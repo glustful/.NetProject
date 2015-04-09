@@ -1,0 +1,22 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="YP.CodeGen.TemplateModel" #>
+using System;
+using System.Collections.Generic;
+using YooPoon.Core.Data;
+
+namespace <#=_projectName#>.Entity.Model
+{
+	public class <#=_entityName#>Entity : IBaseEntity
+	{
+<# foreach(var model in _models){#>
+		/// <summary>
+		/// <#=model.Description#>
+		/// </summary>
+		public virtual <#=model.Type.Replace("_","")#> <#=model.FieldName.Replace("_","")#> { get; set; }
+<# }#>
+	}
+}
