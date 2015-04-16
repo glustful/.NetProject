@@ -1,0 +1,16 @@
+.login{
+width: 300px;margin:0 auto;
+}
+input{
+    background-color: #c0c0c0;
+}
+#userName,#password{
+    width: 200px;
+}
+#verification{
+    width: 100px;
+}
+#login{
+    width: 100px;
+    height: 30px;
+}

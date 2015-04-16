@@ -19,7 +19,7 @@ namespace YP.CodeGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+    #line 1 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
     public partial class ServiceTemplate : ServiceTemplateBase
     {
@@ -30,7 +30,7 @@ namespace YP.CodeGen.Templates
         public virtual string TransformText()
         {
             
-            #line 7 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 7 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
  var orderNames = new List<string>(); 
             
             #line default
@@ -38,105 +38,105 @@ namespace YP.CodeGen.Templates
             this.Write("using System;\r\nusing System.Linq;\r\nusing YooPoon.Core.Data;\r\nusing YooPoon.Core.L" +
                     "ogging;\r\nusing ");
             
-            #line 12 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 12 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
             
             #line default
             #line hidden
             this.Write(".Entity.Model;\r\n\r\nnamespace ");
             
-            #line 14 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 14 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
             
             #line default
             #line hidden
             this.Write(".Service.");
             
-            #line 14 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 14 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n\tpublic class ");
             
-            #line 16 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 16 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Service : I");
             
-            #line 16 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 16 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Service\r\n\t{\r\n\t\tprivate readonly IRepository<");
             
-            #line 18 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 18 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity> _");
             
-            #line 18 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 18 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
             
             #line default
             #line hidden
             this.Write("Repository;\r\n\t\tprivate readonly ILog _log;\r\n\r\n\t\tpublic ");
             
-            #line 21 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 21 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Service(IRepository<");
             
-            #line 21 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 21 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity> ");
             
-            #line 21 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 21 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
             
             #line default
             #line hidden
             this.Write("Repository,ILog log)\r\n\t\t{\r\n\t\t\t_");
             
-            #line 23 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 23 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
             
             #line default
             #line hidden
             this.Write("Repository = ");
             
-            #line 23 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 23 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
             
             #line default
             #line hidden
             this.Write("Repository;\r\n\t\t\t_log = log;\r\n\t\t}\r\n\t\t\r\n\t\tpublic ");
             
-            #line 27 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 27 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity Create (");
             
-            #line 27 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 27 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity entity)\r\n\t\t{\r\n\t\t\ttry\r\n            {\r\n                _");
             
-            #line 31 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 31 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
             
             #line default
@@ -145,14 +145,14 @@ namespace YP.CodeGen.Templates
                     "      catch (Exception e)\r\n            {\r\n\t\t\t\t_log.Error(e,\"数据库操作出错\");\r\n        " +
                     "        return null;\r\n            }\r\n\t\t}\r\n\r\n\t\tpublic bool Delete(");
             
-            #line 41 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 41 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity entity)\r\n\t\t{\r\n\t\t\ttry\r\n            {\r\n                _");
             
-            #line 45 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 45 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
             
             #line default
@@ -161,21 +161,21 @@ namespace YP.CodeGen.Templates
                     "    catch (Exception e)\r\n            {\r\n\t\t\t\t_log.Error(e,\"数据库操作出错\");\r\n          " +
                     "      return false;\r\n            }\r\n\t\t}\r\n\r\n\t\tpublic ");
             
-            #line 55 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 55 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity Update (");
             
-            #line 55 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 55 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity entity)\r\n\t\t{\r\n\t\t\ttry\r\n            {\r\n                _");
             
-            #line 59 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 59 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
             
             #line default
@@ -184,21 +184,21 @@ namespace YP.CodeGen.Templates
                     "      catch (Exception e)\r\n            {\r\n\t\t\t\t_log.Error(e,\"数据库操作出错\");\r\n        " +
                     "        return null;\r\n            }\r\n\t\t}\r\n\r\n\t\tpublic ");
             
-            #line 69 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 69 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity Get");
             
-            #line 69 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 69 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("ById (int id)\r\n\t\t{\r\n\t\t\ttry\r\n            {\r\n                return _");
             
-            #line 73 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 73 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
             
             #line default
@@ -207,35 +207,35 @@ namespace YP.CodeGen.Templates
                     "      {\r\n\t\t\t\t_log.Error(e,\"数据库操作出错\");\r\n                return null;\r\n           " +
                     " }\r\n\t\t}\r\n\r\n\t\tpublic IQueryable<");
             
-            #line 82 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 82 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Entity> Get");
             
-            #line 82 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 82 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("sByCondition(");
             
-            #line 82 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 82 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("SearchCondition condition)\r\n\t\t{\r\n\t\t\tvar query = _");
             
-            #line 84 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 84 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
             
             #line default
             #line hidden
             this.Write("Repository.Table;\r\n\t\t\ttry\r\n\t\t\t{\r\n");
             
-            #line 87 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 87 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
  foreach(var model in _sModels.OrderByDescending(c => c.Type)){ 
 				if(model.Type == EnumSearchType.Range){
             
@@ -243,7 +243,7 @@ namespace YP.CodeGen.Templates
             #line hidden
             this.Write("\t\t\t\tif (condition.");
             
-            #line 89 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 89 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
@@ -251,21 +251,21 @@ namespace YP.CodeGen.Templates
             this.Write("Begin.HasValue)\r\n                {\r\n                    query = query.Where(q => " +
                     "q.");
             
-            #line 91 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 91 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(">= condition.");
             
-            #line 91 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 91 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("Begin.Value);\r\n                }\r\n                if (condition.");
             
-            #line 93 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 93 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
@@ -273,21 +273,21 @@ namespace YP.CodeGen.Templates
             this.Write("End.HasValue)\r\n                {\r\n                    query = query.Where(q => q." +
                     "");
             
-            #line 95 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 95 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(" < condition.");
             
-            #line 95 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 95 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("End.Value);\r\n                }\r\n");
             
-            #line 97 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 97 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
  }			else if(model.Type == EnumSearchType.Equal){
 				if(model.SearchType =="string"){
             
@@ -295,62 +295,62 @@ namespace YP.CodeGen.Templates
             #line hidden
             this.Write("\t\t\t\tif (string.IsNullOrEmpty(condition.");
             
-            #line 99 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 99 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("))\r\n                {\r\n                    query = query.Where(q => q.");
             
-            #line 101 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 101 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(" == condition.");
             
-            #line 101 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 101 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(");\r\n                }\r\n");
             
-            #line 103 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 103 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
 }else{
             
             #line default
             #line hidden
             this.Write("\t\t\t\tif (condition.");
             
-            #line 104 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 104 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(".HasValue)\r\n                {\r\n                    query = query.Where(q => q.");
             
-            #line 106 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 106 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(" == condition.");
             
-            #line 106 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 106 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(".Value);\r\n                }\r\n");
             
-            #line 108 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 108 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
  }
             
             #line default
             #line hidden
             
-            #line 109 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 109 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
  }			else if(model.Type == EnumSearchType.Like){
 				if(model.SearchType =="string"){
             
@@ -358,76 +358,76 @@ namespace YP.CodeGen.Templates
             #line hidden
             this.Write("\t\t\t\tif (!string.IsNullOrEmpty(condition.");
             
-            #line 111 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 111 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("))\r\n                {\r\n                    query = query.Where(q => q.");
             
-            #line 113 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 113 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(".Contains(condition.");
             
-            #line 113 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 113 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("));\r\n                }\r\n");
             
-            #line 115 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 115 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
 }else{
             
             #line default
             #line hidden
             this.Write("\t\t\t\tif (condition.");
             
-            #line 116 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 116 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(".HasValue)\r\n                {\r\n                    query = query.Where(q => q.");
             
-            #line 118 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 118 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(".Contains(condition.");
             
-            #line 118 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 118 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(".Value));\r\n                }\r\n");
             
-            #line 120 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 120 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
 }
             
             #line default
             #line hidden
             
-            #line 121 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 121 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
 }				else if(model.Type == EnumSearchType.In){
             
             #line default
             #line hidden
             this.Write("\t\t\t\tif (condition.");
             
-            #line 122 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 122 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("s != null && condition.");
             
-            #line 122 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 122 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
@@ -435,34 +435,34 @@ namespace YP.CodeGen.Templates
             this.Write("s.Any())\r\n                {\r\n                    query = query.Where(q => conditi" +
                     "on.");
             
-            #line 124 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 124 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("s.Contains(q.");
             
-            #line 124 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 124 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("));\r\n                }\r\n");
             
-            #line 126 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 126 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
 }				else if(model.Type == EnumSearchType.Order){
  orderNames.Add(model.SearchName);}
             
             #line default
             #line hidden
             
-            #line 128 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 128 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
 }
             
             #line default
             #line hidden
             
-            #line 129 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 129 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
 				if(orderNames.Count() > 0){
             
             #line default
@@ -470,56 +470,56 @@ namespace YP.CodeGen.Templates
             this.Write("\t\t\t\tif(condition.OrderBy.HasValue)\r\n\t\t\t\t{\r\n\t\t\t\t\tswitch (condition.OrderBy.Value)\r" +
                     "\n                    {\r\n");
             
-            #line 134 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 134 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
 						foreach(var name in orderNames){ 
             
             #line default
             #line hidden
             this.Write("\t\t\t\t\t\tcase Enum");
             
-            #line 135 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 135 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("SearchOrderBy.OrderBy");
             
-            #line 135 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 135 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
             this.Write(":\r\n\t\t\t\t\t\t\tquery = condition.isDescending?query.OrderByDescending(q=>q.");
             
-            #line 136 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 136 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
             this.Write("):query.OrderBy(q=>q.");
             
-            #line 136 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 136 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
             this.Write(");\r\n\t\t\t\t\t\t\tbreak;\r\n");
             
-            #line 138 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 138 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
  }
             
             #line default
             #line hidden
             this.Write("                    }\r\n\t\t\t\t\t\r\n\t\t\t\t}\r\n");
             
-            #line 142 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 142 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
  }
             
             #line default
             #line hidden
             this.Write("\t\t\t\telse\r\n\t\t\t\t{\r\n\t\t\t\t\tquery = query.OrderBy(q=>q.");
             
-            #line 145 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 145 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(orderNames.First()));
             
             #line default
@@ -542,28 +542,28 @@ namespace YP.CodeGen.Templates
 
 		public int Get");
             
-            #line 161 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 161 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("Count (");
             
-            #line 161 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 161 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
             
             #line default
             #line hidden
             this.Write("SearchCondition condition)\r\n\t\t{\r\n\t\t\tvar query = _");
             
-            #line 163 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 163 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName.ToLower()));
             
             #line default
             #line hidden
             this.Write("Repository.Table;\r\n\t\t\ttry\r\n\t\t\t{\r\n");
             
-            #line 166 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 166 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
  foreach(var model in _sModels.OrderByDescending(c => c.Type)){ 
 				if(model.Type == EnumSearchType.Range){
             
@@ -571,7 +571,7 @@ namespace YP.CodeGen.Templates
             #line hidden
             this.Write("\t\t\t\tif (condition.");
             
-            #line 168 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 168 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
@@ -579,21 +579,21 @@ namespace YP.CodeGen.Templates
             this.Write("Begin.HasValue)\r\n                {\r\n                    query = query.Where(q => " +
                     "q.");
             
-            #line 170 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 170 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(">= condition.");
             
-            #line 170 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 170 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("Begin.Value);\r\n                }\r\n                if (condition.");
             
-            #line 172 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 172 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
@@ -601,21 +601,21 @@ namespace YP.CodeGen.Templates
             this.Write("End.HasValue)\r\n                {\r\n                    query = query.Where(q => q." +
                     "");
             
-            #line 174 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 174 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(" < condition.");
             
-            #line 174 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 174 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("End.Value);\r\n                }\r\n");
             
-            #line 176 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 176 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
  }			else if(model.Type == EnumSearchType.Equal){
 				if(model.SearchType =="string"){
             
@@ -623,62 +623,62 @@ namespace YP.CodeGen.Templates
             #line hidden
             this.Write("\t\t\t\tif (string.IsNullOrEmpty(condition.");
             
-            #line 178 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 178 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("))\r\n                {\r\n                    query = query.Where(q => q.");
             
-            #line 180 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 180 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(" == condition.");
             
-            #line 180 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 180 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(");\r\n                }\r\n");
             
-            #line 182 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 182 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
 }else{
             
             #line default
             #line hidden
             this.Write("\t\t\t\tif (condition.");
             
-            #line 183 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 183 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(".HasValue)\r\n                {\r\n                    query = query.Where(q => q.");
             
-            #line 185 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 185 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(" == condition.");
             
-            #line 185 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 185 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(".Value);\r\n                }\r\n");
             
-            #line 187 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 187 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
  }
             
             #line default
             #line hidden
             
-            #line 188 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 188 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
  }			else if(model.Type == EnumSearchType.Like){
 				if(model.SearchType =="string"){
             
@@ -686,76 +686,76 @@ namespace YP.CodeGen.Templates
             #line hidden
             this.Write("\t\t\t\tif (!string.IsNullOrEmpty(condition.");
             
-            #line 190 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 190 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("))\r\n                {\r\n                    query = query.Where(q => q.");
             
-            #line 192 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 192 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(".Contains(condition.");
             
-            #line 192 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 192 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("));\r\n                }\r\n");
             
-            #line 194 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 194 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
 }else{
             
             #line default
             #line hidden
             this.Write("\t\t\t\tif (condition.");
             
-            #line 195 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 195 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(".HasValue)\r\n                {\r\n                    query = query.Where(q => q.");
             
-            #line 197 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 197 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(".Contains(condition.");
             
-            #line 197 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 197 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write(".Value));\r\n                }\r\n");
             
-            #line 199 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 199 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
 }
             
             #line default
             #line hidden
             
-            #line 200 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 200 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
 }				else if(model.Type == EnumSearchType.In){
             
             #line default
             #line hidden
             this.Write("\t\t\t\tif (condition.");
             
-            #line 201 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 201 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("s != null && condition.");
             
-            #line 201 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 201 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
@@ -763,27 +763,27 @@ namespace YP.CodeGen.Templates
             this.Write("s.Any())\r\n                {\r\n                    query = query.Where(q => conditi" +
                     "on.");
             
-            #line 203 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 203 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("s.Contains(q.");
             
-            #line 203 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 203 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(model.SearchName));
             
             #line default
             #line hidden
             this.Write("));\r\n                }\r\n");
             
-            #line 205 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 205 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
  }
             
             #line default
             #line hidden
             
-            #line 206 "E:\Project_Zerg\YP.CodeGen\Templates\ServiceTemplate.tt"
+            #line 206 "E:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
 }
             
             #line default
