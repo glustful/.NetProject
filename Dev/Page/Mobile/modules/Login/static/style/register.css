@@ -1,5 +1,5 @@
-.login{
-width: 300px;margin:0 auto;
+.register{
+    width: 300px;margin:0 auto;
 }
 input{
     background-color: #c0c0c0;
@@ -10,7 +10,7 @@ input{
 #verification{
     width: 100px;
 }
-#login{
+#register{
     width: 100px;
     height: 30px;
 }
