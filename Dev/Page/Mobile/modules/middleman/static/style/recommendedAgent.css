@@ -1,0 +1,27 @@
+*{
+    padding:0;
+    margin:0;
+    border: none;
+    list-style: none;
+}
+.window{
+    width:640px;
+    margin:0 auto;
+}
+
+ p{
+   margin: 40px;
+   text-align: center;
+
+}
+.Text{
+    width: 150px;
+    height: 30px;
+    background: #f2f2f2;
+
+}
+.button{
+    width: 150px;
+    height: 40px;
+    margin-left: 40px;
+}
