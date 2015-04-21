@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.BrokerBill
 		{
 			ToTable("BrokerBill");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
+			Property(c => c.Id).HasColumnType("int");
 			HasOptional(c =>c.Broker);
 			Property(c => c.BillId).HasColumnType("int");
 			Property(c => c.Type).HasColumnType("bit");
@@ -23,7 +23,7 @@ namespace CRM.Entity.Mappings.BrokerBill
 			Property(c => c.Payeenum).HasColumnType("varchar").HasMaxLength(30);
 			Property(c => c.Paytime).HasColumnType("datetime");
 			Property(c => c.Customername).HasColumnType("varchar").HasMaxLength(50);
-			Property(c => c.Note).HasColumnType("varchar").HasMaxLength(256);
+			Property(c => c.Note).HasColumnType("varchar").HasMaxLength(256).IsOptional();
 			Property(c => c.Adduser).HasColumnType("int");
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upuser).HasColumnType("int");

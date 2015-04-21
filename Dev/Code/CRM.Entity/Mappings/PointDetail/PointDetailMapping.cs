@@ -10,9 +10,9 @@ namespace CRM.Entity.Mappings.PointDetail
 		{
 			ToTable("PointDetail");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
+			Property(c => c.Id).HasColumnType("int");
 			HasOptional(c =>c.Broker);
-			Property(c => c.Pointsds).HasColumnType("varchar").HasMaxLength(50);
+			Property(c => c.Pointsds).HasColumnType("varchar").HasMaxLength(50).IsOptional();
 			Property(c => c.Addpoints).HasColumnType("int");
 			Property(c => c.Totalpoints).HasColumnType("int");
 			Property(c => c.Adduser).HasColumnType("int");

@@ -10,8 +10,8 @@ namespace CRM.Entity.Mappings.Bank
 		{
 			ToTable("Bank");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
-			Property(c => c.Codeid).HasColumnType("varchar").HasMaxLength(30).IsOptional();
+			Property(c => c.Id).HasColumnType("int");
+			Property(c => c.Codeid).HasColumnType("varchar").HasMaxLength(30);
 			Property(c => c.address).HasColumnType("varchar").HasMaxLength(256);
 		}
 	}

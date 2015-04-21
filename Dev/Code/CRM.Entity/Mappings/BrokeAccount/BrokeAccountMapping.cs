@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.BrokeAccount
 		{
 			ToTable("BrokeAccount");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
+			Property(c => c.Id).HasColumnType("int");
 			HasOptional(c =>c.Broker);
 			Property(c => c.Balancenum).HasColumnType("float");
 			Property(c => c.Adduser).HasColumnType("int");

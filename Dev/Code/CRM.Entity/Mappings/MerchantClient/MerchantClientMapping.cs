@@ -10,12 +10,12 @@ namespace CRM.Entity.Mappings.MerchantClient
 		{
 			ToTable("MerchantClient");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
+			Property(c => c.Id).HasColumnType("int");
 			HasOptional(c =>c.MerchantInfo);
 			HasOptional(c =>c.ClientInfo);
 			Property(c => c.Appointmenttime).HasColumnType("datetime");
 			Property(c => c.Appointmentstatus).HasColumnType("varchar").HasMaxLength(50);
-			Property(c => c.Details).HasColumnType("varchar").HasMaxLength(256);
+			Property(c => c.Details).HasColumnType("varchar").HasMaxLength(256).IsOptional();
 			Property(c => c.Adduser).HasColumnType("int");
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upuser).HasColumnType("int");

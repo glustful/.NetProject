@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.MerchantBill
 		{
 			ToTable("MerchantBill");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
+			Property(c => c.Id).HasColumnType("int");
 			HasOptional(c =>c.MerchantInfo);
 			Property(c => c.Adduser).HasColumnType("int");
 			Property(c => c.Addtime).HasColumnType("datetime");

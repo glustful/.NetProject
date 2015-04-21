@@ -10,12 +10,12 @@ namespace CRM.Entity.Mappings.BankCard
 		{
 			ToTable("BankCard");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
+			Property(c => c.Id).HasColumnType("int");
 			HasOptional(c =>c.Bank);
 			HasOptional(c =>c.Broker);
 			Property(c => c.Num).HasColumnType("int");
 			Property(c => c.Type).HasColumnType("bit");
-			Property(c => c.Deadline).HasColumnType("datetime");
+			Property(c => c.Deadline).HasColumnType("datetime").IsOptional();
 			Property(c => c.Adduser).HasColumnType("int");
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upuser).HasColumnType("int");

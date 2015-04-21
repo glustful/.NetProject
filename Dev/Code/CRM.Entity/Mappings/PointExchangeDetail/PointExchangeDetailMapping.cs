@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.PointExchangeDetail
 		{
 			ToTable("PointExchangeDetail");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
+			Property(c => c.Id).HasColumnType("int");
 			HasOptional(c =>c.Broker);
 			Property(c => c.Userpointsds).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Userpoints).HasColumnType("int");

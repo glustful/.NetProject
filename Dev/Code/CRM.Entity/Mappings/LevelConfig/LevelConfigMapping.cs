@@ -10,9 +10,9 @@ namespace CRM.Entity.Mappings.LevelConfig
 		{
 			ToTable("LevelConfig");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
-			Property(c => c.Name).HasColumnType("varchar").HasMaxLength(50).IsOptional();
-			Property(c => c.Describe).HasColumnType("varchar").HasMaxLength(256);
+			Property(c => c.Id).HasColumnType("int");
+			Property(c => c.Name).HasColumnType("varchar").HasMaxLength(50);
+			Property(c => c.Describe).HasColumnType("varchar").HasMaxLength(256).IsOptional();
 			Property(c => c.Value).HasColumnType("varchar").HasMaxLength(256);
 			Property(c => c.Adduser).HasColumnType("int");
 			Property(c => c.Addtime).HasColumnType("datetime");

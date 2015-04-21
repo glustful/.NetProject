@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.BrokerWithdrawDetail
 		{
 			ToTable("BrokerWithdrawDetail");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
+			Property(c => c.Id).HasColumnType("int");
 			HasOptional(c =>c.Broker);
 			HasOptional(c =>c.BankCard);
 			Property(c => c.Withdrawtime).HasColumnType("datetime");
