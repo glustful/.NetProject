@@ -10,6 +10,7 @@
     <RootNamespace>CMS.Service</RootNamespace>
     <AssemblyName>CMS.Service</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -40,7 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Advertisement\AdvertisementService.cs" />
+    <Compile Include="Advertisement\IAdvertisementService.cs" />
+    <Compile Include="Channel\ChannelService.cs" />
+    <Compile Include="Channel\IChannelService.cs" />
+    <Compile Include="Content\ContentService.cs" />
+    <Compile Include="Content\IContentService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublishProduct\IPublishProductService.cs" />
+    <Compile Include="PublishProduct\PublishProductService.cs" />
+    <Compile Include="Resource\IResourceService.cs" />
+    <Compile Include="Resource\ResourceService.cs" />
+    <Compile Include="Setting\ISettingService.cs" />
+    <Compile Include="Setting\SettingService.cs" />
+    <Compile Include="Tag\ITagService.cs" />
+    <Compile Include="Tag\TagService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CMS.Entity\CMS.Entity.csproj">
