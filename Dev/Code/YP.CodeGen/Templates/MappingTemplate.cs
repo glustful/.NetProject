@@ -116,7 +116,7 @@ namespace YP.CodeGen.Templates
             this.Write(";\r\n");
             
             #line 22 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\MappingTemplate.tt"
- }else if(model.FieldName.StartsWith("IList")){ 
+ }else if(model.Type.StartsWith("IList")){ 
             
             #line default
             #line hidden

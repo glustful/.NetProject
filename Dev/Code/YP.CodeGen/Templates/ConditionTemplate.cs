@@ -70,7 +70,7 @@ namespace YP.CodeGen.Templates
 		/// <summary>
 		/// 是否降序
 		/// </summary>
-		public bool isDescending { get; set; }
+		public bool IsDescending { get; set; }
 
 ");
             

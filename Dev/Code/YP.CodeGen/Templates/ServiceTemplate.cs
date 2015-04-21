@@ -203,9 +203,9 @@ namespace YP.CodeGen.Templates
             
             #line default
             #line hidden
-            this.Write("Repository.GetById(id); ;\r\n            }\r\n            catch (Exception e)\r\n      " +
-                    "      {\r\n\t\t\t\t_log.Error(e,\"数据库操作出错\");\r\n                return null;\r\n           " +
-                    " }\r\n\t\t}\r\n\r\n\t\tpublic IQueryable<");
+            this.Write("Repository.GetById(id);\r\n            }\r\n            catch (Exception e)\r\n        " +
+                    "    {\r\n\t\t\t\t_log.Error(e,\"数据库操作出错\");\r\n                return null;\r\n            }" +
+                    "\r\n\t\t}\r\n\r\n\t\tpublic IQueryable<");
             
             #line 82 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_entityName));
@@ -489,7 +489,7 @@ namespace YP.CodeGen.Templates
             
             #line default
             #line hidden
-            this.Write(":\r\n\t\t\t\t\t\t\tquery = condition.isDescending?query.OrderByDescending(q=>q.");
+            this.Write(":\r\n\t\t\t\t\t\t\tquery = condition.IsDescending?query.OrderByDescending(q=>q.");
             
             #line 136 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
