@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.BrokerLeadClient
 		{
 			ToTable("BrokerLeadClient");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
+
 			HasOptional(c =>c.Broker);
 			HasOptional(c =>c.ClientInfo);
 			Property(c => c.Appointmenttime).HasColumnType("datetime");

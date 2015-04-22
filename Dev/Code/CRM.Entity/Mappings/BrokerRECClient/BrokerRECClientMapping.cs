@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.BrokerRECClient
 		{
 			ToTable("BrokerRECClient");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
+
 			HasOptional(c =>c.Broker);
 			HasOptional(c =>c.ClientInfo);
 			Property(c => c.Clientname).HasColumnType("varchar").HasMaxLength(50);

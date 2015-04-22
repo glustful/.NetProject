@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.MessageDetail
 		{
 			ToTable("MessageDetail");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
+			 
 			Property(c => c.Title).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Content).HasColumnType("varchar").HasMaxLength(500);
 			Property(c => c.Sender).HasColumnType("int");

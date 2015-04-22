@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.BankCard
 		{
 			ToTable("BankCard");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
+
 			HasOptional(c =>c.Bank);
 			HasOptional(c =>c.Broker);
 			Property(c => c.Num).HasColumnType("int");

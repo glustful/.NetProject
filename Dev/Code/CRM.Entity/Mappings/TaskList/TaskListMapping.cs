@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.TaskList
 		{
 			ToTable("TaskList");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
+			 
 			HasOptional(c =>c.Task);
 			HasOptional(c =>c.Broker);
 			Property(c => c.Taskschedule).HasColumnType("varcahr").HasMaxLength(50);

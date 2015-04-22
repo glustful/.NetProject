@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.MerchantInfo
 		{
 			ToTable("MerchantInfo");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
+			 
 			Property(c => c.UserId).HasColumnType("int");
 			Property(c => c.Merchantname).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Mail).HasColumnType("varchar").HasMaxLength(256).IsOptional();

@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.BrokerBill
 		{
 			ToTable("BrokerBill");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
+
 			HasOptional(c =>c.Broker);
 			Property(c => c.BillId).HasColumnType("int");
 			Property(c => c.Type).HasColumnType("bit");
