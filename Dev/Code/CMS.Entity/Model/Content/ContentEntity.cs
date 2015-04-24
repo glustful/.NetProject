@@ -9,47 +9,47 @@ namespace CMS.Entity.Model
 		/// <summary>
 		/// Id
 		/// </summary>
-		public virtual int Id { get; set; }
+		public int Id { get; set; }
 		/// <summary>
 		/// 内容
 		/// </summary>
-		public virtual string Content { get; set; }
+		public string Content { get; set; }
 		/// <summary>
 		/// 标题
 		/// </summary>
-		public virtual string Title { get; set; }
+		public string Title { get; set; }
 		/// <summary>
 		/// 添加人
 		/// </summary>
-		public virtual int Adduser { get; set; }
+		public int Adduser { get; set; }
 		/// <summary>
 		/// 添加时间
 		/// </summary>
-		public virtual DateTime Addtime { get; set; }
+		public DateTime Addtime { get; set; }
 		/// <summary>
 		/// 更新人
 		/// </summary>
-		public virtual int UpdUser { get; set; }
+		public int UpdUser { get; set; }
 		/// <summary>
 		/// 更新时间
 		/// </summary>
-		public virtual DateTime UpdTime { get; set; }
+		public DateTime UpdTime { get; set; }
 		/// <summary>
 		/// 状态
 		/// </summary>
-		public virtual EnumContentStatus Status { get; set; }
+		public EnumContentStatus Status { get; set; }
 		/// <summary>
 		/// 点赞数
 		/// </summary>
-		public virtual int Praise { get; set; }
+		public int Praise { get; set; }
 		/// <summary>
 		/// 点踩数
 		/// </summary>
-		public virtual int Unpraise { get; set; }
+		public int Unpraise { get; set; }
 		/// <summary>
 		/// 点击数
 		/// </summary>
-		public virtual int Viewcount { get; set; }
+		public int Viewcount { get; set; }
 		/// <summary>
 		/// 内容所带多媒体资源
 		/// </summary>
@@ -61,6 +61,6 @@ namespace CMS.Entity.Model
 		/// <summary>
 		/// 所属频道
 		/// </summary>
-		public virtual IList<ChannelEntity> Channels { get; set; }
+		public virtual ChannelEntity Channel { get; set; }
 	}
 }

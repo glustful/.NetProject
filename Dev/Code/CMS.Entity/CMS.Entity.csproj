@@ -49,6 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mappings\Advertisement\AdvertisementMapping.cs" />
+    <Compile Include="Mappings\Channel\ChannelMapping.cs" />
+    <Compile Include="Mappings\Content\ContentMapping.cs" />
+    <Compile Include="Mappings\PublishProduct\PublishProductMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\Resource\ResourceMapping.cs" />
+    <Compile Include="Mappings\Tag\TagMapping.cs" />
     <Compile Include="Model\Advertisement\AdvertisementEntity.cs" />
     <Compile Include="Model\Advertisement\AdvertisementSearchConditon.cs" />
     <Compile Include="Model\Advertisement\EnumAdvertisement.cs" />
@@ -70,13 +78,7 @@
     <Compile Include="Model\Tag\EnumTag.cs" />
     <Compile Include="Model\Tag\TagEntity.cs" />
     <Compile Include="Model\Tag\TagSearchConditon.cs" />
-    <Compile Include="Mappings\Advertisement\AdvertisementMapping.cs" />
-    <Compile Include="Mappings\Channel\ChannelMapping.cs" />
-    <Compile Include="Mappings\Content\ContentMapping.cs" />
-    <Compile Include="Mappings\PublishProduct\PublishProductMapping.cs" />
-    <Compile Include="Mappings\Resource\ResourceMapping.cs" />
     <Compile Include="Mappings\Setting\SettingMapping.cs" />
-    <Compile Include="Mappings\Tag\TagMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +99,7 @@
       <Name>YooPoon.WebFramework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

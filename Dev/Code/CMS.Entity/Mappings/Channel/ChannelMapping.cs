@@ -10,7 +10,6 @@ namespace CMS.Entity.Mappings.Channel
 		{
 			ToTable("Channel");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
 			Property(c => c.Name).HasColumnType("varchar");
 			Property(c => c.Status).HasColumnType("int");
 			HasOptional(c =>c.Parent);
@@ -18,6 +17,7 @@ namespace CMS.Entity.Mappings.Channel
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.UpdUser).HasColumnType("int").IsOptional();
 			Property(c => c.UpdTime).HasColumnType("datetime").IsOptional();
+		    HasMany(c => c.Contents).WithRequired(c => c.Channel);
 		}
 	}
 }

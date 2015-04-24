@@ -129,13 +129,9 @@ namespace CMS.Service.Content
                 {
                     query = query.Where(q => condition.Viewcounts.Contains(q.Viewcount));
                 }
-				if (condition.Tagss != null && condition.Tagss.Any())
+                if (string.IsNullOrEmpty(condition.ChannelName))
                 {
-                    query = query.Where(q => condition.Tagss.Contains(q.Tags));
-                }
-				if (condition.Channelss != null && condition.Channelss.Any())
-                {
-                    query = query.Where(q => condition.Channelss.Contains(q.Channels));
+                    query = query.Where(q=>q.Channel.Name == condition.ChannelName);
                 }
 				if(condition.OrderBy.HasValue)
 				{
@@ -240,13 +236,9 @@ namespace CMS.Service.Content
                 {
                     query = query.Where(q => condition.Viewcounts.Contains(q.Viewcount));
                 }
-				if (condition.Tagss != null && condition.Tagss.Any())
+                if (string.IsNullOrEmpty(condition.ChannelName))
                 {
-                    query = query.Where(q => condition.Tagss.Contains(q.Tags));
-                }
-				if (condition.Channelss != null && condition.Channelss.Any())
-                {
-                    query = query.Where(q => condition.Channelss.Contains(q.Channels));
+                    query = query.Where(q => q.Channel.Name == condition.ChannelName);
                 }
 				return query.Count();
 			}

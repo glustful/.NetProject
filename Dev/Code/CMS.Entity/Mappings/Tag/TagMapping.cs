@@ -10,13 +10,12 @@ namespace CMS.Entity.Mappings.Tag
 		{
 			ToTable("Tag");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
 			Property(c => c.Tag).HasColumnType("varchar");
 			Property(c => c.Adduser).HasColumnType("int");
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.UpdUser).HasColumnType("int").IsOptional();
 			Property(c => c.UpdTime).HasColumnType("datetime").IsOptional();
-			HasMany(c =>c.Content);
+			HasMany(c =>c.Content).WithMany(c=>c.Tags);
 		}
 	}
 }

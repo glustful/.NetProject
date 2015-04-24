@@ -10,7 +10,6 @@ namespace CMS.Entity.Mappings.Content
 		{
 			ToTable("Content");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
 			Property(c => c.Content).HasColumnType("varchar").IsOptional();
 			Property(c => c.Title).HasColumnType("varchar");
 			Property(c => c.Adduser).HasColumnType("int");
@@ -21,9 +20,9 @@ namespace CMS.Entity.Mappings.Content
 			Property(c => c.Praise).HasColumnType("int");
 			Property(c => c.Unpraise).HasColumnType("int");
 			Property(c => c.Viewcount).HasColumnType("int");
-			HasMany(c =>c.Resources);
-            HasMany(c => c.Tags);
-            HasMany(c => c.Channels);
+			HasMany(c =>c.Resources).WithOptional(r=>r.Content);
+            HasMany(c => c.Tags).WithMany(t=>t.Content);
+            HasRequired(c => c.Channel).WithMany(c=>c.Contents);
 		}
 	}
 }

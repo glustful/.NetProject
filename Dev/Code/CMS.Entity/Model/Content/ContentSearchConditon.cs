@@ -53,9 +53,9 @@ namespace CMS.Entity.Model
 		public int[] Viewcounts { get; set; }
 
 
-		public IList<TagEntity>[] Tagss { get; set; }
+		public string Tag { get; set; }
 
-		public IList<ChannelEntity>[] Channelss { get; set; }
+		public string ChannelName { get; set; }
 
 		public EnumContentSearchOrderBy? OrderBy { get; set; }
 	}

@@ -9,19 +9,19 @@ namespace CMS.Entity.Model
 		/// <summary>
 		/// Id
 		/// </summary>
-		public virtual int Id { get; set; }
+		public int Id { get; set; }
 		/// <summary>
 		/// 标题
 		/// </summary>
-		public virtual string Title { get; set; }
+		public string Title { get; set; }
 		/// <summary>
 		/// 明细
 		/// </summary>
-		public virtual string Detail { get; set; }
+		public string Detail { get; set; }
 		/// <summary>
 		/// 持续时间
 		/// </summary>
-		public virtual DateTime Continue { get; set; }
+		public DateTime Continue { get; set; }
 		/// <summary>
 		/// 内容
 		/// </summary>
@@ -29,18 +29,18 @@ namespace CMS.Entity.Model
 		/// <summary>
 		/// 添加人
 		/// </summary>
-		public virtual int Adduser { get; set; }
+		public int Adduser { get; set; }
 		/// <summary>
 		/// 添加时间
 		/// </summary>
-		public virtual DateTime Addtime { get; set; }
+		public DateTime Addtime { get; set; }
 		/// <summary>
 		/// 更新人
 		/// </summary>
-		public virtual int UpdUser { get; set; }
+		public int UpdUser { get; set; }
 		/// <summary>
 		/// 更新时间
 		/// </summary>
-		public virtual DateTime UpdTime { get; set; }
+		public DateTime UpdTime { get; set; }
 	}
 }

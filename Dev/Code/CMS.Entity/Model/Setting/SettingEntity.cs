@@ -9,14 +9,14 @@ namespace CMS.Entity.Model
 		/// <summary>
 		/// Id
 		/// </summary>
-		public virtual int Id { get; set; }
+		public  int Id { get; set; }
 		/// <summary>
 		/// 键
 		/// </summary>
-		public virtual string Key { get; set; }
+		public  string Key { get; set; }
 		/// <summary>
 		/// 值
 		/// </summary>
-		public virtual string Value { get; set; }
+		public  string Value { get; set; }
 	}
 }

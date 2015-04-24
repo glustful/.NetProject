@@ -10,7 +10,6 @@ namespace CMS.Entity.Mappings.Advertisement
 		{
 			ToTable("Advertisement");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
 			Property(c => c.Title).HasColumnType("varchar");
 			Property(c => c.Detail).HasColumnType("varchar").IsOptional();
 			Property(c => c.Continue).HasColumnType("datetime");

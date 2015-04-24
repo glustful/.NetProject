@@ -10,7 +10,6 @@ namespace CMS.Entity.Mappings.PublishProduct
 		{
 			ToTable("PublishProduct");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
 			Property(c => c.ProductId).HasColumnType("int");
 			Property(c => c.ProductName).HasColumnType("varchar");
 			Property(c => c.Detail).HasColumnType("varchar");

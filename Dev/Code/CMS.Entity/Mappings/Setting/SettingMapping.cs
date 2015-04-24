@@ -10,7 +10,6 @@ namespace CMS.Entity.Mappings.Setting
 		{
 			ToTable("Setting");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
 			Property(c => c.Key).HasColumnType("varchar");
 			Property(c => c.Value).HasColumnType("varchar");
 		}

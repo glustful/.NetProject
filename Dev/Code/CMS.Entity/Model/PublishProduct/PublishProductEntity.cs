@@ -9,27 +9,27 @@ namespace CMS.Entity.Model
 		/// <summary>
 		/// Id
 		/// </summary>
-		public virtual int Id { get; set; }
+		public int Id { get; set; }
 		/// <summary>
 		/// Product_Id
 		/// </summary>
-		public virtual int ProductId { get; set; }
+		public int ProductId { get; set; }
 		/// <summary>
 		/// 商品名称
 		/// </summary>
-		public virtual string ProductName { get; set; }
+		public string ProductName { get; set; }
 		/// <summary>
 		/// 详细
 		/// </summary>
-		public virtual string Detail { get; set; }
+		public string Detail { get; set; }
 		/// <summary>
 		/// 发布时间
 		/// </summary>
-		public virtual DateTime Publishtime { get; set; }
+		public DateTime Publishtime { get; set; }
 		/// <summary>
 		/// 发布人
 		/// </summary>
-		public virtual int PublishUser { get; set; }
+		public int PublishUser { get; set; }
 		/// <summary>
 		/// 标签
 		/// </summary>
