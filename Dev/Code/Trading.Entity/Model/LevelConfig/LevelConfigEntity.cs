@@ -2,41 +2,49 @@ using System;
 using System.Collections.Generic;
 using YooPoon.Core.Data;
 
-namespace CRM.Entity.Model
+namespace CMS.Entity.Model
 {
-	public class LevelConfigEntity : IBaseEntity
+	public class ResourceEntity : IBaseEntity
 	{
 		/// <summary>
-		/// 规则ID
+		/// Id
 		/// </summary>
-		public virtual int Id { get; set; }
+		public int Id { get; set; }
 		/// <summary>
-		/// 配置名称
+		/// GUID
 		/// </summary>
-		public virtual string Name { get; set; }
+		public Guid Guid { get; set; }
 		/// <summary>
-		/// 等级描述
+		/// 名称
 		/// </summary>
-		public virtual string Describe { get; set; }
+		public string Name { get; set; }
 		/// <summary>
-		/// 值
+		/// 类型
 		/// </summary>
-		public virtual string Value { get; set; }
+		public string Type { get; set; }
 		/// <summary>
-		/// AddUser
+		/// 长度
 		/// </summary>
-		public virtual int Adduser { get; set; }
+		public Int64 Length { get; set; }
 		/// <summary>
-		/// AddTime
+		/// 添加人
 		/// </summary>
-		public virtual DateTime Addtime { get; set; }
+		public int Adduser { get; set; }
 		/// <summary>
-		/// UpUser
+		/// 添加时间
 		/// </summary>
-		public virtual int Upuser { get; set; }
+		public DateTime Addtime { get; set; }
 		/// <summary>
-		/// UpTime
+		/// 更新人
 		/// </summary>
-		public virtual DateTime Uptime { get; set; }
+		public int UpdUser { get; set; }
+		/// <summary>
+		/// 更新时间
+		/// </summary>
+		public DateTime UpdTime { get; set; }
+        /// <summary>
+        /// 相关内容
+        /// </summary>
+        public virtual ContentEntity Content { get; set; }
 	}
 }

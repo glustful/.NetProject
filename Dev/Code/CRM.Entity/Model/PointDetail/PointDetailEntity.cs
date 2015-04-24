@@ -2,45 +2,45 @@ using System;
 using System.Collections.Generic;
 using YooPoon.Core.Data;
 
-namespace CRM.Entity.Model
+namespace CMS.Entity.Model
 {
-	public class PointDetailEntity : IBaseEntity
+	public class AdvertisementEntity : IBaseEntity
 	{
 		/// <summary>
-		/// 积分ID
+		/// Id
 		/// </summary>
-		public virtual int Id { get; set; }
+		public int Id { get; set; }
 		/// <summary>
-		/// 经纪人ID
+		/// 标题
 		/// </summary>
-		public virtual BrokerEntity Broker { get; set; }
+		public string Title { get; set; }
 		/// <summary>
-		/// 积分动作描述
+		/// 明细
 		/// </summary>
-		public virtual string Pointsds { get; set; }
+		public string Detail { get; set; }
 		/// <summary>
-		/// 增加积分
+		/// 持续时间
 		/// </summary>
-		public virtual int Addpoints { get; set; }
+		public DateTime Continue { get; set; }
 		/// <summary>
-		/// 积分总额
+		/// 内容
 		/// </summary>
-		public virtual int Totalpoints { get; set; }
+		public virtual ContentEntity Content { get; set; }
 		/// <summary>
-		/// AddUser
+		/// 添加人
 		/// </summary>
-		public virtual int Adduser { get; set; }
+		public int Adduser { get; set; }
 		/// <summary>
-		/// AddTime
+		/// 添加时间
 		/// </summary>
-		public virtual DateTime Addtime { get; set; }
+		public DateTime Addtime { get; set; }
 		/// <summary>
-		/// UpUser
+		/// 更新人
 		/// </summary>
-		public virtual int Upuser { get; set; }
+		public int UpdUser { get; set; }
 		/// <summary>
-		/// UpTime
+		/// 更新时间
 		/// </summary>
-		public virtual DateTime Uptime { get; set; }
+		public DateTime UpdTime { get; set; }
 	}
 }
