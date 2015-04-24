@@ -2,45 +2,41 @@ using System;
 using System.Collections.Generic;
 using YooPoon.Core.Data;
 
-namespace CMS.Entity.Model
+namespace CRM.Entity.Model
 {
-	public class ChannelEntity : IBaseEntity
+	public class LevelConfigEntity : IBaseEntity
 	{
 		/// <summary>
-		/// Id
+		/// 规则ID
 		/// </summary>
-		public int Id { get; set; }
+		public virtual int Id { get; set; }
 		/// <summary>
-		/// 名称
+		/// 配置名称
 		/// </summary>
-		public string Name { get; set; }
+		public virtual string Name { get; set; }
 		/// <summary>
-		/// 状态
+		/// 等级描述
 		/// </summary>
-		public EnumChannelStatus Status { get; set; }
+		public virtual string Describe { get; set; }
 		/// <summary>
-		/// 父级
+		/// 值
 		/// </summary>
-		public virtual ChannelEntity Parent { get; set; }
+		public virtual string Value { get; set; }
 		/// <summary>
-		/// 添加人
+		/// AddUser
 		/// </summary>
-		public int Adduser { get; set; }
+		public virtual int Adduser { get; set; }
 		/// <summary>
-		/// 添加时间
+		/// AddTime
 		/// </summary>
-		public DateTime Addtime { get; set; }
+		public virtual DateTime Addtime { get; set; }
 		/// <summary>
-		/// 更新人
+		/// UpUser
 		/// </summary>
-		public int UpdUser { get; set; }
+		public virtual int Upuser { get; set; }
 		/// <summary>
-		/// 更新时间
+		/// UpTime
 		/// </summary>
-		public DateTime UpdTime { get; set; }
-        /// <summary>
-        /// 频道内内容
-        /// </summary>
-        public virtual IList<ContentEntity> Contents { get; set; } 
+		public virtual DateTime Uptime { get; set; }
 	}
 }

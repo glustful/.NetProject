@@ -2,41 +2,37 @@ using System;
 using System.Collections.Generic;
 using YooPoon.Core.Data;
 
-namespace CMS.Entity.Model
+namespace CRM.Entity.Model
 {
-	public class TagEntity : IBaseEntity
+	public class BrokeAccountEntity : IBaseEntity
 	{
 		/// <summary>
-		/// Id
+		/// 账户ID
 		/// </summary>
-		public int Id { get; set; }
+		public virtual int Id { get; set; }
 		/// <summary>
-		/// 标签
+		/// 经纪人ID
 		/// </summary>
-		public  string Tag { get; set; }
+		public virtual BrokerEntity Broker { get; set; }
 		/// <summary>
-		/// 添加人
+		/// 账户余额
 		/// </summary>
-		public  int Adduser { get; set; }
+		public virtual decimal Balancenum { get; set; }
 		/// <summary>
-		/// 添加时间
+		/// AddUser
 		/// </summary>
-		public  DateTime Addtime { get; set; }
+		public virtual int Adduser { get; set; }
 		/// <summary>
-		/// 更新人
+		/// AddTime
 		/// </summary>
-		public  int UpdUser { get; set; }
+		public virtual DateTime Addtime { get; set; }
 		/// <summary>
-		/// 更新时间
+		/// UpUser
 		/// </summary>
-		public  DateTime UpdTime { get; set; }
+		public virtual int Upuser { get; set; }
 		/// <summary>
-		/// 关联内容
+		/// UpTime
 		/// </summary>
-		public virtual IList<ContentEntity> Content { get; set; }
-        /// <summary>
-        /// 发布的商品信息
-        /// </summary>
-        public virtual IList<PublishProductEntity> PublishProduct { get; set; } 
+		public virtual DateTime Uptime { get; set; }
 	}
 }

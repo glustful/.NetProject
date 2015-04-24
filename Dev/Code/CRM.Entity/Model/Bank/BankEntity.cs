@@ -2,21 +2,21 @@ using System;
 using System.Collections.Generic;
 using YooPoon.Core.Data;
 
-namespace CMS.Entity.Model
+namespace CRM.Entity.Model
 {
-	public class SettingEntity : IBaseEntity
+	public class BankEntity : IBaseEntity
 	{
 		/// <summary>
-		/// Id
+		/// 银行ID
 		/// </summary>
-		public  int Id { get; set; }
+		public virtual int Id { get; set; }
 		/// <summary>
-		/// 键
+		/// 银行名字
 		/// </summary>
-		public  string Key { get; set; }
+		public virtual string Codeid { get; set; }
 		/// <summary>
-		/// 值
+		/// 开户行地址
 		/// </summary>
-		public  string Value { get; set; }
+		public virtual string address { get; set; }
 	}
 }
