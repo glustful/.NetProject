@@ -49,34 +49,90 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mappings\BankCard\BankCardMapping.cs" />
-    <Compile Include="Mappings\Bank\BankMapping.cs" />
-    <Compile Include="Mappings\BargainClient\BargainClientMapping.cs" />
-    <Compile Include="Mappings\BrokeAccount\BrokeAccountMapping.cs" />
-    <Compile Include="Mappings\BrokerBill\BrokerBillMapping.cs" />
-    <Compile Include="Mappings\BrokerLeadClient\BrokerLeadClientMapping.cs" />
-    <Compile Include="Mappings\BrokerOrder\BrokerOrderMapping.cs" />
-    <Compile Include="Mappings\BrokerRECClient\BrokerRECClientMapping.cs" />
-    <Compile Include="Mappings\BrokerWithdrawDetail\BrokerWithdrawDetailMapping.cs" />
-    <Compile Include="Mappings\Broker\BrokerMapping.cs" />
-    <Compile Include="Mappings\ClientInfo\ClientInfoMapping.cs" />
-    <Compile Include="Mappings\LevelConfig\LevelConfigMapping.cs" />
-    <Compile Include="Mappings\Level\LevelMapping.cs" />
-    <Compile Include="Mappings\MerchantBill\MerchantBillMapping.cs" />
-    <Compile Include="Mappings\MerchantClient\MerchantClientMapping.cs" />
-    <Compile Include="Mappings\MerchantInfo\MerchantInfoMapping.cs" />
-    <Compile Include="Mappings\MerchantOrder\MerchantOrderMapping.cs" />
-    <Compile Include="Mappings\MessageConfig\MessageConfigMapping.cs" />
-    <Compile Include="Mappings\MessageDetail\MessageDetailMapping.cs" />
-    <Compile Include="Mappings\PartnerList\PartnerListMapping.cs" />
-    <Compile Include="Mappings\PointDetail\PointDetailMapping.cs" />
-    <Compile Include="Mappings\PointExchangeDetail\PointExchangeDetailMapping.cs" />
-    <Compile Include="Mappings\RecommendAgent\RecommendAgentMapping.cs" />
-    <Compile Include="Mappings\TaskAward\TaskAwardMapping.cs" />
-    <Compile Include="Mappings\TaskList\TaskListMapping.cs" />
-    <Compile Include="Mappings\TaskPunishment\TaskPunishmentMapping.cs" />
-    <Compile Include="Mappings\TaskTag\TaskTagMapping.cs" />
-    <Compile Include="Mappings\Task\TaskMapping.cs" />
+    <Compile Include="Mappings\BankCard\BankCardMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\Bank\BankMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\BargainClient\BargainClientMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\BrokeAccount\BrokeAccountMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\BrokerBill\BrokerBillMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\BrokerLeadClient\BrokerLeadClientMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\BrokerOrder\BrokerOrderMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\BrokerRECClient\BrokerRECClientMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\BrokerWithdrawDetail\BrokerWithdrawDetailMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\Broker\BrokerMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\ClientInfo\ClientInfoMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\LevelConfig\LevelConfigMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\Level\LevelMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\MerchantBill\MerchantBillMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\MerchantClient\MerchantClientMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\MerchantInfo\MerchantInfoMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\MerchantOrder\MerchantOrderMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\MessageConfig\MessageConfigMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\MessageDetail\MessageDetailMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\PartnerList\PartnerListMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\PointDetail\PointDetailMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\PointExchangeDetail\PointExchangeDetailMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\RecommendAgent\RecommendAgentMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\TaskAward\TaskAwardMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\TaskList\TaskListMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\TaskPunishment\TaskPunishmentMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\TaskTag\TaskTagMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\Task\TaskMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\BankCard\BankCardEntity.cs" />
     <Compile Include="Model\BankCard\BankCardSearchConditon.cs" />
     <Compile Include="Model\BankCard\EnumBankCard.cs" />
@@ -181,6 +237,7 @@
       <Name>YooPoon.WebFramework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

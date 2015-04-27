@@ -21,6 +21,6 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// 任务进度
 		/// </summary>
-		public virtual string Taskschedule { get; set; }
+		public string Taskschedule { get; set; }
 	}
 }

@@ -23,7 +23,7 @@ namespace CRM.Entity.Mappings.Broker
 			Property(c => c.Zip).HasColumnType("int").IsOptional();
 			Property(c => c.Headphoto).HasColumnType("varchar").HasMaxLength(256).IsOptional();
 			Property(c => c.Totalpoints).HasColumnType("int");
-			Property(c => c.Amount).HasColumnType("float");
+            Property(c => c.Amount).HasColumnType("decimal");
 			Property(c => c.Agentlevel).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Usertype).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Address).HasColumnType("varchar").HasMaxLength(256).IsOptional();

@@ -11,9 +11,9 @@ namespace CRM.Entity.Mappings.TaskList
 			ToTable("TaskList");
 			HasKey(c => c.Id);
 			 
-			HasOptional(c =>c.Task);
-			HasOptional(c =>c.Broker);
-			Property(c => c.Taskschedule).HasColumnType("varcahr").HasMaxLength(50);
+			HasRequired(c =>c.Task);
+			HasRequired(c =>c.Broker);
+			Property(c => c.Taskschedule).HasColumnType("varchar").HasMaxLength(50);
 		}
 	}
 }
