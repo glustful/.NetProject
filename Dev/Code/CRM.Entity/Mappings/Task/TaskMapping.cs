@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.Task
 		{
 			ToTable("Task");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
+			 
 			HasOptional(c =>c.TaskPunishment);
 			HasOptional(c =>c.TaskAward);
 			HasOptional(c =>c.TaskTag);

@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.MessageConfig
 		{
 			ToTable("MessageConfig");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
+			 
 			Property(c => c.Name).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Template).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Addtime).HasColumnType("datetime");

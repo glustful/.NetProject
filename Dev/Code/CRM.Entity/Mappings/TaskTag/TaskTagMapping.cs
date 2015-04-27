@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.TaskTag
 		{
 			ToTable("TaskTag");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
+			 
 			Property(c => c.Name).HasColumnType("varchar").HasMaxLength(30);
 			Property(c => c.Describe).HasColumnType("varchar").HasMaxLength(256).IsOptional();
 			Property(c => c.Value).HasColumnType("varchar").HasMaxLength(50);

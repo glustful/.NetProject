@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.ClientInfo
 		{
 			ToTable("ClientInfo");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
+
 			Property(c => c.Clientname).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Phone).HasColumnType("varchar").HasMaxLength(11);
 			Property(c => c.Housetype).HasColumnType("varchar").HasMaxLength(50).IsOptional();

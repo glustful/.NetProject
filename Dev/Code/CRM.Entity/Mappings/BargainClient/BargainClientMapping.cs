@@ -10,7 +10,7 @@ namespace CRM.Entity.Mappings.BargainClient
 		{
 			ToTable("BargainClient");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int");
+
 			HasOptional(c =>c.MerchantInfo);
 			HasOptional(c =>c.ClientInfo);
 			Property(c => c.Dealtime).HasColumnType("varchar").HasMaxLength(50);
