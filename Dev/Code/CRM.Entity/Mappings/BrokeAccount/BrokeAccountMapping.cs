@@ -12,7 +12,7 @@ namespace CRM.Entity.Mappings.BrokeAccount
 			HasKey(c => c.Id);
 
 			HasOptional(c =>c.Broker);
-			Property(c => c.Balancenum).HasColumnType("float");
+            Property(c => c.Balancenum).HasColumnType("decimal");
 			Property(c => c.Adduser).HasColumnType("int");
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upuser).HasColumnType("int");

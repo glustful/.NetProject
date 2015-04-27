@@ -24,7 +24,7 @@ namespace Zerg.Controllers
         /// <returns></returns>
         public ActionResult Get(string name)
         {
-            return View();
+            return null;
         }
         #endregion
     }

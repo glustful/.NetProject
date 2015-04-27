@@ -14,7 +14,7 @@ namespace CRM.Entity.Mappings.BrokerWithdrawDetail
 			HasOptional(c =>c.Broker);
 			HasOptional(c =>c.BankCard);
 			Property(c => c.Withdrawtime).HasColumnType("datetime");
-			Property(c => c.Withdrawnum).HasColumnType("float");
+            Property(c => c.Withdrawnum).HasColumnType("decimal");
 			Property(c => c.Adduser).HasColumnType("int");
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upuser).HasColumnType("int");
