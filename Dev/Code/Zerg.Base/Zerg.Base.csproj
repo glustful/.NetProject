@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DB11F281-E24F-4237-B77F-0CFDCF8DD647}</ProjectGuid>
+    <ProjectGuid>{51B7FC52-21E7-40D1-96D2-D0867932B4A5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zerg.Common</RootNamespace>
-    <AssemblyName>Zerg.Common</AssemblyName>
+    <RootNamespace>Zerg.Base</RootNamespace>
+    <AssemblyName>Zerg.Base</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -67,13 +67,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\ZergRepository.cs" />
-    <Compile Include="Data\IZergRepository.cs" />
-    <Compile Include="Data\ZergDbContext.cs" />
-    <Compile Include="Data\IZergMapping.cs" />
-    <Compile Include="Data\ZergDataProvider.cs" />
-    <Compile Include="Data\ZergEfConfiguration.cs" />
+    <Compile Include="Dependency\ZergDependencyRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\YooPoon.Core\YooPoon.Core.csproj">
@@ -84,10 +83,10 @@
       <Project>{2c74c9cf-a131-49e2-99bf-717315b46b4b}</Project>
       <Name>YooPoon.Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Zerg.Common\Zerg.Common.csproj">
+      <Project>{db11f281-e24f-4237-b77f-0cfdcf8dd647}</Project>
+      <Name>Zerg.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

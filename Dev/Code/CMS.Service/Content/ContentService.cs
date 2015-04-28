@@ -3,15 +3,16 @@ using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 using CMS.Entity.Model;
+using Zerg.Common.Data;
 
 namespace CMS.Service.Content
 {
 	public class ContentService : IContentService
 	{
-		private readonly IRepository<ContentEntity> _contentRepository;
+		private readonly ICMSRepository<ContentEntity> _contentRepository;
 		private readonly ILog _log;
 
-		public ContentService(IRepository<ContentEntity> contentRepository,ILog log)
+		public ContentService(ICMSRepository<ContentEntity> contentRepository,ILog log)
 		{
 			_contentRepository = contentRepository;
 			_log = log;
@@ -63,7 +64,7 @@ namespace CMS.Service.Content
 		{
 			try
             {
-                return _contentRepository.GetById(id); ;
+                return _contentRepository.GetById(id);
             }
             catch (Exception e)
             {

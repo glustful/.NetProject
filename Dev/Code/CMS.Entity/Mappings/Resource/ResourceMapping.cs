@@ -1,10 +1,11 @@
 using YooPoon.Core.Data;
 using System.Data.Entity.ModelConfiguration;
 using CMS.Entity.Model;
+using Zerg.Common.Data;
 
 namespace CMS.Entity.Mappings.Resource
 {
-	public class ResourceMapping : EntityTypeConfiguration<ResourceEntity>, IMapping
+	public class ResourceMapping : EntityTypeConfiguration<ResourceEntity>, IZergMapping
 	{
 		public ResourceMapping()
 		{

@@ -3,15 +3,16 @@ using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 using CMS.Entity.Model;
+using Zerg.Common.Data;
 
 namespace CMS.Service.Setting
 {
 	public class SettingService : ISettingService
 	{
-		private readonly IRepository<SettingEntity> _settingRepository;
+		private readonly ICMSRepository<SettingEntity> _settingRepository;
 		private readonly ILog _log;
 
-		public SettingService(IRepository<SettingEntity> settingRepository,ILog log)
+		public SettingService(ICMSRepository<SettingEntity> settingRepository,ILog log)
 		{
 			_settingRepository = settingRepository;
 			_log = log;

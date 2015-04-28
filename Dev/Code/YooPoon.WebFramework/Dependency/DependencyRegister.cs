@@ -14,7 +14,7 @@ namespace YooPoon.WebFramework.Dependency
     /// <summary>
     /// 依赖注入注册
     /// </summary>
-    public class DependencyRegistrar:IDependencyRegistrar
+    public class DependencyRegister:IDependencyRegister
     {
         public virtual void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {

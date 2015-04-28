@@ -3,15 +3,16 @@ using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 using CMS.Entity.Model;
+using Zerg.Common.Data;
 
 namespace CMS.Service.Resource
 {
 	public class ResourceService : IResourceService
 	{
-		private readonly IRepository<ResourceEntity> _resourceRepository;
+		private readonly ICMSRepository<ResourceEntity> _resourceRepository;
 		private readonly ILog _log;
 
-		public ResourceService(IRepository<ResourceEntity> resourceRepository,ILog log)
+		public ResourceService(ICMSRepository<ResourceEntity> resourceRepository,ILog log)
 		{
 			_resourceRepository = resourceRepository;
 			_log = log;

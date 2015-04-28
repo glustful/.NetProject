@@ -1,10 +1,11 @@
 using YooPoon.Core.Data;
 using System.Data.Entity.ModelConfiguration;
 using CMS.Entity.Model;
+using Zerg.Common.Data;
 
 namespace CMS.Entity.Mappings.Advertisement
 {
-	public class AdvertisementMapping : EntityTypeConfiguration<AdvertisementEntity>, IMapping
+	public class AdvertisementMapping : EntityTypeConfiguration<AdvertisementEntity>, IZergMapping
 	{
 		public AdvertisementMapping()
 		{

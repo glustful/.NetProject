@@ -125,6 +125,7 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CMS\ContentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -140,7 +141,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +195,10 @@
     <ProjectReference Include="..\YP.CodeGen\YP.CodeGen.csproj">
       <Project>{4cdf48d9-0088-4c22-897d-9f8799b57883}</Project>
       <Name>YP.CodeGen</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zerg.Base\Zerg.Base.csproj">
+      <Project>{51b7fc52-21e7-40d1-96d2-d0867932b4a5}</Project>
+      <Name>Zerg.Base</Name>
     </ProjectReference>
     <ProjectReference Include="..\Zerg.Common\Zerg.Common.csproj">
       <Project>{db11f281-e24f-4237-b77f-0cfdcf8dd647}</Project>
