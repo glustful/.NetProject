@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 using System;
 using System.Linq;
 using YooPoon.Core.Data;
@@ -63,7 +70,7 @@ namespace CRM.Service.Task
 		{
 			try
             {
-                return _taskRepository.GetById(id); ;
+                return _taskRepository.GetById(id);
             }
             catch (Exception e)
             {
@@ -77,6 +84,7 @@ namespace CRM.Service.Task
 			var query = _taskRepository.Table;
 			try
 			{
+
 				if (condition.EndtimeBegin.HasValue)
                 {
                     query = query.Where(q => q.Endtime>= condition.EndtimeBegin.Value);
@@ -85,6 +93,8 @@ namespace CRM.Service.Task
                 {
                     query = query.Where(q => q.Endtime < condition.EndtimeEnd.Value);
                 }
+
+
 				if (condition.AddtimeBegin.HasValue)
                 {
                     query = query.Where(q => q.Addtime>= condition.AddtimeBegin.Value);
@@ -93,6 +103,8 @@ namespace CRM.Service.Task
                 {
                     query = query.Where(q => q.Addtime < condition.AddtimeEnd.Value);
                 }
+
+
 				if (condition.UptimeBegin.HasValue)
                 {
                     query = query.Where(q => q.Uptime>= condition.UptimeBegin.Value);
@@ -101,44 +113,72 @@ namespace CRM.Service.Task
                 {
                     query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
                 }
+
+
 				if (!string.IsNullOrEmpty(condition.Taskname))
                 {
                     query = query.Where(q => q.Taskname.Contains(condition.Taskname));
                 }
+
+
+
 				if (condition.Ids != null && condition.Ids.Any())
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
+
+
 				if (condition.TaskPunishments != null && condition.TaskPunishments.Any())
                 {
                     query = query.Where(q => condition.TaskPunishments.Contains(q.TaskPunishment));
                 }
+
+
 				if (condition.TaskAwards != null && condition.TaskAwards.Any())
                 {
                     query = query.Where(q => condition.TaskAwards.Contains(q.TaskAward));
                 }
+
+
 				if (condition.TaskTags != null && condition.TaskTags.Any())
                 {
                     query = query.Where(q => condition.TaskTags.Contains(q.TaskTag));
                 }
+
+
+				if (condition.TaskTypes != null && condition.TaskTypes.Any())
+                {
+                    query = query.Where(q => condition.TaskTypes.Contains(q.TaskType));
+                }
+
+
 				if (condition.Addusers != null && condition.Addusers.Any())
                 {
                     query = query.Where(q => condition.Addusers.Contains(q.Adduser));
                 }
+
+
 				if (condition.Upusers != null && condition.Upusers.Any())
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
+
+
+
+
 				if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
                     {
+
 						case EnumTaskSearchOrderBy.OrderById:
-							query = condition.isDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
+							query = condition.IsDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
 							break;
+
                     }
 					
 				}
+
 				else
 				{
 					query = query.OrderBy(q=>q.Id);
@@ -162,6 +202,7 @@ namespace CRM.Service.Task
 			var query = _taskRepository.Table;
 			try
 			{
+
 				if (condition.EndtimeBegin.HasValue)
                 {
                     query = query.Where(q => q.Endtime>= condition.EndtimeBegin.Value);
@@ -170,6 +211,8 @@ namespace CRM.Service.Task
                 {
                     query = query.Where(q => q.Endtime < condition.EndtimeEnd.Value);
                 }
+
+
 				if (condition.AddtimeBegin.HasValue)
                 {
                     query = query.Where(q => q.Addtime>= condition.AddtimeBegin.Value);
@@ -178,6 +221,8 @@ namespace CRM.Service.Task
                 {
                     query = query.Where(q => q.Addtime < condition.AddtimeEnd.Value);
                 }
+
+
 				if (condition.UptimeBegin.HasValue)
                 {
                     query = query.Where(q => q.Uptime>= condition.UptimeBegin.Value);
@@ -186,34 +231,58 @@ namespace CRM.Service.Task
                 {
                     query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
                 }
+
+
 				if (!string.IsNullOrEmpty(condition.Taskname))
                 {
                     query = query.Where(q => q.Taskname.Contains(condition.Taskname));
                 }
+
+
+
 				if (condition.Ids != null && condition.Ids.Any())
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
+
+
 				if (condition.TaskPunishments != null && condition.TaskPunishments.Any())
                 {
                     query = query.Where(q => condition.TaskPunishments.Contains(q.TaskPunishment));
                 }
+
+
 				if (condition.TaskAwards != null && condition.TaskAwards.Any())
                 {
                     query = query.Where(q => condition.TaskAwards.Contains(q.TaskAward));
                 }
+
+
 				if (condition.TaskTags != null && condition.TaskTags.Any())
                 {
                     query = query.Where(q => condition.TaskTags.Contains(q.TaskTag));
                 }
+
+
+				if (condition.TaskTypes != null && condition.TaskTypes.Any())
+                {
+                    query = query.Where(q => condition.TaskTypes.Contains(q.TaskType));
+                }
+
+
 				if (condition.Addusers != null && condition.Addusers.Any())
                 {
                     query = query.Where(q => condition.Addusers.Contains(q.Adduser));
                 }
+
+
 				if (condition.Upusers != null && condition.Upusers.Any())
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
+
+
+
 				return query.Count();
 			}
 			catch(Exception e)

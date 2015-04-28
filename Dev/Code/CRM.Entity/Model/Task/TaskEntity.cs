@@ -23,6 +23,10 @@ namespace CRM.Entity.Model
 		/// </summary>
 		public virtual TaskTagEntity TaskTag { get; set; }
 		/// <summary>
+		/// 任务类型ID
+		/// </summary>
+		public virtual TaskTypeEntity TaskType { get; set; }
+		/// <summary>
 		/// 任务名称
 		/// </summary>
 		public virtual string Taskname { get; set; }
