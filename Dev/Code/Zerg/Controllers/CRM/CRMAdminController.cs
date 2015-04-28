@@ -32,13 +32,16 @@ namespace Zerg.Controllers
         /// <param name="id">分页ID</param>
         /// <param name="typeid">任务类型</param>
         /// <returns></returns>
+        [System.Web.Http.HttpGet]
         public List<TaskModel> TaskList(int typeid)
         {
-            //var list=new TaskSearchCondition();
-            //var type=_taskTypeService.GetTaskTypeById(typeid);
-            //var list1=_taskService.GetTasksByCondition(list).ToList().Where(p => p.TaskType == type);
-
-            //TaskModel temp = (from t in list1 select t).ToList();
+            var condition = new TaskSearchCondition();
+            var type = _taskTypeService.GetTaskTypeById(typeid);
+            var listCount = _taskService.GetTasksByCondition(condition).ToList().Where(p => p.TaskType == type);
+            //var model=new TaskModel
+            //{
+            //    Id=
+            //}
 
             return null;
         }
