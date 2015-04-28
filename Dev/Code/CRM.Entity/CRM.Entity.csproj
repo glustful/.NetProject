@@ -130,6 +130,7 @@
     <Compile Include="Mappings\TaskTag\TaskTagMapping.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Mappings\TaskType\TaskTypeMapping.cs" />
     <Compile Include="Mappings\Task\TaskMapping.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -214,6 +215,9 @@
     <Compile Include="Model\TaskTag\EnumTaskTag.cs" />
     <Compile Include="Model\TaskTag\TaskTagEntity.cs" />
     <Compile Include="Model\TaskTag\TaskTagSearchConditon.cs" />
+    <Compile Include="Model\TaskType\EnumTaskType.cs" />
+    <Compile Include="Model\TaskType\TaskTypeEntity.cs" />
+    <Compile Include="Model\TaskType\TaskTypeSearchConditon.cs" />
     <Compile Include="Model\Task\EnumTask.cs" />
     <Compile Include="Model\Task\TaskEntity.cs" />
     <Compile Include="Model\Task\TaskSearchConditon.cs" />
