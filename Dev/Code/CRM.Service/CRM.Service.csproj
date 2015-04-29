@@ -95,6 +95,8 @@
     <Compile Include="TaskPunishment\TaskPunishmentService.cs" />
     <Compile Include="TaskTag\ITaskTagService.cs" />
     <Compile Include="TaskTag\TaskTagService.cs" />
+    <Compile Include="TaskType\ITaskTypeService.cs" />
+    <Compile Include="TaskType\TaskTypeService.cs" />
     <Compile Include="Task\ITaskService.cs" />
     <Compile Include="Task\TaskService.cs" />
   </ItemGroup>

@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 using System;
 
 namespace CRM.Entity.Model
@@ -17,40 +25,72 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// 是否降序
 		/// </summary>
-		public bool isDescending { get; set; }
+		public bool IsDescending { get; set; }
+
 
 		public int[] Ids { get; set; }
 
 
+
+
+
 		public TaskPunishmentEntity[] TaskPunishments { get; set; }
+
+
 
 		public TaskAwardEntity[] TaskAwards { get; set; }
 
+
+
 		public TaskTagEntity[] TaskTags { get; set; }
 
+
+
+		public TaskTypeEntity[] TaskTypes { get; set; }
+
+
+
 		public string Taskname { get; set; }
+
+
 
 		public DateTime? EndtimeBegin { get; set; }
 
 		public DateTime? EndtimeEnd { get; set; }
 
+
+
 		public int[] Addusers { get; set; }
+
+
 
 		public DateTime? AddtimeBegin { get; set; }
 
 		public DateTime? AddtimeEnd { get; set; }
 
+
+
 		public int[] Upusers { get; set; }
+
+
 
 		public DateTime? UptimeBegin { get; set; }
 
 		public DateTime? UptimeEnd { get; set; }
 
+
+
+
 		public EnumTaskSearchOrderBy? OrderBy { get; set; }
+
 	}
+
 
 	public enum EnumTaskSearchOrderBy
 	{
+
 		OrderById,
+
 	}
+
 }

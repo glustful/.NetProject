@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
-using System.Web.Mvc;
 using CRM.Entity.Model;
 using CRM.Service.Bank;
-using CRM.Service.Broker;
 
 namespace Zerg.Controllers
 {
@@ -23,7 +17,9 @@ namespace Zerg.Controllers
             _bankService = bankService;
         }
 
-        public List<BrokerEntity> GetUser()
+
+
+        public List<BrokerEntity> GetUser(string name)
         {
             var brokerlist = new List<BrokerEntity>
             {
