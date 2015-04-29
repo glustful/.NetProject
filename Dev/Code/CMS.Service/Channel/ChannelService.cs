@@ -45,7 +45,7 @@ namespace CMS.Service.Channel
             }
 		}
 
-		public ChannelEntity Update (ChannelEntity entity)
+		/*public ChannelEntity Update (ChannelEntity entity)
 		{
 			try
             {
@@ -57,8 +57,20 @@ namespace CMS.Service.Channel
 				_log.Error(e,"数据库操作出错");
                 return null;
             }
-		}
-
+		}*/
+        public bool Update(ChannelEntity entity)
+        {
+            try
+            {
+                _channelRepository.Update(entity);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return false;
+            }
+        }
 		public ChannelEntity GetChannelById (int id)
 		{
 			try

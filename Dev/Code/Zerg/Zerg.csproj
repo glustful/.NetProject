@@ -125,13 +125,16 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CMS\ChannelController.cs" />
     <Compile Include="Controllers\CMS\TagController.cs" />
     <Compile Include="Controllers\CMS\ContentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CMS\ChannelModel.cs" />
+    <Compile Include="Models\CMS\ContentDetailModel.cs" />
     <Compile Include="Models\CMS\ContentModel.cs" />
-    <Compile Include="Models\CMS\ResultModel.cs" />
+    <Compile Include="Models\ResultModel.cs" />
     <Compile Include="Models\CMS\TagDetailModel.cs" />
     <Compile Include="Models\CMS\TagModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -145,9 +148,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CMS.Entity\CMS.Entity.csproj">
       <Project>{df25f940-2fea-43f5-bd41-cbe319688651}</Project>
