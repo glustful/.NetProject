@@ -13,7 +13,8 @@ namespace CRM.Entity.Mappings.MessageDetail
 			 
 			Property(c => c.Title).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Content).HasColumnType("varchar").HasMaxLength(500);
-			Property(c => c.Sender).HasColumnType("int");
+			Property(c => c.Sender).HasColumnType("varchar");
+            Property(c => c.Mobile).HasColumnType("varchar");
 			Property(c => c.Addtime).HasColumnType("datetime");
 		}
 	}

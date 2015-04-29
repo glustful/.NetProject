@@ -26,7 +26,7 @@ namespace CRM.Entity.Model
 
 		public string Content { get; set; }
 
-		public int[] Senders { get; set; }
+		public string Senders { get; set; }
 
 		public DateTime? AddtimeBegin { get; set; }
 
