@@ -93,9 +93,9 @@ namespace CRM.Service.Level
                 {
                     query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
                 }
-				if (!string.IsNullOrEmpty(condition.CodeId))
+				if (!string.IsNullOrEmpty(condition.Name))
                 {
-                    query = query.Where(q => q.CodeId.Contains(condition.CodeId));
+                    query = query.Where(q => q.Name.Contains(condition.Name));
                 }
 				if (condition.Ids != null && condition.Ids.Any())
                 {
@@ -158,9 +158,9 @@ namespace CRM.Service.Level
                 {
                     query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
                 }
-				if (!string.IsNullOrEmpty(condition.CodeId))
+				if (!string.IsNullOrEmpty(condition.Name))
                 {
-                    query = query.Where(q => q.CodeId.Contains(condition.CodeId));
+                    query = query.Where(q => q.Name.Contains(condition.Name));
                 }
 				if (condition.Ids != null && condition.Ids.Any())
                 {

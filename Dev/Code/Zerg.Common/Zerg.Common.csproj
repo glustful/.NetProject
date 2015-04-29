@@ -69,15 +69,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Com\ResultModel.cs" />
     <Compile Include="Data\ZergRepository.cs" />
     <Compile Include="Data\IZergRepository.cs" />
     <Compile Include="Data\ZergDbContext.cs" />
     <Compile Include="Data\IZergMapping.cs" />
     <Compile Include="Data\ZergDataProvider.cs" />
     <Compile Include="Data\ZergEfConfiguration.cs" />
-    <Compile Include="PageHelper.cs" />
+    <Compile Include="Com\PageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SMSHelper.cs" />
+    <Compile Include="Com\SMSHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\YooPoon.Core\YooPoon.Core.csproj">
