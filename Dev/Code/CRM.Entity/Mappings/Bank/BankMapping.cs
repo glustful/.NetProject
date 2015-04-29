@@ -1,10 +1,11 @@
 using YooPoon.Core.Data;
 using System.Data.Entity.ModelConfiguration;
 using CRM.Entity.Model;
+using Zerg.Common.Data;
 
 namespace CRM.Entity.Mappings.Bank
 {
-	public class BankMapping : EntityTypeConfiguration<BankEntity>, IMapping
+    public class BankMapping : EntityTypeConfiguration<BankEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public BankMapping()
 		{

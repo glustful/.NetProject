@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.MessageConfig
 {
-	public class MessageConfigMapping : EntityTypeConfiguration<MessageConfigEntity>, IMapping
+	public class MessageConfigMapping : EntityTypeConfiguration<MessageConfigEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public MessageConfigMapping()
 		{

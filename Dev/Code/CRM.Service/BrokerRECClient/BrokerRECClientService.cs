@@ -8,10 +8,10 @@ namespace CRM.Service.BrokerRECClient
 {
 	public class BrokerRECClientService : IBrokerRECClientService
 	{
-		private readonly IRepository<BrokerRECClientEntity> _brokerrecclientRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<BrokerRECClientEntity> _brokerrecclientRepository;
 		private readonly ILog _log;
 
-		public BrokerRECClientService(IRepository<BrokerRECClientEntity> brokerrecclientRepository,ILog log)
+		public BrokerRECClientService(Zerg.Common.Data.ICRMRepository<BrokerRECClientEntity> brokerrecclientRepository,ILog log)
 		{
 			_brokerrecclientRepository = brokerrecclientRepository;
 			_log = log;

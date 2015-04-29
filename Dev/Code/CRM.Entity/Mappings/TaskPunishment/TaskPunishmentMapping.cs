@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.TaskPunishment
 {
-	public class TaskPunishmentMapping : EntityTypeConfiguration<TaskPunishmentEntity>, IMapping
+	public class TaskPunishmentMapping : EntityTypeConfiguration<TaskPunishmentEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public TaskPunishmentMapping()
 		{

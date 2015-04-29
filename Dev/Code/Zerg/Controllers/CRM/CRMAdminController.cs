@@ -5,7 +5,12 @@ using CRM.Entity.Model;
 using CRM.Service.Task;
 using CRM.Service.TaskType;
 using Zerg.Models.CRM;
-
+using System.Net.Http;
+using System;
+using System.Web.Script.Serialization;
+using Zerg.Models;
+using CRM.Service.Level;
+using Zerg.Common;
 namespace Zerg.Controllers
 {
 
@@ -16,12 +21,13 @@ namespace Zerg.Controllers
     {
         private readonly ITaskService _taskService;
         private readonly ITaskTypeService _taskTypeService;
+        private readonly ILevelService _levelService;
 
-        public CRMAdminController(ITaskService taskService,
-            ITaskTypeService taskTypeService)
+        public CRMAdminController(ITaskService taskService, ITaskTypeService taskTypeService,ILevelService levelService)
         {
             _taskService = taskService;
             _taskTypeService = taskTypeService;
+            _levelService=levelService;
         }
 
         #region 任务配置 杨定鹏 2015年4月28日10:04:08
@@ -64,35 +70,35 @@ namespace Zerg.Controllers
         /// <param name="name"></param>
         /// <param name="describe"></param>
         /// <returns></returns>
-        public AccsessModel AddTaskTpye(string name, string describe)
-        {
-            if (!string.IsNullOrWhiteSpace(name))
-            {
-                var model = new TaskTypeEntity()
-                {
-                    Name = name,
-                    Describe = describe
-                };
-                _taskTypeService.Create(model);
-            }
-            else
-            {
-                return new AccsessModel {status = "添加失败", msg = "类型名称不能为空"};;
-            }
+        //public AccsessModel AddTaskTpye(string name, string describe)
+        //{
+        //    if (!string.IsNullOrWhiteSpace(name))
+        //    {
+        //        var model = new TaskTypeEntity()
+        //        {
+        //            Name = name,
+        //            Describe = describe
+        //        };
+        //        _taskTypeService.Create(model);
+        //    }
+        //    else
+        //    {
+        //        return new AccsessModel {status = "添加失败", msg = "类型名称不能为空"};;
+        //    }
 
-            return new AccsessModel { status = "添加成功", msg = "ok" }; ;
-        }
+        //    return new AccsessModel { status = "添加成功", msg = "ok" }; ;
+        //}
 
-        /// <summary>
-        /// 删除任务类型
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public AccsessModel DelTaskType(int id)
-        {
-            _taskTypeService.Delete(_taskTypeService.GetTaskTypeById(id));
-            return new AccsessModel { status = "添加成功", msg = "ok" }; ;
-        }
+        ///// <summary>
+        ///// 删除任务类型
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <returns></returns>
+        //public AccsessModel DelTaskType(int id)
+        //{
+        //    _taskTypeService.Delete(_taskTypeService.GetTaskTypeById(id));
+        //    return new AccsessModel { status = "添加成功", msg = "ok" }; ;
+        //}
 
         public List<TaskTypeModel> TaskTypeList()
         {
@@ -104,13 +110,49 @@ namespace Zerg.Controllers
         }
 
         #endregion
-
         #endregion
-    }
-}
 
-public class AccsessModel
-{
-    public string status { get; set; }
-    public string msg { get; set; }
+        #region 等级  李洪亮 2015 4 28
+
+        public HttpResponseMessage SearchLevel()
+        {
+            return PageHelper.toJson("");
+        }
+
+        /// <summary>
+        /// 新增商家  
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public HttpResponseMessage AddLevel(string name)
+        {
+            return PageHelper.toJson(name);
+        }
+
+
+        /// <summary>
+        /// 修改等级
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public HttpResponseMessage UpdateLevel(string name)
+        {
+            return PageHelper.toJson(" ");
+        }
+
+
+        /// <summary>
+        /// 删除等级
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public HttpResponseMessage DeleteLevel(string name)
+        {
+            return PageHelper.toJson(" ");
+        }
+        
+        #endregion
+
+
+    }
 }

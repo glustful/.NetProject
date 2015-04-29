@@ -8,10 +8,10 @@ namespace CRM.Service.BankCard
 {
 	public class BankCardService : IBankCardService
 	{
-		private readonly IRepository<BankCardEntity> _bankcardRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<BankCardEntity> _bankcardRepository;
 		private readonly ILog _log;
 
-		public BankCardService(IRepository<BankCardEntity> bankcardRepository,ILog log)
+		public BankCardService(Zerg.Common.Data.ICRMRepository<BankCardEntity> bankcardRepository,ILog log)
 		{
 			_bankcardRepository = bankcardRepository;
 			_log = log;

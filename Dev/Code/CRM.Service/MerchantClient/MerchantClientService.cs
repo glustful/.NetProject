@@ -8,10 +8,10 @@ namespace CRM.Service.MerchantClient
 {
 	public class MerchantClientService : IMerchantClientService
 	{
-		private readonly IRepository<MerchantClientEntity> _merchantclientRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<MerchantClientEntity> _merchantclientRepository;
 		private readonly ILog _log;
 
-		public MerchantClientService(IRepository<MerchantClientEntity> merchantclientRepository,ILog log)
+		public MerchantClientService(Zerg.Common.Data.ICRMRepository<MerchantClientEntity> merchantclientRepository,ILog log)
 		{
 			_merchantclientRepository = merchantclientRepository;
 			_log = log;

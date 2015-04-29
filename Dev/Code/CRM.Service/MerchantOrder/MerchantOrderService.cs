@@ -8,10 +8,10 @@ namespace CRM.Service.MerchantOrder
 {
 	public class MerchantOrderService : IMerchantOrderService
 	{
-		private readonly IRepository<MerchantOrderEntity> _merchantorderRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<MerchantOrderEntity> _merchantorderRepository;
 		private readonly ILog _log;
 
-		public MerchantOrderService(IRepository<MerchantOrderEntity> merchantorderRepository,ILog log)
+		public MerchantOrderService(Zerg.Common.Data.ICRMRepository<MerchantOrderEntity> merchantorderRepository,ILog log)
 		{
 			_merchantorderRepository = merchantorderRepository;
 			_log = log;

@@ -8,10 +8,10 @@ namespace CRM.Service.MessageConfig
 {
 	public class MessageConfigService : IMessageConfigService
 	{
-		private readonly IRepository<MessageConfigEntity> _messageconfigRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<MessageConfigEntity> _messageconfigRepository;
 		private readonly ILog _log;
 
-		public MessageConfigService(IRepository<MessageConfigEntity> messageconfigRepository,ILog log)
+		public MessageConfigService(Zerg.Common.Data.ICRMRepository<MessageConfigEntity> messageconfigRepository,ILog log)
 		{
 			_messageconfigRepository = messageconfigRepository;
 			_log = log;

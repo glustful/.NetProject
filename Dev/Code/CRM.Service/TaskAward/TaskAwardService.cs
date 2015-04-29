@@ -8,10 +8,10 @@ namespace CRM.Service.TaskAward
 {
 	public class TaskAwardService : ITaskAwardService
 	{
-		private readonly IRepository<TaskAwardEntity> _taskawardRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<TaskAwardEntity> _taskawardRepository;
 		private readonly ILog _log;
 
-		public TaskAwardService(IRepository<TaskAwardEntity> taskawardRepository,ILog log)
+		public TaskAwardService(Zerg.Common.Data.ICRMRepository<TaskAwardEntity> taskawardRepository,ILog log)
 		{
 			_taskawardRepository = taskawardRepository;
 			_log = log;
