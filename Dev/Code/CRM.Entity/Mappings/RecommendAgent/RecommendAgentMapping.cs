@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.RecommendAgent
 {
-	public class RecommendAgentMapping : EntityTypeConfiguration<RecommendAgentEntity>, IMapping
+	public class RecommendAgentMapping : EntityTypeConfiguration<RecommendAgentEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public RecommendAgentMapping()
 		{

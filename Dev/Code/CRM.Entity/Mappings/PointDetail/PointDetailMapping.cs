@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.PointDetail
 {
-	public class PointDetailMapping : EntityTypeConfiguration<PointDetailEntity>, IMapping
+	public class PointDetailMapping : EntityTypeConfiguration<PointDetailEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public PointDetailMapping()
 		{

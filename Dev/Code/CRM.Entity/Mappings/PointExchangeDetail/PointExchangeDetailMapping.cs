@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.PointExchangeDetail
 {
-	public class PointExchangeDetailMapping : EntityTypeConfiguration<PointExchangeDetailEntity>, IMapping
+	public class PointExchangeDetailMapping : EntityTypeConfiguration<PointExchangeDetailEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public PointExchangeDetailMapping()
 		{

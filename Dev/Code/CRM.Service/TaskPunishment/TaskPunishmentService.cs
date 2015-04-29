@@ -8,10 +8,10 @@ namespace CRM.Service.TaskPunishment
 {
 	public class TaskPunishmentService : ITaskPunishmentService
 	{
-		private readonly IRepository<TaskPunishmentEntity> _taskpunishmentRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<TaskPunishmentEntity> _taskpunishmentRepository;
 		private readonly ILog _log;
 
-		public TaskPunishmentService(IRepository<TaskPunishmentEntity> taskpunishmentRepository,ILog log)
+		public TaskPunishmentService(Zerg.Common.Data.ICRMRepository<TaskPunishmentEntity> taskpunishmentRepository,ILog log)
 		{
 			_taskpunishmentRepository = taskpunishmentRepository;
 			_log = log;

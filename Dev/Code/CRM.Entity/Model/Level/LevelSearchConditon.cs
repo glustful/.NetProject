@@ -22,7 +22,7 @@ namespace CRM.Entity.Model
 		public int[] Ids { get; set; }
 
 
-		public string CodeId { get; set; }
+		public string Name { get; set; }
 
 		public int[] Addusers { get; set; }
 

@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.BrokerOrder
 {
-	public class BrokerOrderMapping : EntityTypeConfiguration<BrokerOrderEntity>, IMapping
+	public class BrokerOrderMapping : EntityTypeConfiguration<BrokerOrderEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public BrokerOrderMapping()
 		{

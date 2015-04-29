@@ -8,10 +8,10 @@ namespace CRM.Service.BrokeAccount
 {
 	public class BrokeAccountService : IBrokeAccountService
 	{
-		private readonly IRepository<BrokeAccountEntity> _brokeaccountRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<BrokeAccountEntity> _brokeaccountRepository;
 		private readonly ILog _log;
 
-		public BrokeAccountService(IRepository<BrokeAccountEntity> brokeaccountRepository,ILog log)
+		public BrokeAccountService(Zerg.Common.Data.ICRMRepository<BrokeAccountEntity> brokeaccountRepository,ILog log)
 		{
 			_brokeaccountRepository = brokeaccountRepository;
 			_log = log;

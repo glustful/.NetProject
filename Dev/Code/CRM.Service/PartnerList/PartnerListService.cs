@@ -8,10 +8,10 @@ namespace CRM.Service.PartnerList
 {
 	public class PartnerListService : IPartnerListService
 	{
-		private readonly IRepository<PartnerListEntity> _partnerlistRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<PartnerListEntity> _partnerlistRepository;
 		private readonly ILog _log;
 
-		public PartnerListService(IRepository<PartnerListEntity> partnerlistRepository,ILog log)
+		public PartnerListService(Zerg.Common.Data.ICRMRepository<PartnerListEntity> partnerlistRepository,ILog log)
 		{
 			_partnerlistRepository = partnerlistRepository;
 			_log = log;

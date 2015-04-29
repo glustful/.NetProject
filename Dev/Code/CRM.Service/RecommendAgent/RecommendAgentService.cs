@@ -8,10 +8,10 @@ namespace CRM.Service.RecommendAgent
 {
 	public class RecommendAgentService : IRecommendAgentService
 	{
-		private readonly IRepository<RecommendAgentEntity> _recommendagentRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<RecommendAgentEntity> _recommendagentRepository;
 		private readonly ILog _log;
 
-		public RecommendAgentService(IRepository<RecommendAgentEntity> recommendagentRepository,ILog log)
+		public RecommendAgentService(Zerg.Common.Data.ICRMRepository<RecommendAgentEntity> recommendagentRepository,ILog log)
 		{
 			_recommendagentRepository = recommendagentRepository;
 			_log = log;

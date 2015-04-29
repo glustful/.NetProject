@@ -8,10 +8,10 @@ namespace CRM.Service.TaskList
 {
 	public class TaskListService : ITaskListService
 	{
-		private readonly IRepository<TaskListEntity> _tasklistRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<TaskListEntity> _tasklistRepository;
 		private readonly ILog _log;
 
-		public TaskListService(IRepository<TaskListEntity> tasklistRepository,ILog log)
+		public TaskListService(Zerg.Common.Data.ICRMRepository<TaskListEntity> tasklistRepository,ILog log)
 		{
 			_tasklistRepository = tasklistRepository;
 			_log = log;
