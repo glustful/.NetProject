@@ -84,7 +84,7 @@ namespace Zerg.Controllers
         /// <param name="taskTypeModel">任务类型数据模型</param>
         /// <param name="type">操作状态，新增/修改</param>
         /// <returns></returns>
-        public ResultModel AddTaskTpye(TaskTypeModel taskTypeModel,string type)
+        public HttpResponseMessage AddTaskTpye(TaskTypeModel taskTypeModel, string type)
         {
             if (!string.IsNullOrWhiteSpace(taskTypeModel.Name))
             {
@@ -104,9 +104,9 @@ namespace Zerg.Controllers
             }
             else
             {
-                return new ResultModel { Status = false, Msg = "类型名称不能为空" }; ;
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "类型名称不能为空！"));
             }
-            return new ResultModel { Status = true, Msg = "操作成功" }; ;
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "操作成功"));
         }
 
         /// <summary>
@@ -114,10 +114,10 @@ namespace Zerg.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ResultModel DelTaskType(int id)
+        public HttpResponseMessage DelTaskType(int id)
         {
             _taskTypeService.Delete(_taskTypeService.GetTaskTypeById(id));
-            return new ResultModel { Status = true, Msg = "删除成功" }; ;
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功"));
         }
 
         #endregion
