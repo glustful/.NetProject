@@ -10,7 +10,7 @@ namespace Zerg.Common
 {
 
     /// <summary>
-    ///要么处理帮助类
+    ///页面处理帮助类
     /// </summary>
     public class PageHelper
     {
@@ -37,9 +37,29 @@ namespace Zerg.Common
             return result;
         }
 
+        /// <summary>
+        /// 返回数据封装
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public static ResultModel  ReturnValue(bool status,string msg)
+        {
+            return new ResultModel { Status=status,Msg=msg };
+        }
 
+        /// <summary>
+        /// 验证输入是否是数字
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public static bool ValidateNumber(string number)
+        {  
+           int num;
+           return Int32.TryParse(number, out num);             
+        }
 
-
+     
 
     }
 }

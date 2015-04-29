@@ -11,7 +11,7 @@ namespace CRM.Entity.Mappings.Level
 			ToTable("Level");
 			HasKey(c => c.Id);
 
-			Property(c => c.CodeId).HasColumnType("varchar").HasMaxLength(50);
+			Property(c => c.Name).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Describe).HasColumnType("varchar").HasMaxLength(256).IsOptional();
 			Property(c => c.Url).HasColumnType("varchar").HasMaxLength(256).IsOptional();
 			Property(c => c.Adduser).HasColumnType("int");
