@@ -8,10 +8,10 @@ namespace CRM.Service.MerchantBill
 {
 	public class MerchantBillService : IMerchantBillService
 	{
-		private readonly IRepository<MerchantBillEntity> _merchantbillRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<MerchantBillEntity> _merchantbillRepository;
 		private readonly ILog _log;
 
-		public MerchantBillService(IRepository<MerchantBillEntity> merchantbillRepository,ILog log)
+		public MerchantBillService(Zerg.Common.Data.ICRMRepository<MerchantBillEntity> merchantbillRepository,ILog log)
 		{
 			_merchantbillRepository = merchantbillRepository;
 			_log = log;

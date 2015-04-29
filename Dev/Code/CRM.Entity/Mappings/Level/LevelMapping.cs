@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.Level
 {
-	public class LevelMapping : EntityTypeConfiguration<LevelEntity>, IMapping
+	public class LevelMapping : EntityTypeConfiguration<LevelEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public LevelMapping()
 		{

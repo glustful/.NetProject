@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.BrokerWithdrawDetail
 {
-	public class BrokerWithdrawDetailMapping : EntityTypeConfiguration<BrokerWithdrawDetailEntity>, IMapping
+	public class BrokerWithdrawDetailMapping : EntityTypeConfiguration<BrokerWithdrawDetailEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public BrokerWithdrawDetailMapping()
 		{

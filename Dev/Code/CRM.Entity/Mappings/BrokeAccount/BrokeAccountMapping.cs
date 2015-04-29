@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.BrokeAccount
 {
-	public class BrokeAccountMapping : EntityTypeConfiguration<BrokeAccountEntity>, IMapping
+	public class BrokeAccountMapping : EntityTypeConfiguration<BrokeAccountEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public BrokeAccountMapping()
 		{

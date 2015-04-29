@@ -8,10 +8,10 @@ namespace CRM.Service.BrokerWithdrawDetail
 {
 	public class BrokerWithdrawDetailService : IBrokerWithdrawDetailService
 	{
-		private readonly IRepository<BrokerWithdrawDetailEntity> _brokerwithdrawdetailRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<BrokerWithdrawDetailEntity> _brokerwithdrawdetailRepository;
 		private readonly ILog _log;
 
-		public BrokerWithdrawDetailService(IRepository<BrokerWithdrawDetailEntity> brokerwithdrawdetailRepository,ILog log)
+		public BrokerWithdrawDetailService(Zerg.Common.Data.ICRMRepository<BrokerWithdrawDetailEntity> brokerwithdrawdetailRepository,ILog log)
 		{
 			_brokerwithdrawdetailRepository = brokerwithdrawdetailRepository;
 			_log = log;

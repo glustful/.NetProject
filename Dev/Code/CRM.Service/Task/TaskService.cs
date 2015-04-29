@@ -15,10 +15,10 @@ namespace CRM.Service.Task
 {
 	public class TaskService : ITaskService
 	{
-		private readonly IRepository<TaskEntity> _taskRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<TaskEntity> _taskRepository;
 		private readonly ILog _log;
 
-		public TaskService(IRepository<TaskEntity> taskRepository,ILog log)
+		public TaskService(Zerg.Common.Data.ICRMRepository<TaskEntity> taskRepository,ILog log)
 		{
 			_taskRepository = taskRepository;
 			_log = log;
