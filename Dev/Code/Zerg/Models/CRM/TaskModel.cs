@@ -39,7 +39,7 @@ namespace Zerg.Models.CRM
         /// <summary>
         /// 结束时间
         /// </summary>
-        public string Endtime { get; set; }
+        public DateTime Endtime { get; set; }
         /// <summary>
         /// AddUser
         /// </summary>
@@ -47,7 +47,7 @@ namespace Zerg.Models.CRM
         /// <summary>
         /// AddTime
         /// </summary>
-        public string Addtime { get; set; }
+        public DateTime Addtime { get; set; }
         /// <summary>
         /// UpUser
         /// </summary>
@@ -55,6 +55,6 @@ namespace Zerg.Models.CRM
         /// <summary>
         /// UpTime
         /// </summary>
-        public string Uptime { get; set; }
+        public DateTime Uptime { get; set; }
     }
 }
