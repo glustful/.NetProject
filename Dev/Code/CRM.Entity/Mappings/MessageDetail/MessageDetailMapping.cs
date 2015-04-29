@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.MessageDetail
 {
-	public class MessageDetailMapping : EntityTypeConfiguration<MessageDetailEntity>, IMapping
+	public class MessageDetailMapping : EntityTypeConfiguration<MessageDetailEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public MessageDetailMapping()
 		{
