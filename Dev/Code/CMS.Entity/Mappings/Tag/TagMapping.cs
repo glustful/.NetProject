@@ -1,10 +1,11 @@
 using YooPoon.Core.Data;
 using System.Data.Entity.ModelConfiguration;
 using CMS.Entity.Model;
+using Zerg.Common.Data;
 
 namespace CMS.Entity.Mappings.Tag
 {
-	public class TagMapping : EntityTypeConfiguration<TagEntity>, IMapping
+	public class TagMapping : EntityTypeConfiguration<TagEntity>, IZergMapping
 	{
 		public TagMapping()
 		{

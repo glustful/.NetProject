@@ -3,15 +3,16 @@ using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 using CMS.Entity.Model;
+using Zerg.Common.Data;
 
 namespace CMS.Service.Advertisement
 {
 	public class AdvertisementService : IAdvertisementService
 	{
-		private readonly IRepository<AdvertisementEntity> _advertisementRepository;
+		private readonly ICMSRepository<AdvertisementEntity> _advertisementRepository;
 		private readonly ILog _log;
 
-		public AdvertisementService(IRepository<AdvertisementEntity> advertisementRepository,ILog log)
+		public AdvertisementService(ICMSRepository<AdvertisementEntity> advertisementRepository,ILog log)
 		{
 			_advertisementRepository = advertisementRepository;
 			_log = log;

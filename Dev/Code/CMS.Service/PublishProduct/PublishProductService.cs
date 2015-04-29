@@ -3,15 +3,16 @@ using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 using CMS.Entity.Model;
+using Zerg.Common.Data;
 
 namespace CMS.Service.PublishProduct
 {
 	public class PublishProductService : IPublishProductService
 	{
-		private readonly IRepository<PublishProductEntity> _publishproductRepository;
+		private readonly ICMSRepository<PublishProductEntity> _publishproductRepository;
 		private readonly ILog _log;
 
-		public PublishProductService(IRepository<PublishProductEntity> publishproductRepository,ILog log)
+		public PublishProductService(ICMSRepository<PublishProductEntity> publishproductRepository,ILog log)
 		{
 			_publishproductRepository = publishproductRepository;
 			_log = log;

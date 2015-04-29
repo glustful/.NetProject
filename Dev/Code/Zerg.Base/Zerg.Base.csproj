@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DF25F940-2FEA-43F5-BD41-CBE319688651}</ProjectGuid>
+    <ProjectGuid>{51B7FC52-21E7-40D1-96D2-D0867932B4A5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CMS.Entity</RootNamespace>
-    <AssemblyName>CMS.Entity</AssemblyName>
+    <RootNamespace>Zerg.Base</RootNamespace>
+    <AssemblyName>Zerg.Base</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -33,15 +33,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi">
+      <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,40 +67,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mappings\Advertisement\AdvertisementMapping.cs" />
-    <Compile Include="Mappings\Channel\ChannelMapping.cs" />
-    <Compile Include="Mappings\Content\ContentMapping.cs" />
-    <Compile Include="Mappings\PublishProduct\PublishProductMapping.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Mappings\Resource\ResourceMapping.cs" />
-    <Compile Include="Mappings\Tag\TagMapping.cs" />
-    <Compile Include="Model\Advertisement\AdvertisementEntity.cs" />
-    <Compile Include="Model\Advertisement\AdvertisementSearchConditon.cs" />
-    <Compile Include="Model\Advertisement\EnumAdvertisement.cs" />
-    <Compile Include="Model\Channel\ChannelEntity.cs" />
-    <Compile Include="Model\Channel\ChannelSearchConditon.cs" />
-    <Compile Include="Model\Channel\EnumChannel.cs" />
-    <Compile Include="Model\Content\ContentEntity.cs" />
-    <Compile Include="Model\Content\ContentSearchConditon.cs" />
-    <Compile Include="Model\Content\EnumContent.cs" />
-    <Compile Include="Model\PublishProduct\EnumPublishProduct.cs" />
-    <Compile Include="Model\PublishProduct\PublishProductEntity.cs" />
-    <Compile Include="Model\PublishProduct\PublishProductSearchConditon.cs" />
-    <Compile Include="Model\Resource\EnumResource.cs" />
-    <Compile Include="Model\Resource\ResourceEntity.cs" />
-    <Compile Include="Model\Resource\ResourceSearchConditon.cs" />
-    <Compile Include="Model\Setting\EnumSetting.cs" />
-    <Compile Include="Model\Setting\SettingEntity.cs" />
-    <Compile Include="Model\Setting\SettingSearchConditon.cs" />
-    <Compile Include="Model\Tag\EnumTag.cs" />
-    <Compile Include="Model\Tag\TagEntity.cs" />
-    <Compile Include="Model\Tag\TagSearchConditon.cs" />
-    <Compile Include="Mappings\Setting\SettingMapping.cs" />
+    <Compile Include="Dependency\ZergDependencyRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -94,16 +83,11 @@
       <Project>{2c74c9cf-a131-49e2-99bf-717315b46b4b}</Project>
       <Name>YooPoon.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\YooPoon.WebFramework\YooPoon.WebFramework.csproj">
-      <Project>{ae97a52e-b5f5-469d-95cb-94e14883ad01}</Project>
-      <Name>YooPoon.WebFramework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Zerg.Common\Zerg.Common.csproj">
       <Project>{db11f281-e24f-4237-b77f-0cfdcf8dd647}</Project>
       <Name>Zerg.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

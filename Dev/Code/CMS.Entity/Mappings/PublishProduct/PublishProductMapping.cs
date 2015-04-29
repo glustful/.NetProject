@@ -1,10 +1,11 @@
 using YooPoon.Core.Data;
 using System.Data.Entity.ModelConfiguration;
 using CMS.Entity.Model;
+using Zerg.Common.Data;
 
 namespace CMS.Entity.Mappings.PublishProduct
 {
-	public class PublishProductMapping : EntityTypeConfiguration<PublishProductEntity>, IMapping
+	public class PublishProductMapping : EntityTypeConfiguration<PublishProductEntity>, IZergMapping
 	{
 		public PublishProductMapping()
 		{

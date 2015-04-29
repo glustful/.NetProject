@@ -3,15 +3,16 @@ using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 using CMS.Entity.Model;
+using Zerg.Common.Data;
 
 namespace CMS.Service.Tag
 {
 	public class TagService : ITagService
 	{
-		private readonly IRepository<TagEntity> _tagRepository;
+		private readonly ICMSRepository<TagEntity> _tagRepository;
 		private readonly ILog _log;
 
-		public TagService(IRepository<TagEntity> tagRepository,ILog log)
+		public TagService(ICMSRepository<TagEntity> tagRepository,ILog log)
 		{
 			_tagRepository = tagRepository;
 			_log = log;

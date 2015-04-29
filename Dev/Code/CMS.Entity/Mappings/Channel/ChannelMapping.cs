@@ -1,10 +1,11 @@
 using YooPoon.Core.Data;
 using System.Data.Entity.ModelConfiguration;
 using CMS.Entity.Model;
+using Zerg.Common.Data;
 
 namespace CMS.Entity.Mappings.Channel
 {
-	public class ChannelMapping : EntityTypeConfiguration<ChannelEntity>, IMapping
+	public class ChannelMapping : EntityTypeConfiguration<ChannelEntity>, IZergMapping
 	{
 		public ChannelMapping()
 		{

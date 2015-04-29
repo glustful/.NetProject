@@ -1,17 +1,17 @@
 using System;
 using System.Linq;
-using YooPoon.Core.Data;
-using YooPoon.Core.Logging;
 using CMS.Entity.Model;
+using YooPoon.Core.Logging;
+using Zerg.Common.Data;
 
 namespace CMS.Service.Channel
 {
 	public class ChannelService : IChannelService
 	{
-		private readonly IRepository<ChannelEntity> _channelRepository;
+		private readonly ICMSRepository<ChannelEntity> _channelRepository;
 		private readonly ILog _log;
 
-		public ChannelService(IRepository<ChannelEntity> channelRepository,ILog log)
+		public ChannelService(ICMSRepository<ChannelEntity> channelRepository,ILog log)
 		{
 			_channelRepository = channelRepository;
 			_log = log;
@@ -63,7 +63,7 @@ namespace CMS.Service.Channel
 		{
 			try
             {
-                return _channelRepository.GetById(id); ;
+                return _channelRepository.GetById(id);
             }
             catch (Exception e)
             {
