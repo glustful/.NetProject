@@ -133,6 +133,7 @@
     <Compile Include="Controllers\CRM\CRMAdminController.cs" />
     <Compile Include="Controllers\CRM\CRMBrokerController.cs" />
     <Compile Include="Controllers\CRM\CRMMerchantController.cs" />
+    <Compile Include="Controllers\CRM\CRMTaskController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -161,6 +162,7 @@
     <Folder Include="Models\CMS\" />
     <Folder Include="Views\CRMBroker\" />
     <Folder Include="Views\Home\" />
+    <Folder Include="Views\Task\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CMS.Entity\CMS.Entity.csproj">
