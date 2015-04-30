@@ -7,6 +7,7 @@ using System.Web.Http;
 using CRM.Service.MessageDetail;
 using CRM.Entity.Model;
 using Zerg.Common;
+using Zerg.Models.CRM;
 
 namespace Zerg.Controllers.CRM
 {
@@ -33,14 +34,14 @@ namespace Zerg.Controllers.CRM
         /// <param name="AddtimeEnd"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        public List<MessageDetailEntity> SearchMessageDetail( string  AddtimeBegin, string  AddtimeEnd, string title)
+        public List<MessageDetailEntity> SearchMessageDetail(MessageDetailModel messageDetailModel)
         {
             var mDetail = new MessageDetailSearchCondition()
             {
 
-                AddtimeBegin =DateTime .Parse( AddtimeBegin),
-                AddtimeEnd  =DateTime .Parse(AddtimeEnd),
-                Title =title 
+                AddtimeBegin = messageDetailModel.AddtimeBegin,
+                AddtimeEnd = messageDetailModel.AddtimeEnd,
+                Title = messageDetailModel.Title 
 
             };
 
@@ -57,20 +58,20 @@ namespace Zerg.Controllers.CRM
         /// <param name="addtime"></param>
         /// <param name="mobile"></param>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddMessageDetail(string Title, string content, string sender, string mobile)
+        public HttpResponseMessage AddMessageDetail(MessageDetailModel messageDetailModel)
         {
-            if (!string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(content) && !string.IsNullOrEmpty(sender) && !string.IsNullOrEmpty(mobile))
+            if (!string.IsNullOrEmpty(messageDetailModel.Title) && !string.IsNullOrEmpty(messageDetailModel.Content) && !string.IsNullOrEmpty(messageDetailModel.Sender) && !string.IsNullOrEmpty(messageDetailModel.Mobile))
             {
-                if(!PageHelper.IsMobilePhone(mobile))
+                if (!PageHelper.IsMobilePhone(messageDetailModel.Mobile))
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号格式验证错误！"));
                 }
                 var MessageDetailInsert = new MessageDetailEntity()
                 {
-                    Title = Title,
-                    Content = content,
-                    Sender = sender,
-                    Mobile = mobile,
+                    Title = messageDetailModel.Title,
+                    Content = messageDetailModel.Content,
+                    Sender = messageDetailModel.Sender,
+                    Mobile = messageDetailModel.Mobile,
                     Addtime = DateTime.Now
 
                 };

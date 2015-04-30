@@ -7,6 +7,7 @@ using System.Web.Http;
 using CRM.Service.MessageConfig ;
 using CRM.Entity.Model;
 using Zerg.Common;
+using Zerg.Models.CRM;
 
 namespace Zerg.Controllers.CRM
 {
@@ -30,14 +31,14 @@ namespace Zerg.Controllers.CRM
         /// <param name="isDescending">是否降序</param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        public List<MessageConfigEntity> SearchMessageConfig(int Page = 1, int PageCount = 1, bool isDescending = true)
+        public List<MessageConfigEntity> SearchMessageConfig(MessageConfigModel messageConfigModel)
         {
 
             var mConfig = new MessageConfigSearchCondition()
             {
-                Page = Page,
-                PageCount = PageCount,
-                isDescending = isDescending
+                Page = messageConfigModel.Page,
+                PageCount = messageConfigModel.PageCount,
+                isDescending = messageConfigModel.isDescending
 
             };
            return  _MessageConfigService.GetMessageConfigsByCondition(mConfig).ToList();
@@ -49,14 +50,14 @@ namespace Zerg.Controllers.CRM
         /// <param name="Name">模板名称</param>
         /// <param name="Template">配置模板</param>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddMessageConfig(string Name, string Template)
+        public HttpResponseMessage AddMessageConfig(MessageConfigModel messageConfigModel)
         {
-            if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Template))
+            if (!string.IsNullOrEmpty(messageConfigModel.Name) && !string.IsNullOrEmpty(messageConfigModel.Template))
             {
                 var MessageConfigInsert = new MessageConfigEntity()
                 {
-                    Name = Name,
-                    Template = Template,
+                    Name = messageConfigModel.Name,
+                    Template = messageConfigModel.Template,
                      Uptime = DateTime.Now,
                     Addtime = DateTime.Now
                 };
@@ -105,15 +106,15 @@ namespace Zerg.Controllers.CRM
         /// <param name="Name">模板名称</param>
         /// <param name="Template">配置模板</param>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage UpdateMessageConfig(string id, string Name, string Template)
+        public HttpResponseMessage UpdateMessageConfig(MessageConfigModel messageConfigModel)
         {
-            if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id) && !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Template))
+            if (!string.IsNullOrEmpty(messageConfigModel.Id) && PageHelper.ValidateNumber(messageConfigModel.Id) && !string.IsNullOrEmpty(messageConfigModel.Name) && !string.IsNullOrEmpty(messageConfigModel.Template))
             {
-                
-                var mConfigUpdate = _MessageConfigService.GetMessageConfigById(Convert.ToInt32(id));
+
+                var mConfigUpdate = _MessageConfigService.GetMessageConfigById(Convert.ToInt32(messageConfigModel.Id));
                 mConfigUpdate.Uptime = DateTime.Now;
-                mConfigUpdate.Name = Name;
-                mConfigUpdate.Template = Template;
+                mConfigUpdate.Name = messageConfigModel.Name;
+                mConfigUpdate.Template = messageConfigModel.Template;
               
                 try
                 {
