@@ -78,11 +78,11 @@ namespace CMS.Service.Setting
 			var query = _settingRepository.Table;
 			try
 			{
-				if (string.IsNullOrEmpty(condition.Key))
+				if (!string.IsNullOrEmpty(condition.Key))
                 {
                     query = query.Where(q => q.Key == condition.Key);
                 }
-				if (string.IsNullOrEmpty(condition.Value))
+				if (!string.IsNullOrEmpty(condition.Value))
                 {
                     query = query.Where(q => q.Value == condition.Value);
                 }
@@ -123,11 +123,11 @@ namespace CMS.Service.Setting
 			var query = _settingRepository.Table;
 			try
 			{
-				if (string.IsNullOrEmpty(condition.Key))
+				if (!string.IsNullOrEmpty(condition.Key))
                 {
                     query = query.Where(q => q.Key == condition.Key);
                 }
-				if (string.IsNullOrEmpty(condition.Value))
+				if (!string.IsNullOrEmpty(condition.Value))
                 {
                     query = query.Where(q => q.Value == condition.Value);
                 }
