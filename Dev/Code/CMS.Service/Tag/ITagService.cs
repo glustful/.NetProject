@@ -10,8 +10,7 @@ namespace CMS.Service.Tag
 
 		bool Delete(TagEntity entity);
 
-		//TagEntity Update (TagEntity entity);
-        bool Update(TagEntity entity);
+		TagEntity Update (TagEntity entity);
 		TagEntity GetTagById (int id);
 
 		IQueryable<TagEntity> GetTagsByCondition(TagSearchCondition condition);

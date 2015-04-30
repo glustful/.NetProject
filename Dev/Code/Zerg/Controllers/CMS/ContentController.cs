@@ -45,7 +45,7 @@ namespace Zerg.Controllers.CMS
         /// <param name="pageSize">页面记录数</param>
         /// <returns></returns>
         [HttpGet]
-        public List<ContentModel> Index(string title=null,int page = 1, int pageSize = 10)
+        public HttpResponseMessage Index(string title=null,int page = 1, int pageSize = 10)
         {
             var contentCon = new ContentSearchCondition
             {
@@ -60,7 +60,7 @@ namespace Zerg.Controllers.CMS
                 Status=a.Status,
                 Channel=a.Channel.Name
             }).ToList();
-            return contentList;
+            return PageHelper.toJson(contentList);
         }
         /// <summary>
         /// 内容详细信息
@@ -68,9 +68,12 @@ namespace Zerg.Controllers.CMS
         /// <param name="id">内容id</param>
         /// <returns></returns>
         [HttpGet]
-        public ContentDetailModel Detailed(int id)
+        public HttpResponseMessage Detailed(int id)
         {
             var content = _contentService.GetContentById(id);
+            if (content == null) {
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"该数据不存在！"));
+            }
             var contentDetail = new ContentDetailModel
             {
                 Id=content.Id,
@@ -79,42 +82,38 @@ namespace Zerg.Controllers.CMS
                 ChannelName=content.Channel.Name,
                 Status=content.Status
             };
-            return contentDetail;
+            return PageHelper.toJson(contentDetail);
         }
         /// <summary>
         /// 内容修改
         /// </summary>
         /// <param name="model">内容参数</param>
         /// <returns></returns>
-        public ResultModel DoEdit(ContentDetailModel model)
+        public HttpResponseMessage DoEdit(ContentDetailModel model)
         { 
-            ResultModel result = new ResultModel();
             var content = _contentService.GetContentById(model.Id);
             content.Title = model.Title;
             content.Content = model.Content;
             content.UpdTime = DateTime.Now;
-            if (_contentService.Update(content)) {
-                result.Status = true;
-                result.Msg = "修改成功";
+            if (_contentService.Update(content)!=null) {
+                return PageHelper.toJson(PageHelper.ReturnValue(true,"数据更新成功！"));
             }
             else
             {
-                result.Status = false;
-                result.Msg = "修改失败";
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"数据更新失败！"));
             }
-            return result;
         }
         /// <summary>
         /// 新建内容
         /// </summary>
         /// <param name="model">内容参数</param>
         /// <returns></returns>
-        public ResultModel DoCreate(ContentDetailModel model)
+        public HttpResponseMessage DoCreate(ContentDetailModel model)
         {
             var channel = _channelService.GetChannelById(model.ChannelId);
             if (channel == null)
             {
-                return new ResultModel();
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"数据添加失败！"));
             }
             var content = new ContentEntity
             {
@@ -124,17 +123,13 @@ namespace Zerg.Controllers.CMS
                 Channel=channel,
                 Addtime=DateTime.Now
             };
-            ResultModel result = new ResultModel();
-            if (_contentService.Create(content).Id > 0)
+            if (_contentService.Create(content)!=null)
             {
-                result.Status = true;
-                result.Msg = "保存成功";
+                return PageHelper.toJson(PageHelper.ReturnValue(true,"数据添加成功！"));
             }
             else {
-                result.Status = false;
-                result.Msg = "保存失败";
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
             }
-            return result;
         }
         /// <summary>
         /// 删除内容
@@ -142,19 +137,15 @@ namespace Zerg.Controllers.CMS
         /// <param name="id">内容id</param>
         /// <returns></returns>
         [HttpGet]
-        public ResultModel Delete(int id) {
+        public HttpResponseMessage Delete(int id) {
             var content = _contentService.GetContentById(id);
-            ResultModel result = new ResultModel();
             if (_contentService.Delete(content))
             {
-                result.Status = true;
-                result.Msg = "删除成功";
+                return PageHelper.toJson(PageHelper.ReturnValue(true,"数据删除成功"));
             }
             else {
-                result.Status = false;
-                result.Msg = "删除失败";
-            }
-            return result;
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"数据删除失败"));
+            }          
         }
     }
 }

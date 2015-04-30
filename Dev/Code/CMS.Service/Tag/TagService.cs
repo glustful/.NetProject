@@ -46,7 +46,7 @@ namespace CMS.Service.Tag
             }
 		}
 
-		/*public TagEntity Update (TagEntity entity)
+		public TagEntity Update (TagEntity entity)
 		{
 			try
             {
@@ -58,20 +58,7 @@ namespace CMS.Service.Tag
 				_log.Error(e,"数据库操作出错");
                 return null;
             }
-		}*/
-        public bool Update(TagEntity entity)
-        {
-            try
-            {
-                _tagRepository.Update(entity);
-                return true;
-            }
-            catch (Exception e)
-            {
-                _log.Error(e, "数据库操作出错");
-                return false;
-            }
-        }
+		}
 		public TagEntity GetTagById (int id)
 		{
 			try
