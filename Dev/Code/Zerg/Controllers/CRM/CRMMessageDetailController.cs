@@ -33,41 +33,19 @@ namespace Zerg.Controllers.CRM
         /// <param name="AddtimeEnd"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        public List<MessageDetailEntity> MessageDetailSearchCondition(int[] Ids, DateTime AddtimeBegin, DateTime AddtimeEnd, int Page = 1, int PageCount = 1, bool isDescending = true)
+        public List<MessageDetailEntity> SearchMessageDetail( string  AddtimeBegin, string  AddtimeEnd, string title)
         {
             var mDetail = new MessageDetailSearchCondition()
             {
 
-                Page = Page,
-                PageCount = PageCount,
-                isDescending = isDescending,
-                Ids = Ids,
-                AddtimeBegin = AddtimeBegin,
-                AddtimeEnd = AddtimeEnd
+                AddtimeBegin =DateTime .Parse( AddtimeBegin),
+                AddtimeEnd  =DateTime .Parse(AddtimeEnd),
+                Title =title 
+
             };
 
-            var temp = _messageDetailService.GetMessageDetailsByCondition(mDetail).ToList();
-           
-
-            return temp;
+            return  _messageDetailService.GetMessageDetailsByCondition(mDetail).ToList();
         }
-
-
-        ///// <summary>
-        ///// 删除短信
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <returns></returns>
-        //[System.Web.Http.HttpGet]
-        //public bool MessageDetailDelete(int id = 0)
-        //{
-        //    var mDetailDel = new MessageDetailEntity()
-        //    {
-        //        Id = id
-        //    };
-        //    return _messageDetailService.Delete(mDetailDel);
-
-        //}
 
 
         /// <summary>
@@ -78,20 +56,34 @@ namespace Zerg.Controllers.CRM
         /// <param name="sender"></param>
         /// <param name="addtime"></param>
         /// <param name="mobile"></param>
-        [System.Web.Http.HttpGet]
-        public ResultModel  MessageDetailCreate(string Title, string content, string sender, string mobile)
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage AddMessageDetail(string Title, string content, string sender, string mobile)
         {
-            var MessageDetailInsert = new MessageDetailEntity()
+            if (!string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(content) && !string.IsNullOrEmpty(sender) && !string.IsNullOrEmpty(mobile))
             {
-                Title = Title,
-                Content = content,
-                Sender = sender,
-                Mobile = mobile
+                var MessageDetailInsert = new MessageDetailEntity()
+                {
+                    Title = Title,
+                    Content = content,
+                    Sender = sender,
+                    Mobile = mobile,
+                    Addtime = DateTime.Now
 
-            };
-            _messageDetailService.Create(MessageDetailInsert);
+                };
 
-            return new ResultModel { Status = true, Msg = "操作成功" };
+                try
+                {
+                    if (  _messageDetailService.Create(MessageDetailInsert) != null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                    }
+                }
+                catch
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                }
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
         }
         #endregion
     }

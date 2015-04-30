@@ -30,8 +30,9 @@ namespace Zerg.Controllers.CRM
         /// <param name="isDescending">是否降序</param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        public List<MessageConfigEntity> MessageConfigSearchCondition(int Page = 1, int PageCount = 1, bool isDescending = true)
+        public List<MessageConfigEntity> SearchMessageConfig(int Page = 1, int PageCount = 1, bool isDescending = true)
         {
+
             var mConfig = new MessageConfigSearchCondition()
             {
                 Page = Page,
@@ -39,56 +40,96 @@ namespace Zerg.Controllers.CRM
                 isDescending = isDescending
 
             };
-            var temp = _MessageConfigService.GetMessageConfigsByCondition(mConfig).ToList();
-            return temp;
+           return  _MessageConfigService.GetMessageConfigsByCondition(mConfig).ToList();
+           
         }
         /// <summary>
         /// 添加短信配置模板
         /// </summary>
         /// <param name="Name">模板名称</param>
         /// <param name="Template">配置模板</param>
-        [System.Web.Http.HttpGet]
-        public ResultModel  MessageConfigCreate(string Name, string Template)
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage AddMessageConfig(string Name, string Template)
         {
-            var MessageConfigInsert = new MessageConfigEntity()
+            if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Template))
             {
-                Name = Name,
-                Template = Template
-            };
-            _MessageConfigService.Create(MessageConfigInsert);
-            return new ResultModel { Status = true, Msg = "操作成功" };
+                var MessageConfigInsert = new MessageConfigEntity()
+                {
+                    Name = Name,
+                    Template = Template,
+                     Uptime = DateTime.Now,
+                    Addtime = DateTime.Now
+                };
+                try
+                {
+                    if ( _MessageConfigService.Create(MessageConfigInsert)!= null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                    }
+                }
+                catch
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                }
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
+          
+          
         }
         /// <summary>
         /// 删除短信配置
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
-        public ResultModel  MessageConfigDelete(int id = 0)
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage DeleteMessageConfig(string id)
         {
-            var mConfigDel = new MessageConfigEntity()
+            if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id))
             {
-                Id = id
-            };
-            _MessageConfigService.Delete(mConfigDel);
-               return new ResultModel { Status = true, Msg = "操作成功" }; 
-            
+                if (_MessageConfigService.Delete(_MessageConfigService.GetMessageConfigById(Convert.ToInt32(id))))
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据成功删除！"));
+                }
+                else
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
+                }
+            }
+
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
+          
         }
         /// <summary>
         /// 更新短信配置模板
         /// </summary>
         /// <param name="Name">模板名称</param>
         /// <param name="Template">配置模板</param>
-        [System.Web.Http.HttpGet]
-        public ResultModel  MessageConfigUpdate(string Name, string Template)
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage UpdateMessageConfig(string id, string Name, string Template)
         {
-            var mConfigUpdate = new MessageConfigEntity()
+            if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id) && !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Template))
             {
-                Name = Name,
-                Template = Template
-            };
-            _MessageConfigService.Update(mConfigUpdate);
-            return new ResultModel { Status = true, Msg = "操作成功" };
+                
+                var mConfigUpdate = _MessageConfigService.GetMessageConfigById(Convert.ToInt32(id));
+                mConfigUpdate.Uptime = DateTime.Now;
+                mConfigUpdate.Name = Name;
+                mConfigUpdate.Template = Template;
+              
+                try
+                {
+                    if ( _MessageConfigService.Update(mConfigUpdate)!= null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                    }
+                }
+                catch
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+                }
+
+
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
         }
         #endregion
     }
