@@ -133,15 +133,15 @@
     <Compile Include="Controllers\CRM\CRMAdminController.cs" />
     <Compile Include="Controllers\CRM\CRMBrokerController.cs" />
     <Compile Include="Controllers\CRM\CRMMerchantController.cs" />
+    <Compile Include="Controllers\CRM\CRMMessageConfigController.cs" />
+    <Compile Include="Controllers\CRM\CRMMessageDetailController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CRM\TaskAwardModel.cs" />
     <Compile Include="Models\CRM\TaskModel.cs" />
-
     <Compile Include="Models\CRM\TaskPunishmentModel.cs" />
     <Compile Include="Models\CRM\TaskTagModel.cs" />
-
     <Compile Include="Models\CRM\TaskTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
