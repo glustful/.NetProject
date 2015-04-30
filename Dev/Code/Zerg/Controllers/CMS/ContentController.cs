@@ -12,6 +12,7 @@ using YooPoon.WebFramework.User.Services;
 using CMS.Entity.Model;
 using Zerg.Models;
 using Zerg.Models.CMS;
+using Zerg.Common;
 
 namespace Zerg.Controllers.CMS
 {

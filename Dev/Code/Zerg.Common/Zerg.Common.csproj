@@ -60,6 +60,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,13 +69,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Com\ResultModel.cs" />
     <Compile Include="Data\ZergRepository.cs" />
     <Compile Include="Data\IZergRepository.cs" />
     <Compile Include="Data\ZergDbContext.cs" />
     <Compile Include="Data\IZergMapping.cs" />
     <Compile Include="Data\ZergDataProvider.cs" />
     <Compile Include="Data\ZergEfConfiguration.cs" />
+    <Compile Include="Com\PageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Com\SMSHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\YooPoon.Core\YooPoon.Core.csproj">

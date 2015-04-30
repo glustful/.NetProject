@@ -10,6 +10,7 @@ using CMS.Service.Channel;
 using CMS.Entity.Model;
 using Zerg.Models;
 using System.Web.Http.Results;
+using Zerg.Common;
 
 namespace Zerg.Controllers.CMS
 {
