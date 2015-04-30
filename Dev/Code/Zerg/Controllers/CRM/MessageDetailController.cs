@@ -33,7 +33,7 @@ namespace Zerg.Controllers.CRM
         /// <param name="AddtimeBegin"></param>
         /// <param name="AddtimeEnd"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [System.Web.Http.HttpPost]
         public List<MessageDetailEntity> SearchMessageDetail(MessageDetailModel messageDetailModel)
         {
             var mDetail = new MessageDetailSearchCondition()

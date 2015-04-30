@@ -20,6 +20,7 @@ namespace Zerg.Controllers.CRM
         public MessageConfigController (IMessageConfigService messageConfig)
         {
             _MessageConfigService = messageConfig;
+         
         }
         #region 短信配置 黄秀宇 2015.04.29
 
@@ -30,7 +31,7 @@ namespace Zerg.Controllers.CRM
         /// <param name="PageCount">每页大小</param>
         /// <param name="isDescending">是否降序</param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [System.Web.Http.HttpPost]
         public List<MessageConfigEntity> SearchMessageConfig(MessageConfigModel messageConfigModel)
         {
 

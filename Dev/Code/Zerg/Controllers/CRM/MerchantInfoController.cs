@@ -32,6 +32,10 @@ namespace Zerg.Controllers.CRM
         {
             if (string.IsNullOrEmpty(merchantInfoModel.Merchantname) && string.IsNullOrEmpty(merchantInfoModel.Mail))
             {
+                if (!PageHelper.IsEmail(merchantInfoModel.Mail))
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "Email格式验证错误！"));
+                }
                 var merchantInfoEntity = new MerchantInfoEntity()
                 {
                     Merchantname = merchantInfoModel.Merchantname,
@@ -78,7 +82,7 @@ namespace Zerg.Controllers.CRM
         /// <param name="PageCount"></param>
         /// <param name="isDescending"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [System.Web.Http.HttpPost]
    
         public List<MerchantInfoEntity> SearchMerchantInfo(MerchantInfoModel merchantInfoModel)
         {
@@ -103,7 +107,10 @@ namespace Zerg.Controllers.CRM
         {
             if (!string.IsNullOrEmpty(merchantInfoModel.Id) && PageHelper.ValidateNumber(merchantInfoModel.Id) && !string.IsNullOrEmpty(merchantInfoModel.Merchantname) && !string.IsNullOrEmpty( merchantInfoModel.Mail))
             {
-
+                if (!PageHelper.IsEmail(merchantInfoModel.Mail))
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "Email格式验证错误！"));
+                }
                 var merchantInfo = _merchantInfoService.GetMerchantInfoById(Convert.ToInt32(merchantInfoModel.Id));
                 merchantInfo.Uptime = DateTime.Now;
                 merchantInfo.Merchantname = merchantInfoModel.Merchantname;
