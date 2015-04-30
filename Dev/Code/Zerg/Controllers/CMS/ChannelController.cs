@@ -26,7 +26,7 @@ namespace Zerg.Controllers.CMS
         /// <param name="pageSize">页记录数</param>
         /// <returns></returns>
         [HttpGet]
-        public List<ChannelModel> Index(string name = null,int page = 1, int pageSize = 10)
+        public HttpResponseMessage Index(string name = null,int page = 1, int pageSize = 10)
         {
             var channelCon = new ChannelSearchCondition
             { 
@@ -40,14 +40,14 @@ namespace Zerg.Controllers.CMS
                 Name=a.Name,
                 Status=a.Status                
             }).ToList();
-            return channelList;
+            return PageHelper.toJson(channelList);
         }
         /// <summary>
         /// 新建频道
         /// </summary>
         /// <param name="model">频道参数</param>
         /// <returns></returns>
-        public ResultModel Docreate(ChannelModel model)
+        public HttpResponseMessage Docreate(ChannelModel model)
         {
            var newParent = _channelService.GetChannelById(model.Parent.Id);
             var channel = new ChannelEntity
@@ -57,18 +57,14 @@ namespace Zerg.Controllers.CMS
                 Parent=newParent,
                 Addtime=DateTime.Now
             };
-            ResultModel result = new ResultModel();
-            if (_channelService.Create(channel).Id > 0)
+            if (_channelService.Create(channel)!=null)
             {
-                result.Status = true;
-                result.Msg = "创建成功";
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
             }
             else
             {
-                result.Status = false;
-                result.Msg = "创建失败";
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
             }
-            return result;
         }
         /// <summary>
         /// 频道详细信息
@@ -76,18 +72,17 @@ namespace Zerg.Controllers.CMS
         /// <param name="id">频道id</param>
         /// <returns></returns>
          [HttpGet]
-        public ChannelModel Detailed(int id)
+        public HttpResponseMessage Detailed(int id)
         {
             var channel = _channelService.GetChannelById(id);
             if (channel == null) {
-                return new ChannelModel();
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"该数据不存在！"));
             }
             var channelDetail = new ChannelModel
             {
                 Id = channel.Id,
                 Name = channel.Name,
                 Status = channel.Status,
-                //parentid=channel.Parent.Id,
                 Parent = new ChannelModel
                 {
                     Id=channel.Parent.Id,
@@ -95,31 +90,27 @@ namespace Zerg.Controllers.CMS
                     Status=channel.Parent.Status
                 }
             };
-            return channelDetail;
+            return PageHelper.toJson(channelDetail);
         }
         /// <summary>
         /// 保存修改信息
         /// </summary>
         /// <param name="model">频道参数</param>
         /// <returns></returns>        
-         public ResultModel DoEdit(ChannelModel model)
+         public HttpResponseMessage DoEdit(ChannelModel model)
          {
              var channel = _channelService.GetChannelById(model.Id);
              var newParent = _channelService.GetChannelById(model.Parent.Id);
              channel.Name = model.Name;
              channel.UpdTime = DateTime.Now;
              channel.Parent = newParent;
-             ResultModel result = new ResultModel();
-             if (_channelService.Update(channel)) {
-                 result.Status = true;
-                 result.Msg = "修改成功";
+             if (_channelService.Update(channel)!=null) {
+                 return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
              }
              else
              {
-                 result.Status = false;
-                 result.Msg = "修改失败";
+                 return PageHelper.toJson(PageHelper.ReturnValue(false,"数据更新失败！"));
              }
-             return result;
          }
         /// <summary>
         /// 频道删除
@@ -127,20 +118,16 @@ namespace Zerg.Controllers.CMS
         /// <param name="id">频道id</param>
         /// <returns></returns>
         [HttpGet]
-         public ResultModel Delete(int id)
+         public HttpResponseMessage Delete(int id)
          {
              var channel = _channelService.GetChannelById(id);
-             ResultModel result = new ResultModel();
              if (_channelService.Delete(channel))
              {
-                 result.Status=true;
-                 result.Msg="删除成功";
+                 return PageHelper.toJson(PageHelper.ReturnValue(true,"数据删除成功！"));
              }
              else{
-                 result.Status = false;
-                 result.Msg = "删除失败";
+                 return PageHelper.toJson(PageHelper.ReturnValue(false,"数据删除失败！"));
              }
-             return result;
          }
     }
 }

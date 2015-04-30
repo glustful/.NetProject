@@ -10,9 +10,7 @@ namespace CMS.Service.Content
 
 		bool Delete(ContentEntity entity);
 
-		//ContentEntity Update (ContentEntity entity);
-        bool Update(ContentEntity entity);
-
+		ContentEntity Update (ContentEntity entity);
 		ContentEntity GetContentById (int id);
 
 		IQueryable<ContentEntity> GetContentsByCondition(ContentSearchCondition condition);

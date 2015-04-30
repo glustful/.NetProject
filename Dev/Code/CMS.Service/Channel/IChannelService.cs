@@ -10,8 +10,7 @@ namespace CMS.Service.Channel
 
 		bool Delete(ChannelEntity entity);
 
-		//ChannelEntity Update (ChannelEntity entity);
-        bool Update(ChannelEntity entity);
+		ChannelEntity Update (ChannelEntity entity);
 		ChannelEntity GetChannelById (int id);
 
 		IQueryable<ChannelEntity> GetChannelsByCondition(ChannelSearchCondition condition);

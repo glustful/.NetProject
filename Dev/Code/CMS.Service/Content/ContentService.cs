@@ -46,7 +46,7 @@ namespace CMS.Service.Content
             }
 		}
 
-		/*public ContentEntity Update (ContentEntity entity)
+		public ContentEntity Update (ContentEntity entity)
 		{
 			try
             {
@@ -58,20 +58,7 @@ namespace CMS.Service.Content
 				_log.Error(e,"数据库操作出错");
                 return null;
             }
-		}*/
-        public bool Update(ContentEntity entity)
-        {
-            try
-            {
-                _contentRepository.Update(entity);
-                return true;
-            }
-            catch (Exception e)
-            {
-                _log.Error(e, "数据库操作出错");
-                return false;
-            }
-        }
+		}
 
 		public ContentEntity GetContentById (int id)
 		{
