@@ -1,0 +1,23 @@
+*{
+    padding:0;
+    margin:0;
+    border: none;
+    list-style: none;
+}
+.window{
+    width:640px;
+    margin:0 auto;
+}
+.noPartner{
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    background: #f2f2f2;
+}
+.invite{
+    width: 100%;
+    height: 500px;
+    background: #f2f2f2;
+    text-align: center;
+    margin-top: 10px;
+}
