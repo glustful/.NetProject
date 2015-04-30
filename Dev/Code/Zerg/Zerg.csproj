@@ -135,6 +135,9 @@
     <Compile Include="Controllers\CRM\CRMMerchantController.cs" />
     <Compile Include="Controllers\CRM\MessageConfigController.cs" />
     <Compile Include="Controllers\CRM\MessageDetailController.cs" />
+    <Compile Include="Controllers\CRM\CRMTaskController.cs" />
+    <Compile Include="Controllers\CRM\LevelConfigController.cs" />
+    <Compile Include="Controllers\CRM\LevelController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
