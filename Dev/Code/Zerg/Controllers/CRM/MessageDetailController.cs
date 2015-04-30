@@ -61,6 +61,10 @@ namespace Zerg.Controllers.CRM
         {
             if (!string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(content) && !string.IsNullOrEmpty(sender) && !string.IsNullOrEmpty(mobile))
             {
+                if(!PageHelper.IsMobilePhone(mobile))
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号格式验证错误！"));
+                }
                 var MessageDetailInsert = new MessageDetailEntity()
                 {
                     Title = Title,
