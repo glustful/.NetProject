@@ -130,9 +130,6 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CRM\CRMAdminController.cs" />
-    <Compile Include="Controllers\CRM\CRMBrokerController.cs" />
-    <Compile Include="Controllers\CRM\CRMMerchantController.cs" />
     <Compile Include="Controllers\CRM\MessageConfigController.cs" />
     <Compile Include="Controllers\CRM\MessageDetailController.cs" />
     <Compile Include="Controllers\CRM\CRMTaskController.cs" />
