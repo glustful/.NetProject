@@ -98,5 +98,16 @@ namespace CRM.Entity.Model
 		/// UpTime
 		/// </summary>
 		public virtual DateTime Uptime { get; set; }
+
+
+        /// <summary>
+        /// 用户类型枚举 （经纪人 broker  ，  管理员 manager）
+        /// </summary>
+        public enum EnumUserType
+        {
+            // 经纪人 broker  ，  管理员 manager
+            broker = 0,
+            manager = 1         
+        }
 	}
 }
