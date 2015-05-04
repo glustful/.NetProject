@@ -30,7 +30,7 @@ namespace Zerg.Controllers.CRM
 
 
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage SearchLevel(string pageindex)
+        public HttpResponseMessage SearchLevel([FromBody] string pageindex)
         {
             var leSearchCon = new LevelSearchCondition
             {
@@ -45,16 +45,16 @@ namespace Zerg.Controllers.CRM
         /// <param name="name"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddLevel(string name, string desc, string imgurl)
+        public HttpResponseMessage AddLevel([FromBody] LevelEntity Level)
         {
 
-            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(desc) && !string.IsNullOrEmpty(imgurl))
+            if (!string.IsNullOrEmpty(Level.Name) && !string.IsNullOrEmpty(Level.Describe) && !string.IsNullOrEmpty(Level.Url))
             {
                 var levelModel = new LevelEntity
                 {
-                    Name = name,
-                    Describe = desc,
-                    Url = imgurl,
+                    Name = Level.Name,
+                    Describe = Level.Describe,
+                    Url = Level.Url,
                     Uptime = DateTime.Now,
                     Addtime = DateTime.Now,
 
@@ -83,15 +83,15 @@ namespace Zerg.Controllers.CRM
         /// <param name="name"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage UpdateLevel(string id, string name, string desc, string imgurl)
+        public HttpResponseMessage UpdateLevel([FromBody] LevelEntity Level)
         {
-            if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id) && !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(desc) && !string.IsNullOrEmpty(imgurl))
+            if (Level != null && !string.IsNullOrEmpty(Level.Id.ToString()) && PageHelper.ValidateNumber(Level.Id.ToString()) && !string.IsNullOrEmpty(Level.Name) && !string.IsNullOrEmpty(Level.Describe) && !string.IsNullOrEmpty(Level.Url))
             {
-                var levelModel = _levelService.GetLevelById(Convert.ToInt32(id));
+                var levelModel = _levelService.GetLevelById(Level.Id);
                 levelModel.Uptime = DateTime.Now;
-                levelModel.Name = name;
-                levelModel.Describe = desc;
-                levelModel.Url = imgurl;
+                levelModel.Name = Level.Name;
+                levelModel.Describe = Level.Describe;
+                levelModel.Url = Level.Url;
 
                 try
                 {
@@ -118,7 +118,7 @@ namespace Zerg.Controllers.CRM
         /// <param name="name"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage DeleteLevel(string id)
+        public HttpResponseMessage DeleteLevel([FromBody] string id)
         {
             if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id))
             {
