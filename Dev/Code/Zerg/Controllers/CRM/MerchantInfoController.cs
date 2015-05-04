@@ -16,7 +16,7 @@ namespace Zerg.Controllers.CRM
     /// </summary>
     public class MerchantInfoController : ApiController
     {
-        MerchantInfoService _merchantInfoService;
+        IMerchantInfoService _merchantInfoService;
         public MerchantInfoController(MerchantInfoService merchantInfoService)
         {
             _merchantInfoService = merchantInfoService;
@@ -83,8 +83,8 @@ namespace Zerg.Controllers.CRM
         /// <param name="isDescending"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-   
-        public List<MerchantInfoEntity> SearchMerchantInfo(MerchantInfoModel merchantInfoModel)
+
+        public HttpResponseMessage SearchMerchantInfo(MerchantInfoModel merchantInfoModel)
         {
 
             var merchantInfo = new MerchantInfoSearchCondition()
@@ -94,7 +94,8 @@ namespace Zerg.Controllers.CRM
                 isDescending = merchantInfoModel.isDescending
 
             };
-            return _merchantInfoService.GetMerchantInfosByCondition(merchantInfo).ToList();
+          
+            return PageHelper.toJson(_merchantInfoService.GetMerchantInfosByCondition(merchantInfo).ToList ());
 
         }
         /// <summary>
@@ -131,6 +132,52 @@ namespace Zerg.Controllers.CRM
 
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
+        }
+        #endregion
+        #region 注销、查找商家详情 黄秀宇 2015.05.04
+        /// <summary>
+        /// 注销商家
+        /// </summary>
+        /// <param name="merchantInfoModel"></param>
+        /// <returns></returns>
+        [System.Web .Http .HttpPost ]
+        public HttpResponseMessage LogoffMerchantInfo(MerchantInfoModel merchantInfoModel)
+        {
+            if (!string.IsNullOrEmpty(merchantInfoModel.Id))
+            {
+                var mInfoModel = _merchantInfoService.GetMerchantInfoById(Convert.ToInt32(merchantInfoModel.Id));
+                mInfoModel.Id = Convert.ToInt32(merchantInfoModel.Id);
+                mInfoModel.State = false;
+                try
+                {
+                    if (_merchantInfoService.Update(mInfoModel) != null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "注销成功！"));
+                    }
+                }
+                catch
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "注销失败！"));
+                }
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
+        }
+        /// <summary>
+        /// 查找商家详情
+        /// </summary>
+        /// <param name="merchantInfoModel"></param>
+        /// <returns></returns>
+        [System .Web .Http .HttpPost ]
+        public HttpResponseMessage  SearchDetailMerchantInfo(MerchantInfoModel merchantInfoModel)
+        {
+            if(!string .IsNullOrEmpty(merchantInfoModel .Id  )){
+                var mInfoCondition=new MerchantInfoSearchCondition(){
+                   OrderBy =EnumMerchantInfoSearchOrderBy.OrderById
+                };
+           
+            return PageHelper.toJson(_merchantInfoService.GetMerchantInfosByCondition(mInfoCondition).Where(p=>p.Id==Convert.ToInt32(merchantInfoModel.Id)).First());
+        }
+          return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
         }
         #endregion
     }
