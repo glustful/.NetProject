@@ -35,14 +35,14 @@ namespace Zerg.Controllers.CRM
         public List<MessageConfigEntity> SearchMessageConfig(MessageConfigModel messageConfigModel)
         {
 
-            var mConfig = new MessageConfigSearchCondition()
+            var mConfigCondition = new MessageConfigSearchCondition()
             {
                 Page = messageConfigModel.Page,
                 PageCount = messageConfigModel.PageCount,
                 isDescending = messageConfigModel.isDescending
 
             };
-           return  _MessageConfigService.GetMessageConfigsByCondition(mConfig).ToList();
+           return  _MessageConfigService.GetMessageConfigsByCondition(mConfigCondition).ToList();
            
         }
         /// <summary>
@@ -84,11 +84,11 @@ namespace Zerg.Controllers.CRM
         /// <param name="id"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage DeleteMessageConfig(string id)
+        public HttpResponseMessage DeleteMessageConfig(MessageConfigModel messageConfigModel)
         {
-            if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id))
+            if (!string.IsNullOrEmpty(messageConfigModel.Id) && PageHelper.ValidateNumber(messageConfigModel.Id))
             {
-                if (_MessageConfigService.Delete(_MessageConfigService.GetMessageConfigById(Convert.ToInt32(id))))
+                if (_MessageConfigService.Delete(_MessageConfigService.GetMessageConfigById(Convert.ToInt32(messageConfigModel.Id))))
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(true, "数据成功删除！"));
                 }

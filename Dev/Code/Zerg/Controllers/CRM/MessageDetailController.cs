@@ -36,7 +36,7 @@ namespace Zerg.Controllers.CRM
         [System.Web.Http.HttpPost]
         public List<MessageDetailEntity> SearchMessageDetail(MessageDetailModel messageDetailModel)
         {
-            var mDetail = new MessageDetailSearchCondition()
+            var mDetailCondition = new MessageDetailSearchCondition()
             {
 
                 AddtimeBegin = messageDetailModel.AddtimeBegin,
@@ -45,7 +45,7 @@ namespace Zerg.Controllers.CRM
 
             };
 
-            return  _messageDetailService.GetMessageDetailsByCondition(mDetail).ToList();
+            return  _messageDetailService.GetMessageDetailsByCondition(mDetailCondition).ToList();
         }
 
 
