@@ -11,6 +11,7 @@ using CMS.Entity.Model;
 using Zerg.Models;
 using System.Web.Http.Results;
 using Zerg.Common;
+using YooPoon.Core.Site;
 
 namespace Zerg.Controllers.CMS
 {
@@ -18,10 +19,12 @@ namespace Zerg.Controllers.CMS
     {
         private readonly ITagService _tagService;
         private readonly IContentService _contentService;
-        public TagController(ITagService tagService, IContentService contentService)
+        private readonly IWorkContext _workContext;
+        public TagController(ITagService tagService, IContentService contentService,IWorkContext workcontext)
         {
             _tagService = tagService;
             _contentService = contentService;
+            _workContext = workcontext; 
         }
         /// <summary>
         /// 首页
@@ -85,47 +88,36 @@ namespace Zerg.Controllers.CMS
         /// 新建Tag
         /// </summary>
         /// <param name="tag">标签参数</param>
-        public HttpResponseMessage DoCreate(TagModel tag)
+        [HttpPost]
+        public HttpResponseMessage Create(TagModel tag)
         {
             var tagModel = new TagEntity
             {
                 Tag=tag.Tag,
-                Addtime=DateTime.Now
+                Adduser=_workContext.CurrentUser.Id,
+                Addtime=DateTime.Now,
+                UpdUser = _workContext.CurrentUser.Id,
+                UpdTime=DateTime.Now
             };
-            if (_tagService.Create(tagModel) != null)
+            if (_tagService.Create(tagModel)!=null)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(true,"数据添加成功！"));
             }
             else {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加成功！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
             }
-        }
-        /// <summary>
-        /// 编辑
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-       [System.Web.Http.HttpGet] 
-        public TagModel Edit(int id)
-        {
-            var tag = _tagService.GetTagById(id); 
-        
-            return new TagModel
-            {
-                Id=tag.Id,
-                Tag=tag.Tag
-            };
         }
         /// <summary>
         /// 保存修改
         /// </summary>
         /// <param name="model">标签参数</param> 
-        
-        public HttpResponseMessage DoEdit(TagModel model)
+        [HttpPost]
+        public HttpResponseMessage Edit(TagModel model)
         {
             var tag = _tagService.GetTagById(model.Id);
             tag.Tag = model.Tag;
             tag.UpdTime=DateTime.Now;
+            tag.UpdUser = _workContext.CurrentUser.Id;
             if (_tagService.Update(tag)!=null)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
@@ -139,7 +131,7 @@ namespace Zerg.Controllers.CMS
         /// 删除
         /// </summary>
         /// <param name="id">标签Id</param> 
-       [System.Web.Http.HttpGet]
+       [System.Web.Http.HttpPost]
         public HttpResponseMessage Delete(int id)
         {
             var tag = _tagService.GetTagById(id);                      

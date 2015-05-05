@@ -11,7 +11,8 @@ namespace Zerg.Models.CMS
         public int Id { get; set; }
         public string Name { get; set; }
         public EnumChannelStatus Status { get; set; }
-        public ChannelModel Parent { get; set; }
+       // public ChannelModel Parent { get; set; }
+        public int ParentId { get; set; }
         public string StatusString
         {
             get
