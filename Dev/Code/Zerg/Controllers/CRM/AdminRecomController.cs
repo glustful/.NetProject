@@ -13,13 +13,13 @@ using Zerg.Models.CRM;
 namespace Zerg.Controllers.CRM
 {
     /// <summary>
-    /// 经纪人的业务处理
+    /// admin的推荐至平台流程处理
     /// </summary>
-    public class BrokerBusinessController : ApiController
+    public class AdminRecomController : ApiController
     {
         private readonly IBrokerService _brokerService;
 
-        public BrokerBusinessController(IBrokerService brokerService
+        public AdminRecomController(IBrokerService brokerService
             )
         {
             _brokerService = brokerService;
@@ -36,10 +36,22 @@ namespace Zerg.Controllers.CRM
             var condition = new BrokerSearchCondition()
             {
                 OrderBy = EnumBrokerSearchOrderBy.OrderById
-
             };
             return PageHelper.toJson(_brokerService.GetBrokersByCondition(condition).ToPagedList(Convert.ToInt32(brokerSearchModel.Pageindex) + 1, 10).ToList());
         }
+        #endregion
+
+        #region 待审核业务处理 杨定鹏 2015年5月5日16:28:30
+        /// <summary>
+        /// 查看审核详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public HttpResponseMessage GetAuditDetail(int id)
+        {
+            return null;
+        }
+
         #endregion
     }
 }

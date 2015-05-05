@@ -26,7 +26,7 @@ namespace Zerg.Controllers.CRM
         }
 
 
-        #region 等级明细  李洪亮 2015 4 28
+        #region 等级配置  李洪亮 2015 4 28
 
 
 
@@ -46,16 +46,16 @@ namespace Zerg.Controllers.CRM
         /// <param name="name"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddLevelconfig(string name, string desc, string val)
+        public HttpResponseMessage AddLevelconfig([FromBody] LevelConfigEntity  LevelConfig )
         {
 
-            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(desc) && !string.IsNullOrEmpty(val))
+            if (!string.IsNullOrEmpty(LevelConfig.Name) && !string.IsNullOrEmpty(LevelConfig.Describe) && !string.IsNullOrEmpty(LevelConfig.Value))
             {
                 var levelconfigModel = new LevelConfigEntity
                 {
-                    Name = name,
-                    Describe = desc,
-                    Value=val,
+                    Name = LevelConfig.Name,
+                    Describe = LevelConfig.Describe,
+                    Value=LevelConfig.Value,
                     Uptime = DateTime.Now,
                     Addtime = DateTime.Now,
 
@@ -84,15 +84,15 @@ namespace Zerg.Controllers.CRM
         /// <param name="name"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage UpdateLevelconfig(string id, string name, string desc, string val)
+        public HttpResponseMessage UpdateLevelconfig([FromBody] LevelConfigEntity  LevelConfig )
         {
-            if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id) && !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(desc) && !string.IsNullOrEmpty(val))
+            if (LevelConfig != null && !string.IsNullOrEmpty(LevelConfig.Id.ToString()) && PageHelper.ValidateNumber(LevelConfig.Id.ToString()) && !string.IsNullOrEmpty(LevelConfig.Name) && !string.IsNullOrEmpty(LevelConfig.Describe) && !string.IsNullOrEmpty(LevelConfig.Value))
             {
-                var levelconfigModel = _levelconfigService.GetLevelConfigById(Convert.ToInt32(id));
+                var levelconfigModel = _levelconfigService.GetLevelConfigById(LevelConfig.Id);
               
-                levelconfigModel.Name = name;
-                levelconfigModel.Describe = desc;
-                levelconfigModel.Value = val;
+                levelconfigModel.Name = LevelConfig.Name;
+                levelconfigModel.Describe =LevelConfig.Describe;
+                levelconfigModel.Value = LevelConfig.Value;
                 levelconfigModel.Uptime = DateTime.Now;
                 try
                 {
@@ -119,7 +119,7 @@ namespace Zerg.Controllers.CRM
         /// <param name="name"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage DeleteLevelConfig(string id)
+        public HttpResponseMessage DeleteLevelConfig([FromBody] string id)
         {
             if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id))
             {
