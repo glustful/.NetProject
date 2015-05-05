@@ -125,22 +125,28 @@
     <Content Include="App_Data\Settings.txt" />
     <Content Include="Global.asax" />
     <Content Include="Lib\MvcPager.dll" />
+    <Content Include="test.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CRM\AdminInfoController.cs" />
+    <Compile Include="Controllers\CRM\BrokerBusinessController.cs" />
     <Compile Include="Controllers\CRM\MessageConfigController.cs" />
     <Compile Include="Controllers\CRM\MessageDetailController.cs" />
     <Compile Include="Controllers\CRM\LevelConfigController.cs" />
     <Compile Include="Controllers\CRM\LevelController.cs" />
     <Compile Include="Controllers\CRM\TaskController.cs" />
+    <Compile Include="Controllers\CRM\testController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CRM\BrokerModel.cs" />
     <Compile Include="Models\CRM\TaskAwardModel.cs" />
     <Compile Include="Models\CRM\TaskModel.cs" />
     <Compile Include="Models\CRM\TaskPunishmentModel.cs" />
+    <Compile Include="Models\CRM\TaskSearchModel.cs" />
     <Compile Include="Models\CRM\TaskTagModel.cs" />
     <Compile Include="Models\CRM\TaskTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+//任务目标数据模型
 namespace Zerg.Models.CRM
 {
     public class TaskTagModel
@@ -23,5 +23,9 @@ namespace Zerg.Models.CRM
         /// 目标值
         /// </summary>
         public string Value { get; set; }
+        /// <summary>
+        /// 添加/修改类型
+        /// </summary>
+        public string Type { get; set; }
     }
 }

@@ -46,5 +46,25 @@ namespace CRM.Entity.Model
 		/// UpTime
 		/// </summary>
 		public virtual DateTime Uptime { get; set; }
+		/// <summary>
+		/// 经纪人名
+		/// </summary>
+		public virtual string Brokername { get; set; }
+		/// <summary>
+		/// 经纪人等级
+		/// </summary>
+		public virtual string Brokerlevel { get; set; }
+		/// <summary>
+		/// 项目名
+		/// </summary>
+		public virtual string Projectname { get; set; }
+		/// <summary>
+		/// 项目ID
+		/// </summary>
+		public virtual int Projectid { get; set; }
+		/// <summary>
+		/// 进度状态
+		/// </summary>
+		public virtual EnumBRECCType Status { get; set; }
 	}
 }

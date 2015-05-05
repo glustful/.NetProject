@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using CRM.Entity.Model;
 
+//任务表的数据模型
 namespace Zerg.Models.CRM
 {
     public class TaskModel
@@ -15,19 +16,19 @@ namespace Zerg.Models.CRM
         /// <summary>
         /// 失败惩罚ID
         /// </summary>
-        public int TaskPunishment { get; set; }
+        public int TaskPunishmentId { get; set; }
         /// <summary>
         /// 发放奖励ID
         /// </summary>
-        public int TaskAward { get; set; }
+        public int TaskAwardId { get; set; }
         /// <summary>
         /// 任务目标ID
         /// </summary>
-        public int TaskTag { get; set; }
+        public int TaskTagId { get; set; }
         /// <summary>
         /// 任务类型ID
         /// </summary>
-        public int TaskType { get; set; }
+        public int TaskTypeId { get; set; }
         /// <summary>
         /// 任务名称
         /// </summary>
@@ -56,5 +57,9 @@ namespace Zerg.Models.CRM
         /// UpTime
         /// </summary>
         public DateTime Uptime { get; set; }
+        /// <summary>
+        /// 添加/修改类型
+        /// </summary>
+        public string Type { get; set; }
     }
 }

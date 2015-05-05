@@ -44,28 +44,44 @@ namespace Zerg.Controllers.CRM
         /// <summary>
         /// 返回任务列表
         /// </summary>
-        /// <param name="pageindex"></param>
+        /// <param name="taskSearchModel"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage TaskList(string pageindex)
+        public HttpResponseMessage TaskList([FromBody]TaskSearchModel taskSearchModel)
         {
             var condition = new TaskSearchCondition
             {
                 OrderBy = EnumTaskSearchOrderBy.OrderById
             };
-            return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToPagedList(Convert.ToInt32(pageindex) + 1, 10).ToList());
+            return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToPagedList(Convert.ToInt32(taskSearchModel.Pageindex) + 1, 10).ToList());
         }
 
+        /// <summary>
+        /// 添加和修改单个任务
+        /// </summary>
+        /// <param name="taskModel">任务数据模型</param>
+        /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddTsk(TaskModel taskModel, string type)
+        public HttpResponseMessage AddTask([FromBody]TaskModel taskModel)
         {
             if (!string.IsNullOrEmpty(taskModel.Taskname))
             {
                 var model = new TaskEntity
                 {
-
+                    Id = taskModel.Id,
+                    TaskPunishment = _taskPunishmentService.GetTaskPunishmentById(taskModel.TaskPunishmentId),
+                    TaskAward = _taskAwardService.GetTaskAwardById(taskModel.TaskAwardId),
+                    TaskTag = _taskTagService.GetTaskTagById(taskModel.TaskTagId),
+                    TaskType = _taskTypeService.GetTaskTypeById(taskModel.TaskTypeId),
+                    Taskname = taskModel.Taskname,
+                    Describe = taskModel.Describe,
+                    Endtime = taskModel.Endtime,
+                    //Adduser = 
+                    Addtime = DateTime.Now,
+                    //Upuser = 
+                    Uptime = DateTime.Now,
                 };
-                if (type == "add")
+                if (taskModel.Type == "add")
                 {
                     try
                     {
@@ -79,7 +95,7 @@ namespace Zerg.Controllers.CRM
                         return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败"));
                     }
                 }
-                if (type == "edit")
+                if (taskModel.Type == "edit")
                 {
                     try
                     {
@@ -95,26 +111,59 @@ namespace Zerg.Controllers.CRM
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证失败"));
         }
 
+        /// <summary>
+        /// 删除单个任务
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage DelTask(int id)
+        {
+            try
+            {
+                _taskService.Delete(_taskService.GetTaskById(id));
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功"));
+            }
+            catch (Exception)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "删除失败"));
+            }
+        }
+
         #endregion
 
         #region 任务类型 杨定鹏 2015年4月28日17:13:12
         /// <summary>
+        /// 显示任务类型列表
+        /// </summary>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage TaskTypeList()
+        {
+            var condition = new TaskTypeSearchCondition
+            {
+                OrderBy = EnumTaskTypeSearchOrderBy.OrderById
+            };
+            return PageHelper.toJson(_taskTypeService.GetTaskTypesByCondition(condition).ToList());
+        }
+
+        /// <summary>
         /// 添加和修改任务类型表
         /// </summary>
         /// <param name="taskTypeModel">任务类型数据模型</param>
-        /// <param name="type">操作状态，新增/修改</param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddTaskTpye(TaskTypeModel taskTypeModel, string type)
+        public HttpResponseMessage AddTaskTpye([FromBody]TaskTypeModel taskTypeModel)
         {
             if (!string.IsNullOrWhiteSpace(taskTypeModel.Name))
             {
                 var model = new TaskTypeEntity()
                 {
+                    Id =taskTypeModel.Id,
                     Name = taskTypeModel.Name,
                     Describe = taskTypeModel.Describe
                 };
-                if (type == "add")
+                if (taskTypeModel.Type == "add")
                 {
                     try
                     {
@@ -128,7 +177,7 @@ namespace Zerg.Controllers.CRM
                         return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败"));
                     }
                 }
-                if (type == "edit")
+                if (taskTypeModel.Type == "edit")
                 {
                     try
                     {
@@ -167,23 +216,38 @@ namespace Zerg.Controllers.CRM
 
         #region 任务奖励 杨定鹏 2015年4月29日15:15:41
         /// <summary>
+        /// 显示任务奖励列表
+        /// </summary>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage TaskAwardList()
+        {
+            var condition = new TaskAwardSearchCondition
+            {
+                OrderBy = EnumTaskAwardSearchOrderBy.OrderById
+            };
+            return PageHelper.toJson(_taskAwardService.GetTaskAwardsByCondition(condition).ToList());
+        }
+
+        /// <summary>
         /// 添加和修改任务奖励
         /// </summary>
         /// <param name="taskAwardModel">任务奖励数据模型</param>
         /// <param name="type">操作状态，新增/修改</param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddTaskAward(TaskAwardModel taskAwardModel, string type)
+        public HttpResponseMessage AddTaskAward([FromBody]TaskAwardModel taskAwardModel)
         {
             if (!string.IsNullOrWhiteSpace(taskAwardModel.Name))
             {
                 var model = new TaskAwardEntity()
                 {
+                    Id = taskAwardModel.Id,
                     Name = taskAwardModel.Name,
                     Describe = taskAwardModel.Describe,
                     Value = taskAwardModel.Value
                 };
-                if (type == "add")
+                if (taskAwardModel.Value == "add")
                 {
                     try
                     {
@@ -195,7 +259,7 @@ namespace Zerg.Controllers.CRM
                         return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败"));
                     }
                 }
-                if (type == "edit")
+                if (taskAwardModel.Value == "edit")
                 {
                     try
                     {
@@ -227,23 +291,37 @@ namespace Zerg.Controllers.CRM
 
         #region 任务目标 杨定鹏 2015年4月29日15:57:37
         /// <summary>
+        /// 显示任务目标列表
+        /// </summary>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage TaskTagList()
+        {
+            var condition = new TaskTagSearchCondition
+            {
+                OrderBy = EnumTaskTagSearchOrderBy.OrderById
+            };
+            return PageHelper.toJson(_taskTagService.GetTaskTagsByCondition(condition).ToList());
+        }
+
+        /// <summary>
         /// 添加和修改任务目标
         /// </summary>
         /// <param name="taskTagModel">任务目标数据模型</param>
-        /// <param name="type">操作状态 新增/修改</param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddTaskTag(TaskTagModel taskTagModel, string type)
+        public HttpResponseMessage AddTaskTag([FromBody]TaskTagModel taskTagModel)
         {
             if (!string.IsNullOrWhiteSpace(taskTagModel.Name))
             {
                 var model = new TaskTagEntity()
                 {
+                    Id = taskTagModel.Id,
                     Name = taskTagModel.Name,
                     Describe = taskTagModel.Describe,
                     Value = taskTagModel.Value
                 };
-                if (type == "add")
+                if (taskTagModel.Type == "add")
                 {
                     try
                     {
@@ -255,7 +333,7 @@ namespace Zerg.Controllers.CRM
                         return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败"));
                     }
                 }
-                if (type == "edit")
+                if (taskTagModel.Type == "edit")
                 {
                     try
                     {
@@ -293,23 +371,37 @@ namespace Zerg.Controllers.CRM
 
         #region 任务惩罚 杨定鹏 2015年4月29日16:21:10
         /// <summary>
+        /// 显示任务惩罚列表
+        /// </summary>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage TaskPunishmentList()
+        {
+            var condition = new TaskPunishmentSearchCondition
+            {
+                OrderBy = EnumTaskPunishmentSearchOrderBy.OrderById
+            };
+            return PageHelper.toJson(_taskPunishmentService.GetTaskPunishmentsByCondition(condition).ToList());
+        }
+
+        /// <summary>
         /// 添加和修改任务惩罚
         /// </summary>
         /// <param name="taskPunishmentModel"></param>
-        /// <param name="type"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddTaskPunishment(TaskPunishmentModel taskPunishmentModel, string type)
+        public HttpResponseMessage AddTaskPunishment([FromBody]TaskPunishmentModel taskPunishmentModel)
         {
             if (!string.IsNullOrWhiteSpace(taskPunishmentModel.Name))
             {
                 var model = new TaskPunishmentEntity()
                 {
+                    Id=taskPunishmentModel.Id,
                     Name = taskPunishmentModel.Name,
                     Describe = taskPunishmentModel.Describe,
                     Value = taskPunishmentModel.Value
                 };
-                if (type == "add")
+                if (taskPunishmentModel.Type == "add")
                 {
                     try
                     {
@@ -321,7 +413,7 @@ namespace Zerg.Controllers.CRM
                         return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败"));
                     }
                 }
-                if (type == "edit")
+                if (taskPunishmentModel.Type == "edit")
                 {
                     try
                     {
