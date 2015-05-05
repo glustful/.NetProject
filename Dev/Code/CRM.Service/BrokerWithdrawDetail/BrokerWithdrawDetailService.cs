@@ -109,9 +109,9 @@ namespace CRM.Service.BrokerWithdrawDetail
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null )
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q => condition.Brokers==(q.Broker));
                 }
 				if (condition.BankCards != null && condition.BankCards.Any())
                 {
@@ -190,9 +190,9 @@ namespace CRM.Service.BrokerWithdrawDetail
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null )
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q => condition.Brokers==(q.Broker));
                 }
 				if (condition.BankCards != null && condition.BankCards.Any())
                 {
