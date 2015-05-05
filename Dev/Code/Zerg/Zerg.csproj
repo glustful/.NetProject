@@ -133,6 +133,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CRM\AdminInfoController.cs" />
     <Compile Include="Controllers\CRM\BrokerBusinessController.cs" />
+    <Compile Include="Controllers\CRM\BrokerInfoController.cs" />
+    <Compile Include="Controllers\CRM\MerchantInfoController.cs" />
     <Compile Include="Controllers\CRM\MessageConfigController.cs" />
     <Compile Include="Controllers\CRM\MessageDetailController.cs" />
     <Compile Include="Controllers\CRM\LevelConfigController.cs" />
@@ -143,6 +145,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CRM\BrokerModel.cs" />
+    <Compile Include="Models\CRM\MerchantInfoModel.cs" />
+    <Compile Include="Models\CRM\MessageConfigModel.cs" />
+    <Compile Include="Models\CRM\MessageDetailModel.cs" />
     <Compile Include="Models\CRM\TaskAwardModel.cs" />
     <Compile Include="Models\CRM\TaskModel.cs" />
     <Compile Include="Models\CRM\TaskPunishmentModel.cs" />
