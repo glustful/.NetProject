@@ -139,6 +139,8 @@
     <Compile Include="Controllers\CRM\CRMMerchantController.cs" />
     <Compile Include="Controllers\CRM\CRMMessageConfigController.cs" />
     <Compile Include="Controllers\CRM\CRMMessageDetailController.cs" />
+    <Compile Include="Controllers\CRM\CRMTaskController.cs" />
+    <Compile Include="Controllers\UC\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -153,14 +155,11 @@
     <Compile Include="Models\CMS\ContentModel.cs" />
     <Compile Include="Models\CMS\TagDetailModel.cs" />
     <Compile Include="Models\CMS\TagModel.cs" />
+    <Compile Include="Models\UC\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
