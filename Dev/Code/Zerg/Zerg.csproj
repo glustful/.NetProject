@@ -130,7 +130,9 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CMS\AdvertisementController.cs" />
     <Compile Include="Controllers\CMS\ChannelController.cs" />
+    <Compile Include="Controllers\CMS\ResourceController.cs" />
     <Compile Include="Controllers\CMS\SettingController.cs" />
     <Compile Include="Controllers\CMS\TagController.cs" />
     <Compile Include="Controllers\CMS\ContentController.cs" />
@@ -144,6 +146,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CMS\AdvertisementModel.cs" />
     <Compile Include="Models\CMS\ChannelModel.cs" />
     <Compile Include="Models\CMS\SettingModel.cs" />
     <Compile Include="Models\CRM\TaskAwardModel.cs" />
