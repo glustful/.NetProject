@@ -44,8 +44,8 @@ namespace Zerg.Controllers.CRM
 
 
 
-        [System.Web.Http.HttpGet]
-        public HttpResponseMessage SearchBrokers([FromBody] string pageindex)
+       [System.Web.Http.HttpGet]
+        public HttpResponseMessage SearchBrokers(string pageindex)
         {
             var brokerSearchCondition = new BrokerSearchCondition
             {
