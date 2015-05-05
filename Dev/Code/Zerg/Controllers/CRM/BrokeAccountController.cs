@@ -1,6 +1,6 @@
 ﻿using CRM.Entity.Model;
+using CRM.Service.BrokeAccount;
 using CRM.Service.Broker;
-using CRM.Service.PointDetail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,22 +11,20 @@ using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
-
     /// <summary>
-    /// 积分详情管理  李洪亮  2015-05-05
+    /// 账户明细管理  李洪亮  2015-05-05
     /// </summary>
-    public class PointDetailController : ApiController
+    public class BrokeAccountController : ApiController
     {
-
-        private IPointDetailService _pointdetailService;
-        private readonly IBrokerService _brokerService;
-        public PointDetailController(IPointDetailService pointdetailService, IBrokerService brokerService)
+         private IBrokeAccountService _brokeaccountService;
+        private  IBrokerService _brokerService;
+        public BrokeAccountController(IBrokeAccountService brokeaccountService, IBrokerService brokerService)
         {
-            _pointdetailService =pointdetailService;
+            _brokeaccountService = brokeaccountService;
             _brokerService =brokerService;
         }
 
-        #region 积分详情
+        #region 经纪人账户明细详情
 
       /// <summary>
       /// 查询经纪人的积分详情
@@ -37,11 +35,11 @@ namespace Zerg.Controllers.CRM
         [System.Web.Http.HttpGet]
         public HttpResponseMessage GetPointDetailByUserId(string userId)
         {
-            var pointdetailCon = new PointDetailSearchCondition
+            var brokeaccountcon = new BrokeAccountSearchCondition
             {
                Brokers=_brokerService.GetBrokerById(Convert.ToInt32(userId))
             };
-            return PageHelper.toJson(_pointdetailService.GetPointDetailsByCondition(pointdetailCon).ToList());
+            return PageHelper.toJson(_brokeaccountService.GetBrokeAccountsByCondition(brokeaccountcon).ToList());
         }
 
         /// <summary>
@@ -50,17 +48,17 @@ namespace Zerg.Controllers.CRM
         /// <param name="name"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddPointDetail([FromBody] PointDetailEntity pointDetail)
+        public HttpResponseMessage AddBrokeAccount([FromBody] BrokeAccountEntity brokeAccount)
         {
 
-            if (pointDetail!=null)
+            if (brokeAccount != null)
             {
-                var entity = new PointDetailEntity
+                var entity = new BrokeAccountEntity
                 {
-                    Addpoints=pointDetail.Addpoints,
+                    MoneyDesc=brokeAccount.MoneyDesc,
+                    Balancenum=brokeAccount.Balancenum,
                     Broker=null,
-                    Pointsds=pointDetail.Pointsds,
-                    Totalpoints=pointDetail.Totalpoints,
+                  
                     Uptime = DateTime.Now,
                     Addtime = DateTime.Now,
 
@@ -68,7 +66,7 @@ namespace Zerg.Controllers.CRM
 
                 try
                 {
-                    if (_pointdetailService.Create(entity) != null)
+                    if (_brokeaccountService.Create(entity) != null)
                     {
                         return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
                     }
@@ -85,6 +83,7 @@ namespace Zerg.Controllers.CRM
 
 
         #endregion
+
 
     }
 }
