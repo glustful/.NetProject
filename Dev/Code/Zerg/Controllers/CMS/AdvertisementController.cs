@@ -1,23 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using CMS.Entity.Model;
 using CMS.Service.Advertisement;
 using CMS.Service.Content;
-using CMS.Entity.Model;
-using Zerg.Models.CMS;
-using Zerg.Common;
 using YooPoon.Core.Site;
+using Zerg.Common;
+using Zerg.Models.CMS;
 
 namespace Zerg.Controllers.CMS
 {
     public class AdvertisementController : ApiController
     {
-        private IAdvertisementService _advertisementService;
-        private IContentService _contentService;
-        private IWorkContext _workContent;
+        private readonly IAdvertisementService _advertisementService;
+        private readonly IContentService _contentService;
+        private readonly IWorkContext _workContent;
         public AdvertisementController(IAdvertisementService advertisementService,IContentService contentService,IWorkContext workContent)
         {
             _advertisementService = advertisementService;
@@ -43,7 +42,7 @@ namespace Zerg.Controllers.CMS
             var advertisementList = _advertisementService.GetAdvertisementsByCondition(advertisementCon).Select(a => new AdvertisementModel { 
                  Id=a.Id,
                  Title=a.Title,
-                 Continue=a.Continue.ToString()
+                 Continue=a.Continue.ToString(CultureInfo.InvariantCulture)
             }).ToList();
             return PageHelper.toJson(advertisementList);
         }
@@ -66,7 +65,7 @@ namespace Zerg.Controllers.CMS
                       Id = advertisement.Id,
                       Title = advertisement.Title,
                       Detail = advertisement.Detail,
-                      Continue=advertisement.Continue.ToString(),
+                      Continue=advertisement.Continue.ToString(CultureInfo.InvariantCulture),
                       ContentId=advertisement.Content.Id,
                       ContentTitle=advertisement.Content.Title
                  };
