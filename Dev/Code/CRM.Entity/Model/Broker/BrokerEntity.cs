@@ -7,15 +7,12 @@ namespace CRM.Entity.Model
 	public class BrokerEntity : IBaseEntity
 	{
 		/// <summary>
-		/// 经纪人ID
+		/// ID
 		/// </summary>
 		public virtual int Id { get; set; }
+	
 		/// <summary>
-		/// 等级ID
-		/// </summary>
-		public virtual LevelEntity Level { get; set; }
-		/// <summary>
-		/// 用户ID
+		/// 用户基础信息ID
 		/// </summary>
 		public virtual int UserId { get; set; }
 		/// <summary>
@@ -34,7 +31,16 @@ namespace CRM.Entity.Model
 		/// 身份证
 		/// </summary>
 		public virtual string Sfz { get; set; }
-		/// <summary>
+
+        /// <summary>
+        /// 身份证正面照
+        /// </summary>
+        public virtual string SfzPhoto { get; set; }
+	
+        
+        
+        
+        /// <summary>
 		/// 性别
 		/// </summary>
 		public virtual string Sexy { get; set; }
@@ -62,12 +68,18 @@ namespace CRM.Entity.Model
 		/// 账户金额
 		/// </summary>
 		public virtual decimal Amount { get; set; }
+
+        /// <summary>
+        /// 等级ID
+        /// </summary>
+        public virtual LevelEntity Level { get; set; }
+
 		/// <summary>
-		/// 经纪人等级
+		/// 经纪人等级名称
 		/// </summary>
 		public virtual string Agentlevel { get; set; }
 		/// <summary>
-		/// 用户类型
+		/// 用户类型（会员 经纪人 财务 小秘书）
 		/// </summary>
 		public virtual string Usertype { get; set; }
 		/// <summary>
@@ -79,9 +91,9 @@ namespace CRM.Entity.Model
 		/// </summary>
 		public virtual DateTime Regtime { get; set; }
 		/// <summary>
-		/// 删除状态
+		/// 用户状态（删除0 注销-1 正常1）
 		/// </summary>
-		public virtual bool Delflag { get; set; }
+		public virtual int State { get; set; }
 		/// <summary>
 		/// AddUser
 		/// </summary>
@@ -109,5 +121,17 @@ namespace CRM.Entity.Model
             broker = 0,
             manager = 1         
         }
+
+
+        /// <summary>
+        /// 用户状态 （删除0 注销-1 正常1）
+        /// </summary>
+        public enum EnumUserState
+        {
+            Delete = 0,
+            Cancel = -1,
+            OK=1
+        }
+
 	}
 }

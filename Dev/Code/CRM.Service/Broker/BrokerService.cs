@@ -107,7 +107,7 @@ namespace CRM.Service.Broker
                 }
 				if (condition.Delflag.HasValue)
                 {
-                    query = query.Where(q => q.Delflag == condition.Delflag.Value);
+                    query = query.Where(q => q.State == condition.Delflag.Value);
                 }
 				if (!string.IsNullOrEmpty(condition.Brokername))
                 {
@@ -244,7 +244,7 @@ namespace CRM.Service.Broker
                 }
 				if (condition.Delflag.HasValue)
                 {
-                    query = query.Where(q => q.Delflag == condition.Delflag.Value);
+                    query = query.Where(q => q.State == condition.Delflag.Value);
                 }
 				if (!string.IsNullOrEmpty(condition.Brokername))
                 {

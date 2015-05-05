@@ -30,7 +30,7 @@ namespace Zerg.Controllers.CRM
 
 
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage SearchLevel([FromBody] string pageindex)
+        public HttpResponseMessage SearchLevel( string pageindex)
         {
             var leSearchCon = new LevelSearchCondition
             {

@@ -130,6 +130,7 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CRM\BankCardController.cs" />
     <Compile Include="Controllers\CRM\AdminInfoController.cs" />
     <Compile Include="Controllers\CRM\AdminRecomController.cs" />
     <Compile Include="Controllers\CRM\BrokerInfoController.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Controllers\CRM\MessageDetailController.cs" />
     <Compile Include="Controllers\CRM\LevelConfigController.cs" />
     <Compile Include="Controllers\CRM\LevelController.cs" />
+    <Compile Include="Controllers\CRM\PointDetailController.cs" />
     <Compile Include="Controllers\CRM\TaskController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
