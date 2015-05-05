@@ -2,6 +2,7 @@
 using System.Web;
 using Autofac;
 using Autofac.Integration.Mvc;
+using Autofac.Integration.WebApi;
 using YooPoon.Core.Autofac;
 using YooPoon.Core.Data;
 using YooPoon.Core.Site;
@@ -46,6 +47,8 @@ namespace YooPoon.WebFramework.Dependency
 
             //controllers
             builder.RegisterControllers(assemblies);
+            //ApiControllers
+            builder.RegisterApiControllers(assemblies);
 
             //View
             //builder.RegisterSource(new ViewRegistrationSource());
