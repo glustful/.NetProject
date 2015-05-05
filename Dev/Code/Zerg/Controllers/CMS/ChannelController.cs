@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using CMS.Service.Channel;
 using CMS.Entity.Model;
-using Zerg.Models.CMS;
-using Zerg.Models;
-using Zerg.Common;
+using CMS.Service.Channel;
 using YooPoon.Core.Site;
+using Zerg.Common;
+using Zerg.Models.CMS;
 
 namespace Zerg.Controllers.CMS
 {
     public class ChannelController : ApiController
     {
         private readonly IChannelService _channelService;
-        private IWorkContext _workContent;
+        private readonly IWorkContext _workContent;
+
         public ChannelController(IChannelService channelService,IWorkContext workContent) {
             _channelService = channelService;
             _workContent = workContent;

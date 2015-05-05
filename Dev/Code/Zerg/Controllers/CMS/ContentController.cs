@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Results;
-using CMS.Service.Content;
+using CMS.Entity.Model;
 using CMS.Service.Channel;
+using CMS.Service.Content;
 using YooPoon.Core.Site;
 using YooPoon.WebFramework.User.Services;
-using CMS.Entity.Model;
+using Zerg.Common;
 using Zerg.Models;
 using Zerg.Models.CMS;
-using Zerg.Common;
-using YooPoon.Core;
 
 namespace Zerg.Controllers.CMS
 {
@@ -22,7 +18,7 @@ namespace Zerg.Controllers.CMS
         private readonly IContentService _contentService;
         private readonly IUserService _userService;
         private readonly IChannelService _channelService;
-        private IWorkContext _workContent;
+        private readonly IWorkContext _workContent;
 
 
         public ContentController(IContentService contentService,IUserService userService,IChannelService channelService,IWorkContext workContent)

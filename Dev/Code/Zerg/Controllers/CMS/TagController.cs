@@ -1,29 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using CMS.Service.Tag;
-using CMS.Service.Content;
-using CMS.Service.Channel;
 using CMS.Entity.Model;
-using Zerg.Models;
-using System.Web.Http.Results;
-using Zerg.Common;
+using CMS.Service.Tag;
 using YooPoon.Core.Site;
+using Zerg.Common;
+using Zerg.Models;
 
 namespace Zerg.Controllers.CMS
 {
     public class TagController : ApiController
     {
         private readonly ITagService _tagService;
-        private readonly IContentService _contentService;
         private readonly IWorkContext _workContext;
-        public TagController(ITagService tagService, IContentService contentService,IWorkContext workcontext)
+        public TagController(ITagService tagService,IWorkContext workcontext)
         {
             _tagService = tagService;
-            _contentService = contentService;
             _workContext = workcontext; 
         }
         /// <summary>
@@ -31,9 +25,9 @@ namespace Zerg.Controllers.CMS
         /// </summary>
         /// <param name="tag">标签名称</param>
         /// <param name="page">页码</param>
-        /// <param name="pagesize">页面记录数</param>
+        /// <param name="pageSize">页面记录数</param>
         /// <returns></returns>   
-        [System.Web.Http.HttpGet] 
+        [HttpGet] 
         public HttpResponseMessage Index(string tag = null,int page=1,int pageSize=10)
         {
             var tagCon = new TagSearchCondition{
@@ -52,7 +46,7 @@ namespace Zerg.Controllers.CMS
         /// </summary>
         /// <param name="id">标签Id</param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet] 
+        [HttpGet] 
         public HttpResponseMessage Detailed(int id)
         {
             var tag = _tagService.GetTagById(id);
@@ -131,7 +125,7 @@ namespace Zerg.Controllers.CMS
         /// 删除
         /// </summary>
         /// <param name="id">标签Id</param> 
-       [System.Web.Http.HttpPost]
+       [HttpPost]
         public HttpResponseMessage Delete(int id)
         {
             var tag = _tagService.GetTagById(id);                      
