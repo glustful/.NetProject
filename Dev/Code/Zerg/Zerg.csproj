@@ -125,14 +125,13 @@
     <Content Include="App_Data\Settings.txt" />
     <Content Include="Global.asax" />
     <Content Include="Lib\MvcPager.dll" />
-    <Content Include="test.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CRM\AdminInfoController.cs" />
-    <Compile Include="Controllers\CRM\BrokerBusinessController.cs" />
+    <Compile Include="Controllers\CRM\AdminRecomController.cs" />
     <Compile Include="Controllers\CRM\BrokerInfoController.cs" />
     <Compile Include="Controllers\CRM\MerchantInfoController.cs" />
     <Compile Include="Controllers\CRM\MessageConfigController.cs" />
@@ -140,10 +139,10 @@
     <Compile Include="Controllers\CRM\LevelConfigController.cs" />
     <Compile Include="Controllers\CRM\LevelController.cs" />
     <Compile Include="Controllers\CRM\TaskController.cs" />
-    <Compile Include="Controllers\CRM\testController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CRM\AdminRecomModel.cs" />
     <Compile Include="Models\CRM\BrokerModel.cs" />
     <Compile Include="Models\CRM\MerchantInfoModel.cs" />
     <Compile Include="Models\CRM\MessageConfigModel.cs" />

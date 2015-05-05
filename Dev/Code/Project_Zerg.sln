@@ -33,9 +33,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugin", "plugin", "{C5D7129F-F480-4DDB-95BB-B4946EC6C087}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{7BCF5AC0-0521-4A97-88B0-CC061162AEB5}"
-	ProjectSection(SolutionItems) = preProject
-		Zerg\test.html = Zerg\test.html
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{64210B8F-BE0A-4B4C-98F5-1944A731C0C5}"
 EndProject
