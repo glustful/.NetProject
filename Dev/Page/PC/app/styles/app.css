@@ -838,6 +838,7 @@ sup {
     width: 20%;
     height: 34px;
     padding: 6px 12px;
+    margin-left: 14px;
     font-size: 14px;
     line-height: 1.42857143;
     color: #555;
@@ -6189,4 +6190,46 @@ a.text-dark:hover {
   .w-full-xs {
     width: 100%;
   }
+}
+.content li{
+    float: left;
+    list-style: none;
+}
+.content span{
+    margin-right: 8%;
+}
+.information span{
+    margin-right: 2%;
+}
+small{
+    color: #0088cc;
+}
+
+
+.right li{
+    list-style: none;
+    float: left;
+}
+.left li{
+    float: left;
+    margin:3px;
+}
+
+.header li{
+    float:left;
+    list-style: none;
+    font-weight: bold;
+    width: 32%;
+    text-align: center;
+    margin-top: 20px;
+}
+.time{
+    margin:0  18% 0 19%;
+}
+.content-1 li{
+    float: left;
+    list-style: none;
+}
+.content-1 span{
+    margin-right: 30px;
 }

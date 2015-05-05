@@ -55,7 +55,7 @@ angular.module('app')
             .state('app.BusinessManagement', {
                 url: '/BusinessManagement',
                 templateUrl: 'views/pages/BusinessManagement.html',
-                data : { title: 'BusinessManagement' },
+                data : { title: '商家管理' },
                 resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
             })
             //-------------------------end-----------------------------------
