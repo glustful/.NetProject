@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using CRM.Service.Broker;
 
 namespace Zerg.Controllers.CRM
 {
@@ -12,5 +13,12 @@ namespace Zerg.Controllers.CRM
     /// </summary>
     public class AdminInfoController : ApiController
     {
+        private readonly IBrokerService _brokerService;
+
+        public AdminInfoController(IBrokerService brokerService
+            )
+        {
+            _brokerService = brokerService;
+        }
     }
 }
