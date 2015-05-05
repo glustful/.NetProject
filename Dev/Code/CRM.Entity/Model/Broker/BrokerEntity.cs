@@ -94,6 +94,22 @@ namespace CRM.Entity.Model
 		/// 用户状态（删除0 注销-1 正常1）
 		/// </summary>
 		public virtual int State { get; set; }
+
+
+        /// <summary>
+        /// 所属的合伙人ID（同ID）
+        /// </summary>
+        public virtual int PartnersId { get; set; }
+
+
+        /// <summary>
+        /// 所属的合伙人姓名（同经纪人名）
+        /// </summary>
+        public virtual string PartnersName { get; set; }
+
+
+
+
 		/// <summary>
 		/// AddUser
 		/// </summary>

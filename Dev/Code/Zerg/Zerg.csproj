@@ -141,6 +141,7 @@
     <Compile Include="Controllers\CRM\MessageDetailController.cs" />
     <Compile Include="Controllers\CRM\LevelConfigController.cs" />
     <Compile Include="Controllers\CRM\LevelController.cs" />
+    <Compile Include="Controllers\CRM\PartnerListController.cs" />
     <Compile Include="Controllers\CRM\PointDetailController.cs" />
     <Compile Include="Controllers\CRM\TaskController.cs" />
     <Compile Include="Global.asax.cs">
