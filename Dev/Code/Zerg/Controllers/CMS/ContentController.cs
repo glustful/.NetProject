@@ -13,6 +13,7 @@ using CMS.Entity.Model;
 using Zerg.Models;
 using Zerg.Models.CMS;
 using Zerg.Common;
+using YooPoon.Core;
 
 namespace Zerg.Controllers.CMS
 {
@@ -21,13 +22,15 @@ namespace Zerg.Controllers.CMS
         private readonly IContentService _contentService;
         private readonly IUserService _userService;
         private readonly IChannelService _channelService;
+        private IWorkContext _workContent;
 
 
-        public ContentController(IContentService contentService,IUserService userService,IChannelService channelService)
+        public ContentController(IContentService contentService,IUserService userService,IChannelService channelService,IWorkContext workContent)
         {
             _contentService = contentService;
             _channelService = channelService;
             _userService = userService;
+            _workContent = workContent;
         }
 
 
@@ -89,12 +92,17 @@ namespace Zerg.Controllers.CMS
         /// </summary>
         /// <param name="model">内容参数</param>
         /// <returns></returns>
-        public HttpResponseMessage DoEdit(ContentDetailModel model)
+        [HttpPost]
+        public HttpResponseMessage Edit(ContentDetailModel model)
         { 
             var content = _contentService.GetContentById(model.Id);
+            var newChannel = _channelService.GetChannelById(model.ChannelId);
             content.Title = model.Title;
             content.Content = model.Content;
+            content.Status = model.Status;
+            content.UpdUser = _workContent.CurrentUser.Id;
             content.UpdTime = DateTime.Now;
+            content.Channel = newChannel;
             if (_contentService.Update(content)!=null) {
                 return PageHelper.toJson(PageHelper.ReturnValue(true,"数据更新成功！"));
             }
@@ -108,10 +116,11 @@ namespace Zerg.Controllers.CMS
         /// </summary>
         /// <param name="model">内容参数</param>
         /// <returns></returns>
-        public HttpResponseMessage DoCreate(ContentDetailModel model)
+        [HttpPost]
+        public HttpResponseMessage Create(ContentDetailModel model)
         {
-            var channel = _channelService.GetChannelById(model.ChannelId);
-            if (channel == null)
+            var newChannel = _channelService.GetChannelById(model.ChannelId);
+            if (newChannel == null)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false,"数据添加失败！"));
             }
@@ -120,8 +129,11 @@ namespace Zerg.Controllers.CMS
                 Title = model.Title,
                 Content = model.Content,
                 Status=model.Status, 
-                Channel=channel,
-                Addtime=DateTime.Now
+                Channel=newChannel,
+                Adduser=_workContent.CurrentUser.Id,
+                Addtime=DateTime.Now,
+                UpdUser=_workContent.CurrentUser.Id,
+                UpdTime=DateTime.Now
             };
             if (_contentService.Create(content)!=null)
             {
@@ -136,7 +148,7 @@ namespace Zerg.Controllers.CMS
         /// </summary>
         /// <param name="id">内容id</param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         public HttpResponseMessage Delete(int id) {
             var content = _contentService.GetContentById(id);
             if (_contentService.Delete(content))

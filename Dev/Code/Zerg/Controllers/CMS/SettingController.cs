@@ -9,6 +9,7 @@ using Zerg.Common;
 using CMS.Entity.Model;
 using Zerg.Models.CMS;
 
+
 namespace Zerg.Controllers.CMS
 {
     public class SettingController : ApiController
@@ -66,8 +67,8 @@ namespace Zerg.Controllers.CMS
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpGet]
-        public HttpResponseMessage DoEdit(SettingModel model)
+        [HttpPost]
+        public HttpResponseMessage Edit(SettingModel model)
         {
             var setting = _settingService.GetSettingById(model.Id);
             setting.Key = model.Key;
@@ -78,7 +79,7 @@ namespace Zerg.Controllers.CMS
             }
             else 
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(true,"数据更新失败"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"数据更新失败"));
             }
         }
         /// <summary>
@@ -86,12 +87,11 @@ namespace Zerg.Controllers.CMS
         /// </summary>
         /// <param name="model">设置参数</param>
         /// <returns></returns>
-        [HttpGet]
-        public HttpResponseMessage DoCreate(SettingModel model)
+        [HttpPost]
+        public HttpResponseMessage Create(SettingModel model)
         {
             var setting = new SettingEntity
             {
-                Id = model.Id,
                 Key = model.Key,
                 Value = model.Value
             };
@@ -109,7 +109,7 @@ namespace Zerg.Controllers.CMS
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         public HttpResponseMessage Delete(int id) {
             var setting = _settingService.GetSettingById(id);
             if (_settingService.Delete(setting))

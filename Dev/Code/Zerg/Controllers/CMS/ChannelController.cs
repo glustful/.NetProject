@@ -9,14 +9,17 @@ using CMS.Entity.Model;
 using Zerg.Models.CMS;
 using Zerg.Models;
 using Zerg.Common;
+using YooPoon.Core.Site;
 
 namespace Zerg.Controllers.CMS
 {
     public class ChannelController : ApiController
     {
         private readonly IChannelService _channelService;
-        public ChannelController(IChannelService channelService) {
+        private IWorkContext _workContent;
+        public ChannelController(IChannelService channelService,IWorkContext workContent) {
             _channelService = channelService;
+            _workContent = workContent;
         }
         /// <summary>
         /// 首页
@@ -38,7 +41,7 @@ namespace Zerg.Controllers.CMS
             { 
                 Id=a.Id,
                 Name=a.Name,
-                Status=a.Status                
+                Status=a.Status,
             }).ToList();
             return PageHelper.toJson(channelList);
         }
@@ -47,15 +50,19 @@ namespace Zerg.Controllers.CMS
         /// </summary>
         /// <param name="model">频道参数</param>
         /// <returns></returns>
-        public HttpResponseMessage Docreate(ChannelModel model)
+        [HttpPost]
+        public HttpResponseMessage Create(ChannelModel model)
         {
-           var newParent = _channelService.GetChannelById(model.Parent.Id);
+           var newParent = _channelService.GetChannelById(model.ParentId);
             var channel = new ChannelEntity
             {
                 Name=model.Name,
                 Status=model.Status,
                 Parent=newParent,
-                Addtime=DateTime.Now
+                Adduser=_workContent.CurrentUser.Id,
+                Addtime=DateTime.Now,
+                UpdUser=_workContent.CurrentUser.Id,
+                UpdTime=DateTime.Now
             };
             if (_channelService.Create(channel)!=null)
             {
@@ -83,12 +90,7 @@ namespace Zerg.Controllers.CMS
                 Id = channel.Id,
                 Name = channel.Name,
                 Status = channel.Status,
-                Parent = new ChannelModel
-                {
-                    Id=channel.Parent.Id,
-                    Name=channel.Parent.Name,
-                    Status=channel.Parent.Status
-                }
+                ParentId=channel.Parent.Id
             };
             return PageHelper.toJson(channelDetail);
         }
@@ -96,12 +98,15 @@ namespace Zerg.Controllers.CMS
         /// 保存修改信息
         /// </summary>
         /// <param name="model">频道参数</param>
-        /// <returns></returns>        
-         public HttpResponseMessage DoEdit(ChannelModel model)
+        /// <returns></returns>  
+        [HttpPost]
+         public HttpResponseMessage Edit(ChannelModel model)
          {
              var channel = _channelService.GetChannelById(model.Id);
-             var newParent = _channelService.GetChannelById(model.Parent.Id);
+             var newParent = _channelService.GetChannelById(model.ParentId);
              channel.Name = model.Name;
+             channel.Status = model.Status;
+             channel.UpdUser = _workContent.CurrentUser.Id;
              channel.UpdTime = DateTime.Now;
              channel.Parent = newParent;
              if (_channelService.Update(channel)!=null) {
@@ -117,7 +122,7 @@ namespace Zerg.Controllers.CMS
         /// </summary>
         /// <param name="id">频道id</param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
          public HttpResponseMessage Delete(int id)
          {
              var channel = _channelService.GetChannelById(id);
