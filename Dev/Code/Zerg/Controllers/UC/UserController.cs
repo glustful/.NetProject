@@ -31,15 +31,11 @@ namespace Zerg.Controllers.UC
         {
             var user = _userService.GetUserByName(model.UserName);
             if (user == null)
-            {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名或密码错误"));
-            }
-            if (PasswordHelper.ValidatePasswordHashed(user, model.Password))
-            {
-                _authenticationService.SignIn(user, model.Remember);
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "登陆成功"));
-            }
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名或密码错误"));
+            if (!PasswordHelper.ValidatePasswordHashed(user, model.Password))
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名或密码错误"));
+            _authenticationService.SignIn(user, model.Remember);
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "登陆成功"));
         }
 
         /// <summary>
