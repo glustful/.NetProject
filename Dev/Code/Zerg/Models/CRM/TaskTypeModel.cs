@@ -19,5 +19,9 @@ namespace Zerg.Models.CRM
         /// 类型描述
         /// </summary>
         public string Describe { get; set; }
+        /// <summary>
+        /// 添加/修改类型
+        /// </summary>
+        public string Type { get; set; }
     }
 }

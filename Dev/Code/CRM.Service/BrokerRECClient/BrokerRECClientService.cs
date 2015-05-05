@@ -63,7 +63,7 @@ namespace CRM.Service.BrokerRECClient
 		{
 			try
             {
-                return _brokerrecclientRepository.GetById(id); ;
+                return _brokerrecclientRepository.GetById(id);
             }
             catch (Exception e)
             {
@@ -105,6 +105,18 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Where(q => q.Clientname.Contains(condition.Clientname));
                 }
+				if (!string.IsNullOrEmpty(condition.Brokername))
+                {
+                    query = query.Where(q => q.Brokername.Contains(condition.Brokername));
+                }
+				if (!string.IsNullOrEmpty(condition.Brokerlevel))
+                {
+                    query = query.Where(q => q.Brokerlevel.Contains(condition.Brokerlevel));
+                }
+				if (!string.IsNullOrEmpty(condition.Projectname))
+                {
+                    query = query.Where(q => q.Projectname.Contains(condition.Projectname));
+                }
 				if (condition.Ids != null && condition.Ids.Any())
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
@@ -125,12 +137,16 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
+				if (condition.Projectids != null && condition.Projectids.Any())
+                {
+                    query = query.Where(q => condition.Projectids.Contains(q.Projectid));
+                }
 				if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
                     {
 						case EnumBrokerRECClientSearchOrderBy.OrderById:
-							query = condition.isDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
+							query = condition.IsDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
 							break;
                     }
 					
@@ -186,6 +202,18 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Where(q => q.Clientname.Contains(condition.Clientname));
                 }
+				if (!string.IsNullOrEmpty(condition.Brokername))
+                {
+                    query = query.Where(q => q.Brokername.Contains(condition.Brokername));
+                }
+				if (!string.IsNullOrEmpty(condition.Brokerlevel))
+                {
+                    query = query.Where(q => q.Brokerlevel.Contains(condition.Brokerlevel));
+                }
+				if (!string.IsNullOrEmpty(condition.Projectname))
+                {
+                    query = query.Where(q => q.Projectname.Contains(condition.Projectname));
+                }
 				if (condition.Ids != null && condition.Ids.Any())
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
@@ -205,6 +233,10 @@ namespace CRM.Service.BrokerRECClient
 				if (condition.Upusers != null && condition.Upusers.Any())
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
+                }
+				if (condition.Projectids != null && condition.Projectids.Any())
+                {
+                    query = query.Where(q => condition.Projectids.Contains(q.Projectid));
                 }
 				return query.Count();
 			}

@@ -4,14 +4,16 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.BrokerRECClient
 {
-	public class BrokerRECClientMapping : EntityTypeConfiguration<BrokerRECClientEntity>, Zerg.Common.Data.IZergMapping
+    public class BrokerRECClientMapping : EntityTypeConfiguration<BrokerRECClientEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public BrokerRECClientMapping()
 		{
 			ToTable("BrokerRECClient");
 			HasKey(c => c.Id);
-
+			Property(c => c.Id).HasColumnType("int").IsOptional();
 			HasOptional(c =>c.Broker);
+
+
 			HasOptional(c =>c.ClientInfo);
 			Property(c => c.Clientname).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Phone).HasColumnType("int");
@@ -20,6 +22,11 @@ namespace CRM.Entity.Mappings.BrokerRECClient
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upuser).HasColumnType("int");
 			Property(c => c.Uptime).HasColumnType("datetime");
+			Property(c => c.Brokername).HasColumnType("varchar").HasMaxLength(50);
+			Property(c => c.Brokerlevel).HasColumnType("varchar").HasMaxLength(50);
+			Property(c => c.Projectname).HasColumnType("varchar").HasMaxLength(256);
+			Property(c => c.Projectid).HasColumnType("int");
+			Property(c => c.Status).HasColumnType("int");
 		}
 	}
 }
