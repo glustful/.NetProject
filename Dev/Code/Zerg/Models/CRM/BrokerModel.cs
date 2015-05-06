@@ -99,6 +99,10 @@ namespace Zerg.Models.CRM
         /// UpTime
         /// </summary>
         public virtual DateTime Uptime { get; set; }
+        /// <summary>
+        /// 添加/修改类型
+        /// </summary>
+        public virtual string Type { get; set; }
     }
 
     /// <summary>

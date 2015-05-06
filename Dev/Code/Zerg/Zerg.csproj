@@ -130,9 +130,9 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CRM\BankCardController.cs" />
     <Compile Include="Controllers\CRM\AdminInfoController.cs" />
     <Compile Include="Controllers\CRM\AdminRecomController.cs" />
+    <Compile Include="Controllers\CRM\BankCardController.cs" />
     <Compile Include="Controllers\CRM\BrokerInfoController.cs" />
     <Compile Include="Controllers\CRM\MerchantInfoController.cs" />
     <Compile Include="Controllers\CRM\MessageConfigController.cs" />

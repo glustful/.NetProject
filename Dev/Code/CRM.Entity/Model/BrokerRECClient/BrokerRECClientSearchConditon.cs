@@ -88,10 +88,10 @@ namespace CRM.Entity.Model
 
 		public int[] Projectids { get; set; }
 
+	    public int BRECCType { get; set; }
 
 
-
-		public EnumBrokerRECClientSearchOrderBy? OrderBy { get; set; }
+	    public EnumBrokerRECClientSearchOrderBy? OrderBy { get; set; }
 
 	}
 
