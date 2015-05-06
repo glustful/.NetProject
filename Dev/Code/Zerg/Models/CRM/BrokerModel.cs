@@ -2,21 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using CRM.Entity.Model;
 
 namespace Zerg.Models.CRM
 {
     public class BrokerModel
     {
-        /// <summary>
-        /// 经纪人ID
-        /// </summary>
         public virtual int Id { get; set; }
+
         /// <summary>
-        /// 等级ID
-        /// </summary>
-        public virtual int LevelId { get; set; }
-        /// <summary>
-        /// 用户ID
+        /// 用户基础信息ID
         /// </summary>
         public virtual int UserId { get; set; }
         /// <summary>
@@ -35,6 +30,12 @@ namespace Zerg.Models.CRM
         /// 身份证
         /// </summary>
         public virtual string Sfz { get; set; }
+
+        /// <summary>
+        /// 身份证正面照
+        /// </summary>
+        public virtual string SfzPhoto { get; set; }
+
         /// <summary>
         /// 性别
         /// </summary>
@@ -63,12 +64,18 @@ namespace Zerg.Models.CRM
         /// 账户金额
         /// </summary>
         public virtual decimal Amount { get; set; }
+
         /// <summary>
-        /// 经纪人等级
+        /// 等级ID
+        /// </summary>
+        public virtual int LevelId { get; set; }
+
+        /// <summary>
+        /// 经纪人等级名称
         /// </summary>
         public virtual string Agentlevel { get; set; }
         /// <summary>
-        /// 用户类型
+        /// 用户类型（会员 经纪人 财务 小秘书）
         /// </summary>
         public virtual string Usertype { get; set; }
         /// <summary>
@@ -80,9 +87,25 @@ namespace Zerg.Models.CRM
         /// </summary>
         public virtual DateTime Regtime { get; set; }
         /// <summary>
-        /// 删除状态
+        /// 用户状态（删除0 注销-1 正常1）
         /// </summary>
-        public virtual bool Delflag { get; set; }
+        public virtual int State { get; set; }
+
+
+        /// <summary>
+        /// 所属的合伙人ID（同ID）
+        /// </summary>
+        public virtual int PartnersId { get; set; }
+
+
+        /// <summary>
+        /// 所属的合伙人姓名（同经纪人名）
+        /// </summary>
+        public virtual string PartnersName { get; set; }
+
+
+
+
         /// <summary>
         /// AddUser
         /// </summary>
@@ -100,9 +123,31 @@ namespace Zerg.Models.CRM
         /// </summary>
         public virtual DateTime Uptime { get; set; }
         /// <summary>
-        /// 添加/修改类型
+        /// 添加/删除类型
         /// </summary>
         public virtual string Type { get; set; }
+
+
+        /// <summary>
+        /// 用户类型枚举 （经纪人 broker  ，  管理员 manager）
+        /// </summary>
+        public enum EnumUserType
+        {
+            // 经纪人 broker  ，  管理员 manager
+            broker = 0,
+            manager = 1
+        }
+
+
+        /// <summary>
+        /// 用户状态 （删除0 注销-1 正常1）
+        /// </summary>
+        public enum EnumUserState
+        {
+            Delete = 0,
+            Cancel = -1,
+            OK = 1
+        }
     }
 
     /// <summary>

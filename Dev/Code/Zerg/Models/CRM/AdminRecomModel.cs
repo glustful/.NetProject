@@ -71,5 +71,9 @@ namespace Zerg.Models.CRM
         /// 进度状态
         /// </summary>
         public virtual EnumBRECCType Status { get; set; }
+        /// <summary>
+        /// 添加/修改类型
+        /// </summary>
+        public virtual string Type { get; set; }
     }
 }
