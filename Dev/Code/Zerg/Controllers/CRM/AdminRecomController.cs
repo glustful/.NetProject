@@ -62,15 +62,15 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public HttpResponseMessage PassAudit(int id)
+        public HttpResponseMessage PassAudit([FromBody]BrokerRECClientModel brokerRecClientModel)
         {
             var model = new BrokerRECClientEntity
             {
-                Id = id,
-                Status = EnumBRECCType.洽谈中
+                Id = brokerRecClientModel.Id,
+                Status = brokerRecClientModel.Status
             };
             _brokerRecClientService.Update(model);
-            return PageHelper.toJson(PageHelper.ReturnValue(true,"审核成功"));
+            return PageHelper.toJson(PageHelper.ReturnValue(true,"确认成功"));
         }
 
         #region 选择带客人 杨定鹏 2015年5月5日19:45:14
@@ -90,8 +90,36 @@ namespace Zerg.Controllers.CRM
         #endregion
 
         #region 场秘管理 杨定鹏 2015年5月5日19:45:40
-        
+        /// <summary>
+        /// 场秘列表
+        /// </summary>
+        /// <returns></returns>
+        public HttpResponseMessage SecretaryList()
+        {
+            var condition = new BrokerSearchCondition
+            {
+                OrderBy = EnumBrokerSearchOrderBy.OrderById
+            };
+            return PageHelper.toJson(_brokerService.GetBrokersByCondition(condition).ToList());
+        }
+
         #endregion
+
+        /// <summary>
+        /// 确认成功/失败
+        /// </summary>
+        /// <param name="brokerRecClientModel"></param>
+        /// <returns></returns>
+        public HttpResponseMessage Access([FromBody]BrokerRECClientModel brokerRecClientModel)
+        {
+            var model = new BrokerRECClientEntity()
+            {
+                Id=brokerRecClientModel.Id,
+                Status = brokerRecClientModel.Status
+            };
+            _brokerRecClientService.Update(model);
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "提交成功"));
+        }
 
         #endregion
     }
