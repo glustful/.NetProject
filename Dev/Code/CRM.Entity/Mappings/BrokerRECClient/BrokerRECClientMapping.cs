@@ -12,8 +12,6 @@ namespace CRM.Entity.Mappings.BrokerRECClient
 			HasKey(c => c.Id);
 			Property(c => c.Id).HasColumnType("int").IsOptional();
 			HasOptional(c =>c.Broker);
-
-
 			HasOptional(c =>c.ClientInfo);
 			Property(c => c.Clientname).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Phone).HasColumnType("int");
@@ -27,6 +25,13 @@ namespace CRM.Entity.Mappings.BrokerRECClient
 			Property(c => c.Projectname).HasColumnType("varchar").HasMaxLength(256);
 			Property(c => c.Projectid).HasColumnType("int");
 			Property(c => c.Status).HasColumnType("int");
+			HasOptional(c =>c.SecretaryID);
+			HasOptional(c =>c.SecretaryPhone);
+			HasOptional(c =>c.WriterID);
+			HasOptional(c =>c.WriterPhone);
+			HasOptional(c =>c.AccountantID);
+			Property(c => c.Payment).HasColumnType("Bool");
+			Property(c => c.Amount).HasColumnType("Decimal");
 		}
 	}
 }

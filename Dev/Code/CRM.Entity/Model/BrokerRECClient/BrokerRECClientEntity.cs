@@ -66,5 +66,33 @@ namespace CRM.Entity.Model
 		/// 进度状态
 		/// </summary>
 		public virtual EnumBRECCType Status { get; set; }
+		/// <summary>
+		/// 场秘ID
+		/// </summary>
+		public virtual BrokerEntity SecretaryID { get; set; }
+		/// <summary>
+		/// 场秘电话
+		/// </summary>
+		public virtual int SecretaryPhone { get; set; }
+		/// <summary>
+		/// 带客人员ID
+		/// </summary>
+		public virtual BrokerEntity WriterID { get; set; }
+		/// <summary>
+		/// 带客人员电话
+		/// </summary>
+		public virtual int WriterPhone { get; set; }
+		/// <summary>
+		/// 财务ID
+		/// </summary>
+		public virtual BrokerEntity AccountantID { get; set; }
+		/// <summary>
+		/// 是否打款
+		/// </summary>
+		public virtual bool Payment { get; set; }
+		/// <summary>
+		/// 打款金额
+		/// </summary>
+		public virtual Decimal Amount { get; set; }
 	}
 }
