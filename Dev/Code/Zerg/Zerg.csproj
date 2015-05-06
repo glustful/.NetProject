@@ -136,6 +136,7 @@
     <Compile Include="Controllers\CRM\BrokeAccountController.cs" />
     <Compile Include="Controllers\CRM\BrokerInfoController.cs" />
     <Compile Include="Controllers\CRM\BrokerWithdrawDetailController.cs" />
+    <Compile Include="Controllers\CRM\ClientInfoController.cs" />
     <Compile Include="Controllers\CRM\MerchantInfoController.cs" />
     <Compile Include="Controllers\CRM\MessageConfigController.cs" />
     <Compile Include="Controllers\CRM\MessageDetailController.cs" />
