@@ -1,11 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using CMS.Entity.Model;
 using CMS.Service.Resource;
 using YooPoon.Core.Site;
 using Zerg.Common;
+using Zerg.Common.Oss;
 
 namespace Zerg.Controllers.CMS
 {
@@ -23,17 +26,16 @@ namespace Zerg.Controllers.CMS
         {
             Random rnd = new Random(); //获取一个随机数
             const int randomMaxValue = 1000;
-            string strTemp, strYear, strMonth, strDay, strHour, strMinute, strSecond, strMillisecond;
             DateTime dt = DateTime.Now;
             int rndNumber = rnd.Next(randomMaxValue);
-            strYear = dt.Year.ToString();
-            strMonth = (dt.Month > 9) ? dt.Month.ToString() : "0" + dt.Month.ToString();
-            strDay = (dt.Day > 9) ? dt.Day.ToString() : "0" + dt.Day.ToString();
-            strHour = (dt.Hour > 9) ? dt.Hour.ToString() : "0" + dt.Hour.ToString();
-            strMinute = (dt.Minute > 9) ? dt.Minute.ToString() : "0" + dt.Minute.ToString();
-            strSecond = (dt.Second > 9) ? dt.Second.ToString() : "0" + dt.Second.ToString();
-            strMillisecond = dt.Millisecond.ToString();
-            strTemp = strYear + strMonth + strDay + "_" + strHour + strMinute + strSecond + "_" + strMillisecond + "_" + rndNumber.ToString();
+            var strYear = dt.Year.ToString();
+            var strMonth = (dt.Month > 9) ? dt.Month.ToString() : "0" + dt.Month.ToString();
+            var strDay = (dt.Day > 9) ? dt.Day.ToString() : "0" + dt.Day.ToString();
+            var strHour = (dt.Hour > 9) ? dt.Hour.ToString() : "0" + dt.Hour.ToString();
+            var strMinute = (dt.Minute > 9) ? dt.Minute.ToString() : "0" + dt.Minute.ToString();
+            var strSecond = (dt.Second > 9) ? dt.Second.ToString() : "0" + dt.Second.ToString();
+            var strMillisecond = dt.Millisecond.ToString();
+            var strTemp = strYear + strMonth + strDay + "_" + strHour + strMinute + strSecond + "_" + strMillisecond + "_" + rndNumber.ToString();
             return strTemp;
         }
         /// <summary>
@@ -41,29 +43,36 @@ namespace Zerg.Controllers.CMS
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage Upload()
+        public async Task<HttpResponseMessage> Upload()
         {
-            HttpPostedFile file = HttpContext.Current.Request.Files[0];
-            int pos = file.FileName.LastIndexOf(".", StringComparison.Ordinal) + 1;
-            var resource = new ResourceEntity
+            var streamProvider = new MultipartMemoryStreamProvider();
+            await Request.Content.ReadAsMultipartAsync(streamProvider);
+            foreach (var item in streamProvider.Contents)
             {
-                Guid = Guid.NewGuid(),
-                Name = GetUniquelyString()+file.FileName,
-                Length = file.ContentLength,
-                Type=file.FileName.Substring(pos,file.FileName.Length-pos),
-                Adduser=_workContent.CurrentUser.Id,
-                Addtime=DateTime.Now,
-                 UpdUser=_workContent.CurrentUser.Id,
-                UpdTime=DateTime.Now,
-            };
-            if (_resourceService.Create(resource) != null)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "文件上传成功"));
+                if (item.Headers.ContentDisposition.FileName != null)
+                {
+                    var ms = item.ReadAsStreamAsync().Result;
+                    FileInfo info = new FileInfo(item.Headers.ContentDisposition.FileName.Replace("\"", ""));
+
+
+                    var fileNewName = GetUniquelyString();
+                    OssHelper.PutObject(ms, fileNewName + info.Extension);
+                   
+                    var resource = new ResourceEntity
+                    {
+                        Guid = Guid.NewGuid(),
+                        Name = fileNewName,
+                        Length = ms.Length,
+                        Type = info.Extension.Substring(1).ToLower(),
+                        Adduser = _workContent.CurrentUser.Id,
+                        Addtime = DateTime.Now,
+                        UpdUser = _workContent.CurrentUser.Id,
+                        UpdTime = DateTime.Now,
+                    };
+                    _resourceService.Create(resource);
+                }
             }
-            else
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false,"文件上传失败"));
-            }            
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "文件上传成功"));
         }
         public HttpResponseMessage Search()
         {
