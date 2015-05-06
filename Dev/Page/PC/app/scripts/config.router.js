@@ -77,7 +77,7 @@ angular.module('app')
             .state('app.AdminWork', {
                 url: '/AdminWork',
                 templateUrl: 'views/pages/AdminWork.html',
-                data: { title: 'Admin管理'},
+                data: { title: 'Admin业务'},
                 resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
             })
             //-----------------------------------end------------------------------
@@ -515,7 +515,25 @@ angular.module('app')
               url: '/lockme',
               templateUrl: 'views/pages/lockme.html'
             })
-          ;
+            //---------------------------yangbo 2015.5.6 start------
+            .state('ui.map.list', {
+                url: '/list',
+                templateUrl: 'views/ui/map/list.html',
+                data : { title: '任务列表' },
+                controller: 'VectorMapCtrl',
+                resolve: load('scripts/controllers/vectormap.js')
+            })
+        //------------------------------------end----------
+            //---------------------------yangbo 2015.5.6 start------
+            .state('ui.map.task', {
+                url: '/task',
+                templateUrl: 'views/ui/map/task.html',
+                data : { title: '任务配置' },
+                controller: 'VectorMapCtrl',
+                resolve: load('scripts/controllers/vectormap.js')
+            })
+            //------------------------------------end----------
+
 
 
           function load(srcs, callback) {
