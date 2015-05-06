@@ -8,10 +8,10 @@ namespace CRM.Service.BrokerRECClient
 {
 	public class BrokerRECClientService : IBrokerRECClientService
 	{
-		private readonly Zerg.Common.Data.ICRMRepository<BrokerRECClientEntity> _brokerrecclientRepository;
+		private readonly IRepository<BrokerRECClientEntity> _brokerrecclientRepository;
 		private readonly ILog _log;
 
-		public BrokerRECClientService(Zerg.Common.Data.ICRMRepository<BrokerRECClientEntity> brokerrecclientRepository,ILog log)
+		public BrokerRECClientService(IRepository<BrokerRECClientEntity> brokerrecclientRepository,ILog log)
 		{
 			_brokerrecclientRepository = brokerrecclientRepository;
 			_log = log;
@@ -101,21 +101,9 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Where(q => q.Qq == condition.Qq.Value);
                 }
-				if (condition.SecretaryPhone.HasValue)
-                {
-                    query = query.Where(q => q.SecretaryPhone == condition.SecretaryPhone.Value);
-                }
-				if (condition.WriterPhone.HasValue)
-                {
-                    query = query.Where(q => q.WriterPhone == condition.WriterPhone.Value);
-                }
 				if (condition.Payment.HasValue)
                 {
                     query = query.Where(q => q.Payment == condition.Payment.Value);
-                }
-				if (condition.Amount.HasValue)
-                {
-                    query = query.Where(q => q.Amount == condition.Amount.Value);
                 }
 				if (!string.IsNullOrEmpty(condition.Clientname))
                 {
@@ -132,6 +120,14 @@ namespace CRM.Service.BrokerRECClient
 				if (!string.IsNullOrEmpty(condition.Projectname))
                 {
                     query = query.Where(q => q.Projectname.Contains(condition.Projectname));
+                }
+				if (!string.IsNullOrEmpty(condition.SecretaryPhone))
+                {
+                    query = query.Where(q => q.SecretaryPhone.Contains(condition.SecretaryPhone));
+                }
+				if (!string.IsNullOrEmpty(condition.WriterPhone))
+                {
+                    query = query.Where(q => q.WriterPhone.Contains(condition.WriterPhone));
                 }
 				if (condition.Ids != null && condition.Ids.Any())
                 {
@@ -229,21 +225,9 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Where(q => q.Qq == condition.Qq.Value);
                 }
-				if (condition.SecretaryPhone.HasValue)
-                {
-                    query = query.Where(q => q.SecretaryPhone == condition.SecretaryPhone.Value);
-                }
-				if (condition.WriterPhone.HasValue)
-                {
-                    query = query.Where(q => q.WriterPhone == condition.WriterPhone.Value);
-                }
 				if (condition.Payment.HasValue)
                 {
                     query = query.Where(q => q.Payment == condition.Payment.Value);
-                }
-				if (condition.Amount.HasValue)
-                {
-                    query = query.Where(q => q.Amount == condition.Amount.Value);
                 }
 				if (!string.IsNullOrEmpty(condition.Clientname))
                 {
@@ -260,6 +244,14 @@ namespace CRM.Service.BrokerRECClient
 				if (!string.IsNullOrEmpty(condition.Projectname))
                 {
                     query = query.Where(q => q.Projectname.Contains(condition.Projectname));
+                }
+				if (!string.IsNullOrEmpty(condition.SecretaryPhone))
+                {
+                    query = query.Where(q => q.SecretaryPhone.Contains(condition.SecretaryPhone));
+                }
+				if (!string.IsNullOrEmpty(condition.WriterPhone))
+                {
+                    query = query.Where(q => q.WriterPhone.Contains(condition.WriterPhone));
                 }
 				if (condition.Ids != null && condition.Ids.Any())
                 {

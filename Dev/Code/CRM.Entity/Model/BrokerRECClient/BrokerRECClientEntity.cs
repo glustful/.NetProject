@@ -73,7 +73,7 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// 场秘电话
 		/// </summary>
-		public virtual int SecretaryPhone { get; set; }
+		public virtual string SecretaryPhone { get; set; }
 		/// <summary>
 		/// 带客人员ID
 		/// </summary>
@@ -81,7 +81,7 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// 带客人员电话
 		/// </summary>
-		public virtual int WriterPhone { get; set; }
+		public virtual string WriterPhone { get; set; }
 		/// <summary>
 		/// 财务ID
 		/// </summary>

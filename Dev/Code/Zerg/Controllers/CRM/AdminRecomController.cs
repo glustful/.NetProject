@@ -40,7 +40,6 @@ namespace Zerg.Controllers.CRM
             var condition = new BrokerRECClientSearchCondition
             {
                 OrderBy = EnumBrokerRECClientSearchOrderBy.OrderById,
-                BRECCType = brokerRecClientSearchCondition.BRECCType
             };
             return PageHelper.toJson(_brokerRecClientService.GetBrokerRECClientsByCondition(condition).ToPagedList(Convert.ToInt32(brokerRecClientSearchCondition.PageCount) + 1, 10).ToList());
         }

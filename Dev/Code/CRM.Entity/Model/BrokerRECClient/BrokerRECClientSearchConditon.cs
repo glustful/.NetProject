@@ -94,7 +94,7 @@ namespace CRM.Entity.Model
 
 
 
-		public int? SecretaryPhone { get; set; }
+		public string SecretaryPhone { get; set; }
 
 
 
@@ -102,7 +102,7 @@ namespace CRM.Entity.Model
 
 
 
-		public int? WriterPhone { get; set; }
+		public string WriterPhone { get; set; }
 
 
 
