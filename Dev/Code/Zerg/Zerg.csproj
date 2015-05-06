@@ -133,15 +133,15 @@
     <Compile Include="Controllers\CRM\AdminInfoController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\CRM\BrokeAccountController.cs" />
     <Compile Include="Controllers\CRM\AdminRecomController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\CRM\ClientInfoController.cs" />
     <Compile Include="Controllers\CRM\BankCardController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\CRM\BrokeAccountController.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Controllers\CRM\MessageDetailController.cs" />
     <Compile Include="Controllers\CRM\BrokerInfoController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -158,9 +158,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\CRM\MessageConfigController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CRM\MessageDetailController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\CRM\PartnerListController.cs">
