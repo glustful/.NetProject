@@ -69,7 +69,7 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// 场秘ID
 		/// </summary>
-		public virtual BrokerEntity SecretaryID { get; set; }
+		public virtual BrokerEntity SecretaryId { get; set; }
 		/// <summary>
 		/// 场秘电话
 		/// </summary>
@@ -77,7 +77,7 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// 带客人员ID
 		/// </summary>
-		public virtual BrokerEntity WriterID { get; set; }
+		public virtual BrokerEntity WriterId { get; set; }
 		/// <summary>
 		/// 带客人员电话
 		/// </summary>
@@ -85,7 +85,7 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// 财务ID
 		/// </summary>
-		public virtual BrokerEntity AccountantID { get; set; }
+		public virtual BrokerEntity AccountantId { get; set; }
 		/// <summary>
 		/// 是否打款
 		/// </summary>

@@ -4,13 +4,12 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.BrokerRECClient
 {
-	public class BrokerRECClientMapping : EntityTypeConfiguration<BrokerRECClientEntity>, IMapping
+    public class BrokerRECClientMapping : EntityTypeConfiguration<BrokerRECClientEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public BrokerRECClientMapping()
 		{
 			ToTable("BrokerRECClient");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
 			HasOptional(c =>c.Broker);
 			HasOptional(c =>c.ClientInfo);
 			Property(c => c.Clientname).HasColumnType("varchar").HasMaxLength(50);
@@ -25,12 +24,12 @@ namespace CRM.Entity.Mappings.BrokerRECClient
 			Property(c => c.Projectname).HasColumnType("varchar").HasMaxLength(256);
 			Property(c => c.Projectid).HasColumnType("int");
 			Property(c => c.Status).HasColumnType("int");
-			HasOptional(c =>c.SecretaryID);
+			//HasOptional(c =>c.SecretaryID);
             Property(c => c.SecretaryPhone).HasColumnType("varchar").HasMaxLength(50);
-			HasOptional(c =>c.WriterID);
+			HasOptional(c =>c.WriterId);
             Property(c => c.WriterPhone).HasColumnType("varchar").HasMaxLength(50);
-			HasOptional(c =>c.AccountantID);
-			Property(c => c.Payment).HasColumnType("Bool");
+			//HasOptional(c =>c.AccountantID);
+			Property(c => c.Payment).HasColumnType("bool");
 			Property(c => c.Amount).HasColumnType("Decimal");
 		}
 	}

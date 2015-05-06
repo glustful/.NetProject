@@ -155,15 +155,15 @@ namespace CRM.Service.BrokerRECClient
                 }
 				if (condition.SecretaryIDs != null && condition.SecretaryIDs.Any())
                 {
-                    query = query.Where(q => condition.SecretaryIDs.Contains(q.SecretaryID));
+                    query = query.Where(q => condition.SecretaryIDs.Contains(q.SecretaryId));
                 }
 				if (condition.WriterIDs != null && condition.WriterIDs.Any())
                 {
-                    query = query.Where(q => condition.WriterIDs.Contains(q.WriterID));
+                    query = query.Where(q => condition.WriterIDs.Contains(q.WriterId));
                 }
 				if (condition.AccountantIDs != null && condition.AccountantIDs.Any())
                 {
-                    query = query.Where(q => condition.AccountantIDs.Contains(q.AccountantID));
+                    query = query.Where(q => condition.AccountantIDs.Contains(q.AccountantId));
                 }
 				if(condition.OrderBy.HasValue)
 				{
@@ -279,15 +279,15 @@ namespace CRM.Service.BrokerRECClient
                 }
 				if (condition.SecretaryIDs != null && condition.SecretaryIDs.Any())
                 {
-                    query = query.Where(q => condition.SecretaryIDs.Contains(q.SecretaryID));
+                    query = query.Where(q => condition.SecretaryIDs.Contains(q.SecretaryId));
                 }
 				if (condition.WriterIDs != null && condition.WriterIDs.Any())
                 {
-                    query = query.Where(q => condition.WriterIDs.Contains(q.WriterID));
+                    query = query.Where(q => condition.WriterIDs.Contains(q.WriterId));
                 }
 				if (condition.AccountantIDs != null && condition.AccountantIDs.Any())
                 {
-                    query = query.Where(q => condition.AccountantIDs.Contains(q.AccountantID));
+                    query = query.Where(q => condition.AccountantIDs.Contains(q.AccountantId));
                 }
 				return query.Count();
 			}
