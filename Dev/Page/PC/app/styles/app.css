@@ -838,7 +838,6 @@ sup {
     width: 20%;
     height: 34px;
     padding: 6px 12px;
-    margin-left: 14px;
     font-size: 14px;
     line-height: 1.42857143;
     color: #555;
@@ -3130,20 +3129,22 @@ a.list-group-item.hover {
 }
 
 .md-list-item-left {
+  margin-top:10px;
   float: left;
   width: 40px;
   height: 40px;
   margin-right: 16px;
   line-height: 40px;
   text-align: center;
+    margin-left: 5px;
 }
 
 .md-list-item-content {
   overflow: hidden;
+  width:260px;
 }
 
 .md-list-item-content h3 {
-  margin: 0 0 3px 0;
   font-weight: normal;
 }
 
@@ -5995,7 +5996,7 @@ a.text-dark:hover {
 }
 
 .text-lg {
-  font-size: 24px;
+  font-size: 16px;
 }
 
 .text-md {
@@ -6204,8 +6205,9 @@ a.text-dark:hover {
 small{
     color: #0088cc;
 }
-
-
+.right{
+    float: right;
+}
 .right li{
     list-style: none;
     float: left;
@@ -6227,9 +6229,38 @@ small{
     margin:0  18% 0 19%;
 }
 .content-1 li{
-    float: left;
+    float:left;
     list-style: none;
 }
 .content-1 span{
     margin-right: 30px;
 }
+.time-1{
+    margin:0 15% 0 25%;
+}
+.form-control-1{
+    margin-left: 14px;
+}
+.header-1 li{
+    display: inline;
+    float:left;
+    list-style: none;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 24% 0 5%;
+}
+.content-2 li{
+    float: left;
+    margin:0 22.6% 0 5%;
+    list-style: none;
+    text-align: center;
+}
+.center{
+    text-align: center;
+    height: 100px;
+    padding-top:40px;
+}
+.font{
+    font-size: 1.0em;
+}
+
