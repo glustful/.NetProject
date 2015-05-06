@@ -12,6 +12,7 @@ namespace CRM.Entity.Mappings.BrokeAccount
 			HasKey(c => c.Id);
 
 			HasOptional(c =>c.Broker);
+            Property(c => c.MoneyDesc).HasColumnType("varchar").HasMaxLength(256);
             Property(c => c.Balancenum).HasColumnType("decimal");
 			Property(c => c.Adduser).HasColumnType("int");
 			Property(c => c.Addtime).HasColumnType("datetime");

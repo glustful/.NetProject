@@ -133,12 +133,15 @@
     <Compile Include="Controllers\CRM\AdminInfoController.cs" />
     <Compile Include="Controllers\CRM\AdminRecomController.cs" />
     <Compile Include="Controllers\CRM\BankCardController.cs" />
+    <Compile Include="Controllers\CRM\BrokeAccountController.cs" />
     <Compile Include="Controllers\CRM\BrokerInfoController.cs" />
+    <Compile Include="Controllers\CRM\BrokerWithdrawDetailController.cs" />
     <Compile Include="Controllers\CRM\MerchantInfoController.cs" />
     <Compile Include="Controllers\CRM\MessageConfigController.cs" />
     <Compile Include="Controllers\CRM\MessageDetailController.cs" />
     <Compile Include="Controllers\CRM\LevelConfigController.cs" />
     <Compile Include="Controllers\CRM\LevelController.cs" />
+    <Compile Include="Controllers\CRM\PartnerListController.cs" />
     <Compile Include="Controllers\CRM\PointDetailController.cs" />
     <Compile Include="Controllers\CRM\TaskController.cs" />
     <Compile Include="Global.asax.cs">

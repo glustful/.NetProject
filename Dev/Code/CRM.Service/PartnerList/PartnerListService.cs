@@ -117,9 +117,9 @@ namespace CRM.Service.PartnerList
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null )
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q => condition.Brokers==(q.Broker));
                 }
 				if (condition.PartnerIds != null && condition.PartnerIds.Any())
                 {
@@ -206,9 +206,9 @@ namespace CRM.Service.PartnerList
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null )
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q => condition.Brokers==(q.Broker));
                 }
 				if (condition.PartnerIds != null && condition.PartnerIds.Any())
                 {

@@ -1,6 +1,6 @@
 ﻿using CRM.Entity.Model;
 using CRM.Service.Broker;
-using CRM.Service.PointDetail;
+using CRM.Service.BrokerWithdrawDetail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,62 +13,59 @@ namespace Zerg.Controllers.CRM
 {
 
     /// <summary>
-    /// 积分详情管理  李洪亮  2015-05-05
+    /// 经纪人提现明细  李洪亮  2015-05-05
     /// </summary>
-    public class PointDetailController : ApiController
+    public class BrokerWithdrawDetailController : ApiController
     {
-
-        private IPointDetailService _pointdetailService;
-        private readonly IBrokerService _brokerService;
-        public PointDetailController(IPointDetailService pointdetailService, IBrokerService brokerService)
+        private IBrokerWithdrawDetailService _brokerwithdrawdetailService;
+        private  IBrokerService _brokerService;
+        public BrokerWithdrawDetailController(IBrokerWithdrawDetailService brokerwithdrawdetailService, IBrokerService brokerService)
         {
-            _pointdetailService =pointdetailService;
+            _brokerwithdrawdetailService =brokerwithdrawdetailService;
             _brokerService =brokerService;
         }
 
-        #region 积分详情
+        #region 经纪人提现明细详情
 
       /// <summary>
-      /// 查询经纪人的积分详情
+      /// 查询经纪人的提现明细详情List
       /// </summary>
       /// <param name="userId">经纪人ID</param>
       /// <returns></returns>
 
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetPointDetailByUserId(string userId)
+        public HttpResponseMessage GetBrokerWithdrawDetailListByUserId(string userId)
         {
-            var pointdetailCon = new PointDetailSearchCondition
+            var brokerwithdrawdetailcon = new BrokerWithdrawDetailSearchCondition
             {
                Brokers=_brokerService.GetBrokerById(Convert.ToInt32(userId))
             };
-            return PageHelper.toJson(_pointdetailService.GetPointDetailsByCondition(pointdetailCon).ToList());
+            return PageHelper.toJson(_brokerwithdrawdetailService.GetBrokerWithdrawDetailsByCondition(brokerwithdrawdetailcon).ToList());
         }
 
         /// <summary>
-        /// 新增积分详情
+        /// 新增提现详情
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddPointDetail([FromBody] PointDetailEntity pointDetail)
+        public HttpResponseMessage AddBrokerWithdrawDetail([FromBody] BrokerWithdrawDetailEntity brokerwithDetail)
         {
-
-            if (pointDetail!=null)
+            if (brokerwithDetail != null)
             {
-                var entity = new PointDetailEntity
+                var entity = new BrokerWithdrawDetailEntity
                 {
-                    Addpoints=pointDetail.Addpoints,
+                    BankCard=null,
+                    Withdrawnum=brokerwithDetail.Withdrawnum,
+                    Withdrawtime=DateTime.Now,
                     Broker=null,
-                    Pointsds=pointDetail.Pointsds,
-                    Totalpoints=pointDetail.Totalpoints,
                     Uptime = DateTime.Now,
                     Addtime = DateTime.Now,
-
                 };
 
                 try
                 {
-                    if (_pointdetailService.Create(entity) != null)
+                    if (_brokerwithdrawdetailService.Create(entity) != null)
                     {
                         return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
                     }
@@ -79,12 +76,13 @@ namespace Zerg.Controllers.CRM
                 }
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
-
         }
 
 
 
         #endregion
+
+
 
     }
 }
