@@ -8,7 +8,6 @@ using CRM.Service.TaskAward;
 using CRM.Service.TaskPunishment;
 using CRM.Service.TaskTag;
 using CRM.Service.TaskType;
-using Webdiyer.WebControls.Mvc;
 using Zerg.Common;
 using Zerg.Models.CRM;
 
@@ -46,14 +45,14 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="taskSearchModel"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public HttpResponseMessage TaskList([FromBody]TaskSearchModel taskSearchModel)
         {
             var condition = new TaskSearchCondition
             {
                 OrderBy = EnumTaskSearchOrderBy.OrderById
             };
-            return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToPagedList(Convert.ToInt32(taskSearchModel.Pageindex) + 1, 10).ToList());
+            return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToList());
         }
 
         /// <summary>
@@ -61,7 +60,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="taskModel">任务数据模型</param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public HttpResponseMessage AddTask([FromBody]TaskModel taskModel)
         {
             if (!string.IsNullOrEmpty(taskModel.Taskname))
@@ -116,7 +115,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public HttpResponseMessage DelTask(int id)
         {
             try
@@ -137,7 +136,7 @@ namespace Zerg.Controllers.CRM
         /// 显示任务类型列表
         /// </summary>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public HttpResponseMessage TaskTypeList()
         {
             var condition = new TaskTypeSearchCondition
@@ -152,12 +151,12 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="taskTypeModel">任务类型数据模型</param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public HttpResponseMessage AddTaskTpye([FromBody]TaskTypeModel taskTypeModel)
         {
             if (!string.IsNullOrWhiteSpace(taskTypeModel.Name))
             {
-                var model = new TaskTypeEntity()
+                var model = new TaskTypeEntity
                 {
                     Id =taskTypeModel.Id,
                     Name = taskTypeModel.Name,
@@ -198,7 +197,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public HttpResponseMessage DelTaskType(int id)
         {
             try
@@ -219,7 +218,7 @@ namespace Zerg.Controllers.CRM
         /// 显示任务奖励列表
         /// </summary>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public HttpResponseMessage TaskAwardList()
         {
             var condition = new TaskAwardSearchCondition
@@ -233,14 +232,13 @@ namespace Zerg.Controllers.CRM
         /// 添加和修改任务奖励
         /// </summary>
         /// <param name="taskAwardModel">任务奖励数据模型</param>
-        /// <param name="type">操作状态，新增/修改</param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public HttpResponseMessage AddTaskAward([FromBody]TaskAwardModel taskAwardModel)
         {
             if (!string.IsNullOrWhiteSpace(taskAwardModel.Name))
             {
-                var model = new TaskAwardEntity()
+                var model = new TaskAwardEntity
                 {
                     Id = taskAwardModel.Id,
                     Name = taskAwardModel.Name,
@@ -280,7 +278,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public HttpResponseMessage DelTaskAward(int id)
         {
             _taskAwardService.Delete(_taskAwardService.GetTaskAwardById(id));
@@ -294,7 +292,7 @@ namespace Zerg.Controllers.CRM
         /// 显示任务目标列表
         /// </summary>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public HttpResponseMessage TaskTagList()
         {
             var condition = new TaskTagSearchCondition
@@ -309,12 +307,12 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="taskTagModel">任务目标数据模型</param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public HttpResponseMessage AddTaskTag([FromBody]TaskTagModel taskTagModel)
         {
             if (!string.IsNullOrWhiteSpace(taskTagModel.Name))
             {
-                var model = new TaskTagEntity()
+                var model = new TaskTagEntity
                 {
                     Id = taskTagModel.Id,
                     Name = taskTagModel.Name,
@@ -354,7 +352,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public HttpResponseMessage DelTaskTag(int id)
         {
             try
@@ -374,7 +372,7 @@ namespace Zerg.Controllers.CRM
         /// 显示任务惩罚列表
         /// </summary>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public HttpResponseMessage TaskPunishmentList()
         {
             var condition = new TaskPunishmentSearchCondition
@@ -389,12 +387,12 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="taskPunishmentModel"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public HttpResponseMessage AddTaskPunishment([FromBody]TaskPunishmentModel taskPunishmentModel)
         {
             if (!string.IsNullOrWhiteSpace(taskPunishmentModel.Name))
             {
-                var model = new TaskPunishmentEntity()
+                var model = new TaskPunishmentEntity
                 {
                     Id=taskPunishmentModel.Id,
                     Name = taskPunishmentModel.Name,
@@ -434,7 +432,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public HttpResponseMessage DelTaskPunishment(int id)
         {
             try

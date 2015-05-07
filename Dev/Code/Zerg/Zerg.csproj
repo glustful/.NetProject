@@ -141,6 +141,7 @@
     <Compile Include="Controllers\CRM\BankCardController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\CRM\ClientScheduleController.cs" />
     <Compile Include="Controllers\CRM\MessageDetailController.cs" />
     <Compile Include="Controllers\CRM\BrokerInfoController.cs">
       <SubType>Code</SubType>

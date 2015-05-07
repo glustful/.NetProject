@@ -117,11 +117,13 @@ namespace CRM.Entity.Model
 		public Decimal Amount { get; set; }
 
 
+        /// <summary>
+        /// 用户进度
+        /// </summary>
+	    public EnumBRECCType Status { get; set; }
 
 
-
-
-		public EnumBrokerRECClientSearchOrderBy? OrderBy { get; set; }
+	    public EnumBrokerRECClientSearchOrderBy? OrderBy { get; set; }
 
 	}
 
