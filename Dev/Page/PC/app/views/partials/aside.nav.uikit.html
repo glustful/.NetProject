@@ -50,7 +50,7 @@
               <a md-ink-ripple ui-sref="app.FinanceWork">洽谈失败</a>
         </li>
         <li ui-sref-active="active">
-              <a md-ink-ripple ui-sref="app.FinanceWork">洽谈成功</a>
+              <a md-ink-ripple ui-sref="app.failed">洽谈成功</a>
         </li>
       </ul>
     </li>
@@ -253,9 +253,14 @@
       <ul class="nav nav-sub">
         <li ui-sref-active="active">
           <a md-ink-ripple ui-sref="page.setting">
-            <span>Admin</span>
+            <span>短信列表</span>
           </a>
         </li>
+          <li ui-sref-active="active">
+              <a md-ink-ripple ui-sref="page.allocation">
+                  <span>短信配置</span>
+              </a>
+          </li>
         <!--<li ui-sref-active="active">
           <a md-ink-ripple ui-sref="page.settings">
             <span>Settings</span>
@@ -314,6 +319,43 @@
             <li ui-sref-active="active">
                 <a md-ink-ripple ui-sref="ui.map.task">任务配置</a>
             </li>
+            <!--<li ui-sref-active="active">
+              <a md-ink-ripple ui-sref="ui.map.vector">Vector Map</a>
+            </li-->
+        </ul>
+    </li>
+    <li ng-class="{active:$state.includes('ui.map')}">
+        <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+            <i class="icon mdi-maps-navigation i-20"></i>
+            <!--<span class="font-normal">Maps</span>-->
+            <span class="font-normal">内容管理</span>
+        </a>
+        <ul class="nav nav-sub">
+            <li ui-sref-active="active">
+                <a md-ink-ripple ui-sref="ui.map.label">标签页</a>
+            </li>
+            <li ui-sref-active="active">
+                <a md-ink-ripple ui-sref="ui.map.ad">广告页</a>
+            </li>
+            <li ui-sref-active="active">
+                <a md-ink-ripple ui-sref="ui.map.topic">栏目管理</a>
+            </li>
+            <li ui-sref-active="active">
+            <a md-ink-ripple ui-sref="ui.map.content">内容页</a>
+        </li>
+            <li ui-sref-active="active">
+                <a md-ink-ripple ui-sref="ui.map.channel">channel</a>
+            </li>
+            <li ui-sref-active="active">
+                <a md-ink-ripple ui-sref="ui.map.set">set</a>
+            </li>
+            <li ui-sref-active="active">
+                <a md-ink-ripple ui-sref="ui.map.FM">FM</a>
+            </li>
+
             <!--<li ui-sref-active="active">
               <a md-ink-ripple ui-sref="ui.map.vector">Vector Map</a>
             </li-->
