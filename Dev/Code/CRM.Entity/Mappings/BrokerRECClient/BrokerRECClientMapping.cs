@@ -24,12 +24,12 @@ namespace CRM.Entity.Mappings.BrokerRECClient
 			Property(c => c.Projectname).HasColumnType("varchar").HasMaxLength(256);
 			Property(c => c.Projectid).HasColumnType("int");
 			Property(c => c.Status).HasColumnType("int");
-			//HasOptional(c =>c.SecretaryID);
+			HasOptional(c =>c.SecretaryId);
             Property(c => c.SecretaryPhone).HasColumnType("varchar").HasMaxLength(50);
 			HasOptional(c =>c.WriterId);
             Property(c => c.WriterPhone).HasColumnType("varchar").HasMaxLength(50);
-			//HasOptional(c =>c.AccountantID);
-			Property(c => c.Payment).HasColumnType("bool");
+			HasOptional(c =>c.AccountantId);
+			Property(c => c.Payment).HasColumnType("bit");
 			Property(c => c.Amount).HasColumnType("Decimal");
 		}
 	}
