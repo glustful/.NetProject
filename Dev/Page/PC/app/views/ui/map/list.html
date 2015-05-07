@@ -1,27 +1,28 @@
-<!--黄秀宇 任务列表  2015.05.06-->
-<div id="divTaskH">
-    <input style="width:200px;" type="text" class="form-control" placeholder="搜索条件1">
-    <input style="width:200px;" type="text" class="form-control" placeholder="搜索条件2">
-    <button md-ink-ripple=""style="width:100px;" class="md-btn md-raised m-b btn-fw blue">检索</button>
-    <button id="btntask"onclick="taskOble()" md-ink-ripple=""style="width:150px;margin-left: 150px;" class="md-btn md-raised m-b btn-fw blue">添加新任务</button>
+<!--黄秀宇 任务列表  2015.05.06
+自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />-->
+<div id="divTaskH"class="marginL">
+    <input style="width:200px;" type="text" class="form-control bordhtml" placeholder="搜索条件1">
+    <input style="width:200px;" type="text" class="form-control bordhtml" placeholder="搜索条件2">
+    <button md-ink-ripple=""style="width:100px;" class="md-btn md-raised m-b btn-fw indigo">检索</button>
+    <button id="btntask"onclick="taskOble()" md-ink-ripple=""style="width:150px;margin-left: 150px;" class="md-btn md-raised m-b btn-fw indigo">添加新任务</button>
 
 </div>
 
-      <div id="divTaskL">
-        <!--列表头-->
-<div class="taskclear">
+      <div id="divTaskL"class="marginL">
+        <!--表头-->
+<div class="bord taskclear divheard">
     <ul class="taskheader">
         <li>任务名称</li>
         <li>任务类型</li>
         <li>结束时间</li>
         <li>创建人</li>
-        <li >   列表</li>
+        <li >列表</li>
         <li >详情</li>
     </ul>
 
 </div>
           <!--列表内容-->
-          <div class="taskcenter">
+          <div  class="taskcenter bord bordTop0px divodd ">
               <ul class="taskheader">
                   <li>任务名称</li>
                   <li>任务类型</li>
@@ -32,7 +33,7 @@
               </ul>
 
           </div>
-          <div class="taskcenter">
+          <div class="taskcenter bord bordTop0px diveven ">
               <ul class="taskheader">
                   <li>任务名称</li>
                   <li>任务类型</li>
@@ -43,7 +44,7 @@
               </ul>
 
           </div>
-          <div class="taskcenter">
+          <div class="taskcenter bord bordTop0px divodd">
               <ul class="taskheader">
                   <li>任务名称</li>
                   <li>任务类型</li>
@@ -54,7 +55,7 @@
               </ul>
 
           </div>
-          <div class="taskcenter">
+          <div class="taskcenter bord bordTop0px diveven">
               <ul class="taskheader">
                   <li>任务名称</li>
                   <li>任务类型</li>
@@ -65,11 +66,21 @@
               </ul>
 
           </div>
+          <div style="width:800px;" colspan="6" class="text-center footable-visible ng-scope">
+              <ul class="pagination">
+                  <li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li>
+                  <li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li>
+                  <li class="footable-page active"><a data-page="0" href="#">1</a></li>
+                  <li class="footable-page"><a data-page="1" href="#">2</a></li>
+                  <li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li>
+                  <li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li>
+              </ul>
           </div>
+      </div>
 
-      <div id="divTaskC">
+      <div id="divTaskC" class="marginL">
                       <!--列表头-->
-                       <div class="taskclear1">
+                       <div class="taskclear1 bord divheard">
                            <ul class="taskheader1">
                                <li>任务名称</li>
                                <li>接受者</li>
@@ -79,7 +90,7 @@
 
                        </div>
                       <!--列表内容-->
-               <div class="taskcenter1">
+               <div class="taskcenter1 bord bordTop0px divodd">
                    <ul class="taskheader1">
                        <li>任务名称</li>
                        <li>接受者</li>
@@ -88,7 +99,7 @@
                    </ul>
 
                </div>
-               <div class="taskcenter1">
+               <div class="taskcenter1 bord bordTop0px diveven">
                    <ul class="taskheader1">
                        <li>任务名称</li>
                        <li>接受者</li>
@@ -97,7 +108,7 @@
                    </ul>
 
                </div>
-               <div class="taskcenter1">
+               <div class="taskcenter1 bord bordTop0px divodd">
                    <ul class="taskheader1">
                        <li>任务名称</li>
                        <li>接受者</li>
@@ -106,7 +117,7 @@
                    </ul>
 
                </div>
-               <div class="taskcenter1">
+               <div class="taskcenter1 bord bordTop0px diveven">
                    <ul class="taskheader1">
                        <li>任务名称</li>
                        <li>接受者</li>
@@ -115,9 +126,20 @@
                    </ul>
 
                </div>
+          <div style="width:800px;" colspan="6" class="text-center footable-visible ng-scope">
+              <ul class="pagination">
+                  <li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li>
+                  <li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li>
+                  <li class="footable-page active"><a data-page="0" href="#">1</a></li>
+                  <li class="footable-page"><a data-page="1" href="#">2</a></li>
+                  <li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li>
+                  <li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li>
+              </ul>
+          </div>
                </div>
-<div id="divTaskD">
-    <div class="taskd">
+
+      <div id="divTaskD"class="bord">
+    <div class="taskd  bord">
 <div>
             <p >任务名称<span class="spantask">
             研发高科技</span>
@@ -130,7 +152,7 @@
     </div>
 
     </div>
-    <div class="taskd">
+    <div class="taskd  bord">
         <div>
             <p >任务描述<span style="margin-left:10px;margin-right:30px;color:#0088cc;">
             sfsafdjoweijgihboifdhnvpaaowejtgiprojnnnnnnnseajgvpfdovhjn
@@ -139,29 +161,31 @@
 
         </div>
     </div>
-<div style="text-align:center;width:500px;margin-left:200px;"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">修改</button>
+<div style="margin-top:30px;"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">修改</button>
     <button md-ink-ripple=""onclick="taskAble()" style="margin-left:40px;" class="md-btn md-raised m-b btn-fw blue">返回</button>
 </div>
+
 </div>
-        <div id="divTaskA">
-            <div class="taska">
+
+      <div id="divTaskA"class="marginL">
+            <div class="taska bord">
                 <p style="height:30px"></p>
-                <p >任务名称<input class="ptaska" type="text"  placeholder="任务名称"></p>
-                <p>结束时间<input class="ptaska" type="text"  placeholder="结束时间"></p>
-                <p>任务类型<select class="ptaska"  name="" >
+                <p >任务名称<input class="ptaska  bordhtml" type="text"  placeholder="任务名称"></p>
+                <p>结束时间<input class="ptaska bordhtml" type="text"  placeholder="结束时间"></p>
+                <p>任务类型<select class="ptaska bordhtml"  name="" >
                     <option value="1">任务类型</option>
                 </select></p>
-                <p>任务目标<select class="ptaska" name="" >
+                <p>任务目标<select class="ptaska bordhtml" name="" >
                     <option value="1">任务目标</option>
                 </select></p>
-                <p>任务奖励<select class="ptaska" name=""  >
+                <p>任务奖励<select class="ptaska bordhtml" name=""  >
                     <option value="1">任务奖励</option>
                 </select></p>
-                <p>失败惩罚<select class="ptaska" name=""  >
+                <p>失败惩罚<select class="ptaska bordhtml" name=""  >
                     <option value="1">失败惩罚</option>
                 </select></p>
                 <p>任务描述
-                   <textarea style="height:100px;" class="ptaska" type="text"
+                   <textarea style="height:100px;" class="ptaska bordhtml" type="text"
                                                         placeholder="任务描述"></textarea></p>
 
             <div style="text-align:center;width:500px;margin-left:150px;margin-top:30px;"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">发布任务</button>
