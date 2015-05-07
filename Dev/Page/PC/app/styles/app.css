@@ -6192,69 +6192,31 @@ a.text-dark:hover {
     width: 100%;
   }
 }
-.content li{
-    float: left;
-    list-style: none;
-}
-.content span{
-    margin-right: 8%;
-}
-.information span{
-    margin-right: 2%;
-}
+
 small{
     color: #0088cc;
 }
 .right{
     float: right;
 }
-.right li{
-    list-style: none;
-    float: left;
-}
-.left li{
-    float: left;
-    margin:3px;
-}
 
-.header li{
-    float:left;
-    list-style: none;
-    font-weight: bold;
-    width: 32%;
-    text-align: center;
-    margin-top: 20px;
-}
+
+
 .time{
     margin:0  18% 0 19%;
 }
-.content-1 li{
-    float:left;
-    list-style: none;
+.form-control-1{
+    margin-left: 18px;
 }
-.content-1 span{
+
+ .information span{
     margin-right: 30px;
 }
 .time-1{
     margin:0 15% 0 25%;
 }
-.form-control-1{
-    margin-left: 14px;
-}
-.header-1 li{
-    display: inline;
-    float:left;
-    list-style: none;
-    font-weight: bold;
-    text-align: center;
-    margin: 20px 24% 0 5%;
-}
-.content-2 li{
-    float: left;
-    margin:0 22.6% 0 5%;
-    list-style: none;
-    text-align: center;
-}
+
+
 .center{
     text-align: center;
     height: 100px;
@@ -6264,3 +6226,15 @@ small{
     font-size: 1.0em;
 }
 
+td button{
+    margin-right: 5px;
+}
+
+.col-1{
+    width: 30%;
+    text-align: right;
+}
+.col-2{
+    width: 70%;
+    text-align: right;
+}
