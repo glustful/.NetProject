@@ -86,7 +86,7 @@ angular.module('app')
             .state('app.AdminWork', {
                 url: '/AdminWork',
                 templateUrl: 'views/pages/AdminWork.html',
-                data: { title: 'Admin业务'},
+                data: { title: '待审核推荐'},
                 resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
             })
             //-----------------------------------end------------------------------
@@ -94,26 +94,35 @@ angular.module('app')
             .state('app.BusinessWork', {
                 url: '/BusinessWork',
                 templateUrl: 'views/pages/BusinessWork.html',
-                data: { title: '商家管理'},
+                data: { title: '待上访记录'},
                 resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
             })
             //--------------------------------------end-------------------------
             //----------------------------yangbo 2015.4.30 start----------------
             .state('app.SecretaryWork', {
-                url: '/SecretaryWord',
+                url: '/SecretaryWork',
                 templateUrl: 'views/pages/SecretaryWork.html',
-                data: { title: '驻场秘书业务'},
+                data: { title: '洽谈中业务'},
                 resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
             })
             //----------------------------end--------------
             //-------------------yangbo 2015.4.30 start------------
             .state('app.FinanceWork', {
-                url: '/FinanceWord',
+                url: '/FinanceWork',
                 templateUrl: 'views/pages/FinanceWork.html',
-                data: { title: '财务业务'},
+                data: { title: '洽谈失败'},
                 resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
             })
             //----------------------------------------end---------------
+            //-------------------yangbo 2015.4.30 start------------
+            .state('app.failed', {
+                url: '/failed',
+                templateUrl: 'views/pages/failed.html',
+                data: { title: '洽谈成功'},
+                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
+            })
+            //----------------------------------------end---------------
+
             .state('app.todo', {
               url: '/todo',
               templateUrl: 'apps/todo/todo.html',
@@ -478,7 +487,14 @@ angular.module('app')
             .state('page.setting', {
                 url: '/setting',
                 templateUrl: 'views/pages/setting.html',
-                data : { title: '短信设置', theme: { primary: 'green'} }
+                data : { title: '短信列表', theme: { primary: 'green'} }
+            })
+            //-------------------------end----------
+            //------------------------yangbo 2015.4.30 start--------
+            .state('page.allocation', {
+                url: '/allocation',
+                templateUrl: 'views/pages/allocation.html',
+                data : { title: '短信配置', theme: { primary: 'green'} }
             })
             //-------------------------end----------
             .state('page.settings', {
@@ -544,7 +560,69 @@ angular.module('app')
                 resolve: load('scripts/controllers/vectormap.js')
             })
             //------------------------------------end----------
-
+          //------------------------yangbo 2015.5.6 start-----------
+            .state('ui.map.label', {
+                url: '/label',
+                templateUrl: 'views/ui/map/label.html',
+                data : { title: '标签页' },
+                controller: 'VectorMapCtrl',
+                resolve: load('scripts/controllers/vectormap.js')
+            })
+          //-----------------------end-------------------
+            //------------------------yangbo 2015.5.6 start-----------
+            .state('ui.map.ad', {
+                url: '/ad',
+                templateUrl: 'views/ui/map/ad.html',
+                data : { title: '广告页' },
+                controller: 'VectorMapCtrl',
+                resolve: load('scripts/controllers/vectormap.js')
+            })
+          //-----------------------end-------------------
+            //------------------------yangbo 2015.5.6 start-----------
+            .state('ui.map.topic', {
+                url: '/topic',
+                templateUrl: 'views/ui/map/topic.html',
+                data : { title: '栏目管理' },
+                controller: 'VectorMapCtrl',
+                resolve: load('scripts/controllers/vectormap.js')
+            })
+          //-----------------------end-------------------
+            //------------------------yangbo 2015.5.6 start-----------
+            .state('ui.map.content', {
+                url: '/content',
+                templateUrl: 'views/ui/map/content.html',
+                data : { title: '内容页' },
+                controller: 'VectorMapCtrl',
+                resolve: load('scripts/controllers/vectormap.js')
+            })
+          //-----------------------end-------------------
+            //------------------------yangbo 2015.5.6 start-----------
+            .state('ui.map.channel', {
+                url: '/channel',
+                templateUrl: 'views/ui/map/channel.html',
+                data : { title: '频道' },
+                controller: 'VectorMapCtrl',
+                resolve: load('scripts/controllers/vectormap.js')
+            })
+          //-----------------------end-------------------
+            //------------------------yangbo 2015.5.6 start-----------
+            .state('ui.map.set', {
+                url: '/set',
+                templateUrl: 'views/ui/map/set.html',
+                data : { title: '设置' },
+                controller: 'VectorMapCtrl',
+                resolve: load('scripts/controllers/vectormap.js')
+            })
+          //-----------------------end-------------------
+            //------------------------yangbo 2015.5.6 start-----------
+            .state('ui.map.FM', {
+                url: '/FM',
+                templateUrl: 'views/ui/map/FM.html',
+                data : { title: '文件管理' },
+                controller: 'VectorMapCtrl',
+                resolve: load('scripts/controllers/vectormap.js')
+            })
+          //-----------------------end-------------------
 
 
           function load(srcs, callback) {
