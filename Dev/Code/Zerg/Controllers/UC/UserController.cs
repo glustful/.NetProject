@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using YooPoon.WebFramework.Authentication;
 using YooPoon.WebFramework.User;
 using YooPoon.WebFramework.User.Entity;
@@ -27,6 +28,7 @@ namespace Zerg.Controllers.UC
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage Login([FromBody]UserModel model)
         {
             var user = _userService.GetUserByName(model.UserName);
