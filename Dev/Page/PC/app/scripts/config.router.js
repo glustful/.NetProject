@@ -9,10 +9,19 @@
  */
 angular.module('app')
   .run(
-    [           '$rootScope', '$state', '$stateParams',
-      function ( $rootScope,   $state,   $stateParams ) {
+    [           '$rootScope', '$state', '$stateParams','AuthService',
+      function ( $rootScope,   $state,   $stateParams ,AuthService) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
+          $rootScope.$on('$stateChangeStart', function (event,next) {
+              if(next.name==='access.signin'){
+                  return;
+              }
+              if(!AuthService.IsAuthenticated()){
+                  event.preventDefault();
+                  $state.go('access.signin');
+              }
+          });
       }
     ]
   )
@@ -20,7 +29,7 @@ angular.module('app')
     [          '$stateProvider', '$urlRouterProvider', 'MODULE_CONFIG',
       function ( $stateProvider,   $urlRouterProvider,  MODULE_CONFIG ) {
         $urlRouterProvider
-          .otherwise('/app/AgentManagement');
+          .otherwise('/access/signin');
         $stateProvider
           .state('app', {
             abstract: true,
@@ -389,8 +398,10 @@ angular.module('app')
               template: '<div class="indigo bg-big"><div ui-view class="fade-in-down smooth"></div></div>'
             })
             .state('access.signin', {
-              url: '/signin',
-              templateUrl: 'views/pages/signin.html'
+                url: '/signin',
+                templateUrl: 'views/pages/signin.html',
+                controller: 'LoginControl',
+                resolve: load('scripts/controllers/CMS/Login.js')
             })
             .state('access.signup', {
               url: '/signup',

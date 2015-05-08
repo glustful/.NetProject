@@ -16,9 +16,9 @@
       <div class="m-b text-sm">
         Sign in with your {{app.name}} Account
       </div>
-      <form name="form">
+      <form name="form" ng-controller="LoginControl" ng-submit="Login()">
         <div class="md-form-group float-label">
-          <input type="email" class="md-input" ng-model="user.email" required>
+          <input class="md-input" ng-model="user.name" required>
           <label>Email</label>
         </div>
         <div class="md-form-group float-label">

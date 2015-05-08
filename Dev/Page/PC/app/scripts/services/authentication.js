@@ -2,24 +2,59 @@
  * Created by Yunjoy on 2015/5/6.
  * 用户验证登陆service
  */
-angular.module("Zerg.Service").service("AuthenticationService",["$http",function($http){
-    var userName; //用户名
-    var IsAuthorised = false;
-    this.doLogin = function(userName,password){
-        $http.post("",
+angular.module("app").service("AuthService",["$http",function($http){
+    var _isAuthenticated = false;
+    var _currentUser;
+    /**
+     * 是否拥有授权
+     * @returns {boolean}
+     * @constructor
+     */
+    this.IsAuthorized = function(){
+        return false;
+    };
+    /**
+     * 是否已经登陆
+     * @returns {boolean}
+     * @constructor
+     */
+    this.IsAuthenticated = function(){
+        return _isAuthenticated
+    };
+    /**
+     * 当前用户
+     * @returns CurrentUser
+     * @constructor
+     */
+    this.CurrentUser = function(){
+        return _currentUser;
+    };
+    /**
+     * 登陆操作
+     * @param userName
+     * @param password
+     */
+    this.doLogin = function(userName,password,callback,faildCallback){
+        $http.post("http://localhost:50597/api/user/login",
             {
                 UserName:userName,
                 Password:password
+            },{
+                'withCredentials':true,
+                'async': false
             })
             .success(function(data){
                 if(data.Status){
-                    return true;
+                    _currentUser ={
+                        UserName:userName
+                    };
+                    _isAuthenticated = true;
+                    if(typeof(callback) === 'function')
+                        callback();
                 }else{
-                    return false;
+                    if(typeof(faildCallback) === 'function')
+                        faildCallback();
                 }
-            })
-            .error(function(data){
-                return false;
-            })
+            });
     };
 }]);
