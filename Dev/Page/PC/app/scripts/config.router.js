@@ -37,82 +37,18 @@ angular.module('app')
               }
             }
           })
-           /* .state('app.dashboard', {
+            .state('app.dashboard', {
               url: '/dashboard',
               templateUrl: 'views/pages/dashboard.html',
               data : { title: 'Dashboard' },
               resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
-            })*/
-            //-------------------------yangbo 2015.4.30 start----------------
-            .state('app.AgentManagement', {
-                url: '/AgentManagement',
-                templateUrl: 'views/pages/AgentManagement.html',
-                data : { title: '经纪人管理' },
-                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
             })
-            //-------------------------end-----------------------------------
-            //-------------------------yangbo 2015.4.30 start----------------
-            .state('app.BusinessManagement', {
-                url: '/BusinessManagement',
-                templateUrl: 'views/pages/BusinessManagement.html',
-                data : { title: '商家管理' },
-                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
-            })
-            //-------------------------end-----------------------------------
-           /* .state('app.wall', {
+
+            .state('app.wall', {
               url: '/wall',
               templateUrl: 'views/pages/dashboard.wall.html',
               data : { title: 'Wall', folded: true }
-            })*/
-            //=================================yangbao 2015.4.25 start=======================================================
-                        .state('app.AdminManagement', {
-                            url: '/AdminManagement',
-                            templateUrl: 'views/pages/AdminManagement.html',
-                            data: { title: 'Admin管理'},
-                            resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
-                        })  // ���ŷ���ҳ��
-
-            //========================================================================================
-            //------------------------------yangbo 2015.4.30 start---------------------------
-            .state('app.AdminWork', {
-                url: '/AdminWork',
-                templateUrl: 'views/pages/AdminWork.html',
-                data: { title: '待审核推荐'},
-                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
             })
-            //-----------------------------------end------------------------------
-            //----------------------------------yangbo 2015.4.30 start-----------------
-            .state('app.BusinessWork', {
-                url: '/BusinessWork',
-                templateUrl: 'views/pages/BusinessWork.html',
-                data: { title: '待上访记录'},
-                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
-            })
-            //--------------------------------------end-------------------------
-            //----------------------------yangbo 2015.4.30 start----------------
-            .state('app.SecretaryWork', {
-                url: '/SecretaryWork',
-                templateUrl: 'views/pages/SecretaryWork.html',
-                data: { title: '洽谈中业务'},
-                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
-            })
-            //----------------------------end--------------
-            //-------------------yangbo 2015.4.30 start------------
-            .state('app.FinanceWork', {
-                url: '/FinanceWork',
-                templateUrl: 'views/pages/FinanceWork.html',
-                data: { title: '洽谈失败'},
-                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
-            })
-            //----------------------------------------end---------------
-            //-------------------yangbo 2015.4.30 start------------
-            .state('app.failed', {
-                url: '/failed',
-                templateUrl: 'views/pages/failed.html',
-                data: { title: '洽谈成功'},
-                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
-            })
-            //----------------------------------------end---------------
 
             .state('app.todo', {
               url: '/todo',
@@ -172,24 +108,12 @@ angular.module('app')
               abstract: true,
               template: '<div ui-view></div>'
             })
-             /* .state('ui.component.arrow', {
+             .state('ui.component.arrow', {
                 url: '/arrow',
                 templateUrl: 'views/ui/component/arrow.html',
                 data : { title: 'Arrows' }
-              })*/
-            //------------------------------------yangbo 4.30 start--------------------
-            .state('ui.component.Admin', {
-                url: '/Admin',
-                templateUrl: 'views/ui/component/Admin.html',
-                data : { title: 'Admin' }
-            })
-            //-------------------------end-------------------------
-            //----------------------------yangbo 4.30 start--------------
-            .state('ui.component.business', {
-                url: '/business',
-                templateUrl: 'views/ui/component/business.html',
-                data : { title: '商家' }
-            })
+              })
+
               .state('ui.component.badge-label', {
                 url: '/badge-label',
                 templateUrl: 'views/ui/component/badge-label.html',
@@ -252,30 +176,12 @@ angular.module('app')
               template: '<div ui-view></div>',
               resolve: load('scripts/controllers/material.js')
             })
-              /*.state('ui.material.button', {
+              .state('ui.material.button', {
                 url: '/button',
                 templateUrl: 'views/ui/material/button.html',
                 data : { title: 'Buttons' }
-              })*/
-            //------------------------yangbo 4.30 start-----------
-              .state('ui.material.recommended', {
-                url: '/recommended',
-                templateUrl: 'views/ui/material/recommended.html',
-                data : { title: '带客推荐' }
               })
-            //-----------------------------------------end-------
-             /* .state('ui.material.icon', {
-                url: '/icon',
-                templateUrl: 'views/ui/material/icon.html',
-                data : { title: 'Icons' }
-              })*/
-            //---------------------------yangbo 4.30 start----------
-            .state('ui.material.strike', {
-             url: '/strike',
-             templateUrl: 'views/ui/material/strike.html',
-             data : { title: '所有成交' }
-             })
-            //------------------------end--------------
+
               .state('ui.material.card', {
                 url: '/card',
                 templateUrl: 'views/ui/material/card.html',
@@ -301,18 +207,12 @@ angular.module('app')
               url: '/form',
               template: '<div ui-view></div>'
             })
-              /*.state('ui.form.layout', {
+              .state('ui.form.layout', {
                 url: '/layout',
                 templateUrl: 'views/ui/form/layout.html',
                 data : { title: 'Layouts' }
-              })*/
-            //------------------------yangbo 2015 4.30 start-----------
-            .state('ui.form.comBroker', {
-                url: '/comBroker',
-                templateUrl: 'views/ui/form/comBroker.html',
-                data : { title: '推荐经纪人' }
-            })
-            //--------------------------------------end----------------
+              })
+
               .state('ui.form.element', {
                 url: '/element',
                 templateUrl: 'views/ui/form/element.html',
@@ -377,18 +277,12 @@ angular.module('app')
               url: '/table',
               template: '<div ui-view></div>'
             })
-             /* .state('ui.table.static', {
+              .state('ui.table.static', {
                 url: '/static',
                 templateUrl: 'views/ui/table/static.html',
                 data : { title: 'Static', theme: { primary: 'blue'} }
-              })*/
-            //-------------------yangbo 2015.4.30---------
-            .state('ui.table.partner', {
-                url: '/partner',
-                templateUrl: 'views/ui/table/partner.html',
-                data : { title: '合伙人', theme: { primary: 'blue'} }
-            })
-            //-------------------end----------------------
+              })
+
               .state('ui.table.smart', {
                 url: '/smart',
                 templateUrl: 'views/ui/table/smart.html',
@@ -439,22 +333,14 @@ angular.module('app')
               url: '/map',
               template: '<div ui-view></div>'
             })
-             /* .state('ui.map.google', {
+              .state('ui.map.google', {
                 url: '/google',
                 templateUrl: 'views/ui/map/google.html',
                 data : { title: 'Gmap' },
                 controller: 'GoogleMapCtrl',
                 resolve: load(['ui.map', 'scripts/controllers/load-google-maps.js', 'scripts/controllers/googlemap.js'], function(){ return loadGoogleMaps(); })
-              })*/
-            //------------------------yangbo 2015.4.30 start-------
-              .state('ui.map.admins', {
-                url: '/admins',
-                templateUrl: 'views/ui/map/admins.html',
-                data : { title: '等级配置' },
-                controller: 'VectorMapCtrl',
-                resolve: load('scripts/controllers/vectormap.js')
               })
-              //-------------------------end---------------------
+
           .state('page', {
             url: '/page',
             views: {
@@ -469,25 +355,12 @@ angular.module('app')
               }
             }
           })
-            /*.state('page.profile', {
+            .state('page.profile', {
               url: '/profile',
               templateUrl: 'views/pages/profile.html',
               data : { title: 'Profile', theme: { primary: 'green'} }
-            })*/
-            //------------------------yangbo 2015.4.30 start--------
-            .state('page.setting', {
-                url: '/setting',
-                templateUrl: 'views/pages/setting.html',
-                data : { title: '短信列表', theme: { primary: 'green'} }
             })
-            //-------------------------end----------
-            //------------------------yangbo 2015.4.30 start--------
-            .state('page.allocation', {
-                url: '/allocation',
-                templateUrl: 'views/pages/allocation.html',
-                data : { title: '短信配置', theme: { primary: 'green'} }
-            })
-            //-------------------------end----------
+
             .state('page.settings', {
               url: '/settings',
               templateUrl: 'views/pages/settings.html',
@@ -531,7 +404,151 @@ angular.module('app')
               url: '/lockme',
               templateUrl: 'views/pages/lockme.html'
             })
-            //---------------------------yangbo 2015.5.6 start------
+
+
+
+
+
+            //-------------------------yangbo----------------
+            .state('app.AgentManagement', {
+                url: '/AgentManagement',
+                templateUrl: 'views/pages/AgentManagement.html',
+                data : { title: '经纪人管理' },
+                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
+            })
+
+            .state('app.BusinessManagement', {
+                url: '/BusinessManagement',
+                templateUrl: 'views/pages/BusinessManagement.html',
+                data : { title: '商家管理' },
+                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
+            })
+
+            .state('app.AdminManagement', {
+                url: '/AdminManagement',
+                templateUrl: 'views/pages/AdminManagement.html',
+                data: { title: 'Admin管理'},
+                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
+            })
+
+            .state('app.cw', {
+                url: '/cw',
+                templateUrl: 'views/pages/cw.html',
+                data : { title: '财务账号管理' },
+                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
+            })
+
+            .state('app.zc', {
+                url: '/zc',
+                templateUrl: 'views/pages/zc.html',
+                data : { title: '驻场秘书账号管理' },
+                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
+            })
+
+            .state('app.dk', {
+                url: '/dk',
+                templateUrl: 'views/pages/dk.html',
+                data : { title: '驻场秘书账号管理' },
+                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
+            })
+
+            .state('app.AdminWork', {
+                url: '/AdminWork',
+                templateUrl: 'views/pages/AdminWork.html',
+                data: { title: '待审核推荐'},
+                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
+            })
+
+            .state('app.BusinessWork', {
+                url: '/BusinessWork',
+                templateUrl: 'views/pages/BusinessWork.html',
+                data: { title: '待上访记录'},
+                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
+            })
+
+            .state('app.SecretaryWork', {
+                url: '/SecretaryWork',
+                templateUrl: 'views/pages/SecretaryWork.html',
+                data: { title: '洽谈中业务'},
+                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
+            })
+
+            .state('app.FinanceWork', {
+                url: '/FinanceWork',
+                templateUrl: 'views/pages/FinanceWork.html',
+                data: { title: '洽谈失败'},
+                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
+            })
+
+            .state('app.failed', {
+                url: '/failed',
+                templateUrl: 'views/pages/failed.html',
+                data: { title: '洽谈成功'},
+                resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
+            })
+
+            .state('ui.component.Admin', {
+                url: '/Admin',
+                templateUrl: 'views/ui/component/Admin.html',
+                data : { title: 'Admin' }
+            })
+
+            .state('ui.component.business', {
+                url: '/business',
+                templateUrl: 'views/ui/component/business.html',
+                data : { title: '商家' }
+            })
+
+            .state('ui.material.recommended', {
+                url: '/recommended',
+                templateUrl: 'views/ui/material/recommended.html',
+                data : { title: '带客推荐' }
+            })
+
+            /* .state('ui.material.icon', {
+             url: '/icon',
+             templateUrl: 'views/ui/material/icon.html',
+             data : { title: 'Icons' }
+             })*/
+
+            .state('ui.material.strike', {
+                url: '/strike',
+                templateUrl: 'views/ui/material/strike.html',
+                data : { title: '所有成交' }
+            })
+
+            .state('ui.form.comBroker', {
+                url: '/comBroker',
+                templateUrl: 'views/ui/form/comBroker.html',
+                data : { title: '推荐经纪人' }
+            })
+
+            .state('ui.table.partner', {
+                url: '/partner',
+                templateUrl: 'views/ui/table/partner.html',
+                data : { title: '合伙人', theme: { primary: 'blue'} }
+            })
+
+            .state('ui.map.admins', {
+                url: '/admins',
+                templateUrl: 'views/ui/map/admins.html',
+                data : { title: '等级配置' },
+                controller: 'VectorMapCtrl',
+                resolve: load('scripts/controllers/vectormap.js')
+            })
+
+            .state('page.setting', {
+                url: '/setting',
+                templateUrl: 'views/pages/setting.html',
+                data : { title: '短信列表', theme: { primary: 'green'} }
+            })
+
+            .state('page.allocation', {
+                url: '/allocation',
+                templateUrl: 'views/pages/allocation.html',
+                data : { title: '短信配置', theme: { primary: 'green'} }
+            })
+
             .state('ui.map.list', {
                 url: '/list',
                 templateUrl: 'views/ui/map/list.html',
@@ -539,8 +556,7 @@ angular.module('app')
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
-        //------------------------------------end----------
-            //---------------------------yangbo 2015.5.6 start------
+
             .state('ui.map.task', {
                 url: '/task',
                 templateUrl: 'views/ui/map/task.html',
@@ -548,8 +564,7 @@ angular.module('app')
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
-            //------------------------------------end----------
-          //------------------------yangbo 2015.5.6 start-----------
+
             .state('ui.map.label', {
                 url: '/label',
                 templateUrl: 'views/ui/map/label.html',
@@ -557,8 +572,7 @@ angular.module('app')
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
-          //-----------------------end-------------------
-            //------------------------yangbo 2015.5.6 start-----------
+
             .state('ui.map.ad', {
                 url: '/ad',
                 templateUrl: 'views/ui/map/ad.html',
@@ -566,8 +580,7 @@ angular.module('app')
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
-          //-----------------------end-------------------
-            //------------------------yangbo 2015.5.6 start-----------
+
             .state('ui.map.topic', {
                 url: '/topic',
                 templateUrl: 'views/ui/map/topic.html',
@@ -575,8 +588,7 @@ angular.module('app')
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
-          //-----------------------end-------------------
-            //------------------------yangbo 2015.5.6 start-----------
+
             .state('ui.map.content', {
                 url: '/content',
                 templateUrl: 'views/ui/map/content.html',
@@ -584,8 +596,7 @@ angular.module('app')
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
-          //-----------------------end-------------------
-            //------------------------yangbo 2015.5.6 start-----------
+
             .state('ui.map.channel', {
                 url: '/channel',
                 templateUrl: 'views/ui/map/channel.html',
@@ -593,8 +604,7 @@ angular.module('app')
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
-          //-----------------------end-------------------
-            //------------------------yangbo 2015.5.6 start-----------
+
             .state('ui.map.set', {
                 url: '/set',
                 templateUrl: 'views/ui/map/set.html',
@@ -602,8 +612,7 @@ angular.module('app')
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
-          //-----------------------end-------------------
-            //------------------------yangbo 2015.5.6 start-----------
+
             .state('ui.map.FM', {
                 url: '/FM',
                 templateUrl: 'views/ui/map/FM.html',
@@ -611,7 +620,27 @@ angular.module('app')
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
+
+            .state('app.DetailsPage1', {
+                url: '/DetailsPage1',
+                templateUrl: 'views/pages/DetailsPage1.html',
+                data : { title: '详情页' },
+                controller: 'VectorMapCtrl',
+                resolve: load('scripts/controllers/vectormap.js')
+            })
+
+            .state('app.cms-edit1', {
+                url: '/cms-edit1',
+                templateUrl: 'views/pages/cms-edit1.html',
+                data : { title: '编辑页' },
+                controller: 'VectorMapCtrl',
+                resolve: load('scripts/controllers/vectormap.js')
+            })
           //-----------------------end-------------------
+
+
+
+
 
 
           function load(srcs, callback) {

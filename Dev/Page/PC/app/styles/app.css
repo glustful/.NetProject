@@ -1397,8 +1397,8 @@ a.list-group-item.hover {
 
 .panel-footer {
   padding: 16px 24px;
-  background-color: #f2f3f3;
-  border-color: #eaebec;
+  background-color: white;
+  border-top:none;
   border-radius: 0 0 3px 3px;
 }
 
@@ -6231,10 +6231,47 @@ td button{
 }
 
 .col-1{
-    width: 30%;
-    text-align: right;
+    width: 80%;
+    text-align: left;
 }
 .col-2{
-    width: 70%;
+    width: 20%;
+    text-align: left;
+}
+.col-2-th{
+    padding-right: 50px;
+
+}
+.form-control-2{
+    padding:20px 0 0 20px;
+}
+.tm{
+    padding:10px 30px 0 0;
     text-align: right;
+}
+.table-cms1 td{
+    text-align: center;
+}
+.table-cms1 th{
+    text-align: center;
+}
+#form{
+    color: #b0bec5;
+}
+#form span{
+    font-size: 0.4em;
+}
+#form input{
+    width: 20%;
+}
+.bottom{
+    margin-bottom: 20px;
+}
+.border{
+    border:1px solid #f2f2f2;
+    margin-bottom: 10px;
+    padding:10px 0;
+}
+.details small{
+    margin:0 15px;
 }
