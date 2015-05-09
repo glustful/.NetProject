@@ -42,7 +42,7 @@ angular.module('app')
                 templateUrl: 'views/aside.html'
               },
               'content': {
-                templateUrl: 'views/index.html'
+                templateUrl: 'views/content.html'
               }
             }
           })
@@ -107,7 +107,7 @@ angular.module('app')
                 templateUrl: 'views/aside.html'
               },
               'content': {
-                templateUrl: 'views/index.html'
+                templateUrl: 'views/content.html'
               }
             }
           })
@@ -360,7 +360,7 @@ angular.module('app')
                 templateUrl: 'views/aside.html'
               },
               'content': {
-                templateUrl: 'views/index.html'
+                templateUrl: 'views/content.html'
               }
             }
           })
@@ -583,8 +583,7 @@ angular.module('app')
             .state('page.CMS.tag.index', {
               url: '/index',
               templateUrl: 'views/pages/CMS/tag/index.html',
-              data : { title: '标签页' },
-              controller: 'VectorMapCtrl'
+              data : { title: '标签页' }
             })
             .state('page.CMS.tag.edit', {
               url: '/edit',
