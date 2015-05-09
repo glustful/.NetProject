@@ -42,7 +42,7 @@ angular.module('app')
                 templateUrl: 'views/aside.html'
               },
               'content': {
-                templateUrl: 'views/content.html'
+                templateUrl: 'views/index.html'
               }
             }
           })
@@ -107,7 +107,7 @@ angular.module('app')
                 templateUrl: 'views/aside.html'
               },
               'content': {
-                templateUrl: 'views/content.html'
+                templateUrl: 'views/index.html'
               }
             }
           })
@@ -360,7 +360,7 @@ angular.module('app')
                 templateUrl: 'views/aside.html'
               },
               'content': {
-                templateUrl: 'views/content.html'
+                templateUrl: 'views/index.html'
               }
             }
           })
@@ -573,53 +573,56 @@ angular.module('app')
             })
 
             .state('page.CMS',{url:'/CMS',template:'<div ui-view></div>'})
-
-            .state('page.CMS.tag', {
-                url: '/tag',
-                templateUrl: 'views/pages/CMS/tag.html',
+            .state('page.CMS.tag',{url:'/tag',template:'<div ui-view></div>'})
+            .state('page.CMS.ad',{url:'/ad',template:'<div ui-view></div>'})
+            .state('page.CMS.channel',{url:'/channel',template:'<div ui-view></div>'})
+            .state('page.CMS.content',{url:'/content',template:'<div ui-view></div>'})
+            .state('page.CMS.set',{url:'/set',template:'<div ui-view></div>'})
+            .state('page.CMS.fileManager',{url:'/fileManager',template:'<div ui-view></div>'})
+            .state('page.CMS.tag.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CMS/tag/index.html',
                 data : { title: '标签页' },
-                controller: 'VectorMapCtrl',
-                resolve: load('scripts/controllers/vectormap.js')
+                controller: 'VectorMapCtrl'
             })
 
-            .state('page.CMS.ad', {
-                url: '/ad',
-                templateUrl: 'views/pages/CMS/ad.html',
+            .state('page.CMS.ad.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CMS/ad/index.html',
                 data : { title: '广告页' },
-                controller: 'VectorMapCtrl',
-                resolve: load('scripts/controllers/vectormap.js')
+                controller: 'VectorMapCtrl'
+
             })
 
-            .state('page.CMS.channel', {
-                url: '/channel',
-                templateUrl: 'views/pages/CMS/channel.html',
+            .state('page.CMS.channel.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CMS/channel/index.html',
                 data : { title: '栏目管理' },
-                controller: 'VectorMapCtrl',
-                resolve: load('scripts/controllers/vectormap.js')
+                controller: 'VectorMapCtrl'
+
             })
 
-            .state('page.CMS.content', {
-                url: '/content',
-                templateUrl: 'views/ui/map/content.html',
+            .state('page.CMS.content.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CMS/content/index.html',
                 data : { title: '内容页' },
-                controller: 'VectorMapCtrl',
-                resolve: load('scripts/controllers/vectormap.js')
+                controller: 'VectorMapCtrl'
+
             })
 
-            .state('page.CMS.set', {
-                url: '/set',
-                templateUrl: 'views/pages/CMS/set.html',
+            .state('page.CMS.set.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CMS/set/index.html',
                 data : { title: '设置' },
-                controller: 'VectorMapCtrl',
-                resolve: load('scripts/controllers/vectormap.js')
+                controller: 'VectorMapCtrl'
+
             })
 
-            .state('page.CMS.fileManager', {
-                url: '/fileManager',
-                templateUrl: 'views/pages/CMS/fileManager.html',
+            .state('page.CMS.fileManager.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CMS/fileManager/index.html',
                 data : { title: '文件管理' },
-                controller: 'VectorMapCtrl',
-                resolve: load('scripts/controllers/vectormap.js')
+                controller: 'VectorMapCtrl'
             })
 
             .state('app.DetailsPage1', {
@@ -630,20 +633,64 @@ angular.module('app')
                 resolve: load('scripts/controllers/vectormap.js')
             })
 
-            .state('page.CMS.cms-edit1', {
-                url: '/cms-edit1',
-                templateUrl: 'views/pages/CMS/cms-edit1.html',
+            .state('page.CMS.tag.edit', {
+                url: '/edit',
+                templateUrl: 'views/pages/CMS/tag/edit.html',
                 data : { title: '编辑页' },
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
-            .state('page.CMS.creat', {
+            .state('page.CMS.tag.creat', {
                 url: '/creat',
-                templateUrl: 'views/pages/CMS/creat.html',
+                templateUrl: 'views/pages/CMS/tag/creat.html',
                 data : { title: '新建页' },
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
+            .state('page.CMS.ad.edit', {
+                url: '/edit',
+                templateUrl: 'views/pages/CMS/ad/edit.html',
+                data : { title: '编辑页' },
+                controller: 'VectorMapCtrl',
+                resolve: load('scripts/controllers/vectormap.js')
+            })
+            .state('page.CMS.ad.creat', {
+                url: '/creat',
+                templateUrl: 'views/pages/CMS/ad/creat.html',
+                data : { title: '新建页' },
+                controller: 'VectorMapCtrl'
+
+            })
+            .state('page.CMS.channel.edit', {
+                url: '/edit',
+                templateUrl: 'views/pages/CMS/channel/edit.html',
+                data : { title: '编辑页' },
+                controller: 'VectorMapCtrl'
+
+            })
+            .state('page.CMS.channel.creat', {
+                url: '/creat',
+                templateUrl: 'views/pages/CMS/channel/creat.html',
+                data : { title: '新建页' },
+                controller: 'VectorMapCtrl'
+
+            })
+            .state('page.CMS.content.edit', {
+                url: '/edit',
+                templateUrl: 'views/pages/CMS/content/edit.html',
+                data : { title: '编辑页' },
+                controller: 'VectorMapCtrl'
+
+            })
+            .state('page.CMS.content.creat', {
+                url: '/creat',
+                templateUrl: 'views/pages/CMS/content/creat.html',
+                data : { title: '新建页' },
+                controller: 'VectorMapCtrl'
+
+            })
+
+
           //-----------------------end-------------------
 
 
