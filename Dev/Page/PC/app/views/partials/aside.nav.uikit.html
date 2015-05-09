@@ -333,36 +333,33 @@
             </li-->
         </ul>
     </li>
-    <li ng-class="{active:$state.includes('ui.map')}">
+    <li ui-sref-active="active">
         <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
         </span>
-            <i class="icon mdi-maps-navigation i-20"></i>
-            <!--<span class="font-normal">Maps</span>-->
-            <span class="font-normal">内容管理</span>
+            <i class="pull-right up"><b class="badge no-bg">6</b></i>
+            <i class="icon mdi-action-settings-input-svideo i-20"></i>
+            <span class="font-normal">信息管理</span>
         </a>
         <ul class="nav nav-sub">
             <li ui-sref-active="active">
-                <a md-ink-ripple ui-sref="ui.map.label">标签页</a>
+                <a md-ink-ripple ui-sref="page.CMS.tag">标签页</a>
             </li>
             <li ui-sref-active="active">
-                <a md-ink-ripple ui-sref="ui.map.ad">广告页</a>
+                <a md-ink-ripple ui-sref="page.CMS.ad">广告页</a>
             </li>
             <li ui-sref-active="active">
-                <a md-ink-ripple ui-sref="ui.map.topic">栏目管理</a>
+                <a md-ink-ripple ui-sref="page.CMS.channel">栏目管理</a>
             </li>
             <li ui-sref-active="active">
-            <a md-ink-ripple ui-sref="ui.map.content">内容页</a>
-        </li>
-            <li ui-sref-active="active">
-                <a md-ink-ripple ui-sref="ui.map.channel">channel</a>
+                <a md-ink-ripple ui-sref="page.CMS.content">内容页</a>
             </li>
             <li ui-sref-active="active">
-                <a md-ink-ripple ui-sref="ui.map.set">set</a>
+                <a md-ink-ripple ui-sref="page.CMS.set">设置</a>
             </li>
             <li ui-sref-active="active">
-                <a md-ink-ripple ui-sref="ui.map.FM">FM</a>
+                <a md-ink-ripple ui-sref="page.CMS.fileManager">文件管理</a>
             </li>
 
             <!--<li ui-sref-active="active">

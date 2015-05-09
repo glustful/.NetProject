@@ -13,15 +13,15 @@ angular.module('app')
       function ( $rootScope,   $state,   $stateParams ,AuthService) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
-          $rootScope.$on('$stateChangeStart', function (event,next) {
-              if(next.name==='access.signin'){
-                  return;
-              }
-              if(!AuthService.IsAuthenticated()){
-                  event.preventDefault();
-                  $state.go('access.signin');
-              }
-          });
+//          $rootScope.$on('$stateChangeStart', function (event,next) {
+//              if(next.name==='access.signin'){
+//                  return;
+//              }
+//              if(!AuthService.IsAuthenticated()){
+//                  event.preventDefault();
+//                  $state.go('access.signin');
+//              }
+//          });
       }
     ]
   )
@@ -416,10 +416,6 @@ angular.module('app')
               templateUrl: 'views/pages/lockme.html'
             })
 
-
-
-
-
             //-------------------------yangbo----------------
             .state('app.AgentManagement', {
                 url: '/AgentManagement',
@@ -576,31 +572,33 @@ angular.module('app')
                 resolve: load('scripts/controllers/vectormap.js')
             })
 
-            .state('ui.map.label', {
-                url: '/label',
-                templateUrl: 'views/ui/map/label.html',
+            .state('page.CMS',{url:'/CMS',template:'<div ui-view></div>'})
+
+            .state('page.CMS.tag', {
+                url: '/tag',
+                templateUrl: 'views/pages/CMS/tag.html',
                 data : { title: '标签页' },
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
 
-            .state('ui.map.ad', {
+            .state('page.CMS.ad', {
                 url: '/ad',
-                templateUrl: 'views/ui/map/ad.html',
+                templateUrl: 'views/pages/CMS/ad.html',
                 data : { title: '广告页' },
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
 
-            .state('ui.map.topic', {
-                url: '/topic',
-                templateUrl: 'views/ui/map/topic.html',
+            .state('page.CMS.channel', {
+                url: '/channel',
+                templateUrl: 'views/pages/CMS/channel.html',
                 data : { title: '栏目管理' },
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
 
-            .state('ui.map.content', {
+            .state('page.CMS.content', {
                 url: '/content',
                 templateUrl: 'views/ui/map/content.html',
                 data : { title: '内容页' },
@@ -608,25 +606,17 @@ angular.module('app')
                 resolve: load('scripts/controllers/vectormap.js')
             })
 
-            .state('ui.map.channel', {
-                url: '/channel',
-                templateUrl: 'views/ui/map/channel.html',
-                data : { title: '频道' },
-                controller: 'VectorMapCtrl',
-                resolve: load('scripts/controllers/vectormap.js')
-            })
-
-            .state('ui.map.set', {
+            .state('page.CMS.set', {
                 url: '/set',
-                templateUrl: 'views/ui/map/set.html',
+                templateUrl: 'views/pages/CMS/set.html',
                 data : { title: '设置' },
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
 
-            .state('ui.map.FM', {
-                url: '/FM',
-                templateUrl: 'views/ui/map/FM.html',
+            .state('page.CMS.fileManager', {
+                url: '/fileManager',
+                templateUrl: 'views/pages/CMS/fileManager.html',
                 data : { title: '文件管理' },
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
@@ -640,10 +630,17 @@ angular.module('app')
                 resolve: load('scripts/controllers/vectormap.js')
             })
 
-            .state('app.cms-edit1', {
+            .state('page.CMS.cms-edit1', {
                 url: '/cms-edit1',
-                templateUrl: 'views/pages/cms-edit1.html',
+                templateUrl: 'views/pages/CMS/cms-edit1.html',
                 data : { title: '编辑页' },
+                controller: 'VectorMapCtrl',
+                resolve: load('scripts/controllers/vectormap.js')
+            })
+            .state('page.CMS.creat', {
+                url: '/creat',
+                templateUrl: 'views/pages/CMS/creat.html',
+                data : { title: '新建页' },
                 controller: 'VectorMapCtrl',
                 resolve: load('scripts/controllers/vectormap.js')
             })
