@@ -538,7 +538,7 @@ Licensed under the MIT license.
                     inverseTransform: null, // if transform is set, this should be the inverse function
                     min: null, // min. value to show, null means set automatically
                     max: null, // max. value to show, null means set automatically
-                    autoscaleMargin: null, // margin in % to add if auto-setting min/max
+                    autoscaleMargin: null, // margin in % to add if auto-SETTING min/max
                     ticks: null, // either [1, 3] or [[1, "a"], 3] or (fn: axis info -> ticks) or app. number of ticks for auto-ticks
                     tickFormatter: null, // fn: number -> string
                     labelWidth: null, // size of tick labels in pixels
@@ -2527,7 +2527,7 @@ Licensed under the MIT license.
 
             // If the user sets the line width to 0, we change it to a very 
             // small value. A line width of 0 seems to force the default of 1.
-            // Doing the conditional here allows the shadow setting to still be 
+            // Doing the conditional here allows the shadow SETTING to still be
             // optional even with a lineWidth of 0.
 
             if( lw == 0 )

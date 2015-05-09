@@ -35,13 +35,12 @@ angular.module("app").service("AuthService",["$http",function($http){
      * @param password
      */
     this.doLogin = function(userName,password,callback,faildCallback){
-        $http.post("http://localhost:50597/api/user/login",
+        $http.post(SETTING.ApiUrl+"/user/login",
             {
                 UserName:userName,
                 Password:password
             },{
-                'withCredentials':true,
-                'async': false
+                'withCredentials':true
             })
             .success(function(data){
                 if(data.Status){

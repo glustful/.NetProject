@@ -485,7 +485,7 @@ angular.module('app')
             })*/
             //------------------------yangbo 2015.4.30 start--------
             .state('page.setting', {
-                url: '/setting',
+                url: '/SETTING',
                 templateUrl: 'views/pages/setting.html',
                 data : { title: '短信列表', theme: { primary: 'green'} }
             })

@@ -303,7 +303,7 @@ function ( i18nService, uiGridConstants, gridUtil ) {
      * @ngdoc boolean
      * @name enableSorting
      * @propertyOf ui.grid.class:GridOptions.columnDef
-     * @description (optional) True by default. When enabled, this setting adds sort
+     * @description (optional) True by default. When enabled, this SETTING adds sort
      * widgets to the column header, allowing sorting of the data in the individual column.
      */
     /**
@@ -343,7 +343,7 @@ function ( i18nService, uiGridConstants, gridUtil ) {
      * @ngdoc boolean
      * @name suppressRemoveSort
      * @propertyOf ui.grid.class:GridOptions.columnDef
-     * @description (optional) False by default. When enabled, this setting hides the removeSort option
+     * @description (optional) False by default. When enabled, this SETTING hides the removeSort option
      * in the menu.
      */
     /**
@@ -368,7 +368,7 @@ function ( i18nService, uiGridConstants, gridUtil ) {
      * @ngdoc boolean
      * @name enableHiding
      * @propertyOf ui.grid.class:GridOptions.columnDef
-     * @description (optional) True by default. When set to false, this setting prevents a user from hiding the column
+     * @description (optional) True by default. When set to false, this SETTING prevents a user from hiding the column
      * using the column menu or the grid menu.
      */
     /**
@@ -5476,10 +5476,10 @@ angular.module('ui.grid')
    * @methodOf ui.grid.class:GridColumn
    * @name setPropertyOrDefault
    * @description Sets a property on the column using the passed in columnDef, and
-   * setting the defaultValue if the value cannot be found on the colDef
+   * SETTING the defaultValue if the value cannot be found on the colDef
    * @param {ColumnDef} colDef the column def to look in for the property value
    * @param {string} propName the property name we'd like to set
-   * @param {object} defaultValue the value to use if the colDef doesn't provide the setting
+   * @param {object} defaultValue the value to use if the colDef doesn't provide the SETTING
    */ 
   GridColumn.prototype.setPropertyOrDefault = function (colDef, propName, defaultValue) {
     var self = this;
@@ -5974,7 +5974,7 @@ angular.module('ui.grid')
    * @ngdoc function
    * @name showColumn
    * @methodOf ui.grid.class:GridColumn
-   * @description Makes the column visible by setting colDef.visible = true
+   * @description Makes the column visible by SETTING colDef.visible = true
    */
   GridColumn.prototype.showColumn = function() {
       this.colDef.visible = true;
@@ -5984,7 +5984,7 @@ angular.module('ui.grid')
    * @ngdoc function
    * @name hideColumn
    * @methodOf ui.grid.class:GridColumn
-   * @description Hides the column by setting colDef.visible = false
+   * @description Hides the column by SETTING colDef.visible = false
    */
   GridColumn.prototype.hideColumn = function() {
       this.colDef.visible = false;
@@ -6227,12 +6227,12 @@ angular.module('ui.grid')
        * @ngdoc boolean
        * @name enableRowHashing
        * @propertyOf ui.grid.class:GridOptions
-       * @description True by default. When enabled, this setting allows uiGrid to add
+       * @description True by default. When enabled, this SETTING allows uiGrid to add
        * `$$hashKey`-type properties (similar to Angular) to elements in the `data` array. This allows
        * the grid to maintain state while vastly speeding up the process of altering `data` by adding/moving/removing rows.
        * 
        * Note that this DOES add properties to your data that you may not want, but they are stripped out when using `angular.toJson()`. IF
-       * you do not want this at all you can disable this setting but you will take a performance hit if you are using large numbers of rows
+       * you do not want this at all you can disable this SETTING but you will take a performance hit if you are using large numbers of rows
        * and are altering the data set often.
        */
       baseOptions.enableRowHashing = baseOptions.enableRowHashing !== false;
@@ -6265,7 +6265,7 @@ angular.module('ui.grid')
        * @ngdoc property
        * @name showHeader
        * @propertyOf ui.grid.class:GridOptions
-       * @description True by default. When set to false, this setting will replace the
+       * @description True by default. When set to false, this SETTING will replace the
        * standard header template with '<div></div>', resulting in no header being shown.
        *
        * It will also set the `headerRowHeight` option to 0.
@@ -6402,7 +6402,7 @@ angular.module('ui.grid')
        * @ngdoc boolean
        * @name enableSorting
        * @propertyOf ui.grid.class:GridOptions
-       * @description True by default. When enabled, this setting adds sort
+       * @description True by default. When enabled, this SETTING adds sort
        * widgets to the column headers, allowing sorting of the data for the entire grid.
        * Sorting can then be disabled on individual columns using the columnDefs.
        */
@@ -6412,7 +6412,7 @@ angular.module('ui.grid')
        * @ngdoc boolean
        * @name enableFiltering
        * @propertyOf ui.grid.class:GridOptions
-       * @description False by default. When enabled, this setting adds filter 
+       * @description False by default. When enabled, this SETTING adds filter
        * boxes to each column header, allowing filtering within the column for the entire grid.
        * Filtering can then be disabled on individual columns using the columnDefs. 
        */
@@ -6422,7 +6422,7 @@ angular.module('ui.grid')
        * @ngdoc boolean
        * @name enableColumnMenus
        * @propertyOf ui.grid.class:GridOptions
-       * @description True by default. When enabled, this setting displays a column
+       * @description True by default. When enabled, this SETTING displays a column
        * menu within each column.
        */
       baseOptions.enableColumnMenus = baseOptions.enableColumnMenus !== false;
@@ -6470,7 +6470,7 @@ angular.module('ui.grid')
        * @ngdoc string
        * @name headerTemplate
        * @propertyOf ui.grid.class:GridOptions
-       * @description Null by default. When provided, this setting uses a custom header
+       * @description Null by default. When provided, this SETTING uses a custom header
        * template, rather than the default template. Can be set to either the name of a template file:
        * <pre>  $scope.gridOptions.headerTemplate = 'header_template.html';</pre>
        * inline html 
@@ -6491,7 +6491,7 @@ angular.module('ui.grid')
        * @ngdoc string
        * @name footerTemplate
        * @propertyOf ui.grid.class:GridOptions
-       * @description (optional) Null by default. When provided, this setting uses a custom footer
+       * @description (optional) Null by default. When provided, this SETTING uses a custom footer
        * template. Can be set to either the name of a template file 'footer_template.html', inline html
        * <pre>'<div class="ui-grid-bottom-panel" style="text-align: center">I am a Custom Grid Footer</div>'</pre>, or the id
        * of a precompiled template (TBD how to use this).  Refer to the custom footer tutorial for more information.
@@ -6502,7 +6502,7 @@ angular.module('ui.grid')
        * @ngdoc string
        * @name rowTemplate
        * @propertyOf ui.grid.class:GridOptions
-       * @description 'ui-grid/ui-grid-row' by default. When provided, this setting uses a 
+       * @description 'ui-grid/ui-grid-row' by default. When provided, this SETTING uses a
        * custom row template.  Can be set to either the name of a template file:
        * <pre> $scope.gridOptions.rowTemplate = 'row_template.html';</pre>
        * inline html 
@@ -8075,7 +8075,7 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
    * @ngdoc boolean
    * @name useExternalFiltering
    * @propertyOf ui.grid.class:GridOptions
-   * @description False by default. When enabled, this setting suppresses the internal filtering.
+   * @description False by default. When enabled, this SETTING suppresses the internal filtering.
    * All UI logic will still operate, allowing filter conditions to be set and modified.
    * 
    * The external filter logic can listen for the `filterChange` event, which fires whenever
@@ -9938,7 +9938,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
     // by 40 to try and get a more usable deltaFactor.
     // Side note, this actually impacts the reported scroll distance
     // in older browsers and can cause scrolling to be slower than native.
-    // Turn this off by setting $.event.special.mousewheel.settings.adjustOldDeltas to false.
+    // Turn this off by SETTING $.event.special.mousewheel.settings.adjustOldDeltas to false.
     return orgEvent.type === 'mousewheel' && absDelta % 120 === 0;
   }
 
@@ -15925,7 +15925,7 @@ module.filter('px', function() {
        * @ngdoc property
        * @name infiniteScrollPercentage
        * @propertyOf ui.grid.class:GridOptions
-       * @description This setting controls at what percentage of the scroll more data
+       * @description This SETTING controls at what percentage of the scroll more data
        * is requested by the infinite scroll
        */
     };
@@ -18154,7 +18154,7 @@ module.filter('px', function() {
          * @ngdoc method
          * @methodOf ui.grid.rowEdit.service:uiGridRowEditService
          * @name considerSetTimer
-         * @description Consider setting a timer on this row (if it is dirty).  if there is a timer running 
+         * @description Consider SETTING a timer on this row (if it is dirty).  if there is a timer running
          * on the row and the row isn't currently saving, cancel it, using cancelTimer, then if the row is 
          * dirty and not currently saving then set a new timer
          * @param {object} grid the grid for which we are processing

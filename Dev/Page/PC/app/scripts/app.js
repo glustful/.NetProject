@@ -29,3 +29,7 @@ angular
     'oc.lazyLoad',
     'angular-loading-bar'
   ]);
+
+var SETTING = {
+  ApiUrl:'http://localhost:50597/api'
+};

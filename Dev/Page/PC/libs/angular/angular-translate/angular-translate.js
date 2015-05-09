@@ -395,7 +395,7 @@ angular.module('pascalprecht.translate').provider('$translate', ['$STORAGE_KEY',
    *
    * @description
    * Sets an indicator which is used when a translation isn't found. E.g. when
-   * setting the indicator as 'X' and one tries to translate a translation id
+   * SETTING the indicator as 'X' and one tries to translate a translation id
    * called `NOT_FOUND`, this will result in `X NOT_FOUND X`.
    *
    * Internally this methods sets a left indicator and a right indicator using
@@ -957,7 +957,7 @@ angular.module('pascalprecht.translate').provider('$translate', ['$STORAGE_KEY',
        * @private
        *
        * @description
-       * Makes actual use of a language by setting a given language key as used
+       * Makes actual use of a language by SETTING a given language key as used
        * language and informs registered interpolators to also use the given
        * key as locale.
        *
@@ -1057,7 +1057,7 @@ angular.module('pascalprecht.translate').provider('$translate', ['$STORAGE_KEY',
       if ($interpolatorFactories.length) {
         angular.forEach($interpolatorFactories, function (interpolatorFactory) {
           var interpolator = $injector.get(interpolatorFactory);
-          // setting initial locale for each interpolation service
+          // SETTING initial locale for each interpolation service
           interpolator.setLocale($preferredLanguage || $uses);
           // apply additional settings
           if (angular.isFunction(interpolator.useSanitizeValueStrategy)) {

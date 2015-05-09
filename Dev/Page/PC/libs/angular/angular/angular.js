@@ -1442,7 +1442,7 @@ function bootstrap(element, modules, config) {
     }]);
 
     if (config.debugInfoEnabled) {
-      // Pushing so that this overrides `debugInfoEnabled` setting defined in user's `modules`.
+      // Pushing so that this overrides `debugInfoEnabled` SETTING defined in user's `modules`.
       modules.push(['$compileProvider', function($compileProvider) {
         $compileProvider.debugInfoEnabled(true);
       }]);
@@ -3649,7 +3649,7 @@ function annotate(fn, strictDi, name) {
  *
  * # The array notation
  *
- * It is often desirable to inline Injected functions and that's when setting the `$inject` property
+ * It is often desirable to inline Injected functions and that's when SETTING the `$inject` property
  * is very inconvenient. In these situations using the array notation to specify the dependencies in
  * a way that survives minification is a better choice:
  *
@@ -4561,7 +4561,7 @@ var $AnimateProvider = ['$provide', function($provide) {
    * Sets and/or returns the CSS class regular expression that is checked when performing
    * an animation. Upon bootstrap the classNameFilter value is not set at all and will
    * therefore enable $animate to attempt to perform an animation on any element.
-   * When setting the classNameFilter value, animations will only be performed on elements
+   * When SETTING the classNameFilter value, animations will only be performed on elements
    * that successfully match the filter expression. This in turn can boost performance
    * for low-powered devices as well as applications containing a lot of structural operations.
    * @param {RegExp=} expression The className expression which will be checked against all animations
@@ -8738,8 +8738,8 @@ function $HttpProvider() {
    * XSRF token. Defaults value is `'X-XSRF-TOKEN'`.
    *
    * - **`defaults.headers`** - {Object} - Default headers for all $http requests.
-   * Refer to {@link ng.$http#setting-http-headers $http} for documentation on
-   * setting default headers.
+   * Refer to {@link ng.$http#SETTING-http-headers $http} for documentation on
+   * SETTING default headers.
    *     - **`defaults.headers.common`**
    *     - **`defaults.headers.post`**
    *     - **`defaults.headers.put`**
@@ -8960,7 +8960,7 @@ function $HttpProvider() {
      * calling `$http(config)`, which overrides the defaults without changing them globally.
      *
      * To explicitly remove a header automatically added via $httpProvider.defaults.headers on a per request basis,
-     * Use the `headers` property, setting the desired header to `undefined`. For example:
+     * Use the `headers` property, SETTING the desired header to `undefined`. For example:
      *
      * ```js
      * var req = {
@@ -9852,7 +9852,7 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
         } catch (e) {
           // WebKit added support for the json responseType value on 09/03/2013
           // https://bugs.webkit.org/show_bug.cgi?id=73648. Versions of Safari prior to 7 are
-          // known to throw when setting the value "json" as the response type. Other older
+          // known to throw when SETTING the value "json" as the response type. Other older
           // browsers implementing the responseType
           //
           // The json response type can be ignored if not supported, because JSON payloads are
@@ -11037,7 +11037,7 @@ var locationPrototype = {
    * @param {string|Object.<string>|Object.<Array.<string>>} search New search params - string or
    * hash object.
    *
-   * When called with a single argument the method acts as a setter, setting the `search` component
+   * When called with a single argument the method acts as a setter, SETTING the `search` component
    * of `$location` to the specified value.
    *
    * If the argument is a hash object containing an array of values, these values will be encoded
@@ -15019,7 +15019,7 @@ function adjustMatchers(matchers) {
  *
  * The default instance of `$sceDelegate` should work out of the box with little pain.  While you
  * can override it completely to change the behavior of `$sce`, the common case would
- * involve configuring the {@link ng.$sceDelegateProvider $sceDelegateProvider} instead by setting
+ * involve configuring the {@link ng.$sceDelegateProvider $sceDelegateProvider} instead by SETTING
  * your own whitelists and blacklists for trusting URLs used for loading AngularJS resources such as
  * templates.  Refer {@link ng.$sceDelegateProvider#resourceUrlWhitelist
  * $sceDelegateProvider.resourceUrlWhitelist} and {@link
@@ -15445,7 +15445,7 @@ function $SceDelegateProvider() {
  * The included {@link ng.$sceDelegate $sceDelegate} comes with sane defaults to allow you to load
  * templates in `ng-include` from your application's domain without having to even know about SCE.
  * It blocks loading templates from other domains or loading templates over http from an https
- * served document.  You can change these by setting your own custom {@link
+ * served document.  You can change these by SETTING your own custom {@link
  * ng.$sceDelegateProvider#resourceUrlWhitelist whitelists} and {@link
  * ng.$sceDelegateProvider#resourceUrlBlacklist blacklists} for matching such URLs.
  *
@@ -16091,7 +16091,7 @@ var $compileMinErr = minErr('$compile');
  * The `$templateRequest` service downloads the provided template using `$http` and, upon success,
  * stores the contents inside of `$templateCache`. If the HTTP request fails or the response data
  * of the HTTP request is empty, a `$compile` error will be thrown (the exception can be thwarted
- * by setting the 2nd parameter of the function to true).
+ * by SETTING the 2nd parameter of the function to true).
  *
  * @param {string} tpl The HTTP request template URL
  * @param {boolean=} ignoreRequestError Whether or not to ignore the exception when the request fails or the template is empty
@@ -16374,8 +16374,8 @@ var originUrl = urlResolve(window.location.href);
  *
  * IE7 does not normalize the URL when assigned to an anchor node.  (Apparently, it does, if one
  * uses the inner HTML approach to assign the URL as part of an HTML snippet -
- * http://stackoverflow.com/a/472729)  However, setting img[src] does normalize the URL.
- * Unfortunately, setting img[src] to something like "javascript:foo" on IE throws an exception.
+ * http://stackoverflow.com/a/472729)  However, SETTING img[src] does normalize the URL.
+ * Unfortunately, SETTING img[src] to something like "javascript:foo" on IE throws an exception.
  * Since the primary usage for normalizing URLs is to sanitize such URLs, we can't use that
  * method and IE < 8 is unsupported.
  *
@@ -18509,7 +18509,7 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
    * This method can be called to remove the 'ng-touched' class and set the form controls to their
    * untouched state (ng-untouched class).
    *
-   * Setting a form controls back to their untouched state is often useful when setting the form
+   * Setting a form controls back to their untouched state is often useful when SETTING the form
    * back to its pristine state.
    */
   form.$setUntouched = function() {
@@ -23686,7 +23686,7 @@ var DEFAULT_REGEXP = /(\s+|^)default(\s+|$)/;
  *     custom value for each event. For example:
  *     `ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"`
  *   - `allowInvalid`: boolean value which indicates that the model can be set with values that did
- *     not validate correctly instead of the default behavior of setting the model to undefined.
+ *     not validate correctly instead of the default behavior of SETTING the model to undefined.
  *   - `getterSetter`: boolean value which determines whether or not to treat functions bound to
        `ngModel` as getters/setters.
  *   - `timezone`: Defines the timezone to be used to read/write the `Date` instance in the model for
@@ -23870,7 +23870,7 @@ function addSetValidityMethod(context) {
 
     // re-read the state as the set/unset methods could have
     // combined state in ctrl.$error[validationError] (used for forms),
-    // where setting/unsetting only increments/decrements the value,
+    // where SETTING/unsetting only increments/decrements the value,
     // and does not replace it.
     var combinedState;
     if (ctrl.$pending && ctrl.$pending[validationErrorKey]) {

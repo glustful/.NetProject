@@ -1461,7 +1461,7 @@ var ngGrid = function ($scope, options, sortService, domUtilityService, $filter,
         keepLastSelected: true,
 
         /*Maintains the column widths while resizing. 
-        Defaults to true when using *'s or undefined widths. Can be ovverriden by setting to false.*/
+        Defaults to true when using *'s or undefined widths. Can be ovverriden by SETTING to false.*/
         maintainColumnRatios: undefined,
 
         // the template for the column menu and filter, including the button.
@@ -1827,8 +1827,8 @@ var ngGrid = function ($scope, options, sortService, domUtilityService, $filter,
             //If they specificy for maintain column ratios to be false in grid config, then it will remain false. If not specifiied or true, will be true.
             self.config.maintainColumnRatios = self.config.maintainColumnRatios !== false; 
             // If any columns with % widths have been hidden, then let other % based columns use their width
-            var percentWidth = 0; // The total % value for all columns setting their width using % (will e.g. be 40 for 2 columns with 20% each)
-            var hiddenPercent = 0; // The total % value for all columns setting their width using %, but which have been hidden
+            var percentWidth = 0; // The total % value for all columns SETTING their width using % (will e.g. be 40 for 2 columns with 20% each)
+            var hiddenPercent = 0; // The total % value for all columns SETTING their width using %, but which have been hidden
             angular.forEach(percentArray, function(colDef) {
                 // Get the ngColumn that matches the current column from columnDefs
                 var ngColumn = $scope.columns[indexMap[colDef.index]];
@@ -3350,7 +3350,7 @@ ngGridDirectives.directive('ngGrid', ['$compile', '$filter', '$templateCache', '
                                 }
                             }));
                         }
-                        // If it's NOT a string, then just set totalServerItems to 0 since they should only be setting this if using a string
+                        // If it's NOT a string, then just set totalServerItems to 0 since they should only be SETTING this if using a string
                         else {
                             $scope.totalServerItems = 0;
                         }

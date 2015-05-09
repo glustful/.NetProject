@@ -3015,8 +3015,8 @@ function ThemingProvider($mdColorPalette) {
       
       // Light and dark themes have different default hues.
       // Go through each existing color type for this theme, and for every
-      // hue value that is still the default hue value from the previous light/dark setting,
-      // set it to the default hue value from the new light/dark setting.
+      // hue value that is still the default hue value from the previous light/dark SETTING,
+      // set it to the default hue value from the new light/dark SETTING.
       var newDefaultHues = self.isDark ? DARK_DEFAULT_HUES : LIGHT_DEFAULT_HUES;
       var oldDefaultHues = self.isDark ? LIGHT_DEFAULT_HUES : DARK_DEFAULT_HUES;
       angular.forEach(newDefaultHues, function(newDefaults, colorType) {
@@ -9973,8 +9973,8 @@ function MdTooltipDirective($timeout, $window, $$rAF, $document, $mdUtil, $mdThe
     // Methods
     // *******
 
-    // If setting visible to true, debounce to scope.delay ms
-    // If setting visible to false and no timeout is active, instantly hide the tooltip.
+    // If SETTING visible to true, debounce to scope.delay ms
+    // If SETTING visible to false and no timeout is active, instantly hide the tooltip.
     function setVisible (value) {
       setVisible.value = !!value;
       if (!setVisible.queued) {
