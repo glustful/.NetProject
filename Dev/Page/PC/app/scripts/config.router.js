@@ -578,7 +578,8 @@ angular.module('app')
             })
             .state('page.CMS.tag',{
               url:'/tag',
-              template:'<div ui-view></div>'
+              template:'<div ui-view></div>',
+              resolve:load('scripts/controllers/CMS/Tag.js')
             })
             .state('page.CMS.tag.index', {
               url: '/index',
@@ -586,11 +587,9 @@ angular.module('app')
               data : { title: '标签页' }
             })
             .state('page.CMS.tag.edit', {
-              url: '/edit',
+              url: '/edit?id',
               templateUrl: 'views/pages/CMS/tag/edit.html',
-              data : { title: '编辑页' },
-              controller: 'VectorMapCtrl',
-              resolve: load('scripts/controllers/vectormap.js')
+              data : { title: '编辑页' }
             })
             .state('page.CMS.tag.creat', {
               url: '/creat',
