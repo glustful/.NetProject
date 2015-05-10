@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using CMS.Entity.Model;
 using CMS.Service.Tag;
 using YooPoon.Core.Site;
@@ -11,6 +12,7 @@ using Zerg.Models;
 
 namespace Zerg.Controllers.CMS
 {
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class TagController : ApiController
     {
         private readonly ITagService _tagService;
@@ -39,7 +41,8 @@ namespace Zerg.Controllers.CMS
                 Id=a.Id,
                 Tag=a.Tag
             }).ToList();
-            return PageHelper.toJson(tagList);
+            var totalCount = _tagService.GetTagCount(tagCon);
+            return PageHelper.toJson(new{List=tagList,Condition=tagCon,TotalCount=totalCount});
         }
         /// <summary>
         /// tag详细信息
