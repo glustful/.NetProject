@@ -1,6 +1,6 @@
-<div class="panel panel-card ng-scope">
+<div class="panel panel-card ng-scope" ng-controller="ContentIndexController">
     <div class="row form-control-2">
-        <input type="text" class="form-control form-control-1   ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入搜索条件" ng-model="contact.name" required="" tabindex="0" aria-required="true" aria-invalid="true">
+        <input type="text" class="form-control form-control-1   ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入搜索条件" ng-model="searchCondition.title"  tabindex="0" aria-required="true" aria-invalid="true">
         <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">搜索<div class="md-ripple-container"></div></button>
         <a href="#page/CMS/content/create" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw orange-200"style="float:right;;margin-right: 50px;">新建<div class="md-ripple-container"></div></button></a>
     </div>
@@ -11,41 +11,17 @@
             <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">所属频道<span class="footable-sort-indicator"></span></th>
             <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">状态<span class="footable-sort-indicator"></span></th>
             <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">操作<span class="footable-sort-indicator"></span></th>
-
-
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td >大数据</td>
-            <td >内容管理</td>
-            <td >正常/不可用</td>
+        <tr ng-repeat="item in list">
+            <td >{{item.Title}}</td>
+            <td >{{item.Channel}}</td>
+            <td >{{item.StatusString}}</td>
             <td >
-                <a href="#page/CMS/content/edit"> <span class="label bg-success" title="Active">编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                <a ui-sref="page.CMS.content.edit({id: item.Id})"> <span class="label bg-success" title="Active">编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                 <a href="#"> <span class="label yellow" title="Active">删除</span></a>
             </td>
-
-        </tr>
-        <tr>
-            <td >大数据</td>
-            <td >内容管理</td>
-            <td >正常/不可用</td>
-            <td >
-                <a href="#page/CMS/content/edit"> <span class="label bg-success" title="Active">编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                <a href="#"> <span class="label yellow" title="Active">删除</span></a>
-            </td>
-
-        </tr>
-        <tr>
-            <td >大数据</td>
-            <td >内容管理</td>
-            <td >正常/不可用</td>
-            <td >
-                <a href="#page/CMS/content/edit"> <span class="label bg-success" title="Active">编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                <a href="#"> <span class="label yellow" title="Active">删除</span></a>
-
-            </td>
-
         </tr>
         </tbody>
 

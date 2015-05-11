@@ -878,8 +878,7 @@ angular.module('app')
             .state('page.CMS.channel.index', {
               url: '/index',
               templateUrl: 'views/pages/CMS/channel/index.html',
-              data : { title: '栏目管理' },
-              controller: 'VectorMapCtrl'
+              data : { title: '栏目管理' }
             })
             .state('page.CMS.channel.edit', {
               url: '/edit',
@@ -904,7 +903,7 @@ angular.module('app')
               controller: 'VectorMapCtrl'
             })
             .state('page.CMS.content.edit', {
-              url: '/edit',
+              url: '/edit?id',
               templateUrl: 'views/pages/CMS/content/edit.html',
               data : { title: '编辑页' },
               controller: 'VectorMapCtrl'
@@ -923,8 +922,8 @@ angular.module('app')
               url: '/index',
               templateUrl: 'views/pages/CMS/set/index.html',
               data : { title: '设置' },
-              controller: 'VectorMapCtrl'
-
+              controller: 'SettingController',
+              resolve:load('scripts/controllers/CMS/Setting.js')
             })
 
             .state('page.CMS.fileManager',{url:'/fileManager',template:'<div ui-view></div>'})
