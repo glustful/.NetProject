@@ -883,18 +883,18 @@ angular.module('app')
               resolve:load('scripts/controllers/CMS/Channel.js')
             })
             .state('page.CMS.channel.edit', {
-              url: '/edit',
+              url: '/edit?id',
               templateUrl: 'views/pages/CMS/channel/edit.html',
               data : { title: '编辑页' },
-              controller: 'VectorMapCtrl'
-
+              controller: 'ChannelEditController',
+              resolve:load('scripts/controllers/CMS/Channel.js')
             })
             .state('page.CMS.channel.create', {
               url: '/create',
               templateUrl: 'views/pages/CMS/channel/create.html',
               data : { title: '新建页' },
-              controller: 'VectorMapCtrl'
-
+              controller: 'ChannelCreateController',
+              resolve:load('scripts/controllers/CMS/Channel.js')
             })
 
             .state('page.CMS.content',{url:'/content',template:'<div ui-view></div>'})
