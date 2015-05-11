@@ -5,18 +5,14 @@ angular.module("app").controller('TagIndexController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
             tag: '',
-            page: 1,         //当前页
-            pageSize: 10,   //每页的条目
-            totalPage:1     //总共页数
+            page: 1,
+            pageSize: 10,
+            totalPage:1
         };
 
         var getTagList = function() {
             $http.get(SETTING.ApiUrl+'/Tag/Index',{params:$scope.searchCondition}).success(function(data){
-                $scope.list = data.List;
-                $scope.searchCondition.tag =data.Condition.Tag;
-                $scope.searchCondition.page =data.Condition.Page;
-                $scope.searchCondition.pageSize =data.Condition.PageCount;
-                $scope.searchCondition.totalPage =Math.ceil(data.TotalCount/data.Condition.PageCount);
+                $scope.list = data;
             });
         };
         $scope.getList = getTagList;
@@ -55,10 +51,7 @@ angular.module("app").controller('TagEditController',['$http','$scope','$statePa
     });
 
     $scope.Save = function(){
-        $http.post(SETTING.ApiUrl + '/Tag/Edit',{
-            Id:$scope.TagModel.Tag.Id,
-            Tag:$scope.TagModel.Tag.Tag
-        },{
+        $http.post(SETTING.ApiUrl + '/Tag/Edit',$scope.TagModel,{
             'withCredentials':true
         }).success(function(data){
             if(data.Status){
