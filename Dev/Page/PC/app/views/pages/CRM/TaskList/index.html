@@ -5,6 +5,254 @@
     <title></title>
 </head>
 <body>
+<!--黄秀宇 任务列表  2015.05.06
+自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />-->
+<div id="divTaskH"class="marginL">
+    <input style="width:200px;" type="text" class="form-control bordhtml" placeholder="搜索条件1">
+    <input style="width:200px;" type="text" class="form-control bordhtml" placeholder="搜索条件2">
+    <button md-ink-ripple=""style="width:100px;" class="md-btn md-raised m-b btn-fw indigo">检索</button>
+    <button id="btntask"onclick="taskOble()" md-ink-ripple=""style="width:150px;margin-left: 150px;" class="md-btn md-raised m-b btn-fw indigo">添加新任务</button>
+    <button id="btnback"onclick="taskBack()" md-ink-ripple=""style="width:150px;margin-left: 150px;" class="md-btn md-raised m-b btn-fw indigo">返回</button>
+
+</div>
+
+<div id="divTaskL"class="marginL">
+    <!--表头-->
+    <div class="bord taskclear divheard">
+        <ul class="taskheader">
+            <li>任务名称</li>
+            <li>任务类型</li>
+            <li>结束时间</li>
+            <li>创建人</li>
+            <li >列表</li>
+            <li >详情</li>
+        </ul>
+
+    </div>
+    <!--列表内容-->
+    <div  class="taskcenter bord bordTop0px divodd ">
+        <ul class="taskheader">
+            <li>任务名称</li>
+            <li>任务类型</li>
+            <li>结束时间</li>
+            <li>创建人</li>
+            <li><button md-ink-ripple="" onclick="taskCable()" class="md-btn md-raised m-b btn-fw blue">列表</button></li>
+            <li><button md-ink-ripple=""onclick="taskDable()" class="md-btn md-raised m-b btn-fw blue">详情</button></li>
+        </ul>
+
+    </div>
+    <div class="taskcenter bord bordTop0px diveven ">
+        <ul class="taskheader">
+            <li>任务名称</li>
+            <li>任务类型</li>
+            <li>结束时间</li>
+            <li>创建人</li>
+            <li><button md-ink-ripple=""onclick="taskCable()" class="md-btn md-raised m-b btn-fw blue">列表</button></li>
+            <li><button md-ink-ripple="" onclick="taskDable()"class="md-btn md-raised m-b btn-fw blue">详情</button></li>
+        </ul>
+
+    </div>
+    <div class="taskcenter bord bordTop0px divodd">
+        <ul class="taskheader">
+            <li>任务名称</li>
+            <li>任务类型</li>
+            <li>结束时间</li>
+            <li>创建人</li>
+            <li><button md-ink-ripple=""onclick="taskCable()" class="md-btn md-raised m-b btn-fw blue">列表</button></li>
+            <li><button md-ink-ripple=""onclick="taskDable()" class="md-btn md-raised m-b btn-fw blue">详情</button></li>
+        </ul>
+
+    </div>
+    <div class="taskcenter bord bordTop0px diveven">
+        <ul class="taskheader">
+            <li>任务名称</li>
+            <li>任务类型</li>
+            <li>结束时间</li>
+            <li>创建人</li>
+            <li><button md-ink-ripple="" onclick="taskCable()"class="md-btn md-raised m-b btn-fw blue">列表</button></li>
+            <li><button md-ink-ripple="" onclick="taskDable()"class="md-btn md-raised m-b btn-fw blue">详情</button></li>
+        </ul>
+
+    </div>
+    <div style="width:800px;" colspan="6" class="text-center footable-visible ng-scope">
+        <ul class="pagination">
+            <li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li>
+            <li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li>
+            <li class="footable-page active"><a data-page="0" href="#">1</a></li>
+            <li class="footable-page"><a data-page="1" href="#">2</a></li>
+            <li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li>
+            <li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li>
+        </ul>
+    </div>
+</div>
+
+<div id="divTaskC" class="marginL">
+    <!--列表头-->
+    <div class="taskclear1 bord divheard">
+        <ul class="taskheader1">
+            <li>任务名称</li>
+            <li>接受者</li>
+            <li>任务进度</li>
+            <li>结束时间</li>
+        </ul>
+
+    </div>
+    <!--列表内容-->
+    <div class="taskcenter1 bord bordTop0px divodd">
+        <ul class="taskheader1">
+            <li>任务名称</li>
+            <li>接受者</li>
+            <li>任务进度</li>
+            <li>结束时间</li>
+        </ul>
+
+    </div>
+    <div class="taskcenter1 bord bordTop0px diveven">
+        <ul class="taskheader1">
+            <li>任务名称</li>
+            <li>接受者</li>
+            <li>任务进度</li>
+            <li>结束时间</li>
+        </ul>
+
+    </div>
+    <div class="taskcenter1 bord bordTop0px divodd">
+        <ul class="taskheader1">
+            <li>任务名称</li>
+            <li>接受者</li>
+            <li>任务进度</li>
+            <li>结束时间</li>
+        </ul>
+
+    </div>
+    <div class="taskcenter1 bord bordTop0px diveven">
+        <ul class="taskheader1">
+            <li>任务名称</li>
+            <li>接受者</li>
+            <li>任务进度</li>
+            <li>结束时间</li>
+        </ul>
+
+    </div>
+    <div style="width:800px;" colspan="6" class="text-center footable-visible ng-scope">
+        <ul class="pagination">
+            <li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li>
+            <li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li>
+            <li class="footable-page active"><a data-page="0" href="#">1</a></li>
+            <li class="footable-page"><a data-page="1" href="#">2</a></li>
+            <li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li>
+            <li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li>
+        </ul>
+    </div>
+</div>
+
+<div id="divTaskD"class="bord">
+    <div class="taskd  bord">
+        <div>
+            <p >任务名称<span class="spantask">
+            研发高科技</span>
+                结束时间<span style="margin-left:20px;color:#0088cc;">
+            2015年1月1日</span></p>
+            <p style="margin-top:50px;">完成条件<span class="spantask">
+            研发高科技</span>
+                奖励方式<span style="margin-left:20px;color:#0088cc;">
+            2015年1月1日</span></p>
+        </div>
+
+    </div>
+    <div class="taskd  bord">
+        <div>
+            <p >任务描述<span style="margin-left:10px;margin-right:30px;color:#0088cc;">
+            sfsafdjoweijgihboifdhnvpaaowejtgiprojnnnnnnnseajgvpfdovhjn
+            sdfoisfhnkowiehigvb</span>
+            </p>
+
+        </div>
+    </div>
+    <div style="margin-top:30px;"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">修改</button>
+        <button md-ink-ripple=""onclick="taskAble()" style="margin-left:40px;" class="md-btn md-raised m-b btn-fw blue">返回</button>
+    </div>
+
+</div>
+
+<div id="divTaskA"class="marginL">
+    <div class="taska bord">
+        <p style="height:30px"></p>
+        <p >任务名称<input class="ptaska  bordhtml form-control" type="text"  placeholder="任务名称"></p>
+        <p>结束时间<input class="ptaska bordhtml form-control" type="text"  placeholder="结束时间"></p>
+        <p>任务类型<select class="ptaska bordhtml form-control"  name="" >
+            <option value="1">任务类型</option>
+        </select></p>
+        <p>任务目标<select class="ptaska bordhtml form-control" name="" >
+            <option value="1">任务目标</option>
+        </select></p>
+        <p>任务奖励<select class="ptaska bordhtml form-control" name=""  >
+            <option value="1">任务奖励</option>
+        </select></p>
+        <p>失败惩罚<select class="ptaska bordhtml form-control" name=""  >
+            <option value="1">失败惩罚</option>
+        </select></p>
+        <p>任务描述
+            <textarea style="height:100px;" class="ptaska bordhtml form-control" type="text"
+                      placeholder="任务描述"></textarea></p>
+
+        <div style="text-align:center;width:500px;margin-left:150px;margin-top:30px;"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">发布任务</button>
+            <button md-ink-ripple=""onclick="taskAble()" style="margin-left:40px;" class="md-btn md-raised m-b btn-fw blue">返回</button>
+        </div>
+        <p style="height:80px"></p>
+    </div>
+</div>
+<script type="text/javascript" >
+    //初始化点击列表后才能看到的内容为不可见
+    document.getElementById("divTaskC").style.display="none";
+    document.getElementById("divTaskD").style.display="none";
+    document.getElementById("divTaskA").style.display="none";
+    document.getElementById("btnback").style.display="none";
+
+    function taskCable(){
+        document.getElementById("btntask").style.display="none";
+        document.getElementById("divTaskL").style.display="none";
+        document.getElementById("divTaskC").style.display="";
+        document.getElementById("divTaskD").style.display="none";
+        document.getElementById("divTaskH").style.display="";
+        document.getElementById("divTaskA").style.display="none";
+        document.getElementById("btnback").style.display="";
+    }
+    function taskDable(){
+        document.getElementById("divTaskL").style.display="none";
+        document.getElementById("divTaskC").style.display="none";
+        document.getElementById("divTaskD").style.display="";
+        document.getElementById("divTaskH").style.display="none";
+        document.getElementById("divTaskA").style.display="none";
+
+    }
+    function taskAble(){
+        document.getElementById("divTaskC").style.display="none";
+        document.getElementById("divTaskD").style.display="none";
+        document.getElementById("divTaskH").style.display="";
+        document.getElementById("divTaskL").style.display="";
+        document.getElementById("divTaskA").style.display="none";
+    }
+    function taskOble(){
+        document.getElementById("divTaskC").style.display="none";
+        document.getElementById("divTaskD").style.display="none";
+        document.getElementById("divTaskH").style.display="none";
+        document.getElementById("divTaskL").style.display="none";
+        document.getElementById("divTaskA").style.display="";
+    }
+    function taskBack(){
+
+        document.getElementById("btntask").style.display="";
+        document.getElementById("divTaskL").style.display="";
+        document.getElementById("divTaskC").style.display="none";
+        document.getElementById("divTaskD").style.display="none";
+        document.getElementById("divTaskH").style.display="";
+        document.getElementById("divTaskA").style.display="none";
+        document.getElementById("btnback").style.display="none";
+
+    }
+</script>
+
 
 </body>
 </html>

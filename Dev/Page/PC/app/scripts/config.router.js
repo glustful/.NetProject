@@ -822,6 +822,45 @@ angular.module('app')
                 data : { title: '等级配置' }
             })
 
+            .state('page.CRM.MessageConfigure',{
+                url:'/MessageConfigure',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.MessageConfigure.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/MessageConfigure/index.html',
+                data : { title: '短信配置' }
+            })
+
+            .state('page.CRM.MessageList',{
+                url:'/MessageList',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.MessageList.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/MessageList/index.html',
+                data : { title: '短信列表' }
+            })
+
+            .state('page.CRM.TaskList',{
+                url:'/TaskList',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.TaskList.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/TaskList/index.html',
+                data : { title: '任务列表' }
+            })
+
+            .state('page.CRM.TaskConfigure',{
+                url:'/TaskConfigure',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.TaskConfigure.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/TaskConfigure/index.html',
+                data : { title: '任务配置' }
+            })
 
 
 
