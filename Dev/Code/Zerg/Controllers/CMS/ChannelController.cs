@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using CMS.Entity.Model;
 using CMS.Service.Channel;
 using YooPoon.Core.Site;
@@ -10,6 +11,7 @@ using Zerg.Models.CMS;
 
 namespace Zerg.Controllers.CMS
 {
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class ChannelController : ApiController
     {
         private readonly IChannelService _channelService;

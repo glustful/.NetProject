@@ -2,40 +2,32 @@
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using CMS.Entity.Model;
 using CMS.Service.Channel;
 using CMS.Service.Content;
 using YooPoon.Core.Site;
-using YooPoon.WebFramework.User.Services;
 using Zerg.Common;
 using Zerg.Models;
 using Zerg.Models.CMS;
 
 namespace Zerg.Controllers.CMS
 {
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class ContentController : ApiController
     {
         private readonly IContentService _contentService;
-        private readonly IUserService _userService;
         private readonly IChannelService _channelService;
         private readonly IWorkContext _workContent;
 
-
-        public ContentController(IContentService contentService,IUserService userService,IChannelService channelService,IWorkContext workContent)
+        
+        public ContentController(IContentService contentService,IChannelService channelService,IWorkContext workContent)
         {
             _contentService = contentService;
             _channelService = channelService;
-            _userService = userService;
             _workContent = workContent;
         }
 
-
-        public string Get()
-        {
-            _contentService.GetContentById(1);
-            _userService.GetUserByName("a");
-            return "0";
-        }
         /// <summary>
         /// 首页
         /// </summary>
@@ -57,9 +49,12 @@ namespace Zerg.Controllers.CMS
                 Id=a.Id,
                 Title=a.Title,
                 Status=a.Status,
-                Channel=a.Channel.Name
+                Channel=a.Channel.Name,
+                ChannelId = a.Channel.Id,
+                AddUser = a.Adduser
             }).ToList();
-            return PageHelper.toJson(contentList);
+            var totalCount = _contentService.GetContentCount(contentCon);
+            return PageHelper.toJson(new { List = contentList, Condition = contentCon, TotalCount = totalCount });
         }
         /// <summary>
         /// 内容详细信息
