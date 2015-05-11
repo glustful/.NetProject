@@ -1,35 +1,23 @@
-<form name="form" id="form" >
+<form name="form" id="form" ng-controller="ContentEditController" ng-submit="Save()">
     <div class="panel panel-default">
-
         <div class="panel-body revise">
-            <div class="bottom" ><label for="name">标题： </label> <input id="name" type="text" ></div>
-            <div class="bottom" ><label for="names">内容： </label>
-                <textarea name="" id="names" cols="42" rows="10"></textarea>
+            <div class="bottom" ><label for="title">标题： </label> <input id="title" type="text" ng-model="ContentModel.Title"></div>
+            <div class="bottom" ><label for="Content">内容： </label>
+                <textarea name="Content" id="Content" cols="42" rows="10" ng-model="ContentModel.Content"></textarea>
             </div>
-            <div class="bottom" ><label for="names1">状态： </label>
-                <select name="" id="names1">
-                    <option value="">正常</option>
-                    <option value="">不可用</option>
-
+            <div class="bottom" ><label for="status">状态： </label>
+                <select name="Status" id="Status" ng-model="ContentModel.Status">
+                    <option value="Deleted">删除</option>
+                    <option value="Published">发布</option>
                 </select>
             </div>
             <div class="bottom" ><label for="names">频道： </label>
-                <select name="" id="names">
-                    <option value="">频道1</option>
-                    <option value="">频道2</option>
-                    <option value="">频道3</option>
-                </select>
+                <select name="" id="names" ng-model="ContentModel.ChannelId" ng-options="list.Id as list.Name in ChannelList"></select>
             </div>
             <div>
-
+                <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" type="submit">确认<div class="md-ripple-container"></div></button>
                 <a href="#/page/CMS/content"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink">取消<div class="md-ripple-container"></div></button></a>
             </div>
-
-
         </div>
-
-
-
     </div>
-
 </form>
