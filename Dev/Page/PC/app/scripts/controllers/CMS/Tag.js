@@ -12,7 +12,10 @@ angular.module("app").controller('TagIndexController', [
 
         var getTagList = function() {
             $http.get(SETTING.ApiUrl+'/Tag/Index',{params:$scope.searchCondition}).success(function(data){
-                $scope.list = data;
+                $scope.list = data.List;
+                $scope.searchCondition.page = data.Condition.Page;
+                $scope.searchCondition.pageSize = data.Condition.PageCount;
+                $scope.totalCount = data.TotalCount;
             });
         };
         $scope.getList = getTagList;
@@ -29,9 +32,7 @@ angular.module("app").controller('TagDetailController',['$http','$scope','$state
 angular.module("app").controller('TagCreateController',['$http','$scope','$state',function($http,$scope,$state){
     $scope.TagModel = {
         Id: 0,
-        Name: '',
-        Status: '',
-        ParentId: 0
+        Tag:''
     };
 
     $scope.Create = function(){
@@ -39,15 +40,15 @@ angular.module("app").controller('TagCreateController',['$http','$scope','$state
             'withCredentials':true
         }).success(function(data){
             if(data.Status){
-                $state.go("page.CMS.Tag.index");
+                $state.go("page.CMS.tag.index");
             }
         });
     }
 }]);
 
-angular.module("app").controller('TagEditController',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+angular.module("app").controller('TagEditController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
     $http.get(SETTING.ApiUrl + '/Tag/Detailed/' + $stateParams.id).success(function(data){
-        $scope.TagModel =data;
+        $scope.TagModel =data.Tag;
     });
 
     $scope.Save = function(){
@@ -55,7 +56,7 @@ angular.module("app").controller('TagEditController',['$http','$scope','$statePa
             'withCredentials':true
         }).success(function(data){
             if(data.Status){
-                $state.go("page.CMS.Tag.index");
+                $state.go("page.CMS.tag.index");
             }
         });
     }
