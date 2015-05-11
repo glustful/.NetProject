@@ -20,7 +20,7 @@
   });
 
   app.controller('AsideDemoCtrl', function($scope) {
-    $scope.aside = {title: 'Title', content: 'Hello Aside<br />This is a multiline message!'};
+    $scope.aside = {title: 'Title', content: 'Hello Aside<br />This is a multiline MessageList!'};
   });
 
   app.controller('ButtonDemoCtrl', function($scope) {
@@ -84,11 +84,11 @@
 
 
   app.controller('ModalDemoCtrl', function($scope, $modal) {
-    $scope.modal = {title: 'Title', content: 'Hello Modal<br />This is a multiline message!'};
+    $scope.modal = {title: 'Title', content: 'Hello Modal<br />This is a multiline MessageList!'};
 
     // Controller usage example
     //
-    // var myModal = $modal({title: 'Title', content: 'Hello Modal<br />This is a multiline message!', show: false});
+    // var myModal = $modal({title: 'Title', content: 'Hello Modal<br />This is a multiline MessageList!', show: false});
     // $scope.showModal = function() {
     //   myModal.$promise.then(myModal.show);
     // };
@@ -133,7 +133,7 @@
 
   app.controller('TooltipDemoCtrl', function($scope, $q, $sce, $tooltip) {
 
-    $scope.tooltip = {title: 'Hello Tooltip<br />This is a multiline message!', checked: false};
+    $scope.tooltip = {title: 'Hello Tooltip<br />This is a multiline MessageList!', checked: false};
 
     // Controller usage example
     /*
@@ -152,11 +152,11 @@
 
   app.controller('PopoverDemoCtrl', function($scope) {
 
-    $scope.popover = {title: 'Title', content: 'Hello Popover<br />This is a multiline message!'};
+    $scope.popover = {title: 'Title', content: 'Hello Popover<br />This is a multiline MessageList!'};
 
     // Controller usage example
     /*
-    var myPopover = $popover(angular.element(document.querySelector('#test')), {title: 'Title', content: 'Hello Popover<br />This is a multiline message!', placement: 'right'});
+    var myPopover = $popover(angular.element(document.querySelector('#test')), {title: 'Title', content: 'Hello Popover<br />This is a multiline MessageList!', placement: 'right'});
     $scope.showTooltip = function() {
       myPopover.$promise.then(myPopover.show);
     };
