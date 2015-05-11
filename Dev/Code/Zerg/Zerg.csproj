@@ -130,30 +130,65 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CRM\AdminInfoController.cs" />
-    <Compile Include="Controllers\CRM\AdminRecomController.cs" />
-    <Compile Include="Controllers\CRM\BankCardController.cs" />
+    <Compile Include="Controllers\CRM\AdminInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\CRM\BrokeAccountController.cs" />
-    <Compile Include="Controllers\CRM\BrokerInfoController.cs" />
-    <Compile Include="Controllers\CRM\BrokerWithdrawDetailController.cs" />
+    <Compile Include="Controllers\CRM\AdminRecomController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\CRM\ClientInfoController.cs" />
-    <Compile Include="Controllers\CRM\MerchantInfoController.cs" />
-    <Compile Include="Controllers\CRM\MessageConfigController.cs" />
+    <Compile Include="Controllers\CRM\BankCardController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\ClientScheduleController.cs" />
     <Compile Include="Controllers\CRM\MessageDetailController.cs" />
-    <Compile Include="Controllers\CRM\LevelConfigController.cs" />
-    <Compile Include="Controllers\CRM\LevelController.cs" />
-    <Compile Include="Controllers\CRM\PartnerListController.cs" />
-    <Compile Include="Controllers\CRM\PointDetailController.cs" />
-    <Compile Include="Controllers\CRM\RecommendAgentController.cs" />
+    <Compile Include="Controllers\CRM\BrokerInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\BrokerWithdrawDetailController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\LevelConfigController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\LevelController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\MerchantInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\MessageConfigController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\PartnerListController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\PointDetailController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\RecommendAgentController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\CRM\TaskController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CRM\AdminRecomModel.cs" />
-    <Compile Include="Models\CRM\BrokerModel.cs" />
-    <Compile Include="Models\CRM\MerchantInfoModel.cs" />
-    <Compile Include="Models\CRM\MessageConfigModel.cs" />
-    <Compile Include="Models\CRM\MessageDetailModel.cs" />
+    <Compile Include="Models\CRM\AdminRecomModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CRM\BrokerModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CRM\MerchantInfoModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CRM\MessageConfigModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CRM\MessageDetailModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\CRM\TaskAwardModel.cs" />
     <Compile Include="Models\CRM\TaskModel.cs" />
     <Compile Include="Models\CRM\TaskPunishmentModel.cs" />

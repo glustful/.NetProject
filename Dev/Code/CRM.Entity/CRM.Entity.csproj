@@ -134,75 +134,169 @@
     <Compile Include="Mappings\Task\TaskMapping.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\BankCard\BankCardEntity.cs" />
-    <Compile Include="Model\BankCard\BankCardSearchConditon.cs" />
+    <Compile Include="Model\BankCard\BankCardEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\BankCard\BankCardSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\BankCard\EnumBankCard.cs" />
-    <Compile Include="Model\Bank\BankEntity.cs" />
-    <Compile Include="Model\Bank\BankSearchConditon.cs" />
+    <Compile Include="Model\Bank\BankEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Bank\BankSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\Bank\EnumBank.cs" />
-    <Compile Include="Model\BargainClient\BargainClientEntity.cs" />
-    <Compile Include="Model\BargainClient\BargainClientSearchConditon.cs" />
+    <Compile Include="Model\BargainClient\BargainClientEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\BargainClient\BargainClientSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\BargainClient\EnumBargainClient.cs" />
-    <Compile Include="Model\BrokeAccount\BrokeAccountEntity.cs" />
-    <Compile Include="Model\BrokeAccount\BrokeAccountSearchConditon.cs" />
+    <Compile Include="Model\BrokeAccount\BrokeAccountEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\BrokeAccount\BrokeAccountSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\BrokeAccount\EnumBrokeAccount.cs" />
-    <Compile Include="Model\BrokerBill\BrokerBillEntity.cs" />
-    <Compile Include="Model\BrokerBill\BrokerBillSearchConditon.cs" />
+    <Compile Include="Model\BrokerBill\BrokerBillEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\BrokerBill\BrokerBillSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\BrokerBill\EnumBrokerBill.cs" />
-    <Compile Include="Model\BrokerLeadClient\BrokerLeadClientEntity.cs" />
-    <Compile Include="Model\BrokerLeadClient\BrokerLeadClientSearchConditon.cs" />
+    <Compile Include="Model\BrokerLeadClient\BrokerLeadClientEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\BrokerLeadClient\BrokerLeadClientSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\BrokerLeadClient\EnumBrokerLeadClient.cs" />
-    <Compile Include="Model\BrokerOrder\BrokerOrderEntity.cs" />
-    <Compile Include="Model\BrokerOrder\BrokerOrderSearchConditon.cs" />
+    <Compile Include="Model\BrokerOrder\BrokerOrderEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\BrokerOrder\BrokerOrderSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\BrokerOrder\EnumBrokerOrder.cs" />
-    <Compile Include="Model\BrokerRECClient\BrokerRECClientEntity.cs" />
-    <Compile Include="Model\BrokerRECClient\BrokerRECClientSearchConditon.cs" />
-    <Compile Include="Model\BrokerRECClient\EnumBrokerRECClient.cs" />
-    <Compile Include="Model\BrokerWithdrawDetail\BrokerWithdrawDetailEntity.cs" />
-    <Compile Include="Model\BrokerWithdrawDetail\BrokerWithdrawDetailSearchConditon.cs" />
+    <Compile Include="Model\BrokerRECClient\BrokerRECClientEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\BrokerRECClient\BrokerRECClientSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\BrokerRECClient\EnumBrokerRECClient.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\BrokerWithdrawDetail\BrokerWithdrawDetailEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\BrokerWithdrawDetail\BrokerWithdrawDetailSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\BrokerWithdrawDetail\EnumBrokerWithdrawDetail.cs" />
-    <Compile Include="Model\Broker\BrokerEntity.cs" />
-    <Compile Include="Model\Broker\BrokerSearchConditon.cs" />
+    <Compile Include="Model\Broker\BrokerEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Broker\BrokerSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\Broker\EnumBroker.cs" />
-    <Compile Include="Model\ClientInfo\ClientInfoEntity.cs" />
-    <Compile Include="Model\ClientInfo\ClientInfoSearchConditon.cs" />
+    <Compile Include="Model\ClientInfo\ClientInfoEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\ClientInfo\ClientInfoSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\ClientInfo\EnumClientInfo.cs" />
     <Compile Include="Model\LevelConfig\EnumLevelConfig.cs" />
-    <Compile Include="Model\LevelConfig\LevelConfigEntity.cs" />
-    <Compile Include="Model\LevelConfig\LevelConfigSearchConditon.cs" />
+    <Compile Include="Model\LevelConfig\LevelConfigEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\LevelConfig\LevelConfigSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\Level\EnumLevel.cs" />
-    <Compile Include="Model\Level\LevelEntity.cs" />
-    <Compile Include="Model\Level\LevelSearchConditon.cs" />
+    <Compile Include="Model\Level\LevelEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Level\LevelSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\MerchantBill\EnumMerchantBill.cs" />
-    <Compile Include="Model\MerchantBill\MerchantBillEntity.cs" />
-    <Compile Include="Model\MerchantBill\MerchantBillSearchConditon.cs" />
+    <Compile Include="Model\MerchantBill\MerchantBillEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\MerchantBill\MerchantBillSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\MerchantClient\EnumMerchantClient.cs" />
-    <Compile Include="Model\MerchantClient\MerchantClientEntity.cs" />
-    <Compile Include="Model\MerchantClient\MerchantClientSearchConditon.cs" />
+    <Compile Include="Model\MerchantClient\MerchantClientEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\MerchantClient\MerchantClientSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\MerchantInfo\EnumMerchantInfo.cs" />
-    <Compile Include="Model\MerchantInfo\MerchantInfoEntity.cs" />
-    <Compile Include="Model\MerchantInfo\MerchantInfoSearchConditon.cs" />
+    <Compile Include="Model\MerchantInfo\MerchantInfoEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\MerchantInfo\MerchantInfoSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\MerchantOrder\EnumMerchantOrder.cs" />
-    <Compile Include="Model\MerchantOrder\MerchantOrderEntity.cs" />
-    <Compile Include="Model\MerchantOrder\MerchantOrderSearchConditon.cs" />
+    <Compile Include="Model\MerchantOrder\MerchantOrderEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\MerchantOrder\MerchantOrderSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\MessageConfig\EnumMessageConfig.cs" />
-    <Compile Include="Model\MessageConfig\MessageConfigEntity.cs" />
-    <Compile Include="Model\MessageConfig\MessageConfigSearchConditon.cs" />
+    <Compile Include="Model\MessageConfig\MessageConfigEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\MessageConfig\MessageConfigSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\MessageDetail\EnumMessageDetail.cs" />
-    <Compile Include="Model\MessageDetail\MessageDetailEntity.cs" />
-    <Compile Include="Model\MessageDetail\MessageDetailSearchConditon.cs" />
+    <Compile Include="Model\MessageDetail\MessageDetailEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\MessageDetail\MessageDetailSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\PartnerList\EnumPartnerList.cs" />
-    <Compile Include="Model\PartnerList\PartnerListEntity.cs" />
-    <Compile Include="Model\PartnerList\PartnerListSearchConditon.cs" />
+    <Compile Include="Model\PartnerList\PartnerListEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\PartnerList\PartnerListSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\PointDetail\EnumPointDetail.cs" />
-    <Compile Include="Model\PointDetail\PointDetailEntity.cs" />
-    <Compile Include="Model\PointDetail\PointDetailSearchConditon.cs" />
+    <Compile Include="Model\PointDetail\PointDetailEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\PointDetail\PointDetailSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\PointExchangeDetail\EnumPointExchangeDetail.cs" />
-    <Compile Include="Model\PointExchangeDetail\PointExchangeDetailEntity.cs" />
-    <Compile Include="Model\PointExchangeDetail\PointExchangeDetailSearchConditon.cs" />
+    <Compile Include="Model\PointExchangeDetail\PointExchangeDetailEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\PointExchangeDetail\PointExchangeDetailSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\RecommendAgent\EnumRecommendAgent.cs" />
-    <Compile Include="Model\RecommendAgent\RecommendAgentEntity.cs" />
-    <Compile Include="Model\RecommendAgent\RecommendAgentSearchConditon.cs" />
+    <Compile Include="Model\RecommendAgent\RecommendAgentEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\RecommendAgent\RecommendAgentSearchConditon.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\TaskAward\EnumTaskAward.cs" />
     <Compile Include="Model\TaskAward\TaskAwardEntity.cs" />
     <Compile Include="Model\TaskAward\TaskAwardSearchConditon.cs" />

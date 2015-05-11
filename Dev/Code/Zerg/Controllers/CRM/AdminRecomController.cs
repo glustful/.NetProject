@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CRM.Entity.Model;
@@ -30,17 +28,19 @@ namespace Zerg.Controllers.CRM
         }
 
         #region 经济人列表 杨定鹏 2015年5月4日14:29:24
+
         /// <summary>
         /// 经纪人列表
         /// </summary>
-        /// <param name="brokerSearchModel"></param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage BrokerList([FromBody] BrokerRECClientSearchCondition brokerRecClientSearchCondition)
         {
+            if (brokerRecClientSearchCondition == null)
+                throw new ArgumentNullException("brokerRecClientSearchCondition");
             var condition = new BrokerRECClientSearchCondition
             {
                 OrderBy = EnumBrokerRECClientSearchOrderBy.OrderById,
-                BRECCType = brokerRecClientSearchCondition.BRECCType
             };
             return PageHelper.toJson(_brokerRecClientService.GetBrokerRECClientsByCondition(condition).ToPagedList(Convert.ToInt32(brokerRecClientSearchCondition.PageCount) + 1, 10).ToList());
         }
@@ -60,10 +60,10 @@ namespace Zerg.Controllers.CRM
         /// <summary>
         /// 确认审核
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
         public HttpResponseMessage PassAudit([FromBody]BrokerRECClientModel brokerRecClientModel)
         {
+            if (brokerRecClientModel == null) throw new ArgumentNullException("brokerRecClientModel");
             var model = new BrokerRECClientEntity
             {
                 Id = brokerRecClientModel.Id,
@@ -112,7 +112,8 @@ namespace Zerg.Controllers.CRM
         /// <returns></returns>
         public HttpResponseMessage Access([FromBody]BrokerRECClientModel brokerRecClientModel)
         {
-            var model = new BrokerRECClientEntity()
+            if (brokerRecClientModel == null) throw new ArgumentNullException("brokerRecClientModel");
+            var model = new BrokerRECClientEntity
             {
                 Id=brokerRecClientModel.Id,
                 Status = brokerRecClientModel.Status

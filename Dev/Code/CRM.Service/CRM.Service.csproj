@@ -54,8 +54,12 @@
     <Compile Include="BrokerLeadClient\IBrokerLeadClientService.cs" />
     <Compile Include="BrokerOrder\BrokerOrderService.cs" />
     <Compile Include="BrokerOrder\IBrokerOrderService.cs" />
-    <Compile Include="BrokerRECClient\BrokerRECClientService.cs" />
-    <Compile Include="BrokerRECClient\IBrokerRECClientService.cs" />
+    <Compile Include="BrokerRECClient\BrokerRECClientService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BrokerRECClient\IBrokerRECClientService.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="BrokerWithdrawDetail\BrokerWithdrawDetailService.cs" />
     <Compile Include="BrokerWithdrawDetail\IBrokerWithdrawDetailService.cs" />
     <Compile Include="Broker\BrokerService.cs" />

@@ -88,7 +88,39 @@ namespace CRM.Entity.Model
 
 		public int[] Projectids { get; set; }
 
-	    public int BRECCType { get; set; }
+
+
+		public BrokerEntity[] SecretaryIDs { get; set; }
+
+
+
+		public string SecretaryPhone { get; set; }
+
+
+
+		public BrokerEntity[] WriterIDs { get; set; }
+
+
+
+		public string WriterPhone { get; set; }
+
+
+
+		public BrokerEntity[] AccountantIDs { get; set; }
+
+
+
+		public bool? Payment { get; set; }
+
+
+
+		public Decimal Amount { get; set; }
+
+
+        /// <summary>
+        /// 用户进度
+        /// </summary>
+	    public EnumBRECCType Status { get; set; }
 
 
 	    public EnumBrokerRECClientSearchOrderBy? OrderBy { get; set; }
@@ -100,6 +132,8 @@ namespace CRM.Entity.Model
 	{
 
 		OrderById,
+
+		OrderByAmount,
 
 	}
 
