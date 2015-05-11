@@ -5,9 +5,10 @@ angular.module("app").controller('TagIndexController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
             tag: '',
-            page: 1,
-            pageSize: 10,
+            page: 1,         //????
+            pageSize: 10,   //???????
             totalPage:1
+                 //??????
         };
 
         var getTagList = function() {

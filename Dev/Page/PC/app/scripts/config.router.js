@@ -822,6 +822,45 @@ angular.module('app')
                 data : { title: '等级配置' }
             })
 
+            .state('page.CRM.MessageConfigure',{
+                url:'/MessageConfigure',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.MessageConfigure.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/MessageConfigure/index.html',
+                data : { title: '短信配置' }
+            })
+
+            .state('page.CRM.MessageList',{
+                url:'/MessageList',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.MessageList.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/MessageList/index.html',
+                data : { title: '短信列表' }
+            })
+
+            .state('page.CRM.TaskList',{
+                url:'/TaskList',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.TaskList.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/TaskList/index.html',
+                data : { title: '任务列表' }
+            })
+
+            .state('page.CRM.TaskConfigure',{
+                url:'/TaskConfigure',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.TaskConfigure.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/TaskConfigure/index.html',
+                data : { title: '任务配置' }
+            })
 
 
 
@@ -878,21 +917,23 @@ angular.module('app')
             .state('page.CMS.channel.index', {
               url: '/index',
               templateUrl: 'views/pages/CMS/channel/index.html',
-              data : { title: '栏目管理' }
+              data : { title: '栏目管理' },
+              controller: 'ChannelIndexController',
+              resolve:load('scripts/controllers/CMS/Channel.js')
             })
             .state('page.CMS.channel.edit', {
-              url: '/edit',
+              url: '/edit?id',
               templateUrl: 'views/pages/CMS/channel/edit.html',
               data : { title: '编辑页' },
-              controller: 'VectorMapCtrl'
-
+              controller: 'ChannelEditController',
+              resolve:load('scripts/controllers/CMS/Channel.js')
             })
             .state('page.CMS.channel.create', {
               url: '/create',
               templateUrl: 'views/pages/CMS/channel/create.html',
               data : { title: '新建页' },
-              controller: 'VectorMapCtrl'
-
+              controller: 'ChannelCreateController',
+              resolve:load('scripts/controllers/CMS/Channel.js')
             })
 
             .state('page.CMS.content',{
