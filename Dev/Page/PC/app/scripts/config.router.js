@@ -572,14 +572,266 @@ angular.module('app')
                 resolve: load('scripts/controllers/vectormap.js')
             })
 
+            .state('page.CRM',{
+              url:'/CRM',
+              template:'<div ui-view></div>'
+            })
+            .state('page.CRM.AgentManager',{
+              url:'/AgentManager',
+              template:'<div ui-view></div>'
+            })
+            .state('page.CRM.AgentManager.index', {
+              url: '/index',
+              templateUrl: 'views/pages/CRM/AgentManager/index.html',
+              data : { title: '经纪人管理' }
+            })
+            .state('page.CRM.AgentManager.detailed', {
+              url: '/detailed',
+              templateUrl: 'views/pages/CRM/AgentManager/detailed.html',
+              data : { title: '详情页' },
+              controller: 'VectorMapCtrl'
+            })
+
+            .state('page.CRM.BusMan',{
+              url:'/BusMan',
+              template:'<div ui-view></div>'
+            })
+            .state('page.CRM.BusMan.index', {
+              url: '/index',
+              templateUrl: 'views/pages/CRM/BusMan/index.html',
+              data : { title: '商家管理' }
+            })
+            .state('page.CRM.BusMan.detailed', {
+              url: '/detailed',
+              templateUrl: 'views/pages/CRM/BusMan/detailed.html',
+              data : { title: '详情页' }
+            })
+
+            .state('page.CRM.AdmMan',{
+              url:'/AdmMan',
+              template:'<div ui-view></div>'
+            })
+            .state('page.CRM.AdmMan.index', {
+              url: '/index',
+              templateUrl: 'views/pages/CRM/AdmMan/index.html',
+              data : { title: 'Admin管理' }
+            })
+            .state('page.CRM.AdmMan.detailed', {
+              url: '/detailed',
+              templateUrl: 'views/pages/CRM/AdmMan/detailed.html',
+              data : { title: '详情页' }
+            })
+
+            .state('page.CRM.CW',{
+              url:'/CW',
+              template:'<div ui-view></div>'
+            })
+            .state('page.CRM.CW.index', {
+              url: '/index',
+              templateUrl: 'views/pages/CRM/CW/index.html',
+              data : { title: '财务账号管理' }
+            })
+            .state('page.CRM.CW.detailed', {
+              url: '/detailed',
+              templateUrl: 'views/pages/CRM/CW/detailed.html',
+              data : { title: '详情页' }
+            })
+
+            .state('page.CRM.ZC',{
+              url:'/ZC',
+              template:'<div ui-view></div>'
+            })
+            .state('page.CRM.ZC.index', {
+              url: '/index',
+              templateUrl: 'views/pages/CRM/ZC/index.html',
+              data : { title: '驻场秘书账号管理' }
+            })
+            .state('page.CRM.ZC.detailed', {
+              url: '/detailed',
+              templateUrl: 'views/pages/CRM/ZC/detailed.html',
+              data : { title: '详情页' }
+            })
+
+            .state('page.CRM.DK',{
+              url:'/DK',
+              template:'<div ui-view></div>'
+            })
+            .state('page.CRM.DK.index', {
+              url: '/index',
+              templateUrl: 'views/pages/CRM/DK/index.html',
+              data : { title: '带客人员账号管理' }
+            })
+            .state('page.CRM.DK.detailed', {
+              url: '/detailed',
+              templateUrl: 'views/pages/CRM/DK/detailed.html',
+              data : { title: '详情页' }
+            })
+
+            .state('page.CRM.WaitCheck',{
+              url:'/WaitCheck',
+              template:'<div ui-view></div>'
+            })
+            .state('page.CRM.WaitCheck.index', {
+              url: '/index',
+              templateUrl: 'views/pages/CRM/WaitCheck/index.html',
+              data : { title: '待审核推荐' }
+            })
+            .state('page.CRM.WaitCheck.check', {
+              url: '/check',
+              templateUrl: 'views/pages/CRM/WaitCheck/check.html',
+              data : { title: '审核页' }
+            })
+            .state('page.CRM.WaitCheck.pass', {
+              url: '/pass',
+              templateUrl: 'views/pages/CRM/WaitCheck/pass.html',
+              data : { title: '通过页' }
+            })
+            .state('page.CRM.WaitCheck.refuse', {
+              url: '/refuse',
+              templateUrl: 'views/pages/CRM/WaitCheck/refuse.html',
+              data : { title: '拒绝页' }
+            })
+
+            .state('page.CRM.WaitPetition',{
+              url:'/WaitPetition',
+              template:'<div ui-view></div>'
+            })
+            .state('page.CRM.WaitPetition.index', {
+              url: '/index',
+              templateUrl: 'views/pages/CRM/WaitPetition/index.html',
+              data : { title: '待上访记录' }
+            })
+            .state('page.CRM.WaitPetition.detailed', {
+              url: '/detailed',
+              templateUrl: 'views/pages/CRM/WaitPetition/detailed.html',
+              data : { title: '详情页' }
+            })
+
+            .state('page.CRM.talking',{
+              url:'/talking',
+              template:'<div ui-view></div>'
+            })
+            .state('page.CRM.talking.index', {
+              url: '/index',
+              templateUrl: 'views/pages/CRM/talking/index.html',
+              data : { title: '洽谈中业务' }
+            })
+            .state('page.CRM.talking.detailed', {
+              url: '/detailed',
+              templateUrl: 'views/pages/CRM/talking/detailed.html',
+              data : { title: '详情页' }
+            })
+
+            .state('page.CRM.fail',{
+              url:'/fail',
+              template:'<div ui-view></div>'
+            })
+            .state('page.CRM.fail.index', {
+              url: '/index',
+              templateUrl: 'views/pages/CRM/fail/index.html',
+              data : { title: '洽谈失败' }
+            })
+            .state('page.CRM.fail.detailed', {
+              url: '/detailed',
+              templateUrl: 'views/pages/CRM/fail/detailed.html',
+              data : { title: '详情页' }
+            })
+
+            .state('page.CRM.success',{
+              url:'/success',
+              template:'<div ui-view></div>'
+            })
+            .state('page.CRM.success.index', {
+              url: '/index',
+              templateUrl: 'views/pages/CRM/success/index.html',
+              data : { title: '洽谈成功' }
+            })
+            .state('page.CRM.success.detailed', {
+              url: '/detailed',
+              templateUrl: 'views/pages/CRM/success/detailed.html',
+              data : { title: '详情页' }
+            })
+
+            .state('page.CRM.CustomerInformation',{
+                url:'/CustomerInformation',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.CustomerInformation.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/CustomerInformation/index.html',
+                data : { title: '带客推荐' }
+            })
+            .state('page.CRM.CustomerInformation.detailed', {
+                url: '/detailed',
+                templateUrl: 'views/pages/CRM/CustomerInformation/detailed.html',
+                data : { title: '详情页' }
+            })
+
+            .state('page.CRM.strike',{
+                url:'/strike',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.strike.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/strike/index.html',
+                data : { title: '所有成交' }
+            })
+            .state('page.CRM.strike.detailed', {
+                url: '/detailed',
+                templateUrl: 'views/pages/CRM/strike/detailed.html',
+                data : { title: '详情页' }
+            })
+
+            .state('page.CRM.recommend',{
+                url:'/recommend',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.recommend.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/recommend/index.html',
+                data : { title: '经纪人列表' }
+            })
+            .state('page.CRM.recommend.detailed', {
+                url: '/detailed',
+                templateUrl: 'views/pages/CRM/recommend/detailed.html',
+                data : { title: '详情页' }
+            })
+
+            .state('page.CRM.partner',{
+                url:'/partner',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.partner.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/partner/index.html',
+                data : { title: '经纪人列表' }
+            })
+            .state('page.CRM.partner.detailed', {
+                url: '/detailed',
+                templateUrl: 'views/pages/CRM/partner/detailed.html',
+                data : { title: '详情页' }
+            })
+
+            .state('page.CRM.configure',{
+                url:'/configure',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.configure.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/configure/index.html',
+                data : { title: '等级配置' }
+            })
+
+
+
+
             .state('page.CMS',{
               url:'/CMS',
               template:'<div ui-view></div>'
             })
             .state('page.CMS.tag',{
               url:'/tag',
-              template:'<div ui-view></div>',
-              resolve:load('scripts/controllers/CMS/Tag.js')
+              template:'<div ui-view></div>'
             })
             .state('page.CMS.tag.index', {
               url: '/index',
@@ -587,13 +839,15 @@ angular.module('app')
               data : { title: '标签页' }
             })
             .state('page.CMS.tag.edit', {
-              url: '/edit?id',
+              url: '/edit',
               templateUrl: 'views/pages/CMS/tag/edit.html',
-              data : { title: '编辑页' }
+              data : { title: '编辑页' },
+              controller: 'VectorMapCtrl',
+              resolve: load('scripts/controllers/vectormap.js')
             })
-            .state('page.CMS.tag.creat', {
-              url: '/creat',
-              templateUrl: 'views/pages/CMS/tag/creat.html',
+            .state('page.CMS.tag.create', {
+              url: '/create',
+              templateUrl: 'views/pages/CMS/tag/create.html',
               data : { title: '新建页' },
               controller: 'VectorMapCtrl'
             })
@@ -612,9 +866,9 @@ angular.module('app')
               controller: 'VectorMapCtrl',
               resolve: load('scripts/controllers/vectormap.js')
             })
-            .state('page.CMS.ad.creat', {
-              url: '/creat',
-              templateUrl: 'views/pages/CMS/ad/creat.html',
+            .state('page.CMS.ad.create', {
+              url: '/create',
+              templateUrl: 'views/pages/CMS/ad/create.html',
               data : { title: '新建页' },
               controller: 'VectorMapCtrl'
 
@@ -635,9 +889,9 @@ angular.module('app')
               controller: 'VectorMapCtrl'
 
             })
-            .state('page.CMS.channel.creat', {
-              url: '/creat',
-              templateUrl: 'views/pages/CMS/channel/creat.html',
+            .state('page.CMS.channel.create', {
+              url: '/create',
+              templateUrl: 'views/pages/CMS/channel/create.html',
               data : { title: '新建页' },
               controller: 'VectorMapCtrl'
 
@@ -651,15 +905,15 @@ angular.module('app')
               controller: 'VectorMapCtrl'
             })
             .state('page.CMS.content.edit', {
-              url: '/edit',
+              url: '/edit?id',
               templateUrl: 'views/pages/CMS/content/edit.html',
               data : { title: '编辑页' },
               controller: 'VectorMapCtrl'
 
             })
-            .state('page.CMS.content.creat', {
-              url: '/creat',
-              templateUrl: 'views/pages/CMS/content/creat.html',
+            .state('page.CMS.content.create', {
+              url: '/create',
+              templateUrl: 'views/pages/CMS/content/create.html',
               data : { title: '新建页' },
               controller: 'VectorMapCtrl'
 
@@ -670,8 +924,8 @@ angular.module('app')
               url: '/index',
               templateUrl: 'views/pages/CMS/set/index.html',
               data : { title: '设置' },
-              controller: 'VectorMapCtrl'
-
+              controller: 'SettingController',
+              resolve:load('scripts/controllers/CMS/Setting.js')
             })
 
             .state('page.CMS.fileManager',{url:'/fileManager',template:'<div ui-view></div>'})

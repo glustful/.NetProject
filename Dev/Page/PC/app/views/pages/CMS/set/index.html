@@ -1,29 +1,29 @@
-<form name="form" id="form" >
+<form name="form" id="form" ng-controller="SettingController" ng-submit="Save()" >
     <div class="panel panel-default">
 
         <div class="panel-body">
             <div class="bottom">
                 <div><label>站点名称 </label></div>
-                <input type="text" >
+                <input type="text" name="SiteName" ng-model="SiteName.Value">
             </div>
             <div class="bottom">
                 <div><label>Base URL</label></div>
-                <input type="email">
+                <input type="url" name="SiteUrl" ng-model="SiteUrl.Value">
                 <div><span>输入完全合格的基地网站的url,</span></div>
                 <div><span>例如：http://localhost:30320/orchardlocal,http://baidu.com</span></div>
 
             </div>
-            <div  class="bottom">
-                <div><label>默认的网站语言</label></div>
-                <select name="" id="select">
-                    <option value="1">中文</option>
-                    <option value="2">英文</option>
-                </select>
-                <div><span>确定用于本地化字符串和数字的默认格式以及日期和时间</span></div>
+            <!--<div  class="bottom">-->
+                <!--<div><label>默认的网站语言</label></div>-->
+                <!--<select name="" id="select">-->
+                    <!--<option value="1">中文</option>-->
+                    <!--<option value="2">英文</option>-->
+                <!--</select>-->
+                <!--<div><span>确定用于本地化字符串和数字的默认格式以及日期和时间</span></div>-->
 
 
 
-            </div>
+            <!--</div>-->
             <footer class="panel-footer text-left">
                 <button type="submit" class="btn btn-info" ng-disabled="form.$invalid" aria-disabled="true" disabled="disabled">保存</button>
             </footer>

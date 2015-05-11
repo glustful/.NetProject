@@ -32,7 +32,7 @@
   ; 
   app.controller('AlertDemoCtrl', ['$scope', function($scope) {
     $scope.alerts = [
-      { type: 'success', msg: 'Well done! You successfully read this important alert message.' },
+      { type: 'success', msg: 'Well done! You successfully read this important alert MessageList.' },
       { type: 'info', msg: 'Heads up! This alert needs your attention, but it is not super important.' },
       { type: 'warning', msg: 'Warning! Best check yo self, you are not looking too good...' }
     ];
