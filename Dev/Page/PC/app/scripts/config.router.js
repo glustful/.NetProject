@@ -625,7 +625,8 @@ angular.module('app')
               url: '/index',
               templateUrl: 'views/pages/CMS/channel/index.html',
               data : { title: '栏目管理' },
-              controller: 'VectorMapCtrl'
+              controller: 'ChannelIndexController',
+              resolve:load('scripts/controllers/CMS/Channel.js')
             })
             .state('page.CMS.channel.edit', {
               url: '/edit',

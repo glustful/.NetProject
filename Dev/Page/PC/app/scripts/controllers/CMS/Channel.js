@@ -1,5 +1,5 @@
 /**
- * Created by ¶Î«h•F on 2015/5/9.
+ * Created by ï¿½Î«hï¿½F on 2015/5/9.
  */
 angular.module("app").controller('ChannelIndexController', [
     '$http','$scope',function($http,$scope) {
