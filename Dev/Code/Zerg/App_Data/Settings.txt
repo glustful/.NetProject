@@ -1,5 +1,5 @@
 ﻿DataProvider: sqlserver
 DataConnectionString: Data Source=.;Initial Catalog=Zerg.UC;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=123;MultipleActiveResultSets=True
 CMSConnection:Data Source=.;Initial Catalog=Zerg.CMS;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=123;MultipleActiveResultSets=True
-CRMConnection:Data Source=.;Initial Catalog=Zerg.CRM;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=Sa12345678;MultipleActiveResultSets=True
+CRMConnection:Data Source=.;Initial Catalog=Zerg.CRM;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=123;MultipleActiveResultSets=True
 TradingConnection:Data Source=.;Initial Catalog=Zerg.Trading;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=123;MultipleActiveResultSets=True
