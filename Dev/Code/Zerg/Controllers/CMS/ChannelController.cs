@@ -53,7 +53,7 @@ namespace Zerg.Controllers.CMS
         [HttpPost]
         public HttpResponseMessage Create(ChannelModel model)
         {
-           var newParent = _channelService.GetChannelById(model.ParentId);
+           var newParent = model.ParentId == 0?null:_channelService.GetChannelById(model.ParentId);
             var channel = new ChannelEntity
             {
                 Name=model.Name,
@@ -90,7 +90,7 @@ namespace Zerg.Controllers.CMS
                 Id = channel.Id,
                 Name = channel.Name,
                 Status = channel.Status,
-                ParentId=channel.Parent.Id
+                ParentId=channel.Parent==null?0:channel.Parent.Id
             };
             return PageHelper.toJson(channelDetail);
         }
