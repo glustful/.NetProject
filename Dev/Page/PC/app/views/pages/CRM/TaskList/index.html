@@ -1,4 +1,3 @@
-
 <!--黄秀宇 任务列表  2015.05.06
 自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />-->
 <div id="divTaskH"class="marginL">
@@ -6,7 +5,6 @@
     <input style="width:200px;" type="text" class="form-control bordhtml" placeholder="搜索条件2">
     <button md-ink-ripple=""style="width:100px;" class="md-btn md-raised m-b btn-fw indigo">检索</button>
     <button id="btntask"onclick="taskOble()" md-ink-ripple=""style="width:150px;margin-left: 150px;" class="md-btn md-raised m-b btn-fw indigo">添加新任务</button>
-    <button id="btnback"onclick="taskBack()" md-ink-ripple=""style="width:150px;margin-left: 150px;" class="md-btn md-raised m-b btn-fw indigo">返回</button>
 
 </div>
 
@@ -201,7 +199,6 @@
     document.getElementById("divTaskC").style.display="none";
     document.getElementById("divTaskD").style.display="none";
     document.getElementById("divTaskA").style.display="none";
-    document.getElementById("btnback").style.display="none";
 
     function taskCable(){
         document.getElementById("btntask").style.display="none";
@@ -210,7 +207,6 @@
         document.getElementById("divTaskD").style.display="none";
         document.getElementById("divTaskH").style.display="";
         document.getElementById("divTaskA").style.display="none";
-        document.getElementById("btnback").style.display="";
     }
     function taskDable(){
         document.getElementById("divTaskL").style.display="none";
@@ -233,17 +229,6 @@
         document.getElementById("divTaskH").style.display="none";
         document.getElementById("divTaskL").style.display="none";
         document.getElementById("divTaskA").style.display="";
-    }
-    function taskBack(){
-
-        document.getElementById("btntask").style.display="";
-        document.getElementById("divTaskL").style.display="";
-        document.getElementById("divTaskC").style.display="none";
-        document.getElementById("divTaskD").style.display="none";
-        document.getElementById("divTaskH").style.display="";
-        document.getElementById("divTaskA").style.display="none";
-        document.getElementById("btnback").style.display="none";
-
     }
 </script>
 
