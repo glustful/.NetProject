@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using CRM.Entity.Model;
 using CRM.Service.Task;
 using CRM.Service.TaskAward;
@@ -13,6 +14,7 @@ using Zerg.Models.CRM;
 
 namespace Zerg.Controllers.CRM
 {
+     [EnableCors("*", "*", "*")]
     /// <summary>
     /// CRM 任务管理明细
     /// </summary>
@@ -46,7 +48,7 @@ namespace Zerg.Controllers.CRM
         /// <param name="taskSearchModel"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage TaskList([FromBody]TaskSearchModel taskSearchModel)
+        public HttpResponseMessage TaskList(TaskSearchCondition searchCondition)
         {
             var condition = new TaskSearchCondition
             {
@@ -55,7 +57,17 @@ namespace Zerg.Controllers.CRM
             return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToList());
         }
 
-        /// <summary>
+         /// <summary>
+         /// 返回任务详情
+         /// </summary>
+         /// <param name="id"></param>
+         /// <returns></returns>
+         public HttpResponseMessage TaskDetail([FromBody] int id)
+         {
+             return PageHelper.toJson(_taskService.GetTaskById(id));
+         }
+
+         /// <summary>
         /// 添加和修改单个任务
         /// </summary>
         /// <param name="taskModel">任务数据模型</param>

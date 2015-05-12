@@ -548,7 +548,7 @@
       <summary>表示 <see cref="T:System.Web.Http.HttpServer" /> 实例的配置。</summary>
     </member>
     <member name="M:System.Web.Http.HttpConfiguration.#ctor">
-      <summary>初始化 <see cref="T:System.Web.Http.HttpConfiguration" /> 类的新实例。</summary>
+      <summary>初始化 <see cref="T:System.Web.Http.HttpConfiguration" /> 类的一个新实例。</summary>
     </member>
     <member name="M:System.Web.Http.HttpConfiguration.#ctor(System.Web.Http.HttpRouteCollection)">
       <summary>使用 HTTP 路由集合初始化 <see cref="T:System.Web.Http.HttpConfiguration" /> 类的新实例。</summary>
@@ -559,17 +559,17 @@
       <returns>依赖关系解析程序。</returns>
     </member>
     <member name="M:System.Web.Http.HttpConfiguration.Dispose">
-      <summary>执行与释放或重置非托管资源关联的应用程序定义任务。</summary>
+      <summary>执行应用程序定义的、与释放或重置非托管资源相关的任务。</summary>
     </member>
     <member name="M:System.Web.Http.HttpConfiguration.Dispose(System.Boolean)">
-      <summary>释放对象使用的非托管资源，并有选择性地释放托管资源。</summary>
-      <param name="disposing">若为 true，则同时释放托管资源和非托管资源；若为 false，则仅释放非托管资源。</param>
+      <summary>释放由对象使用的非托管资源，并选择性释放托管资源。</summary>
+      <param name="disposing">如果为 true，则托管及非托管资源都释放；如果为 false，则仅释放非托管资源。</param>
     </member>
     <member name="M:System.Web.Http.HttpConfiguration.EnsureInitialized">
-      <summary>调用 Intializer 挂钩。从此时开始，它被视为不可变。可以安全地调用它多次。</summary>
+      <summary>用于调用初始化程序挂钩。从此之后，将此项视为不变项。可以多次调用此方法。</summary>
     </member>
     <member name="P:System.Web.Http.HttpConfiguration.Filters">
-      <summary>获取适用于所有使用此 <see cref="T:System.Web.Http.HttpConfiguration" /> 实例提供的请求的筛选器列表。</summary>
+      <summary>获取筛选器列表，这些筛选器适用于使用此 <see cref="T:System.Web.Http.HttpConfiguration" /> 实例处理的所有请求。</summary>
       <returns>筛选器列表。</returns>
     </member>
     <member name="P:System.Web.Http.HttpConfiguration.Formatters">
@@ -578,24 +578,25 @@
         <see cref="T:System.Net.Http.Formatting.MediaTypeFormatter" /> 对象的集合。</returns>
     </member>
     <member name="P:System.Web.Http.HttpConfiguration.IncludeErrorDetailPolicy">
-      <summary>获取或设置一个值，该值指示是否应在错误消息中包含错误详细信息。</summary>
-      <returns>用于指示错误详细信息策略的 <see cref="T:System.Web.Http.IncludeErrorDetailPolicy" /> 值。</returns>
+      <summary>获取或设置指示错误消息中是否应包含错误详细信息的值。</summary>
+      <returns>
+        <see cref="T:System.Web.Http.IncludeErrorDetailPolicy" /> 值，指示该错误详细信息策略。</returns>
     </member>
     <member name="P:System.Web.Http.HttpConfiguration.Initializer">
-      <summary> 获取或设置在使用 <see cref="T:System.Web.Http.HttpConfiguration" /> 实例处理请求之前将执行该实例的最终初始化的操作。</summary>
-      <returns>将执行 <see cref="T:System.Web.Http.HttpConfiguration" /> 实例的最终初始化的操作。</returns>
+      <summary> 获取或设置在使用 <see cref="T:System.Web.Http.HttpConfiguration" /> 实例处理请求前，需要对该实例执行的最终初始化操作。</summary>
+      <returns>需要对 <see cref="T:System.Web.Http.HttpConfiguration" /> 实例执行的最终初始化操作。</returns>
     </member>
     <member name="P:System.Web.Http.HttpConfiguration.MessageHandlers">
-      <summary>获取当 <see cref="T:System.Net.Http.HttpRequestMessage" /> 在堆栈中向上遍历，并且 <see cref="T:System.Net.Http.HttpResponseMessage" /> 在堆栈中向下遍历以进行回应时要调用的 <see cref="T:System.Net.Http.DelegatingHandler" /> 实例的排序列表。</summary>
+      <summary>当 <see cref="T:System.Net.Http.HttpRequestMessage" /> 在堆栈中向上遍历，使得 <see cref="T:System.Net.Http.HttpResponseMessage" /> 在堆栈中向下遍历时，获取要调用的 <see cref="T:System.Net.Http.DelegatingHandler" /> 实例的有序列表。</summary>
       <returns>消息处理程序集合。</returns>
     </member>
     <member name="P:System.Web.Http.HttpConfiguration.ParameterBindingRules">
-      <summary>获取与参数绑定方式相关的规则的集合。</summary>
-      <returns>函数的集合，可用于生成给定参数的参数绑定。</returns>
+      <summary>获取参数绑定规则集。</summary>
+      <returns>可为给定参数生成参数绑定的函数集。</returns>
     </member>
     <member name="P:System.Web.Http.HttpConfiguration.Properties">
       <summary>获取与此实例关联的属性。</summary>
-      <returns>包含这些属性的 <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2" />。</returns>
+      <returns>包含属性的 <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2" />。</returns>
     </member>
     <member name="P:System.Web.Http.HttpConfiguration.Routes">
       <summary>获取与此 <see cref="T:System.Web.Http.HttpConfiguration" /> 实例关联的 <see cref="T:System.Web.Http.HttpRouteCollection" />。</summary>
@@ -604,7 +605,8 @@
     </member>
     <member name="P:System.Web.Http.HttpConfiguration.Services">
       <summary>获取与此实例关联的默认服务的容器。</summary>
-      <returns>包含此实例的默认服务的 <see cref="T:System.Web.Http.Controllers.ServicesContainer" />。</returns>
+      <returns>
+        <see cref="T:System.Web.Http.Controllers.ServicesContainer" />，包含此实例的默认服务。</returns>
     </member>
     <member name="P:System.Web.Http.HttpConfiguration.VirtualPathRoot">
       <summary>获取根虚拟路径。</summary>
@@ -758,8 +760,8 @@
       <summary>初始化 <see cref="T:System.Web.Http.HttpHeadAttribute" /> 类的新实例。</summary>
     </member>
     <member name="P:System.Web.Http.HttpHeadAttribute.HttpMethods">
-      <summary>获取与此特性对应的 http 方法。</summary>
-      <returns>与此特性对应的 http 方法。</returns>
+      <summary>获取与此特性对应的 HTTP 方法。</summary>
+      <returns>与此特性对应的 HTTP 方法。</returns>
     </member>
     <member name="T:System.Web.Http.HttpOptionsAttribute">
       <summary>表示一个特性，该特性用于限制某个 HTTP 方法，使得该方法仅处理 HTTP OPTIONS 请求。</summary>
@@ -768,8 +770,8 @@
       <summary>初始化 <see cref="T:System.Web.Http.HttpOptionsAttribute" /> 类的新实例。</summary>
     </member>
     <member name="P:System.Web.Http.HttpOptionsAttribute.HttpMethods">
-      <summary>获取与此特性对应的 http 方法。</summary>
-      <returns>与此特性对应的 http 方法。</returns>
+      <summary>获取与此特性对应的 HTTP 方法。</summary>
+      <returns>与此特性对应的 HTTP 方法。</returns>
     </member>
     <member name="T:System.Web.Http.HttpPatchAttribute">
       <summary> 指定某个操作支持 PATCH HTTP 方法。</summary>
@@ -778,8 +780,8 @@
       <summary>初始化 <see cref="T:System.Web.Http.HttpPatchAttribute" /> 类的新实例。</summary>
     </member>
     <member name="P:System.Web.Http.HttpPatchAttribute.HttpMethods">
-      <summary>获取与此特性对应的 http 方法。</summary>
-      <returns>与此特性对应的 http 方法。</returns>
+      <summary>获取与此特性对应的 HTTP 方法。</summary>
+      <returns>与此特性对应的 HTTP 方法。</returns>
     </member>
     <member name="T:System.Web.Http.HttpPostAttribute">
       <summary>指定某个操作支持 POST HTTP 方法。</summary>
@@ -788,8 +790,8 @@
       <summary>初始化 <see cref="T:System.Web.Http.HttpPostAttribute" /> 类的新实例。</summary>
     </member>
     <member name="P:System.Web.Http.HttpPostAttribute.HttpMethods">
-      <summary>获取与此特性对应的 http 方法。</summary>
-      <returns>与此特性对应的 http 方法。</returns>
+      <summary>获取与此特性对应的 HTTP 方法。</summary>
+      <returns>与此特性对应的 HTTP 方法。</returns>
     </member>
     <member name="T:System.Web.Http.HttpPutAttribute">
       <summary>表示一个特性，该特性用于限制某个 HTTP 方法，以便该方法仅处理 HTTP PUT 请求。</summary>
@@ -798,8 +800,8 @@
       <summary>初始化 <see cref="T:System.Web.Http.HttpPutAttribute" /> 类的新实例。</summary>
     </member>
     <member name="P:System.Web.Http.HttpPutAttribute.HttpMethods">
-      <summary>获取与此特性对应的 http 方法。</summary>
-      <returns>与此特性对应的 http 方法。</returns>
+      <summary>获取与此特性对应的 HTTP 方法。</summary>
+      <returns>与此特性对应的 HTTP 方法。</returns>
     </member>
     <member name="T:System.Web.Http.HttpResponseException">
       <summary> 允许向客户端返回给定 <see cref="T:System.Net.Http.HttpResponseMessage" /> 的异常。</summary>
@@ -5785,7 +5787,7 @@
     </member>
     <member name="T:System.Web.Http.Services.IDecorator`1">
       <summary> 定义一个用于公开内部修饰对象的修饰器。</summary>
-      <typeparam name="T">此类型参数是协变式的。也就是说，您可以使用您指定的类型或者派生程度更大的任何类型。有关协变式和逆变式的详细信息，请参阅。</typeparam>
+      <typeparam name="T">此类型参数是协变。即可以使用指定的类型或派生程度更高的类型。 有关协变和逆变的详细信息，请参阅。</typeparam>
     </member>
     <member name="P:System.Web.Http.Services.IDecorator`1.Inner">
       <summary> 获取内部对象。 </summary>
