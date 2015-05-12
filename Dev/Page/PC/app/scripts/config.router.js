@@ -839,7 +839,9 @@ angular.module('app')
             .state('page.CRM.MessageList.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/MessageList/index.html',
-                data : { title: '短信列表' }
+                data: { title: '短信列表' },
+                //controller: 'Message',
+                resolve: load('scripts/controllers/CRM/Message.js')
             })
 
             .state('page.CRM.TaskList',{
