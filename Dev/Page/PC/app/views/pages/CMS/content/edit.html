@@ -7,12 +7,16 @@
             </div>
             <div class="bottom" ><label for="status">状态： </label>
                 <select name="Status" id="Status" ng-model="ContentModel.Status">
-                    <option value="Deleted">删除</option>
-                    <option value="Published">发布</option>
+                    <option value="2">删除</option>
+                    <option value="1">发布</option>
+                    <option value="0">新建</option>
                 </select>
             </div>
-            <div class="bottom" ><label for="names">频道： </label>
-                <select name="" id="names" ng-model="ContentModel.ChannelId" ng-options="list.Id as list.Name in ChannelList"></select>
+            <div class="bottom" ><label for="ChannelId">频道： </label>
+                <!--<select name="ChannelId" id="ChannelId" ng-model="ContentModel.ChannelId">-->
+                    <!--<option ng-repeat="list in ChannelList" value="{{list.Id}}" ng-selected="list.Id==ContentModel.ChannelId">{{list.Name}}</option>-->
+                <!--</select>-->
+                <select name="ChannelId" id="ChannelId" ng-model="ContentModel.ChannelId" ng-options="list.Id as list.Name for list in ChannelList"></select>
             </div>
             <div>
                 <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" type="submit">确认<div class="md-ripple-container"></div></button>
