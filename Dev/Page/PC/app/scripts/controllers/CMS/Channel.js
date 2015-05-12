@@ -12,7 +12,10 @@ angular.module("app").controller('ChannelIndexController', [
 
         var getChannelList = function() {
             $http.get(SETTING.ApiUrl+'/Channel/Index',{params:$scope.searchCondition}).success(function(data){
-                $scope.list = data;
+                $scope.list = data.List;
+                $scope.searchCondition.page = data.Condition.Page;
+                $scope.searchCondition.pageSize = data.Condition.PageCount;
+                $scope.totalCount = data.TotalCount;
             });
         };
         $scope.getList = getChannelList;

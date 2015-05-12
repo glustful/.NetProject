@@ -106,6 +106,13 @@
 
         <!--</tr>-->
         </tbody>
+        <tfoot class="hide-if-no-paging">
+        <tr>
+            <td colspan="5" class="text-center footable-visible">
+            <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+            </td>
+        </tr>
+        </tfoot>
     </table>
     <!--<div colspan="5" class="text-center footable-visible">-->
         <!--<ul class="pagination">-->
