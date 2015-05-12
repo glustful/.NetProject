@@ -62,8 +62,19 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="MvcPager, Version=2.0.0.1, Culture=neutral, PublicKeyToken=f6872c5a09aed72c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\MvcPager.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Cors">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -76,6 +87,13 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -107,12 +125,6 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http.Formatting">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Http.WebHost">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
@@ -120,26 +132,81 @@
   <ItemGroup>
     <Content Include="App_Data\Settings.txt" />
     <Content Include="Global.asax" />
+    <Content Include="Lib\MvcPager.dll" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CRM\CRMAdminController.cs" />
-    <Compile Include="Controllers\CRM\CRMBrokerController.cs" />
-    <Compile Include="Controllers\CRM\CRMMerchantController.cs" />
+    <Compile Include="Controllers\CRM\AdminInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\BrokeAccountController.cs" />
+    <Compile Include="Controllers\CRM\AdminRecomController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\ClientInfoController.cs" />
+    <Compile Include="Controllers\CRM\BankCardController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\ClientScheduleController.cs" />
+    <Compile Include="Controllers\CRM\MessageDetailController.cs" />
+    <Compile Include="Controllers\CRM\BrokerInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\BrokerWithdrawDetailController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\LevelConfigController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\LevelController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\MerchantInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\MessageConfigController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\PartnerListController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\PointDetailController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\RecommendAgentController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\TaskController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CRM\AdminRecomModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CRM\BrokerModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CRM\MerchantInfoModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CRM\MessageConfigModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CRM\MessageDetailModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CRM\TaskAwardModel.cs" />
     <Compile Include="Models\CRM\TaskModel.cs" />
+    <Compile Include="Models\CRM\TaskPunishmentModel.cs" />
+    <Compile Include="Models\CRM\TaskSearchModel.cs" />
+    <Compile Include="Models\CRM\TaskTagModel.cs" />
+    <Compile Include="Models\CRM\TaskTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -148,8 +215,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\CRMBroker\" />
-    <Folder Include="Views\Home\" />
+    <Folder Include="Controllers\CMS\" />
+    <Folder Include="Models\CMS\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CMS.Entity\CMS.Entity.csproj">
@@ -203,6 +270,10 @@
     <ProjectReference Include="..\YP.CodeGen\YP.CodeGen.csproj">
       <Project>{4cdf48d9-0088-4c22-897d-9f8799b57883}</Project>
       <Name>YP.CodeGen</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zerg.Base\Zerg.Base.csproj">
+      <Project>{51b7fc52-21e7-40d1-96d2-d0867932b4a5}</Project>
+      <Name>Zerg.Base</Name>
     </ProjectReference>
     <ProjectReference Include="..\Zerg.Common\Zerg.Common.csproj">
       <Project>{db11f281-e24f-4237-b77f-0cfdcf8dd647}</Project>

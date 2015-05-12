@@ -8,10 +8,10 @@ namespace CRM.Service.ClientInfo
 {
 	public class ClientInfoService : IClientInfoService
 	{
-		private readonly IRepository<ClientInfoEntity> _clientinfoRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<ClientInfoEntity> _clientinfoRepository;
 		private readonly ILog _log;
 
-		public ClientInfoService(IRepository<ClientInfoEntity> clientinfoRepository,ILog log)
+		public ClientInfoService(Zerg.Common.Data.ICRMRepository<ClientInfoEntity> clientinfoRepository,ILog log)
 		{
 			_clientinfoRepository = clientinfoRepository;
 			_log = log;

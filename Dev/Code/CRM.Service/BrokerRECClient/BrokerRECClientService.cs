@@ -63,7 +63,7 @@ namespace CRM.Service.BrokerRECClient
 		{
 			try
             {
-                return _brokerrecclientRepository.GetById(id); ;
+                return _brokerrecclientRepository.GetById(id);
             }
             catch (Exception e)
             {
@@ -101,9 +101,33 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Where(q => q.Qq == condition.Qq.Value);
                 }
+				if (condition.Payment.HasValue)
+                {
+                    query = query.Where(q => q.Payment == condition.Payment.Value);
+                }
 				if (!string.IsNullOrEmpty(condition.Clientname))
                 {
                     query = query.Where(q => q.Clientname.Contains(condition.Clientname));
+                }
+				if (!string.IsNullOrEmpty(condition.Brokername))
+                {
+                    query = query.Where(q => q.Brokername.Contains(condition.Brokername));
+                }
+				if (!string.IsNullOrEmpty(condition.Brokerlevel))
+                {
+                    query = query.Where(q => q.Brokerlevel.Contains(condition.Brokerlevel));
+                }
+				if (!string.IsNullOrEmpty(condition.Projectname))
+                {
+                    query = query.Where(q => q.Projectname.Contains(condition.Projectname));
+                }
+				if (!string.IsNullOrEmpty(condition.SecretaryPhone))
+                {
+                    query = query.Where(q => q.SecretaryPhone.Contains(condition.SecretaryPhone));
+                }
+				if (!string.IsNullOrEmpty(condition.WriterPhone))
+                {
+                    query = query.Where(q => q.WriterPhone.Contains(condition.WriterPhone));
                 }
 				if (condition.Ids != null && condition.Ids.Any())
                 {
@@ -125,12 +149,31 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
+				if (condition.Projectids != null && condition.Projectids.Any())
+                {
+                    query = query.Where(q => condition.Projectids.Contains(q.Projectid));
+                }
+				if (condition.SecretaryIDs != null && condition.SecretaryIDs.Any())
+                {
+                    query = query.Where(q => condition.SecretaryIDs.Contains(q.SecretaryId));
+                }
+				if (condition.WriterIDs != null && condition.WriterIDs.Any())
+                {
+                    query = query.Where(q => condition.WriterIDs.Contains(q.WriterId));
+                }
+				if (condition.AccountantIDs != null && condition.AccountantIDs.Any())
+                {
+                    query = query.Where(q => condition.AccountantIDs.Contains(q.AccountantId));
+                }
 				if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
                     {
 						case EnumBrokerRECClientSearchOrderBy.OrderById:
-							query = condition.isDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
+							query = condition.IsDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
+							break;
+						case EnumBrokerRECClientSearchOrderBy.OrderByAmount:
+							query = condition.IsDescending?query.OrderByDescending(q=>q.Amount):query.OrderBy(q=>q.Amount);
 							break;
                     }
 					
@@ -182,9 +225,33 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Where(q => q.Qq == condition.Qq.Value);
                 }
+				if (condition.Payment.HasValue)
+                {
+                    query = query.Where(q => q.Payment == condition.Payment.Value);
+                }
 				if (!string.IsNullOrEmpty(condition.Clientname))
                 {
                     query = query.Where(q => q.Clientname.Contains(condition.Clientname));
+                }
+				if (!string.IsNullOrEmpty(condition.Brokername))
+                {
+                    query = query.Where(q => q.Brokername.Contains(condition.Brokername));
+                }
+				if (!string.IsNullOrEmpty(condition.Brokerlevel))
+                {
+                    query = query.Where(q => q.Brokerlevel.Contains(condition.Brokerlevel));
+                }
+				if (!string.IsNullOrEmpty(condition.Projectname))
+                {
+                    query = query.Where(q => q.Projectname.Contains(condition.Projectname));
+                }
+				if (!string.IsNullOrEmpty(condition.SecretaryPhone))
+                {
+                    query = query.Where(q => q.SecretaryPhone.Contains(condition.SecretaryPhone));
+                }
+				if (!string.IsNullOrEmpty(condition.WriterPhone))
+                {
+                    query = query.Where(q => q.WriterPhone.Contains(condition.WriterPhone));
                 }
 				if (condition.Ids != null && condition.Ids.Any())
                 {
@@ -205,6 +272,22 @@ namespace CRM.Service.BrokerRECClient
 				if (condition.Upusers != null && condition.Upusers.Any())
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
+                }
+				if (condition.Projectids != null && condition.Projectids.Any())
+                {
+                    query = query.Where(q => condition.Projectids.Contains(q.Projectid));
+                }
+				if (condition.SecretaryIDs != null && condition.SecretaryIDs.Any())
+                {
+                    query = query.Where(q => condition.SecretaryIDs.Contains(q.SecretaryId));
+                }
+				if (condition.WriterIDs != null && condition.WriterIDs.Any())
+                {
+                    query = query.Where(q => condition.WriterIDs.Contains(q.WriterId));
+                }
+				if (condition.AccountantIDs != null && condition.AccountantIDs.Any())
+                {
+                    query = query.Where(q => condition.AccountantIDs.Contains(q.AccountantId));
                 }
 				return query.Count();
 			}

@@ -58,7 +58,7 @@ namespace CRM.Entity.Model
 
 		public DateTime? RegtimeEnd { get; set; }
 
-		public bool? Delflag { get; set; }
+		public int? Delflag { get; set; }
 
 		public int[] Addusers { get; set; }
 

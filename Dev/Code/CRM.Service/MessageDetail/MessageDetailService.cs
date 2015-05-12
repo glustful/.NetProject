@@ -8,10 +8,10 @@ namespace CRM.Service.MessageDetail
 {
 	public class MessageDetailService : IMessageDetailService
 	{
-		private readonly IRepository<MessageDetailEntity> _messagedetailRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<MessageDetailEntity> _messagedetailRepository;
 		private readonly ILog _log;
 
-		public MessageDetailService(IRepository<MessageDetailEntity> messagedetailRepository,ILog log)
+		public MessageDetailService(Zerg.Common.Data.ICRMRepository<MessageDetailEntity> messagedetailRepository,ILog log)
 		{
 			_messagedetailRepository = messagedetailRepository;
 			_log = log;

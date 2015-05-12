@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.Task
 {
-	public class TaskMapping : EntityTypeConfiguration<TaskEntity>, IMapping
+	public class TaskMapping : EntityTypeConfiguration<TaskEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public TaskMapping()
 		{
