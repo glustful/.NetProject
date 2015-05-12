@@ -73,7 +73,20 @@ namespace CMS.Service.Setting
             }
 		}
 
-		public IQueryable<SettingEntity> GetSettingsByCondition(SettingSearchCondition condition)
+	    public SettingEntity GetSettingByKey(string key)
+	    {
+            try
+            {
+                return _settingRepository.Table.FirstOrDefault(c=>c.Key == key);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+	    }
+
+	    public IQueryable<SettingEntity> GetSettingsByCondition(SettingSearchCondition condition)
 		{
 			var query = _settingRepository.Table;
 			try

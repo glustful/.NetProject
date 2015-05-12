@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using CMS.Entity.Model;
 using CMS.Service.Setting;
 using Zerg.Common;
@@ -8,10 +9,11 @@ using Zerg.Models.CMS;
 
 namespace Zerg.Controllers.CMS
 {
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class SettingController : ApiController
     {
         private readonly ISettingService _settingService;
-        public SettingController(ISettingService settingService) 
+        public SettingController(ISettingService settingService)
         {
             _settingService = settingService;
         }
@@ -23,19 +25,21 @@ namespace Zerg.Controllers.CMS
         /// <param name="pageSize">页面记录</param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage Index(string key = null, int page = 1, int pageSize = 10) 
+        public HttpResponseMessage Index(string key = null, int page = 1, int pageSize = 10)
         {
-            var settingCon=new SettingSearchCondition{
-               Key=key,
-               Page=page,
-               PageCount=pageSize
+            var settingCon = new SettingSearchCondition
+            {
+                Key = key,
+                Page = page,
+                PageCount = pageSize
             };
-            var settingList = _settingService.GetSettingsByCondition(settingCon).Select(a => new SettingModel { 
-             Id=a.Id,
-             Key=a.Key,
-             Value=a.Value
+            var settingList = _settingService.GetSettingsByCondition(settingCon).Select(a => new SettingModel
+            {
+                Id = a.Id,
+                Key = a.Key,
+                Value = a.Value
             }).ToList();
-            return PageHelper.toJson(settingList); 
+            return PageHelper.toJson(settingList);
         }
         /// <summary>
         /// 设置详细信息
@@ -66,17 +70,32 @@ namespace Zerg.Controllers.CMS
         [HttpPost]
         public HttpResponseMessage Edit(SettingModel model)
         {
-            var setting = _settingService.GetSettingById(model.Id);
+            var createNew = false;
+            var setting = _settingService.GetSettingById(model.Id) ?? _settingService.GetSettingByKey(model.Key);
+            if (setting == null)
+            {
+                setting = new SettingEntity();
+                createNew = true;
+            }
+
             setting.Key = model.Key;
             setting.Value = model.Value;
-            if (_settingService.Update(setting) != null)
+            if (createNew)
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功"));
+                if (_settingService.Create(setting).Id > 0)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功"));
+                }
             }
-            else 
+            else
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(false,"数据更新失败"));
+                if (_settingService.Update(setting) != null)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功"));
+                }
             }
+
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败"));
         }
         /// <summary>
         /// 新建设置
@@ -91,11 +110,12 @@ namespace Zerg.Controllers.CMS
                 Key = model.Key,
                 Value = model.Value
             };
-            if (_settingService.Create(setting)!= null)
+            if (_settingService.Create(setting) != null)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功"));
             }
-            else {
+            else
+            {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败"));
             }
         }
@@ -106,13 +126,15 @@ namespace Zerg.Controllers.CMS
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage Delete(int id) {
+        public HttpResponseMessage Delete(int id)
+        {
             var setting = _settingService.GetSettingById(id);
             if (_settingService.Delete(setting))
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功"));
             }
-            else {
+            else
+            {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败"));
             }
         }

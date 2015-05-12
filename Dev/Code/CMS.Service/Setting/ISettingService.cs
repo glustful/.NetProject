@@ -14,6 +14,8 @@ namespace CMS.Service.Setting
 
 		SettingEntity GetSettingById (int id);
 
+	    SettingEntity GetSettingByKey(string key);
+
 		IQueryable<SettingEntity> GetSettingsByCondition(SettingSearchCondition condition);
 
 		int GetSettingCount (SettingSearchCondition condition);

@@ -145,12 +145,6 @@
     <Compile Include="Controllers\CMS\SettingController.cs" />
     <Compile Include="Controllers\CMS\TagController.cs" />
     <Compile Include="Controllers\CMS\ContentController.cs" />
-    <Compile Include="Controllers\CRM\CRMAdminController.cs" />
-    <Compile Include="Controllers\CRM\CRMBrokerController.cs" />
-    <Compile Include="Controllers\CRM\CRMMerchantController.cs" />
-    <Compile Include="Controllers\CRM\CRMMessageConfigController.cs" />
-    <Compile Include="Controllers\CRM\CRMMessageDetailController.cs" />
-    <Compile Include="Controllers\CRM\CRMTaskController.cs" />
     <Compile Include="Controllers\UC\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -179,7 +173,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Controllers\CRM\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CMS.Entity\CMS.Entity.csproj">
       <Project>{df25f940-2fea-43f5-bd41-cbe319688651}</Project>
