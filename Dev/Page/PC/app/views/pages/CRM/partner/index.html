@@ -1,6 +1,7 @@
+<div ng-controller="PartnerIndexController">
 <div class="row">
-    <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入经纪人名" ng-model="contact.name" required="" tabindex="0" aria-required="true" aria-invalid="true">
-    <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">搜索<div class="md-ripple-container"></div></button>
+    <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入经纪人名" ng-model="searchCondition.name" required="" tabindex="0" aria-required="true" aria-invalid="true">
+    <button md-ink-ripple="" ng-click="getList()" class="md-btn md-raised m-b btn-fw indigo">搜索<div class="md-ripple-container"></div></button>
 </div>
 <table class="table m-b-none footable-loaded footable default" ui-jp="footable" data-filter="#filter" data-page-size="5">
     <thead>
@@ -16,12 +17,14 @@
             <span class="footable-sort-indicator"></span></th>
     </tr>
     </thead>
-    <tbody>
+    <tbody ng-repeat="item in list">
+
     <tr class="footable-even" style="display: table-row;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>董少明</td>
-        <td class="footable-visible"><a href="">杨庭</a></td>
-        <td data-value="1" class="footable-visible footable-last-column"><a href="#/page/CRM/partner/detailed"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">详情<div class="md-ripple-container"></div></button></a></td>
+        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>{{item.BrokerName}}</td>
+        <td class="footable-visible"><a href="">{{item.PartnersName}}</a></td>
+        <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.partner.detailed({id: item.Id})"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">详情<div class="md-ripple-container"></div></button></a></td>
     </tr>
+
     <tr class="footable-odd" style="display: table-row;">
         <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>董少明</td>
         <td class="footable-visible">杨庭</td>
@@ -84,3 +87,4 @@
     </tr>
     </tfoot>
 </table>
+</div>

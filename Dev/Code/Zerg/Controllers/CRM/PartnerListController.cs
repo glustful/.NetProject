@@ -7,11 +7,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
-
+     [EnableCors("*", "*", "*")]
     /// <summary>
     /// 合伙人  李洪亮  2015-05-05
     /// </summary>
@@ -34,15 +35,22 @@ namespace Zerg.Controllers.CRM
         /// <returns></returns>
 
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage SearchPartnerList(string pageindex)
+        public HttpResponseMessage SearchPartnerList(string name = null, int page = 1, int pageSize = 10)
         {
             var brokerSearchCondition = new BrokerSearchCondition
             {
+                Brokername = name,
                 OrderBy = EnumBrokerSearchOrderBy.OrderById,
-                Page = Convert.ToInt32(pageindex),
-                PageCount = 10
+                Page = Convert.ToInt32(page),
+                PageCount =pageSize
             };
-            return PageHelper.toJson(_brokerService.GetBrokersByCondition(brokerSearchCondition).ToList());
+            return PageHelper.toJson(
+                _brokerService.GetBrokersByCondition(brokerSearchCondition).Select(p => new { 
+                Id=p.Id,
+                PartnersName = p.PartnersName,
+                PartnersId=p.PartnersId,
+                BrokerName=p.Brokername   
+            }).ToList());
         }
 
       /// <summary>

@@ -804,7 +804,9 @@ angular.module('app')
             .state('page.CRM.partner.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/partner/index.html',
-                data : { title: '经纪人列表' }
+                data : { title: '合伙人列表' },
+                controller: 'PartnerIndexController',
+                resolve:load('scripts/controllers/CRM/Partner.js')
             })
             .state('page.CRM.partner.detailed', {
                 url: '/detailed',
