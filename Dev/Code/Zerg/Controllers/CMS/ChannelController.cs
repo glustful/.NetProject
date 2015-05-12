@@ -43,7 +43,8 @@ namespace Zerg.Controllers.CMS
                 Name=a.Name,
                 Status=a.Status,
             }).ToList();
-            return PageHelper.toJson(channelList);
+            var totalCount = _channelService.GetChannelCount(channelCon);
+            return PageHelper.toJson(new{List=channelList,Condition=channelCon,TotalCount=totalCount});
         }
         /// <summary>
         /// 新建频道
