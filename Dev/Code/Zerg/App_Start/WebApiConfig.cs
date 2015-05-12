@@ -14,6 +14,8 @@ namespace Zerg
     {
         public static void Register(HttpConfiguration config)
         {
+            config.EnableCors();
+
             // Web API 配置和服务
             var initialize = new InitializeContainer();
             initialize.Initializing();
