@@ -166,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\Zerg_CMS.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -224,10 +225,6 @@
     <ProjectReference Include="..\YooPoon.WebFramework\YooPoon.WebFramework.csproj">
       <Project>{ae97a52e-b5f5-469d-95cb-94e14883ad01}</Project>
       <Name>YooPoon.WebFramework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\YP.CodeGen\YP.CodeGen.csproj">
-      <Project>{4cdf48d9-0088-4c22-897d-9f8799b57883}</Project>
-      <Name>YP.CodeGen</Name>
     </ProjectReference>
     <ProjectReference Include="..\Zerg.Base\Zerg.Base.csproj">
       <Project>{51b7fc52-21e7-40d1-96d2-d0867932b4a5}</Project>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Web;
 using Aliyun.OpenServices.OpenStorageService;
 
 namespace Zerg.Common.Oss
@@ -12,7 +13,7 @@ namespace Zerg.Common.Oss
         public const string Endpoint = "http://oss-cn-hangzhou.aliyuncs.com/";
         public const string BucketName = "chuangfubao";
         private static readonly OssClient OssClient = new OssClient(Endpoint, AccessId, AccessKey);
-        
+
         public static string CreateEmptyFolder()
         {
 
@@ -42,11 +43,11 @@ namespace Zerg.Common.Oss
             {
                 if (ex.ErrorCode == OssErrorCode.BucketAlreadyExists)
                 {
-                    return  string.Format("Bucket '{0}' already exists, please modify and recreate it.", BucketName);
+                    return string.Format("Bucket '{0}' already exists, please modify and recreate it.", BucketName);
                 }
                 else
                 {
-                    return  string.Format("CreateBucket Failed with error info: {0}; Error info: {1}. \nRequestID:{2}\tHostID:{3}",
+                    return string.Format("CreateBucket Failed with error info: {0}; Error info: {1}. \nRequestID:{2}\tHostID:{3}",
                         ex.ErrorCode, ex.Message, ex.RequestId, ex.HostId);
                 }
             }
@@ -205,51 +206,49 @@ namespace Zerg.Common.Oss
             return OssClient.CompleteMultipartUpload(completeMultipartUploadRequest);
         }
 
-        public static void PutObject(Stream fs,string fileName)
+        public static string PutObject(Stream fs, string fileName)
         {
 
 
             OssClient client = OssClient;
 
             string bucketName = BucketName;
-            string key = fileName;
-//            const string fileToUpload = "<file to upload>";
-//
-//            try
-//            {
-                // 1. put object to specified output stream
-//                using (var fs = File.Open(fileToUpload, FileMode.Open))
-//                {
+            string key = DateTime.Now.Date.ToString("yyyyMMdd") + "/" + fileName;
+            //            const string fileToUpload = "<file to upload>";
+            //
+            //            try
+            //            {
+            // 1. put object to specified output stream
+            //                using (var fs = File.Open(fileToUpload, FileMode.Open))
+            //                {
             using (fs)
             {
                 var metadata = new ObjectMetadata();
-                metadata.UserMetadata.Add("mykey1", "myval1");
-                metadata.UserMetadata.Add("mykey2", "myval2");
-                metadata.CacheControl = "No-Cache";
-                metadata.ContentType = "text/html";
+                metadata.CacheControl = "Private";
+                metadata.ContentType = MimeMapping.GetMimeMapping(fileName);
                 client.PutObject(bucketName, key, fs, metadata);
 
-                metadata = client.GetObjectMetadata(bucketName, key);
+                // metadata = client.GetObjectMetadata(bucketName, key);
             }
+            return key;
+            //                }
 
-//                }
+            // 2. put object to specified file
+            //client.PutObject(bucketName, key, fileToUpload);
 
-                // 2. put object to specified file
-                //client.PutObject(bucketName, key, fileToUpload);
-
-                // 3. put object from specified object with multi-level virtual directory
-                //key = "folder/sub_folder/key0";
-                //client.PutObject(bucketName, key, fileToUpload);
-//            }
-//            catch (OssException ex)
-//            {
-//                Console.WriteLine("Failed with error code: {0}; Error info: {1}. \nRequestID:{2}\tHostID:{3}",
-//                    ex.ErrorCode, ex.Message, ex.RequestId, ex.HostId);
-//            }
-//            catch (Exception ex)
-//            {
-//                Console.WriteLine("Failed with error info: {0}", ex.Message);
-//            }
+            // 3. put object from specified object with multi-level virtual directory
+            //key = "folder/sub_folder/key0";
+            //client.PutObject(bucketName, key, fileToUpload);
+            //            }
+            //            catch (OssException ex)
+            //            {
+            //                Console.WriteLine("Failed with error code: {0}; Error info: {1}. \nRequestID:{2}\tHostID:{3}",
+            //                    ex.ErrorCode, ex.Message, ex.RequestId, ex.HostId);
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                Console.WriteLine("Failed with error info: {0}", ex.Message);
+            //            }
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using CMS.Entity.Model;
 using CMS.Service.Resource;
@@ -47,32 +47,35 @@ namespace Zerg.Controllers.CMS
         {
             var streamProvider = new MultipartMemoryStreamProvider();
             await Request.Content.ReadAsMultipartAsync(streamProvider);
+            var fileNames = new List<string>();
             foreach (var item in streamProvider.Contents)
             {
                 if (item.Headers.ContentDisposition.FileName != null)
                 {
                     var ms = item.ReadAsStreamAsync().Result;
-                    FileInfo info = new FileInfo(item.Headers.ContentDisposition.FileName.Replace("\"", ""));
+                    var fileLength = ms.Length;
+                    var info = new FileInfo(item.Headers.ContentDisposition.FileName.Replace("\"", ""));
 
 
                     var fileNewName = GetUniquelyString();
-                    OssHelper.PutObject(ms, fileNewName + info.Extension);
+                    var key = OssHelper.PutObject(ms, fileNewName + info.Extension);
                    
                     var resource = new ResourceEntity
                     {
                         Guid = Guid.NewGuid(),
                         Name = fileNewName,
-                        Length = ms.Length,
+                        Length = fileLength,
                         Type = info.Extension.Substring(1).ToLower(),
                         Adduser = _workContent.CurrentUser.Id,
                         Addtime = DateTime.Now,
                         UpdUser = _workContent.CurrentUser.Id,
                         UpdTime = DateTime.Now,
                     };
-                    _resourceService.Create(resource);
+                    if(_resourceService.Create(resource).Id >0)
+                        fileNames.Add(key);
                 }
             }
-            return PageHelper.toJson(PageHelper.ReturnValue(true, "文件上传成功"));
+            return PageHelper.toJson(PageHelper.ReturnValue(true, string.Join("|",fileNames)));
         }
         public HttpResponseMessage Search()
         {
