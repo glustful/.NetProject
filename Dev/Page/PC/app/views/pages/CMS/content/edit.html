@@ -1,9 +1,12 @@
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/lang/zh-cn/zh-cn.js"></script>
 <form name="form" id="form" ng-controller="ContentEditController" ng-submit="Save()">
     <div class="panel panel-default">
         <div class="panel-body revise">
             <div class="bottom" ><label for="title">标题： </label> <input id="title" type="text" ng-model="ContentModel.Title"></div>
             <div class="bottom" ><label for="Content">内容： </label>
-                <textarea name="Content" id="Content" cols="42" rows="10" ng-model="ContentModel.Content"></textarea>
+                <textarea class="ueditor" name="Content" id="Content" cols="42" rows="10" ng-model="ContentModel.Content" style="height: 400px;"></textarea>
             </div>
             <div class="bottom" ><label for="status">状态： </label>
                 <select name="Status" id="Status" ng-model="ContentModel.Status">

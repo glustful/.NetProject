@@ -27,9 +27,11 @@ angular
     'ui.jp',
     'pascalprecht.translate',
     'oc.lazyLoad',
-    'angular-loading-bar'
+    'angular-loading-bar',
+      'ng.ueditor'
   ]);
 
 var SETTING = {
+  BaseUrl:'http://localhost:50597/',
   ApiUrl:'http://localhost:50597/api'
 };
