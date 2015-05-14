@@ -15,10 +15,23 @@ namespace Zerg.Models.CRM
         /// 推荐客户ID
         /// </summary>
         public virtual int Id { get; set; }
+
         /// <summary>
         /// 经纪人ID
         /// </summary>
         public virtual int Broker { get; set; }
+        /// <summary>
+        /// 经纪人昵称
+        /// </summary>
+        public virtual string NickName { get; set; }
+        /// <summary>
+        /// 经纪人性别
+        /// </summary>
+        public virtual string Sex { get; set; }
+        /// <summary>
+        /// 注册时间
+        /// </summary>
+        public virtual string RegTime { get; set; }
         /// <summary>
         /// 客户信息ID
         /// </summary>
@@ -28,13 +41,26 @@ namespace Zerg.Models.CRM
         /// </summary>
         public virtual string Clientname { get; set; }
         /// <summary>
-        /// 电话
+        /// 客户电话
         /// </summary>
         public virtual int Phone { get; set; }
         /// <summary>
         /// QQ
         /// </summary>
         public virtual int Qq { get; set; }
+        /// <summary>
+        /// 客户意向户型
+        /// </summary>
+        public virtual string HouseType { get; set; }
+        /// <summary>
+        /// 客户意楼盘信息
+        /// </summary>
+        public virtual string Houses { get; set; }
+        /// <summary>
+        /// 备注信息
+        /// </summary>
+        public virtual string Note { get; set; }
+
         /// <summary>
         /// AddUser
         /// </summary>

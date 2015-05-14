@@ -50,7 +50,7 @@ namespace CRM.Entity.Model
 
 		public string Agentlevel { get; set; }
 
-		public string Usertype { get; set; }
+		//public string Usertype { get; set; }
 
 		public string Address { get; set; }
 
@@ -73,6 +73,8 @@ namespace CRM.Entity.Model
 		public DateTime? UptimeEnd { get; set; }
 
 		public EnumBrokerSearchOrderBy? OrderBy { get; set; }
+
+	    public EnumUserType? UserType { get; set; }
 	}
 
 	public enum EnumBrokerSearchOrderBy

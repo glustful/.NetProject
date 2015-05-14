@@ -317,6 +317,5 @@ namespace Zerg.Common
             }
 
         }
-
     }
 }

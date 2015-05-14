@@ -108,7 +108,7 @@ namespace Zerg.Controllers.CRM
                 {
                     Id=id,
                     State = 0,
-                    Usertype = "1"
+                    Usertype = EnumUserType.管理员
                 };
                 _brokerService.Update(model);
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功"));
