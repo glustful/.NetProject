@@ -7,22 +7,22 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// 审核中
 		/// </summary>
-		Normal,
+        审核中=0,
 		/// <summary>
 		/// 等待上访
 		/// </summary>
-		Write,
+        等待上访=1,
 		/// <summary>
 		/// 洽谈中
 		/// </summary>
-		Discuss,
+        洽谈中=2,
 		/// <summary>
 		/// 洽谈失败
 		/// </summary>
-		Defeated,
+        洽谈失败=3,
 		/// <summary>
 		/// 洽谈成功
 		/// </summary>
-		Succeed,
+        洽谈成功=4,
 	}
 }

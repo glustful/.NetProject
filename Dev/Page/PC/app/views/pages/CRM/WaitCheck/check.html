@@ -1,87 +1,83 @@
-<div class="panel panel-card ng-scope">
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <td>经纪人名</td>
-            <td>等级</td>
+    <div class="panel panel-card ng-scope">
 
-        </tr>
-        <tr>
-            <td>昵称</td>
-            <td>电话</td>
+        <table class="table">
+            <tbody>
+            <tr>
+                <td>经纪人名：{{ARDetialModel.Brokername}}</td>
+                <td>等级：{{ARDetialModel.Brokerlevel}}</td>
 
-        </tr>
-        <tr>
-            <td>性别</td>
-            <td>注册时间</td>
+            </tr>
+            <tr>
+                <td>昵称：{{ARDetialModel.Nickname}}</td>
+                <td>电话：{{ARDetialModel.Phone}}</td>
 
-        </tr>
-        </tbody>
-    </table>
+            </tr>
+            <tr>
+                <td>性别：{{ARDetialModel.Sexy}}</td>
+                <td>注册时间：{{ARDetialModel.RegTime}}</td>
+
+            </tr>
+            </tbody>
+        </table>
     </div>
-<div class="panel panel-card ng-scope">
+    <div class="panel panel-card ng-scope">
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <td>客户姓名</td>
-            <td>意向户型</td>
+        <table class="table">
+            <tbody>
+            <tr>
+                <td>客户姓名：{{ARDetialModel.Clientname}}</td>
+                <td>意向户型：{{ARDetialModel.HouseType}}</td>
 
-        </tr>
-        <tr>
-            <td>电话</td>
-            <td>备注信息</td>
+            </tr>
+            <tr>
+                <td>电话：{{ARDetialModel.Phone}}</td>
+                <td>备注信息：{{ARDetialModel.Note}}</td>
 
-        </tr>
-        <tr>
-            <td>楼盘信息</td>
-            <td></td>
+            </tr>
+            <tr>
+                <td>楼盘信息：{{ARDetialModel.Houses}}</td>
+                <td></td>
 
-        </tr>
-        </tbody>
-    </table>
+            </tr>
+            </tbody>
+        </table>
     </div>
-<div class="panel panel-card ng-scope">
+    <div class="panel panel-card ng-scope">
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <td>项目名称</td>
-            <td>所属行业</td>
+        <table class="table">
+            <tbody>
+            <tr>
+                <td>项目名称：</td>
+                <td>所属行业：</td>
 
-        </tr>
+            </tr>
 
-        </tbody>
-    </table>
-</div>
-<div class="panel panel-card ng-scope">
-    <form name="form" id="form" >
-        <div class="panel panel-default">
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-card ng-scope">
+        <form name="form" id="form" >
+            <div class="panel panel-default">
 
-            <div class="panel-body revise">
-                <div class="bottom" ><label for="name">选择带客人员： </label>
-                    <select name="" id="name">
-                    <option value="">带客甲</option>
-                    <option value="">带客乙</option>
-                    <option value="">带客丙</option>
-                </select></div>
-                <div class="bottom" ><label for="names">选择驻场秘书： </label>
-                    <select name="" id="names">
-                        <option value="">驻场秘甲</option>
-                        <option value="">驻场秘乙</option>
-                        <option value="">驻场丙</option>
-                    </select>
+                <div class="panel-body revise">
+                    <div class="bottom" ><label for="name">选择带客人员： </label>
+                        <select name="" id="name" ng-repeat="item in WaiterList">
+                            <option value="{{item.Id}}">{{item.Brokername}}</option>
+
+                        </select></div>
+                    <div class="bottom" ><label for="names">选择驻场秘书： </label>
+                        <select name="" id="names"  ng-repeat="item2 in SecretaryList">
+                            <option value="{{item2.Id}}">{{item2.Brokername}}</option>
+
+                        </select>
+                    </div>
                 </div>
             </div>
-
-        </div>
-    </form>
-</div>
-
-    <div style="text-align: center;">
-        <a href="#/page/CRM/WaitCheck/pass"> <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">审核通过<div class="md-ripple-container"></div></button></a>
+        </form>
+    </div>
+    <div style="text-align: center;" class="panel panel-card ng-scope">
+        <a href="#/page/CRM/WaitCheck/pass"> <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" ng-click="passAudit1()">审核通过<div class="md-ripple-container"></div></button></a>
         <a href="#page/CRM/WaitCheck/refuse"> <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink">拒绝<div class="md-ripple-container"></div></button></a>
         <button class="btn btn-success" ng-click="open()" tabindex="0">Open me!</button>
     </div>
-

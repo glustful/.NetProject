@@ -674,12 +674,16 @@ angular.module('app')
             .state('page.CRM.WaitCheck.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/WaitCheck/index.html',
-              data : { title: '待审核推荐' }
+              data : { title: '待审核推荐' },
+              controller:"WaitListController",
+              resolve:load('scripts/controllers/CRM/WaitCheck.js')
             })
             .state('page.CRM.WaitCheck.check', {
-              url: '/check',
+              url: '/check?id',
               templateUrl: 'views/pages/CRM/WaitCheck/check.html',
-              data : { title: '审核页' }
+              data : { title: '审核页' },
+              controller:"ARDetialController",
+              resolve:load('scripts/controllers/CRM/WaitCheck.js')
             })
             .state('page.CRM.WaitCheck.pass', {
               url: '/pass',
