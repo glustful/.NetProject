@@ -193,27 +193,6 @@ namespace CRM.Service.Broker
 				}
                 if (condition.UserType.HasValue)
                 {
-                    //switch (condition.UserType)
-                    //{
-                    //    case EnumUserType.商家:
-                    //        query = condition.isDescending ? query.OrderByDescending(q => q.Usertype) : query.OrderBy(q => q.Usertype);
-                    //        break;
-                    //    case EnumUserType.场秘:
-                    //        query = condition.isDescending ? query.OrderByDescending(q => q.Usertype) : query.OrderBy(q => q.Usertype);
-                    //        break;
-                    //    case EnumUserType.带客人员:
-                    //        query = condition.isDescending ? query.OrderByDescending(q => q.Usertype) : query.OrderBy(q => q.Usertype);
-                    //        break;
-                    //    case EnumUserType.管理员:
-                    //        query = condition.isDescending ? query.OrderByDescending(q => q.Usertype) : query.OrderBy(q => q.Usertype);
-                    //        break;
-                    //    case EnumUserType.经纪人:
-                    //        query = condition.isDescending ? query.OrderByDescending(q => q.Usertype) : query.OrderBy(q => q.Usertype);
-                    //        break;
-                    //    case EnumUserType.财务:
-                    //        query = condition.isDescending ? query.OrderByDescending(q => q.Usertype) : query.OrderBy(q => q.Usertype);
-                    //        break;
-                    //}
                     query = query.Where(c => c.Usertype == condition.UserType);
                 }
                 else

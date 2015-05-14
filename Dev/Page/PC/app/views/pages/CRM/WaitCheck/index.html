@@ -1,6 +1,6 @@
 
 <div class="row">
-    <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入搜索条件" ng-model="searchCondition.Phone" required="" tabindex="0" aria-required="true" aria-invalid="true">
+    <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入搜索条件" ng-model="searchCondition.Brokername" required="" tabindex="0" aria-required="true" aria-invalid="true">
     <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo"  ng-click="getList()">搜索<div class="md-ripple-container"></div></button>
 </div>
 <table class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" data-page-size="5">
@@ -33,11 +33,11 @@
 
     <tr class="footable-even" style="display: table-row;" ng-repeat="item in Brokerlist">
         <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>{{item.Id}}</td>
-        <td class="footable-visible"><a href="">{{item.Clientname}}</a></td>
+        <td class="footable-visible"><a href="">{{item.Brokername}}</a></td>
         <td class="footable-visible">{{item.Brokerlevel}}</td>
         <td data-value="78025368997" class="footable-visible">{{item.Phone}}</td>
         <td class="footable-visible">{{item.Projectname}}</td>
-        <td data-value="78025368997" class="footable-visible">{{1422928054257 | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+        <td data-value="78025368997" class="footable-visible">{{item.Addtime}}</td>
         <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.WaitCheck.check({id:item.Id})"><span class="label bg-success" title="Active">审核</span></a></td>
     </tr>
 
@@ -84,8 +84,9 @@
     <tfoot class="hide-if-no-paging">
     <tr>
         <td colspan="5" class="text-center footable-visible">
-            <ul class="pagination"><li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li><li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li><li class="footable-page active"><a data-page="0" href="#">1</a></li><li class="footable-page"><a data-page="1" href="#">2</a></li><li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li><li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li></ul>
+            <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
         </td>
     </tr>
     </tfoot>
 </table>
+

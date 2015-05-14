@@ -24,5 +24,6 @@ namespace CRM.Entity.Model
 		/// 洽谈成功
 		/// </summary>
         洽谈成功=4,
+	    HasValue
 	}
 }

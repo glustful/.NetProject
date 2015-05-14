@@ -108,7 +108,7 @@ namespace CRM.Entity.Model
         /// <summary>
         /// 用户进度
         /// </summary>
-	    public EnumBRECCType Status { get; set; }
+	    public EnumBRECCType? Status { get; set; }
 
 
 	    public EnumBrokerRECClientSearchOrderBy? OrderBy { get; set; }

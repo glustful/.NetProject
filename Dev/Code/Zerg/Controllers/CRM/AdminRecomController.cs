@@ -14,7 +14,7 @@ using Zerg.Models.CRM;
 
 namespace Zerg.Controllers.CRM
 {
-    [EnableCors("*","*","*")]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// admin的推荐至平台流程处理
     /// </summary>
@@ -38,15 +38,31 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage BrokerList(int page, int pageSize)
+        public HttpResponseMessage BrokerList(EnumBRECCType status, string brokername,int page, int pageSize)
         {
+           
             var condition = new BrokerRECClientSearchCondition
             {
                 OrderBy = EnumBrokerRECClientSearchOrderBy.OrderById,
                 Page = page,
-                PageCount = pageSize
+                PageCount = pageSize,
+                Status = status,
+                Brokername=brokername
+                    
             };
-            return PageHelper.toJson(_brokerRecClientService.GetBrokerRECClientsByCondition(condition).ToList());
+            var list = _brokerRecClientService.GetBrokerRECClientsByCondition(condition).Select(a => new
+            {
+                a.Id,
+                a.Brokername,
+                a.Brokerlevel,
+                a.ClientInfo.Phone,
+                a.Projectname,
+                a.Addtime
+            }).ToList();
+
+            var totalCont = _brokerRecClientService.GetBrokerRECClientCount(condition);
+
+            return PageHelper.toJson(new { list1 = list, condition1 = condition, totalCont1 = totalCont });
         }
         #endregion
 
