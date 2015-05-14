@@ -40,7 +40,7 @@
         <button md-ink-ripple="" onclick="settingAdd()" class="md-btn md-raised m-b btn-fw blue">发送</button>
     </div>
 
-    <div id="divSet">
+    <div id="divSet" ng-app="app" ng-controller="MessageSeachController">
         <table class="table m-b-none footable-loaded footable default" ui-jp="footable" data-filter="#filter" data-page-size="5">
             <thead class="divheard">
                 <tr>
@@ -49,19 +49,19 @@
                         <span class="footable-sort-indicator"></span>
                     </th>
                     <th class="footable-visible footable-sortable footable-sorted-desc">
-                        内容
+                        标题
                         <span class="footable-sort-indicator"></span>
                     </th>
                     <th data-hide="phone,tablet" class="footable-sortable footable-visible" style="display: table-cell;">
-                        发送人员
+                        发送内容
                         <span class="footable-sort-indicator"></span>
                     </th>
                     <th data-hide="phone,tablet" data-name="Date Of Birth" class="footable-sortable footable-visible" style="display: table-cell;">
-                        接收人员
+                        发送人
                         <span class="footable-sort-indicator"></span>
                     </th>
                     <th data-hide="phone" class="footable-visible footable-sortable footable-last-column">
-                        发送时间
+                        发送号码
                         <span class="footable-sort-indicator"></span>
                     </th>
                 </tr>
@@ -74,9 +74,9 @@
                     <td class="footable-visible">{{item.Content}}</td>
                     <td class="footable-visible">{{item.Sender}}</td>
                     <td class="footable-visible">{{item.Mobile}}</td>
-                    <td class="footable-visible">{{item.Addtime}}</td>
+                    <!--<td class="footable-visible">{{item.Addtime}}</td>-->
                 </tr>
-                
+
 
             </tbody>
             <tfoot class="hide-if-no-paging">
