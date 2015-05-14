@@ -146,6 +146,14 @@
     <Compile Include="Controllers\CMS\TagController.cs" />
     <Compile Include="Controllers\CMS\ContentController.cs" />
     <Compile Include="Controllers\UC\UserController.cs" />
+    <Compile Include="Controllers\UEditor\Config.cs" />
+    <Compile Include="Controllers\UEditor\ConfigHandler.cs" />
+    <Compile Include="Controllers\UEditor\CrawlerHandler.cs" />
+    <Compile Include="Controllers\UEditor\Handler.cs" />
+    <Compile Include="Controllers\UEditor\ListFileHandler.cs" />
+    <Compile Include="Controllers\UEditor\NotSupportedHandler.cs" />
+    <Compile Include="Controllers\UEditor\PathFormater.cs" />
+    <Compile Include="Controllers\UEditor\UploadHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -166,6 +174,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Controllers\UEditor\controller.ashx" />
+    <Content Include="Controllers\UEditor\config.json" />
     <None Include="Properties\PublishProfiles\Zerg_CMS.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
