@@ -62,13 +62,19 @@ namespace Zerg.Controllers.CRM
         /// <returns></returns>
 
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetPartnerListListByUserId(string userId)
+        public HttpResponseMessage PartnerListDetailed(string userId)
         {
             var partnerlistsearchcon = new PartnerListSearchCondition
             {
                 Brokers = _brokerService.GetBrokerById(Convert.ToInt32(userId))
             };
-            return PageHelper.toJson(_partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).ToList());
+            var partnerList = _partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).Select(p => new
+                {
+                 Name=p.Brokername,
+                 AddTime =p.Addtime
+
+                }).ToList();
+            return PageHelper.toJson(partnerList);
         }
 
         /// <summary>

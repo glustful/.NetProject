@@ -5,7 +5,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.UI.WebControls.Expressions;
 using CRM.Entity.Model;
-using CRM.Service.BLPay;
+//using CRM.Service.BLPay;
 using CRM.Service.Task;
 using CRM.Service.TaskAward;
 using CRM.Service.TaskPunishment;

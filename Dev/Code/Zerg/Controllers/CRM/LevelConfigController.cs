@@ -9,9 +9,11 @@ using System.Web.Http;
 using Zerg.Common;
 using Webdiyer.WebControls.Mvc;
 using CRM.Service.LevelConfig;
+using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.CRM
 {
+    [EnableCors("*", "*", "*")]
     /// <summary>
     /// 等级配置设置
     /// </summary>

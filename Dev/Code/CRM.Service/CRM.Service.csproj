@@ -46,10 +46,6 @@
     <Compile Include="Bank\IBankService.cs" />
     <Compile Include="BargainClient\BargainClientService.cs" />
     <Compile Include="BargainClient\IBargainClientService.cs" />
-    <Compile Include="BLPay\BLPayService.cs" />
-    <Compile Include="BLPay\IBLPayService.cs" />
-    <Compile Include="BRECPay\BRECPayService.cs" />
-    <Compile Include="BRECPay\IBRECPayService.cs" />
     <Compile Include="BrokeAccount\BrokeAccountService.cs" />
     <Compile Include="BrokeAccount\IBrokeAccountService.cs" />
     <Compile Include="BrokerBill\BrokerBillService.cs" />
@@ -136,6 +132,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BLPay\" />
+    <Folder Include="BRECPay\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
