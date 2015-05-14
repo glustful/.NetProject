@@ -789,12 +789,14 @@ angular.module('app')
             .state('page.CRM.recommend.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/recommend/index.html',
-                data : { title: '经纪人列表' }
+                data : { title: '推荐人列表' },
+                resolve:load('scripts/controllers/CRM/Recommend.js')
             })
             .state('page.CRM.recommend.detailed', {
-                url: '/detailed',
-                templateUrl: 'views/pages/CRM/recommend/detailed.html',
-                data : { title: '详情页' }
+                url: '/detailed?userId',
+                templateUrl: '../views/pages/CRM/configure/indexset.html',
+                resolve:load('scripts/controllers/CRM/Recommend.js'),
+                data : { title: '推荐人详情页' }
             })
 
             .state('page.CRM.partner',{
@@ -808,9 +810,10 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/Partner.js')
             })
             .state('page.CRM.partner.detailed', {
-                url: '/detailed',
+                url: '/detailed?userId',
                 templateUrl: 'views/pages/CRM/partner/detailed.html',
-                data : { title: '详情页' }
+                data : { title: '合伙人详情页' },
+                resolve:load('scripts/controllers/CRM/Partner.js')
             })
 
             .state('page.CRM.configure',{
@@ -820,8 +823,43 @@ angular.module('app')
             .state('page.CRM.configure.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/configure/index.html',
-                data : { title: '等级配置' }
+                data : { title: '等级列表' },
+                resolve:load('scripts/controllers/CRM/configure.js')
             })
+            .state('page.CRM.configure.create', {
+                url: '/create',
+                templateUrl: 'views/pages/CRM/configure/create.html',
+                data : { title: '等级新建' },
+                resolve:load('scripts/controllers/CRM/configure.js')
+            })
+            .state('page.CRM.configure.edit', {
+                url: '/edit?id',
+                templateUrl: 'views/pages/CRM/configure/edit.html',
+                data : { title: '等级编辑' },
+                resolve:load('scripts/controllers/CRM/configure.js')
+            })
+
+
+            .state('page.CRM.configure.indexset', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/configure/indexset.html',
+                data : { title: '等级配置列表' },
+                resolve:load('scripts/controllers/CRM/configure.js')
+            })
+            .state('page.CRM.configure.setcreate', {
+                url: '/create',
+                templateUrl: 'views/pages/CRM/configure/setcreate.html',
+                data : { title: '等级配置新建' },
+                resolve:load('scripts/controllers/CRM/configure.js')
+            })
+            .state('page.CRM.configure.setedit', {
+                url: '/edit?id',
+                templateUrl: 'views/pages/CRM/configure/setedit.html',
+                data : { title: '等级配置编辑' },
+                resolve:load('scripts/controllers/CRM/configure.js')
+            })
+
+
 
             .state('page.CRM.MessageConfigure',{
                 url:'/MessageConfigure',

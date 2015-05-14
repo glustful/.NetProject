@@ -22,7 +22,7 @@
         <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>{{item.BrokerName}}</td>
         <td class="footable-visible"><a href="">{{item.PartnersName}}</a></td>
         <td data-value="1" class="footable-visible footable-last-column">
-         <a ui-sref="page.CRM.partner.detailed({id: item.Id})"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">详情<div class="md-ripple-container"></div></button>
+         <a   href="#/page/CRM/partner/detailed?userId={{item.Id}}" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">他的合伙人<div class="md-ripple-container"></div></button>
          </a></td>
          </a></td>
     </tr>
