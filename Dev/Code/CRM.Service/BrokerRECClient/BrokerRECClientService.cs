@@ -8,10 +8,10 @@ namespace CRM.Service.BrokerRECClient
 {
 	public class BrokerRECClientService : IBrokerRECClientService
 	{
-		private readonly IRepository<BrokerRECClientEntity> _brokerrecclientRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<BrokerRECClientEntity> _brokerrecclientRepository;
 		private readonly ILog _log;
 
-		public BrokerRECClientService(IRepository<BrokerRECClientEntity> brokerrecclientRepository,ILog log)
+		public BrokerRECClientService(Zerg.Common.Data.ICRMRepository<BrokerRECClientEntity> brokerrecclientRepository,ILog log)
 		{
 			_brokerrecclientRepository = brokerrecclientRepository;
 			_log = log;
@@ -101,10 +101,6 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Where(q => q.Qq == condition.Qq.Value);
                 }
-				if (condition.Payment.HasValue)
-                {
-                    query = query.Where(q => q.Payment == condition.Payment.Value);
-                }
 				if (!string.IsNullOrEmpty(condition.Clientname))
                 {
                     query = query.Where(q => q.Clientname.Contains(condition.Clientname));
@@ -161,19 +157,12 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Where(q => condition.WriterIDs.Contains(q.WriterId));
                 }
-				if (condition.AccountantIDs != null && condition.AccountantIDs.Any())
-                {
-                    query = query.Where(q => condition.AccountantIDs.Contains(q.AccountantId));
-                }
 				if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
                     {
 						case EnumBrokerRECClientSearchOrderBy.OrderById:
 							query = condition.IsDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
-							break;
-						case EnumBrokerRECClientSearchOrderBy.OrderByAmount:
-							query = condition.IsDescending?query.OrderByDescending(q=>q.Amount):query.OrderBy(q=>q.Amount);
 							break;
                     }
 					
@@ -225,10 +214,6 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Where(q => q.Qq == condition.Qq.Value);
                 }
-				if (condition.Payment.HasValue)
-                {
-                    query = query.Where(q => q.Payment == condition.Payment.Value);
-                }
 				if (!string.IsNullOrEmpty(condition.Clientname))
                 {
                     query = query.Where(q => q.Clientname.Contains(condition.Clientname));
@@ -285,10 +270,7 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Where(q => condition.WriterIDs.Contains(q.WriterId));
                 }
-				if (condition.AccountantIDs != null && condition.AccountantIDs.Any())
-                {
-                    query = query.Where(q => condition.AccountantIDs.Contains(q.AccountantId));
-                }
+
 				return query.Count();
 			}
 			catch(Exception e)

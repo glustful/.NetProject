@@ -1,5 +1,5 @@
 /**
- * Created by ¶Î«h•F on 2015/5/9.
+ * Created by ï¿½Î«hï¿½F on 2015/5/9.
  */
 angular.module("app").controller('ChannelIndexController', [
     '$http','$scope',function($http,$scope) {
@@ -12,7 +12,10 @@ angular.module("app").controller('ChannelIndexController', [
 
         var getChannelList = function() {
             $http.get(SETTING.ApiUrl+'/Channel/Index',{params:$scope.searchCondition}).success(function(data){
-                $scope.list = data;
+                $scope.list = data.List;
+                $scope.searchCondition.page = data.Condition.Page;
+                $scope.searchCondition.pageSize = data.Condition.PageCount;
+                $scope.totalCount = data.TotalCount;
             });
         };
         $scope.getList = getChannelList;
