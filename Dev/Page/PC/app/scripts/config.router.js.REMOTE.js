@@ -703,16 +703,12 @@ angular.module('app')
             .state('page.CRM.WaitPetition.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/WaitPetition/index.html',
-                  data: { title: '待上访记录' },
-                controller:"PetitionListController",
-                resolve:load('scripts/controllers/CRM/WaitPetition.js')
+                  data: { title: '待上访记录' }
             })
             .state('page.CRM.WaitPetition.detailed', {
-                url: '/detailed?id',
+              url: '/detailed',
               templateUrl: 'views/pages/CRM/WaitPetition/detailed.html',
-                  data: { title: '详情页' },
-                controller:"WPDetialController",
-                resolve:load('scripts/controllers/CRM/WaitPetition.js')
+                  data: { title: '详情页' }
             })
 
               .state('page.CRM.talking', {
@@ -722,16 +718,12 @@ angular.module('app')
             .state('page.CRM.talking.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/talking/index.html',
-                  data: { title: '洽谈中业务' },
-                controller:"TalkingListController",
-                resolve:load('scripts/controllers/CRM/Talking.js')
+                  data: { title: '洽谈中业务' }
             })
             .state('page.CRM.talking.detailed', {
-              url: '/detailed?id',
+              url: '/detailed',
               templateUrl: 'views/pages/CRM/talking/detailed.html',
-                  data: { title: '详情页' },
-                controller:"TaklDetialController",
-                resolve:load('scripts/controllers/CRM/Talking.js')
+                  data: { title: '详情页' }
             })
 
               .state('page.CRM.fail', {
@@ -756,16 +748,12 @@ angular.module('app')
             .state('page.CRM.success.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/success/index.html',
-                  data: { title: '洽谈成功' },
-                controller:"SuccessListController",
-                resolve:load('scripts/controllers/CRM/Success.js')
+                  data: { title: '洽谈成功' }
             })
             .state('page.CRM.success.detailed', {
-              url: '/detailed?id',
+              url: '/detailed',
               templateUrl: 'views/pages/CRM/success/detailed.html',
-                  data: { title: '详情页' },
-                controller:"SuccessDetialController",
-                resolve:load('scripts/controllers/CRM/Success.js')
+                  data: { title: '详情页' }
             })
 
               .state('page.CRM.CustomerInformation', {
@@ -805,16 +793,13 @@ angular.module('app')
             .state('page.CRM.recommend.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/recommend/index.html',
-                data : { title: '推荐人列表' },
-                resolve:load('scripts/controllers/CRM/Recommend.js')
+                  data: { title: '经纪人列表' }
             })
             .state('page.CRM.recommend.detailed', {
-                url: '/detailed?userId',
-                templateUrl: '../views/pages/CRM/configure/indexset.html',
-                resolve:load('scripts/controllers/CRM/Recommend.js'),
-                data : { title: '推荐人详情页' }
+                url: '/detailed',
+                templateUrl: 'views/pages/CRM/recommend/detailed.html',
+                  data: { title: '详情页' }
             })
-
 
               .state('page.CRM.partner', {
                   url: '/partner',
@@ -827,10 +812,9 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/Partner.js')
             })
             .state('page.CRM.partner.detailed', {
-                url: '/detailed?userId',
+                url: '/detailed',
                 templateUrl: 'views/pages/CRM/partner/detailed.html',
-                data : { title: '合伙人详情页' },
-                resolve:load('scripts/controllers/CRM/Partner.js')
+                  data: { title: '详情页' }
             })
 
               .state('page.CRM.configure', {
@@ -840,43 +824,8 @@ angular.module('app')
             .state('page.CRM.configure.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/configure/index.html',
-                data : { title: '等级列表' },
-                resolve:load('scripts/controllers/CRM/configure.js')
+                  data: { title: '等级配置' }
             })
-            .state('page.CRM.configure.create', {
-                url: '/create',
-                templateUrl: 'views/pages/CRM/configure/create.html',
-                data : { title: '等级新建' },
-                resolve:load('scripts/controllers/CRM/configure.js')
-            })
-            .state('page.CRM.configure.edit', {
-                url: '/edit?id',
-                templateUrl: 'views/pages/CRM/configure/edit.html',
-                data : { title: '等级编辑' },
-                resolve:load('scripts/controllers/CRM/configure.js')
-            })
-
-
-            .state('page.CRM.configure.setindex', {
-                url: '/index',
-                templateUrl: 'views/pages/CRM/configure/indexset.html',
-                data : { title: '等级配置列表' },
-                resolve:load('scripts/controllers/CRM/configure.js')
-            })
-            .state('page.CRM.configure.setcreate', {
-                url: '/create',
-                templateUrl: 'views/pages/CRM/configure/setcreate.html',
-                data : { title: '等级配置新建' },
-                resolve:load('scripts/controllers/CRM/configure.js')
-            })
-            .state('page.CRM.configure.setedit', {
-                url: '/edit?id',
-                templateUrl: 'views/pages/CRM/configure/setedit.html',
-                data : { title: '等级配置编辑' },
-                resolve:load('scripts/controllers/CRM/configure.js')
-            })
-
-
 
               .state('page.CRM.MessageConfigure', {
                   url: '/MessageConfigure',
@@ -908,54 +857,17 @@ angular.module('app')
             .state('page.CRM.TaskList.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskList/index.html',
-<<<<<<< HEAD
-                data : { title: '任务主页' },
-
-                resolve:load(['scripts/controllers/taskList.js',
-                    'scripts/filters/toDate.js'])
-            })
-            .state('page.CRM.TaskList.taskList', {
-                url: '/taskList?id',
-                templateUrl: 'views/pages/CRM/TaskList/taskList.html',
-                data : { title: '任务列表' },
-                resolve:load(['scripts/controllers/taskList.js',
-                    'scripts/filters/toDate.js'])
-            })
-            .state('page.CRM.TaskList.createTask', {
-                url: '/createTask?taskModel',
-                templateUrl: 'views/pages/CRM/TaskList/createTask.html',
-                data : { title: '添加任务' },
-                resolve:load(['scripts/controllers/createTask.js'])
-            })
-            .state('page.CRM.TaskList.taskDetail', {
-                url: '/taskDetail?id',
-                templateUrl: 'views/pages/CRM/TaskList/taskDetail.html',
-                data : { title: '任务详情' },
-                resolve:load(['scripts/controllers/taskList.js',
-                    'scripts/filters/toDate.js'])
-            })
-            .state('page.CRM.TaskConfigure',{
-                url:'/TaskConfigure',
-                template:'<div ui-view></div>'
-=======
                 data: { title: '任务列表' }
             })
 
             .state('page.CRM.TaskConfigure', {
                 url: '/TaskConfigure',
                 template: '<div ui-view></div>'
->>>>>>> 723f3a05b8bdbf3b2c1ce04618bc0880e883d7c8
             })
             .state('page.CRM.TaskConfigure.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskConfigure/index.html',
-<<<<<<< HEAD
-                data : { title: '任务配置' },
-                resolve:load([ 'scripts/filters/toDate.js',
-                    'scripts/controllers/taskConfig.js'])
-=======
                 data: { title: '任务配置' }
->>>>>>> 723f3a05b8bdbf3b2c1ce04618bc0880e883d7c8
             })
 
 

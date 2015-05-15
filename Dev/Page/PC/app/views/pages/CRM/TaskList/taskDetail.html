@@ -1,0 +1,37 @@
+<!--黄秀宇 任务列表  2015.05.12
+自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />-->
+<div ng-controller="taskDetailcontroller">
+<div id="divTaskD"class="bord"ng-bing="taskModel1" >
+    <div class="taskd  bord">
+        <div style="text-align: left;">
+            <p >任务名称<span class="spantask">
+            {{taskModel1.Taskname}}</span>
+                </p>
+            <p style="margin-top:50px;">完成条件<span class="spantask">
+            {{taskModel1.TaskTag.Name}}</span>
+                </p>
+        </div>
+        <div style="text-align: left;margin-left:400px;margin-top:-110px;">
+            <p >
+                结束时间<span style="margin-left:20px;color:#0088cc;">
+            {{taskModel1.Endtime|toDate|date}}</span></p>
+            <p style="margin-top:50px;">
+                奖励方式<span style="margin-left:20px;color:#0088cc;">
+            {{taskModel1.TaskAward.Name}}</span></p>
+        </div>
+
+    </div>
+    <div class="taskd  bord" style="text-align:left;">
+        <div>
+            <p >任务描述<span style="margin-left:10px;margin-right:30px;color:#0088cc;">
+            {{taskModel1.Describe}}</span>
+            </p>
+
+        </div>
+    </div>
+    <div style="margin-top:50px;"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">修改</button>
+        <a href="#page/CRM/TaskList/index"> <button style="margin-left:150px;" md-ink-ripple="" style="margin-left:40px;" class="md-btn md-raised m-b btn-fw blue">返回</button></a>
+    </div>
+
+</div>
+</div>
