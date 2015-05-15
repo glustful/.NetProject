@@ -777,12 +777,12 @@ angular.module('app')
             })
             .state('page.CRM.strike.index', {
                 url: '/index',
-                templateUrl: 'views/pages/CRM/strike/index.html',
+                templateUrl: '../views/pages/CRM/success/strike/index.html',
                   data: { title: '所有成交' }
             })
             .state('page.CRM.strike.detailed', {
                 url: '/detailed',
-                templateUrl: 'views/pages/CRM/strike/detailed.html',
+                templateUrl: '../views/pages/CRM/success/strike/detailed.html',
                   data: { title: '详情页' }
             })
 
@@ -896,54 +896,48 @@ angular.module('app')
             .state('page.CRM.TaskList.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskList/index.html',
-<<<<<<< HEAD
+
                 data : { title: '任务主页' },
 
-                resolve:load(['scripts/controllers/taskList.js',
+                resolve:load(['scripts/controllers/CRM/taskList.js',
                     'scripts/filters/toDate.js'])
             })
             .state('page.CRM.TaskList.taskList', {
                 url: '/taskList?id',
                 templateUrl: 'views/pages/CRM/TaskList/taskList.html',
                 data : { title: '任务列表' },
-                resolve:load(['scripts/controllers/taskList.js',
+                resolve:load(['scripts/controllers/CRM/taskList.js',
                     'scripts/filters/toDate.js'])
             })
             .state('page.CRM.TaskList.createTask', {
                 url: '/createTask?taskModel',
                 templateUrl: 'views/pages/CRM/TaskList/createTask.html',
                 data : { title: '添加任务' },
-                resolve:load(['scripts/controllers/createTask.js'])
+                resolve:load(['scripts/controllers/CRM/createTask.js'])
             })
             .state('page.CRM.TaskList.taskDetail', {
                 url: '/taskDetail?id',
                 templateUrl: 'views/pages/CRM/TaskList/taskDetail.html',
                 data : { title: '任务详情' },
-                resolve:load(['scripts/controllers/taskList.js',
+                resolve:load(['scripts/controllers/CRM/taskList.js',
                     'scripts/filters/toDate.js'])
             })
             .state('page.CRM.TaskConfigure',{
                 url:'/TaskConfigure',
-                template:'<div ui-view></div>'
-=======
+                template:'<div ui-view></div>',
+
                 data: { title: '任务列表' }
             })
 
-            .state('page.CRM.TaskConfigure', {
-                url: '/TaskConfigure',
-                template: '<div ui-view></div>'
->>>>>>> 723f3a05b8bdbf3b2c1ce04618bc0880e883d7c8
-            })
+
             .state('page.CRM.TaskConfigure.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskConfigure/index.html',
-<<<<<<< HEAD
+
                 data : { title: '任务配置' },
                 resolve:load([ 'scripts/filters/toDate.js',
-                    'scripts/controllers/taskConfig.js'])
-=======
-                data: { title: '任务配置' }
->>>>>>> 723f3a05b8bdbf3b2c1ce04618bc0880e883d7c8
+                    'scripts/controllers/CRM/taskConfig.js'])
+
             })
 
 
@@ -966,7 +960,7 @@ angular.module('app')
               url: '/edit?id',
               templateUrl: 'views/pages/CMS/tag/edit.html',
               data : { title: '编辑页' },
-              controller: '',
+              controller: ''
             })
             .state('page.CMS.tag.create', {
               url: '/create',
@@ -1111,4 +1105,4 @@ angular.module('app')
           }
       }
     ]
-  );
+  )

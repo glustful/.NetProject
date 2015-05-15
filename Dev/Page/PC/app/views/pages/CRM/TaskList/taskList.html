@@ -21,10 +21,10 @@
     <!--列表内容-->
     <div  class="taskcenter1 bord bordTop0px divodd"ng-repeat="item in taskModel">
         <ul class="taskheader1">
-            <li>{{item.Task.Taskname}}</li>
-            <li>{{item.Broker.Brokername}}</li>
+            <li>{{item.Taskname}}</li>
+            <li>{{item.Brokername}}</li>
             <li>{{item.Taskschedule}}</li>
-            <li>{{item.Task.Endtime | toDate|date}}</li>
+            <li>{{item.Endtime | toDate|date}}</li>
         </ul>
 
     </div>

@@ -32,7 +32,7 @@ namespace CRM.Entity.Model
 
 
 
-
+        public int Id { get; set; }
 
 		public TaskPunishmentEntity[] TaskPunishments { get; set; }
 

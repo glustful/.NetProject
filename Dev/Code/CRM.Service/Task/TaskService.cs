@@ -119,12 +119,15 @@ namespace CRM.Service.Task
                 {
                     query = query.Where(q => q.Taskname.Contains(condition.Taskname));
                 }
-
-
+            
 
 				if (condition.Ids != null && condition.Ids.Any())
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
+                }
+                if (condition.Id >0)
+                {
+                    query = query.Where(q => condition.Id==q.Id);
                 }
 
 

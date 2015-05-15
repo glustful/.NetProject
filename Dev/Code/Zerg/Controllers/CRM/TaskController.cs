@@ -58,33 +58,30 @@ namespace Zerg.Controllers.CRM
         /// <param name="taskSearchModel"></param>
         /// <returns></returns>
         [HttpGet]
-        //public HttpResponseMessage TaskList(TaskSearchCondition searchCondition)
-        //{
-        //    if (searchCondition == null)
-        //    {
-        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "condition is null"));
-        //    }
-
-        //    var condition = new TaskSearchCondition
-        //    {
-        //        OrderBy = EnumTaskSearchOrderBy.OrderById,
-        //        Taskname = searchCondition.Taskname
-
-        //    };
-        //    return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToList());
-        //}
-        public HttpResponseMessage TaskList(string Taskname)
+       
+        public HttpResponseMessage TaskList(string Taskname,int page=1,int pageSize=10)
         {
 
 
             
-            var condition = new TaskSearchCondition
+            var taskcondition = new TaskSearchCondition
             {
                 OrderBy = EnumTaskSearchOrderBy.OrderById,
                 Taskname = Taskname,
+                Page =page ,
+                PageCount =pageSize 
               
             };
-            return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToList());
+            var taskList = _taskService.GetTasksByCondition(taskcondition).Select(p => new
+            {
+                Taskname=p.Taskname ,
+                Name=p.TaskType.Name ,
+                Endtime=p.Endtime ,
+                Adduser=p.Adduser ,
+                Id=p.Id 
+            }).ToList ();
+            var taskCount = _taskService.GetTaskCount(taskcondition);
+            return PageHelper.toJson(new { list = taskList, totalCount =taskCount });
         }
          /// <summary>
          /// 返回任务详情
@@ -94,7 +91,24 @@ namespace Zerg.Controllers.CRM
         [HttpGet]
          public HttpResponseMessage TaskDetail( int id)
          {
-             return PageHelper.toJson(_taskService.GetTaskById(id));
+          
+             var taskcondition = new TaskSearchCondition
+             {
+                 OrderBy = EnumTaskSearchOrderBy.OrderById,
+                 Id=id
+
+             };
+             var taskdetail = _taskService.GetTasksByCondition(taskcondition).Select(p => new
+             {
+                 Taskname = p.Taskname,
+                 tagName = p.TaskTag.Name,
+                 Endtime = p.Endtime,
+                 awardName=p.TaskAward .Name ,
+                 Describe=p.Describe 
+             }).ToList();
+             
+             return PageHelper.toJson(taskdetail);
+            
          }
          /// <summary>
          /// 查找同一任务列表
@@ -102,49 +116,63 @@ namespace Zerg.Controllers.CRM
          /// <param name="id"></param>
          /// <returns></returns>
          [HttpGet]
-        public HttpResponseMessage taskListBytaskId(int id)
+        public HttpResponseMessage taskListBytaskId(int id, int page = 1, int pageSize = 10)
         {
             var condition = new TaskListSearchCondition
             {
-                TaskId = id
-
+                TaskId = id,
+                Page =page ,
+                PageCount =pageSize 
             };
-            var p = _taskListService.GetTaskListsByCondition(condition).ToList();
-            return PageHelper.toJson(p);
+            var tasklistone = _taskListService.GetTaskListsByCondition(condition).Select(p => new
+            {
+                Taskname=p.Task .Taskname ,
+                Brokername=p.Broker .Brokername ,
+                Taskschedule=p.Taskschedule ,
+                Endtime=p.Task .Endtime 
+            }).ToList ();
+
+            var taskCount = _taskListService.GetTaskListCount(condition);
+            return PageHelper.toJson(new { list = tasklistone, totalCount = taskCount });
 
 
         }
-        // public HttpResponseMessage taskListBytaskId(string  id)
-        //{
-        //    if (string.IsNullOrEmpty(id) || !PageHelper.ValidateNumber(id))
-        //    {
-        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
-        //    }
-        //     var dd =_taskService.GetTaskById(Convert.ToInt32(id));
-        //     if (dd != null) { 
-        //     var condition = new TaskListSearchCondition
-        //    {
-        //      Task =dd
-             
-        //    };
-        //     var p = _taskListService.GetTaskListsByCondition(condition).ToList();
-        //return PageHelper .toJson ( p);
-        //        }
-        //     return PageHelper.toJson(PageHelper.ReturnValue(false, "没有数据！"));
-          
-          
-        //}
+     /// <summary>
+     /// tongguojieshouzhechaxun
+     /// </summary>
+     /// <param name="Taskschedule"></param>
+     /// <param name="id"></param>
+     /// <param name="page"></param>
+     /// <param name="pageSize"></param>
+     /// <returns></returns>
          [HttpGet]
-         public HttpResponseMessage taskListByuser(string Taskschedule,int id)
+         public HttpResponseMessage taskListByuser(string Taskschedule, int id, int page = 1, int pageSize = 10)
          {
-             var condition = new TaskListSearchCondition
-                 {
-                    TaskId=id,
-                    BrokerName = Taskschedule
+             //var condition = new TaskListSearchCondition
+             //    {
+             //       TaskId=id,
+             //       BrokerName = Taskschedule
 
-                 };
-             var p = _taskListService.GetTaskListsByCondition(condition).ToList();
-             return PageHelper.toJson(p);
+             //    };
+             //var p = _taskListService.GetTaskListsByCondition(condition).ToList();
+             //return PageHelper.toJson(p);
+             var condition = new TaskListSearchCondition
+             {
+                 TaskId = id,
+                 Page = page,
+                 PageCount = pageSize,
+                 BrokerName = Taskschedule
+             };
+             var tasklistone = _taskListService.GetTaskListsByCondition(condition).Select(p => new
+             {
+                 Taskname = p.Task.Taskname,
+                 Brokername = p.Broker.Brokername,
+                 Taskschedule = p.Taskschedule,
+                 Endtime = p.Task.Endtime
+             });
+
+             var taskCount = _taskListService.GetTaskListCount(condition);
+             return PageHelper.toJson(new { list = tasklistone, totalCount = taskCount });
 
 
          }
@@ -236,7 +264,12 @@ namespace Zerg.Controllers.CRM
             {
                 OrderBy = EnumTaskTypeSearchOrderBy.OrderById
             };
-            return PageHelper.toJson(_taskTypeService.GetTaskTypesByCondition(condition).ToList());
+            var typelist = _taskTypeService.GetTaskTypesByCondition(condition).Select(p => new
+            {
+                Id=p.Id ,
+                Name =p.Name 
+            }).ToList();
+            return PageHelper.toJson(typelist);
         }
 
         /// <summary>
@@ -314,11 +347,21 @@ namespace Zerg.Controllers.CRM
         [HttpGet]
         public HttpResponseMessage TaskAwardList()
         {
+            //var condition = new TaskAwardSearchCondition
+            //{
+            //    OrderBy = EnumTaskAwardSearchOrderBy.OrderById
+            //};
+            //return PageHelper.toJson(_taskAwardService.GetTaskAwardsByCondition(condition).ToList());
             var condition = new TaskAwardSearchCondition
             {
                 OrderBy = EnumTaskAwardSearchOrderBy.OrderById
             };
-            return PageHelper.toJson(_taskAwardService.GetTaskAwardsByCondition(condition).ToList());
+            var typelist = _taskAwardService.GetTaskAwardsByCondition(condition).Select(p => new
+            {
+                Id = p.Id,
+                Name = p.Name
+            }).ToList();
+            return PageHelper.toJson(typelist);
         }
 
         /// <summary>
@@ -388,11 +431,21 @@ namespace Zerg.Controllers.CRM
         [HttpGet]
         public HttpResponseMessage TaskTagList()
         {
+            //var condition = new TaskTagSearchCondition
+            //{
+            //    OrderBy = EnumTaskTagSearchOrderBy.OrderById
+            //};
+            //return PageHelper.toJson(_taskTagService.GetTaskTagsByCondition(condition).ToList());
             var condition = new TaskTagSearchCondition
             {
                 OrderBy = EnumTaskTagSearchOrderBy.OrderById
             };
-            return PageHelper.toJson(_taskTagService.GetTaskTagsByCondition(condition).ToList());
+            var typelist = _taskTagService.GetTaskTagsByCondition(condition).Select(p => new
+            {
+                Id = p.Id,
+                Name = p.Name
+            }).ToList();
+            return PageHelper.toJson(typelist);
         }
 
         /// <summary>
@@ -468,11 +521,21 @@ namespace Zerg.Controllers.CRM
         [HttpGet]
         public HttpResponseMessage TaskPunishmentList()
         {
+            //var condition = new TaskPunishmentSearchCondition
+            //{
+            //    OrderBy = EnumTaskPunishmentSearchOrderBy.OrderById
+            //};
+            //return PageHelper.toJson(_taskPunishmentService.GetTaskPunishmentsByCondition(condition).ToList());
             var condition = new TaskPunishmentSearchCondition
             {
                 OrderBy = EnumTaskPunishmentSearchOrderBy.OrderById
             };
-            return PageHelper.toJson(_taskPunishmentService.GetTaskPunishmentsByCondition(condition).ToList());
+            var typelist = _taskPunishmentService.GetTaskPunishmentsByCondition(condition).Select(p => new
+            {
+                Id = p.Id,
+                Name = p.Name
+            }).ToList();
+            return PageHelper.toJson(typelist);
         }
 
         /// <summary>

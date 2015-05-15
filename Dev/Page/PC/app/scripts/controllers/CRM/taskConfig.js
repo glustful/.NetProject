@@ -4,14 +4,7 @@
 app.controller('taskconfigcontroller',['$http','$scope',function($http,$scope) {
     $scope.mainCondition={
         Id:0,
-        Typename:'',
-        Typedes:'',
-        Tagname:'',
-        Tagdes:'',
-        Awardname:'',
-        Awardes:'',
-        Punishmentname:'',
-        Punishmentdes:'',
+
         TaskTypeId:0,
         TaskTagId:0,
         TaskAwardId:0,
