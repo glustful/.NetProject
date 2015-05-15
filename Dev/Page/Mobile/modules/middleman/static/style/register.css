@@ -1,0 +1,123 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    background-color: #eeeeee;
+    font-size: 18px;
+    font-family: 'microsoft yahei';
+    color: #848484;
+
+}
+.window{
+    width: 640px ;
+   margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+a{
+    text-decoration: none;
+}
+.login a{
+    color: #fc3b00;
+}
+.content {
+    float: left;
+    margin-left: 42px;
+    margin-right: 42px;
+    margin-top: 53px;
+    margin-bottom: 0;
+}
+.pregister{
+    padding: 20px;
+    background-color: #fc3b00;
+    font-size: 20px;
+    color: #ffffff;
+    text-align:center;
+}
+.ublank{
+    line-height: 48px;
+    width: 519px;
+    background: url("../img/tex.png");
+}
+.ujpg{
+    margin-left: 15px;
+    vertical-align: middle;
+}
+.ublank input {
+    width: 466px;
+    height: 46px;
+    font-size: 18px;
+    border: 1px solid #eeeeee;
+   margin-left: 7px;
+}
+.password{
+    margin-top: 20px;
+}
+.pjpg{
+    margin-left: 15px;
+    vertical-align: middle;
+}
+.pblank{
+    line-height: 48px;
+    width: 519px;
+    background: url("../img/tex.png");
+}
+.pblank input{
+    width: 466px;
+    height: 46px;
+    font-size: 18px;
+    border: 1px solid #eeeeee;
+    margin-left: 12px;
+}
+.num{
+    margin-top: 20px;
+}
+.nmblank{
+    line-height: 48px;
+    width: 519px;
+    background: url("../img/tex.png");
+}
+.nmjpg{
+    vertical-align: middle;
+    margin-left: 17px;
+}
+.nmblank input{
+    width: 466px;
+    height: 46px;
+    font-size: 18px;
+    border: 1px solid #eeeeee;
+    margin-left: 17px;
+}
+.pin{
+    margin-top: 20px;
+}
+.pinblank input{
+    width: 145px;
+    height: 46px;
+    background: url("../img/pin.png") no-repeat 0 0;
+    border: 1px solid #eeeeee;
+    background-color: white;
+}
+.pinblank button{
+    width: 147px;
+    height: 44px;
+    background-color:  #fc3b00;
+    font-size: 20px;
+    color: #ffffff;
+    font-family:'microsoft yahei' ;
+}
+.register{
+    margin-top: 70px;
+    width: 512px;
+    height: 46px;
+    background-color: #fc3b00;
+    font-size: 20px;
+    color: #ffffff;
+    font-family:'microsoft yahei' ;
+}
+.login{
+    margin-top: 10px;
+    text-align: right;
+}
