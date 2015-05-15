@@ -5,7 +5,8 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名称</th>
+            <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名称</th>
+            <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;状态</th>
             <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;操作</th>
 
         </tr>
@@ -13,12 +14,14 @@
         <tbody>
         <tr ng-repeat="item in list">
             <td><span class=" text-danger"><i class="fa fa-circle text-xs"></i></span>&nbsp;&nbsp;{{item.Name}}</td>
+            <td><span class=" text-danger"></span>&nbsp;&nbsp;{{item.StatusString}}</td>
             <td>
                 <a ui-sref="page.CMS.channel.edit({id:item.Id})"><span class="label bg-success" title="Active">编辑</span></a>
-                <a><span class="label blue" title="Active">移动</span></a>
-                <a><span class="label yellow" title="Active">删除</span></a>
+                <!--<a><span class="label blue" title="Active">移动</span></a>-->
+                <a ng-click="open(item.Id)"><span class="label yellow" title="Active">删除</span></a>
             </td>
         </tr>
+        <div id="Message">{{Message}}</div>
         <!--<tr>-->
             <!--<td><span class=" text-danger"><i class="fa fa-circle text-xs"></i></span>&nbsp;&nbsp;信息传输</td>-->
             <!--<td>-->
@@ -124,4 +127,7 @@
             <!--<li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li>-->
         <!--</ul>-->
     <!--</div>-->
+    <script type="text/ng-template" id="myModalContent.html">
+        <div ng-include="'views/partials/modal.html'"></div>
+    </script>
 </div>

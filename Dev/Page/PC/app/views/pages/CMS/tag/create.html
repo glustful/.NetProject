@@ -4,11 +4,10 @@
         <div class="panel-body">
             <div class="bottom" >
                 <div class="revise"><label for="largeDate">新建</label></div>
-                <input id="largeDate" type="text" value="输入新Tag" ng-model="TagModel.Tag">
+                <input id="largeDate" type="text" value="输入新Tag" ng-model="TagModel.Tag" required>
             </div>
+            <div id="Message">{{Message}}</div>
         </div>
-
-
         <div>
             <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" type="submit">确认<div class="md-ripple-container"></div></button>
             <a href="#/page/CMS/tag/index"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink">取消<div class="md-ripple-container"></div></button></a>

@@ -2,7 +2,7 @@
  * Created by �Ϋh�F on 2015/5/9.
  */
 angular.module("app").controller('ChannelIndexController', [
-    '$http','$scope',function($http,$scope) {
+    '$http','$scope','$modal',function($http,$scope,$modal) {
         $scope.searchCondition = {
             name: '',
             page: 1,
@@ -20,6 +20,32 @@ angular.module("app").controller('ChannelIndexController', [
         };
         $scope.getList = getChannelList;
         getChannelList();
+
+        $scope.open=function(id){
+            $scope.selectedId = id;
+            var modalInstance = $modal.open({
+                templateUrl: 'myModalContent.html',
+                controller:'ModalInstanceCtrl',
+                resolve: {
+                    msg:function(){return "你确定要删除吗？";}
+                }
+            });
+            modalInstance.result.then(function(){
+                $http.get(SETTING.ApiUrl + '/Channel/Delete',{
+                        params:{
+                            id:$scope.selectedId
+                        }
+                    }
+                ).success(function(data) {
+                        if (data.Status) {
+                            getChannelList();
+                        }
+                        else{
+                            $scope.Message=data.Msg;
+                        }
+                    });
+            });
+        }
     }
 ]);
 
