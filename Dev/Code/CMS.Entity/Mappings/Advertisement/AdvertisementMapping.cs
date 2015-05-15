@@ -11,8 +11,8 @@ namespace CMS.Entity.Mappings.Advertisement
 		{
 			ToTable("Advertisement");
 			HasKey(c => c.Id);
-			Property(c => c.Title).HasColumnType("varchar");
-			Property(c => c.Detail).HasColumnType("varchar").IsOptional();
+			Property(c => c.Title).HasColumnType("varchar").HasMaxLength(100);
+			Property(c => c.Detail).HasColumnType("varchar").IsOptional().HasMaxLength(2000);
 			Property(c => c.Continue).HasColumnType("datetime");
 			HasOptional(c =>c.Content);
 			Property(c => c.Adduser).HasColumnType("int");

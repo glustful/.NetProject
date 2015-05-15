@@ -11,8 +11,8 @@ namespace CMS.Entity.Mappings.Setting
 		{
 			ToTable("Setting");
 			HasKey(c => c.Id);
-			Property(c => c.Key).HasColumnType("varchar");
-			Property(c => c.Value).HasColumnType("varchar");
+			Property(c => c.Key).HasColumnType("varchar").HasMaxLength(20);
+			Property(c => c.Value).HasColumnType("varchar").HasMaxLength(2000);
 		}
 	}
 }
