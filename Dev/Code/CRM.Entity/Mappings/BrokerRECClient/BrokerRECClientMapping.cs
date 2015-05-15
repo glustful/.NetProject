@@ -28,9 +28,6 @@ namespace CRM.Entity.Mappings.BrokerRECClient
             Property(c => c.SecretaryPhone).HasColumnType("varchar").HasMaxLength(50);
 			HasOptional(c =>c.WriterId);
             Property(c => c.WriterPhone).HasColumnType("varchar").HasMaxLength(50);
-			HasOptional(c =>c.AccountantId);
-			Property(c => c.Payment).HasColumnType("bit");
-			Property(c => c.Amount).HasColumnType("Decimal");
 		}
 	}
 }

@@ -3,8 +3,7 @@
         $scope.searchCondition = {
             title: '',
             page: 1,
-            pageSize: 10,
-            totalPage:1
+            pageSize: 10
         };
 
         var getContentList = function() {
@@ -14,6 +13,7 @@
                 $scope.searchCondition.page=data.Condition.Page;
                 $scope.searchCondition.pageSize=data.Conditon.PageCount;
                 $scope.searchCondition.totalPage=Math.ceil(data.TotalCount/data.Condition.PageCount);
+                $scope.totalCount = data.TotalCount;
             });
         };
         $scope.getList = getContentList;
@@ -31,11 +31,15 @@ angular.module("app").controller('ContentCreateController',['$http','$scope','$s
     $scope.ContentModel = {
         Id: 0,
         Title: '',
-        Status: '',
-        Channel: '',
+        Status: '0',
+        Content:'',
         ChannelId: 0,
         AddUser:0
     };
+
+    $http.get(SETTING.ApiUrl + '/Channel/Index').success(function(data){
+        $scope.ChannelList = data.List;
+    });
 
     $scope.Create = function(){
         $http.post(SETTING.ApiUrl + '/Content/Create',$scope.ContentModel,{

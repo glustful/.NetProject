@@ -137,10 +137,6 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => q.Agentlevel.Contains(condition.Agentlevel));
                 }
-				if (!string.IsNullOrEmpty(condition.Usertype))
-                {
-                    query = query.Where(q => q.Usertype.Contains(condition.Usertype));
-                }
 				if (!string.IsNullOrEmpty(condition.Address))
                 {
                     query = query.Where(q => q.Address.Contains(condition.Address));
@@ -195,6 +191,14 @@ namespace CRM.Service.Broker
 				{
 					query = query.OrderBy(q=>q.Id);
 				}
+                if (condition.UserType.HasValue)
+                {
+                    query = query.Where(c => c.Usertype == condition.UserType);
+                }
+                else
+                {
+                    query = query.OrderBy(q => q.Usertype);
+                }
 
 				if (condition.Page.HasValue && condition.PageCount.HasValue)
                 {
@@ -274,10 +278,10 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => q.Agentlevel.Contains(condition.Agentlevel));
                 }
-				if (!string.IsNullOrEmpty(condition.Usertype))
-                {
-                    query = query.Where(q => q.Usertype.Contains(condition.Usertype));
-                }
+                //if (!string.IsNullOrEmpty(condition.Usertype))
+                //{
+                //    query = query.Where(q => q.Usertype.Contains(condition.Usertype));
+                //}
 				if (!string.IsNullOrEmpty(condition.Address))
                 {
                     query = query.Where(q => q.Address.Contains(condition.Address));

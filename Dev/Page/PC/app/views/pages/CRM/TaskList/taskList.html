@@ -1,0 +1,43 @@
+<!--黄秀宇 任务列表  2015.05.12
+自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />-->
+<div ng-controller="taskListcontroller">
+<div id="divTaskH"class="marginL">
+    <input style="width:200px;"ng-model="searchCondition1.Taskschedule" type="text" class="form-control bordhtml" placeholder="接受者">
+    <input style="width:200px;" type="text"ng-model="searchCondition1.Brokername" class="form-control bordhtml" placeholder="搜索条件2">
+    <button md-ink-ripple=""style="width:100px;"ng-click="gettasklist()" class="md-btn md-raised m-b btn-fw indigo">检索</button>
+    </div>
+
+<div id="divTaskC" class="marginL">
+    <!--列表头-->
+    <div class="taskclear1 bord divheard">
+        <ul class="taskheader1">
+            <li>任务名称</li>
+            <li>接受者</li>
+            <li>任务进度</li>
+            <li>结束时间</li>
+        </ul>
+
+    </div>
+    <!--列表内容-->
+    <div  class="taskcenter1 bord bordTop0px divodd"ng-repeat="item in taskModel">
+        <ul class="taskheader1">
+            <li>{{item.Task.Taskname}}</li>
+            <li>{{item.Broker.Brokername}}</li>
+            <li>{{item.Taskschedule}}</li>
+            <li>{{item.Task.Endtime | toDate|date}}</li>
+        </ul>
+
+    </div>
+
+    <div style="width:800px;" colspan="6" class="text-center footable-visible ng-scope">
+        <ul class="pagination">
+            <li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li>
+            <li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li>
+            <li class="footable-page active"><a data-page="0" href="#">1</a></li>
+            <li class="footable-page"><a data-page="1" href="#">2</a></li>
+            <li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li>
+            <li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li>
+        </ul>
+    </div>
+</div>
+</div>

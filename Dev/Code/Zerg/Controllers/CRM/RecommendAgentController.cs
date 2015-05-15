@@ -7,11 +7,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
-
+   [EnableCors("*", "*", "*")]
     /// <summary>
     /// 推荐经纪人  李洪亮 2015-05-06
     /// </summary>
@@ -35,13 +36,24 @@ namespace Zerg.Controllers.CRM
         /// <returns></returns>
 
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetRecommendAgentList()
+        public HttpResponseMessage GetRecommendAgentList(string name = null, int page = 1, int pageSize = 10)
         {
             var recomagmentsearchcon = new RecommendAgentSearchCondition
             {
-                 PageCount=10
+                
+                Brokername = name,
+                Page = Convert.ToInt32(page),
+                PageCount = pageSize
             };
-            return PageHelper.toJson(_recommendagentService.GetRecommendAgentsByCondition(recomagmentsearchcon).ToList());
+            var recommendAgentList = _recommendagentService.GetRecommendAgentsByCondition(recomagmentsearchcon).Select(p => new {               
+              BBrokername= p.Brokername,
+              Brokername=p.Broker.Brokername,
+              
+            
+            }).ToList();
+            var partnerListCount = _recommendagentService.GetRecommendAgentCount(recomagmentsearchcon);
+            return PageHelper.toJson(new { List = recommendAgentList, Condition = recomagmentsearchcon, totalCount = partnerListCount });
+          
         }
 
 

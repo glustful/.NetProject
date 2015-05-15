@@ -58,6 +58,8 @@
     <Compile Include="Mappings\BargainClient\BargainClientMapping.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Mappings\BLPay\BLPayMapping.cs" />
+    <Compile Include="Mappings\BRECPay\BRECPayMapping.cs" />
     <Compile Include="Mappings\BrokeAccount\BrokeAccountMapping.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -155,6 +157,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\BargainClient\EnumBargainClient.cs" />
+    <Compile Include="Model\BLPay\BLPayEntity.cs" />
+    <Compile Include="Model\BLPay\BLPaySearchConditon.cs" />
+    <Compile Include="Model\BLPay\EnumBLPay.cs" />
+    <Compile Include="Model\BRECPay\BRECPayEntity.cs" />
+    <Compile Include="Model\BRECPay\BRECPaySearchConditon.cs" />
+    <Compile Include="Model\BRECPay\EnumBRECPay.cs" />
     <Compile Include="Model\BrokeAccount\BrokeAccountEntity.cs">
       <SubType>Code</SubType>
     </Compile>
