@@ -1,23 +1,150 @@
 *{
-    padding:0;
-    margin:0;
-    border: none;
-    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+body{
+
+    font-family: 'microsoft yahei';
+    color: #848484;
+    background-color: #eeeeee;
+    font-size: 18px;
+}
+.fl{
+    float:left;
 }
 .window{
-    width:640px;
-    margin:0 auto;
+    width: 640px;
+  margin:0 auto;
 }
-.noPartner{
-    width: 100%;
-    height: 100px;
-    text-align: center;
-    background: #f2f2f2;
+.content p{
+    margin-left: 30px;
+    font-weight:600;
 }
-.invite{
-    width: 100%;
-    height: 500px;
-    background: #f2f2f2;
+.head{
+    padding: 16px;
+    background-color: #fc3b00;
+}
+.head p {
+    line-height: 30px;
+    color: #ffffff;
     text-align: center;
-    margin-top: 10px;
+}
+.head a{
+    color:  #ffffff;
+    text-decoration: none;
+}
+.back{
+    float: left;
+}
+.personal{
+    float: right;
+}
+ul li{
+    list-style: none;
+}
+.partner{
+    height: 60px;
+    width: 640px;
+    color: #848484;
+    font-family: "microsoft yahei";
+    font-size: 18px;
+    line-height: 60px;
+    background-color: #ffffff;
+    border: hidden;
+}
+.name{
+    float: left;
+    margin-left: 45px;
+}
+.jiantou{
+    float: right;
+    margin-right: 30px;
+}
+.p_photo{
+    float: left;
+    margin-left: 30px;
+}
+.footer{
+    position: fixed;
+    bottom: 0;
+}
+.button_insert{
+    height: 75px;
+    width: 100%;
+    font-family: "microsoft yahei";
+    font-size: 18px;
+    color: #ff4200;
+    background-color: #ffffff;
+    border: hidden;
+}
+.bottom{
+    background-color: #fb440c;
+}
+.bottom span{
+    display: inline-block;
+    width: 210px;
+    text-align: center;
+    padding: 52px 0 0 0;
+    font-size: 12px;
+}
+.bottom span a{
+    color: white;
+    text-decoration: none;
+}
+.daike{
+    background: url("../image/partner/daike_03.png") no-repeat center 12px;
+}
+.tuijian{
+    background: url("../image/partner/tuijian_12.png") no-repeat center 12px;
+}
+.renwu{
+    background: url("../image/partner/renwu_14.png") no-repeat center 12px;
+}
+/*合伙人详情*/
+.detail_content{
+    margin: 56px 25px 0 30px;
+    background-color: white;
+    color: black;
+}
+
+.partner_mark{
+    clear: both;
+    margin-top: 80px;
+}
+.information{
+   margin-left: 27px;
+    margin-right: 106px;
+}
+.mark{
+    margin-left: 75px;
+    margin-right: 260px;
+    color: #fc3b00;
+}
+.information span {
+    color: #848484;
+}
+/*添加合伙人*/
+.add_content{
+    margin: 20px 55px 0 55px;
+}
+.add_blank{
+    width: 516px;
+    height: 46px;
+    font-size: 16px;
+    font-family: "microsoft yahei";
+    border: 1px solid #eeeeee;
+}
+.add_button{
+    width: 516px;
+    height: 46px;
+    background-color: #fc3b00;
+    border: hidden;
+    margin: 83px 0 0 0;
+    font-size: 20px;
+    font-family: "microsoft yahei";
+    color: white;
+}
+.add_content span{
+    font-size: 14px;
+    color: #fc3b00;
 }

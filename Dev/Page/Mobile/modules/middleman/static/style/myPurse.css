@@ -1,0 +1,120 @@
+*{
+    padding:0;
+    margin:0;
+    list-style: none;
+    border: none;
+}
+body{
+    font-family: "微软雅黑";
+    font-size: 16px;
+    color:#525252;
+}
+a {
+    text-decoration: none;
+}
+.clear{
+    clear:both;
+    height: 0;
+    overflow: hidden;
+}
+.cf:after{
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: "";
+    clear: both;
+    height: 0;
+}
+
+.fl{
+    float: left;
+}
+.window{
+    width: 640px;
+    margin: 0 auto;
+}
+.bg{
+    background: #ebebeb;
+}
+.header{
+    height: 67px;
+    line-height: 67px;
+    background: url("../image/houseDetail/icon_03.png") no-repeat 588px center #fc3b00;
+
+}
+.header a{
+    color: #fff;
+    font-size: 18px;
+    display: inline-block;
+    margin-left:19px;
+    padding-left:19px;
+    background: url("../image/houseDetail/icon1_03.png") no-repeat 0 center;
+}
+h1{
+    font-weight: normal;
+    color:#fff;
+    margin-left: 270px;
+    font-size: 22px;
+}
+.money {
+    background-color: #fff;
+    padding:47px 0 40px 77px;
+}
+.money .balance img{
+    margin-right: 35px;
+}
+.money .balance span{
+    line-height: 40px;
+    font-size: 50px;
+    color: #ff4200;
+    font-weight: bolder;
+}
+.money .balance small{
+    font-size: 18px;
+    color: #626161;
+    font-weight: normal;
+ }
+.money  p{
+    margin-top: 43px;
+}
+.money p button{
+    width:436px;
+    height: 49px;
+    color: #fff;
+    font-size: 24px;
+    background-color: #fc3b00;
+    border-radius: 5px;
+}
+.bank{
+    margin-top:20px;
+    background-color: #fff;
+    padding:12px 67px 0;
+}
+.bank .card{
+    margin-bottom: 10px;
+}
+.foot {
+    background: #f13800;
+}
+.foot span{
+    display: inline-block;
+    text-align: center;
+    width:150px;
+    padding:60px 0 17px 0;
+    color: #fff;
+}
+.act{
+    background: url("../image/personal/活动1.png") no-repeat center 20px;
+}
+.house{
+    background: url("../image/personal/房源库1.png") no-repeat center 20px;
+}
+.agent{
+    background: url("../image/personal/经纪人专区1.png") no-repeat center 20px;
+}
+.personal{
+    background: url("../image/personal/个人中心2.png") no-repeat center 20px;
+}
+.foot .personal{
+    color: #f9e700;
+}
