@@ -896,17 +896,54 @@ angular.module('app')
             .state('page.CRM.TaskList.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskList/index.html',
+<<<<<<< HEAD
+                data : { title: '任务主页' },
+
+                resolve:load(['scripts/controllers/taskList.js',
+                    'scripts/filters/toDate.js'])
+            })
+            .state('page.CRM.TaskList.taskList', {
+                url: '/taskList?id',
+                templateUrl: 'views/pages/CRM/TaskList/taskList.html',
+                data : { title: '任务列表' },
+                resolve:load(['scripts/controllers/taskList.js',
+                    'scripts/filters/toDate.js'])
+            })
+            .state('page.CRM.TaskList.createTask', {
+                url: '/createTask?taskModel',
+                templateUrl: 'views/pages/CRM/TaskList/createTask.html',
+                data : { title: '添加任务' },
+                resolve:load(['scripts/controllers/createTask.js'])
+            })
+            .state('page.CRM.TaskList.taskDetail', {
+                url: '/taskDetail?id',
+                templateUrl: 'views/pages/CRM/TaskList/taskDetail.html',
+                data : { title: '任务详情' },
+                resolve:load(['scripts/controllers/taskList.js',
+                    'scripts/filters/toDate.js'])
+            })
+            .state('page.CRM.TaskConfigure',{
+                url:'/TaskConfigure',
+                template:'<div ui-view></div>'
+=======
                 data: { title: '任务列表' }
             })
 
             .state('page.CRM.TaskConfigure', {
                 url: '/TaskConfigure',
                 template: '<div ui-view></div>'
+>>>>>>> 723f3a05b8bdbf3b2c1ce04618bc0880e883d7c8
             })
             .state('page.CRM.TaskConfigure.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskConfigure/index.html',
+<<<<<<< HEAD
+                data : { title: '任务配置' },
+                resolve:load([ 'scripts/filters/toDate.js',
+                    'scripts/controllers/taskConfig.js'])
+=======
                 data: { title: '任务配置' }
+>>>>>>> 723f3a05b8bdbf3b2c1ce04618bc0880e883d7c8
             })
 
 
