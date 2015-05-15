@@ -1,8 +1,29 @@
 /**
  * Created by Yunjoy on 2015/5/9.
  */
+//app.controller('ModalInstanceCtrl', ['$scope', '$modalInstance','msg',function($scope, $modalInstance,msg) {
+//    $scope.msg = msg;
+//    $scope.ok = function () {
+//        $modalInstance.close();
+//        $scope.id = id;
+//        $http.get(SETTING.ApiUrl + '/Tag/Delete',{
+//                params:{
+//                    tagId:$scope.id
+//                }
+//            }
+//        ).success(function(data) {
+//            if (data.Status) {
+//                refresh();
+//                $modalInstance.close();
+//            }
+//        });
+//    };
+//    $scope.cancel = function () {
+//        $modalInstance.dismiss('cancel');
+//    };
+//}]);
 angular.module("app").controller('TagIndexController', [
-    '$http','$scope',function($http,$scope) {
+    '$http','$scope','$modal',function($http,$scope,$modal) {
         $scope.searchCondition = {
             tag: '',
             page: 1,         //????
@@ -21,6 +42,29 @@ angular.module("app").controller('TagIndexController', [
         };
         $scope.getList = getTagList;
         getTagList();
+
+        $scope.open = function (id) {
+             $scope.selectedId = id;
+            var modalInstance = $modal.open({
+                templateUrl: 'myModalContent.html',
+                controller:'ModalInstanceCtrl',
+                resolve: {
+                    msg:function(){return "你确定要删除吗？";}
+                }
+            });
+            modalInstance.result.then(function(){
+                $http.get(SETTING.ApiUrl + '/Tag/Delete',{
+                        params:{
+                            tagId:$scope.selectedId
+                        }
+                    }
+                ).success(function(data) {
+                        if (data.Status) {
+                            getTagList();
+                        }
+                    });
+            })
+        }
     }
 ]);
 
@@ -42,6 +86,9 @@ angular.module("app").controller('TagCreateController',['$http','$scope','$state
         }).success(function(data){
             if(data.Status){
                 $state.go("page.CMS.tag.index");
+            }
+            else{
+                $scope.Message=data.Msg;
             }
         });
     }

@@ -1,5 +1,5 @@
 ﻿angular.module("app").controller('ContentIndexController', [
-    '$http','$scope',function($http,$scope) {
+    '$http','$scope','$modal',function($http,$scope,$modal) {
         $scope.searchCondition = {
             title: '',
             page: 1,
@@ -18,6 +18,30 @@
         };
         $scope.getList = getContentList;
         getContentList();
+
+        $scope.open=function(id){
+            $scope.selectedId=id;
+            var modalInstance=$modal.open({
+                templateUrl:'myModalContent.html',
+                controller:'ModalInstanceCtrl',
+                resolve:{
+                    msg:function(){
+                        return "你确定要删除吗？";
+                    }
+                }
+            });
+            modalInstance.result.then(function () {
+               $http.get(SETTING.ApiUrl+'/Content/Delete',{
+                   params:{
+                       id:$scope.selectedId
+                   }
+               }).success(function(data){
+                   if(data.Status){
+                       getContentList();
+                   }
+               })
+            });
+        }
     }
 ]);
 

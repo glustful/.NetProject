@@ -26,7 +26,7 @@
                     <td class="col-1">{{item.Tag}}</td>
                     <td class="col-2">
                         <a ui-sref="page.CMS.tag.edit({id: item.Id})"><span class="label bg-success" title="Active">编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                        <a href=""><span class="label yellow" title="Active">删除</span></a>
+                        <a href="" ng-click="open(item.Id)"><span class="label yellow" title="Active">删除</span></a>
                     </td>
 
                 </tr>
@@ -50,4 +50,12 @@
         </div>
     </div>
     </div>
+    <script type="text/ng-template" id="myModalContent.html">
+        <div ng-include="'views/partials/modal.html'"></div>
+    </script>
 </div>
+
+
+
+
+
