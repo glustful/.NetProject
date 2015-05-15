@@ -13,8 +13,8 @@ angular.module("app").controller('SettingController', [
         var getAdvertisementList = function() {
             $http.get(SETTING.ApiUrl+'/Setting/Index',{params:$scope.searchCondition}).success(function(data){
                 //$scope.list = data;
-                $scope.SiteName = data[0];
-                $scope.SiteUrl = data[1];
+                $scope.SiteName = {Key:'SiteName',Value:data[0].Value};
+                $scope.SiteUrl = {Key:'SiteUrl',Value:data[1].Value};
             });
         };
         $scope.getList = getAdvertisementList;

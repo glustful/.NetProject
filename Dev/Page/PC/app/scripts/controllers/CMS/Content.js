@@ -9,9 +9,9 @@
         var getContentList = function() {
             $http.get(SETTING.ApiUrl+'/Content/Index',{params:$scope.searchCondition}).success(function(data){
                 $scope.list = data.List;
-                $scope.searchCondition.title=data.Condtion.Title;
+                $scope.searchCondition.title=data.Condition.Title;
                 $scope.searchCondition.page=data.Condition.Page;
-                $scope.searchCondition.pageSize=data.Conditon.PageCount;
+                $scope.searchCondition.pageSize=data.Condition.PageCount;
                 $scope.searchCondition.totalPage=Math.ceil(data.TotalCount/data.Condition.PageCount);
                 $scope.totalCount = data.TotalCount;
             });
@@ -76,7 +76,7 @@ angular.module("app").controller('ContentCreateController',['$http','$scope','$s
     }
 }]);
 
-angular.module("app").controller('ContentEditController',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+angular.module("app").controller('ContentEditController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
     $http.get(SETTING.ApiUrl + '/Content/Detailed/' + $stateParams.id).success(function(data){
         $scope.ContentModel =data;
     });

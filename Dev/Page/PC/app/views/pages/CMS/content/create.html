@@ -1,11 +1,14 @@
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/lang/zh-cn/zh-cn.js"></script>
+
 <form name="form" id="form" ng-controller="ContentCreateController" ng-submit="Create()">
     <div class="panel panel-default">
 
         <div class="panel-body revise">
             <div class="bottom" ><label for="Title">标题： </label> <input id="Title" name="Title" type="text" ng-model="ContentModel.Title" required></div>
             <div class="bottom" ><label for="Content">内容： </label>
-                <textarea name="Content" id="Content" cols="42" rows="10" ng-model="ContentModel.Content" required></textarea>
-            </div>
+                <textarea class="ueditor"  name="Content" id="Content" cols="42" rows="10" ng-model="ContentModel.Content" style="height: 400px" required></textarea>            </div>
             <!--<div class="bottom" ><label for="Status">状态： </label>-->
                 <!--<select name="Status" id="Status" ng-model-options="ContentModel.Status">-->
                     <!--<option value="1">发布</option>-->
@@ -13,7 +16,7 @@
                 <!--</select>-->
             <!--</div>-->
             <div class="bottom" ><label for="Channel">频道： </label>
-                <select name="Channel" id="Channel" ng-model="ContentModel.ChannelId" ng-options="list.Id as list.Name in ChannelList"></select>
+                <select name="Channel" id="Channel" ng-model="ContentModel.ChannelId" ng-options="list.Id as list.Name for list in ChannelList"></select>
             </div>
             <div>
                 <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" type="submit">确认<div class="md-ripple-container"></div></button>
