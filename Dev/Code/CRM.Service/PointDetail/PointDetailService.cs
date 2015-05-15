@@ -8,10 +8,10 @@ namespace CRM.Service.PointDetail
 {
 	public class PointDetailService : IPointDetailService
 	{
-		private readonly IRepository<PointDetailEntity> _pointdetailRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<PointDetailEntity> _pointdetailRepository;
 		private readonly ILog _log;
 
-		public PointDetailService(IRepository<PointDetailEntity> pointdetailRepository,ILog log)
+		public PointDetailService(Zerg.Common.Data.ICRMRepository<PointDetailEntity> pointdetailRepository,ILog log)
 		{
 			_pointdetailRepository = pointdetailRepository;
 			_log = log;
@@ -101,9 +101,9 @@ namespace CRM.Service.PointDetail
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null )
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q => condition.Brokers==(q.Broker));
                 }
 				if (condition.Addpointss != null && condition.Addpointss.Any())
                 {
@@ -178,9 +178,9 @@ namespace CRM.Service.PointDetail
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null )
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q => condition.Brokers==(q.Broker));
                 }
 				if (condition.Addpointss != null && condition.Addpointss.Any())
                 {

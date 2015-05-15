@@ -22,9 +22,9 @@ namespace CRM.Entity.Model
 		public int[] Ids { get; set; }
 
 
-		public BankEntity[] Banks { get; set; }
+		public BankEntity Banks { get; set; }
 
-		public BrokerEntity[] Brokers { get; set; }
+		public BrokerEntity Brokers { get; set; }
 
 		public int[] Nums { get; set; }
 

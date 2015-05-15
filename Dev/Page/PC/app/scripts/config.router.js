@@ -13,15 +13,15 @@ angular.module('app')
       function ( $rootScope,   $state,   $stateParams ,AuthService) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
-//          $rootScope.$on('$stateChangeStart', function (event,next) {
-//              if(next.name==='access.signin'){
-//                  return;
-//              }
-//              if(!AuthService.IsAuthenticated()){
-//                  event.preventDefault();
-//                  $state.go('access.signin');
-//              }
-//          });
+          $rootScope.$on('$stateChangeStart', function (event,next) {
+              if(next.name==='access.signin' || next.name==='access.signup' || next.name==='access.forgot-password'){
+                  return;
+              }
+              if(!AuthService.IsAuthenticated()){
+                  event.preventDefault();
+                  $state.go('access.signin');
+              }
+          });
       }
     ]
   )
@@ -804,7 +804,9 @@ angular.module('app')
             .state('page.CRM.partner.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/partner/index.html',
-                data : { title: '经纪人列表' }
+                data : { title: '合伙人列表' },
+                controller: 'PartnerIndexController',
+                resolve:load('scripts/controllers/CRM/Partner.js')
             })
             .state('page.CRM.partner.detailed', {
                 url: '/detailed',
@@ -822,6 +824,45 @@ angular.module('app')
                 data : { title: '等级配置' }
             })
 
+            .state('page.CRM.MessageConfigure',{
+                url:'/MessageConfigure',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.MessageConfigure.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/MessageConfigure/index.html',
+                data : { title: '短信配置' }
+            })
+
+            .state('page.CRM.MessageList',{
+                url:'/MessageList',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.MessageList.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/MessageList/index.html',
+                data : { title: '短信列表' }
+            })
+
+            .state('page.CRM.TaskList',{
+                url:'/TaskList',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.TaskList.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/TaskList/index.html',
+                data : { title: '任务列表' }
+            })
+
+            .state('page.CRM.TaskConfigure',{
+                url:'/TaskConfigure',
+                template:'<div ui-view></div>'
+            })
+            .state('page.CRM.TaskConfigure.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/TaskConfigure/index.html',
+                data : { title: '任务配置' }
+            })
 
 
 
@@ -831,7 +872,8 @@ angular.module('app')
             })
             .state('page.CMS.tag',{
               url:'/tag',
-              template:'<div ui-view></div>'
+              template:'<div ui-view></div>',
+              resolve: load('scripts/controllers/CMS/Tag.js')
             })
             .state('page.CMS.tag.index', {
               url: '/index',
@@ -839,17 +881,16 @@ angular.module('app')
               data : { title: '标签页' }
             })
             .state('page.CMS.tag.edit', {
-              url: '/edit',
+              url: '/edit?id',
               templateUrl: 'views/pages/CMS/tag/edit.html',
               data : { title: '编辑页' },
-              controller: 'VectorMapCtrl',
-              resolve: load('scripts/controllers/vectormap.js')
+              controller: '',
             })
             .state('page.CMS.tag.create', {
               url: '/create',
               templateUrl: 'views/pages/CMS/tag/create.html',
               data : { title: '新建页' },
-              controller: 'VectorMapCtrl'
+              controller: ''
             })
 
             .state('page.CMS.ad',{url:'/ad',template:'<div ui-view></div>'})
@@ -878,42 +919,48 @@ angular.module('app')
             .state('page.CMS.channel.index', {
               url: '/index',
               templateUrl: 'views/pages/CMS/channel/index.html',
-              data : { title: '栏目管理' }
+              data : { title: '栏目管理' },
+              controller: 'ChannelIndexController',
+              resolve:load('scripts/controllers/CMS/Channel.js')
             })
             .state('page.CMS.channel.edit', {
-              url: '/edit',
+              url: '/edit?id',
               templateUrl: 'views/pages/CMS/channel/edit.html',
               data : { title: '编辑页' },
-              controller: 'VectorMapCtrl'
-
+              controller: 'ChannelEditController',
+              resolve:load('scripts/controllers/CMS/Channel.js')
             })
             .state('page.CMS.channel.create', {
               url: '/create',
               templateUrl: 'views/pages/CMS/channel/create.html',
               data : { title: '新建页' },
-              controller: 'VectorMapCtrl'
-
+              controller: 'ChannelCreateController',
+              resolve:load('scripts/controllers/CMS/Channel.js')
             })
 
-            .state('page.CMS.content',{url:'/content',template:'<div ui-view></div>'})
+            .state('page.CMS.content',{
+              url:'/content',
+              template:'<div ui-view></div>',
+              resolve:load('scripts/controllers/CMS/Content.js')
+            })
             .state('page.CMS.content.index', {
               url: '/index',
               templateUrl: 'views/pages/CMS/content/index.html',
               data : { title: '内容页' },
-              controller: 'VectorMapCtrl'
+              controller: 'ContentIndexController'
             })
             .state('page.CMS.content.edit', {
               url: '/edit?id',
               templateUrl: 'views/pages/CMS/content/edit.html',
               data : { title: '编辑页' },
-              controller: 'VectorMapCtrl'
+              controller: 'ContentEditController'
 
             })
             .state('page.CMS.content.create', {
               url: '/create',
               templateUrl: 'views/pages/CMS/content/create.html',
               data : { title: '新建页' },
-              controller: 'VectorMapCtrl'
+              controller: 'ContentCreateController'
 
             })
 

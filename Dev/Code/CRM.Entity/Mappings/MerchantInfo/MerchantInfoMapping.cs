@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.MerchantInfo
 {
-	public class MerchantInfoMapping : EntityTypeConfiguration<MerchantInfoEntity>, IMapping
+	public class MerchantInfoMapping : EntityTypeConfiguration<MerchantInfoEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public MerchantInfoMapping()
 		{
@@ -26,6 +26,7 @@ namespace CRM.Entity.Mappings.MerchantInfo
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upuser).HasColumnType("int");
 			Property(c => c.Uptime).HasColumnType("datetime");
+            Property(c => c.State).HasColumnType("bit");
 		}
 	}
 }

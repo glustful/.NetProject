@@ -14,8 +14,14 @@ namespace CRM.Entity.Model
 		/// 经纪人ID
 		/// </summary>
 		public virtual BrokerEntity Broker { get; set; }
+
+        /// <summary>
+        /// 金额变动描述
+        /// </summary>
+        public virtual string MoneyDesc { get; set; }
+
 		/// <summary>
-		/// 账户余额
+		/// 新增金额
 		/// </summary>
 		public virtual decimal Balancenum { get; set; }
 		/// <summary>

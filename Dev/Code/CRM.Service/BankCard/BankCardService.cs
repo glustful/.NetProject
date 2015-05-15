@@ -8,10 +8,10 @@ namespace CRM.Service.BankCard
 {
 	public class BankCardService : IBankCardService
 	{
-		private readonly IRepository<BankCardEntity> _bankcardRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<BankCardEntity> _bankcardRepository;
 		private readonly ILog _log;
 
-		public BankCardService(IRepository<BankCardEntity> bankcardRepository,ILog log)
+		public BankCardService(Zerg.Common.Data.ICRMRepository<BankCardEntity> bankcardRepository,ILog log)
 		{
 			_bankcardRepository = bankcardRepository;
 			_log = log;
@@ -109,13 +109,13 @@ namespace CRM.Service.BankCard
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Banks != null && condition.Banks.Any())
+				if (condition.Banks != null)
                 {
-                    query = query.Where(q => condition.Banks.Contains(q.Bank));
+                    query = query.Where(q => condition.Banks==q.Bank);
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null)
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q => condition.Brokers==(q.Broker));
                 }
 				if (condition.Nums != null && condition.Nums.Any())
                 {
@@ -194,13 +194,13 @@ namespace CRM.Service.BankCard
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Banks != null && condition.Banks.Any())
+				if (condition.Banks != null )
                 {
-                    query = query.Where(q => condition.Banks.Contains(q.Bank));
+                    query = query.Where(q => condition.Banks==(q.Bank));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null )
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q => condition.Brokers==(q.Broker));
                 }
 				if (condition.Nums != null && condition.Nums.Any())
                 {

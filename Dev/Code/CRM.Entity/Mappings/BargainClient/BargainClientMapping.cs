@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.BargainClient
 {
-	public class BargainClientMapping : EntityTypeConfiguration<BargainClientEntity>, IMapping
+	public class BargainClientMapping : EntityTypeConfiguration<BargainClientEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public BargainClientMapping()
 		{

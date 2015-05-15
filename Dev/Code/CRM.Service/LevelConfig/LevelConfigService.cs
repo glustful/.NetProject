@@ -8,10 +8,10 @@ namespace CRM.Service.LevelConfig
 {
 	public class LevelConfigService : ILevelConfigService
 	{
-		private readonly IRepository<LevelConfigEntity> _levelconfigRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<LevelConfigEntity> _levelconfigRepository;
 		private readonly ILog _log;
 
-		public LevelConfigService(IRepository<LevelConfigEntity> levelconfigRepository,ILog log)
+		public LevelConfigService(Zerg.Common.Data.ICRMRepository<LevelConfigEntity> levelconfigRepository,ILog log)
 		{
 			_levelconfigRepository = levelconfigRepository;
 			_log = log;

@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.PartnerList
 {
-	public class PartnerListMapping : EntityTypeConfiguration<PartnerListEntity>, IMapping
+	public class PartnerListMapping : EntityTypeConfiguration<PartnerListEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public PartnerListMapping()
 		{

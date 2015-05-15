@@ -8,10 +8,10 @@ namespace CRM.Service.Broker
 {
 	public class BrokerService : IBrokerService
 	{
-		private readonly IRepository<BrokerEntity> _brokerRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<BrokerEntity> _brokerRepository;
 		private readonly ILog _log;
 
-		public BrokerService(IRepository<BrokerEntity> brokerRepository,ILog log)
+		public BrokerService(Zerg.Common.Data.ICRMRepository<BrokerEntity> brokerRepository,ILog log)
 		{
 			_brokerRepository = brokerRepository;
 			_log = log;
@@ -107,7 +107,7 @@ namespace CRM.Service.Broker
                 }
 				if (condition.Delflag.HasValue)
                 {
-                    query = query.Where(q => q.Delflag == condition.Delflag.Value);
+                    query = query.Where(q => q.State == condition.Delflag.Value);
                 }
 				if (!string.IsNullOrEmpty(condition.Brokername))
                 {
@@ -244,7 +244,7 @@ namespace CRM.Service.Broker
                 }
 				if (condition.Delflag.HasValue)
                 {
-                    query = query.Where(q => q.Delflag == condition.Delflag.Value);
+                    query = query.Where(q => q.State == condition.Delflag.Value);
                 }
 				if (!string.IsNullOrEmpty(condition.Brokername))
                 {
