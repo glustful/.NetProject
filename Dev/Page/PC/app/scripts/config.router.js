@@ -845,20 +845,20 @@ angular.module('app')
             })
 
 
-            .state('page.CRM.configure.setindex', {
-                url: '/index',
+            .state('page.CRM.configure.indexset', {
+                url: '/indexset',
                 templateUrl: 'views/pages/CRM/configure/indexset.html',
                 data : { title: '等级配置列表' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
             .state('page.CRM.configure.setcreate', {
-                url: '/create',
+                url: '/setcreate',
                 templateUrl: 'views/pages/CRM/configure/setcreate.html',
                 data : { title: '等级配置新建' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
             .state('page.CRM.configure.setedit', {
-                url: '/edit?id',
+                url: '/setedit?id',
                 templateUrl: 'views/pages/CRM/configure/setedit.html',
                 data : { title: '等级配置编辑' },
                 resolve:load('scripts/controllers/CRM/configure.js')
@@ -896,9 +896,7 @@ angular.module('app')
             .state('page.CRM.TaskList.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskList/index.html',
-<<<<<<< HEAD
                 data : { title: '任务主页' },
-
                 resolve:load(['scripts/controllers/taskList.js',
                     'scripts/filters/toDate.js'])
             })
@@ -924,26 +922,18 @@ angular.module('app')
             })
             .state('page.CRM.TaskConfigure',{
                 url:'/TaskConfigure',
-                template:'<div ui-view></div>'
-=======
+                template:'<div ui-view></div>',
                 data: { title: '任务列表' }
             })
 
-            .state('page.CRM.TaskConfigure', {
-                url: '/TaskConfigure',
-                template: '<div ui-view></div>'
->>>>>>> 723f3a05b8bdbf3b2c1ce04618bc0880e883d7c8
-            })
+
             .state('page.CRM.TaskConfigure.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskConfigure/index.html',
-<<<<<<< HEAD
                 data : { title: '任务配置' },
                 resolve:load([ 'scripts/filters/toDate.js',
-                    'scripts/controllers/taskConfig.js'])
-=======
+                    'scripts/controllers/taskConfig.js']),
                 data: { title: '任务配置' }
->>>>>>> 723f3a05b8bdbf3b2c1ce04618bc0880e883d7c8
             })
 
 
