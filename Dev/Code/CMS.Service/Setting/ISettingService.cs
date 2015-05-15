@@ -19,5 +19,7 @@ namespace CMS.Service.Setting
 		IQueryable<SettingEntity> GetSettingsByCondition(SettingSearchCondition condition);
 
 		int GetSettingCount (SettingSearchCondition condition);
+
+	    bool CreateOrUpdateEntity(SettingEntity[] settings);
 	}
 }

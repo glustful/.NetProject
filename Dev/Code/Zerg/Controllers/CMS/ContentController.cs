@@ -110,11 +110,11 @@ namespace Zerg.Controllers.CMS
         /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage Create(ContentDetailModel model)
-        {
+        {           
             var newChannel = _channelService.GetChannelById(model.ChannelId);
             if (newChannel == null)
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(false,"数据添加失败！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"请选择频道！"));
             }
             var content = new ContentEntity
             {
@@ -140,7 +140,7 @@ namespace Zerg.Controllers.CMS
         /// </summary>
         /// <param name="id">内容id</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         public HttpResponseMessage Delete(int id) {
             var content = _contentService.GetContentById(id);
             if (_contentService.Delete(content))

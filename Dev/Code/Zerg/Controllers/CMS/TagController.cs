@@ -81,6 +81,7 @@ namespace Zerg.Controllers.CMS
             };
             return PageHelper.toJson(newModel);
         }
+
         /// <summary>
         /// 新建Tag
         /// </summary>
@@ -88,22 +89,36 @@ namespace Zerg.Controllers.CMS
         [HttpPost]
         public HttpResponseMessage Create(TagModel tag)
         {
-            var tagModel = new TagEntity
+            var tagCon = new TagSearchCondition
             {
-                Tag=tag.Tag,
-                Adduser=_workContext.CurrentUser.Id,
-                Addtime=DateTime.Now,
-                UpdUser = _workContext.CurrentUser.Id,
-                UpdTime=DateTime.Now
+                Tag = tag.Tag,
             };
-            if (_tagService.Create(tagModel)!=null)
+            var tagCount = _tagService.GetTagCount(tagCon);
+            if (tagCount > 0)
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(true,"数据添加成功！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已存在"));
             }
-            else {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+            else
+            {
+                var tagModel = new TagEntity
+                {
+                    Tag = tag.Tag,
+                    Adduser = _workContext.CurrentUser.Id,
+                    Addtime = DateTime.Now,
+                    UpdUser = _workContext.CurrentUser.Id,
+                    UpdTime = DateTime.Now
+                };
+                if (_tagService.Create(tagModel) != null)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                }
+                else
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                }
             }
         }
+
         /// <summary>
         /// 保存修改
         /// </summary>
@@ -127,11 +142,11 @@ namespace Zerg.Controllers.CMS
         /// <summary>
         /// 删除
         /// </summary>
-        /// <param name="id">标签Id</param> 
-       [HttpPost]
-        public HttpResponseMessage Delete(int id)
+        /// <param name="tagId">标签Id</param> 
+       [HttpGet]
+        public HttpResponseMessage Delete(int tagId)
         {
-            var tag = _tagService.GetTagById(id);                      
+            var tag = _tagService.GetTagById(tagId);                      
             if (_tagService.Delete(tag))
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功！"));           

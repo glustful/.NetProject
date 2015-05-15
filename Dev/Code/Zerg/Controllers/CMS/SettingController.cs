@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -35,7 +36,6 @@ namespace Zerg.Controllers.CMS
             };
             var settingList = _settingService.GetSettingsByCondition(settingCon).Select(a => new SettingModel
             {
-                Id = a.Id,
                 Key = a.Key,
                 Value = a.Value
             }).ToList();
@@ -56,7 +56,6 @@ namespace Zerg.Controllers.CMS
             }
             var settingDetail = new SettingModel
             {
-                Id = setting.Id,
                 Key = setting.Key,
                 Value = setting.Value
             };
@@ -68,8 +67,12 @@ namespace Zerg.Controllers.CMS
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage Edit(SettingModel model)
+        public HttpResponseMessage Edit(List<SettingModel> model)
         {
+            /*if (string.IsNullOrEmpty(model.Value)||string.IsNullOrEmpty(model.Value))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"数据不允许为空！"));
+            }
             var createNew = false;
             var setting = _settingService.GetSettingById(model.Id) ?? _settingService.GetSettingByKey(model.Key);
             if (setting == null)
@@ -93,8 +96,19 @@ namespace Zerg.Controllers.CMS
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功"));
                 }
+            }*/
+            var settings = new List<SettingEntity>();
+            foreach (var setting in model)
+            {
+                //Todo:效率过低，建议一次查询
+                var newSet = _settingService.GetSettingByKey(setting.Key) ?? new SettingEntity { Key = setting.Key };
+                newSet.Value = setting.Value;
+                settings.Add(newSet);
             }
-
+            if(_settingService.CreateOrUpdateEntity(settings.ToArray()))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功"));
+            }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败"));
         }
         /// <summary>
@@ -105,6 +119,10 @@ namespace Zerg.Controllers.CMS
         [HttpPost]
         public HttpResponseMessage Create(SettingModel model)
         {
+            if (string.IsNullOrEmpty(model.Value))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不允许为空！"));
+            }
             var setting = new SettingEntity
             {
                 Key = model.Key,

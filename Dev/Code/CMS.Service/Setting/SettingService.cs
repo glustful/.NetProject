@@ -1,8 +1,7 @@
 using System;
 using System.Linq;
-using YooPoon.Core.Data;
-using YooPoon.Core.Logging;
 using CMS.Entity.Model;
+using YooPoon.Core.Logging;
 using Zerg.Common.Data;
 
 namespace CMS.Service.Setting
@@ -64,7 +63,7 @@ namespace CMS.Service.Setting
 		{
 			try
             {
-                return _settingRepository.GetById(id); ;
+                return _settingRepository.GetById(id);
             }
             catch (Exception e)
             {
@@ -84,6 +83,20 @@ namespace CMS.Service.Setting
                 _log.Error(e, "数据库操作出错");
                 return null;
             }
+	    }
+
+	    public bool CreateOrUpdateEntity(SettingEntity[] settings)
+	    {
+	        try
+	        {
+                _settingRepository.AddOrUpdate(settings);
+	            return true;
+	        }
+	        catch (Exception e)
+	        {
+                _log.Error(e, "数据库操作出错");
+	            return false;
+	        }
 	    }
 
 	    public IQueryable<SettingEntity> GetSettingsByCondition(SettingSearchCondition condition)

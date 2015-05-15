@@ -5,6 +5,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using CMS.Entity.Model;
 using CMS.Service.Channel;
+using CMS.Service.Content;
 using YooPoon.Core.Site;
 using Zerg.Common;
 using Zerg.Models.CMS;
@@ -16,9 +17,11 @@ namespace Zerg.Controllers.CMS
     {
         private readonly IChannelService _channelService;
         private readonly IWorkContext _workContent;
+        private readonly IContentService _contentService;
 
-        public ChannelController(IChannelService channelService,IWorkContext workContent) {
+        public ChannelController(IChannelService channelService,IContentService contentService,IWorkContext workContent) {
             _channelService = channelService;
+            _contentService = contentService;
             _workContent = workContent;
         }
         /// <summary>
@@ -54,7 +57,7 @@ namespace Zerg.Controllers.CMS
         [HttpPost]
         public HttpResponseMessage Create(ChannelModel model)
         {
-           var newParent = model.ParentId == 0?null:_channelService.GetChannelById(model.ParentId);
+            var newParent = model.ParentId == 0?null:_channelService.GetChannelById(model.ParentId);
             var channel = new ChannelEntity
             {
                 Name=model.Name,
@@ -123,17 +126,22 @@ namespace Zerg.Controllers.CMS
         /// </summary>
         /// <param name="id">频道id</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
          public HttpResponseMessage Delete(int id)
          {
-             var channel = _channelService.GetChannelById(id);
-             if (_channelService.Delete(channel))
-             {
-                 return PageHelper.toJson(PageHelper.ReturnValue(true,"数据删除成功！"));
-             }
-             else{
-                 return PageHelper.toJson(PageHelper.ReturnValue(false,"数据删除失败！"));
-             }
+                var channel = _channelService.GetChannelById(id);
+            if (channel.Contents != null && channel.Contents.Any())
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "有内容关联不能删除"));
+            }
+            if (_channelService.Delete(channel))
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功！"));
+                }
+                else
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
+                }
          }
     }
 }

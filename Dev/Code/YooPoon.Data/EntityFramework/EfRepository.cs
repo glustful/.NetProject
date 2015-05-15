@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Linq.Expressions;
@@ -96,6 +97,31 @@ namespace YooPoon.Data.EntityFramework
         IQueryable<T> IRepository<T>.Table
         {
             get { return Table; }
+        }
+
+        public IDbSet<T> DbSet
+        {
+            get { return Entities; }
+        }
+
+        public void AddOrUpdate(T[] entity)
+        {
+            try
+            {
+                if(entity==null || !entity.Any())
+                    return;
+                _entities.AddOrUpdate(entity);
+
+                _context.SaveChanges();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                var msg = dbEx.EntityValidationErrors.Aggregate(string.Empty, (current1, validationErrors) => validationErrors.ValidationErrors.Aggregate(current1, (current, validationError) => current + (Environment.NewLine + string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage))));
+
+                var fail = new Exception(msg, dbEx);
+
+                throw fail;
+            }
         }
 
         public virtual IQueryable<T> Table
