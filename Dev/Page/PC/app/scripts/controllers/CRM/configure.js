@@ -98,7 +98,7 @@ angular.module("app").controller('configureSetCreateController',['$http','$scope
 
         }).success(function(data){
             if(data.Status){
-                $state.go("page.CRM.configure.setindex");
+                $state.go("page.CRM.configure.indexset");
             }else{
                 alert(data.Msg);
             }
@@ -117,7 +117,7 @@ angular.module("app").controller('configureSetEditController',['$http','$scope',
 
         }).success(function(data){
             if(data.Status){
-                $state.go("page.CRM.configure.setindex");
+                $state.go("page.CRM.configure.indexset");
             }else{
                 alert(data.Msg);
             }

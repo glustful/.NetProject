@@ -857,20 +857,20 @@ angular.module('app')
             })
 
 
-            .state('page.CRM.configure.setindex', {
-                url: '/index',
+            .state('page.CRM.configure.indexset', {
+                url: '/indexset',
                 templateUrl: 'views/pages/CRM/configure/indexset.html',
                 data : { title: '等级配置列表' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
             .state('page.CRM.configure.setcreate', {
-                url: '/create',
+                url: '/setcreate',
                 templateUrl: 'views/pages/CRM/configure/setcreate.html',
                 data : { title: '等级配置新建' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
             .state('page.CRM.configure.setedit', {
-                url: '/edit?id',
+                url: '/setedit?id',
                 templateUrl: 'views/pages/CRM/configure/setedit.html',
                 data : { title: '等级配置编辑' },
                 resolve:load('scripts/controllers/CRM/configure.js')
@@ -938,10 +938,6 @@ angular.module('app')
                 data: { title: '任务列表' }
             })
 
-            .state('page.CRM.TaskConfigure', {
-                url: '/TaskConfigure',
-                template: '<div ui-view></div>'
-            })
             .state('page.CRM.TaskConfigure.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskConfigure/index.html',
