@@ -2,13 +2,11 @@
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
-using System.Security;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
 using CRM.Service.BrokerRECClient;
-using Webdiyer.WebControls.Mvc;
 using Zerg.Common;
 using Zerg.Models.CRM;
 
@@ -57,7 +55,15 @@ namespace Zerg.Controllers.CRM
                 a.Brokerlevel,
                 a.ClientInfo.Phone,
                 a.Projectname,
-                a.Addtime
+                a.Addtime,
+
+                a.Clientname,
+                SecretaryName=a.SecretaryId.Brokername,
+                a.SecretaryPhone,
+                Waiter=a.WriterId.Brokername,
+                a.WriterPhone,
+                a.Uptime
+
             }).ToList();
 
             var totalCont = _brokerRecClientService.GetBrokerRECClientCount(condition);
@@ -111,6 +117,7 @@ namespace Zerg.Controllers.CRM
 
             var model = _brokerRecClientService.GetBrokerRECClientById(brokerRecClientModel.Id);
             model.Status = brokerRecClientModel.Status;
+            model.Uptime = DateTime.Now;
 
             _brokerRecClientService.Update(model);
             return PageHelper.toJson(PageHelper.ReturnValue(true,"确认成功"));

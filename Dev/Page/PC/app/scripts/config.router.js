@@ -703,12 +703,16 @@ angular.module('app')
             .state('page.CRM.WaitPetition.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/WaitPetition/index.html',
-                  data: { title: '待上访记录' }
+                  data: { title: '待上访记录' },
+                controller:"PetitionListController",
+                resolve:load('scripts/controllers/CRM/WaitPetition.js')
             })
             .state('page.CRM.WaitPetition.detailed', {
-              url: '/detailed',
+                url: '/detailed?id',
               templateUrl: 'views/pages/CRM/WaitPetition/detailed.html',
-                  data: { title: '详情页' }
+                  data: { title: '详情页' },
+                controller:"WPDetialController",
+                resolve:load('scripts/controllers/CRM/WaitPetition.js')
             })
 
               .state('page.CRM.talking', {
@@ -718,12 +722,16 @@ angular.module('app')
             .state('page.CRM.talking.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/talking/index.html',
-                  data: { title: '洽谈中业务' }
+                  data: { title: '洽谈中业务' },
+                controller:"TalkingListController",
+                resolve:load('scripts/controllers/CRM/Talking.js')
             })
             .state('page.CRM.talking.detailed', {
-              url: '/detailed',
+              url: '/detailed?id',
               templateUrl: 'views/pages/CRM/talking/detailed.html',
-                  data: { title: '详情页' }
+                  data: { title: '详情页' },
+                controller:"TaklDetialController",
+                resolve:load('scripts/controllers/CRM/Talking.js')
             })
 
               .state('page.CRM.fail', {
@@ -748,12 +756,16 @@ angular.module('app')
             .state('page.CRM.success.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/success/index.html',
-                  data: { title: '洽谈成功' }
+                  data: { title: '洽谈成功' },
+                controller:"SuccessListController",
+                resolve:load('scripts/controllers/CRM/Success.js')
             })
             .state('page.CRM.success.detailed', {
-              url: '/detailed',
+              url: '/detailed?id',
               templateUrl: 'views/pages/CRM/success/detailed.html',
-                  data: { title: '详情页' }
+                  data: { title: '详情页' },
+                controller:"SuccessDetialController",
+                resolve:load('scripts/controllers/CRM/Success.js')
             })
 
               .state('page.CRM.CustomerInformation', {

@@ -129,6 +129,10 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => q.Sexy.Contains(condition.Sexy));
                 }
+                if (!string.IsNullOrEmpty(condition.Email))
+                {
+                    query = query.Where(q => q.Email.Contains(condition.Email));
+                }
 				if (!string.IsNullOrEmpty(condition.Headphoto))
                 {
                     query = query.Where(q => q.Headphoto.Contains(condition.Headphoto));
