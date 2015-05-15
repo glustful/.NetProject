@@ -845,7 +845,7 @@ angular.module('app')
             })
 
 
-            .state('page.CRM.configure.indexset', {
+            .state('page.CRM.configure.setindex', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/configure/indexset.html',
                 data : { title: '等级配置列表' },
