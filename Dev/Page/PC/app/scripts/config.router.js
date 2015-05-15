@@ -849,9 +849,31 @@ angular.module('app')
             .state('page.CRM.TaskList.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskList/index.html',
-                data : { title: '任务列表' }
-            })
+                data : { title: '任务主页' },
 
+                resolve:load(['scripts/controllers/taskList.js',
+                    'scripts/filters/toDate.js'])
+            })
+            .state('page.CRM.TaskList.taskList', {
+                url: '/taskList?id',
+                templateUrl: 'views/pages/CRM/TaskList/taskList.html',
+                data : { title: '任务列表' },
+                resolve:load(['scripts/controllers/taskList.js',
+                    'scripts/filters/toDate.js'])
+            })
+            .state('page.CRM.TaskList.createTask', {
+                url: '/createTask?taskModel',
+                templateUrl: 'views/pages/CRM/TaskList/createTask.html',
+                data : { title: '添加任务' },
+                resolve:load(['scripts/controllers/createTask.js'])
+            })
+            .state('page.CRM.TaskList.taskDetail', {
+                url: '/taskDetail?id',
+                templateUrl: 'views/pages/CRM/TaskList/taskDetail.html',
+                data : { title: '任务详情' },
+                resolve:load(['scripts/controllers/taskList.js',
+                    'scripts/filters/toDate.js'])
+            })
             .state('page.CRM.TaskConfigure',{
                 url:'/TaskConfigure',
                 template:'<div ui-view></div>'
@@ -859,7 +881,9 @@ angular.module('app')
             .state('page.CRM.TaskConfigure.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskConfigure/index.html',
-                data : { title: '任务配置' }
+                data : { title: '任务配置' },
+                resolve:load([ 'scripts/filters/toDate.js',
+                    'scripts/controllers/taskConfig.js'])
             })
 
 
