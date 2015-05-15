@@ -13,15 +13,15 @@ angular.module('app')
       function ( $rootScope,   $state,   $stateParams ,AuthService) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
-//          $rootScope.$on('$stateChangeStart', function (event,next) {
-//              if(next.name==='access.signin'){
-//                  return;
-//              }
-//              if(!AuthService.IsAuthenticated()){
-//                  event.preventDefault();
-//                  $state.go('access.signin');
-//              }
-//          });
+          $rootScope.$on('$stateChangeStart', function (event,next) {
+              if(next.name==='access.signin' || next.name==='access.signup' || next.name==='access.forgot-password'){
+                  return;
+              }
+              if(!AuthService.IsAuthenticated()){
+                  event.preventDefault();
+                  $state.go('access.signin');
+              }
+          });
       }
     ]
   )
