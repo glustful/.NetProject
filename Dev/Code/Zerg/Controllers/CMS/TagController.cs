@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CMS.Entity.Model;
@@ -89,32 +90,41 @@ namespace Zerg.Controllers.CMS
         [HttpPost]
         public HttpResponseMessage Create(TagModel tag)
         {
-            var tagCon = new TagSearchCondition
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            var m = reg.IsMatch(tag.Tag);
+            if (!m)
             {
-                Tag = tag.Tag,
-            };
-            var tagCount = _tagService.GetTagCount(tagCon);
-            if (tagCount > 0)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已存在"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
             }
             else
-            {
-                var tagModel = new TagEntity
+            {               
+                var tagCon = new TagSearchCondition
                 {
-                    Tag = tag.Tag,
-                    Adduser = _workContext.CurrentUser.Id,
-                    Addtime = DateTime.Now,
-                    UpdUser = _workContext.CurrentUser.Id,
-                    UpdTime = DateTime.Now
+                    Tag = tag.Tag
                 };
-                if (_tagService.Create(tagModel) != null)
+                var tagCount = _tagService.GetTagCount(tagCon);
+                if (tagCount > 0)
                 {
-                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已存在"));
                 }
                 else
                 {
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                    var tagModel = new TagEntity
+                    {
+                        Tag = tag.Tag,
+                        Adduser = _workContext.CurrentUser.Id,
+                        Addtime = DateTime.Now,
+                        UpdUser = _workContext.CurrentUser.Id,
+                        UpdTime = DateTime.Now
+                    };
+                    if (_tagService.Create(tagModel) != null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                    }
+                    else
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                    }
                 }
             }
         }

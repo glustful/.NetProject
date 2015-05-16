@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CMS.Entity.Model;
 using CMS.Service.Channel;
-using CMS.Service.Content;
 using YooPoon.Core.Site;
 using Zerg.Common;
 using Zerg.Models.CMS;
@@ -17,11 +17,9 @@ namespace Zerg.Controllers.CMS
     {
         private readonly IChannelService _channelService;
         private readonly IWorkContext _workContent;
-        private readonly IContentService _contentService;
 
-        public ChannelController(IChannelService channelService,IContentService contentService,IWorkContext workContent) {
+        public ChannelController(IChannelService channelService,IWorkContext workContent) {
             _channelService = channelService;
-            _contentService = contentService;
             _workContent = workContent;
         }
         /// <summary>
@@ -57,24 +55,45 @@ namespace Zerg.Controllers.CMS
         [HttpPost]
         public HttpResponseMessage Create(ChannelModel model)
         {
-            var newParent = model.ParentId == 0?null:_channelService.GetChannelById(model.ParentId);
-            var channel = new ChannelEntity
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            var m = reg.IsMatch(model.Name);
+            if (!m)
             {
-                Name=model.Name,
-                Status=model.Status,
-                Parent=newParent,
-                Adduser=_workContent.CurrentUser.Id,
-                Addtime=DateTime.Now,
-                UpdUser=_workContent.CurrentUser.Id,
-                UpdTime=DateTime.Now
-            };
-            if (_channelService.Create(channel)!=null)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
             }
             else
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                var channelCon = new ChannelSearchCondition
+                {
+                    Name = model.Name               
+                };
+                var totalCount = _channelService.GetChannelCount(channelCon);
+                if (totalCount > 0)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已存在！"));
+                }
+                else
+                {
+                    var newParent = model.ParentId == 0 ? null : _channelService.GetChannelById(model.ParentId);
+                    var channel = new ChannelEntity
+                    {
+                        Name = model.Name,
+                        Status = model.Status,
+                        Parent = newParent,
+                        Adduser = _workContent.CurrentUser.Id,
+                        Addtime = DateTime.Now,
+                        UpdUser = _workContent.CurrentUser.Id,
+                        UpdTime = DateTime.Now
+                    };
+                    if (_channelService.Create(channel) != null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                    }
+                    else
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                    }
+                }
             }
         }
         /// <summary>

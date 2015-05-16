@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CMS.Entity.Model;
@@ -110,29 +111,39 @@ namespace Zerg.Controllers.CMS
         /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage Create(ContentDetailModel model)
-        {           
-            var newChannel = _channelService.GetChannelById(model.ChannelId);
-            if (newChannel == null)
+        {
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            var m = reg.IsMatch(model.Title);
+            if (!m)
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(false,"请选择频道！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "标题存在非法字符！"));
             }
-            var content = new ContentEntity
-            {
-                Title = model.Title,
-                Content = model.Content,
-                Status=model.Status, 
-                Channel=newChannel,
-                Adduser=_workContent.CurrentUser.Id,
-                Addtime=DateTime.Now,
-                UpdUser=_workContent.CurrentUser.Id,
-                UpdTime=DateTime.Now
-            };
-            if (_contentService.Create(content)!=null)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(true,"数据添加成功！"));
-            }
-            else {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+            else
+            {                              
+                    var newChannel = _channelService.GetChannelById(model.ChannelId);
+                    if (newChannel == null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "请选择频道！"));
+                    }
+                    var content = new ContentEntity
+                    {
+                        Title = model.Title,
+                        Content = model.Content,
+                        Status = model.Status,
+                        Channel = newChannel,
+                        Adduser = _workContent.CurrentUser.Id,
+                        Addtime = DateTime.Now,
+                        UpdUser = _workContent.CurrentUser.Id,
+                        UpdTime = DateTime.Now
+                    };
+                    if (_contentService.Create(content) != null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                    }
+                    else
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                    }
             }
         }
         /// <summary>
