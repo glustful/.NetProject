@@ -11,8 +11,8 @@ angular.module('app')
   .run(
     [           '$rootScope', '$state', '$stateParams','AuthService',
       function ( $rootScope,   $state,   $stateParams ,AuthService) {
-        $rootScope.$state = $state;
-        $rootScope.$stateParams = $stateParams;
+          $rootScope.$state = $state;
+          $rootScope.$stateParams = $stateParams;
           $rootScope.$on('$stateChangeStart', function (event,next) {
               if(next.name==='access.signin' || next.name==='access.signup' || next.name==='access.forgot-password'){
                   return;
@@ -20,6 +20,13 @@ angular.module('app')
               if(!AuthService.IsAuthenticated()){
                   event.preventDefault();
                   $state.go('access.signin');
+              }
+              if(next.access !== undefined){
+                  if(!AuthService.IsAuthorized(next.access)){
+                    event.preventDefault();
+                    //TODO:跳转到权限提示页
+                  }
+
               }
           });
       }
@@ -29,7 +36,7 @@ angular.module('app')
     [          '$stateProvider', '$urlRouterProvider', 'MODULE_CONFIG',
       function ( $stateProvider,   $urlRouterProvider,  MODULE_CONFIG ) {
         $urlRouterProvider
-          .otherwise('/access/signin');
+          .otherwise('/page/CMS/tag/index');
         $stateProvider
           .state('app', {
             abstract: true,
@@ -50,7 +57,8 @@ angular.module('app')
               url: '/dashboard',
               templateUrl: 'views/pages/dashboard.html',
               data : { title: 'Dashboard' },
-              resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
+              resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js']),
+              access:["admin"]
             })
 
             .state('app.wall', {
