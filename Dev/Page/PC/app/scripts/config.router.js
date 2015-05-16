@@ -703,12 +703,16 @@ angular.module('app')
             .state('page.CRM.WaitPetition.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/WaitPetition/index.html',
-                  data: { title: '待上访记录' }
+                  data: { title: '待上访记录' },
+                controller:"PetitionListController",
+                resolve:load('scripts/controllers/CRM/WaitPetition.js')
             })
             .state('page.CRM.WaitPetition.detailed', {
-              url: '/detailed',
+                url: '/detailed?id',
               templateUrl: 'views/pages/CRM/WaitPetition/detailed.html',
-                  data: { title: '详情页' }
+                  data: { title: '详情页' },
+                controller:"WPDetialController",
+                resolve:load('scripts/controllers/CRM/WaitPetition.js')
             })
 
               .state('page.CRM.talking', {
@@ -718,12 +722,16 @@ angular.module('app')
             .state('page.CRM.talking.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/talking/index.html',
-                  data: { title: '洽谈中业务' }
+                  data: { title: '洽谈中业务' },
+                controller:"TalkingListController",
+                resolve:load('scripts/controllers/CRM/Talking.js')
             })
             .state('page.CRM.talking.detailed', {
-              url: '/detailed',
+              url: '/detailed?id',
               templateUrl: 'views/pages/CRM/talking/detailed.html',
-                  data: { title: '详情页' }
+                  data: { title: '详情页' },
+                controller:"TaklDetialController",
+                resolve:load('scripts/controllers/CRM/Talking.js')
             })
 
               .state('page.CRM.fail', {
@@ -748,12 +756,16 @@ angular.module('app')
             .state('page.CRM.success.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/success/index.html',
-                  data: { title: '洽谈成功' }
+                  data: { title: '洽谈成功' },
+                controller:"SuccessListController",
+                resolve:load('scripts/controllers/CRM/Success.js')
             })
             .state('page.CRM.success.detailed', {
-              url: '/detailed',
+              url: '/detailed?id',
               templateUrl: 'views/pages/CRM/success/detailed.html',
-                  data: { title: '详情页' }
+                  data: { title: '详情页' },
+                controller:"SuccessDetialController",
+                resolve:load('scripts/controllers/CRM/Success.js')
             })
 
               .state('page.CRM.CustomerInformation', {
@@ -846,19 +858,19 @@ angular.module('app')
 
 
             .state('page.CRM.configure.indexset', {
-                url: '/index',
+                url: '/indexset',
                 templateUrl: 'views/pages/CRM/configure/indexset.html',
                 data : { title: '等级配置列表' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
             .state('page.CRM.configure.setcreate', {
-                url: '/create',
+                url: '/setcreate',
                 templateUrl: 'views/pages/CRM/configure/setcreate.html',
                 data : { title: '等级配置新建' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
             .state('page.CRM.configure.setedit', {
-                url: '/edit?id',
+                url: '/setedit?id',
                 templateUrl: 'views/pages/CRM/configure/setedit.html',
                 data : { title: '等级配置编辑' },
                 resolve:load('scripts/controllers/CRM/configure.js')
@@ -897,10 +909,11 @@ angular.module('app')
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskList/index.html',
 
+
                 data : { title: '任务主页' },
 
                 resolve:load(['scripts/controllers/CRM/taskList.js',
-                    'scripts/filters/toDate.js'])
+          'scripts/filters/toDate.js'])
             })
             .state('page.CRM.TaskList.taskList', {
                 url: '/taskList?id',
@@ -925,11 +938,8 @@ angular.module('app')
             .state('page.CRM.TaskConfigure',{
                 url:'/TaskConfigure',
                 template:'<div ui-view></div>',
-
                 data: { title: '任务列表' }
             })
-
-
             .state('page.CRM.TaskConfigure.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskConfigure/index.html',
@@ -939,9 +949,6 @@ angular.module('app')
                     'scripts/controllers/CRM/taskConfig.js'])
 
             })
-
-
-
             .state('page.CMS', {
                 url: '/CMS',
                 template: '<div ui-view></div>'

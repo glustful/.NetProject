@@ -1,44 +1,38 @@
 /**
- * Created by yangdingpeng on 2015/5/12.
+ * Created by yangdingpeng on 2015/5/15.
  */
 
 //推荐列表
-angular.module("app").controller('WaitListController', [
+angular.module("app").controller('TalkingListController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
-            status:"审核中",
+            status:"洽谈中",
             Brokername:"",
             page: 1,
             pageSize: 10
-};
+        };
 
-var getTagList = function() {
-    $http.get(SETTING.ApiUrl+'/AdminRecom/BrokerList',{params:$scope.searchCondition}).success(function(data){
-        $scope.Brokerlist = data.list1;
-        $scope.searchCondition.page=data.condition1.Page;
-        $scope.searchCondition.PageCount=data.condition1.PageCount;
-        $scope.searchCondition.totalCount=data.totalCont1;
-    });
-};
-$scope.getList = getTagList;
-getTagList();
-}
+        var getTagList = function() {
+            $http.get(SETTING.ApiUrl+'/AdminRecom/BrokerList',{params:$scope.searchCondition}).success(function(data){
+                $scope.Brokerlist = data.list1;
+                $scope.searchCondition.page=data.condition1.Page;
+                $scope.searchCondition.PageCount=data.condition1.PageCount;
+                $scope.searchCondition.totalCount=data.totalCont1;
+                console.log($scope.Brokerlist);
+            });
+        };
+        $scope.getList = getTagList;
+        getTagList();
+    }
 ]);
 
 //详细信息
-angular.module("app").controller('ARDetialController',[
+angular.module("app").controller('TaklDetialController',[
     '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
         //获取详细信息
         $http.get(SETTING.ApiUrl + '/AdminRecom/GetAuditDetail/' + $stateParams.id).success(function (data) {
             $scope.ARDetialModel = data;
-        });
-        //获取带客人员列表
-        $http.get(SETTING.ApiUrl + '/AdminRecom/WaiterList').success(function (data) {
-            $scope.WaiterList = data;
-        });
-        //获取驻场秘书列表
-        $http.get(SETTING.ApiUrl + '/AdminRecom/SecretaryList').success(function (data) {
-            $scope.SecretaryList = data;
+            console.log(data);
         });
 
         $scope.PassAudit = {
