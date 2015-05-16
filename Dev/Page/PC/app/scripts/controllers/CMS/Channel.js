@@ -70,6 +70,9 @@ angular.module("app").controller('ChannelCreateController',['$http','$scope','$s
             if(data.Status){
                 $state.go("page.CMS.channel.index");
             }
+            else{
+                $scope.Message=data.Msg;
+            }
         });
     }
 }]);
