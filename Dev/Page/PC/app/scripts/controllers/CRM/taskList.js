@@ -4,22 +4,30 @@
 app.controller('taskIndexController',['$http','$scope',function($http,$scope) {
     $scope.searchCondition = {
         Taskname: '',
-        Tasktype: '',
-        Id:0
+
+        Id:0,
+        page: 1,
+        pageSize: 10
     };
+    //查询任务
     var getTaskList  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskList/',{params:{Taskname:($scope.searchCondition.Taskname)}}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/TaskList/',{params:$scope.searchCondition}).success(function(data){
            console.log(data);
             $scope.list = data.list;
+            $scope.searchCondition.page=data.condition.Page;
+            $scope.searchCondition.pageSize=data.condition.PageCount;
+            $scope.searchCondition.totalCount=data.totalCount;
         });
     };
     $scope.getList = getTaskList;
     getTaskList();
     //删除任务
 
-   var DelTask = function() {
-        $http.get(SETTING.ApiUrl+'/Task/DelTask/',{params:{id:$scope.searchCondition.Id}}).success(function(data){
+   var DelTask = function(id11) {
+        $http.get(SETTING.ApiUrl+'/Task/DelTask/',{params:{id:id11}}).success(function(data){
             if(data.Status){
+                getTaskList();
+
                 // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
             }
         });
@@ -29,27 +37,39 @@ app.controller('taskIndexController',['$http','$scope',function($http,$scope) {
 ]);
 app.controller('taskListcontroller',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
     $scope.searchCondition1 = {
-        Taskschedule:'',
-        id:$stateParams.id
+        brokerName:'',
+        id:$stateParams.id,
+        page: 1,
+        pageSize: 10
     };
-
+//加载时绑定，绑定任务列表,根据接受者查询该任务任务列表
     var getTaskList1  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/taskListBytaskId?id='+$stateParams.id).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/taskListByuser',{params:$scope.searchCondition1}).success(function(data){
 
             console.log(data);
             $scope.taskModel = data.list;
+            $scope.searchCondition1.page=data.condition.Page;
+            $scope.searchCondition1.pageSize=data.condition.PageCount;
+            $scope.searchCondition1.totalCount=data.totalCount;
+
         });
     };
-
+$scope.getList1=getTaskList1 ;
     getTaskList1();
+    /*
+    //根据接受者查询该任务任务列表
     var getTaskListSer  = function() {
         $http.get(SETTING.ApiUrl+'/Task/taskListByuser',{params:$scope.searchCondition1}).success(function(data){
 
             console.log(data);
             $scope.taskModel = data.list;
+            $scope.searchCondition1.page=data.condition.Page;
+            $scope.searchCondition1.pageSize=data.condition.PageCount;
+            $scope.searchCondition1.totalCount=data.totalCount;
+
         });
     };
-    $scope.gettasklist=getTaskListSer;
+    $scope.gettasklist=getTaskListSer;*/
 }
 ]);
 

@@ -1,10 +1,11 @@
 <!--黄秀宇 任务列表  2015.05.12
-自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />-->
+自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />
+angular.js路径app/scrips/controller/CRM/taskList.js-->
 <div ng-controller="taskListcontroller">
 <div id="divTaskH"class="marginL">
-    <input style="width:200px;"ng-model="searchCondition1.Taskschedule" type="text" class="form-control bordhtml" placeholder="接受者">
+    <input style="width:200px;"ng-model="searchCondition1.brokerName" type="text" class="form-control bordhtml" placeholder="接受者">
     <input style="width:200px;" type="text"ng-model="searchCondition1.Brokername" class="form-control bordhtml" placeholder="搜索条件2">
-    <button md-ink-ripple=""style="width:100px;"ng-click="gettasklist()" class="md-btn md-raised m-b btn-fw indigo">检索</button>
+    <button md-ink-ripple=""style="width:100px;"ng-click="getList1()" class="md-btn md-raised m-b btn-fw indigo">检索</button>
     </div>
 
 <div id="divTaskC" class="marginL">
@@ -29,15 +30,9 @@
 
     </div>
 
-    <div style="width:800px;" colspan="6" class="text-center footable-visible ng-scope">
-        <ul class="pagination">
-            <li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li>
-            <li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li>
-            <li class="footable-page active"><a data-page="0" href="#">1</a></li>
-            <li class="footable-page"><a data-page="1" href="#">2</a></li>
-            <li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li>
-            <li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li>
-        </ul>
+    <div style="width:800px;"  class="text-center footable-visible ng-scope">
+        <pagination boundary-links="true" total-items="searchCondition1.totalCount" items-per-page="searchCondition1.pageSize" ng-model="searchCondition1.page" ng-change="getList1()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+
     </div>
 </div>
 </div>

@@ -247,7 +247,7 @@ namespace CRM.Service.Task
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-
+              
 
 				if (condition.TaskPunishments != null && condition.TaskPunishments.Any())
                 {
@@ -277,13 +277,28 @@ namespace CRM.Service.Task
                 {
                     query = query.Where(q => condition.Addusers.Contains(q.Adduser));
                 }
-
-
-				if (condition.Upusers != null && condition.Upusers.Any())
+                if (condition.Addusers != null && condition.Addusers.Any())
                 {
-                    query = query.Where(q => condition.Upusers.Contains(q.Upuser));
+                    query = query.Where(q => condition.Addusers.Contains(q.Adduser));
                 }
 
+                if (condition.typeId >0)
+                {
+                    query = query.Where(q => q.TaskType.Id == condition.typeId);
+                }
+                if (condition.awardId >0)
+                {
+                    query = query.Where(q => q.TaskAward.Id == condition.awardId);
+                }
+                if (condition.punishId >0)
+                {
+                    query = query.Where(q => q.TaskPunishment.Id == condition.punishId);
+                }
+                if (condition.tagId >0)
+                {
+                    query = query.Where(q => q.TaskTag.Id == condition.tagId);
+                }
+				
 
 
 				return query.Count();
