@@ -72,6 +72,9 @@ angular.module("app").controller('ContentCreateController',['$http','$scope','$s
             if(data.Status){
                 $state.go("page.CMS.content.index");
             }
+            else{
+                 $scope.Message=data.Msg;
+            }
         });
     }
 }]);

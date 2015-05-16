@@ -17,6 +17,7 @@
             <div class="bottom" ><label for="Channel">频道： </label>
                 <select name="Channel" id="Channel" ng-model="ContentModel.ChannelId" ng-options="list.Id as list.Name for list in ChannelList"></select>
             </div>
+            <div id="Message">{{Message}}</div>
             <div>
                 <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" type="submit" ng-disabled="form.$invalid" aria-disabled="true" disabled="disabled">确认<div class="md-ripple-container"></div></button>
                 <a href="#/page/CMS/content/index"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink">取消<div class="md-ripple-container"></div></button></a>
