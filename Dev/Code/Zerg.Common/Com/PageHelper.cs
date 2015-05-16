@@ -42,10 +42,11 @@ namespace Zerg.Common
         /// </summary>
         /// <param name="status"></param>
         /// <param name="msg"></param>
+        /// <param name="obj"></param>
         /// <returns></returns>
-        public static ResultModel  ReturnValue(bool status,string msg)
+        public static ResultModel  ReturnValue(bool status,string msg,object obj = null)
         {
-            return new ResultModel { Status=status,Msg=msg };
+            return new ResultModel { Status = status, Msg = msg, Object = obj };
         }
 
         /// <summary>
