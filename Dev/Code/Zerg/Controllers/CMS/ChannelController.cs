@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CMS.Entity.Model;
@@ -54,24 +55,45 @@ namespace Zerg.Controllers.CMS
         [HttpPost]
         public HttpResponseMessage Create(ChannelModel model)
         {
-           var newParent = model.ParentId == 0?null:_channelService.GetChannelById(model.ParentId);
-            var channel = new ChannelEntity
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            var m = reg.IsMatch(model.Name);
+            if (!m)
             {
-                Name=model.Name,
-                Status=model.Status,
-                Parent=newParent,
-                Adduser=_workContent.CurrentUser.Id,
-                Addtime=DateTime.Now,
-                UpdUser=_workContent.CurrentUser.Id,
-                UpdTime=DateTime.Now
-            };
-            if (_channelService.Create(channel)!=null)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
             }
             else
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                var channelCon = new ChannelSearchCondition
+                {
+                    Name = model.Name               
+                };
+                var totalCount = _channelService.GetChannelCount(channelCon);
+                if (totalCount > 0)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已存在！"));
+                }
+                else
+                {
+                    var newParent = model.ParentId == 0 ? null : _channelService.GetChannelById(model.ParentId);
+                    var channel = new ChannelEntity
+                    {
+                        Name = model.Name,
+                        Status = model.Status,
+                        Parent = newParent,
+                        Adduser = _workContent.CurrentUser.Id,
+                        Addtime = DateTime.Now,
+                        UpdUser = _workContent.CurrentUser.Id,
+                        UpdTime = DateTime.Now
+                    };
+                    if (_channelService.Create(channel) != null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                    }
+                    else
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                    }
+                }
             }
         }
         /// <summary>
@@ -123,17 +145,22 @@ namespace Zerg.Controllers.CMS
         /// </summary>
         /// <param name="id">频道id</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
          public HttpResponseMessage Delete(int id)
          {
-             var channel = _channelService.GetChannelById(id);
-             if (_channelService.Delete(channel))
-             {
-                 return PageHelper.toJson(PageHelper.ReturnValue(true,"数据删除成功！"));
-             }
-             else{
-                 return PageHelper.toJson(PageHelper.ReturnValue(false,"数据删除失败！"));
-             }
+                var channel = _channelService.GetChannelById(id);
+            if (channel.Contents != null && channel.Contents.Any())
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "有内容关联不能删除"));
+            }
+            if (_channelService.Delete(channel))
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功！"));
+                }
+                else
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
+                }
          }
     }
 }
