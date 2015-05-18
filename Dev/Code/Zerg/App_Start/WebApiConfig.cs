@@ -14,6 +14,8 @@ namespace Zerg
     {
         public static void Register(HttpConfiguration config)
         {
+            //允许跨域请求
+            config.EnableCors();
             // Web API 配置和服务
             var initialize = new InitializeContainer();
             initialize.Initializing();
@@ -24,7 +26,7 @@ namespace Zerg
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
         }

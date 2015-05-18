@@ -14,6 +14,7 @@ namespace Zerg
     {
         protected void Application_Start()
         {
+            GlobalConfiguration.Configuration.EnableCors();
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
 //            //注册依赖容器

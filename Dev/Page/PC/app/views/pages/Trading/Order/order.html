@@ -1,0 +1,64 @@
+<div class="p-md" ng-app="App" ng-controller="orderController">
+<div>
+    <select ng-model="vm.selectVal" ng-options="o.id as o.title for o in vm.optionsData" ng-change="selectChange()">
+        <option value="">选择审核状态</option>
+    </select>
+</div>
+<div class="panel panel-default" align="center">
+    <div class="panel-heading">订单列表</div>
+    <table st-table="rowCollectionPage" class="table table-striped" align="center">
+        <thead>
+        <tr>
+            <th align="center">编码</th>
+            <th align="center">类型</th>
+            <th align="center">审核</th>
+            <th align="center">流程</th>
+            <th align="center">经纪人名称</th>
+            <th align="center">经纪人电话</th>
+            <th align="center">地产商名称</th>
+            <th align="center">价格</th>
+            <th align="center">推荐佣金</th>
+            <th align="center">成交佣金</th>
+            <th align="center">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in rowCollectionBasic">
+            <td align="center">{{row.Ordercode }}</td>
+            <td align="center" ng-if="row.Ordertype==0">推荐订单</td>
+            <td align="center" ng-if="row.Ordertype==1">成交订单</td>
+            <td align="center" ng-if="row.Status==0">未审核</td>
+            <td align="center" ng-if="row.Status==1">审核驳回</td>
+            <td align="center" ng-if="row.Status==2">审核通过</td>
+            <td align="center" ng-if="row.Shipstatus==0">未看房</td>
+            <td align="center" ng-if="row.Shipstatus==1">已预约</td>
+            <td align="center" ng-if="row.Shipstatus==2">已看房</td>
+            <td align="center" ng-if="row.Shipstatus==3">已付佣金</td>
+            <td align="center" ng-if="row.Shipstatus==4">已买房</td>
+            <td align="center" ng-if="row.Shipstatus==5">已付佣金</td>
+            <td align="center">{{row.Agentname }}</td>
+            <td align="center">{{row.Agenttel }}</td>
+            <td align="center">{{row.Busname }}</td>
+            <td align="center">{{row.OrderDetail.Price }}</td>
+            <td align="center">{{row.OrderDetail.Commission }}</td>
+            <td align="center">{{row.OrderDetail.Dealcommission }}</td>
+            <td align="center">
+                <button ng-click='Pass(row.Id,2)' class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-edit"></i>通过审核
+                </button>
+                <button ng-click='Pass(row.Id,1)' class="btn btn-info btn-sm"><i md-ink-ripple
+                                                                                 class="fa fa-fw m-r-xs fa-minus"></i>
+                    驳回审核
+                </button>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="5" class="text-center">
+                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7" class="no-margin"></div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+</div>

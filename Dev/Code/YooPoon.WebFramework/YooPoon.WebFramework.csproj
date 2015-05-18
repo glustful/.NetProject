@@ -116,7 +116,7 @@
     <Compile Include="Authentication\Services\IControllerActionService.cs" />
     <Compile Include="Authentication\Services\IRoleService.cs" />
     <Compile Include="Authentication\Services\RoleService.cs" />
-    <Compile Include="Dependency\DependencyRegistrar.cs" />
+    <Compile Include="Dependency\DependencyRegister.cs" />
     <Compile Include="Dependency\YpWebApiDependencyResolver.cs" />
     <Compile Include="MVC\WorkContext.cs" />
     <Compile Include="MVC\YpAuthorizeAttribute.cs" />
