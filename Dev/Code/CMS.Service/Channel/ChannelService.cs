@@ -82,7 +82,7 @@ namespace CMS.Service.Channel
                 }
 				if (!string.IsNullOrEmpty(condition.Name))
                 {
-                    query = query.Where(q => q.Name.Contains(condition.Name));
+                    query = query.Where(q => q.Name==condition.Name);
                 }
 				if (condition.Ids != null && condition.Ids.Any())
                 {
@@ -133,7 +133,7 @@ namespace CMS.Service.Channel
                 }
 				if (!string.IsNullOrEmpty(condition.Name))
                 {
-                    query = query.Where(q => q.Name.Contains(condition.Name));
+                    query = query.Where(q => q.Name==condition.Name);
                 }
 				if (condition.Ids != null && condition.Ids.Any())
                 {
