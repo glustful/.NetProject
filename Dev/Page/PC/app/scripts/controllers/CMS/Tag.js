@@ -106,6 +106,9 @@ angular.module("app").controller('TagEditController',['$http','$scope','$statePa
             if(data.Status){
                 $state.go("page.CMS.tag.index");
             }
+            else{
+                $scope.Message=data.Msg;
+            }
         });
     }
 }]);

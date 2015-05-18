@@ -95,6 +95,9 @@ angular.module("app").controller('ContentEditController',['$http','$scope','$sta
             if(data.Status){
                 $state.go("page.CMS.content.index");
             }
+            else{
+                $scope.Message=data.Msg;
+            }
         });
     }
 }]);
