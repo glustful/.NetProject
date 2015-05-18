@@ -849,9 +849,26 @@ angular.module('app')
             .state('page.CRM.TaskList.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskList/index.html',
+                data : { title: '任务主页' },
+                controller:'taskIndexController',
+                resolve:load(['scripts/controllers/taskList.js',
+                    'scripts/filters/toDate.js'])
+            })
+            .state('page.CRM.TaskList.taskList', {
+                url: '/taskList',
+                templateUrl: 'views/pages/CRM/TaskList/taskList.html',
                 data : { title: '任务列表' }
             })
-
+            .state('page.CRM.TaskList.createTask', {
+                url: '/createTask',
+                templateUrl: 'views/pages/CRM/TaskList/createTask.html',
+                data : { title: '添加任务' }
+            })
+            .state('page.CRM.TaskList.taskDetail', {
+                url: '/taskDetail',
+                templateUrl: 'views/pages/CRM/TaskList/taskDetail.html',
+                data : { title: '任务详情' }
+            })
             .state('page.CRM.TaskConfigure',{
                 url:'/TaskConfigure',
                 template:'<div ui-view></div>'

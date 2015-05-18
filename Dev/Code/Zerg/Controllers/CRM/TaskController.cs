@@ -48,20 +48,40 @@ namespace Zerg.Controllers.CRM
         /// <param name="taskSearchModel"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage TaskList(TaskSearchCondition searchCondition)
+        //public HttpResponseMessage TaskList(TaskSearchCondition searchCondition)
+        //{
+        //    if (searchCondition == null)
+        //    {
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "condition is null"));
+        //    }
+
+        //    var condition = new TaskSearchCondition
+        //    {
+        //        OrderBy = EnumTaskSearchOrderBy.OrderById,
+        //        Taskname = searchCondition.Taskname
+
+        //    };
+        //    return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToList());
+        //}
+        public HttpResponseMessage TaskList(string Taskname)
         {
+
+
+            
             var condition = new TaskSearchCondition
             {
-                OrderBy = EnumTaskSearchOrderBy.OrderById
+                OrderBy = EnumTaskSearchOrderBy.OrderById,
+                Taskname = Taskname,
+              
             };
             return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToList());
         }
-
          /// <summary>
          /// 返回任务详情
          /// </summary>
          /// <param name="id"></param>
          /// <returns></returns>
+        [HttpGet]
          public HttpResponseMessage TaskDetail([FromBody] int id)
          {
              return PageHelper.toJson(_taskService.GetTaskById(id));
