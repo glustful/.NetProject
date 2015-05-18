@@ -6,7 +6,7 @@
 }
 body{
     color:#686868;
-    font-family: "微软雅黑";
+    font-family: 'microsoft yahei';
 }
 .clear{
     clear:both;
@@ -197,7 +197,7 @@ h5{
 }
 .act{
     background: url("../image/storeroom/活动2.png") no-repeat center 20px;
-    color: #f9e700;
+
 }
 
 .house{
@@ -208,4 +208,7 @@ h5{
 }
 .personal{
     background: url("../image/storeroom/个人中心1.png") no-repeat center 20px;
+}
+ .foot .act {
+    color: #f9e700;
 }

@@ -5,7 +5,7 @@
     border: none;
 }
 body{
-    font-family: "微软雅黑";
+    font-family: 'microsoft yahei';
     font-size: 16px;
     color:#a0a0a0;
 }
@@ -182,17 +182,17 @@ h4{
     color: #fff;
 }
 .act{
-    background: url("../image/takeOff/活动2.png") no-repeat center 20px;
+    background: url("../image/syj/活动2.png") no-repeat center 20px;
     color: #f9e700;
 }
 .house{
-    background: url("../image/takeOff/房源库1.png") no-repeat center 20px;
+    background: url("../image/syj/房源库1.png") no-repeat center 20px;
 }
 .agent{
-    background: url("../image/takeOff/经纪人专区1.png") no-repeat center 20px;
+    background: url("../image/syj/经纪人专区1.png") no-repeat center 20px;
 }
 .personal{
-    background: url("../image/takeOff/个人中心1.png") no-repeat center 20px;
+    background: url("../image/syj/个人中心1.png") no-repeat center 20px;
 }
 
 

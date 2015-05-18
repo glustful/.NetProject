@@ -128,7 +128,7 @@ a{
 .syj a .summary{
     position: absolute;
     left: 18px;
-    top: 530px;
+    top: 130px;
     z-index:3;
     color: #fff;
 }
@@ -138,7 +138,7 @@ a{
     position: absolute;
     z-index: 2;
     left: 0;
-    top: 523px;
+    top: 120px;
     width: 620px;
     height: 40px;
 }

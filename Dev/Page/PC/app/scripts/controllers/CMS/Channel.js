@@ -89,6 +89,9 @@ angular.module("app").controller('ChannelEditController',['$http','$scope','$sta
             if(data.Status){
                 $state.go("page.CMS.channel.index");
             }
+            else{
+                $scope.Message=data.Msg;
+            }
         });
     }
 }]);

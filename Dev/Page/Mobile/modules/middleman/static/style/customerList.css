@@ -41,7 +41,7 @@ a {
 .header{
     height: 67px;
     line-height: 67px;
-    background: url("../image/houseDetail/icon_03.png") no-repeat 588px center #fc3b00;
+    background: url("../image/customerList/icon_03.png") no-repeat 588px center #fc3b00;
 
 }
 .header a{
@@ -50,13 +50,16 @@ a {
     display: inline-block;
     margin-left:19px;
     padding-left:19px;
-    background: url("../image/houseDetail/icon1_03.png") no-repeat 0 center;
+    background: url("../image/customerList/icon1_03.png") no-repeat 0 center;
 }
 h1{
     font-weight: normal;
     color:#fff;
     margin-left: 270px;
     font-size: 22px;
+}
+.content .list {
+    margin-bottom: 20px;
 }
 
 .content .intro{
@@ -127,4 +130,28 @@ h1{
     font-size: 16px;
     color: #b5b4b4;
 }
-
+.foot {
+    background: #f13800;
+}
+.foot span{
+    display: inline-block;
+    text-align: center;
+    width:150px;
+    padding:60px 0 17px 0;
+    color: #fff;
+}
+.act{
+    background: url("../image/customerList/活动1.png") no-repeat center 20px;
+}
+.house{
+    background: url("../image/customerList/房源库1.png") no-repeat center 20px;
+}
+.agent{
+    background: url("../image/customerList/经纪人专区1.png") no-repeat center 20px;
+}
+.personal{
+    background: url("../image/customerList/个人中心2.png") no-repeat center 20px;
+}
+.foot .personal{
+    color: #f9e700;
+}

@@ -5,7 +5,7 @@
     border: none;
 }
 body{
-    font-family: "微软雅黑";
+    font-family: 'microsoft yahei';
     font-size: 16px;
     color:#a0a0a0;
 }
@@ -196,11 +196,10 @@ h3{
     color: #fff;
 }
 .act{
-    background: url("../image/recommend/活动2.png") no-repeat center 20px;
+    background: url("../image/recommend/活动1.png") no-repeat center 20px;
 }
-.act{
-    color: #f9e700;
-}
+
+
 .house{
     background: url("../image/recommend/房源库1.png") no-repeat center 20px;
 }

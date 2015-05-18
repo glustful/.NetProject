@@ -25,7 +25,7 @@
 angular.module("app").controller('TagIndexController', [
     '$http','$scope','$modal',function($http,$scope,$modal) {
         $scope.searchCondition = {
-            tag: '',
+            LikeTag: '',
             page: 1,         //????
             pageSize: 10,   //???????
             totalPage:1
@@ -105,6 +105,9 @@ angular.module("app").controller('TagEditController',['$http','$scope','$statePa
         }).success(function(data){
             if(data.Status){
                 $state.go("page.CMS.tag.index");
+            }
+            else{
+                $scope.Message=data.Msg;
             }
         });
     }

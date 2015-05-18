@@ -6,7 +6,7 @@
 }
 body{
     color:#686868;
-    font-family: "微软雅黑";
+    font-family: 'microsoft yahei';
 }
 .clear{
     clear:both;
@@ -51,7 +51,7 @@ a{
 }
 .logo{
     margin:13px 0 0 27px;
-    background: url("../image/storeroom/logo.png") no-repeat 0 0;
+    background: url("../image/personal/logo.png") no-repeat 0 0;
     width: 82px;
     height: 41px;
 }
@@ -66,13 +66,13 @@ a{
     height: 45px;
     line-height: 45px;
     margin:10px 20px 0 0;
-    background: url("../image/storeroom/搜索框.png") no-repeat 0 bottom ;
+    background: url("../image/personal/搜索框.png") no-repeat 0 bottom ;
 
 }
 .search label{
     text-indent: -99em;
     display: inline-block;
-    background: url("../image/storeroom/search.png") no-repeat center center ;
+    background: url("../image/personal/search.png") no-repeat center center ;
     width: 50px;
 }
 .search input{
@@ -110,10 +110,13 @@ h1 small{
     font-size:22px;
 }
 h4{
-    color: #666666;
+
     padding:5px 0 15px 0;
     border-bottom:1px solid #ebebeb;
     font-size: 20px;
+}
+h4 a{
+    color: #666666;
 }
 h3{
     color:#f13800;
