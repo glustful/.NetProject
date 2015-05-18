@@ -2,11 +2,11 @@
  * Created by yangdingpeng on 2015/5/15.
  */
 
-//推荐列表
-angular.module("app").controller('TalkingListController', [
+//上访列表
+angular.module("app").controller('FailListController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
-            status:"洽谈中",
+            status:"洽谈失败",
             Brokername:"",
             page: 1,
             pageSize: 10
@@ -25,12 +25,14 @@ angular.module("app").controller('TalkingListController', [
     }
 ]);
 
+
 //详细信息
-angular.module("app").controller('TaklDetialController',[
+angular.module("app").controller('FailDetialController',[
     '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
         //获取详细信息
         $http.get(SETTING.ApiUrl + '/AdminRecom/GetAuditDetail/' + $stateParams.id).success(function (data) {
             $scope.ARDetialModel = data;
+            console.log(data);
         });
 
         $scope.PassAudit = {

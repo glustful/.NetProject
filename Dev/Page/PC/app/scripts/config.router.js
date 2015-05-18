@@ -741,12 +741,16 @@ angular.module('app')
             .state('page.CRM.fail.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/fail/index.html',
-                  data: { title: '洽谈失败' }
+                  data: { title: '洽谈失败' },
+                controller:"FailListController",
+                resolve:load('scripts/controllers/CRM/fail.js')
             })
             .state('page.CRM.fail.detailed', {
-              url: '/detailed',
+              url: '/detailed?id',
               templateUrl: 'views/pages/CRM/fail/detailed.html',
-                  data: { title: '详情页' }
+                  data: { title: '详情页' },
+                controller:"FailDetialController",
+                resolve:load('scripts/controllers/CRM/fail.js')
             })
 
               .state('page.CRM.success', {
@@ -775,12 +779,16 @@ angular.module('app')
             .state('page.CRM.CustomerInformation.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/CustomerInformation/index.html',
-                  data: { title: '带客推荐' }
+                  data: { title: '带客推荐' },
+                controller:"CInfoListController",
+                resolve:load('scripts/controllers/CRM/CustomerInformation.js')
             })
             .state('page.CRM.CustomerInformation.detailed', {
-                url: '/detailed',
+                url: '/detailed?id',
                 templateUrl: 'views/pages/CRM/CustomerInformation/detailed.html',
-                  data: { title: '详情页' }
+                  data: { title: '详情页' },
+                controller:"CIDetialController",
+                resolve:load('scripts/controllers/CRM/CustomerInformation.js')
             })
 
               .state('page.CRM.strike', {
@@ -790,12 +798,16 @@ angular.module('app')
             .state('page.CRM.strike.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/strike/index.html',
-                  data: { title: '所有成交' }
+                  data: { title: '所有成交' },
+                controller:"SCInfoListController",
+                resolve:load('scripts/controllers/CRM/strike.js')
             })
             .state('page.CRM.strike.detailed', {
-                url: '/detailed',
+                url: '/detailed?id',
                 templateUrl: 'views/pages/CRM/strike/detailed.html',
-                  data: { title: '详情页' }
+                  data: { title: '详情页' },
+                controller:"SCIDetialController",
+                resolve:load('scripts/controllers/CRM/strike.js')
             })
 
               .state('page.CRM.recommend', {
