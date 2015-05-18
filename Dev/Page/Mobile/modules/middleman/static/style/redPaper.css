@@ -106,11 +106,9 @@ h3{
     background: url("../image/redPaper/经纪人专区1.png") no-repeat center 20px;
 }
 .personal{
-    background: url("../image/redPaper/个人中心2.png") no-repeat center 20px;
+    background: url("../image/redPaper/个人中心1.png") no-repeat center 20px;
 }
-.foot .personal{
-    color: #f9e700;
-}
+
 h3{
     color: #525252;
     font-size: 3.5em;
