@@ -1,38 +1,29 @@
 *{
-    padding: 0;
     margin: 0;
+    padding: 0;
 }
 body{
-
-    font-family: 'microsoft yahei';
-    color: #848484;
-    background-color: #eeeeee;
+    font-family: "microsoft yahei";
     font-size: 18px;
-}
-.fl{
-    float:left;
+    background-color: #eeeeee;
+    color: #848484;
 }
 .window{
     width: 640px;
-  margin:0 auto;
-    clear: both;
+    margin: 0 auto;
 }
-.content p{
-    margin-left: 30px;
-    font-weight:600;
+a{
+    text-decoration: none;
+    color: #ffffff;
 }
 .head{
     padding: 16px;
     background-color: #fc3b00;
 }
 .head p {
-    line-height: 20px;
+    line-height: 32px;
     color: #ffffff;
     text-align: center;
-}
-.head a{
-    color:  #ffffff;
-    text-decoration: none;
 }
 .back{
     float: left;
@@ -40,39 +31,35 @@ body{
 .personall{
     float: right;
 }
-ul li{
+ul li {
+    width: 100%;
+    background-color: #ffffff;
+
+}
+ul{
     list-style: none;
 }
-.partner{
-    height: 60px;
+ul li button{
     width: 640px;
-    color: #848484;
-    font-family: "microsoft yahei";
-    font-size: 18px;
-    line-height: 60px;
     background-color: #ffffff;
-    border: hidden;
+    border: none;
+    font-family: "microsoft yahei";
+    font-size: 20px;
+    color: #626161;
+    height: 80px;
+    line-height: 80px;
+}
+.fl{
+    float: left;
 }
 .name{
-    float: left;
-    margin-left: 45px;
+    margin-left: 34px;
 }
-.jiantou{
-    float: right;
-    margin-right: 30px;
-}
-.p_photo{
-    float: left;
-    margin-left: 30px;
-}
-.button_insert{
-    height: 75px;
-    width: 100%;
-    font-family: "microsoft yahei";
-    font-size: 18px;
-    color: #ff4200;
-    background-color: #ffffff;
-    border: hidden;
+.set{
+    margin-left: 365px;
+    margin-right: 60px;
+    color: #aeacac;
+    font-size: 16px;
 }
 .footer{
     position: fixed;
@@ -101,42 +88,26 @@ ul li{
 .personal{
     background: url("../image/partner/gerenzhongxin.png") no-repeat center 20px;
 }
-
-/*合伙人详情*/
-.detail_content{
-    margin: 56px 25px 0 30px;
-    background-color: white;
-    color: black;
-}
-
-.partner_mark{
+/*安全设置*/
+.security_content{
+    margin: 20px 55px 0 55px;
+    color: #848484;
     clear: both;
-    margin-top: 80px;
 }
-.information{
-   margin-left: 27px;
-    margin-right: 106px;
-}
-.mark{
-    margin-left: 75px;
-    margin-right: 260px;
-    color: #fc3b00;
-}
-.information span {
+form a{
     color: #848484;
 }
-/*添加合伙人*/
-.add_content{
-    margin: 20px 55px 0 55px;
-}
-.add_blank{
+.password{
     width: 516px;
     height: 46px;
     font-size: 16px;
     font-family: "microsoft yahei";
     border: 1px solid #eeeeee;
 }
-.add_button{
+.old{
+    margin-bottom: 20px;
+}
+.save_button{
     width: 516px;
     height: 46px;
     background-color: #fc3b00;
@@ -146,8 +117,28 @@ ul li{
     font-family: "microsoft yahei";
     color: white;
 }
-.add_content span{
-    font-size: 14px;
-    color: #fc3b00;
+.found{
+  float: right;
+    margin-right: 10px;
 }
-
+/*个人设置*/
+.person_revise{
+    margin: 20px 55px 0 55px;
+    color: #848484;
+}
+.headphoto{
+    text-align: center;
+    margin-top: 30px;
+}
+.headphoto a{
+    color: #848484;
+    text-decoration: none;
+}
+.touxiang{
+    margin-left: 250px;
+    margin-right: 250px;
+    width: 128px;
+    height: 128px;
+    background: url("../image/partner/touxiang.png") no-repeat center center;
+    background-color: #ffffff;
+}
