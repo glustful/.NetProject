@@ -34,11 +34,12 @@ namespace Zerg.Controllers.CMS
         public HttpResponseMessage Index(string tag = null,int page=1,int pageSize=10)
         {
             var tagCon = new TagSearchCondition{
-                Tag = tag,
+                LikeTag = tag,
                 Page = page,
                 PageCount = pageSize
             };
-            var tagList = _tagService.GetTagsByCondition(tagCon).Select(a => new TagModel { 
+            var tagList = _tagService.GetTagsByCondition(tagCon).Select(a => new TagModel
+            { 
                 Id=a.Id,
                 Tag=a.Tag
             }).ToList();
