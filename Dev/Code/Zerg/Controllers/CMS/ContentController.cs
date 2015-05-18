@@ -87,21 +87,31 @@ namespace Zerg.Controllers.CMS
         /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage Edit(ContentDetailModel model)
-        { 
-            var content = _contentService.GetContentById(model.Id);
-            var newChannel = _channelService.GetChannelById(model.ChannelId);
-            content.Title = model.Title;
-            content.Content = model.Content;
-            content.Status = model.Status;
-            content.UpdUser = _workContent.CurrentUser.Id;
-            content.UpdTime = DateTime.Now;
-            content.Channel = newChannel;
-            if (_contentService.Update(content)!=null) {
-                return PageHelper.toJson(PageHelper.ReturnValue(true,"数据更新成功！"));
+        {
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            var m = reg.IsMatch(model.Title);
+            if (!m)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "标题存在非法字符！"));
             }
             else
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(false,"数据更新失败！"));
+                var content = _contentService.GetContentById(model.Id);
+                var newChannel = _channelService.GetChannelById(model.ChannelId);
+                content.Title = model.Title;
+                content.Content = model.Content;
+                content.Status = model.Status;
+                content.UpdUser = _workContent.CurrentUser.Id;
+                content.UpdTime = DateTime.Now;
+                content.Channel = newChannel;
+                if (_contentService.Update(content) != null)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                }
+                else
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+                }
             }
         }
         /// <summary>
