@@ -25,7 +25,7 @@
 angular.module("app").controller('TagIndexController', [
     '$http','$scope','$modal',function($http,$scope,$modal) {
         $scope.searchCondition = {
-            tag: '',
+            LikeTag: '',
             page: 1,         //????
             pageSize: 10,   //???????
             totalPage:1
