@@ -572,6 +572,12 @@ angular.module('app')
                 resolve: load('scripts/controllers/vectormap.js')
             })
 
+
+
+
+
+
+
               .state('page.CRM', {
                   url: '/CRM',
                   template: '<div ui-view></div>'
@@ -583,13 +589,14 @@ angular.module('app')
             .state('page.CRM.AgentManager.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/AgentManager/index.html',
-                  data: { title: '经纪人管理' }
+              data: { title: '经纪人管理' },
+              resolve:load('scripts/controllers/CRM/agentmanager.js')
             })
             .state('page.CRM.AgentManager.detailed', {
-              url: '/detailed',
+              url: '/detailed?userid',
               templateUrl: 'views/pages/CRM/AgentManager/detailed.html',
-                  data: { title: '详情页' },
-              controller: 'VectorMapCtrl'
+              data: { title: '详情页' },
+               resolve:load('scripts/controllers/CRM/agentmanager.js')
             })
 
               .state('page.CRM.BusMan', {

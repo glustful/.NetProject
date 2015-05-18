@@ -115,7 +115,7 @@ namespace CRM.Service.BankCard
                 }
 				if (condition.Brokers != null)
                 {
-                    query = query.Where(q => condition.Brokers==(q.Broker));
+                    query = query.Where(q => (q.Broker.Id == condition.Brokers.Id));
                 }
 				if (condition.Nums != null && condition.Nums.Any())
                 {
