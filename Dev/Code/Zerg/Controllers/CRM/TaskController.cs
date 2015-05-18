@@ -58,7 +58,6 @@ namespace Zerg.Controllers.CRM
         /// <param name="taskSearchModel"></param>
         /// <returns></returns>
         [HttpGet]
-<<<<<<< HEAD
         //public HttpResponseMessage TaskList(TaskSearchCondition searchCondition)
         //{
         //    if (searchCondition == null)
@@ -74,28 +73,16 @@ namespace Zerg.Controllers.CRM
         //    };
         //    return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToList());
         //}
-        public HttpResponseMessage TaskList(string Taskname)
-=======
+      
 
         public HttpResponseMessage TaskList(string Taskname, int page, int pageSize)
->>>>>>> 4af4dcba0a34a626067e81c22df3a71fdae1d511
-        {
-
-
-            
-<<<<<<< HEAD
-            var condition = new TaskSearchCondition
-            {
-                OrderBy = EnumTaskSearchOrderBy.OrderById,
-                Taskname = Taskname,
-=======
+        {                     
             var taskcondition = new TaskSearchCondition
             {
                 OrderBy = EnumTaskSearchOrderBy.OrderById,
                 Taskname = Taskname,
                 Page = page,
                 PageCount = pageSize 
->>>>>>> 4af4dcba0a34a626067e81c22df3a71fdae1d511
               
             };
             var taskList = _taskService.GetTasksByCondition(taskcondition).Select(p => new
@@ -114,12 +101,8 @@ namespace Zerg.Controllers.CRM
          /// </summary>
          /// <param name="id"></param>
          /// <returns></returns>
-        [HttpGet]
-<<<<<<< HEAD
-         public HttpResponseMessage TaskDetail([FromBody] int id)
-=======
-         public HttpResponseMessage TaskDetail( int id)
->>>>>>> 4af4dcba0a34a626067e81c22df3a71fdae1d511
+         [HttpGet]
+         public HttpResponseMessage TaskDetail([FromBody] int id)   
          {
           
              var taskcondition = new TaskSearchCondition
