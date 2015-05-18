@@ -41,7 +41,7 @@ namespace CRM.Entity.Model
 		public string Describe { get; set; }
 
 
-
+        public int taskId { get; set; }
 
 		public EnumTaskTypeSearchOrderBy? OrderBy { get; set; }
 

@@ -27,88 +27,20 @@
     </tr>
     </thead>
     <tbody>
-    <tr class="footable-even" style="display: table-row;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>1、</td>
-        <td class="footable-visible"><a href="">张三</a></td>
-        <td class="footable-visible">俊发地产</td>
-        <td data-value="78025368997" class="footable-visible">2015.5.7</td>
+    <tr class="footable-even" style="display: table-row;" ng-repeat="item in Brokerlist">
+        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>{{item.Id}}</td>
+        <td class="footable-visible"><a href="">{{item.Clientname}}</a></td>
+        <td class="footable-visible">{{item.Projectname}}</td>
+        <td data-value="78025368997" class="footable-visible">{{item.Uptime}}</td>
         <td class="footable-visible">是</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a href="#/page/CRM/success/detailed"><span class="label bg-success" title="Active">详情</span></a></td>
+        <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.success.detailed({id:item.Id})"><span class="label bg-success" title="Active">审核</span></a></td>
     </tr>
-    <!--<tr class="footable-even" style="display: table-row;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>2、</td>
-        <td class="footable-visible"><a href="">张三</a></td>
-        <td class="footable-visible">小李</td>
-        <td class="footable-visible">俊发地产</td>
-        <td data-value="78025368997" class="footable-visible">2015.5.7</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a href=""><span class="label bg-success" title="Active">详情</span></a></td>
-    </tr>
-    <tr class="footable-even" style="display: table-row;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>3、</td>
-        <td class="footable-visible"><a href="">张三</a></td>
-        <td class="footable-visible">小李</td>
-        <td class="footable-visible">俊发地产</td>
-        <td data-value="78025368997" class="footable-visible">2015.5.7</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a href=""><span class="label bg-success" title="Active">详情</span></a></td>
-    </tr>
-    <tr class="footable-even" style="display: table-row;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>4、</td>
-        <td class="footable-visible"><a href="">张三</a></td>
-        <td class="footable-visible">小李</td>
-        <td class="footable-visible">俊发地产</td>
-        <td data-value="78025368997" class="footable-visible">2015.5.7</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a href=""><span class="label bg-success" title="Active">详情</span></a></td>
-    </tr>
-    <tr class="footable-even" style="display: table-row;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>5、</td>
-        <td class="footable-visible"><a href="">张三</a></td>
-        <td class="footable-visible">小李</td>
-        <td class="footable-visible">俊发地产</td>
-        <td data-value="78025368997" class="footable-visible">2015.5.7</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a href=""><span class="label bg-success" title="Active">详情</span></a></td>
-    </tr>
-    <tr class="footable-odd" style="display: none;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>Maxine</td>
-        <td class="footable-visible"><a href="">Woldt</a></td>
-        <td class="footable-visible"><a href="">Business Services Sales Representative</a></td>
-        <td data-value="561440464855" class="footable-visible">17 Oct 1987</td>
-        <td data-value="2" class="footable-visible footable-last-column"><span class="label bg-light" title="Disabled">Disabled</span></td>
-    </tr>
-    <tr class="footable-even" style="display: none;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>Lorraine</td>
-        <td class="footable-visible">Mcgaughy</td>
-        <td class="footable-visible">Hemodialysis Technician</td>
-        <td data-value="437400551390" class="footable-visible">11 Nov 1983</td>
-        <td data-value="2" class="footable-visible footable-last-column"><span class="label bg-light" title="Disabled">Disabled</span></td>
-    </tr>
-    <tr class="footable-odd" style="display: none;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>Lizzee</td>
-        <td class="footable-visible"><a href="">Goodlow</a></td>
-        <td class="footable-visible">Technical Services Librarian</td>
-        <td data-value="-257733999319" class="footable-visible">1 Nov 1961</td>
-        <td data-value="3" class="footable-visible footable-last-column"><span class="label bg-warning" title="Suspended">Suspended</span>
-        </td>
-    </tr>
-    <tr class="footable-even" style="display: none;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>Judi</td>
-        <td class="footable-visible">Badgett</td>
-        <td class="footable-visible">Electrical Lineworker</td>
-        <td data-value="362134712000" class="footable-visible">23 Jun 1981</td>
-        <td data-value="1" class="footable-visible footable-last-column"><span class="label bg-success" title="Active">Active</span></td>
-    </tr>
-    <tr class="footable-odd" style="display: none;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>Lauri</td>
-        <td class="footable-visible">Hyland</td>
-        <td class="footable-visible">Blackjack Supervisor</td>
-        <td data-value="500874333932" class="footable-visible">15 Nov 1985</td>
-        <td data-value="3" class="footable-visible footable-last-column"><span class="label bg-warning" title="Suspended">Suspended</span>
-        </td>
-    </tr>-->
+
     </tbody>
     <tfoot class="hide-if-no-paging">
     <tr>
         <td colspan="5" class="text-center footable-visible">
-            <ul class="pagination"><li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li><li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li><li class="footable-page active"><a data-page="0" href="#">1</a></li><li class="footable-page"><a data-page="1" href="#">2</a></li><li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li><li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li></ul>
+            <pagination boundary-links="true" total-items="searchCondition.totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
         </td>
     </tr>
     </tfoot>

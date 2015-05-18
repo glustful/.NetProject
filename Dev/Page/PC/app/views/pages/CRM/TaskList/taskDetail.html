@@ -1,4 +1,5 @@
 <!--黄秀宇 任务列表  2015.05.12
+<<<<<<< HEAD
 自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />-->
 
 <div id="divTaskD"class="bord">
@@ -20,12 +21,49 @@
             <p >任务描述<span style="margin-left:10px;margin-right:30px;color:#0088cc;">
             sfsafdjoweijgihboifdhnvpaaowejtgiprojnnnnnnnseajgvpfdovhjn
             sdfoisfhnkowiehigvb</span>
+=======
+自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />
+angular.js路径app/scrips/controller/CRM/taskList.js-->
+<div ng-controller="taskDetailcontroller">
+<div id="divTaskD"class="bord"ng-repeat="item in taskModel1" >
+    <div class="taskd  bord">
+        <div style="text-align: left;">
+            <p >任务名称<span class="spantask">
+            {{item.Taskname}}</span>
+                </p>
+            <p style="margin-top:50px;">完成条件<span class="spantask">
+            {{item.tagName}}</span>
+                </p>
+        </div>
+        <div style="text-align: left;margin-left:400px;margin-top:-110px;">
+            <p >
+                结束时间<span style="margin-left:20px;color:#0088cc;">
+            {{item.Endtime|toDate|date}}</span></p>
+            <p style="margin-top:50px;">
+                奖励方式<span style="margin-left:20px;color:#0088cc;">
+            {{item.awardName}}</span></p>
+        </div>
+
+    </div>
+    <div class="taskd  bord" style="text-align:left;">
+        <div>
+            <p >任务描述<span style="margin-left:10px;margin-right:30px;color:#0088cc;">
+            {{item.Describe}}</span>
+>>>>>>> 4af4dcba0a34a626067e81c22df3a71fdae1d511
             </p>
 
         </div>
     </div>
+<<<<<<< HEAD
     <div style="margin-top:30px;"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">修改</button>
         <a href="#page/CRM/TaskList/index"> <button md-ink-ripple="" style="margin-left:40px;" class="md-btn md-raised m-b btn-fw blue">返回</button></a>
     </div>
 
+=======
+    <div style="margin-top:50px;"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">修改</button>
+        <a href="#page/CRM/TaskList/index"> <button style="margin-left:150px;" md-ink-ripple="" style="margin-left:40px;" class="md-btn md-raised m-b btn-fw blue">返回</button></a>
+    </div>
+
+</div>
+>>>>>>> 4af4dcba0a34a626067e81c22df3a71fdae1d511
 </div>

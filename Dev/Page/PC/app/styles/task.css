@@ -19,7 +19,7 @@
     border :1px solid #dbdbdb;
 }
 .marginL{
-    margin-left:200px;
+    margin-left:0px;
 
 }
 .taskheader li{
@@ -28,7 +28,7 @@
     margin:0;
     float:left;
     text-align:left;
-    width:16.6%;
+    width:15%;
 }
 .taskheader1 li{
     list-style:none;
@@ -40,7 +40,7 @@
 }
 .taskclear{
      padding:28px;
-    width:80%;
+
     vertical-align:middle;
 
 }
@@ -48,7 +48,7 @@
 
     border-top:0px ;
     padding:28px;
-    width:80%;
+
     vertical-align:middle;
 
 
@@ -74,7 +74,7 @@ border-top:0px ;
 }
 
 .taskd{
-    width:500px;
+    width:830px;
 
     padding:30px;
     text-align:center;
@@ -86,7 +86,7 @@ border-top:0px ;
 }
 #divTaskD{
     background-color:white;
-    width:700px;
+    width:1000px;
     text-align:center;
     padding:80px;
 

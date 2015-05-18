@@ -3,14 +3,18 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.UI.WebControls.Expressions;
 using CRM.Entity.Model;
+//using CRM.Service.BLPay;
 using CRM.Service.Task;
 using CRM.Service.TaskAward;
 using CRM.Service.TaskPunishment;
 using CRM.Service.TaskTag;
 using CRM.Service.TaskType;
+using CRM .Service .TaskList ;
 using Zerg.Common;
 using Zerg.Models.CRM;
+using CRM.Service.Broker;
 
 namespace Zerg.Controllers.CRM
 {
@@ -25,12 +29,16 @@ namespace Zerg.Controllers.CRM
         private readonly ITaskAwardService _taskAwardService;
         private readonly ITaskTagService _taskTagService;
         private readonly ITaskPunishmentService _taskPunishmentService;
+        private readonly ITaskListService _taskListService;
+         private readonly IBrokerService _brokerService;
 
         public TaskController(ITaskService taskService, 
             ITaskTypeService taskTypeService, 
             ITaskAwardService taskAwardService, 
             ITaskTagService taskTagService, 
-            ITaskPunishmentService taskPunishmentService
+            ITaskPunishmentService taskPunishmentService,
+            ITaskListService taskListService,
+            IBrokerService  brokerService
             )
         {
             _taskService = taskService;
@@ -38,6 +46,8 @@ namespace Zerg.Controllers.CRM
             _taskAwardService = taskAwardService;
             _taskTagService = taskTagService;
             _taskPunishmentService = taskPunishmentService;
+            _taskListService = taskListService;
+            _brokerService = brokerService;
         }
 
         #region 单个任务配置 杨定鹏 2015年4月28日10:04:08
@@ -48,6 +58,7 @@ namespace Zerg.Controllers.CRM
         /// <param name="taskSearchModel"></param>
         /// <returns></returns>
         [HttpGet]
+<<<<<<< HEAD
         //public HttpResponseMessage TaskList(TaskSearchCondition searchCondition)
         //{
         //    if (searchCondition == null)
@@ -64,17 +75,39 @@ namespace Zerg.Controllers.CRM
         //    return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToList());
         //}
         public HttpResponseMessage TaskList(string Taskname)
+=======
+
+        public HttpResponseMessage TaskList(string Taskname, int page, int pageSize)
+>>>>>>> 4af4dcba0a34a626067e81c22df3a71fdae1d511
         {
 
 
             
+<<<<<<< HEAD
             var condition = new TaskSearchCondition
             {
                 OrderBy = EnumTaskSearchOrderBy.OrderById,
                 Taskname = Taskname,
+=======
+            var taskcondition = new TaskSearchCondition
+            {
+                OrderBy = EnumTaskSearchOrderBy.OrderById,
+                Taskname = Taskname,
+                Page = page,
+                PageCount = pageSize 
+>>>>>>> 4af4dcba0a34a626067e81c22df3a71fdae1d511
               
             };
-            return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToList());
+            var taskList = _taskService.GetTasksByCondition(taskcondition).Select(p => new
+            {
+                Taskname=p.Taskname ,
+                Name=p.TaskType.Name ,
+                Endtime=p.Endtime ,
+                Adduser=p.Adduser ,
+                Id=p.Id 
+            }).ToList ();
+            var taskCount = _taskService.GetTaskCount(taskcondition);
+            return PageHelper.toJson(new { list = taskList, totalCount = taskCount, condition=taskcondition  });
         }
          /// <summary>
          /// 返回任务详情
@@ -82,11 +115,90 @@ namespace Zerg.Controllers.CRM
          /// <param name="id"></param>
          /// <returns></returns>
         [HttpGet]
+<<<<<<< HEAD
          public HttpResponseMessage TaskDetail([FromBody] int id)
+=======
+         public HttpResponseMessage TaskDetail( int id)
+>>>>>>> 4af4dcba0a34a626067e81c22df3a71fdae1d511
          {
-             return PageHelper.toJson(_taskService.GetTaskById(id));
-         }
+          
+             var taskcondition = new TaskSearchCondition
+             {
+                 OrderBy = EnumTaskSearchOrderBy.OrderById,
+                 Id=id
 
+             };
+             var taskdetail = _taskService.GetTasksByCondition(taskcondition).Select(p => new
+             {
+                 Taskname = p.Taskname,
+                 tagName = p.TaskTag.Name,
+                 Endtime = p.Endtime,
+                 awardName=p.TaskAward .Name ,
+                 Describe=p.Describe 
+             }).ToList();
+             
+             return PageHelper.toJson(taskdetail);
+            
+         }
+         /// <summary>
+         /// 查找同一任务列表
+         /// </summary>
+         /// <param name="id"></param>
+         /// <returns></returns>
+         [HttpGet]
+        public HttpResponseMessage taskListBytaskId(int id, int page, int pageSize)
+        {
+            var taskCondition = new TaskListSearchCondition
+            {
+                TaskId = id,
+                Page =page ,
+                PageCount =pageSize 
+            };
+            var tasklistone = _taskListService.GetTaskListsByCondition(taskCondition).Select(p => new
+            {
+                Taskname=p.Task .Taskname ,
+                Brokername=p.Broker .Brokername ,
+                Taskschedule=p.Taskschedule ,
+                Endtime=p.Task .Endtime 
+            }).ToList ();
+
+            var taskCount = _taskListService.GetTaskListCount(taskCondition);
+            return PageHelper.toJson(new { list = tasklistone, totalCount = taskCount ,condition=taskCondition });
+
+
+        }
+     /// <summary>
+     /// 查询任务列表
+     /// </summary>
+     /// <param name="Taskschedule"></param>
+     /// <param name="id"></param>
+     /// <param name="page"></param>
+     /// <param name="pageSize"></param>
+     /// <returns></returns>
+         [HttpGet]
+         public HttpResponseMessage taskListByuser(string Taskschedule, int id, int page, int pageSize)
+         {
+           
+             var taskCondition = new TaskListSearchCondition
+             {
+                 TaskId = id,
+                 Page = page,
+                 PageCount = pageSize,
+                 BrokerName = Taskschedule
+             };
+             var tasklistone = _taskListService.GetTaskListsByCondition(taskCondition).Select(p => new
+             {
+                 Taskname = p.Task.Taskname,
+                 Brokername = p.Broker.Brokername,
+                 Taskschedule = p.Taskschedule,
+                 Endtime = p.Task.Endtime
+             });
+
+             var taskCount = _taskListService.GetTaskListCount(taskCondition);
+             return PageHelper.toJson(new { list = tasklistone, totalCount = taskCount,condition=taskCondition  });
+
+
+         }
          /// <summary>
         /// 添加和修改单个任务
         /// </summary>
@@ -107,9 +219,9 @@ namespace Zerg.Controllers.CRM
                     Taskname = taskModel.Taskname,
                     Describe = taskModel.Describe,
                     Endtime = taskModel.Endtime,
-                    //Adduser = 
+                    Adduser = 1,
                     Addtime = DateTime.Now,
-                    //Upuser = 
+                    Upuser = 1,
                     Uptime = DateTime.Now,
                 };
                 if (taskModel.Type == "add")
@@ -152,8 +264,14 @@ namespace Zerg.Controllers.CRM
         {
             try
             {
+                var cond=new TaskListSearchCondition (){
+                    TaskId =id
+                };
+                int tlistcout = _taskListService.GetTaskListCount(cond);
+                if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "不能删除，已经有人接手任务")); }
+                else { 
                 _taskService.Delete(_taskService.GetTaskById(id));
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功"));
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功"));}
             }
             catch (Exception)
             {
@@ -175,7 +293,12 @@ namespace Zerg.Controllers.CRM
             {
                 OrderBy = EnumTaskTypeSearchOrderBy.OrderById
             };
-            return PageHelper.toJson(_taskTypeService.GetTaskTypesByCondition(condition).ToList());
+            var typelist = _taskTypeService.GetTaskTypesByCondition(condition).Select(p => new
+            {
+                Id=p.Id ,
+                Name =p.Name 
+            }).ToList();
+            return PageHelper.toJson(typelist);
         }
 
         /// <summary>
@@ -229,13 +352,21 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         public HttpResponseMessage DelTaskType(int id)
         {
             try
             {
-                _taskTypeService.Delete(_taskTypeService.GetTaskTypeById(id));
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功"));
+                 var cond=new TaskSearchCondition (){
+                    typeId =id
+                };
+                int tlistcout = _taskService.GetTaskCount(cond);
+                if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "不能删除，已有任务中正使用该任务类型")); }
+                else
+                {
+                    _taskTypeService.Delete(_taskTypeService.GetTaskTypeById(id));
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功"));
+                }
             }
             catch (Exception)
             {
@@ -253,11 +384,21 @@ namespace Zerg.Controllers.CRM
         [HttpGet]
         public HttpResponseMessage TaskAwardList()
         {
+            //var condition = new TaskAwardSearchCondition
+            //{
+            //    OrderBy = EnumTaskAwardSearchOrderBy.OrderById
+            //};
+            //return PageHelper.toJson(_taskAwardService.GetTaskAwardsByCondition(condition).ToList());
             var condition = new TaskAwardSearchCondition
             {
                 OrderBy = EnumTaskAwardSearchOrderBy.OrderById
             };
-            return PageHelper.toJson(_taskAwardService.GetTaskAwardsByCondition(condition).ToList());
+            var typelist = _taskAwardService.GetTaskAwardsByCondition(condition).Select(p => new
+            {
+                Id = p.Id,
+                Name = p.Name
+            }).ToList();
+            return PageHelper.toJson(typelist);
         }
 
         /// <summary>
@@ -277,7 +418,7 @@ namespace Zerg.Controllers.CRM
                     Describe = taskAwardModel.Describe,
                     Value = taskAwardModel.Value
                 };
-                if (taskAwardModel.Value == "add")
+                if (taskAwardModel.Type == "add")
                 {
                     try
                     {
@@ -310,11 +451,29 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         public HttpResponseMessage DelTaskAward(int id)
         {
-            _taskAwardService.Delete(_taskAwardService.GetTaskAwardById(id));
-            return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功"));
+            try
+            {
+                var cond = new TaskSearchCondition()
+                {
+                   awardId = id
+                };
+                int tlistcout = _taskService.GetTaskCount(cond);
+                if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "不能删除，已有任务中正使用该任务奖励")); }
+                else
+                {
+                    _taskAwardService.Delete(_taskAwardService.GetTaskAwardById(id));
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功"));
+                }
+            }
+            catch (Exception)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "删除失败"));
+            }
+           
+          
         }
 
         #endregion
@@ -327,11 +486,21 @@ namespace Zerg.Controllers.CRM
         [HttpGet]
         public HttpResponseMessage TaskTagList()
         {
+            //var condition = new TaskTagSearchCondition
+            //{
+            //    OrderBy = EnumTaskTagSearchOrderBy.OrderById
+            //};
+            //return PageHelper.toJson(_taskTagService.GetTaskTagsByCondition(condition).ToList());
             var condition = new TaskTagSearchCondition
             {
                 OrderBy = EnumTaskTagSearchOrderBy.OrderById
             };
-            return PageHelper.toJson(_taskTagService.GetTaskTagsByCondition(condition).ToList());
+            var typelist = _taskTagService.GetTaskTagsByCondition(condition).Select(p => new
+            {
+                Id = p.Id,
+                Name = p.Name
+            }).ToList();
+            return PageHelper.toJson(typelist);
         }
 
         /// <summary>
@@ -384,13 +553,23 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         public HttpResponseMessage DelTaskTag(int id)
         {
+
             try
             {
-                _taskTagService.Delete(_taskTagService.GetTaskTagById(id));
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功"));
+                var cond = new TaskSearchCondition()
+                {
+                    tagId = id
+                };
+                int tlistcout = _taskService.GetTaskCount(cond);
+                if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "不能删除，已有任务中正使用该任务目标")); }
+                else
+                {
+                    _taskTagService.Delete(_taskTagService.GetTaskTagById(id));
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功"));
+                }
             }
             catch (Exception)
             {
@@ -407,11 +586,21 @@ namespace Zerg.Controllers.CRM
         [HttpGet]
         public HttpResponseMessage TaskPunishmentList()
         {
+            //var condition = new TaskPunishmentSearchCondition
+            //{
+            //    OrderBy = EnumTaskPunishmentSearchOrderBy.OrderById
+            //};
+            //return PageHelper.toJson(_taskPunishmentService.GetTaskPunishmentsByCondition(condition).ToList());
             var condition = new TaskPunishmentSearchCondition
             {
                 OrderBy = EnumTaskPunishmentSearchOrderBy.OrderById
             };
-            return PageHelper.toJson(_taskPunishmentService.GetTaskPunishmentsByCondition(condition).ToList());
+            var typelist = _taskPunishmentService.GetTaskPunishmentsByCondition(condition).Select(p => new
+            {
+                Id = p.Id,
+                Name = p.Name
+            }).ToList();
+            return PageHelper.toJson(typelist);
         }
 
         /// <summary>
@@ -464,18 +653,28 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         public HttpResponseMessage DelTaskPunishment(int id)
         {
             try
             {
-                _taskPunishmentService.Delete(_taskPunishmentService.GetTaskPunishmentById(id));
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功"));
+                var cond = new TaskSearchCondition()
+                {
+                    punishId = id
+                };
+                int tlistcout = _taskService.GetTaskCount(cond);
+                if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "不能删除，已有任务中正使用该任务惩罚")); }
+                else
+                {
+                    _taskPunishmentService.Delete(_taskPunishmentService.GetTaskPunishmentById(id));
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功"));
+                }
             }
             catch (Exception)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "删除失败"));
             }
+         
         }
 
         #endregion

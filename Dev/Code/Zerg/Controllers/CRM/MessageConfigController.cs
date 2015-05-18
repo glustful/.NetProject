@@ -4,23 +4,25 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using CRM.Service.MessageConfig ;
+using CRM.Service.MessageConfig;
 using CRM.Entity.Model;
 using Zerg.Common;
 using Zerg.Models.CRM;
+using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.CRM
 {
+    [EnableCors("*", "*", "*")]
     /// <summary>
     /// 短信配置
     /// </summary>
     public class MessageConfigController : ApiController
     {
         public readonly IMessageConfigService _MessageConfigService;
-        public MessageConfigController (IMessageConfigService messageConfig)
+        public MessageConfigController(IMessageConfigService messageConfig)
         {
             _MessageConfigService = messageConfig;
-         
+
         }
         #region 短信配置 黄秀宇 2015.04.29
 
@@ -31,27 +33,28 @@ namespace Zerg.Controllers.CRM
         /// <param name="PageCount">每页大小</param>
         /// <param name="isDescending">是否降序</param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
-        public List<MessageConfigEntity> SearchMessageConfig(MessageConfigModel messageConfigModel)
+        [HttpGet]
+        public HttpResponseMessage SearchMessageConfig(string page, string pageSize, string totalPage)
         {
 
-            var mConfigCondition = new MessageConfigSearchCondition()
+            var mDetailCondition = new MessageConfigSearchCondition()
             {
-                Page = messageConfigModel.Page,
-                PageCount = messageConfigModel.PageCount,
-                isDescending = messageConfigModel.isDescending
+                Page = Convert.ToInt16(page),
+                PageCount = 100
 
             };
-           return  _MessageConfigService.GetMessageConfigsByCondition(mConfigCondition).ToList();
-           
+            var list = _MessageConfigService.GetMessageConfigsByCondition(mDetailCondition).Select(c => new { c.Id, c.Name, c.Template }).ToList();
+
+            return PageHelper.toJson(list);
         }
+
         /// <summary>
         /// 添加短信配置模板
         /// </summary>
         /// <param name="Name">模板名称</param>
         /// <param name="Template">配置模板</param>
-        [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddMessageConfig(MessageConfigModel messageConfigModel)
+        [HttpPost]
+        public HttpResponseMessage AddMessageConfig(CreateMessageConfigModel messageConfigModel)
         {
             if (!string.IsNullOrEmpty(messageConfigModel.Name) && !string.IsNullOrEmpty(messageConfigModel.Template))
             {
@@ -59,12 +62,12 @@ namespace Zerg.Controllers.CRM
                 {
                     Name = messageConfigModel.Name,
                     Template = messageConfigModel.Template,
-                     Uptime = DateTime.Now,
+                    Uptime = DateTime.Now,
                     Addtime = DateTime.Now
                 };
                 try
                 {
-                    if ( _MessageConfigService.Create(MessageConfigInsert)!= null)
+                    if (_MessageConfigService.Create(MessageConfigInsert) != null)
                     {
                         return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
                     }
@@ -75,8 +78,8 @@ namespace Zerg.Controllers.CRM
                 }
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
-          
-          
+
+
         }
         /// <summary>
         /// 删除短信配置
@@ -99,7 +102,7 @@ namespace Zerg.Controllers.CRM
             }
 
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
-          
+
         }
         /// <summary>
         /// 更新短信配置模板
@@ -116,10 +119,10 @@ namespace Zerg.Controllers.CRM
                 mConfigUpdate.Uptime = DateTime.Now;
                 mConfigUpdate.Name = messageConfigModel.Name;
                 mConfigUpdate.Template = messageConfigModel.Template;
-              
+
                 try
                 {
-                    if ( _MessageConfigService.Update(mConfigUpdate)!= null)
+                    if (_MessageConfigService.Update(mConfigUpdate) != null)
                     {
                         return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
                     }
