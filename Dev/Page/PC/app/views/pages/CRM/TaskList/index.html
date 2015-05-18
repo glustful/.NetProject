@@ -1,10 +1,11 @@
 <!--黄秀宇 任务列表  2015.05.06
-自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />-->
+自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css"
+/>angular.js路径app/scrips/controller/CRM/taskList.js-->
 
 <div ng-controller="taskIndexController">
 <div id="divTaskH"class="marginL">
-    <input style="width:200px;" type="text"ng-model="searchCondition.Taskname" class="form-control bordhtml" placeholder="搜索条件1">
-    <input style="width:200px;" type="text"ng-model="searchCondition.Tasktype" class="form-control bordhtml" placeholder="搜索条件2">
+    <input style="width:200px;" type="text"ng-model="searchCondition.Taskname" maxlength="30"  class="form-control bordhtml" placeholder="任务名称">
+
     <button md-ink-ripple=""ng-click="getList()"style="width:100px;" class="md-btn md-raised m-b btn-fw indigo">检索</button>
     <a href="#page/CRM/TaskList/createTask">  <button id="btntask" md-ink-ripple=""style="width:150px;margin-left: 150px;" class="md-btn md-raised m-b btn-fw indigo">添加新任务</button></a>
 
@@ -18,33 +19,29 @@
             <li>任务类型</li>
             <li>结束时间</li>
             <li>创建人</li>
-            <li >列表</li>
-            <li >详情</li>
+            <li >操作</li>
+
         </ul>
 
     </div>
     <!--列表内容-->
     <div  class="taskcenter bord bordTop0px divodd "ng-repeat="item in list">
-        <ul class="taskheader">
+        <ul class="taskheader" >
             <li>{{item.Taskname}}</li>
-            <li>{{item.TaskType.Name}}</li>
+            <li>{{item.Name}}</li>
             <li>{{item.Endtime | toDate|date}}</li>
             <li>{{item.Adduser}}</li>
-            <li><a href="#page/CRM/TaskList/taskList?id={{item.Id}}"><button md-ink-ripple=""  class="md-btn md-raised m-b btn-fw blue">列表</button></a></li>
-            <li><a href="#page/CRM/TaskList/taskDetail?id={{ item.Id}}"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">详情</button></a></li>
+            <li style="width: 40%"><a href="#page/CRM/TaskList/taskList?id={{item.Id}}"><button md-ink-ripple=""  class="md-btn md-raised m-b btn-fw blue">列表</button></a>
+            <a href="#page/CRM/TaskList/taskDetail?id={{ item.Id}}"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">详情</button></a>
+                <label ><button md-ink-ripple="" ng-click="delTask(item.Id)" class="md-btn md-raised m-b btn-fw blue">删除</button></label></li>
+
         </ul>
 
     </div>
 
-    <div style="width:800px;" colspan="6" class="text-center footable-visible ng-scope">
-        <ul class="pagination">
-            <li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li>
-            <li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li>
-            <li class="footable-page active"><a data-page="0" href="#">1</a></li>
-            <li class="footable-page"><a data-page="1" href="#">2</a></li>
-            <li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li>
-            <li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li>
-        </ul>
+    <div style="width:800px;"  class="text-center footable-visible ng-scope">
+        <pagination boundary-links="true" total-items="searchCondition.totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+
     </div>
 </div>
 

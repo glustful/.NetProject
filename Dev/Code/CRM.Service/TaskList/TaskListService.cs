@@ -122,13 +122,13 @@ namespace CRM.Service.TaskList
                 {
                     query = query.Where(q => condition.Taskschedule.Contains(q.Taskschedule));
                 }
-                if (condition.TaskId != null)
+                if (condition.TaskId >0)
                 {
                     query = query.Where(q => q.Task.Id == (condition.TaskId));
                 }
-                if (condition.BrokerName != null)
+                if (condition.BrokerName != null && condition.BrokerName.Any())
                 {
-                    query = query.Where(q => q.Broker.Brokername == (condition.BrokerName));
+                    query = query.Where(q => q.Broker.Brokername.Contains(condition.BrokerName));
                 }
 				return query;
 			}
@@ -159,6 +159,14 @@ namespace CRM.Service.TaskList
 				if (condition.Brokers != null && condition.Brokers.Any())
                 {
                     query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                }
+                if (condition.TaskId >0)
+                {
+                    query = query.Where(q => q.Task.Id == (condition.TaskId));
+                }
+                if (condition.BrokerName != null && condition.Taskschedule.Any())
+                {
+                    query = query.Where(q => q.Broker.Brokername.Contains(condition.BrokerName));
                 }
 				return query.Count();
 			}
