@@ -8,7 +8,7 @@ public enum EnumUserType
     //商家 merchant    ，   
     //财务 accountant   ，   
     //场秘 secretary    ,   
-    //带客人员
+    //带客人员 waiter
     经纪人 = 0,
     管理员 = 1,
     商家 = 2,

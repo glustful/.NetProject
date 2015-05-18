@@ -710,12 +710,16 @@ angular.module('app')
             .state('page.CRM.WaitPetition.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/WaitPetition/index.html',
-                  data: { title: '待上访记录' }
+                  data: { title: '待上访记录' },
+                controller:"PetitionListController",
+                resolve:load('scripts/controllers/CRM/WaitPetition.js')
             })
             .state('page.CRM.WaitPetition.detailed', {
-              url: '/detailed',
+                url: '/detailed?id',
               templateUrl: 'views/pages/CRM/WaitPetition/detailed.html',
-                  data: { title: '详情页' }
+                  data: { title: '详情页' },
+                controller:"WPDetialController",
+                resolve:load('scripts/controllers/CRM/WaitPetition.js')
             })
 
               .state('page.CRM.talking', {
@@ -725,12 +729,16 @@ angular.module('app')
             .state('page.CRM.talking.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/talking/index.html',
-                  data: { title: '洽谈中业务' }
+                  data: { title: '洽谈中业务' },
+                controller:"TalkingListController",
+                resolve:load('scripts/controllers/CRM/Talking.js')
             })
             .state('page.CRM.talking.detailed', {
-              url: '/detailed',
+              url: '/detailed?id',
               templateUrl: 'views/pages/CRM/talking/detailed.html',
-                  data: { title: '详情页' }
+                  data: { title: '详情页' },
+                controller:"TaklDetialController",
+                resolve:load('scripts/controllers/CRM/Talking.js')
             })
 
               .state('page.CRM.fail', {
@@ -740,12 +748,16 @@ angular.module('app')
             .state('page.CRM.fail.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/fail/index.html',
-                  data: { title: '洽谈失败' }
+                  data: { title: '洽谈失败' },
+                controller:"FailListController",
+                resolve:load('scripts/controllers/CRM/fail.js')
             })
             .state('page.CRM.fail.detailed', {
-              url: '/detailed',
+              url: '/detailed?id',
               templateUrl: 'views/pages/CRM/fail/detailed.html',
-                  data: { title: '详情页' }
+                  data: { title: '详情页' },
+                controller:"FailDetialController",
+                resolve:load('scripts/controllers/CRM/fail.js')
             })
 
               .state('page.CRM.success', {
@@ -755,12 +767,16 @@ angular.module('app')
             .state('page.CRM.success.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/success/index.html',
-                  data: { title: '洽谈成功' }
+                  data: { title: '洽谈成功' },
+                controller:"SuccessListController",
+                resolve:load('scripts/controllers/CRM/Success.js')
             })
             .state('page.CRM.success.detailed', {
-              url: '/detailed',
+              url: '/detailed?id',
               templateUrl: 'views/pages/CRM/success/detailed.html',
-                  data: { title: '详情页' }
+                  data: { title: '详情页' },
+                controller:"SuccessDetialController",
+                resolve:load('scripts/controllers/CRM/Success.js')
             })
 
               .state('page.CRM.CustomerInformation', {
@@ -770,12 +786,16 @@ angular.module('app')
             .state('page.CRM.CustomerInformation.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/CustomerInformation/index.html',
-                  data: { title: '带客推荐' }
+                  data: { title: '带客推荐' },
+                controller:"CInfoListController",
+                resolve:load('scripts/controllers/CRM/CustomerInformation.js')
             })
             .state('page.CRM.CustomerInformation.detailed', {
-                url: '/detailed',
+                url: '/detailed?id',
                 templateUrl: 'views/pages/CRM/CustomerInformation/detailed.html',
-                  data: { title: '详情页' }
+                  data: { title: '详情页' },
+                controller:"CIDetialController",
+                resolve:load('scripts/controllers/CRM/CustomerInformation.js')
             })
 
               .state('page.CRM.strike', {
@@ -784,13 +804,17 @@ angular.module('app')
             })
             .state('page.CRM.strike.index', {
                 url: '/index',
-                templateUrl: 'views/pages/CRM/strike/index.html',
-                  data: { title: '所有成交' }
+                templateUrl: '../views/pages/CRM/success/strike/index.html',
+                  data: { title: '所有成交' },
+                controller:"SCInfoListController",
+                resolve:load('scripts/controllers/CRM/strike.js')
             })
             .state('page.CRM.strike.detailed', {
-                url: '/detailed',
-                templateUrl: 'views/pages/CRM/strike/detailed.html',
-                  data: { title: '详情页' }
+                url: '/detailed?id',
+                templateUrl: '../views/pages/CRM/success/strike/detailed.html',
+                  data: { title: '详情页' },
+                controller:"SCIDetialController",
+                resolve:load('scripts/controllers/CRM/strike.js')
             })
 
               .state('page.CRM.recommend', {
@@ -903,48 +927,69 @@ angular.module('app')
             .state('page.CRM.TaskList.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskList/index.html',
+<<<<<<< HEAD
                 data : { title: '任务主页' },
+                controller:'taskIndexController',
                 resolve:load(['scripts/controllers/taskList.js',
                     'scripts/filters/toDate.js'])
+            })
+            .state('page.CRM.TaskList.taskList', {
+                url: '/taskList',
+                templateUrl: 'views/pages/CRM/TaskList/taskList.html',
+                data : { title: '任务列表' }
+            })
+            .state('page.CRM.TaskList.createTask', {
+                url: '/createTask',
+                templateUrl: 'views/pages/CRM/TaskList/createTask.html',
+                data : { title: '添加任务' }
+            })
+            .state('page.CRM.TaskList.taskDetail', {
+                url: '/taskDetail',
+                templateUrl: 'views/pages/CRM/TaskList/taskDetail.html',
+                data : { title: '任务详情' }
+=======
+
+
+                data : { title: '任务主页' },
+
+                resolve:load(['scripts/controllers/CRM/taskList.js',
+          'scripts/filters/toDate.js'])
             })
             .state('page.CRM.TaskList.taskList', {
                 url: '/taskList?id',
                 templateUrl: 'views/pages/CRM/TaskList/taskList.html',
                 data : { title: '任务列表' },
-                resolve:load(['scripts/controllers/taskList.js',
+                resolve:load(['scripts/controllers/CRM/taskList.js',
                     'scripts/filters/toDate.js'])
             })
             .state('page.CRM.TaskList.createTask', {
                 url: '/createTask?taskModel',
                 templateUrl: 'views/pages/CRM/TaskList/createTask.html',
                 data : { title: '添加任务' },
-                resolve:load(['scripts/controllers/createTask.js'])
+                resolve:load(['scripts/controllers/CRM/createTask.js'])
             })
             .state('page.CRM.TaskList.taskDetail', {
                 url: '/taskDetail?id',
                 templateUrl: 'views/pages/CRM/TaskList/taskDetail.html',
                 data : { title: '任务详情' },
-                resolve:load(['scripts/controllers/taskList.js',
+                resolve:load(['scripts/controllers/CRM/taskList.js',
                     'scripts/filters/toDate.js'])
+>>>>>>> 4af4dcba0a34a626067e81c22df3a71fdae1d511
             })
             .state('page.CRM.TaskConfigure',{
                 url:'/TaskConfigure',
                 template:'<div ui-view></div>',
                 data: { title: '任务列表' }
             })
-
-
             .state('page.CRM.TaskConfigure.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskConfigure/index.html',
+
                 data : { title: '任务配置' },
                 resolve:load([ 'scripts/filters/toDate.js',
-                    'scripts/controllers/taskConfig.js']),
-                data: { title: '任务配置' }
+                    'scripts/controllers/CRM/taskConfig.js'])
+
             })
-
-
-
             .state('page.CMS', {
                 url: '/CMS',
                 template: '<div ui-view></div>'
@@ -963,7 +1008,7 @@ angular.module('app')
               url: '/edit?id',
               templateUrl: 'views/pages/CMS/tag/edit.html',
               data : { title: '编辑页' },
-              controller: '',
+              controller: ''
             })
             .state('page.CMS.tag.create', {
               url: '/create',
@@ -1108,4 +1153,4 @@ angular.module('app')
           }
       }
     ]
-  );
+  )

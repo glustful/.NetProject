@@ -61,5 +61,8 @@ namespace Zerg.Models.CRM
         /// 添加/修改类型
         /// </summary>
         public string Type { get; set; }
+        public int page{ get; set; }
+        public int pageSize { get; set; }
+        
     }
 }

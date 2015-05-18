@@ -61,5 +61,22 @@ app.controller('taskaddcontroller',['$http','$scope',function($http,$scope) {
 
     };
     getTaskPunishment();
+    // 结束时间
+    $scope.open = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.opened = true;
+    };
+
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1,
+        class: 'datepicker'
+    };
+
+    $scope.initDate = new Date();
+    $scope.formats = ['yyyy/MM/dd', 'shortDate'];
+    $scope.format = $scope.formats[0];
 }
 ]);

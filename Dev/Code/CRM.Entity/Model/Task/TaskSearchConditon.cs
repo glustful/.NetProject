@@ -32,7 +32,8 @@ namespace CRM.Entity.Model
 
 
 
-
+        public int Id { get; set; }
+      
 
 		public TaskPunishmentEntity[] TaskPunishments { get; set; }
 
@@ -77,8 +78,22 @@ namespace CRM.Entity.Model
 		public DateTime? UptimeBegin { get; set; }
 
 		public DateTime? UptimeEnd { get; set; }
-
-
+        /// <summary>
+        /// 类型id
+        /// </summary>
+        public int typeId { get; set; }
+        /// <summary>
+        /// 奖励id
+        /// </summary>
+        public int awardId { get; set; }
+        /// <summary>
+        /// 惩罚id
+        /// </summary>
+        public int punishId { get; set; }
+        /// <summary>
+        /// 目标id
+        /// </summary>
+        public int tagId { get; set; }
 
 
 		public EnumTaskSearchOrderBy? OrderBy { get; set; }
