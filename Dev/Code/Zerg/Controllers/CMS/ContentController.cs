@@ -164,13 +164,21 @@ namespace Zerg.Controllers.CMS
         [HttpGet]
         public HttpResponseMessage Delete(int id) {
             var content = _contentService.GetContentById(id);
-            if (_contentService.Delete(content))
+            if (content.Resources != null && content.Resources.Any())
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(true,"数据删除成功"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "有资源关联无法删除！"));
             }
-            else {
-                return PageHelper.toJson(PageHelper.ReturnValue(false,"数据删除失败"));
-            }          
+            else
+            {
+                if (_contentService.Delete(content))
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功！"));
+                }
+                else
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
+                }
+            }
         }
     }
 }

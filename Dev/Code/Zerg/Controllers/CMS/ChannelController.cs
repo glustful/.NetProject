@@ -190,7 +190,7 @@ namespace Zerg.Controllers.CMS
         [HttpGet]
          public HttpResponseMessage Delete(int id)
          {
-                var channel = _channelService.GetChannelById(id);
+            var channel = _channelService.GetChannelById(id);
             if (channel.Contents != null && channel.Contents.Any())
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "有内容关联不能删除"));
