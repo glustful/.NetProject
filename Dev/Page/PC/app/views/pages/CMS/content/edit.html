@@ -3,6 +3,7 @@
 <script type="text/javascript" charset="utf-8" src="../libs/ueditor/lang/zh-cn/zh-cn.js"></script>
 <form name="form" id="form" ng-controller="ContentEditController" ng-submit="Save()">
     <div class="panel panel-default">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
         <div class="panel-body revise">
             <div class="bottom" ><label for="title">标题： </label> <input id="title" type="text" ng-model="ContentModel.Title" required></div>
             <div class="bottom" ><label for="Content">内容： </label>

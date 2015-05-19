@@ -25,7 +25,7 @@
 angular.module("app").controller('TagIndexController', [
     '$http','$scope','$modal',function($http,$scope,$modal) {
         $scope.searchCondition = {
-            tag: '',
+            LikeTag: '',
             page: 1,         //????
             pageSize: 10,   //???????
             totalPage:1
@@ -88,10 +88,14 @@ angular.module("app").controller('TagCreateController',['$http','$scope','$state
                 $state.go("page.CMS.tag.index");
             }
             else{
-                $scope.Message=data.Msg;
+                //$scope.Message=data.Msg;
+                $scope.alerts=[{type:'danger',msg:data.Msg}];
             }
         });
     }
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
 }]);
 
 angular.module("app").controller('TagEditController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
@@ -106,6 +110,12 @@ angular.module("app").controller('TagEditController',['$http','$scope','$statePa
             if(data.Status){
                 $state.go("page.CMS.tag.index");
             }
+            else{
+                $scope.alerts=[{type:'danger',msg:data.Msg}];
+            }
         });
     }
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
 }]);

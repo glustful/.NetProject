@@ -2,6 +2,7 @@
     <div class="tm">
         <a href="#page/CMS/channel/create"> <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw cyan-900 add">新增条目<div class="md-ripple-container"></div></button></a>
     </div>
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -21,7 +22,7 @@
                 <a ng-click="open(item.Id)"><span class="label yellow">删除</span></a>
             </td>
         </tr>
-        <div id="Message">{{Message}}</div>
+        <!--<div id="Message" style="text-align: center"><span style="font-size: 20px;color: #ff0000">{{Message}}</span></div>-->
         <!--<tr>-->
             <!--<td><span class=" text-danger"><i class="fa fa-circle text-xs"></i></span>&nbsp;&nbsp;信息传输</td>-->
             <!--<td>-->

@@ -39,9 +39,15 @@
                    if(data.Status){
                        getContentList();
                    }
+                   else{
+                           $scope.alerts=[{type:'danger',msg:data.Msg}];
+                       }
                })
             });
         }
+        $scope.closeAlert = function(index) {
+            $scope.alerts.splice(index, 1);
+        };
     }
 ]);
 
@@ -73,10 +79,13 @@ angular.module("app").controller('ContentCreateController',['$http','$scope','$s
                 $state.go("page.CMS.content.index");
             }
             else{
-                 $scope.Message=data.Msg;
+                $scope.alerts=[{type:'danger',msg:data.Msg}];
             }
         });
     }
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
 }]);
 
 angular.module("app").controller('ContentEditController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
@@ -95,6 +104,12 @@ angular.module("app").controller('ContentEditController',['$http','$scope','$sta
             if(data.Status){
                 $state.go("page.CMS.content.index");
             }
+            else{
+                $scope.alerts=[{type:'danger',msg:data.Msg}];
+            }
         });
     }
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
 }]);
