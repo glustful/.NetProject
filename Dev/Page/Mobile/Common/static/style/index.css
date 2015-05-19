@@ -6,7 +6,8 @@
 }
 body{
     color:#686868;
-    font-family: "微软雅黑";
+    font-family: 'microsoft yahei';
+    padding: 70px 0 110px 0;
 }
 .clear{
     clear:both;
@@ -48,6 +49,13 @@ a{
 .header{
    height: 70px;
    background:#f13800 ;
+    position: fixed;
+    width:640px;
+    top:0;
+    z-index: 10;
+}
+.hd{
+
 }
 .logo{
     margin:13px 0 0 27px;
@@ -90,6 +98,25 @@ a{
     color: #ffffff;
     background: none;
 }
+.hd .pic li{
+    position: relative;
+}
+.hd .pic .page{
+    position: absolute;
+    left: 255px;
+    top:200px;
+
+}
+ .hd .pic .page span{
+    background: url("../image/index/p1-1.png") no-repeat 0 0;
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin-right: 20px;
+}
+ .hd .pic .page .white{
+     background: url("../image/index/p2-2.png") no-repeat 0 0;
+ }
 .content{
    padding: 10px 10px 25px 10px;
 }
@@ -156,21 +183,29 @@ h3{
     background: #f9f9f9;
 }
 .nav {
-    height: 64px;
-    line-height: 64px;
+
     border-top: 1px solid #f1f1f1;
     background: #fff;
+    padding:20px 0;
 }
 .nav span{
     display: inline-block;
-    padding:0 40px;
+    width: 300px;
+    border-right: 1px solid #ebebeb;
+    text-align: center;
+}
+.nav span a{
+    font-size: 20px;
 }
 .orange a{
     color:#ffa800;
     font-weight: bold;
 }
+.nav .brokerage{
+    border-right: none;
+}
 .brokerage a{
-    color:#686868; ;
+    color:#ff0000;
 }
 .syj{
     margin-bottom: 10px;
@@ -238,28 +273,35 @@ h3{
 }
 .foot {
    background: #f13800;
-
+    width:640px;
+    position:fixed;
+    bottom:0;
+    z-index: 10;
 }
 .foot span{
     display: inline-block;
     text-align: center;
     width:150px;
-    padding:60px 0 17px 0;
+    padding:70px 0 17px 0;
     color: #fff;
-
+    font-size: 20px;
 }
 .act{
     background: url("../image/index/活动2.png") no-repeat center 20px;
+    background-size: 35px 40px;
 }
 .foot .act{
     color: #f9e700;
 }
 .house{
     background: url("../image/index/房源库1.png") no-repeat center 20px;
+    background-size: 35px 40px;
 }
 .agent{
     background: url("../image/index/经纪人专区1.png") no-repeat center 20px;
+    background-size: 35px 40px;
 }
 .personal{
     background: url("../image/index/个人中心1.png") no-repeat center 20px;
+    background-size: 35px 40px;
 }

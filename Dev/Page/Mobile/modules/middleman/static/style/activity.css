@@ -39,7 +39,7 @@ a {
 .header{
     height: 67px;
     line-height: 67px;
-    background: url("../image/activity/icon_03.png") no-repeat 588px center #fc3b00;
+    background:  #fc3b00;
 
 }
 .header a{
@@ -77,6 +77,10 @@ h2{
 }
 .foot {
     background: #f13800;
+    width:640px;
+    position:fixed;
+    bottom:0;
+    z-index: 10;
 }
 .foot span{
     display: inline-block;
@@ -84,6 +88,7 @@ h2{
     width:150px;
     padding:60px 0 17px 0;
     color: #fff;
+    /*font-size: 18px;*/
 }
 .act{
     background: url("../image/activity/活动2.png") no-repeat center 20px;

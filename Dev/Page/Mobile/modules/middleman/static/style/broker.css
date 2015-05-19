@@ -90,6 +90,25 @@ a{
     color: #ffffff;
     background: none;
 }
+.hd .pic li{
+    position: relative;
+}
+.hd .pic .page{
+    position: absolute;
+    left: 255px;
+    top:200px;
+
+}
+.hd .pic .page span{
+    background: url("../image/broker/p1-1.png") no-repeat 0 0;
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin-right: 20px;
+}
+.hd .pic .page .white{
+    background: url("../image/broker/p2-2.png") no-repeat 0 0;
+}
 .content{
     padding:20px 10px 10px 10px;
 }
@@ -149,15 +168,7 @@ a{
 .two{
     margin-right: 2px;
 }
-.four{
-    margin:2px 2px 0 0;
-}
-.five{
-    margin:2px 2px 10px 0;
-}
-.six{
-    margin-top: 2px;
-}
+
 h4{
     color: #333333;
     font-size: 20px;
@@ -178,6 +189,7 @@ h5{
     padding:0 25px;
     color: #72c27b;
     font-size: 20px;
+    margin-top:15px;
 }
 .hero {
     background: #fff;
@@ -280,6 +292,7 @@ h5{
     width:150px;
     padding:60px 0 17px 0;
     color: #fff;
+    font-size: 18px;
 }
 .act{
     background: url("../image/broker/活动1.png") no-repeat center 20px;
