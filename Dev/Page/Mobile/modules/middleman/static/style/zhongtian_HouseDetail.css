@@ -74,10 +74,11 @@ body{
     line-height: 70px;
 }
 .title span{
-    margin-left: 415px;
+    float: right;
     font-weight: 600;
     color: black;
     font-size: 25px;
+    margin-right: 25px;
 }
 .content .title img{
     width: 50px;
