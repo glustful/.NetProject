@@ -1,0 +1,267 @@
+*{
+    padding:0;
+    margin:0;
+    list-style: none;
+    border: none;
+}
+body{
+    color:#686868;
+    font-family: 'microsoft yahei';
+    padding: 70px 0 110px 0;
+}
+.clear{
+    clear:both;
+    height: 0;
+    overflow: hidden;
+}
+.cf:after{
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: "";
+    clear: both;
+    height: 0;
+}
+
+.fl{
+    float: left;
+}
+a{
+    text-decoration: none;
+}
+
+.cf{
+    clear: both;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.window{
+    width: 640px;
+    margin: 0 auto;
+}
+.bg{
+    background: #ebebeb;
+}
+.header{
+    height: 70px;
+    background:#f13800 ;
+    position: fixed;
+    width:640px;
+    top:0;
+    z-index: 10;
+}
+.hd{
+
+}
+.logo{
+    margin:13px 0 0 27px;
+    background: url("../image/housesBuy/logo.png") no-repeat 0 0;
+    width: 82px;
+    height: 41px;
+}
+.logo a{
+    text-indent: -999em;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.search{
+    width:436px;
+    height: 45px;
+    line-height: 45px;
+    margin:10px 20px 0 0;
+    background: url("../image/housesBuy/搜索框.png") no-repeat 0 bottom ;
+
+}
+.search label{
+    text-indent: -99em;
+    display: inline-block;
+    background: url("../image/housesBuy/search.png") no-repeat center center ;
+    width: 50px;
+}
+.search input{
+    width: 297px;
+    color: #f1aa94;
+    font-size: 24px;
+    background: none;
+    border: none;
+
+}
+.search button{
+    width: 80px;
+    border: none;
+    font-size: 24px;
+    color: #ffffff;
+    background: none;
+}
+.pic{
+    position: relative;
+    z-index: 1;
+}
+.pic .syj{
+    position: absolute;
+    z-index: 2;
+    top:0;
+    left: 2em;
+}
+.pic .summary{
+    position: absolute;
+    top: 9.8em;
+    left: 2em;
+    color: #fff;
+    font-size: 22px;
+    z-index: 4;
+}
+.pic .summary .zt{
+    padding:0 50px 0 0;
+}
+.pic .summary .zt small{
+    color: #929292;
+}
+.pic .summary .lp{
+    padding-left: 25px;
+}
+.pic .summaryBg{
+    width: 640px;
+    position: absolute;
+    z-index: 3;
+    height: 100px;
+    opacity: 0.4;
+    bottom:0.2em;
+    left:0;
+    background:url("../image/housesBuy/fgx.png") no-repeat 530px 0 #000;
+}
+.content p{
+    height: 80px;
+    line-height: 80px;
+    padding-left: 36px;
+    color: #f13800;
+    background-color:#fff;
+    font-size: 20px;
+}
+.content p a{
+    margin-left: 225px;
+
+}
+.content p a button{
+    width: 130px;
+    height: 50px;
+    font-size: 1em;
+    color: #fff;
+    border-radius: 8px;
+    background:url("../image/housesBuy/cell.png") no-repeat 10px 15px #f13800;
+    padding-left: 20px;
+}
+.content .nav{
+    height: 78px;
+    line-height: 78px;
+    background: url("../image/housesBuy/sx.png") no-repeat 445px center #f13800;
+    padding-left:56px;
+}
+.content .nav a{
+    color: #fff;
+    font-size: 18px;
+}
+.content .nav .dk{
+    padding-right: 90px;
+}
+.content .nav .tj{
+    padding-right: 205px;
+}
+.content .nav .cell{
+    padding-left: 25px;
+    background: url("../image/housesBuy/cell.png") no-repeat 0 center;
+}
+.content .type{
+    padding:20px;
+    position: relative;
+    height: 1500px;
+}
+.content .type .hx1{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+.content .type .hx2{
+    position: absolute;
+    top: 20px;
+    left: 330px;
+}
+.content .type .hx3{
+    position: absolute;
+    top:468px;
+    left: 20px;
+}
+.content .type .hx4{
+    position: absolute;
+    top:780px;
+    left: 330px;
+}
+.content .type .hx5{
+    position: absolute;
+    top:915px;
+    left: 20px;
+}
+.content .type .ask{
+    position: absolute;
+    padding-left: 20px;
+    background:url("../image/housesBuy/ask.png") no-repeat 0 center;
+    font-size: 18px;
+    left: 100px;
+}
+.content .type .ask a{
+    color: #f13800;
+}
+.content .type .hx1 .ask{
+    top: 385px;
+}
+.content .type .hx2 .ask{
+    top:700px;
+}
+.content .type .hx3 .ask{
+    top:380px;
+}
+.content .type .hx4 .ask{
+    top:695px;
+}
+.content .type .hx5 .ask{
+    top:380px;
+}
+.foot {
+    background: #f13800;
+    width:640px;
+    position:fixed;
+    bottom:0;
+    z-index: 10;
+}
+.foot span{
+    display: inline-block;
+    text-align: center;
+    width:150px;
+    padding:70px 0 17px 0;
+    color: #fff;
+    font-size: 20px;
+}
+.act{
+    background: url("../image/housesBuy/活动2.png") no-repeat center 20px;
+    background-size: 35px 40px;
+}
+.foot .act{
+    color: #f9e700;
+}
+.house{
+    background: url("../image/housesBuy/房源库1.png") no-repeat center 20px;
+    background-size: 35px 40px;
+}
+.agent{
+    background: url("../image/housesBuy/经纪人专区1.png") no-repeat center 20px;
+    background-size: 35px 40px;
+}
+.personal{
+    background: url("../image/housesBuy/个人中心1.png") no-repeat center 20px;
+    background-size: 35px 40px;
+}
