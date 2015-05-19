@@ -133,18 +133,9 @@ namespace Zerg.Controllers.CMS
             }
             else
             {
-                var channelCon = new ChannelSearchCondition
+                var channel = _channelService.GetChannelById(model.Id);
+                if (channel.Name == model.Name)
                 {
-                    Name = model.Name
-                };
-                var totalCount = _channelService.GetChannelCount(channelCon);
-                if (totalCount > 0)
-                {
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已存在！"));
-                }
-                else
-                {
-                    var channel = _channelService.GetChannelById(model.Id);
                     var newParent = _channelService.GetChannelById(model.ParentId);
                     channel.Name = model.Name;
                     channel.Status = model.Status;
@@ -160,7 +151,36 @@ namespace Zerg.Controllers.CMS
                         return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
                     }
                 }
-            }
+                else
+                {
+                      var channelCon = new ChannelSearchCondition
+                      {
+                          Name = model.Name
+                      };
+                      var totalCount = _channelService.GetChannelCount(channelCon);
+                      if (totalCount > 0)
+                      {
+                          return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已存在！"));
+                      }
+                      else
+                      {
+                          var newParent = _channelService.GetChannelById(model.ParentId);
+                          channel.Name = model.Name;
+                          channel.Status = model.Status;
+                          channel.UpdUser = _workContent.CurrentUser.Id;
+                          channel.UpdTime = DateTime.Now;
+                          channel.Parent = newParent;
+                          if (_channelService.Update(channel) != null)
+                          {
+                              return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                          }
+                          else
+                          {
+                              return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+                          }
+                      }
+                }
+            }          
          }
         /// <summary>
         /// 频道删除

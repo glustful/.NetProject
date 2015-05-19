@@ -237,7 +237,7 @@ namespace CMS.Service.Content
                 {
                     query = query.Where(q => condition.Viewcounts.Contains(q.Viewcount));
                 }
-                if (string.IsNullOrEmpty(condition.ChannelName))
+                if (!string.IsNullOrEmpty(condition.ChannelName))
                 {
                     query = query.Where(q => q.Channel.Name == condition.ChannelName);
                 }
