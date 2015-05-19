@@ -145,27 +145,68 @@ namespace Zerg.Controllers.CMS
             }
             else
             {
-                var tagCon = new TagSearchCondition
-                {
-                    Tag = model.Tag
-                };
-                var tagCount = _tagService.GetTagCount(tagCon);
-                if (tagCount > 0)
-                {
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已存在"));
-                }
                 var tag = _tagService.GetTagById(model.Id);
-                tag.Tag = model.Tag;
-                tag.UpdTime = DateTime.Now;
-                tag.UpdUser = _workContext.CurrentUser.Id;
-                if (_tagService.Update(tag) != null)
+                if (tag.Tag == model.Tag)
                 {
-                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                    tag.Tag = model.Tag;
+                    tag.UpdTime = DateTime.Now;
+                    tag.UpdUser = _workContext.CurrentUser.Id;
+                    if (_tagService.Update(tag) != null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                    }
+                    else
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+                    }
                 }
                 else
                 {
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+                    var tagCon = new TagSearchCondition
+                    {
+                        Tag = model.Tag
+                    };
+                    var tagCount = _tagService.GetTagCount(tagCon);
+                    if (tagCount > 0)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已存在"));
+                    }
+                    else
+                    {
+                        tag.Tag = model.Tag;
+                        tag.UpdTime = DateTime.Now;
+                        tag.UpdUser = _workContext.CurrentUser.Id;
+                        if (_tagService.Update(tag) != null)
+                        {
+                            return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                        }
+                        else
+                        {
+                            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+                        }
+                    }
                 }
+                //var tagCon = new TagSearchCondition
+                //{
+                //    Tag = model.Tag
+                //};
+                //var tagCount = _tagService.GetTagCount(tagCon);
+                //if (tagCount > 0)
+                //{
+                //    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已存在"));
+                //}
+                //var tag = _tagService.GetTagById(model.Id);
+                //tag.Tag = model.Tag;
+                //tag.UpdTime = DateTime.Now;
+                //tag.UpdUser = _workContext.CurrentUser.Id;
+                //if (_tagService.Update(tag) != null)
+                //{
+                //    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                //}
+                //else
+                //{
+                //    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+                //}
             }
         }
         /// <summary>
