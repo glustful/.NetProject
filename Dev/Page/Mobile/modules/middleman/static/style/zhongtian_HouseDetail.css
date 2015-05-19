@@ -19,6 +19,7 @@ body{
     padding: 20px 0 10px 0;
     position: fixed;
     top: 0;
+    z-index: 10;
 }
 .fl{
     float: left;
@@ -54,6 +55,7 @@ body{
 }
 .banner{
     position: relative;
+    z-index: 9;
 }
 .banner .point{
     position: absolute;
@@ -66,12 +68,14 @@ body{
 .content{
     margin-top: 80px;
     z-index: 1;
+    z-index: 8;
 }
 .title{
     width: 640px;
     height: 70px;
     background-color: white;
     line-height: 70px;
+    z-index: 7;
 }
 .title span{
     float: right;
@@ -124,7 +128,15 @@ body{
     text-align: center;
     width:180px;
     color: #fff;
-    font-size: 22px;
+}
+.daike{
+    font-size: 25px;
+}
+.tuijian{
+    font-size: 25px;
+}
+.help{
+    font-size: 25px;
 }
 .foot .help .btn{
     width: 20px;
@@ -157,4 +169,15 @@ body{
 }
 .personal{
     background: url("../image/partner/gerenzhongxin.png") no-repeat center 20px;
+}
+
+/*Âò·½*/
+.advice{
+    margin-left: 220px;
+    font-size: 35px;
+}
+.foot .advice .btn1{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
 }
