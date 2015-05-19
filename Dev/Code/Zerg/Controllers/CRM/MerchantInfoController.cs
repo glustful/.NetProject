@@ -6,14 +6,22 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Zerg.Common;
 using Zerg.Models.CRM;
 
 namespace Zerg.Controllers.CRM
 {
+
+
+
     /// <summary>
     /// 商家管理
     /// </summary>
+    /// 
+
+
+    [EnableCors("*", "*", "*")]
     public class MerchantInfoController : ApiController
     {
         IMerchantInfoService _merchantInfoService;

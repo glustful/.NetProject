@@ -58,12 +58,25 @@ namespace Zerg.Controllers.CRM
         /// <param name="taskSearchModel"></param>
         /// <returns></returns>
         [HttpGet]
+        //public HttpResponseMessage TaskList(TaskSearchCondition searchCondition)
+        //{
+        //    if (searchCondition == null)
+        //    {
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "condition is null"));
+        //    }
+
+        //    var condition = new TaskSearchCondition
+        //    {
+        //        OrderBy = EnumTaskSearchOrderBy.OrderById,
+        //        Taskname = searchCondition.Taskname
+
+        //    };
+        //    return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToList());
+        //}
+      
 
         public HttpResponseMessage TaskList(string Taskname, int page, int pageSize)
-        {
-
-
-            
+        {                     
             var taskcondition = new TaskSearchCondition
             {
                 OrderBy = EnumTaskSearchOrderBy.OrderById,
@@ -88,8 +101,8 @@ namespace Zerg.Controllers.CRM
          /// </summary>
          /// <param name="id"></param>
          /// <returns></returns>
-        [HttpGet]
-         public HttpResponseMessage TaskDetail( int id)
+         [HttpGet]
+         public HttpResponseMessage TaskDetail( int id)   
          {
              var task=_taskService.GetTaskById(id);
              var model = new TaskModel();
@@ -240,7 +253,7 @@ namespace Zerg.Controllers.CRM
                     TaskId =taskModel .Id 
                 };
                 int tlistcout = _taskListService.GetTaskListCount(cond);
-                if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "不能删除，已经有人接手任务")); }
+                if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "不能修改，已经有人接手任务")); }
                 else
                 {
                     var mdel = _taskService.GetTaskById(taskModel.Id);

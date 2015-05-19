@@ -35,7 +35,8 @@ app.controller('taskconfigcontroller',['$http','$scope',function($http,$scope) {
         Describe:'',
         Value:'',
         Type:'add',
-        Status: ''
+        Status: '',
+        warm:''
     };
     $scope.punishmentCondition={
         Id:0,

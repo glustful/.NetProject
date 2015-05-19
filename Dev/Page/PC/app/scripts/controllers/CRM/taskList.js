@@ -73,35 +73,35 @@ $scope.getList1=getTaskList1 ;
 }
 ]);
 
-app.controller('taskDetailcontroller',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
-
-    var getTaskDetail  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskDetail?id='+$stateParams.id).success(function(data){
-
-            console.log(data);
-            $scope.taskModel1 = data;
-        });
-    };
-    $scope.gettaskdetail=getTaskDetail();
-    getTaskDetail();
-    // 结束时间
-    $scope.open = function ($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        $scope.opened = true;
-    };
-
-    $scope.dateOptions = {
-        formatYear: 'yy',
-        startingDay: 1,
-        class: 'datepicker'
-    };
-
-    $scope.initDate = new Date();
-    $scope.formats = ['yyyy/MM/dd', 'shortDate'];
-    $scope.format = $scope.formats[0];
-}
-]);
+//app.controller('taskDetailcontroller',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+//
+//    var getTaskDetail  = function() {
+//        $http.get(SETTING.ApiUrl+'/Task/TaskDetail?id='+$stateParams.id).success(function(data){
+//
+//            console.log(data);
+//            $scope.taskModel1 = data;
+//        });
+//    };
+//    $scope.gettaskdetail=getTaskDetail();
+//    getTaskDetail();
+//    // 结束时间
+//    $scope.open = function ($event) {
+//        $event.preventDefault();
+//        $event.stopPropagation();
+//
+//        $scope.opened = true;
+//    };
+//
+//    $scope.dateOptions = {
+//        formatYear: 'yy',
+//        startingDay: 1,
+//        class: 'datepicker'
+//    };
+//
+//    $scope.initDate = new Date();
+//    $scope.formats = ['yyyy/MM/dd', 'shortDate'];
+//    $scope.format = $scope.formats[0];
+//}
+//]);
 
 
