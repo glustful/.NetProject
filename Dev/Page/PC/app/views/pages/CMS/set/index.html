@@ -1,6 +1,6 @@
 <form name="form" id="form" ng-controller="SettingController" ng-submit="Save()" >
     <div class="panel panel-default">
-
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
         <div class="panel-body">
             <div class="bottom">
                 <div><label>站点名称 </label></div>
@@ -11,7 +11,6 @@
                 <input type="url" name="SiteUrl" ng-model="SiteUrl.Value" required>
                 <div><span>输入完全合格的基地网站的url,</span></div>
                 <div><span>例如：http://localhost:30320/orchardlocal,http://baidu.com</span></div>
-                <div id="Message"><span style="font-size:20px;color: #ff0000">{{Message}}</span></div>
             </div>
             <!--<div  class="bottom">-->
                 <!--<div><label>默认的网站语言</label></div>-->

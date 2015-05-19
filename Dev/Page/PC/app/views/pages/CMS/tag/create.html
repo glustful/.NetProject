@@ -1,12 +1,11 @@
 <form name="form" id="form" ng-controller="TagCreateController" ng-submit="Create()">
     <div class="panel panel-default">
-
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
         <div class="panel-body">
             <div class="bottom" >
                 <div class="revise"><label for="largeDate">新建</label></div>
                 <input id="largeDate" type="text" name="name" value="输入新Tag" ng-model="TagModel.Tag" required>
                 <span ng-show="form.name.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
-                <div id="Message"><span style="font-size:20px;color: #ff0000">{{Message}}</span></div>
             </div>
         </div>
         <div>

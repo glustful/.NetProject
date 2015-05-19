@@ -25,7 +25,7 @@ angular.module("app").controller('SettingController', [
                 'withCredentials':true
             }).success(function(data){
                     if(data.Status){
-                        $scope.Message=data.Msg;
+                        $scope.alerts=[{type:'danger',msg:data.Msg}];
                     }
                 }
             )
@@ -34,5 +34,8 @@ angular.module("app").controller('SettingController', [
 //            })
             $state.go("page.CMS.set.index");
         }
+        $scope.closeAlert = function(index) {
+            $scope.alerts.splice(index, 1);
+        };
     }
 ]);
