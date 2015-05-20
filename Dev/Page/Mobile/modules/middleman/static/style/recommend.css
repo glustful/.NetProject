@@ -191,9 +191,8 @@ h3{
     text-align: center;
     width:150px;
     padding:60px 0 17px 0;
-}
-.foot span {
     color: #fff;
+    font-size: 18px;
 }
 .act{
     background: url("../image/recommend/活动1.png") no-repeat center 20px;
