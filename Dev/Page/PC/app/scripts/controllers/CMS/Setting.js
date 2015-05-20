@@ -11,7 +11,7 @@ angular.module("app").controller('SettingController', [
         };
 
         var getAdvertisementList = function() {
-            $http.get(SETTING.ApiUrl+'/Setting/Index',{params:$scope.searchCondition}).success(function(data){
+            $http.get(SETTING.ApiUrl+'/Setting/Index',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
                 //$scope.list = data;
                 $scope.SiteName = {Key:'SiteName',Value:data[0].Value};
                 $scope.SiteUrl = {Key:'SiteUrl',Value:data[1].Value};

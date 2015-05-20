@@ -1,27 +1,6 @@
 /**
  * Created by Yunjoy on 2015/5/9.
  */
-//app.controller('ModalInstanceCtrl', ['$scope', '$modalInstance','msg',function($scope, $modalInstance,msg) {
-//    $scope.msg = msg;
-//    $scope.ok = function () {
-//        $modalInstance.close();
-//        $scope.id = id;
-//        $http.get(SETTING.ApiUrl + '/Tag/Delete',{
-//                params:{
-//                    tagId:$scope.id
-//                }
-//            }
-//        ).success(function(data) {
-//            if (data.Status) {
-//                refresh();
-//                $modalInstance.close();
-//            }
-//        });
-//    };
-//    $scope.cancel = function () {
-//        $modalInstance.dismiss('cancel');
-//    };
-//}]);
 angular.module("app").controller('TagIndexController', [
     '$http','$scope','$modal',function($http,$scope,$modal) {
         $scope.searchCondition = {
@@ -33,7 +12,10 @@ angular.module("app").controller('TagIndexController', [
         };
 
         var getTagList = function() {
-            $http.get(SETTING.ApiUrl+'/Tag/Index',{params:$scope.searchCondition}).success(function(data){
+            $http.get(SETTING.ApiUrl+'/Tag/Index',{
+                params:$scope.searchCondition,
+                'withCredentials':true
+            }).success(function(data){
                 $scope.list = data.List;
                 $scope.searchCondition.page = data.Condition.Page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -43,7 +25,7 @@ angular.module("app").controller('TagIndexController', [
         $scope.getList = getTagList;
         getTagList();
 
-        $scope.open = function (id) {
+        $scope.del = function (id) {
              $scope.selectedId = id;
             var modalInstance = $modal.open({
                 templateUrl: 'myModalContent.html',
@@ -56,7 +38,8 @@ angular.module("app").controller('TagIndexController', [
                 $http.get(SETTING.ApiUrl + '/Tag/Delete',{
                         params:{
                             tagId:$scope.selectedId
-                        }
+                        },
+                        'withCredentials':true
                     }
                 ).success(function(data) {
                         if (data.Status) {

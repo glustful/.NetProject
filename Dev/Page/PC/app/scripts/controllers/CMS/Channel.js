@@ -11,7 +11,7 @@ angular.module("app").controller('ChannelIndexController', [
         };
 
         var getChannelList = function() {
-            $http.get(SETTING.ApiUrl+'/Channel/Index',{params:$scope.searchCondition}).success(function(data){
+            $http.get(SETTING.ApiUrl+'/Channel/Index',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
                 $scope.list = data.List;
                 $scope.searchCondition.page = data.Condition.Page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -34,7 +34,8 @@ angular.module("app").controller('ChannelIndexController', [
                 $http.get(SETTING.ApiUrl + '/Channel/Delete',{
                         params:{
                             id:$scope.selectedId
-                        }
+                        },
+                        'withCredentials':true
                     }
                 ).success(function(data) {
                         if (data.Status) {
@@ -50,7 +51,7 @@ angular.module("app").controller('ChannelIndexController', [
 ]);
 
 angular.module("app").controller('ChannelDetailController',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
-    $http.get(SETTING.ApiUrl + '/Channel/Detailed/' + $stateParams.id).success(function(data){
+    $http.get(SETTING.ApiUrl + '/Channel/Detailed/' + $stateParams.id,{'withCredentials':true}).success(function(data){
         $scope.ChannelModel =data;
     });
 }]);
@@ -78,7 +79,7 @@ angular.module("app").controller('ChannelCreateController',['$http','$scope','$s
 }]);
 
 angular.module("app").controller('ChannelEditController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
-    $http.get(SETTING.ApiUrl + '/Channel/Detailed/' + $stateParams.id).success(function(data){
+    $http.get(SETTING.ApiUrl + '/Channel/Detailed/' + $stateParams.id,{'withCredentials':true}).success(function(data){
         $scope.ChannelModel =data;
     });
 

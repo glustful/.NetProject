@@ -7,7 +7,7 @@
         };
 
         var getContentList = function() {
-            $http.get(SETTING.ApiUrl+'/Content/Index',{params:$scope.searchCondition}).success(function(data){
+            $http.get(SETTING.ApiUrl+'/Content/Index',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
                 $scope.list = data.List;
                 $scope.searchCondition.title=data.Condition.Title;
                 $scope.searchCondition.page=data.Condition.Page;
@@ -34,7 +34,8 @@
                $http.get(SETTING.ApiUrl+'/Content/Delete',{
                    params:{
                        id:$scope.selectedId
-                   }
+                   },
+                   'withCredentials':true
                }).success(function(data){
                    if(data.Status){
                        getContentList();
@@ -61,7 +62,7 @@ angular.module("app").controller('ContentCreateController',['$http','$scope','$s
         AddUser:0
     };
 
-    $http.get(SETTING.ApiUrl + '/Channel/Index').success(function(data){
+    $http.get(SETTING.ApiUrl + '/Channel/Index',{'withCredentials':true}).success(function(data){
         $scope.ChannelList = data.List;
     });
 
@@ -84,7 +85,7 @@ angular.module("app").controller('ContentEditController',['$http','$scope','$sta
         $scope.ContentModel =data;
     });
 
-    $http.get(SETTING.ApiUrl + '/Channel/Index').success(function(data){
+    $http.get(SETTING.ApiUrl + '/Channel/Index',{'withCredentials':true}).success(function(data){
         $scope.ChannelList = data.List;
     });
 
