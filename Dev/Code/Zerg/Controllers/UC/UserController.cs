@@ -13,6 +13,7 @@ using Zerg.Models.UC;
 
 namespace Zerg.Controllers.UC
 {
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class UserController : ApiController
     {
         private readonly IUserService _userService;
@@ -103,6 +104,65 @@ namespace Zerg.Controllers.UC
                         r.Role.RoleName
                     }).ToArray()
                 }));
+        }
+        [HttpGet]
+        
+        public HttpResponseMessage GetUserList(string userName=null,int page=1,int pageSize=10)
+        {
+            var userCondition = new UserSearchCondition
+            {             
+                UserName = userName,
+                Page = page,
+                PageSize = pageSize
+            };
+           
+            var userList = _userService.GetUserByCondition(userCondition).Select(a=>new UserModel
+            {
+                Id = a.Id,
+                UserName = a.UserName,
+                Status =a.Status
+            }).ToList();
+            var userCount = _userService.GetUserCountByCondition(userCondition);
+            return PageHelper.toJson(new{ List=userList, Condition=userCondition, TotalCount=userCount});
+        }
+        [HttpGet]
+        public HttpResponseMessage Detailed(int id)
+        {
+            var user = _userService.FindUser(id);
+            if (user == null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "该数据不存在！"));
+            }
+            var userDetail = new UserModel
+            {
+                Id = user.Id,
+                UserName = user.UserName,              
+                Status =user.Status
+            };
+            return PageHelper.toJson(userDetail);
+        }
+
+        [HttpPost]
+        public HttpResponseMessage EditUser(UserModel model)
+        {
+            var user = _userService.FindUser(model.Id);
+            user.Password = model.Password;
+            user.Status = model.Status;
+            if (_userService.ModifyUser(user))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true,"数据更新成功！"));
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+        }
+        [HttpGet]
+        public HttpResponseMessage Delete(int id)
+        {
+            var user = _userService.FindUser(id);
+            if (_userService.DeleteUser(user))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功"));
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
         }
     }
 }
