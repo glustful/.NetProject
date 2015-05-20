@@ -13,6 +13,7 @@ using Zerg.Models.UC;
 
 namespace Zerg.Controllers.UC
 {
+    [AllowAnonymous]
     public class UserController : ApiController
     {
         private readonly IUserService _userService;

@@ -8,6 +8,7 @@ using System.Web.Http.Cors;
 using CMS.Entity.Model;
 using CMS.Service.Tag;
 using YooPoon.Core.Site;
+using YooPoon.WebFramework.API;
 using Zerg.Common;
 using Zerg.Models;
 

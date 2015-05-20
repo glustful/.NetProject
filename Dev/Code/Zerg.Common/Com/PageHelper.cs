@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
@@ -14,14 +15,13 @@ namespace Zerg.Common
     /// </summary>
     public class PageHelper
     {
-
-
         /// <summary>
         /// 将返回数据转换成Json格式
         /// </summary>
         /// <param name="obj"></param>
+        /// <param name="status"></param>
         /// <returns></returns>
-        public static HttpResponseMessage toJson(Object obj)
+        public static HttpResponseMessage toJson(Object obj,HttpStatusCode status=HttpStatusCode.OK)
         {
             String str;
             if (obj is String || obj is Char)
@@ -33,7 +33,7 @@ namespace Zerg.Common
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 str = serializer.Serialize(obj);
             }
-            HttpResponseMessage result = new HttpResponseMessage { Content = new StringContent(str, Encoding.GetEncoding("UTF-8"), "application/json") };
+            HttpResponseMessage result = new HttpResponseMessage { Content = new StringContent(str, Encoding.GetEncoding("UTF-8"), "application/json"), StatusCode = status };
             return result;
         }
 
