@@ -105,9 +105,9 @@ namespace CRM.Service.BRECPay
                 {
                     query = query.Where(q => q.Name.Contains(condition.Name));
                 }
-				if (!string.IsNullOrEmpty(condition.Statusname))
+                if (condition.Statusname.HasValue)
                 {
-                    query = query.Where(q => q.Statusname.Contains(condition.Statusname));
+                    query = query.Where(c => c.Statusname == condition.Statusname);
                 }
 				if (!string.IsNullOrEmpty(condition.Describe))
                 {
@@ -133,6 +133,10 @@ namespace CRM.Service.BRECPay
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
+                if (condition.BankCard.HasValue)
+                {
+                    query = query.Where(c => c.BankCard == condition.BankCard);
+                }
 				if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
@@ -152,6 +156,7 @@ namespace CRM.Service.BRECPay
                 {
                     query = query.Skip((condition.Page.Value - 1)*condition.PageCount.Value).Take(condition.PageCount.Value);
                 }
+
 				return query;
 			}
 			catch(Exception e)
@@ -194,9 +199,9 @@ namespace CRM.Service.BRECPay
                 {
                     query = query.Where(q => q.Name.Contains(condition.Name));
                 }
-				if (!string.IsNullOrEmpty(condition.Statusname))
+                if (condition.Statusname.HasValue)
                 {
-                    query = query.Where(q => q.Statusname.Contains(condition.Statusname));
+                    query = query.Where(c => c.Statusname == condition.Statusname);
                 }
 				if (!string.IsNullOrEmpty(condition.Describe))
                 {
