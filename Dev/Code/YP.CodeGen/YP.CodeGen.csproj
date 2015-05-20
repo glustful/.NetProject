@@ -61,7 +61,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>YP.CodeGen.Program</StartupObject>
@@ -171,7 +171,6 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ServiceTemplate.cs</LastGenOutput>
     </None>
-    <None Include="YP.CodeGen_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Output\" />

@@ -41,14 +41,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac">
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Integration.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Autofac.Mvc5.3.1.0\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+      <HintPath>..\..\..\..\Project_Zerg\Dev\Code\packages\Autofac.Mvc5.3.1.0\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac.Integration.WebApi">
+    <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework">
@@ -62,9 +64,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="MvcPager, Version=2.0.0.1, Culture=neutral, PublicKeyToken=f6872c5a09aed72c, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\MvcPager.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
@@ -74,8 +76,7 @@
     </Reference>
     <Reference Include="System.Web.Cors">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.DynamicData" />
+    </Reference>    <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -127,14 +128,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_Data\Settings.txt" />
     <Content Include="Global.asax" />
-    <Content Include="Lib\MvcPager.dll" />
+    <Content Include="index.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +193,10 @@
     <Compile Include="Controllers\UEditor\NotSupportedHandler.cs" />
     <Compile Include="Controllers\UEditor\PathFormater.cs" />
     <Compile Include="Controllers\UEditor\UploadHandler.cs" />
+    <Compile Include="Controllers\Trading\Product\BrandController.cs" />
+    <Compile Include="Controllers\Trading\Product\ClassifyController.cs" />
+    <Compile Include="Controllers\Trading\Product\ProductController.cs" />
+    <Compile Include="Controllers\Trading\Trading\BillController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -234,6 +234,17 @@
     <Compile Include="Models\UC\ActionModel.cs" />
     <Compile Include="Models\UC\RoleModel.cs" />
     <Compile Include="Models\UC\UserModel.cs" />
+    <Compile Include="Models\Trading\Product\ClassifyModel.cs" />
+    <Compile Include="Models\Trading\Product\ParameterModel.cs" />
+    <Compile Include="Models\Trading\Product\ParameterValueModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductBrandModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductBrandParameterModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductDetailModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductParameterModel.cs" />
+    <Compile Include="Controllers\Trading\Trading\OrderController.cs" />
+    <Compile Include="Models\Trading\Trading\OrderDetailModel.cs" />
+    <Compile Include="Models\Trading\Trading\OrderModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

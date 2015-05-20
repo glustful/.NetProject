@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
-using CRM.Service.Level;
-using Webdiyer.WebControls.Mvc;
 using Zerg.Common;
 using Zerg.Models.CRM;
 
@@ -38,7 +34,7 @@ namespace Zerg.Controllers.CRM
             {
                 OrderBy = EnumBrokerSearchOrderBy.OrderById
             };
-            return PageHelper.toJson(_brokerService.GetBrokersByCondition(condition).ToPagedList(Convert.ToInt32(brokerSearchModel.Pageindex) + 1, 10).ToList());
+            return PageHelper.toJson(_brokerService.GetBrokersByCondition(condition).ToList());
         }
 
         /// <summary>

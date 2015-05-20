@@ -1143,6 +1143,74 @@ angular.module('app')
             })
           //-----------------------end-------------------
 
+          //---------------------商品管理-------------------------
+
+            .state('page.Trading',{
+                url:'/Trading',
+                template:'<div ui-view></div>'
+            })
+            .state('page.Trading.product',{
+                url:'/product',
+                template:'<div ui-view></div>'
+            })
+            .state('page.Trading.order',{
+                url:'/order',
+                template:'<div ui-view></div>'
+            })
+            .state('page.Trading.bill',{
+                url:'/bill',
+                template:'<div ui-view></div>'
+            })
+            .state('page.Trading.product.product', {
+                url: '/product',
+                templateUrl: 'views/pages/Trading/product/product.html',
+                data : { title: '商品管理' },
+                resolve: load(['scripts/controllers/Trading/Product.js','scripts/controllers/vectormap.js'])
+            })
+            .state('page.Trading.product.createProduct', {
+                url: '/createProduct',
+                templateUrl: 'views/pages/Trading/product/createProduct.html',
+                data : { title: '添加商品' },
+                resolve: load(['scripts/controllers/Trading/CreateProduct.js','scripts/controllers/vectormap.js'])
+            })
+            .state('page.Trading.product.brand', {
+                url: '/brand',
+                templateUrl: 'views/pages/Trading/product/brand.html',
+                data : { title: '品牌项目' },
+                resolve: load(['scripts/controllers/Trading/Brand.js','scripts/controllers/vectormap.js'])
+            })
+            .state('page.Trading.product.brandParameter', {
+                url: '/brandParameter',
+                templateUrl: 'views/pages/Trading/product/brandParameter.html',
+                data : { title: '项目参数' },
+                resolve: load(['scripts/controllers/Trading/Brand.js','scripts/controllers/vectormap.js'])
+            })
+            .state('page.Trading.product.parameter', {
+                url: '/parameter',
+                templateUrl: 'views/pages/Trading/product/parameter.html',
+                data : { title: '分类参数' },
+                resolve: load(['scripts/controllers/Trading/Parameter.js','scripts/controllers/vectormap.js'])
+            })
+            .state('page.Trading.product.classify', {
+                url: '/classify',
+                templateUrl: 'views/pages/Trading/product/classify.html',
+                data : { title: '商品分类' },
+                resolve: load(['scripts/controllers/Trading/Classify.js','scripts/controllers/vectormap.js'])
+            })
+            .state('page.Trading.bill.bill', {
+                url: '/bill',
+                templateUrl: 'views/pages/Trading/bill/bill.html',
+                data : { title: '账单管理' },
+                resolve: load(['scripts/controllers/Trading/Bill.js','scripts/controllers/vectormap.js'])
+            })
+            .state('page.Trading.order.order', {
+                url: '/order',
+                templateUrl: 'views/pages/Trading/order/order.html',
+                data : { title: '订单管理' },
+                resolve: load(['scripts/controllers/Trading/Order.js','scripts/controllers/vectormap.js'])
+            })
+            //-----------------------end-------------------
+
           function load(srcs, callback) {
             return {
                 deps: ['$ocLazyLoad', '$q',
