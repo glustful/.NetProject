@@ -4,7 +4,7 @@
 angular.module("app").controller('billController', [
     '$http', '$scope', function ($http, $scope) {
         //默认初始化推荐订单；
-        $http.get(SETTING.TradingApiUrl + '/bill/GetAdminBill').success(function (data) {
+        $http.get(SETTING.ApiUrl + '/bill/GetAdminBill').success(function (data) {
             $scope.rowCollectionBasic = data;
         });
 

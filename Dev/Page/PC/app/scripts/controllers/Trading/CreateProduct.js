@@ -5,21 +5,21 @@ angular.module("app").controller('CreatProductController', [
     '$http', '$scope', '$state', function ($http, $scope, $state) {
         //选择商品分类；
         var classifys = $scope.classifys = {};
-        $http.get(SETTING.TradingApiUrl + '/Classify/GetAllClassify').success(function (data) {
+        $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify').success(function (data) {
             classifys.optionsData = data;
         });
         $scope.classifyMsg = "";
         $scope.classifyMsg1 = "";
         $scope.selectclassifyChange = function () {
-            $http.get(SETTING.TradingApiUrl + '/Classify/GetNextNodesById?nodeId=' + classifys.selectClassifyId).success(function (dataRes) {
+            $http.get(SETTING.ApiUrl + '/Classify/GetNextNodesById?nodeId=' + classifys.selectClassifyId).success(function (dataRes) {
                 if (dataRes == "获取失败") {
                     $scope.classifyMsg1 = "选择完成！";
-                    $http.get(SETTING.TradingApiUrl + '/Classify/GetParameterTreeData?classifyId=' + classifys.selectClassifyId).success(function (data) {
+                    $http.get(SETTING.ApiUrl + '/Classify/GetParameterTreeData?classifyId=' + classifys.selectClassifyId).success(function (data) {
                         $scope.parameterValueList = data;
                     });
                 } else {
                     $scope.classifyMsg1 = "";
-                    $http.get(SETTING.TradingApiUrl + '/Classify/GetClassifyNameById?classifyId=' + classifys.selectClassifyId).success(function (data) {
+                    $http.get(SETTING.ApiUrl + '/Classify/GetClassifyNameById?classifyId=' + classifys.selectClassifyId).success(function (data) {
                         classifys.optionsData = dataRes;
                         $scope.classifyMsg = $scope.classifyMsg + data + "->";
                     });
@@ -31,20 +31,20 @@ angular.module("app").controller('CreatProductController', [
         $scope.resetClassifySelect = function () {
             $scope.classifyMsg = "";
             $scope.classifyMsg1 = "";
-            $http.get(SETTING.TradingApiUrl + '/Classify/GetAllClassify').success(function (data) {
+            $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify').success(function (data) {
                 classifys.optionsData = data;
             });
         };
 
         //选择分类值
         $scope.parameterValueList = [];
-//        $http.get(SETTING.TradingApiUrl + '/Classify/GetParameterTreeData?classifyId=' + 57).success(function (data) {
+//        $http.get(SETTING.ApiUrl + '/Classify/GetParameterTreeData?classifyId=' + 57).success(function (data) {
 //            $scope.parameterValueList = data;
 //        });
 
         //选择品牌项目
         var brands = $scope.brands = {};
-        $http.get(SETTING.TradingApiUrl + '/Brand/GetAllBrand?pageindex=' + 0).success(function (data) {
+        $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0).success(function (data) {
             brands.optionsData = data;
         });
         $scope.selectBrandChange = function () {
@@ -99,14 +99,14 @@ angular.module("app").controller('CreatProductController', [
                 alert("添加失败，请认真检查是否有漏填项！");
             } else {
                 var classifyJson = JSON.stringify({ product: product, productDetail: productDetail });
-                $http.post(SETTING.TradingApiUrl + '/Product/AddProduct', classifyJson, {
+                $http.post(SETTING.ApiUrl + '/Product/AddProduct', classifyJson, {
                     'withCredentials': true
                 }).success(function (productId) {
                     if (productId > 0) {
                         //遍历添加参数
                         valueClick();
                         for (var i = 0; i < $scope.selectParameterValue.length; i++) {
-                            $http.get(SETTING.TradingApiUrl + '/Classify/AddProductParameterVaule?parameterValueId=' + $scope.selectParameterValue[i] + "&productId=" + productId).success(function (data) {
+                            $http.get(SETTING.ApiUrl + '/Classify/AddProductParameterVaule?parameterValueId=' + $scope.selectParameterValue[i] + "&productId=" + productId).success(function (data) {
 
                             });
                         }
@@ -154,7 +154,7 @@ angular.module("app").controller('CreatProductController', [
             //your validation
             var formData = new FormData($('form')[0]);
             $.ajax({
-                url: SETTING.TradingApiUrl + '/Resource/Upload',  //server script to process data
+                url: SETTING.ApiUrl + '/Resource/Upload',  //server script to process data
                 type: 'POST',
                 xhr: function () {  // custom xhr
                     myXhr = $.ajaxSettings.xhr();
