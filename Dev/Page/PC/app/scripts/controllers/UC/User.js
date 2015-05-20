@@ -48,10 +48,16 @@ angular.module("app").controller('UserListController', [
     }
 ]);
 angular.module("app").controller('UserEditController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
-    $http.get(SETTING.ApiUrl + '/User/Detailed/' + $stateParams.id).success(function(data){
+    $http.get(SETTING.ApiUrl + '/User/Detailed/' + $stateParams.id,{
+        'withCredentials':true
+    }).success(function(data){
         $scope.UserModel =data;
     });
-
+    $http.get(SETTING.ApiUrl + '/Role/GetRoles',{
+        'withCredentials':true
+    }).success(function(data){
+        $scope.RoleList =data;
+    });
     $scope.Save = function(){
         $http.post(SETTING.ApiUrl + '/User/EditUser',$scope.UserModel,{
             'withCredentials':true

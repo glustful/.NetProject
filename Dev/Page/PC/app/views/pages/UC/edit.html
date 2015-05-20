@@ -14,6 +14,11 @@
             <option value="1">可用</option>
             </select>
             </div>
+            <div class="form-group">
+                <label for="names" >角色： </label>
+                <select name="" id="roleid" ng-model="UserModel.RoleId" ng-options="list.Id as list.RoleName for list in RoleList">
+                </select>
+            </div>
             <div>
                 <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw orange" style="margin-right:20px;" type="submit">保存<div class="md-ripple-container"></div></button>
                 <a href="#/page/UC/index"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink">取消<div class="md-ripple-container"></div></button></a>
