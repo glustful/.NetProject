@@ -1,14 +1,12 @@
 <form name="form" id="form" ng-controller="TagEditController" ng-submit="Save()">
             <div class="panel panel-default">
-
+                <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
                 <div class="panel-body">
                     <div class="bottom" >
                         <div class="revise"><label for="largeDate">修改 </label></div>
-                        <input id="largeDate" type="text" value="大数据" ng-model="TagModel.Tag" required>
+                        <input id="largeDate" type="text" name="name" value="大数据" ng-model="TagModel.Tag" required>
                     </div>
                 </div>
-
-
         <div>
             <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" type="submit">确认<div class="md-ripple-container"></div></button>
             <a href="#/page/CMS/tag/index"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink">取消<div class="md-ripple-container"></div></button></a>

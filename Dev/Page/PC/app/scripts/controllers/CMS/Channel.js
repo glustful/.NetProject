@@ -42,10 +42,14 @@ angular.module("app").controller('ChannelIndexController', [
                             getChannelList();
                         }
                         else{
-                            $scope.Message=data.Msg;
+                            //$scope.Message=data.Msg;
+                            $scope.alerts=[{type:'danger',msg:data.Msg}];
                         }
                     });
             });
+            $scope.closeAlert = function(index) {
+                $scope.alerts.splice(index, 1);
+            };
         }
     }
 ]);
@@ -72,10 +76,14 @@ angular.module("app").controller('ChannelCreateController',['$http','$scope','$s
                 $state.go("page.CMS.channel.index");
             }
             else{
-                $scope.Message=data.Msg;
+                //$scope.Message=data.Msg;
+                $scope.alerts=[{type:'danger',msg:data.Msg}];
             }
         });
     }
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
 }]);
 
 angular.module("app").controller('ChannelEditController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
@@ -90,6 +98,12 @@ angular.module("app").controller('ChannelEditController',['$http','$scope','$sta
             if(data.Status){
                 $state.go("page.CMS.channel.index");
             }
+            else{
+                $scope.alerts=[{type:'danger',msg:data.Msg}];
+            }
         });
     }
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
 }]);

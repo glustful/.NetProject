@@ -1,0 +1,26 @@
+<form name="form" id="form" ng-controller="UserEditController" ng-submit="Save()">
+    <div class="panel panel-default">
+        <div class="panel-body revise">
+            <div class="bottom" ><label for="name">用户名： </label> <input id="name" type="text" name="Name" ng-model="UserModel.UserName" required>
+            </div>
+            <div class="bottom" ><label for="name">新密码： </label> <input id="newpass" type="text" name="newpass" ng-model="UserModel.newPassWord" required>
+            </div>
+            <div class="bottom" ><label for="name">确认密码： </label> <input id="pass" type="text" name="pass" ng-model="UserModel.Password" ui-validate=" '$value==UserModel.newPassWord' " ui-validate-watch=" '$value==UserModel.newPassWord' " required>
+                <span ng-show='form.pass.$error.validator'>两次输入的密码不一致</span>
+            </div>
+            <div class="bottom" ><label for="names" >状态： </label>
+            <select name="" id="names" ng-model="UserModel.Status">
+            <option value="0">不可用</option>
+            <option value="1">可用</option>
+            </select>
+            </div>
+            <div>
+                <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw orange" style="margin-right:20px;" type="submit">保存<div class="md-ripple-container"></div></button>
+                <a href="#/page/UC/index"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink">取消<div class="md-ripple-container"></div></button></a>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+
+</script>

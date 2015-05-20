@@ -5,8 +5,8 @@
     border: none;
 }
 body{
-    color:#686868;
     font-family: 'microsoft yahei';
+    padding:70px 0 110px 0;
 }
 .clear{
     clear:both;
@@ -48,6 +48,11 @@ a{
 .header{
     height: 70px;
     background:#f13800 ;
+    background:#f13800 ;
+    position: fixed;
+    width:640px;
+    top:0;
+    z-index: 10;
 }
 .logo{
     margin:13px 0 0 27px;
@@ -89,6 +94,25 @@ a{
     font-size: 24px;
     color: #ffffff;
     background: none;
+}
+.hd .pic li{
+    position: relative;
+}
+.hd .pic .page{
+    position: absolute;
+    left: 255px;
+    top:200px;
+
+}
+.hd .pic .page span{
+    background: url("../image/broker/p1-1.png") no-repeat 0 0;
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin-right: 20px;
+}
+.hd .pic .page .white{
+    background: url("../image/broker/p2-2.png") no-repeat 0 0;
 }
 .content{
     padding:20px 10px 10px 10px;
@@ -149,15 +173,7 @@ a{
 .two{
     margin-right: 2px;
 }
-.four{
-    margin:2px 2px 0 0;
-}
-.five{
-    margin:2px 2px 10px 0;
-}
-.six{
-    margin-top: 2px;
-}
+
 h4{
     color: #333333;
     font-size: 20px;
@@ -178,6 +194,7 @@ h5{
     padding:0 25px;
     color: #72c27b;
     font-size: 20px;
+    margin-top:15px;
 }
 .hero {
     background: #fff;
@@ -273,25 +290,34 @@ h5{
 }
 .foot {
     background: #f13800;
+    width:640px;
+    position:fixed;
+    bottom:0;
+    z-index: 10;
 }
 .foot span{
     display: inline-block;
     text-align: center;
     width:150px;
-    padding:60px 0 17px 0;
+    padding:70px 0 17px 0;
     color: #fff;
+    font-size: 18px;
 }
 .act{
     background: url("../image/broker/活动1.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .house{
     background: url("../image/broker/房源库1.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .agent{
     background: url("../image/broker/经纪人专区2.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .personal{
     background: url("../image/broker/个人中心1.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .foot .agent{
     color: #f9e700;

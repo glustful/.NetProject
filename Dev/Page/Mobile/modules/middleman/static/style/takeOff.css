@@ -35,7 +35,7 @@ a{
     height: 67px;
     line-height: 67px;
     text-align:center;
-    background: url("../image/takeOff/icon_03.png") no-repeat 588px center #fc3b00;
+    background:#fc3b00;
 }
 h1{
     font-weight: normal;
@@ -199,6 +199,7 @@ h3{
     width:150px;
     padding:60px 0 17px 0;
     color: #fff;
+    font-size: 18px;
 }
 .act{
     background: url("../image/takeOff/活动1.png") no-repeat center 20px;

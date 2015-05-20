@@ -39,7 +39,7 @@ a {
 .header{
     height: 67px;
     line-height: 67px;
-    background: url("../image/houseDetail/icon_03.png") no-repeat 588px center #fc3b00;
+    background:  #fc3b00;
 
 }
 .header a{
@@ -83,26 +83,32 @@ p{
 }
 .foot {
     background: #f13800;
+
 }
 .foot span{
     display: inline-block;
     text-align: center;
     width:150px;
-    padding:60px 0 17px 0;
+    padding:70px 0 17px 0;
     color: #fff;
+    font-size: 18px;
 }
 .act{
     background: url("../image/houseDetail/活动2.png") no-repeat center 20px;
+    background-size: 40px 40px;
     color: #f9e700;
 }
 .house{
     background: url("../image/houseDetail/房源库1.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .agent{
     background: url("../image/houseDetail/经纪人专区1.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .personal{
     background: url("../image/houseDetail/个人中心1.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 
 

@@ -6,7 +6,7 @@
 }
 body{
     font-family: "microsoft yahei";
-    color:#525252;
+   padding:67px 0 110px 0;
 }
 a {
     text-decoration: none;
@@ -41,8 +41,11 @@ a {
 .header{
     height: 67px;
     line-height: 67px;
-    background: url("../image/customerList/icon_03.png") no-repeat 588px center #fc3b00;
-
+    background: #fc3b00;
+    position:fixed;
+    top:0;
+    width:640px;
+    z-index:10;
 }
 .header a{
     color: #fff;
@@ -105,9 +108,6 @@ h1{
 .content .detail{
     background-color: #f8f8f8;
 }
-.detail .last{
-    background-color:none;
-}
 .detail .last small{
     color: #b2b2b2;
 }
@@ -132,25 +132,34 @@ h1{
 }
 .foot {
     background: #f13800;
+    position: fixed;
+    bottom: 0;
+    width:640px;
+    z-index:10;
 }
 .foot span{
     display: inline-block;
     text-align: center;
     width:150px;
-    padding:60px 0 17px 0;
+    padding:70px 0 17px 0;
     color: #fff;
+    font-size: 18px;
 }
 .act{
     background: url("../image/customerList/活动1.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .house{
     background: url("../image/customerList/房源库1.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .agent{
     background: url("../image/customerList/经纪人专区1.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .personal{
     background: url("../image/customerList/个人中心2.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .foot .personal{
     color: #f9e700;
