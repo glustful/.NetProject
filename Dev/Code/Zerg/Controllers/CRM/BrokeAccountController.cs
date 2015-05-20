@@ -7,10 +7,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
+
+    [EnableCors("*", "*", "*")]
     /// <summary>
     /// 账户明细管理  李洪亮  2015-05-05
     /// </summary>
@@ -27,19 +30,36 @@ namespace Zerg.Controllers.CRM
         #region 经纪人账户明细详情
 
       /// <summary>
-      /// 查询经纪人的积分详情
+        /// 经纪人账户明细详情
       /// </summary>
       /// <param name="userId">经纪人ID</param>
       /// <returns></returns>
 
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetPointDetailByUserId(string userId)
+        public HttpResponseMessage GetPointDetailListByUserId(string userId=null, int page = 1, int pageSize = 10)
         {
+            if(string.IsNullOrEmpty(userId))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误！"));
+            }
+
             var brokeaccountcon = new BrokeAccountSearchCondition
             {
-               Brokers=_brokerService.GetBrokerById(Convert.ToInt32(userId))
+               Brokers=_brokerService.GetBrokerById(Convert.ToInt32(userId)),
+               Page = Convert.ToInt32(page),
+               PageCount = pageSize
             };
-            return PageHelper.toJson(_brokeaccountService.GetBrokeAccountsByCondition(brokeaccountcon).ToList());
+            var PointDetailList = _brokeaccountService.GetBrokeAccountsByCondition(brokeaccountcon).Select(p => new
+            {
+                Id = p.Id,
+                p.Balancenum,
+                p.MoneyDesc,
+             
+                p.Addtime
+
+            }).ToList();
+            var PointDetailListCount = _brokeaccountService.GetBrokeAccountCount(brokeaccountcon);
+            return PageHelper.toJson(new { List = PointDetailList, Condition = brokeaccountcon, totalCount = PointDetailListCount });       
         }
 
         /// <summary>
