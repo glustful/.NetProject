@@ -1015,6 +1015,18 @@ angular.module('app')
               data:{title:'编辑权限'},
               templateUrl:'views/pages/UC/Role/permission.html'
             })
+            .state('page.UC.index',{
+                url:'/index',
+                data:{title:'用户列表'},
+                templateUrl:'views/pages/UC/index.html',
+                resolve:load('scripts/controllers/UC/User.js')
+            })
+            .state('page.UC.edit',{
+                url:'/edit?id',
+                data:{title:'编辑页'},
+                templateUrl:'views/pages/UC/edit.html',
+                resolve:load('scripts/controllers/UC/User.js')
+            })
           //-----------------------end-------------------
 
           function load(srcs, callback) {
