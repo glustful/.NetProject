@@ -6,8 +6,7 @@
 }
 body{
     font-family: 'microsoft yahei';
-    font-size: 16px;
-    color:#525252;
+    padding:70px 0 110px 0;
 }
 a {
     text-decoration: none;
@@ -40,7 +39,10 @@ a {
     height: 67px;
     line-height: 67px;
     background:  #fc3b00;
-
+    position: fixed;
+    width:640px;
+    top:0;
+    z-index: 10;
 }
 .header a{
     color: #fff;
@@ -88,19 +90,22 @@ h2{
     width:150px;
     padding:60px 0 17px 0;
     color: #fff;
-    /*font-size: 18px;*/
+
 }
 .act{
     background: url("../image/activity/活动2.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .house{
     background: url("../image/activity/房源库1.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .agent{
     background: url("../image/activity/经纪人专区1.png") no-repeat center 20px;
 }
 .personal{
     background: url("../image/activity/个人中心1.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .foot .act{
     color: #f9e700;

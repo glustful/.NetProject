@@ -5,8 +5,9 @@
     border: none;
 }
 body{
-    color:#686868;
+
     font-family: 'microsoft yahei';
+    padding: 70px 0 110px 0;
 }
 .clear{
     clear:both;
@@ -48,6 +49,10 @@ a{
 .header{
     height: 70px;
     background:#f13800 ;
+    position: fixed;
+    width:640px;
+    top:0;
+    z-index: 10;
 }
 .logo{
     margin:13px 0 0 27px;
@@ -198,27 +203,35 @@ h2{
 }
 .foot {
     background: #f13800;
+    width:640px;
+    position:fixed;
+    bottom:0;
+    z-index: 10;
 }
 .foot span{
     display: inline-block;
     text-align: center;
     width:150px;
-    padding:60px 0 17px 0;
+    padding:70px 0 17px 0;
     color: #fff;
     font-size: 18px;
 }
 
 .act{
     background: url("../image/personal/活动1.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .house{
     background: url("../image/personal/房源库1.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .agent{
     background: url("../image/personal/经纪人专区1.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .personal{
     background: url("../image/personal/个人中心2.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .foot .personal{
     color: #f9e700;

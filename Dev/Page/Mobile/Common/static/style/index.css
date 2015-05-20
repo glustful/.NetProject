@@ -54,9 +54,6 @@ a{
     top:0;
     z-index: 10;
 }
-.hd{
-
-}
 .logo{
     margin:13px 0 0 27px;
     background: url("../image/index/logo.png") no-repeat 0 0;
@@ -288,20 +285,20 @@ h3{
 }
 .act{
     background: url("../image/index/活动2.png") no-repeat center 20px;
-    background-size: 35px 40px;
+    background-size: 40px 40px;
 }
 .foot .act{
     color: #f9e700;
 }
 .house{
     background: url("../image/index/房源库1.png") no-repeat center 20px;
-    background-size: 35px 40px;
+    background-size: 40px 40px;
 }
 .agent{
     background: url("../image/index/经纪人专区1.png") no-repeat center 20px;
-    background-size: 35px 40px;
+    background-size: 40px 40px;
 }
 .personal{
     background: url("../image/index/个人中心1.png") no-repeat center 20px;
-    background-size: 35px 40px;
+    background-size: 40px 40px;
 }
