@@ -1,0 +1,28 @@
+<div class="panel panel-card ng-scope">
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>款项名称：<input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="款项名" ng-model="PayInfo.Name" required="" tabindex="0" aria-required="true" aria-invalid="true"></td>
+        </tr>
+
+        <tr>
+            <td>款项描述：<input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="款项描述" ng-model="PayInfo.Describe" required="" tabindex="0" aria-required="true" aria-invalid="true"></td>
+        </tr>
+
+        <tr>
+            <td>打款金额：<input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="打款金额" ng-model="PayInfo.Amount" required="" tabindex="0" aria-required="true" aria-invalid="true"></td>
+        </tr>
+
+        <tr>
+            <td>银行卡号：<input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="银行卡号" ng-model="PayInfo.BankCard" required="" tabindex="0" aria-required="true" aria-invalid="true"></td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<div style="text-align: center;">
+    <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" ng-click="SetPay()">确认提交<div class="md-ripple-container"></div></button>
+    <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink" ng-click="history.back()">返回<div class="md-ripple-container"></div></button>
+</div>

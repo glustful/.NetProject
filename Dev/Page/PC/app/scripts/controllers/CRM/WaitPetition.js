@@ -32,7 +32,6 @@ angular.module("app").controller('WPDetialController',[
         //获取详细信息
         $http.get(SETTING.ApiUrl + '/AdminRecom/GetAuditDetail/' + $stateParams.id).success(function (data) {
             $scope.ARDetialModel = data;
-            console.log(data);
         });
 
         $scope.PassAudit = {
