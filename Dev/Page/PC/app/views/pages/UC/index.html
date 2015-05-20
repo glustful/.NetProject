@@ -1,0 +1,32 @@
+<div class="panel panel-card ng-scope" ng-controller="UserListController">
+    <div class="row form-control-2">
+        <input type="text" class="form-control form-control-1   ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入搜索条件" ng-model="searchCondition.title"  tabindex="0" aria-required="true" aria-invalid="true">
+        <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo" ng-click="getList()">搜索<div class="md-ripple-container"></div></button>
+    </div>
+    <!--<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>-->
+    <table class="table table-striped m-b-none tablet breakpoint footable-loaded footable" ui-jp="footable" data-filter="#filter" data-page-size="5">
+        <thead>
+        <tr>
+            <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">用户名<span class="footable-sort-indicator"></span></th>
+            <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">状态<span class="footable-sort-indicator"></span></th>
+            <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">操作<span class="footable-sort-indicator"></span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in list">
+            <td>{{item.UserName}}</td>
+            <td>{{item.Status}}</td>
+            <td>
+                <a ui-sref="page.UC.edit({id: item.Id})"> <span class="label bg-success">编辑</span></a>
+                <a href="#" ng-click="open(item.Id)"> <span class="label yellow">删除</span></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div colspan="5" class="text-center footable-visible">
+        <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+    </div>
+    <script type="text/ng-template" id="myModalContent.html">
+        <div ng-include="'views/partials/modal.html'"></div>
+    </script>
+</div>

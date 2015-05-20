@@ -13,15 +13,22 @@ angular.module('app')
       function ($rootScope, $state, $stateParams, AuthService) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
-//          $rootScope.$on('$stateChangeStart', function (event,next) {
-//              if(next.name==='access.signin'){
-//                  return;
-//              }
-//              if(!AuthService.IsAuthenticated()){
-//                  event.preventDefault();
-//                  $state.go('access.signin');
-//              }
-//          });
+          $rootScope.$on('$stateChangeStart', function (event,next) {
+              if(next.name==='access.signin' || next.name==='access.signup' || next.name==='access.forgot-password'){
+                  return;
+      }
+              if(!AuthService.IsAuthenticated()){
+                  event.preventDefault();
+                  $state.go('access.signin');
+              }
+              if(next.access !== undefined){
+                  if(!AuthService.IsAuthorized(next.access)){
+                    event.preventDefault();
+                    //TODO:跳转到权限提示页
+                  }
+
+              }
+          });
       }
     ]
   )
@@ -29,7 +36,7 @@ angular.module('app')
     ['$stateProvider', '$urlRouterProvider', 'MODULE_CONFIG',
       function ($stateProvider, $urlRouterProvider, MODULE_CONFIG) {
         $urlRouterProvider
-          .otherwise('/access/signin');
+          .otherwise('/page/CMS/tag/index');
         $stateProvider
           .state('app', {
             abstract: true,
@@ -49,8 +56,9 @@ angular.module('app')
             .state('app.dashboard', {
               url: '/dashboard',
               templateUrl: 'views/pages/dashboard.html',
-                  data: { title: 'Dashboard' },
-                  resolve: load(['scripts/controllers/chart.js', 'scripts/controllers/vectormap.js'])
+              data : { title: 'Dashboard' },
+              resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js']),
+              access:["admin"]
             })
 
             .state('app.wall', {
@@ -997,59 +1005,54 @@ angular.module('app')
             .state('page.CMS.tag.edit', {
               url: '/edit?id',
               templateUrl: 'views/pages/CMS/tag/edit.html',
-              data : { title: '编辑页' },
-              controller: ''
+                  data : { title: '编辑页' }
             })
             .state('page.CMS.tag.create', {
               url: '/create',
               templateUrl: 'views/pages/CMS/tag/create.html',
-              data : { title: '新建页' },
-              controller: ''
+                  data : { title: '新建页' }
             })
 
-            .state('page.CMS.ad', { url: '/ad', template: '<div ui-view></div>' })
+              .state('page.CMS.ad',{
+                url:'/ad',
+                template:'<div ui-view></div>',
+                resolve:load('scripts/controllers/CMS/Ad.js')
+              })
             .state('page.CMS.ad.index', {
               url: '/index',
               templateUrl: 'views/pages/CMS/ad/index.html',
-                data: { title: '广告页' },
-              controller: 'VectorMapCtrl'
+                  data : { title: '广告页' }
             })
             .state('page.CMS.ad.edit', {
               url: '/edit',
               templateUrl: 'views/pages/CMS/ad/edit.html',
-                data: { title: '编辑页' },
-              controller: 'VectorMapCtrl',
-              resolve: load('scripts/controllers/vectormap.js')
+                  data : { title: '编辑页' }
             })
             .state('page.CMS.ad.create', {
               url: '/create',
               templateUrl: 'views/pages/CMS/ad/create.html',
-                data: { title: '新建页' },
-              controller: 'VectorMapCtrl'
-
+                  data : { title: '新建页' }
             })
 
-            .state('page.CMS.channel', { url: '/channel', template: '<div ui-view></div>' })
+              .state('page.CMS.channel',{
+                url:'/channel',
+                template:'<div ui-view></div>',
+                resolve:load('scripts/controllers/CMS/Channel.js')
+              })
             .state('page.CMS.channel.index', {
               url: '/index',
               templateUrl: 'views/pages/CMS/channel/index.html',
-              data : { title: '栏目管理' },
-              controller: 'ChannelIndexController',
-              resolve:load('scripts/controllers/CMS/Channel.js')
+                  data : { title: '栏目管理' }
             })
             .state('page.CMS.channel.edit', {
               url: '/edit?id',
               templateUrl: 'views/pages/CMS/channel/edit.html',
-              data : { title: '编辑页' },
-              controller: 'ChannelEditController',
-              resolve:load('scripts/controllers/CMS/Channel.js')
+                  data : { title: '编辑页' }
             })
             .state('page.CMS.channel.create', {
               url: '/create',
               templateUrl: 'views/pages/CMS/channel/create.html',
-              data : { title: '新建页' },
-              controller: 'ChannelCreateController',
-              resolve:load('scripts/controllers/CMS/Channel.js')
+                  data : { title: '新建页' }
             })
 
             .state('page.CMS.content',{
@@ -1060,22 +1063,18 @@ angular.module('app')
             .state('page.CMS.content.index', {
               url: '/index',
               templateUrl: 'views/pages/CMS/content/index.html',
-              data : { title: '内容页' },
-              controller: 'ContentIndexController'
+                  data : { title: '内容页' }
             })
             .state('page.CMS.content.edit', {
               url: '/edit?id',
               templateUrl: 'views/pages/CMS/content/edit.html',
-              data : { title: '编辑页' },
-              controller: 'ContentEditController'
+                  data : { title: '编辑页' }
 
             })
             .state('page.CMS.content.create', {
               url: '/create',
               templateUrl: 'views/pages/CMS/content/create.html',
-              data : { title: '新建页' },
-              controller: 'ContentCreateController'
-
+                  data : { title: '新建页' }
             })
 
             .state('page.CMS.set', { url: '/set', template: '<div ui-view></div>' })
@@ -1091,24 +1090,58 @@ angular.module('app')
             .state('page.CMS.fileManager.index', {
               url: '/index',
               templateUrl: 'views/pages/CMS/fileManager/index.html',
-                data: { title: '文件管理' },
-              controller: 'VectorMapCtrl'
-            })
-            .state('app.DetailsPage1', {
-                url: '/DetailsPage1',
-                templateUrl: 'views/pages/DetailsPage1.html',
-                data: { title: '详情页' },
-                controller: 'VectorMapCtrl',
-                resolve: load('scripts/controllers/vectormap.js')
+                  data : { title: '文件管理' }
             })
 
 
           //-----------------------end-------------------
 
 
-
-
-
+          //-----------------------UC--------------------
+          .state('page.UC',{
+              url:'/UC',
+              template:'<div ui-view></div>',
+              abstract: true
+            })
+            .state('page.UC.role',{
+              url:'/role',
+              template:'<div ui-view></div>',
+              resolve:load('scripts/controllers/UC/Role.js'),
+              abstract: true
+            })
+              .state('page.UC.role.index',{
+                url:'/index',
+                data:{title:'角色列表'},
+                templateUrl:'views/pages/UC/Role/index.html'
+              })
+            .state('page.UC.role.edit',{
+              url:'/edit?id',
+              data:{title:'编辑角色'},
+              templateUrl:'views/pages/UC/Role/edit.html'
+            })
+            .state('page.UC.role.create',{
+              url:'/create',
+              data:{title:'新建角色'},
+              templateUrl:'views/pages/UC/Role/create.html'
+            })
+            .state('page.UC.role.permission',{
+              url:'/permission?id',
+              data:{title:'编辑权限'},
+              templateUrl:'views/pages/UC/Role/permission.html'
+            })
+            .state('page.UC.index',{
+                url:'/index',
+                data:{title:'用户列表'},
+                templateUrl:'views/pages/UC/index.html',
+                resolve:load('scripts/controllers/UC/User.js')
+            })
+            .state('page.UC.edit',{
+                url:'/edit?id',
+                data:{title:'编辑页'},
+                templateUrl:'views/pages/UC/edit.html',
+                resolve:load('scripts/controllers/UC/User.js')
+            })
+          //-----------------------end-------------------
 
           function load(srcs, callback) {
             return {

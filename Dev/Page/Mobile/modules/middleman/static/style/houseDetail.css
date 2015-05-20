@@ -1,0 +1,115 @@
+*{
+    padding:0;
+    margin:0;
+    list-style: none;
+    border: none;
+}
+body{
+    font-family: 'microsoft yahei';
+    font-size: 16px;
+    color:#525252;
+}
+a {
+    text-decoration: none;
+}
+.clear{
+    clear:both;
+    height: 0;
+    overflow: hidden;
+}
+.cf:after{
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: "";
+    clear: both;
+    height: 0;
+}
+
+.fl{
+    float: left;
+}
+.window{
+    width: 640px;
+    margin: 0 auto;
+}
+.bg{
+    background: #ebebeb;
+}
+.header{
+    height: 67px;
+    line-height: 67px;
+    background:  #fc3b00;
+
+}
+.header a{
+    color: #fff;
+    font-size: 18px;
+    display: inline-block;
+    margin-left:19px;
+    padding-left:19px;
+    background: url("../image/houseDetail/icon1_03.png") no-repeat 0 center;
+}
+h1{
+    font-weight: normal;
+    color:#fff;
+    margin-left: 270px;
+    font-size: 22px;
+}
+.content{
+    padding: 15px;
+}
+.bg-1{
+   background: #fff;
+}
+p{
+    text-align: center;
+}
+.title{
+    font-size: 24px;
+    font-weight: bolder;
+    line-height: 40px;
+}
+.mid{
+    line-height: 35px;
+    font-weight:bold;
+    font-size: 18px;
+}
+.main{
+    text-align: left;
+    padding: 20px 0 100px 80px;
+    text-indent:2em;
+    line-height: 25px;
+}
+.foot {
+    background: #f13800;
+
+}
+.foot span{
+    display: inline-block;
+    text-align: center;
+    width:150px;
+    padding:70px 0 17px 0;
+    color: #fff;
+    font-size: 18px;
+}
+.act{
+    background: url("../image/houseDetail/活动2.png") no-repeat center 20px;
+    background-size: 40px 40px;
+    color: #f9e700;
+}
+.house{
+    background: url("../image/houseDetail/房源库1.png") no-repeat center 20px;
+    background-size: 40px 40px;
+}
+.agent{
+    background: url("../image/houseDetail/经纪人专区1.png") no-repeat center 20px;
+    background-size: 40px 40px;
+}
+.personal{
+    background: url("../image/houseDetail/个人中心1.png") no-repeat center 20px;
+    background-size: 40px 40px;
+}
+
+
+

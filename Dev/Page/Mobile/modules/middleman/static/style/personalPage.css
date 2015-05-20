@@ -1,0 +1,122 @@
+*{
+    padding:0;
+    margin:0;
+    list-style: none;
+    border: none;
+}
+body{
+    font-family: "microsoft yahei";
+    font-size: 16px;
+    color:#525252;
+    padding:76px 0 110px 0;
+}
+a {
+    text-decoration: none;
+}
+.clear{
+    clear:both;
+    height: 0;
+    overflow: hidden;
+}
+.cf:after{
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: "";
+    clear: both;
+    height: 0;
+}
+
+.fl{
+    float: left;
+}
+.fr{
+    float:right;
+}
+.window{
+    width: 640px;
+    margin: 0 auto;
+}
+.bg{
+    background: #ebebeb;
+}
+.header{
+    height: 67px;
+    line-height: 67px;
+    background: #fc3b00;
+    position: fixed;
+    top:0;
+    width: 640px;
+    z-index:10;
+}
+.header a{
+    color: #fff;
+    font-size: 18px;
+    display: inline-block;
+    margin-left:19px;
+    padding-left:19px;
+    background: url("../image/personalPage/icon1_03.png") no-repeat 0 center;
+}
+h1{
+    font-weight: normal;
+    color:#fff;
+    margin-left: 270px;
+    font-size: 22px;
+}
+.intro{
+    background: #fff;
+}
+.int{
+    background: #fff;
+    margin: 20px 0 290px 0;
+}
+ li{
+    height:78px;
+    line-height: 78px;
+    border-bottom: 1px solid #e7e7e7;
+}
+ li span{
+     color: #706f6f;
+     font-size: 22px;
+     padding-left: 40px;
+ }
+ li small{
+     color: #b5b4b4;
+     font-size: 18px;
+     padding-right:40px;
+
+ }
+.foot {
+    background: #f13800;
+    position:fixed;
+    bottom:0;
+    width: 640px;
+    z-index: 10;
+}
+.foot span{
+    display: inline-block;
+    text-align: center;
+    width:150px;
+    padding:70px 0 17px 0;
+    color: #fff;
+    font-size: 18px;
+}
+.act{
+    background: url("../image/personalPage/活动1.png") no-repeat center 20px;
+    background-size: 40px 40px;
+}
+.house{
+    background: url("../image/personalPage/房源库1.png") no-repeat center 20px;
+    background-size: 40px 40px;
+}
+.agent{
+    background: url("../image/personalPage/经纪人专区1.png") no-repeat center 20px;
+    background-size: 40px 40px;
+}
+.personal{
+    background: url("../image/personalPage/个人中心2.png") no-repeat center 20px;
+    background-size: 40px 40px;
+}
+.foot .personal{
+    color: #f9e700;
+}

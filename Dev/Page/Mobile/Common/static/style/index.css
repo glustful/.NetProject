@@ -1,0 +1,304 @@
+*{
+    padding:0;
+    margin:0;
+    list-style: none;
+    border: none;
+}
+body{
+    color:#686868;
+    font-family: 'microsoft yahei';
+    padding: 70px 0 110px 0;
+}
+.clear{
+    clear:both;
+    height: 0;
+    overflow: hidden;
+}
+.cf:after{
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: "";
+    clear: both;
+    height: 0;
+}
+
+.fl{
+    float: left;
+}
+a{
+    text-decoration: none;
+}
+
+.cf{
+    clear: both;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.window{
+    width: 640px;
+    margin: 0 auto;
+}
+.bg{
+    background: #ebebeb;
+}
+.header{
+   height: 70px;
+   background:#f13800 ;
+    position: fixed;
+    width:640px;
+    top:0;
+    z-index: 10;
+}
+.logo{
+    margin:13px 0 0 27px;
+    background: url("../image/index/logo.png") no-repeat 0 0;
+    width: 82px;
+    height: 41px;
+}
+.logo a{
+    text-indent: -999em;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.search{
+    width:436px;
+    height: 45px;
+    line-height: 45px;
+    margin:10px 20px 0 0;
+    background: url("../image/index/搜索框.png") no-repeat 0 bottom ;
+
+}
+.search label{
+    text-indent: -99em;
+    display: inline-block;
+    background: url("../image/index/search.png") no-repeat center center ;
+    width: 50px;
+}
+.search input{
+    width: 297px;
+    color: #f1aa94;
+    font-size: 24px;
+    background: none;
+    border: none;
+
+}
+.search button{
+    width: 80px;
+    border: none;
+    font-size: 24px;
+    color: #ffffff;
+    background: none;
+}
+.hd .pic li{
+    position: relative;
+}
+.hd .pic .page{
+    position: absolute;
+    left: 255px;
+    top:200px;
+
+}
+ .hd .pic .page span{
+    background: url("../image/index/p1-1.png") no-repeat 0 0;
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin-right: 20px;
+}
+ .hd .pic .page .white{
+     background: url("../image/index/p2-2.png") no-repeat 0 0;
+ }
+.content{
+   padding: 10px 10px 25px 10px;
+}
+
+.activity li{
+    width: 205px;
+    float: left;
+    background:#ffffff;
+    text-align: center;
+    padding:27px 0 20px 0;
+}
+.one{
+    margin: 0 2px 0 0;
+}
+.two{
+    margin-right: 2px;
+}
+.four{
+    margin:2px 2px 0 0;
+}
+.five{
+    margin:2px 2px 10px 0;
+}
+.six{
+    margin-top: 2px;
+}
+.message{
+    margin-top:10px;
+}
+.brand{
+    position: relative;
+}
+.brand a{
+    display: block;
+}
+.syj a .summary{
+    position: absolute;
+    left: 18px;
+    top: 130px;
+    z-index:3;
+    color: #fff;
+}
+.syj a .summaryBg{
+    background: #000;
+    opacity: 0.7;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 120px;
+    width: 620px;
+    height: 40px;
+}
+.brand a span{
+    margin-right: 33px;
+}
+h3{
+    width: 600px;
+    height:55px;
+    line-height: 55px;
+    color: #686868;
+    font-size: 18px;
+    padding-left:20px;
+    font-weight: normal;
+    background: #f9f9f9;
+}
+.nav {
+
+    border-top: 1px solid #f1f1f1;
+    background: #fff;
+    padding:20px 0;
+}
+.nav span{
+    display: inline-block;
+    width: 300px;
+    border-right: 1px solid #ebebeb;
+    text-align: center;
+}
+.nav span a{
+    font-size: 20px;
+}
+.orange a{
+    color:#ffa800;
+    font-weight: bold;
+}
+.nav .brokerage{
+    border-right: none;
+}
+.brokerage a{
+    color:#ff0000;
+}
+.syj{
+    margin-bottom: 10px;
+}
+.jf a .summary{
+    position: absolute;
+    left: 18px;
+    top:125px;
+    z-index:3;
+    color: #fff;
+}
+.jf a .summaryBg{
+    background: #000;
+    opacity: 0.7;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 120px;
+    width: 620px;
+    height: 40px;
+}
+.jf{
+    margin-bottom: 10px;
+}
+.sl a .summary{
+    position: absolute;
+    left: 18px;
+    top:125px;
+    z-index:3;
+    color: #fff;
+}
+.sl a .summaryBg{
+    background: #000;
+    opacity: 0.7;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 120px;
+    width: 620px;
+    height: 40px;
+}
+.sl{
+    margin-bottom: 10px;
+}
+.ywc a .summary{
+    position: absolute;
+    left: 18px;
+    top:280px;
+    z-index:3;
+    color: #fff;
+}
+
+.ywc a .summaryBg{
+    background: #000;
+    opacity: 0.7;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 276px;
+    width: 620px;
+    height: 40px;
+}
+.img-inner{
+    margin-bottom: 10px;
+}
+.foot {
+   background: #f13800;
+    width:640px;
+    position:fixed;
+    bottom:0;
+    z-index: 10;
+}
+.foot span{
+    display: inline-block;
+    text-align: center;
+    width:150px;
+    padding:70px 0 17px 0;
+    color: #fff;
+    font-size: 20px;
+}
+.act{
+    background: url("../image/index/活动2.png") no-repeat center 20px;
+    background-size: 40px 40px;
+}
+.foot .act{
+    color: #f9e700;
+}
+.house{
+    background: url("../image/index/房源库1.png") no-repeat center 20px;
+    background-size: 40px 40px;
+}
+.agent{
+    background: url("../image/index/经纪人专区1.png") no-repeat center 20px;
+    background-size: 40px 40px;
+}
+.personal{
+    background: url("../image/index/个人中心1.png") no-repeat center 20px;
+    background-size: 40px 40px;
+}

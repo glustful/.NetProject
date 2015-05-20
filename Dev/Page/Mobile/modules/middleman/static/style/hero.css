@@ -1,0 +1,171 @@
+*{
+    padding:0;
+    margin:0;
+    list-style: none;
+    border: none;
+}
+body{
+    color:#686868;
+    font-family:'microsoft yahei' ;
+}
+.content ul li .jp .intro .blue{
+    color: #3a82d1;
+}
+.content ul li .jp .intro .green{
+    color: #3dac96;
+}
+.content ul li .jp .intro .hui{
+    color: #aaaaaa;
+}
+.clear{
+    clear:both;
+    height: 0;
+    overflow: hidden;
+}
+.cf:after{
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: "";
+    clear: both;
+    height: 0;
+}
+
+.fl{
+    float: left;
+}
+a{
+    text-decoration: none;
+}
+
+.cf{
+    clear: both;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.window{
+    width: 640px;
+    margin: 0 auto;
+}
+.bg{
+    background: #ebebeb;
+}
+.header{
+    height: 70px;
+    background:#f13800 ;
+}
+.logo{
+    margin:13px 0 0 27px;
+    background: url("../image/hero/logo.png") no-repeat 0 0;
+    width: 82px;
+    height: 41px;
+}
+.logo a{
+    text-indent: -999em;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.search{
+    width:436px;
+    height: 45px;
+    line-height: 45px;
+    margin:10px 20px 0 0;
+    background: url("../image/hero/搜索框.png") no-repeat 0 bottom ;
+
+}
+.search label{
+    text-indent: -99em;
+    display: inline-block;
+    background: url("../image/hero/search.png") no-repeat center center ;
+    width: 50px;
+}
+.search input{
+    width: 297px;
+    color: #f1aa94;
+    font-size: 24px;
+    background: none;
+    border: none;
+
+}
+.search button{
+    width: 80px;
+    border: none;
+    font-size: 24px;
+    color: #ffffff;
+    background: none;
+}
+.content{
+    padding:0 10px 40px 10px;
+}
+.pic{
+    position: relative;
+}
+.pic .summary{
+   position: absolute;
+   left: 20px;
+   top: 82px;
+   color: #f13800;
+    font-size: 18px;
+    z-index: 4;
+}
+.content ul li{
+    background: #fff;
+    padding:47px 0 41px 40px;
+    border-top:1px solid #ebebeb;
+}
+.content ul li .jp{
+   width: 470px;
+   height:50px;
+   border-right: 1px solid #ebebeb;
+}
+.content ul li .jp .img{
+    padding-right: 25px;
+}
+.content ul li .jp .intro h2{
+    color: #5a5a5a;
+    font-size: 20px;
+}
+.content ul li .jp .intro small{
+    color: #f6c607;
+}
+.content ul li .jp .intro p{
+    color: #f13800;
+    font-size:18px;
+    padding-top:10px;
+}
+.content .icon a{
+    display:inline-block;
+    height: 50px;
+   width: 100px;
+}
+.content .icon a{
+    background:url("../image/hero/jh.png") no-repeat center center;
+}
+.content .icon-2 a{
+    background:url("../image/hero/jt1.png") no-repeat center center;
+}
+.content .icon-3 a{
+    background:url("../image/hero/jt2.png") no-repeat center center;
+}
+.int .img{
+    display: inline-block;
+    font-size: 5em;
+    margin: 0;
+}
+.content .grow{
+    height:60px;
+    line-height: 60px;
+    padding-left: 15px;
+    color:#ff3000;
+    font-size: 20px;
+    margin-top:24px;
+    background-color: #fafafa;
+}
+.content ul li .intro h2 .tong{
+    color: #b98755;
+}
