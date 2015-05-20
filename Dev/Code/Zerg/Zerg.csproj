@@ -94,6 +94,11 @@
     </Reference>
     <Reference Include="System.Web.Http.Cors">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -125,9 +130,6 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http.WebHost">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Settings.txt" />
@@ -136,7 +138,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CRM\AdminInfoController.cs">
       <SubType>Code</SubType>
@@ -180,6 +181,22 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\CRM\TaskController.cs" />
+    <Compile Include="Controllers\CMS\AdvertisementController.cs" />
+    <Compile Include="Controllers\CMS\ChannelController.cs" />
+    <Compile Include="Controllers\CMS\ResourceController.cs" />
+    <Compile Include="Controllers\CMS\SettingController.cs" />
+    <Compile Include="Controllers\CMS\TagController.cs" />
+    <Compile Include="Controllers\CMS\ContentController.cs" />
+    <Compile Include="Controllers\UC\RoleController.cs" />
+    <Compile Include="Controllers\UC\UserController.cs" />
+    <Compile Include="Controllers\UEditor\Config.cs" />
+    <Compile Include="Controllers\UEditor\ConfigHandler.cs" />
+    <Compile Include="Controllers\UEditor\CrawlerHandler.cs" />
+    <Compile Include="Controllers\UEditor\Handler.cs" />
+    <Compile Include="Controllers\UEditor\ListFileHandler.cs" />
+    <Compile Include="Controllers\UEditor\NotSupportedHandler.cs" />
+    <Compile Include="Controllers\UEditor\PathFormater.cs" />
+    <Compile Include="Controllers\UEditor\UploadHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -201,16 +218,29 @@
     <Compile Include="Models\CRM\MessageDetailModel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\CMS\AdvertisementModel.cs" />
+    <Compile Include="Models\CMS\ChannelModel.cs" />
+    <Compile Include="Models\CMS\SettingModel.cs" />
     <Compile Include="Models\CRM\TaskAwardModel.cs" />
     <Compile Include="Models\CRM\TaskModel.cs" />
     <Compile Include="Models\CRM\TaskPunishmentModel.cs" />
     <Compile Include="Models\CRM\TaskSearchModel.cs" />
     <Compile Include="Models\CRM\TaskTagModel.cs" />
     <Compile Include="Models\CRM\TaskTypeModel.cs" />
+    <Compile Include="Models\CMS\ContentDetailModel.cs" />
+    <Compile Include="Models\CMS\ContentModel.cs" />
+    <Compile Include="Models\CMS\TagDetailModel.cs" />
+    <Compile Include="Models\CMS\TagModel.cs" />
+    <Compile Include="Models\UC\ActionModel.cs" />
+    <Compile Include="Models\UC\RoleModel.cs" />
+    <Compile Include="Models\UC\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Controllers\UEditor\controller.ashx" />
+    <Content Include="Controllers\UEditor\config.json" />
+    <None Include="Properties\PublishProfiles\Zerg_CMS.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -221,6 +251,7 @@
   <ItemGroup>
     <Folder Include="Controllers\CMS\" />
     <Folder Include="Models\CMS\" />
+    <Folder Include="Controllers\CRM\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CMS.Entity\CMS.Entity.csproj">
@@ -270,10 +301,6 @@
     <ProjectReference Include="..\YooPoon.WebFramework\YooPoon.WebFramework.csproj">
       <Project>{ae97a52e-b5f5-469d-95cb-94e14883ad01}</Project>
       <Name>YooPoon.WebFramework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\YP.CodeGen\YP.CodeGen.csproj">
-      <Project>{4cdf48d9-0088-4c22-897d-9f8799b57883}</Project>
-      <Name>YP.CodeGen</Name>
     </ProjectReference>
     <ProjectReference Include="..\Zerg.Base\Zerg.Base.csproj">
       <Project>{51b7fc52-21e7-40d1-96d2-d0867932b4a5}</Project>

@@ -109,6 +109,10 @@ namespace YooPoon.WebFramework.User.Services
                 {
                     query = query.Where(c => condition.Ids.Contains(c.Id));
                 }
+                if (!string.IsNullOrEmpty(condition.UserName))
+                {
+                    query = query.Where(c => c.UserName.Contains(condition.UserName));
+                }
                 if (condition.OrderBy.HasValue)
                 {
                     switch (condition.OrderBy)
@@ -134,6 +138,12 @@ namespace YooPoon.WebFramework.User.Services
                                 : query.OrderBy(c => c.RegTime);
                             break;
                     }
+                }
+                else
+                {
+                    query = condition.IsDescending
+                                ? query.OrderByDescending(c => c.Id)
+                                : query.OrderBy(c => c.Id);
                 }
                 if (condition.Page.HasValue && condition.PageSize.HasValue)
                 {
@@ -169,6 +179,10 @@ namespace YooPoon.WebFramework.User.Services
                 if (condition.Ids != null && condition.Ids.Length > 0)
                 {
                     query = query.Where(c => condition.Ids.Contains(c.Id));
+                }
+                if (!string.IsNullOrEmpty(condition.UserName))
+                {
+                    query = query.Where(c => c.UserName.Contains(condition.UserName));
                 }
                 return query.Count();
             }

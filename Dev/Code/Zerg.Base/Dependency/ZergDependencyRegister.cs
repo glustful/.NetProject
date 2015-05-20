@@ -1,5 +1,7 @@
-﻿using Autofac;
+﻿using System.Web.Http;
+using Autofac;
 using Autofac.Core;
+using Autofac.Integration.WebApi;
 using YooPoon.Core.Autofac;
 using YooPoon.Core.Data;
 using YooPoon.Data.EntityFramework;
@@ -51,7 +53,6 @@ namespace Zerg.Base.Dependency
             //            builder.RegisterAssemblyTypes(typeFinder.GetAssemblies().ToArray())
             //                .Where(t =>!String.IsNullOrEmpty(t.Namespace)&& t.Namespace.StartsWith("CMS") && t.Name.Contains("Service"))
             //                .WithParameter(repositeryParameter);
-
         }
 
         public int Order { get { return 1; } }
