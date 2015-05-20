@@ -1,0 +1,30 @@
+<form name="form" id="form" ng-controller="ContentCreateController" ng-submit="Create()">
+    <div class="panel panel-default">
+
+        <div class="panel-body revise">
+            <div class="bottom" ><label for="Title">标题： </label> <input id="Title" name="Title" type="text" ng-model="ContentModel.Title"></div>
+            <div class="bottom" ><label for="Content">内容： </label>
+                <textarea name="Content" id="Content" cols="42" rows="10" ng-model="ContentModel.Content"></textarea>
+            </div>
+            <!--<div class="bottom" ><label for="Status">状态： </label>-->
+                <!--<select name="Status" id="Status" ng-model-options="ContentModel.Status">-->
+                    <!--<option value="1">发布</option>-->
+                    <!--<option value="2">删除</option>-->
+                <!--</select>-->
+            <!--</div>-->
+            <div class="bottom" ><label for="Channel">频道： </label>
+                <select name="Channel" id="Channel" ng-model="ContentModel.ChannelId" ng-options="list.Id as list.Name in ChannelList"></select>
+            </div>
+            <div>
+                <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" type="submit">确认<div class="md-ripple-container"></div></button>
+                <a href="#/page/CMS/content/index"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink">取消<div class="md-ripple-container"></div></button></a>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+</form>

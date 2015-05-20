@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.MessageDetail
 {
-	public class MessageDetailMapping : EntityTypeConfiguration<MessageDetailEntity>, IMapping
+	public class MessageDetailMapping : EntityTypeConfiguration<MessageDetailEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public MessageDetailMapping()
 		{
@@ -13,7 +13,8 @@ namespace CRM.Entity.Mappings.MessageDetail
 			 
 			Property(c => c.Title).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Content).HasColumnType("varchar").HasMaxLength(500);
-			Property(c => c.Sender).HasColumnType("int");
+			Property(c => c.Sender).HasColumnType("varchar");
+            Property(c => c.Mobile).HasColumnType("varchar");
 			Property(c => c.Addtime).HasColumnType("datetime");
 		}
 	}

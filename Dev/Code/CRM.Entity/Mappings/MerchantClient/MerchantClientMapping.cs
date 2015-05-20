@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.MerchantClient
 {
-	public class MerchantClientMapping : EntityTypeConfiguration<MerchantClientEntity>, IMapping
+	public class MerchantClientMapping : EntityTypeConfiguration<MerchantClientEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public MerchantClientMapping()
 		{

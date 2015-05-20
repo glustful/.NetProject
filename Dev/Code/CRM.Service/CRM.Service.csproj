@@ -46,6 +46,10 @@
     <Compile Include="Bank\IBankService.cs" />
     <Compile Include="BargainClient\BargainClientService.cs" />
     <Compile Include="BargainClient\IBargainClientService.cs" />
+    <Compile Include="BLPay\BLPayService.cs" />
+    <Compile Include="BLPay\IBLPayService.cs" />
+    <Compile Include="BRECPay\BRECPayService.cs" />
+    <Compile Include="BRECPay\IBRECPayService.cs" />
     <Compile Include="BrokeAccount\BrokeAccountService.cs" />
     <Compile Include="BrokeAccount\IBrokeAccountService.cs" />
     <Compile Include="BrokerBill\BrokerBillService.cs" />
@@ -54,8 +58,12 @@
     <Compile Include="BrokerLeadClient\IBrokerLeadClientService.cs" />
     <Compile Include="BrokerOrder\BrokerOrderService.cs" />
     <Compile Include="BrokerOrder\IBrokerOrderService.cs" />
-    <Compile Include="BrokerRECClient\BrokerRECClientService.cs" />
-    <Compile Include="BrokerRECClient\IBrokerRECClientService.cs" />
+    <Compile Include="BrokerRECClient\BrokerRECClientService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BrokerRECClient\IBrokerRECClientService.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="BrokerWithdrawDetail\BrokerWithdrawDetailService.cs" />
     <Compile Include="BrokerWithdrawDetail\IBrokerWithdrawDetailService.cs" />
     <Compile Include="Broker\BrokerService.cs" />
@@ -121,10 +129,15 @@
       <Project>{ae97a52e-b5f5-469d-95cb-94e14883ad01}</Project>
       <Name>YooPoon.WebFramework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Zerg.Common\Zerg.Common.csproj">
+      <Project>{db11f281-e24f-4237-b77f-0cfdcf8dd647}</Project>
+      <Name>Zerg.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

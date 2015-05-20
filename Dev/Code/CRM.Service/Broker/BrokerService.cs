@@ -8,10 +8,10 @@ namespace CRM.Service.Broker
 {
 	public class BrokerService : IBrokerService
 	{
-		private readonly IRepository<BrokerEntity> _brokerRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<BrokerEntity> _brokerRepository;
 		private readonly ILog _log;
 
-		public BrokerService(IRepository<BrokerEntity> brokerRepository,ILog log)
+		public BrokerService(Zerg.Common.Data.ICRMRepository<BrokerEntity> brokerRepository,ILog log)
 		{
 			_brokerRepository = brokerRepository;
 			_log = log;
@@ -107,7 +107,7 @@ namespace CRM.Service.Broker
                 }
 				if (condition.Delflag.HasValue)
                 {
-                    query = query.Where(q => q.Delflag == condition.Delflag.Value);
+                    query = query.Where(q => q.State == condition.Delflag.Value);
                 }
 				if (!string.IsNullOrEmpty(condition.Brokername))
                 {
@@ -129,6 +129,10 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => q.Sexy.Contains(condition.Sexy));
                 }
+                if (!string.IsNullOrEmpty(condition.Email))
+                {
+                    query = query.Where(q => q.Email.Contains(condition.Email));
+                }
 				if (!string.IsNullOrEmpty(condition.Headphoto))
                 {
                     query = query.Where(q => q.Headphoto.Contains(condition.Headphoto));
@@ -136,10 +140,6 @@ namespace CRM.Service.Broker
 				if (!string.IsNullOrEmpty(condition.Agentlevel))
                 {
                     query = query.Where(q => q.Agentlevel.Contains(condition.Agentlevel));
-                }
-				if (!string.IsNullOrEmpty(condition.Usertype))
-                {
-                    query = query.Where(q => q.Usertype.Contains(condition.Usertype));
                 }
 				if (!string.IsNullOrEmpty(condition.Address))
                 {
@@ -195,6 +195,14 @@ namespace CRM.Service.Broker
 				{
 					query = query.OrderBy(q=>q.Id);
 				}
+                if (condition.UserType.HasValue)
+                {
+                    query = query.Where(c => c.Usertype == condition.UserType);
+                }
+                else
+                {
+                    query = query.OrderBy(q => q.Usertype);
+                }
 
 				if (condition.Page.HasValue && condition.PageCount.HasValue)
                 {
@@ -244,7 +252,7 @@ namespace CRM.Service.Broker
                 }
 				if (condition.Delflag.HasValue)
                 {
-                    query = query.Where(q => q.Delflag == condition.Delflag.Value);
+                    query = query.Where(q => q.State == condition.Delflag.Value);
                 }
 				if (!string.IsNullOrEmpty(condition.Brokername))
                 {
@@ -274,10 +282,10 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => q.Agentlevel.Contains(condition.Agentlevel));
                 }
-				if (!string.IsNullOrEmpty(condition.Usertype))
-                {
-                    query = query.Where(q => q.Usertype.Contains(condition.Usertype));
-                }
+                //if (!string.IsNullOrEmpty(condition.Usertype))
+                //{
+                //    query = query.Where(q => q.Usertype.Contains(condition.Usertype));
+                //}
 				if (!string.IsNullOrEmpty(condition.Address))
                 {
                     query = query.Where(q => q.Address.Contains(condition.Address));

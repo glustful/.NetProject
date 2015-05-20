@@ -70,5 +70,10 @@ namespace CRM.Entity.Model
 		/// UpTime
 		/// </summary>
 		public virtual DateTime Uptime { get; set; }
+
+        /// <summary>
+        /// 状态（可用  ，不可用（注销））
+        /// </summary>
+        public virtual bool State { get; set; }
 	}
 }

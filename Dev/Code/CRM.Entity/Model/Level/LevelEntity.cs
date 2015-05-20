@@ -13,13 +13,13 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// 等级名称
 		/// </summary>
-		public virtual string CodeId { get; set; }
+		public virtual string Name { get; set; }
 		/// <summary>
 		/// 等级描述
 		/// </summary>
 		public virtual string Describe { get; set; }
 		/// <summary>
-		/// 图片SRC
+		/// 图标SRC
 		/// </summary>
 		public virtual string Url { get; set; }
 		/// <summary>

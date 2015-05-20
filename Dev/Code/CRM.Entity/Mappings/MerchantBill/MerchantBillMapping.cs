@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.MerchantBill
 {
-	public class MerchantBillMapping : EntityTypeConfiguration<MerchantBillEntity>, IMapping
+	public class MerchantBillMapping : EntityTypeConfiguration<MerchantBillEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public MerchantBillMapping()
 		{

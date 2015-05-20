@@ -19,9 +19,15 @@ namespace CRM.Entity.Model
 		/// </summary>
 		public virtual string Content { get; set; }
 		/// <summary>
-		/// 发送人
+		/// 接收人
 		/// </summary>
-		public virtual int Sender { get; set; }
+        public virtual string Sender { get; set; }
+
+        /// <summary>
+		/// 手机号
+		/// </summary>
+		public virtual string Mobile { get; set; }
+
 		/// <summary>
 		/// 发送时间
 		/// </summary>

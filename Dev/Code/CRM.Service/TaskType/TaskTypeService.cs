@@ -15,10 +15,10 @@ namespace CRM.Service.TaskType
 {
 	public class TaskTypeService : ITaskTypeService
 	{
-		private readonly IRepository<TaskTypeEntity> _tasktypeRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<TaskTypeEntity> _tasktypeRepository;
 		private readonly ILog _log;
 
-		public TaskTypeService(IRepository<TaskTypeEntity> tasktypeRepository,ILog log)
+		public TaskTypeService(Zerg.Common.Data.ICRMRepository<TaskTypeEntity> tasktypeRepository,ILog log)
 		{
 			_tasktypeRepository = tasktypeRepository;
 			_log = log;
@@ -149,6 +149,10 @@ namespace CRM.Service.TaskType
                     query = query.Where(q => q.Name.Contains(condition.Name));
                 }
 
+                if (!string.IsNullOrEmpty(condition.NameRe))
+                {
+                    query = query.Where(q => q.Name==condition.NameRe);
+                }
 
 
 				if (!string.IsNullOrEmpty(condition.Describe))

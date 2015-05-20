@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using CRM.Entity.Model;
 
+//任务表的数据模型
 namespace Zerg.Models.CRM
 {
     public class TaskModel
@@ -15,19 +16,23 @@ namespace Zerg.Models.CRM
         /// <summary>
         /// 失败惩罚ID
         /// </summary>
-        public int TaskPunishment { get; set; }
+        public int TaskPunishmentId { get; set; }
+        public string TaskPunishment { get; set; }
         /// <summary>
         /// 发放奖励ID
         /// </summary>
-        public int TaskAward { get; set; }
+        public int TaskAwardId { get; set; }
+        public string awardName { get; set; }
         /// <summary>
         /// 任务目标ID
         /// </summary>
-        public int TaskTag { get; set; }
+        public int TaskTagId { get; set; }
+        public string tagName { get; set; }
         /// <summary>
         /// 任务类型ID
         /// </summary>
-        public int TaskType { get; set; }
+        public int TaskTypeId { get; set; }
+        public string TaskType { get; set; }
         /// <summary>
         /// 任务名称
         /// </summary>
@@ -39,7 +44,7 @@ namespace Zerg.Models.CRM
         /// <summary>
         /// 结束时间
         /// </summary>
-        public string Endtime { get; set; }
+        public DateTime Endtime { get; set; }
         /// <summary>
         /// AddUser
         /// </summary>
@@ -47,7 +52,7 @@ namespace Zerg.Models.CRM
         /// <summary>
         /// AddTime
         /// </summary>
-        public string Addtime { get; set; }
+        public DateTime Addtime { get; set; }
         /// <summary>
         /// UpUser
         /// </summary>
@@ -55,6 +60,13 @@ namespace Zerg.Models.CRM
         /// <summary>
         /// UpTime
         /// </summary>
-        public string Uptime { get; set; }
+        public DateTime Uptime { get; set; }
+        /// <summary>
+        /// 添加/修改类型
+        /// </summary>
+        public string Type { get; set; }
+        public int page{ get; set; }
+        public int pageSize { get; set; }
+        
     }
 }

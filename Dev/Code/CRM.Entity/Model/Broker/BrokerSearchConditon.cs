@@ -42,7 +42,9 @@ namespace CRM.Entity.Model
 
 		public int[] Zips { get; set; }
 
-		public string Headphoto { get; set; }
+	    public string Email { get; set; }
+
+	    public string Headphoto { get; set; }
 
 		public int[] Totalpointss { get; set; }
 
@@ -50,7 +52,7 @@ namespace CRM.Entity.Model
 
 		public string Agentlevel { get; set; }
 
-		public string Usertype { get; set; }
+		//public string Usertype { get; set; }
 
 		public string Address { get; set; }
 
@@ -58,7 +60,7 @@ namespace CRM.Entity.Model
 
 		public DateTime? RegtimeEnd { get; set; }
 
-		public bool? Delflag { get; set; }
+		public int? Delflag { get; set; }
 
 		public int[] Addusers { get; set; }
 
@@ -73,6 +75,8 @@ namespace CRM.Entity.Model
 		public DateTime? UptimeEnd { get; set; }
 
 		public EnumBrokerSearchOrderBy? OrderBy { get; set; }
+
+	    public EnumUserType? UserType { get; set; }
 	}
 
 	public enum EnumBrokerSearchOrderBy
