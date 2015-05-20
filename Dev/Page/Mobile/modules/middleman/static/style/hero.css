@@ -7,6 +7,7 @@
 body{
     color:#686868;
     font-family:'microsoft yahei' ;
+    padding-top:70px;
 }
 .content ul li .jp .intro .blue{
     color: #3a82d1;
@@ -57,6 +58,10 @@ a{
 .header{
     height: 70px;
     background:#f13800 ;
+    position: fixed;
+    top:0;
+    width: 640px;
+    z-index: 10;
 }
 .logo{
     margin:13px 0 0 27px;

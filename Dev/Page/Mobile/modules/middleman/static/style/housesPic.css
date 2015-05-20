@@ -218,22 +218,22 @@ a{
 }
 .act{
     background: url("../image/houses/活动2.png") no-repeat center 20px;
-    background-size: 35px 40px;
+    background-size: 40px 40px;
 }
 .foot .act{
     color: #f9e700;
 }
 .house{
     background: url("../image/houses/房源库1.png") no-repeat center 20px;
-    background-size: 35px 40px;
+    background-size: 40px 40px;
 }
 .agent{
     background: url("../image/houses/经纪人专区1.png") no-repeat center 20px;
-    background-size: 35px 40px;
+    background-size: 40px 40px;
 }
 .personal{
     background: url("../image/houses/个人中心1.png") no-repeat center 20px;
-    background-size: 35px 40px;
+    background-size: 40px 40px;
 }
 
 

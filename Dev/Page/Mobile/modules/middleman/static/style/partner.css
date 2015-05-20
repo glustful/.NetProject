@@ -85,24 +85,29 @@ ul li{
     display: inline-block;
     text-align: center;
     width:150px;
-    padding:60px 0 17px 0;
+    padding:70px 0 17px 0;
     color: #fff;
+    font-size: 20px;
 }
 .act{
     background: url("../image/partner/huodong.png") no-repeat center 20px;
+    background-size: 40px 40px;
     color: #f9e700;
 }
 .house{
     background: url("../image/partner/fangyuanku.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .agent{
     background: url("../image/partner/jinjiren.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 .personal{
     background: url("../image/partner/gerenzhongxin.png") no-repeat center 20px;
+    background-size: 40px 40px;
 }
 
-/*ºÏ»ïÈËÏêÇé*/
+/*ï¿½Ï»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 .detail_content{
     margin: 56px 25px 0 30px;
     background-color: white;
@@ -125,7 +130,7 @@ ul li{
 .information span {
     color: #848484;
 }
-/*Ìí¼ÓºÏ»ïÈË*/
+/*ï¿½ï¿½ÓºÏ»ï¿½ï¿½ï¿½*/
 .add_content{
     margin: 20px 55px 0 55px;
 }

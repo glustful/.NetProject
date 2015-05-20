@@ -192,19 +192,23 @@ h3{
     width:150px;
     padding:60px 0 17px 0;
     color: #fff;
-    font-size: 18px;
+    font-size: 20px;
 }
 .act{
     background: url("../image/recommend/活动1.png") no-repeat center 20px;
+    background-size: 35px 40px;
 }
 
 
 .house{
     background: url("../image/recommend/房源库1.png") no-repeat center 20px;
+    background-size: 35px 40px;
 }
 .agent{
     background: url("../image/recommend/经纪人专区1.png") no-repeat center 20px;
+    background-size: 35px 40px;
 }
 .personal{
     background: url("../image/recommend/个人中心1.png") no-repeat center 20px;
+    background-size: 35px 40px;
 }
