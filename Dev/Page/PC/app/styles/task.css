@@ -127,9 +127,34 @@ border-left-style: none;
 .vertical{
     width:19px; padding-left: 7px; height: 121px;
     border-right: 1px solid #ddd;
-    margin-left:700px;
-    margin-top: -450px;
     color:red;
     FONT-SIZE: 20pt;
     FONT-FAMILY: "华文行楷";
+}
+.vertical1{
+    width:19px; padding-left: 7px; height: 121px;
+    border-right: 1px solid #ddd;
+    color:red;
+    FONT-SIZE: 10pt;
+
+}
+.positionTask{
+    margin-left:700px;
+    margin-top: -450px;
+}
+.positionType{
+    margin-left:650px;
+    margin-top:-1450px;
+}
+.positionTag{
+    margin-left:650px;
+    margin-top:230px;
+}
+.positionAward{
+    margin-left:650px;
+    margin-top:270px;
+}
+.positionPunish{
+    margin-left:650px;
+    margin-top:270px;
 }

@@ -13,6 +13,7 @@ app.controller('taskconfigcontroller',['$http','$scope',function($http,$scope) {
         describe:'',
         Type:'add',
         Status: ''
+
     };
     $scope.typeCondition={
         Id:0,
@@ -46,7 +47,10 @@ app.controller('taskconfigcontroller',['$http','$scope',function($http,$scope) {
         Type:'add',
         Status: ''
     };
-
+$scope.warnType='';
+    $scope.warnTag='';
+    $scope.warnAward='';
+    $scope.warnPunish='';
     //绑定任务类型
     var getTaskType  = function() {
         $http.get(SETTING.ApiUrl+'/Task/TaskTypeList').success(function(data){
@@ -94,13 +98,22 @@ app.controller('taskconfigcontroller',['$http','$scope',function($http,$scope) {
                 $scope.typeCondition.Name='';
                 $scope.typeCondition.Describe='';
                 getTaskType();
-
-                // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
-            }
+                $scope.warnType='添加成功';
+                 }
+            else{ $scope.warnType='类型重复，请更换';}
 
         });
     };
-    $scope.addType=getTypeResult;
+    var typeTest=function(){
+        if($scope.typeCondition.Name==""){
+            $scope.warnType='请输入类型名称';
+        }
+        else if($scope.typeCondition.Describe==""){
+            $scope.warnType='请输入描述';
+        }
+        else{getTypeResult(); }
+    }
+    $scope.addType=typeTest;
     //添加任务目标
 
     var getTagResult  = function() {
@@ -111,14 +124,31 @@ app.controller('taskconfigcontroller',['$http','$scope',function($http,$scope) {
                 $scope.tagCondition.Name='';
                 $scope.tagCondition.Describe='';
                 $scope.tagCondition.Value='';
-
+                $scope.warnTag='添加成功';
                 getTaskTag();
                 // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
             }
+            else{ $scope.warnTag='目标名称重复，请更换';}
 
         });
     };
-    $scope.AddTaskTag=getTagResult;
+    var tagTest=function(){
+        if($scope.tagCondition.Name==""){
+            $scope.warnTag='请输入奖励名称';
+
+        }
+        else if($scope.tagCondition.Describe==""){
+
+            $scope.warnTag='请输入描述';
+        }
+        else if($scope.tagCondition.Value==""){
+
+            $scope.warnTag='请输入目标值';
+        }
+        else{getTagResult(); }
+    }
+
+    $scope.AddTaskTag=tagTest;
     //添加任务奖励
 
     var getAwardResult  = function() {
@@ -129,14 +159,31 @@ app.controller('taskconfigcontroller',['$http','$scope',function($http,$scope) {
                 $scope.awardCondition.Name='';
                 $scope.awardCondition.Describe='';
                 $scope.awardCondition.Value='';
-
+                $scope.warnAward='添加成功';
                 getTaskAward();
+
                 // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
             }
+            else{ $scope.warnAward='奖励重复，请更换';}
 
         });
     };
-    $scope.AddTaskAward=getAwardResult;
+    var awardTest=function(){
+        if($scope.awardCondition.Name==""){
+            $scope.warnAward='请输入奖励名称';
+
+        }
+        else if($scope.awardCondition.Describe==""){
+
+            $scope.warnAward='请输入描述';
+        }
+        else if($scope.awardCondition.Value==""){
+
+            $scope.warnAward='请输入目标值';
+        }
+        else{getAwardResult(); }
+    }
+    $scope.AddTaskAward=awardTest;
     //添加任务惩罚
 
     var getPunishResult  = function() {
@@ -148,20 +195,41 @@ app.controller('taskconfigcontroller',['$http','$scope',function($http,$scope) {
                 $scope.punishmentCondition.Describe='';
                 $scope.punishmentCondition.Value='';
                 getTaskPunishment();
+                $scope.warnPunish='添加成功';
                 // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
             }
+            else{ $scope.warnPunish='惩罚重复，请更换';}
 
         });
     };
-    $scope.AddTaskPunishment=getPunishResult;
+    var punishTest=function(){
+        if($scope.punishmentCondition.Name==""){
+            $scope.warnPunish='请输入惩罚名称';
+
+        }
+        else if($scope.punishmentCondition.Describe==""){
+
+            $scope.warnPunish='请输入描述';
+        }
+        else if($scope.punishmentCondition.Value==""){
+
+            $scope.warnPunish='请输入目标值';
+        }
+        else{getPunishResult(); }
+    }
+    $scope.AddTaskPunishment=punishTest;
+
     //删除任务类型
 
     var DelTaskType  = function() {
         $http.get(SETTING.ApiUrl+'/Task/DelTaskType/',{params:{id:$scope.mainCondition.TaskTypeId}}).success(function(data){
             if(data.Status){
                 getTaskType();
-
+                $scope.warnType='删除成功';
                 // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
+            }
+            else{
+                $scope.warnType='该任务类型使用中，删除失败';
             }
         });
     };
@@ -172,8 +240,11 @@ app.controller('taskconfigcontroller',['$http','$scope',function($http,$scope) {
         $http.get(SETTING.ApiUrl+'/Task/DelTaskTag/',{params:{id:$scope.mainCondition.TaskTagId}}).success(function(data){
             if(data.Status){
                 getTaskTag();
-
+                $scope.warnTag='删除成功';
                 // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
+            }
+            else{
+                $scope.warnTag='该任务目标使用中，删除失败';
             }
         });
     };
@@ -184,8 +255,12 @@ app.controller('taskconfigcontroller',['$http','$scope',function($http,$scope) {
         $http.get(SETTING.ApiUrl+'/Task/DelTaskAward/',{params:{id:$scope.mainCondition.TaskAwardId}}).success(function(data){
             if(data.Status){
                 getTaskAward();
+                $scope.warnAward ='删除成功';
 
                 // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
+            }
+            else{
+                $scope.warnAward ='该任务奖励使用中，删除失败';
             }
         });
     };
@@ -196,11 +271,22 @@ app.controller('taskconfigcontroller',['$http','$scope',function($http,$scope) {
         $http.get(SETTING.ApiUrl+'/Task/DelTaskPunishment/',{params:{id:$scope.mainCondition.TaskPunishmentId}}).success(function(data){
             if(data.Status){
                 getTaskPunishment();
-
+                $scope.warnPunish='删除成功';
                 // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
+            }
+            else{
+                $scope.warnPunish='该任务惩罚使用中，删除失败';
             }
         });
     };
     $scope.delPunish = DelTaskPunish;
+    //删除提示
+    var delW=function(){
+        $scope.warnAward ='';
+        $scope.warnPunish ='';
+        $scope.warnTag ='';
+        $scope.warnType ='';
+    }
+    $scope.delWarn=delW;
 }
 ]);

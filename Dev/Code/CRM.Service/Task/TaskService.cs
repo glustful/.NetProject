@@ -241,7 +241,10 @@ namespace CRM.Service.Task
                     query = query.Where(q => q.Taskname.Contains(condition.Taskname));
                 }
 
-
+                if (!string.IsNullOrEmpty(condition.TasknameRe))
+                {
+                    query = query.Where(q => q.Taskname==condition.TasknameRe);
+                }
 
 				if (condition.Ids != null && condition.Ids.Any())
                 {

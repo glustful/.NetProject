@@ -226,7 +226,7 @@ namespace Zerg.Controllers.CRM
                 };
                 var mo1 = new TaskSearchCondition
                 {
-                    Taskname = taskModel.Taskname
+                    TasknameRe = taskModel.Taskname
                 };
                 if (taskModel.Type == "add")
                 {
@@ -347,8 +347,18 @@ namespace Zerg.Controllers.CRM
                     Name = taskTypeModel.Name,
                     Describe = taskTypeModel.Describe
                 };
+                   var mo1 = new TaskTypeSearchCondition 
+                {
+                   NameRe = taskTypeModel.Name 
+                };
+                
                 if (taskTypeModel.Type == "add")
                 {
+                    int taskTypeCount = _taskTypeService.GetTaskTypeCount(mo1);
+                    if (taskTypeCount>0)
+                    { return PageHelper.toJson(PageHelper.ReturnValue(false, "名称重复，请更换")); }
+                    else 
+                    { 
                     try
                     {
                         if (_taskTypeService.Create(model) != null)
@@ -359,6 +369,7 @@ namespace Zerg.Controllers.CRM
                     catch (Exception)
                     {
                         return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败"));
+                    }
                     }
                 }
                 if (taskTypeModel.Type == "edit")
@@ -448,17 +459,27 @@ namespace Zerg.Controllers.CRM
                     Describe = taskAwardModel.Describe,
                     Value = taskAwardModel.Value
                 };
+                var mo1 = new TaskAwardSearchCondition
+                {
+                    NameRe = taskAwardModel.Name
+                };
                 if (taskAwardModel.Type == "add")
                 {
-                    try
-                    {
-                        _taskAwardService.Create(model);
-                        return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));
-                    }
-                    catch (Exception)
-                    {
-                        return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败"));
-                    }
+                     int taskTypeCount = _taskAwardService.GetTaskAwardCount(mo1);
+                     if (taskTypeCount > 0)
+                     { return PageHelper.toJson(PageHelper.ReturnValue(false, "名称重复，请更换")); }
+                     else
+                     {
+                         try
+                         {
+                             _taskAwardService.Create(model);
+                             return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));
+                         }
+                         catch (Exception)
+                         {
+                             return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败"));
+                         }
+                     }
                 }
                 if (taskAwardModel.Value == "edit")
                 {
@@ -550,17 +571,27 @@ namespace Zerg.Controllers.CRM
                     Describe = taskTagModel.Describe,
                     Value = taskTagModel.Value
                 };
+                 var mo1 = new TaskTagSearchCondition
+                {
+                    NameRe = taskTagModel.Name
+                };
                 if (taskTagModel.Type == "add")
                 {
-                    try
-                    {
-                        _taskTagService.Create(model);
-                        return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));
-                    }
-                    catch (Exception)
-                    {
-                        return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败"));
-                    }
+                       int taskTagCount = _taskTagService.GetTaskTagCount(mo1);
+                       if (taskTagCount > 0)
+                       { return PageHelper.toJson(PageHelper.ReturnValue(false, "名称重复，请更换")); }
+                       else
+                       {
+                           try
+                           {
+                               _taskTagService.Create(model);
+                               return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));
+                           }
+                           catch (Exception)
+                           {
+                               return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败"));
+                           }
+                       }
                 }
                 if (taskTagModel.Type == "edit")
                 {
@@ -650,17 +681,27 @@ namespace Zerg.Controllers.CRM
                     Describe = taskPunishmentModel.Describe,
                     Value = taskPunishmentModel.Value
                 };
+                var mo1 = new TaskPunishmentSearchCondition
+                {
+                    NameRe = taskPunishmentModel.Name
+                };
                 if (taskPunishmentModel.Type == "add")
                 {
-                    try
-                    {
-                        _taskPunishmentService.Create(model);
-                        return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));
-                    }
-                    catch (Exception)
-                    {
-                        return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败"));
-                    }
+                     int taskPunishCount = _taskPunishmentService.GetTaskPunishmentCount(mo1);
+                     if (taskPunishCount > 0)
+                     { return PageHelper.toJson(PageHelper.ReturnValue(false, "名称重复，请更换")); }
+                     else
+                     {
+                         try
+                         {
+                             _taskPunishmentService.Create(model);
+                             return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));
+                         }
+                         catch (Exception)
+                         {
+                             return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败"));
+                         }
+                     }
                 }
                 if (taskPunishmentModel.Type == "edit")
                 {

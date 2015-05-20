@@ -137,7 +137,7 @@ var dd=function (){
               // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
             }
                 else{
-               $scope.addcondition.warm="请检查日期格式是否有误";
+               $scope.addcondition.warm="任务名称重复，请更换";
 
            }
 
