@@ -97,6 +97,10 @@ namespace CMS.Service.Tag
                 {
                     query = query.Where(q => q.Tag == condition.Tag);
                 }
+			    if (!string.IsNullOrEmpty(condition.LikeTag))
+			    {
+                    query = query.Where(q => q.Tag.Contains(condition.LikeTag));
+			    }
 				if (condition.Ids != null && condition.Ids.Any())
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
@@ -135,9 +139,9 @@ namespace CMS.Service.Tag
 				_log.Error(e,"数据库操作出错");
                 return null;
 			}
-		}
+		}	   
 
-		public int GetTagCount (TagSearchCondition condition)
+	    public int GetTagCount (TagSearchCondition condition)
 		{
 			var query = _tagRepository.Table;
 			try
@@ -161,6 +165,10 @@ namespace CMS.Service.Tag
 				if (!string.IsNullOrEmpty(condition.Tag))
                 {
                     query = query.Where(q => q.Tag == condition.Tag);
+                }
+                if (!string.IsNullOrEmpty(condition.LikeTag))
+                {
+                    query = query.Where(q => q.Tag.Contains(condition.LikeTag));
                 }
 				if (condition.Ids != null && condition.Ids.Any())
                 {

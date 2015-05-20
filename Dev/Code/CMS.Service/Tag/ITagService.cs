@@ -15,6 +15,6 @@ namespace CMS.Service.Tag
 
 		IQueryable<TagEntity> GetTagsByCondition(TagSearchCondition condition);
 
-		int GetTagCount (TagSearchCondition condition);
+		int GetTagCount (TagSearchCondition condition);      
 	}
 }

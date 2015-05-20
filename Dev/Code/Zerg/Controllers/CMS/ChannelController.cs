@@ -125,20 +125,62 @@ namespace Zerg.Controllers.CMS
         [HttpPost]
          public HttpResponseMessage Edit(ChannelModel model)
          {
-             var channel = _channelService.GetChannelById(model.Id);
-             var newParent = _channelService.GetChannelById(model.ParentId);
-             channel.Name = model.Name;
-             channel.Status = model.Status;
-             channel.UpdUser = _workContent.CurrentUser.Id;
-             channel.UpdTime = DateTime.Now;
-             channel.Parent = newParent;
-             if (_channelService.Update(channel)!=null) {
-                 return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
-             }
-             else
-             {
-                 return PageHelper.toJson(PageHelper.ReturnValue(false,"数据更新失败！"));
-             }
+             Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+             var m = reg.IsMatch(model.Name);
+            if (!m)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
+            }
+            else
+            {
+                var channel = _channelService.GetChannelById(model.Id);
+                if (channel.Name == model.Name)
+                {
+                    var newParent = _channelService.GetChannelById(model.ParentId);
+                    channel.Name = model.Name;
+                    channel.Status = model.Status;
+                    channel.UpdUser = _workContent.CurrentUser.Id;
+                    channel.UpdTime = DateTime.Now;
+                    channel.Parent = newParent;
+                    if (_channelService.Update(channel) != null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                    }
+                    else
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+                    }
+                }
+                else
+                {
+                      var channelCon = new ChannelSearchCondition
+                      {
+                          Name = model.Name
+                      };
+                      var totalCount = _channelService.GetChannelCount(channelCon);
+                      if (totalCount > 0)
+                      {
+                          return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已存在！"));
+                      }
+                      else
+                      {
+                          var newParent = _channelService.GetChannelById(model.ParentId);
+                          channel.Name = model.Name;
+                          channel.Status = model.Status;
+                          channel.UpdUser = _workContent.CurrentUser.Id;
+                          channel.UpdTime = DateTime.Now;
+                          channel.Parent = newParent;
+                          if (_channelService.Update(channel) != null)
+                          {
+                              return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                          }
+                          else
+                          {
+                              return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+                          }
+                      }
+                }
+            }          
          }
         /// <summary>
         /// 频道删除
@@ -148,7 +190,7 @@ namespace Zerg.Controllers.CMS
         [HttpGet]
          public HttpResponseMessage Delete(int id)
          {
-                var channel = _channelService.GetChannelById(id);
+            var channel = _channelService.GetChannelById(id);
             if (channel.Contents != null && channel.Contents.Any())
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "有内容关联不能删除"));

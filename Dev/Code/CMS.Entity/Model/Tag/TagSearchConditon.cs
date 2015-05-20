@@ -24,6 +24,8 @@ namespace CMS.Entity.Model
 
 		public string Tag { get; set; }
 
+        public string LikeTag { get; set; }
+
 		public int[] Addusers { get; set; }
 
 		public DateTime? AddtimeBegin { get; set; }
