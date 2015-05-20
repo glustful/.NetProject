@@ -996,6 +996,25 @@ angular.module('app')
                 resolve: load('scripts/controllers/vectormap.js')
             })
 
+            .state('page.UC',
+          {
+              url:'/UC',
+              template:'<div ui-view></div>'
+          })
+            .state('page.UC.index',{
+                url:'/index',
+                templateUrl:'views/pages/UC/index.html',
+                data:{title:'用户管理'},
+                controller:'UserListController',
+                resolve:load('scripts/controllers/UC/User.js')
+            })
+            .state('page.UC.edit',{
+                url:'/edit?id',
+                templateUrl:'views/pages/UC/edit.html',
+                data:{title:'编辑页'},
+                controller:'UserEditController',
+                resolve:load('scripts/controllers/UC/User.js')
+            })
 
           //-----------------------end-------------------
 
