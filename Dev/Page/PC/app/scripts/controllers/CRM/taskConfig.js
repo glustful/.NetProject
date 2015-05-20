@@ -233,7 +233,12 @@ $scope.warnType='';
             }
         });
     };
-    $scope.delType = DelTaskType;
+    var delTyleTest=function(){
+        if($scope.mainCondition.TaskTypeId>0){
+            DelTaskType();
+        }
+    }
+    $scope.delType =delTyleTest ;
     //删除任务目标
 
     var DelTaskTag  = function() {
@@ -248,7 +253,13 @@ $scope.warnType='';
             }
         });
     };
-    $scope.delTag = DelTaskTag;
+    var delTagTest=function(){
+        if($scope.mainCondition.TaskTagId>0){
+            DelTaskTag();
+        }
+    }
+    $scope.delTag =delTagTest ;
+
     //删除任务奖励
 
     var DelTaskAward  = function() {
@@ -264,7 +275,12 @@ $scope.warnType='';
             }
         });
     };
-    $scope.delAward = DelTaskAward;
+    var delAwardTest=function(){
+        if($scope.mainCondition.TaskAwardId>0){
+            DelTaskAward();
+        }
+    }
+    $scope.delAward =delAwardTest ;
     //删除任务惩罚
 
     var DelTaskPunish  = function() {
@@ -279,7 +295,12 @@ $scope.warnType='';
             }
         });
     };
-    $scope.delPunish = DelTaskPunish;
+    var delPunishTest=function(){
+        if($scope.mainCondition.TaskPunishmentId>0){
+            DelTaskPunish();
+        }
+    }
+    $scope.delPunish = delPunishTest;
     //删除提示
     var delW=function(){
         $scope.warnAward ='';
