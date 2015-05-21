@@ -71,7 +71,7 @@ a{
     height: 45px;
     line-height: 45px;
     margin:10px 20px 0 0;
-    background: url("../image/index/搜索框.png") no-repeat 0 bottom ;
+    background: url("../image/index/ssk.png") no-repeat 0 bottom ;
 
 }
 .search label{
@@ -268,14 +268,14 @@ h3{
 .img-inner{
     margin-bottom: 10px;
 }
-.foot {
+.footer {
    background: #f13800;
     width:640px;
     position:fixed;
     bottom:0;
     z-index: 10;
 }
-.foot span{
+.footer span{
     display: inline-block;
     text-align: center;
     width:150px;
@@ -284,21 +284,21 @@ h3{
     font-size: 20px;
 }
 .act{
-    background: url("../image/index/活动2.png") no-repeat center 20px;
+    background: url("../image/index/hd2.png") no-repeat center 20px;
     background-size: 40px 40px;
 }
-.foot .act{
+.footer .act{
     color: #f9e700;
 }
 .house{
-    background: url("../image/index/房源库1.png") no-repeat center 20px;
+    background: url("../image/index/fyk1.png") no-repeat center 20px;
     background-size: 40px 40px;
 }
 .agent{
-    background: url("../image/index/经纪人专区1.png") no-repeat center 20px;
+    background: url("../image/index/jjrzq1.png") no-repeat center 20px;
     background-size: 40px 40px;
 }
 .personal{
-    background: url("../image/index/个人中心1.png") no-repeat center 20px;
+    background: url("../image/index/grzx1.png") no-repeat center 20px;
     background-size: 40px 40px;
 }
