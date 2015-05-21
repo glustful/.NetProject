@@ -248,20 +248,20 @@ a{
 }
 .act{
     background: url("../image/housesBuy/活动2.png") no-repeat center 20px;
-    background-size: 35px 40px;
+    background-size: 40px 40px;
 }
 .foot .act{
     color: #f9e700;
 }
-.house{
+.house {
     background: url("../image/housesBuy/房源库1.png") no-repeat center 20px;
-    background-size: 35px 40px;
+    background-size: 40px 40px;
 }
 .agent{
     background: url("../image/housesBuy/经纪人专区1.png") no-repeat center 20px;
-    background-size: 35px 40px;
+    background-size: 40px 40px;
 }
 .personal{
     background: url("../image/housesBuy/个人中心1.png") no-repeat center 20px;
-    background-size: 35px 40px;
+    background-size: 40px 40px;
 }

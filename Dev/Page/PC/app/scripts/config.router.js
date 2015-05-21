@@ -878,131 +878,156 @@ angular.module('app')
               url:'/CMS',
               template:'<div ui-view></div>'
             })
-            .state('page.CMS.tag',{
-              url:'/tag',
-              template:'<div ui-view></div>',
-              resolve: load('scripts/controllers/CMS/Tag.js')
-            })
-            .state('page.CMS.tag.index', {
-              url: '/index',
-              templateUrl: 'views/pages/CMS/tag/index.html',
-              data : { title: '标签页' }
-            })
-            .state('page.CMS.tag.edit', {
-              url: '/edit?id',
-              templateUrl: 'views/pages/CMS/tag/edit.html',
-              data : { title: '编辑页' },
-              controller: '',
-            })
-            .state('page.CMS.tag.create', {
-              url: '/create',
-              templateUrl: 'views/pages/CMS/tag/create.html',
-              data : { title: '新建页' },
-              controller: ''
-            })
+              .state('page.CMS.tag',{
+                url:'/tag',
+                template:'<div ui-view></div>',
+                resolve: load('scripts/controllers/CMS/Tag.js')
+              })
+                .state('page.CMS.tag.index', {
+                  url: '/index',
+                  templateUrl: 'views/pages/CMS/tag/index.html',
+                  data : { title: '标签页' }
+                })
+                .state('page.CMS.tag.edit', {
+                  url: '/edit?id',
+                  templateUrl: 'views/pages/CMS/tag/edit.html',
+                  data : { title: '编辑页' }
+                })
+                .state('page.CMS.tag.create', {
+                  url: '/create',
+                  templateUrl: 'views/pages/CMS/tag/create.html',
+                  data : { title: '新建页' }
+                })
 
-            .state('page.CMS.ad',{url:'/ad',template:'<div ui-view></div>'})
-            .state('page.CMS.ad.index', {
-              url: '/index',
-              templateUrl: 'views/pages/CMS/ad/index.html',
-              data : { title: '广告页' },
-              controller: 'VectorMapCtrl'
-            })
-            .state('page.CMS.ad.edit', {
-              url: '/edit',
-              templateUrl: 'views/pages/CMS/ad/edit.html',
-              data : { title: '编辑页' },
-              controller: 'VectorMapCtrl',
-              resolve: load('scripts/controllers/vectormap.js')
-            })
-            .state('page.CMS.ad.create', {
-              url: '/create',
-              templateUrl: 'views/pages/CMS/ad/create.html',
-              data : { title: '新建页' },
-              controller: 'VectorMapCtrl'
+              .state('page.CMS.ad',{
+                url:'/ad',
+                template:'<div ui-view></div>',
+                resolve:load('scripts/controllers/CMS/Ad.js')
+              })
+                .state('page.CMS.ad.index', {
+                  url: '/index',
+                  templateUrl: 'views/pages/CMS/ad/index.html',
+                  data : { title: '广告页' }
+                })
+                .state('page.CMS.ad.edit', {
+                  url: '/edit',
+                  templateUrl: 'views/pages/CMS/ad/edit.html',
+                  data : { title: '编辑页' }
+                })
+                .state('page.CMS.ad.create', {
+                  url: '/create',
+                  templateUrl: 'views/pages/CMS/ad/create.html',
+                  data : { title: '新建页' }
+                })
 
-            })
+              .state('page.CMS.channel',{
+                url:'/channel',
+                template:'<div ui-view></div>',
+                resolve:load('scripts/controllers/CMS/Channel.js')
+              })
+                .state('page.CMS.channel.index', {
+                  url: '/index',
+                  templateUrl: 'views/pages/CMS/channel/index.html',
+                  data : { title: '栏目管理' }
+                })
+                .state('page.CMS.channel.edit', {
+                  url: '/edit?id',
+                  templateUrl: 'views/pages/CMS/channel/edit.html',
+                  data : { title: '编辑页' }
+                })
+                .state('page.CMS.channel.create', {
+                  url: '/create',
+                  templateUrl: 'views/pages/CMS/channel/create.html',
+                  data : { title: '新建页' }
+                })
 
-            .state('page.CMS.channel',{url:'/channel',template:'<div ui-view></div>'})
-            .state('page.CMS.channel.index', {
-              url: '/index',
-              templateUrl: 'views/pages/CMS/channel/index.html',
-              data : { title: '栏目管理' },
-              controller: 'ChannelIndexController',
-              resolve:load('scripts/controllers/CMS/Channel.js')
-            })
-            .state('page.CMS.channel.edit', {
-              url: '/edit?id',
-              templateUrl: 'views/pages/CMS/channel/edit.html',
-              data : { title: '编辑页' },
-              controller: 'ChannelEditController',
-              resolve:load('scripts/controllers/CMS/Channel.js')
-            })
-            .state('page.CMS.channel.create', {
-              url: '/create',
-              templateUrl: 'views/pages/CMS/channel/create.html',
-              data : { title: '新建页' },
-              controller: 'ChannelCreateController',
-              resolve:load('scripts/controllers/CMS/Channel.js')
-            })
+              .state('page.CMS.content',{
+                url:'/content',
+                template:'<div ui-view></div>',
+                resolve:load('scripts/controllers/CMS/Content.js')
+              })
+                .state('page.CMS.content.index', {
+                  url: '/index',
+                  templateUrl: 'views/pages/CMS/content/index.html',
+                  data : { title: '内容页' }
+                })
+                .state('page.CMS.content.edit', {
+                  url: '/edit?id',
+                  templateUrl: 'views/pages/CMS/content/edit.html',
+                  data : { title: '编辑页' }
 
-            .state('page.CMS.content',{
-              url:'/content',
-              template:'<div ui-view></div>',
-              resolve:load('scripts/controllers/CMS/Content.js')
-            })
-            .state('page.CMS.content.index', {
-              url: '/index',
-              templateUrl: 'views/pages/CMS/content/index.html',
-              data : { title: '内容页' },
-              controller: 'ContentIndexController'
-            })
-            .state('page.CMS.content.edit', {
-              url: '/edit?id',
-              templateUrl: 'views/pages/CMS/content/edit.html',
-              data : { title: '编辑页' },
-              controller: 'ContentEditController'
+                })
+                .state('page.CMS.content.create', {
+                  url: '/create',
+                  templateUrl: 'views/pages/CMS/content/create.html',
+                  data : { title: '新建页' }
+                })
 
-            })
-            .state('page.CMS.content.create', {
-              url: '/create',
-              templateUrl: 'views/pages/CMS/content/create.html',
-              data : { title: '新建页' },
-              controller: 'ContentCreateController'
+              .state('page.CMS.set',{url:'/set',template:'<div ui-view></div>'})
+                .state('page.CMS.set.index', {
+                  url: '/index',
+                  templateUrl: 'views/pages/CMS/set/index.html',
+                  data : { title: '设置' },
+                  controller: 'SettingController',
+                  resolve:load('scripts/controllers/CMS/Setting.js')
+                })
 
-            })
-
-            .state('page.CMS.set',{url:'/set',template:'<div ui-view></div>'})
-            .state('page.CMS.set.index', {
-              url: '/index',
-              templateUrl: 'views/pages/CMS/set/index.html',
-              data : { title: '设置' },
-              controller: 'SettingController',
-              resolve:load('scripts/controllers/CMS/Setting.js')
-            })
-
-            .state('page.CMS.fileManager',{url:'/fileManager',template:'<div ui-view></div>'})
-            .state('page.CMS.fileManager.index', {
-              url: '/index',
-              templateUrl: 'views/pages/CMS/fileManager/index.html',
-              data : { title: '文件管理' },
-              controller: 'VectorMapCtrl'
-            })
-            .state('app.DetailsPage1', {
-                url: '/DetailsPage1',
-                templateUrl: 'views/pages/DetailsPage1.html',
-                data : { title: '详情页' },
-                controller: 'VectorMapCtrl',
-                resolve: load('scripts/controllers/vectormap.js')
-            })
+              .state('page.CMS.fileManager',{url:'/fileManager',template:'<div ui-view></div>'})
+                .state('page.CMS.fileManager.index', {
+                  url: '/index',
+                  templateUrl: 'views/pages/CMS/fileManager/index.html',
+                  data : { title: '文件管理' }
+                })
 
 
           //-----------------------end-------------------
 
 
-
-
-
+          //-----------------------UC--------------------
+          .state('page.UC',{
+              url:'/UC',
+              template:'<div ui-view></div>',
+              abstract: true
+            })
+            .state('page.UC.role',{
+              url:'/role',
+              template:'<div ui-view></div>',
+              resolve:load('scripts/controllers/UC/Role.js'),
+              abstract: true
+            })
+              .state('page.UC.role.index',{
+                url:'/index',
+                data:{title:'角色列表'},
+                templateUrl:'views/pages/UC/Role/index.html'
+              })
+            .state('page.UC.role.edit',{
+              url:'/edit?id',
+              data:{title:'编辑角色'},
+              templateUrl:'views/pages/UC/Role/edit.html'
+            })
+            .state('page.UC.role.create',{
+              url:'/create',
+              data:{title:'新建角色'},
+              templateUrl:'views/pages/UC/Role/create.html'
+            })
+            .state('page.UC.role.permission',{
+              url:'/permission?id',
+              data:{title:'编辑权限'},
+              templateUrl:'views/pages/UC/Role/permission.html'
+            })
+            .state('page.UC.index',{
+                url:'/index',
+                data:{title:'用户列表'},
+                templateUrl:'views/pages/UC/index.html',
+                resolve:load('scripts/controllers/UC/User.js')
+            })
+            .state('page.UC.edit',{
+                url:'/edit?id',
+                data:{title:'编辑页'},
+                templateUrl:'views/pages/UC/edit.html',
+                resolve:load('scripts/controllers/UC/User.js')
+            })
+          //-----------------------end-------------------
 
           function load(srcs, callback) {
             return {

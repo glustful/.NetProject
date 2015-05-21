@@ -199,18 +199,22 @@ h3{
     width:150px;
     padding:60px 0 17px 0;
     color: #fff;
-    font-size: 18px;
+    font-size: 20px;
 }
 .act{
     background: url("../image/takeOff/活动1.png") no-repeat center 20px;
+    background-size: 35px 40px;
 
 }
 .house{
     background: url("../image/takeOff/房源库1.png") no-repeat center 20px;
+    background-size: 35px 40px;
 }
 .agent{
     background: url("../image/takeOff/经纪人专区1.png") no-repeat center 20px;
+    background-size: 35px 40px;
 }
 .personal{
     background: url("../image/takeOff/个人中心1.png") no-repeat center 20px;
+    background-size: 35px 40px;
 }
