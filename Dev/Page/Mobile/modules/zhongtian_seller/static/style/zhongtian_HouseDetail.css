@@ -1,0 +1,183 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    font-family: Microsoft YaHei;
+    font-size: 18px;
+    background-color: #ebebeb;
+}
+.window{
+    width: 640px;
+    margin: 0 auto;
+}
+
+.head{
+    height: 50px;
+    width: 640px;
+    background-color:#f13800;
+    padding: 20px 0 10px 0;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+}
+.fl{
+    float: left;
+}
+.logo{
+    margin-left: 27px;
+}
+.search{
+    margin-left: 68px;
+    display: inline-block;
+    line-height: 45px;
+    width: 440px;
+    height: 45px;
+    background: url("../image/houseDetail/searchBlank.png") no-repeat 0 bottom;
+}
+.search input{
+    font-family: Microsoft YaHei;
+    width: 320px;
+    height: 30px;
+    color:  #f1aa94;
+    font-size: 18px;
+    border: none;
+    background-color:#f13800;
+}
+.search button{
+    width: 70px;
+    height: 30px;
+    background-color:#f13800;
+    border: none;
+    font-size: 18px;
+    color: white;
+    font-family: Microsoft YaHei;
+}
+.banner{
+    position: relative;
+    z-index: 9;
+}
+.banner .point{
+    position: absolute;
+    left: 230px;
+    top: 240px;
+}
+.banner .point img{
+    margin-left: 20px;
+}
+.content{
+    margin-top: 80px;
+    z-index: 1;
+    z-index: 8;
+}
+.title{
+    width: 640px;
+    height: 70px;
+    background-color: white;
+    line-height: 70px;
+    z-index: 7;
+}
+.title span{
+    float: right;
+    font-weight: 600;
+    color: black;
+    font-size: 25px;
+    margin-right: 25px;
+}
+.content .title img{
+    width: 50px;
+    height: 60px;
+    margin-left: 25px;
+}
+.abstract{
+    height: 97px;
+    width: 640px;
+    line-height: 40px;
+    margin: 0 40px 2px 0;
+    background-color: white;
+}
+.abstract p{
+    margin-left: 25px;
+}
+.content .Ptitle{
+    background-color: white;
+    height: 87px;
+    line-height: 87px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #f13800;
+}
+.content h1{
+    margin-left: 25px;
+}
+.content .main{
+    margin-top: 15px;
+}
+.bottom{
+    position: fixed;
+    bottom: 0;
+}
+.foot {
+    background:black;
+    width: 640px;
+   line-height: 77px;
+    opacity: 0.6;
+}
+.foot span{
+    display: inline-block;
+    text-align: center;
+    width:180px;
+    color: #fff;
+}
+.daike{
+    font-size: 25px;
+}
+.tuijian{
+    font-size: 25px;
+}
+.help{
+    font-size: 25px;
+}
+.foot .help .btn{
+    width: 20px;
+    height: 20px;
+    margin-left: 39px;
+    margin-right: 10px;
+}
+.footer {
+    background: #f13800;
+   width: 640px;
+}
+.footer span{
+    display: inline-block;
+    text-align: center;
+    width:150px;
+    padding:60px 0 17px 0;
+    color: #fff;
+}
+.act{
+    background: url("../image/partner/huodong.png") no-repeat center 20px;
+}
+.footer .house{
+    color: #f9e700;
+}
+.house{
+    background: url("../image/partner/fangyuan.png") no-repeat center 20px;
+}
+.agent{
+    background: url("../image/partner/jinjiren.png") no-repeat center 20px;
+}
+.personal{
+    background: url("../image/partner/gerenzhongxin.png") no-repeat center 20px;
+}
+
+/*Âò·½*/
+.advice{
+    margin-left: 220px;
+    font-size: 35px;
+}
+.foot .advice .btn1{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
