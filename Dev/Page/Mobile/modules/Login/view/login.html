@@ -3,21 +3,37 @@
 <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=640px"/>
-    <title>登录页面</title>
-    <link rel="stylesheet" href="../static/style/login.css">
-    <!--<script src="../render/jquery-2.1.1.min.js"></script>
-    <script src="../render/login.js"></script>-->
+    <title>登录</title>
+    <link href="../static/style/login.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<div class="login">
-<div><span>账号</span>&nbsp;&nbsp;<input type="text" id="userName"/></div>
-    <br>
-<div><span>密码</span>&nbsp;&nbsp;<input type="password" id="password"/></div>
-    <br>
-<div><span>验证码</span>&nbsp;<input type="text" id="verification"/></div>
-    <br>
-<!--<div><span id="massage" style="color: red; width: 200px; text-align: center"></span></div>-->
-<div style="text-align: center;"><input id="login"type="button" value="登录"></div>
+<div class="window">
+    <p class="puser">
+        用户登录
+    </p>
+    <form class="content">
+        <p class="inuser">
+            请输入用户名
+        </p>
+        <p class="ublank">
+            <span><img src="../static/image/login/user.png"  class="user"></span>
+            <input type="text" id="user" placeholder="User name" name="uer"/>
+        </p>
+        <p class="ppassword">
+            密码
+        </p>
+        <p class="pblank">
+            <span><img src="../static/image/login/pword.png" class="password"></span>
+            <input type="text" placeholder="Password" name="password" id="password"/>
+        </p>
+        <p class="rp">
+            <input type="checkbox" name="box" id="box"/>记住我<span class="fp"><a href="#">忘记密码?</a></span>
+        </p>
+        <button class="bt">登 录</button>
+        <p class="register">
+            没有账号？点此<span><a href="#">注册</a></span>
+        </p>
+    </form>
 </div>
 </body>
 </html>
