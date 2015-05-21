@@ -130,14 +130,14 @@ h1{
     font-size: 16px;
     color: #b5b4b4;
 }
-.foot {
+.footer {
     background: #f13800;
     position: fixed;
     bottom: 0;
     width:640px;
     z-index:10;
 }
-.foot span{
+.footer span{
     display: inline-block;
     text-align: center;
     width:150px;
@@ -161,6 +161,6 @@ h1{
     background: url("../image/customerList/个人中心2.png") no-repeat center 20px;
     background-size: 40px 40px;
 }
-.foot .personal{
+.footer .personal{
     color: #f9e700;
 }

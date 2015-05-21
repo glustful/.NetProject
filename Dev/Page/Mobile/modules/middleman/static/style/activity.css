@@ -77,18 +77,18 @@ h2{
     margin-top: 10px;
     line-height: 20px;
 }
-.foot {
+.footer {
     background: #f13800;
     width:640px;
     position:fixed;
     bottom:0;
     z-index: 10;
 }
-.foot span{
+.footer span{
     display: inline-block;
     text-align: center;
     width:150px;
-    padding:60px 0 17px 0;
+    padding:70px 0 17px 0;
     color: #fff;
     font-size:20px;
 }
@@ -107,6 +107,6 @@ h2{
     background: url("../image/activity/个人中心1.png") no-repeat center 20px;
     background-size: 40px 40px;
 }
-.foot .act{
+.footer .act{
     color: #f9e700;
 }

@@ -116,14 +116,14 @@ p{
     color: #fff;
     font-size:20px;
 }
-.foot {
+.footer {
     background: #f13800;
     position:fixed;
     bottom:0;
     width: 640px;
     z-index: 10;
 }
-.foot span{
+.footer span{
     display: inline-block;
     text-align: center;
     width:150px;

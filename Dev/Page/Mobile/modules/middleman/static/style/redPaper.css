@@ -86,14 +86,14 @@ h3{
 .qiang{
     padding:100px 0;
 }
-.foot {
+.footer {
     background: #f13800;
 }
-.foot span{
+.footer span{
     display: inline-block;
     text-align: center;
     width:150px;
-    padding:60px 0 17px 0;
+    padding:70px 0 17px 0;
     color: #fff;
     font-size: 20px;
 }

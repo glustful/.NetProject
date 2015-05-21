@@ -201,14 +201,14 @@ h2{
 .activity .two a{
     color: #f13800;
 }
-.foot {
+.footer {
     background: #f13800;
     width:640px;
     position:fixed;
     bottom:0;
     z-index: 10;
 }
-.foot span{
+.footer span{
     display: inline-block;
     text-align: center;
     width:150px;
@@ -233,7 +233,7 @@ h2{
     background: url("../image/personal/个人中心2.png") no-repeat center 20px;
     background-size: 40px 40px;
 }
-.foot .personal{
+.footer .personal{
     color: #f9e700;
 }
 

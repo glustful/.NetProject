@@ -207,14 +207,14 @@ h5{
     overflow: hidden;
     margin-bottom: 0;
 }
-.foot {
+.footer {
     background: #f13800;
     position: fixed;
     bottom: 0;
     width: 640px;
     z-index: 10;
 }
-.foot span{
+.footer span{
     display: inline-block;
     text-align: center;
     width:150px;
@@ -239,6 +239,6 @@ h5{
     background: url("../image/storeroom/个人中心1.png") no-repeat center 20px;
     background-size: 40px 40px;
 }
- .foot .act {
+ .footer .act {
     color: #f9e700;
 }

@@ -81,11 +81,11 @@ p{
     text-indent:2em;
     line-height: 25px;
 }
-.foot {
+.footer {
     background: #f13800;
 
 }
-.foot span{
+.footer span{
     display: inline-block;
     text-align: center;
     width:150px;

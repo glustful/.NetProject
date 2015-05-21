@@ -315,14 +315,14 @@ h5{
 .brand .nav .blue a{
     color: #46a1e8;
 }
-.foot {
+.footer {
     background: #f13800;
     width:640px;
     position:fixed;
     bottom:0;
     z-index: 10;
 }
-.foot span{
+.footer span{
     display: inline-block;
     text-align: center;
     width:150px;
@@ -346,6 +346,6 @@ h5{
     background: url("../image/broker/个人中心1.png") no-repeat center 20px;
     background-size: 40px 40px;
 }
-.foot .agent{
+.footer .agent{
     color: #f9e700;
 }

@@ -231,14 +231,14 @@ a{
 .content .type .hx5 .ask{
     top:380px;
 }
-.foot {
+.footer {
     background: #f13800;
     width:640px;
     position:fixed;
     bottom:0;
     z-index: 10;
 }
-.foot span{
+.footer span{
     display: inline-block;
     text-align: center;
     width:150px;
@@ -250,7 +250,7 @@ a{
     background: url("../image/housesBuy/活动2.png") no-repeat center 20px;
     background-size: 40px 40px;
 }
-.foot .act{
+.footer .act{
     color: #f9e700;
 }
 .house {
