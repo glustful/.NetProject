@@ -3,61 +3,30 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>首页</title>
-    <meta name="viewport" content="width=640px" />
+    <meta name="viewport" content="width=640,user-scalable=no" />
     <link href="Common/static/style/index.css" rel="stylesheet" type="text/css" />
-
+</head>
+<body ng-app="zergApp" ng-controller="appController">
+    <div ui-view></div>
+    <!-- JQuery-->
+    <!--<script src="libs/jquery/jquery/dist/jquery.js"></script>-->
     <!-- Angular -->
     <script src="libs/angular/angular/angular.js"></script>
-    <script src="libs/angular/angular-animate/angular-animate.js"></script>
-    <script src="libs/angular/angular-aria/angular-aria.js"></script>
-    <script src="libs/angular/angular-cookies/angular-cookies.js"></script>
-    <script src="libs/angular/angular-messages/angular-messages.js"></script>
-    <script src="libs/angular/angular-resource/angular-resource.js"></script>
-    <script src="libs/angular/angular-sanitize/angular-sanitize.js"></script>
-    <script src="libs/angular/angular-touch/angular-touch.js"></script>
-    <script src="libs/angular/angular-material/angular-material.js"></script>
+    <!--<script src="libs/angular/angular-animate/angular-animate.js"></script>-->
+    <!--<script src="libs/angular/angular-aria/angular-aria.js"></script>-->
+    <!--<script src="libs/angular/angular-cookies/angular-cookies.js"></script>-->
+    <!--<script src="libs/angular/angular-messages/angular-messages.js"></script>-->
+    <!--<script src="libs/angular/angular-resource/angular-resource.js"></script>-->
+    <!--<script src="libs/angular/angular-sanitize/angular-sanitize.js"></script>-->
+    <!--<script src="libs/angular/angular-touch/angular-touch.js"></script>-->
+    <!--<script src="libs/angular/angular-material/angular-material.js"></script>-->
 
     <!-- Vendor -->
-    <script src="libs/angular/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="libs/angular/angular-ui-router/release/angular-route.min.js"></script>
+    <script src="libs/angular/angular-ui-router/release/angular-ui-router.min.js"></script>
 
     <!-- App -->
+    <script src="app.js"></script>
     <script src="Common/scripts/config.router.js"></script>
-
-</head>
-<body ng-app="routeApp">
-    <div class="window">
-        <div class="bg">
-            <div class="hd">
-                <div class="header cf">
-                    <div class="logo fl"><a href="#">创富宝</a> </div>
-                    <div class="search fr">
-                        <label for="houses">456</label><input name="" id="houses" type="text" placeholder="搜索楼盘" />
-                        <button>搜索</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content">
-
-                <div ng-view></div>
-
-            </div>
-
-            <div class="foot">
-                <a href="./index.html"><span class="act">活动</span></a>
-                <a href="modules/middleman/view/storeroom.html"><span class="house">房源库</span></a>
-                <a href="modules/middleman/view/broker.html"><span class="agent">经纪人专区</span></a>
-                <a href="modules/middleman/view/personal.html"> <span class="personal">个人中心</span></a>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
 
 </body>
 </html>
