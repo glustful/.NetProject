@@ -1,0 +1,351 @@
+*{
+    padding:0;
+    margin:0;
+    list-style: none;
+    border: none;
+}
+body{
+    font-family: 'microsoft yahei';
+    padding:70px 0 110px 0;
+}
+.clear{
+    clear:both;
+    height: 0;
+    overflow: hidden;
+}
+.cf:after{
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: "";
+    clear: both;
+    height: 0;
+}
+
+.fl{
+    float: left;
+}
+a{
+    text-decoration: none;
+}
+
+.cf{
+    clear: both;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.window{
+    width: 640px;
+    margin: 0 auto;
+}
+.bg{
+    background: #ebebeb;
+}
+.header{
+    height: 70px;
+    background:#f13800 ;
+    background:#f13800 ;
+    position: fixed;
+    width:640px;
+    top:0;
+    z-index: 10;
+}
+.logo{
+    margin:13px 0 0 27px;
+    background: url("../image/broker/logo.png") no-repeat 0 0;
+    width: 82px;
+    height: 41px;
+}
+.logo a{
+    text-indent: -999em;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.search{
+    width:436px;
+    height: 45px;
+    line-height: 45px;
+    margin:10px 20px 0 0;
+    background: url("../image/broker/搜索框.png") no-repeat 0 bottom ;
+
+}
+.search label{
+    text-indent: -99em;
+    display: inline-block;
+    background: url("../image/broker/search.png") no-repeat center center ;
+    width: 50px;
+}
+.search input{
+    width: 297px;
+    color: #f1aa94;
+    font-size: 24px;
+    background: none;
+    border: none;
+
+}
+.search button{
+    width: 80px;
+    border: none;
+    font-size: 24px;
+    color: #ffffff;
+    background: none;
+}
+.hd .pic li{
+    position: relative;
+}
+.hd .pic .page{
+    position: absolute;
+    left: 255px;
+    top:200px;
+
+}
+.hd .pic .page span{
+    background: url("../image/broker/p1-1.png") no-repeat 0 0;
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin-right: 20px;
+}
+.hd .pic .page .white{
+    background: url("../image/broker/p2-2.png") no-repeat 0 0;
+}
+.content{
+    padding:20px 10px 10px 10px;
+}
+.nav-1 {
+    background: #fff;
+    padding-top:24px;
+    margin-bottom: 20px;
+}
+.nav-1 span{
+    display: inline-block;
+    text-align: center;
+    width:150px;
+    padding:77px 0 26px 0;
+    color: #7a7a7a;
+}
+.nav-1 .dk{
+    background:url("../image/broker/n1.png") no-repeat center 0;
+}
+.nav-1 .tj{
+    background:url("../image/broker/n2.png") no-repeat center 0;
+}
+.nav-1 .rw{
+    background:url("../image/broker/n3.png") no-repeat center 0;
+}
+.nav-1 .hb{
+    background:url("../image/broker/n4.png") no-repeat center 0;
+}
+.activity .sub-nav{
+    height: 59px;
+    line-height: 59px;
+    background-color: #fafafa;
+    border-bottom: 1px solid #ebebeb;
+    padding:0 25px;
+    color: #f13800;
+    font-size: 20px;
+}
+.activity .sub-nav .icon a{
+   display: inline-block;
+    width: 9px;
+    height: 9px;
+    background: url("../image/broker/y2.png");
+    margin-left: 15px;
+}
+.activity .sub-nav .icon .icon-red{
+    background: url("../image/broker/y1.png");
+}
+.activity li{
+    width: 205px;
+    float: left;
+    background:#ffffff;
+    text-align: center;
+    padding:27px 0 20px 0;
+}
+.one{
+    margin: 0 2px 0 0;
+}
+.two{
+    margin-right: 2px;
+}
+
+h4{
+    color: #333333;
+    font-size: 20px;
+}
+.red{
+    color: #f13800;
+}
+h5{
+  color: #959595;
+  padding:5px 0 10px 0;
+  font-size: 18px;
+}
+.hero .hd{
+    height: 59px;
+    line-height: 59px;
+    background-color: #fafafa;
+    border-bottom: 1px solid #ebebeb;
+    padding:0 25px;
+    color: #72c27b;
+    font-size: 20px;
+    margin-top:15px;
+}
+.hero {
+    background: #fff;
+    margin-bottom: 20px;
+}
+.hero span{
+    display: inline-block;
+    text-align: center;
+    width:202px;
+    padding:77px 0 26px 0;
+    color: #7a7a7a;
+    margin-top: 27px;
+}
+.hero .star1{
+    background: url("../image/broker/1.png") no-repeat center 0;
+    border-right: 1px solid #f7f7f7;
+}
+.hero .star2{
+    background: url("../image/broker/2.png") no-repeat center 0;
+    border-right: 1px solid #f7f7f7;
+}
+.hero .star3{
+    background: url("../image/broker/3.png") no-repeat center 0;
+}
+.message .recommend{
+    height: 59px;
+    line-height: 59px;
+    background-color: #fafafa;
+    border-bottom: 1px solid #ebebeb;
+    padding:0 25px;
+    color: #78baed;
+    font-size: 20px;
+}
+.brand{
+    position: relative;
+}
+.brand a span{
+    margin-right: 30px;
+}
+.brand a .summary{
+    position: absolute;
+    left: 18px;
+    top: 130px;
+    color: #fff;
+    z-index: 3;
+}
+.brand a .summaryBg{
+    background: #000;
+    opacity: 0.6;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 120px;
+    width: 440px;
+    height: 40px;
+}
+.brand a .depreciate{
+    position: absolute;
+    top:20px;
+    right: 30px;
+    z-index: 6;
+    color: #fff;
+}
+.brand a .depreciateBg{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 180px;
+    height: 160px;
+    z-index: 5;
+    background-color: #ff4100;
+    opacity: 0.9;
+}
+.brand a .depreciate span{
+    display: inline-block;
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+.brand a .depreciate b{
+    display: inline-block;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+.brand a .tiptop{
+    position: absolute;
+    width:250px;
+    height: 45px;
+    line-height: 45px;
+    left:0;
+    top: 75px;
+    color: #fff;
+    z-index: 4;
+    background-color: #f14700;
+    font-size: 20px;
+    padding-left: 11px;
+}
+.nav{
+    height: 54px;
+    line-height: 54px;
+    background: #fff;
+    border-bottom: 1px solid #bdbdbd;
+    margin-bottom: 10px;
+}
+.nav a{
+    text-align: center;
+    display: inline-block;
+    width: 150px;
+    height:27px;
+    line-height: 27px;
+    border-right: 1px solid #bdbdbd;
+}
+.brand .nav .last a{
+    border-right: none;
+}
+.brand .nav .orange a{
+    color: #f13800;
+}
+.brand .nav .blue a{
+    color: #46a1e8;
+}
+.foot {
+    background: #f13800;
+    width:640px;
+    position:fixed;
+    bottom:0;
+    z-index: 10;
+}
+.foot span{
+    display: inline-block;
+    text-align: center;
+    width:150px;
+    padding:70px 0 17px 0;
+    color: #fff;
+    font-size: 20px;
+}
+.act{
+    background: url("../image/broker/活动1.png") no-repeat center 20px;
+    background-size: 40px 40px;
+}
+.house{
+    background: url("../image/broker/房源库1.png") no-repeat center 20px;
+    background-size: 40px 40px;
+}
+.agent{
+    background: url("../image/broker/经纪人专区2.png") no-repeat center 20px;
+    background-size: 40px 40px;
+}
+.personal{
+    background: url("../image/broker/个人中心1.png") no-repeat center 20px;
+    background-size: 40px 40px;
+}
+.foot .agent{
+    color: #f9e700;
+}

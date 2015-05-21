@@ -1,0 +1,214 @@
+*{
+    padding:0;
+    margin:0;
+    list-style: none;
+    border: none;
+}
+body{
+    font-family: 'microsoft yahei';
+    font-size: 16px;
+    color:#a0a0a0;
+}
+a{
+    text-decoration: none;
+}
+.cf{
+    clear: both;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.window{
+    width: 640px;
+    margin: 0 auto;
+}
+.header{
+    height: 67px;
+    line-height: 67px;
+    text-align:center;
+    background: url("../image/recommend/icon_03.png") no-repeat 588px center #fc3b00;
+}
+h1{
+    font-weight: normal;
+    color:#fff;
+    font-size: 22px;
+}
+.message{
+    padding: 0 10px 10px 10px;
+}
+.lead{
+    height: 68px;
+    line-height: 68px;
+    background: #fff;
+}
+.lead a{
+    display: inline-block;
+    width: 212px;
+    height: 30px;
+    line-height: 30px;
+    border-right: 1px solid #a0a0a0;
+    text-align: center;
+    color:#a0a0a0;
+}
+.lead .price{
+
+    border: none;
+}
+.lead .icon{
+    display: inline-block;
+    width:18px;
+    height: 12px;
+    margin-left: 10px;
+    background: url("../image/recommend/icon.png");
+}
+.brand{
+    position: relative;
+}
+.brand a span{
+    margin-right: 50px;
+}
+.brand a .summary{
+    position: absolute;
+    left: 18px;
+    top: 118px;
+    color: #fff;
+    z-index: 3;
+}
+.brand a .summaryBg{
+    background: #000;
+    opacity: 0.6;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 110px;
+    width: 620px;
+    height: 40px;
+}
+.brand a .point{
+    position: absolute;
+    left: 18px;
+    top: 10px;
+    color: #fff;
+    z-index: 3;
+}
+.brand a .pointBg{
+    background: #000;
+    opacity: 0.6;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0px;
+    width: 243px;
+    height: 40px;
+}
+.nav{
+    height: 54px;
+    line-height: 54px;
+    background: #fff;
+    border-bottom: 1px solid #bdbdbd;
+    margin-bottom: 10px;
+}
+.nav a{
+    text-align: center;
+    display: inline-block;
+    width: 150px;
+    height:27px;
+    line-height: 27px;
+    border-right: 1px solid #bdbdbd;
+    color: #fd816b;
+}
+.nav .int{
+    border-right: none;
+}
+.wk a .summary{
+    position: absolute;
+    left: 18px;
+    top: 98px;
+    color: #fff;
+    z-index: 3;
+}
+.wk a .summaryBg{
+    background: #000;
+    opacity: 0.6;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 86px;
+    width: 365px;
+    height: 40px;
+}
+.wk a .diamond{
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #fff;
+    z-index: 3;
+}
+.wk a .diamondBg{
+    background: #000;
+    opacity: 0.6;
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    top: 0;
+    width: 255px;
+    height:127px; ;
+}
+.summary .small{
+    font-size: 12px;
+    margin-right: 10px;
+}
+.nav .hui{
+    color: #a0a0a0;
+}
+.summary .city{
+    margin-right: 200px;
+}
+h2{
+    width: 250px;
+    text-align: center;
+    color: #c49845;
+    font-size: 20px;
+    margin-top: 15px;
+}
+h3{
+    width: 250px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    color:#c49845;
+    font-size: 18px;
+}
+.foot {
+    background: #f13800;
+
+}
+.foot span{
+    display: inline-block;
+    text-align: center;
+    width:150px;
+    padding:60px 0 17px 0;
+    color: #fff;
+    font-size: 20px;
+}
+.act{
+    background: url("../image/recommend/活动1.png") no-repeat center 20px;
+    background-size: 35px 40px;
+}
+
+
+.house{
+    background: url("../image/recommend/房源库1.png") no-repeat center 20px;
+    background-size: 35px 40px;
+}
+.agent{
+    background: url("../image/recommend/经纪人专区1.png") no-repeat center 20px;
+    background-size: 35px 40px;
+}
+.personal{
+    background: url("../image/recommend/个人中心1.png") no-repeat center 20px;
+    background-size: 35px 40px;
+}
