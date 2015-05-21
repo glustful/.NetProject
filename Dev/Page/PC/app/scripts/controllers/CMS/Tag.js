@@ -52,7 +52,9 @@ angular.module("app").controller('TagIndexController', [
 ]);
 
 angular.module("app").controller('TagDetailController',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
-    $http.get(SETTING.ApiUrl + '/Tag/Detailed/' + $stateParams.id).success(function(data){
+    $http.get(SETTING.ApiUrl + '/Tag/Detailed/' + $stateParams.id,{
+        'withCredentials':true
+    }).success(function(data){
         $scope.TagModel =data;
     });
 }]);
@@ -82,7 +84,9 @@ angular.module("app").controller('TagCreateController',['$http','$scope','$state
 }]);
 
 angular.module("app").controller('TagEditController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
-    $http.get(SETTING.ApiUrl + '/Tag/Detailed/' + $stateParams.id).success(function(data){
+    $http.get(SETTING.ApiUrl + '/Tag/Detailed/' + $stateParams.id,{
+        'withCredentials':true
+    }).success(function(data){
         $scope.TagModel =data.Tag;
     });
 
