@@ -52,4 +52,8 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/home',
             templateUrl:'modules/Index/view/Index.html'
         })
+        .state('app.activity',{
+            url:'/activity',
+            templateUrl:'modules/activity/view/activity.html'
+        })
 }]);
