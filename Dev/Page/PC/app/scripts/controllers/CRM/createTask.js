@@ -1,4 +1,4 @@
-app.controller('taskaddcontroller',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+app.controller('taskaddcontroller',['$http','$scope','$stateParams','$modal',function($http,$scope,$stateParams,$modal) {
     $scope.addcondition={
 
         Id:0,
@@ -19,9 +19,10 @@ app.controller('taskaddcontroller',['$http','$scope','$stateParams',function($ht
 
     //绑定任务
     if($stateParams.id){
-    var getTaskDetail  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskDetail?id='+$stateParams.id).success(function(data){
 
+    var getTaskDetail  = function() {
+      //  $http.get(SETTING.ApiUrl+'/Task/TaskDetail'+{params:{Id:$stateParams.id},'withCredentials':true}).success(function(data){
+            $http.get(SETTING.ApiUrl+'/Task/TaskDetail',{params:{id:$stateParams.id}, 'withCredentials':true}).success(function(data){
 
             $scope.taskModel1 = data;
             $scope.addcondition.Taskname=data.Taskname;
@@ -44,17 +45,29 @@ app.controller('taskaddcontroller',['$http','$scope','$stateParams',function($ht
     //修改任务
 
     var UpdateTaskResult  = function() {
-        $http.post(SETTING.ApiUrl+'/Task/AddTask',$scope.addcondition,{
-            //'withCredentials':true
+        $http.post(SETTING.ApiUrl+'/Task/AddTask',$scope.addcondition,{'withCredentials':true
         }).success(function(data){
-            if(data.Status){
-//                $scope.addcondition.Taskname='';
-//                $scope.addcondition.Endtime='';
-//                $scope.addcondition.Describe='';
 
-                // ngDialog.open({ template: '#page/CRM/TaskList/index' });
-            }
-            else{}
+            if(data.Status){
+
+                var modalInstanc = $modal.open({
+                    templateUrl: 'myModalContent.html',
+                    controller: 'ModalInstanceCtrl',
+                    resolve: {
+                        msg: function () {
+                            return data.Msg;
+                        }
+                    }
+                });           }
+            else{ var modalInstanc = $modal.open({
+                templateUrl: 'myModalContent.html',
+                controller: 'ModalInstanceCtrl',
+                resolve: {
+                    msg: function () {
+                        return data.Msg;
+                    }
+                }
+            });}
 
         });
     };
@@ -120,14 +133,14 @@ var dd=function (){
     var getTaskResult  = function() {
         $scope.addcondition.type='add',
             $http.post(SETTING.ApiUrl+'/Task/AddTask',$scope.addcondition,{
-            //'withCredentials':true
+            'withCredentials':true
         }).success(function(data){
            if(data.Status){
 
                $scope.addcondition.Taskname='';
                $scope.addcondition.Endtime='';
                $scope.addcondition.Describe='';
-               $scope.addcondition.warm="添加成功";
+               $scope.addcondition.warm=data.Msg;
                $scope.delTipsName=dTips;
                $scope.delTipsTime=dTips;
                $scope.delTipsType=dTips;
@@ -137,7 +150,7 @@ var dd=function (){
               // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
             }
                 else{
-               $scope.addcondition.warm="任务名称重复，请更换";
+               $scope.addcondition.warm=data.Msg;
 
            }
 
@@ -151,7 +164,8 @@ var dd=function (){
 
     //绑定任务类型
     var getTaskType  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskTypeList').success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/TaskTypeList',{'withCredentials':true}).success(function(data){
+
             console.log(data);
             $scope.taskType=data;
         });
@@ -160,7 +174,7 @@ var dd=function (){
     getTaskType();
     //绑定任务目标
     var getTaskTag  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskTagList').success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/TaskTagList',{'withCredentials':true}).success(function(data){
             console.log(data);
             $scope.tasktag=data;
         });
@@ -169,7 +183,7 @@ var dd=function (){
     getTaskTag();
     //绑定任务奖励
     var getTaskAward  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskAwardList').success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/TaskAwardList',{ 'withCredentials':true}).success(function(data){
             console.log(data);
             $scope.taskaward=data;
         });
@@ -178,7 +192,7 @@ var dd=function (){
     getTaskAward();
     //绑定任务惩罚
     var getTaskPunishment  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskPunishmentList').success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/TaskPunishmentList',{ 'withCredentials':true}).success(function(data){
             console.log(data);
             $scope.taskpunishment=data;
         });
