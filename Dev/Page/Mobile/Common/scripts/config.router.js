@@ -52,4 +52,24 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/home',
             templateUrl:'modules/Index/view/Index.html'
         })
+        .state('app.setting',{
+            url:'/setting',
+            templateUrl:'modules/setting/view/setting.html'
+        })
+        .state('app.person_setting',{
+            url:'/person_setting',
+            templateUrl:'modules/person_setting/view/person_setting.html'
+        })
+        .state('app.security_setting',{
+            url:'/security_setting',
+            templateUrl:'modules/security_setting/view/security_setting.html'
+        })
+        .state('app.zhongtian_HouseDetail',{
+            url:'/zhongtian_HouseDetail',
+            templateUrl:'modules/zhongtian_HouseDetail/view/zhongtian_HouseDetail.html'
+        })
+        .state('app.zhongtian_seller',{
+            url:'/zhongtian_seller',
+            templateUrl:'modules/zhongtian_seller/view/zhongtian_seller.html'
+        })
 }]);
