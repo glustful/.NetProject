@@ -56,4 +56,20 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/activity',
             templateUrl:'modules/activity/view/activity.html'
         })
+        .state('app.broker',{
+            url:'/broker',
+            templateUrl:'modules/broker/view/broker.html'
+        })
+        .state('app.customerList',{
+            url:'/customerList',
+            templateUrl:'modules/customerList/view/customerList.html'
+        })
+        .state('app.detail',{
+            url:'/detail',
+            templateUrl:'modules/detail/view/detail.html'
+        })
+        .state('app.hero',{
+            url:'/hero',
+            templateUrl:'modules/hero/view/hero.html'
+        })
 }]);

@@ -1,58 +1,5 @@
-*{
-    padding:0;
-    margin:0;
-    list-style: none;
-    border: none;
-}
-body{
-    font-family: 'microsoft yahei';
-    font-size: 16px;
-    color:#525252;
-    padding:67px 0 110px 0 ;
-}
-a {
-    text-decoration: none;
-}
-.clear{
-    clear:both;
-    height: 0;
-    overflow: hidden;
-}
-.cf:after{
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: "";
-    clear: both;
-    height: 0;
-}
 
-.fl{
-    float: left;
-}
-.window{
-    width: 640px;
-    margin: 0 auto;
-}
-.bg{
-    background: #ebebeb;
-}
-.header{
-    height: 67px;
-    line-height: 67px;
-    text-align:center;
-    background: #fc3b00;
-    position: fixed;
-    top:0;
-    width:640px;
-    z-index: 10;
-}
-h1{
-    font-weight: normal;
-    color:#fff;
-    font-size: 22px;
-}
-.hd{
+.zt-syj{
     background: #fff;
     padding: 10px 0 14px 10px;
 }
@@ -148,37 +95,4 @@ h4{
     color: #fff;
     font-size: 18px;
     margin: 0 90px 0 100px;
-}
-.footer {
-    background: #f13800;
-    position: fixed;
-    bottom:0;
-    width:640px;
-    z-index: 10;
-}
-.footer span{
-    display: inline-block;
-    text-align: center;
-    width:150px;
-    padding:70px 0 17px 0;
-    color: #fff;
-    font-size: 20px;
-}
-
-.act{
-    background: url("../image/detail/活动2.png") no-repeat center 20px;
-    background-size: 40px 40px;
-    color: #f9e700;
-}
-.house{
-    background: url("../image/detail/房源库1.png") no-repeat center 20px;
-    background-size: 40px 40px;
-}
-.agent{
-    background: url("../image/detail/经纪人专区1.png") no-repeat center 20px;
-    background-size: 40px 40px;
-}
-.personal{
-    background: url("../image/detail/个人中心1.png") no-repeat center 20px;
-    background-size: 40px 40px;
 }

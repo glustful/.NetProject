@@ -75,7 +75,7 @@ a{
 
 }
 .search label{
-    text-indent: -99em;
+    text-indent: -999em;
     display: inline-block;
     background: url("../image/search.png") no-repeat center center ;
     width: 50px;

@@ -20,26 +20,26 @@
 .activity{
     padding: 10px;
 }
-.activity li{
+.activity ul li{
     width: 205px;
     float: left;
     background:#ffffff;
     text-align: center;
     padding:27px 0 20px 0;
 }
-.one{
+.activity .one{
     margin: 0 2px 0 0;
 }
-.two{
+.activity .two{
     margin-right: 2px;
 }
-.four{
+.activity .four{
     margin:2px 2px 0 0;
 }
-.five{
+.activity .five{
     margin:2px 2px 10px 0;
 }
-.six{
+.activity .six{
     margin-top: 2px;
 }
 .message{
