@@ -1,40 +1,7 @@
-*{
-    margin: 0;
-    padding: 0;
-}
-body{
-    font-family: "microsoft yahei";
-    font-size: 18px;
-    background-color: #eeeeee;
-    color: #848484;
-}
-.window{
-    width: 640px;
-    margin: 0 auto;
-}
-a{
-    text-decoration: none;
-    color: #ffffff;
-}
-.head{
-    padding: 16px;
-    background-color: #fc3b00;
-}
-.head p {
-    line-height: 32px;
-    color: #ffffff;
-    text-align: center;
-}
-.back{
-    float: left;
-}
-.personall{
-    float: right;
-}
+/*设置*/
 ul li {
     width: 100%;
     background-color: #ffffff;
-
 }
 ul{
     list-style: none;
@@ -61,33 +28,8 @@ ul li button{
     color: #aeacac;
     font-size: 16px;
 }
-.footer{
-    position: fixed;
-    bottom: 0;
-    background: #f13800;
-    width: 640px;
-}
 
-.footer span{
-    display: inline-block;
-    text-align: center;
-    width:150px;
-    padding:60px 0 17px 0;
-    color: #fff;
-}
-.act{
-    background: url("../image/partner/huodong.png") no-repeat center 20px;
-    color: #f9e700;
-}
-.house{
-    background: url("../image/partner/fangyuanku.png") no-repeat center 20px;
-}
-.agent{
-    background: url("../image/partner/jinjiren.png") no-repeat center 20px;
-}
-.personal{
-    background: url("../image/partner/gerenzhongxin.png") no-repeat center 20px;
-}
+
 /*安全设置*/
 .security_content{
     margin: 20px 55px 0 55px;
@@ -121,6 +63,8 @@ form a{
   float: right;
     margin-right: 10px;
 }
+
+
 /*个人设置*/
 .person_revise{
     margin: 20px 55px 0 55px;

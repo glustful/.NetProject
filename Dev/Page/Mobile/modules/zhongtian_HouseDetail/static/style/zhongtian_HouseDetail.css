@@ -1,58 +1,4 @@
-*{
-    padding: 0;
-    margin: 0;
-}
-body{
-    font-family: Microsoft YaHei;
-    font-size: 18px;
-    background-color: #ebebeb;
-}
-.window{
-    width: 640px;
-    margin: 0 auto;
-}
 
-.head{
-    height: 50px;
-    width: 640px;
-    background-color:#f13800;
-    padding: 20px 0 10px 0;
-    position: fixed;
-    top: 0;
-    z-index: 10;
-}
-.fl{
-    float: left;
-}
-.logo{
-    margin-left: 27px;
-}
-.search{
-    margin-left: 68px;
-    display: inline-block;
-    line-height: 45px;
-    width: 440px;
-    height: 45px;
-    background: url("../image/houseDetail/searchBlank.png") no-repeat 0 bottom;
-}
-.search input{
-    font-family: Microsoft YaHei;
-    width: 320px;
-    height: 30px;
-    color:  #f1aa94;
-    font-size: 18px;
-    border: none;
-    background-color:#f13800;
-}
-.search button{
-    width: 70px;
-    height: 30px;
-    background-color:#f13800;
-    border: none;
-    font-size: 18px;
-    color: white;
-    font-family: Microsoft YaHei;
-}
 .banner{
     position: relative;
     z-index: 9;
@@ -144,32 +90,7 @@ body{
     margin-left: 39px;
     margin-right: 10px;
 }
-.footer {
-    background: #f13800;
-   width: 640px;
-}
-.footer span{
-    display: inline-block;
-    text-align: center;
-    width:150px;
-    padding:60px 0 17px 0;
-    color: #fff;
-}
-.act{
-    background: url("../image/partner/huodong.png") no-repeat center 20px;
-}
-.footer .house{
-    color: #f9e700;
-}
-.house{
-    background: url("../image/partner/fangyuan.png") no-repeat center 20px;
-}
-.agent{
-    background: url("../image/partner/jinjiren.png") no-repeat center 20px;
-}
-.personal{
-    background: url("../image/partner/gerenzhongxin.png") no-repeat center 20px;
-}
+
 
 /*Âò·½*/
 .advice{
