@@ -72,4 +72,8 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/zhongtian_seller',
             templateUrl:'modules/zhongtian_seller/view/zhongtian_seller.html'
         })
+        .state('app.activity',{
+            url:'/activity',
+            templateUrl:'modules/activity/view/activity.html'
+        })
 }]);
