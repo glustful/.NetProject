@@ -65,7 +65,7 @@ ul li{
 }
 /*ÃÌº”∫œªÔ»À*/
 .add_content{
-    margin: 20px 55px 0 55px;
+    margin: 20px 55px 0 20px;
 }
 .add_blank{
     width: 516px;
@@ -84,8 +84,8 @@ ul li{
     font-family: "microsoft yahei";
     color: white;
 }
-.add_content span{
-    font-size: 14px;
+.tips{
+    font-size: 16px;
     color: #fc3b00;
 }
 

@@ -76,4 +76,20 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/activity',
             templateUrl:'modules/activity/view/activity.html'
         })
+        .state('app.partner_list',{
+            url:'/partner_list',
+            templateUrl:'modules/partner_list/view/partner_list.html'
+        })
+        .state('app.partner_details',{
+            url:'/partner_details',
+            templateUrl:'modules/partner_details/view/partner_details.html'
+        })
+        .state('app.partner_insert',{
+            url:'/partner_insert',
+            templateUrl:'modules/partner_insert/view/partner_insert.html'
+        })
+        .state('app.partner_insert1',{
+            url:'/partner_insert1',
+            templateUrl:'modules/partner_insert1/view/partner_insert1.html'
+        })
 }]);
