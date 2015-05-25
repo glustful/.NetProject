@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
@@ -15,14 +16,13 @@ namespace Zerg.Common
     /// </summary>
     public class PageHelper
     {
-
-
         /// <summary>
         /// 将返回数据转换成Json格式
         /// </summary>
         /// <param name="obj"></param>
+        /// <param name="status"></param>
         /// <returns></returns>
-        public static HttpResponseMessage toJson(Object obj)
+        public static HttpResponseMessage toJson(Object obj,HttpStatusCode status=HttpStatusCode.OK)
         {
             String str;
             if (obj is String || obj is Char)
@@ -34,7 +34,7 @@ namespace Zerg.Common
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 str = serializer.Serialize(obj);
             }
-            HttpResponseMessage result = new HttpResponseMessage { Content = new StringContent(str, Encoding.GetEncoding("UTF-8"), "application/json") };
+            HttpResponseMessage result = new HttpResponseMessage { Content = new StringContent(str, Encoding.GetEncoding("UTF-8"), "application/json"), StatusCode = status };
             return result;
         }
 
@@ -43,10 +43,11 @@ namespace Zerg.Common
         /// </summary>
         /// <param name="status"></param>
         /// <param name="msg"></param>
+        /// <param name="obj"></param>
         /// <returns></returns>
-        public static ResultModel ReturnValue(bool status, string msg)
+        public static ResultModel ReturnValue(bool status, string msg ,object obj =null)
         {
-            return new ResultModel { Status = status, Msg = msg };
+            return new ResultModel { Status = status, Msg = msg, Object = obj };
         }
 
         /// <summary>
@@ -55,12 +56,12 @@ namespace Zerg.Common
         /// <param name="number"></param>
         /// <returns></returns>
         public static bool ValidateNumber(string number)
-        {
-            int num;
-            return Int32.TryParse(number, out num);
+        {  
+           int num;
+           return Int32.TryParse(number, out num);             
         }
 
-
+     
 
         /// <summary>
         /// 判断输入的字符串只包含汉字
@@ -317,6 +318,5 @@ namespace Zerg.Common
             }
 
         }
-
     }
 }

@@ -1,17 +1,15 @@
-﻿using CRM.Entity.Model;
-using CRM.Service.Level;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Zerg.Common;
-using Webdiyer.WebControls.Mvc;
+using System.Web.Http.Cors;
+using CRM.Entity.Model;
 using CRM.Service.LevelConfig;
+using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
+    [EnableCors("*", "*", "*")]
     /// <summary>
     /// 等级配置设置
     /// </summary>
@@ -30,23 +28,46 @@ namespace Zerg.Controllers.CRM
 
 
 
-        [System.Web.Http.HttpGet]
-        public HttpResponseMessage SearchLevelConfig(string pageindex)
+        [HttpGet]
+        public HttpResponseMessage SearchLevelConfig(string name = null, int page = 1, int pageSize = 10)
         {
             var leconfigSearchCon = new LevelConfigSearchCondition
             {
-                OrderBy = EnumLevelConfigSearchOrderBy.OrderById
+                Name = name,
+                Page = Convert.ToInt32(page),
+                PageCount = pageSize
             };
-            return PageHelper.toJson(_levelconfigService.GetLevelConfigsByCondition(leconfigSearchCon).ToPagedList(Convert.ToInt32(pageindex) + 1, 10).ToList());
+            var levelconfigList = _levelconfigService.GetLevelConfigsByCondition(leconfigSearchCon).Select(
+                p => new
+                {
+                    p.Id,
+                    p.Name,
+                    p.Describe,
+                    p.Value,
+                    p.Addtime
+                }
+                ).ToList();
+            var levelconfigListCount = _levelconfigService.GetLevelConfigCount(leconfigSearchCon);
+            return PageHelper.toJson(new { List = levelconfigList, Condition = leconfigSearchCon, totalCount = levelconfigListCount });
+          
         }
+
+        [HttpGet]
+        public HttpResponseMessage GetLevelConfig(string id)
+        {
+            var LevelConfig = _levelconfigService.GetLevelConfigById(Convert.ToInt32(id));
+            return PageHelper.toJson(LevelConfig);
+
+        }
+
 
         /// <summary>
         /// 新增等级设置
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddLevelconfig([FromBody] LevelConfigEntity  LevelConfig )
+        [HttpPost]
+        public HttpResponseMessage DoCreate([FromBody] LevelConfigEntity LevelConfig)
         {
 
             if (!string.IsNullOrEmpty(LevelConfig.Name) && !string.IsNullOrEmpty(LevelConfig.Describe) && !string.IsNullOrEmpty(LevelConfig.Value))
@@ -83,8 +104,8 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
-        public HttpResponseMessage UpdateLevelconfig([FromBody] LevelConfigEntity  LevelConfig )
+        [HttpPost]
+        public HttpResponseMessage DoEdit([FromBody] LevelConfigEntity LevelConfig)
         {
             if (LevelConfig != null && !string.IsNullOrEmpty(LevelConfig.Id.ToString()) && PageHelper.ValidateNumber(LevelConfig.Id.ToString()) && !string.IsNullOrEmpty(LevelConfig.Name) && !string.IsNullOrEmpty(LevelConfig.Describe) && !string.IsNullOrEmpty(LevelConfig.Value))
             {
@@ -118,7 +139,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public HttpResponseMessage DeleteLevelConfig([FromBody] string id)
         {
             if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id))

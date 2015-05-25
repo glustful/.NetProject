@@ -130,6 +130,10 @@ namespace CRM.Service.TaskAward
                 {
                     query = query.Where(q => q.Name.Contains(condition.Name));
                 }
+                if (!string.IsNullOrEmpty(condition.NameRe))
+                {
+                    query = query.Where(q => q.Name==condition.NameRe);
+                }
 				if (!string.IsNullOrEmpty(condition.Describe))
                 {
                     query = query.Where(q => q.Describe.Contains(condition.Describe));

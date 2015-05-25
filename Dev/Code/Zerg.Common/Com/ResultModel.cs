@@ -18,5 +18,10 @@ namespace Zerg.Common
        /// 返回状态说明
        /// </summary>
         public string Msg { get; set; }
+
+        /// <summary>
+        /// 附带对象
+        /// </summary>
+        public object Object { get; set; }
     }
 }

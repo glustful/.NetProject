@@ -105,22 +105,10 @@ namespace CRM.Entity.Model
 		public string WriterPhone { get; set; }
 
 
-
-		public BrokerEntity[] AccountantIDs { get; set; }
-
-
-
-		public bool? Payment { get; set; }
-
-
-
-		public Decimal Amount { get; set; }
-
-
         /// <summary>
         /// 用户进度
         /// </summary>
-	    public EnumBRECCType Status { get; set; }
+	    public EnumBRECCType? Status { get; set; }
 
 
 	    public EnumBrokerRECClientSearchOrderBy? OrderBy { get; set; }

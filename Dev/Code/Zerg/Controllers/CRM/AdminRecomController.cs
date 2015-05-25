@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
 using CRM.Service.BrokerRECClient;
-using Webdiyer.WebControls.Mvc;
 using Zerg.Common;
 using Zerg.Models.CRM;
 
 namespace Zerg.Controllers.CRM
 {
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// admin的推荐至平台流程处理
     /// </summary>
@@ -34,41 +36,89 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage BrokerList([FromBody] BrokerRECClientSearchCondition brokerRecClientSearchCondition)
+        public HttpResponseMessage BrokerList(EnumBRECCType status, string brokername,int page, int pageSize)
         {
-            if (brokerRecClientSearchCondition == null)
-                throw new ArgumentNullException("brokerRecClientSearchCondition");
+           
             var condition = new BrokerRECClientSearchCondition
             {
                 OrderBy = EnumBrokerRECClientSearchOrderBy.OrderById,
+                Page = page,
+                PageCount = pageSize,
+                Status = status,
+                Brokername=brokername
+                    
             };
-            return PageHelper.toJson(_brokerRecClientService.GetBrokerRECClientsByCondition(condition).ToPagedList(Convert.ToInt32(brokerRecClientSearchCondition.PageCount) + 1, 10).ToList());
+            var list = _brokerRecClientService.GetBrokerRECClientsByCondition(condition).Select(a => new
+            {
+                a.Id,
+                a.Brokername,
+                a.Brokerlevel,
+                a.ClientInfo.Phone,
+                a.Projectname,
+                a.Addtime,
+
+                a.Clientname,
+                SecretaryName=a.SecretaryId.Brokername,
+                a.SecretaryPhone,
+                Waiter=a.WriterId.Brokername,
+                a.WriterPhone,
+                a.Uptime
+
+            }).ToList();
+
+            var totalCont = _brokerRecClientService.GetBrokerRECClientCount(condition);
+
+            return PageHelper.toJson(new { list1 = list, condition1 = condition, totalCont1 = totalCont });
         }
         #endregion
 
         #region 待审核业务处理 杨定鹏 2015年5月5日16:28:30
         /// <summary>
-        /// 查看审核详情
+        /// 审核状态变更
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage GetAuditDetail(int id)
         {
-            return PageHelper.toJson(_brokerRecClientService.GetBrokerRECClientById(id));
+            var model = _brokerRecClientService.GetBrokerRECClientById(id);
+            var newModel = new BrokerRECClientModel
+            {
+                Id = model.Id,
+                Broker = model.Broker.Id,
+                NickName = model.Broker.Nickname,
+                Brokername = model.Brokername,
+                Brokerlevel = model.Brokerlevel,
+                Sex = model.Broker.Sexy,
+                RegTime = model.Broker.Regtime.ToString(CultureInfo.InvariantCulture),
+
+                Clientname = model.Clientname,
+                HouseType = model.ClientInfo.Housetype,
+                Houses = model.ClientInfo.Houses,
+                Note = model.ClientInfo.Note,
+                Phone = model.Phone
+
+            };
+
+            return PageHelper.toJson(newModel);
         }
 
         /// <summary>
         /// 确认审核
         /// </summary>
         /// <returns></returns>
+        [HttpPost]
         public HttpResponseMessage PassAudit([FromBody]BrokerRECClientModel brokerRecClientModel)
         {
-            if (brokerRecClientModel == null) throw new ArgumentNullException("brokerRecClientModel");
-            var model = new BrokerRECClientEntity
+            if (brokerRecClientModel.Id==0)
             {
-                Id = brokerRecClientModel.Id,
-                Status = brokerRecClientModel.Status
-            };
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "Id不能为空"));
+            }
+
+            var model = _brokerRecClientService.GetBrokerRECClientById(brokerRecClientModel.Id);
+            model.Status = brokerRecClientModel.Status;
+            model.Uptime = DateTime.Now;
+
             _brokerRecClientService.Update(model);
             return PageHelper.toJson(PageHelper.ReturnValue(true,"确认成功"));
         }
@@ -78,13 +128,21 @@ namespace Zerg.Controllers.CRM
         /// 带客人列表
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage WaiterList()
         {
             var condition = new BrokerSearchCondition
             {
-                OrderBy = EnumBrokerSearchOrderBy.OrderById
+                OrderBy = EnumBrokerSearchOrderBy.OrderById,
+                UserType = EnumUserType.带客人员
             };
-            return PageHelper.toJson(_brokerService.GetBrokersByCondition(condition).ToList());
+            var list = _brokerService.GetBrokersByCondition(condition).Select(a => new
+            {
+                a.Id,
+                a.Brokername, 
+                a.Phone
+            }).ToList();
+            return PageHelper.toJson(list);
         }
 
         #endregion
@@ -94,13 +152,21 @@ namespace Zerg.Controllers.CRM
         /// 场秘列表
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage SecretaryList()
         {
             var condition = new BrokerSearchCondition
             {
-                OrderBy = EnumBrokerSearchOrderBy.OrderById
+                OrderBy = EnumBrokerSearchOrderBy.OrderById,
+                UserType = EnumUserType.场秘
             };
-            return PageHelper.toJson(_brokerService.GetBrokersByCondition(condition).ToList());
+            var list = _brokerService.GetBrokersByCondition(condition).Select(a => new
+            {
+                a.Id,
+                a.Brokername,
+                a.Phone
+            }).ToList();
+            return PageHelper.toJson(list);
         }
 
         #endregion

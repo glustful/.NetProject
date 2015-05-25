@@ -49,6 +49,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mappings\Advertisement\AdvertisementMapping.cs" />
+    <Compile Include="Mappings\Channel\ChannelMapping.cs" />
+    <Compile Include="Mappings\Content\ContentMapping.cs" />
+    <Compile Include="Mappings\PublishProduct\PublishProductMapping.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mappings\Resource\ResourceMapping.cs" />
+    <Compile Include="Mappings\Tag\TagMapping.cs" />
+    <Compile Include="Model\Advertisement\AdvertisementEntity.cs" />
+    <Compile Include="Model\Advertisement\AdvertisementSearchConditon.cs" />
+    <Compile Include="Model\Channel\ChannelEntity.cs" />
+    <Compile Include="Model\Channel\ChannelSearchConditon.cs" />
+    <Compile Include="Model\Channel\EnumChannel.cs" />
+    <Compile Include="Model\Content\ContentEntity.cs" />
+    <Compile Include="Model\Content\ContentSearchConditon.cs" />
+    <Compile Include="Model\Content\EnumContent.cs" />
+    <Compile Include="Model\PublishProduct\EnumPublishProduct.cs" />
+    <Compile Include="Model\PublishProduct\PublishProductEntity.cs" />
+    <Compile Include="Model\PublishProduct\PublishProductSearchConditon.cs" />
+    <Compile Include="Model\Resource\EnumResource.cs" />
+    <Compile Include="Model\Resource\ResourceEntity.cs" />
+    <Compile Include="Model\Resource\ResourceSearchConditon.cs" />
+    <Compile Include="Model\Setting\EnumSetting.cs" />
+    <Compile Include="Model\Setting\SettingEntity.cs" />
+    <Compile Include="Model\Setting\SettingSearchConditon.cs" />
+    <Compile Include="Model\Tag\EnumTag.cs" />
+    <Compile Include="Model\Tag\TagEntity.cs" />
+    <Compile Include="Model\Tag\TagSearchConditon.cs" />
+    <Compile Include="Mappings\Setting\SettingMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

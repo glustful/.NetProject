@@ -1,0 +1,41 @@
+<!--黄秀宇 任务列表  2015.05.12
+自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />
+angular.js路径app/scrips/controller/CRM/taskList.js-->
+<div ng-controller="taskListcontroller">
+<div id="divTaskH"class="marginL">
+    <input style="width:200px;"ng-model="searchCondition1.brokerName" type="text" class="form-control bordhtml" placeholder="接受者">
+    <!--<input style="width:200px;" type="text"ng-model="searchCondition1.Brokername" class="form-control bordhtml" placeholder="搜索条件2">-->
+    <button md-ink-ripple=""style="width:100px;"ng-click="getList1()" class="md-btn md-raised m-b btn-fw indigo">检索</button>
+    </div>
+
+<div id="divTaskC" class="marginL">
+    <!--列表头-->
+    <div class="taskclear1 bord divheard">
+        <ul class="taskheader1">
+            <li>任务名称</li>
+            <li>接受者</li>
+            <li>任务进度</li>
+            <li>结束时间</li>
+        </ul>
+
+    </div>
+    <!--列表内容-->
+    <div  class="taskcenter1 bord bordTop0px divodd"ng-repeat="item in taskModel">
+        <ul class="taskheader1">
+            <li>{{item.Taskname}}</li>
+            <li>{{item.Brokername}}</li>
+            <li>{{item.Taskschedule}}</li>
+            <li>{{item.Endtime|toDate |date}}</li>
+        </ul>
+
+    </div>
+
+    <div style="width:800px;"  class="text-center footable-visible ng-scope">
+        <pagination boundary-links="true" total-items="searchCondition1.totalCount" items-per-page="searchCondition1.pageSize" ng-model="searchCondition1.page" ng-change="getList1()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+
+    </div>
+</div>
+</div>
+<script type="text/ng-template" id="myModalContent.html">
+    <div ng-include="'views/partials/modal.html'"></div>
+</script>
