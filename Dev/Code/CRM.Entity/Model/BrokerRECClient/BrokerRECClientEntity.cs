@@ -82,17 +82,5 @@ namespace CRM.Entity.Model
 		/// 带客人员电话
 		/// </summary>
 		public virtual string WriterPhone { get; set; }
-		/// <summary>
-		/// 财务ID
-		/// </summary>
-		public virtual BrokerEntity AccountantId { get; set; }
-		/// <summary>
-		/// 是否打款
-		/// </summary>
-		public virtual bool Payment { get; set; }
-		/// <summary>
-		/// 打款金额
-		/// </summary>
-		public virtual Decimal Amount { get; set; }
 	}
 }

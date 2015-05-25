@@ -41,14 +41,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac">
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Integration.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Autofac.Mvc5.3.1.0\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+      <HintPath>..\..\..\..\Project_Zerg\Dev\Code\packages\Autofac.Mvc5.3.1.0\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac.Integration.WebApi">
+    <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework">
@@ -62,9 +64,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="MvcPager, Version=2.0.0.1, Culture=neutral, PublicKeyToken=f6872c5a09aed72c, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\MvcPager.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
@@ -94,6 +96,11 @@
     </Reference>
     <Reference Include="System.Web.Http.Cors">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -122,25 +129,17 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.WebHost">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_Data\Settings.txt" />
     <Content Include="Global.asax" />
-    <Content Include="Lib\MvcPager.dll" />
+    <Content Include="index.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CRM\AdminInfoController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\CRM\AdminPayController.cs" />
     <Compile Include="Controllers\CRM\BrokeAccountController.cs" />
     <Compile Include="Controllers\CRM\AdminRecomController.cs">
       <SubType>Code</SubType>
@@ -179,15 +178,38 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\CRM\TaskController.cs" />
+    <Compile Include="Controllers\CMS\AdvertisementController.cs" />
+    <Compile Include="Controllers\CMS\ChannelController.cs" />
+    <Compile Include="Controllers\CMS\ResourceController.cs" />
+    <Compile Include="Controllers\CMS\SettingController.cs" />
+    <Compile Include="Controllers\CMS\TagController.cs" />
+    <Compile Include="Controllers\CMS\ContentController.cs" />
+    <Compile Include="Controllers\UC\RoleController.cs" />
+    <Compile Include="Controllers\UC\UserController.cs" />
+    <Compile Include="Controllers\UEditor\Config.cs" />
+    <Compile Include="Controllers\UEditor\ConfigHandler.cs" />
+    <Compile Include="Controllers\UEditor\CrawlerHandler.cs" />
+    <Compile Include="Controllers\UEditor\Handler.cs" />
+    <Compile Include="Controllers\UEditor\ListFileHandler.cs" />
+    <Compile Include="Controllers\UEditor\NotSupportedHandler.cs" />
+    <Compile Include="Controllers\UEditor\PathFormater.cs" />
+    <Compile Include="Controllers\UEditor\UploadHandler.cs" />
+    <Compile Include="Controllers\Trading\Product\BrandController.cs" />
+    <Compile Include="Controllers\Trading\Product\ClassifyController.cs" />
+    <Compile Include="Controllers\Trading\Product\ProductController.cs" />
+    <Compile Include="Controllers\Trading\Trading\BillController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CRM\AdminPayModel.cs" />
     <Compile Include="Models\CRM\AdminRecomModel.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\CRM\BrokerModel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\CRM\ClientInfoModel.cs" />
+    <Compile Include="Models\CRM\CreateMessageConfigModel.cs" />
     <Compile Include="Models\CRM\MerchantInfoModel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -197,16 +219,40 @@
     <Compile Include="Models\CRM\MessageDetailModel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\CMS\AdvertisementModel.cs" />
+    <Compile Include="Models\CMS\ChannelModel.cs" />
+    <Compile Include="Models\CMS\SettingModel.cs" />
     <Compile Include="Models\CRM\TaskAwardModel.cs" />
     <Compile Include="Models\CRM\TaskModel.cs" />
     <Compile Include="Models\CRM\TaskPunishmentModel.cs" />
     <Compile Include="Models\CRM\TaskSearchModel.cs" />
     <Compile Include="Models\CRM\TaskTagModel.cs" />
     <Compile Include="Models\CRM\TaskTypeModel.cs" />
+    <Compile Include="Models\CMS\ContentDetailModel.cs" />
+    <Compile Include="Models\CMS\ContentModel.cs" />
+    <Compile Include="Models\CMS\TagDetailModel.cs" />
+    <Compile Include="Models\CMS\TagModel.cs" />
+    <Compile Include="Models\UC\ActionModel.cs" />
+    <Compile Include="Models\UC\RoleModel.cs" />
+    <Compile Include="Models\UC\UserModel.cs" />
+    <Compile Include="Models\Trading\Product\ClassifyModel.cs" />
+    <Compile Include="Models\Trading\Product\ParameterModel.cs" />
+    <Compile Include="Models\Trading\Product\ParameterValueModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductBrandModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductBrandParameterModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductDetailModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductParameterModel.cs" />
+    <Compile Include="Controllers\Trading\Trading\OrderController.cs" />
+    <Compile Include="Models\Trading\Trading\OrderDetailModel.cs" />
+    <Compile Include="Models\Trading\Trading\OrderModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Controllers\UEditor\controller.ashx" />
+    <Content Include="Controllers\UEditor\config.json" />
+    <None Include="Properties\PublishProfiles\Zerg_CMS.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -214,10 +260,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\CMS\" />
-    <Folder Include="Models\CMS\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CMS.Entity\CMS.Entity.csproj">
       <Project>{df25f940-2fea-43f5-bd41-cbe319688651}</Project>

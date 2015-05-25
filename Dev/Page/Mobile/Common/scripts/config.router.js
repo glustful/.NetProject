@@ -79,6 +79,10 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/partner_insert1',
             templateUrl:'modules/partner_insert1/view/partner_insert1.html'
         })
+        .state('app.groom',{
+            url:'/groom',
+            templateUrl:'modules/groom/view/groom.html'
+        })
         .state('app.houseDetail',{
             url:'/houseDetail',
             templateUrl:'modules/houseDetail/view/houseDetail.html'

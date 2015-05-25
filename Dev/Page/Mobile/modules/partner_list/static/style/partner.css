@@ -1,8 +1,5 @@
 
-.fl{
-    float:left;
-}
-.content p{
+.list_content p{
     margin-left: 30px;
     font-weight:600;
 }
@@ -51,7 +48,7 @@ ul li{
     clear: both;
     margin-top: 80px;
 }
-.information{
+.partner_information{
    margin-left: 27px;
     margin-right: 106px;
 }
@@ -60,7 +57,7 @@ ul li{
     margin-right: 260px;
     color: #fc3b00;
 }
-.information span {
+.partner_information span {
     color: #848484;
 }
 /*ÃÌº”∫œªÔ»À*/

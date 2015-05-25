@@ -89,6 +89,12 @@ namespace CRM.Service.TaskList
                 {
                     query = query.Where(q => condition.Tasks.Contains(q.Task));
                 }
+                if (condition.Task != null )
+                {
+                    query = query.Where(q=>q.Task.Id==(condition.Task.Id));
+                }
+              
+
 				if (condition.Brokers != null && condition.Brokers.Any())
                 {
                     query = query.Where(q => condition.Brokers.Contains(q.Broker));
@@ -111,6 +117,18 @@ namespace CRM.Service.TaskList
 				if (condition.Page.HasValue && condition.PageCount.HasValue)
                 {
                     query = query.Skip((condition.Page.Value - 1)*condition.PageCount.Value).Take(condition.PageCount.Value);
+                }
+                if (condition.Taskschedule != null && condition.Taskschedule.Any())
+                {
+                    query = query.Where(q => condition.Taskschedule.Contains(q.Taskschedule));
+                }
+                if (condition.TaskId >0)
+                {
+                    query = query.Where(q => q.Task.Id == (condition.TaskId));
+                }
+                if (condition.BrokerName != null && condition.BrokerName.Any())
+                {
+                    query = query.Where(q => q.Broker.Brokername.Contains(condition.BrokerName));
                 }
 				return query;
 			}
@@ -141,6 +159,14 @@ namespace CRM.Service.TaskList
 				if (condition.Brokers != null && condition.Brokers.Any())
                 {
                     query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                }
+                if (condition.TaskId > 0)
+                {
+                    query = query.Where(q => q.Task.Id == (condition.TaskId));
+                }
+                if (condition.BrokerName != null && condition.BrokerName.Any())
+                {
+                    query = query.Where(q => q.Broker.Brokername.Contains(condition.BrokerName));
                 }
 				return query.Count();
 			}

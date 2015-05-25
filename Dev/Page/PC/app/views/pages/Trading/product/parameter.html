@@ -1,0 +1,209 @@
+<div class="padding-out" ng-app="App" ng-controller="ParameterController">
+    <div class="box">
+        <div class="col-md-3 col-sm-6">
+            <div class="p-md">
+                <div class="m-v-sm btn-groups">
+                    <button ng-click="my_tree.expand_all()" class="btn btn-default btn-sm">全部展开</button>
+                    <button ng-click="my_tree.collapse_all()" class="btn btn-default btn-sm">全部折叠</button>
+                    <button ng-click="my_tree.expand_branch()" class="btn btn-default btn-sm">展开</button>
+                    <button ng-click="my_tree.collapse_branch()" class="btn btn-default btn-sm">折叠</button>
+                </div>
+                <div class="line b-b m-v-md"></div>
+                <span ng-if="doing_async">...正在加载...</span>
+
+                <div lazy-load="angularBootstrapNavTree">
+                    <abn-tree
+                            tree-data="my_data"
+                            tree-control="my_tree"
+                            on-select="selectEvent(branch)"
+                            expand-level="2"
+                            initial-selection="Granny Smith"
+                            icon-leaf="fa fa-file-o"
+                            icon-expand="fa fa-angle-right"
+                            icon-collapse="fa fa-angle-down"
+                            >
+                    </abn-tree>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 col-sm-6 bg-light b-l bg-auto">
+            <div class="p-md">
+                <div class="alert alert-info">{{output}}</div>
+                <button onclick="AddParameterWindowShow()" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加参数
+                </button>
+                <div class="line b-b m-v-md"></div>
+                <div class="panel panel-default" align="center">
+                <table st-table="rowCollectionPage" class="table table-striped" align="center">
+                    <thead>
+                    <tr>
+                        <th align="center">参数名称</th>
+                        <th align="center">参数ID</th>
+                        <th align="center">添加时间</th>
+                        <th align="center">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in rowParameter">
+                        <td align="center">{{row.Name }}</td>
+                        <td align="center">{{row.Id }}</td>
+                        <td align="center">{{row.Addtime| date }}</td>
+                        <td align="center">
+                            <button class="btn btn-info btn-sm"  ng-click="getParameterValue(row.Id)" onclick="ParameterValueWindowShow()"><i class="fa fa-fw m-r-xs fa-edit"></i>参数值管理
+                            </button>
+                            <button ng-click='delParameter(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
+                            </button>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7" class="no-margin"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--弹出层开始  -->
+    <div id="modal-form-addparameter" class="modal in" tabindex="-1" aria-hidden="false" style="display:none;">
+        <div class="modal-dialog" style="padding-top:100px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="AddParameterWindowClose()" class="close" data-dismiss="modal">×</button>
+                    <h4 id="eidt-msg">请填写编辑信息</h4>
+                </div>
+                <div class="modal-body overflow-visible">
+                    <div class="row">
+                        <div class="col-xs-12 ">
+                            <div class="space-4"></div>
+                            <div class="form-group" style="text-align:center">
+                                <label for="parameterName">参数名称</label>
+                                <input class="input-large" type="text" ng-model="parameterName" id="parameterName" placeholder="" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info btn-sm" ng-click="addParameter()">
+                        <i class="fa fa-fw m-r-xs fa-plus"></i>
+                        添 加
+                    </button>
+                    <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="AddParameterWindowClose()">
+                        <i class="icon-remove"></i>
+                        取 消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--弹出层结束-->
+    <!--弹出层开始  -->
+    <div id="modal-form-parametervalue" class="modal in" tabindex="-1" aria-hidden="false" style="display:none;">
+        <div class="modal-dialog" style="padding-top:100px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="ParameterValueWindowClose()" class="close" data-dismiss="modal">×</button>
+                    <h4 id="pamametermsg">分类参数值</h4>
+                </div>
+                <div class="modal-body overflow-visible">
+                    <table st-table="rowCollectionPage" class="table table-striped" align="center">
+                        <thead>
+                        <tr>
+                            <th align="center">参数名</th>
+                            <th align="center">参数ID</th>
+                            <th align="center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="row in rowParameterValue">
+                            <td align="center">{{row.Parametervalue }}</td>
+                            <td align="center">{{row.Id }}</td>
+                            <td align="center">
+                                <button ng-click='delParameterValue(row.Id)' class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-minus"></i> 删除
+                                </button></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7" class="no-margin"></div>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info btn-sm" onclick=" AddValueWindowShow()">
+                        <i class="fa fa-fw m-r-xs fa-plus"></i>
+                        添 加
+                    </button>
+                    <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="ParameterValueWindowClose()">
+                        <i class="icon-remove"></i>
+                        取 消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--弹出层结束  -->
+    <!--弹出层开始  -->
+    <div id="modal-form-addvalue" class="modal in" tabindex="-1" aria-hidden="false" style="display:none;">
+        <div class="modal-dialog" style="padding-top:100px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="AddValueWindowClose()" class="close" data-dismiss="modal">×</button>
+                    <h4 id="addmsg">添加分类参数值</h4>
+                </div>
+                <div class="modal-body overflow-visible">
+                    <div class="row">
+                        <div class="col-xs-12 ">
+                            <div class="space-4"></div>
+                            <div class="form-group" style="text-align:center">
+                                <label for="ClassifyParameterValue">参数值</label>
+                                <input class="input-large" type="text" ng-model="ClassifyParameterValue" id="ClassifyParameterValue" placeholder="" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info btn-sm" ng-click="addParameterValue()">
+                        <i class="fa fa-fw m-r-xs fa-plus"></i>
+                        添 加
+                    </button>
+                    <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="AddValueWindowClose()">
+                        <i class="icon-remove"></i>
+                        取 消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--弹出层结束  -->
+    <script>
+        function AddParameterWindowClose() {
+            $("#modal-form-addparameter").hide();
+        }
+        function AddParameterWindowShow() {
+            $("#modal-form-addparameter").show();
+
+        }
+        function ParameterValueWindowClose() {
+            $("#modal-form-parametervalue").hide();
+        }
+        function ParameterValueWindowShow() {
+            $("#modal-form-parametervalue").show();
+
+        }
+        function AddValueWindowClose() {
+            $("#modal-form-addvalue").hide();
+        }
+        function AddValueWindowShow() {
+            $("#modal-form-addvalue").show();
+
+        }
+        </script>
+</div>

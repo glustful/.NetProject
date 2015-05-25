@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 /*ï¿½ï¿½ï¿½ï¿½*/
 /*body{*/
     /*background-color: #e7e7e7;*/
 /*}*/
+=======
+/*ÉèÖÃ*/
+body{
+    background-color: #eeeeee;
+}
+>>>>>>> 449345f90d758e721f93ab5148e9fdbf0851c0fb
 .set_person{
     width: 640px;
     background-color: #ffffff;
@@ -22,9 +29,13 @@
     color: #aeacac;
     font-size: 16px;
 }
+<<<<<<< HEAD
 
 
 /*ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½*/
+=======
+/*°²È«ÉèÖÃ*/
+>>>>>>> 449345f90d758e721f93ab5148e9fdbf0851c0fb
 .security_content{
     margin: 20px 55px 0 20px;
     color: #848484;
@@ -60,7 +71,25 @@ form a{
     margin-right: 10px;
     margin-top: 20px;
 }
-
+.pin{
+    margin-top: 40px;
+}
+.pin input{
+    width: 145px;
+    height: 46px;
+    background: url("../img/pin.png") no-repeat 0 0;
+    border: 1px solid #eeeeee;
+    background-color: white;
+}
+.pin button{
+    width: 147px;
+    height: 44px;
+    margin-left: 10px;
+    background-color:  #fc3b00;
+    font-size: 20px;
+    color: #ffffff;
+    font-family:'microsoft yahei' ;
+}
 
 /*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 .person_revise{

@@ -7,10 +7,11 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Zerg.Common;
-using Webdiyer.WebControls.Mvc;
+using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.CRM
 {
+   [EnableCors("*", "*", "*")]
     /// <summary>
     /// 等级设置
     /// </summary>
@@ -30,14 +31,36 @@ namespace Zerg.Controllers.CRM
 
 
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage SearchLevel( string pageindex)
+        public HttpResponseMessage SearchLevel(string name = null, int page = 1, int pageSize = 10)
         {
             var leSearchCon = new LevelSearchCondition
-            {
-                OrderBy = EnumLevelSearchOrderBy.OrderById
+            {   
+                Name=name,
+                Page = Convert.ToInt32(page),
+                PageCount = pageSize
             };
-            return PageHelper.toJson(_levelService.GetLevelsByCondition(leSearchCon).ToPagedList(Convert.ToInt32(pageindex) + 1, 10).ToList());
+            var levelList = _levelService.GetLevelsByCondition(leSearchCon).Select(p => new { 
+              Id=p.Id,
+              Name=p.Name,
+               p.Describe,
+               p.Url,
+               p.Addtime
+
+            }).ToList();
+            var levelListCount = _levelService.GetLevelCount(leSearchCon);
+            return PageHelper.toJson(new { List = levelList, Condition = leSearchCon, totalCount = levelListCount });
+          
         }
+
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetLevel(string id)
+        {
+           var Level=_levelService.GetLevelById(Convert.ToInt32(id));         
+            return PageHelper.toJson(Level);
+
+        }
+
+
 
         /// <summary>
         /// 新增等级  
@@ -45,7 +68,7 @@ namespace Zerg.Controllers.CRM
         /// <param name="name"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddLevel([FromBody] LevelEntity Level)
+        public HttpResponseMessage DoCreate( LevelEntity Level)
         {
 
             if (!string.IsNullOrEmpty(Level.Name) && !string.IsNullOrEmpty(Level.Describe) && !string.IsNullOrEmpty(Level.Url))
@@ -83,7 +106,7 @@ namespace Zerg.Controllers.CRM
         /// <param name="name"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage UpdateLevel([FromBody] LevelEntity Level)
+        public HttpResponseMessage DoEdit([FromBody] LevelEntity Level)
         {
             if (Level != null && !string.IsNullOrEmpty(Level.Id.ToString()) && PageHelper.ValidateNumber(Level.Id.ToString()) && !string.IsNullOrEmpty(Level.Name) && !string.IsNullOrEmpty(Level.Describe) && !string.IsNullOrEmpty(Level.Url))
             {
