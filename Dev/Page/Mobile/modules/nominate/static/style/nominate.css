@@ -1,0 +1,29 @@
+.IWant{
+    background: #fff;
+    height: 66px;
+    line-height: 66px;
+}
+.IWant button{
+    width: 125px;
+    height: 46px;
+    background:#f13800;
+    color: #fff;
+    font-size: 18px;
+    margin: 0 10px 0 10px;
+    border-radius: 5px;
+}
+.IWant a{
+    display: inline-block;
+    font-size: 20px;
+    color:#707070;
+    text-align: center;
+    width: 154px;
+    height: 30px;
+    line-height: 30px;
+
+}
+.IWant .red-nominate{
+    color: #ff3000;
+    border-right:1px solid #ebebeb;
+}
+

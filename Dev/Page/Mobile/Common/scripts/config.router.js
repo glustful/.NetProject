@@ -139,4 +139,12 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/storeroom',
             templateUrl:'modules/storeroom/view/storeroom.html'
         })
+        .state('app.task',{
+            url:'/task',
+            templateUrl:'modules/task/view/task.html'
+        })
+        .state('app.nominate',{
+            url:'/nominate',
+            templateUrl:'modules/nominate/view/nominate.html'
+        })
 }]);
