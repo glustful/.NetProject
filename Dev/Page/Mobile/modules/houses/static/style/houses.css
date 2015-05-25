@@ -36,7 +36,7 @@
     left:0;
     background:url("../image/houses/fgx.png") no-repeat 530px 0 #000;
 }
-.content-houses p{
+.content-houses .zgyj{
     height: 80px;
     line-height: 80px;
     padding-left: 36px;
@@ -64,58 +64,58 @@
     padding-left: 25px;
     background: url("../image/houses/cell.png") no-repeat 0 center;
 }
-.content-houses .type{
+.content-houses .type-houses{
     padding:20px;
     position: relative;
     height: 1500px;
 }
-.content-houses .type .hx1{
+.content-houses .type-houses .hx1{
     position: absolute;
     top: 20px;
     left: 20px;
 }
-.content-houses .type .hx2{
+.content-houses .type-houses .hx2{
     position: absolute;
     top: 20px;
     left: 330px;
 }
-.content-houses .type .hx3{
+.content-houses .type-houses .hx3{
     position: absolute;
     top:468px;
     left: 20px;
 }
-.content-houses .type .hx4{
+.content-houses .type-houses .hx4{
     position: absolute;
     top:780px;
     left: 330px;
 }
-.content-houses .type .hx5{
+.content-houses .type-houses .hx5{
     position: absolute;
     top:915px;
     left: 20px;
 }
-.content-houses .type .ask{
+.content-houses .type-houses .ask{
     position: absolute;
     padding-left: 20px;
     background:url("../image/houses/ask.png") no-repeat 0 center;
     font-size: 18px;
     left: 100px;
 }
-.contenthouses .type .ask a{
+.content-houses .type-houses .ask a{
     color: #f13800;
 }
-.contenthouses .type .hx1 .ask{
+.content-houses .type-houses .hx1 .ask{
     top: 385px;
 }
-.content .type .hx2 .ask{
+.content-houses .type-houses .hx2 .ask{
     top:700px;
 }
-.content-houses .type .hx3 .ask{
+.content-houses .type-houses .hx3 .ask{
     top:380px;
 }
-.content-houses .type .hx4 .ask{
+.content-houses .type-houses .hx4 .ask{
     top:695px;
 }
-.content-houses .type .hx5 .ask{
+.content-houses .type-houses .hx5 .ask{
     top:380px;
 }
