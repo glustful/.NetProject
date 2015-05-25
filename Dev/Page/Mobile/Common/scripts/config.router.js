@@ -79,7 +79,6 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/partner_insert1',
             templateUrl:'modules/partner_insert1/view/partner_insert1.html'
         })
-<<<<<<< HEAD
         .state('app.groom',{
             url:'/groom',
             templateUrl:'modules/groom/view/groom.html'
@@ -140,6 +139,4 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/storeroom',
             templateUrl:'modules/storeroom/view/storeroom.html'
         })
-=======
->>>>>>> parent of 885f823... 我要带客页面
 }]);
