@@ -11,27 +11,26 @@
 .banner .point img{
     margin-left: 20px;
 }
-.content{
+.zhongtian_content{
     z-index: 8;
+    left: 0;
 }
-.title{
-    width: 640px;
+.h_title{
     height: 70px;
-    background-color: white;
+
     line-height: 70px;
     z-index: 7;
 }
-.title span{
+.h_title span{
     float: right;
     font-weight: 600;
     color: black;
     font-size: 25px;
     margin-right: 25px;
 }
-.content .title img{
+.zhongtian_content .h_title img{
     width: 50px;
     height: 60px;
-    margin-left: 25px;
 }
 .abstract{
     height: 97px;
@@ -43,18 +42,18 @@
 .abstract p{
     margin-left: 25px;
 }
-.content .Ptitle{
+.zhongtian_content .P_title{
     background-color: white;
     height: 87px;
     line-height: 87px;
     font-size: 12px;
     font-weight: 600;
+}
+.zhongtian_content h1{
+    margin-left: 25px;
     color: #f13800;
 }
-.content h1{
-    margin-left: 25px;
-}
-.content .main{
+.zhongtian_content .main_png{
     margin-top: 15px;
 }
 .bottom{
