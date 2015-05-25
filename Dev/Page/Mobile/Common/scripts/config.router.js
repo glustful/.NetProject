@@ -83,6 +83,26 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/groom',
             templateUrl:'modules/groom/view/groom.html'
         })
+        .state('app.houseDetail',{
+            url:'/houseDetail',
+            templateUrl:'modules/houseDetail/view/houseDetail.html'
+        })
+        .state('app.houses',{
+            url:'/houses',
+            templateUrl:'modules/houses/view/houses.html'
+        })
+        .state('app.housesBuy',{
+            url:'/housesBuy',
+            templateUrl:'modules/housesBuy/view/housesBuy.html'
+        })
+        .state('app.housesPic',{
+            url:'/housesPic',
+            templateUrl:'modules/housesPic/view/housesPic.html'
+        })
+        .state('app.housesPicBuy',{
+            url:'/housesPicBuy',
+            templateUrl:'modules/housesPicBuy/view/housesPicBuy.html'
+        })
         .state('app.myInt',{
             url:'/myInt',
             templateUrl:'modules/myInt/view/myInt.html'
