@@ -79,8 +79,67 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/partner_insert1',
             templateUrl:'modules/partner_insert1/view/partner_insert1.html'
         })
+<<<<<<< HEAD
         .state('app.groom',{
             url:'/groom',
             templateUrl:'modules/groom/view/groom.html'
         })
+        .state('app.houseDetail',{
+            url:'/houseDetail',
+            templateUrl:'modules/houseDetail/view/houseDetail.html'
+        })
+        .state('app.houses',{
+            url:'/houses',
+            templateUrl:'modules/houses/view/houses.html'
+        })
+        .state('app.housesBuy',{
+            url:'/housesBuy',
+            templateUrl:'modules/housesBuy/view/housesBuy.html'
+        })
+        .state('app.housesPic',{
+            url:'/housesPic',
+            templateUrl:'modules/housesPic/view/housesPic.html'
+        })
+        .state('app.housesPicBuy',{
+            url:'/housesPicBuy',
+            templateUrl:'modules/housesPicBuy/view/housesPicBuy.html'
+        })
+        .state('app.myInt',{
+            url:'/myInt',
+            templateUrl:'modules/myInt/view/myInt.html'
+        })
+        .state('app.myPurse',{
+            url:'/myPurse',
+            templateUrl:'modules/myPurse/view/myPurse.html'
+        })
+        .state('app.personal',{
+            url:'/personal',
+            templateUrl:'modules/personal/view/personal.html'
+        })
+        .state('app.personalPage',{
+            url:'/personalPage',
+            templateUrl:'modules/personalPage/view/personalPage.html'
+        })
+        .state('app.recommend',{
+            url:'/recommend',
+            templateUrl:'modules/recommend/view/recommend.html'
+        })
+        .state('app.takeOff',{
+            url:'/takeOff',
+            templateUrl:'modules/takeOff/view/takeOff.html'
+        })
+        .state('app.redPaper-1',{
+            url:'/redPaper-1',
+            templateUrl:'modules/redPaper-1/view/redPaper-1.html'
+        })
+        .state('app.redPaper-2',{
+            url:'/redPaper-2',
+            templateUrl:'modules/redPaper-2/view/redPaper-2.html'
+        })
+        .state('app.storeroom',{
+            url:'/storeroom',
+            templateUrl:'modules/storeroom/view/storeroom.html'
+        })
+=======
+>>>>>>> parent of 885f823... 我要带客页面
 }]);

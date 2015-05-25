@@ -1,0 +1,86 @@
+<div class="padding-out" ng-app="App" ng-controller="ProductTreeCtrl">
+    <div class="box">
+
+        <div class="col-md-9 col-sm-6 bg-light b-l bg-auto">
+
+
+            <div class="p-md">
+                <div class="m-v-sm btn-groups">
+                    <button onclick="WindowShow()" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加分类
+                    </button>
+                    <button ng-click="delClassify()" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-minus"></i> 删除分类
+                    </button>
+                    <div class="line b-b m-v-md"></div>
+                    <button ng-click="my_tree.expand_all()" class="btn btn-default btn-sm">全部展开</button>
+                    <button ng-click="my_tree.collapse_all()" class="btn btn-default btn-sm">全部折叠</button>
+                    <button ng-click="my_tree.expand_branch()" class="btn btn-default btn-sm">展开</button>
+                    <button ng-click="my_tree.collapse_branch()" class="btn btn-default btn-sm">折叠</button>
+                </div>
+                <div class="line b-b m-v-md"></div>
+                <div class="alert alert-info">{{output}}</div>
+                <span ng-if="doing_async">...正在加载...</span>
+
+                <div lazy-load="angularBootstrapNavTree">
+                    <abn-tree
+                            tree-data="my_data"
+                            tree-control="my_tree"
+                            on-select="selectEvent(branch)"
+                            expand-level="2"
+                            initial-selection="Granny Smith"
+                            icon-leaf="fa fa-file-o"
+                            icon-expand="fa fa-angle-right"
+                            icon-collapse="fa fa-angle-down"
+                            >
+                    </abn-tree>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--弹出层开始  -->
+    <div id="modal-form" class="modal in" tabindex="-1" aria-hidden="false" style="display:none;">
+        <div class="modal-dialog" style="padding-top:100px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="WindowClose()" class="close" data-dismiss="modal">×</button>
+                    <h4 id="eidt-msg">请填写编辑信息</h4>
+                </div>
+                <div class="modal-body overflow-visible">
+                    <div class="row">
+                        <div class="col-xs-12 ">
+                            <div class="space-4"></div>
+                            <div class="form-group" style="text-align:center">
+                                <label for="txtflname">分类名称</label>
+                                <input class="input-large" type="text" ng-model="classifyValue" id="txtflname" placeholder="" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info btn-sm" ng-click="addClassify()">
+                        <i class="fa fa-fw m-r-xs fa-plus"></i>
+                        添加同级分类
+                    </button>
+                    <button class="btn btn-info btn-sm" ng-click="addSubClassify()">
+                        <i class="fa fa-fw m-r-xs fa-plus"></i>
+                        添加子分类
+                    </button>
+                    <button class="btn btn-sm" data-dismiss="modal" onclick="WindowClose()">
+                        <i class="icon-remove"></i>
+                        取 消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--弹出层结束  -->
+</div>
+<script>
+    function WindowClose() {
+        $("#modal-form").hide();
+    }
+    function WindowShow() {
+            $("#modal-form").show();
+
+    }
+</script>

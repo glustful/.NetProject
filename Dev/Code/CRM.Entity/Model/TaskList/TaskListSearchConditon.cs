@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace CRM.Entity.Model
 {
@@ -21,14 +22,22 @@ namespace CRM.Entity.Model
 
 		public int[] Ids { get; set; }
 
-
+    
 		public TaskEntity[] Tasks { get; set; }
+        public TaskEntity Task{ get; set; }
 
 		public BrokerEntity[] Brokers { get; set; }
+        public IQueryable<BrokerEntity> Broker { get; set; }
 
 		public string Taskschedule { get; set; }
 
 		public EnumTaskListSearchOrderBy? OrderBy { get; set; }
+
+        public string BrokerName { get; set; }
+        /// <summary>
+        /// 任务Id
+        /// </summary>
+        public int TaskId { get; set; }
 	}
 
 	public enum EnumTaskListSearchOrderBy

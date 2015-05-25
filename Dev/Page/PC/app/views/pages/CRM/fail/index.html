@@ -1,6 +1,6 @@
 <div class="row">
-    <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入搜索条件" ng-model="contact.name" required="" tabindex="0" aria-required="true" aria-invalid="true">
-    <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">搜索<div class="md-ripple-container"></div></button>
+    <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="搜索客户名" ng-model="searchCondition.Brokername" required="" tabindex="0" aria-required="true" aria-invalid="true">
+    <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo"  ng-click="getList()">搜索<div class="md-ripple-container"></div></button>
 </div>
 <table class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" data-page-size="5">
     <thead>
@@ -26,46 +26,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr class="footable-even" style="display: table-row;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>1、</td>
-        <td class="footable-visible"><a href="">张三</a></td>
-        <td class="footable-visible">小李</td>
-        <td class="footable-visible">俊发地产</td>
-        <td data-value="78025368997" class="footable-visible">2015.5.7</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a href="#/page/CRM/fail/detailed"><span class="label bg-success" title="Active">详情</span></a></td>
+
+
+    <tr class="footable-even" style="display: table-row;" ng-repeat="item in Brokerlist">
+        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>{{item.Id}}</td>
+        <td class="footable-visible"><a href="">{{item.Brokername}}</a></td>
+        <td class="footable-visible">{{item.Brokerlevel}}</td>
+        <td data-value="78025368997" class="footable-visible">{{item.Phone}}</td>
+        <td class="footable-visible">{{item.Projectname}}</td>
+        <td data-value="78025368997" class="footable-visible">{{item.Addtime}}</td>
+        <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.WaitCheck.check({id:item.Id})"><span class="label bg-success" title="Active">审核</span></a></td>
     </tr>
-    <tr class="footable-even" style="display: table-row;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>2、</td>
-        <td class="footable-visible"><a href="">张三</a></td>
-        <td class="footable-visible">小李</td>
-        <td class="footable-visible">俊发地产</td>
-        <td data-value="78025368997" class="footable-visible">2015.5.7</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a href="#/page/CRM/fail/detailed"><span class="label bg-success" title="Active">详情</span></a></td>
-    </tr>
-    <tr class="footable-even" style="display: table-row;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>3、</td>
-        <td class="footable-visible"><a href="">张三</a></td>
-        <td class="footable-visible">小李</td>
-        <td class="footable-visible">俊发地产</td>
-        <td data-value="78025368997" class="footable-visible">2015.5.7</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a href="#/page/CRM/fail/detailed"><span class="label bg-success" title="Active">详情</span></a></td>
-    </tr>
-    <tr class="footable-even" style="display: table-row;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>4、</td>
-        <td class="footable-visible"><a href="">张三</a></td>
-        <td class="footable-visible">小李</td>
-        <td class="footable-visible">俊发地产</td>
-        <td data-value="78025368997" class="footable-visible">2015.5.7</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a href="#/page/CRM/fail/detailed"><span class="label bg-success" title="Active">详情</span></a></td>
-    </tr>
-    <tr class="footable-even" style="display: table-row;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>5、</td>
-        <td class="footable-visible"><a href="">张三</a></td>
-        <td class="footable-visible">小李</td>
-        <td class="footable-visible">俊发地产</td>
-        <td data-value="78025368997" class="footable-visible">2015.5.7</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a href="#/page/CRM/fail/detailed"><span class="label bg-success" title="Active">详情</span></a></td>
-    </tr>
+
+
     <tr class="footable-odd" style="display: none;">
         <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>Maxine</td>
         <td class="footable-visible"><a href="">Woldt</a></td>
