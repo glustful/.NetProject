@@ -18,7 +18,7 @@ using CRM.Service.Broker;
 
 namespace Zerg.Controllers.CRM
 {
-     [EnableCors("*", "*", "*")]
+     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// CRM 任务管理明细
     /// </summary>

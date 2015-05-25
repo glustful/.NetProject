@@ -11,7 +11,10 @@ app.controller('taskIndexController',['$http','$scope',function($http,$scope) {
     };
     //查询任务
     var getTaskList  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskList/',{params:$scope.searchCondition}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/TaskList/',{
+            params:$scope.searchCondition,
+            'withCredentials':true
+        }).success(function(data){
            console.log(data);
             $scope.list = data.list;
             $scope.searchCondition.page=data.condition.Page;
@@ -44,7 +47,10 @@ app.controller('taskListcontroller',['$http','$scope','$stateParams',function($h
     };
 //加载时绑定，绑定任务列表,根据接受者查询该任务任务列表
     var getTaskList1  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/taskListByuser',{params:$scope.searchCondition1}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/taskListByuser',{
+            params:$scope.searchCondition1,
+            'withCredentials':true
+        }).success(function(data){
 
             console.log(data);
             $scope.taskModel = data.list;
@@ -69,7 +75,8 @@ $scope.getList1=getTaskList1 ;
 
         });
     };
-    $scope.gettasklist=getTaskListSer;*/
+    $scope.gettaskl
+    ist=getTaskListSer;*/
 }
 ]);
 

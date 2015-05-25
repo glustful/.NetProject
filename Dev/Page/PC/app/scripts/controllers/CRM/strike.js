@@ -13,7 +13,10 @@ angular.module("app").controller('SCInfoListController', [
         };
 
         var getTagList = function() {
-            $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoList',{params:$scope.searchCondition}).success(function(data){
+            $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoList',{
+                params:$scope.searchCondition,
+                'withCredentials':true
+            }).success(function(data){
                 $scope.Brokerlist = data.list1;
                 $scope.searchCondition.page=data.condition1.Page;
                 $scope.searchCondition.PageCount=data.condition1.PageCount;
@@ -29,7 +32,9 @@ angular.module("app").controller('SCInfoListController', [
 angular.module("app").controller('SCIDetialController',[
     '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
         //获取详细信息
-        $http.get(SETTING.ApiUrl + '/ClientInfo/ClientInfo/' + $stateParams.id).success(function (data) {
+        $http.get(SETTING.ApiUrl + '/ClientInfo/ClientInfo/' + $stateParams.id,{
+            'withCredentials':true
+        }).success(function (data) {
             $scope.ARDetialModel = data;
         });
 

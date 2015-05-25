@@ -53,7 +53,9 @@ $scope.warnType='';
     $scope.warnPunish='';
     //绑定任务类型
     var getTaskType  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskTypeList').success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/TaskTypeList',{
+            'withCredentials':true
+        }).success(function(data){
             console.log(data);
             $scope.taskType=data;
         });
@@ -62,7 +64,9 @@ $scope.warnType='';
     getTaskType();
     //绑定任务目标
     var getTaskTag  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskTagList').success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/TaskTagList',{
+            'withCredentials':true
+        }).success(function(data){
             console.log(data);
             $scope.tasktag=data;
         });
@@ -71,7 +75,9 @@ $scope.warnType='';
     getTaskTag();
     //绑定任务奖励
     var getTaskAward  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskAwardList').success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/TaskAwardList',{
+            'withCredentials':true
+        }).success(function(data){
             console.log(data);
             $scope.taskaward=data;
         });
@@ -80,7 +86,9 @@ $scope.warnType='';
     getTaskAward();
     //绑定任务惩罚
     var getTaskPunishment  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskPunishmentList').success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/TaskPunishmentList',{
+            'withCredentials':true
+        }).success(function(data){
             console.log(data);
             $scope.taskpunishment=data;
         });
@@ -92,7 +100,7 @@ $scope.warnType='';
 
     var getTypeResult  = function() {
         $http.post(SETTING.ApiUrl+'/Task/AddTaskTpye',$scope.typeCondition,{
-
+            'withCredentials':true
         }).success(function(data){
             if(data.Status){
                 $scope.typeCondition.Name='';
@@ -118,7 +126,7 @@ $scope.warnType='';
 
     var getTagResult  = function() {
         $http.post(SETTING.ApiUrl+'/Task/AddTaskTag',$scope.tagCondition,{
-
+            'withCredentials':true
         }).success(function(data){
             if(data.Status){
                 $scope.tagCondition.Name='';
@@ -153,7 +161,7 @@ $scope.warnType='';
 
     var getAwardResult  = function() {
         $http.post(SETTING.ApiUrl+'/Task/AddTaskAward',$scope.awardCondition,{
-
+            'withCredentials':true
         }).success(function(data){
             if(data.Status){
                 $scope.awardCondition.Name='';
@@ -188,7 +196,7 @@ $scope.warnType='';
 
     var getPunishResult  = function() {
         $http.post(SETTING.ApiUrl+'/Task/AddTaskPunishment',$scope.punishmentCondition,{
-
+            'withCredentials':true
         }).success(function(data){
             if(data.Status){
                 $scope.punishmentCondition.Name='';
@@ -222,7 +230,9 @@ $scope.warnType='';
     //删除任务类型
 
     var DelTaskType  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/DelTaskType/',{params:{id:$scope.mainCondition.TaskTypeId}}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/DelTaskType/',{params:{id:$scope.mainCondition.TaskTypeId},
+            'withCredentials':true
+        }).success(function(data){
             if(data.Status){
                 getTaskType();
                 $scope.warnType='删除成功';
@@ -242,7 +252,9 @@ $scope.warnType='';
     //删除任务目标
 
     var DelTaskTag  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/DelTaskTag/',{params:{id:$scope.mainCondition.TaskTagId}}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/DelTaskTag/',{params:{id:$scope.mainCondition.TaskTagId},
+            'withCredentials':true
+        }).success(function(data){
             if(data.Status){
                 getTaskTag();
                 $scope.warnTag='删除成功';
@@ -263,7 +275,9 @@ $scope.warnType='';
     //删除任务奖励
 
     var DelTaskAward  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/DelTaskAward/',{params:{id:$scope.mainCondition.TaskAwardId}}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/DelTaskAward/',{params:{id:$scope.mainCondition.TaskAwardId},
+            'withCredentials':true
+        }).success(function(data){
             if(data.Status){
                 getTaskAward();
                 $scope.warnAward ='删除成功';
@@ -284,7 +298,9 @@ $scope.warnType='';
     //删除任务惩罚
 
     var DelTaskPunish  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/DelTaskPunishment/',{params:{id:$scope.mainCondition.TaskPunishmentId}}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/DelTaskPunishment/',{params:{id:$scope.mainCondition.TaskPunishmentId},
+            'withCredentials':true
+        }).success(function(data){
             if(data.Status){
                 getTaskPunishment();
                 $scope.warnPunish='删除成功';
