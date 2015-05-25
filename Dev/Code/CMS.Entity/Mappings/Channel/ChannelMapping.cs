@@ -11,7 +11,7 @@ namespace CMS.Entity.Mappings.Channel
 		{
 			ToTable("Channel");
 			HasKey(c => c.Id);
-			Property(c => c.Name).HasColumnType("varchar");
+			Property(c => c.Name).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Status).HasColumnType("int");
 			HasOptional(c =>c.Parent);
 			Property(c => c.Adduser).HasColumnType("int");

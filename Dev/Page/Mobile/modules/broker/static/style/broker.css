@@ -34,14 +34,14 @@
     color: #f13800;
     font-size: 20px;
 }
-.activity-broker .sub-nav .icon a{
+.activity-broker .sub-nav .yuan-icon a{
    display: inline-block;
     width: 9px;
     height: 9px;
     background: url("../image/broker/y2.png");
     margin-left: 15px;
 }
-.activity-broker .sub-nav .icon .icon-red{
+.activity-broker .sub-nav .yuan-icon .icon-red{
     background: url("../image/broker/y1.png");
 }
 .activity-broker li{
@@ -58,17 +58,17 @@
     margin-right: 2px;
 }
 
-h4{
-    color: #333333;
+.activity-broker .wait{
+    color: #484848;
     font-size: 20px;
 }
-.red{
+.activity-broker .red-broker{
     color: #f13800;
 }
-h5{
+.activity-broker .well{
   color: #959595;
-  padding:5px 0 10px 0;
-  font-size: 18px;
+  padding:0 0 10px 0;
+  font-size: 16px;
 }
 .hero .hd{
     height: 59px;

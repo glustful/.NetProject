@@ -12,18 +12,18 @@ using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
-     [EnableCors("*", "*", "*")]
+    [EnableCors("*", "*", "*")]
     /// <summary>
     /// 合伙人  李洪亮  2015-05-05
     /// </summary>
     public class PartnerListController : ApiController
     {
         private IPartnerListService _partnerlistService;
-        private  IBrokerService _brokerService;
+        private IBrokerService _brokerService;
         public PartnerListController(IPartnerListService partnerlistService, IBrokerService brokerService)
         {
             _partnerlistService = partnerlistService;
-            _brokerService =brokerService;
+            _brokerService = brokerService;
         }
 
         #region 合伙人详情
@@ -40,33 +40,41 @@ namespace Zerg.Controllers.CRM
             var brokerSearchCondition = new BrokerSearchCondition
             {
                 Brokername = name,
-                OrderBy = EnumBrokerSearchOrderBy.OrderById,
                 Page = Convert.ToInt32(page),
                 PageCount =pageSize
             };
-            return PageHelper.toJson(
-                _brokerService.GetBrokersByCondition(brokerSearchCondition).Select(p => new { 
-                Id=p.Id,
+            var partnerList = _brokerService.GetBrokersByCondition(brokerSearchCondition).Select(p => new
+            {
+                Id = p.Id,
                 PartnersName = p.PartnersName,
-                PartnersId=p.PartnersId,
-                BrokerName=p.Brokername   
-            }).ToList());
+                PartnersId = p.PartnersId,
+                BrokerName = p.Brokername
+            }).ToList();
+            var partnerListCount = _brokerService.GetBrokerCount(brokerSearchCondition);
+            return PageHelper.toJson(new { List = partnerList, Condition = brokerSearchCondition, totalCount = partnerListCount });
+             
         }
 
-      /// <summary>
-      /// 查询经纪人下的合伙人List
-      /// </summary>
-      /// <param name="userId">经纪人ID</param>
-      /// <returns></returns>
+        /// <summary>
+        /// 查询经纪人下的合伙人List
+        /// </summary>
+        /// <param name="userId">经纪人ID</param>
+        /// <returns></returns>
 
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetPartnerListListByUserId(string userId)
+        public HttpResponseMessage PartnerListDetailed(string userId)
         {
             var partnerlistsearchcon = new PartnerListSearchCondition
             {
-               Brokers=_brokerService.GetBrokerById(Convert.ToInt32(userId))
+                Brokers = _brokerService.GetBrokerById(Convert.ToInt32(userId))
             };
-            return PageHelper.toJson(_partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).ToList());
+            var partnerList = _partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).Select(p => new
+                {
+                 Name=p.Brokername,
+                 AddTime =p.Addtime
+
+                }).ToList();
+            return PageHelper.toJson(partnerList);
         }
 
         /// <summary>
@@ -81,12 +89,12 @@ namespace Zerg.Controllers.CRM
             {
                 var entity = new PartnerListEntity
                 {
-                    Agentlevel="",
-                    Brokername="",
-                    PartnerId=0,
-                    Phone=0,
-                    Regtime=DateTime.Now,
-                    Broker=null,
+                    Agentlevel = "",
+                    Brokername = "",
+                    PartnerId = 0,
+                    Phone = 0,
+                    Regtime = DateTime.Now,
+                    Broker = null,
                     Uptime = DateTime.Now,
                     Addtime = DateTime.Now,
                 };

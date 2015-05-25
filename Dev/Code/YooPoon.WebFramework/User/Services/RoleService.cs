@@ -35,7 +35,7 @@ namespace YooPoon.WebFramework.User.Services
         {
             try
             {
-                return _roleRepository.Table.ToList();
+                return _roleRepository.Table.Where(r=>r.RoleName != "superAdmin").ToList();
             }
             catch (Exception e)
             {

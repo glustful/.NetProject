@@ -1,0 +1,19 @@
+<form name="form" id="form" ng-controller="configureSetEditController" ng-submit="Save()">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="bottom" ><label for="Title">名称： </label> <input  name="Title" type="text" ng-model="LevelConfig.Name"></div>
+            <div class="bottom" ><label for="Title">值： </label> <input  name="Title" type="text" ng-model="LevelConfig.Value"></div>
+
+            <div class="bottom" ><label for="Content">描述： </label>
+                <textarea name="Content" id="Content" cols="42" rows="10" ng-model="LevelConfig.Describe"></textarea>
+            </div>
+
+            <div>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" type="submit">确认<div class="md-ripple-container"></div></button>
+                <a href="#/page/CRM/configure/indexset"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink">取消<div class="md-ripple-container"></div></button></a>
+            </div>
+        </div>
+    </div>
+
+</form>

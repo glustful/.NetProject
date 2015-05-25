@@ -6,10 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
+
+    [EnableCors("*", "*", "*")]
     /// <summary>
     /// 经纪人管理  李洪亮  2015-05-04
     /// </summary>
@@ -32,28 +35,43 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
-        public HttpResponseMessage GetBroker([FromBody] string id)
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetBroker(string id)
         {
-            if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id))
+            if (string.IsNullOrEmpty(id) || !PageHelper.ValidateNumber(id))
             {
-                return PageHelper.toJson(_brokerService.GetBrokerById(Convert.ToInt32(id)));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
             }
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
+            return PageHelper.toJson(_brokerService.GetBrokerById(Convert.ToInt32(id)));
         }
 
 
 
        [System.Web.Http.HttpGet]
-        public HttpResponseMessage SearchBrokers(string pageindex)
+        public HttpResponseMessage SearchBrokers(string name = null,string phone=null, int page = 1, int pageSize = 10)
         {
             var brokerSearchCondition = new BrokerSearchCondition
             {
+               
+                 Brokername=name,
                 OrderBy = EnumBrokerSearchOrderBy.OrderById,
-                Page=Convert.ToInt32(pageindex),
-                PageCount=10
+                Page=Convert.ToInt32(page),
+                PageCount=10,
+                UserType=EnumUserType.经纪人
             };
-            return PageHelper.toJson(_brokerService.GetBrokersByCondition(brokerSearchCondition).ToList());
+           
+            var BrokersList = _brokerService.GetBrokersByCondition(brokerSearchCondition).Select(p => new
+            {
+                Id = p.Id,
+                Name =p.Brokername,
+                p.Realname,
+                p.Regtime,
+                p.Phone,
+                LevelName=p.Level.Name,
+
+            }).ToList();
+            var brokerListCount = _brokerService.GetBrokerCount(brokerSearchCondition);
+            return PageHelper.toJson(new { List = BrokersList, Condition = brokerSearchCondition, totalCount = brokerListCount });
         }
 
         /// <summary>

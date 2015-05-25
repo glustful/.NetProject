@@ -1,73 +1,15 @@
-*{
-    padding:0;
-    margin:0;
-    list-style: none;
-    border: none;
-}
-body{
-    font-family: 'microsoft yahei';
-    font-size: 16px;
 
-}
-a {
-    text-decoration: none;
-}
-.clear{
-    clear:both;
-    height: 0;
-    overflow: hidden;
-}
-.cf:after{
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: "";
-    clear: both;
-    height: 0;
-}
-
-.fl{
-    float: left;
-}
-.window{
-    width: 640px;
-    height: 1008px;
-    margin: 0 auto;
-}
-.bg{
-    background: #fff;
-}
-.header{
-    height: 67px;
-    line-height: 67px;
-    background:#fc3b00;
-
-}
-.header a{
-    color: #fff;
-    font-size: 18px;
-    display: inline-block;
-    margin-left:19px;
-    padding-left:19px;
-    background: url("../image/redPaper/icon1_03.png") no-repeat 0 center;
-}
-h1{
-    font-weight: normal;
-    color:#fff;
-    margin-left: 270px;
-    font-size: 22px;
-}
-.content{
+.content-redPaper-1{
     text-align: center;
 }
-h2{
+.dj{
     font-size:40px;
     color: #525252;
     padding-top:48px;
 }
-h3{
+.yg{
     font-size: 24px;
-    color: #979797;
+    color: #525252;
     padding-top:22px;
     font-weight: normal;
 }
@@ -84,54 +26,31 @@ h3{
     box-shadow: 0 3px 10px #000;
 }
 .qiang{
-    padding:100px 0;
-}
-.footer {
-    background: #f13800;
-}
-.footer span{
-    display: inline-block;
-    text-align: center;
-    width:150px;
-    padding:70px 0 17px 0;
-    color: #fff;
-    font-size: 20px;
-}
-.act{
-    background: url("../image/redPaper/活动1.png") no-repeat center 20px;
-    background-size: 35px 40px;
-}
-.house{
-    background: url("../image/redPaper/房源库1.png") no-repeat center 20px;
-    background-size: 35px 40px;
-}
-.agent{
-    background: url("../image/redPaper/经纪人专区1.png") no-repeat center 20px;
-    background-size: 35px 40px;
-}
-.personal{
-    background: url("../image/redPaper/个人中心1.png") no-repeat center 20px;
-    background-size: 35px 40px;
+    padding:75px 0;
 }
 
-h3{
-    color: #525252;
-    font-size: 3.5em;
-    padding-top:103px;
+.content-redPaper-2{
+    text-align: center;
+    background-color: #fff;
 }
- .content p{
-    padding-top:93px;
+.congratulations{
+    color: #525252;
+    font-size: 3em;
+    padding-top:80px;
+}
+ .content-redPaper-2 .qd{
+    padding-top:60px;
     color: #525252;
     font-size: 3em;
     font-weight: normal;
 }
 .money{
-    padding-top:45px;
+    padding-top:20px;
     font-size: 6em;
     color: #ff0000;
 }
 .red{
-    padding-top:55px;
+    padding-top:20px;
     color: #ff0000;
     font-size:3em;
 }
@@ -145,39 +64,39 @@ h3{
     box-shadow: 0 3px 10px #000;
 }
 .back{
-    padding:120px 0 168px 0;
+    padding:100px 0 0 0;
 }
-.hd{
-    text-align: center;
-    background-color: #4db132;
-    padding:20px 35px 44px;
-}
-.hd p{
-    margin-top: 10px;
-    color: #fff;
-    font-size:24px;
-}
-.main .check{
-    padding:28px 0 0 20px;
-    color: #c9c9cc;
-    font-size: 18px;
-}
-.btn{
-   padding-top:47px;
-    text-align: center;
-}
-.btn button{
-    width: 610px;
-    height: 65px;
-    background-color:#04be02;
-    font-size: 24px;
-    color: #fff;
-    border-radius: 8px;
-}
-.tz{
-    color: #525252;
-    font-size: 24px;
-    font-weight: normal;
-    padding-top:95px;
-    text-align: center;
-}
+/*.hd{*/
+    /*text-align: center;*/
+    /*background-color: #4db132;*/
+    /*padding:20px 35px 44px;*/
+/*}*/
+/*.hd p{*/
+    /*margin-top: 10px;*/
+    /*color: #fff;*/
+    /*font-size:24px;*/
+/*}*/
+/*.main .check{*/
+    /*padding:28px 0 0 20px;*/
+    /*color: #c9c9cc;*/
+    /*font-size: 18px;*/
+/*}*/
+/*.btn{*/
+   /*padding-top:47px;*/
+    /*text-align: center;*/
+/*}*/
+/*.btn button{*/
+    /*width: 610px;*/
+    /*height: 65px;*/
+    /*background-color:#04be02;*/
+    /*font-size: 24px;*/
+    /*color: #fff;*/
+    /*border-radius: 8px;*/
+/*}*/
+/*.tz{*/
+    /*color: #525252;*/
+    /*font-size: 24px;*/
+    /*font-weight: normal;*/
+    /*padding-top:95px;*/
+    /*text-align: center;*/
+/*}*/

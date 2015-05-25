@@ -7,10 +7,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
+
+   [EnableCors("*", "*", "*")]
     /// <summary>
     /// 银行卡管理  李洪亮  2015-05-05
     /// </summary>
@@ -31,19 +34,32 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="userID">经纪人ID</param>
         /// <returns></returns>
-        public HttpResponseMessage SearchBankCardsByUserID(string userID)
+          [System.Web.Http.HttpGet]
+        public HttpResponseMessage SearchBankCardsByUserID(string userId = null, int page = 1, int pageSize = 10)
         {
-            if(string.IsNullOrEmpty(userID) || !PageHelper.ValidateNumber(userID))
+            if (string.IsNullOrEmpty(userId) || !PageHelper.ValidateNumber(userId))
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！")); 
             }
 
            var bankcardSearchCon=new BankCardSearchCondition
            {
-                 Brokers=_brokerService.GetBrokerById(Convert.ToInt32(userID))
+                Brokers=_brokerService.GetBrokerById(Convert.ToInt32(userId)),
+                Page = Convert.ToInt32(page),
+                PageCount = pageSize
            };
-           return PageHelper.toJson(
-           _bankcardService.GetBankCardsByCondition(bankcardSearchCon).ToList());
+
+           var bankList = _bankcardService.GetBankCardsByCondition(bankcardSearchCon).Select(p => new
+           {
+               Id = p.Id,
+               bankName = p.Bank.Codeid,
+               p.Num,             
+               p.Addtime
+
+           }).ToList();
+           var bankListCount = _bankcardService.GetBankCardCount(bankcardSearchCon);
+           return PageHelper.toJson(new { List = bankList, Condition = bankcardSearchCon, totalCount = bankListCount });
+          
         }
 
 
