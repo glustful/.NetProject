@@ -1,7 +1,4 @@
 /*设置*/
-body{
-    background-color: #e7e7e7;
-}
 .set_person{
     width: 640px;
     background-color: #ffffff;
@@ -22,8 +19,6 @@ body{
     color: #aeacac;
     font-size: 16px;
 }
-
-
 /*安全设置*/
 .security_content{
     margin: 20px 55px 0 20px;
