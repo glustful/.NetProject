@@ -17,18 +17,22 @@ namespace Zerg.Models.CRM
         /// 失败惩罚ID
         /// </summary>
         public int TaskPunishmentId { get; set; }
+        public string TaskPunishment { get; set; }
         /// <summary>
         /// 发放奖励ID
         /// </summary>
         public int TaskAwardId { get; set; }
+        public string awardName { get; set; }
         /// <summary>
         /// 任务目标ID
         /// </summary>
         public int TaskTagId { get; set; }
+        public string tagName { get; set; }
         /// <summary>
         /// 任务类型ID
         /// </summary>
         public int TaskTypeId { get; set; }
+        public string TaskType { get; set; }
         /// <summary>
         /// 任务名称
         /// </summary>

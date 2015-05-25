@@ -1,53 +1,26 @@
 <!--黄秀宇 任务列表  2015.05.12
-<<<<<<< HEAD
-自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />-->
-
-<div id="divTaskA"class="marginL">
-    <div class="taska bord">
-        <p style="height:30px"></p>
-        <p >任务名称<input class="ptaska  bordhtml form-control" type="text"  placeholder="任务名称"></p>
-        <p>结束时间<input class="ptaska bordhtml form-control" type="text"  placeholder="结束时间"></p>
-        <p>任务类型<select class="ptaska bordhtml form-control"  name="" >
-            <option value="1">任务类型</option>
-        </select></p>
-        <p>任务目标<select class="ptaska bordhtml form-control" name="" >
-            <option value="1">任务目标</option>
-        </select></p>
-        <p>任务奖励<select class="ptaska bordhtml form-control" name=""  >
-            <option value="1">任务奖励</option>
-        </select></p>
-        <p>失败惩罚<select class="ptaska bordhtml form-control" name=""  >
-            <option value="1">失败惩罚</option>
-        </select></p>
-        <p>任务描述
-            <textarea style="height:100px;" class="ptaska bordhtml form-control" type="text"
-                      placeholder="任务描述"></textarea></p>
-
-        <div style="text-align:center;width:500px;margin-left:150px;margin-top:30px;"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">发布任务</button>
-=======
 自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />
 angular.js路径app/scrips/controller/CRM/taskList.js-->
 
 <div id="divTaskA"class="marginL"ng-controller="taskaddcontroller" >
     <div class="taska bord">
         <p style="height:30px"></p>
-        <p >任务名称<input maxlength="15"  class="ptaska  bordhtml form-control"ng-model="addcondition.Taskname" type="text"  placeholder="任务名称"></p>
+        <p >任务名称<input maxlength="15"ng-click="delTipsName()"  class="ptaska  bordhtml form-control"ng-model="addcondition.Taskname" type="text"  placeholder="任务名称"></p>
         <p style="margin-left:18px;" >结束时间
 
-            <input datepicker-popup="{{format}}" date-format="{{format}}"is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-model="addcondition.Endtime" class="ptaska bordhtml form-control" type="text"  placeholder="结束时间">
-
+            <input ng-click="delTipsTime()" datepicker-popup="{{format}}" date-format="{{format}}"is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-model="addcondition.Endtime" class="ptaska bordhtml form-control" type="text" >
             <span style=" margin-left:-21px;">   <button  type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
             </span> </p>
-        <p>任务类型<select ng-model="addcondition.TaskTypeId" class="ptaska bordhtml form-control"  name="" >
+        <p>任务类型<select ng-click="delTipsType()" ng-model="addcondition.TaskTypeId" class="ptaska bordhtml form-control"  name="" >
             <option ng-repeat="item in taskType"  value={{item.Id}}>{{item.Name}}</option>
         </select></p>
-        <p>任务目标<select ng-model="addcondition.TaskTagId" class="ptaska bordhtml form-control" name="" >
+        <p>任务目标<select ng-click="delTipsTag()" ng-model="addcondition.TaskTagId" class="ptaska bordhtml form-control" name="" >
             <option ng-repeat="item in tasktag" value={{item.Id}}>{{item.Name}}</option>
         </select></p>
-        <p>任务奖励<select ng-model="addcondition.TaskAwardId" class="ptaska bordhtml form-control" name=""  >
+        <p>任务奖励<select ng-click="delTipsAward()" ng-model="addcondition.TaskAwardId" class="ptaska bordhtml form-control" name=""  >
             <option ng-repeat="item in taskaward"value={{item.Id}}>{{item.Name}}</option>
         </select></p>
-        <p>失败惩罚<select ng-model="addcondition.TaskPunishmentId"class="ptaska bordhtml form-control" name=""  >
+        <p>失败惩罚<select ng-click="delTipsPunish()" ng-model="addcondition.TaskPunishmentId"class="ptaska bordhtml form-control" name=""  >
             <option ng-repeat="item in taskpunishment" value={{item.Id}}>{{item.Name}}</option>
         </select></p>
         <p>任务描述
@@ -55,9 +28,10 @@ angular.js路径app/scrips/controller/CRM/taskList.js-->
                       placeholder="任务描述"></textarea></p>
 
         <div style="text-align:center;width:500px;margin-left:150px;margin-top:30px;"><button md-ink-ripple=""ng-click="gettaskRe()" class="md-btn md-raised m-b btn-fw blue">发布任务</button>
->>>>>>> 4af4dcba0a34a626067e81c22df3a71fdae1d511
-            <a href="#page/CRM/TaskList/index">  <button md-ink-ripple=""onclick="taskAble()" style="margin-left:40px;" class="md-btn md-raised m-b btn-fw blue">返回</button></a>
+            <a href="#page/CRM/TaskList/index">  <button md-ink-ripple="" style="margin-left:40px;" class="md-btn md-raised m-b btn-fw blue">返回</button></a>
         </div>
         <p style="height:80px"></p>
     </div>
-</div>
+
+<div class="vertical positionTask" >
+  {{addcondition.warm}}</div></div>

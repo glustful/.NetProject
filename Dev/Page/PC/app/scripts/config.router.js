@@ -606,14 +606,12 @@ angular.module('app')
             .state('page.CRM.BusMan.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/BusMan/index.html',
-                  data: { title: '商家管理' },
-                resolve:load('scripts/controllers/CRM/busman.js')
+                  data: { title: '商家管理' }
             })
             .state('page.CRM.BusMan.detailed', {
-              url: '/detailed?id',
+              url: '/detailed',
               templateUrl: 'views/pages/CRM/BusMan/detailed.html',
-                  data: { title: '详情页' },
-                resolve:load('scripts/controllers/CRM/busman.js')
+                  data: { title: '详情页' }
             })
 
               .state('page.CRM.AdmMan', {
@@ -623,14 +621,12 @@ angular.module('app')
             .state('page.CRM.AdmMan.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/AdmMan/index.html',
-                  data: { title: 'Admin管理' },
-                resolve:load('scripts/controllers/CRM/admin.js')
+                  data: { title: 'Admin管理' }
             })
             .state('page.CRM.AdmMan.detailed', {
-              url: '/detailed?userid',
+              url: '/detailed',
               templateUrl: 'views/pages/CRM/AdmMan/detailed.html',
-                  data: { title: '详情页' },
-                resolve:load('scripts/controllers/CRM/admin.js')
+                  data: { title: '详情页' }
             })
 
               .state('page.CRM.CW', {
@@ -640,14 +636,12 @@ angular.module('app')
             .state('page.CRM.CW.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/CW/index.html',
-                  data: { title: '财务账号管理' },
-                resolve:load('scripts/controllers/CRM/cw.js')
+                  data: { title: '财务账号管理' }
             })
             .state('page.CRM.CW.detailed', {
-              url: '/detailed?userid',
+              url: '/detailed',
               templateUrl: 'views/pages/CRM/CW/detailed.html',
-                  data: { title: '详情页' },
-                resolve:load('scripts/controllers/CRM/cw.js')
+                  data: { title: '详情页' }
             })
 
               .state('page.CRM.ZC', {
@@ -657,14 +651,12 @@ angular.module('app')
             .state('page.CRM.ZC.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/ZC/index.html',
-                  data: { title: '驻场秘书账号管理' },
-                resolve:load('scripts/controllers/CRM/zc.js')
+                  data: { title: '驻场秘书账号管理' }
             })
             .state('page.CRM.ZC.detailed', {
-              url: '/detailed?userid',
+              url: '/detailed',
               templateUrl: 'views/pages/CRM/ZC/detailed.html',
-                  data: { title: '详情页' },
-                resolve:load('scripts/controllers/CRM/zc.js')
+                  data: { title: '详情页' }
             })
 
               .state('page.CRM.DK', {
@@ -674,14 +666,12 @@ angular.module('app')
             .state('page.CRM.DK.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/DK/index.html',
-                  data: { title: '带客人员账号管理' },
-                resolve:load('scripts/controllers/CRM/dk.js')
+                  data: { title: '带客人员账号管理' }
             })
             .state('page.CRM.DK.detailed', {
-              url: '/detailed?userid',
+              url: '/detailed',
               templateUrl: 'views/pages/CRM/DK/detailed.html',
-                  data: { title: '详情页' },
-                resolve:load('scripts/controllers/CRM/dk.js')
+                  data: { title: '详情页' }
             })
 
               .state('page.CRM.WaitCheck', {
@@ -786,6 +776,20 @@ angular.module('app')
               templateUrl: 'views/pages/CRM/success/detailed.html',
                   data: { title: '详情页' },
                 controller:"SuccessDetialController",
+                resolve:load('scripts/controllers/CRM/Success.js')
+            })
+            .state('page.CRM.success.BRECPay', {
+                url: '/BRECPay?id',
+                templateUrl: 'views/pages/CRM/success/BRECPay.html',
+                data: { title: '洽谈成功打款' },
+                controller:"BRECPayController",
+                resolve:load('scripts/controllers/CRM/Success.js')
+            })
+            .state('page.CRM.success.BLPay', {
+                url: '/BLPay?id',
+                templateUrl: 'views/pages/CRM/success/BLPay.html',
+                data: { title: '上访成功打款' },
+                controller:"BLPayController",
                 resolve:load('scripts/controllers/CRM/Success.js')
             })
 
@@ -937,20 +941,17 @@ angular.module('app')
             .state('page.CRM.TaskList.index', {
                 url: '/index',
                 templateUrl: 'views/pages/CRM/TaskList/index.html',
+
                 data : { title: '任务主页' },
-                controller:'taskIndexController',
-                resolve:load(['scripts/controllers/taskList.js',
-                    'scripts/filters/toDate.js'])
+
+                resolve:load(['scripts/controllers/CRM/taskList.js',
+          'scripts/filters/toDate.js'])
             })
-
-
-
             .state('page.CRM.TaskList.taskList', {
                 url: '/taskList?id',
                 templateUrl: 'views/pages/CRM/TaskList/taskList.html',
                 data : { title: '任务列表' },
-                resolve:load(['scripts/controllers/CRM/taskList.js',
-                    'scripts/filters/toDate.js'])
+                resolve:load(['scripts/controllers/CRM/taskList.js'])
             })
             .state('page.CRM.TaskList.createTask', {
                 url: '/createTask?taskModel',
@@ -962,8 +963,8 @@ angular.module('app')
                 url: '/taskDetail?id',
                 templateUrl: 'views/pages/CRM/TaskList/taskDetail.html',
                 data : { title: '任务详情' },
-                resolve:load(['scripts/controllers/CRM/taskList.js',
-                    'scripts/filters/toDate.js'])
+                resolve:load(['scripts/controllers/CRM/createTask.js'])
+
             })
             .state('page.CRM.TaskConfigure',{
                 url:'/TaskConfigure',
@@ -975,7 +976,7 @@ angular.module('app')
                 templateUrl: 'views/pages/CRM/TaskConfigure/index.html',
 
                 data : { title: '任务配置' },
-                resolve:load([ 'scripts/filters/toDate.js',
+                resolve:load([
                     'scripts/controllers/CRM/taskConfig.js'])
 
             })

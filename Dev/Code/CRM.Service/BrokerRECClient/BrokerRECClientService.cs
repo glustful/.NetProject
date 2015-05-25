@@ -181,6 +181,7 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Skip((condition.Page.Value - 1)*condition.PageCount.Value).Take(condition.PageCount.Value);
                 }
+
 				return query;
 			}
 			catch(Exception e)

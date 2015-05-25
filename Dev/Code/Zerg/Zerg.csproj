@@ -141,6 +141,7 @@
     <Compile Include="Controllers\CRM\AdminInfoController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\CRM\AdminPayController.cs" />
     <Compile Include="Controllers\CRM\BrokeAccountController.cs" />
     <Compile Include="Controllers\CRM\AdminRecomController.cs">
       <SubType>Code</SubType>
@@ -182,6 +183,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CRM\AdminPayModel.cs" />
     <Compile Include="Models\CRM\AdminRecomModel.cs">
       <SubType>Code</SubType>
     </Compile>

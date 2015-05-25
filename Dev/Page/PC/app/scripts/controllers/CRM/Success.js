@@ -57,3 +57,65 @@ angular.module("app").controller('SuccessDetialController',[
         };
     }
 ]);
+
+//详细信息
+angular.module("app").controller('BRECPayController',[
+    '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+        //获取详细信息
+//        $http.get(SETTING.ApiUrl + '/AdminPay/GetAuditDetail/' + $stateParams.id).success(function (data) {
+//            $scope.ARDetialModel = data;
+//            console.log(data);
+//        });
+        $scope.PayInfo = {
+            Id:$stateParams.id,
+            Name:"",
+            Statusname:"洽谈成功",
+            Describe:"",
+            Amount:""
+        };
+
+        //变更用户状态
+        $scope.SetPay=function(){
+            $http.post(SETTING.ApiUrl + '/AdminPay/SetPay',$scope.PayInfo,{
+                'withCredentials':true
+            }).success(function(data){
+                if(data.Status){
+                    console.log(data.Msg);
+                }else{
+                    console.log(data.Msg);
+                }
+            });
+        };
+    }
+]);
+
+//详细信息
+angular.module("app").controller('BLPayController',[
+    '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+        //获取详细信息
+//        $http.get(SETTING.ApiUrl + '/AdminPay/GetAuditDetail/' + $stateParams.id).success(function (data) {
+//            $scope.ARDetialModel = data;
+//            console.log(data);
+//        });
+        $scope.PayInfo = {
+            Id:$stateParams.id,
+            Name:"",
+            Statusname:"上访成功",
+            Describe:"",
+            Amount:""
+        };
+
+        //变更用户状态
+        $scope.SetPay=function(){
+            $http.post(SETTING.ApiUrl + '/AdminPay/SetPay',$scope.PayInfo,{
+                'withCredentials':true
+            }).success(function(data){
+                if(data.Status){
+                    console.log(data.Msg);
+                }else{
+                    console.log(data.Msg);
+                }
+            });
+        };
+    }
+]);

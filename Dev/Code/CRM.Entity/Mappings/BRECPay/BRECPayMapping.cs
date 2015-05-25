@@ -13,7 +13,7 @@ namespace CRM.Entity.Mappings.BRECPay
 
 			HasOptional(c =>c.BrokerRECClient);
 			Property(c => c.Name).HasColumnType("varchar").HasMaxLength(256).IsOptional();
-			Property(c => c.Statusname).HasColumnType("varchar").HasMaxLength(50);
+            Property(c => c.Statusname).HasColumnType("int");
 			Property(c => c.Describe).HasColumnType("varchar").HasMaxLength(256);
 			Property(c => c.Amount).HasColumnType("decimal");
 			Property(c => c.Accountantid).HasColumnType("int");
@@ -21,6 +21,7 @@ namespace CRM.Entity.Mappings.BRECPay
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upuser).HasColumnType("int");
 			Property(c => c.Uptime).HasColumnType("datetime");
+            Property(c => c.BankCard).HasColumnType("int");
 		}
 	}
 }

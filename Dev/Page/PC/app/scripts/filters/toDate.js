@@ -6,9 +6,7 @@ angular.module('app').filter('toDate',function(){
     return function(jsonDate){
         //获取毫秒数
         var oldtime= jsonDate.replace(/[^0-9]/ig,"");
-<<<<<<< HEAD
-        //转成日期
-=======
+
        return oldtime;
        /* //转成日期
 >>>>>>> 4af4dcba0a34a626067e81c22df3a71fdae1d511
@@ -21,6 +19,6 @@ angular.module('app').filter('toDate',function(){
         return nntime;
 =======
         return nntime;*/
->>>>>>> 4af4dcba0a34a626067e81c22df3a71fdae1d511
+
     }
 });
