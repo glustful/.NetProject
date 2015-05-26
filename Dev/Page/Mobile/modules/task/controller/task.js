@@ -12,7 +12,7 @@ app.controller('taskController',['$http','$scope',function($http,$scope) {
     //查询任务
     var getTaskList  = function() {
         $http.get(SETTING.ApiUrl+'/Task/TaskListMobile/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
-            console.log(data);  
+            console.log(data);
             if(data.totalCount>0){
 
                 $scope.list = data.list;
