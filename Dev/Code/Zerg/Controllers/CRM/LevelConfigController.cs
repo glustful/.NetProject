@@ -9,7 +9,7 @@ using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
-    [EnableCors("*", "*", "*")]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 等级配置设置
     /// </summary>

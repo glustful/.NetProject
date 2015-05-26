@@ -5,41 +5,40 @@
     </li>
 </ul>
 <div class="tab-content p b-a no-b-t bg-white m-b-md" style="height: 500px">
-    <div role="tabpanel" class=" animated fadeIn" id="tab1">
+
         <div class="md-list-item">
             <div class="md-list-item-left">
-                <img src="images/a0.jpg" class="w-full circle">
+                <img src="{{BusmanModel.Headphoto}}" class="w-full circle">
             </div>
-            <div class="md-list-item-content details">
-                <div><small>都是望角</small><small>{{BusmanModel.Merchantname}}</small></div>
-                <div><small>注册账号</small><small>张杰</small></div>
-                <div><small>积分总额</small><small>800元</small></div>
+            <div class="md-list-item-content details"  >
+                <div><small>{{BusmanModel.Nickname}}</small><small> {{BusmanModel.Brokername}}</small></div>
+                <div><small>{{BusmanModel.Realname}}</small><small>{{BusmanModel.Sexy}}</small></div>
+                <div><small>积分总额：{{BrokerModel.Totalpoints}}</small><small>账户余额：{{BusmanModel.Amount}}</small></div>
             </div>
         </div>
         <table class="table">
 
 
             <tr>
-                <td>电话</td>
-                <td>QQ</td>
-                <td>邮箱</td>
+                <td>电话：{{BusmanModel.Phone}}</td>
+                <td>QQ：{{BusmanModel.Qq}}</td>
+                <td>邮箱：{{BusmanModel.Email}}</td>
             </tr>
             <tr>
-                <td>身份证</td>
-                <td>性别</td>
-                <td>注册时间</td>
+                <td>身份证：{{BusmanModel.Sfz}}</td>
+                <td>性别：{{BusmanModel.Sexy}}</td>
+                <td>注册时间：{{BusmanModel.Regtime}}</td>
 
             </tr>
             <tr>
-                <td>用户类型</td>
-                <td>状态</td>
-                <td>所属合伙人</td>
+                <td>用户类型{{BusmanModel.Usertype}}</td>
+                <td>状态：{{BusmanModel.State}}</td>
+                <td>所属合伙人：{{BusmanModel.PartnersId}}</td>
 
             </tr>
 
         </table>
-        <div>详细地址：昆明市盘龙区穿金路金尚国际A座</div>
-
-    </div>
+        <div>{{BusmanModel.Address}}</div>
 </div>
+
 </div>
