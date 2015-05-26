@@ -141,8 +141,7 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
         })
                 .state('app.task',{
             url:'/task',
-            templateUrl:'modules/task/view/task.html',
-            resolve: load(['../task.js'])
+            templateUrl:'modules/task/view/task.html'
 
         })
         .state('app.nominate',{
@@ -157,12 +156,24 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/credit_add',
             templateUrl:'modules/credit_add/view/credit_add.html'
         })
+<<<<<<< .mine
+}]);
+=======
+
+>>>>>>> .theirs
+
+
+<<<<<<< .mine
+
+
+
+=======
 }]);
 
 
+>>>>>>> .theirs
 
-
-
+<<<<<<< .mine
 //-----------------------end-------------------
 
 function load(srcs, callback) {
@@ -199,3 +210,41 @@ function load(srcs, callback) {
 
 
 
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> .theirs
