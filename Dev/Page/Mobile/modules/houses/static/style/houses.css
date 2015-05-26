@@ -70,52 +70,75 @@
     height: 1500px;
 }
 .content-houses .type-houses .hx1{
-    position: absolute;
+    width: 290px;
+    height: 426px;
+    position:absolute;
     top: 20px;
     left: 20px;
+    background-color: #fff;
 }
 .content-houses .type-houses .hx2{
+    width: 290px;
+    height: 741px;
     position: absolute;
     top: 20px;
     left: 330px;
+    background-color: #fff;
 }
 .content-houses .type-houses .hx3{
+    width: 290px;
+    height: 426px;
     position: absolute;
     top:468px;
     left: 20px;
+    background-color: #fff;
 }
 .content-houses .type-houses .hx4{
+    width: 290px;
+    height: 741px;
     position: absolute;
     top:780px;
     left: 330px;
+    background-color: #fff;
 }
 .content-houses .type-houses .hx5{
+    width: 290px;
+    height: 426px;
     position: absolute;
     top:915px;
     left: 20px;
+    background-color: #fff;
 }
 .content-houses .type-houses .ask{
-    position: absolute;
-    padding-left: 20px;
-    background:url("../image/houses/ask.png") no-repeat 0 center;
+
+    background:url("../image/houses/ask.png") no-repeat 90px center;
     font-size: 18px;
-    left: 100px;
+    text-align: center;
+    margin-top:20px;
+    border-top:1px solid #ebebeb;
+    line-height: 60px;
 }
 .content-houses .type-houses .ask a{
     color: #f13800;
 }
-.content-houses .type-houses .hx1 .ask{
-    top: 385px;
+
+.content-houses .type-houses .HX{
+    font-size:1.2em;
+    color: #000;
+    padding:20px 0 10px 25px;
+    font-weight:bold;
 }
-.content-houses .type-houses .hx2 .ask{
-    top:700px;
+.content-houses .type-houses .gift{
+    font-size: 0.95em;
+    color: #858585;
+    line-height: 20px;
+    padding-left: 25px;
 }
-.content-houses .type-houses .hx3 .ask{
-    top:380px;
+.content-houses .type-houses .JJ{
+    font-size: 1.2em;
+    color: #f13800;
+    padding:20px 0 15px 25px;
 }
-.content-houses .type-houses .hx4 .ask{
-    top:695px;
-}
-.content-houses .type-houses .hx5 .ask{
-    top:380px;
+.content-houses .type-houses .HXT{
+    padding-left: 25px;
 }

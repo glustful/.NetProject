@@ -139,6 +139,73 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/storeroom',
             templateUrl:'modules/storeroom/view/storeroom.html'
         })
+                .state('app.task',{
+            url:'/task',
+            templateUrl:'modules/task/view/task.html',
+            resolve: load(['../task.js'])
+
+        })
+        .state('app.nominate',{
+            url:'/nominate',
+            templateUrl:'modules/nominate/view/nominate.html'
+        })
+        .state('app.carry_client',{
+            url:'/carry_client',
+            templateUrl:'modules/carry_client/view/carry_client.html'
+        })
+        .state('app.credit_add',{
+            url:'/credit_add',
+            templateUrl:'modules/credit_add/view/credit_add.html'
+        })
+<<<<<<< .mine
+        .state('app.carry_client',{
+            url:'/carry_client',
+            templateUrl:'modules/carry_client/view/carry_client.html'
+        })
+        .state('app.credit_add',{
+            url:'/credit_add',
+            templateUrl:'modules/credit_add/view/credit_add.html'
+        })
+}]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
         .state('app.task',{
             url:'/task',
             templateUrl:'modules/task/view/task.html'
