@@ -1,9 +1,10 @@
 <div class="panel panel-card ng-scope" ng-controller="ContentIndexController">
     <div class="row form-control-2">
         <input type="text" class="form-control form-control-1   ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入搜索条件" ng-model="searchCondition.title"  tabindex="0" aria-required="true" aria-invalid="true">
-        <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">搜索<div class="md-ripple-container"></div></button>
+        <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo" ng-click="getList()">搜索<div class="md-ripple-container"></div></button>
         <a href="#page/CMS/content/create" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw orange-200"style="float:right;;margin-right: 50px;">新建<div class="md-ripple-container"></div></button></a>
     </div>
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
     <table class="table table-striped m-b-none tablet breakpoint footable-loaded footable" ui-jp="footable" data-filter="#filter" data-page-size="5">
         <thead>
         <tr>
@@ -19,8 +20,8 @@
             <td >{{item.Channel}}</td>
             <td >{{item.StatusString}}</td>
             <td >
-                <a ui-sref="page.CMS.content.edit({id: item.Id})"> <span class="label bg-success" title="Active">编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                <a href="#"> <span class="label yellow" title="Active">删除</span></a>
+                <a ui-sref="page.CMS.content.edit({id: item.Id})"> <span class="label bg-success">编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                <a href="#" ng-click="open(item.Id)"> <span class="label yellow">删除</span></a>
             </td>
         </tr>
         </tbody>
@@ -29,4 +30,7 @@
     <div colspan="5" class="text-center footable-visible">
         <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
     </div>
+    <script type="text/ng-template" id="myModalContent.html">
+        <div ng-include="'views/partials/modal.html'"></div>
+    </script>
 </div>

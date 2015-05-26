@@ -1,5 +1,5 @@
 ﻿angular.module("app").controller('ContentIndexController', [
-    '$http','$scope',function($http,$scope) {
+    '$http','$scope','$modal',function($http,$scope,$modal) {
         $scope.searchCondition = {
             title: '',
             page: 1,
@@ -7,17 +7,48 @@
         };
 
         var getContentList = function() {
-            $http.get(SETTING.ApiUrl+'/Content/Index',{params:$scope.searchCondition}).success(function(data){
+            $http.get(SETTING.ApiUrl+'/Content/Index',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
                 $scope.list = data.List;
-                $scope.searchCondition.title=data.Condtion.Title;
+                $scope.searchCondition.title=data.Condition.Title;
                 $scope.searchCondition.page=data.Condition.Page;
-                $scope.searchCondition.pageSize=data.Conditon.PageCount;
+                $scope.searchCondition.pageSize=data.Condition.PageCount;
                 $scope.searchCondition.totalPage=Math.ceil(data.TotalCount/data.Condition.PageCount);
                 $scope.totalCount = data.TotalCount;
             });
         };
         $scope.getList = getContentList;
         getContentList();
+
+        $scope.open=function(id){
+            $scope.selectedId=id;
+            var modalInstance=$modal.open({
+                templateUrl:'myModalContent.html',
+                controller:'ModalInstanceCtrl',
+                resolve:{
+                    msg:function(){
+                        return "你确定要删除吗？";
+                    }
+                }
+            });
+            modalInstance.result.then(function () {
+               $http.get(SETTING.ApiUrl+'/Content/Delete',{
+                   params:{
+                       id:$scope.selectedId
+                   },
+                   'withCredentials':true
+               }).success(function(data){
+                   if(data.Status){
+                       getContentList();
+                   }
+                   else{
+                           $scope.alerts=[{type:'danger',msg:data.Msg}];
+                       }
+               })
+            });
+        }
+        $scope.closeAlert = function(index) {
+            $scope.alerts.splice(index, 1);
+        };
     }
 ]);
 
@@ -37,7 +68,7 @@ angular.module("app").controller('ContentCreateController',['$http','$scope','$s
         AddUser:0
     };
 
-    $http.get(SETTING.ApiUrl + '/Channel/Index').success(function(data){
+    $http.get(SETTING.ApiUrl + '/Channel/Index',{'withCredentials':true}).success(function(data){
         $scope.ChannelList = data.List;
     });
 
@@ -48,16 +79,22 @@ angular.module("app").controller('ContentCreateController',['$http','$scope','$s
             if(data.Status){
                 $state.go("page.CMS.content.index");
             }
+            else{
+                $scope.alerts=[{type:'danger',msg:data.Msg}];
+            }
         });
     }
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
 }]);
 
-angular.module("app").controller('ContentEditController',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+angular.module("app").controller('ContentEditController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
     $http.get(SETTING.ApiUrl + '/Content/Detailed/' + $stateParams.id).success(function(data){
         $scope.ContentModel =data;
     });
 
-    $http.get(SETTING.ApiUrl + '/Channel/Index').success(function(data){
+    $http.get(SETTING.ApiUrl + '/Channel/Index',{'withCredentials':true}).success(function(data){
         $scope.ChannelList = data.List;
     });
 
@@ -68,6 +105,12 @@ angular.module("app").controller('ContentEditController',['$http','$scope','$sta
             if(data.Status){
                 $state.go("page.CMS.content.index");
             }
+            else{
+                $scope.alerts=[{type:'danger',msg:data.Msg}];
+            }
         });
     }
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
 }]);

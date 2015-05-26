@@ -10,7 +10,10 @@ angular.module("app").controller('adminIndexController', [
             pageSize: 10
         };
         $scope.getList  = function() {
-            $http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{params:$scope.searchCondition}).success(function(data){
+            $http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{
+                params:$scope.searchCondition,
+                'withCredentials':true
+            }).success(function(data){
                 $scope.list = data.List;
                 $scope.searchCondition.page = data.Condition.Page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -26,7 +29,9 @@ angular.module("app").controller('adminIndexController', [
 angular.module("app").controller('adminDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
 
     //个人信息
-    $http.get(SETTING.ApiUrl + '/BrokerInfo/GetBroker?id=' + $stateParams.userid).success(function(data){
+    $http.get(SETTING.ApiUrl + '/BrokerInfo/GetBroker?id=' + $stateParams.userid,{
+        'withCredentials':true
+    }).success(function(data){
         $scope.BrokerModel =data;
     });
 

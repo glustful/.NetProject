@@ -1,4 +1,5 @@
-﻿using CRM.Entity.Model;
+﻿using System.ComponentModel;
+using CRM.Entity.Model;
 using CRM.Service.Broker;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,11 @@ using Zerg.Common;
 namespace Zerg.Controllers.CRM
 {
 
-    [EnableCors("*", "*", "*")]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 经纪人管理  李洪亮  2015-05-04
     /// </summary>
+    [Description("经纪人管理")]
     public class BrokerInfoController : ApiController
     {
         private readonly IBrokerService _brokerService;
@@ -46,32 +48,46 @@ namespace Zerg.Controllers.CRM
         }
 
 
-
+        /// <summary>
+        /// 会员列表查询操作
+        /// </summary>
+        /// <param name="userType"></param>
+        /// <param name="name"></param>
+        /// <param name="phone"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
        [System.Web.Http.HttpGet]
-        public HttpResponseMessage SearchBrokers(string name = null,string phone=null, int page = 1, int pageSize = 10)
+        public HttpResponseMessage SearchBrokers(EnumUserType userType,int? phone, string name = null,  int page = 1, int pageSize = 10)
         {
+            //var phones = new int[1];
+
             var brokerSearchCondition = new BrokerSearchCondition
             {
-               
-                 Brokername=name,
+                Brokername=name,
+                //Phones=phones,
                 OrderBy = EnumBrokerSearchOrderBy.OrderById,
                 Page=Convert.ToInt32(page),
                 PageCount=10,
-                UserType=EnumUserType.经纪人
+                UserType = userType
             };
            
-            var BrokersList = _brokerService.GetBrokersByCondition(brokerSearchCondition).Select(p => new
+            var brokersList = _brokerService.GetBrokersByCondition(brokerSearchCondition).Select(p => new
             {
-                Id = p.Id,
-                Name =p.Brokername,
+                p.Id,
+                p.Nickname,
+                p.Brokername,
                 p.Realname,
-                p.Regtime,
                 p.Phone,
-                LevelName=p.Level.Name,
+                p.Sfz,
+                p.Amount,
+                p.Agentlevel,
+                p.Regtime,
+                p.Headphoto
 
             }).ToList();
             var brokerListCount = _brokerService.GetBrokerCount(brokerSearchCondition);
-            return PageHelper.toJson(new { List = BrokersList, Condition = brokerSearchCondition, totalCount = brokerListCount });
+            return PageHelper.toJson(new { List = brokersList, Condition = brokerSearchCondition, totalCount = brokerListCount });
         }
 
         /// <summary>

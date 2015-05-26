@@ -7,12 +7,11 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Zerg.Common;
-using Webdiyer.WebControls.Mvc;
 using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.CRM
 {
-   [EnableCors("*", "*", "*")]
+   [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 等级设置
     /// </summary>
@@ -32,22 +31,16 @@ namespace Zerg.Controllers.CRM
 
 
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage SearchLevel(string name = null, int page = 1, int pageSize = 10)
+        public HttpResponseMessage SearchLevel(string name, int page = 1, int pageSize = 10)
         {
             var leSearchCon = new LevelSearchCondition
             {   
                 Name=name,
-                Page = Convert.ToInt32(page),
+                Page =page,
                 PageCount = pageSize
             };
-            var levelList = _levelService.GetLevelsByCondition(leSearchCon).Select(p => new { 
-              Id=p.Id,
-              Name=p.Name,
-               p.Describe,
-               p.Url,
-               p.Addtime
+            var levelList = _levelService.GetLevelsByCondition(leSearchCon).ToList();
 
-            }).ToList();
             var levelListCount = _levelService.GetLevelCount(leSearchCon);
             return PageHelper.toJson(new { List = levelList, Condition = leSearchCon, totalCount = levelListCount });
           

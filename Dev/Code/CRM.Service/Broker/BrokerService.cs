@@ -195,6 +195,7 @@ namespace CRM.Service.Broker
 				{
 					query = query.OrderBy(q=>q.Id);
 				}
+
                 if (condition.UserType.HasValue)
                 {
                     query = query.Where(c => c.Usertype == condition.UserType);

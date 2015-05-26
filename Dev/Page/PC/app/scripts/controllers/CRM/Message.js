@@ -68,7 +68,10 @@ angular.module("app").controller('MessageSeachController', ['$http', '$scope', f
 
     // 检索
     var getData = function () {
-        $http.get(SETTING.ApiUrl + '/MessageDetail/SearchMessageDetail', { params: $scope.searchCondition }).success(function (data) {
+        $http.get(SETTING.ApiUrl + '/MessageDetail/SearchMessageDetail', {
+            params: $scope.searchCondition,
+            'withCredentials':true
+        }).success(function (data) {
             $scope.list = data;
         });
     };
@@ -112,7 +115,10 @@ angular.module("app").controller('MessageConfigController', ['$http', '$scope', 
     };
 
     var getMessageConfig = function () {
-        $http.get(SETTING.ApiUrl + '/MessageConfig/SearchMessageConfig', { params: $scope.SeachMessageConfigCondition }).success(function (data) {
+        $http.get(SETTING.ApiUrl + '/MessageConfig/SearchMessageConfig', {
+            params: $scope.SeachMessageConfigCondition ,
+            'withCredentials':true
+        }).success(function (data) {
             $scope.list = data;
         });
     };

@@ -1,4 +1,4 @@
-<div ng-controller="adminIndexController">
+
     <div class="row" >
         <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入经纪人名"  ng-model="searchCondition.name"   required="" tabindex="0" aria-required="true" aria-invalid="true">
         <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入电话号码" ng-model="searchCondition.phone" required="" tabindex="0" aria-required="true" aria-invalid="true">
@@ -20,13 +20,13 @@
                     <img src="images/a0.jpg" class="w-full circle">
                 </div>
                 <div class="information">
-                    <p><span>昵称：<small class="small">{{item.Name}}</small></span><span>姓名：<small>{{item.Realname}}</small></span><span>手机:<small>{{item.Phone}}</small></span></p>
-                    <p><span>身份证：<small>530129197006040051</small></span><span>余额：<small>￥900.00</small></span><span>等级：<small>白银</small></span> </p>
+                    <p><span>昵称：<small class="small">{{item.Nickname}}</small></span><span>姓名：<small>{{item.Realname}}</small></span><span>手机:<small>{{item.Phone}}</small></span></p>
+                    <p><span>身份证：<small>{{item.Sfz}}</small></span><span>余额：<small>{{item.Amount}}</small></span><span>等级：<small>{{item.Agentlevel}}</small></span> </p>
                 </div>
             </td>
             <td><time>2015年4月30日</time></td>
             <td>
-                <a href="#/page/CRM/AdmMan/detailed?userid={{item.Id}}" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">详情</button></a>
+                <a href="#/page/CRM/AdmMan/detailed?id={{item.Id}}" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">详情</button></a>
                 <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw yellow">删除</button>
                 <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">注销</button>
             </td>
@@ -39,4 +39,3 @@
         <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
 
     </div>
-</div>

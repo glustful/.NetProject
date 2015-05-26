@@ -1,0 +1,49 @@
+<div class="p-md" ng-app="App" ng-controller="ProductController">
+    <div>
+        <button ui-sref="page.Trading.product.createProduct" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加商品
+        </button>
+        <div class="line b-b m-v-md"></div>
+        <div class="alert alert-info" align="center">{{output}}</div>
+    </div>
+    <div class="panel panel-default" align="center">
+        <div class="panel-heading">商品列表</div>
+        <table st-table="rowCollectionPage" class="table table-striped" align="center">
+            <thead>
+            <tr>
+                <th align="center">缩略图</th>
+                <th align="center">名称</th>
+                <th align="center">价格</th>
+                <th align="center">推荐佣金</th>
+                <th align="center">成交佣金</th>
+                <th align="center">项目</th>
+                <th align="center">库存</th>
+                <th align="center">添加时间</th>
+                <th align="center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in rowCollectionProduct">
+                <td align="center"><img width="40" height="40" src={{row.Productimg}}></td>
+                <td align="center">{{row.Productname }}</td>
+                <td align="center">{{row.Price }}</td>
+                <td align="center">{{row.Commission }}</td>
+                <td align="center">{{row.Dealcommission }}</td>
+                <td align="center">{{row.ProductBrand.Bname }}</td>
+                <td align="center">{{row.Stockrule }}</td>
+                <td align="center">{{row.Addtime }}</td>
+                <td align="center">
+                    <button ng-click='delProduct(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5" class="text-center">
+                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7" class="no-margin"></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

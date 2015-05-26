@@ -13,7 +13,7 @@ using Zerg.Common;
 namespace Zerg.Controllers.CRM
 {
 
-   [EnableCors("*", "*", "*")]
+   [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 银行卡管理  李洪亮  2015-05-05
     /// </summary>

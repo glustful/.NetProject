@@ -1,0 +1,95 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    background-color: #eeeeee;
+    font-size: 18px;
+    font-family: 'microsoft yahei';
+    color: #848484;
+}
+a{
+    text-decoration: none;
+}
+.fp a{
+    color: #848484;
+}
+.register a{
+    color: #fc3b00;
+}
+.window {
+    width: 640px;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+.content {
+    float: left;
+    margin-left: 42px;
+    margin-right: 42px;
+    margin-top: 53px;
+    margin-bottom: 0;
+}
+.puser{
+    padding: 20px;
+    background-color: #fc3b00;
+    font-size: 20px;
+    color: #ffffff;
+    text-align:center;
+}
+.ublank{
+    height: 48px;
+    line-height: 48px;
+    background: url("../img/tex.png");
+}
+
+#user{
+    width: 466px;
+    height: 46px;
+    font-size: 18px;
+    border: 1px solid #eeeeee;
+}
+.ppassword{
+    margin-top: 28px;
+}
+.pblank{
+    height: 48px;
+    line-height: 48px;
+    background: url("../img/tex.png");
+}
+.user{
+    vertical-align: middle;
+}
+.password{
+    vertical-align: middle;
+}
+#password{
+    width: 466px;
+    height: 46px;
+    font-size: 18px;
+    border: 1px solid #eeeeee;
+}
+.rp{
+    margin-top: 40px;
+}
+#box{
+    width: 23px;
+    height: 23px;
+}
+.fp{
+    float: right;
+}
+.bt{
+    margin-top: 70px;
+    width: 512px;
+    height: 46px;
+    background-color: #fc3b00;
+    font-size: 20px;
+    color: #ffffff;
+    font-family:'microsoft yahei' ;
+}
+.register{
+    margin-top: 36px;
+    text-align: right;
+}

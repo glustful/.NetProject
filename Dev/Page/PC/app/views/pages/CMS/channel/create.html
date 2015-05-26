@@ -1,8 +1,10 @@
 <form name="form" id="form" ng-controller="ChannelCreateController" ng-submit="Create()">
     <div class="panel panel-default">
-
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
         <div class="panel-body revise">
-            <div class="bottom" ><label for="name">频道名称： </label> <input id="name" type="text" ng-model="ChannelModel.Name" name="Name"></div>
+            <div class="bottom" ><label for="name">频道名称： </label> <input id="name" type="text" ng-model="ChannelModel.Name" name="Name" required>
+                <span ng-show="form.Name.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+            </div>
             <!--<div class="bottom" ><label for="names">所属频道： </label>-->
                 <!--<select name="" id="names">-->
                     <!--<option value="">频道1</option>-->

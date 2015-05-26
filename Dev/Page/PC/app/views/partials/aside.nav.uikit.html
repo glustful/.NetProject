@@ -248,7 +248,7 @@
 
           <li ui-sref-active="active">
               <a md-ink-ripple ui-sref="page.CRM.configure.indexset">等级设置</a>
-          </li>
+        </li>
         <!--<li ui-sref-active="active">
           <a md-ink-ripple ui-sref="ui.map.vector">Vector Map</a>
         </li-->
@@ -345,7 +345,7 @@
         </span>
             <i class="pull-right up"><b class="badge no-bg">6</b></i>
             <i class="icon mdi-action-settings-input-svideo i-20"></i>
-            <span class="font-normal">信息管理</span>
+            <span class="font-normal">内容管理</span>
         </a>
         <ul class="nav nav-sub">
             <li ui-sref-active="active">
@@ -370,6 +370,23 @@
             <!--<li ui-sref-active="active">
               <a md-ink-ripple ui-sref="ui.map.vector">Vector Map</a>
             </li-->
+        </ul>
+    </li>
+    <li ui-sref-active="active">
+        <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+            <i class="icon mdi-action-settings-input-svideo i-20"></i>
+            <span class="font-normal">用户管理</span>
+        </a>
+        <ul class="nav nav-sub">
+            <li ui-sref-active="active">
+                <a md-ink-ripple ui-sref="page.UC.index">用户列表</a>
+            </li>
+            <li ui-sref-active="active">
+                <a md-ink-ripple ui-sref="page.UC.role.index">角色管理</a>
+            </li>
         </ul>
     </li>
     <!--<li>
@@ -412,5 +429,60 @@
         <span>Document</span>
       </a>
     </li>-->
+<li>
+      <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+        <i class="pull-right up"><b class="badge no-bg">5</b></i>
+        <i class="icon mdi-navigation-apps i-20"></i>
+        <span class="font-normal">商品管理</span>
+      </a>
+      <ul class="nav nav-sub">
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="page.Trading.product.classify">商品分类管理</a>
+        </li>
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="page.Trading.product.brand">商品品牌项目</a>
+        </li>
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="page.Trading.product.parameter">商品分类参数管理</a>
+      </li>
+        <li ui-sref-active="active">
+              <a md-ink-ripple ui-sref="page.Trading.product.product">商品管理</a>
+        </li>
+      </ul>
+    </li>
+      <li>
+          <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+              <i class="pull-right up"><b class="badge no-bg">5</b></i>
+              <i class="icon mdi-navigation-apps i-20"></i>
+              <span class="font-normal">订单管理</span>
+          </a>
+          <ul class="nav nav-sub">
+              <li ui-sref-active="active">
+                  <a md-ink-ripple ui-sref="page.Trading.order.order">全部订单</a>
+              </li>
+          </ul>
+      </li>
+      </li>
+      <li>
+          <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+              <i class="pull-right up"><b class="badge no-bg">5</b></i>
+              <i class="icon mdi-navigation-apps i-20"></i>
+              <span class="font-normal">账单管理</span>
+          </a>
+          <ul class="nav nav-sub">
+              <li ui-sref-active="active">
+                  <a md-ink-ripple ui-sref="page.Trading.bill.bill">全部账单</a>
+              </li>
+          </ul>
+      </li>
   </ul>
 </nav>

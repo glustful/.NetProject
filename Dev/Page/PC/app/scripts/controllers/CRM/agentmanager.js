@@ -6,11 +6,15 @@ angular.module("app").controller('agentmanagerIndexController', [
         $scope.searchCondition = {
             name:'',
             phone:'',
+            userType:"经纪人",
             page: 1,
             pageSize: 10
         };
         $scope.getList  = function() {
-            $http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{params:$scope.searchCondition}).success(function(data){
+            $http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{
+                params:$scope.searchCondition,
+                'withCredentials':true
+            }).success(function(data){
                 $scope.list = data.List;
                 $scope.searchCondition.page = data.Condition.Page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -26,7 +30,9 @@ angular.module("app").controller('agentmanagerIndexController', [
 angular.module("app").controller('configureDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
 
      //个人信息
-    $http.get(SETTING.ApiUrl + '/BrokerInfo/GetBroker?id=' + $stateParams.userid).success(function(data){
+    $http.get(SETTING.ApiUrl + '/BrokerInfo/GetBroker?id=' + $stateParams.userid,{
+        'withCredentials':true
+    }).success(function(data){
         $scope.BrokerModel =data;
     });
 
@@ -37,7 +43,10 @@ angular.module("app").controller('configureDetailedController',['$http','$scope'
         pageSize: 10
     };
     $scope.getCRZList  = function() {
-        $http.get(SETTING.ApiUrl+'/BrokeAccount/GetPointDetailListByUserId',{params:$scope.searchCRZCondition}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/BrokeAccount/GetPointDetailListByUserId',{
+            params:$scope.searchCRZCondition,
+            'withCredentials':true
+        }).success(function(data){
             $scope.listCRZ = data.List;
             $scope.searchCRZCondition.page = data.Condition.Page;
             $scope.searchCRZCondition.pageSize = data.Condition.PageCount;
@@ -53,7 +62,10 @@ angular.module("app").controller('configureDetailedController',['$http','$scope'
         pageSize: 10
     };
     $scope.getTXList  = function() {
-        $http.get(SETTING.ApiUrl+'/BrokerWithdrawDetail/GetBrokerWithdrawDetailListByUserId',{params:$scope.searchTXCondition}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/BrokerWithdrawDetail/GetBrokerWithdrawDetailListByUserId',{
+            params:$scope.searchTXCondition,
+            'withCredentials':true
+        }).success(function(data){
             $scope.listTX = data.List;
             $scope.searchTXCondition.page = data.Condition.Page;
             $scope.searchTXCondition.pageSize = data.Condition.PageCount;
@@ -69,7 +81,10 @@ angular.module("app").controller('configureDetailedController',['$http','$scope'
         pageSize: 10
     };
     $scope.getBankList  = function() {
-        $http.get(SETTING.ApiUrl+'/BankCard/SearchBankCardsByUserID',{params:$scope.searchBankCondition}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/BankCard/SearchBankCardsByUserID',{
+            params:$scope.searchBankCondition,
+            'withCredentials':true
+        }).success(function(data){
             $scope.listBank = data.List;
             $scope.searchBankCondition.page = data.Condition.Page;
             $scope.searchBankCondition.pageSize = data.Condition.PageCount;
@@ -85,7 +100,10 @@ angular.module("app").controller('configureDetailedController',['$http','$scope'
         pageSize: 10
     };
     $scope.getJFList  = function() {
-        $http.get(SETTING.ApiUrl+'/PointDetail/GetPointDetailByUserId',{params:$scope.searchJFCondition}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/PointDetail/GetPointDetailByUserId',{
+            params:$scope.searchJFCondition,
+            'withCredentials':true
+        }).success(function(data){
             $scope.listJF = data.List;
             $scope.searchJFCondition.page = data.Condition.Page;
             $scope.searchJFCondition.pageSize = data.Condition.PageCount;
