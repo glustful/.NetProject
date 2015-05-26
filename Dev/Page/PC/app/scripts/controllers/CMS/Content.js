@@ -90,7 +90,7 @@ angular.module("app").controller('ContentCreateController',['$http','$scope','$s
 }]);
 
 angular.module("app").controller('ContentEditController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
-    $http.get(SETTING.ApiUrl + '/Content/Detailed/' + $stateParams.id).success(function(data){
+    $http.get(SETTING.ApiUrl + '/Content/Detailed/' + $stateParams.id,{'withCredentials':true}).success(function(data){
         $scope.ContentModel =data;
     });
 
