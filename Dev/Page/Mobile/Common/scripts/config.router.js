@@ -139,6 +139,25 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/storeroom',
             templateUrl:'modules/storeroom/view/storeroom.html'
         })
+                .state('app.task',{
+            url:'/task',
+            templateUrl:'modules/task/view/task.html',
+            resolve: load(['../task.js'])
+
+        })
+        .state('app.nominate',{
+            url:'/nominate',
+            templateUrl:'modules/nominate/view/nominate.html'
+        })
+        .state('app.carry_client',{
+            url:'/carry_client',
+            templateUrl:'modules/carry_client/view/carry_client.html'
+        })
+        .state('app.credit_add',{
+            url:'/credit_add',
+            templateUrl:'modules/credit_add/view/credit_add.html'
+        })
+<<<<<<< .mine
         .state('app.carry_client',{
             url:'/carry_client',
             templateUrl:'modules/carry_client/view/carry_client.html'
@@ -148,3 +167,90 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             templateUrl:'modules/credit_add/view/credit_add.html'
         })
 }]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
+        .state('app.task',{
+            url:'/task',
+            templateUrl:'modules/task/view/task.html',
+            resolve: load(['../task.js'])
+
+        })
+        .state('app.nominate',{
+            url:'/nominate',
+            templateUrl:'modules/nominate/view/nominate.html'
+        })
+}]);
+//-----------------------end-------------------
+
+function load(srcs, callback) {
+    return {
+        deps: ['$ocLazyLoad', '$q',
+            function ($ocLazyLoad, $q) {
+                var deferred = $q.defer();
+                var promise = false;
+                srcs = angular.isArray(srcs) ? srcs : srcs.split(/\s+/);
+                if (!promise) {
+                    promise = deferred.promise;
+                }
+                angular.forEach(srcs, function (src) {
+                    promise = promise.then(function () {
+                        angular.forEach(MODULE_CONFIG, function (module) {
+                            if (module.name == src) {
+                                if (!module.module) {
+                                    name = module.files;
+                                } else {
+                                    name = module.name;
+                                }
+                            } else {
+                                name = src;
+                            }
+                        });
+                        return $ocLazyLoad.load(name);
+                    });
+                });
+                deferred.resolve();
+                return callback ? promise.then(function () { return callback(); }) : promise;
+            }]
+    }}
+
+
+
+
+>>>>>>> .theirs

@@ -45,7 +45,7 @@
     margin-top:15px;
     background-color: #fff;
 }
-.task-personal .today{
+.task-personal .todayTask{
     height: 60px;
     line-height: 60px;
     padding-left:35px;
@@ -57,9 +57,9 @@
     border-bottom:1px solid #ebebeb;
 }
 .task-personal p{
-   padding:22px 0 22px 35px;
+   padding:15px 0 15px 35px;
     color: #737373;
-    font-size: 18px;
+    font-size: 20px;
     line-height: 30px;
 }
 .task-personal p span{
@@ -83,7 +83,7 @@
     float: left;
     background:#ffffff;
     text-align: center;
-    padding:50px 0 50px 0;
+    padding:45px 0 45px 0;
 }
 .activity-personal .two{
 
@@ -97,7 +97,7 @@
 }
 
 .activity-personal li a{
-    line-height: 40px;
+    line-height: 30px;
     color: #4b6770;
     font-size: 18px;
 }
@@ -106,11 +106,4 @@
 }
 .activity-personal .two a{
     color: #f13800;
-}
-.footer {
-    background: #f13800;
-    width:640px;
-    position:fixed;
-    bottom:0;
-    z-index: 10;
 }
