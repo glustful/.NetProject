@@ -1,3 +1,4 @@
+
 .groom .client_information{
     width: 515px;
     height: 48px;
@@ -8,9 +9,8 @@
     margin-top: 26px;
 }
 .groom{
-
-    height: 770px;
-    padding: 30px 58px 0 58px;
+    padding: 30px 58px 310px 58px;
+    background-color: #eeeeee;
 }
 .groom button{
     width: 515px;
