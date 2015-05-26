@@ -38,8 +38,8 @@ angular.js路径app/scrips/controller/CRM/taskList.js-->
         </div>
 
     </div>
-    <div class="divbt"><button ng-click="detailBind()" onclick="taskDetailUpdate()" md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">修改</button>
-        <a href="#page/CRM/TaskList/index"> <button style="margin-left:150px;" md-ink-ripple=""  class="md-btn md-raised m-b btn-fw blue">返回</button></a>
+    <div class="divbt"><button style="margin-left:20px;"  onclick="taskDetailUpdate()" md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">修改</button>
+        <a href="#page/CRM/TaskList/index"> <button class="md-btn md-raised m-b btn-fw pink pull-left"><i class="fa fa-reply  m-r-sm"></i>返回<div class="md-ripple-container"></div></button></a>
     </div>
 
 </div>
@@ -97,14 +97,17 @@ angular.js路径app/scrips/controller/CRM/taskList.js-->
         </p>
     </div>
 </div>
-        <div class="divbt"><button ng-click="Uptask()"  md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">确定修改</button>
-            <a href="#page/CRM/TaskList/index"> <button style="margin-left:150px;" md-ink-ripple=""  class="md-btn md-raised m-b btn-fw blue">返回</button></a>
+        <div class="divbt">
+            <button ng-click="Uptask()" type="submit" class="md-btn md-raised m-b btn-fw green"><i class="glyphicon glyphicon-ok m-r-sm"></i>提交<div class="md-ripple-container"></div></button>
+            <a href="#page/CRM/TaskList/index"> <button class="md-btn md-raised m-b btn-fw pink pull-left"><i class="fa fa-reply  m-r-sm"></i>返回<div class="md-ripple-container"></div></button></a>
         </div>
 
     </div>
 
 </div>
-
+<script type="text/ng-template" id="myModalContent.html">
+    <div ng-include="'views/partials/modal.html'"></div>
+</script>
 <script type="text/javascript">
     document.getElementById("divTaskListB").style.display = "none";
     function taskDetailUpdate() {

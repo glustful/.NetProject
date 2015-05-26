@@ -15,10 +15,11 @@ using CRM .Service .TaskList ;
 using Zerg.Common;
 using Zerg.Models.CRM;
 using CRM.Service.Broker;
+using System.Text.RegularExpressions;
 
 namespace Zerg.Controllers.CRM
 {
-     [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// CRM 任务管理明细
     /// </summary>
@@ -73,10 +74,20 @@ namespace Zerg.Controllers.CRM
         //    };
         //    return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToList());
         //}
-      
 
+      
         public HttpResponseMessage TaskList(string Taskname, int page, int pageSize)
-        {                     
+        {
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+
+            if (!string.IsNullOrEmpty(Taskname))
+            {
+                var m = reg.IsMatch(Taskname);
+                if (!m)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "搜索输入存在非法字符！"));
+                }
+            }     
             var taskcondition = new TaskSearchCondition
             {
                 OrderBy = EnumTaskSearchOrderBy.OrderById,
@@ -85,26 +96,34 @@ namespace Zerg.Controllers.CRM
                 PageCount = pageSize 
               
             };
+       
             var taskList = _taskService.GetTasksByCondition(taskcondition).Select(p => new
             {
                 Taskname=p.Taskname ,
                 Name=p.TaskType.Name ,
+               
                 Endtime=p.Endtime ,
                 Adduser=p.Adduser ,
                 Id=p.Id 
             }).ToList ();
             var taskCount = _taskService.GetTaskCount(taskcondition);
-            return PageHelper.toJson(new { list = taskList, totalCount = taskCount, condition=taskcondition  });
+            if (taskCount > 0) {
+            return PageHelper.toJson(new { list = taskList, totalCount = taskCount, condition=taskcondition  }); 
+            }
+            else
+            {
+             return PageHelper.toJson(PageHelper.ReturnValue(true, "不存在数据！"));
+            }
         }
          /// <summary>
          /// 返回任务详情
          /// </summary>
-         /// <param name="id"></param>
+         /// <param name="Id"></param>
          /// <returns></returns>
          [HttpGet]
-         public HttpResponseMessage TaskDetail( int id)   
+         public HttpResponseMessage TaskDetail( int Id)   
          {
-             var task=_taskService.GetTaskById(id);
+             var task=_taskService.GetTaskById(Id);
              var model = new TaskModel();
               model.Id=task.Id;
               model.Taskname = task.Taskname;
@@ -147,12 +166,14 @@ namespace Zerg.Controllers.CRM
          [HttpGet]
         public HttpResponseMessage taskListBytaskId(int id, int page, int pageSize)
         {
+
             var taskCondition = new TaskListSearchCondition
             {
                 TaskId = id,
                 Page =page ,
                 PageCount =pageSize 
             };
+
             var tasklistone = _taskListService.GetTaskListsByCondition(taskCondition).Select(p => new
             {
                 Taskname=p.Task .Taskname ,
@@ -177,7 +198,15 @@ namespace Zerg.Controllers.CRM
          [HttpGet]
          public HttpResponseMessage taskListByuser(string brokerName, int id, int page, int pageSize)
          {
-           
+             Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+
+             if (!string.IsNullOrEmpty(brokerName))
+             {
+             var m = reg.IsMatch(brokerName);
+             if (!m)
+             {
+                 return PageHelper.toJson(PageHelper.ReturnValue(false, "搜索输入存在非法字符！"));
+             }}
              var taskCondition = new TaskListSearchCondition
              {
                  TaskId = id,
@@ -194,7 +223,13 @@ namespace Zerg.Controllers.CRM
              });
 
              var taskCount = _taskListService.GetTaskListCount(taskCondition);
+             if(taskCount >0){
              return PageHelper.toJson(new { list = tasklistone, totalCount = taskCount,condition=taskCondition  });
+                }
+            else
+            {
+             return PageHelper.toJson(PageHelper.ReturnValue(true, "不存在数据！"));
+            }
 
 
          }
@@ -208,7 +243,19 @@ namespace Zerg.Controllers.CRM
         {
             if (!string.IsNullOrEmpty(taskModel.Taskname))
             {
-               
+                Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+                var m = reg.IsMatch(taskModel.Taskname);
+                if (!m)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "任务名称存在非法字符！"));
+                }
+                if (!string.IsNullOrEmpty(taskModel.Describe )) { 
+                var m1 = reg.IsMatch(taskModel.Describe);
+              
+                if (!m1)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "描述存在非法字符！"));
+                }}
                 var model = new TaskEntity
                 {
                     Id = taskModel.Id,
@@ -230,6 +277,7 @@ namespace Zerg.Controllers.CRM
                 };
                 if (taskModel.Type == "add")
                 {
+                    //判断是否存在同名名称
                     int taskCount = _taskService.GetTaskCount(mo1);
                   if (taskCount == 0) { 
                     try
@@ -252,8 +300,19 @@ namespace Zerg.Controllers.CRM
                     var cond=new TaskListSearchCondition (){
                     TaskId =taskModel .Id 
                 };
+                    //判断任务是否被接手
+
                 int tlistcout = _taskListService.GetTaskListCount(cond);
+                //判断是否存在同名名称
+                var mo11 = new TaskSearchCondition
+                {
+                    TasknameRe = taskModel.Taskname,
+                    Id =taskModel .Id 
+                };
+                    int tasknameCount = _taskService.GetTaskCount(mo11);
                 if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "不能修改，已经有人接手任务")); }
+
+                else if (tasknameCount >0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "任务名称已存在，请换名称")); }
                 else
                 {
                     var mdel = _taskService.GetTaskById(taskModel.Id);
@@ -341,6 +400,21 @@ namespace Zerg.Controllers.CRM
         {
             if (!string.IsNullOrWhiteSpace(taskTypeModel.Name))
             {
+                Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+                var m = reg.IsMatch(taskTypeModel.Name );
+                if (!m)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "类型名称存在非法字符！"));
+                }
+                if (taskTypeModel.Describe != "")
+                {
+                    var m1 = reg.IsMatch(taskTypeModel.Describe);
+
+                    if (!m1)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "描述存在非法字符！"));
+                    }
+                }
                 var model = new TaskTypeEntity
                 {
                     Id =taskTypeModel.Id,
@@ -402,7 +476,7 @@ namespace Zerg.Controllers.CRM
                     typeId =id
                 };
                 int tlistcout = _taskService.GetTaskCount(cond);
-                if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "不能删除，已有任务中正使用该任务类型")); }
+                if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "该类型使用中，删除失败")); }
                 else
                 {
                     _taskTypeService.Delete(_taskTypeService.GetTaskTypeById(id));
@@ -452,6 +526,21 @@ namespace Zerg.Controllers.CRM
         {
             if (!string.IsNullOrWhiteSpace(taskAwardModel.Name))
             {
+                Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+                var m = reg.IsMatch(taskAwardModel.Name);
+                if (!m)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "奖励名称存在非法字符！"));
+                }
+                if (!string.IsNullOrEmpty(taskAwardModel.Describe ))
+                {
+                    var m1 = reg.IsMatch(taskAwardModel.Describe);
+
+                    if (!m1)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "描述存在非法字符！"));
+                    }
+                }
                 var model = new TaskAwardEntity
                 {
                     Id = taskAwardModel.Id,
@@ -512,7 +601,7 @@ namespace Zerg.Controllers.CRM
                    awardId = id
                 };
                 int tlistcout = _taskService.GetTaskCount(cond);
-                if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "不能删除，已有任务中正使用该任务奖励")); }
+                if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "该奖励使用中，删除失败")); }
                 else
                 {
                     _taskAwardService.Delete(_taskAwardService.GetTaskAwardById(id));
@@ -564,6 +653,21 @@ namespace Zerg.Controllers.CRM
         {
             if (!string.IsNullOrWhiteSpace(taskTagModel.Name))
             {
+                Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+                var m = reg.IsMatch(taskTagModel.Name);
+                if (!m)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "目标名称存在非法字符！"));
+                }
+                if (!string.IsNullOrEmpty(taskTagModel.Describe))
+                {
+                    var m1 = reg.IsMatch(taskTagModel.Describe);
+
+                    if (!m1)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "描述存在非法字符！"));
+                    }
+                }
                 var model = new TaskTagEntity
                 {
                     Id = taskTagModel.Id,
@@ -625,7 +729,7 @@ namespace Zerg.Controllers.CRM
                     tagId = id
                 };
                 int tlistcout = _taskService.GetTaskCount(cond);
-                if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "不能删除，已有任务中正使用该任务目标")); }
+                if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "该目标使用中，删除失败")); }
                 else
                 {
                     _taskTagService.Delete(_taskTagService.GetTaskTagById(id));
@@ -674,6 +778,21 @@ namespace Zerg.Controllers.CRM
         {
             if (!string.IsNullOrWhiteSpace(taskPunishmentModel.Name))
             {
+                Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+                var m = reg.IsMatch(taskPunishmentModel.Name);
+                if (!m)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "惩罚名称存在非法字符！"));
+                }
+                if (!string.IsNullOrEmpty(taskPunishmentModel.Describe ))
+                {
+                    var m1 = reg.IsMatch(taskPunishmentModel.Describe);
+
+                    if (!m1)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "描述存在非法字符！"));
+                    }
+                }
                 var model = new TaskPunishmentEntity
                 {
                     Id=taskPunishmentModel.Id,
@@ -734,7 +853,7 @@ namespace Zerg.Controllers.CRM
                     punishId = id
                 };
                 int tlistcout = _taskService.GetTaskCount(cond);
-                if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "不能删除，已有任务中正使用该任务惩罚")); }
+                if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "该惩罚使用中，删除失败")); }
                 else
                 {
                     _taskPunishmentService.Delete(_taskPunishmentService.GetTaskPunishmentById(id));

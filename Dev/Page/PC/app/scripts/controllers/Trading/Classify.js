@@ -12,7 +12,7 @@ app.controller('ProductTreeCtrl', ['$scope', '$http', '$state', function ($scope
     $scope.classifyValue = "";
     $scope.my_data = [];
     $scope.my_tree = tree = {};
-    $http.get(SETTING.TradingApiUrl + '/Classify/GetAllClassify/').success(function (data) {
+    $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify/').success(function (data) {
         $scope.my_data = data;
         $scope.my_tree.select_branch( $scope.my_tree.get);
     });
@@ -41,11 +41,11 @@ app.controller('ProductTreeCtrl', ['$scope', '$http', '$state', function ($scope
                 };
             }
             var classifyJson = JSON.stringify(cla);
-            $http.post(SETTING.TradingApiUrl + '/Classify/AddClassify', classifyJson, {
+            $http.post(SETTING.ApiUrl + '/Classify/AddClassify', classifyJson, {
                 'withCredentials': true
             }).success(function (data) {
                 WindowClose();
-                $http.get(SETTING.TradingApiUrl + '/Classify/GetAllClassify/').success(function (data) {
+                $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify/').success(function (data) {
                     $scope.my_data = data;
                     $scope.my_tree.expand_all();
                 });
@@ -68,11 +68,11 @@ app.controller('ProductTreeCtrl', ['$scope', '$http', '$state', function ($scope
                 Upduser: '1'
             };
             var classifyJson = JSON.stringify(cla);
-            $http.post(SETTING.TradingApiUrl + '/Classify/AddClassify', classifyJson, {
+            $http.post(SETTING.ApiUrl + '/Classify/AddClassify', classifyJson, {
                 'withCredentials': true
             }).success(function (data) {
                 WindowClose();
-                $http.get(SETTING.TradingApiUrl + '/Classify/GetAllClassify/').success(function (data) {
+                $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify/').success(function (data) {
                     $scope.my_data = data;
                     $scope.my_tree.expand_all();
                 });
@@ -88,10 +88,10 @@ app.controller('ProductTreeCtrl', ['$scope', '$http', '$state', function ($scope
         selectedBranch = tree.get_selected_branch();
         if(selectedBranch!=null){
             $scope.output = "您正在删除 " + selectedBranch.label +" 分类! ";
-            $http.get(SETTING.TradingApiUrl + '/Classify/DelClassify?classifyId='+selectedBranch.Id, {
+            $http.get(SETTING.ApiUrl + '/Classify/DelClassify?classifyId='+selectedBranch.Id, {
                 'withCredentials': true
             }).success(function (data) {
-                $http.get(SETTING.TradingApiUrl + '/Classify/GetAllClassify/').success(function (data) {
+                $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify/').success(function (data) {
                     $scope.my_data = data;
                 });
                 $scope.my_tree.expand_all();

@@ -2,7 +2,7 @@
  * Created by 黄秀宇 on 2015/5/15.
  */
 
-app.controller('taskconfigcontroller',['$http','$scope',function($http,$scope) {
+app.controller('taskconfigcontroller',['$http','$scope','$modal',function($http,$scope,$modal) {
     $scope.mainCondition={
         Id:0,
 
@@ -53,9 +53,7 @@ $scope.warnType='';
     $scope.warnPunish='';
     //绑定任务类型
     var getTaskType  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskTypeList',{
-            'withCredentials':true
-        }).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/TaskTypeList',{'withCredentials':true}).success(function(data){
             console.log(data);
             $scope.taskType=data;
         });
@@ -64,9 +62,7 @@ $scope.warnType='';
     getTaskType();
     //绑定任务目标
     var getTaskTag  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskTagList',{
-            'withCredentials':true
-        }).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/TaskTagList',{'withCredentials':true}).success(function(data){
             console.log(data);
             $scope.tasktag=data;
         });
@@ -75,9 +71,7 @@ $scope.warnType='';
     getTaskTag();
     //绑定任务奖励
     var getTaskAward  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskAwardList',{
-            'withCredentials':true
-        }).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/TaskAwardList',{'withCredentials':true}).success(function(data){
             console.log(data);
             $scope.taskaward=data;
         });
@@ -86,9 +80,7 @@ $scope.warnType='';
     getTaskAward();
     //绑定任务惩罚
     var getTaskPunishment  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/TaskPunishmentList',{
-            'withCredentials':true
-        }).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/TaskPunishmentList',{'withCredentials':true}).success(function(data){
             console.log(data);
             $scope.taskpunishment=data;
         });
@@ -106,9 +98,9 @@ $scope.warnType='';
                 $scope.typeCondition.Name='';
                 $scope.typeCondition.Describe='';
                 getTaskType();
-                $scope.warnType='添加成功';
+                $scope.warnType=data.Msg;
                  }
-            else{ $scope.warnType='类型重复，请更换';}
+            else{ $scope.warnType=data.Msg;}
 
         });
     };
@@ -132,17 +124,17 @@ $scope.warnType='';
                 $scope.tagCondition.Name='';
                 $scope.tagCondition.Describe='';
                 $scope.tagCondition.Value='';
-                $scope.warnTag='添加成功';
+                $scope.warnTag=data.Msg;
                 getTaskTag();
                 // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
             }
-            else{ $scope.warnTag='目标名称重复，请更换';}
+            else{ $scope.warnTag=data.Msg;}
 
         });
     };
     var tagTest=function(){
         if($scope.tagCondition.Name==""){
-            $scope.warnTag='请输入奖励名称';
+            $scope.warnTag='请输入目标名称';
 
         }
         else if($scope.tagCondition.Describe==""){
@@ -167,12 +159,12 @@ $scope.warnType='';
                 $scope.awardCondition.Name='';
                 $scope.awardCondition.Describe='';
                 $scope.awardCondition.Value='';
-                $scope.warnAward='添加成功';
+                $scope.warnAward=data.Msg;
                 getTaskAward();
 
                 // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
             }
-            else{ $scope.warnAward='奖励重复，请更换';}
+            else{ $scope.warnAward=data.Msg;}
 
         });
     };
@@ -203,10 +195,10 @@ $scope.warnType='';
                 $scope.punishmentCondition.Describe='';
                 $scope.punishmentCondition.Value='';
                 getTaskPunishment();
-                $scope.warnPunish='添加成功';
+                $scope.warnPunish=data.Msg;
                 // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
             }
-            else{ $scope.warnPunish='惩罚重复，请更换';}
+            else{ $scope.warnPunish=data.Msg;}
 
         });
     };
@@ -230,93 +222,136 @@ $scope.warnType='';
     //删除任务类型
 
     var DelTaskType  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/DelTaskType/',{params:{id:$scope.mainCondition.TaskTypeId},
-            'withCredentials':true
-        }).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/DelTaskType/',{params:{id:$scope.mainCondition.TaskTypeId}, 'withCredentials':true}).success(function(data){
             if(data.Status){
                 getTaskType();
-                $scope.warnType='删除成功';
-                // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
-            }
+                $scope.mainCondition.TaskTypeId=0;
+                $scope.warnType=data.Msg;
+               }
             else{
-                $scope.warnType='该任务类型使用中，删除失败';
+                $scope.warnType=data.Msg;
             }
         });
     };
-    var delTyleTest=function(){
+    $scope.delType=function(){
         if($scope.mainCondition.TaskTypeId>0){
-            DelTaskType();
+            openType();
         }
+        else{$scope.warnType='请选择删除对象';}
     }
-    $scope.delType =delTyleTest ;
+      var openType= function () {
+        var modalInstance = $modal.open({
+            templateUrl: 'myModalContent.html',
+            controller: 'ModalInstanceCtrl',
+            resolve: {
+                msg: function () {
+                    return "你确定要删除吗？";
+                }
+            }
+        });
+           modalInstance.result.then(DelTaskType);
+    }
     //删除任务目标
 
     var DelTaskTag  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/DelTaskTag/',{params:{id:$scope.mainCondition.TaskTagId},
-            'withCredentials':true
-        }).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/DelTaskTag/',{params:{id:$scope.mainCondition.TaskTagId}, 'withCredentials':true}).success(function(data){
             if(data.Status){
                 getTaskTag();
-                $scope.warnTag='删除成功';
-                // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
-            }
+                $scope.mainCondition.TaskTagId=0;
+                $scope.warnTag=data.Msg;
+                }
             else{
-                $scope.warnTag='该任务目标使用中，删除失败';
+                $scope.warnTag=data.Msg;
             }
         });
     };
-    var delTagTest=function(){
+    $scope.delTag=function(){
         if($scope.mainCondition.TaskTagId>0){
-            DelTaskTag();
+            openopenTag();
         }
+        else{$scope.warnTag='请选择删除对象';}
     }
-    $scope.delTag =delTagTest ;
+    var openopenTag = function () {
+        var modalInstance = $modal.open({
+            templateUrl: 'myModalContent.html',
+            controller: 'ModalInstanceCtrl',
+            resolve: {
+                msg: function () {
+                    return "你确定要删除吗？";
+                }
+            }
+        });
+        modalInstance.result.then(DelTaskTag);
+    }
+
 
     //删除任务奖励
 
     var DelTaskAward  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/DelTaskAward/',{params:{id:$scope.mainCondition.TaskAwardId},
-            'withCredentials':true
-        }).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/DelTaskAward/',{params:{id:$scope.mainCondition.TaskAwardId}, 'withCredentials':true}).success(function(data){
             if(data.Status){
                 getTaskAward();
-                $scope.warnAward ='删除成功';
-
-                // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
-            }
+                $scope.mainCondition.TaskAwardId=0;
+                $scope.warnAward =data.Msg;
+        }
             else{
-                $scope.warnAward ='该任务奖励使用中，删除失败';
+                $scope.warnAward =data.Msg;
             }
         });
     };
-    var delAwardTest=function(){
+    $scope.delAward=function(){
         if($scope.mainCondition.TaskAwardId>0){
-            DelTaskAward();
+            openAward();
         }
+        else{$scope.warnAward='请选择删除对象';}
     }
-    $scope.delAward =delAwardTest ;
+   var openAward = function () {
+        var modalInstance = $modal.open({
+            templateUrl: 'myModalContent.html',
+            controller: 'ModalInstanceCtrl',
+            resolve: {
+                msg: function () {
+                    return "你确定要删除吗？";
+                }
+            }
+        });
+        modalInstance.result.then(DelTaskAward);
+    }
+
     //删除任务惩罚
 
     var DelTaskPunish  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/DelTaskPunishment/',{params:{id:$scope.mainCondition.TaskPunishmentId},
-            'withCredentials':true
-        }).success(function(data){
+        $http.get(SETTING.ApiUrl+'/Task/DelTaskPunishment/',{params:{id:$scope.mainCondition.TaskPunishmentId}, 'withCredentials':true}).success(function(data){
             if(data.Status){
                 getTaskPunishment();
-                $scope.warnPunish='删除成功';
+                $scope.warnPunish=data.Msg;
+                $scope.mainCondition.TaskPunishmentId=0;
                 // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
             }
             else{
-                $scope.warnPunish='该任务惩罚使用中，删除失败';
+                $scope.warnPunish=data.Msg;
             }
         });
     };
-    var delPunishTest=function(){
+    $scope.delPunish=function(){
         if($scope.mainCondition.TaskPunishmentId>0){
-            DelTaskPunish();
+            penPunish();
         }
+        else{$scope.warnPunish='请选择删除对象';}
     }
-    $scope.delPunish = delPunishTest;
+   var penPunish= function () {
+        var modalInstance = $modal.open({
+            templateUrl: 'myModalContent.html',
+            controller: 'ModalInstanceCtrl',
+            resolve: {
+                msg: function () {
+                    return "你确定要删除吗？";
+                }
+            }
+        });
+        modalInstance.result.then(DelTaskPunish);
+    }
+
     //删除提示
     var delW=function(){
         $scope.warnAward ='';

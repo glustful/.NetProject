@@ -5,21 +5,21 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
     //初始化界面；
     $scope.rowCollectionBasic = [];
     $scope.rowCollectionParameter = [];
-    $http.get(SETTING.TradingApiUrl + '/Brand/GetAllBrand?pageindex=' + 0).success(function (data) {
+    $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0).success(function (data) {
         $scope.rowCollectionBasic = data;
     });
 
     //下一页；
     $scope.getAllBrand = function (pageIndex) {
-        $http.get(SETTING.TradingApiUrl + '/Brand/GetAllBrand?pageindex=' + 0).success(function (data) {
+        $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0).success(function (data) {
             $scope.rowCollectionBasic = data;
         });
     };
 
     //删除该项目；
     $scope.delBrand = function (brandId) {
-        $http.get(SETTING.TradingApiUrl + '/Brand/DelBrandById?brandId=' + brandId).success(function (data) {
-            $http.get(SETTING.TradingApiUrl + '/Brand/GetAllBrand?pageindex=' + 0).success(function (data) {
+        $http.get(SETTING.ApiUrl + '/Brand/DelBrandById?brandId=' + brandId).success(function (data) {
+            $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0).success(function (data) {
                 $scope.rowCollectionBasic = data;
             });
             return $scope.output = data;
@@ -35,11 +35,11 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
             Bimg: $scope.imgUrl
         };
         var Json = JSON.stringify(brand);
-        $http.post(SETTING.TradingApiUrl + '/Brand/AddProductBrand', Json, {
+        $http.post(SETTING.ApiUrl + '/Brand/AddProductBrand', Json, {
             'withCredentials': true
         }).success(function (data) {
             WindowClose();
-            $http.get(SETTING.TradingApiUrl + '/Brand/GetAllBrand?pageindex=' + 0).success(function (data) {
+            $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0).success(function (data) {
                 $scope.rowCollectionBasic = data;
             });
             $scope.output = data;
@@ -50,7 +50,7 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
     $scope.selectBrandId=0;
     $scope.getBrandParameter = function (seletId) {
         $scope.selectBrandId=seletId;
-       $http.get(SETTING.TradingApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' + seletId).success(function (data) {
+       $http.get(SETTING.ApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' + seletId).success(function (data) {
             $scope.rowCollectionParameter = data;
         });
     };
@@ -67,7 +67,7 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
             Upduser: 'jiadou'
         };
         var Json = JSON.stringify(brand);
-        $http.post(SETTING.TradingApiUrl + '/Brand/AddProductBrandParameter', Json, {
+        $http.post(SETTING.ApiUrl + '/Brand/AddProductBrandParameter', Json, {
             'withCredentials': true
         }).success(function (data) {
             AddParameterWindowClose();
@@ -80,8 +80,8 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
 
     //删除项目参数值
     $scope.delBrandParameter=function (brandParameterId) {
-        $http.get(SETTING.TradingApiUrl + '/Brand/DelBrandParameter?brandParameterId=' + brandParameterId).success(function (data) {
-            $http.get(SETTING.TradingApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' +  $scope.selectBrandId).success(function (data) {
+        $http.get(SETTING.ApiUrl + '/Brand/DelBrandParameter?brandParameterId=' + brandParameterId).success(function (data) {
+            $http.get(SETTING.ApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' +  $scope.selectBrandId).success(function (data) {
                 $scope.rowCollectionParameter = data;
             });
             return $scope.output = data;
@@ -98,7 +98,7 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
         //your validation
         var formData = new FormData($('form')[0]);
         $.ajax({
-            url: SETTING.TradingApiUrl+ '/Resource/Upload',  //server script to process data
+            url: SETTING.ApiUrl+ '/Resource/Upload',  //server script to process data
             type: 'POST',
             xhr: function() {  // custom xhr
                 myXhr = $.ajaxSettings.xhr();

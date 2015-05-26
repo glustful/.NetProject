@@ -160,11 +160,11 @@ namespace CRM.Service.TaskList
                 {
                     query = query.Where(q => condition.Brokers.Contains(q.Broker));
                 }
-                if (condition.TaskId >0)
+                if (condition.TaskId > 0)
                 {
                     query = query.Where(q => q.Task.Id == (condition.TaskId));
                 }
-                if (condition.BrokerName != null && condition.Taskschedule.Any())
+                if (condition.BrokerName != null && condition.BrokerName.Any())
                 {
                     query = query.Where(q => q.Broker.Brokername.Contains(condition.BrokerName));
                 }
