@@ -157,6 +157,37 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             templateUrl:'modules/credit_add/view/credit_add.html'
         })
 
+}])
 
-}]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

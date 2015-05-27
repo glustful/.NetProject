@@ -2,7 +2,6 @@
 .list_content p{
     margin-left: 30px;
     font-weight:600;
-    font-size: 25px;
 }
 ul li{
     list-style: none;
@@ -38,7 +37,7 @@ ul li{
     background-color: #ffffff;
     border: hidden;
 }
-/*合伙人详情*/
+/*?????????*/
 .detail_content{
     margin: 56px 25px 0 30px;
     background-color: white;
@@ -61,7 +60,7 @@ ul li{
 .partner_information span {
     color: #848484;
 }
-/*添加合伙人*/
+/*???????*/
 .add_content{
     padding: 30px 0 600px 50px;
 }
@@ -82,4 +81,20 @@ ul li{
     font-family: "microsoft yahei";
     color: white;
 }
-
+.list_content .addPartners{
+    background-color:#fff;
+    padding-top: 450px;
+}
+.list_content .addPartners p{
+    text-align: center;
+    width: 600px;
+    height: 80px;
+    line-height: 80px;
+    border: 3px solid #ebebeb;
+    border-radius: 5px;
+    margin: 0 auto;
+   font-size: 2em;
+}
+.list_content .addPartners p a{
+   color:#fc3b00;
+}

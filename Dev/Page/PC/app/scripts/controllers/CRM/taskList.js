@@ -137,7 +137,8 @@ $scope.getList1=getTaskList1 ;
 
         });
     };
-    $scope.gettasklist=getTaskListSer;*/
+    $scope.gettaskl
+    ist=getTaskListSer;*/
 }
 ]);
 
