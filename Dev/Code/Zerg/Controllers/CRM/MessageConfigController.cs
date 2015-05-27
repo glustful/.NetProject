@@ -12,6 +12,7 @@ using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.CRM
 {
+    [AllowAnonymous]
     [EnableCors("*", "*", "*")]
     /// <summary>
     /// 短信配置
