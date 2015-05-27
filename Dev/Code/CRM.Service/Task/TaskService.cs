@@ -301,7 +301,10 @@ namespace CRM.Service.Task
                 {
                     query = query.Where(q => q.TaskTag.Id == condition.tagId);
                 }
-				
+                if (condition.Id > 0)
+                {
+                    query = query.Where(q => q.Id!= condition.Id);
+                }
 
 
 				return query.Count();

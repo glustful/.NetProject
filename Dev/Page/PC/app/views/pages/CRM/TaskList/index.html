@@ -36,6 +36,7 @@
                 <label ><button md-ink-ripple="" ng-click="delTask(item.Id)" class="md-btn md-raised m-b btn-fw blue">删除</button></label></li>
 
         </ul>
+       <!--<alert ng-bing="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>-->
 
     </div>
 
@@ -44,7 +45,9 @@
 
     </div>
 </div>
-
+    <script type="text/ng-template" id="myModalContent.html">
+        <div ng-include="'views/partials/modal.html'"></div>
+    </script>
 </div>
 
 
