@@ -34,11 +34,17 @@ namespace Trading.Entity.Model
 		/// UpdTime
 		/// </summary>
 		public virtual DateTime Updtime { get; set; }
-
+        /// <summary>
+        /// 副标题
+        /// </summary>
         public string SubTitle { get; set; }
-
+        /// <summary>
+        /// 简介
+        /// </summary>
         public string Content { get; set; }
-
+        /// <summary>
+        /// 父类
+        /// </summary>
         public virtual ProductBrandEntity Father { get; set; }
 	}
 }
