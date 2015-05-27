@@ -12,6 +12,7 @@ using Zerg.Models.CMS;
 
 namespace Zerg.Controllers.CMS
 {
+    [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class ChannelController : ApiController
     {
@@ -30,6 +31,7 @@ namespace Zerg.Controllers.CMS
         /// <param name="pageSize">页记录数</param>
         /// <returns></returns>
         [HttpGet]
+       
         public HttpResponseMessage Index(string name = null,int page = 1, int pageSize = 10)
         {
             var channelCon = new ChannelSearchCondition

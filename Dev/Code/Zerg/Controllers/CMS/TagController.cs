@@ -14,6 +14,7 @@ using Zerg.Models;
 
 namespace Zerg.Controllers.CMS
 {
+    [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class TagController : ApiController
     {
@@ -31,7 +32,8 @@ namespace Zerg.Controllers.CMS
         /// <param name="page">页码</param>
         /// <param name="pageSize">页面记录数</param>
         /// <returns></returns>   
-        [HttpGet] 
+        [HttpGet]
+        
         public HttpResponseMessage Index(string tag = null,int page=1,int pageSize=10)
         {
             var tagCon = new TagSearchCondition{

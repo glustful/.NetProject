@@ -18,7 +18,12 @@ namespace CMS.Entity.Model
 		/// 标题
 		/// </summary>
 		public string Title { get; set; }
-		/// <summary>
+        /// <summary>
+        /// 标题图片
+        /// </summary>
+	    public string TitleImg { get; set; }
+
+	    /// <summary>
 		/// 添加人
 		/// </summary>
 		public int Adduser { get; set; }

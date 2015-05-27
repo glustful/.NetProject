@@ -14,6 +14,7 @@ using Zerg.Models.CMS;
 
 namespace Zerg.Controllers.CMS
 {
+     [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class ContentController : ApiController
     {
@@ -37,6 +38,7 @@ namespace Zerg.Controllers.CMS
         /// <param name="pageSize">页面记录数</param>
         /// <returns></returns>
         [HttpGet]
+       
         public HttpResponseMessage Index(string title=null,int page = 1, int pageSize = 10)
         {
             var contentCon = new ContentSearchCondition
@@ -73,6 +75,7 @@ namespace Zerg.Controllers.CMS
             {
                 Id=content.Id,
                 Title=content.Title,
+                TitleImg = content.TitleImg,
                 Content=content.Content,
                 ChannelName=content.Channel.Name,
                 ChannelId = content.Channel.Id,
@@ -138,6 +141,7 @@ namespace Zerg.Controllers.CMS
                     var content = new ContentEntity
                     {
                         Title = model.Title,
+                        TitleImg = model.TitleImg,
                         Content = model.Content,
                         Status = model.Status,
                         Channel = newChannel,
