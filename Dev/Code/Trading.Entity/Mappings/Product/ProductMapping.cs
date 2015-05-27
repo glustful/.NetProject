@@ -28,6 +28,8 @@ namespace Trading.Entity.Mappings.Product
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upduser).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Updtime).HasColumnType("datetime");
+		    Property(c => c.SubTitle).HasColumnType("varchar").HasMaxLength(200);
+		    Property(c => c.ContactPhone).HasColumnType("varchar").HasMaxLength(50);
 		}
 	}
 }
