@@ -23,6 +23,9 @@ namespace Trading.Entity.Mappings.ProductDetail
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upduser).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Updtime).HasColumnType("datetime");
+		    Property(c => c.Ad1).HasColumnType("varchar").HasMaxLength(200);
+            Property(c => c.Ad2).HasColumnType("varchar").HasMaxLength(200);
+            Property(c => c.Ad3).HasColumnType("varchar").HasMaxLength(200);
 		}
 	}
 }

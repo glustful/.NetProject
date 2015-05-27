@@ -67,5 +67,20 @@ namespace CMS.Entity.Model
 		/// 所属频道
 		/// </summary>
 		public virtual ChannelEntity Channel { get; set; }
+
+        /// <summary>
+        /// 副标题
+        /// </summary>
+        public string SubTitle { get; set; }
+
+        /// <summary>
+        /// 联系电话/人
+        /// </summary>
+        public string Contact { get; set; }
+
+        /// <summary>
+        /// 广告副标题
+        /// </summary>
+        public string AdSubTitle { get; set; }
 	}
 }
