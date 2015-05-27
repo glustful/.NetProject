@@ -1,12 +1,12 @@
 /**
- * Created by lhl on 2015/5/16 驻厂秘书管理
+ * Created by lhl on 2015/5/16 经纪人管理
  */
-angular.module("app").controller('zcIndexController', [
+angular.module("app").controller('agentmanagerIndexController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
             name:'',
             phone:'',
-            userType:"场秘",
+            userType:"管理员",
             page: 1,
             pageSize: 10
         };
@@ -25,15 +25,13 @@ angular.module("app").controller('zcIndexController', [
     }
 ]);
 
-
-
-angular.module("app").controller('zcDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
+angular.module("app").controller('configureDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
 
     //个人信息
     $http.get(SETTING.ApiUrl + '/BrokerInfo/GetBroker?id=' + $stateParams.id,{
         'withCredentials':true
     }).success(function(data){
-        $scope.BusmanModel =data;
+        $scope.BrokerModel =data;
     });
 
 }]);

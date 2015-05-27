@@ -13,7 +13,10 @@ angular.module("app").controller('PetitionListController', [
         };
 
         var getTagList = function() {
-            $http.get(SETTING.ApiUrl+'/AdminRecom/BrokerList',{params:$scope.searchCondition}).success(function(data){
+            $http.get(SETTING.ApiUrl+'/AdminRecom/BrokerList',{
+                params:$scope.searchCondition,
+                'withCredentials':true
+            }).success(function(data){
                 $scope.Brokerlist = data.list1;
                 $scope.searchCondition.page=data.condition1.Page;
                 $scope.searchCondition.PageCount=data.condition1.PageCount;
@@ -30,7 +33,9 @@ angular.module("app").controller('PetitionListController', [
 angular.module("app").controller('WPDetialController',[
     '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
         //获取详细信息
-        $http.get(SETTING.ApiUrl + '/AdminRecom/GetAuditDetail/' + $stateParams.id).success(function (data) {
+        $http.get(SETTING.ApiUrl + '/AdminRecom/GetAuditDetail/' + $stateParams.id,{
+            'withCredentials':true
+        }).success(function (data) {
             $scope.ARDetialModel = data;
         });
 

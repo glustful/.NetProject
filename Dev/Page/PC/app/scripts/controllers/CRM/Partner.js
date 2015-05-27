@@ -10,7 +10,10 @@ angular.module("app").controller('PartnerIndexController', [
             pageSize: 10
         };
         $scope.getList  = function() {
-            $http.get(SETTING.ApiUrl+'/PartnerList/SearchPartnerList',{params:$scope.searchCondition}).success(function(data){
+            $http.get(SETTING.ApiUrl+'/PartnerList/SearchPartnerList',{
+                params:$scope.searchCondition,
+                'withCredentials':true
+            }).success(function(data){
                 $scope.list = data.List;
                 $scope.searchCondition.page = data.Condition.Page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -27,7 +30,9 @@ angular.module("app").controller('PartnerDetailedController', [
     '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
 
 
-        $http.get(SETTING.ApiUrl+'/PartnerList/PartnerListDetailed?userId=' + $stateParams.userId).success(function(data){
+        $http.get(SETTING.ApiUrl+'/PartnerList/PartnerListDetailed?userId=' + $stateParams.userId,{
+            'withCredentials':true
+        }).success(function(data){
             $scope.list = data;
         });
 

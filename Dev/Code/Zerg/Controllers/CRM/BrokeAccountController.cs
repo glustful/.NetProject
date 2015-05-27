@@ -13,7 +13,7 @@ using Zerg.Common;
 namespace Zerg.Controllers.CRM
 {
 
-    [EnableCors("*", "*", "*")]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 账户明细管理  李洪亮  2015-05-05
     /// </summary>
@@ -63,7 +63,7 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 新增积分详情
+        /// 新增详情
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>

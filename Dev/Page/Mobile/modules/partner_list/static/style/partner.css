@@ -37,7 +37,7 @@ ul li{
     background-color: #ffffff;
     border: hidden;
 }
-/*�ϻ�������*/
+/*?????????*/
 .detail_content{
     margin: 56px 25px 0 30px;
     background-color: white;
@@ -45,8 +45,8 @@ ul li{
 }
 
 .partner_mark{
-    clear: both;
     margin-top: 80px;
+    margin-left: 30px;
 }
 .partner_information{
    margin-left: 27px;
@@ -60,9 +60,9 @@ ul li{
 .partner_information span {
     color: #848484;
 }
-/*��Ӻϻ���*/
+/*???????*/
 .add_content{
-    margin: 20px 55px 0 20px;
+    padding: 30px 0 600px 50px;
 }
 .add_blank{
     width: 516px;
@@ -80,10 +80,6 @@ ul li{
     font-size: 20px;
     font-family: "microsoft yahei";
     color: white;
-}
-.tips{
-    font-size: 16px;
-    color: #fc3b00;
 }
 .list_content .addPartners{
     background-color:#fff;

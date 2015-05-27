@@ -34,7 +34,7 @@ namespace CRM.Entity.Model
 
 
 
-		public BrokerEntity[] Brokers { get; set; }
+		public BrokerEntity Brokers { get; set; }
 
 
 
