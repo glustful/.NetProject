@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using CMS.Entity.Model;
 using CMS.Service.Resource;
 using YooPoon.Core.Site;
@@ -12,6 +13,7 @@ using Zerg.Common.Oss;
 
 namespace Zerg.Controllers.CMS
 {
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class ResourceController : ApiController
     {
         

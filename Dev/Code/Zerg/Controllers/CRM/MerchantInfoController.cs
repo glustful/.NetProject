@@ -13,7 +13,7 @@ using Zerg.Models.CRM;
 namespace Zerg.Controllers.CRM
 {
     // 商家管理
-    [EnableCors("*", "*", "*")]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class MerchantInfoController : ApiController
     {
         private readonly IMerchantInfoService _merchantInfoService;
