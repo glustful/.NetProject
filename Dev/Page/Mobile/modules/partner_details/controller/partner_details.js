@@ -5,7 +5,7 @@ app.controller('partnerListController',['$http','$scope',function($http,$scope) 
         Id:0,
         page: 1,
         pageSize: 10,
-        userId:0
+        userId:0,
         partnerList:''
     };
     //查询任务
@@ -28,7 +28,7 @@ app.controller('partnerListController',['$http','$scope',function($http,$scope) 
     var addPartnerList=function(){
         $http.post(SETTING.ApiUrl+'/PartnerList/AddPartnerList/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
 
-        }
+        })
     }
 
 }
