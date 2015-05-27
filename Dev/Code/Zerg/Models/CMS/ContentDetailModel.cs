@@ -10,6 +10,7 @@ namespace Zerg.Models.CMS
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        public string TitleImg { get; set; }
         public string Content { get; set; }
         public string ChannelName { get; set; }
         public int ChannelId { get; set; }
