@@ -344,7 +344,7 @@ namespace CRM.Service.Broker
         public IQueryable<BrokerEntity> OrderbyBrokersList()
         {
             var query = _brokerRepository.Table;
-            return  query.Where(o => o.Amount > 0).OrderByDescending(o =>o.Amount).Skip(10);
+            return query.Where(o => o.Amount>0).OrderByDescending(o => o.Amount).Take(10);
         }
     }
 }

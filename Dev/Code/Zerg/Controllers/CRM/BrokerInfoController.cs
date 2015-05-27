@@ -12,7 +12,7 @@ using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
-
+    [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 经纪人管理  李洪亮  2015-05-04
@@ -217,6 +217,8 @@ namespace Zerg.Controllers.CRM
         [System.Web.Http.HttpGet]
         public HttpResponseMessage  OrderByBrokerList()
         {
+          
+
             var brokersList = _brokerService.OrderbyBrokersList().Select(p => new
             {
                 p.Id,
