@@ -37,7 +37,7 @@ ul li{
     background-color: #ffffff;
     border: hidden;
 }
-/*ºÏ»ïÈËÏêÇé*/
+/*ï¿½Ï»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 .detail_content{
     margin: 56px 25px 0 30px;
     background-color: white;
@@ -60,7 +60,7 @@ ul li{
 .partner_information span {
     color: #848484;
 }
-/*Ìí¼ÓºÏ»ïÈË*/
+/*ï¿½ï¿½ÓºÏ»ï¿½ï¿½ï¿½*/
 .add_content{
     margin: 20px 55px 0 20px;
 }
@@ -85,4 +85,20 @@ ul li{
     font-size: 16px;
     color: #fc3b00;
 }
-
+.list_content .addPartners{
+    background-color:#fff;
+    padding-top: 450px;
+}
+.list_content .addPartners p{
+    text-align: center;
+    width: 600px;
+    height: 80px;
+    line-height: 80px;
+    border: 3px solid #ebebeb;
+    border-radius: 5px;
+    margin: 0 auto;
+   font-size: 2em;
+}
+.list_content .addPartners p a{
+   color:#fc3b00;
+}

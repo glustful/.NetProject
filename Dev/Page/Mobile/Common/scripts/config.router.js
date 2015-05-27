@@ -156,61 +156,8 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/credit_add',
             templateUrl:'modules/credit_add/view/credit_add.html'
         })
-<<<<<<< .mine
-}]);
-=======
 
->>>>>>> .theirs
-
-
-<<<<<<< .mine
-
-
-
-=======
-}]);
-
-
->>>>>>> .theirs
-
-<<<<<<< .mine
-//-----------------------end-------------------
-
-function load(srcs, callback) {
-    return {
-        deps: ['$ocLazyLoad', '$q',
-            function ($ocLazyLoad, $q) {
-                var deferred = $q.defer();
-                var promise = false;
-                srcs = angular.isArray(srcs) ? srcs : srcs.split(/\s+/);
-                if (!promise) {
-                    promise = deferred.promise;
-                }
-                angular.forEach(srcs, function (src) {
-                    promise = promise.then(function () {
-                        angular.forEach(MODULE_CONFIG, function (module) {
-                            if (module.name == src) {
-                                if (!module.module) {
-                                    name = module.files;
-                                } else {
-                                    name = module.name;
-                                }
-                            } else {
-                                name = src;
-                            }
-                        });
-                        return $ocLazyLoad.load(name);
-                    });
-                });
-                deferred.resolve();
-                return callback ? promise.then(function () { return callback(); }) : promise;
-            }]
-    }}
-
-
-
-
-=======
+}])
 
 
 
@@ -244,7 +191,3 @@ function load(srcs, callback) {
 
 
 
-
-
-
->>>>>>> .theirs
