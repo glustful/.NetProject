@@ -1,5 +1,7 @@
 /*ÉèÖÃ*/
-
+.setting_person{
+    padding: 0 0 650px 0;
+}
 .set_person{
     width: 640px;
     background-color: #ffffff;
@@ -20,15 +22,10 @@
     color: #aeacac;
     font-size: 16px;
 }
-<<<<<<< HEAD
-
-
-/*ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½*/
-=======
 /*°²È«ÉèÖÃ*/
->>>>>>> 449345f90d758e721f93ab5148e9fdbf0851c0fb
+
 .security_content{
-    margin: 20px 55px 0 20px;
+    padding: 30px 55px 440px 58px;
     color: #848484;
 }
 form a{
@@ -81,10 +78,12 @@ form a{
     color: #ffffff;
     font-family:'microsoft yahei' ;
 }
-
-/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+/*¸öÈËÉèÖÃ*/
+.setting_personal{
+    padding: 40px 0 100px 0;
+}
 .person_revise{
-    margin: 20px 55px 0 20px;
+    padding: 20px 55px 0 55px;
     color: #848484;
 }
 .headphoto{

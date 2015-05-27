@@ -11,7 +11,31 @@
 /**
  * 由于不适用项目老方法是用的路由策略被抛弃
  */
-app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $urlRouterProvider){
+app  .run(
+    ['$rootScope', '$state', '$stateParams',
+        function ($rootScope, $state, $stateParams) {
+            $rootScope.$state = $state;
+            $rootScope.$stateParams = $stateParams;
+            //$rootScope.$on('$stateChangeStart', function (event,next) {
+            //    if(next.name==='access.signin' || next.name==='access.signup' || next.name==='access.forgot-password'){
+            //        return;
+            //    }
+            //    if(!AuthService.IsAuthenticated()){
+            //        event.preventDefault();
+            //        $state.go('access.signin');
+            //    }
+            //    if(next.access !== undefined){
+            //        if(!AuthService.IsAuthorized(next.access)){
+            //            event.preventDefault();
+            //            //TODO:跳转到权限提示页
+            //        }
+            //
+            //    }
+            //});
+        }
+    ]
+)
+    .config(['$stateProvider', '$urlRouterProvider','MAIN_CONFIG',function($stateProvider, $urlRouterProvider,MAIN_CONFIG){
     $urlRouterProvider
         .otherwise('/app/home');
     $stateProvider
@@ -69,7 +93,8 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
         })
         .state('app.partner_details',{
             url:'/partner_details',
-            templateUrl:'modules/partner_details/view/partner_details.html'
+            templateUrl:'modules/partner_details/view/partner_details.html',
+            resolve:load('modules/partner_details/controller/partner_details.js')
         })
         .state('app.partner_insert',{
             url:'/partner_insert',
@@ -139,10 +164,11 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/storeroom',
             templateUrl:'modules/storeroom/view/storeroom.html'
         })
-                .state('app.task',{
+        .state('app.task',{
             url:'/task',
-            templateUrl:'modules/task/view/task.html'
-
+            templateUrl:'modules/task/view/task.html',
+            controller:'taskController',
+            resolve:load('modules/task/controller/task.js')
         })
         .state('app.nominate',{
             url:'/nominate',
@@ -158,4 +184,68 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
         })
 
 
-}]);
+        function load(srcs, callback) {
+        return {
+            deps: ['$ocLazyLoad', '$q',
+                function ($ocLazyLoad, $q) {
+                    var deferred = $q.defer();
+                    var promise = false;
+                    srcs = angular.isArray(srcs) ? srcs : srcs.split(/\s+/);
+                    if (!promise) {
+                        promise = deferred.promise;
+                    }
+                    angular.forEach(srcs, function (src) {
+                        promise = promise.then(function () {
+                            angular.forEach(MAIN_CONFIG, function (module) {
+                                if (module.name == src) {
+                                    if (!module.module) {
+                                        name = module.files;
+                                    } else {
+                                        name = module.name;
+                                    }
+                                } else {
+                                    name = src;
+                                }
+                            });
+                            return $ocLazyLoad.load(name);
+                        });
+                    });
+                    deferred.resolve();
+                    return callback ? promise.then(function () { return callback(); }) : promise;
+                }]
+        }
+    }
+}])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

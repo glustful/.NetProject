@@ -58,12 +58,13 @@ angular.module("app").controller('ContentDetailController',['$http','$scope','$s
     });
 }]);
 
-angular.module("app").controller('ContentCreateController',['$http','$scope','$state',function($http,$scope,$state){
+angular.module("app").controller('ContentCreateController',['$http','$scope','$state','FileUploader',function($http,$scope,$state, FileUploader){
     $scope.ContentModel = {
         Id: 0,
         Title: '',
         Status: '0',
         Content:'',
+        TitleImg:'',
         ChannelId: 0,
         AddUser:0
     };
@@ -87,11 +88,20 @@ angular.module("app").controller('ContentCreateController',['$http','$scope','$s
     $scope.closeAlert = function(index) {
         $scope.alerts.splice(index, 1);
     };
+    var uploader = $scope.uploader = new FileUploader({
+        url: SETTING.ApiUrl+'/Resource/Upload',
+        'withCredentials':true
+    })
+    uploader.onSuccessItem = function(fileItem, response, status, headers) {
+        console.info('onSuccessItem', fileItem, response, status, headers);
+        $scope.ContentModel.TitleImg=response.Msg;
+    };
 }]);
 
 angular.module("app").controller('ContentEditController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
     $http.get(SETTING.ApiUrl + '/Content/Detailed/' + $stateParams.id,{'withCredentials':true}).success(function(data){
         $scope.ContentModel =data;
+        $scope.titleImg = SETTING.ImgUrl+ data.TitleImg;
     });
 
     $http.get(SETTING.ApiUrl + '/Channel/Index',{'withCredentials':true}).success(function(data){
