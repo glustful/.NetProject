@@ -17,6 +17,9 @@ namespace Trading.Entity.Mappings.ProductBrand
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upduser).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Updtime).HasColumnType("datetime");
+		    Property(c => c.SubTitle).HasColumnType("varchar").HasMaxLength(900);
+		    Property(c => c.Content).HasColumnType("varchar").HasMaxLength(900);
+		    HasOptional(c => c.Father);
 		}
 	}
 }

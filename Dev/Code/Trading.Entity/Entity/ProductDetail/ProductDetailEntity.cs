@@ -58,5 +58,11 @@ namespace Trading.Entity.Model
 		/// UpdTime
 		/// </summary>
 		public virtual DateTime Updtime { get; set; }
+
+        public string Ad1 { get; set; }
+
+        public string Ad2 { get; set; }
+
+        public string Ad3 { get; set; }
 	}
 }
