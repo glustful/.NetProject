@@ -19,19 +19,19 @@ namespace CRM.Entity.Model
 		/// </summary>
 		public virtual int PresenteebId { get; set; }
 		/// <summary>
-		/// 经纪人名
+		/// 被推荐经纪人名
 		/// </summary>
 		public virtual string Brokername { get; set; }
 		/// <summary>
-		/// 电话
+        ///  被推荐经纪人电话
 		/// </summary>
 		public virtual int Phone { get; set; }
 		/// <summary>
-		/// QQ
+        ///  被推荐经纪人QQ
 		/// </summary>
 		public virtual int Qq { get; set; }
 		/// <summary>
-		/// 经纪人等级
+        ///  被推荐经纪人经纪人等级
 		/// </summary>
 		public virtual string Agentlevel { get; set; }
 		/// <summary>

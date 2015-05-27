@@ -8,9 +8,11 @@ using CRM.Service.MessageDetail;
 using CRM.Entity.Model;
 using Zerg.Common;
 using Zerg.Models.CRM;
+using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.CRM
 {
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 短信发送明细
     /// </summary>
@@ -32,20 +34,36 @@ namespace Zerg.Controllers.CRM
         /// <param name="Ids"></param>
         /// <param name="AddtimeBegin"></param>
         /// <param name="AddtimeEnd"></param>
-        /// <returns></returns>
-        [System.Web.Http.HttpPost]
-        public List<MessageDetailEntity> SearchMessageDetail(MessageDetailModel messageDetailModel)
+        /// <returns></returns> 
+        [HttpGet]
+        public HttpResponseMessage SearchMessageDetail(string endTime, string page, string pageSize, string startTime, string totalPage, string type)
         {
+            //================================================赵旭初 by 2015-05-13 start===============================================================
+            string strStarttime = "";
+            string strEndtime = "";
+            string strType = "";
+
+            if (startTime == null || startTime.Length <= 0) strStarttime = "1900-01-01";
+            else strStarttime = startTime.Substring(0, 10);
+            if (endTime == null || endTime.Length <= 0)
+                strEndtime = string.Format(DateTime.Now.ToShortDateString(), "yyyy-mm-dd");
+            else
+                strEndtime = endTime.Substring(0, 10);
+            strType = type;
+
+
             var mDetailCondition = new MessageDetailSearchCondition()
             {
+                AddtimeBegin = Convert.ToDateTime(strStarttime),
+                AddtimeEnd = Convert.ToDateTime(strEndtime), 
 
-                AddtimeBegin = messageDetailModel.AddtimeBegin,
-                AddtimeEnd = messageDetailModel.AddtimeEnd,
-                Title = messageDetailModel.Title 
+                Title = strType
 
             };
+            var list = _messageDetailService.GetMessageDetailsByCondition(mDetailCondition).Select(c => new { c.Id, c.Title, c.Sender, c.Mobile, c.Content }).ToList();
 
-            return  _messageDetailService.GetMessageDetailsByCondition(mDetailCondition).ToList();
+            return PageHelper.toJson(list);
+            //================================================赵旭初 by 2015-05-13 end===============================================================
         }
 
 
@@ -78,7 +96,7 @@ namespace Zerg.Controllers.CRM
 
                 try
                 {
-                    if (  _messageDetailService.Create(MessageDetailInsert) != null)
+                    if (_messageDetailService.Create(MessageDetailInsert) != null)
                     {
                         return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
                     }

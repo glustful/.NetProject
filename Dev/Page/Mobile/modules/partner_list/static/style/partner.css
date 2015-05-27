@@ -1,8 +1,5 @@
 
-.fl{
-    float:left;
-}
-.content p{
+.list_content p{
     margin-left: 30px;
     font-weight:600;
 }
@@ -40,7 +37,7 @@ ul li{
     background-color: #ffffff;
     border: hidden;
 }
-/*合伙人详情*/
+/*?????????*/
 .detail_content{
     margin: 56px 25px 0 30px;
     background-color: white;
@@ -48,10 +45,10 @@ ul li{
 }
 
 .partner_mark{
-    clear: both;
     margin-top: 80px;
+    margin-left: 30px;
 }
-.information{
+.partner_information{
    margin-left: 27px;
     margin-right: 106px;
 }
@@ -60,12 +57,12 @@ ul li{
     margin-right: 260px;
     color: #fc3b00;
 }
-.information span {
+.partner_information span {
     color: #848484;
 }
-/*添加合伙人*/
+/*???????*/
 .add_content{
-    margin: 20px 55px 0 20px;
+    padding: 30px 0 600px 50px;
 }
 .add_blank{
     width: 516px;
@@ -84,8 +81,20 @@ ul li{
     font-family: "microsoft yahei";
     color: white;
 }
-.tips{
-    font-size: 16px;
-    color: #fc3b00;
+.list_content .addPartners{
+    background-color:#fff;
+    padding-top: 450px;
 }
-
+.list_content .addPartners p{
+    text-align: center;
+    width: 600px;
+    height: 80px;
+    line-height: 80px;
+    border: 3px solid #ebebeb;
+    border-radius: 5px;
+    margin: 0 auto;
+   font-size: 2em;
+}
+.list_content .addPartners p a{
+   color:#fc3b00;
+}

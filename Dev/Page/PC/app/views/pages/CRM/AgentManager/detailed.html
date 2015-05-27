@@ -1,3 +1,4 @@
+<div ng-controller="configureDetailedController">
 <ul class="nav nav-tabs">
     <li class="">
         <a href="" data-toggle="tab" data-target="#tab1" aria-expanded="false">个人信息</a>
@@ -16,86 +17,61 @@
     </li>
 </ul>
 <div class="tab-content p b-a no-b-t bg-white m-b-md">
-    <div role="tabpanel" class="tab-pane animated fadeIn" id="tab1">
+
+    <div role="tabpanel" class="tab-pane animated fadeIn " id="tab1">
         <div class="md-list-item">
             <div class="md-list-item-left">
-                <img src="images/a0.jpg" class="w-full circle">
+                <img src="{{BrokerModel.Headphoto}}" class="w-full circle">
             </div>
-            <div class="md-list-item-content details">
-                <div><small>都是望角</small><small>白银</small></div>
-                <div><small>注册账号</small><small>张杰</small></div>
-                <div><small>积分总额</small><small>800元</small></div>
+            <div class="md-list-item-content details"  >
+                <div><small>{{BrokerModel.Nickname}}</small><small> {{BrokerModel.Brokername}}</small></div>
+                <div><small>{{BrokerModel.Realname}}</small><small>{{BrokerModel.Sexy}}</small></div>
+                <div><small>积分总额：{{BrokerModel.Totalpoints}}</small><small>账户余额：{{BrokerModel.Amount}}</small></div>
             </div>
         </div>
         <table class="table">
 
 
             <tr>
-                <td>电话</td>
-                <td>QQ</td>
-                <td>邮箱</td>
+                <td>电话：{{BrokerModel.Phone}}</td>
+                <td>QQ：{{BrokerModel.Qq}}</td>
+                <td>邮箱：{{BrokerModel.Email}}</td>
             </tr>
             <tr>
-                <td>身份证</td>
-                <td>性别</td>
-                <td>注册时间</td>
+                <td>身份证：{{BrokerModel.Sfz}}</td>
+                <td>性别：{{BrokerModel.Sexy}}</td>
+                <td>注册时间：{{BrokerModel.Regtime}}</td>
 
             </tr>
             <tr>
-                <td>用户类型</td>
-                <td>状态</td>
-                <td>所属合伙人</td>
+                <td>用户类型{{BrokerModel.Usertype}}</td>
+                <td>状态：{{BrokerModel.State}}</td>
+                <td>所属合伙人：{{BrokerModel.PartnersId}}</td>
 
             </tr>
 
         </table>
-        <div>详细地址：昆明市盘龙区穿金路金尚国际A座</div>
+        <div>{{BrokerModel.Address}}</div>
 
     </div>
+
     <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab2">
-        <div class="row">
+        <div class="row"  style="display: none">
             <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入搜索条件" ng-model="contact.name" required="" tabindex="0" aria-required="true" aria-invalid="true">
             <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入电话号码" ng-model="contact.name" required="" tabindex="0" aria-required="true" aria-invalid="true">
             <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">搜索<div class="md-ripple-container"></div></button>
         </div>
+
+
+
+
+
+        <div ng-repeat="item in listCRZ">
         <div class="row border">
             <div class="col-md-6">
-                <div class="col-md-4">1</div>
-                <div class="col-md-4">￥4500</div>
-                <div class="col-md-4">描述</div>
-            </div>
-            <div class="col-lg-6">
-                <div class="col-md-6">2015.5.12</div>
-                <div class="col-md-6">李晓光</div>
-            </div>
-        </div>
-        <div class="row border">
-            <div class="col-md-6">
-                <div class="col-md-4">2</div>
-                <div class="col-md-4">￥4500</div>
-                <div class="col-md-4">描述</div>
-            </div>
-            <div class="col-md-6">
-                <div class="col-md-6">2015.5.12</div>
-                <div class="col-md-6">李晓光</div>
-            </div>
-        </div>
-        <div class="row border">
-            <div class="col-md-6">
-                <div class="col-md-4">3</div>
-                <div class="col-md-4">￥4500</div>
-                <div class="col-md-4">描述</div>
-            </div>
-            <div class="col-lg-6">
-                <div class="col-md-6">2015.5.12</div>
-                <div class="col-md-6">李晓光</div>
-            </div>
-        </div>
-        <div class="row border">
-            <div class="col-md-6">
-                <div class="col-md-4">4</div>
-                <div class="col-md-4">￥4500</div>
-                <div class="col-md-4">描述</div>
+                <div class="col-md-4">{{item.Id}}</div>
+                <div class="col-md-4">￥{{item.Balancenum}}</div>
+                <div class="col-md-4">{{item.MoneyDesc}}</div>
             </div>
             <div class="col-lg-6">
                 <div class="col-md-6">2015.5.12</div>
@@ -103,7 +79,14 @@
             </div>
         </div>
 
+            <div colspan="5" class="text-center footable-visible">
+                <pagination boundary-links="true" total-items="totalCountCRZ" items-per-page="searchCRZCondition.pageSize" ng-model="searchCRZCondition.page" ng-change="getCRZList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+
+            </div>
+        </div>
+
     </div>
+
     <div role="tabpanel" class="tab-pane animated fadeIn" id="tab3">
         <div class="row">
             <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入搜索条件" ng-model="contact.name" required="" tabindex="0" aria-required="true" aria-invalid="true">
@@ -136,6 +119,7 @@
         </div>
 
     </div>
+
     <div role="tabpanel" class="tab-pane animated fadeIn" id="tab4">
         <div class="row">
             <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入搜索条件" ng-model="contact.name" required="" tabindex="0" aria-required="true" aria-invalid="true">
@@ -163,6 +147,7 @@
             <div class="col-md-4">中国银行云南盘龙支行</div>
         </div>
     </div>
+
     <div role="tabpanel" class="tab-pane animated fadeIn" id="tab5">
         <div class="row">
             <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入搜索条件" ng-model="contact.name" required="" tabindex="0" aria-required="true" aria-invalid="true">

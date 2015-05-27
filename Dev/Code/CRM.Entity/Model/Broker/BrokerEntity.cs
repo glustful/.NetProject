@@ -56,7 +56,12 @@ namespace CRM.Entity.Model
 		/// 邮编
 		/// </summary>
 		public virtual int Zip { get; set; }
-		/// <summary>
+        /// <summary>
+        /// 邮箱
+        /// </summary>
+	    public virtual string Email { get; set; }
+
+	    /// <summary>
 		/// 头像
 		/// </summary>
 		public virtual string Headphoto { get; set; }
@@ -81,7 +86,7 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// 用户类型（会员 经纪人 财务 小秘书）
 		/// </summary>
-		public virtual string Usertype { get; set; }
+		public virtual EnumUserType Usertype { get; set; }
 		/// <summary>
 		/// 详细地址
 		/// </summary>
@@ -126,28 +131,5 @@ namespace CRM.Entity.Model
 		/// UpTime
 		/// </summary>
 		public virtual DateTime Uptime { get; set; }
-
-
-        /// <summary>
-        /// 用户类型枚举 （经纪人 broker  ，  管理员 manager）
-        /// </summary>
-        public enum EnumUserType
-        {
-            // 经纪人 broker  ，  管理员 manager
-            broker = 0,
-            manager = 1         
-        }
-
-
-        /// <summary>
-        /// 用户状态 （删除0 注销-1 正常1）
-        /// </summary>
-        public enum EnumUserState
-        {
-            Delete = 0,
-            Cancel = -1,
-            OK=1
-        }
-
 	}
 }

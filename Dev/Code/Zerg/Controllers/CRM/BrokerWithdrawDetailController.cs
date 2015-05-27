@@ -7,11 +7,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
-
+   [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 经纪人提现明细  李洪亮  2015-05-05
     /// </summary>
@@ -34,13 +35,31 @@ namespace Zerg.Controllers.CRM
       /// <returns></returns>
 
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetBrokerWithdrawDetailListByUserId(string userId)
+        public HttpResponseMessage GetBrokerWithdrawDetailListByUserId(string userId = null, int page = 1, int pageSize = 10)
         {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误！"));
+            }
+
             var brokerwithdrawdetailcon = new BrokerWithdrawDetailSearchCondition
             {
-               Brokers=_brokerService.GetBrokerById(Convert.ToInt32(userId))
+                Brokers = _brokerService.GetBrokerById(Convert.ToInt32(userId)),
+                Page = Convert.ToInt32(page),
+                PageCount = pageSize
             };
-            return PageHelper.toJson(_brokerwithdrawdetailService.GetBrokerWithdrawDetailsByCondition(brokerwithdrawdetailcon).ToList());
+            var PointDetailList = _brokerwithdrawdetailService.GetBrokerWithdrawDetailsByCondition(brokerwithdrawdetailcon).Select(p => new
+            {
+                Id = p.Id,
+                bankname=p.BankCard.Bank.Codeid,
+                banknumber= p.BankCard.Num,
+                p.Withdrawnum,
+                p.Withdrawtime
+
+            }).ToList();
+            var PointDetailListCount = _brokerwithdrawdetailService.GetBrokerWithdrawDetailCount(brokerwithdrawdetailcon);
+            return PageHelper.toJson(new { List = PointDetailList, Condition = brokerwithdrawdetailcon, totalCount = PointDetailListCount });       
+       
         }
 
         /// <summary>

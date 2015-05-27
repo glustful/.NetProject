@@ -36,12 +36,12 @@ namespace CRM.Entity.Model
 
 		public string Name { get; set; }
 
-
+        public string NameRe { get; set; }
 
 		public string Describe { get; set; }
 
 
-
+        public int taskId { get; set; }
 
 		public EnumTaskTypeSearchOrderBy? OrderBy { get; set; }
 

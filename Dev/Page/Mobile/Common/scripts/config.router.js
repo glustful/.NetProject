@@ -79,6 +79,10 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/partner_insert1',
             templateUrl:'modules/partner_insert1/view/partner_insert1.html'
         })
+        .state('app.groom',{
+            url:'/groom',
+            templateUrl:'modules/groom/view/groom.html'
+        })
         .state('app.houseDetail',{
             url:'/houseDetail',
             templateUrl:'modules/houseDetail/view/houseDetail.html'
@@ -135,4 +139,55 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/storeroom',
             templateUrl:'modules/storeroom/view/storeroom.html'
         })
-}]);
+                .state('app.task',{
+            url:'/task',
+            templateUrl:'modules/task/view/task.html'
+
+        })
+        .state('app.nominate',{
+            url:'/nominate',
+            templateUrl:'modules/nominate/view/nominate.html'
+        })
+        .state('app.carry_client',{
+            url:'/carry_client',
+            templateUrl:'modules/carry_client/view/carry_client.html'
+        })
+        .state('app.credit_add',{
+            url:'/credit_add',
+            templateUrl:'modules/credit_add/view/credit_add.html'
+        })
+
+}])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

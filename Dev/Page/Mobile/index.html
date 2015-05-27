@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>首页</title>
-    <meta name="viewport" content="width=640,user-scalable=no" />
+    <meta name="viewport" content="width=640,user-scalable=no" initial-scale=1.0/>
     <link href="Common/static/style/common.css" rel="stylesheet" type="text/css" />
     <link href= "modules/Index/static/style/index.css" rel="stylesheet" type="text/css" />
     <link href= "modules/activity/static/style/activity.css" rel="stylesheet" type="text/css" />
@@ -24,11 +24,14 @@
     <link href= "modules/takeOff/static/style/takeOff.css" rel="stylesheet" type="text/css" />
     <link href= "modules/redPaper-1/static/style/redPaper.css" rel="stylesheet" type="text/css" />
     <link href= "modules/storeroom/static/style/storeroom.css" rel="stylesheet" type="text/css" />
-    <!--<link href= "modules/syj/static/style/syj.css" rel="stylesheet" type="text/css" />-->
-
     <link href= "modules/zhongtian_HouseDetail/static/style/zhongtian_HouseDetail.css" rel="stylesheet" type="text/css" />
-    <!--<link href="modules/partner_list/static/style/partner.css" rel="stylesheet" type="text/css"/>-->
-    <!--<link href="modules/security_setting/static/style/setting.css" rel="stylesheet" type="text/css"/>-->
+    <link href="modules/partner_list/static/style/partner.css" rel="stylesheet" type="text/css"/>
+    <link href="modules/security_setting/static/style/setting.css" rel="stylesheet" type="text/css"/>
+   <link href="modules/credit_add/static/style/credit_add.css" rel="stylesheet" type="text/css"/>
+    <link href="modules/groom/static/style/groom.css" rel="stylesheet" type="text/css"/>
+    <link href="modules/task/static/style/task.css" rel="stylesheet" type="text/css"/>
+    <link href="modules/nominate/static/style/nominate.css" rel="stylesheet" type="text/css"/>
+ 
 </head>
 <body ng-app="zergApp" ng-controller="appController">
     <div ui-view></div>
@@ -51,6 +54,8 @@
     <!-- App -->
     <script src="app.js"></script>
     <script src="Common/scripts/config.router.js"></script>
+    <script src="modules/task/controller/task.js"></script>
+    <script src="modules/partner_details/controller/partner_details.js"></script>
 
 </body>
 <!--<body ng-app="routeApp">-->

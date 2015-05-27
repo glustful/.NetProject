@@ -33,22 +33,21 @@
     border-bottom: 1px solid #e2e2e2;
 }
 .message-storeroom{
-    margin:0 0 20px 20px;
+    margin:0 0 20px 0;
 }
  .main-storeroom{
     background: #fff;
     padding:20px 0 15px 15px;
-    border: 1px solid #e2e2e2;
-    border-right: none;
+    border-bottom: 1px solid #e2e2e2;
 }
  .detail-storeroom{
-    padding-left: 20px;
     width: 350px;
 }
 .yhy{
     padding: 5px 0 20px 0;
     color: #333333;
     border-bottom:1px solid #ebebeb;
+    font-size: 1.2em;
 }
 .yuan{
   padding-top:20px;
@@ -86,9 +85,4 @@
 }
  .sub-nav-storeroom .int-storeroom{
     border-right: none;
-}
- .show-half{
-    height: 77px;
-    overflow: hidden;
-    margin-bottom: 0;
 }

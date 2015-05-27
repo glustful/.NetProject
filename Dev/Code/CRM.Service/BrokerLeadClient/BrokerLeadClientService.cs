@@ -109,9 +109,9 @@ namespace CRM.Service.BrokerLeadClient
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null)
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q =>q.Broker.Id== condition.Brokers.Id);
                 }
 				if (condition.ClientInfos != null && condition.ClientInfos.Any())
                 {
@@ -190,9 +190,9 @@ namespace CRM.Service.BrokerLeadClient
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null)
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q =>q.Broker.Id== condition.Brokers.Id);
                 }
 				if (condition.ClientInfos != null && condition.ClientInfos.Any())
                 {
