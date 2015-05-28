@@ -63,7 +63,7 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 新增积分详情
+        /// 新增详情
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>

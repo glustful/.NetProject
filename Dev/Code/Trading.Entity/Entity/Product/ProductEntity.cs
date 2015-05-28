@@ -82,5 +82,13 @@ namespace Trading.Entity.Model
 		/// UpdTime
 		/// </summary>
 		public virtual DateTime Updtime { get; set; }
+        /// <summary>
+        /// 副标题
+        /// </summary>
+        public string SubTitle { get; set; }
+        /// <summary>
+        /// 联系电话
+        /// </summary>
+        public string ContactPhone { get; set; }
 	}
 }

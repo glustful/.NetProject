@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using CMS.Entity.Model;
 using CMS.Service.Resource;
 using YooPoon.Core.Site;
@@ -12,6 +18,8 @@ using Zerg.Common.Oss;
 
 namespace Zerg.Controllers.CMS
 {
+    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class ResourceController : ApiController
     {
         
@@ -53,13 +61,60 @@ namespace Zerg.Controllers.CMS
                 if (item.Headers.ContentDisposition.FileName != null)
                 {
                     var ms = item.ReadAsStreamAsync().Result;
+
+                    //double size = ms.Length/1024;
+                    //int maxSize = 50;
+                    //int maxWidth = 640;
+                    //int maxHeight = 200;
+                    //if (size > maxSize)
+                    //{
+                    //Image img = Image.FromStream(ms);
+                    //    int imgWidth = img.Width;
+                    //    int imgHeight = img.Height;
+                    //    if (imgWidth > imgHeight)
+                    //    {
+                    //        if (imgWidth > maxWidth)
+                    //        {
+                    //            float toImgWidth = maxWidth;
+                    //            //float toImgHeight = imgHeight / (imgWidth / toImgWidth);
+                    //            // float toImgHeight = toImgWidth*imgHeight/imgWidth;
+                    //            float toImgHeight = imgHeight * (toImgWidth / imgWidth);
+                    //            // Bitmap newImg=new Bitmap(img,int.Parse(toImgWidth.ToString()),int.Parse(toImgHeight.ToString()));
+                    //            Bitmap newImg = new Bitmap(img, Convert.ToInt16(toImgWidth), Convert.ToInt16(toImgHeight));
+
+                    //            MemoryStream stream = new MemoryStream();
+                    //            //newImg.Save(stream, newImg.RawFormat);                               
+                    //            newImg.Save(stream, ImageFormat.Png);
+                    //            ms = stream;
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        if (imgHeight > maxHeight)
+                    //        {
+                    //            float toImgHeight = maxHeight;
+                    //            float toImgWidth = imgWidth / (imgHeight / toImgHeight);
+                    //            var newImg = new Bitmap(img, int.Parse(toImgWidth.ToString()), int.Parse(toImgHeight.ToString()));
+                    //            MemoryStream stream = new MemoryStream();
+                    //            newImg.Save(stream, newImg.RawFormat);
+                    //            ms = stream;
+                    //        }
+                    //    }
+
+                    //}
                     var fileLength = ms.Length;
                     var info = new FileInfo(item.Headers.ContentDisposition.FileName.Replace("\"", ""));
-
-
+                    var allowFomat = new[] {".png",".jpg",".jepg",".gif"};
+                    var isImage = allowFomat.Contains(info.Extension.ToLower());
                     var fileNewName = GetUniquelyString();
+
+                    //保存至OSS
                     var key = OssHelper.PutObject(ms, fileNewName + info.Extension);
-                   
+                    if (isImage)
+                    {
+                        OssHelper.PutThumbnaiObject(ms, fileNewName + info.Extension);
+                    }
+                  
                     var resource = new ResourceEntity
                     {
                         Guid = Guid.NewGuid(),
