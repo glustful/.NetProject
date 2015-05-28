@@ -49,8 +49,12 @@ namespace Zerg.Controllers.CRM
                 Id = p.Id,
                 PartnersName = p.PartnersName,
                 PartnersId = p.PartnersId,
-                BrokerName = p.Brokername
-            }).ToList();
+                BrokerName = p.Brokername,
+                Phone = p.Phone,
+                Regtime = p.Regtime,
+                Agentlevel = p.Agentlevel
+
+            });
             var partnerListCount = _brokerService.GetBrokerCount(brokerSearchCondition);
             return PageHelper.toJson(new { List = partnerList, Condition = brokerSearchCondition, totalCount = partnerListCount });
              
@@ -73,7 +77,9 @@ namespace Zerg.Controllers.CRM
                 {
                  Name=p.Brokername,
                  AddTime =p.Addtime,
-                 regtime=p.Regtime 
+                 regtime=p.Regtime, 
+                 Phone=p.Phone,
+                Headphoto= p.Broker .Headphoto ,
 
                 }).ToList();
             return PageHelper.toJson(new { list = partnerList });
@@ -94,7 +100,7 @@ namespace Zerg.Controllers.CRM
                     Agentlevel = "",
                     Brokername = "",
                     PartnerId = 0,
-                    Phone = 0,
+                    Phone =partnerList .Phone ,
                     Regtime = DateTime.Now,
                     Broker = null,
                     Uptime = DateTime.Now,

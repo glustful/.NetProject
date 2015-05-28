@@ -3,10 +3,10 @@
     <div class="list_content" ng-controller="partnerListController" >
         <ul>
 
-            <li ng-repeat="item in list"><a href="#/app/partner_details" ><button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
-                <span class="name">{{item.Name}}</span>
+            <li ng-repeat="item in list"><a href="#/app/partner_details?userId={{item.Id}}"> <button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
+                <span class="name">{{item.PartnersName}}</span>
                 <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
-                </button>
+            </button>
             </a></li>
 
         </ul>

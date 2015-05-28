@@ -68,7 +68,7 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             templateUrl:'modules/partner_list/view/partner_list.html'
         })
         .state('app.partner_details',{
-            url:'/partner_details',
+            url:'/partner_details?userId',
             templateUrl:'modules/partner_details/view/partner_details.html'
         })
         .state('app.partner_insert',{

@@ -1,33 +1,35 @@
 <!--合伙人详情-->
 <!--required：../static/style/partner.css-->
 
-    <div class="detail_content">
+    <div class="detail_content cf " ng-controller="partnerDetailedController">
             <div class="partner_face fl">
-                <a href="#"><img src="modules/partner_list/static/image/partner/face.png"></a>
-            </div>
-            <div class="partner_information fl">
+                <a href="#" class="fl"><img ng-bind="item.Headphoto" src="modules/partner_list/static/image/partner/face.png"></a>
+                <div class="partner_information fl" ng-repeat="item in list">
                 <p>
-                  姓名：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>杨婷</span>
+                  姓名：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{item.Name}}</span>
                 </p>
                 <p>
-                    电话：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>13629609670</span>
+                    电话：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{item.Phone}}</span>
                 </p>
+
                 <p>
-                   职业：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>自由职业</span>
-                </p>
-                <p>
-                    注册日期：<span>2015-4-30</span>
+                    注册日期：<span>{{item.regtime}}</span>
                 </p>
             </div>
-            <div class="partner_grade fl">
+                </div>
+            <div class="partner_grade fr">
                 <img src="modules/partner_list/static/image/partner/grade.png">
             </div>
         </div>
-        <div class="partner_mark fl">
-            <p>
-                <span class="devotevalue">贡献值</span>
-                <span class="mark">800</span>
-                <span class="means">如何提高贡献值？</span>
-            </p>
-        </div>
+
+<div class="partner_mark ">
+    <p>
+        <span class="devotevalue">贡献值</span>
+        <span class="mark">800</span>
+        <span class="means">如何提高贡献值？</span>
+    </p>
+</div>
+<div class="addPartners">
+    <p><a href="#/app/partner_insert">添加合伙人</a></p>
+</div>
 
