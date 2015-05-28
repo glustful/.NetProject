@@ -54,7 +54,7 @@ namespace Zerg.Controllers.CRM
                 a.Brokername,
                 a.Brokerlevel,
                 a.ClientInfo.Phone,
-                a.Projectname,
+                a.Projectname, 
                 a.Addtime,
 
                 a.Clientname,
@@ -70,6 +70,17 @@ namespace Zerg.Controllers.CRM
 
             return PageHelper.toJson(new { list1 = list, condition1 = condition, totalCont1 = totalCont });
         }
+
+        /// <summary>
+        /// 添加新用户
+        /// </summary>
+        /// <param name="brokerModel"></param>
+        /// <returns></returns>
+        public HttpResponseMessage AddBroker([FromBody]BrokerModel brokerModel)
+        {
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "Id不能为空"));
+        }
+
         #endregion
 
         #region 待审核业务处理 杨定鹏 2015年5月5日16:28:30
