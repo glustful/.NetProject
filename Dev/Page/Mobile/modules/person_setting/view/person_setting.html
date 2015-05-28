@@ -7,25 +7,25 @@
                    </div>
                    <p><a href="#">头像修改</a> </p>
                </div>
-               <div class="person_revise">
+               <div class="person_revise" ng-controller="personsettingController">
                    <form>
                        <p>
                            姓名
                        </p>
-                       <p><input type="" class="password old" placeholder="用户名"/><br/></p>
+                       <p><input type="" class="password old" placeholder="用户名" value="{{users.Brokername}}"/><br/></p>
                        <p>
                            电话
                        </p>
-                       <p><input type="" class="password old" placeholder="用户手机号码"/><br/></p>
+                       <p><input type="" class="password old" placeholder="用户手机号码"value="{{users.Phone}}"/><br/></p>
                        <p>
                            身份证
                        </p>
-                       <p><input type="" class="password old" placeholder="保护账号安全"/><br/></p>
+                       <p><input type="" class="password old" placeholder="保护账号安全" value="{{users.Sfz}}"/><br/></p>
                        <p>
                            银行卡
                        </p>
                        <p> <input type="" class="password old" placeholder="绑定银行卡"/><br/></p>
-                       <p><button class="save_button">保存</button></p>
+                       <p><button class="save_button" ng-click="save()">保存</button></p>
                    </form>
                </div>
            </div>
