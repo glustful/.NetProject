@@ -14,6 +14,7 @@ namespace Zerg.Controllers.CRM
 {
 
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    [AllowAnonymous]
     /// <summary>
     /// 经纪人管理  李洪亮  2015-05-04
     /// </summary>
@@ -103,7 +104,7 @@ namespace Zerg.Controllers.CRM
             {
                 var brokerEntity = new BrokerEntity
                 {
-                    Brokername=broker.Brokername,                   
+                    Brokername=broker.Brokername,
                     Uptime = DateTime.Now,
                     Addtime = DateTime.Now,
 
@@ -134,7 +135,7 @@ namespace Zerg.Controllers.CRM
         [System.Web.Http.HttpPost]
         public HttpResponseMessage UpdateBroker([FromBody] BrokerEntity broker)
         {
-            if (broker != null && !string.IsNullOrEmpty(broker.Id.ToString()) && PageHelper.ValidateNumber(broker.Id.ToString()) && !string.IsNullOrEmpty(broker.Brokername))
+            if (broker != null && !string.IsNullOrEmpty(broker.Id.ToString()) && PageHelper.ValidateNumber(broker.Id.ToString()) )
             {
                 var brokerModel = _brokerService.GetBrokerById(broker.Id);
                 brokerModel.Uptime = DateTime.Now;
