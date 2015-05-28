@@ -649,7 +649,7 @@ angular.module('app')
                 url: '/create',
                 templateUrl: 'views/pages/CRM/AdmMan/create.html',
                 data: { title: '新建管理员账号' },
-                controller:"configureDetailedController",
+                controller:"UserCreateController",
                 resolve:load('scripts/controllers/CRM/AdmMan.js')
             })
 
