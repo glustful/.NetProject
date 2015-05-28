@@ -12,7 +12,7 @@ using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
-
+    [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 经纪人管理  李洪亮  2015-05-04
@@ -209,7 +209,27 @@ namespace Zerg.Controllers.CRM
         }
 
 
+        /// <summary>
+        /// 经纪人排行 返回前10条
+        /// </summary>
+        /// <returns></returns>
 
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage  OrderByBrokerList()
+        {
+          
+
+            var brokersList = _brokerService.OrderbyBrokersList().Select(p => new
+            {
+                p.Id,
+                p.Brokername,
+                p.Agentlevel,
+                p.Amount
+
+            }).ToList();
+            
+            return PageHelper.toJson(new { List = brokersList});
+        }
 
 
         #endregion

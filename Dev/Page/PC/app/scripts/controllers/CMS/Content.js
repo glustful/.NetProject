@@ -53,6 +53,7 @@
 ]);
 
 angular.module("app").controller('ContentDetailController',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+    $http.get(SETTING.ApiUrl + '/Content/Detailed/' + $stateParams.id,{'withCredentials':true}).success(function(data){
     $http.get(SETTING.ApiUrl + '/Content/Detailed/' + $stateParams.id,{ 'withCredentials':true}).success(function(data){
        $scope.ContentModel =data;
     });

@@ -21,6 +21,7 @@ angular.module("app").controller('CInfoListController', [
                 $scope.searchCondition.page=data.condition1.Page;
                 $scope.searchCondition.PageCount=data.condition1.PageCount;
                 $scope.searchCondition.totalCount=data.totalCont1;
+                console.log(data);
             });
         };
         $scope.getList = getTagList;

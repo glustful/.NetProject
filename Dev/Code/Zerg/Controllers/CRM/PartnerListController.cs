@@ -93,10 +93,28 @@ namespace Zerg.Controllers.CRM
         [System.Web.Http.HttpPost]
         public HttpResponseMessage AddPartnerList([FromBody] PartnerListEntity partnerList)
         {
-            if (partnerList != null)
+            var sech = new BrokerSearchCondition()
             {
-                var entity = new PartnerListEntity
+                Phones = new int[] { partnerList.Phone}
+            };
+            var list = _brokerService.GetBrokersByCondition(sech).First();
+            if (list != null)
+            {
+                if (list.PartnersId != 0)
                 {
+                    if (partnerList != null)
+                    {
+                        var entity = new PartnerListEntity
+                        {
+                            Agentlevel = "",
+                            Brokername = "",
+                            PartnerId = 0,
+                            Phone = 0,
+                            Regtime = DateTime.Now,
+                            Broker = null,
+                            Uptime = DateTime.Now,
+                            Addtime = DateTime.Now,
+                        };
                     Agentlevel = "",
                     Brokername = "",
                     PartnerId = 0,
@@ -107,19 +125,25 @@ namespace Zerg.Controllers.CRM
                     Addtime = DateTime.Now,
                 };
 
-                try
-                {
-                    if (_partnerlistService.Create(entity) != null)
-                    {
-                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                        try
+                        {
+                            if (_partnerlistService.Create(entity) != null)
+                            {
+                                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                            }
+                        }
+                        catch
+                        {
+                            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                        }
                     }
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
                 }
-                catch
-                {
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
-                }
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户已经是别人的合伙人了！"));
             }
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在"));
+
+            
         }
 
 
