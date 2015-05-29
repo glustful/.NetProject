@@ -39,11 +39,12 @@ angular.module("app").controller('configureDetailedController',['$http','$scope'
 angular.module("app").controller('UserCreateController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
 
     $scope.UserModel={
-        UserName:"asd",
-        Password:"123456",
-        Brokername:"asd",
-        Phone:"123",
-        UserType:"管理员"
+
+        Password:"",
+        Brokername:"",
+        Phone:"",
+        UserType:"管理员",
+        UserName:""
     };
 
     $scope.Save = function(){

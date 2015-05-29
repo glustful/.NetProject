@@ -83,6 +83,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="brokerModel"></param>
         /// <returns></returns>
+        [HttpPost]
         public HttpResponseMessage AddBroker([FromBody]BrokerModel brokerModel)
         {
             #region UC用户创建 杨定鹏 2015年5月28日14:52:48
