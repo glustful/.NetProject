@@ -7,8 +7,6 @@
 
 using System;
 using System.Linq;
-using Trading.Entity.Entity.Product;
-using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 using Trading.Entity.Model;
 
