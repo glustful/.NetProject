@@ -6,6 +6,7 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
@@ -78,7 +79,6 @@ namespace Trading.Service.ParameterValue
                 return null;
             }
         }
-
         public IQueryable<ParameterValueEntity> GetParameterValuesByCondition(ParameterValueSearchCondition condition)
         {
             var query = _parametervalueRepository.Table;
@@ -180,14 +180,14 @@ namespace Trading.Service.ParameterValue
         /// <summary>
         /// 获取参数下所有参数值；
         /// </summary>
-        /// <param name="ParameterId"></param>
+        /// <param name="parameterId"></param>
         /// <returns></returns>
-        public IQueryable<ParameterValueEntity> GetParameterValuesByParameter(int ParameterId)
+        public IQueryable<ParameterValueEntity> GetParameterValuesByParameter(int parameterId)
         {
             var query = _parametervalueRepository.Table;
             try
             {
-                query = query.Where(q => q.Parameter.Id == ParameterId);
+                query = query.Where(q => q.Parameter.Id == parameterId);
                 return query.OrderBy(q => q.Id);
             }
             catch (Exception e)

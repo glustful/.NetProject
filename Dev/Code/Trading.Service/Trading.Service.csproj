@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="AgentBill\AgentBillService.cs" />
     <Compile Include="AgentBill\IAgentBillService.cs" />
+    <Compile Include="Area\AreaService.cs" />
+    <Compile Include="Area\IAreaService.cs" />
     <Compile Include="BrandParameter\BrandParameterService.cs" />
     <Compile Include="BrandParameter\IBrandParameterService.cs" />
     <Compile Include="CFBBill\CFBBillService.cs" />
