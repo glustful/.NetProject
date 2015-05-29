@@ -1,4 +1,5 @@
 using System.Linq;
+using Trading.Entity.Entity.Product;
 using Trading.Entity.Model;
 using YooPoon.Core.Autofac;
 

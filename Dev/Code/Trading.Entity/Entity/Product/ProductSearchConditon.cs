@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 using System;
 
 namespace Trading.Entity.Model
@@ -31,7 +23,8 @@ namespace Trading.Entity.Model
 		public int[] Ids { get; set; }
 
 
-
+        public string AreaName { get; set; }
+        public int? TypeId { get; set; }
 
 
 		public ProductDetailEntity[] ProductDetails { get; set; }
