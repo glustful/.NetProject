@@ -48,9 +48,6 @@ angular.module('app')
               },
               'aside': {
                 templateUrl: 'views/aside.html'
-              },
-              'content': {
-                templateUrl: 'views/content.html'
               }
             }
           })
@@ -371,7 +368,9 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+            },
+                service:"AuthService",
+                resolve:load('scripts/services/authentication.js')
           })
             .state('page.profile', {
               url: '/profile',
@@ -422,7 +421,9 @@ angular.module('app')
             })
             .state('access.lockme', {
               url: '/lockme',
-              templateUrl: 'views/pages/lockme.html'
+              templateUrl: 'views/pages/lockme.html',
+                controller: 'LogoutControl',
+                resolve: load('scripts/controllers/UC/Logout.js')
             })
 
             //-------------------------yangbo----------------
@@ -643,6 +644,13 @@ angular.module('app')
               templateUrl: 'views/pages/CRM/AdmMan/detailed.html',
                   data: { title: '详情页' },
                 controller:"configureDetailedController",
+                resolve:load('scripts/controllers/CRM/AdmMan.js')
+            })
+            .state('page.CRM.AdmMan.create', {
+                url: '/create',
+                templateUrl: 'views/pages/CRM/AdmMan/create.html',
+                data: { title: '新建管理员账号' },
+                controller:"UserCreateController",
                 resolve:load('scripts/controllers/CRM/AdmMan.js')
             })
 

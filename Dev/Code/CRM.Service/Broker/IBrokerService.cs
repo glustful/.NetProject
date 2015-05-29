@@ -18,5 +18,11 @@ namespace CRM.Service.Broker
      
 
 		int GetBrokerCount (BrokerSearchCondition condition);
+
+        /// <summary>
+        /// 经纪人排行
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<BrokerEntity> OrderbyBrokersList();
 	}
 }
