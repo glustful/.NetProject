@@ -27,10 +27,9 @@ app.controller('partnerListController',['$http','$scope','$stateParams',function
     $scope.getList = getPartnerList;
     getPartnerList();
     //增加合伙人
-    var addPartner=function(){
-        $http.post(SETTING.ApiUrl+'/PartnerList/AddPartnerList',$scope.addCondition,{'withCredentials':true}).success(function(data){
+    var addPartner=function() {
+        $http.post(SETTING.ApiUrl + '/PartnerList/AddPartnerList', $scope.addCondition, {'withCredentials': true}).success(function (data) {
             console.log(data);
-
         })
     };
     $scope.addPartner1=addPartner;

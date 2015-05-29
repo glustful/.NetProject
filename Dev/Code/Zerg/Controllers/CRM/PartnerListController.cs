@@ -52,8 +52,8 @@ namespace Zerg.Controllers.CRM
                 BrokerName = p.Brokername,
                 Phone = p.Phone,
                 Regtime = p.Regtime,
-                Agentlevel = p.Agentlevel
-
+                Agentlevel = p.Agentlevel,
+                Headphoto=p.Headphoto
             });
             var partnerListCount = _brokerService.GetBrokerCount(brokerSearchCondition);
             return PageHelper.toJson(new { List = partnerList, Condition = brokerSearchCondition, totalCount = partnerListCount });
@@ -95,7 +95,7 @@ namespace Zerg.Controllers.CRM
         {
             var sech = new BrokerSearchCondition()
             {
-                Phones = new int[] { partnerList.Phone}
+                Phones = new int[] { partnerList.Phone }
             };
             var list = _brokerService.GetBrokersByCondition(sech).First();
             if (list != null)
@@ -115,15 +115,6 @@ namespace Zerg.Controllers.CRM
                             Uptime = DateTime.Now,
                             Addtime = DateTime.Now,
                         };
-                    Agentlevel = "",
-                    Brokername = "",
-                    PartnerId = 0,
-                    Phone =partnerList .Phone ,
-                    Regtime = DateTime.Now,
-                    Broker = null,
-                    Uptime = DateTime.Now,
-                    Addtime = DateTime.Now,
-                };
 
                         try
                         {
@@ -143,8 +134,9 @@ namespace Zerg.Controllers.CRM
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在"));
 
-            
+
         }
+
 
 
 

@@ -1,9 +1,12 @@
 <!--合伙人详情-->
 <!--required：../static/style/partner.css-->
+<div class="addPartners">
+    <p><a href="#/app/partner_insert">添加合伙人</a></p>
+</div>
 
     <div class="detail_content cf " ng-controller="partnerDetailedController">
             <div class="partner_face fl">
-                <a href="#" class="fl"><img ng-bind="item.Headphoto" src="modules/partner_list/static/image/partner/face.png"></a>
+                <a href="#" class="fl"><img ng-src="item.Headphoto"></a>
                 <div class="partner_information fl" ng-repeat="item in list">
                 <p>
                   姓名：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{item.Name}}</span>
@@ -29,7 +32,5 @@
         <span class="means">如何提高贡献值？</span>
     </p>
 </div>
-<div class="addPartners">
-    <p><a href="#/app/partner_insert">添加合伙人</a></p>
-</div>
+
 

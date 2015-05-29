@@ -156,6 +156,14 @@ app.config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $url
             url:'/credit_add',
             templateUrl:'modules/credit_add/view/credit_add.html'
         })
+        .state('app.recommendedBroker',{
+            url:'/recommendedBroker',
+            templateUrl:'modules/recommendBroker/view/recommendedBroker.html'
+        })
+        .state('app.addBroker',{
+            url:'/addBroker',
+            templateUrl:'modules/addBroker/view/addBroker.html'
+        })
 
 }])
 
