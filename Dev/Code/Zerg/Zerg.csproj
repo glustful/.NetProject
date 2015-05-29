@@ -186,6 +186,8 @@
     <Compile Include="Controllers\CMS\SettingController.cs" />
     <Compile Include="Controllers\CMS\TagController.cs" />
     <Compile Include="Controllers\CMS\ContentController.cs" />
+    <Compile Include="Controllers\Trading\Area\AreaController.cs" />
+    <Compile Include="Controllers\Trading\Condition\ConditionController.cs" />
     <Compile Include="Controllers\UC\RoleController.cs" />
     <Compile Include="Controllers\UC\UserController.cs" />
     <Compile Include="Controllers\UEditor\Config.cs" />
@@ -234,6 +236,7 @@
     <Compile Include="Models\CMS\ContentModel.cs" />
     <Compile Include="Models\CMS\TagDetailModel.cs" />
     <Compile Include="Models\CMS\TagModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductDetail.cs" />
     <Compile Include="Models\UC\ActionModel.cs" />
     <Compile Include="Models\UC\RoleModel.cs" />
     <Compile Include="Models\UC\UserModel.cs" />

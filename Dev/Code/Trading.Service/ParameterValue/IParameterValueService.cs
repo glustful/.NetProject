@@ -18,7 +18,7 @@ namespace Trading.Service.ParameterValue
 
         int GetParameterValueCount(ParameterValueSearchCondition condition);
 
-        IQueryable<ParameterValueEntity> GetParameterValuesByParameter(int ParameterId);
+        IQueryable<ParameterValueEntity> GetParameterValuesByParameter(int parameterId);
        
     }
 }
