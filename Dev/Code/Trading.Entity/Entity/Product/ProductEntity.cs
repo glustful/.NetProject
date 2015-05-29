@@ -90,5 +90,7 @@ namespace Trading.Entity.Model
         /// 联系电话
         /// </summary>
         public string ContactPhone { get; set; }
+
+        public List<ProductParameterEntity> ProductParameter { get; set; } 
 	}
 }

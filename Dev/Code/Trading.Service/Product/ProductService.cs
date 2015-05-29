@@ -7,6 +7,7 @@
 
 using System;
 using System.Linq;
+using Trading.Entity.Entity.Product;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 using Trading.Entity.Model;
@@ -113,7 +114,14 @@ namespace Trading.Service.Product
             var query = _productRepository.Table;
             try
             {
-
+                if (!string.IsNullOrEmpty(condition.AreaName))
+                {
+                    query = query.Where(q=>q.ProductParameter.Exists(pp=>pp.ParameterValue.Parametervalue == condition.AreaName));
+                }
+                if (condition.TypeId.HasValue)
+                {
+                    query = query.Where(q=>q.ProductParameter.Exists(pp=>pp.ParameterValue.Id ==condition.TypeId));
+                }
                 if (condition.CommissionBegin.HasValue)
                 {
                     query = query.Where(q => q.Commission >= condition.CommissionBegin.Value);
@@ -276,7 +284,14 @@ namespace Trading.Service.Product
             var query = _productRepository.Table;
             try
             {
-
+                if (!string.IsNullOrEmpty(condition.AreaName))
+                {
+                    query = query.Where(q => q.ProductParameter.Exists(pp => pp.ParameterValue.Parametervalue == condition.AreaName.ToString()));
+                }
+                if (condition.TypeId.HasValue)
+                {
+                    query = query.Where(q => q.ProductParameter.Exists(pp => pp.ParameterValue.Id == condition.TypeId));
+                }
                 if (condition.CommissionBegin.HasValue)
                 {
                     query = query.Where(q => q.Commission >= condition.CommissionBegin.Value);
