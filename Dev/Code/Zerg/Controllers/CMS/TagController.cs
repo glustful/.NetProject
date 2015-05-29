@@ -1,60 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Http;
-using CMS.Service.Tag;
-using CMS.Service.Content;
-using CMS.Service.Channel;
+using System.Web.Http.Cors;
 using CMS.Entity.Model;
+using CMS.Service.Tag;
+using YooPoon.Core.Site;
+using YooPoon.WebFramework.API;
+using Zerg.Common;
 using Zerg.Models;
-using System.Web.Http.Results;
 
 namespace Zerg.Controllers.CMS
 {
+    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class TagController : ApiController
     {
         private readonly ITagService _tagService;
-        private readonly IContentService _contentService;
-        public TagController(ITagService tagService, IContentService contentService)
+        private readonly IWorkContext _workContext;
+        public TagController(ITagService tagService,IWorkContext workcontext)
         {
             _tagService = tagService;
-            _contentService = contentService;
+            _workContext = workcontext; 
         }
         /// <summary>
         /// 首页
         /// </summary>
-        /// <param name="tag"></param>
-        /// <param name="page"></param>
-        /// <param name="pagesize"></param>
+        /// <param name="tag">标签名称</param>
+        /// <param name="page">页码</param>
+        /// <param name="pageSize">页面记录数</param>
         /// <returns></returns>   
-        [System.Web.Http.HttpGet] 
-        public List<TagModel> Index(string tag = null,int page=1,int pageSize=10)
+        [HttpGet]
+        
+        public HttpResponseMessage Index(string tag = null,int page=1,int pageSize=10)
         {
             var tagCon = new TagSearchCondition{
-                Tag = tag,
+                LikeTag = tag,
                 Page = page,
                 PageCount = pageSize
             };
-            var totalCount = _tagService.GetTagsByCondition(tagCon).Select(a => new TagModel { 
+            var tagList = _tagService.GetTagsByCondition(tagCon).Select(a => new TagModel
+            { 
                 Id=a.Id,
                 Tag=a.Tag
             }).ToList();
-            return totalCount;
+            var totalCount = _tagService.GetTagCount(tagCon);
+            return PageHelper.toJson(new{List=tagList,Condition=tagCon,TotalCount=totalCount});
         }
         /// <summary>
-        /// 详细信息
+        /// tag详细信息
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">标签Id</param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet] 
-        public TagDetailModel Detailed(int id)
+        [HttpGet] 
+        public HttpResponseMessage Detailed(int id)
         {
             var tag = _tagService.GetTagById(id);
             if (tag == null)
             {
-                return new TagDetailModel();
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"该数据不存在！"));
             }      
             var content = tag.Content;
             List<ContentModel> list;
@@ -78,78 +84,150 @@ namespace Zerg.Controllers.CMS
                 Tag = new TagModel { Id = tag.Id,Tag=tag.Tag },
                 Contents = list
             };
-            return newModel;
+            return PageHelper.toJson(newModel);
         }
+
         /// <summary>
-        /// 新建
+        /// 新建Tag
         /// </summary>
-        /// <param name="tag"></param>
-        public void DoCreate(TagModel tag)
+        /// <param name="tag">标签参数</param>
+        [HttpPost]
+        public HttpResponseMessage Create(TagModel tag)
         {
-            var tagModel = new TagEntity
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            var m = reg.IsMatch(tag.Tag);
+            if (!m)
             {
-                Id=tag.Id,
-                Tag=tag.Tag,                
-            };          
-            _tagService.Create(tagModel);     
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
+            }
+            else
+            {               
+                var tagCon = new TagSearchCondition
+                {
+                    Tag = tag.Tag
+                };
+                var tagCount = _tagService.GetTagCount(tagCon);
+                if (tagCount > 0)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已存在"));
+                }
+                else
+                {
+                    var tagModel = new TagEntity
+                    {
+                        Tag = tag.Tag,
+                        Adduser = _workContext.CurrentUser.Id,
+                        Addtime = DateTime.Now,
+                        UpdUser = _workContext.CurrentUser.Id,
+                        UpdTime = DateTime.Now
+                    };
+                    if (_tagService.Create(tagModel) != null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                    }
+                    else
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                    }
+                }
+            }
         }
+
         /// <summary>
-        /// 编辑
+        /// 保存修改
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-       [System.Web.Http.HttpGet] 
-        public TagModel Edit(int id)
+        /// <param name="model">标签参数</param> 
+        [HttpPost]
+        public HttpResponseMessage Edit(TagModel model)
         {
-            var tag = _tagService.GetTagById(id);         
-            return new TagModel
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            var m = reg.IsMatch(model.Tag);
+            if (!m)
             {
-                Id=tag.Id,
-                Tag=tag.Tag
-            };
-        }
-        /// <summary>
-        /// 保存编辑
-        /// </summary>
-        /// <param name="model"></param> 
-        
-        public ResultModel DoEdit(TagModel model)
-        {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
+            }
+            else
+            {
             var tag = _tagService.GetTagById(model.Id);
+                if (tag.Tag == model.Tag)
+                {
+                    tag.Tag = model.Tag;
+                    tag.UpdTime = DateTime.Now;
+                    tag.UpdUser = _workContext.CurrentUser.Id;
+                    if (_tagService.Update(tag) != null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                    }
+                    else
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+                    }
+                }
+                else
+                {
+                    var tagCon = new TagSearchCondition
+                    {
+                        Tag = model.Tag
+                    };
+                    var tagCount = _tagService.GetTagCount(tagCon);
+                    if (tagCount > 0)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已存在"));
+                    }
+                    else
+                    {
             tag.Tag = model.Tag;
-            tag.UpdTime=DateTime.Now;
-            ResultModel result = new ResultModel();
-            if (_tagService.Update(tag))
+                        tag.UpdTime = DateTime.Now;
+            tag.UpdUser = _workContext.CurrentUser.Id;
+                        if (_tagService.Update(tag) != null)
             {
-                result.Status =true;
-                result.Msg = "修改成功";
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
             }
-            else {
-                result.Status = false;
-                result.Msg = "修改失败";
+            else 
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
             }
-            return result;  
+        }
+                }
+                //var tagCon = new TagSearchCondition
+                //{
+                //    Tag = model.Tag
+                //};
+                //var tagCount = _tagService.GetTagCount(tagCon);
+                //if (tagCount > 0)
+                //{
+                //    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已存在"));
+                //}
+                //var tag = _tagService.GetTagById(model.Id);
+                //tag.Tag = model.Tag;
+                //tag.UpdTime = DateTime.Now;
+                //tag.UpdUser = _workContext.CurrentUser.Id;
+                //if (_tagService.Update(tag) != null)
+                //{
+                //    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                //}
+                //else
+                //{
+                //    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+                //}
+            }
         }
         /// <summary>
         /// 删除
         /// </summary>
-        /// <param name="id"></param> 
-       [System.Web.Http.HttpGet] 
-        public ResultModel Delete(int id)
+        /// <param name="tagId">标签Id</param> 
+       [HttpGet]
+        public HttpResponseMessage Delete(int tagId)
         {
-            var tag = _tagService.GetTagById(id);                      
-            ResultModel result = new ResultModel();
+            var tag = _tagService.GetTagById(tagId);                      
             if (_tagService.Delete(tag))
-            {               
-                result.Status =true;
-                result.Msg = "删除成功";                
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功！"));           
             }
             else
             {
-                result.Status =false;
-                result.Msg = "删除失败";
-            }
-            return result;                   
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
+            }                  
         }
     }
 }

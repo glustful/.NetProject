@@ -1,7 +1,8 @@
-<div class="row">
-    <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入搜索条件" ng-model="contact.name" required="" tabindex="0" aria-required="true" aria-invalid="true">
-    <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入电话号码" ng-model="contact.name" required="" tabindex="0" aria-required="true" aria-invalid="true">
-    <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">搜索<div class="md-ripple-container"></div></button>
+<div ng-controller="agentmanagerIndexController">
+<div class="row" >
+    <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入经纪人名"  ng-model="searchCondition.name"   required="" tabindex="0" aria-required="true" aria-invalid="true">
+    <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入电话号码" ng-model="searchCondition.phone" required="" tabindex="0" aria-required="true" aria-invalid="true">
+    <button md-ink-ripple=""  ng-click="getList()" class="md-btn md-raised m-b btn-fw indigo">搜索<div class="md-ripple-container"></div></button>
 </div>
 <table class="table table-striped">
     <thead>
@@ -12,106 +13,30 @@
 
     </tr>
     </thead>
-    <tbody>
+    <tbody ng-repeat="item in list">
     <tr>
         <td>
             <div class="md-list-item-left">
-                <img src="images/a0.jpg" class="w-full circle">
+                <img src="{{item.Headphoto}}" class="w-full circle">
             </div>
             <div class="information">
-                <p><span>昵称：<small class="small">都市角落</small></span><span>姓名：<small>杨庭</small></span><span>手机:<small>15667202214</small></span></p>
-                <p><span>身份证：<small>530129197006040051</small></span><span>余额：<small>￥900.00</small></span><span>等级：<small>白银</small></span> </p>
+                <p><span>昵称：<small class="small">{{item.Nickname}}</small></span><span>姓名：<small>{{item.Realname}}</small></span><span>手机:<small>{{item.Phone}}</small></span></p>
+                <p><span>身份证：<small>{{item.Sfz}}</small></span><span>余额：<small>{{item.Amount}}</small></span><span>等级：<small>{{item.Agentlevel}}</small></span> </p>
             </div>
         </td>
-        <td><time>2015年4月30日</time></td>
+        <td><time>{{item.Regtime}}</time></td>
         <td>
-            <a href="#/page/CRM/AgentManager/detailed" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">详情</button></a>
+            <a href="#/page/CRM/AgentManager/detailed?userid={{item.Id}}" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">详情</button></a>
             <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw yellow">删除</button>
             <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">注销</button>
         </td>
 
     </tr>
-    <tr>
-        <td>
-            <div class="md-list-item-left">
-                <img src="images/a0.jpg" class="w-full circle">
-            </div>
-            <div class="information">
-                <p><span>昵称：<small class="small">都市角落</small></span><span>姓名：<small>杨庭</small></span><span>手机:<small>15667202214</small></span></p>
-                <p><span>身份证：<small>530129197006040051</small></span><span>余额：<small>￥900.00</small></span><span>等级：<small>白银</small></span> </p>
-            </div>
-        </td>
-        <td><time>2015年4月30日</time></td>
-        <td>
-            <a href="#/page/CRM/AgentManager/detailed" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">详情</button></a>
-            <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw yellow">删除</button>
-            <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">注销</button>
-        </td>
 
-    </tr>
-    <tr>
-        <td>
-            <div class="md-list-item-left">
-                <img src="images/a0.jpg" class="w-full circle">
-            </div>
-            <div class="information">
-                <p><span>昵称：<small class="small">都市角落</small></span><span>姓名：<small>杨庭</small></span><span>手机:<small>15667202214</small></span></p>
-                <p><span>身份证：<small>530129197006040051</small></span><span>余额：<small>￥900.00</small></span><span>等级：<small>白银</small></span> </p>
-            </div>
-        </td>
-        <td><time>2015年4月30日</time></td>
-        <td>
-            <a href="#/page/CRM/AgentManager/detailed" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">详情</button></a>
-            <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw yellow">删除</button>
-            <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">注销</button>
-        </td>
-
-    </tr>
-    <tr>
-        <td>
-            <div class="md-list-item-left">
-                <img src="images/a0.jpg" class="w-full circle">
-            </div>
-            <div class="information">
-                <p><span>昵称：<small class="small">都市角落</small></span><span>姓名：<small>杨庭</small></span><span>手机:<small>15667202214</small></span></p>
-                <p><span>身份证：<small>530129197006040051</small></span><span>余额：<small>￥900.00</small></span><span>等级：<small>白银</small></span> </p>
-            </div>
-        </td>
-        <td><time>2015年4月30日</time></td>
-        <td>
-            <a href="#/page/CRM/AgentManager/detailed" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">详情</button></a>
-            <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw yellow">删除</button>
-            <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">注销</button>
-        </td>
-
-    </tr>
-    <tr>
-        <td>
-            <div class="md-list-item-left">
-                <img src="images/a0.jpg" class="w-full circle">
-            </div>
-            <div class="information">
-                <p><span>昵称：<small class="small">都市角落</small></span><span>姓名：<small>杨庭</small></span><span>手机:<small>15667202214</small></span></p>
-                <p><span>身份证：<small>530129197006040051</small></span><span>余额：<small>￥900.00</small></span><span>等级：<small>白银</small></span> </p>
-            </div>
-        </td>
-        <td><time>2015年4月30日</time></td>
-        <td>
-            <a href="#/page/CRM/AgentManager/detailed" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">详情</button></a>
-            <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw yellow">删除</button>
-            <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">注销</button>
-        </td>
-
-    </tr>
     </tbody>
 </table>
 <div colspan="5" class="text-center footable-visible">
-    <ul class="pagination">
-        <li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li>
-        <li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li>
-        <li class="footable-page active"><a data-page="0" href="#">1</a></li>
-        <li class="footable-page"><a data-page="1" href="#">2</a></li>
-        <li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li>
-        <li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li>
-    </ul>
+    <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+
+</div>
 </div>

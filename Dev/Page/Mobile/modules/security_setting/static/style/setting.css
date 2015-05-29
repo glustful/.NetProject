@@ -1,6 +1,6 @@
 /*设置*/
-body{
-    background-color: #e7e7e7;
+.setting_person{
+    padding: 0 0 650px 0;
 }
 .set_person{
     width: 640px;
@@ -22,11 +22,10 @@ body{
     color: #aeacac;
     font-size: 16px;
 }
-
-
 /*安全设置*/
+
 .security_content{
-    margin: 20px 55px 0 20px;
+    padding: 30px 55px 440px 58px;
     color: #848484;
 }
 form a{
@@ -60,11 +59,31 @@ form a{
     margin-right: 10px;
     margin-top: 20px;
 }
-
-
+.pin{
+    margin-top: 40px;
+}
+.pin input{
+    width: 145px;
+    height: 46px;
+    background: url("../img/pin.png") no-repeat 0 0;
+    border: 1px solid #eeeeee;
+    background-color: white;
+}
+.pin button{
+    width: 147px;
+    height: 44px;
+    margin-left: 10px;
+    background-color:  #fc3b00;
+    font-size: 20px;
+    color: #ffffff;
+    font-family:'microsoft yahei' ;
+}
 /*个人设置*/
+.setting_personal{
+    padding: 40px 0 100px 0;
+}
 .person_revise{
-    margin: 20px 55px 0 20px;
+    padding: 20px 55px 0 55px;
     color: #848484;
 }
 .headphoto{

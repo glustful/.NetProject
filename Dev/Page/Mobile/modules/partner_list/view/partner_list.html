@@ -1,73 +1,16 @@
 <!--合伙人列表-->
 <!--required：../static/style/partner.css" rel="stylesheet-->
-    <div class="content">
+    <div class="list_content" ng-controller="partnerListController" >
         <ul>
-            <li><p>A</p></li>
-            <li><button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
-                <span class="name">Angle</span>
+
+            <li ng-repeat="item in list"><a href="#/app/partner_details" ><button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
+                <span class="name">{{item.Name}}</span>
                 <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
                 </button>
-            </li>
-            <li><button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
-                <span class="name">ababababa</span>
-                <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png""></span>
-            </button>
-            </li>
-            <li><button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
-                <span class="name">abc</span>
-                <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
-            </button>
-            </li>
+            </a></li>
+
         </ul>
-        <ul>
-            <li><p>B</p></li>
-            <li><button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
-                <span class="name">Abi锋</span>
-                <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
-            </button>
-            </li>
-            <li><button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
-                <span class="name">保利</span>
-                <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
-            </button>
-            </li>
-            <li><button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
-                <span class="name">Bailey</span>
-                <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
-            </button>
-            </li>
-            <li><button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
-                <span class="name">Began</span>
-                <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
-            </button>
-            </li>
-        </ul>
-        <ul>
-            <li><p>C</p></li>
-            <li><button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
-                <span class="name">Called</span>
-                <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
-            </button>
-            </li>
-            <li><button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
-                <span class="name">曹飞燕</span>
-                <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
-            </button>
-            </li>
-            <li><button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
-                <span class="name">曹蓝</span>
-                <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
-            </button>
-            </li>
-            <li><button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
-                <span class="name">蔡飞燕</span>
-                <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
-            </button>
-            </li>
-            <li><button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
-                <span class="name">陈金蓝</span>
-                <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
-            </button>
-            </li>
-        </ul>
+        <div class="addPartners">
+              <p><a href="#/app/partner_insert">添加合伙人</a></p>
+        </div>
     </div>

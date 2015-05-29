@@ -7,11 +7,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
-
+     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 积分详情管理  李洪亮  2015-05-05
     /// </summary>
@@ -35,13 +36,25 @@ namespace Zerg.Controllers.CRM
       /// <returns></returns>
 
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetPointDetailByUserId(string userId)
+        public HttpResponseMessage GetPointDetailByUserId(string userId = null, int page = 1, int pageSize = 10)
         {
             var pointdetailCon = new PointDetailSearchCondition
             {
-               Brokers=_brokerService.GetBrokerById(Convert.ToInt32(userId))
+               Brokers=_brokerService.GetBrokerById(Convert.ToInt32(userId)),
+                Page = Convert.ToInt32(page),
+                PageCount = pageSize
             };
-            return PageHelper.toJson(_pointdetailService.GetPointDetailsByCondition(pointdetailCon).ToList());
+
+             var PointDetailList = _pointdetailService.GetPointDetailsByCondition(pointdetailCon).Select(p => new { 
+              Id=p.Id,
+             p.Addpoints,
+             p.Pointsds,
+              p.Addtime
+
+            }).ToList();
+            var PointDetailListCount = _pointdetailService.GetPointDetailCount(pointdetailCon);
+            return PageHelper.toJson(new { List = PointDetailList, Condition = pointdetailCon, totalCount = PointDetailListCount });
+                  
         }
 
         /// <summary>

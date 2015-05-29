@@ -111,7 +111,7 @@ namespace CRM.Service.BrokerWithdrawDetail
                 }
 				if (condition.Brokers != null )
                 {
-                    query = query.Where(q => condition.Brokers==(q.Broker));
+                    query = query.Where(q => (q.Broker.Id==condition.Brokers.Id));
                 }
 				if (condition.BankCards != null && condition.BankCards.Any())
                 {

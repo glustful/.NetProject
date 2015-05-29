@@ -1,0 +1,76 @@
+<!--<div class="bg-groom">-->
+<!--<div class="groom">-->
+    <!--<form>-->
+        <!--<p class="">-->
+            <!--意向户型-->
+        <!--</p>-->
+       <!--<p>-->
+          <!--<input type="text" list="house_type" name="house_choose" class="client_information" placeholder="请选择户型">-->
+           <!--<datalist id="house_type">-->
+               <!--<option>别墅</option>-->
+           <!--</datalist>-->
+       <!--</p>-->
+        <!--<p class="client_choice">-->
+            <!--预约时间-->
+        <!--</p>-->
+        <!--<p><input type="" class="client_information" placeholder="请填写看房时间"/><br/></p>-->
+        <!--<p class="client_choice">-->
+            <!--客户姓名-->
+        <!--</p>-->
+        <!--<p><input type="" class="client_information" placeholder="请填写客户姓名"/><br/></p>-->
+        <!--<p class="client_choice">-->
+            <!--客户电话-->
+        <!--</p>-->
+        <!--<p> <input type="" class="client_information" placeholder="请填写客户电话"/><br/></p>-->
+        <!--<p><button class="submit_button">提交信息</button></p>-->
+    <!--</form>-->
+<!--</div>-->
+<!--</div>-->
+
+
+
+<div  ng-controller="tuijianController">
+    <div class="groom">
+        <form>
+            <p class="client_choice">
+                意向楼盘
+            </p>
+            <p>
+                <input type="" ng-model="BrokerRECClientEntity.Houses" list="house_type" name="house_choose" class="client_information" placeholder="意向楼盘">
+            </p>
+            <p class="client_choice">
+                意向户型
+            </p>
+            <p><input type="" ng-model="BrokerRECClientEntity.Housetype" class="client_information" placeholder="意向户型"/><br/></p>
+            <p class="client_choice">
+                客户姓名
+            </p>
+            <p><input type="" ng-model="BrokerRECClientEntity.Clientname" class="client_information" placeholder="客户姓名"/><br/></p>
+            <p class="client_choice">
+                客户电话
+            </p>
+            <p><input type="" ng-model="BrokerRECClientEntity.Phone" class="client_information" placeholder="请填写客户姓名"/><br/></p>
+            <!--<p class="client_choice">-->
+            <!--经纪人等级-->
+            <!--</p>-->
+            <!--<p> <input type="" ng-model="BrokerRECClientEntity.Brokerlevel" class="client_information" placeholder=""/><br/></p>-->
+            <!--<p class="client_choice">-->
+            <!--客户电话-->
+            <!--</p>-->
+            <!--<p> <input type="" class="client_information" placeholder="请填写客户电话"/><br/></p>-->
+            <!--<p><button class="submit_button">提交信息</button></p>-->
+            <!--<p><input type="" ng-model="BrokerRECClientEntity.ClientName" class="client_information" placeholder=""/><br/></p>-->
+            <!--<p class="client_choice">-->
+            <!--客户电话-->
+            <!--</p>-->
+            <!--<p> <input type="" ng-model="BrokerRECClientEntity.Phone" class="client_information" placeholder=""/><br/></p>-->
+
+            <!--<p class="client_choice">-->
+            <!--QQ-->
+            <!--</p>-->
+            <!--<p><input type="" ng-model="BrokerRECClientEntity.QQ" class="client_information" placeholder=""/><br/></p>-->
+
+            <p><button class="submit_button" ng-click="add()" >提交信息</button></p>
+        </form>
+    </div>
+</div>

@@ -11,8 +11,9 @@ namespace CMS.Entity.Mappings.Content
 		{
 			ToTable("Content");
 			HasKey(c => c.Id);
-			Property(c => c.Content).HasColumnType("varchar").IsOptional();
-			Property(c => c.Title).HasColumnType("varchar");
+			Property(c => c.Content).HasColumnType("text").IsOptional();
+			Property(c => c.Title).HasColumnType("varchar").HasMaxLength(50);
+            Property(c => c.TitleImg).HasColumnType("varchar");
 			Property(c => c.Adduser).HasColumnType("int");
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.UpdUser).HasColumnType("int").IsOptional();

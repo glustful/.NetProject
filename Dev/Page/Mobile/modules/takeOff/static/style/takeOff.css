@@ -24,7 +24,7 @@
     width:18px;
     height: 12px;
     margin-left: 10px;
-    background: url("../image/recommend/icon.png");
+    background: url("../image/takeOff/icon.png");
 }
 .brand-recTake{
     position: relative;
@@ -128,7 +128,7 @@
 .wk .summary span{
     margin-right: 20px;
 }
-.wk .nav-recTake .hui{
+ .nav-recTake .hui{
     color: #a0a0a0;
 }
 .wk .summary .city{
