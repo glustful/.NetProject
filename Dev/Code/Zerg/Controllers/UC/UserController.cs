@@ -144,13 +144,12 @@ namespace Zerg.Controllers.UC
         }
 
         [HttpPost]
-        public HttpResponseMessage EditUser(UserModel model)
+        public HttpResponseMessage ChangePassword(string oldPassword,string newPassword)
         {
-            var user = _userService.FindUser(model.Id);
-            user.Password = model.Password;
-            user.Status = model.Status;
-            if (_userService.ModifyUser(user))
+            var user =(UserBase) _workContext.CurrentUser;
+            if (user!=null && PasswordHelper.ValidatePasswordHashed(user,newPassword))
             {
+                PasswordHelper.SetPasswordHashed(user, newPassword);
                 return PageHelper.toJson(PageHelper.ReturnValue(true,"数据更新成功！"));
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
