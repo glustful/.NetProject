@@ -225,6 +225,7 @@
     <Compile Include="Models\CMS\ChannelModel.cs" />
     <Compile Include="Models\CMS\SettingModel.cs" />
     <Compile Include="Models\CRM\TaskAwardModel.cs" />
+    <Compile Include="Models\CRM\TaskListModel.cs" />
     <Compile Include="Models\CRM\TaskModel.cs" />
     <Compile Include="Models\CRM\TaskPunishmentModel.cs" />
     <Compile Include="Models\CRM\TaskSearchModel.cs" />

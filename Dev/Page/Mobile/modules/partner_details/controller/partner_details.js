@@ -4,7 +4,7 @@ app.controller('partnerListController',['$http','$scope','$stateParams',function
         name: '',
         Id:0,
         page: 1,
-        pageSize: 10
+       
     };
     $scope.addCondition = {
         Id:0,
@@ -38,6 +38,8 @@ app.controller('partnerListController',['$http','$scope','$stateParams',function
 
 //查询个人信息
 app.controller('partnerDetailedController',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+        })
+    }
 
     $scope.getCondition = {
         userId:0
