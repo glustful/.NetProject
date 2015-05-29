@@ -1,29 +1,34 @@
 <!--我要带客-->
+<div ng-controller="daikeController">
 <div class="groom">
-    <form>
+    <form ng-submit="addBrokerLead()">
+        <p class="client_choice">
+            意向楼盘
+        </p>
+        <p>
+            <input type="" required ng-model="BrokerLeadClient.Houses" list="house_type" name="house_choose" class="client_information" placeholder="意向楼盘">
+        </p>
         <p class="client_choice">
             意向户型
         </p>
-        <p>
-            <input type="text" list="house_type" name="house_choose" class="client_information" placeholder="请选择户型">
-            <datalist id="house_type">
-                <option>别墅</option>
-            </datalist>
-        </p>
-
-
-        <p class="client_choice">
-            预约时间
-        </p>
-        <p><input type="" class="client_information" placeholder="请填写看房时间"/><br/></p>
+        <p><input type="" required ng-model="BrokerLeadClient.HouseType" class="client_information" placeholder="意向户型"/><br/></p>
         <p class="client_choice">
             客户姓名
         </p>
-        <p><input type="" class="client_information" placeholder="请填写客户姓名"/><br/></p>
+        <p><input type="" required ng-model="BrokerLeadClient.Clientname" class="client_information" placeholder="客户姓名"/><br/></p>
         <p class="client_choice">
             客户电话
         </p>
-        <p> <input type="" class="client_information" placeholder="请填写客户电话"/><br/></p>
-        <p><button class="submit_button">提交信息</button></p>
+        <p><input type="" required ng-model="BrokerLeadClient.Phone" class="client_information" placeholder="请填写客户姓名"/><br/></p>
+        <p class="client_choice">
+            预约时间
+        </p>
+        <p><input type="" ng-model="BrokerLeadClient.Appointmenttime" class="client_information" placeholder="预约时间">
+        <p class="client_choice">
+            备注
+        </p>
+        <p><input type="" ng-model="BrokerLeadClient.Note" class="client_information" placeholder="备注"/><br/></p>
+        <p><button class="submit_button" ng-click="add()">提交信息</button></p>
     </form>
+</div>
 </div>
