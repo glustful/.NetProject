@@ -149,10 +149,10 @@ namespace Zerg.Controllers.CRM
             if (broker != null && !string.IsNullOrEmpty(broker.Id.ToString()) && PageHelper.ValidateNumber(broker.Id.ToString()) )
             {
                 var brokerModel = _brokerService.GetBrokerById(broker.Id);
-                brokerModel.Uptime = DateTime.Now;
+                brokerModel.Headphoto = broker.Headphoto;
                 brokerModel.Brokername = broker.Brokername;
-                brokerModel.Address = broker.Address;
-                brokerModel.Nickname = broker.Nickname;
+                brokerModel.Phone = broker.Phone;
+                brokerModel.Sfz = broker.Sfz;
 
                 try
                 {
