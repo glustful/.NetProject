@@ -269,7 +269,7 @@ namespace Zerg.Common.Oss
             //                {
             using (fs)
             {
-                Image img = Image.FromStream(fs);
+//                Image img = Image.FromStream(fs);
                 
                 var metadata = new ObjectMetadata();
                 metadata.CacheControl = "Private";
