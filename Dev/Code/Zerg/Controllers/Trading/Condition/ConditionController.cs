@@ -38,11 +38,12 @@ namespace Zerg.Controllers.Trading.Type
             {
                 Name="户型"
             };
-            var parameterValue = _parameterService.GetParametersByCondition(typeCon).Select(p => new
+            var typeList = _parameterService.GetParametersByCondition(typeCon).Select(p => new
             {
-                TypeId=p.Id,               
+                TypeId=p.ParameterValue.Id,
+                TypeName=p.ParameterValue.Parametervalue
             }).ToList();
-            return PageHelper.toJson(new { AreaList = areaList, TypeList = parameterValue });
+            return PageHelper.toJson(new { AreaList = areaList, TypeList = typeList });
         }
     }
 }

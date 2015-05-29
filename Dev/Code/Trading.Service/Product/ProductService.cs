@@ -1,25 +1,17 @@
-
-
-
-
-
-
-
 using System;
 using System.Linq;
-using Trading.Entity.Entity.Product;
-using YooPoon.Core.Data;
-using YooPoon.Core.Logging;
 using Trading.Entity.Model;
+using YooPoon.Core.Logging;
+using Zerg.Common.Data;
 
 namespace Trading.Service.Product
 {
     public class ProductService : IProductService
     {
-        private readonly Zerg.Common.Data.ITradingRepository<ProductEntity> _productRepository;
+        private readonly ITradingRepository<ProductEntity> _productRepository;
         private readonly ILog _log;
 
-        public ProductService(Zerg.Common.Data.ITradingRepository<ProductEntity> productRepository, ILog log)
+        public ProductService(ITradingRepository<ProductEntity> productRepository, ILog log)
         {
             _productRepository = productRepository;
             _log = log;
