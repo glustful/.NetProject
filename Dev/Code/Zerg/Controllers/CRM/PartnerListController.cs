@@ -97,7 +97,7 @@ namespace Zerg.Controllers.CRM
             {
                 Phones = new int[] { partnerList.Phone }
             };
-            var list = _brokerService.GetBrokersByCondition(sech).First();
+            var list = _brokerService.GetBrokersByCondition(sech).FirstOrDefault();
             if (list != null)
             {
                 if (list.PartnersId != 0)

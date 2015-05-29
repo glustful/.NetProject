@@ -89,7 +89,8 @@ app  .run(
         })
         .state('app.partner_list',{
             url:'/partner_list',
-            templateUrl:'modules/partner_list/view/partner_list.html'
+            templateUrl:'modules/partner_list/view/partner_list.html',
+            resolve:load('modules/partner_list/controller/partner_list.js')
         })
         .state('app.partner_details',{
             url:'/partner_details?userId',
@@ -98,7 +99,8 @@ app  .run(
         })
         .state('app.partner_insert',{
             url:'/partner_insert',
-            templateUrl:'modules/partner_insert/view/partner_insert.html'
+            templateUrl:'modules/partner_insert/view/partner_insert.html',
+            resolve:load('modules/partner_insert/controller/partner_insert.js')
         })
         .state('app.partner_insert1',{
             url:'/partner_insert1',
