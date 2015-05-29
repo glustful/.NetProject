@@ -99,3 +99,38 @@ ul li{
 .addPartners p a{
    color:#fc3b00;
 }
+.others{
+    background-color: #fff;
+
+    margin-top: 20px;
+
+
+
+
+}
+.others .invite{
+    height: 60px;
+    line-height: 60px;
+    border-bottom: 1px solid #ebebeb;
+    color:#fc3b00;
+    padding-left: 30px;
+    font-size: 1.5em;
+}
+.others .othersInformation li{
+    height: 60px;
+    line-height: 60px;
+    padding: 10px;
+    border-bottom: 1px solid #ebebeb;
+}
+.others .othersInformation li span button{
+    height: 40px;
+    width: 80px;
+    margin-right: 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1em;
+    background-color:#fc3b00;
+}
+.others .othersInformation li span .agree{
+
+}

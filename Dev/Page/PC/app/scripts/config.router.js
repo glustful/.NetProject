@@ -672,6 +672,13 @@ angular.module('app')
                 controller:"cwDetailedController",
                 resolve:load('scripts/controllers/CRM/cw.js')
             })
+            .state('page.CRM.CW.create', {
+                url: '/create',
+                templateUrl: 'views/pages/CRM/CW/create.html',
+                data: { title: '添加页' },
+                controller:"UserCreateController",
+                resolve:load('scripts/controllers/CRM/cw.js')
+            })
 
               .state('page.CRM.ZC', {
                   url: '/ZC',
@@ -691,6 +698,13 @@ angular.module('app')
                 controller:"zcDetailedController",
                 resolve:load('scripts/controllers/CRM/zc.js')
             })
+            .state('page.CRM.ZC.create', {
+                url: '/create',
+                templateUrl: 'views/pages/CRM/ZC/create.html',
+                data: { title: '新建用户' },
+                controller:"UserCreateController",
+                resolve:load('scripts/controllers/CRM/zc.js')
+            })
 
               .state('page.CRM.DK', {
                   url: '/DK',
@@ -708,6 +722,13 @@ angular.module('app')
               templateUrl: 'views/pages/CRM/DK/detailed.html',
                   data: { title: '详情页' },
                 controller:"dkDetailedController",
+                resolve:load('scripts/controllers/CRM/dk.js')
+            })
+            .state('page.CRM.DK.create', {
+                url: '/create',
+                templateUrl: 'views/pages/CRM/DK/create.html',
+                data: { title: '新建用户' },
+                controller:"UserCreateController",
                 resolve:load('scripts/controllers/CRM/dk.js')
             })
 
@@ -849,21 +870,23 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/CustomerInformation.js')
             })
 
+
+
               .state('page.CRM.strike', {
                   url: '/strike',
                   template: '<div ui-view></div>'
             })
             .state('page.CRM.strike.index', {
                 url: '/index',
-                templateUrl: '../views/pages/CRM/success/strike/index.html',
-                  data: { title: '所有成交' },
+                templateUrl: 'views/pages/CRM/strike/index.html',
+                data: { title: '所有成交' },
                 controller:"SCInfoListController",
                 resolve:load('scripts/controllers/CRM/strike.js')
             })
             .state('page.CRM.strike.detailed', {
                 url: '/detailed?id',
-                templateUrl: '../views/pages/CRM/success/strike/detailed.html',
-                  data: { title: '详情页' },
+                templateUrl: 'views/pages/CRM/strike/detailed.html',
+                data: { title: '详情页' },
                 controller:"SCIDetialController",
                 resolve:load('scripts/controllers/CRM/strike.js')
             })

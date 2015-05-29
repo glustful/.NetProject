@@ -5,7 +5,8 @@ app.controller('partnerListController',['$http','$scope','$stateParams',function
     $scope.searchCondition = {
         name: '',
         Id:0,
-        page: 1
+        page: 1,
+        status:'同意'
 
     };
     //查询合伙人
@@ -21,3 +22,4 @@ app.controller('partnerListController',['$http','$scope','$stateParams',function
 }
 ]);
 
+//收到的邀请

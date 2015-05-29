@@ -11,7 +11,7 @@ namespace Trading.Entity.Mappings.ParameterValue
 			ToTable("ParameterValue");
 			HasKey(c => c.Id);
 			//Property(c => c.Id).HasColumnType("int").IsOptional();
-			HasOptional(c =>c.Parameter);
+			HasRequired(c =>c.Parameter);
 			Property(c => c.Parametervalue).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Sort).HasColumnType("int");
 			Property(c => c.Adduser).HasColumnType("varchar").HasMaxLength(50);

@@ -16,6 +16,7 @@ using Zerg.Models.CRM;
 
 namespace Zerg.Controllers.CRM
 {
+    [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 经纪人带客
@@ -48,6 +49,7 @@ namespace Zerg.Controllers.CRM
         [HttpPost]
         public HttpResponseMessage Add([FromBody] BrokerRECClientModel brokerleadclient)
         {
+            EnumBRECCType type;
             //查询客户信息
             var sech = new ClientInfoSearchCondition
             {
@@ -55,11 +57,9 @@ namespace Zerg.Controllers.CRM
                 Phone = brokerleadclient.Phone.ToString(CultureInfo.InvariantCulture)
 
             };
-            var Cid = _clientInfoService.GetClientInfosByCondition(sech).First().Id;
-            var type = _brokerleadclientService.GetBrokerLeadClientById(Cid).Status;
+            var Cmodel = _clientInfoService.GetClientInfosByCondition(sech).FirstOrDefault();
 
-            //检测
-            if (type != EnumBRECCType.等待上访)
+            if (Cmodel == null)
             {
                 //客户信息
                 var client = new ClientInfoEntity
@@ -75,6 +75,18 @@ namespace Zerg.Controllers.CRM
                     Uptime = DateTime.Now
                 };
                 _clientInfoService.Create(client);
+
+                type = EnumBRECCType.审核中;
+            }
+            else
+            {
+                type = _brokerleadclientService.GetBrokerLeadClientById(Cmodel.Id).Status;
+            }
+
+            //检测
+            if (type != EnumBRECCType.等待上访)
+            {
+                
 
                 var cmodel = _clientInfoService.GetClientInfosByCondition(sech).First();
 
