@@ -17,6 +17,7 @@ using Zerg.Models.Trading.Product;
 
 namespace Zerg.Controllers.Trading.Product
 {
+    [AllowAnonymous]
     public class ProductController : ApiController
     {
         private readonly IProductService _productService;
