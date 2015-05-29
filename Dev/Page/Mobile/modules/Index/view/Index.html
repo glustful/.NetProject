@@ -1,25 +1,48 @@
 <!--首页-->
 <!--required:../static/style/index.css-->
-<div class="pic ">
+
+<div class="pic">
+<div class="slider">
     <ul>
-        <li><a href="#"> <img src="modules/Index/static/image/index/banner.png" alt="成为经纪人轻松赚大钱 "/><div class="page"><span class="white"></span><span></span><span></span><span></span><span></span></div></a></li>
-        <!--<li style="display: none"><a href="#"> <img src="./Common/static/image/index/" alt="成为经纪人轻松赚大钱 "/></a></li>-->
-        <!--<li style="display: none"><a href="#"> <img src="./Common/static/image/index/" alt="成为经纪人轻松赚大钱 "/></a></li>-->
-        <!--<li style="display: none"><a href="#"> <img src="./Common/static/image/index/" alt="成为经纪人轻松赚大钱 "/></a></li>-->
-        <!--<li style="display: none"><a href="#"> <img src="./Common/static/image/index/" alt="成为经纪人轻松赚大钱 "/></a></li>-->
+        <li><a href="#" ><img src="modules/Index/static/image/index/banner.png" alt="科e互联网站建设团队" width="640"height="230" ></a></li>
+        <li><a href="#" ><img src="modules/Index/static/image/index/ad-2.jpg" alt="网页特效集锦" width="640"height="230" ></a></li>
+        <li><a href="#" ><img src="modules/Index/static/image/index/ad-3.jpg" alt="JS代码素材库" width="640"height="230" ></a></li>
+        <li><a href="#" ><img src="modules/Index/static/image/index/ad-4.jpg" alt="用心建站用心服务" width="640"height="230" ></a></li>
+        <li><a href="#" ><img src="modules/Index/static/image/index/ad-5.jpg" alt="学会用才能学会写" width="640"height="230" ></a></li>
     </ul>
 </div>
-<div class="activity">
-    <ul class="cf">
-        <li class="one"> <a href="#"><img src="modules/Index/static/image/index/ad-2.png" alt="百万红包等你抢" /></a></li>
+</div>
+
+<!--<div class="pic">-->
+    <!--<ul>-->
+        <!--<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+        <!--&lt;!&ndash;<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>&ndash;&gt;-->
+    <!--</ul>-->
+
+<!--</div>-->
+
+
+
+
+
+
+
+<div class="activity" >
+    <ul  class="cf">
+        <li class="one" > <a href="#"><img   src="modules/Index/static/image/index/ad-2.png" alt="百万红包等你抢" /></a></li>
         <li class="two"> <a href="../../redPaper-1/view/redPaper-1.html"><img src="modules/Index/static/image/index/ad-1.png" alt="开发商疯了吧" /></a></li>
         <li class="three"> <a href="#"><img src="modules/Index/static/image/index/ad-3.png" alt="名校就在小区里" /></a></li>
         <li class="four"> <a href="#"><img src="modules/Index/static/image/index/ad-4.png" alt="俊发钜惠" /></a></li>
         <li class="five"> <a href="#"><img src="modules/Index/static/image/index/ad-5.png" alt="水云间大优惠" /></a></li>
         <li class="six"> <a href="#"><img src="modules/Index/static/image/index/ad-6.png" alt="买房送奔驰" /></a></li>
     </ul>
+    <a href="javascript:;" id="btn_prev"></a>
+    <a href="javascript:;" id="btn_next"></a>
 </div>
-<div class="message" ng-app="app">
+<div class="message" ng-app="app" >
     <ul>
         <li class="brand">
             <a href="">
@@ -63,20 +86,14 @@
                 <span class="brokerage"><a href="#">最高享用优惠：10000元</a></span>
             </div>
         </li>
-         <li><a href="../../housesBuy/view/housesBuy.html"><img class="img-inner" src="modules/Index/static/image/index/banner-foot.png" alt="实力·壹方城" /></a></li>
-        <li class="brand">
-            <a href="../../housesBuy/view/housesBuy.html">
-                <img src="modules/Index/static/image/index/lp4.png" alt="实力·壹方城" />
-                <div class="summary"><span>[昆明市]实力·壹方城</span><span>户型：76m²</span><span>总价：55万</span></div>
-                <div class="summaryBg"></div>
-                <div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>
-                <div class="depreciateBg"></div>
-            </a>
-            <h3>签约立减8888元，购房还可领红包，返积分</h3>
-            <div class="nav">
-                <span class="orange"><a href="#"> 来电咨询</a></span>
-                <span class="brokerage"><a href="#">最高享用优惠：10000元</a></span>
-            </div>
-        </li>
+
+
     </ul>
+
+   </div>
+
 </div>
+
+<script>
+    $(".slider").yxMobileSlider({width:640,height:320,during:3000})/**
+</script>
