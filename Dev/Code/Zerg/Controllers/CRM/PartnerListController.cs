@@ -35,11 +35,12 @@ namespace Zerg.Controllers.CRM
         /// <returns></returns>
 
         [HttpGet]
-        public HttpResponseMessage SearchPartnerList(string name = null, int page = 1, int pageSize = 10)
+        public HttpResponseMessage SearchPartnerList(EnumPartnerType status, string name = null, int page = 1, int pageSize = 10)
         {
             var brokerSearchCondition = new BrokerSearchCondition
             {
                 Brokername = name,
+                Status = status,
                 Page = Convert.ToInt32(page),
                 PageCount =pageSize
             };

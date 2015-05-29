@@ -49,7 +49,6 @@ namespace Zerg.Controllers.CRM
         [HttpPost]
         public HttpResponseMessage Add([FromBody] BrokerRECClientModel brokerleadclient)
         {
-            int Cid = 0;
             EnumBRECCType type;
             //查询客户信息
             var sech = new ClientInfoSearchCondition
@@ -77,8 +76,7 @@ namespace Zerg.Controllers.CRM
                 };
                 _clientInfoService.Create(client);
 
-                Cid = _clientInfoService.GetClientInfosByCondition(sech).First().Id;
-                type = _brokerleadclientService.GetBrokerLeadClientById(Cid).Status;
+                type = EnumBRECCType.审核中;
             }
             else
             {
