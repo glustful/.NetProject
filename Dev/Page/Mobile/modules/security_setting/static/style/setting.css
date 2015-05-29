@@ -1,0 +1,103 @@
+/*设置*/
+.setting_person{
+    padding: 0 0 650px 0;
+}
+.set_person{
+    width: 640px;
+    background-color: #ffffff;
+    font-family: "microsoft yahei";
+    font-size: 20px;
+    color: #626161;
+    height: 80px;
+    line-height: 80px;
+   margin-bottom: 3px;
+}
+.person{
+    margin-left: 34px;
+    float: left;
+}
+.setting{
+    margin-left: 365px;
+    margin-right: 60px;
+    color: #aeacac;
+    font-size: 16px;
+}
+/*安全设置*/
+
+.security_content{
+    padding: 30px 55px 440px 58px;
+    color: #848484;
+}
+form a{
+    color: #848484;
+}
+.P_old{
+    margin: 0 0 5px 0;
+}
+.password{
+    width: 520px;
+    height: 46px;
+    font-size: 16px;
+    font-family: "microsoft yahei";
+    border: 1px solid #eeeeee;
+}
+.old{
+    margin-bottom: 20px;
+}
+.save_button{
+    width: 520px;
+    height: 46px;
+    background-color: #fc3b00;
+    border: hidden;
+    margin: 60px 0 0 0;
+    font-size: 20px;
+    font-family: "microsoft yahei";
+    color: white;
+}
+.found{
+  float: right;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+.pin{
+    margin-top: 40px;
+}
+.pin input{
+    width: 145px;
+    height: 46px;
+    background: url("../img/pin.png") no-repeat 0 0;
+    border: 1px solid #eeeeee;
+    background-color: white;
+}
+.pin button{
+    width: 147px;
+    height: 44px;
+    margin-left: 10px;
+    background-color:  #fc3b00;
+    font-size: 20px;
+    color: #ffffff;
+    font-family:'microsoft yahei' ;
+}
+/*个人设置*/
+.setting_personal{
+    padding: 40px 0 100px 0;
+}
+.person_revise{
+    padding: 20px 55px 0 55px;
+    color: #848484;
+}
+.headphoto{
+    text-align: center;
+    margin-top: 30px;
+}
+.headphoto a{
+    color: #848484;
+    text-decoration: none;
+}
+.touxiang{
+    margin-left: 268px;
+    width: 128px;
+    height: 128px;
+    background: url("../../../person_setting/static/image/touxiang.png") no-repeat center center;
+    background-color: #ffffff;
+}

@@ -1,0 +1,201 @@
+*{
+    padding:0;
+    margin:0;
+    list-style: none;
+    border: none;
+}
+body{
+    font-family: 'microsoft yahei';
+    font-size: 16px;
+    color:#a0a0a0;
+}
+a {
+    text-decoration: none;
+}
+.clear{
+    clear:both;
+    height: 0;
+    overflow: hidden;
+}
+.cf:after{
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: "";
+    clear: both;
+    height: 0;
+}
+
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.window{
+    width: 640px;
+    margin: 0 auto;
+}
+.bg{
+    background: #ebebeb;
+}
+.header{
+    height: 67px;
+    line-height: 67px;
+    background: #fc3b00;
+
+}
+.header a{
+    color: #fff;
+    font-size: 18px;
+    display: inline-block;
+    margin-left:19px;
+    padding-left:19px;
+    background: url("../image/syj/icon1_03.png") no-repeat 0 center;
+}
+h1{
+    font-weight: normal;
+    color:#fff;
+    margin-left: 250px;
+    font-size: 22px;
+}
+.hd{
+    background: #fff;
+    padding: 10px 0 14px 10px;
+}
+.img{
+    margin-right: 28px;
+    position: relative;
+}
+.img a .summary{
+    position: absolute;
+    left: 190px;
+    top: 145px;
+    color: #fff;
+    z-index: 3;
+}
+.img a .summaryBg{
+    background: #000;
+    opacity: 0.6;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 135px;
+    width: 298px;
+    height: 40px;
+}
+
+h2{
+    font-size:18px;
+    color: #000;
+    line-height: 35px;
+}
+h4{
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 35px;
+}
+.money span{
+    display: inline-block;
+    width: 90px;
+    text-align: center;
+    height:46px;
+    border-right:1px solid #e7e7e7;
+}
+.money span b{
+    color: #000;
+    font-size: 18px;
+}
+.money span small {
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: normal;
+}
+.money .int{
+    border: none;
+}
+.money .int b{
+    color:#ff6666;
+}
+.btn{
+    padding-top: 20px;
+}
+.btn button{
+    width: 90px;
+    height: 30px;
+    background: #fc3b00;
+    margin-right: 30px;
+    color: #fff;
+    border-radius:5px;
+}
+.main{
+   margin-top: 13px;
+}
+.main li{
+   padding: 10px;
+    background: #fff;
+    margin-bottom: 10px;
+}
+
+.img-p1{
+    margin-right: 10px;
+}
+.intro span{
+    display: inline-block;
+    width: 100px;
+    color:#525252;
+    text-align: center;
+
+}
+.intro h3{
+    padding:20px 0 30px 0;
+}
+
+.intro div span{
+    border-right:1px solid #d8d8d8;
+}
+
+
+
+.intro .price{
+    border: none;
+}
+.btn-1{
+    padding-top: 25px;
+}
+.btn-1 button{
+    width: 65px;
+    height: 30px;
+    background: #fc3b00;
+    margin-bottom:30px;
+    border-radius:5px;
+    color: #fff;
+}
+.footer {
+    background: #f13800;
+}
+.footer span{
+    display: inline-block;
+    text-align: center;
+    width:150px;
+    padding:60px 0 17px 0;
+    color: #fff;
+    font-size: 18px;
+}
+.act{
+    background: url("../image/syj/活动2.png") no-repeat center 20px;
+    color: #f9e700;
+}
+.house{
+    background: url("../image/syj/房源库1.png") no-repeat center 20px;
+}
+.agent{
+    background: url("../image/syj/经纪人专区1.png") no-repeat center 20px;
+}
+.personal{
+    background: url("../image/syj/个人中心1.png") no-repeat center 20px;
+}
+
+
+
+
