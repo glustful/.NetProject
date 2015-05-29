@@ -56,7 +56,7 @@ namespace Zerg.Controllers.CRM
         /// <returns></returns>
         public HttpResponseMessage AddAdmin([FromBody] BrokerModel brokerModel)
         {
-            var model = new BrokerEntity()
+            var model = new BrokerEntity
             {
                 Id = brokerModel.Id,
             };
@@ -102,7 +102,7 @@ namespace Zerg.Controllers.CRM
         {
             try
             {
-                var model = new BrokerEntity()
+                var model = new BrokerEntity
                 {
                     Id=id,
                     State = 0,

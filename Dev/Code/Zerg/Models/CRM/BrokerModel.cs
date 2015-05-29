@@ -8,6 +8,27 @@ namespace Zerg.Models.CRM
 {
     public class BrokerModel
     {
+        /// <summary>
+        /// UCId
+        /// </summary>
+        public int UcId { get; set; }
+        /// <summary>
+        /// UC用户名
+        /// </summary>
+        public string UserName { get; set; }
+        /// <summary>
+        /// UC密码
+        /// </summary>
+        public string Password { get; set; }
+        /// <summary>
+        /// 是否记住密码
+        /// </summary>
+        public bool Remember { get; set; }
+        /// <summary>
+        /// UC状态
+        /// </summary>
+        public int Status { get; set; }
+
         public virtual int Id { get; set; }
 
         /// <summary>
@@ -77,7 +98,7 @@ namespace Zerg.Models.CRM
         /// <summary>
         /// 用户类型（会员 经纪人 财务 小秘书）
         /// </summary>
-        public virtual string Usertype { get; set; }
+        //public virtual string Usertype { get; set; }
         /// <summary>
         /// 详细地址
         /// </summary>
@@ -131,13 +152,7 @@ namespace Zerg.Models.CRM
         /// <summary>
         /// 用户类型枚举 （经纪人 broker  ，  管理员 manager）
         /// </summary>
-        public enum EnumUserType
-        {
-            // 经纪人 broker  ，  管理员 manager
-            broker = 0,
-            manager = 1
-        }
-
+        public virtual EnumUserType UserType { get; set; }
 
         /// <summary>
         /// 用户状态 （删除0 注销-1 正常1）
