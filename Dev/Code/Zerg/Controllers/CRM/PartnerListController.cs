@@ -12,6 +12,7 @@ using Zerg.Common;
 namespace Zerg.Controllers.CRM
 {
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    [AllowAnonymous]
     /// <summary>
     /// 合伙人  李洪亮  2015-05-05
     /// </summary>
@@ -70,10 +71,11 @@ namespace Zerg.Controllers.CRM
             var partnerList = _partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).Select(p => new
                 {
                  Name=p.Brokername,
-                 AddTime =p.Addtime
+                 AddTime =p.Addtime,
+                 regtime=p.Regtime 
 
                 }).ToList();
-            return PageHelper.toJson(partnerList);
+            return PageHelper.toJson(new { list = partnerList });
         }
 
         /// <summary>

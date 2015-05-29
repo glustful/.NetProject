@@ -9,14 +9,15 @@
  */
 angular.module('app')
   .run(
-    ['$rootScope', '$state', '$stateParams', 'AuthService',
-      function ($rootScope, $state, $stateParams, AuthService) {
-        $rootScope.$state = $state;
-        $rootScope.$stateParams = $stateParams;
+    [           '$rootScope', '$state', '$stateParams','AuthService',
+      function ( $rootScope,   $state,   $stateParams ,AuthService) {
+          $rootScope.$state = $state;
+          $rootScope.$stateParams = $stateParams;
+
           $rootScope.$on('$stateChangeStart', function (event,next) {
               if(next.name==='access.signin' || next.name==='access.signup' || next.name==='access.forgot-password'){
                   return;
-      }
+              }
               if(!AuthService.IsAuthenticated()){
                   event.preventDefault();
                   $state.go('access.signin');
@@ -1123,7 +1124,8 @@ angular.module('app')
             .state('page.CMS.content.create', {
               url: '/create',
               templateUrl: 'views/pages/CMS/content/create.html',
-                  data : { title: '新建页' }
+                  data : { title: '新建页' },
+                  resolve:load('angularFileUpload')
             })
 
             .state('page.CMS.set', { url: '/set', template: '<div ui-view></div>' })

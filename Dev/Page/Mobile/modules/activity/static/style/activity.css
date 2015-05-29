@@ -1,0 +1,20 @@
+
+.main{
+    padding: 15px 15px 130px 15px;
+}
+.main li{
+    background-color: #fff;
+    padding:20px;
+    margin-bottom: 15px;
+}
+.main h2{
+    font-size:16px;
+}
+.main img{
+    margin-right: 15px;
+}
+.main p{
+    font-size: 0.78em;
+    margin-top: 10px;
+    line-height: 20px;
+}
