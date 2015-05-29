@@ -14,9 +14,7 @@ using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
-    [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
-    [AllowAnonymous]
     /// <summary>
     /// 经纪人管理  李洪亮  2015-05-04
     /// </summary>
