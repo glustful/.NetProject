@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.Globalization;
+using System.Linq.Expressions;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
 using System;
@@ -84,8 +86,19 @@ namespace Zerg.Controllers.CRM
                 p.Agentlevel,
                 p.Regtime,
                 p.Headphoto
-
-            }).ToList();
+            }).ToList().Select(b => new
+            {
+                b.Id,
+                b.Nickname,
+                b.Brokername,
+                b.Realname,
+                b.Phone,
+                b.Sfz,
+                b.Amount,
+                b.Agentlevel,
+                Regtime = b.Regtime.ToString("yyyy-MM-dd"),
+                b.Headphoto
+            });
             var brokerListCount = _brokerService.GetBrokerCount(brokerSearchCondition);
             return PageHelper.toJson(new { List = brokersList, Condition = brokerSearchCondition, totalCount = brokerListCount });
         }
