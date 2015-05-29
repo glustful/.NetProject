@@ -18,6 +18,7 @@ namespace Trading.Entity.Mappings.Parameter
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upduser).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Updtime).HasColumnType("datetime");
+		    HasMany(c => c.Values).WithRequired(v=>v.Parameter).WillCascadeOnDelete(false);
 		}
 	}
 }

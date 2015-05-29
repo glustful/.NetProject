@@ -14,8 +14,8 @@ namespace Trading.Entity.Model
 		/// 平台商品分类ID
 		/// </summary>
 		public virtual ClassifyEntity Classify { get; set; }
-
-	    public virtual ParameterValueEntity ParameterValue { get; set; }
+//
+//	    public virtual ParameterValueEntity ParameterValue { get; set; }
 
 	    /// <summary>
 		/// 参数名称
@@ -41,5 +41,7 @@ namespace Trading.Entity.Model
 		/// UpdTime
 		/// </summary>
 		public virtual DateTime Updtime { get; set; }
+
+        public virtual IList<ParameterValueEntity> Values { get; set; }
 	}
 }
