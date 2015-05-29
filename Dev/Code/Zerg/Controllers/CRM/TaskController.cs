@@ -19,6 +19,7 @@ using System.Text.RegularExpressions;
 
 namespace Zerg.Controllers.CRM
 {
+    [AllowAnonymous ]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// CRM 任务管理明细
@@ -113,6 +114,56 @@ namespace Zerg.Controllers.CRM
             else
             {
              return PageHelper.toJson(PageHelper.ReturnValue(true, "不存在数据！"));
+            }
+        }
+        /// <summary>
+        /// 返回手机端任务列表
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage TaskListMobile(int page)
+        {
+            string Taskname = "";
+            int pageSize = 10;
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+
+            if (!string.IsNullOrEmpty(Taskname))
+            {
+                var m = reg.IsMatch(Taskname);
+                if (!m)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "搜索输入存在非法字符！"));
+                }
+            }
+            var taskcondition = new TaskSearchCondition
+            {
+                OrderBy = EnumTaskSearchOrderBy.OrderById,
+                Taskname = Taskname,
+                Page = page,
+                PageCount = pageSize
+
+            };
+
+            var taskList = _taskService.GetTasksByCondition(taskcondition).Select(p => new
+            {
+                Taskname = p.Taskname,
+                Name = p.TaskType.Name,
+                awardname = p.TaskAward.Name,
+                awardvalue = p.TaskAward.Value,
+                Endtime = p.Endtime,
+                Adduser = p.Adduser,
+                Id = p.Id,
+
+            }).ToList();
+            var taskCount = _taskService.GetTaskCount(taskcondition);
+            if (taskCount > 0)
+            {
+                return PageHelper.toJson(new { list = taskList, totalCount = taskCount, condition = taskcondition });
+            }
+            else
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "不存在数据！"));
             }
         }
          /// <summary>
