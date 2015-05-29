@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 using System;
 
 namespace Trading.Entity.Model
@@ -41,7 +33,7 @@ namespace Trading.Entity.Model
 		public string Bimg { get; set; }
 
 
-
+        public string SubTitle { get; set; } 
 		public string Adduser { get; set; }
 
 

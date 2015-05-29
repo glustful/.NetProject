@@ -7,6 +7,10 @@ using System.Web.Http.Cors;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
 using CRM.Service.BrokerRECClient;
+using YooPoon.Core.Data;
+using YooPoon.WebFramework.User;
+using YooPoon.WebFramework.User.Entity;
+using YooPoon.WebFramework.User.Services;
 using Zerg.Common;
 using Zerg.Models.CRM;
 
@@ -20,13 +24,16 @@ namespace Zerg.Controllers.CRM
     {
         private readonly IBrokerRECClientService _brokerRecClientService;
         private readonly IBrokerService _brokerService;
+        private readonly IUserService _userService;
 
         public AdminRecomController(IBrokerRECClientService brokerRecClientService,
-            IBrokerService brokerService
+            IBrokerService brokerService,
+            IUserService userService
             )
         {
             _brokerRecClientService = brokerRecClientService;
             _brokerService = brokerService;
+            _userService = userService;
         }
 
         #region 经济人列表 杨定鹏 2015年5月4日14:29:24
@@ -54,7 +61,7 @@ namespace Zerg.Controllers.CRM
                 a.Brokername,
                 a.Brokerlevel,
                 a.ClientInfo.Phone,
-                a.Projectname,
+                a.Projectname, 
                 a.Addtime,
 
                 a.Clientname,
@@ -70,6 +77,57 @@ namespace Zerg.Controllers.CRM
 
             return PageHelper.toJson(new { list1 = list, condition1 = condition, totalCont1 = totalCont });
         }
+
+        /// <summary>
+        /// 添加新用户
+        /// </summary>
+        /// <param name="brokerModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage AddBroker([FromBody]BrokerModel brokerModel)
+        {
+            #region UC用户创建 杨定鹏 2015年5月28日14:52:48
+            var user = _userService.GetUserByName(brokerModel.UserName);
+            if (user != null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
+            }
+            var newUser = new UserBase
+            {
+                UserName = brokerModel.UserName,
+                Password = brokerModel.Password,
+                RegTime = DateTime.Now,
+                NormalizedName = brokerModel.UserName.ToLower(),
+                Status = 0
+            };
+            PasswordHelper.SetPasswordHashed(newUser, brokerModel.Password);
+            if (_userService.InsertUser(newUser).Id <= 0)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "注册用户失败，请重试"));
+            }
+            
+            #endregion
+
+            #region Broker用户创建 杨定鹏 2015年5月28日14:53:32
+            var model = new BrokerEntity
+            {
+                UserId =  _userService.GetUserByName(brokerModel.UserName).Id,
+                Brokername = brokerModel.Brokername,
+                Phone = brokerModel.Phone,
+                Totalpoints = 0,
+                Amount = 0,
+                Usertype = brokerModel.UserType,
+                Realname = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                State = 1,
+
+            };
+            _brokerService.Create(model);
+
+            #endregion
+
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
+        }
+
         #endregion
 
         #region 待审核业务处理 杨定鹏 2015年5月5日16:28:30

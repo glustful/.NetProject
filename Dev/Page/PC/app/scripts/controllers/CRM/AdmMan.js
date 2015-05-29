@@ -35,3 +35,27 @@ angular.module("app").controller('configureDetailedController',['$http','$scope'
     });
 
 }]);
+
+angular.module("app").controller('UserCreateController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
+
+    $scope.UserModel={
+
+        Password:"",
+        Brokername:"",
+        Phone:"",
+        UserType:"管理员",
+        UserName:""
+    };
+
+    $scope.Save = function(){
+        $http.post(SETTING.ApiUrl + '/AdminRecom/AddBroker',$scope.UserModel,{
+            'withCredentials':true
+        }).success(function(data){
+            if(data.Status){
+                console.log(data);
+            }else{
+                console.log("error");
+            }
+        });
+    }
+}]);

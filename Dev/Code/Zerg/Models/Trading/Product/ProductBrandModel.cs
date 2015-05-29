@@ -15,6 +15,7 @@ namespace Zerg.Models.Trading.Product
         /// 品牌图片(存图片URL)
         /// </summary>
         public  string Bimg { get; set; }
+        public string SubTitle { get; set; }
         /// <summary>
         /// AddUser
         /// </summary>

@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.Globalization;
+using System.Linq.Expressions;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
 using System;
@@ -12,7 +14,6 @@ using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
-    [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 经纪人管理  李洪亮  2015-05-04
@@ -84,8 +85,19 @@ namespace Zerg.Controllers.CRM
                 p.Agentlevel,
                 p.Regtime,
                 p.Headphoto
-
-            }).ToList();
+            }).ToList().Select(b => new
+            {
+                b.Id,
+                b.Nickname,
+                b.Brokername,
+                b.Realname,
+                b.Phone,
+                b.Sfz,
+                b.Amount,
+                b.Agentlevel,
+                Regtime = b.Regtime.ToString("yyyy-MM-dd"),
+                b.Headphoto
+            });
             var brokerListCount = _brokerService.GetBrokerCount(brokerSearchCondition);
             return PageHelper.toJson(new { List = brokersList, Condition = brokerSearchCondition, totalCount = brokerListCount });
         }
@@ -103,7 +115,7 @@ namespace Zerg.Controllers.CRM
             {
                 var brokerEntity = new BrokerEntity
                 {
-                    Brokername=broker.Brokername,                   
+                    Brokername=broker.Brokername,
                     Uptime = DateTime.Now,
                     Addtime = DateTime.Now,
 
@@ -134,7 +146,7 @@ namespace Zerg.Controllers.CRM
         [System.Web.Http.HttpPost]
         public HttpResponseMessage UpdateBroker([FromBody] BrokerEntity broker)
         {
-            if (broker != null && !string.IsNullOrEmpty(broker.Id.ToString()) && PageHelper.ValidateNumber(broker.Id.ToString()) && !string.IsNullOrEmpty(broker.Brokername))
+            if (broker != null && !string.IsNullOrEmpty(broker.Id.ToString()) && PageHelper.ValidateNumber(broker.Id.ToString()) )
             {
                 var brokerModel = _brokerService.GetBrokerById(broker.Id);
                 brokerModel.Uptime = DateTime.Now;

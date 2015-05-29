@@ -160,7 +160,14 @@ namespace Zerg.Controllers.Trading.Product
             {
                 OrderBy = EnumProductBrandSearchOrderBy.OrderById
             };
-            return PageHelper.toJson(_productBrandService.GetProductBrandsByCondition(PBSC).ToList());
+            var brandList = _productBrandService.GetProductBrandsByCondition(PBSC).Select(a => new ProductBrandModel
+            {
+                Bname = a.Bname,
+                Bimg = a.Bimg,
+                SubTitle = a.SubTitle
+            });
+            return PageHelper.toJson(brandList);
+            //return PageHelper.toJson(_productBrandService.GetProductBrandsByCondition(PBSC).ToList());
         }
         /// <summary>
         /// 根据品牌id获取项目参数；

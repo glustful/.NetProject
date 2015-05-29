@@ -1,12 +1,12 @@
 /**
  * Created by Yunjoy on 2015/5/6.
- * 用户验证登陆service
+ * authentication service
  */
 angular.module("app").service("AuthService",["$http",'$localStorage',function($http,$localStorage){
     var _isAuthenticated = false;
     var _currentUser;
 
-    //依据cookies获取当前用户(使用同步获取——仅此一次)
+    //????cookies?????????(????????????????????)
     var xmlhttp=new XMLHttpRequest();
     xmlhttp.open("get",SETTING.ApiUrl+"/user/GetCurrentUser",false);
     xmlhttp.withCredentials = true;
@@ -21,7 +21,7 @@ angular.module("app").service("AuthService",["$http",'$localStorage',function($h
     }
 
     /**
-     * 是否拥有授权
+     * 鏄惁鎷ユ湁鏉冮檺
      * @returns {boolean}
      * @constructor
      */
@@ -37,7 +37,7 @@ angular.module("app").service("AuthService",["$http",'$localStorage',function($h
         return hasRole;
     };
     /**
-     * 是否已经登陆
+     * 鏄惁鐧诲綍
      * @returns {boolean}
      * @constructor
      */
@@ -55,7 +55,7 @@ angular.module("app").service("AuthService",["$http",'$localStorage',function($h
         return _isAuthenticated;
     };
     /**
-     * 当前用户
+     * 褰撳墠鐢ㄦ埛
      * @returns CurrentUser
      * @constructor
      */
@@ -65,7 +65,7 @@ angular.module("app").service("AuthService",["$http",'$localStorage',function($h
         //return $cookieStore.get("CurrentUser");
     };
     /**
-     * 登陆操作
+     * 鐧诲綍
      * @param userName
      * @param password
      */
@@ -92,4 +92,24 @@ angular.module("app").service("AuthService",["$http",'$localStorage',function($h
                 }
             });
     };
+
+    this.doLogout=function(callback,faildCallback){
+        $http.post(SETTING.ApiUrl+"/user/Logout",
+            {'withCredentials':true}
+        ).success(function(data){
+                //鐧诲嚭鎴愬姛
+                if(data.Status){
+                    _currentUser=null;
+                    _isAuthenticated=false;
+                    $localStorage.UserRoles=null;
+
+                    if(typeof(callback) === 'function')
+                        callback();
+                }else{
+                    if(typeof(faildCallback) === 'function')
+                        faildCallback();
+                }
+            });
+    };
+
 }]);

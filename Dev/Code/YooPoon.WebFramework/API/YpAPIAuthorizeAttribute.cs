@@ -25,7 +25,7 @@ namespace YooPoon.WebFramework.API
             User = WorkContext.CurrentUser as UserBase;
             //用户权限判断
             //获取 controller  名称        
-            var controllerName = filterContext.ControllerContext.ControllerDescriptor.ControllerName;
+            var controllerName = filterContext.ControllerContext.ControllerDescriptor.ControllerType.FullName;
             //获取 action 名称      
             var actionName = filterContext.ActionDescriptor.ActionName;
             if (User != null &&
