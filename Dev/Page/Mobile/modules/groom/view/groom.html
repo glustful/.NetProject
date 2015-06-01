@@ -31,25 +31,29 @@
 
 <div  ng-controller="tuijianController">
     <div class="groom">
-        <form>
+        <form  ng-submit="addBrokerREC()">
             <p class="client_choice">
                 意向楼盘
             </p>
             <p>
-                <input type="" ng-model="BrokerRECClientEntity.Houses" list="house_type" name="house_choose" class="client_information" placeholder="意向楼盘">
+                <input type="" required ng-model="BrokerRECClientEntity.Houses" list="house_type" name="house_choose" class="client_information" placeholder="意向楼盘">
             </p>
             <p class="client_choice">
                 意向户型
             </p>
-            <p><input type="" ng-model="BrokerRECClientEntity.Housetype" class="client_information" placeholder="意向户型"/><br/></p>
+            <p><input type="" required ng-model="BrokerRECClientEntity.HouseType" class="client_information" placeholder="意向户型"/><br/></p>
             <p class="client_choice">
                 客户姓名
             </p>
-            <p><input type="" ng-model="BrokerRECClientEntity.Clientname" class="client_information" placeholder="客户姓名"/><br/></p>
+            <p><input type="" required ng-model="BrokerRECClientEntity.Clientname" class="client_information" placeholder="客户姓名"/><br/></p>
             <p class="client_choice">
                 客户电话
             </p>
-            <p><input type="" ng-model="BrokerRECClientEntity.Phone" class="client_information" placeholder="请填写客户姓名"/><br/></p>
+            <p><input type="" required ng-model="BrokerRECClientEntity.Phone" class="client_information" ng-pattern="/^[1][3-8]+\\d{9}/" placeholder="请填写客户姓名"/><br/></p>
+            <p class="client_choice">
+                备注
+            </p>
+            <p><input type="" required ng-model="BrokerRECClientEntity.Note" class="client_information" placeholder="备注"/><br/></p>
             <!--<p class="client_choice">-->
             <!--经纪人等级-->
             <!--</p>-->

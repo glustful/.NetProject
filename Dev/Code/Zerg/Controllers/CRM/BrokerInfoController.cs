@@ -14,7 +14,6 @@ namespace Zerg.Controllers.CRM
 {
     [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
-    [AllowAnonymous]
     /// <summary>
     /// 经纪人管理  李洪亮  2015-05-04
     /// </summary>
@@ -140,8 +139,8 @@ namespace Zerg.Controllers.CRM
                 var brokerModel = _brokerService.GetBrokerById(broker.Id);
                 brokerModel.Uptime = DateTime.Now;
                 brokerModel.Brokername = broker.Brokername;
-                brokerModel.Address = broker.Address;
-                brokerModel.Nickname = broker.Nickname;
+                brokerModel.Phone = broker.Phone;
+                brokerModel.Sfz = broker.Sfz;
 
                 try
                 {

@@ -89,7 +89,6 @@
     <Compile Include="Entity\ProductParameter\ProductParameterSearchConditon.cs" />
     <Compile Include="Entity\Product\EnumProduct.cs" />
     <Compile Include="Entity\Product\ProductEntity.cs" />
-    <Compile Include="Entity\Product\ProductSearch.cs" />
     <Compile Include="Entity\Product\ProductSearchConditon.cs" />
     <Compile Include="Mappings\AgentBill\AgentBillMapping.cs" />
     <Compile Include="Mappings\Area\AreaMapping.cs" />
