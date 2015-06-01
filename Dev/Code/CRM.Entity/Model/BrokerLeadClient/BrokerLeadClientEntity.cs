@@ -65,7 +65,7 @@ namespace CRM.Entity.Model
         /// <summary>
         /// 进度状态
         /// </summary>
-	    public virtual EnumBRECCType Status { get; set; }
+        public virtual EnumBLeadType Status { get; set; }
         /// <summary>
 		/// 场秘ID
 		/// </summary>

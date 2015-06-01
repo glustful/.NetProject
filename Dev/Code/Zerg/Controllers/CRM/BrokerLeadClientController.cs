@@ -49,6 +49,7 @@ namespace Zerg.Controllers.CRM
         [HttpPost]
         public HttpResponseMessage Add([FromBody] BrokerRECClientModel brokerleadclient)
         {
+            EnumBLeadType type;
             //查询客户信息
             var sech = new ClientInfoSearchCondition
             {
@@ -56,11 +57,10 @@ namespace Zerg.Controllers.CRM
                 Phone = brokerleadclient.Phone.ToString(CultureInfo.InvariantCulture)
 
             };
-            var Cid = _clientInfoService.GetClientInfosByCondition(sech).First().Id;
-            var type = _brokerleadclientService.GetBrokerLeadClientById(Cid).Status;
 
-            //检测
-            if (type != EnumBRECCType.等待上访)
+            var Cmodel = _clientInfoService.GetClientInfosByCondition(sech).FirstOrDefault();
+
+            if (Cmodel == null)
             {
                 //客户信息
                 var client = new ClientInfoEntity
@@ -77,6 +77,18 @@ namespace Zerg.Controllers.CRM
                 };
                 _clientInfoService.Create(client);
 
+                type = EnumBLeadType.预约中;
+            }
+            else
+            {
+                type = _brokerleadclientService.GetBrokerLeadClientById(Cmodel.Id).Status;
+            }
+
+            //检测
+            if (type != EnumBLeadType.等待上访)
+            {
+                
+
                 var cmodel = _clientInfoService.GetClientInfosByCondition(sech).First();
 
                 var model = new BrokerLeadClientEntity
@@ -88,7 +100,7 @@ namespace Zerg.Controllers.CRM
                     Upuser = _workContext.CurrentUser.Id,
                     Uptime = DateTime.Now,
                     ProjectId = brokerleadclient.Projectid,
-                    Status = EnumBRECCType.等待上访,
+                    Status = EnumBLeadType.等待上访,
                 };
                 _brokerleadclientService.Create(model);
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "提交成功"));

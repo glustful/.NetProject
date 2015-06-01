@@ -1,0 +1,31 @@
+/**
+ * Created by chenda on 2015/5/27.
+ */
+app.controller('daikeController',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+    $scope.BrokerLeadClient={
+        Broker:1,
+        Brokername:'',
+        Appointmenttime:'',
+        Houses:'',
+        HouseType:'',
+        Clientname:'',
+        Phone:'',
+        Note:'',
+        Stats:'0',
+        Projectname:'',
+        Projectid:1
+    };
+    //$scope.BrokerLeadClient.Broker_Id=$stateParams.Broker_Id;
+    //$scope.BrokerLeadClient.Brokername=$stateParams.Brokername;
+    //$scope.BrokerLeadClient.Projectid=$stateParams.Projectid;
+    //$scope.BrokerLeadClient.Projectname=$stateParams.Projectname;
+    var getBrokerResult  = function() {
+        console.log(  $scope.BrokerLeadClient);
+        $http.post(SETTING.ApiUrl+'/BrokerLeadClient/Add',$scope.BrokerLeadClient).success(function(data){
+            if(data.Status){
+                alert(data.Msg)
+            }
+        });
+    };
+    $scope.add=getBrokerResult;
+}])

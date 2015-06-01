@@ -1,7 +1,7 @@
 <!--黄秀宇 短信  2015.05.06
 自加CSS,路径<link rel="stylesheet" href="styles/task.css" type="text/css" />-->
-<div class="marginL">
-    <div id="divhea" ng-app="app" ng-controller="MessageSeachController">
+<div class="marginL" ng-controller="MessageSeachController">
+    <div id="divhea" ng-app="app" >
         <!--<input type="text" class="form-control" placeholder="开始时间">-->
         <!--<div ng-controller="DatepickerDemoCtrl" class="m-b-lg">
             <div class="m-b">-->
@@ -10,9 +10,9 @@
                 <div class="col-md-6">
                     <label>开始时间</label>
                     <p class="input-group">
-                        <input type="text" class="form-control" datepicker-popup="{{format}}" date-format="{{format}}" ng-model="searchCondition.startTime" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        <input type="text" class="form-control" style="width: 200px"  datepicker-popup="{{format}}" date-format="{{format}}" ng-model="searchCondition.startTime" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn" style="float: left">
+                            <button type="button" style="float: left" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
                     </p>
                 </div>
@@ -25,9 +25,9 @@
                 <div class="col-md-6">
                     <label>结束时间</label>
                     <p class="input-group">
-                        <input type="text" class="form-control" datepicker-popup="{{endformat}}" ng-model="searchCondition.endTime" is-open="endopened" datepicker-options="enddateOptions" ng-required="true" close-text="Close" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="endtimeopen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        <input type="text" class="form-control" style="width: 200px" datepicker-popup="{{endformat}}" ng-model="searchCondition.endTime" is-open="endopened" datepicker-options="enddateOptions" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn" style="float: left">
+                            <button type="button" style="float: left" class="btn btn-default" ng-click="endtimeopen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
                     </p>
                 </div>
@@ -37,10 +37,13 @@
             <option value="{{item.value}}" ng-repeat="item in typelist">{{item.value}}</option>
         </select>
         <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue" ng-click="getDataByTime()">检索</button>
+
         <button md-ink-ripple="" onclick="settingAdd()" class="md-btn md-raised m-b btn-fw blue">发送</button>
+        <br>
+        短信平台可用短信数量：<h3 style="color: red" >{{SMSCounts}}</h3>条
     </div>
 
-    <div id="divSet" ng-app="app" ng-controller="MessageSeachController">
+    <div id="divSet" ng-app="app" >
         <table class="table m-b-none footable-loaded footable default" ui-jp="footable" data-filter="#filter" data-page-size="5">
             <thead class="divheard">
                 <tr>
@@ -64,6 +67,11 @@
                         发送号码
                         <span class="footable-sort-indicator"></span>
                     </th>
+
+                    <th data-hide="phone" class="footable-visible footable-sortable footable-last-column">
+                        发送时间
+                        <span class="footable-sort-indicator"></span>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -74,38 +82,16 @@
                     <td class="footable-visible">{{item.Content}}</td>
                     <td class="footable-visible">{{item.Sender}}</td>
                     <td class="footable-visible">{{item.Mobile}}</td>
-                    <!--<td class="footable-visible">{{item.Addtime}}</td>-->
+                    <td class="footable-visible">{{item.Addtime | dateFilter }}</td>
                 </tr>
 
 
             </tbody>
-            <tfoot class="hide-if-no-paging">
-                <tr>
-                    <td colspan="5" class="text-center footable-visible">
-                        <ul class="pagination">
-                            <li class="footable-page-arrow">
-                                <a data-page="first" href="#first">«</a>
-                            </li>
-                            <li class="footable-page-arrow">
-                                <a data-page="prev" href="#prev">‹</a>
-                            </li>
-                            <li class="footable-page">
-                                <a data-page="0" href="#">1</a>
-                            </li>
-                            <li class="footable-page active">
-                                <a data-page="1" href="#">2</a>
-                            </li>
-                            <li class="footable-page-arrow disabled">
-                                <a data-page="next" href="#next">›</a>
-                            </li>
-                            <li class="footable-page-arrow disabled">
-                                <a data-page="last" href="#last">»</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-            </tfoot>
+
         </table>
+        <div colspan="5" class="text-center footable-visible">
+            <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+        </div>
     </div>
 
 

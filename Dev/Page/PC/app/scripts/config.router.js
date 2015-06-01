@@ -870,21 +870,23 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/CustomerInformation.js')
             })
 
+
+
               .state('page.CRM.strike', {
                   url: '/strike',
                   template: '<div ui-view></div>'
             })
             .state('page.CRM.strike.index', {
                 url: '/index',
-                templateUrl: '../views/pages/CRM/success/strike/index.html',
-                  data: { title: '所有成交' },
+                templateUrl: 'views/pages/CRM/strike/index.html',
+                data: { title: '所有成交' },
                 controller:"SCInfoListController",
                 resolve:load('scripts/controllers/CRM/strike.js')
             })
             .state('page.CRM.strike.detailed', {
                 url: '/detailed?id',
-                templateUrl: '../views/pages/CRM/success/strike/detailed.html',
-                  data: { title: '详情页' },
+                templateUrl: 'views/pages/CRM/strike/detailed.html',
+                data: { title: '详情页' },
                 controller:"SCIDetialController",
                 resolve:load('scripts/controllers/CRM/strike.js')
             })
@@ -979,6 +981,25 @@ angular.module('app')
                   resolve: load('scripts/controllers/CRM/Message.js'),
                   data: { title: '短信配置' }
             })
+
+            .state('page.CRM.MessageConfigure.create', {
+                url: '/create',
+                templateUrl: 'views/pages/CRM/MessageConfigure/create.html',
+                data : { title: '短信配置新建' },
+                resolve:load('scripts/controllers/CRM/Message.js')
+            })
+            .state('page.CRM.MessageConfigure.edit', {
+                url: '/edit?id',
+                templateUrl: 'views/pages/CRM/MessageConfigure/edit.html',
+                data : { title: '短信配置编辑' },
+                resolve:load('scripts/controllers/CRM/Message.js')
+            })
+
+
+
+
+
+
 
             .state('page.CRM.MessageList', {
                 url: '/MessageList',

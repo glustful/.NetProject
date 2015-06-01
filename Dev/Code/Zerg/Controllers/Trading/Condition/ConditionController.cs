@@ -3,10 +3,10 @@ using System.Net.Http;
 using System.Web.Http;
 using Trading.Service.Parameter;
 using Trading.Entity.Entity.Area;
-using Trading.Service.Area;
 using Trading.Entity.Model;
 using Trading.Service.ParameterValue;
 using Zerg.Common;
+using Trading.Service.Area;
 
 namespace Zerg.Controllers.Trading.Type
 {
@@ -38,10 +38,10 @@ namespace Zerg.Controllers.Trading.Type
             {
                 Name="户型"
             };
-            var typeList = _parameterService.GetParametersByCondition(typeCon).Select(p => new
+            var typeList = _parameterService.GetParametersByCondition(typeCon).SelectMany(p => p.Values).Select(v=>new
             {
-                TypeId=p.ParameterValue.Id,
-                TypeName=p.ParameterValue.Parametervalue
+                TypeId = v.Id,
+                TypeName = v.Parametervalue
             }).ToList();
             return PageHelper.toJson(new { AreaList = areaList, TypeList = typeList });
         }

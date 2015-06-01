@@ -35,11 +35,12 @@ namespace Zerg.Controllers.CRM
         /// <returns></returns>
 
         [HttpGet]
-        public HttpResponseMessage SearchPartnerList(string name = null, int page = 1, int pageSize = 10)
+        public HttpResponseMessage SearchPartnerList(EnumPartnerType status, string name = null, int page = 1, int pageSize = 10)
         {
             var brokerSearchCondition = new BrokerSearchCondition
             {
                 Brokername = name,
+                Status = status,
                 Page = Convert.ToInt32(page),
                 PageCount =pageSize
             };
@@ -48,8 +49,13 @@ namespace Zerg.Controllers.CRM
                 p.Id,
                 p.PartnersName,
                 p.PartnersId,
-                BrokerName = p.Brokername
-            }).ToList();
+                BrokerName = p.Brokername,
+                Phone = p.Phone,
+                Regtime = p.Regtime,
+                Agentlevel = p.Agentlevel,
+                Headphoto=p.Headphoto,
+                status=EnumPartnerType.同意
+            });
             var partnerListCount = _brokerService.GetBrokerCount(brokerSearchCondition);
             return PageHelper.toJson(new { List = partnerList, Condition = brokerSearchCondition, totalCount = partnerListCount });
              
@@ -72,7 +78,9 @@ namespace Zerg.Controllers.CRM
                 {
                  Name=p.Brokername,
                  AddTime =p.Addtime,
-                 regtime=p.Regtime 
+                 regtime=p.Regtime, 
+                 Phone=p.Phone,
+                Headphoto= p.Broker .Headphoto ,
 
                 }).ToList();
             return PageHelper.toJson(new { list = partnerList });
@@ -128,8 +136,9 @@ namespace Zerg.Controllers.CRM
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在"));
 
-            
+
         }
+
 
 
 

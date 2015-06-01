@@ -45,7 +45,8 @@ app  .run(
         })
         .state('app.home',{
             url:'/home',
-            templateUrl:'modules/Index/view/Index.html'
+            templateUrl:'modules/Index/view/Index.html',
+            resolve:load(['modules/Index/static/js/yxMobileSlider.js','modules/Index/static/js/homeController.js'])
         })
         .state('app.activity',{
             url:'/activity',
@@ -89,16 +90,18 @@ app  .run(
         })
         .state('app.partner_list',{
             url:'/partner_list',
-            templateUrl:'modules/partner_list/view/partner_list.html'
+            templateUrl:'modules/partner_list/view/partner_list.html',
+            resolve:load('modules/partner_list/controller/partner_list.js')
         })
         .state('app.partner_details',{
-            url:'/partner_details',
+            url:'/partner_details?userId',
             templateUrl:'modules/partner_details/view/partner_details.html',
             resolve:load('modules/partner_details/controller/partner_details.js')
         })
         .state('app.partner_insert',{
             url:'/partner_insert',
-            templateUrl:'modules/partner_insert/view/partner_insert.html'
+            templateUrl:'modules/partner_insert/view/partner_insert.html',
+            resolve:load('modules/partner_insert/controller/partner_insert.js')
         })
         .state('app.partner_insert1',{
             url:'/partner_insert1',
@@ -106,7 +109,8 @@ app  .run(
         })
         .state('app.groom',{
             url:'/groom',
-            templateUrl:'modules/groom/view/groom.html'
+            templateUrl:'modules/groom/view/groom.html',
+            resolve:load('modules/groom/controller/controller.js')
         })
         .state('app.houseDetail',{
             url:'/houseDetail',
@@ -176,11 +180,20 @@ app  .run(
         })
         .state('app.carry_client',{
             url:'/carry_client',
-            templateUrl:'modules/carry_client/view/carry_client.html'
+            templateUrl:'modules/carry_client/view/carry_client.html',
+            resolve:load('modules/carry_client/controller/controller.js')
         })
         .state('app.credit_add',{
             url:'/credit_add',
             templateUrl:'modules/credit_add/view/credit_add.html'
+        })
+        .state('app.recommendedBroker',{
+            url:'/recommendedBroker',
+            templateUrl:'modules/recommendBroker/view/recommendedBroker.html'
+        })
+        .state('app.addBroker',{
+            url:'/addBroker',
+            templateUrl:'modules/addBroker/view/addBroker.html'
         })
 
 
