@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Trading.Entity.Model;
+using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 using Zerg.Common.Data;
 

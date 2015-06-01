@@ -13,17 +13,18 @@ app.controller('personsettingController',function($scope,$http){
         Id:11,
         Brokername: "afaf",
         phone: 525424,
+        Sfz:1234567891,
         page: 1,
         pageSize: 10
     }
     $http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{params: $scope.user})
         .success(function(response) {$scope.users = response.List[0];
-            console.log($scope.List);
+
         });
     $scope.save = function()
     {
         $http.post(SETTING.ApiUrl+'/BrokerInfo/UpdateBroker', $scope.newuser)
-            .success(function(data) {$scope.nnn =data;
+            .success(function(data) {
             });
     }
 })
