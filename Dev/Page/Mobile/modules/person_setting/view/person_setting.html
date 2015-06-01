@@ -2,10 +2,13 @@
 <!--required:../static/style/setting.css" rel="stylesheet-->
            <div class="setting_personal">
                <div class="headphoto">
-                   <div class="touxiang">
-                       <a href=""><img src="" alt=""></a>
+                   <div class="touxiang" id="preview">
+                       <img src="" id="imghead">
                    </div>
-                   <p><a href="#">头像修改</a> </p>
+                   <span class="input-file">
+                   	修改头像
+                   	<input type="file" onchange="previewImage(this)" />
+                   </span>
                </div>
                <div class="person_revise" ng-controller="personsettingController">
                    <form>

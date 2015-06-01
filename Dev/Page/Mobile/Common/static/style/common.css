@@ -129,7 +129,9 @@ a{
     background: url("../image/grzx1.png") no-repeat center 20px;
     background-size: 40px 40px;
 }
-
+#imghead{
+	border-radius: 500px;
+}
 
 
 
