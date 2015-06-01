@@ -53,7 +53,8 @@ namespace Zerg.Controllers.CRM
                 Phone = p.Phone,
                 Regtime = p.Regtime,
                 Agentlevel = p.Agentlevel,
-                Headphoto=p.Headphoto
+                Headphoto=p.Headphoto,
+                status=EnumPartnerType.同意
             });
             var partnerListCount = _brokerService.GetBrokerCount(brokerSearchCondition);
             return PageHelper.toJson(new { List = partnerList, Condition = brokerSearchCondition, totalCount = partnerListCount });

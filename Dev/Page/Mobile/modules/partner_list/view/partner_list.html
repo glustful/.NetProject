@@ -15,12 +15,12 @@
         </ul>
 
 </div>
-        <div class="others">
-           <div class="invite">收到的邀请</div>
-            <div class="othersInformation">
-                <ul>
-                    <li class="cf"><span class="fl"><img src="modules/partner_list/static/image/partner/photo.png" alt=""/></span><span class="name">奶奶给你说fgs</span><span class="fr"><button class="agree">同意</button><button class="refuse">拒绝</button></span></li>
-                </ul>
-            </div>
-        </div>
+<div class="others" ng-controller="inviteController">
+     <div class="invite">收到的邀请</div>
+     <div class="othersInformation">
+          <ul>
+              <li class="cf" ng-repeat="item in list"><span class="fl"><img src="modules/partner_list/static/image/partner/photo.png" alt=""/></span><span class="name">{{item.Name}}</span><span class="fr"><button class="agree">同意</button><button class="refuse">拒绝</button></span></li>
+          </ul>
+     </div>
+</div>
 
