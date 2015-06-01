@@ -11,9 +11,9 @@ namespace Trading.Entity.Mappings.ProductParameter
 			ToTable("ProductParameter");
 			HasKey(c => c.Id);
 			//Property(c => c.Id).HasColumnType("int").IsOptional();
-			HasOptional(c =>c.ParameterValue);
-			HasOptional(c =>c.Parameter);
-			HasOptional(c =>c.Product);
+			HasRequired(c =>c.ParameterValue);
+			HasRequired(c =>c.Parameter);
+			HasRequired(c =>c.Product);
 			Property(c => c.Sort).HasColumnType("int");
 			Property(c => c.Adduser).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Addtime).HasColumnType("datetime");

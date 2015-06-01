@@ -870,21 +870,23 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/CustomerInformation.js')
             })
 
+
+
               .state('page.CRM.strike', {
                   url: '/strike',
                   template: '<div ui-view></div>'
             })
             .state('page.CRM.strike.index', {
                 url: '/index',
-                templateUrl: '../views/pages/CRM/success/strike/index.html',
-                  data: { title: '所有成交' },
+                templateUrl: 'views/pages/CRM/strike/index.html',
+                data: { title: '所有成交' },
                 controller:"SCInfoListController",
                 resolve:load('scripts/controllers/CRM/strike.js')
             })
             .state('page.CRM.strike.detailed', {
                 url: '/detailed?id',
-                templateUrl: '../views/pages/CRM/success/strike/detailed.html',
-                  data: { title: '详情页' },
+                templateUrl: 'views/pages/CRM/strike/detailed.html',
+                data: { title: '详情页' },
                 controller:"SCIDetialController",
                 resolve:load('scripts/controllers/CRM/strike.js')
             })
