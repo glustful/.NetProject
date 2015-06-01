@@ -14,7 +14,6 @@ using Zerg.Models.CRM;
 
 namespace Zerg.Controllers.CRM
 {
-    [AllowAnonymous]
      [EnableCors("*", "*", "*", SupportsCredentials = true)]
 
      //经纪人推荐客户
@@ -111,7 +110,7 @@ namespace Zerg.Controllers.CRM
                      Status = EnumBRECCType.审核中,
                  };
                  BrokerRecClientService.Create(model);
-                 return PageHelper.toJson(PageHelper.ReturnValue(true, "提交成功"));
+                 return PageHelper.toJson(PageHelper.ReturnValue(true, "已经提交至平台审核"));
              }
              return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在上访！"));
          }

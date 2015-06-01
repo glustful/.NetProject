@@ -140,6 +140,11 @@ namespace CRM.Service.BrokerLeadClient
 					query = query.OrderBy(q=>q.Id);
 				}
 
+                if (condition.Status.HasValue)
+                {
+                    query = query.Where(c => c.Status == condition.Status);
+                }
+
 				if (condition.Page.HasValue && condition.PageCount.HasValue)
                 {
                     query = query.Skip((condition.Page.Value - 1)*condition.PageCount.Value).Take(condition.PageCount.Value);
