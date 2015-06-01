@@ -60,10 +60,10 @@ angular.module("app").controller('MessageSeachController', ['$http', '$scope', f
     $scope.searchCondition = {
         startTime: '',
         endTime: '',
-        type: '消息提示',
+        type: '',
         page: 1,
-        pageSize: 10,
-        totalPage: 2
+        pageSize: 10
+
     };
 
     // 检索
@@ -72,73 +72,117 @@ angular.module("app").controller('MessageSeachController', ['$http', '$scope', f
             params: $scope.searchCondition,
             'withCredentials':true
         }).success(function (data) {
-            $scope.list = data;
+            $scope.list = data.List;
+            $scope.searchCondition.page = data.Condition.Page;
+            $scope.searchCondition.pageSize = data.Condition.PageCount;
+            $scope.totalCount = data.totalCount;
         });
     };
     $scope.getDataByTime = getData;
     getData();
 
+
+    $scope.GetSMSCount= function () {
+        $http.get(SETTING.ApiUrl + '/MessageDetail/GetSMSCount').success(function (data) {
+            $scope.SMSCounts = data;
+        });
+    };
+        $scope.GetSMSCount();
+
 }]);
 
 
 angular.module("app").controller('MessageConfigController', ['$http', '$scope', '$state', function ($http, $scope, $state) {
+    $scope.searchCondition = {
+        page: 1,
+        pageSize: 10
+    };
+    $scope.getList = function () {
+        $http.get(SETTING.ApiUrl + '/MessageConfig/SearchMessageConfig', {
+            params: $scope.searchCondition ,
+            'withCredentials':true
+        }).success(function (data) {
+            $scope.list = data.List;
+            $scope.searchCondition.page = data.Condition.Page;
+            $scope.searchCondition.pageSize = data.Condition.PageCount;
+            $scope.totalCount = data.totalCount;
+        });
+    };
+    $scope.getList ();
+}]);
 
-    //=====================================================添加 start==========================================================================
+
+angular.module("app").controller('MessageConfigCreateController',['$http','$scope','$state',function($http,$scope,$state){
     $scope.MessageConfigModel = {
         Name: '',
         Template: ''
 
     };
-
-    // 添加
-    var AddMessage = function () {
+    $scope.Create = function(){
         $http.post(SETTING.ApiUrl + '/MessageConfig/AddMessageConfig', $scope.MessageConfigModel).success(function (data) {
-            // 从新刷新底部
-            if (data.Status) {
+            if(data.Status){
+                $state.go("page.CRM.MessageConfigure.index");
+            }else{
+                alert(data.Msg);
+            }
 
-                $scope.MessageConfigModel.Name = '';
-                $scope.MessageConfigModel.Template = '';
-                getMessageConfig();
+        });
+    }
+}]);
 
+
+angular.module("app").controller('MessageConfigEditController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
+    $http.get(SETTING.ApiUrl + '/MessageConfig/GetMessageConfig/' + $stateParams.id,{
+        'withCredentials':true
+    }).success(function(data){
+        $scope.MessageConfigModel =data;
+    });
+
+    $scope.Save = function(){
+        $http.post(SETTING.ApiUrl + '/MessageConfig/UpdateMessageConfig',$scope.MessageConfigModel,{
+
+        }).success(function(data){
+            if(data.Status){
+                $state.go("page.CRM.MessageConfigure.index");
+            }else{
+                alert(data.Msg);
             }
         });
-    };
-
-    $scope.AddNewMessage = AddMessage;
-    //=====================================================添加 end==========================================================================
-
-    //======================================================检索 start=======================================================================
-    $scope.SeachMessageConfigCondition = {
-        page: '1',
-        pageSize: '1',
-        totalPage: '100'
-    };
-
-    var getMessageConfig = function () {
-        $http.get(SETTING.ApiUrl + '/MessageConfig/SearchMessageConfig', {
-            params: $scope.SeachMessageConfigCondition ,
-            'withCredentials':true
-        }).success(function (data) {
-            $scope.list = data;
-        });
-    };
-   
-    getMessageConfig();
+    }
+}]);
 
 
+app.filter('dateFilter',function(){
+    return function(date){
+    return FormatDate(date);
+    }
+})
+function FormatDate(JSONDateString) {
+    jsondate = JSONDateString.replace("/Date(", "").replace(")/", "");
+    if (jsondate.indexOf("+") > 0) {
+        jsondate = jsondate.substring(0, jsondate.indexOf("+"));
+    }
+    else if (jsondate.indexOf("-") > 0) {
+        jsondate = jsondate.substring(0, jsondate.indexOf("-"));
+    }
 
+    var date = new Date(parseInt(jsondate, 10));
+    var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+    var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
 
-    //======================================================检索 end=======================================================================
-
-
-
-
-
+    return date.getFullYear()
+        + "-"
+        + month
+        + "-"
+        + currentDate
+        + "-"
+        + date.getHours()
+        + ":"
+        + date.getMinutes()
+        + ":"
+        + date.getSeconds()
+        ;
 
 }
-]);
-
-
-
 
 
