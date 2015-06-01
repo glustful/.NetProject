@@ -106,7 +106,8 @@ app  .run(
         })
         .state('app.groom',{
             url:'/groom',
-            templateUrl:'modules/groom/view/groom.html'
+            templateUrl:'modules/groom/view/groom.html',
+            resolve:load('modules/groom/controller/controller.js')
         })
         .state('app.houseDetail',{
             url:'/houseDetail',
@@ -176,7 +177,8 @@ app  .run(
         })
         .state('app.carry_client',{
             url:'/carry_client',
-            templateUrl:'modules/carry_client/view/carry_client.html'
+            templateUrl:'modules/carry_client/view/carry_client.html',
+            resolve:load('modules/carry_client/controller/controller.js')
         })
         .state('app.credit_add',{
             url:'/credit_add',
