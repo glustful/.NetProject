@@ -104,7 +104,7 @@ namespace CRM.Entity.Model
         /// <summary>
         /// 所属的合伙人ID（同ID）
         /// </summary>
-        public virtual int PartnersId { get; set; }
+        public virtual int? PartnersId { get; set; }
 
 
         /// <summary>

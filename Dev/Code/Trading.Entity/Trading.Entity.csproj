@@ -52,6 +52,8 @@
     <Compile Include="Entity\AgentBill\AgentBillEntity.cs" />
     <Compile Include="Entity\AgentBill\AgentBillSearchConditon.cs" />
     <Compile Include="Entity\AgentBill\EnumAgentBill.cs" />
+    <Compile Include="Entity\Area\AreaEntity.cs" />
+    <Compile Include="Entity\Area\AreaSearchCondition.cs" />
     <Compile Include="Entity\BrandParameter\BrandParameterEntity.cs" />
     <Compile Include="Entity\BrandParameter\BrandParameterSearchConditon.cs" />
     <Compile Include="Entity\BrandParameter\EnumBrandParameter.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Entity\Product\ProductEntity.cs" />
     <Compile Include="Entity\Product\ProductSearchConditon.cs" />
     <Compile Include="Mappings\AgentBill\AgentBillMapping.cs" />
+    <Compile Include="Mappings\Area\AreaMapping.cs" />
     <Compile Include="Mappings\BrandParameter\BrandParameterMapping.cs" />
     <Compile Include="Mappings\CFBBill\CFBBillMapping.cs" />
     <Compile Include="Mappings\Classify\ClassifyMapping.cs" />
@@ -125,6 +128,7 @@
       <Name>Zerg.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

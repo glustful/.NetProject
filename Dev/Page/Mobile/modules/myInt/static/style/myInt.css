@@ -1,0 +1,54 @@
+
+.myint{
+    background-color: #fff;
+    margin-bottom:15px;
+}
+.cfbjf{
+    color:#626161;
+    font-size:24px;
+    padding-top:60px;
+    text-align: center;
+}
+.sz{
+   padding-top:60px;
+   text-align: center;
+   color:#fc3b00;
+   font-size: 8em;
+}
+.warn{
+    padding:70px 90px 70px 80px;
+    line-height: 25px;
+    color: #acacac;
+    font-size: 14px;
+}
+.detail-myInt li{
+   height: 78px;
+   line-height: 78px;
+    padding:0 40px 0 35px;
+    background-color: #fff;
+    border-bottom: 1px solid #ebebeb;
+    font-size:20px;
+}
+.detail-myInt .icon{
+
+    width: 12px;
+    height: 28px;
+    display: inline-block;
+    background: url("../image/myInt/y.png") no-repeat 0 0;
+  margin-top:25px;
+}
+.btn-myInt{
+    margin-top:135px;
+    text-align: center;
+    background-color:#f0f0f0;
+    height: 80px;
+    line-height: 80px;
+}
+.btn-myInt button{
+    background-color: #fc3030;
+    width:144px;
+    height: 50px;
+    border-radius: 30px;
+    color: #fff;
+    font-size:20px;
+}

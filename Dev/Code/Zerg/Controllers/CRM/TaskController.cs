@@ -21,6 +21,7 @@ namespace Zerg.Controllers.CRM
 {
     [AllowAnonymous ]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
+   
     /// <summary>
     /// CRM 任务管理明细
     /// </summary>
@@ -391,6 +392,93 @@ namespace Zerg.Controllers.CRM
                 }
                 }
             }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证失败"));
+        }
+        [HttpPost]
+        public HttpResponseMessage AddTaskList([FromBody]TaskListModel  taskListModel)
+        {
+            
+              
+                
+                var model = new TaskListEntity
+                {
+                    Task = _taskService .GetTaskById (taskListModel.TaskId),
+                    Broker =_brokerService .GetBrokerById (taskListModel .BrokerId),
+                    Taskschedule =taskListModel .Taskschedule ,
+
+                  
+                };
+                //var mo1 = new TaskListSearchCondition
+                //{
+                //    TaskId  = taskListModel.TaskId 
+                //};
+                //if (taskListModel.Type == "add")
+                //{
+                //    //判断是否存在同名名称
+                //    int taskCount = _taskListService.GetTaskListCount(mo1);
+                //    if (taskCount == 0)
+                //    {
+                        try
+                        {
+                            if (_taskListService.Create(model) != null)
+                            {
+                                return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败"));
+                        }
+                //    }
+                //    else
+                //    { return PageHelper.toJson(PageHelper.ReturnValue(false, "任务名称已存在，请换名称")); }
+                //}
+                //if (taskListModel.Type == "edit")
+                //{
+                //    var cond = new TaskListSearchCondition()
+                //    {
+                //        TaskId = taskListModel.Id
+                //    };
+                //    //判断任务是否被接手
+
+                //    int tlistcout = _taskListService.GetTaskListCount(cond);
+                //    //判断是否存在同名名称
+                //    var mo11 = new TaskSearchCondition
+                //    {
+                //        TasknameRe = taskListModel.Taskname,
+                //        Id = taskListModel.Id
+                //    };
+                //    int tasknameCount = _taskService.GetTaskCount(mo11);
+                //    if (tlistcout > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "不能修改，已经有人接手任务")); }
+
+                //    else if (tasknameCount > 0) { return PageHelper.toJson(PageHelper.ReturnValue(false, "任务名称已存在，请换名称")); }
+                //    else
+                //    {
+                //        var mdel = _taskService.GetTaskById(taskListModel.Id);
+                //        mdel.Id = taskListModel.Id;
+                //        mdel.TaskPunishment = _taskPunishmentService.GetTaskPunishmentById(taskListModel.TaskPunishmentId);
+                //        mdel.TaskAward = _taskAwardService.GetTaskAwardById(taskListModel.TaskAwardId);
+                //        mdel.TaskTag = _taskTagService.GetTaskTagById(taskListModel.TaskTagId);
+                //        mdel.TaskType = _taskTypeService.GetTaskTypeById(taskListModel.TaskTypeId);
+                //        mdel.Taskname = taskListModel.Taskname;
+                //        mdel.Describe = taskListModel.Describe;
+                //        mdel.Endtime = taskListModel.Endtime;
+                //        mdel.Adduser = 1;
+                //        mdel.Addtime = DateTime.Now;
+                //        mdel.Upuser = 1;
+                //        mdel.Uptime = DateTime.Now;
+                //        try
+                //        {
+                //            _taskService.Update(mdel);
+                //            return PageHelper.toJson(PageHelper.ReturnValue(true, "修改成功"));
+                //        }
+                //        catch (Exception)
+                //        {
+                //            return PageHelper.toJson(PageHelper.ReturnValue(false, "修改失败"));
+                //        }
+                //    }
+                //}
+            
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证失败"));
         }
 

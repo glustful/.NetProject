@@ -10,7 +10,10 @@ angular.module("app").controller('RecommendIndexController', [
             pageSize: 1
         };
         $scope.getList  = function() {
-            $http.get(SETTING.ApiUrl+'/RecommendAgent/GetRecommendAgentList',{params:$scope.searchCondition}).success(function(data){
+            $http.get(SETTING.ApiUrl+'/RecommendAgent/GetRecommendAgentList',{
+                params:$scope.searchCondition,
+                'withCredentials':true
+            }).success(function(data){
                 $scope.list = data.List;
                 $scope.searchCondition.page = data.Condition.Page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -27,7 +30,9 @@ angular.module("app").controller('PartnerDetailedController', [
     '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
 
 
-        $http.get(SETTING.ApiUrl+'/RecommendAgent/PartnerListDetailed?userId=' + $stateParams.userId).success(function(data){
+        $http.get(SETTING.ApiUrl+'/RecommendAgent/PartnerListDetailed?userId=' + $stateParams.userId,{
+            'withCredentials':true
+        }).success(function(data){
             $scope.list = data;
         });
 

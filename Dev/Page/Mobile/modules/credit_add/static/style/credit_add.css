@@ -1,0 +1,36 @@
+.credit_add{
+    padding: 40px 58px 0 58px;
+}
+.card_information{
+    width: 515px;
+    height: 48px;
+    font-family: "microsoft yahei";
+    font-size: 16px;
+}
+.card_choice{
+    margin-top: 26px;
+}
+.bank_button{
+    height: 48px;
+    width: 150px;
+    background-color: #fc3b00;
+    font-size: 20px;
+    margin-left: 20px;
+    color: white;
+    font-family: "microsoft yahei";
+}
+.card_tel{
+    width: 300px;
+    height: 48px;
+    font-family: "microsoft yahei";
+    font-size: 16px;
+}
+.add_confirm{
+    width: 515px;
+    height: 48px;
+    background-color:#fc3b00 ;
+    color: white;
+    font-size: 25px;
+    margin-top: 25px;
+    font-family: "microsoft yahei";
+}

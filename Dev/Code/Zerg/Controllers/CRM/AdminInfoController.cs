@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
 using Zerg.Common;
@@ -9,6 +10,7 @@ using Zerg.Models.CRM;
 
 namespace Zerg.Controllers.CRM
 {
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// CRM 个人信息管理/admin管理
     /// </summary>
@@ -54,7 +56,7 @@ namespace Zerg.Controllers.CRM
         /// <returns></returns>
         public HttpResponseMessage AddAdmin([FromBody] BrokerModel brokerModel)
         {
-            var model = new BrokerEntity()
+            var model = new BrokerEntity
             {
                 Id = brokerModel.Id,
             };
@@ -100,7 +102,7 @@ namespace Zerg.Controllers.CRM
         {
             try
             {
-                var model = new BrokerEntity()
+                var model = new BrokerEntity
                 {
                     Id=id,
                     State = 0,

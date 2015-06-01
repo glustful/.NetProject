@@ -1,0 +1,26 @@
+.main-houseDetail{
+    padding:20px 15px 15px;
+}
+.bg-house{
+   background: #fff;
+}
+.bg-house p{
+    text-align: center;
+}
+.beauty{
+    font-size: 2em;
+    font-weight: bolder;
+    line-height: 55px;
+    color: #525252;
+}
+.mid{
+    line-height: 35px;
+    font-size: 18px;
+    color: #7e7e7e;
+}
+.paragraph{
+    text-align: left;
+    padding: 20px 0 80px 80px;
+    text-indent:2em;
+    line-height: 25px;
+}

@@ -6,14 +6,19 @@ angular.module("app").controller('configureIndexController', [
         $scope.searchCondition = {
             name:'',
             page: 1,
-            pageSize: 1
+            pageSize: 10
         };
         $scope.getList  = function() {
-            $http.get(SETTING.ApiUrl+'/Level/SearchLevel',{params:$scope.searchCondition}).success(function(data){
+            $http.get(SETTING.ApiUrl+'/Level/SearchLevel',{
+                params:$scope.searchCondition,
+                'withCredentials':true
+            }).success(function(data){
                 $scope.list = data.List;
                 $scope.searchCondition.page = data.Condition.Page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
                 $scope.totalCount = data.totalCount;
+
+                console.log(data);
             });
         };
         $scope.getList();
@@ -30,7 +35,7 @@ angular.module("app").controller('configureCreateController',['$http','$scope','
     };
     $scope.Create = function(){
         $http.post(SETTING.ApiUrl + '/Level/DoCreate',$scope.LevelModel,{
-
+            'withCredentials':true
         }).success(function(data){
             if(data.Status){
                 $state.go("page.CRM.configure.index");
@@ -43,13 +48,15 @@ angular.module("app").controller('configureCreateController',['$http','$scope','
 }]);
 
 angular.module("app").controller('configureEditController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
-    $http.get(SETTING.ApiUrl + '/Level/GetLevel/' + $stateParams.id).success(function(data){
+    $http.get(SETTING.ApiUrl + '/Level/GetLevel/' + $stateParams.id,{
+        'withCredentials':true
+    }).success(function(data){
         $scope.LevelModel =data;
     });
 
     $scope.Save = function(){
         $http.post(SETTING.ApiUrl + '/Level/DoEdit',$scope.LevelModel,{
-
+            'withCredentials':true
         }).success(function(data){
             if(data.Status){
                 $state.go("page.CRM.configure.index");
@@ -74,7 +81,10 @@ angular.module("app").controller('configureSetIndexController', [
             pageSize: 1
         };
         $scope.getList  = function() {
-            $http.get(SETTING.ApiUrl+'/LevelConfig/SearchLevelConfig',{params:$scope.searchCondition}).success(function(data){
+            $http.get(SETTING.ApiUrl+'/LevelConfig/SearchLevelConfig',{
+                params:$scope.searchCondition,
+                'withCredentials':true
+            }).success(function(data){
                 $scope.list = data.List;
                 $scope.searchCondition.page = data.Condition.Page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -108,7 +118,9 @@ angular.module("app").controller('configureSetCreateController',['$http','$scope
 }]);
 
 angular.module("app").controller('configureSetEditController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
-    $http.get(SETTING.ApiUrl + '/LevelConfig/GetLevelConfig/' + $stateParams.id).success(function(data){
+    $http.get(SETTING.ApiUrl + '/LevelConfig/GetLevelConfig/' + $stateParams.id,{
+        'withCredentials':true
+    }).success(function(data){
         $scope.LevelConfig =data;
     });
 

@@ -4,7 +4,7 @@
       UI Kits
     </li>-->
     
-    <li ui-sref-active="active">
+    <li access="superAdmin,admin">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -13,7 +13,7 @@
         <i class="icon mdi-action-settings-input-svideo i-20"></i>
         <span class="font-normal">信息管理</span>
       </a>
-      <ul class="nav nav-sub">
+      <ul class="nav nav-sub" >
         <li ui-sref-active="active">
           <!--<a md-ink-ripple ui-sref="app.dashboard">Dashboard</a>-->
           <a md-ink-ripple ui-sref="page.CRM.AgentManager.index">经济人管理</a>
@@ -46,24 +46,24 @@
         <span class="font-normal">业务管理</span>
       </a>
       <ul class="nav nav-sub">
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" access="superAdmin,admin">
           <a md-ink-ripple ui-sref="page.CRM.WaitCheck.index">待审核推荐</a>
         </li>
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" access="superAdmin,admin,secretary,waiter,merchant">
           <a md-ink-ripple ui-sref="page.CRM.WaitPetition.index">待上访记录</a>
         </li>
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" access="superAdmin,admin,secretary,accountant,merchant">
           <a md-ink-ripple ui-sref="page.CRM.talking.index">洽谈中业务</a>
       </li>
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" access="superAdmin,admin,secretary,merchant">
               <a md-ink-ripple ui-sref="page.CRM.fail.index">洽谈失败</a>
         </li>
-        <li ui-sref-active="active">
+        <li ui-sref-active="active" access="superAdmin,admin,secretary,accountant,merchant">
               <a md-ink-ripple ui-sref="page.CRM.success.index">洽谈成功</a>
         </li>
       </ul>
     </li>
-    <li ng-class="{active:$state.includes('ui.component')}">
+    <li ng-class="{active:$state.includes('ui.component')}" access="superAdmin,admin,merchant">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -113,7 +113,7 @@
         </li>-->
       </ul>
     </li>
-    <li ng-class="{active:$state.includes('ui.material')}">
+    <li ng-class="{active:$state.includes('ui.material')}" access="superAdmin,admin,secretary,merchant">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -149,7 +149,7 @@
         </li>-->
       </ul>
     </li>
-    <li ng-class="{active:$state.includes('ui.form')}">
+    <li ng-class="{active:$state.includes('ui.form')}" access="superAdmin,admin">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -192,7 +192,7 @@
         </li>-->
       </ul>
     </li>
-    <li ng-class="{active:$state.includes('ui.table')}">
+    <li ng-class="{active:$state.includes('ui.table')}" access="superAdmin,admin">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -232,7 +232,7 @@
         <span class="font-normal">Charts</span>
       </a>
     </li>-->
-    <li ng-class="{active:$state.includes('ui.map')}">
+    <li ng-class="{active:$state.includes('ui.map')}" access="superAdmin,admin">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -254,7 +254,7 @@
         </li-->
       </ul>
     </li>
-    <li ng-class="{active:$state.includes('pages')}">
+    <li ng-class="{active:$state.includes('pages')}" access="superadmin,admin">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -316,7 +316,7 @@
         </li>-->
       </ul>
     </li>
-    <li ng-class="{active:$state.includes('ui.map')}">
+    <li ng-class="{active:$state.includes('ui.map')}" access="superAdmin,admin">
         <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -338,7 +338,7 @@
             </li-->
         </ul>
     </li>
-    <li ui-sref-active="active">
+    <li access="superAdmin,admin">
         <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -372,7 +372,7 @@
             </li-->
         </ul>
     </li>
-    <li ui-sref-active="active">
+    <li access="superAdmin,admin">
         <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -429,7 +429,7 @@
         <span>Document</span>
       </a>
     </li>-->
-<li>
+<li access="superAdmin,admin">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -453,7 +453,7 @@
         </li>
       </ul>
     </li>
-      <li>
+      <li access="superAdmin,admin">
           <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -469,7 +469,7 @@
           </ul>
       </li>
       </li>
-      <li>
+      <li access="superAdmin,admin">
           <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>

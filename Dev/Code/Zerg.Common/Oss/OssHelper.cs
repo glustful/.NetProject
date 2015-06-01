@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using Aliyun.OpenServices.OpenStorageService;
+using System.Drawing;
 
 namespace Zerg.Common.Oss
 {
@@ -223,6 +224,53 @@ namespace Zerg.Common.Oss
             //                {
             using (fs)
             {
+                var metadata = new ObjectMetadata();
+                metadata.CacheControl = "Private";
+                metadata.ContentType = MimeMapping.GetMimeMapping(fileName);
+                client.PutObject(bucketName, key, fs, metadata);
+
+                // metadata = client.GetObjectMetadata(bucketName, key);
+            }
+            return key;
+            //                }
+
+            // 2. put object to specified file
+            //client.PutObject(bucketName, key, fileToUpload);
+
+            // 3. put object from specified object with multi-level virtual directory
+            //key = "folder/sub_folder/key0";
+            //client.PutObject(bucketName, key, fileToUpload);
+            //            }
+            //            catch (OssException ex)
+            //            {
+            //                Console.WriteLine("Failed with error code: {0}; Error info: {1}. \nRequestID:{2}\tHostID:{3}",
+            //                    ex.ErrorCode, ex.Message, ex.RequestId, ex.HostId);
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                Console.WriteLine("Failed with error info: {0}", ex.Message);
+            //            }
+        }
+
+        public static string PutThumbnaiObject(Stream fs, string fileName)
+        {
+
+
+            OssClient client = OssClient;
+
+            string bucketName = BucketName;
+            string key = "thumbnail" + DateTime.Now.Date.ToString("yyyyMMdd") + "/" + fileName;
+            //            const string fileToUpload = "<file to upload>";
+            //
+            //            try
+            //            {
+            // 1. put object to specified output stream
+            //                using (var fs = File.Open(fileToUpload, FileMode.Open))
+            //                {
+            using (fs)
+            {
+//                Image img = Image.FromStream(fs);
+                
                 var metadata = new ObjectMetadata();
                 metadata.CacheControl = "Private";
                 metadata.ContentType = MimeMapping.GetMimeMapping(fileName);

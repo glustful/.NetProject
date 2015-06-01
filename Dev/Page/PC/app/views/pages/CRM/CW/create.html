@@ -1,0 +1,35 @@
+
+<div class="panel-body">
+    <form class="form-horizontal" ng-submit="Save()">
+        <div class="form-group">
+            <label for="UserName" class="col-sm-2 control-label">用户名：</label>
+            <div class="col-sm-10">
+                <input name="UserName" id="UserName" type="text" class="form-control" required ng-model="UserModel.UserName" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Password" class="col-sm-2 control-label">密码：</label>
+            <div class="col-sm-10">
+                <input name="Password" id="Password" type="text" class="form-control" required ng-model="UserModel.Password" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Brokername" class="col-sm-2 control-label">经纪人名：</label>
+            <div class="col-sm-10">
+                <input name="Brokername" id="Brokername" type="text" class="form-control" required ng-model="UserModel.Brokername" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Phone" class="col-sm-2 control-label">电话号码：</label>
+            <div class="col-sm-10">
+                <input name="Phone" id="Phone" type="text" class="form-control" required ng-model="UserModel.Phone" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-11">
+                <button type="submit" class="md-btn md-raised m-b btn-fw green"><i class="glyphicon glyphicon-ok m-r-sm"></i>提交<div class="md-ripple-container"></div></button>
+                <a ui-sref="page.CRM.AdmMan.index"><button class="md-btn md-raised m-b btn-fw pink"><i class="fa fa-reply  m-r-sm"></i>返回<div class="md-ripple-container"></div></button></a>
+            </div>
+        </div>
+    </form>
+</div>

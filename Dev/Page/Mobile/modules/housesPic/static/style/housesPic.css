@@ -1,0 +1,104 @@
+
+.content-housesPic .syj{
+    height: 74px;
+    line-height: 74px;
+    background-color: #fff;
+    padding: 0 10px;
+}
+.content-housesPic .syj span{
+    font-size: 18px;
+    color: #000;
+    font-weight: bold;
+}
+.content-housesPic .brokerage{
+    height: 90px;
+    line-height: 90px;
+    margin-top: 10px;
+    background-color: #fff;
+    font-size: 1.3em;
+    color: #f15100;
+    padding-left: 30px;
+    border-bottom:1px solid #ebebeb;
+}
+.content-housesPic .price{
+    background-color: #fff;
+    padding-left: 30px;
+    border-bottom: 1px solid #ebebeb;
+    padding-bottom: 20px;
+}
+.content-housesPic .price .qi{
+    font-size: 1.5em;
+    color:#f15100;
+    line-height: 60px;
+
+}
+.content-housesPic .price p{
+   font-size: 1.4em;
+    color: #414141;
+    line-height: 40px;
+}
+.content-housesPic .tw{
+   height: 70px;
+  line-height: 70px;
+  color: #666666;
+  background-color: #f9f9f9;
+  margin-top: 15px;
+    padding-left: 30px;
+}
+.content-housesPic .hjt{
+    padding:43px 65px 30px 65px;
+    background-color: #fff;
+}
+.content-housesPic .jp{
+    padding-left: 77px;
+    color: #f13800;
+    font-size: 1.5em;
+    background-color: #fff;
+}
+.content-housesPic .sun{
+    padding:28px 0 0 77px;
+    color: #333333;
+    background-color: #fff;
+    font-size: 1.3em;
+}
+.content-housesPic .intro{
+    padding:50px 0 10px 77px;
+    background-color: #fff;
+    color: #333333;
+    line-height: 30px;
+    position: relative;
+    z-index: 2;
+}
+.content-housesPic .intro p{
+    color: #333333;
+    font-size: 1.3em;
+}
+.content-housesPic .intro .summary{
+    position: absolute;
+    left: 50px;
+    z-index: 3;
+    bottom: 20px;
+}
+.content-housesPic .intro .summary a{
+    color: #fff;
+    font-size: 1.4em;
+}
+.content-housesPic .intro .summary .dk{
+    margin-right: 96px;
+}
+.content-housesPic .intro .summary .tj{
+    margin-right: 100px;
+}
+.content-housesPic .intro .summary .ask{
+    padding-left: 30px;
+    background:url("../image/housePic/cell.png") no-repeat 0 center;
+}
+.content-housesPic .intro .summaryBg{
+    position: absolute;
+    height: 90px;
+    width: 640px;
+    opacity: 0.65;
+    left: 0;
+    bottom: 0;
+    background: url("../image/housePic/sx.png") no-repeat 380px 40px #000;
+}

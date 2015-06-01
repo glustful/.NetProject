@@ -1,0 +1,72 @@
+
+.pic-hero{
+    position: relative;
+   margin:0 10px;
+}
+.pic-hero .first{
+   position: absolute;
+   left: 20px;
+  bottom:20px;
+   color: #f13800;
+    font-size: 18px;
+    z-index: 4;
+}
+.list{
+    padding:0 10px 20px;
+}
+.list ul li{
+    background: #fff;
+    padding:47px 0 41px 40px;
+    border-top:1px solid #ebebeb;
+}
+.list ul li .jp{
+   width: 470px;
+   height:50px;
+   border-right: 1px solid #ebebeb;
+}
+.list ul li .jp .img{
+    padding-right: 25px;
+}
+.list ul li .jp .intro h2{
+    color: #5a5a5a;
+    font-size: 20px;
+}
+.list ul li .jp .intro small{
+    color: #f6c607;
+}
+.list ul li .jp .intro p{
+    color: #f13800;
+    font-size:18px;
+    padding-top:10px;
+}
+.list .smIcon a{
+    display:inline-block;
+    height: 50px;
+   width: 100px;
+}
+.list .icon-1 a{
+    background:url("../image/hero/jh.png") no-repeat center center;
+}
+.list .icon-2 a{
+    background:url("../image/hero/jt1.png") no-repeat center center;
+}
+.list .icon-3 a{
+    background:url("../image/hero/jt2.png") no-repeat center center;
+}
+.int .img{
+    display: inline-block;
+    font-size: 5em;
+    margin: 0;
+}
+.list .grow{
+    height:60px;
+    line-height: 60px;
+    padding-left: 15px;
+    color:#ff3000;
+    font-size: 20px;
+    margin-top:24px;
+    background-color: #fafafa;
+}
+.list ul li .intro h2 .tong{
+    color: #b98755;
+}

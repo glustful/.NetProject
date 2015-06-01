@@ -1,4 +1,7 @@
-﻿using CRM.Entity.Model;
+﻿using System.ComponentModel;
+using System.Globalization;
+using System.Linq.Expressions;
+using CRM.Entity.Model;
 using CRM.Service.Broker;
 using System;
 using System.Collections.Generic;
@@ -11,11 +14,11 @@ using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
-
-    [EnableCors("*", "*", "*")]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 经纪人管理  李洪亮  2015-05-04
     /// </summary>
+    [Description("经纪人管理")]
     public class BrokerInfoController : ApiController
     {
         private readonly IBrokerService _brokerService;
@@ -46,32 +49,57 @@ namespace Zerg.Controllers.CRM
         }
 
 
-
+        /// <summary>
+        /// 会员列表查询操作
+        /// </summary>
+        /// <param name="userType"></param>
+        /// <param name="name"></param>
+        /// <param name="phone"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
        [System.Web.Http.HttpGet]
-        public HttpResponseMessage SearchBrokers(string name = null,string phone=null, int page = 1, int pageSize = 10)
+        public HttpResponseMessage SearchBrokers(EnumUserType userType,int? phone, string name = null,  int page = 1, int pageSize = 10)
         {
+            //var phones = new int[1];
+
             var brokerSearchCondition = new BrokerSearchCondition
             {
-               
-                 Brokername=name,
+                Brokername=name,
+                //Phones=phones,
                 OrderBy = EnumBrokerSearchOrderBy.OrderById,
                 Page=Convert.ToInt32(page),
                 PageCount=10,
-                UserType=EnumUserType.经纪人
+                UserType = userType
             };
            
-            var BrokersList = _brokerService.GetBrokersByCondition(brokerSearchCondition).Select(p => new
+            var brokersList = _brokerService.GetBrokersByCondition(brokerSearchCondition).Select(p => new
             {
-                Id = p.Id,
-                Name =p.Brokername,
+                p.Id,
+                p.Nickname,
+                p.Brokername,
                 p.Realname,
-                p.Regtime,
                 p.Phone,
-                LevelName=p.Level.Name,
-
-            }).ToList();
+                p.Sfz,
+                p.Amount,
+                p.Agentlevel,
+                p.Regtime,
+                p.Headphoto
+            }).ToList().Select(b => new
+            {
+                b.Id,
+                b.Nickname,
+                b.Brokername,
+                b.Realname,
+                b.Phone,
+                b.Sfz,
+                b.Amount,
+                b.Agentlevel,
+                Regtime = b.Regtime.ToString("yyyy-MM-dd"),
+                b.Headphoto
+            });
             var brokerListCount = _brokerService.GetBrokerCount(brokerSearchCondition);
-            return PageHelper.toJson(new { List = BrokersList, Condition = brokerSearchCondition, totalCount = brokerListCount });
+            return PageHelper.toJson(new { List = brokersList, Condition = brokerSearchCondition, totalCount = brokerListCount });
         }
 
         /// <summary>
@@ -87,7 +115,7 @@ namespace Zerg.Controllers.CRM
             {
                 var brokerEntity = new BrokerEntity
                 {
-                    Brokername=broker.Brokername,                   
+                    Brokername=broker.Brokername,
                     Uptime = DateTime.Now,
                     Addtime = DateTime.Now,
 
@@ -118,7 +146,7 @@ namespace Zerg.Controllers.CRM
         [System.Web.Http.HttpPost]
         public HttpResponseMessage UpdateBroker([FromBody] BrokerEntity broker)
         {
-            if (broker != null && !string.IsNullOrEmpty(broker.Id.ToString()) && PageHelper.ValidateNumber(broker.Id.ToString()) && !string.IsNullOrEmpty(broker.Brokername))
+            if (broker != null && !string.IsNullOrEmpty(broker.Id.ToString()) && PageHelper.ValidateNumber(broker.Id.ToString()) )
             {
                 var brokerModel = _brokerService.GetBrokerById(broker.Id);
                 brokerModel.Uptime = DateTime.Now;
@@ -193,7 +221,27 @@ namespace Zerg.Controllers.CRM
         }
 
 
+        /// <summary>
+        /// 经纪人排行 返回前10条
+        /// </summary>
+        /// <returns></returns>
 
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage  OrderByBrokerList()
+        {
+          
+
+            var brokersList = _brokerService.OrderbyBrokersList().Select(p => new
+            {
+                p.Id,
+                p.Brokername,
+                p.Agentlevel,
+                p.Amount
+
+            }).ToList();
+            
+            return PageHelper.toJson(new { List = brokersList});
+        }
 
 
         #endregion
