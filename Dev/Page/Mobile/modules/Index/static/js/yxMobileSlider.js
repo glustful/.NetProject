@@ -3,7 +3,7 @@
     $.fn.yxMobileSlider = function(settings){
         var defaultSettings = {
             width: 640, //容器宽度
-            height: 230, //容器高度
+            height: 320, //容器高度
             during: 5000, //间隔时间
             speed:30 //滑动速度
         }
@@ -23,7 +23,7 @@
             _this.width(s.width).height(s.height).css({
                 position: 'relative',
                 overflow: 'hidden',
-				margin:'0 auto'
+                margin:'0 auto'
             }); //设定容器宽高及样式
             oMover.css({
                 position: 'absolute',
@@ -184,7 +184,7 @@
                 oMover.stop().animate({
                     left: iTarget
                 }, _this.speed , function(){
-                    if (fn) 
+                    if (fn)
                         fn();
                 });
             }
