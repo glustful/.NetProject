@@ -57,6 +57,11 @@ app  .run(
             templateUrl:'modules/Register/view/register.html',
             resolve:load('modules/Register/controller/RegisterController.js')
         })
+        .state('user.PasswordFound',{
+            url:'/PasswordFound',
+            templateUrl:'modules/PasswordFound/view/PasswordFound.html',
+            resolve:load('modules/Register/controller/RegisterController.js')
+        })
         .state('app.home',{
             url:'/home',
             templateUrl:'modules/Index/view/Index.html',

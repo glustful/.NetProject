@@ -31,7 +31,7 @@ app.controller('personsettingController',function($scope,$http){
             });
     }
 })
-/////////////////////////////上传头像////////////////////////////
+/////////////////////////////涓婁紶澶村儚////////////////////////////
         function previewImage(file)
         {
           var MAXWIDTH  = 128; 
@@ -49,11 +49,11 @@ app.controller('personsettingController',function($scope,$http){
               }
               var reader = new FileReader();
               reader.onload = function(evt){
-              	//扩展名
+              	//鎵╁睍鍚�
               	var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
-              	// gif在IE浏览器暂时无法显示
+              	// gif鍦↖E娴忚鍣ㄦ殏鏃舵棤娉曟樉绀�
 			     if(ext!='png'&&ext!='jpg'&&ext!='jpeg'&&ext!='gif'){
-			         alert("图片的格式必须为png或者jpg或者jpeg格式！"); 
+			         alert("鍥剧墖鐨勬牸寮忓繀椤讳负png鎴栬�卝pg鎴栬�卝peg鏍煎紡锛�"); 
 			         return;
 			     }
               	img.src = evt.target.result;
@@ -67,7 +67,7 @@ app.controller('personsettingController',function($scope,$http){
 				//xmlhttp.setRequestHeader("Content-Type","multipart/form-data");
 				xmlhttp.send(fd);
 				function callback () {
-					//0未初始化，1正在加载，2已经加载，3交互中，4完成
+					//0鏈垵濮嬪寲锛�1姝ｅ湪鍔犺浇锛�2宸茬粡鍔犺浇锛�3浜や簰涓紝4瀹屾垚
 					if(xmlhttp.readyState==4)
 					{
 						
@@ -100,4 +100,4 @@ app.controller('personsettingController',function($scope,$http){
             param.top = Math.round((maxHeight - param.height) / 2);
             return param;
         }
-///////////////////////////结束//////////////////////////////////
+///////////////////////////缁撴潫//////////////////////////////////
