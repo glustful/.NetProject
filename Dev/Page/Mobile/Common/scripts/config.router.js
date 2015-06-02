@@ -121,8 +121,10 @@ app  .run(
             templateUrl:'modules/housesBuy/view/housesBuy.html'
         })
         .state('app.housesPic',{
-            url:'/housesPic',
-            templateUrl:'modules/housesPic/view/housesPic.html'
+            url:'/housesPic?productId',
+            templateUrl:'modules/housesPic/view/housesPic.html',
+            controller:'HousesPicController',
+            resolve:load('modules/housesPic/scripts/HousesPic.js')
         })
         .state('app.housesPicBuy',{
             url:'/housesPicBuy',
@@ -162,7 +164,9 @@ app  .run(
         })
         .state('app.storeroom',{
             url:'/storeroom',
-            templateUrl:'modules/storeroom/view/storeroom.html'
+            controller:'StormRoomController',
+            templateUrl:'modules/storeroom/view/storeroom.html',
+            resolve:load('modules/storeroom/scripts/StoreRoom.js')
         })
         .state('app.task',{
             url:'/task',
