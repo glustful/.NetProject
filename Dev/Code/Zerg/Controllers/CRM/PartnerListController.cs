@@ -76,7 +76,9 @@ namespace Zerg.Controllers.CRM
                  regtime=p.Regtime 
 
                 }).ToList();
+
             return PageHelper.toJson(new { list = partnerList });
+
         }
 
         /// <summary>
@@ -132,7 +134,47 @@ namespace Zerg.Controllers.CRM
             
         }
 
+        /// <summary>
+        /// 查询经纪人收到的邀请
+        /// </summary>
+        /// <param name="brokerId"></param>
+        /// <returns></returns>
+        public HttpResponseMessage GetInviteForBroker(int brokerId=0)
+        {
+            if (brokerId == 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
 
+            var list = _partnerlistService.GetInviteForBroker(brokerId).Where(p => p.Status == EnumPartnerType.默认).Select(a => new
+            {
+                a.Id,
+                HeadPhoto = a.Broker.Headphoto,
+                BrokerName = a.Broker.Brokername,
+                AddTime = a.Addtime
+            }).ToList().Select(b => new
+            {
+                b.Id,
+                b.HeadPhoto,
+                b.BrokerName,
+                AddTime = b.AddTime.ToString("yyyy-MM-dd")
+            });
+            return PageHelper.toJson(list);
+        }
+
+        /// <summary>
+        /// 设置状态
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public HttpResponseMessage SetPartner(EnumPartnerType status,int id=0)
+        {
+            if (id == 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
+
+            var model = _partnerlistService.GetPartnerListById(id);
+            model.Status = status;
+            _partnerlistService.Update(model);
+
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));
+        }
 
         #endregion
 
