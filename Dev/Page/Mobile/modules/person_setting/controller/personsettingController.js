@@ -49,6 +49,8 @@ app.controller('personsettingController',function($scope,$http){
               }
               var reader = new FileReader();
               reader.onload = function(evt){
+              	//base64编码
+              	img.src = evt.target.result;
               	//扩展名
               	var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
               	// gif在IE浏览器暂时无法显示
@@ -56,15 +58,13 @@ app.controller('personsettingController',function($scope,$http){
 			         alert("图片的格式必须为png或者jpg或者jpeg格式！"); 
 			         return;
 			     }
-              	img.src = evt.target.result;
+              	//发送请求
 				var xmlhttp=new XMLHttpRequest();
 				xmlhttp.onreadystatechange = callback;
 				var fd = new FormData();  
 				xmlhttp.open("POST",SETTING.ApiUrl+'/Resource/Upload');
-				//var boundary ="---------------------------32404670520626"; 
-				fd.append("fileToUpload", files);
-				//xmlhttp.charset="utf-8";
-				//xmlhttp.setRequestHeader("Content-Type","multipart/form-data");
+				fd.append("fileToUpload",img.src,files.name);
+				console.log(img.src);
 				xmlhttp.send(fd);
 				function callback () {
 					//0未初始化，1正在加载，2已经加载，3交互中，4完成
@@ -74,9 +74,8 @@ app.controller('personsettingController',function($scope,$http){
 					}
 				}
               }
-              reader.readAsDataURL(file.files[0]);
+              reader.readAsDataURL(files);
           }
-          
         }
         function clacImgZoomParam( maxWidth, maxHeight, width, height ){
             var param = {top:0, left:0, width:width, height:height};
