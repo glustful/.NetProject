@@ -39,18 +39,19 @@ ul li{
 }
 /*?????????*/
 .detail_content{
-    margin: 56px 25px 0 30px;
+   padding: 56px 25px 0 30px;
     background-color: white;
     color: black;
 }
 
 .partner_mark{
-    margin-top: 80px;
-    margin-left: 30px;
+    padding:80px 0 0 30px;
+    background-color: #fff;
+
 }
 .partner_information{
    margin-left: 27px;
-    margin-right: 106px;
+
 }
 .mark{
     margin-left: 75px;
@@ -81,11 +82,11 @@ ul li{
     font-family: "microsoft yahei";
     color: white;
 }
-.list_content .addPartners{
+ .addPartners{
     background-color:#fff;
-    padding-top: 450px;
+    padding: 10px 0 20px 0;
 }
-.list_content .addPartners p{
+.addPartners p{
     text-align: center;
     width: 600px;
     height: 80px;
@@ -95,6 +96,41 @@ ul li{
     margin: 0 auto;
    font-size: 2em;
 }
-.list_content .addPartners p a{
+.addPartners p a{
    color:#fc3b00;
+}
+.others{
+    background-color: #fff;
+
+    margin-top: 20px;
+
+
+
+
+}
+.others .invite{
+    height: 60px;
+    line-height: 60px;
+    border-bottom: 1px solid #ebebeb;
+    color:#fc3b00;
+    padding-left: 30px;
+    font-size: 1.5em;
+}
+.others .othersInformation li{
+    height: 60px;
+    line-height: 60px;
+    padding: 10px;
+    border-bottom: 1px solid #ebebeb;
+}
+.others .othersInformation li span button{
+    height: 40px;
+    width: 80px;
+    margin-right: 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1em;
+    background-color:#fc3b00;
+}
+.others .othersInformation li span .agree{
+
 }

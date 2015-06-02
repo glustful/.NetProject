@@ -49,6 +49,8 @@ namespace CRM.Entity.Model
 		public DateTime? UptimeEnd { get; set; }
 
 		public EnumPartnerListSearchOrderBy? OrderBy { get; set; }
+
+	    public EnumPartnerType? Status { get; set; }
 	}
 
 	public enum EnumPartnerListSearchOrderBy

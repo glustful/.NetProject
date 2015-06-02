@@ -91,6 +91,6 @@ namespace Trading.Entity.Model
         /// </summary>
         public string ContactPhone { get; set; }
 
-        public List<ProductParameterEntity> ProductParameter { get; set; } 
+        public virtual List<ProductParameterEntity> ProductParameter { get; set; } 
 	}
 }
