@@ -45,6 +45,8 @@ namespace CRM.Entity.Model
 		public DateTime? UptimeEnd { get; set; }
 
 		public EnumBrokerLeadClientSearchOrderBy? OrderBy { get; set; }
+
+	    public EnumBLeadType? Status { get; set; }
 	}
 
 	public enum EnumBrokerLeadClientSearchOrderBy

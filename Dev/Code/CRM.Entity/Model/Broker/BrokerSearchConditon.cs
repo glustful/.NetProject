@@ -77,6 +77,8 @@ namespace CRM.Entity.Model
 		public EnumBrokerSearchOrderBy? OrderBy { get; set; }
 
 	    public EnumUserType? UserType { get; set; }
+
+	    public EnumPartnerType? Status { get; set; }
 	}
 
 	public enum EnumBrokerSearchOrderBy

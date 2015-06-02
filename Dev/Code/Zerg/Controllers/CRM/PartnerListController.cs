@@ -1,10 +1,9 @@
-﻿using CRM.Entity.Model;
+﻿using System.ComponentModel;
+using CRM.Entity.Model;
 using CRM.Service.Broker;
 using CRM.Service.PartnerList;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -35,22 +34,28 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <returns></returns>
 
-        [System.Web.Http.HttpGet]
-        public HttpResponseMessage SearchPartnerList(string name = null, int page = 1, int pageSize = 10)
+        [HttpGet]
+        public HttpResponseMessage SearchPartnerList(EnumPartnerType status, string name = null, int page = 1, int pageSize = 10)
         {
             var brokerSearchCondition = new BrokerSearchCondition
             {
                 Brokername = name,
+                Status = status,
                 Page = Convert.ToInt32(page),
                 PageCount =pageSize
             };
             var partnerList = _brokerService.GetBrokersByCondition(brokerSearchCondition).Select(p => new
             {
-                Id = p.Id,
-                PartnersName = p.PartnersName,
-                PartnersId = p.PartnersId,
-                BrokerName = p.Brokername
-            }).ToList();
+                p.Id,
+                p.PartnersName,
+                p.PartnersId,
+                BrokerName = p.Brokername,
+                Phone = p.Phone,
+                Regtime = p.Regtime,
+                Agentlevel = p.Agentlevel,
+                Headphoto=p.Headphoto,
+                status=EnumPartnerType.同意
+            });
             var partnerListCount = _brokerService.GetBrokerCount(brokerSearchCondition);
             return PageHelper.toJson(new { List = partnerList, Condition = brokerSearchCondition, totalCount = partnerListCount });
              
@@ -61,8 +66,8 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="userId">经纪人ID</param>
         /// <returns></returns>
-
-        [System.Web.Http.HttpGet]
+        [Description("查询经纪人下的合伙人List")]
+        [HttpGet]
         public HttpResponseMessage PartnerListDetailed(string userId)
         {
             var partnerlistsearchcon = new PartnerListSearchCondition
@@ -73,7 +78,9 @@ namespace Zerg.Controllers.CRM
                 {
                  Name=p.Brokername,
                  AddTime =p.Addtime,
-                 regtime=p.Regtime 
+                 regtime=p.Regtime, 
+                 Phone=p.Phone,
+                Headphoto= p.Broker .Headphoto ,
 
                 }).ToList();
             return PageHelper.toJson(new { list = partnerList });
@@ -82,16 +89,16 @@ namespace Zerg.Controllers.CRM
         /// <summary>
         /// 新增合伙人
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="partnerList"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public HttpResponseMessage AddPartnerList([FromBody] PartnerListEntity partnerList)
         {
-            var sech = new BrokerSearchCondition()
+            var sech = new BrokerSearchCondition
             {
-                Phones = new int[] { partnerList.Phone}
+                Phones = new[] { partnerList.Phone}
             };
-            var list = _brokerService.GetBrokersByCondition(sech).First();
+            var list = _brokerService.GetBrokersByCondition(sech).FirstOrDefault();
             if (list != null)
             {
                 if (list.PartnersId != 0)
@@ -108,13 +115,14 @@ namespace Zerg.Controllers.CRM
                             Broker = null,
                             Uptime = DateTime.Now,
                             Addtime = DateTime.Now,
+                            Status = EnumPartnerType.默认
                         };
 
                         try
                         {
                             if (_partnerlistService.Create(entity) != null)
                             {
-                                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！等待对方同意"));
                             }
                         }
                         catch
@@ -128,8 +136,9 @@ namespace Zerg.Controllers.CRM
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在"));
 
-            
+
         }
+
 
 
 

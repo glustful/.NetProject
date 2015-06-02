@@ -59,6 +59,7 @@ app  .run(
         .state('app.customerList',{
             url:'/customerList',
             templateUrl:'modules/customerList/view/customerList.html'
+       ,resolve:load('modules/customerList/controller/customerList.js')
         })
         .state('app.detail',{
             url:'/detail',
@@ -92,16 +93,18 @@ app  .run(
         })
         .state('app.partner_list',{
             url:'/partner_list',
-            templateUrl:'modules/partner_list/view/partner_list.html'
+            templateUrl:'modules/partner_list/view/partner_list.html',
+            resolve:load('modules/partner_list/controller/partner_list.js')
         })
         .state('app.partner_details',{
-            url:'/partner_details',
+            url:'/partner_details?userId',
             templateUrl:'modules/partner_details/view/partner_details.html',
             resolve:load('modules/partner_details/controller/partner_details.js')
         })
         .state('app.partner_insert',{
             url:'/partner_insert',
-            templateUrl:'modules/partner_insert/view/partner_insert.html'
+            templateUrl:'modules/partner_insert/view/partner_insert.html',
+            resolve:load('modules/partner_insert/controller/partner_insert.js')
         })
         .state('app.partner_insert1',{
             url:'/partner_insert1',
@@ -186,6 +189,14 @@ app  .run(
         .state('app.credit_add',{
             url:'/credit_add',
             templateUrl:'modules/credit_add/view/credit_add.html'
+        })
+        .state('app.recommendedBroker',{
+            url:'/recommendedBroker',
+            templateUrl:'modules/recommendBroker/view/recommendedBroker.html'
+        })
+        .state('app.addBroker',{
+            url:'/addBroker',
+            templateUrl:'modules/addBroker/view/addBroker.html'
         })
 
 
