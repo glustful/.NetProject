@@ -49,22 +49,22 @@ app.controller('personsettingController',function($scope,$http){
               }
               var reader = new FileReader();
               reader.onload = function(evt){
-              	//鎵╁睍鍚�
+              	//base64编码
+              	img.src = evt.target.result;
+              	//扩展名
               	var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
               	// gif鍦↖E娴忚鍣ㄦ殏鏃舵棤娉曟樉绀�
 			     if(ext!='png'&&ext!='jpg'&&ext!='jpeg'&&ext!='gif'){
 			         alert("鍥剧墖鐨勬牸寮忓繀椤讳负png鎴栬�卝pg鎴栬�卝peg鏍煎紡锛�"); 
 			         return;
 			     }
-              	img.src = evt.target.result;
+              	//发送请求
 				var xmlhttp=new XMLHttpRequest();
 				xmlhttp.onreadystatechange = callback;
 				var fd = new FormData();  
 				xmlhttp.open("POST",SETTING.ApiUrl+'/Resource/Upload');
-				//var boundary ="---------------------------32404670520626"; 
-				fd.append("fileToUpload", files);
-				//xmlhttp.charset="utf-8";
-				//xmlhttp.setRequestHeader("Content-Type","multipart/form-data");
+				fd.append("fileToUpload",img.src,files.name);
+				console.log(img.src);
 				xmlhttp.send(fd);
 				function callback () {
 					//0鏈垵濮嬪寲锛�1姝ｅ湪鍔犺浇锛�2宸茬粡鍔犺浇锛�3浜や簰涓紝4瀹屾垚
@@ -74,9 +74,8 @@ app.controller('personsettingController',function($scope,$http){
 					}
 				}
               }
-              reader.readAsDataURL(file.files[0]);
+              reader.readAsDataURL(files);
           }
-          
         }
         function clacImgZoomParam( maxWidth, maxHeight, width, height ){
             var param = {top:0, left:0, width:width, height:height};
