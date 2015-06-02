@@ -66,7 +66,8 @@ app  .run(
         })
         .state('app.hero',{
             url:'/hero',
-            templateUrl:'modules/hero/view/hero.html'
+            templateUrl:'modules/hero/view/hero.html',
+            resolve:load("modules/hero/controller/heroController.js")
         })
         .state('app.setting',{
             url:'/setting',
@@ -74,7 +75,8 @@ app  .run(
         })
         .state('app.person_setting',{
             url:'/person_setting',
-            templateUrl:'modules/person_setting/view/person_setting.html'
+            templateUrl:'modules/person_setting/view/person_setting.html',
+            resolve:load('modules/person_setting/controller/personsettingController.js')
         })
         .state('app.security_setting',{
             url:'/security_setting',
