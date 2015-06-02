@@ -71,10 +71,21 @@ form a{
 /*��������*/
 .setting_personal{
     padding: 40px 0 100px 0;
+
 }
 .person_revise{
     padding: 20px 55px 0 55px;
     color: #848484;
+}
+.person_revise p{
+    font-size: 26px;
+    margin-top: 20px;
+}
+.person_revise input {
+    width: 518px;
+    height: 48px;
+    font-size: 20px;
+    font-family: "microsoft yahei";
 }
 .headphoto{
     text-align: center;
