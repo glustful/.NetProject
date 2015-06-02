@@ -3,16 +3,13 @@
  */
 app.controller('partnerListController',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
     $scope.searchCondition = {
-        name: '',
-        Id:0,
-        page: 1,
-        status:'同意'
+      userId:6
     };
     //查询合伙人
     var getPartnerList  = function() {
-        $http.get(SETTING.ApiUrl+'/PartnerList/SearchPartnerList/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/PartnerList/PartnerListDetailed?userId='+6,{'withCredentials':true}).success(function(data){
             console.log(data);
-            $scope.list = data.List;
+            $scope.list = data.list;
         });
     };
     $scope.getList = getPartnerList;
@@ -20,27 +17,27 @@ app.controller('partnerListController',['$http','$scope','$stateParams',function
 
 }
 ]);
-app.controller('inviteController',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
-    $scope.searchCondition = {
-        name: '',
-        Id:0,
-        page: 1,
-        status:'同意'
-    };
-    //查询合伙人
-    var getPartnerList  = function() {
-        $http.get(SETTING.ApiUrl+'/PartnerList/SearchPartnerList/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
-            console.log(data);
-            if($scope.searchCondition.status=='1'){
-                $scope.list = data.List;
-            }
-        });
-    };
-    $scope.getList = getPartnerList;
-    getPartnerList();
-
-}
-]);
+//app.controller('inviteController',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+//    $scope.searchCondition = {
+//        name: '',
+//        Id:0,
+//        page: 1,
+//        status:'同意'
+//    };
+//    //查询合伙人
+//    var getPartnerList  = function() {
+//        $http.get(SETTING.ApiUrl+'/PartnerList/SearchPartnerList/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
+//            console.log(data);
+//            if($scope.searchCondition.status=='1'){
+//                $scope.list = data.List;
+//            }
+//        });
+//    };
+//    $scope.getList = getPartnerList;
+//    getPartnerList();
+//
+//}
+//]);
 
 
 

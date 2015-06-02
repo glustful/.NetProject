@@ -14,6 +14,7 @@ using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
+    [AllowAnonymous ]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 经纪人管理  李洪亮  2015-05-04
@@ -45,7 +46,8 @@ namespace Zerg.Controllers.CRM
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
             }
-            return PageHelper.toJson(_brokerService.GetBrokerById(Convert.ToInt32(id)));
+            var brokerlist = _brokerService.GetBrokerById(Convert.ToInt32(id));
+            return PageHelper.toJson(new { List = brokerlist });
         }
 
 

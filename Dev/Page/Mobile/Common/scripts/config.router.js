@@ -94,7 +94,7 @@ app  .run(
             resolve:load('modules/partner_list/controller/partner_list.js')
         })
         .state('app.partner_details',{
-            url:'/partner_details?userId',
+            url:'/partner_details?Id',
             templateUrl:'modules/partner_details/view/partner_details.html',
             resolve:load('modules/partner_details/controller/partner_details.js')
         })
