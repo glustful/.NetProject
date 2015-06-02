@@ -2,16 +2,7 @@
 自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />-->
 <div class="marginL" ng-app="app" ng-controller="MessageConfigController">
     <div>
-
-        <p>短信配置</p>
-        <p>
-            <input name="Name" type="text" class="form-control form-control-1   ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入模板标题"
-                   ng-model="MessageConfigModel.Name" required="" tabindex="0" aria-required="true" aria-invalid="true">
-        </p>
-        <p><textarea name="Template" class="form-control" ng-model="MessageConfigModel.Template" rows="10" placeholder="通配符又{}组成，在使用通配符的时候，请将通配字段名字与其绑定。例如需要绑定名字通配符请添加{name}"></textarea></p>
-
-        <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue" ng-click="AddNewMessage()">添加</button>
-
+        <a href="#page/CRM/MessageConfigure/create" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw orange-200"style="float:right;;margin-right: 50px;">新建<div class="md-ripple-container"></div></button></a>
     </div>
     <div id="divConfig">
 
@@ -30,6 +21,10 @@
                         短信配置模板
                         <span class="footable-sort-indicator"></span>
                     </th>
+
+
+                    <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">操作<span class="footable-sort-indicator"></span></th>
+
                 </tr>
             </thead>
             <tbody>
@@ -37,11 +32,16 @@
                     <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>{{item.Id}}</td>
                     <td class="footable-visible">{{item.Name}}</td>
                     <td class="footable-visible">{{item.Template}}</td>
+                    <td >
+                        <a ui-sref="page.CRM.MessageConfigure.edit({id: item.Id})"> <span class="label bg-success" title="Active">编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    </td>
                 </tr>
             </tbody>
 
         </table>
-
+        <div colspan="5" class="text-center footable-visible">
+            <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+        </div>
     </div>
 </div>
 

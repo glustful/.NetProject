@@ -1,4 +1,4 @@
-/*ÉèÖÃ*/
+/*ï¿½ï¿½ï¿½ï¿½*/
 .setting_person{
     padding: 0 0 650px 0;
 }
@@ -22,7 +22,7 @@
     color: #aeacac;
     font-size: 16px;
 }
-/*°²È«ÉèÖÃ*/
+/*ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½*/
 
 .security_content{
     padding: 30px 55px 440px 58px;
@@ -78,7 +78,7 @@ form a{
     color: #ffffff;
     font-family:'microsoft yahei' ;
 }
-/*¸öÈËÉèÖÃ*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 .setting_personal{
     padding: 40px 0 100px 0;
 }
@@ -100,4 +100,19 @@ form a{
     height: 128px;
     background: url("../../../person_setting/static/image/touxiang.png") no-repeat center center;
     background-color: #ffffff;
+    border-radius: 500px;
+}
+.input-file{
+	overflow:hidden;
+	position:relative;
+}
+.input-file input
+{
+	opacity:0;
+	filter:alpha(opacity=0);
+	position:absolute;
+	top:-128px;
+	width: 128px;
+	left: -15px;
+	padding-bottom: 120px;
 }

@@ -78,14 +78,14 @@ namespace Zerg.Controllers.CRM
                 b.Brokerlevel,
                 b.Phone,
                 b.Projectname,
-                b.Addtime,
+                Addtime =b.Addtime.ToString("yyy-MM-dd"),
 
                 b.Clientname,
                 SecretaryName = b.Brokername,
                 b.SecretaryPhone,
                 Waiter = b.Brokername,
                 b.WriterPhone,
-                Uptime=b.Uptime.ToString("yy-MM-dd")
+                Uptime=b.Uptime.ToString("yyy-MM-dd")
             });
 
             var totalCont = _brokerRecClientService.GetBrokerRECClientCount(condition);

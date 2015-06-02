@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
@@ -233,5 +234,33 @@ namespace CRM.Service.PartnerList
                 return -1;
 			}
 		}
-	}
+
+
+        public List<PartnerListEntity> GetInviteByBroker(int id)
+        {
+            try
+            {
+                return _partnerlistRepository.Table.Where(p => p.Broker.Id == id).ToList();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
+
+
+        public List<PartnerListEntity> GetInviteForBroker(int id)
+        {
+            try
+            {
+                return _partnerlistRepository.Table.Where(p => p.PartnerId == id).ToList();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
+    }
 }

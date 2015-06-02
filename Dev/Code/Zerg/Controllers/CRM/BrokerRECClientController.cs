@@ -14,13 +14,12 @@ using Zerg.Models.CRM;
 
 namespace Zerg.Controllers.CRM
 {
-    [AllowAnonymous]
      [EnableCors("*", "*", "*", SupportsCredentials = true)]
 
      //经纪人推荐客户
     public class BrokerRECClientController : ApiController
     {
-         public readonly IBrokerRECClientService BrokerRecClientService;
+         public readonly IBrokerRECClientService _brokerRecClientService;
          private readonly IBrokerService _brokerService;//经纪人
          private readonly IClientInfoService _clientInfoService;
          private readonly IWorkContext _workContext;
@@ -32,7 +31,7 @@ namespace Zerg.Controllers.CRM
              IWorkContext workContext
              )
          {
-             BrokerRecClientService =brokerRecClientService;
+             _brokerRecClientService = brokerRecClientService;
              _brokerService = brokerService;
              _clientInfoService = clientInfoService;
              _workContext = workContext;
@@ -53,7 +52,7 @@ namespace Zerg.Controllers.CRM
              {
                  Brokers = _brokerService.GetBrokerById(Convert.ToInt32(userid))
              };
-             var list = BrokerRecClientService.GetBrokerRECClientsByCondition(p).ToList();
+             var list = _brokerRecClientService.GetBrokerRECClientsByCondition(p).ToList();
              return PageHelper.toJson(list);
 
          }
@@ -67,6 +66,7 @@ namespace Zerg.Controllers.CRM
          [HttpPost]
          public HttpResponseMessage Add([FromBody]  BrokerRECClientModel  brokerrecclient)
          {
+             EnumBRECCType type;
              //查询客户信息
              var sech = new ClientInfoSearchCondition
              {
@@ -74,11 +74,10 @@ namespace Zerg.Controllers.CRM
                  Phone = brokerrecclient.Phone.ToString(CultureInfo.InvariantCulture)
 
              };
-             var cid = _clientInfoService.GetClientInfosByCondition(sech).First().Id;
-             var type = BrokerRecClientService.GetBrokerRECClientById(cid).Status;
 
-             //检测
-             if (type!=EnumBRECCType.等待上访)
+             var Cmodel = _clientInfoService.GetClientInfosByCondition(sech).FirstOrDefault();
+
+             if (Cmodel == null)
              {
                  //客户信息
                  var client = new ClientInfoEntity
@@ -95,25 +94,36 @@ namespace Zerg.Controllers.CRM
                  };
                  _clientInfoService.Create(client);
 
+                 type = EnumBRECCType.审核中;
+             }
+             else
+             {
+                 type = _brokerRecClientService.GetBrokerRECClientById(Cmodel.Id).Status;
+             }
+
+             //检测
+             if (type != EnumBRECCType.等待上访)
+             {
+
+
                  var cmodel = _clientInfoService.GetClientInfosByCondition(sech).First();
 
                  var model = new BrokerRECClientEntity
                  {
-                     Broker = _brokerService.GetBrokerById(brokerrecclient.Broker),
+                     Broker = _brokerService.GetBrokerById(_workContext.CurrentUser.Id),
                      ClientInfo = cmodel,
-                     Phone = brokerrecclient.Phone,
-                     Qq = brokerrecclient.Qq,
                      Adduser = _workContext.CurrentUser.Id,
                      Addtime = DateTime.Now,
                      Upuser = _workContext.CurrentUser.Id,
                      Uptime = DateTime.Now,
                      Projectid = brokerrecclient.Projectid,
-                     Status = EnumBRECCType.审核中,
+                     Status = EnumBRECCType.等待上访,
                  };
-                 BrokerRecClientService.Create(model);
+                 _brokerRecClientService.Create(model);
                  return PageHelper.toJson(PageHelper.ReturnValue(true, "提交成功"));
              }
              return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在上访！"));
+
          }
     }
 }

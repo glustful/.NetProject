@@ -4,10 +4,10 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Trading.Service.Parameter;
 using Trading.Entity.Entity.Area;
-using Trading.Service.Area;
 using Trading.Entity.Model;
 using Trading.Service.ParameterValue;
 using Zerg.Common;
+using Trading.Service.Area;
 
 namespace Zerg.Controllers.Trading.Condition
 {
