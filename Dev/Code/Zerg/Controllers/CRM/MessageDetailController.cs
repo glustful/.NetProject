@@ -11,6 +11,7 @@ using System.Web.Http.Cors;
 namespace Zerg.Controllers.CRM
 {
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    [AllowAnonymous]
     /// <summary>
     /// 短信发送明细
     /// </summary>
@@ -22,6 +23,7 @@ namespace Zerg.Controllers.CRM
         {
             _messageDetailService = messageDetailService;
         }
+      
         #region 短信发送明细  黄秀宇  2015.04.28
         /// <summary>
         /// 查询短信明细
@@ -34,7 +36,7 @@ namespace Zerg.Controllers.CRM
         /// <param name="AddtimeEnd"></param>
         /// <returns></returns> 
         [HttpGet]
-        public HttpResponseMessage SearchMessageDetail(string endTime, string page, string pageSize, string startTime, string totalPage, string type)
+        public HttpResponseMessage SearchMessageDetail(string endTime, string startTime, string type, int page = 1, int pageSize = 10)
         {
             //================================================赵旭初 by 2015-05-13 start===============================================================
             string strStarttime = "";
@@ -43,10 +45,12 @@ namespace Zerg.Controllers.CRM
 
             if (startTime == null || startTime.Length <= 0) strStarttime = "1900-01-01";
             else strStarttime = startTime.Substring(0, 10);
+
             if (endTime == null || endTime.Length <= 0)
                 strEndtime = string.Format(DateTime.Now.ToShortDateString(), "yyyy-mm-dd");
             else
                 strEndtime = endTime.Substring(0, 10);
+
             strType = type;
 
 
@@ -54,13 +58,16 @@ namespace Zerg.Controllers.CRM
             {
                 AddtimeBegin = Convert.ToDateTime(strStarttime),
                 AddtimeEnd = Convert.ToDateTime(strEndtime), 
-
-                Title = strType
-
+                Title = strType,
+                 Page = Convert.ToInt32(page),
+                PageCount = pageSize
             };
-            var list = _messageDetailService.GetMessageDetailsByCondition(mDetailCondition).Select(c => new { c.Id, c.Title, c.Sender, c.Mobile, c.Content }).ToList();
 
-            return PageHelper.toJson(list);
+         
+            var list = _messageDetailService.GetMessageDetailsByCondition(mDetailCondition).Select(c => new { c.Id, c.Title, c.Sender, c.Mobile, c.Content,c.Addtime }).ToList();
+            var listCount = _messageDetailService.GetMessageDetailsByCondition(mDetailCondition);
+            return PageHelper.toJson(new { List = list, Condition = mDetailCondition, totalCount = listCount });
+          
             //================================================赵旭初 by 2015-05-13 end===============================================================
         }
 
@@ -105,6 +112,18 @@ namespace Zerg.Controllers.CRM
                 }
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
+        }
+
+
+
+        /// <summary>
+        /// 获取SMS平台可用数量
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetSMSCount()
+        {
+            return PageHelper.toJson(SMSHelper.GetSMSCount());
         }
         #endregion
     }

@@ -113,7 +113,7 @@ namespace CRM.Service.MessageDetail
 				}
 				else
 				{
-					query = query.OrderBy(q=>q.Id);
+					query = query.OrderByDescending(q=>q.Id);
 				}
 
 				if (condition.Page.HasValue && condition.PageCount.HasValue)

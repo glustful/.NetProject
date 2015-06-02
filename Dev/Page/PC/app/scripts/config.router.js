@@ -982,6 +982,25 @@ angular.module('app')
                   data: { title: '短信配置' }
             })
 
+            .state('page.CRM.MessageConfigure.create', {
+                url: '/create',
+                templateUrl: 'views/pages/CRM/MessageConfigure/create.html',
+                data : { title: '短信配置新建' },
+                resolve:load('scripts/controllers/CRM/Message.js')
+            })
+            .state('page.CRM.MessageConfigure.edit', {
+                url: '/edit?id',
+                templateUrl: 'views/pages/CRM/MessageConfigure/edit.html',
+                data : { title: '短信配置编辑' },
+                resolve:load('scripts/controllers/CRM/Message.js')
+            })
+
+
+
+
+
+
+
             .state('page.CRM.MessageList', {
                 url: '/MessageList',
                 template: '<div ui-view></div>'
