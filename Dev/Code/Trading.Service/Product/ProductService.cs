@@ -108,11 +108,11 @@ namespace Trading.Service.Product
             {
                 if (!string.IsNullOrEmpty(condition.AreaName))
                 {
-                    query = query.Where(q=>q.ProductParameter.Exists(pp=>pp.ParameterValue.Parametervalue == condition.AreaName));
+                    query = query.Where(q=>q.ProductParameter.Count(pp=>pp.ParameterValue.Parametervalue == condition.AreaName)>0);
                 }
                 if (condition.TypeId.HasValue)
                 {
-                    query = query.Where(q=>q.ProductParameter.Exists(pp=>pp.ParameterValue.Id ==condition.TypeId));
+                    query = query.Where(q=>q.ProductParameter.Count(pp=>pp.ParameterValue.Id ==condition.TypeId) >0);
                 }
                 if (condition.CommissionBegin.HasValue)
                 {
@@ -278,11 +278,11 @@ namespace Trading.Service.Product
             {
                 if (!string.IsNullOrEmpty(condition.AreaName))
                 {
-                    query = query.Where(q => q.ProductParameter.Exists(pp => pp.ParameterValue.Parametervalue == condition.AreaName.ToString()));
+                    query = query.Where(q => q.ProductParameter.Count(pp => pp.ParameterValue.Parametervalue == condition.AreaName)>0);
                 }
                 if (condition.TypeId.HasValue)
                 {
-                    query = query.Where(q => q.ProductParameter.Exists(pp => pp.ParameterValue.Id == condition.TypeId));
+                     query = query.Where(q=>q.ProductParameter.Count(pp=>pp.ParameterValue.Id ==condition.TypeId) >0);
                 }
                 if (condition.CommissionBegin.HasValue)
                 {
