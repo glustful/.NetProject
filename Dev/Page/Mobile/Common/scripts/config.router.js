@@ -43,6 +43,20 @@ app  .run(
             url:'/app',
             templateUrl:'Common/widget/nav/nav.html'
         })
+        .state('user',{
+            url:'/user',
+            templateUrl:'Common/widget/layout/user.html'
+        })
+        .state('user.login',{
+            url:'/login',
+            templateUrl:'modules/Login/view/login.html',
+            resolve:load('modules/Login/controller/LoginController.js')
+        })
+        .state('user.register',{
+            url:'/register',
+            templateUrl:'modules/Register/view/register.html',
+            resolve:load('modules/Register/controller/RegisterController.js')
+        })
         .state('app.home',{
             url:'/home',
             templateUrl:'modules/Index/view/Index.html',
@@ -81,7 +95,8 @@ app  .run(
         })
         .state('app.security_setting',{
             url:'/security_setting',
-            templateUrl:'modules/security_setting/view/security_setting.html'
+            templateUrl:'modules/security_setting/view/security_setting.html',
+            resolve:load('modules/security_setting/controller/SecuritySetting.js')
         })
         .state('app.zhongtian_HouseDetail',{
             url:'/zhongtian_HouseDetail',

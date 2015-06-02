@@ -31,19 +31,14 @@
 form a{
     color: #848484;
 }
-.P_old{
-    margin: 0 0 5px 0;
-}
-.password{
+.form-control{
     width: 520px;
     height: 46px;
     font-size: 16px;
     font-family: "microsoft yahei";
     border: 1px solid #eeeeee;
 }
-.old{
-    margin-bottom: 20px;
-}
+
 .save_button{
     width: 520px;
     height: 46px;
@@ -53,11 +48,6 @@ form a{
     font-size: 20px;
     font-family: "microsoft yahei";
     color: white;
-}
-.found{
-  float: right;
-    margin-right: 10px;
-    margin-top: 20px;
 }
 .pin{
     margin-top: 40px;
