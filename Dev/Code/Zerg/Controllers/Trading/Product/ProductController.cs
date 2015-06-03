@@ -155,7 +155,7 @@ namespace Zerg.Controllers.Trading.Product
             {
                 Id=a.Id,
                 Productname = a.Productname,
-                Productimg = a.ProductDetail.Productimg,
+                Productimg = a.Productimg,
                 Price = a.Price,
                 SubTitle = a.SubTitle,
                 ProductDetailed = a.ProductDetail.Productdetail,
@@ -180,7 +180,7 @@ namespace Zerg.Controllers.Trading.Product
             var productDetail = new ProductDetail
             {
                 Productname = product.Productname,
-                Productimg = product.Productimg,
+                Productimg = product.ProductDetail.Productimg,
                 Price = product.Price,
                 SubTitle = product.SubTitle,
                 Productimg1 = product.ProductDetail.Productimg1,
@@ -233,15 +233,15 @@ namespace Zerg.Controllers.Trading.Product
             //    ProductDetailed=a.ProductDetail.Productdetail
                 Id =a.Id, 
                 Productname = a.Productname,
-                Productimg = a.ProductDetail.Productimg,
+                Productimg = a.Productimg,
                 Price = a.Price,
                 SubTitle = a.SubTitle,
                 ProductDetailed = a.ProductDetail.Productdetail,
                 StockRule=a.Stockrule,
                 Acreage = a.ProductParameter.FirstOrDefault(pp=>pp.Parameter.Name=="面积").ParameterValue.Parametervalue.ToString(),
                 Type = a.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString()
-            }).ToList();         
-           // return PageHelper.toJson(productList);
+            }).ToList();
+              // return PageHelper.toJson(productList);
             var totalCount = _productService.GetProductCount(condtion);
             return PageHelper.toJson(new { List = productList, TotalCount = totalCount });
         }
