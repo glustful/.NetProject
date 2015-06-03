@@ -21,6 +21,7 @@ namespace CRM.Entity.Mappings.PartnerList
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upuser).HasColumnType("int");
 			Property(c => c.Uptime).HasColumnType("datetime");
+		    Property(c => c.Status).HasColumnType("int");
 		}
 	}
 }

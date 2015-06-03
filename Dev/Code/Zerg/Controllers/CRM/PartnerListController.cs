@@ -1,10 +1,9 @@
-﻿using CRM.Entity.Model;
+﻿using System.ComponentModel;
+using CRM.Entity.Model;
 using CRM.Service.Broker;
 using CRM.Service.PartnerList;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -35,22 +34,28 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <returns></returns>
 
-        [System.Web.Http.HttpGet]
-        public HttpResponseMessage SearchPartnerList(string name = null, int page = 1, int pageSize = 10)
+        [HttpGet]
+        public HttpResponseMessage SearchPartnerList(EnumPartnerType status, string name = null, int page = 1, int pageSize = 10)
         {
             var brokerSearchCondition = new BrokerSearchCondition
             {
                 Brokername = name,
+                Status = status,
                 Page = Convert.ToInt32(page),
                 PageCount =pageSize
             };
             var partnerList = _brokerService.GetBrokersByCondition(brokerSearchCondition).Select(p => new
             {
-                Id = p.Id,
-                PartnersName = p.PartnersName,
-                PartnersId = p.PartnersId,
-                BrokerName = p.Brokername
-            }).ToList();
+                p.Id,
+                p.PartnersName,
+                p.PartnersId,
+                BrokerName = p.Brokername,
+                Phone = p.Phone,
+                Regtime = p.Regtime,
+                Agentlevel = p.Agentlevel,
+                Headphoto=p.Headphoto,
+                status=EnumPartnerType.同意
+            });
             var partnerListCount = _brokerService.GetBrokerCount(brokerSearchCondition);
             return PageHelper.toJson(new { List = partnerList, Condition = brokerSearchCondition, totalCount = partnerListCount });
              
@@ -61,37 +66,43 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="userId">经纪人ID</param>
         /// <returns></returns>
-
-        [System.Web.Http.HttpGet]
-        public HttpResponseMessage PartnerListDetailed(string userId)
+        [Description("查询经纪人下的合伙人List")]
+        [HttpGet]
+        public HttpResponseMessage PartnerListDetailed(int userId)
         {
             var partnerlistsearchcon = new PartnerListSearchCondition
             {
-                Brokers = _brokerService.GetBrokerById(Convert.ToInt32(userId))
+                Brokers = _brokerService.GetBrokerById(userId)
             };
-            var partnerList = _partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).Select(p => new
+            var partnerList = _partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).Where(p=>p.Broker.Id==userId).Select(p => new
                 {
                  Name=p.Brokername,
                  AddTime =p.Addtime,
-                 regtime=p.Regtime 
-
+                 regtime=p.Regtime, 
+                 Phone=p.Phone,
+                Headphoto= p.Broker .Headphoto ,
+                Id=p.Id,
+                PartnerId=p.PartnerId
+              
                 }).ToList();
+
             return PageHelper.toJson(new { list = partnerList });
+
         }
 
         /// <summary>
         /// 新增合伙人
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="partnerList"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public HttpResponseMessage AddPartnerList([FromBody] PartnerListEntity partnerList)
         {
-            var sech = new BrokerSearchCondition()
+            var sech = new BrokerSearchCondition
             {
-                Phones = new int[] { partnerList.Phone}
+                Phones = new[] { partnerList.Phone}
             };
-            var list = _brokerService.GetBrokersByCondition(sech).First();
+            var list = _brokerService.GetBrokersByCondition(sech).FirstOrDefault();
             if (list != null)
             {
                 if (list.PartnersId != 0)
@@ -108,13 +119,14 @@ namespace Zerg.Controllers.CRM
                             Broker = null,
                             Uptime = DateTime.Now,
                             Addtime = DateTime.Now,
+                            Status = EnumPartnerType.默认
                         };
 
                         try
                         {
                             if (_partnerlistService.Create(entity) != null)
                             {
-                                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！等待对方同意"));
                             }
                         }
                         catch
@@ -128,9 +140,50 @@ namespace Zerg.Controllers.CRM
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在"));
 
-            
+
         }
 
+        /// <summary>
+        /// 查询经纪人收到的邀请
+        /// </summary>
+        /// <param name="brokerId"></param>
+        /// <returns></returns>
+        public HttpResponseMessage GetInviteForBroker(int brokerId=0)
+        {
+            if (brokerId == 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
+
+            var list = _partnerlistService.GetInviteForBroker(brokerId).Where(p => p.Status == EnumPartnerType.默认).Select(a => new
+            {
+                a.Id,
+                HeadPhoto = a.Broker.Headphoto,
+                BrokerName = a.Broker.Brokername,
+                AddTime = a.Addtime
+            }).ToList().Select(b => new
+            {
+                b.Id,
+                b.HeadPhoto,
+                b.BrokerName,
+                AddTime = b.AddTime.ToString("yyyy-MM-dd")
+            });
+            return PageHelper.toJson(list);
+        }
+
+        /// <summary>
+        /// 设置状态
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public HttpResponseMessage SetPartner(EnumPartnerType status,int id=0)
+        {
+            if (id == 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
+
+            var model = _partnerlistService.GetPartnerListById(id);
+            model.Status = status;
+            _partnerlistService.Update(model);
+
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));
+        }
 
 
         #endregion

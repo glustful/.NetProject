@@ -1,11 +1,12 @@
 <!--添加合伙人-->
 <!--required：../static/style/partner.css" rel="stylesheet-->
-        <div class="add_content">
-            <form>
+        <div class="add_content" ng-controller ="partnerListController">
+            <form ng-submit="save()">
                 <p>
                     电话
                 </p>
-                <p><input type="tel" class="add_blank" placeholder="请输入被邀请人电话"/></p>
-                <p><button class="add_button">邀请</button></p>
+                <p><input type="tel" class="add_blank" ng-model="addCondition.Phone"  laceholder="请输入被邀请人电话" required/></p>
+                <p>{{warm}}</p>
+                <p><button class="add_button" >邀请</button></p>
             </form>
         </div>

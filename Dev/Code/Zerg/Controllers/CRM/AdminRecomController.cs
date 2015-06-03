@@ -71,7 +71,22 @@ namespace Zerg.Controllers.CRM
                 a.WriterPhone,
                 a.Uptime
 
-            }).ToList();
+            }).ToList().Select(b=>new
+            {
+                b.Id,
+                b.Brokername,
+                b.Brokerlevel,
+                b.Phone,
+                b.Projectname,
+                Addtime =b.Addtime.ToString("yyy-MM-dd"),
+
+                b.Clientname,
+                SecretaryName = b.Brokername,
+                b.SecretaryPhone,
+                Waiter = b.Brokername,
+                b.WriterPhone,
+                Uptime=b.Uptime.ToString("yyy-MM-dd")
+            });
 
             var totalCont = _brokerRecClientService.GetBrokerRECClientCount(condition);
 
@@ -83,6 +98,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="brokerModel"></param>
         /// <returns></returns>
+        [HttpPost]
         public HttpResponseMessage AddBroker([FromBody]BrokerModel brokerModel)
         {
             #region UC用户创建 杨定鹏 2015年5月28日14:52:48

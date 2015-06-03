@@ -13,6 +13,7 @@ using System.Web.Http.Cors;
 namespace Zerg.Controllers.CRM
 {
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    [AllowAnonymous]
     /// <summary>
     /// 短信配置
     /// </summary>
@@ -24,6 +25,9 @@ namespace Zerg.Controllers.CRM
             _MessageConfigService = messageConfig;
 
         }
+
+
+
         #region 短信配置 黄秀宇 2015.04.29
 
         /// <summary>
@@ -34,19 +38,33 @@ namespace Zerg.Controllers.CRM
         /// <param name="isDescending">是否降序</param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage SearchMessageConfig(string page, string pageSize, string totalPage)
+        public HttpResponseMessage SearchMessageConfig(int page = 1, int pageSize = 10)
         {
 
             var mDetailCondition = new MessageConfigSearchCondition()
             {
-                Page = Convert.ToInt16(page),
-                PageCount = 100
+                Page = Convert.ToInt32(page),
+                PageCount = pageSize
 
             };
             var list = _MessageConfigService.GetMessageConfigsByCondition(mDetailCondition).Select(c => new { c.Id, c.Name, c.Template }).ToList();
 
-            return PageHelper.toJson(list);
+            var listCount = _MessageConfigService.GetMessageConfigCount(mDetailCondition);
+            return PageHelper.toJson(new { List = list, Condition = mDetailCondition, totalCount = listCount });
+          
         }
+
+        /// <summary>
+        /// 获取一条配置信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetMessageConfig(string id)
+        {
+            return PageHelper.toJson(_MessageConfigService.GetMessageConfigById(Convert.ToInt32(id)));
+        }
+
 
         /// <summary>
         /// 添加短信配置模板
