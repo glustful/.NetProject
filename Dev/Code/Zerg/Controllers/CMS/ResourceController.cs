@@ -104,16 +104,16 @@ namespace Zerg.Controllers.CMS
                     //}
                     var fileLength = ms.Length;
                     var info = new FileInfo(item.Headers.ContentDisposition.FileName.Replace("\"", ""));
-                    var allowFomat = new[] {".png",".jpg",".jepg",".gif"};
-                    var isImage = allowFomat.Contains(info.Extension.ToLower());
+                    //var allowFomat = new[] {".png",".jpg",".jepg",".gif"};
+                    //var isImage = allowFomat.Contains(info.Extension.ToLower());
                     var fileNewName = GetUniquelyString();
 
                     //保存至OSS
                     var key = OssHelper.PutObject(ms, fileNewName + info.Extension);
-                    if (isImage)
-                    {
-                        OssHelper.PutThumbnaiObject(ms, fileNewName + info.Extension);
-                    }
+                    //if (isImage)
+                    //{
+                    //    OssHelper.PutThumbnaiObject(ms, fileNewName + info.Extension);
+                    //}
                   
                     var resource = new ResourceEntity
                     {
