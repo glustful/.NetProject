@@ -1,24 +1,18 @@
-
-
-
-
-
-
-
 using System;
 using System.Linq;
+using Trading.Entity.Model;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
-using Trading.Entity.Model;
+using Zerg.Common.Data;
 
 namespace Trading.Service.Product
 {
     public class ProductService : IProductService
     {
-        private readonly Zerg.Common.Data.ITradingRepository<ProductEntity> _productRepository;
+        private readonly ITradingRepository<ProductEntity> _productRepository;
         private readonly ILog _log;
 
-        public ProductService(Zerg.Common.Data.ITradingRepository<ProductEntity> productRepository, ILog log)
+        public ProductService(ITradingRepository<ProductEntity> productRepository, ILog log)
         {
             _productRepository = productRepository;
             _log = log;
@@ -113,7 +107,14 @@ namespace Trading.Service.Product
             var query = _productRepository.Table;
             try
             {
-
+                if (!string.IsNullOrEmpty(condition.AreaName))
+                {
+                    query = query.Where(q=>q.ProductParameter.Exists(pp=>pp.ParameterValue.Parametervalue == condition.AreaName));
+                }
+                if (condition.TypeId.HasValue)
+                {
+                    query = query.Where(q=>q.ProductParameter.Exists(pp=>pp.ParameterValue.Id ==condition.TypeId));
+                }
                 if (condition.CommissionBegin.HasValue)
                 {
                     query = query.Where(q => q.Commission >= condition.CommissionBegin.Value);
@@ -276,7 +277,14 @@ namespace Trading.Service.Product
             var query = _productRepository.Table;
             try
             {
-
+                if (!string.IsNullOrEmpty(condition.AreaName))
+                {
+                    query = query.Where(q => q.ProductParameter.Exists(pp => pp.ParameterValue.Parametervalue == condition.AreaName.ToString()));
+                }
+                if (condition.TypeId.HasValue)
+                {
+                    query = query.Where(q => q.ProductParameter.Exists(pp => pp.ParameterValue.Id == condition.TypeId));
+                }
                 if (condition.CommissionBegin.HasValue)
                 {
                     query = query.Where(q => q.Commission >= condition.CommissionBegin.Value);

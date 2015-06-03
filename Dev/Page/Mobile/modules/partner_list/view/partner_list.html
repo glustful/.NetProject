@@ -1,16 +1,28 @@
 <!--合伙人列表-->
 <!--required：../static/style/partner.css" rel="stylesheet-->
-    <div class="list_content" ng-controller="partnerListController" >
+<div class="addPartners">
+    <p><a href="#/app/partner_insert">添加合伙人</a></p>
+</div>
+<div class="list_content" ng-controller="partnerListController" >
         <ul>
 
-            <li ng-repeat="item in list"><a href="#/app/partner_details" ><button class="partner"><span class="p_photo"><img src="modules/partner_list/static/image/partner/photo.png"></span>
+            <li ng-repeat="item in list"><a href="#/app/partner_details?Id={{item.PartnerId}}"> <button class="partner"><span class="p_photo"><img ng-src={{item.headphoto}}></span>
                 <span class="name">{{item.Name}}</span>
+                <!--<span>{{item.Phone}}</span>-->
                 <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
-                </button>
+            </button>
             </a></li>
 
         </ul>
-        <div class="addPartners">
-              <p><a href="#/app/partner_insert">添加合伙人</a></p>
-        </div>
-    </div>
+
+</div>
+<div class="others" ng-controller="searchInviteController">
+     <div class="invite">收到的邀请</div>
+     <div class="othersInformation">
+          <ul>
+              <li class="cf" ng-repeat="item in list"><span class="fl"><img src="modules/partner_list/static/image/partner/photo.png" alt=""/></span><span class="name">{{item.BrokerName}}</span></span><span class="fr"><button class="agree" ng-click="agreeAddPartner(1,item.Id)">同意</button><button class="refuse" ng-click="agreeAddPartner(-1,item.Id)">拒绝</button></span></li>
+
+          </ul>
+     </div>
+</div>
+

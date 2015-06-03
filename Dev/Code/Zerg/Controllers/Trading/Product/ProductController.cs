@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Web;
-using System.Web.Mvc;
+using System.Web.Http;
+using System.Web.Http.Cors;
+using Newtonsoft.Json.Linq;
 using Trading.Entity.Model;
+using Trading.Service.Classify;
+using Trading.Service.ParameterValue;
 using Trading.Service.Product;
 using Trading.Service.ProductBrand;
 using Trading.Service.ProductDetail;
 using Trading.Service.ProductParameter;
-using Trading.Service.Classify;
-using System.Web.Http;
 using Zerg.Common;
-using Newtonsoft.Json.Linq;
 using Zerg.Models.Trading.Product;
-using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.Trading.Product
 {
+    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)] 
     public class ProductController : ApiController
     {
         private readonly IProductService _productService;
@@ -49,7 +50,7 @@ namespace Zerg.Controllers.Trading.Product
         /// </summary>
         /// <param name="obj">此参数由product和productDetail组成</param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public int AddProduct([FromBody]JObject obj)
         {
@@ -114,7 +115,7 @@ namespace Zerg.Controllers.Trading.Product
         /// </summary>
         /// <param name="productId">商品Id</param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public string DelProduct(int productId)
         {
@@ -142,7 +143,7 @@ namespace Zerg.Controllers.Trading.Product
         /// </summary>
         /// <param name="pageindex"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public HttpResponseMessage GetAllProduct()
         {
@@ -150,6 +151,16 @@ namespace Zerg.Controllers.Trading.Product
             {
                 OrderBy = EnumProductSearchOrderBy.OrderById
             };
+            //var product = _productService.GetProductsByCondition(PSC).Select(a => new ProductDetail
+            //{
+            //    Productname = a.Productname,
+            //    Productimg = a.ProductDetail.Productimg,
+            //    Price = a.Price,
+            //    SubTitle = a.SubTitle,
+            //    ProductDetailed = a.ProductDetail.Productdetail
+            //}).ToList();
+            //var totalCount = _productService.GetProductCount(PSC);
+            //return PageHelper.toJson(new { List = product, TotalCount = totalCount });
             return PageHelper.toJson(_productService.GetProductsByCondition(PSC).ToList());
         }
         /// <summary>
@@ -157,7 +168,7 @@ namespace Zerg.Controllers.Trading.Product
         /// </summary>
         /// <param name="productId">商品Id</param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public HttpResponseMessage GetProductById(int productId)
         {
@@ -169,20 +180,50 @@ namespace Zerg.Controllers.Trading.Product
         /// </summary>
         /// <param name="BrandId"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public HttpResponseMessage GetProductsByBrand(int BrandId)
         {
+            //var productList = _productService.GetProductsByProductBrand(BrandId).Select(a => new ProductDetail
+            //{
+            //    Productname = a.Productname,
+            //    Productimg = a.Productimg,
+            //    Price = a.Price,
+            //    SubTitle = a.SubTitle,
+            //    Phone = a.ContactPhone,
+            //    Productimg1 = a.ProductDetail.Productimg1,
+            //    Productimg2 = a.ProductDetail.Productimg2,
+            //    Productimg3 = a.ProductDetail.Productimg3,
+            //    Productimg4 = a.ProductDetail.Productimg4,
+            //    ProductDetailed=a.ProductDetail.Productdetail
+            //}).ToList();
             return PageHelper.toJson(_productService.GetProductsByProductBrand(BrandId));
+           // return PageHelper.toJson(productList);
         }
 
+        public HttpResponseMessage GetSearchProduct(ProductSearchCondition condtion)
+        {
+            var productList = _productService.GetProductsByCondition(condtion).Select(a => new ProductDetail
+            {
+                Productname = a.Productname,
+                Price = a.Price,
+                SubTitle = a.SubTitle,
+                Productimg = a.ProductDetail.Productimg,
+                Productimg1 = a.ProductDetail.Productimg1,
+                Productimg2 = a.ProductDetail.Productimg2,
+                Productimg3 = a.ProductDetail.Productimg3,
+                Productimg4 = a.ProductDetail.Productimg4,
+                ProductDetailed=a.ProductDetail.Productdetail
+            }).ToList();         
+            return PageHelper.toJson(productList);
+        }
 
         /// <summary>
         /// 根据分类获取产品列表
         /// </summary>
         /// <param name="BrandId"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public HttpResponseMessage GetProductsByClassify(int ClassifyId)
         {
@@ -204,7 +245,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="productId">商品Id</param>
         /// <param name="pageindex">分页Id</param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public HttpResponseMessage GetAllParameterValueByProduct(int productId)
         {
@@ -220,7 +261,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="productId"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public string EditProductStatus(int productId, bool status)
         {
@@ -243,7 +284,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="productId"></param>
         /// <param name="stock"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public string EditProductStockrule(int productId, int stock)
         {

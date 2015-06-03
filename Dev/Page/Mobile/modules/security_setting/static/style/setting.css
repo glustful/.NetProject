@@ -1,4 +1,4 @@
-/*ÉèÖÃ*/
+/*ï¿½ï¿½ï¿½ï¿½*/
 .setting_person{
     padding: 0 0 650px 0;
 }
@@ -22,7 +22,7 @@
     color: #aeacac;
     font-size: 16px;
 }
-/*°²È«ÉèÖÃ*/
+/*ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½*/
 
 .security_content{
     padding: 30px 55px 440px 58px;
@@ -31,19 +31,14 @@
 form a{
     color: #848484;
 }
-.P_old{
-    margin: 0 0 5px 0;
-}
-.password{
+.form-control{
     width: 520px;
     height: 46px;
     font-size: 16px;
     font-family: "microsoft yahei";
     border: 1px solid #eeeeee;
 }
-.old{
-    margin-bottom: 20px;
-}
+
 .save_button{
     width: 520px;
     height: 46px;
@@ -53,11 +48,6 @@ form a{
     font-size: 20px;
     font-family: "microsoft yahei";
     color: white;
-}
-.found{
-  float: right;
-    margin-right: 10px;
-    margin-top: 20px;
 }
 .pin{
     margin-top: 40px;
@@ -78,13 +68,24 @@ form a{
     color: #ffffff;
     font-family:'microsoft yahei' ;
 }
-/*¸öÈËÉèÖÃ*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 .setting_personal{
     padding: 40px 0 100px 0;
+
 }
 .person_revise{
     padding: 20px 55px 0 55px;
     color: #848484;
+}
+.person_revise p{
+    font-size: 26px;
+    margin-top: 20px;
+}
+.person_revise input {
+    width: 518px;
+    height: 48px;
+    font-size: 20px;
+    font-family: "microsoft yahei";
 }
 .headphoto{
     text-align: center;
@@ -100,4 +101,21 @@ form a{
     height: 128px;
     background: url("../../../person_setting/static/image/touxiang.png") no-repeat center center;
     background-color: #ffffff;
+    border-radius: 500px;
+}
+.input-file{
+	overflow:hidden;
+	position:relative;
+	left: 10px;
+	color: #848484;
+}
+.input-file input
+{
+	opacity:0;
+	filter:alpha(opacity=0);
+	position:absolute;
+	top:-128px;
+	width: 130px;
+	left: -29px;
+	padding-bottom: 120px;
 }

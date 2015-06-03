@@ -1,49 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=640px"/>
-    <title>注册</title>
-    <link href="../static/style/register.css" rel="stylesheet" type="text/css"/>
-</head>
-<body>
-<div class="window">
-    <p class="pregister">用户注册</p>
-    <form class="content">
-        <p class="username">
+<div class="register_content">
+    <form class="form_register">
+        <p class="register_tip">
             用户名
         </p>
-        <p class="ublank">
-            <span><img src="../static/image/register/user.png" class="ujpg"></span>
-            <input type="text"  id="ublank" placeholder="Username" name="ublank"/>
+        <p class="register_input">
+            <span><img src="modules/Register/static/image/register/user.png" class="registerImg"></span>
+            <input type="text"  class="register_blank" placeholder="Username" name="register_blank"/>
         </p>
-        <p class="password">
+        <p class="register_tip">
             密码
         </p>
-        <p class="pblank">
-            <span><img src="../static/image/register/pass.png" class="pjpg"></span>
-            <input type="text"  id="pblank" placeholder="Password" name="pblank"/>
+        <p class="register_input">
+            <span><img src="modules/Register/static/image/register/pass.png" class="registerImg"></span>
+            <input type="text" class="register_blank" placeholder="Password" name="register_blank"/>
         </p>
-        <p class="num">
+        <p class="register_tip">
             手机号码
         </p>
-        <p class="nmblank">
-            <span><img src="../static/image/register/phone.png" class="nmjpg"></span>
-            <input type="tel"  id="nmblank" placeholder="Telephone" name="nmblank"/>
+        <p class="register_input">
+            <span><img src="modules/Register/static/image/register/phone.png" class="registerImg"></span>
+            <input type="tel" class="register_blank" placeholder="Telephone" name="register_blank"/>
         </p>
-        <p class="pin">
+        <p class="register_tip">
             验证码
         </p>
-        <p class="pinblank">
-            <input type="text"  id="pinblank"  name="pinblank"/>
+        <p class="PinBlank">
+            <input type="text"  class="PinInput"  name="Pin_input"/>
             <button>发送验证码</button>
         </p>
-        <button class="register">注 册</button>
-        <p class="login">
-            已有账号？点此<span><a href="#">登录</a> </span>
+        <button class="register_button">注 册</button>
+        <p class="LoginExit">
+            已有账号？点此<span><a href="#user/login">登录</a> </span>
         </p>
-
     </form>
 </div>
-</body>
-</html>
