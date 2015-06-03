@@ -43,6 +43,25 @@ app  .run(
             url:'/app',
             templateUrl:'Common/widget/nav/nav.html'
         })
+        .state('user',{
+            url:'/user',
+            templateUrl:'Common/widget/layout/user.html'
+        })
+        .state('user.login',{
+            url:'/login',
+            templateUrl:'modules/Login/view/login.html',
+            resolve:load('modules/Login/controller/LoginController.js')
+        })
+        .state('user.register',{
+            url:'/register',
+            templateUrl:'modules/Register/view/register.html',
+            resolve:load('modules/Register/controller/RegisterController.js')
+        })
+        .state('user.PasswordFound',{
+            url:'/PasswordFound',
+            templateUrl:'modules/PasswordFound/view/PasswordFound.html',
+            resolve:load('modules/Register/controller/RegisterController.js')
+        })
         .state('app.home',{
             url:'/home',
             templateUrl:'modules/Index/view/Index.html',
@@ -59,6 +78,7 @@ app  .run(
         .state('app.customerList',{
             url:'/customerList',
             templateUrl:'modules/customerList/view/customerList.html'
+       ,resolve:load('modules/customerList/controller/customerList.js')
         })
         .state('app.detail',{
             url:'/detail',
@@ -66,7 +86,8 @@ app  .run(
         })
         .state('app.hero',{
             url:'/hero',
-            templateUrl:'modules/hero/view/hero.html'
+            templateUrl:'modules/hero/view/hero.html',
+            resolve:load("modules/hero/controller/heroController.js")
         })
         .state('app.setting',{
             url:'/setting',
@@ -74,11 +95,13 @@ app  .run(
         })
         .state('app.person_setting',{
             url:'/person_setting',
-            templateUrl:'modules/person_setting/view/person_setting.html'
+            templateUrl:'modules/person_setting/view/person_setting.html',
+            resolve:load('modules/person_setting/controller/personsettingController.js')
         })
         .state('app.security_setting',{
             url:'/security_setting',
-            templateUrl:'modules/security_setting/view/security_setting.html'
+            templateUrl:'modules/security_setting/view/security_setting.html',
+            resolve:load('modules/security_setting/controller/SecuritySetting.js')
         })
         .state('app.zhongtian_HouseDetail',{
             url:'/zhongtian_HouseDetail',

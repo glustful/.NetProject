@@ -1,39 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=640px"/>
-    <title>登录</title>
-    <link href="../static/style/login.css" rel="stylesheet" type="text/css"/>
-</head>
-<body>
-<div class="window">
-    <p class="puser">
-        用户登录
-    </p>
-    <form class="content">
-        <p class="inuser">
+ <form class="form_content" ng-submit="Login"  ng-controller="LoginController">
+        <p class="user_tip">
             请输入用户名
         </p>
-        <p class="ublank">
-            <span><img src="../static/image/login/user.png"  class="user"></span>
-            <input type="text" id="user" placeholder="User name" name="uer"/>
+        <p class="input_blank">
+            <span><img src="modules/Login/static/image/login/user.png"  class="UserImg"></span>
+            <input type="text" id="Name_blank" placeholder="User name" name="userName" ng-model="user.name"/>
         </p>
-        <p class="ppassword">
+        <p class="user_tip">
             密码
         </p>
-        <p class="pblank">
-            <span><img src="../static/image/login/pword.png" class="password"></span>
-            <input type="text" placeholder="Password" name="password" id="password"/>
+        <p class="input_blank">
+            <span><img src="modules/Login/static/image/login/pword.png" class="UserImg"></span>
+            <input type="password" placeholder="Password" name="password" id="password" ng-model="user.password"/>
         </p>
-        <p class="rp">
+        <p class="MissMe">
             <input type="checkbox" name="box" id="box"/>记住我<span class="fp"><a href="#">忘记密码?</a></span>
         </p>
-        <button class="bt">登 录</button>
-        <p class="register">
+        <button class="login_button" type="submit">登 录</button>
+        <p class="NoAccount">
             没有账号？点此<span><a href="#">注册</a></span>
         </p>
-    </form>
-</div>
-</body>
-</html>
+ </form>

@@ -5,9 +5,9 @@ var app = angular.module('zergApp', [ 'ui.router','oc.lazyLoad']);
 
 var SETTING = {
     BaseUrl:'http://localhost:50597/',
-    ApiUrl:'http://localhost:50597/api'
+    ApiUrl:'http://localhost:50597/api',
+    ImgUrl:'http://img.yoopoon.com/'
 };
-
 
 app.config(
     [        '$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
