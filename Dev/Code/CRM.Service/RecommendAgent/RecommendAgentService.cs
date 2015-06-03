@@ -121,9 +121,9 @@ namespace CRM.Service.RecommendAgent
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null )
+				if (!string.IsNullOrEmpty(condition.BrokerId.ToString()) )
                 {
-                    query = query.Where(q => condition.Brokers==(q.Broker));
+                    query = query.Where(q => q.Broker.Id == condition.BrokerId);
                 }
 				if (condition.PresenteebIds != null && condition.PresenteebIds.Any())
                 {
@@ -214,9 +214,9 @@ namespace CRM.Service.RecommendAgent
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null )
+				if (   !string.IsNullOrEmpty( condition.BrokerId.ToString()) )
                 {
-                    query = query.Where(q => condition.Brokers==(q.Broker));
+                    query = query.Where(q =>q.Broker.Id==condition.BrokerId);
                 }
 				if (condition.PresenteebIds != null && condition.PresenteebIds.Any())
                 {
