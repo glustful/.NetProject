@@ -10,14 +10,15 @@ angular.module("app").controller('ProductController', [
             totalPage:1
         };
         $scope.rowCollectionProduct=[];
-        $http.get(SETTING.ApiUrl + '/Product/GetAllProduct').success(function (data) {
-            $scope.rowCollectionProduct = data;
+        $http.get(SETTING.ApiUrl + '/Product/GetAllProduct',{'withCredentials':true}).success(function (data) {
+            $scope.list = data.list;
+            $scope.product=data.
         });
 
         $scope.delProduct=function(productId){
-            $http.get(SETTING.ApiUrl + '/Product/delProduct?productId='+productId).success(function (data) {
+            $http.get(SETTING.ApiUrl + '/Product/delProduct?productId='+productId,{'withCredentials':true}).success(function (data) {
                 alert(data);
-                $http.get(SETTING.ApiUrl + '/Product/GetAllProduct').success(function (data) {
+                $http.get(SETTING.ApiUrl + '/Product/GetAllProduct',{'withCredentials':true}).success(function (data) {
                     $scope.rowCollectionProduct = data;
                 });
             });

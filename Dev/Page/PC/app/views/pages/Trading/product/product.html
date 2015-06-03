@@ -22,7 +22,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="row in rowCollectionProduct">
+            <tr ng-repeat="row in rowCollectionProduct.list">
                 <td align="center"><img width="40" height="40" src={{row.Productimg}}></td>
                 <td align="center">{{row.Productname }}</td>
                 <td align="center">{{row.Price }}</td>
@@ -40,7 +40,7 @@
             <tfoot>
             <tr>
                 <td colspan="5" class="text-center">
-                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7" class="no-margin"></div>
+                    <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
                 </td>
             </tr>
             </tfoot>
