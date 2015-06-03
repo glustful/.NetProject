@@ -1,0 +1,136 @@
+.pic-housesBuy{
+    position: relative;
+    z-index: 1;
+}
+.pic-housesBuy .syj-2{
+    position: absolute;
+    z-index: 2;
+    top:0;
+    left: 2em;
+}
+.pic-housesBuy .summary{
+    position: absolute;
+    top: 9.8em;
+    left: 2em;
+    color: #fff;
+    font-size: 22px;
+    z-index: 4;
+}
+.pic-housesBuy .summary .zt{
+    padding:0 50px 0 0;
+}
+.pic-housesBuy .summary .zt small{
+    color: #929292;
+}
+.pic-housesBuy .summary .lp{
+    padding-left: 65px;
+}
+.pic-housesBuy .summaryBg{
+    width: 640px;
+    position: absolute;
+    z-index: 3;
+    height: 100px;
+    opacity: 0.4;
+    bottom:0.2em;
+    left:0;
+    background:url("../image/housesBuy/fgx.png") no-repeat 530px 0 #000;
+}
+.content-housesBuy .di{
+    height: 80px;
+    line-height: 80px;
+    padding-left: 36px;
+    color: #f13800;
+    background-color:#fff;
+    font-size: 20px;
+}
+.content-housesBuy .di a{
+    margin-left: 225px;
+
+}
+.content-housesBuy .di a button{
+    width: 130px;
+    height: 50px;
+    font-size: 1em;
+    color: #fff;
+    border-radius: 8px;
+    background:url("../image/housesBuy/cell.png") no-repeat 10px 15px #f13800;
+    padding-left: 20px;
+}
+
+.content-housesBuy .type{
+    padding:20px;
+    position: relative;
+    height: 1500px;
+}
+.content-housesBuy .type .hx1{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 290px;
+    height: 426px;
+    background-color: #fff;
+}
+.content-housesBuy .type .hx2{
+    width: 290px;
+    height: 741px;
+    position: absolute;
+    top: 20px;
+    left: 330px;
+    background-color: #fff;
+}
+.content-housesBuy .type .hx3{
+    position: absolute;
+    top:468px;
+    left: 20px;
+    width: 290px;
+    height: 426px;
+    background-color: #fff;
+}
+.content .type .hx4{
+    position: absolute;
+    top:780px;
+    left: 330px;
+    width: 290px;
+    height: 741px;
+    background-color: #fff;
+}
+.content-housesBuy .type .hx5{
+    position: absolute;
+    top:915px;
+    left: 20px;
+    width: 290px;
+    height: 426px;
+    background-color: #fff;
+}
+.content-housesBuy .type .ask{
+    background:url("../image/housesBuy/ask.png") no-repeat 90px center;
+    font-size: 18px;
+    left: 100px;
+    text-align: center;
+    margin-top:20px;
+    border-top:1px solid #ebebeb;
+    line-height: 60px;
+}
+.content-housesBuy .type .ask a{
+    color: #f13800;
+}
+.content-housesBuy .type .HX{
+    font-size:1.2em;
+    color: #000;
+    padding:20px 0 10px 25px;
+    font-weight:bold;
+}
+.content-housesBuy .type .gift{
+    font-size: 0.95em;
+    color: #858585;
+    line-height: 20px;
+    padding-left: 25px;
+}
+.content-housesBuy .type .JJ{
+    font-size: 1.2em;
+    color: #f13800;
+    padding:20px 0 15px 25px;
+}
+.content-housesBuy .type .HXT{
+    padding-left: 25px;
+}

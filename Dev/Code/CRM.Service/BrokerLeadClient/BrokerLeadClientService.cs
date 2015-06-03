@@ -8,10 +8,10 @@ namespace CRM.Service.BrokerLeadClient
 {
 	public class BrokerLeadClientService : IBrokerLeadClientService
 	{
-		private readonly IRepository<BrokerLeadClientEntity> _brokerleadclientRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<BrokerLeadClientEntity> _brokerleadclientRepository;
 		private readonly ILog _log;
 
-		public BrokerLeadClientService(IRepository<BrokerLeadClientEntity> brokerleadclientRepository,ILog log)
+		public BrokerLeadClientService(Zerg.Common.Data.ICRMRepository<BrokerLeadClientEntity> brokerleadclientRepository,ILog log)
 		{
 			_brokerleadclientRepository = brokerleadclientRepository;
 			_log = log;
@@ -109,9 +109,9 @@ namespace CRM.Service.BrokerLeadClient
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null)
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q =>q.Broker.Id== condition.Brokers.Id);
                 }
 				if (condition.ClientInfos != null && condition.ClientInfos.Any())
                 {
@@ -139,6 +139,11 @@ namespace CRM.Service.BrokerLeadClient
 				{
 					query = query.OrderBy(q=>q.Id);
 				}
+
+                if (condition.Status.HasValue)
+                {
+                    query = query.Where(c => c.Status == condition.Status);
+                }
 
 				if (condition.Page.HasValue && condition.PageCount.HasValue)
                 {
@@ -190,9 +195,9 @@ namespace CRM.Service.BrokerLeadClient
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null)
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q =>q.Broker.Id== condition.Brokers.Id);
                 }
 				if (condition.ClientInfos != null && condition.ClientInfos.Any())
                 {

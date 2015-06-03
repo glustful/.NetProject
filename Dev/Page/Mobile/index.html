@@ -1,10 +1,118 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+    <title>首页</title>
+    <meta name="viewport" content="width=640,user-scalable=no" initial-scale=1.0/>
+    <link href="Common/static/style/common.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/Index/static/style/index.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/activity/static/style/activity.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/broker/static/style/broker.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/customerList/static/style/customerList.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/detail/static/style/detail.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/hero/static/style/hero.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/houseDetail/static/style/houseDetail.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/houses/static/style/houses.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/housesBuy/static/style/housesBuy.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/housesPic/static/style/housesPic.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/housesPicBuy/static/style/housesPicBuy.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/myInt/static/style/myInt.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/myPurse/static/style/myPurse.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/personal/static/style/personal.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/personalPage/static/style/personalPage.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/recommend/static/style/recommend.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/takeOff/static/style/takeOff.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/redPaper-1/static/style/redPaper.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/storeroom/static/style/storeroom.css" rel="stylesheet" type="text/css" />
 
+
+
+
+
+
+
+<!--延迟加载>-->
+    <script type="text/javascript" src="modules/Index/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="modules/Index/static/js/jquery.lazyload.js"></script>
+    <script type="text/javascript" src="modules/Index/static/js/lad.js"></script>
+    <!--<link href= "modules/syj/static/style/syj.css" rel="stylesheet" type="text/css" />-->
+
+    <link href= "modules/zhongtian_HouseDetail/static/style/zhongtian_HouseDetail.css" rel="stylesheet" type="text/css" />
+    <link href="modules/partner_list/static/style/partner.css" rel="stylesheet" type="text/css"/>
+    <link href="modules/security_setting/static/style/setting.css" rel="stylesheet" type="text/css"/>
+    <link href="modules/credit_add/static/style/credit_add.css" rel="stylesheet" type="text/css"/>
+    <link href="modules/groom/static/style/groom.css" rel="stylesheet" type="text/css"/>
+    <link href="modules/task/static/style/task.css" rel="stylesheet" type="text/css"/>
+    <link href="modules/nominate/static/style/nominate.css" rel="stylesheet" type="text/css"/>
+ 
+
+
+
+</head>
+<body  ng-app="zergApp" ng-controller="appController">
+
+
+
+    <div ui-view></div>
+    <!-- JQuery-->
+    <!--<script src="libs/jquery/jquery/dist/jquery.js"></script>-->
+    <!-- Angular -->
+    <script src="libs/angular/angular/angular.js"></script>
+    <!--<script src="libs/angular/angular-animate/angular-animate.js"></script>-->
+    <!--<script src="libs/angular/angular-aria/angular-aria.js"></script>-->
+    <!--<script src="libs/angular/angular-cookies/angular-cookies.js"></script>-->
+    <!--<script src="libs/angular/angular-messages/angular-messages.js"></script>-->
+    <!--<script src="libs/angular/angular-resource/angular-resource.js"></script>-->
+    <!--<script src="libs/angular/angular-sanitize/angular-sanitize.js"></script>-->
+    <!--<script src="libs/angular/angular-touch/angular-touch.js"></script>-->
+    <!--<script src="libs/angular/angular-material/angular-material.js"></script>-->
+
+    <!-- Vendor -->
+    <script src="libs/angular/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="libs/angular/oclazyload/dist/ocLazyLoad.js"></script>
+
+    <!-- App -->
+    <script src="app.js"></script>
+    <script src="Common/scripts/config.router.js"></script>
+    <script src="Common/scripts/appCtrl.js"></script>
+    <!--<script src="modules/task/controller/task.js"></script>-->
+    <!--<script src="modules/partner_details/controller/partner_details.js"></script>-->
+    <script src="modules/person_setting/controller/personsettingController.js"></script>
+    <script src="modules/security_setting/controller/SecuritySetting.js"></script>
+    <script src="modules/hero/controller/heroController.js"></script>
+
+    <!--<script src="modules/task/controller/ng-infinite-scroll.min.js"></script>-->
+
+    <!--图片轮播-->
+    <!--<script type="text/javascript" src="modules/Index/static/js/jquery.min.js"></script>-->
+    <!--<script type="text/javascript" src="modules/Index/static/js/yxMobileSlider.js"></script>-->
+    <!--<script type="text/javascript" src="modules/Index/static/js/kongzhi.js"></script>-->
 </body>
+<!--<body ng-app="routeApp">-->
+    <!--<div class="window">-->
+        <!--<div class="bg">-->
+            <!--<div class="hd">-->
+                <!--<div class="header cf">-->
+                    <!--<div class="logo fl"><a href="#">创富宝</a> </div>-->
+                    <!--<div class="search fr">-->
+                        <!--<label for="houses">456</label><input name="" id="houses" type="text" placeholder="搜索楼盘" />-->
+                        <!--<button>搜索</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="content">-->
+
+                <!--<div ng-view></div>-->
+
+            <!--</div>-->
+            <!--<div class="footer">-->
+                <!--<a href="./index.html"><span class="act">活动</span></a>-->
+                <!--<a href="modules/storeroom/view/storeroom.html"><span class="house">房源库</span></a>-->
+                <!--<a href="modules/broker/view/broker.html"><span class="agent">经纪人专区</span></a>-->
+                <!--<a href="modules/personal/view/personal.html"> <span class="personal">个人中心</span></a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</body>-->
 </html>

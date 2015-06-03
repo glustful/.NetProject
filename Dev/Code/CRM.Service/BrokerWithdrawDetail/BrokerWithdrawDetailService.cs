@@ -8,10 +8,10 @@ namespace CRM.Service.BrokerWithdrawDetail
 {
 	public class BrokerWithdrawDetailService : IBrokerWithdrawDetailService
 	{
-		private readonly IRepository<BrokerWithdrawDetailEntity> _brokerwithdrawdetailRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<BrokerWithdrawDetailEntity> _brokerwithdrawdetailRepository;
 		private readonly ILog _log;
 
-		public BrokerWithdrawDetailService(IRepository<BrokerWithdrawDetailEntity> brokerwithdrawdetailRepository,ILog log)
+		public BrokerWithdrawDetailService(Zerg.Common.Data.ICRMRepository<BrokerWithdrawDetailEntity> brokerwithdrawdetailRepository,ILog log)
 		{
 			_brokerwithdrawdetailRepository = brokerwithdrawdetailRepository;
 			_log = log;
@@ -109,9 +109,9 @@ namespace CRM.Service.BrokerWithdrawDetail
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null )
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q => (q.Broker.Id==condition.Brokers.Id));
                 }
 				if (condition.BankCards != null && condition.BankCards.Any())
                 {
@@ -190,9 +190,9 @@ namespace CRM.Service.BrokerWithdrawDetail
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null )
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q => condition.Brokers==(q.Broker));
                 }
 				if (condition.BankCards != null && condition.BankCards.Any())
                 {

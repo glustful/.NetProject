@@ -1,0 +1,136 @@
+
+.list_content p{
+    margin-left: 30px;
+    font-weight:600;
+}
+ul li{
+    list-style: none;
+}
+.partner{
+    height: 60px;
+    width: 640px;
+    color: #848484;
+    font-family: "microsoft yahei";
+    font-size: 18px;
+    line-height: 60px;
+    background-color: #ffffff;
+    border: hidden;
+}
+.name{
+    float: left;
+    margin-left: 45px;
+}
+.jiantou{
+    float: right;
+    margin-right: 30px;
+}
+.p_photo{
+    float: left;
+    margin-left: 30px;
+}
+.button_insert{
+    height: 75px;
+    width: 100%;
+    font-family: "microsoft yahei";
+    font-size: 18px;
+    color: #ff4200;
+    background-color: #ffffff;
+    border: hidden;
+}
+/*?????????*/
+.detail_content{
+   padding: 56px 25px 0 30px;
+    background-color: white;
+    color: black;
+}
+
+.partner_mark{
+    padding:80px 0 0 30px;
+    background-color: #fff;
+
+}
+.partner_information{
+   margin-left: 27px;
+
+}
+.mark{
+    margin-left: 75px;
+    margin-right: 260px;
+    color: #fc3b00;
+}
+.partner_information span {
+    color: #848484;
+}
+/*???????*/
+.add_content{
+    padding: 30px 0 600px 50px;
+}
+.add_blank{
+    width: 516px;
+    height: 46px;
+    font-size: 16px;
+    font-family: "microsoft yahei";
+    border: 1px solid #eeeeee;
+}
+.add_button{
+    width: 516px;
+    height: 46px;
+    background-color: #fc3b00;
+    border: hidden;
+    margin: 83px 0 0 0;
+    font-size: 20px;
+    font-family: "microsoft yahei";
+    color: white;
+}
+ .addPartners{
+    background-color:#fff;
+    padding: 10px 0 20px 0;
+}
+.addPartners p{
+    text-align: center;
+    width: 600px;
+    height: 80px;
+    line-height: 80px;
+    border: 3px solid #ebebeb;
+    border-radius: 5px;
+    margin: 0 auto;
+   font-size: 2em;
+}
+.addPartners p a{
+   color:#fc3b00;
+}
+.others{
+    background-color: #fff;
+
+    margin-top: 20px;
+
+
+
+
+}
+.others .invite{
+    height: 60px;
+    line-height: 60px;
+    border-bottom: 1px solid #ebebeb;
+    color:#fc3b00;
+    padding-left: 30px;
+    font-size: 1.5em;
+}
+.others .othersInformation li{
+    height: 60px;
+    line-height: 60px;
+    padding: 10px;
+    border-bottom: 1px solid #ebebeb;
+}
+.others .othersInformation li span button{
+    height: 40px;
+    width: 80px;
+    margin-right: 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1em;
+    background-color:#fc3b00;
+}
+.others .othersInformation li span .agree{
+
+}

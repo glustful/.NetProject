@@ -1,0 +1,27 @@
+﻿<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <tital>
+        <h1>test</h1>
+    </tital>
+    <script src="js/jquery-1.7.1.min.js">
+    </script>
+    <script>
+        $(function () {
+            $('#haha').click(function () {
+                $.ajax({
+                    url: "api/Product/GetProductListByCondition",
+                    type: "post",
+                    data: { pageindex: "0" },
+                    success: function (data) {
+                        console.log(data);
+                    }
+                })
+            });
+        })
+    </script>
+</head>
+<body>
+    <input type="button" id="haha" value="post">
+</body>
+</html>

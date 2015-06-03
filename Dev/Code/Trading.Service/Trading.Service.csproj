@@ -40,6 +40,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgentBill\AgentBillService.cs" />
+    <Compile Include="AgentBill\IAgentBillService.cs" />
+    <Compile Include="Area\AreaService.cs" />
+    <Compile Include="Area\IAreaService.cs" />
+    <Compile Include="BrandParameter\BrandParameterService.cs" />
+    <Compile Include="BrandParameter\IBrandParameterService.cs" />
+    <Compile Include="CFBBill\CFBBillService.cs" />
+    <Compile Include="CFBBill\ICFBBillService.cs" />
+    <Compile Include="Classify\ClassifyService.cs" />
+    <Compile Include="Classify\IClassifyService.cs" />
+    <Compile Include="LandAgentBill\ILandAgentBillService.cs" />
+    <Compile Include="LandAgentBill\LandAgentBillService.cs" />
+    <Compile Include="OrderDetail\IOrderDetailService.cs" />
+    <Compile Include="OrderDetail\OrderDetailService.cs" />
+    <Compile Include="Order\IOrderService.cs" />
+    <Compile Include="Order\OrderService.cs" />
+    <Compile Include="ParameterValue\IParameterValueService.cs" />
+    <Compile Include="ParameterValue\ParameterValueService.cs" />
+    <Compile Include="Parameter\IParameterService.cs" />
+    <Compile Include="Parameter\ParameterService.cs" />
+    <Compile Include="ProductBrand\IProductBrandService.cs" />
+    <Compile Include="ProductBrand\ProductBrandService.cs" />
+    <Compile Include="ProductDetail\IProductDetailService.cs" />
+    <Compile Include="ProductDetail\ProductDetailService.cs" />
+    <Compile Include="ProductParameter\IProductParameterService.cs" />
+    <Compile Include="ProductParameter\ProductParameterService.cs" />
+    <Compile Include="Product\IProductService.cs" />
+    <Compile Include="Product\ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +90,10 @@
     <ProjectReference Include="..\YooPoon.WebFramework\YooPoon.WebFramework.csproj">
       <Project>{ae97a52e-b5f5-469d-95cb-94e14883ad01}</Project>
       <Name>YooPoon.WebFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zerg.Common\Zerg.Common.csproj">
+      <Project>{db11f281-e24f-4237-b77f-0cfdcf8dd647}</Project>
+      <Name>Zerg.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

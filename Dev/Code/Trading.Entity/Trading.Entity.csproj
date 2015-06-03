@@ -49,6 +49,61 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\AgentBill\AgentBillEntity.cs" />
+    <Compile Include="Entity\AgentBill\AgentBillSearchConditon.cs" />
+    <Compile Include="Entity\AgentBill\EnumAgentBill.cs" />
+    <Compile Include="Entity\Area\AreaEntity.cs" />
+    <Compile Include="Entity\Area\AreaSearchCondition.cs" />
+    <Compile Include="Entity\BrandParameter\BrandParameterEntity.cs" />
+    <Compile Include="Entity\BrandParameter\BrandParameterSearchConditon.cs" />
+    <Compile Include="Entity\BrandParameter\EnumBrandParameter.cs" />
+    <Compile Include="Entity\CFBBill\CFBBillEntity.cs" />
+    <Compile Include="Entity\CFBBill\CFBBillSearchConditon.cs" />
+    <Compile Include="Entity\CFBBill\EnumCFBBill.cs" />
+    <Compile Include="Entity\Classify\ClassifyEntity.cs" />
+    <Compile Include="Entity\Classify\ClassifySearchConditon.cs" />
+    <Compile Include="Entity\Classify\EnumClassify.cs" />
+    <Compile Include="Entity\LandAgentBill\EnumLandAgentBill.cs" />
+    <Compile Include="Entity\LandAgentBill\LandAgentBillEntity.cs" />
+    <Compile Include="Entity\LandAgentBill\LandAgentBillSearchConditon.cs" />
+    <Compile Include="Entity\OrderDetail\EnumOrderDetail.cs" />
+    <Compile Include="Entity\OrderDetail\OrderDetailEntity.cs" />
+    <Compile Include="Entity\OrderDetail\OrderDetailSearchConditon.cs" />
+    <Compile Include="Entity\Order\EnumOrder.cs" />
+    <Compile Include="Entity\Order\OrderEntity.cs" />
+    <Compile Include="Entity\Order\OrderSearchConditon.cs" />
+    <Compile Include="Entity\ParameterValue\EnumParameterValue.cs" />
+    <Compile Include="Entity\ParameterValue\ParameterValueEntity.cs" />
+    <Compile Include="Entity\ParameterValue\ParameterValueSearchConditon.cs" />
+    <Compile Include="Entity\Parameter\EnumParameter.cs" />
+    <Compile Include="Entity\Parameter\ParameterEntity.cs" />
+    <Compile Include="Entity\Parameter\ParameterSearchConditon.cs" />
+    <Compile Include="Entity\ProductBrand\EnumProductBrand.cs" />
+    <Compile Include="Entity\ProductBrand\ProductBrandEntity.cs" />
+    <Compile Include="Entity\ProductBrand\ProductBrandSearchConditon.cs" />
+    <Compile Include="Entity\ProductDetail\EnumProductDetail.cs" />
+    <Compile Include="Entity\ProductDetail\ProductDetailEntity.cs" />
+    <Compile Include="Entity\ProductDetail\ProductDetailSearchConditon.cs" />
+    <Compile Include="Entity\ProductParameter\EnumProductParameter.cs" />
+    <Compile Include="Entity\ProductParameter\ProductParameterEntity.cs" />
+    <Compile Include="Entity\ProductParameter\ProductParameterSearchConditon.cs" />
+    <Compile Include="Entity\Product\EnumProduct.cs" />
+    <Compile Include="Entity\Product\ProductEntity.cs" />
+    <Compile Include="Entity\Product\ProductSearchConditon.cs" />
+    <Compile Include="Mappings\AgentBill\AgentBillMapping.cs" />
+    <Compile Include="Mappings\Area\AreaMapping.cs" />
+    <Compile Include="Mappings\BrandParameter\BrandParameterMapping.cs" />
+    <Compile Include="Mappings\CFBBill\CFBBillMapping.cs" />
+    <Compile Include="Mappings\Classify\ClassifyMapping.cs" />
+    <Compile Include="Mappings\LandAgentBill\LandAgentBillMapping.cs" />
+    <Compile Include="Mappings\OrderDetail\OrderDetailMapping.cs" />
+    <Compile Include="Mappings\Order\OrderMapping.cs" />
+    <Compile Include="Mappings\ParameterValue\ParameterValueMapping.cs" />
+    <Compile Include="Mappings\Parameter\ParameterMapping.cs" />
+    <Compile Include="Mappings\ProductBrand\ProductBrandMapping.cs" />
+    <Compile Include="Mappings\ProductDetail\ProductDetailMapping.cs" />
+    <Compile Include="Mappings\ProductParameter\ProductParameterMapping.cs" />
+    <Compile Include="Mappings\Product\ProductMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,7 +123,12 @@
       <Project>{ae97a52e-b5f5-469d-95cb-94e14883ad01}</Project>
       <Name>YooPoon.WebFramework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Zerg.Common\Zerg.Common.csproj">
+      <Project>{db11f281-e24f-4237-b77f-0cfdcf8dd647}</Project>
+      <Name>Zerg.Common</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

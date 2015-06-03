@@ -1,0 +1,198 @@
+<div class="p-md" ng-app="App" ng-controller="BrandController">
+    <link href="scripts/ext/uploadify-v3.1/uploadify.css" rel="stylesheet" type="text/css" />
+    <script src="scripts/ext/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="scripts/ext/uploadify-v3.1/jquery.uploadify-3.1.min.js" type="text/javascript"></script>
+    <div>
+        <button  onclick="WindowShow()" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加项目
+        </button>
+        <div class="line b-b m-v-md"></div>
+        <div class="alert alert-info" align="center">{{output}}</div>
+    </div>
+    <div class="panel panel-default" align="center">
+        <div class="panel-heading">项目列表</div>
+        <table st-table="rowCollectionPage" class="table table-striped" align="center">
+            <thead>
+            <tr>
+                <th align="center">缩略图</th>
+                <th align="center">项目名</th>
+                <th align="center">项目ID</th>
+                <th align="center">添加时间</th>
+                <th align="center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in rowCollectionBasic">
+                <td align="center"><img width="40" height="40" src={{row.Bimg}}></td>
+                <td align="center">{{row.Bname }}</td>
+                <td align="center">{{row.Id }}</td>
+                <td align="center">{{row.Addtime| date }}</td>
+                <td align="center">
+                    <button class="btn btn-info btn-sm"  ng-click="getBrandParameter(row.Id)" onclick="ParameterWindowShow()"><i class="fa fa-fw m-r-xs fa-edit"></i>参数管理
+                    </button>
+                    <button ng-click='delBrand(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5" class="text-center">
+                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7" class="no-margin"></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!--弹出层开始  -->
+    <div id="modal-form" class="modal in" tabindex="-1" aria-hidden="false" style="display:none;">
+        <div class="modal-dialog" style="padding-top:100px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="WindowClose()" class="close" data-dismiss="modal">×</button>
+                    <h4 id="eidt-msg">请填写编辑信息</h4>
+                </div>
+                <div class="modal-body overflow-visible">
+                    <div class="row">
+                        <div class="col-xs-12 ">
+                            <div class="space-4"></div>
+                            <div class="form-group" style="text-align:center">
+                                <label for="brandName">项目名称</label>
+                                <input class="input-large" type="text" ng-model="brandName" id="brandName" placeholder="" value="">
+                            </div>
+                            <div class="form-group" style="text-align:center" >
+
+                                <p class="help-block">主图</p>
+                                <img height="100" width="100" id="Brandimg"/>
+                                <form enctype="multipart/form-data">
+                                    <input name="file" type="file" multiple="multiple" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info btn-sm" ng-click="addBrand()">
+                        <i class="fa fa-fw m-r-xs fa-plus"></i>
+                        添加项目
+                    </button>
+                    <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="WindowClose()">
+                        <i class="icon-remove"></i>
+                        取 消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--弹出层结束  -->
+    <!--弹出层开始  -->
+    <div id="modal-form-parameter" class="modal in" tabindex="-1" aria-hidden="false" style="display:none;">
+        <div class="modal-dialog" style="padding-top:100px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="ParameterWindowClose()" class="close" data-dismiss="modal">×</button>
+                    <h4 id="msg">请填写编辑信息</h4>
+                </div>
+                <div class="modal-body overflow-visible">
+                    <table st-table="rowCollectionPage" class="table table-striped" align="center">
+                        <thead>
+                        <tr>
+                            <th align="center">参数名</th>
+                            <th align="center">参数值</th>
+                            <th align="center">参数ID</th>
+                            <th align="center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="row in rowCollectionParameter">
+                            <td align="center">{{row.Parametername }}</td>
+                            <td align="center">{{row.Parametervaule }}</td>
+                            <td align="center">{{row.Id }}</td>
+                            <td align="center">
+                                <button ng-click='delBrandParameter(row.Id)' class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-minus"></i> 删除
+                                </button></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7" class="no-margin"></div>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info btn-sm" onclick="AddParameterWindowShow()">
+                        <i class="fa fa-fw m-r-xs fa-plus"></i>
+                        添加参数
+                    </button>
+                    <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="ParameterWindowClose()">
+                        <i class="icon-remove"></i>
+                        取 消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--弹出层结束  -->
+    <!--弹出层开始  -->
+    <div id="modal-form-addParameter" class="modal in" tabindex="-1" aria-hidden="false" style="display:none;">
+        <div class="modal-dialog" style="padding-top:100px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="AddParameterWindowClose()" class="close" data-dismiss="modal">×</button>
+                    <h4 id="addmsg">添加项目参数</h4>
+                </div>
+                <div class="modal-body overflow-visible">
+                    <div class="row">
+                        <div class="col-xs-12 ">
+                            <div class="space-4"></div>
+                            <div class="form-group" style="text-align:center">
+                                <label for="brandName">参数名称</label>
+                                <input class="input-large" type="text" ng-model="brandParameterName" id="brandParameterName" placeholder="" value="">
+                            </div>
+                            <div class="form-group" style="text-align:center">
+                                <label for="brandParameterValue">参数值</label>
+                                <input class="input-large" type="text" ng-model="brandParameterValue" id="brandParameterValue" placeholder="" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info btn-sm" ng-click="addBrandParameter()">
+                        <i class="fa fa-fw m-r-xs fa-plus"></i>
+                        添 加
+                    </button>
+                    <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="AddParameterWindowClose()">
+                        <i class="icon-remove"></i>
+                        取 消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--弹出层结束  -->
+    <script>
+        function WindowClose() {
+            $("#modal-form").hide();
+        }
+        function WindowShow() {
+            $("#modal-form").show();
+
+        }
+        function ParameterWindowShow() {
+            $(" #modal-form-parameter").show();
+        }
+        function ParameterWindowClose() {
+            $(" #modal-form-parameter").hide();
+        }
+        function AddParameterWindowClose() {
+            $("#modal-form-addParameter").hide();
+        }
+        function AddParameterWindowShow() {
+            $("#modal-form-addParameter").show();
+
+        }
+
+    </script>
+</div>

@@ -1,0 +1,23 @@
+
+.groom .client_information{
+    width: 515px;
+    height: 48px;
+    font-family: "microsoft yahei";
+    font-size: 16px;
+}
+.groom .client_choice{
+    margin-top: 26px;
+}
+.groom{
+    padding: 30px 58px 310px 58px;
+    background-color: #eeeeee;
+}
+.groom button{
+    width: 515px;
+    height: 48px;
+    background-color: #fc3b00;
+    font-size: 24px;
+    color: #fefefe;
+    font-family: "microsoft yahei";
+    margin-top: 78px;
+}

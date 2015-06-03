@@ -50,5 +50,7 @@ namespace CRM.Entity.Model
 		/// UpTime
 		/// </summary>
 		public virtual DateTime Uptime { get; set; }
+
+        public virtual EnumPartnerType Status { get; set; }
 	}
 }

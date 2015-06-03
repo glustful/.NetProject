@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.TaskList
 {
-	public class TaskListMapping : EntityTypeConfiguration<TaskListEntity>, IMapping
+	public class TaskListMapping : EntityTypeConfiguration<TaskListEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public TaskListMapping()
 		{

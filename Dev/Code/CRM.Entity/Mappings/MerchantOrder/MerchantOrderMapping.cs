@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.MerchantOrder
 {
-	public class MerchantOrderMapping : EntityTypeConfiguration<MerchantOrderEntity>, IMapping
+	public class MerchantOrderMapping : EntityTypeConfiguration<MerchantOrderEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public MerchantOrderMapping()
 		{

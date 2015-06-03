@@ -1,0 +1,26 @@
+<!--合伙人列表-->
+<!--required：../static/style/partner.css" rel="stylesheet-->
+<div class="addPartners">
+    <p><a href="#/app/partner_insert">添加合伙人</a></p>
+</div>
+<div class="list_content" ng-controller="partnerListController" >
+        <ul>
+
+            <li ng-repeat="item in list"><a href="#/app/partner_details?userId={{item.Id}}"> <button class="partner"><span class="p_photo"><img ng-src={{item.headphoto}}></span>
+                <span class="name">{{item.PartnersName}}</span>
+                <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
+            </button>
+            </a></li>
+
+        </ul>
+
+</div>
+<div class="others" ng-controller="inviteController">
+     <div class="invite">收到的邀请</div>
+     <div class="othersInformation">
+          <ul>
+              <li class="cf" ng-repeat="item in list"><span class="fl"><img src="modules/partner_list/static/image/partner/photo.png" alt=""/></span><span class="name">{{item.Name}}</span><span class="fr"><button class="agree">同意</button><button class="refuse">拒绝</button></span></li>
+          </ul>
+     </div>
+</div>
+

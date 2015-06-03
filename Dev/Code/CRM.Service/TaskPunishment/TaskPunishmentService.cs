@@ -8,10 +8,10 @@ namespace CRM.Service.TaskPunishment
 {
 	public class TaskPunishmentService : ITaskPunishmentService
 	{
-		private readonly IRepository<TaskPunishmentEntity> _taskpunishmentRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<TaskPunishmentEntity> _taskpunishmentRepository;
 		private readonly ILog _log;
 
-		public TaskPunishmentService(IRepository<TaskPunishmentEntity> taskpunishmentRepository,ILog log)
+		public TaskPunishmentService(Zerg.Common.Data.ICRMRepository<TaskPunishmentEntity> taskpunishmentRepository,ILog log)
 		{
 			_taskpunishmentRepository = taskpunishmentRepository;
 			_log = log;
@@ -129,6 +129,10 @@ namespace CRM.Service.TaskPunishment
 				if (!string.IsNullOrEmpty(condition.Name))
                 {
                     query = query.Where(q => q.Name.Contains(condition.Name));
+                }
+                if (!string.IsNullOrEmpty(condition.NameRe))
+                {
+                    query = query.Where(q => q.Name==condition.NameRe);
                 }
 				if (!string.IsNullOrEmpty(condition.Describe))
                 {

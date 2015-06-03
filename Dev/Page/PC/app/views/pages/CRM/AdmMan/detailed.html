@@ -1,0 +1,43 @@
+
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a href="" data-toggle="tab" data-target="#tab1" aria-expanded="true">个人信息</a>
+    </li>
+</ul>
+<div class="tab-content p b-a no-b-t bg-white m-b-md">
+    <div role="tabpanel" class=" animated fadeIn" id="tab1">
+        <div class="md-list-item">
+            <div class="md-list-item-left">
+                <img src="{{BrokerModel.Headphoto}}" class="w-full circle">
+            </div>
+            <div class="md-list-item-content details"  >
+                <div><small>{{BrokerModel.Nickname}}</small><small> {{BrokerModel.Brokername}}</small></div>
+                <div><small>{{BrokerModel.Realname}}</small><small>{{BrokerModel.Sexy}}</small></div>
+                <div><small>积分总额：{{BrokerModel.Totalpoints}}</small><small>账户余额：{{BrokerModel.Amount}}</small></div>
+            </div>
+        </div>
+        <table class="table">
+
+
+            <tr>
+                <td>电话：{{BrokerModel.Phone}}</td>
+                <td>QQ：{{BrokerModel.Qq}}</td>
+                <td>邮箱：{{BrokerModel.Email}}</td>
+            </tr>
+            <tr>
+                <td>身份证：{{BrokerModel.Sfz}}</td>
+                <td>性别：{{BrokerModel.Sexy}}</td>
+                <td>注册时间：{{BrokerModel.Regtime}}</td>
+
+            </tr>
+            <tr>
+                <td>用户类型{{BrokerModel.Usertype}}</td>
+                <td>状态：{{BrokerModel.State}}</td>
+                <td>所属合伙人：{{BrokerModel.PartnersId}}</td>
+
+            </tr>
+
+        </table>
+        <div>{{BrokerModel.Address}}</div>
+</div>
+</div>

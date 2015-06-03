@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.BankCard
 {
-	public class BankCardMapping : EntityTypeConfiguration<BankCardEntity>, IMapping
+    public class BankCardMapping : EntityTypeConfiguration<BankCardEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public BankCardMapping()
 		{

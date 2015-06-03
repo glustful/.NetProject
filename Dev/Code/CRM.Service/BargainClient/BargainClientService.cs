@@ -8,10 +8,10 @@ namespace CRM.Service.BargainClient
 {
 	public class BargainClientService : IBargainClientService
 	{
-		private readonly IRepository<BargainClientEntity> _bargainclientRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<BargainClientEntity> _bargainclientRepository;
 		private readonly ILog _log;
 
-		public BargainClientService(IRepository<BargainClientEntity> bargainclientRepository,ILog log)
+		public BargainClientService(Zerg.Common.Data.ICRMRepository<BargainClientEntity> bargainclientRepository,ILog log)
 		{
 			_bargainclientRepository = bargainclientRepository;
 			_log = log;

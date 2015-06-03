@@ -8,10 +8,10 @@ namespace CRM.Service.TaskTag
 {
 	public class TaskTagService : ITaskTagService
 	{
-		private readonly IRepository<TaskTagEntity> _tasktagRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<TaskTagEntity> _tasktagRepository;
 		private readonly ILog _log;
 
-		public TaskTagService(IRepository<TaskTagEntity> tasktagRepository,ILog log)
+		public TaskTagService(Zerg.Common.Data.ICRMRepository<TaskTagEntity> tasktagRepository,ILog log)
 		{
 			_tasktagRepository = tasktagRepository;
 			_log = log;
@@ -129,6 +129,10 @@ namespace CRM.Service.TaskTag
 				if (!string.IsNullOrEmpty(condition.Name))
                 {
                     query = query.Where(q => q.Name.Contains(condition.Name));
+                }
+                if (!string.IsNullOrEmpty(condition.NameRe))
+                {
+                    query = query.Where(q => q.Name==condition.NameRe);
                 }
 				if (!string.IsNullOrEmpty(condition.Describe))
                 {

@@ -22,7 +22,7 @@ namespace CRM.Entity.Model
 		public int[] Ids { get; set; }
 
 
-		public BrokerEntity[] Brokers { get; set; }
+		public BrokerEntity Brokers { get; set; }
 
 		public int[] PartnerIds { get; set; }
 
@@ -49,6 +49,8 @@ namespace CRM.Entity.Model
 		public DateTime? UptimeEnd { get; set; }
 
 		public EnumPartnerListSearchOrderBy? OrderBy { get; set; }
+
+	    public EnumPartnerType? Status { get; set; }
 	}
 
 	public enum EnumPartnerListSearchOrderBy

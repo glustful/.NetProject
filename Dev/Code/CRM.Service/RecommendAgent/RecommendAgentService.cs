@@ -8,10 +8,10 @@ namespace CRM.Service.RecommendAgent
 {
 	public class RecommendAgentService : IRecommendAgentService
 	{
-		private readonly IRepository<RecommendAgentEntity> _recommendagentRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<RecommendAgentEntity> _recommendagentRepository;
 		private readonly ILog _log;
 
-		public RecommendAgentService(IRepository<RecommendAgentEntity> recommendagentRepository,ILog log)
+		public RecommendAgentService(Zerg.Common.Data.ICRMRepository<RecommendAgentEntity> recommendagentRepository,ILog log)
 		{
 			_recommendagentRepository = recommendagentRepository;
 			_log = log;
@@ -121,9 +121,9 @@ namespace CRM.Service.RecommendAgent
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (!string.IsNullOrEmpty(condition.BrokerId.ToString()) )
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q => q.Broker.Id == condition.BrokerId);
                 }
 				if (condition.PresenteebIds != null && condition.PresenteebIds.Any())
                 {
@@ -214,9 +214,9 @@ namespace CRM.Service.RecommendAgent
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (   !string.IsNullOrEmpty( condition.BrokerId.ToString()) )
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q =>q.Broker.Id==condition.BrokerId);
                 }
 				if (condition.PresenteebIds != null && condition.PresenteebIds.Any())
                 {

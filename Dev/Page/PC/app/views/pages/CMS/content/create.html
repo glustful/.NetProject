@@ -1,0 +1,87 @@
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<form name="form" id="form" ng-controller="ContentCreateController" ng-submit="Create()">
+    <div class="panel panel-default">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+        <div class="panel-body revise">
+            <div class="bottom" ><label for="Title">标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题： </label> <input id="Title" name="Title" type="text" ng-model="ContentModel.Title" required>
+                <span ng-show="form.Title.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+            </div>
+            <div class="bottom" ><label for="Title">标题图片： </label>
+                <input id="Url" name="Url" type="text" ng-model="ContentModel.TitleImg" required>
+            <div class="box" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+                <!--<div class="col-md-3">-->
+                <!--<div class="p-md">-->
+                <!--<p class="m-t-md">Single</p>-->
+                <!--<input type="file" nv-file-select="" uploader="uploader" />-->
+                <!--</div>-->
+                <!--</div>-->
+                <p class="m-t-md">上传图片</p>
+                <input type="file" nv-file-select="" uploader="uploader" />
+                <div>
+                    <div class="p-md">
+                        <!--<div class="m-b"><b class="badge bg-info pos-rlt m-r-xs"><i class="arrow right b-info pull-in"></i>{{ uploader.queue.length }}</b> file(s)</div>-->
+                        <table class="table bg-white b-a">
+                            <thead>
+                            <tr>
+                                <th width="50%">Name</th>
+                                <th ng-show="uploader.isHTML5">Size</th>
+                                <th ng-show="uploader.isHTML5">Progress</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in uploader.queue">
+                                <td><strong>{{ item.file.name }}</strong></td>
+                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                <td ng-show="uploader.isHTML5">
+                                    <div class="progress progress-sm no-margin m-t-xs">
+                                        <div class="progress-bar bg-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span ng-show="item.isSuccess" class="text-success"><i class="glyphicon glyphicon-ok"></i></span>
+                                    <span ng-show="item.isCancel" class="text-warning"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                    <span ng-show="item.isError" class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                                <td nowrap>
+                                    <button type="button" class="btn btn-default btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                        Upload
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-xs" ng-click="item.remove()">
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="bottom" ><label for="Content">内容： </label>
+                <textarea class="ueditor"  name="Content" id="Content" cols="42" rows="10" ng-model="ContentModel.Content" style="height: 400px" required></textarea>
+                <span ng-show="form.Content.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                </div>
+            <!--<div class="bottom" ><label for="Status">状态： </label>-->
+                <!--<select name="Status" id="Status" ng-model-options="ContentModel.Status">-->
+                    <!--<option value="1">发布</option>-->
+                    <!--<option value="2">删除</option>-->
+                <!--</select>-->
+            <!--</div>-->
+
+            <div class="bottom" ><label for="Channel">频道： </label>
+                <select name="Channel" id="Channel" ng-model="ContentModel.ChannelId" ng-options="list.Id as list.Name for list in ChannelList"></select>
+            </div>
+        </div>
+        <div>
+            <div>
+                <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" type="submit" ng-disabled="form.$invalid" aria-disabled="true" disabled="disabled">确认<div class="md-ripple-container"></div></button>
+                <a href="#/page/CMS/content/index"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink">取消<div class="md-ripple-container"></div></button></a>
+            </div>
+        </div>
+    </div>
+</form>

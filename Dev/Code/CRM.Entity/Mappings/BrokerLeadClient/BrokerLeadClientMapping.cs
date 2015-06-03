@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.BrokerLeadClient
 {
-	public class BrokerLeadClientMapping : EntityTypeConfiguration<BrokerLeadClientEntity>, IMapping
+	public class BrokerLeadClientMapping : EntityTypeConfiguration<BrokerLeadClientEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public BrokerLeadClientMapping()
 		{
@@ -20,6 +20,15 @@ namespace CRM.Entity.Mappings.BrokerLeadClient
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upuser).HasColumnType("int");
 			Property(c => c.Uptime).HasColumnType("datetime");
+            Property(c => c.Brokername).HasColumnType("varchar").HasMaxLength(50);
+            Property(c => c.BrokerLevel).HasColumnType("varchar").HasMaxLength(50);
+            Property(c => c.Projectname).HasColumnType("varchar").HasMaxLength(256);
+            Property(c => c.ProjectId).HasColumnType("int");
+            Property(c => c.Status).HasColumnType("int");
+            HasOptional(c => c.SecretaryId);
+            Property(c => c.SecretaryPhone).HasColumnType("varchar").HasMaxLength(50);
+            HasOptional(c => c.WriterId);
+            Property(c => c.WriterPhone).HasColumnType("varchar").HasMaxLength(50);
 		}
 	}
 }

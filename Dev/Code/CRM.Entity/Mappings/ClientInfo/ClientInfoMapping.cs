@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.ClientInfo
 {
-	public class ClientInfoMapping : EntityTypeConfiguration<ClientInfoEntity>, IMapping
+	public class ClientInfoMapping : EntityTypeConfiguration<ClientInfoEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public ClientInfoMapping()
 		{

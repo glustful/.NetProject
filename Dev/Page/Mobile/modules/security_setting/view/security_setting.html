@@ -1,0 +1,17 @@
+<!--安全设置-->
+<!--required:../static/style/setting.css" rel="stylesheet-->
+        <div class="security_content" ng-controller="SecuritySettingController">
+            <form>
+               <p>
+                  旧密码
+               </p>
+               <P><input type="password" class="password old" placeholder="请输入旧密码" value="{{oldpw.Id}}"/><br/></P>
+               <p>
+                   新密码
+                </p>
+                <p><input type="password" class="password new" placeholder="请输入新密码" value="{{newpw}}"/><br/></p>
+               <p class="found"><a href="#">密码找回</a> </p>
+               <p class="pin"><input type="text" id="pin_blank"/><button>获取验证码</button></p>
+               <p><button class="save_button">保存</button></p>
+        </form>
+        </div>

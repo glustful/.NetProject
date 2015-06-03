@@ -4,7 +4,7 @@ using CRM.Entity.Model;
 
 namespace CRM.Entity.Mappings.PartnerList
 {
-	public class PartnerListMapping : EntityTypeConfiguration<PartnerListEntity>, IMapping
+	public class PartnerListMapping : EntityTypeConfiguration<PartnerListEntity>, Zerg.Common.Data.IZergMapping
 	{
 		public PartnerListMapping()
 		{
@@ -21,6 +21,7 @@ namespace CRM.Entity.Mappings.PartnerList
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upuser).HasColumnType("int");
 			Property(c => c.Uptime).HasColumnType("datetime");
+		    Property(c => c.Status).HasColumnType("int");
 		}
 	}
 }

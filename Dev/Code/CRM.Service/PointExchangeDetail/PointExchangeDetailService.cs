@@ -8,10 +8,10 @@ namespace CRM.Service.PointExchangeDetail
 {
 	public class PointExchangeDetailService : IPointExchangeDetailService
 	{
-		private readonly IRepository<PointExchangeDetailEntity> _pointexchangedetailRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<PointExchangeDetailEntity> _pointexchangedetailRepository;
 		private readonly ILog _log;
 
-		public PointExchangeDetailService(IRepository<PointExchangeDetailEntity> pointexchangedetailRepository,ILog log)
+		public PointExchangeDetailService(Zerg.Common.Data.ICRMRepository<PointExchangeDetailEntity> pointexchangedetailRepository,ILog log)
 		{
 			_pointexchangedetailRepository = pointexchangedetailRepository;
 			_log = log;

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
@@ -8,10 +9,10 @@ namespace CRM.Service.PartnerList
 {
 	public class PartnerListService : IPartnerListService
 	{
-		private readonly IRepository<PartnerListEntity> _partnerlistRepository;
+		private readonly Zerg.Common.Data.ICRMRepository<PartnerListEntity> _partnerlistRepository;
 		private readonly ILog _log;
 
-		public PartnerListService(IRepository<PartnerListEntity> partnerlistRepository,ILog log)
+		public PartnerListService(Zerg.Common.Data.ICRMRepository<PartnerListEntity> partnerlistRepository,ILog log)
 		{
 			_partnerlistRepository = partnerlistRepository;
 			_log = log;
@@ -63,7 +64,7 @@ namespace CRM.Service.PartnerList
 		{
 			try
             {
-                return _partnerlistRepository.GetById(id); ;
+                return _partnerlistRepository.GetById(id); 
             }
             catch (Exception e)
             {
@@ -117,9 +118,9 @@ namespace CRM.Service.PartnerList
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null )
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q =>q.Broker.Id==condition.Brokers.Id);
                 }
 				if (condition.PartnerIds != null && condition.PartnerIds.Any())
                 {
@@ -147,7 +148,10 @@ namespace CRM.Service.PartnerList
 				{
 					query = query.OrderBy(q=>q.Id);
 				}
-
+                if (condition.Status.HasValue)
+                {
+                    query = query.Where(c => c.Status == condition.Status);
+                }
 				if (condition.Page.HasValue && condition.PageCount.HasValue)
                 {
                     query = query.Skip((condition.Page.Value - 1)*condition.PageCount.Value).Take(condition.PageCount.Value);
@@ -206,9 +210,9 @@ namespace CRM.Service.PartnerList
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Brokers != null && condition.Brokers.Any())
+				if (condition.Brokers != null )
                 {
-                    query = query.Where(q => condition.Brokers.Contains(q.Broker));
+                    query = query.Where(q => condition.Brokers==(q.Broker));
                 }
 				if (condition.PartnerIds != null && condition.PartnerIds.Any())
                 {
@@ -230,5 +234,33 @@ namespace CRM.Service.PartnerList
                 return -1;
 			}
 		}
-	}
+
+
+        public List<PartnerListEntity> GetInviteByBroker(int id)
+        {
+            try
+            {
+                return _partnerlistRepository.Table.Where(p => p.Broker.Id == id).ToList();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
+
+
+        public List<PartnerListEntity> GetInviteForBroker(int id)
+        {
+            try
+            {
+                return _partnerlistRepository.Table.Where(p => p.PartnerId == id).ToList();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
+    }
 }
