@@ -56,7 +56,7 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
         $scope.Area =data.AreaList;
         $scope.Type=data.TypeList;
     });
-    $scope.getCityList=function(id){
+    $scope.getCityList=function(id,name){
         $scope.parentId=id;
         $http.get(SETTING.ApiUrl + '/Condition/GetCondition/',{params:{
             parentId:$scope.parentId
@@ -66,6 +66,7 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
         if($scope.city) {
             $scope.city = !$scope.city;
         }
+        $scope.AreaName=name;
 //        if($scope.county==false)
 //        {
 //            $scope.county=!$scope.county;

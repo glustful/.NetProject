@@ -1,59 +1,49 @@
 <!--房源库-->
 <!--required:../static/style/storeroom.css-->
-<div ng-controller="StormRoomController" style="position: relative">
+<div ng-controller="StormRoomController" style="position: relative" class="panel b-a">
             <!--<div class="nav-storeroom">-->
                 <!--<a class="area-storeroom" href="#" ng-click="toggleProvince()">区域<span class="icon-storeroom"></span></a>-->
                 <!--<a class="type-storeroom" href="#" ng-click="toggleType()">类型<span class="icon-storeroom"></span></a>-->
                 <!--<a class="price-storer" href="#" ng-click="togglePrice()">价格<span class="icon-storeroom"></span></a>-->
                 <!--&lt;!&ndash;<a class="more-storeroom" href="#">更多<span class="icon-storeroom"></span></a>&ndash;&gt;-->
             <!--</div>-->
+
     <div class="nav-storeroom cf" style="position: absolute;z-index:4;">
         <div id="area" style="float: left"><a class="area-storeroom" href="#" ng-click="toggleProvince()">区域<span class="icon-storeroom"></span></a>
         </div>
         <div id="type" style="float: left"><a class="type-storeroom" href="#" ng-click="toggleType()">类型<span class="icon-storeroom"></span></a>
-
         </div>
         <div id="price" style="float: left"><a class="price-storer" href="#" ng-click="togglePrice()">价格<span class="icon-storeroom"></span></a></div>
-        <div class="cf" style="background-color:#d3d3d3;width: 640px;">
-            <div ng-hide="province" style="float:left;">
-               <ul><li style="height: 26px;line-height: 26px;" ng-repeat="area in Area" ng-click="getCityList(area.Id)">{{area.AreaName}}</li></ul>
-           </div>
+        <div class="cf" style="background-color:#fbfbfb;width: 640px;border-radius: 10px;">
+            <div ng-hide="province" style="float:left;margin-left: 20px">
+               <ul style="width: 80px;"><li style="height: 26px;line-height: 26px;" ng-repeat="area in Area" ng-click="getCityList(area.Id,area.AreaName)">{{area.AreaName}}
+                   <!--<li style="height: 1px;margin: 9px 0;overflow: hidden;background-color: #e5e5e5;"></li>-->
+               </li>
+               </ul>
+            </div>
             <div ng-hide="city" style="float: left;">
-                <ul><li style="height: 26px;" ng-repeat="areaCity in AreaCity" ng-click="getCountyList(areaCity.Id)">{{areaCity.AreaName}}</li></ul>
+                <ul style="width: 80px"><li style="height: 26px;line-height: 26px;" ng-repeat="areaCity in AreaCity" ng-click="getCountyList(areaCity.Id)">{{areaCity.AreaName}}</li></ul>
             </div>
-            <div ng-hide="county"style="float: left">
-                <ul><li style="height: 26px;" ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li></ul>
+            <div ng-hide="county"style="float: left;">
+                <ul style="width: 100px"><li style="height: 26px;line-height: 26px;" ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li></ul>
             </div>
-            <div ng-hide="type">
-                <ul><li style="height: 26px;" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId)">{{type.TypeName}}</li></ul>
+            <div ng-hide="type" style="margin-left: 20px">
+                <ul style="width: 100px"><li style="height: 26px;line-height: 26px;" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId)">{{type.TypeName}}</li></ul>
             </div>
-            <div ng-hide="price">
-                <ul>
-                    <li style="height: 26px;" ng-click="getPriceCondition(0,4000)"><span>4000以下</span></a></li>
-                    <li style="height: 26px;" ng-click="getPriceCondition(4000,5000)"><span>4000</span>-<span>5000</span></a></li>
-                    <li style="height: 26px;" ng-click="getPriceCondition(5000,6000)"><span>5000</span>-<span>6000</span></a></li>
-                    <li style="height: 26px;" ng-click="getPriceCondition(6000,7000)"><span>6000</span>-<span>7000</span></a></li>
-                    <li style="height: 26px;" ng-click="getPriceCondition(7000,8000)"><span>7000</span>-<span>8000</span></a></li>
-                    <li style="height: 26px;" ng-click="getPriceCondition(8000,9000)"><span>8000</span>-<span>9000</span></a></li>
-                    <li style="height: 26px;" ng-click="getPriceCondition(10000,50000)"><span>10000以上</span></a></li>
+            <div ng-hide="price" style="margin-left: 20px">
+                <ul style="width: 100px">
+                    <li style="height: 26px;line-height: 26px;" ng-click="getPriceCondition(0,4000)"><span>4000以下</span></a></li>
+                    <li style="height: 26px;line-height: 26px;" ng-click="getPriceCondition(4000,5000)"><span>4000</span>-<span>5000</span></a></li>
+                    <li style="height: 26px;line-height: 26px;" ng-click="getPriceCondition(5000,6000)"><span>5000</span>-<span>6000</span></a></li>
+                    <li style="height: 26px;line-height: 26px;" ng-click="getPriceCondition(6000,7000)"><span>6000</span>-<span>7000</span></a></li>
+                    <li style="height: 26px;line-height: 26px;" ng-click="getPriceCondition(7000,8000)"><span>7000</span>-<span>8000</span></a></li>
+                    <li style="height: 26px;line-height: 26px;" ng-click="getPriceCondition(8000,9000)"><span>8000</span>-<span>9000</span></a></li>
+                    <li style="height: 26px;line-height: 26px;" ng-click="getPriceCondition(10000,50000)"><span>10000以上</span></a></li>
                 </ul>
             </div>
      </div>
     </div>
-
-
-    <!--<div ng-hide="province" style="background: #fff;float: left">-->
-        <!--<ul><li ng-repeat="area in Area" ng-click="getCityList(area.Id)">{{area.AreaName}}</li></ul>-->
-    <!--</div>-->
-    <!--<div ng-hide="city" style="background: #fff;float:left ">-->
-         <!--<ul><li ng-repeat="areaCity in AreaCity" ng-click="getCountyList(areaCity.Id)">{{areaCity.AreaName}}</li></ul>-->
-    <!--</div>-->
-    <!--<div ng-hide="county" style="background: #fff;float: left">-->
-         <!--<ul><li ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li></ul>-->
-    <!--</div>-->
-
-
-    <div style="position: absolute;z-index: 3;top:50px" >
+    <div style="position: absolute;z-index: 3;top:50px">
              <p class="zg">共{{Count}}个楼盘</p>
             <div class=" message-storeroom" ng-repeat="item in List">
                  <!--<div class="main-storeroom cf">-->

@@ -5,6 +5,7 @@ app.controller('HousesPicController',['$http','$scope','$stateParams', function 
      $http.get(SETTING.ApiUrl+'/Product/GetProductById?productId='+$stateParams.productId,{'withCredentials':true}).success(
          function(data){
              $scope.ProductDetail=data;
+             $scope.ProductImg=SETTING.ImgUrl+data.Productimg;
          }
      )
 }]);
