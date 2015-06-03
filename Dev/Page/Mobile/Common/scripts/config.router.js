@@ -46,8 +46,10 @@ app  .run(
         .state('app.home',{
             url:'/home',
             templateUrl:'modules/Index/view/Index.html',
+
             resolve:load(['modules/Index/static/js/yxMobileSlider.js','modules/Index/static/js/homeController.js'])
         })
+
         .state('app.activity',{
             url:'/activity',
             templateUrl:'modules/activity/view/activity.html'
@@ -119,8 +121,10 @@ app  .run(
             templateUrl:'modules/houses/view/houses.html'
         })
         .state('app.housesBuy',{
-            url:'/housesBuy',
-            templateUrl:'modules/housesBuy/view/housesBuy.html'
+            url:'/housesBuy?BrandId',
+            templateUrl:'modules/housesBuy/view/housesBuy.html',
+            controller:'HousesBuyController',
+            resolve:load('modules/housesBuy/static/scripts/HousesBuy.js')
         })
         .state('app.housesPic',{
             url:'/housesPic',
