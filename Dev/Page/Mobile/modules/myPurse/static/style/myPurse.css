@@ -33,6 +33,23 @@
     background-color: #fff;
     padding:12px 67px 0;
 }
-.bank .card{
-    margin-bottom: 10px;
+.bank li{
+    width: 505px;
+    height: 143px;
+    background-color: cornflowerblue;
+    margin: 10px 0;
+    color: #fff;
+    border-radius: 10px;
+
+}
+.bank li .bankName{
+    padding:20px 0 10px 60px;
+}
+.bank li .card{
+    font-size: 0.9em;
+    padding-left:60px;
+}
+.bank li .cardNum{
+    padding:20px 0 0 150px;
+    font-size: 2em;
 }

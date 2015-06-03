@@ -110,7 +110,7 @@ namespace Zerg.Controllers.CRM
 
                  var model = new BrokerRECClientEntity
                  {
-                     Broker = _brokerService.GetBrokerById(brokerrecclient.Broker),
+                     Broker = _brokerService.GetBrokerById(_workContext.CurrentUser.Id),
                      ClientInfo = cmodel,
                      Adduser = _workContext.CurrentUser.Id,
                      Addtime = DateTime.Now,
