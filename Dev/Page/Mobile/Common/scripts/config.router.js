@@ -218,6 +218,18 @@ app  .run(
             url:'/addBroker',
             templateUrl:'modules/addBroker/view/addBroker.html'
         })
+        .state('app.grabPacket',{
+            url:'/grabPacket',
+            templateUrl:'modules/grabPacket/view/grabPacket.html'
+        })
+        .state('app.luckPacket',{
+            url:'/luckPacket',
+            templateUrl:'modules/luckPacket/view/luckPacket.html'
+        })
+        .state('app.sendPacket',{
+            url:'/sendPacket',
+            templateUrl:'modules/sendPacket/view/sendPacket.html'
+        })
 
 
         function load(srcs, callback) {
