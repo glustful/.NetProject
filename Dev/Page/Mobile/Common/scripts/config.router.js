@@ -195,6 +195,10 @@ app  .run(
             url:'/addBroker',
             templateUrl:'modules/addBroker/view/addBroker.html'
         })
+        .state('app.chip',{
+            url:'/chip',
+            templateUrl:'modules/chip/view/chip.html'
+        })
 
 
         function load(srcs, callback) {

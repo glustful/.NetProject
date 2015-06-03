@@ -8,7 +8,7 @@
 
             <li ng-repeat="item in list"><a href="#/app/partner_details?Id={{item.PartnerId}}"> <button class="partner"><span class="p_photo"><img ng-src={{item.headphoto}}></span>
                 <span class="name">{{item.Name}}</span>
-                <span>{{item.Phone}}</span>
+                <!--<span>{{item.Phone}}</span>-->
                 <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
             </button>
             </a></li>
@@ -16,11 +16,12 @@
         </ul>
 
 </div>
-<div class="others">
+<div class="others" ng-controller="searchInviteController">
      <div class="invite">收到的邀请</div>
      <div class="othersInformation">
           <ul>
-              <li class="cf"><span class="fl"><img src="modules/partner_list/static/image/partner/photo.png" alt=""/></span><span class="name">你妹的</span><span>邀请时间：<em>2015.5.6</em></span><span class="fr"><button class="agree">同意</button><button class="refuse">拒绝</button></span></li>
+              <li class="cf" ng-repeat="item in list"><span class="fl"><img src="modules/partner_list/static/image/partner/photo.png" alt=""/></span><span class="name">{{item.BrokerName}}</span></span><span class="fr"><button class="agree" ng-click="agreeAddPartner(1,item.Id)">同意</button><button class="refuse" ng-click="agreeAddPartner(-1,item.Id)">拒绝</button></span></li>
+
           </ul>
      </div>
 </div>

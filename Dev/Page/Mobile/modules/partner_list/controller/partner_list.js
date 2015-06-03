@@ -3,41 +3,41 @@
  */
 app.controller('partnerListController',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
     $scope.searchCondition = {
-      userId:6
+      userId:4
     };
     //查询合伙人
     var getPartnerList  = function() {
-        $http.get(SETTING.ApiUrl+'/PartnerList/PartnerListDetailed?userId='+6,{'withCredentials':true}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/PartnerList/PartnerListDetailed?userId='+4,{'withCredentials':true}).success(function(data){
             console.log(data);
             $scope.list = data.list;
         });
     };
-    $scope.getList = getPartnerList;
     getPartnerList();
 
 }
 ]);
-//app.controller('inviteController',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
-//    $scope.searchCondition = {
-//        name: '',
-//        Id:0,
-//        page: 1,
-//        status:'同意'
-//    };
-//    //查询合伙人
-//    var getPartnerList  = function() {
-//        $http.get(SETTING.ApiUrl+'/PartnerList/SearchPartnerList/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
-//            console.log(data);
-//            if($scope.searchCondition.status=='1'){
-//                $scope.list = data.List;
-//            }
-//        });
-//    };
-//    $scope.getList = getPartnerList;
-//    getPartnerList();
-//
-//}
-//]);
+//查询经纪人收到的邀请
+app.controller ('searchInviteController',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+    $scope.searchCondition={
+        brokerId:0
+    };
+    var getInvite = function(){
+        $http.get(SETTING.ApiUrl + '/PartnerList/GetInviteForBroker?brokerId='+1, {'withCredentials': true}).success(function (data) {
+         console.log(data);
+         $scope.list=data.list;
+        })
+    };
+    getInvite();
+    var agreeAdd = function(status,id){
+        $http.get(SETTING.ApiUrl + '/PartnerList/SetPartner?status='+status+"&id="+id, {'withCredentials': true}).success(function (data) {
+            if(data.Status){
+                getInvite();
 
+            }
+        })
+    };
+    $scope.agreeAddPartner = agreeAdd;
+}
+]);
 
 
