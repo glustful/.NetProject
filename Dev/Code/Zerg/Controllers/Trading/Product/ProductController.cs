@@ -184,21 +184,28 @@ namespace Zerg.Controllers.Trading.Product
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public HttpResponseMessage GetProductsByBrand(int BrandId)
         {
-            //var productList = _productService.GetProductsByProductBrand(BrandId).Select(a => new ProductDetail
-            //{
-            //    Productname = a.Productname,
-            //    Productimg = a.Productimg,
-            //    Price = a.Price,
-            //    SubTitle = a.SubTitle,
-            //    Phone = a.ContactPhone,
-            //    Productimg1 = a.ProductDetail.Productimg1,
-            //    Productimg2 = a.ProductDetail.Productimg2,
-            //    Productimg3 = a.ProductDetail.Productimg3,
-            //    Productimg4 = a.ProductDetail.Productimg4,
-            //    ProductDetailed=a.ProductDetail.Productdetail
-            //}).ToList();
-            return PageHelper.toJson(_productService.GetProductsByProductBrand(BrandId));
-           // return PageHelper.toJson(productList);
+            var productList = _productService.GetProductsByProductBrand(BrandId).Select(a => new ProductDetail
+            {
+                Productname = a.Productname,
+                Productimg = a.Productimg,
+                Price = a.Price,
+                SubTitle = a.SubTitle,
+                Phone = a.ContactPhone,
+                
+                //Productimg1 = a.ProductDetail.Productimg1,
+                //Productimg2 = a.ProductDetail.Productimg2,
+                //Productimg3 = a.ProductDetail.Productimg3,
+                //Productimg4 = a.ProductDetail.Productimg4,
+                //ProductDetailed = a.ProductDetail.Productdetail
+            }).ToList();
+
+            var Content = _productService.GetProductsByProductBrand(BrandId).Select(p => new
+            {
+                p.ProductBrand.Content
+            }).First();
+
+            //return PageHelper.toJson(_productService.GetProductsByProductBrand(BrandId));
+            return PageHelper.toJson(new { productList = productList, content = Content });
         }
 
         public HttpResponseMessage GetSearchProduct(ProductSearchCondition condtion)
