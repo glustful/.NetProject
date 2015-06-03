@@ -13,6 +13,7 @@ using Zerg.Common;
 namespace Zerg.Controllers.CRM
 {
    [EnableCors("*", "*", "*", SupportsCredentials = true)]
+   [AllowAnonymous]
     /// <summary>
     /// 推荐经纪人  李洪亮 2015-05-06
     /// </summary>
@@ -57,7 +58,7 @@ namespace Zerg.Controllers.CRM
         }
 
 
-
+      
 
 
         /// <summary>
@@ -67,13 +68,22 @@ namespace Zerg.Controllers.CRM
         /// <returns></returns>
 
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetRecommendAgentByUserId(string userId)
+        public HttpResponseMessage GetRecommendAgentListByUserId(string userId)
         {
             var recomagmentsearchcon = new RecommendAgentSearchCondition
             {
-                Brokers = _brokerService.GetBrokerById(Convert.ToInt32(userId))
+                BrokerId =Convert.ToInt32( userId)
             };
-            return PageHelper.toJson(_recommendagentService.GetRecommendAgentsByCondition(recomagmentsearchcon).ToList());
+
+
+            return PageHelper.toJson(_recommendagentService.GetRecommendAgentsByCondition(recomagmentsearchcon).Select(p=>  new
+            {
+                p.Phone,
+                p.Qq,
+                p.Brokername,
+                p.Agentlevel,
+                p.Id
+            }).ToList());
         }
 
         /// <summary>
@@ -119,6 +129,15 @@ namespace Zerg.Controllers.CRM
 
         #endregion
 
-
+       [HttpPost]
+        public HttpResponseMessage SendRecommendAgentSms([FromBody] string phone)
+        {
+           if (!string.IsNullOrEmpty(phone))
+           {
+              
+           }
+           var p = SMSHelper.Sending(phone, "你好，感谢你使用创富宝软件！发送时间是：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+           return PageHelper.toJson(p);
+        }
     }
 }
