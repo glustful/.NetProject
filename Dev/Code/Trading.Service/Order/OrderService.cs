@@ -395,5 +395,29 @@ namespace Trading.Service.Order
                 return -1;
 			}
 		}
-	}
+
+        /// <summary>
+        /// 生成订单号
+        /// 订单号由时间+流水号组成20位定长string
+        /// </summary>
+        /// <returns></returns>
+        public string CreateOrderNumber()
+        {
+            var query = _orderRepository.Table;
+            int num;
+
+            if (!query.Any())
+            {
+                //获取当日流水号
+                num = query.Count(q => q.Adddate.Date == DateTime.Now.Date) + 1;
+            }
+            else
+            {
+                //生成订单
+                num = 000001;
+            }
+
+            return DateTime.Now.ToString("yyyyMMddHHmmss")+num.ToString("000000");
+        }
+    }
 }

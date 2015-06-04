@@ -24,6 +24,10 @@
     <link href= "modules/takeOff/static/style/takeOff.css" rel="stylesheet" type="text/css" />
     <link href= "modules/redPaper-1/static/style/redPaper.css" rel="stylesheet" type="text/css" />
     <link href= "modules/storeroom/static/style/storeroom.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/grabPacket/static/style/grabPacket.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/sendPacket/static/style/sendPacket.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/luckPacket/static/style/luckPacket.css" rel="stylesheet" type="text/css" />
+
     <link href= "modules/chip/static/style/chip.css" rel="stylesheet" type="text/css" />
     <link href= "modules/withdrawals/static/style/withdrawals.css" rel="stylesheet" type="text/css" />
 
@@ -49,7 +53,10 @@
     <link href="modules/Register/static/style/register.css" rel="stylesheet" type="text/css"/>
     <link href="modules/PasswordFound/static/style/PasswordFound.css" rel="stylesheet" type="text/css"/>
 
+<!--瀑布流-->
 
+
+    <script src="modules/housesBuy/static/scripts/zy_control.js"></script><!--控制滑动-->
 
 </head>
 <body  ng-app="zergApp" ng-controller="appController">
@@ -63,7 +70,7 @@
     <script src="libs/angular/angular/angular.js"></script>
     <!--<script src="libs/angular/angular-animate/angular-animate.js"></script>-->
     <!--<script src="libs/angular/angular-aria/angular-aria.js"></script>-->
-    <!--<script src="libs/angular/angular-cookies/angular-cookies.js"></script>-->
+    <script src="libs/angular/angular-cookies/angular-cookies.js"></script>
     <!--<script src="libs/angular/angular-messages/angular-messages.js"></script>-->
     <!--<script src="libs/angular/angular-resource/angular-resource.js"></script>-->
     <!--<script src="libs/angular/angular-sanitize/angular-sanitize.js"></script>-->
@@ -73,6 +80,7 @@
     <!-- Vendor -->
     <script src="libs/angular/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="libs/angular/oclazyload/dist/ocLazyLoad.js"></script>
+    <script src="libs/angular/ngstorage/ngStorage.js"></script>
 
     <!-- App -->
     <script src="app.js"></script>
@@ -91,6 +99,12 @@
     <!--<script type="text/javascript" src="modules/Index/static/js/yxMobileSlider.js"></script>-->
     <!--<script type="text/javascript" src="modules/Index/static/js/kongzhi.js"></script>-->
 </body>
+
+<!--瀑布流-->
+
+<script src="modules/housesBuy/static/scripts/zepto.js"></script>
+<script src="modules/housesBuy/static/scripts/pic.js"></script>
+
 <!--<body ng-app="routeApp">-->
     <!--<div class="window">-->
         <!--<div class="bg">-->

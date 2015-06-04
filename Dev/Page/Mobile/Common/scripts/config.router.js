@@ -45,28 +45,33 @@ app  .run(
         })
         .state('user',{
             url:'/user',
-            templateUrl:'Common/widget/layout/user.html'
+            templateUrl:'Common/widget/layout/user.html',
+            resolve:load('Common/scripts/UserController.js')
         })
         .state('user.login',{
             url:'/login',
             templateUrl:'modules/Login/view/login.html',
-            resolve:load('modules/Login/controller/LoginController.js')
+            resolve:load('modules/Login/controller/LoginController.js'),
+            data:{title:'用户登录'}
         })
         .state('user.register',{
             url:'/register',
             templateUrl:'modules/Register/view/register.html',
-            resolve:load('modules/Register/controller/RegisterController.js')
+            resolve:load('modules/Register/controller/RegisterController.js'),
+            data:{title:'用户注册'}
         })
         .state('user.PasswordFound',{
             url:'/PasswordFound',
             templateUrl:'modules/PasswordFound/view/PasswordFound.html',
-            resolve:load('modules/Register/controller/RegisterController.js')
+            resolve:load('modules/Register/controller/RegisterController.js'),
+            data:{title:'找回密码'}
         })
         .state('app.home',{
             url:'/home',
             templateUrl:'modules/Index/view/Index.html',
             resolve:load(['modules/Index/static/js/yxMobileSlider.js','modules/Index/static/js/homeController.js'])
         })
+
         .state('app.activity',{
             url:'/activity',
             templateUrl:'modules/activity/view/activity.html'
@@ -144,12 +149,16 @@ app  .run(
             templateUrl:'modules/houses/view/houses.html'
         })
         .state('app.housesBuy',{
-            url:'/housesBuy',
-            templateUrl:'modules/housesBuy/view/housesBuy.html'
+            url:'/housesBuy?BrandId',
+            templateUrl:'modules/housesBuy/view/housesBuy.html',
+            controller:'HousesBuyController',
+            resolve:load('modules/housesBuy/static/scripts/HousesBuy.js')
         })
         .state('app.housesPic',{
-            url:'/housesPic',
-            templateUrl:'modules/housesPic/view/housesPic.html'
+            url:'/housesPic?productId',
+            templateUrl:'modules/housesPic/view/housesPic.html',
+            controller:'HousesPicController',
+            resolve:load('modules/housesPic/scripts/HousesPic.js')
         })
         .state('app.housesPicBuy',{
             url:'/housesPicBuy',
@@ -189,7 +198,9 @@ app  .run(
         })
         .state('app.storeroom',{
             url:'/storeroom',
-            templateUrl:'modules/storeroom/view/storeroom.html'
+            controller:'StormRoomController',
+            templateUrl:'modules/storeroom/view/storeroom.html',
+            resolve:load('modules/storeroom/scripts/StoreRoom.js')
         })
         .state('app.task',{
             url:'/task',
@@ -219,6 +230,18 @@ app  .run(
             url:'/addBroker',
             templateUrl:'modules/addBroker/view/addBroker.html',
             resolve:load('modules/recommendBroker/controller/recommendbroker.js')
+        })
+        .state('app.grabPacket',{
+            url:'/grabPacket',
+            templateUrl:'modules/grabPacket/view/grabPacket.html'
+        })
+        .state('app.luckPacket',{
+            url:'/luckPacket',
+            templateUrl:'modules/luckPacket/view/luckPacket.html'
+        })
+        .state('app.sendPacket',{
+            url:'/sendPacket',
+            templateUrl:'modules/sendPacket/view/sendPacket.html'
         })
         .state('app.chip',{
             url:'/chip',

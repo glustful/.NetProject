@@ -1,4 +1,4 @@
-/*����*/
+/*设置*/
 .setting_person{
     padding: 0 0 650px 0;
 }
@@ -22,7 +22,7 @@
     color: #aeacac;
     font-size: 16px;
 }
-/*��ȫ����*/
+/*安全设置*/
 
 .security_content{
     padding: 30px 55px 440px 58px;
@@ -68,7 +68,7 @@ form a{
     color: #ffffff;
     font-family:'microsoft yahei' ;
 }
-/*��������*/
+/*个人设置*/
 .setting_personal{
     padding: 40px 0 100px 0;
 

@@ -21,5 +21,11 @@ namespace Trading.Service.Order
         IQueryable<OrderEntity> GetOrdersByAgent(int agentId);
 
         IQueryable<OrderEntity> GetOrdersByBus(int busId);
+
+        /// <summary>
+        /// Éú³É¶©µ¥ºÅ
+        /// </summary>
+        /// <returns></returns>
+	    string CreateOrderNumber();
 	}
 }
