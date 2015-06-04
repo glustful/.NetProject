@@ -45,27 +45,30 @@ app  .run(
         })
         .state('user',{
             url:'/user',
-            templateUrl:'Common/widget/layout/user.html'
+            templateUrl:'Common/widget/layout/user.html',
+            resolve:load('Common/scripts/UserController.js')
         })
         .state('user.login',{
             url:'/login',
             templateUrl:'modules/Login/view/login.html',
-            resolve:load('modules/Login/controller/LoginController.js')
+            resolve:load('modules/Login/controller/LoginController.js'),
+            data:{title:'用户登录'}
         })
         .state('user.register',{
             url:'/register',
             templateUrl:'modules/Register/view/register.html',
-            resolve:load('modules/Register/controller/RegisterController.js')
+            resolve:load('modules/Register/controller/RegisterController.js'),
+            data:{title:'用户注册'}
         })
         .state('user.PasswordFound',{
             url:'/PasswordFound',
             templateUrl:'modules/PasswordFound/view/PasswordFound.html',
-            resolve:load('modules/Register/controller/RegisterController.js')
+            resolve:load('modules/Register/controller/RegisterController.js'),
+            data:{title:'找回密码'}
         })
         .state('app.home',{
             url:'/home',
             templateUrl:'modules/Index/view/Index.html',
-
             resolve:load(['modules/Index/static/js/yxMobileSlider.js','modules/Index/static/js/homeController.js'])
         })
 

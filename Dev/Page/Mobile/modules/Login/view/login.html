@@ -1,23 +1,23 @@
- <form class="form_content" ng-submit="Login()"  ng-controller="LoginController">
+ <form class="form_content"   ng-controller="LoginController">
         <p class="user_tip">
             请输入用户名
         </p>
         <p class="input_blank">
             <span><img src="modules/Login/static/image/login/user.png"  class="UserImg"></span>
-            <input type="text" id="Name_blank" placeholder="User name" name="userName" ng-model="user.name"/>
+            <input type="text" id="Name_blank" placeholder="User name" name="userName" id="UserName" ng-model="user.name" required/>
         </p>
         <p class="user_tip">
             密码
         </p>
         <p class="input_blank">
             <span><img src="modules/Login/static/image/login/pword.png" class="UserImg"></span>
-            <input type="password" placeholder="Password" name="password" id="password" ng-model="user.password"/>
+            <input type="password" placeholder="Password" name="password" id="Password" ng-model="user.password" required/>
         </p>
         <p class="MissMe">
-            <input type="checkbox" name="box" id="box"/>记住我<span class="fp"><a href="#">忘记密码?</a></span>
+            <input type="checkbox" name="box" id="box"/>记住我<span class="fp"><a href="#user/PasswordFound">忘记密码?</a></span>
         </p>
-        <button class="login_button" type="submit">登 录</button>
+        <button class="login_button" type="submit" ng-click="Login()">登 录</button>
         <p class="NoAccount">
-            没有账号？点此<span><a href="#">注册</a></span>
+            没有账号？点此<span><a href="#user/register">注册</a></span>
         </p>
  </form>
