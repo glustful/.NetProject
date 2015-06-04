@@ -16,6 +16,7 @@ namespace Zerg.Models.Trading.Product
         public string Type { get; set; }
         public string Phone { get; set; }
         public int StockRule { get; set; }
+        public string Content { get; set; }
         public string Productimg1 { get; set; }
         public string Productimg2 { get; set; }
         public string Productimg3 { get; set; }

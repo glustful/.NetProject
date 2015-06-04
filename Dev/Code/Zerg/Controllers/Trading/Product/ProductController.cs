@@ -155,7 +155,7 @@ namespace Zerg.Controllers.Trading.Product
             {
                 Id=a.Id,
                 Productname = a.Productname,
-                Productimg = a.ProductDetail.Productimg,
+                Productimg = a.Productimg,
                 Price = a.Price,
 
                 RecCommission=a.RecCommission,
@@ -205,7 +205,7 @@ namespace Zerg.Controllers.Trading.Product
             var productDetail = new ProductDetail
             {
                 Productname = product.Productname,
-                Productimg = product.Productimg,
+                Productimg = product.ProductDetail.Productimg,
                 Price = product.Price,
                 SubTitle = product.SubTitle,
                 Productimg1 = product.ProductDetail.Productimg1,
@@ -226,21 +226,28 @@ namespace Zerg.Controllers.Trading.Product
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public HttpResponseMessage GetProductsByBrand(int BrandId)
         {
-            //var productList = _productService.GetProductsByProductBrand(BrandId).Select(a => new ProductDetail
-            //{
-            //    Productname = a.Productname,
-            //    Productimg = a.Productimg,
-            //    Price = a.Price,
-            //    SubTitle = a.SubTitle,
-            //    Phone = a.ContactPhone,
-            //    Productimg1 = a.ProductDetail.Productimg1,
-            //    Productimg2 = a.ProductDetail.Productimg2,
-            //    Productimg3 = a.ProductDetail.Productimg3,
-            //    Productimg4 = a.ProductDetail.Productimg4,
-            //    ProductDetailed=a.ProductDetail.Productdetail
-            //}).ToList();
-            return PageHelper.toJson(_productService.GetProductsByProductBrand(BrandId));
-           // return PageHelper.toJson(productList);
+            var productList = _productService.GetProductsByProductBrand(BrandId).Select(a => new ProductDetail
+            {
+                Productname = a.Productname,
+                Productimg = a.Productimg,
+                Price = a.Price,
+                SubTitle = a.SubTitle,
+                Phone = a.ContactPhone,
+                
+                //Productimg1 = a.ProductDetail.Productimg1,
+                //Productimg2 = a.ProductDetail.Productimg2,
+                //Productimg3 = a.ProductDetail.Productimg3,
+                //Productimg4 = a.ProductDetail.Productimg4,
+                //ProductDetailed = a.ProductDetail.Productdetail
+            }).ToList();
+
+            var Content = _productService.GetProductsByProductBrand(BrandId).Select(p => new
+            {
+                p.ProductBrand.Content
+            }).First();
+
+            //return PageHelper.toJson(_productService.GetProductsByProductBrand(BrandId));
+            return PageHelper.toJson(new { productList = productList, content = Content });
         }
           [HttpGet]
         public HttpResponseMessage GetSearchProduct([FromUri]ProductSearchCondition condtion)
@@ -258,15 +265,15 @@ namespace Zerg.Controllers.Trading.Product
             //    ProductDetailed=a.ProductDetail.Productdetail
                 Id =a.Id, 
                 Productname = a.Productname,
-                Productimg = a.ProductDetail.Productimg,
+                Productimg = a.Productimg,
                 Price = a.Price,
                 SubTitle = a.SubTitle,
                 ProductDetailed = a.ProductDetail.Productdetail,
                 StockRule=a.Stockrule,
                 Acreage = a.ProductParameter.FirstOrDefault(pp=>pp.Parameter.Name=="面积").ParameterValue.Parametervalue.ToString(),
                 Type = a.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString()
-            }).ToList();         
-           // return PageHelper.toJson(productList);
+            }).ToList();
+              // return PageHelper.toJson(productList);
             var totalCount = _productService.GetProductCount(condtion);
             return PageHelper.toJson(new { List = productList, TotalCount = totalCount });
         }
