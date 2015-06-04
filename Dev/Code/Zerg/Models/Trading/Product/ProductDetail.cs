@@ -21,5 +21,7 @@ namespace Zerg.Models.Trading.Product
         public string Productimg3 { get; set; }
         public string Productimg4 { get; set; }
         public string ProductDetailed { get; set; }
+        public string Advertisement { get; set; }      
+        public string BrandImg { get; set; }
     }
 }
