@@ -14,7 +14,7 @@ namespace CRM.Entity.Mappings.PartnerList
 			HasRequired(c =>c.Broker);
 			Property(c => c.PartnerId).HasColumnType("int");
 			Property(c => c.Brokername).HasColumnType("varchar").HasMaxLength(50);
-			Property(c => c.Phone).HasColumnType("int");
+            Property(c => c.Phone).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Agentlevel).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Regtime).HasColumnType("datetime");
 			Property(c => c.Adduser).HasColumnType("int");
