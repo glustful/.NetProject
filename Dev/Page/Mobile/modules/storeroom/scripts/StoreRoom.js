@@ -8,8 +8,9 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
         PriceBegin:'',
         PriceEnd:''
     };
-    $scope.getTypeCondition= function(value){
+    $scope.getTypeCondition= function(value,TypeName){
         $scope.searchCondition.TypeId = value;
+        $scope.TypeName=TypeName;
         if($scope.type==false)
         {
             $scope.type = !$scope.type;
@@ -31,6 +32,10 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
         {
             $scope.county = !$scope.county;
         }
+//        if($scope.condition==false)
+//        {
+//            $scope.condition=!$scope.condition;
+//        }
         $scope.searchProduct();
     }
     $scope.getPriceCondition= function(priceBegin,priceEnd){
@@ -56,7 +61,9 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
         $scope.Area =data.AreaList;
         $scope.Type=data.TypeList;
     });
-    $scope.getCityList=function(id,name){
+    $scope.getCityList=function(id,row,provice){
+        $scope.selectedRow = row;
+        $scope.provice=provice;
         $scope.parentId=id;
         $http.get(SETTING.ApiUrl + '/Condition/GetCondition/',{params:{
             parentId:$scope.parentId
@@ -66,15 +73,11 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
         if($scope.city) {
             $scope.city = !$scope.city;
         }
-        $scope.AreaName=name;
-//        if($scope.county==false)
-//        {
-//            $scope.county=!$scope.county;
-//        }
         $scope.AreaCounty=null;
-        //$scope.AreaCity=null;
     };
-    $scope.getCountyList=function(id){
+    $scope.getCountyList=function(id,row,city){
+        $scope.selectedRow1 = row;
+        $scope.city1=city;
         $scope.parentId=id;
         $http.get(SETTING.ApiUrl + '/Condition/GetCondition/',{params:{
             parentId:$scope.parentId
@@ -84,8 +87,8 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
         if($scope.county) {
             $scope.county = !$scope.county;
         }
-        //$scope.AreaCounty=null;
     };
+   // $scope.condition=true;
     $scope.type = true;
     $scope.province=true;
     $scope.city=true;
