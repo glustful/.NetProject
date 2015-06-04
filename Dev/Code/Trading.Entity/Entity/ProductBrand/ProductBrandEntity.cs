@@ -46,5 +46,7 @@ namespace Trading.Entity.Model
         /// 父类
         /// </summary>
         public virtual ProductBrandEntity Father { get; set; }
+
+        public virtual List<BrandParameterEntity> ParameterEntities { get; set; }
 	}
 }

@@ -7,7 +7,7 @@ angular.module("app").controller('RecommendIndexController', [
         $scope.searchCondition = {
             name: '',
             page: 1,
-            pageSize: 1
+            pageSize: 10
         };
         $scope.getList  = function() {
             $http.get(SETTING.ApiUrl+'/RecommendAgent/GetRecommendAgentList',{

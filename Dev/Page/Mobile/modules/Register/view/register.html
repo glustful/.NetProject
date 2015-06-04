@@ -1,25 +1,25 @@
 <div class="register_content">
-    <form class="form_register">
+    <form class="form_register" ng-controller="registerController">
         <p class="register_tip">
             用户名
         </p>
         <p class="register_input">
             <span><img src="modules/Register/static/image/register/user.png" class="registerImg"></span>
-            <input type="text"  class="register_blank" placeholder="Username" name="register_blank"/>
+            <input type="text"  class="register_blank" placeholder="Username" name="register_blank" id="username" required/>
         </p>
         <p class="register_tip">
             密码
         </p>
         <p class="register_input">
             <span><img src="modules/Register/static/image/register/pass.png" class="registerImg"></span>
-            <input type="text" class="register_blank" placeholder="Password" name="register_blank"/>
+            <input type="password" class="register_blank" placeholder="Password" name="register_blank" id="userPassword" required/>
         </p>
         <p class="register_tip">
             手机号码
         </p>
         <p class="register_input">
             <span><img src="modules/Register/static/image/register/phone.png" class="registerImg"></span>
-            <input type="tel" class="register_blank" placeholder="Telephone" name="register_blank"/>
+            <input type="tel" class="register_blank" placeholder="Telephone" name="register_blank" id="phoneNumber" required/>
         </p>
         <p class="register_tip">
             验证码
@@ -28,7 +28,7 @@
             <input type="text"  class="PinInput"  name="Pin_input"/>
             <button>发送验证码</button>
         </p>
-        <button class="register_button">注 册</button>
+        <button class="register_button" ng-click="registerSubmit()" >注 册</button>
         <p class="LoginExit">
             已有账号？点此<span><a href="#user/login">登录</a> </span>
         </p>

@@ -100,7 +100,7 @@ namespace Zerg.Controllers.CRM
         {
             var sech = new BrokerSearchCondition
             {
-                Phones = new[] { partnerList.Phone}
+                Phone = partnerList.Phone
             };
             var list = _brokerService.GetBrokersByCondition(sech).FirstOrDefault();
             if (list != null)
@@ -114,7 +114,7 @@ namespace Zerg.Controllers.CRM
                             Agentlevel = "",
                             Brokername = "",
                             PartnerId = 0,
-                            Phone = 0,
+                            Phone = partnerList.Phone,
                             Regtime = DateTime.Now,
                             Broker = null,
                             Uptime = DateTime.Now,

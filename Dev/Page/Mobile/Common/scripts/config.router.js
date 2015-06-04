@@ -45,28 +45,33 @@ app  .run(
         })
         .state('user',{
             url:'/user',
-            templateUrl:'Common/widget/layout/user.html'
+            templateUrl:'Common/widget/layout/user.html',
+            resolve:load('Common/scripts/UserController.js')
         })
         .state('user.login',{
             url:'/login',
             templateUrl:'modules/Login/view/login.html',
-            resolve:load('modules/Login/controller/LoginController.js')
+            resolve:load('modules/Login/controller/LoginController.js'),
+            data:{title:'用户登录'}
         })
         .state('user.register',{
             url:'/register',
             templateUrl:'modules/Register/view/register.html',
-            resolve:load('modules/Register/controller/RegisterController.js')
+            resolve:load('modules/Register/controller/RegisterController.js'),
+            data:{title:'用户注册'}
         })
         .state('user.PasswordFound',{
             url:'/PasswordFound',
             templateUrl:'modules/PasswordFound/view/PasswordFound.html',
-            resolve:load('modules/Register/controller/RegisterController.js')
+            resolve:load('modules/Register/controller/RegisterController.js'),
+            data:{title:'找回密码'}
         })
         .state('app.home',{
             url:'/home',
             templateUrl:'modules/Index/view/Index.html',
             resolve:load(['modules/Index/static/js/yxMobileSlider.js','modules/Index/static/js/homeController.js'])
         })
+
         .state('app.activity',{
             url:'/activity',
             templateUrl:'modules/activity/view/activity.html'
@@ -144,8 +149,10 @@ app  .run(
             templateUrl:'modules/houses/view/houses.html'
         })
         .state('app.housesBuy',{
-            url:'/housesBuy',
-            templateUrl:'modules/housesBuy/view/housesBuy.html'
+            url:'/housesBuy?BrandId',
+            templateUrl:'modules/housesBuy/view/housesBuy.html',
+            controller:'HousesBuyController',
+            resolve:load('modules/housesBuy/static/scripts/HousesBuy.js')
         })
         .state('app.housesPic',{
             url:'/housesPic?productId',
@@ -216,11 +223,13 @@ app  .run(
         })
         .state('app.recommendedBroker',{
             url:'/recommendedBroker',
-            templateUrl:'modules/recommendBroker/view/recommendedBroker.html'
+            templateUrl:'modules/recommendBroker/view/recommendedBroker.html',
+            resolve:load('modules/recommendBroker/controller/recommendbroker.js')
         })
         .state('app.addBroker',{
             url:'/addBroker',
-            templateUrl:'modules/addBroker/view/addBroker.html'
+            templateUrl:'modules/addBroker/view/addBroker.html',
+            resolve:load('modules/recommendBroker/controller/recommendbroker.js')
         })
         .state('app.grabPacket',{
             url:'/grabPacket',
@@ -237,6 +246,26 @@ app  .run(
         .state('app.chip',{
             url:'/chip',
             templateUrl:'modules/chip/view/chip.html'
+        })
+        .state('app.chipDetail',{
+            url:'/chipDetail',
+            templateUrl:'modules/chipDetail/view/chipDetail.html'
+        })
+        .state('app.chipPartake',{
+            url:'/chipPartake',
+            templateUrl:'modules/chipPartake/view/chipPartake.html'
+        })
+        .state('app.chipEle',{
+            url:'/chipEle',
+            templateUrl:'modules/chipEle/view/chipEle.html'
+        })
+        .state('app.withdrawals',{
+            url:'/withdrawals',
+            templateUrl:'modules/withdrawals/view/withdrawals.html'
+        })
+        .state('app.withdrawalsDetail',{
+            url:'/withdrawalsDetail',
+            templateUrl:'modules/withdrawalsDetail/view/withdrawalsDetail.html'
         })
 
 
