@@ -221,6 +221,7 @@ namespace Zerg.Controllers.UC
             if (user!=null && PasswordHelper.ValidatePasswordHashed(user,model.OldPassword))
             {
                 PasswordHelper.SetPasswordHashed(user, model.NewPassword);
+                _userService.ModifyUser(user);
                 return PageHelper.toJson(PageHelper.ReturnValue(true,"数据更新成功！"));
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
