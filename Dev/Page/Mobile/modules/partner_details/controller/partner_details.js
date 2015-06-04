@@ -2,12 +2,14 @@
 //查询个人信息
 app.controller('partnerDetailedController',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
     $scope.getCondition = {
-        userId:0
+        Id:0
     };
+
     var getPersonalInformation=function(){
-        $http.get(SETTING.ApiUrl+'/PartnerList/PartnerListDetailed?userId='+$stateParams.userId,{'withCredentials':true}).success(function(data){
-            console.log(data);
-            $scope.list=data.list;
+
+        $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBroker?Id='+$stateParams.Id,{'withCredentials':true}).success(function(data){
+            console.log(data.Id);
+            $scope.list=data;
         })
     };
     getPersonalInformation();

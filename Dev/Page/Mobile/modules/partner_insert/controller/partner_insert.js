@@ -15,7 +15,7 @@ app.controller('partnerListController',['$http','$scope','$stateParams',function
     //增加合伙人
     $scope.save=function() {
         $http.post(SETTING.ApiUrl + '/PartnerList/AddPartnerList', $scope.addCondition, {'withCredentials': true}).success(function (data) {
-            console.log(data);
+            $scope.warm=data.Msg;
         })
     };
 }
