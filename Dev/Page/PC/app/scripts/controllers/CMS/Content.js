@@ -7,7 +7,9 @@
         };
 
         var getContentList = function() {
-            $http.get(SETTING.ApiUrl+'/Content/Index',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
+            $http.get(SETTING.ApiUrl+'/Content/Index',
+                {params:$scope.searchCondition,'withCredentials':true
+                }).success(function(data){
                 $scope.list = data.List;
                 $scope.searchCondition.title=data.Condition.Title;
                 $scope.searchCondition.page=data.Condition.Page;
@@ -45,7 +47,7 @@
                        }
                })
             });
-        }
+        };
         $scope.closeAlert = function(index) {
             $scope.alerts.splice(index, 1);
         };

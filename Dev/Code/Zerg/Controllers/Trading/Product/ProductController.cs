@@ -157,15 +157,40 @@ namespace Zerg.Controllers.Trading.Product
                 Productname = a.Productname,
                 Productimg = a.Productimg,
                 Price = a.Price,
+
+                RecCommission=a.RecCommission,
+                Commission=a.Commission,
+                Dealcommission=a.Dealcommission,
+                ClassifyName=a.Classify.Name,
+                Addtime = a.Addtime,
+
                 SubTitle = a.SubTitle,
                 ProductDetailed = a.ProductDetail.Productdetail,
                 StockRule=a.Stockrule,
                 Advertisement = a.ProductDetail.Ad1,
                 Acreage = a.ProductParameter.FirstOrDefault(pp=>pp.Parameter.Name=="面积").ParameterValue.Parametervalue.ToString(),
                 Type = a.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString()
-            }).ToList();
+            }).ToList().Select(b=>new
+            {
+                b.Id,
+                b.Productname,
+                b.Productimg,
+                b.Price,
+
+                b.RecCommission,
+                b.Commission,
+                b.Dealcommission,
+                b.ClassifyName,
+                Addtime=b.Addtime.ToString("yyy-mm-dd"),
+
+                b.SubTitle,
+                b.ProductDetailed,
+                StockRule = b.Stockrule,
+                b.Acreage,
+                b.Type
+            });
             var totalCount = _productService.GetProductCount(PSC);
-            return PageHelper.toJson(new { List =productList, TotalCount = totalCount });
+            return PageHelper.toJson(new { List =productList,Condition=PSC, TotalCount = totalCount });
             //return PageHelper.toJson(_productService.GetProductsByCondition(PSC).ToList());
         }
         /// <summary>
@@ -204,21 +229,28 @@ namespace Zerg.Controllers.Trading.Product
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public HttpResponseMessage GetProductsByBrand(int BrandId)
         {
-            //var productList = _productService.GetProductsByProductBrand(BrandId).Select(a => new ProductDetail
-            //{
-            //    Productname = a.Productname,
-            //    Productimg = a.Productimg,
-            //    Price = a.Price,
-            //    SubTitle = a.SubTitle,
-            //    Phone = a.ContactPhone,
-            //    Productimg1 = a.ProductDetail.Productimg1,
-            //    Productimg2 = a.ProductDetail.Productimg2,
-            //    Productimg3 = a.ProductDetail.Productimg3,
-            //    Productimg4 = a.ProductDetail.Productimg4,
-            //    ProductDetailed=a.ProductDetail.Productdetail
-            //}).ToList();
-            return PageHelper.toJson(_productService.GetProductsByProductBrand(BrandId));
-           // return PageHelper.toJson(productList);
+            var productList = _productService.GetProductsByProductBrand(BrandId).Select(a => new ProductDetail
+            {
+                Productname = a.Productname,
+                Productimg = a.Productimg,
+                Price = a.Price,
+                SubTitle = a.SubTitle,
+                Phone = a.ContactPhone,
+                
+                //Productimg1 = a.ProductDetail.Productimg1,
+                //Productimg2 = a.ProductDetail.Productimg2,
+                //Productimg3 = a.ProductDetail.Productimg3,
+                //Productimg4 = a.ProductDetail.Productimg4,
+                //ProductDetailed = a.ProductDetail.Productdetail
+            }).ToList();
+
+            var Content = _productService.GetProductsByProductBrand(BrandId).Select(p => new
+            {
+                p.ProductBrand.Content
+            }).First();
+
+            //return PageHelper.toJson(_productService.GetProductsByProductBrand(BrandId));
+            return PageHelper.toJson(new { productList = productList, content = Content });
         }
           [HttpGet]
         public HttpResponseMessage GetSearchProduct([FromUri]ProductSearchCondition condtion)

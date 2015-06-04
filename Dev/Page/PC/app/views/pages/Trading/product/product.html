@@ -14,6 +14,7 @@
                 <th align="center">名称</th>
                 <th align="center">价格</th>
                 <th align="center">推荐佣金</th>
+                <th align="center">带客佣金</th>
                 <th align="center">成交佣金</th>
                 <th align="center">项目</th>
                 <th align="center">库存</th>
@@ -22,14 +23,15 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="row in rowCollectionProduct">
+            <tr ng-repeat="row in list">
                 <td align="center"><img width="40" height="40" src={{row.Productimg}}></td>
                 <td align="center">{{row.Productname }}</td>
                 <td align="center">{{row.Price }}</td>
+                <td align="center">{{row.RecCommission }}</td>
                 <td align="center">{{row.Commission }}</td>
                 <td align="center">{{row.Dealcommission }}</td>
-                <td align="center">{{row.ProductBrand.Bname }}</td>
-                <td align="center">{{row.Stockrule }}</td>
+                <td align="center">{{row.ClassifyName }}</td>
+                <td align="center">{{row.StockRule }}</td>
                 <td align="center">{{row.Addtime }}</td>
                 <td align="center">
                     <button ng-click='delProduct(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
@@ -40,7 +42,7 @@
             <tfoot>
             <tr>
                 <td colspan="5" class="text-center">
-                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7" class="no-margin"></div>
+                    <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
                 </td>
             </tr>
             </tfoot>

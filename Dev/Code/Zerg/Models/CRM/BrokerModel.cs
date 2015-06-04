@@ -64,7 +64,7 @@ namespace Zerg.Models.CRM
         /// <summary>
         /// 电话
         /// </summary>
-        public virtual int Phone { get; set; }
+        public virtual string Phone { get; set; }
         /// <summary>
         /// QQ
         /// </summary>

@@ -16,6 +16,7 @@ namespace Trading.Entity.Mappings.Product
 			Property(c => c.Bussnessid).HasColumnType("int");
             Property(c => c.BussnessName).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Dealcommission).HasColumnType("decimal");
+		    Property(c => c.RecCommission).HasColumnType("decimal");
             Property(c => c.Commission).HasColumnType("decimal");
 			Property(c => c.Price).HasColumnType("decimal");
 			Property(c => c.Productname).HasColumnType("varchar").HasMaxLength(200);
