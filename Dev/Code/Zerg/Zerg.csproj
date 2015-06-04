@@ -239,6 +239,7 @@
     <Compile Include="Models\CMS\TagModel.cs" />
     <Compile Include="Models\Trading\Product\ProductDetail.cs" />
     <Compile Include="Models\UC\ActionModel.cs" />
+    <Compile Include="Models\UC\ChangePasswordModel.cs" />
     <Compile Include="Models\UC\RoleModel.cs" />
     <Compile Include="Models\UC\UserModel.cs" />
     <Compile Include="Models\Trading\Product\ClassifyModel.cs" />

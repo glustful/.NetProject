@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
@@ -93,6 +94,7 @@ namespace Zerg.Controllers.Trading.Product
         /// </summary>
         /// <param name="pageindex">当前翻页页数</param>
         /// <returns>查询结果</returns>
+        [Description("获取所有分类(使用Angular中Tree的数据格式)")]
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public HttpResponseMessage GetAllClassify()

@@ -129,6 +129,10 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => q.Sexy.Contains(condition.Sexy));
                 }
+                if (!string.IsNullOrEmpty(condition.Phone))
+                {
+                    query = query.Where(q => q.Phone.Contains(condition.Phone));
+                }
                 if (!string.IsNullOrEmpty(condition.Email))
                 {
                     query = query.Where(q => q.Email.Contains(condition.Email));
@@ -157,10 +161,7 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => condition.UserIds.Contains(q.UserId));
                 }
-                if (condition.Phones != null && condition.Phones.Any())
-                {
-                    query = query.Where(q => condition.Phones.Contains(q.Phone));
-                }
+
                 if (condition.Qqs != null && condition.Qqs.Any())
                 {
                     query = query.Where(q => condition.Qqs.Contains(q.Qq));
@@ -275,6 +276,10 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => q.Sexy.Contains(condition.Sexy));
                 }
+                if (!string.IsNullOrEmpty(condition.Phone))
+                {
+                    query = query.Where(q => q.Phone.Contains(condition.Phone));
+                }
                 if (!string.IsNullOrEmpty(condition.Headphoto))
                 {
                     query = query.Where(q => q.Headphoto.Contains(condition.Headphoto));
@@ -302,10 +307,6 @@ namespace CRM.Service.Broker
                 if (condition.UserIds != null && condition.UserIds.Any())
                 {
                     query = query.Where(q => condition.UserIds.Contains(q.UserId));
-                }
-                if (condition.Phones != null && condition.Phones.Any())
-                {
-                    query = query.Where(q => condition.Phones.Contains(q.Phone));
                 }
                 if (condition.Qqs != null && condition.Qqs.Any())
                 {

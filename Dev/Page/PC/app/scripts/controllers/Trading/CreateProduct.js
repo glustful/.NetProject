@@ -2,24 +2,24 @@
  * Created by AddBean on 2015/5/13 0013.
  */
 angular.module("app").controller('CreatProductController', [
-    '$http', '$scope', '$state', function ($http, $scope, $state) {
+    '$http', '$scope', '$state','FileUploader', function ($http, $scope, $state,FileUploader) {
         //选择商品分类；
         var classifys = $scope.classifys = {};
-        $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify').success(function (data) {
+        $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify',{'withCredentials':true}).success(function (data) {
             classifys.optionsData = data;
         });
         $scope.classifyMsg = "";
         $scope.classifyMsg1 = "";
         $scope.selectclassifyChange = function () {
-            $http.get(SETTING.ApiUrl + '/Classify/GetNextNodesById?nodeId=' + classifys.selectClassifyId).success(function (dataRes) {
+            $http.get(SETTING.ApiUrl + '/Classify/GetNextNodesById?nodeId=' + classifys.selectClassifyId,{'withCredentials':true}).success(function (dataRes) {
                 if (dataRes == "获取失败") {
                     $scope.classifyMsg1 = "选择完成！";
-                    $http.get(SETTING.ApiUrl + '/Classify/GetParameterTreeData?classifyId=' + classifys.selectClassifyId).success(function (data) {
+                    $http.get(SETTING.ApiUrl + '/Classify/GetParameterTreeData?classifyId=' + classifys.selectClassifyId,{'withCredentials':true}).success(function (data) {
                         $scope.parameterValueList = data;
                     });
                 } else {
                     $scope.classifyMsg1 = "";
-                    $http.get(SETTING.ApiUrl + '/Classify/GetClassifyNameById?classifyId=' + classifys.selectClassifyId).success(function (data) {
+                    $http.get(SETTING.ApiUrl + '/Classify/GetClassifyNameById?classifyId=' + classifys.selectClassifyId,{'withCredentials':true}).success(function (data) {
                         classifys.optionsData = dataRes;
                         $scope.classifyMsg = $scope.classifyMsg + data + "->";
                     });
@@ -31,7 +31,7 @@ angular.module("app").controller('CreatProductController', [
         $scope.resetClassifySelect = function () {
             $scope.classifyMsg = "";
             $scope.classifyMsg1 = "";
-            $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify').success(function (data) {
+            $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify',{'withCredentials':true}).success(function (data) {
                 classifys.optionsData = data;
             });
         };
@@ -44,7 +44,7 @@ angular.module("app").controller('CreatProductController', [
 
         //选择品牌项目
         var brands = $scope.brands = {};
-        $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0).success(function (data) {
+        $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
             brands.optionsData = data;
         });
         $scope.selectBrandChange = function () {
@@ -82,19 +82,19 @@ angular.module("app").controller('CreatProductController', [
                 Upduser: "UserId"
             };
             if (
-                product.ClassifyId == undefined ||
-                product.Commission == undefined ||
-                product.Dealcommission == undefined ||
-                product.Price == undefined ||
-                product.ProductBrandId == undefined ||
-                product.Sort == undefined ||
-                product.Recommend == undefined ||
-                productDetail.Productdetail == undefined ||
-                productDetail.Productimg == "" ||
-                productDetail.Productimg1 == "" ||
-                productDetail.Productimg2 == "" ||
-                productDetail.Productimg3 == "" ||
-                productDetail.Productimg4 == "" ||
+                //product.ClassifyId == undefined ||
+                //product.Commission == undefined ||
+                //product.Dealcommission == undefined ||
+                //product.Price == undefined ||
+               // product.ProductBrandId == undefined ||
+                //product.Sort == undefined ||
+                //product.Recommend == undefined ||
+                //productDetail.Productdetail == undefined ||
+                //productDetail.Productimg == "" ||
+                //productDetail.Productimg1 == "" ||
+                //productDetail.Productimg2 == "" ||
+                //productDetail.Productimg3 == "" ||
+                //productDetail.Productimg4 == "" ||
                 productDetail.Productname == "") {
                 alert("添加失败，请认真检查是否有漏填项！");
             } else {
@@ -106,7 +106,7 @@ angular.module("app").controller('CreatProductController', [
                         //遍历添加参数
                         valueClick();
                         for (var i = 0; i < $scope.selectParameterValue.length; i++) {
-                            $http.get(SETTING.ApiUrl + '/Classify/AddProductParameterVaule?parameterValueId=' + $scope.selectParameterValue[i] + "&productId=" + productId).success(function (data) {
+                            $http.get(SETTING.ApiUrl + '/Classify/AddProductParameterVaule?parameterValueId=' + $scope.selectParameterValue[i] + "&productId=" + productId,{'withCredentials':true}).success(function (data) {
 
                             });
                         }
@@ -202,5 +202,14 @@ angular.module("app").controller('CreatProductController', [
                 $('progress').attr({value: e.loaded, max: e.total});
             }
         }
+
+        var uploader = $scope.uploader = new FileUploader({
+            url: SETTING.ApiUrl+'/Resource/Upload',
+            'withCredentials':true
+        })
+        uploader.onSuccessItem = function(fileItem, response, status, headers) {
+            console.info('onSuccessItem', fileItem, response, status, headers);
+            $scope.ContentModel.TitleImg=response.Msg;
+        };
     }
 ]);

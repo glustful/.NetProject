@@ -25,7 +25,7 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// 电话
 		/// </summary>
-		public virtual int Phone { get; set; }
+		public virtual string Phone { get; set; }
 		/// <summary>
 		/// 经纪人等级
 		/// </summary>

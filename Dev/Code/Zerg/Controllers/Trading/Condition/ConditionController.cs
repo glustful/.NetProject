@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Trading.Service.Parameter;
 using Trading.Entity.Entity.Area;
 using Trading.Entity.Model;
@@ -8,22 +9,24 @@ using Trading.Service.ParameterValue;
 using Zerg.Common;
 using Trading.Service.Area;
 
-namespace Zerg.Controllers.Trading.Type
+namespace Zerg.Controllers.Trading.Condition
 {
-    public class TypeController : ApiController
+    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+    public class ConditionController : ApiController
     {
         private readonly IParameterService _parameterService;
         private readonly IAreaService _areaService;
         private readonly IParameterValueService _parameterValueService;
 
 
-        public TypeController(IParameterService parameterService,IAreaService areaService,IParameterValueService parameterValueService)
+        public ConditionController(IParameterService parameterService, IAreaService areaService, IParameterValueService parameterValueService)
         {
             _parameterService = parameterService;
             _areaService = areaService;
             _parameterValueService = parameterValueService;
         }
-
+        [HttpGet]
         public HttpResponseMessage GetCondition(int parentId=0)
         {           
             var areaCon = new AreaSearchCondition
@@ -32,6 +35,7 @@ namespace Zerg.Controllers.Trading.Type
             };
             var areaList = _areaService.GetAreaByCondition(areaCon).Select(a=>new
             {             
+                Id=a.Id,
                 AreaName=a.AreaName
             }).ToList();
             var typeCon = new ParameterSearchCondition

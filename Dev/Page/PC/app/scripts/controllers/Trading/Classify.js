@@ -12,7 +12,7 @@ app.controller('ProductTreeCtrl', ['$scope', '$http', '$state', function ($scope
     $scope.classifyValue = "";
     $scope.my_data = [];
     $scope.my_tree = tree = {};
-    $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify/').success(function (data) {
+    $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify/',{'withCredentials':true}).success(function (data) {
         $scope.my_data = data;
         $scope.my_tree.select_branch( $scope.my_tree.get);
     });
@@ -45,7 +45,7 @@ app.controller('ProductTreeCtrl', ['$scope', '$http', '$state', function ($scope
                 'withCredentials': true
             }).success(function (data) {
                 WindowClose();
-                $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify/').success(function (data) {
+                $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify/',{'withCredentials':true}).success(function (data) {
                     $scope.my_data = data;
                     $scope.my_tree.expand_all();
                 });
@@ -72,7 +72,7 @@ app.controller('ProductTreeCtrl', ['$scope', '$http', '$state', function ($scope
                 'withCredentials': true
             }).success(function (data) {
                 WindowClose();
-                $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify/').success(function (data) {
+                $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify/',{'withCredentials':true}).success(function (data) {
                     $scope.my_data = data;
                     $scope.my_tree.expand_all();
                 });

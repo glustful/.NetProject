@@ -48,6 +48,7 @@ angular.module("app").controller('UserCreateController',['$http','$scope','$stat
     };
 
     $scope.Save = function(){
+        console.log($scope.UserModel.Phone);
         $http.post(SETTING.ApiUrl + '/AdminRecom/AddBroker',$scope.UserModel,{
             'withCredentials':true
         }).success(function(data){
