@@ -61,10 +61,11 @@ app.controller('personsettingController',function($scope,$http){
               	//发送请求
 				var xmlhttp=new XMLHttpRequest();
 				xmlhttp.onreadystatechange = callback;
-				var fd = new FormData();  
+				var fd = new FormData();
 				xmlhttp.open("POST",SETTING.ApiUrl+'/Resource/Upload');
-				fd.append("fileToUpload",img.src,files.name);
+				fd.append("fileToUpload",files);
 				console.log(img.src);
+                xmlhttp.withCredentials = true;
 				xmlhttp.send(fd);
 				function callback () {
 				//1：请求已经建立，但是还没有发送（还没有调用 send()）。
