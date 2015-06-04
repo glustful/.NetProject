@@ -220,11 +220,13 @@ app  .run(
         })
         .state('app.recommendedBroker',{
             url:'/recommendedBroker',
-            templateUrl:'modules/recommendBroker/view/recommendedBroker.html'
+            templateUrl:'modules/recommendBroker/view/recommendedBroker.html',
+            resolve:load('modules/recommendBroker/controller/recommendbroker.js')
         })
         .state('app.addBroker',{
             url:'/addBroker',
-            templateUrl:'modules/addBroker/view/addBroker.html'
+            templateUrl:'modules/addBroker/view/addBroker.html',
+            resolve:load('modules/recommendBroker/controller/recommendbroker.js')
         })
         .state('app.grabPacket',{
             url:'/grabPacket',
