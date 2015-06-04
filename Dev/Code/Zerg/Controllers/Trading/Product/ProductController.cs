@@ -157,14 +157,39 @@ namespace Zerg.Controllers.Trading.Product
                 Productname = a.Productname,
                 Productimg = a.ProductDetail.Productimg,
                 Price = a.Price,
+
+                RecCommission=a.RecCommission,
+                Commission=a.Commission,
+                Dealcommission=a.Dealcommission,
+                ClassifyName=a.Classify.Name,
+                Addtime = a.Addtime,
+
                 SubTitle = a.SubTitle,
                 ProductDetailed = a.ProductDetail.Productdetail,
                 StockRule=a.Stockrule,
                 Acreage = a.ProductParameter.FirstOrDefault(pp=>pp.Parameter.Name=="面积").ParameterValue.Parametervalue.ToString(),
                 Type = a.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString()
-            }).ToList();
+            }).ToList().Select(b=>new
+            {
+                b.Id,
+                b.Productname,
+                b.Productimg,
+                b.Price,
+
+                b.RecCommission,
+                b.Commission,
+                b.Dealcommission,
+                b.ClassifyName,
+                Addtime=b.Addtime.ToString("yyy-mm-dd"),
+
+                b.SubTitle,
+                b.ProductDetailed,
+                StockRule = b.Stockrule,
+                b.Acreage,
+                b.Type
+            });
             var totalCount = _productService.GetProductCount(PSC);
-            return PageHelper.toJson(new { List =productList, TotalCount = totalCount });
+            return PageHelper.toJson(new { List =productList,Condition=PSC, TotalCount = totalCount });
             //return PageHelper.toJson(_productService.GetProductsByCondition(PSC).ToList());
         }
         /// <summary>

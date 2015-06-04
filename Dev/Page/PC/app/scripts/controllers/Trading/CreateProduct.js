@@ -2,7 +2,7 @@
  * Created by AddBean on 2015/5/13 0013.
  */
 angular.module("app").controller('CreatProductController', [
-    '$http', '$scope', '$state', function ($http, $scope, $state) {
+    '$http', '$scope', '$state','FileUploader', function ($http, $scope, $state,FileUploader) {
         //选择商品分类；
         var classifys = $scope.classifys = {};
         $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify',{'withCredentials':true}).success(function (data) {
@@ -202,5 +202,14 @@ angular.module("app").controller('CreatProductController', [
                 $('progress').attr({value: e.loaded, max: e.total});
             }
         }
+
+        var uploader = $scope.uploader = new FileUploader({
+            url: SETTING.ApiUrl+'/Resource/Upload',
+            'withCredentials':true
+        })
+        uploader.onSuccessItem = function(fileItem, response, status, headers) {
+            console.info('onSuccessItem', fileItem, response, status, headers);
+            $scope.ContentModel.TitleImg=response.Msg;
+        };
     }
 ]);

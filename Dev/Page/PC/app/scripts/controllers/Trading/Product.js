@@ -11,8 +11,10 @@ angular.module("app").controller('ProductController', [
         };
         $scope.rowCollectionProduct=[];
         $http.get(SETTING.ApiUrl + '/Product/GetAllProduct',{'withCredentials':true}).success(function (data) {
-            $scope.list = data.list;
-            $scope.product=data.
+            $scope.list = data.List;
+            $scope.product.Page=data.Condition.Page;
+            $scope.product.pageSize=data.Condition.pageSize;
+            $scope.totalCount = data.TotalCount;
         });
 
         $scope.delProduct=function(productId){
