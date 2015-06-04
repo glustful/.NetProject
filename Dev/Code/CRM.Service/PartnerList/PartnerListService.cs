@@ -102,9 +102,9 @@ namespace CRM.Service.PartnerList
                 {
                     query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
                 }
-				if (condition.Phone.HasValue)
+                if (!string.IsNullOrEmpty(condition.Phone))
                 {
-                    query = query.Where(q => q.Phone == condition.Phone.Value);
+                    query = query.Where(q => q.Phone.Contains(condition.Phone));
                 }
 				if (!string.IsNullOrEmpty(condition.Brokername))
                 {
@@ -194,9 +194,9 @@ namespace CRM.Service.PartnerList
                 {
                     query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
                 }
-				if (condition.Phone.HasValue)
+                if (!string.IsNullOrEmpty(condition.Phone))
                 {
-                    query = query.Where(q => q.Phone == condition.Phone.Value);
+                    query = query.Where(q => q.Phone.Contains(condition.Phone));
                 }
 				if (!string.IsNullOrEmpty(condition.Brokername))
                 {
