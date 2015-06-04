@@ -250,6 +250,7 @@ namespace CRM.Service.PartnerList
         }
 
 
+
         public List<PartnerListEntity> GetInviteForBroker(int id)
         {
             try

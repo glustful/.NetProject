@@ -18,6 +18,7 @@ using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.Trading.Product
 {
+    [System.Web.Http.AllowAnonymous]
     public class BrandController : ApiController
     {
         private readonly IProductService _productService;
@@ -154,18 +155,21 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns></returns>
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public HttpResponseMessage GetAllBrand(int pageindex)
+        public HttpResponseMessage GetAllBrand()
         {
             ProductBrandSearchCondition PBSC = new ProductBrandSearchCondition()
             {
                 OrderBy = EnumProductBrandSearchOrderBy.OrderById
             };
-            var brandList = _productBrandService.GetProductBrandsByCondition(PBSC).Select(a => new ProductBrandModel
+            var brandList = _productBrandService.GetProductBrandsByCondition(PBSC).Select(a => new
             {
-                Bname = a.Bname,
-                Bimg = a.Bimg,
-                SubTitle = a.SubTitle
-            });
+                a.Id,
+                a.Bimg,
+                a.Bname,
+                a.SubTitle,
+                a.Content,
+                ProductPramater = a.ParameterEntities.Select(p => new { p.Parametername,p.Parametervaule})
+            }).ToList();
             return PageHelper.toJson(brandList);
             //return PageHelper.toJson(_productBrandService.GetProductBrandsByCondition(PBSC).ToList());
         }
