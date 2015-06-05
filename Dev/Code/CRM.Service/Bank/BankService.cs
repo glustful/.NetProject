@@ -81,10 +81,7 @@ namespace CRM.Service.Bank
                 {
                     query = query.Where(q => q.Codeid.Contains(condition.Codeid));
                 }
-                if (!string.IsNullOrEmpty(condition.address))
-                {
-                    query = query.Where(q => q.address.Contains(condition.address));
-                }
+               
                 if (condition.Ids != null && condition.Ids.Any())
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
@@ -125,10 +122,7 @@ namespace CRM.Service.Bank
                 {
                     query = query.Where(q => q.Codeid.Contains(condition.Codeid));
                 }
-                if (!string.IsNullOrEmpty(condition.address))
-                {
-                    query = query.Where(q => q.address.Contains(condition.address));
-                }
+               
                 if (condition.Ids != null && condition.Ids.Any())
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));

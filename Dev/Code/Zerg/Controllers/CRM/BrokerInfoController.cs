@@ -244,6 +244,27 @@ namespace Zerg.Controllers.CRM
         }
 
 
+        /// <summary>
+        /// 经纪人排行 返回前3条
+        /// </summary>
+        /// <returns></returns>
+
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage OrderByBrokerTopThree()
+        {
+
+
+            var brokersList = _brokerService.OrderbyBrokersList().Select(p => new
+            {
+                p.Id,
+                p.Brokername,
+                p.Agentlevel,
+                p.Amount
+
+            }).Take(3).ToList();
+
+            return PageHelper.toJson(new { List = brokersList });
+        }
         #endregion
 
 

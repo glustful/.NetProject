@@ -140,6 +140,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\CRM\AdminPayController.cs" />
+    <Compile Include="Controllers\CRM\BankController.cs" />
     <Compile Include="Controllers\CRM\BrokeAccountController.cs" />
     <Compile Include="Controllers\CRM\AdminRecomController.cs">
       <SubType>Code</SubType>
