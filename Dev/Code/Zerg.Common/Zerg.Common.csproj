@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Com\ResultModel.cs" />
+    <Compile Include="Com\Validate.cs" />
     <Compile Include="Data\ZergRepository.cs" />
     <Compile Include="Data\IZergRepository.cs" />
     <Compile Include="Data\ZergDbContext.cs" />
@@ -87,6 +88,14 @@
     <Compile Include="Com\SMSHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YooPoon.Common\YooPoon.Common.csproj">
+      <Project>{a09e564c-ec00-4bfa-acfd-371b45abeeed}</Project>
+      <Name>YooPoon.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\YooPoon.Core\YooPoon.Core.csproj">
       <Project>{9e9ecf02-0eec-449d-8756-e1515d9f8ec8}</Project>
       <Name>YooPoon.Core</Name>
@@ -96,11 +105,6 @@
       <Name>YooPoon.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

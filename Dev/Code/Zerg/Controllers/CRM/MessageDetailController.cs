@@ -7,6 +7,10 @@ using CRM.Entity.Model;
 using Zerg.Common;
 using Zerg.Models.CRM;
 using System.Web.Http.Cors;
+using YooPoon.Common.Encryption;
+using Zerg.Common.Com;
+
+//using System.Collections.Generic;
 
 namespace Zerg.Controllers.CRM
 {
@@ -127,15 +131,32 @@ namespace Zerg.Controllers.CRM
         }
         #endregion
 
+        #region 黄秀宇 发送短信验证码 2015.06.05
+        /// <summary>
+        /// 发送短信验证码
+        /// </summary>
+        /// <param name="phone">手机号码</param>
+        ///  /// <param name="userid">用户ID，EMS加密用</param>
+        /// <returns></returns>
+     
         [HttpPost]
-        public HttpResponseMessage SendMessage([FromBody] string phone)
+      public HttpResponseMessage SendMessage([FromBody] string phone, string userid)
         {
-            if (!string.IsNullOrEmpty(phone))
-            {
-
-            }
-            var p = SMSHelper.Sending(phone, "你好，感谢你使用创富宝软件！发送时间是：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-            return PageHelper.toJson(p);
+            return ValidateMessage.SendMessage6(phone, userid);//发送短信验证码
         }
+        /// <summary>
+        /// 验证短信验证码
+        /// </summary>
+        /// <param name="sourc">加密后的字符串</param>
+        /// <param name="messa">验证码</param>
+        /// <param name="userid">用户id,EMS加密用</param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage validate([FromBody] string sourc,string messa , string userid)
+        {
+
+            return ValidateMessage.validate(sourc, messa, userid);//验证短信验证码
+        }
+        #endregion
     }
 }
