@@ -38,7 +38,7 @@ namespace Trading.Entity.Model
 
 
 
-		public int? Ordertype { get; set; }
+		public EnumOrderType? Ordertype { get; set; }
 
 
 

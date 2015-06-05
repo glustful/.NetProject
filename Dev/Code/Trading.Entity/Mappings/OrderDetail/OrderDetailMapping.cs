@@ -14,6 +14,7 @@ namespace Trading.Entity.Mappings.OrderDetail
 			Property(c => c.Productname).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Price).HasColumnType("decimal");
 			Property(c => c.Commission).HasColumnType("decimal");
+            Property(c => c.RecCommission).HasColumnType("decimal");
             Property(c => c.Dealcommission).HasColumnType("decimal");
 			Property(c => c.Snapshoturl).HasColumnType("varchar").HasMaxLength(500);
 			Property(c => c.Remark).HasColumnType("varchar").HasMaxLength(500);

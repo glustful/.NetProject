@@ -22,7 +22,11 @@ namespace Trading.Entity.Model
 		/// 价格
 		/// </summary>
 		public virtual decimal Price { get; set; }
-		/// <summary>
+        /// <summary>
+        /// 推荐佣金
+        /// </summary>
+        public virtual decimal RecCommission { get; set; }
+	    /// <summary>
 		/// 带客佣金
 		/// </summary>
         public virtual decimal Commission { get; set; }
