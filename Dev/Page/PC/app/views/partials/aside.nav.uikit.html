@@ -233,6 +233,26 @@
       </a>
     </li>-->
     <li ng-class="{active:$state.includes('ui.map')}" access="superAdmin,admin">
+        <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+            <i class="icon mdi-maps-navigation i-20"></i>
+            <!--<span class="font-normal">Maps</span>-->
+            <span class="font-normal">银行管理</span>
+        </a>
+        <ul class="nav nav-sub">
+            <li ui-sref-active="active">
+                <a md-ink-ripple ui-sref="page.CRM.BankSet.index">银行设置</a>
+            </li>
+
+
+            <!--<li ui-sref-active="active">
+              <a md-ink-ripple ui-sref="ui.map.vector">Vector Map</a>
+            </li-->
+        </ul>
+    </li>
+    <li ng-class="{active:$state.includes('ui.map')}" access="superAdmin,admin">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>

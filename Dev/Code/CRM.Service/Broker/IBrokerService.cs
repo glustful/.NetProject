@@ -24,5 +24,7 @@ namespace CRM.Service.Broker
         /// </summary>
         /// <returns></returns>
         IQueryable<BrokerEntity> OrderbyBrokersList();
+
+	    BrokerEntity GetBrokerByUserId(int userId);
 	}
 }

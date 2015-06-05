@@ -8,6 +8,7 @@ using CRM.Entity.Model;
 using CRM.Service.Broker;
 using CRM.Service.BrokerRECClient;
 using YooPoon.Core.Data;
+using YooPoon.Core.Site;
 using YooPoon.WebFramework.User;
 using YooPoon.WebFramework.User.Entity;
 using YooPoon.WebFramework.User.Services;
@@ -25,15 +26,18 @@ namespace Zerg.Controllers.CRM
         private readonly IBrokerRECClientService _brokerRecClientService;
         private readonly IBrokerService _brokerService;
         private readonly IUserService _userService;
+        private readonly IWorkContext _workContext;
 
         public AdminRecomController(IBrokerRECClientService brokerRecClientService,
             IBrokerService brokerService,
-            IUserService userService
+            IUserService userService,
+            IWorkContext workContext
             )
         {
             _brokerRecClientService = brokerRecClientService;
             _brokerService = brokerService;
             _userService = userService;
+            _workContext = workContext;
         }
 
         #region 经济人列表 杨定鹏 2015年5月4日14:29:24
@@ -143,9 +147,9 @@ namespace Zerg.Controllers.CRM
             model.Usertype = brokerModel.UserType;
             model.Regtime = DateTime.Now;
             model.State = 1;
-            model.Adduser = 0;
+            model.Adduser = _workContext.CurrentUser.Id;
             model.Addtime = DateTime.Now;
-            model.Upuser = 0;
+            model.Upuser = _workContext.CurrentUser.Id;
             model.Uptime = DateTime.Now;
 
             //缺少等级
@@ -184,7 +188,6 @@ namespace Zerg.Controllers.CRM
                 Houses = model.ClientInfo.Houses,
                 Note = model.ClientInfo.Note,
                 Phone = model.Phone
-
             };
 
             return PageHelper.toJson(newModel);
@@ -205,6 +208,29 @@ namespace Zerg.Controllers.CRM
             var model = _brokerRecClientService.GetBrokerRECClientById(brokerRecClientModel.Id);
             model.Status = brokerRecClientModel.Status;
             model.Uptime = DateTime.Now;
+
+            #region 推荐订单变更 杨定鹏 2015年6月4日17:38:08
+            //分支处理
+            switch (brokerRecClientModel.Status)
+            {
+                case EnumBRECCType.洽谈中:
+                    //审核通过推荐订单
+                    break;
+
+                case EnumBRECCType.客人未到:
+                    //
+                    break;
+
+                case EnumBRECCType.洽谈成功:
+                    //
+                    break;
+
+                case EnumBRECCType.洽谈失败:
+                    //
+                    break;
+            }
+
+            #endregion
 
             _brokerRecClientService.Update(model);
             return PageHelper.toJson(PageHelper.ReturnValue(true,"确认成功"));

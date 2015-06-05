@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using CRM.Service.ClientInfo;
 using Newtonsoft.Json.Linq;
+using Trading.Entity.Model;
 using Trading.Service.Order;
 using Trading.Service.OrderDetail;
 using Trading.Service.Product;
@@ -121,46 +122,85 @@ namespace Zerg.Controllers.CRM
              }
 
              //检测
-             if (type != EnumBRECCType.等待上访)
+             if (type == EnumBRECCType.等待上访) return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在上访！"));
+
+             #region 创建订单 杨定鹏 2015年6月3日17:21:39
+
+             //创建订单号
+             var num = _orderService.CreateOrderNumber();
+
+             //查询商品详情
+             var product = _productService.GetProductById(brokerrecclient.Projectid);
+
+             //创建订单详情
+             OrderDetailEntity ODE = new OrderDetailEntity()
              {
+                 Adddate = DateTime.Now,
+                 Adduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
+                 Commission = product.Commission,
+                 RecCommission = product.RecCommission,
+                 Dealcommission = product.Dealcommission,
+                 Price = product.Price,
+                 Product = product,
+                 Productname = product.Productname,
+                 //Remark = product.
+                 //Snapshoturl = orderDetailModel.Snapshoturl,
+                 Upddate = DateTime.Now,
+                 Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture)
+             };
+             OrderDetailEntity ODEResult = _orderDetailService.Create(ODE);//创建订单详情；
 
+             //创建订单
+             OrderEntity OE = new OrderEntity()
+             {
+                 Adddate = DateTime.Now,
+                 Adduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
+                 AgentId = _workContext.CurrentUser.Id,
+                 Agentname = brokerrecclient.Brokername,
+                 Agenttel = brokerrecclient.Phone,
+                 BusId = product.Bussnessid,
+                 Busname = "YooPoon",
+                 Customname = brokerrecclient.Clientname,
+                 Ordercode = num,
+                 OrderDetail = ODEResult,
+                 Ordertype = EnumOrderType.推荐订单,
+                 Remark = "前端经纪人提交",
+                 Shipstatus = (int)EnumBRECCType.审核中,
+                 Status = (int)EnumOrderStatus.默认,
+                 Upddate = DateTime.Now,
+                 Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture)
+             };
 
-                 cmodel = _clientInfoService.GetClientInfosByCondition(sech).First();
+             //创建成交订单
+             var num2 = _orderService.CreateOrderNumber();
+             OrderDetailEntity ODE2 = ODE;
+             OrderEntity OE2 = OE;
+             OE2.OrderDetail = ODE2;
+             OE2.Ordercode = num2;
+             OE2.Ordertype=EnumOrderType.成交订单;
+                 
+             #endregion
 
-                 var model = new BrokerRECClientEntity
-                 {
-                     Broker = _brokerService.GetBrokerById(_workContext.CurrentUser.Id),
-                     ClientInfo = cmodel,
-                     Adduser = _workContext.CurrentUser.Id,
-                     Addtime = DateTime.Now,
-                     Upuser = _workContext.CurrentUser.Id,
-                     Uptime = DateTime.Now,
-                     Projectid = brokerrecclient.Projectid,
-                     Status = EnumBRECCType.等待上访,
-                 };
-                 BrokerRecClientService.Create(model);
+             cmodel = _clientInfoService.GetClientInfosByCondition(sech).First();
 
-                 #region 创建订单 杨定鹏 2015年6月3日17:21:39
-                 //实例化订单操作
-                 var api = new OrderController(_productService, _orderDetailService, _orderService);
+             //创建推荐流程
+             var model = new BrokerRECClientEntity
+             {
+                 Broker = _brokerService.GetBrokerById(_workContext.CurrentUser.Id),
+                 ClientInfo = cmodel,
+                 Adduser = _workContext.CurrentUser.Id,
+                 Addtime = DateTime.Now,
+                 Upuser = _workContext.CurrentUser.Id,
+                 Uptime = DateTime.Now,
+                 Projectid = brokerrecclient.Projectid,
+                 Status = EnumBRECCType.等待上访,
+                 RecOrder = _orderService.Create(OE).Id,        //添加推荐订单；
+                 DealOrder = _orderService.Create(OE2).Id,       //添加成交订单
+             };
 
-                 var jObject=new JObject();
+             BrokerRecClientService.Create(model);
 
-                 api.AddRecommonOrder(jObject);
-
-                 #endregion
-
-
-                 return PageHelper.toJson(PageHelper.ReturnValue(true, "提交成功"));
-             }
-             return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在上访！"));
-
-         }
-
-        [System.Web.Http.HttpGet]
-         public HttpResponseMessage test()
-         {
-             return PageHelper.toJson(_orderService.CreateOrderNumber());
+             return PageHelper.toJson(PageHelper.ReturnValue(true, "提交成功"));
          }
     }
 }

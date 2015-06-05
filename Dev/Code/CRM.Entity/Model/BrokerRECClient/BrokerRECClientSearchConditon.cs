@@ -46,7 +46,7 @@ namespace CRM.Entity.Model
 
 
 
-		public int? Phone { get; set; }
+		public string Phone { get; set; }
 
 
 

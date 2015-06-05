@@ -50,6 +50,23 @@ namespace Zerg.Controllers.CRM
             return PageHelper.toJson(new { List = brokerlist });
         }
 
+        /// <summary>
+        /// 通过User查找经纪人
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetBrokerByUserId(string userId)
+        {
+            if (string.IsNullOrEmpty(userId) || !PageHelper.ValidateNumber(userId))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
+            }
+
+            var brokerlist = _brokerService.GetBrokerByUserId(Convert.ToInt32(userId));
+            return PageHelper.toJson(new { List = brokerlist });
+        }
+
 
         /// <summary>
         /// 会员列表查询操作
@@ -246,6 +263,27 @@ namespace Zerg.Controllers.CRM
         }
 
 
+        /// <summary>
+        /// 经纪人排行 返回前3条
+        /// </summary>
+        /// <returns></returns>
+
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage OrderByBrokerTopThree()
+        {
+
+
+            var brokersList = _brokerService.OrderbyBrokersList().Select(p => new
+            {
+                p.Id,
+                p.Brokername,
+                p.Agentlevel,
+                p.Amount
+
+            }).Take(3).ToList();
+
+            return PageHelper.toJson(new { List = brokersList });
+        }
         #endregion
 
 

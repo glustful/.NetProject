@@ -150,6 +150,7 @@ namespace Trading.Service.Order
 
 
 
+
 				if (condition.Shipstatus.HasValue)
                 {
                     query = query.Where(q => q.Shipstatus == condition.Shipstatus.Value);

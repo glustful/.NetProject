@@ -14,7 +14,8 @@ namespace CRM.Entity.Mappings.BankCard
 			HasOptional(c =>c.Bank);
 			HasOptional(c =>c.Broker);
 			Property(c => c.Num).HasColumnType("int");
-			Property(c => c.Type).HasColumnType("bit");
+            Property(c => c.Type).HasColumnType("varchar").HasMaxLength(50);
+            Property(c => c.Address).HasColumnType("varchar").HasMaxLength(3000);
 			Property(c => c.Deadline).HasColumnType("datetime").IsOptional();
 			Property(c => c.Adduser).HasColumnType("int");
 			Property(c => c.Addtime).HasColumnType("datetime");
