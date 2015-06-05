@@ -7,6 +7,9 @@ using System.Web.Http.Cors;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
 using CRM.Service.BrokerRECClient;
+using Trading.Entity.Model;
+using Trading.Service.Order;
+using Trading.Service.OrderDetail;
 using YooPoon.Core.Data;
 using YooPoon.Core.Site;
 using YooPoon.WebFramework.User;
@@ -27,17 +30,23 @@ namespace Zerg.Controllers.CRM
         private readonly IBrokerService _brokerService;
         private readonly IUserService _userService;
         private readonly IWorkContext _workContext;
+        private readonly IOrderService _orderService;
+        private readonly IOrderDetailService _orderDetailService;
 
         public AdminRecomController(IBrokerRECClientService brokerRecClientService,
             IBrokerService brokerService,
             IUserService userService,
-            IWorkContext workContext
+            IWorkContext workContext,
+            IOrderService orderService,
+            IOrderDetailService orderDetailService
             )
         {
             _brokerRecClientService = brokerRecClientService;
             _brokerService = brokerService;
             _userService = userService;
             _workContext = workContext;
+            _orderService = orderService;
+            _orderDetailService = orderDetailService;
         }
 
         #region 经济人列表 杨定鹏 2015年5月4日14:29:24
@@ -210,11 +219,32 @@ namespace Zerg.Controllers.CRM
             model.Uptime = DateTime.Now;
 
             #region 推荐订单变更 杨定鹏 2015年6月4日17:38:08
+
+            var recOrder =_orderService.GetOrderById(model.RecOrder);
+            var dealOrder = _orderService.GetOrderById(model.DealOrder);
+
+            //变更订单状态
+            recOrder.Shipstatus = (int)brokerRecClientModel.Status;
+            dealOrder.Shipstatus = (int)brokerRecClientModel.Status;
+
+            //成交订单状态变更
+            dealOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+            recOrder.Upddate = DateTime.Now;
+            
             //分支处理
             switch (brokerRecClientModel.Status)
             {
+                case EnumBRECCType.审核不通过:
+                    //订单作废
+                    recOrder.Status = (int)EnumOrderStatus.审核失败;
+                    dealOrder.Status = (int)EnumOrderStatus.审核失败;
+                    break;
+
                 case EnumBRECCType.洽谈中:
                     //审核通过推荐订单
+                    recOrder.Status = (int) EnumOrderStatus.审核通过;
+                    recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    recOrder.Upddate = DateTime.Now;
                     break;
 
                 case EnumBRECCType.客人未到:

@@ -133,7 +133,7 @@ namespace Zerg.Controllers.CRM
              var product = _productService.GetProductById(brokerrecclient.Projectid);
 
              //创建订单详情
-             OrderDetailEntity ODE = new OrderDetailEntity()
+             OrderDetailEntity ode = new OrderDetailEntity()
              {
                  Adddate = DateTime.Now,
                  Adduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
@@ -148,10 +148,10 @@ namespace Zerg.Controllers.CRM
                  Upddate = DateTime.Now,
                  Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture)
              };
-             OrderDetailEntity ODEResult = _orderDetailService.Create(ODE);//创建订单详情；
+             OrderDetailEntity odeResult = _orderDetailService.Create(ode);//创建订单详情；
 
              //创建订单
-             OrderEntity OE = new OrderEntity()
+             OrderEntity oe = new OrderEntity
              {
                  Adddate = DateTime.Now,
                  Adduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
@@ -162,7 +162,7 @@ namespace Zerg.Controllers.CRM
                  Busname = "YooPoon",
                  Customname = brokerrecclient.Clientname,
                  Ordercode = num,
-                 OrderDetail = ODEResult,
+                 OrderDetail = odeResult,
                  Ordertype = EnumOrderType.推荐订单,
                  Remark = "前端经纪人提交",
                  Shipstatus = (int)EnumBRECCType.审核中,
@@ -173,11 +173,11 @@ namespace Zerg.Controllers.CRM
 
              //创建成交订单
              var num2 = _orderService.CreateOrderNumber();
-             OrderDetailEntity ODE2 = ODE;
-             OrderEntity OE2 = OE;
-             OE2.OrderDetail = ODE2;
-             OE2.Ordercode = num2;
-             OE2.Ordertype=EnumOrderType.成交订单;
+             OrderDetailEntity ode2 = ode;
+             OrderEntity oe2 = oe;
+             oe2.OrderDetail = ode2;
+             oe2.Ordercode = num2;
+             oe2.Ordertype=EnumOrderType.成交订单;
                  
              #endregion
 
@@ -194,8 +194,8 @@ namespace Zerg.Controllers.CRM
                  Uptime = DateTime.Now,
                  Projectid = brokerrecclient.Projectid,
                  Status = EnumBRECCType.等待上访,
-                 RecOrder = _orderService.Create(OE).Id,        //添加推荐订单；
-                 DealOrder = _orderService.Create(OE2).Id,       //添加成交订单
+                 RecOrder = _orderService.Create(oe).Id,        //添加推荐订单；
+                 DealOrder = _orderService.Create(oe2).Id,       //添加成交订单
              };
 
              BrokerRecClientService.Create(model);
