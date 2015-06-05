@@ -28,7 +28,7 @@ namespace CRM.Entity.Model
 
 		public int[] Nums { get; set; }
 
-		public bool? Type { get; set; }
+		public string Type { get; set; }
 
 		public DateTime? DeadlineBegin { get; set; }
 

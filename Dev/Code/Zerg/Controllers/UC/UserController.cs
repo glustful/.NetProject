@@ -51,7 +51,9 @@ namespace Zerg.Controllers.UC
             _authenticationService.SignIn(user, model.Remember);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "登陆成功", new
             {
-                Roles = user.UserRoles.Select(r => new { r.Role.RoleName }).ToArray()
+                user.Id,
+                Roles = user.UserRoles.Select(r => new { r.Role.RoleName }).ToArray(),
+                user.UserName
             }));
         }
 
