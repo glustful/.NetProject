@@ -1269,7 +1269,7 @@ angular.module('app')
                 url: '/createProduct',
                 templateUrl: 'views/pages/Trading/product/createProduct.html',
                 data : { title: '添加商品' },
-                resolve: load(['scripts/controllers/Trading/CreateProduct.js','scripts/controllers/vectormap.js'])
+                resolve: load(['scripts/controllers/Trading/CreateProduct.js','scripts/controllers/vectormap.js','angularFileUpload'])
             })
             .state('page.Trading.product.brand', {
                 url: '/brand',

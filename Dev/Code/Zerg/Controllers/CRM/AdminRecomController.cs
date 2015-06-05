@@ -103,7 +103,16 @@ namespace Zerg.Controllers.CRM
         {
             #region UC用户创建 杨定鹏 2015年5月28日14:52:48
             var user = _userService.GetUserByName(brokerModel.UserName);
-            if (user != null)
+
+            var condition = new BrokerSearchCondition
+            {   
+                OrderBy = EnumBrokerSearchOrderBy.OrderById,
+                Phone = brokerModel.Phone
+            };
+
+            //判断user表和Broker表中是否存在用户名
+            var user2 = _brokerService.GetBrokerCount(condition);
+            if (user != null || user2!=0)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
             }
@@ -124,18 +133,23 @@ namespace Zerg.Controllers.CRM
             #endregion
 
             #region Broker用户创建 杨定鹏 2015年5月28日14:53:32
-            var model = new BrokerEntity
-            {
-                UserId =  _userService.GetUserByName(brokerModel.UserName).Id,
-                Brokername = brokerModel.Brokername,
-                Phone = brokerModel.Phone,
-                Totalpoints = 0,
-                Amount = 0,
-                Usertype = brokerModel.UserType,
-                Realname = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-                State = 1,
 
-            };
+            var model = new BrokerEntity();
+            model.UserId = _userService.GetUserByName(brokerModel.UserName).Id;
+            model.Brokername = brokerModel.Brokername;
+            model.Phone = brokerModel.Phone;
+            model.Totalpoints = 0;
+            model.Amount = 0;
+            model.Usertype = brokerModel.UserType;
+            model.Regtime = DateTime.Now;
+            model.State = 1;
+            model.Adduser = 0;
+            model.Addtime = DateTime.Now;
+            model.Upuser = 0;
+            model.Uptime = DateTime.Now;
+
+            //缺少等级
+
             _brokerService.Create(model);
 
             #endregion
