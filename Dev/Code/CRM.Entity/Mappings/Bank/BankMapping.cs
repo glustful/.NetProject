@@ -13,7 +13,7 @@ namespace CRM.Entity.Mappings.Bank
 			HasKey(c => c.Id);
 
 			Property(c => c.Codeid).HasColumnType("varchar").HasMaxLength(30);
-			Property(c => c.address).HasColumnType("varchar").HasMaxLength(256);
+            Property(c => c.Addtime).HasColumnType("datetime");
 		}
 	}
 }
