@@ -1,12 +1,12 @@
 /**
  * Created by Yunjoy on 2015/5/6.
- * �û���֤��½service
+ * 用户验证登陆service
  */
 angular.module("zergApp").service("AuthService",["$http",'$localStorage',function($http,$localStorage){
     var _isAuthenticated = false;
     var _currentUser;
 
-    //����cookies��ȡ��ǰ�û�(ʹ��ͬ����ȡ��������һ��)
+    //依据cookies获取当前用户(使用同步获取——仅此一次)
     var xmlhttp=new XMLHttpRequest();
     xmlhttp.open("get",SETTING.ApiUrl+"/user/GetCurrentUser",false);
     xmlhttp.withCredentials = true;
@@ -21,7 +21,7 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
     }
 
     /**
-     * �Ƿ�ӵ����Ȩ
+     * 是否拥有授权
      * @returns {boolean}
      * @constructor
      */
@@ -37,7 +37,7 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
         return hasRole;
     };
     /**
-     * �Ƿ��Ѿ���½
+     * 是否已经登陆
      * @returns {boolean}
      * @constructor
      */
@@ -55,7 +55,7 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
         return _isAuthenticated;
     };
     /**
-     * ��ǰ�û�
+     * 当前用户
      * @returns CurrentUser
      * @constructor
      */
@@ -65,9 +65,11 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
         //return $cookieStore.get("CurrentUser");
     };
     /**
-     * ��½����
+     * 登陆操作
      * @param userName
      * @param password
+     * @param callback
+     * @param faildCallback
      */
     this.doLogin = function(userName,password,callback,faildCallback){
         $http.post(SETTING.ApiUrl+"/user/login",
@@ -80,7 +82,8 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
             .success(function(data){
                 if(data.Status){
                     _currentUser ={
-                        UserName:userName
+                        UserName:userName,
+                        UserId:data.obj.Id
                     };
                     _isAuthenticated = true;
                     $localStorage.UserRoles=data.Object.Roles;
