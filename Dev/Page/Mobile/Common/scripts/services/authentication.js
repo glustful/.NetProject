@@ -15,7 +15,8 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
     if(data.Status){
         _isAuthenticated = true;
         _currentUser = {
-            UserName:data.Object.UserName
+            UserName:data.Object.UserName,
+            UserId:data.Object.Id
         };
         $localStorage.UserRoles=data.Object.Roles;
     }
