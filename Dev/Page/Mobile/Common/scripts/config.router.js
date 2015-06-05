@@ -45,30 +45,27 @@ app  .run(
         })
         .state('user',{
             url:'/user',
-            templateUrl:'Common/widget/layout/user.html',
-            resolve:load('Common/scripts/UserController.js')
+            templateUrl:'Common/widget/layout/user.html'
         })
         .state('user.login',{
             url:'/login',
             templateUrl:'modules/Login/view/login.html',
-            resolve:load('modules/Login/controller/LoginController.js'),
-            data:{title:'用户登录'}
+            resolve:load('modules/Login/controller/LoginController.js')
         })
         .state('user.register',{
             url:'/register',
             templateUrl:'modules/Register/view/register.html',
-            resolve:load('modules/Register/controller/RegisterController.js'),
-            data:{title:'用户注册'}
+            resolve:load('modules/Register/controller/RegisterController.js')
         })
         .state('user.PasswordFound',{
             url:'/PasswordFound',
             templateUrl:'modules/PasswordFound/view/PasswordFound.html',
-            resolve:load('modules/Register/controller/RegisterController.js'),
-            data:{title:'找回密码'}
+            resolve:load('modules/Register/controller/RegisterController.js')
         })
         .state('app.home',{
             url:'/home',
             templateUrl:'modules/Index/view/Index.html',
+
             resolve:load(['modules/Index/static/js/yxMobileSlider.js','modules/Index/static/js/homeController.js'])
         })
 
@@ -223,13 +220,11 @@ app  .run(
         })
         .state('app.recommendedBroker',{
             url:'/recommendedBroker',
-            templateUrl:'modules/recommendBroker/view/recommendedBroker.html',
-            resolve:load('modules/recommendBroker/controller/recommendbroker.js')
+            templateUrl:'modules/recommendBroker/view/recommendedBroker.html'
         })
         .state('app.addBroker',{
             url:'/addBroker',
-            templateUrl:'modules/addBroker/view/addBroker.html',
-            resolve:load('modules/recommendBroker/controller/recommendbroker.js')
+            templateUrl:'modules/addBroker/view/addBroker.html'
         })
         .state('app.grabPacket',{
             url:'/grabPacket',
@@ -246,26 +241,6 @@ app  .run(
         .state('app.chip',{
             url:'/chip',
             templateUrl:'modules/chip/view/chip.html'
-        })
-        .state('app.chipDetail',{
-            url:'/chipDetail',
-            templateUrl:'modules/chipDetail/view/chipDetail.html'
-        })
-        .state('app.chipPartake',{
-            url:'/chipPartake',
-            templateUrl:'modules/chipPartake/view/chipPartake.html'
-        })
-        .state('app.chipEle',{
-            url:'/chipEle',
-            templateUrl:'modules/chipEle/view/chipEle.html'
-        })
-        .state('app.withdrawals',{
-            url:'/withdrawals',
-            templateUrl:'modules/withdrawals/view/withdrawals.html'
-        })
-        .state('app.withdrawalsDetail',{
-            url:'/withdrawalsDetail',
-            templateUrl:'modules/withdrawalsDetail/view/withdrawalsDetail.html'
         })
 
 

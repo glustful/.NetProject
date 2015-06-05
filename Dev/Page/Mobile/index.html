@@ -55,7 +55,17 @@
 
 <!--瀑布流-->
 
-    <script src="modules/housesBuy/static/scripts/zy_control.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            $(".message img").lazyload({
+                placeholder : "modules/index/static/image/index/loading.gif",
+                effect : "fadeIn"
+            });
+        });
+    </script>
+
+
     <!--控制滑动-->
 
 </head>
