@@ -125,22 +125,14 @@ namespace Zerg.Controllers.CRM
         [HttpGet]
         public HttpResponseMessage TaskListMobile(int page)
         {
-            string Taskname = "";
+          
             int pageSize = 10;
             Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
 
-            if (!string.IsNullOrEmpty(Taskname))
-            {
-                var m = reg.IsMatch(Taskname);
-                if (!m)
-                {
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "搜索输入存在非法字符！"));
-                }
-            }
+         
             var taskcondition = new TaskSearchCondition
             {
                 OrderBy = EnumTaskSearchOrderBy.OrderById,
-                Taskname = Taskname,
                 Page = page,
                 PageCount = pageSize
 

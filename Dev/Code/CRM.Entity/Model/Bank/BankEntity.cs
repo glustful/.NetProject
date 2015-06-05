@@ -10,13 +10,16 @@ namespace CRM.Entity.Model
 		/// 银行ID
 		/// </summary>
 		public virtual int Id { get; set; }
+
 		/// <summary>
 		/// 银行名字
 		/// </summary>
 		public virtual string Codeid { get; set; }
-		/// <summary>
-		/// 开户行地址
-		/// </summary>
-		public virtual string address { get; set; }
+
+
+        /// <summary>
+        /// AddTime
+        /// </summary>
+        public virtual DateTime Addtime { get; set; }
 	}
 }
