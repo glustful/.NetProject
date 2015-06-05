@@ -93,9 +93,9 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
                 }
-				if (condition.Phone.HasValue)
+                if (!string.IsNullOrEmpty(condition.Phone))
                 {
-                    query = query.Where(q => q.Phone == condition.Phone.Value);
+                    query = query.Where(q => q.Phone.Contains(condition.Phone));
                 }
 				if (condition.Qq.HasValue)
                 {
@@ -216,10 +216,6 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
                 }
-				if (condition.Phone.HasValue)
-                {
-                    query = query.Where(q => q.Phone == condition.Phone.Value);
-                }
 				if (condition.Qq.HasValue)
                 {
                     query = query.Where(q => q.Qq == condition.Qq.Value);
@@ -227,6 +223,10 @@ namespace CRM.Service.BrokerRECClient
 				if (!string.IsNullOrEmpty(condition.Clientname))
                 {
                     query = query.Where(q => q.Clientname.Contains(condition.Clientname));
+                }
+                if (!string.IsNullOrEmpty(condition.Phone))
+                {
+                    query = query.Where(q => q.Phone.Contains(condition.Phone));
                 }
 				if (!string.IsNullOrEmpty(condition.Brokername))
                 {

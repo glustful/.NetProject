@@ -347,5 +347,19 @@ namespace CRM.Service.Broker
             var query = _brokerRepository.Table;
             return query.Where(o => o.Amount>0).OrderByDescending(o => o.Amount).Take(10);
         }
+
+
+        public BrokerEntity GetBrokerByUserId(int userId)
+        {
+            try
+            {
+                return _brokerRepository.Table.FirstOrDefault(p => p.UserId == userId);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
     }
 }

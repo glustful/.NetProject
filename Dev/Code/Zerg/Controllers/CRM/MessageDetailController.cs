@@ -126,5 +126,16 @@ namespace Zerg.Controllers.CRM
             return PageHelper.toJson(SMSHelper.GetSMSCount());
         }
         #endregion
+
+        [HttpPost]
+        public HttpResponseMessage SendMessage([FromBody] string phone)
+        {
+            if (!string.IsNullOrEmpty(phone))
+            {
+
+            }
+            var p = SMSHelper.Sending(phone, "你好，感谢你使用创富宝软件！发送时间是：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            return PageHelper.toJson(p);
+        }
     }
 }

@@ -85,5 +85,18 @@ namespace YooPoon.WebFramework.User.Services
                 return false;
             }
         }
+
+        public Role GetRoleByName(string roleName)
+        {
+            try
+            {
+                return _roleRepository.Table.FirstOrDefault(c=>c.RoleName == roleName);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "检测Role存在报错");
+                return null;
+            }
+        }
     }
 }
