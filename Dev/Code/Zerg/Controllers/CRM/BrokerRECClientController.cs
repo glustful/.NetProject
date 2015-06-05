@@ -148,7 +148,6 @@ namespace Zerg.Controllers.CRM
                  Upddate = DateTime.Now,
                  Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture)
              };
-             OrderDetailEntity odeResult = _orderDetailService.Create(ode);//创建订单详情；
 
              //创建订单
              OrderEntity oe = new OrderEntity
@@ -162,7 +161,7 @@ namespace Zerg.Controllers.CRM
                  Busname = "YooPoon",
                  Customname = brokerrecclient.Clientname,
                  Ordercode = num,
-                 OrderDetail = odeResult,
+                 OrderDetail = _orderDetailService.Create(ode),//创建订单详情；
                  Ordertype = EnumOrderType.推荐订单,
                  Remark = "前端经纪人提交",
                  Shipstatus = (int)EnumBRECCType.审核中,
