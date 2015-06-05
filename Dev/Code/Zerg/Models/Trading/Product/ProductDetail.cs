@@ -24,6 +24,8 @@ namespace Zerg.Models.Trading.Product
         public string ProductDetailed { get; set; }
         public decimal RecCommission { get; set; }
         public decimal Dealcommission { get; set; }
+        public string Advertisement { get; set; }      
+        public string BrandImg { get; set; }
         public decimal Commission { get; set; }
         public string ClassifyName { get; set; }
         public int Stockrule { get; set; }

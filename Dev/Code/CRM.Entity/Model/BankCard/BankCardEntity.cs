@@ -25,7 +25,14 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// 卡种
 		/// </summary>
-		public virtual bool Type { get; set; }
+		public virtual string Type { get; set; }
+
+
+        /// <summary>
+        /// 开户行地址
+        /// </summary>
+        public virtual string Address { get; set; }
+
 		/// <summary>
 		/// 到期时间
 		/// </summary>
