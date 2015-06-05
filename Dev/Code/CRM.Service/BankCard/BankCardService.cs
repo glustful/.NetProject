@@ -101,9 +101,9 @@ namespace CRM.Service.BankCard
                 {
                     query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
                 }
-				if (condition.Type.HasValue)
+				if (!string.IsNullOrEmpty( condition.Type))
                 {
-                    query = query.Where(q => q.Type == condition.Type.Value);
+                    query = query.Where(q =>q.Type ==condition.Type);
                 }
 				if (condition.Ids != null && condition.Ids.Any())
                 {
@@ -186,9 +186,9 @@ namespace CRM.Service.BankCard
                 {
                     query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
                 }
-				if (condition.Type.HasValue)
+				if (!string.IsNullOrEmpty(condition.Type))
                 {
-                    query = query.Where(q => q.Type == condition.Type.Value);
+                    query = query.Where(q => q.Type == condition.Type);
                 }
 				if (condition.Ids != null && condition.Ids.Any())
                 {

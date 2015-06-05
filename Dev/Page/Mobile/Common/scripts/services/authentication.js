@@ -1,12 +1,12 @@
 /**
  * Created by Yunjoy on 2015/5/6.
- * ÓÃ»§ÑéÖ¤µÇÂ½service
+ * ï¿½Ã»ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½Â½service
  */
 angular.module("zergApp").service("AuthService",["$http",'$localStorage',function($http,$localStorage){
     var _isAuthenticated = false;
     var _currentUser;
 
-    //ÒÀ¾Ýcookies»ñÈ¡µ±Ç°ÓÃ»§(Ê¹ÓÃÍ¬²½»ñÈ¡¡ª¡ª½ö´ËÒ»´Î)
+    //ï¿½ï¿½ï¿½ï¿½cookiesï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½Ã»ï¿½(Ê¹ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½)
     var xmlhttp=new XMLHttpRequest();
     xmlhttp.open("get",SETTING.ApiUrl+"/user/GetCurrentUser",false);
     xmlhttp.withCredentials = true;
@@ -21,7 +21,7 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
     }
 
     /**
-     * ÊÇ·ñÓµÓÐÊÚÈ¨
+     * ï¿½Ç·ï¿½Óµï¿½ï¿½ï¿½ï¿½È¨
      * @returns {boolean}
      * @constructor
      */
@@ -37,7 +37,7 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
         return hasRole;
     };
     /**
-     * ÊÇ·ñÒÑ¾­µÇÂ½
+     * ï¿½Ç·ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½Â½
      * @returns {boolean}
      * @constructor
      */
@@ -55,7 +55,7 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
         return _isAuthenticated;
     };
     /**
-     * µ±Ç°ÓÃ»§
+     * ï¿½ï¿½Ç°ï¿½Ã»ï¿½
      * @returns CurrentUser
      * @constructor
      */
@@ -65,7 +65,7 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
         //return $cookieStore.get("CurrentUser");
     };
     /**
-     * µÇÂ½²Ù×÷
+     * ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½
      * @param userName
      * @param password
      */

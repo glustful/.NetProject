@@ -1,3 +1,6 @@
+.StormRoom-content{
+    /*padding-bottom: 200px;*/
+}
 .nav-storeroom{
     height: 70px;
     line-height: 70px;
@@ -85,4 +88,39 @@
 }
  .sub-nav-storeroom .int-storeroom{
     border-right: none;
+}
+ #area,#type,#price{
+     float: left
+ }
+ #condition{
+     background-color: #ffffff;width: 640px;border-radius: 10px;
+ }
+#province{
+    float:left;margin-left: 50px;width: 150px;
+    background-color: #ffffff;
+}
+#city,#county{
+    float:left;width: 150px;
+    background-color: #ffffff;
+}
+.type{
+    margin-left: 200px;
+    width: 90px;
+}
+#priceCondition{
+    margin-left: 350px;
+    width: 90px;
+}
+.li{
+    height: 30px;width:50px;line-height: 15px;
+    /*border-bottom:2px solid #ebebeb;*/
+}
+.typeOption,.priceOption{
+    height: 30px;line-height: 15px;
+    /*border-bottom:2px solid #ebebeb;*/
+}
+.selected {
+    background-color: #c0c0c0;
+    width:70px;
+    border-radius: 5px;
 }
