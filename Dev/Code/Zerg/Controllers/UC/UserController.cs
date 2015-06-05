@@ -4,10 +4,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.UI.WebControls;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
+using YooPoon.Core.Data;
 using YooPoon.Core.Site;
 using YooPoon.WebFramework.Authentication;
+using YooPoon.WebFramework.Authentication.Entity;
 using YooPoon.WebFramework.User;
 using YooPoon.WebFramework.User.Entity;
 using YooPoon.WebFramework.User.Services;
@@ -25,13 +28,23 @@ namespace Zerg.Controllers.UC
         private readonly IAuthenticationService _authenticationService;
         private readonly IWorkContext _workContext;
         private readonly IBrokerService _brokerService;
+        private readonly IRoleService _roleService;
+        private readonly IBaseEntity _baseEntity;
 
-        public UserController(IUserService userService, IAuthenticationService authenticationService, IWorkContext workContext,IBrokerService brokerService)
+        public UserController(IUserService userService, 
+            IAuthenticationService authenticationService, 
+            IWorkContext workContext,
+            IBrokerService brokerService,
+            IRoleService roleService,
+            IBaseEntity baseEntity
+            )
         {
             _userService = userService;
             _authenticationService = authenticationService;
             _workContext = workContext;
             _brokerService = brokerService;
+            _roleService = roleService;
+            _baseEntity = baseEntity;
         }
 
         /// <summary>
@@ -130,6 +143,32 @@ namespace Zerg.Controllers.UC
                 Status = 0
             };
             PasswordHelper.SetPasswordHashed(newUser, brokerModel.Password);
+
+            #region 权限创建 杨定鹏 2015年6月4日16:38:54
+            //取得经纪人信息
+            const string roleName = "Broker";
+            var role = _roleService.GetRoleByName(roleName);
+            //查询经纪人规则信息是否存在
+            if (role == null)   //存在则添加规则
+            {
+                role = new Role
+                {
+                    RoleName = roleName,
+                    Description = "经纪人角色",
+                    Status = RoleStatus.Normal
+                };
+                _roleService.CreateRole(role);
+
+            }
+
+            newUser.UserRoles.Add(new UserRole
+            {
+                Role = role,
+                User = newUser
+            });
+
+            #endregion
+
             if (_userService.InsertUser(newUser).Id <= 0)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "注册用户失败，请重试"));
@@ -140,7 +179,7 @@ namespace Zerg.Controllers.UC
             #region Broker用户创建 杨定鹏 2015年5月28日14:53:32
 
             var model = new BrokerEntity();
-            model.UserId = _userService.GetUserByName(brokerModel.UserName).Id;
+            model.UserId = newUser.Id;
             model.Brokername = brokerModel.Brokername;
             model.Phone = brokerModel.Phone;
             model.Totalpoints = 0;
@@ -155,10 +194,12 @@ namespace Zerg.Controllers.UC
 
             //缺少等级
 
-            _brokerService.Create(model);
+           
 
             #endregion
 
+
+            _brokerService.Create(model);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
         }
 

@@ -150,6 +150,7 @@ namespace Trading.Service.Order
 
 
 
+
 				if (condition.Shipstatus.HasValue)
                 {
                     query = query.Where(q => q.Shipstatus == condition.Shipstatus.Value);
@@ -404,18 +405,11 @@ namespace Trading.Service.Order
         public string CreateOrderNumber()
         {
             var query = _orderRepository.Table;
-            int num;
 
-            if (!query.Any())
-            {
-                //获取当日流水号
-                num = query.Count(q => q.Adddate.Date == DateTime.Now.Date) + 1;
-            }
-            else
-            {
-                //生成订单
-                num = 000001;
-            }
+
+            //获取当日流水号
+                int num = query.Count(q => q.Adddate.Date == DateTime.Now.Date) + 1;
+
 
             return DateTime.Now.ToString("yyyyMMddHHmmss")+num.ToString("000000");
         }

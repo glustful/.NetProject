@@ -19,11 +19,11 @@ namespace Trading.Entity.Model
 		/// <summary>
 		/// 订单类型
 		/// </summary>
-		public virtual int Ordertype { get; set; }
+        public virtual EnumOrderType Ordertype { get; set; }
 		/// <summary>
 		/// 流程状态
 		/// </summary>
-		public virtual int Shipstatus { get; set; }
+        public virtual int Shipstatus { get; set; }
 		/// <summary>
 		/// 状态
 		/// </summary>
