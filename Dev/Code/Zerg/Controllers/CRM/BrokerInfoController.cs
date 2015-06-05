@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Zerg.Common;
+using Zerg.Models.CRM;
 
 namespace Zerg.Controllers.CRM
 {
@@ -63,8 +64,22 @@ namespace Zerg.Controllers.CRM
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
             }
 
-            var brokerlist = _brokerService.GetBrokerByUserId(Convert.ToInt32(userId));
-            return PageHelper.toJson(new { List = brokerlist });
+            var model = _brokerService.GetBrokerByUserId(Convert.ToInt32(userId));
+
+            if (model == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在！"));
+
+            var brokerInfo = new BrokerModel
+            {
+                Id = model.Id,
+                Brokername = model.Brokername,
+                Realname = model.Realname,
+                Nickname = model.Nickname,
+                Sexy = model.Sexy,
+                Sfz = model.Sfz,
+                Email = model.Email,
+            };
+
+            return PageHelper.toJson(brokerInfo);
         }
 
 
