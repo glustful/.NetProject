@@ -78,7 +78,8 @@ app  .run(
         })
         .state('app.broker',{
             url:'/broker',
-            templateUrl:'modules/broker/view/broker.html'
+            templateUrl:'modules/broker/view/broker.html',
+            resolve:load('modules/broker/controller/broker.js')
         })
         .state('app.customerList',{
             url:'/customerList',
