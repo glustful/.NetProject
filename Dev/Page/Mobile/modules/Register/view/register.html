@@ -5,28 +5,28 @@
         </p>
         <p class="register_input">
             <span><img src="modules/Register/static/image/register/user.png" class="registerImg"></span>
-            <input type="text"  class="register_blank" placeholder="Username" name="register_blank" id="username" required/>
+            <input type="text"  class="register_blank" placeholder="Username" name="register_blank" id="username"  ng-model="register.Brokername" required/>
         </p>
         <p class="register_tip">
             密码
         </p>
         <p class="register_input">
             <span><img src="modules/Register/static/image/register/pass.png" class="registerImg"></span>
-            <input type="password" class="register_blank" placeholder="Password" name="register_blank" id="userPassword" required/>
+            <input type="password" class="register_blank" placeholder="Password" name="register_blank" id="userPassword"  ng-model="register.Password" required/>
         </p>
         <p class="register_tip">
             手机号码
         </p>
         <p class="register_input">
             <span><img src="modules/Register/static/image/register/phone.png" class="registerImg"></span>
-            <input type="tel" class="register_blank" placeholder="Telephone" name="register_blank" id="phoneNumber" required/>
+            <input type="tel" class="register_blank" placeholder="Telephone" name="register_blank" id="phoneNumber"  ng-model="register.Phone" required/>
         </p>
         <p class="register_tip">
             验证码
         </p>
         <p class="PinBlank">
             <input type="text"  class="PinInput"  name="Pin_input"/>
-            <button>发送验证码</button>
+            <button ng-click="pinGet()">发送验证码</button>
         </p>
         <button class="register_button" ng-click="registerSubmit()" >注 册</button>
         <p class="LoginExit">
