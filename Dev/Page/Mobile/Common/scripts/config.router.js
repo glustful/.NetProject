@@ -194,7 +194,6 @@ app  .run(
         .state('app.task',{
             url:'/task',
             templateUrl:'modules/task/view/task.html',
-            controller:'taskController',
             resolve:load('modules/task/controller/task.js')
         })
         .state('app.nominate',{

@@ -8,19 +8,27 @@ app.controller('cusListController',['$http','$scope',function($http,$scope) {
         pageSize: 10
     };
     $scope.warm="";
-    //查询任务
+    $scope.parentVi=true;
+    //查询客户
     var getcustomerList  = function() {
         $http.get(SETTING.ApiUrl+'/ClientInfo/ClientInfo/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
             console.log(data);
             if(data.clientModel!=null){
                 $scope.warm="";
                 $scope.list = data.clientModel;
+                $scope.parentVi=true;
               }
             else{
+                $scope.parentVi=false;
                 $scope.warm="目前没有客户，革命还需努力";
             }
         });
     };
     getcustomerList();
+//隐藏显示元素
+    $scope.visible = false;
+    $scope.toggle = function () {
+        $scope.visible = !$scope.visible;
+    }
   }]);
 
