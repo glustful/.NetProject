@@ -9,6 +9,8 @@ using Zerg.Models.CRM;
 using System.Web.Http.Cors;
 using YooPoon.Common.Encryption;
 using Zerg.Common.Com;
+using CRM.Service.Broker;
+using YooPoon.WebFramework.User.Services;
 
 //using System.Collections.Generic;
 
@@ -23,9 +25,12 @@ namespace Zerg.Controllers.CRM
     {
 
         private readonly IMessageDetailService _messageDetailService;
-        public MessageDetailController(IMessageDetailService messageDetailService)
+        private readonly IUserService _userService;
+        public MessageDetailController(IMessageDetailService messageDetailService,
+             IUserService UserService)
         {
             _messageDetailService = messageDetailService;
+            _userService = UserService;
         }
       
         #region 短信发送明细  黄秀宇  2015.04.28
@@ -136,13 +141,14 @@ namespace Zerg.Controllers.CRM
         /// 发送短信验证码
         /// </summary>
         /// <param name="phone">手机号码</param>
-        ///  /// <param name="userid">用户ID，EMS加密用</param>
+        ///  /// <param name="userid">用户ID</param>
         /// <returns></returns>
      
         [HttpPost]
-      public HttpResponseMessage SendMessage([FromBody] string phone, string userid)
+      public HttpResponseMessage SendMessage([FromBody] string phone,int userid)
         {
-            return ValidateMessage.SendMessage6(phone, userid);//发送短信验证码
+           string salt= _userService.FindUser(userid).PasswordSalt.ToString ();//查找用户密钥
+           return ValidateMessage.SendMessage6(phone, salt);//发送短信验证码
         }
         /// <summary>
         /// 验证短信验证码
@@ -152,10 +158,13 @@ namespace Zerg.Controllers.CRM
         /// <param name="userid">用户id,EMS加密用</param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage validate([FromBody] string sourc,string messa , string userid)
+        public HttpResponseMessage validate([FromBody] string sourc,string messa , int userid)
         {
+           
+            string salt = _userService.FindUser(userid).PasswordSalt.ToString();//查找用户密钥
+            return ValidateMessage.validate(sourc, messa, salt);//验证短信验证码
+        
 
-            return ValidateMessage.validate(sourc, messa, userid);//验证短信验证码
         }
         #endregion
     }

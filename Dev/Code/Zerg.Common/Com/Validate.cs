@@ -8,7 +8,9 @@ using YooPoon.Common.Encryption;
 namespace Zerg.Common.Com
 {
  public static  class ValidateMessage
-    {
+ {
+     #region 黄秀宇 2015.06.05
+   
      /// <summary>
      /// 验证六位短信验证码
      /// </summary>
@@ -16,11 +18,12 @@ namespace Zerg.Common.Com
         /// <param name="messa">验证码</param>
         /// <param name="userid">用户id,EMS加密用</param>
      /// <returns></returns>
-     public static HttpResponseMessage validate(string sourc, string messa, string userid)
+     public static HttpResponseMessage validate(string sourc, string messa, string salt)
         {
-              if (!string.IsNullOrEmpty(sourc))
+            if ((!string.IsNullOrEmpty(sourc)) && (!string.IsNullOrEmpty(messa)))
             {
-                string sou = EncrypHelper.Decrypt(sourc, userid);//解密
+
+                string sou = EncrypHelper.Decrypt(sourc, salt);//解密
              string[] str = sou.Split('$');
              string source = str[0];//获取验证码
              DateTime  date =Convert .ToDateTime (str[1]);//获取发送验证码的时间
@@ -46,21 +49,20 @@ namespace Zerg.Common.Com
      /// 发送短信验证码
      /// </summary>
      /// <param name="phone">手机号码</param>
-     ///  /// <param name="userid">用户ID，EMS加密用</param>
+     ///  /// <param name="salt">用户ID，EMS加密用</param>
      /// <returns></returns>
-     public static  HttpResponseMessage SendMessage6( string phone, string userid)
+     public static  HttpResponseMessage SendMessage6( string phone, string salt)
      {
-         string messa = SMSHelper.radValue;//获取六位短信发送的随机数
+         string messa = new Random().Next(100000, 1000000).ToString();//生成大于等于100000，小于等于999999的随机数，也就是六位随机数
          if (!string.IsNullOrEmpty(phone))
          {
              var p = SMSHelper.Sending(phone, messa);//给用户发送验证码
              string time = DateTime.Now.ToLongTimeString();
-             var source = EncrypHelper.Encrypt(messa + "$" + time, userid);//EMS 加密短信验证码
-             // SMSHelper.vali.Add(userid + messa);//保存用户id跟发送的信息
+             var source = EncrypHelper.Encrypt(messa + "$" + time, salt);//EMS 加密短信验证码
              return PageHelper.toJson(new { sou = source, messP = p });
-
          }
          return PageHelper.toJson(0);
      }
-    }
+     #endregion
+ }
 }

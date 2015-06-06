@@ -12,9 +12,9 @@ namespace Zerg.Common
     /// <summary>
     /// 短信发送帮助类
     /// </summary>
-    public  class SMSHelper
+    public class SMSHelper
     {
-       public static  string  radValue = new Random().Next(100000, 1000000).ToString ();//生成大于等于100000，小于等于999999的随机数，也就是六位随机数；
+      
       // public   static List<string> vali = new List<string>();//定义一个列表，用于保存短信发送的验证码
         #region 中国网建 SMS短信发送平台
 
