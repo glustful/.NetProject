@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Zerg.Common;
 using Zerg.Models.CRM;
+using System.Data;
 
 namespace Zerg.Controllers.CRM
 {
@@ -80,27 +81,36 @@ namespace Zerg.Controllers.CRM
         [HttpGet]
         public HttpResponseMessage ClientInfo(int id)
         {
-            var model = _brokerRecClientService.GetBrokerRECClientById(id);
-            var clientModel = new ClientInfoModel
+            var condition = new BrokerRECClientSearchCondition
             {
-                Clientname = model.ClientInfo.Clientname,
-                Phone = model.ClientInfo.Phone,
-                Housetype = model.ClientInfo.Housetype,
-                Houses = model.ClientInfo.Houses,
-                Note = model.ClientInfo.Note,
-                Uptime = model.Uptime.ToString(CultureInfo.InvariantCulture)
-            };
-            var brokerModel = new BrokerRECClientModel()
-            {
-                Brokername = model.Brokername,
-                Brokerlevel = model.Brokerlevel,
-                Phone = model.Broker.Phone,
-                Qq = model.Broker.Qq,
-                RegTime = model.Broker.Regtime.ToString(CultureInfo.InvariantCulture),
-                Projectname = model.Projectname
+                Id = id
             };
 
+
+            var model = _brokerRecClientService.GetBrokerRECClientsByCondition(condition).ToList();
+            try {
+            var clientModel =model .Select(p=>new {
+            
+                Clientname =p.ClientInfo.Clientname,
+                Phone =p.ClientInfo.Phone,
+                Housetype = p.ClientInfo.Housetype,
+                Houses = p.ClientInfo.Houses,
+                Note = p.ClientInfo.Note,
+                Uptime = p.Uptime.ToString(CultureInfo.InvariantCulture)
+            });
+            var brokerModel =model .Select(p=>new {
+          
+                Brokername = p.Brokername,
+                Brokerlevel = p.Brokerlevel,
+                Phone = p.Broker.Phone,
+                Qq = p.Broker.Qq,
+                RegTime = p.Broker.Regtime.ToString(CultureInfo.InvariantCulture),
+                Projectname =p.Projectname
+            });
             return PageHelper.toJson(new { clientModel, brokerModel });
+            }
+            catch { }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
         }
 
 

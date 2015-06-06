@@ -14,13 +14,13 @@
                <div class="person_revise" ng-controller="personsettingController">
                    <form>
                        <p>姓名</p>
-                       <input type="text" class="password old" placeholder="用户名" value="{{users.Brokername}}" required/><br/>
+                       <input type="text" class="password old" placeholder="用户名" ng-model="olduser.Brokername" required/><br/>
                        <p> 电话</p>
-                       <input type="tel" class="password old" placeholder="用户手机号码"value="{{users.Phone}}" required/><br/>
+                       <input type="text" class="password old" placeholder="用户手机号码"  required/><br/>
                        <p>身份证</p>
-                       <input type="text" class="password old" placeholder="保护账号安全" value="{{users.Sfz}}" required/><br/>
+                       <input type="text" class="password old" placeholder="保护账号安全"  required/><br/>
 
-                       <button class="save_button" ng-click="save()">保存</button></>
+                       <button class="save_button" ng-click="save()">保存</button>
                    </form>
                </div>
            </div>

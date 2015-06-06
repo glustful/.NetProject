@@ -3,7 +3,7 @@
  */
 
 $(function() {
-    $("img").lazyload({
+    $(".message img").lazyload({
         placeholder : "modules/Index/static/image/index/loading.gif",
         effect : "fadeIn"
     });

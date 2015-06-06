@@ -1,6 +1,6 @@
 <!--买房楼盘详细-->
 <!--required:../static/style/housesBuy.css-->
-        <div class="content-housesBuy cf">
+        <div class="content-housesBuy cf" ng-controller="HousesBuyController">
             <div class="pic-housesBuy">
                 <a href="#">
                     <img src="modules/housesBuy/static/image/housesBuy/pic.png" alt="中天·水云天" width="640" height="290"/>
@@ -9,42 +9,53 @@
                     <div class="summaryBg"></div>
                 </a>
             </div>
-            <div class="di">1.8万抵6万，&nbsp;3万抵15万<a href="#"><button>咨询热线</button></a></div>
+            <div class="di">{{tent.Content}}<a href="#"><button>咨询热线</button></a></div>
             <div class="type">
-                <div class="hx1">
-                    <p class="HX">A1/A2户型</p>
-                    <p class="gift">建筑面积约143m²，赠送面积约7.6m²<br/>四室、两厅、一厨、双卫、双阳台</p>
-                    <div class="JJ">均价7000元/m²起</div>
-                    <a class="HXT" href="#/app/housesPic"><img src="modules/housesBuy/static/image/housesBuy/hxt1.png" alt="户型图" width="231" height="188"/></a>
-                    <div class="ask"><a href="#">咨询热线</a></div>
-                </div>
-                <div class="hx2">
-                    <p class="HX">C1/C2户型</p>
-                    <p class="gift">建筑面积约369m²，赠送面积约30m²<br/>九室、五厅、三厨、六卫、九阳台</p>
-                    <div class="JJ">均价7000元/m²起</div>
-                    <a class="HXT" href="#/app/housesPic"><img src="modules/housesBuy/static/image/housesBuy/hxt2.png" alt="户型图"width="231" height="498"/></a>
-                    <div class="ask"><a href="#">咨询热线</a></div>
-                </div>
-                <div class="hx3">
-                    <p class="HX">A1/A2户型</p>
-                    <p class="gift">建筑面积约143m²，赠送面积约7.6m²<br/>四室、两厅、一厨、双卫、双阳台</p>
-                    <div class="JJ">均价7000元/m²起</div>
-                    <a class="HXT" href="#/app/housesPic"><img src="modules/housesBuy/static/image/housesBuy/hxt1.png" alt="户型图" width="231" height="188"/></a>
-                    <div class="ask"><a href="#">咨询热线</a></div>
-                </div>
-                <div class="hx4">
-                    <p class="HX">C1/C2户型</p>
-                    <p class="gift">建筑面积约369m²，赠送面积约30m²<br/>九室、五厅、三厨、六卫、九阳台</p>
-                    <div class="JJ">均价7000元/m²起</div>
-                    <a class="HXT" href="#/app/housesPic"><img src="modules/housesBuy/static/image/housesBuy/hxt2.png" alt="户型图"width="231" height="498"/></a>
-                    <div class="ask"><a href="#">咨询热线</a></div>
-                </div>
-                <div class="hx5">
-                    <p class="HX">A1/A2户型</p>
-                    <p class="gift">建筑面积约143m²，赠送面积约7.6m²<br/>四室、两厅、一厨、双卫、双阳台</p>
-                    <div class="JJ">均价7000元/m²起</div>
-                    <a class="HXT" href="#/app/housesPic"><img src="modules/housesBuy/static/image/housesBuy/hxt1.png" alt="户型图" width="231" height="188"/></a>
-                    <div class="ask"><a href="#">咨询热线</a></div>
-                </div>
+
+                <ul>
+                    <li id="lxf-box">
+                        <div class="hx1"  ng-repeat="item in ProductList">
+
+                            <p class="HX">{{item.Productname}}</p>
+                            <p class="gift">{{item.SubTitle}}</p>
+                            <div class="JJ">均价{{item.Price}}元/m²起</div>
+                             <a class="HXT" href="#/app/housesPic"><img src="http://img.yoopoon.com/{{item.Productimg}}" alt="户型图" width="210" height="188"/></a>
+
+                            <div class="ask"><a href="#">咨询热线:{{item.Phone}}</a></div>
+
+
+                        </div>
+            </li>
+            </ul>
+
+
+                <!--<div class="hx2">-->
+                    <!--<p class="HX">C1/C2户型</p>-->
+                    <!--<p class="gift">建筑面积约369m²，赠送面积约30m²<br/>九室、五厅、三厨、六卫、九阳台</p>-->
+                    <!--<div class="JJ">均价7000元/m²起</div>-->
+                    <!--<a class="HXT" href="#/app/housesPic"><img src="modules/housesBuy/static/image/housesBuy/hxt2.png" alt="户型图"width="231" height="498"/></a>-->
+                    <!--<div class="ask"><a href="#">咨询热线</a></div>-->
+                <!--</div>-->
+                <!--<div class="hx3">-->
+                    <!--<p class="HX">A1/A2户型</p>-->
+                    <!--<p class="gift">建筑面积约143m²，赠送面积约7.6m²<br/>四室、两厅、一厨、双卫、双阳台</p>-->
+                    <!--<div class="JJ">均价7000元/m²起</div>-->
+                    <!--<a class="HXT" href="#/app/housesPic"><img src="modules/housesBuy/static/image/housesBuy/hxt1.png" alt="户型图" width="231" height="188"/></a>-->
+                    <!--<div class="ask"><a href="#">咨询热线</a></div>-->
+                <!--</div>-->
+                <!--<div class="hx4">-->
+                    <!--<p class="HX">C1/C2户型</p>-->
+                    <!--<p class="gift">建筑面积约369m²，赠送面积约30m²<br/>九室、五厅、三厨、六卫、九阳台</p>-->
+                    <!--<div class="JJ">均价7000元/m²起</div>-->
+                    <!--<a class="HXT" href="#/app/housesPic"><img src="modules/housesBuy/static/image/housesBuy/hxt2.png" alt="户型图"width="231" height="498"/></a>-->
+                    <!--<div class="ask"><a href="#">咨询热线</a></div>-->
+                <!--</div>-->
+                <!--<div class="hx5">-->
+                    <!--<p class="HX">A1/A2户型</p>-->
+                    <!--<p class="gift">建筑面积约143m²，赠送面积约7.6m²<br/>四室、两厅、一厨、双卫、双阳台</p>-->
+                    <!--<div class="JJ">均价7000元/m²起</div>-->
+                    <!--<a class="HXT" href="#/app/housesPic"><img src="modules/housesBuy/static/image/housesBuy/hxt1.png" alt="户型图" width="231" height="188"/></a>-->
+                    <!--<div class="ask"><a href="#">咨询热线</a></div>-->
+                <!--</div>-->
             </div>
         </div>

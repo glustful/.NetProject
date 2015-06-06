@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Web.Mvc;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
 using CRM.Service.BrokerRECClient;
@@ -8,33 +9,49 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CRM.Service.ClientInfo;
+using Newtonsoft.Json.Linq;
+using Trading.Service.Order;
+using Trading.Service.OrderDetail;
+using Trading.Service.Product;
 using YooPoon.Core.Site;
 using Zerg.Common;
+using Zerg.Controllers.Trading.Trading.Order;
 using Zerg.Models.CRM;
 
 namespace Zerg.Controllers.CRM
 {
+    [System.Web.Http.AllowAnonymous]
      [EnableCors("*", "*", "*", SupportsCredentials = true)]
 
      //经纪人推荐客户
     public class BrokerRECClientController : ApiController
     {
-         public readonly IBrokerRECClientService _brokerRecClientService;
+         public readonly IBrokerRECClientService BrokerRecClientService;
          private readonly IBrokerService _brokerService;//经纪人
          private readonly IClientInfoService _clientInfoService;
          private readonly IWorkContext _workContext;
+         private readonly IProductService _productService;
+         private readonly IOrderDetailService _orderDetailService;
+         private readonly IOrderService _orderService;
 
          public BrokerRECClientController(
              IBrokerRECClientService brokerRecClientService, 
              IBrokerService brokerService,
              IClientInfoService clientInfoService,
-             IWorkContext workContext
+             IWorkContext workContext,
+             IProductService productService,
+             IOrderDetailService orderDetailService,
+             IOrderService orderService
+
              )
          {
-             _brokerRecClientService = brokerRecClientService;
+             BrokerRecClientService = brokerRecClientService;
              _brokerService = brokerService;
              _clientInfoService = clientInfoService;
              _workContext = workContext;
+             _productService = productService;
+             _orderDetailService = orderDetailService;
+             _orderService = orderService;
          }
 
 
@@ -45,14 +62,14 @@ namespace Zerg.Controllers.CRM
          /// </summary>
          /// <param name="userid"></param>
          /// <returns></returns>
-         [HttpGet]
+         [System.Web.Http.HttpGet]
          public HttpResponseMessage SearchBrokerRecClient(string userid)
          {
              var p = new BrokerRECClientSearchCondition
              {
                  Brokers = _brokerService.GetBrokerById(Convert.ToInt32(userid))
              };
-             var list = _brokerRecClientService.GetBrokerRECClientsByCondition(p).ToList();
+             var list = BrokerRecClientService.GetBrokerRECClientsByCondition(p).ToList();
              return PageHelper.toJson(list);
 
          }
@@ -63,7 +80,7 @@ namespace Zerg.Controllers.CRM
          /// </summary>
          /// <param name="brokerrecclient"></param>
          /// <returns></returns>
-         [HttpPost]
+         [System.Web.Http.HttpPost]
          public HttpResponseMessage Add([FromBody]  BrokerRECClientModel  brokerrecclient)
          {
              EnumBRECCType type;
@@ -75,9 +92,9 @@ namespace Zerg.Controllers.CRM
 
              };
 
-             var Cmodel = _clientInfoService.GetClientInfosByCondition(sech).FirstOrDefault();
+             var cmodel = _clientInfoService.GetClientInfosByCondition(sech).FirstOrDefault();
 
-             if (Cmodel == null)
+             if (cmodel == null)
              {
                  //客户信息
                  var client = new ClientInfoEntity
@@ -92,13 +109,15 @@ namespace Zerg.Controllers.CRM
                      Upuser = brokerrecclient.Broker,
                      Uptime = DateTime.Now
                  };
+
+
                  _clientInfoService.Create(client);
 
                  type = EnumBRECCType.审核中;
              }
              else
              {
-                 type = _brokerRecClientService.GetBrokerRECClientById(Cmodel.Id).Status;
+                 type = BrokerRecClientService.GetBrokerRECClientById(cmodel.Id).Status;
              }
 
              //检测
@@ -106,11 +125,11 @@ namespace Zerg.Controllers.CRM
              {
 
 
-                 var cmodel = _clientInfoService.GetClientInfosByCondition(sech).First();
+                 cmodel = _clientInfoService.GetClientInfosByCondition(sech).First();
 
                  var model = new BrokerRECClientEntity
                  {
-                     Broker = _brokerService.GetBrokerById(brokerrecclient.Broker),
+                     Broker = _brokerService.GetBrokerById(_workContext.CurrentUser.Id),
                      ClientInfo = cmodel,
                      Adduser = _workContext.CurrentUser.Id,
                      Addtime = DateTime.Now,
@@ -119,11 +138,29 @@ namespace Zerg.Controllers.CRM
                      Projectid = brokerrecclient.Projectid,
                      Status = EnumBRECCType.等待上访,
                  };
-                 _brokerRecClientService.Create(model);
+                 BrokerRecClientService.Create(model);
+
+                 #region 创建订单 杨定鹏 2015年6月3日17:21:39
+                 //实例化订单操作
+                 var api = new OrderController(_productService, _orderDetailService, _orderService);
+
+                 var jObject=new JObject();
+
+                 api.AddRecommonOrder(jObject);
+
+                 #endregion
+
+
                  return PageHelper.toJson(PageHelper.ReturnValue(true, "提交成功"));
              }
              return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在上访！"));
 
+         }
+
+        [System.Web.Http.HttpGet]
+         public HttpResponseMessage test()
+         {
+             return PageHelper.toJson(_orderService.CreateOrderNumber());
          }
     }
 }

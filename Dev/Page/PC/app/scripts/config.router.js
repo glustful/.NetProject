@@ -997,6 +997,32 @@ angular.module('app')
 
 
 
+            .state('page.CRM.BankSet', {
+                url: '/BankSet',
+                template: '<div ui-view></div>'
+            })
+            .state('page.CRM.BankSet.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/BankSet/index.html',
+                data: { title: '银行列表' },
+                //controller: 'Message',
+                resolve: load('scripts/controllers/CRM/bankset.js')
+            })
+            .state('page.CRM.BankSet.create', {
+                url: '/create',
+                templateUrl: 'views/pages/CRM/BankSet/create.html',
+                data : { title: '银行新建' },
+                resolve:load('scripts/controllers/CRM/bankset.js')
+            })
+            .state('page.CRM.BankSet.edit', {
+                url: '/edit?id',
+                templateUrl: 'views/pages/CRM/BankSet/edit.html',
+                data : { title: '银行编辑' },
+                resolve:load('scripts/controllers/CRM/bankset.js')
+            })
+
+
+
 
 
 
@@ -1243,7 +1269,7 @@ angular.module('app')
                 url: '/createProduct',
                 templateUrl: 'views/pages/Trading/product/createProduct.html',
                 data : { title: '添加商品' },
-                resolve: load(['scripts/controllers/Trading/CreateProduct.js','scripts/controllers/vectormap.js'])
+                resolve: load(['scripts/controllers/Trading/CreateProduct.js','scripts/controllers/vectormap.js','angularFileUpload'])
             })
             .state('page.Trading.product.brand', {
                 url: '/brand',

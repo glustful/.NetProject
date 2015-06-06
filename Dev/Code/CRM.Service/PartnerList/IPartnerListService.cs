@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using CRM.Entity.Model;
 using YooPoon.Core.Autofac;
@@ -17,5 +18,19 @@ namespace CRM.Service.PartnerList
 		IQueryable<PartnerListEntity> GetPartnerListsByCondition(PartnerListSearchCondition condition);
 
 		int GetPartnerListCount (PartnerListSearchCondition condition);
+
+        /// <summary>
+        /// 查询经纪人下属的合伙人列表
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        List<PartnerListEntity> GetInviteByBroker(int id);
+
+        /// <summary>
+        /// 查询经纪人收到的邀请
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        List<PartnerListEntity> GetInviteForBroker(int id);
 	}
 }

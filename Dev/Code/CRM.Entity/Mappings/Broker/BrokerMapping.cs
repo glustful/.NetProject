@@ -19,7 +19,7 @@ namespace CRM.Entity.Mappings.Broker
 			Property(c => c.Sfz).HasColumnType("varchar").HasMaxLength(18);
             Property(c => c.SfzPhoto).HasColumnType("varchar").HasMaxLength(256).IsOptional();
 			Property(c => c.Sexy).HasColumnType("varchar").HasMaxLength(10).IsOptional();
-			Property(c => c.Phone).HasColumnType("int");
+            Property(c => c.Phone).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Qq).HasColumnType("int").IsOptional();
 			Property(c => c.Zip).HasColumnType("int").IsOptional();
             Property(c => c.Email).HasColumnType("varchar").HasMaxLength(256).IsOptional();

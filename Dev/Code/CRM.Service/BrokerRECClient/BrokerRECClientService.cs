@@ -153,6 +153,10 @@ namespace CRM.Service.BrokerRECClient
                 {
                     query = query.Where(q => condition.SecretaryIDs.Contains(q.SecretaryId));
                 }
+                if (condition.Id >0)
+                {
+                    query = query.Where(q => condition.Id ==q.Id);
+                }
 				if (condition.WriterIDs != null && condition.WriterIDs.Any())
                 {
                     query = query.Where(q => condition.WriterIDs.Contains(q.WriterId));

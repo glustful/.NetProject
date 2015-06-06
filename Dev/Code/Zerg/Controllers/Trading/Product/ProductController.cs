@@ -151,17 +151,47 @@ namespace Zerg.Controllers.Trading.Product
             {
                 OrderBy = EnumProductSearchOrderBy.OrderById
             };
-            //var product = _productService.GetProductsByCondition(PSC).Select(a => new ProductDetail
-            //{
-            //    Productname = a.Productname,
-            //    Productimg = a.ProductDetail.Productimg,
-            //    Price = a.Price,
-            //    SubTitle = a.SubTitle,
-            //    ProductDetailed = a.ProductDetail.Productdetail
-            //}).ToList();
-            //var totalCount = _productService.GetProductCount(PSC);
-            //return PageHelper.toJson(new { List = product, TotalCount = totalCount });
-            return PageHelper.toJson(_productService.GetProductsByCondition(PSC).ToList());
+            var productList = _productService.GetProductsByCondition(PSC).Select(a => new ProductDetail
+            {                
+                Id=a.Id,
+                Productname = a.Productname,
+                Productimg = a.Productimg,
+                Price = a.Price,
+
+                RecCommission=a.RecCommission,
+                Commission=a.Commission,
+                Dealcommission=a.Dealcommission,
+                ClassifyName=a.Classify.Name,
+                Addtime = a.Addtime,
+
+                SubTitle = a.SubTitle,
+                ProductDetailed = a.ProductDetail.Productdetail,
+                StockRule=a.Stockrule,
+                Advertisement = a.ProductDetail.Ad1,
+                Acreage = a.ProductParameter.FirstOrDefault(pp=>pp.Parameter.Name=="面积").ParameterValue.Parametervalue.ToString(),
+                Type = a.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString()
+            }).ToList().Select(b=>new
+            {
+                b.Id,
+                b.Productname,
+                b.Productimg,
+                b.Price,
+
+                b.RecCommission,
+                b.Commission,
+                b.Dealcommission,
+                b.ClassifyName,
+                Addtime=b.Addtime.ToString("yyy-mm-dd"),
+
+                b.SubTitle,
+                b.ProductDetailed,
+                StockRule = b.Stockrule,
+                b.Acreage,
+                b.Type
+            });
+            var totalCount = _productService.GetProductCount(PSC);
+            return PageHelper.toJson(new { List =productList,Condition=PSC, TotalCount = totalCount });
+            //return PageHelper.toJson(_productService.GetProductsByCondition(PSC).ToList());
         }
         /// <summary>
         /// 根据Id查询商品
@@ -169,10 +199,25 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="productId">商品Id</param>
         /// <returns></returns>
         [HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetProductById(int productId)
         {
-            return PageHelper.toJson(_productService.GetProductById(productId));
+            var product = _productService.GetProductById(productId);
+            var productDetail = new ProductDetail
+            {
+                Productname = product.Productname,
+                Productimg = product.ProductDetail.Productimg,
+                BrandImg = product.ProductBrand.Bimg,
+                Price = product.Price,
+                SubTitle = product.SubTitle,
+                Advertisement=product.ProductDetail.Ad2,
+                Productimg1 = product.ProductDetail.Productimg1,
+                Productimg2 = product.ProductDetail.Productimg2,
+                Productimg3 = product.ProductDetail.Productimg3,
+                Productimg4 = product.ProductDetail.Productimg4,
+                ProductDetailed = product.ProductDetail.Productdetail,
+            };
+            return PageHelper.toJson(productDetail);
         }
 
         /// <summary>
@@ -184,38 +229,48 @@ namespace Zerg.Controllers.Trading.Product
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public HttpResponseMessage GetProductsByBrand(int BrandId)
         {
-            //var productList = _productService.GetProductsByProductBrand(BrandId).Select(a => new ProductDetail
-            //{
-            //    Productname = a.Productname,
-            //    Productimg = a.Productimg,
-            //    Price = a.Price,
-            //    SubTitle = a.SubTitle,
-            //    Phone = a.ContactPhone,
-            //    Productimg1 = a.ProductDetail.Productimg1,
-            //    Productimg2 = a.ProductDetail.Productimg2,
-            //    Productimg3 = a.ProductDetail.Productimg3,
-            //    Productimg4 = a.ProductDetail.Productimg4,
-            //    ProductDetailed=a.ProductDetail.Productdetail
-            //}).ToList();
-            return PageHelper.toJson(_productService.GetProductsByProductBrand(BrandId));
-           // return PageHelper.toJson(productList);
-        }
+            var productList = _productService.GetProductsByProductBrand(BrandId).Select(a => new ProductDetail
+            {
+                Productname = a.Productname,
+                Productimg = a.Productimg,
+                Price = a.Price,
+                SubTitle = a.SubTitle,
+                Phone = a.ContactPhone,
+                
+                //Productimg1 = a.ProductDetail.Productimg1,
+                //Productimg2 = a.ProductDetail.Productimg2,
+                //Productimg3 = a.ProductDetail.Productimg3,
+                //Productimg4 = a.ProductDetail.Productimg4,
+                //ProductDetailed = a.ProductDetail.Productdetail
+            }).ToList();
 
-        public HttpResponseMessage GetSearchProduct(ProductSearchCondition condtion)
+            var Content = _productService.GetProductsByProductBrand(BrandId).Select(p => new
+            {
+                p.ProductBrand.Content
+            }).First();
+
+            //return PageHelper.toJson(_productService.GetProductsByProductBrand(BrandId));
+            return PageHelper.toJson(new { productList = productList, content = Content });
+        }
+          [HttpGet]
+        public HttpResponseMessage GetSearchProduct([FromUri]ProductSearchCondition condtion)
         {
             var productList = _productService.GetProductsByCondition(condtion).Select(a => new ProductDetail
             {
+                Id =a.Id, 
                 Productname = a.Productname,
+                Productimg = a.Productimg,
                 Price = a.Price,
                 SubTitle = a.SubTitle,
-                Productimg = a.ProductDetail.Productimg,
-                Productimg1 = a.ProductDetail.Productimg1,
-                Productimg2 = a.ProductDetail.Productimg2,
-                Productimg3 = a.ProductDetail.Productimg3,
-                Productimg4 = a.ProductDetail.Productimg4,
-                ProductDetailed=a.ProductDetail.Productdetail
-            }).ToList();         
-            return PageHelper.toJson(productList);
+                Advertisement = a.ProductDetail.Ad1,
+                ProductDetailed = a.ProductDetail.Productdetail,
+                StockRule=a.Stockrule,
+                Acreage = a.ProductParameter.FirstOrDefault(pp=>pp.Parameter.Name=="面积").ParameterValue.Parametervalue.ToString(),
+                Type = a.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString()
+            }).ToList();
+              // return PageHelper.toJson(productList);
+            var totalCount = _productService.GetProductCount(condtion);
+            return PageHelper.toJson(new { List = productList, TotalCount = totalCount });
         }
 
         /// <summary>

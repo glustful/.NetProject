@@ -65,15 +65,18 @@ app  .run(
         .state('app.home',{
             url:'/home',
             templateUrl:'modules/Index/view/Index.html',
+
             resolve:load(['modules/Index/static/js/yxMobileSlider.js','modules/Index/static/js/homeController.js'])
         })
+
         .state('app.activity',{
             url:'/activity',
             templateUrl:'modules/activity/view/activity.html'
         })
         .state('app.broker',{
             url:'/broker',
-            templateUrl:'modules/broker/view/broker.html'
+            templateUrl:'modules/broker/view/broker.html',
+            resolve:load('modules/broker/controller/broker.js')
         })
         .state('app.customerList',{
             url:'/customerList',
@@ -117,7 +120,7 @@ app  .run(
             resolve:load('modules/partner_list/controller/partner_list.js')
         })
         .state('app.partner_details',{
-            url:'/partner_details?userId',
+            url:'/partner_details?Id',
             templateUrl:'modules/partner_details/view/partner_details.html',
             resolve:load('modules/partner_details/controller/partner_details.js')
         })
@@ -144,12 +147,16 @@ app  .run(
             templateUrl:'modules/houses/view/houses.html'
         })
         .state('app.housesBuy',{
-            url:'/housesBuy',
-            templateUrl:'modules/housesBuy/view/housesBuy.html'
+            url:'/housesBuy?BrandId',
+            templateUrl:'modules/housesBuy/view/housesBuy.html',
+            controller:'HousesBuyController',
+            resolve:load(['modules/housesBuy/static/scripts/HousesBuy.js','modules/housesBuy/static/scripts/water.js'])
         })
         .state('app.housesPic',{
-            url:'/housesPic',
-            templateUrl:'modules/housesPic/view/housesPic.html'
+            url:'/housesPic?productId',
+            templateUrl:'modules/housesPic/view/housesPic.html',
+            controller:'HousesPicController',
+            resolve:load('modules/housesPic/scripts/HousesPic.js')
         })
         .state('app.housesPicBuy',{
             url:'/housesPicBuy',
@@ -189,7 +196,9 @@ app  .run(
         })
         .state('app.storeroom',{
             url:'/storeroom',
-            templateUrl:'modules/storeroom/view/storeroom.html'
+            controller:'StormRoomController',
+            templateUrl:'modules/storeroom/view/storeroom.html',
+            resolve:load('modules/storeroom/scripts/StoreRoom.js')
         })
         .state('app.task',{
             url:'/task',
@@ -216,6 +225,22 @@ app  .run(
         .state('app.addBroker',{
             url:'/addBroker',
             templateUrl:'modules/addBroker/view/addBroker.html'
+        })
+        .state('app.grabPacket',{
+            url:'/grabPacket',
+            templateUrl:'modules/grabPacket/view/grabPacket.html'
+        })
+        .state('app.luckPacket',{
+            url:'/luckPacket',
+            templateUrl:'modules/luckPacket/view/luckPacket.html'
+        })
+        .state('app.sendPacket',{
+            url:'/sendPacket',
+            templateUrl:'modules/sendPacket/view/sendPacket.html'
+        })
+        .state('app.chip',{
+            url:'/chip',
+            templateUrl:'modules/chip/view/chip.html'
         })
 
 

@@ -1,12 +1,12 @@
 /**
  * Created by Yunjoy on 2015/5/6.
- * ÓÃ»§ÑéÖ¤µÇÂ½service
+ * ç”¨æˆ·éªŒè¯ç™»é™†service
  */
-angular.module("app").service("AuthService",["$http",'$localStorage',function($http,$localStorage){
+angular.module("zergApp").service("AuthService",["$http",'$localStorage',function($http,$localStorage){
     var _isAuthenticated = false;
     var _currentUser;
 
-    //ÒÀ¾İcookies»ñÈ¡µ±Ç°ÓÃ»§(Ê¹ÓÃÍ¬²½»ñÈ¡¡ª¡ª½ö´ËÒ»´Î)
+    //ä¾æ®cookiesè·å–å½“å‰ç”¨æˆ·(ä½¿ç”¨åŒæ­¥è·å–â€”â€”ä»…æ­¤ä¸€æ¬¡)
     var xmlhttp=new XMLHttpRequest();
     xmlhttp.open("get",SETTING.ApiUrl+"/user/GetCurrentUser",false);
     xmlhttp.withCredentials = true;
@@ -15,13 +15,14 @@ angular.module("app").service("AuthService",["$http",'$localStorage',function($h
     if(data.Status){
         _isAuthenticated = true;
         _currentUser = {
-            UserName:data.Object.UserName
+            UserName:data.Object.UserName,
+            UserId:data.Object.Id
         };
         $localStorage.UserRoles=data.Object.Roles;
     }
 
     /**
-     * ÊÇ·ñÓµÓĞÊÚÈ¨
+     * æ˜¯å¦æ‹¥æœ‰æˆæƒ
      * @returns {boolean}
      * @constructor
      */
@@ -37,7 +38,7 @@ angular.module("app").service("AuthService",["$http",'$localStorage',function($h
         return hasRole;
     };
     /**
-     * ÊÇ·ñÒÑ¾­µÇÂ½
+     * æ˜¯å¦å·²ç»ç™»é™†
      * @returns {boolean}
      * @constructor
      */
@@ -55,7 +56,7 @@ angular.module("app").service("AuthService",["$http",'$localStorage',function($h
         return _isAuthenticated;
     };
     /**
-     * µ±Ç°ÓÃ»§
+     * å½“å‰ç”¨æˆ·
      * @returns CurrentUser
      * @constructor
      */
@@ -65,9 +66,11 @@ angular.module("app").service("AuthService",["$http",'$localStorage',function($h
         //return $cookieStore.get("CurrentUser");
     };
     /**
-     * µÇÂ½²Ù×÷
+     * ç™»é™†æ“ä½œ
      * @param userName
      * @param password
+     * @param callback
+     * @param faildCallback
      */
     this.doLogin = function(userName,password,callback,faildCallback){
         $http.post(SETTING.ApiUrl+"/user/login",
@@ -80,7 +83,8 @@ angular.module("app").service("AuthService",["$http",'$localStorage',function($h
             .success(function(data){
                 if(data.Status){
                     _currentUser ={
-                        UserName:userName
+                        UserName:userName,
+                        UserId:data.Object.Id
                     };
                     _isAuthenticated = true;
                     $localStorage.UserRoles=data.Object.Roles;
