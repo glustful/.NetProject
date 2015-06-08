@@ -78,6 +78,7 @@ namespace Zerg.Models.CRM
         /// </summary>
         public virtual string Email { get; set; }
       
+
         /// <summary>
         /// 头像
         /// </summary>
