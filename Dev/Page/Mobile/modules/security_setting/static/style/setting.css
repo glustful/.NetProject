@@ -55,7 +55,6 @@ form a{
 .pin input{
     width: 145px;
     height: 46px;
-    background: url("../img/pin.png") no-repeat 0 0;
     border: 1px solid #eeeeee;
     background-color: white;
 }

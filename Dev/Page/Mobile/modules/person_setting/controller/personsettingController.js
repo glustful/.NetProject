@@ -3,34 +3,48 @@
 /**
  * Created by gaofengming on 2015/5/28.
  */
-app.controller('personsettingController',function($scope,$http){
-	
-    $scope.user = {
-        userType: 122,
-        name: "ggg",
-        phone: 2445254,
-        page: 1,
-        pageSize: 10
-    }
-    $scope.newuser = {
-        Id:11,
-        Brokername: "afaf",
-        phone: 525424,
-        Sfz:1234567891,
-        page: 1,
-        pageSize: 10
-    }
-    $http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{params: $scope.user})
-        .success(function(response) {$scope.users = response.List[0];
-
+var app = angular.module("zergApp");
+app.controller('personsettingController',['$scope','$http','AuthService',function($scope,AuthService,$http){
+    $scope.olduser={
+        Brokername:'',
+        Realname:'',
+        Nickname:'',
+        Sexy:'',
+        Sfz:'',
+        Email:'',
+        Phone:''
+    };
+    $scope.currentuser= AuthService.CurrentUser();
+    $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
+       .success(function(response) {
+            console.log(response);
+            $scope.olduser=response
         });
-    $scope.save = function()
-    {
-        $http.post(SETTING.ApiUrl+'/BrokerInfo/UpdateBroker', $scope.newuser)
-            .success(function(data) {
-            });
-    }
-})
+    //$scope.user = {
+    //    userType: 122,
+    //    name: "ggg",
+    //    phone: 2445254,
+    //    page: 1,
+    //    pageSize: 10
+    //}
+    //$scope.newuser = {
+    //    Id:11,
+    //    Brokername: "afaf",
+    //    phone: 525424,
+    //    Sfz:1234567891,
+    //    page: 1,
+    //    pageSize: 10
+    //}
+    //$http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{params: $scope.user})
+    //    .success(function(response) {$scope.users = response.List[0];
+    //    });
+    //$scope.save = function()
+    //{
+    //    $http.post(SETTING.ApiUrl+'/BrokerInfo/UpdateBroker', $scope.newuser)
+    //        .success(function(data) {
+    //        });
+    //}
+}])
 /////////////////////////////头像修改////////////////////////////
         function previewImage(file)
         {

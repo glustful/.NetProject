@@ -152,19 +152,30 @@ namespace Zerg.Controllers.CRM
         {
             if (brokerId == 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
 
-            var list = _partnerlistService.GetInviteForBroker(brokerId).Where(p => p.Status == EnumPartnerType.默认).Select(a => new
-            {
-                a.Id,
-                HeadPhoto = a.Broker.Headphoto,
-                BrokerName = a.Broker.Brokername,
-                AddTime = a.Addtime
-            }).ToList().Select(b => new
-            {
-                b.Id,
-                b.HeadPhoto,
-                b.BrokerName,
-                AddTime = b.AddTime.ToString("yyyy-MM-dd")
-            });
+            object list = null;
+
+          if(  _partnerlistService.GetInviteForBroker(brokerId).Where(p => p.Status == EnumPartnerType.默认).Count()>0)
+          {
+
+
+              list = _partnerlistService.GetInviteForBroker(brokerId).Where(p => p.Status == EnumPartnerType.默认).Select(a => new
+              {
+                  a.Id,
+                  HeadPhoto = a.Broker.Headphoto,
+                  BrokerName = a.Broker.Brokername,
+                  AddTime = a.Addtime
+              }).ToList().Select(b => new
+              {
+                  b.Id,
+                  b.HeadPhoto,
+                  b.BrokerName,
+                  AddTime = b.AddTime.ToString("yyyy-MM-dd")
+              });
+
+
+          }
+
+          
             return PageHelper.toJson(list);
         }
 
