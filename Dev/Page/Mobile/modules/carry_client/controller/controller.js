@@ -17,8 +17,8 @@ app.controller('daikeController',['$http','$scope','$stateParams',function($http
     };
     //$scope.BrokerLeadClient.Broker_Id=$stateParams.Broker_Id;
     //$scope.BrokerLeadClient.Brokername=$stateParams.Brokername;
-    //$scope.BrokerLeadClient.Projectid=$stateParams.Projectid;
-    //$scope.BrokerLeadClient.Projectname=$stateParams.Projectname;
+    $scope.BrokerLeadClient.Houses=$stateParams.name;
+    $scope.BrokerLeadClient.HouseType=$stateParams.type;
     var getBrokerResult  = function() {
         console.log(  $scope.BrokerLeadClient);
         $http.post(SETTING.ApiUrl+'/BrokerLeadClient/Add',$scope.BrokerLeadClient).success(function(data){

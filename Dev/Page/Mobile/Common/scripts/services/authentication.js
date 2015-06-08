@@ -12,12 +12,14 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
     xmlhttp.withCredentials = true;
     xmlhttp.send();
     var data = angular.fromJson(xmlhttp.response);
-    if(data.Status){
+    if (!data.Status) {
+    } else {
         _isAuthenticated = true;
         _currentUser = {
-            UserName:data.Object.UserName
+            UserName: data.Object.UserName,
+            UserId: data.Object.Id
         };
-        $localStorage.UserRoles=data.Object.Roles;
+        $localStorage.UserRoles = data.Object.Roles;
     }
 
     /**
@@ -83,7 +85,7 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
                 if(data.Status){
                     _currentUser ={
                         UserName:userName,
-                        UserId:data.obj.Id
+                        UserId:data.Object.Id
                     };
                     _isAuthenticated = true;
                     $localStorage.UserRoles=data.Object.Roles;

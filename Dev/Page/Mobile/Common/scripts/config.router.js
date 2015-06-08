@@ -50,17 +50,20 @@ app  .run(
         .state('user.login',{
             url:'/login',
             templateUrl:'modules/Login/view/login.html',
-            resolve:load('modules/Login/controller/LoginController.js')
+            resolve:load('modules/Login/controller/LoginController.js'),
+            data:{title:'用户登录'}
         })
         .state('user.register',{
             url:'/register',
             templateUrl:'modules/Register/view/register.html',
-            resolve:load('modules/Register/controller/RegisterController.js')
+            resolve:load('modules/Register/controller/RegisterController.js'),
+            data:{title:'用户注册'}
         })
         .state('user.PasswordFound',{
             url:'/PasswordFound',
             templateUrl:'modules/PasswordFound/view/PasswordFound.html',
-            resolve:load('modules/Register/controller/RegisterController.js')
+            resolve:load('modules/Register/controller/RegisterController.js'),
+            data:{title:'找回密码'}
         })
         .state('app.home',{
             url:'/home',
@@ -134,7 +137,7 @@ app  .run(
             templateUrl:'modules/partner_insert1/view/partner_insert1.html'
         })
         .state('app.groom',{
-            url:'/groom',
+            url:'/groom?name&type',
             templateUrl:'modules/groom/view/groom.html',
             resolve:load('modules/groom/controller/controller.js')
         })
@@ -203,15 +206,15 @@ app  .run(
         .state('app.task',{
             url:'/task',
             templateUrl:'modules/task/view/task.html',
-            controller:'taskController',
             resolve:load('modules/task/controller/task.js')
         })
         .state('app.nominate',{
             url:'/nominate',
-            templateUrl:'modules/nominate/view/nominate.html'
+            templateUrl:'modules/nominate/view/nominate.html',
+            resolve:load('modules///storeroom/scripts/StoreRoom.js')
         })
         .state('app.carry_client',{
-            url:'/carry_client',
+            url:'/carry_client?name&type',
             templateUrl:'modules/carry_client/view/carry_client.html',
             resolve:load('modules/carry_client/controller/controller.js')
         })
@@ -243,6 +246,53 @@ app  .run(
             url:'/chip',
             templateUrl:'modules/chip/view/chip.html'
         })
+        .state('app.chipDetail',{
+            url:'/chipDetail',
+            templateUrl:'modules/chipDetail/view/chipDetail.html'
+        })
+        .state('app.chipEle',{
+            url:'/chipEle',
+            templateUrl:'modules/chipEle/view/chipEle.html'
+        })
+        .state('app.chipPartake',{
+            url:'/chipPartake',
+            templateUrl:'modules/chipPartake/view/chipPartake.html'
+        })
+        .state('app.Auction',{
+            url:'/Auction',
+            templateUrl:'modules/Auction/view/Auction.html'
+        })
+        .state('app.AuctionSpecial',{
+            url:'/AuctionSpecial',
+            templateUrl:'modules/AuctionSpecial/view/AuctionSpecial.html'
+        })
+        .state('app.AuctionUserInformation',{
+            url:'/AuctionUserInformation',
+            templateUrl:'modules/AuctionUserInformation/view/AuctionUserInformation.html'
+        })
+        .state('app.Coupons',{
+            url:'/Coupons',
+            templateUrl:'modules/Coupons/view/Coupons.html'
+        })
+        .state('app.CouponsOwn',{
+            url:'/CouponsOwn',
+            templateUrl:'modules/CouponsOwn/view/CouponsOwn.html'
+        })
+        .state('app.withdrawals',{
+            url:'/withdrawals',
+            templateUrl:'modules/withdrawals/view/withdrawals.html'
+        })
+        .state('app.withdrawalsDetail',{
+            url:'/withdrawalsDetail',
+            templateUrl:'modules/withdrawalsDetail/view/withdrawalsDetail.html'
+        })
+        .state('app.NoviceTask',{
+            url:'/NoviceTask',
+            templateUrl:'modules/NoviceTask/view/NoviceTask.html'
+        })
+
+
+
 
 
         function load(srcs, callback) {

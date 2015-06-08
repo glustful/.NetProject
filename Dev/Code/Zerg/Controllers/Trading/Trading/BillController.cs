@@ -67,7 +67,7 @@ namespace Zerg.Controllers.Trading.Trading
                 {//如果是推荐订单；
                     amount = ODE.Commission;
                 }
-                else if (OE.Ordertype == 1)//如果是成交订单；
+                else if (OE.Ordertype == EnumOrderType.成交订单)//如果是成交订单；
                 {
                     amount = ODE.Dealcommission;
                 }

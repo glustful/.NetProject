@@ -21,7 +21,7 @@ app.controller('LoginController',['$scope','$state','AuthService',function($scop
           $state.go('app.partner_list')
         },
             function(){
-                return;
+                $scope.errorTips='用户名或密码错误！';
             }
         )
     }
