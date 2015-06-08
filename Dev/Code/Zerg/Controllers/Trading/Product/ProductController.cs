@@ -212,6 +212,8 @@ namespace Zerg.Controllers.Trading.Product
                 Price = product.Price,
                 SubTitle = product.SubTitle,
                 Phone = product.ContactPhone,
+                // ReSharper disable once PossibleNullReferenceException
+                Type = product.ProductParameter.FirstOrDefault(p=>p.Parameter.Name=="户型").ParameterValue.Parametervalue,
                 Advertisement=product.ProductDetail.Ad2,
                 Productimg1 = product.ProductDetail.Productimg1,
                 Productimg2 = product.ProductDetail.Productimg2,
