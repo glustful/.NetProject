@@ -1,14 +1,14 @@
 <!--首页-->
 <!--required:../static/style/index.css-->
 <div ng-controller="homeController">
-<div class="pic">
-<div class="slider">
+<div class="pic" >
+<div class="slider" >
     <ul>
-        <li><a href="#" ><img src="modules/Index/static/image/index/banner.png" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>
-        <li><a href="#" ><img src="modules/Index/static/image/index/ad-2.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>
-        <li><a href="#" ><img src="modules/Index/static/image/index/ad-3.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>
-        <li><a href="#" ><img src="modules/Index/static/image/index/ad-4.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>
-        <li><a href="#" ><img src="modules/Index/static/image/index/ad-5.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>
+        <li ng-repeat="item in content"><a href="#" ><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>
+        <!--<li><a href="#" ><img src="modules/Index/static/image/index/ad-2.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+        <!--<li><a href="#" ><img src="modules/Index/static/image/index/ad-3.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+        <!--<li><a href="#" ><img src="modules/Index/static/image/index/ad-4.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+        <!--<li><a href="#" ><img src="modules/Index/static/image/index/ad-5.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
     </ul>
 </div>
 </div>
@@ -32,12 +32,12 @@
 
 <div class="activity" >
     <ul  class="cf">
-        <li class="one" > <a href="#/app/chip"><img   src="modules/Index/static/image/index/ad-2.png" alt="百万红包等你抢" /></a></li>
-        <li class="two"> <a href="../../redPaper-1/view/redPaper-1.html"><img src="modules/Index/static/image/index/ad-1.png" alt="开发商疯了吧" /></a></li>
-        <li class="three"> <a href="#"><img src="modules/Index/static/image/index/ad-3.png" alt="名校就在小区里" /></a></li>
-        <li class="four"> <a href="#"><img src="modules/Index/static/image/index/ad-4.png" alt="俊发钜惠" /></a></li>
-        <li class="five"> <a href="#"><img src="modules/Index/static/image/index/ad-5.png" alt="水云间大优惠" /></a></li>
-        <li class="six"> <a href="#"><img src="modules/Index/static/image/index/ad-6.png" alt="买房送奔驰" /></a></li>
+        <li class="one" ng-repeat="item in Actcontent"> <a href="#/app/chip"><img   src="http://img.yoopoon.com/{{item.TitleImg}}" alt="百万红包等你抢"  width="200px"/></a></li>
+        <!--<li class="two" ng-repeat="item in Activetwo"> <a href="../../redPaper-1/view/redPaper-1.html"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="开发商疯了吧" width="205px"/></a></li>-->
+        <!--<li class="three" ng-repeat="item in Activethree"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="名校就在小区里"  width="205px"/></a></li>-->
+        <!--<li class="four" ng-repeat="item in Activefour"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="俊发钜惠"  width="205px"/></a></li>-->
+        <!--<li class="five" ng-repeat="item in Activefive"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="水云间大优惠"  width="205px"/></a></li>-->
+        <!--<li class="six" ng-repeat="item in Activesix"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="买房送奔驰"  width="205px"/></a></li>-->
     </ul>
     <a href="javascript:;" id="btn_prev"></a>
     <a href="javascript:;" id="btn_next"></a>
