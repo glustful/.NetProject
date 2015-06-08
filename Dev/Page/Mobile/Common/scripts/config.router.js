@@ -101,6 +101,7 @@ app  .run(
             templateUrl:'modules/person_setting/view/person_setting.html',
             resolve:load('modules/person_setting/controller/personsettingController.js')
         })
+
         .state('app.security_setting',{
             url:'/security_setting',
             templateUrl:'modules/security_setting/view/security_setting.html',
@@ -172,7 +173,8 @@ app  .run(
         })
         .state('app.personal',{
             url:'/personal',
-            templateUrl:'modules/personal/view/personal.html'
+            templateUrl:'modules/personal/view/personal.html',
+            resolve:load('modules/personal/controller/personal.js')
         })
         .state('app.personalPage',{
             url:'/personalPage',
