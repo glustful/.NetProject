@@ -123,21 +123,24 @@ namespace Zerg.Controllers.CRM
         /// <param name="page"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage TaskListMobile(int page)
+        public HttpResponseMessage TaskListMobile(int page,string type)
         {
           
             int pageSize = 10;
-            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
-
-         
+           
             var taskcondition = new TaskSearchCondition
             {
                 OrderBy = EnumTaskSearchOrderBy.OrderById,
                 Page = page,
-                PageCount = pageSize
+                PageCount = pageSize,
+                
 
             };
-
+            if (type == "today")///查找今天的任务，否则查询所有任务
+            {
+                taskcondition.AddtimeBegin = DateTime.Today;
+                taskcondition.AddtimeEnd = DateTime.Today.AddDays(1);
+            }
             var taskList = _taskService.GetTasksByCondition(taskcondition).Select(p => new
             {
                 Taskname = p.Taskname,
@@ -287,6 +290,7 @@ namespace Zerg.Controllers.CRM
         {
             if (!string.IsNullOrEmpty(taskModel.Taskname))
             {
+                //用正则表达式验证是否存在非法字符
                 Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
                 var m = reg.IsMatch(taskModel.Taskname);
                 if (!m)
