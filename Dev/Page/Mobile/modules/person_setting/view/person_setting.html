@@ -1,17 +1,17 @@
 <!--个人设置-->
 <!--required:../static/style/setting.css" rel="stylesheet-->
-           <div class="setting_personal">
+           <div class="setting_personal" ng-controller="personsettingController">
 	               <div class="headphoto">
 	               	
 	                   <div class="touxiang" id="preview">
-	                       <img src="" id="imghead">
+	                       <img src="{{olduser.Headphoto}}" id="imghead">
 	                   </div>
 	                   <span class="input-file">
 	                   	修改头像
 	                   	<input name="fileToUpload" type="file" onchange="previewImage(this)"/>
 	                   </span>
 	               </div>
-               <div class="person_revise" ng-controller="personsettingController">
+               <div class="person_revise">
                    <form>
 
                        <p>用户名</p>

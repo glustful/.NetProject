@@ -77,6 +77,8 @@ namespace Zerg.Controllers.CRM
                 Sexy = model.Sexy,
                 Sfz = model.Sfz,
                 Email = model.Email,
+                Phone=model.Phone,
+                Headphoto=model.Headphoto
             };
 
             return PageHelper.toJson(brokerInfo);

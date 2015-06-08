@@ -161,10 +161,20 @@ namespace Zerg.Controllers.UC
             model.Upuser = 0;
             model.Uptime = DateTime.Now;
 
-            //判断初始等级是否存在
+            //判断初始等级是否存在,否则创建
             var level = _levelService.GetLevelsByCondition(new LevelSearchCondition { Name = "默认等级" }).FirstOrDefault();
-            if (level == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "默认等级不存在，请联系管理员"));
-            model.Level = level;
+            if (level == null)
+            {
+                var levelModel = new LevelEntity
+                {
+                    Name = "默认等级",
+                    Describe = "系统默认初始创建",
+                    Url = "",
+                    Uptime = DateTime.Now,
+                    Addtime = DateTime.Now,
+                };
+                _levelService.Create(levelModel);
+            }
 
             _brokerService.Create(model);
 
@@ -231,6 +241,14 @@ namespace Zerg.Controllers.UC
         [HttpPost]
         public HttpResponseMessage ChangePassword([FromBody]ChangePasswordModel model)
         {
+            //首先判断发送到手机的验证码是否正确
+
+            //判断两次新密码是否一致
+            if (model.NewPassword!=model.NewTwoPassword)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "密码不一致！"));
+            }
+            //判读旧密码
             var user =(UserBase) _workContext.CurrentUser;
             if (user!=null && PasswordHelper.ValidatePasswordHashed(user,model.OldPassword))
             {

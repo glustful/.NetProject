@@ -77,7 +77,6 @@ namespace Zerg.Models.CRM
         /// EmAIL
         /// </summary>
         public virtual string Email { get; set; }
-
         /// <summary>
         /// 头像
         /// </summary>
