@@ -7,7 +7,10 @@ app.controller('SecuritySettingController',function($scope,$http){
         newPassword:''
     } ;
     $scope.saveInfo=function(){
-        $http.post(SETTING.ApiUrl+'/User/ChangePassword',$scope.password,{'withCredentials':true}).success(function(data){ })
+        $http.post(SETTING.ApiUrl+'/User/ChangePassword',$scope.password,{'withCredentials':true}).success(function(data){
+
+        alert(data);
+        })
     }
 
 })
@@ -19,9 +22,9 @@ function check()
     var tips= document.getElementById("errorTip");
     if(pass1.value!=pass2.value)
     {
-        tips.innerHTML="密码不一致";
+        tips.innerHTML="两次密码不一致";
     }else{
-        tips.innerHTML="密码一致";
+        tips.innerHTML="";
     }
     if(pass1.value==""||pass2.value=="")
     {

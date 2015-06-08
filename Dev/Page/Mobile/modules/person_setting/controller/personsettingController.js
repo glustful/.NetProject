@@ -3,34 +3,72 @@
 /**
  * Created by gaofengming on 2015/5/28.
  */
-app.controller('personsettingController',function($scope,$http){
-	
-    $scope.user = {
-        userType: 122,
-        name: "ggg",
-        phone: 2445254,
-        page: 1,
-        pageSize: 10
-    }
-    $scope.newuser = {
-        Id:11,
-        Brokername: "afaf",
-        phone: 525424,
-        Sfz:1234567891,
-        page: 1,
-        pageSize: 10
-    }
-    $http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{params: $scope.user})
-        .success(function(response) {$scope.users = response.List[0];
-
+var httpimguri;
+var app = angular.module("zergApp");
+app.controller('personsettingController',['$scope','$http','AuthService',function($scope,$http,AuthService){
+    $scope.olduser={
+        Brokername:'',
+        Realname:'',
+        Nickname:'',
+        Sexy:'',
+        Sfz:'',
+        Email:'',
+        Phone:'',
+        Headphoto:''
+    };
+    $scope.currentuser= AuthService.CurrentUser();
+    $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
+       .success(function(response) {
+            console.log(response);
+            $scope.olduser=response
+            console.log($scope.olduser);
+            //添加判断,如果用户没有头像,隐藏IMG标签SRC为空的样式
+            if($scope.olduser.Headphoto.length<15){
+            	//操作IMG标签的SRC为空
+            	var img = document.getElementById('imghead');
+            	img.src = "";
+            	
+            }
         });
     $scope.save = function()
     {
-        $http.post(SETTING.ApiUrl+'/BrokerInfo/UpdateBroker', $scope.newuser)
+        if(httpimguri.length>15)
+        {
+            $scope.olduser.Headphoto = SETTING.ImgUrl+httpimguri;
+            //如果服务器返回了用户的头像地址,操作IMG标签的SRC为angularjs绑定
+            var img = document.getElementById('imghead');
+            img.src = "{{olduser.Headphoto}}";    
+        }
+
+        $http.post(SETTING.ApiUrl+'/BrokerInfo/UpdateBroker', $scope.olduser)
             .success(function(data) {
             });
     }
-})
+    //$scope.user = {
+    //    userType: 122,
+    //    name: "ggg",
+    //    phone: 2445254,
+    //    page: 1,
+    //    pageSize: 10
+    //}
+    //$scope.newuser = {
+    //    Id:11,
+    //    Brokername: "afaf",
+    //    phone: 525424,
+    //    Sfz:1234567891,
+    //    page: 1,
+    //    pageSize: 10
+    //}
+    //$http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{params: $scope.user})
+    //    .success(function(response) {$scope.users = response.List[0];
+    //    });
+    //$scope.save = function()
+    //{
+    //    $http.post(SETTING.ApiUrl+'/BrokerInfo/UpdateBroker', $scope.newuser)
+    //        .success(function(data) {
+    //        });
+    //}
+}])
 /////////////////////////////头像修改////////////////////////////
         function previewImage(file)
         {

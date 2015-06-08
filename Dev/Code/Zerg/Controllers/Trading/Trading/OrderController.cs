@@ -93,7 +93,8 @@ namespace Zerg.Controllers.Trading.Trading.Order
                     Customname = orderModel.Customname,
                     Ordercode = OrderNumber,
                     OrderDetail = ODEResult,
-                    Ordertype = orderModel.Ordertype,
+                    //该条字段属性变更，因方法无使用，故注释
+                    //Ordertype = orderModel.Ordertype,
                     Remark = orderModel.Remark,
                     Shipstatus = orderModel.Shipstatus,
                     Status = orderModel.Status,
@@ -185,7 +186,7 @@ namespace Zerg.Controllers.Trading.Trading.Order
         {
             OrderSearchCondition OSC = new OrderSearchCondition()
             {
-                Ordertype = 1,
+                Ordertype = EnumOrderType.成交订单,
                 OrderBy = EnumOrderSearchOrderBy.OrderById
             };
             return PageHelper.toJson(_orderService.GetOrdersByCondition(OSC).ToList());

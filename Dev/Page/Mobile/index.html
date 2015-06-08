@@ -27,9 +27,11 @@
     <link href= "modules/grabPacket/static/style/grabPacket.css" rel="stylesheet" type="text/css" />
     <link href= "modules/sendPacket/static/style/sendPacket.css" rel="stylesheet" type="text/css" />
     <link href= "modules/luckPacket/static/style/luckPacket.css" rel="stylesheet" type="text/css" />
-
     <link href= "modules/chip/static/style/chip.css" rel="stylesheet" type="text/css" />
     <link href= "modules/withdrawals/static/style/withdrawals.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/Auction/static/style/Auction.css" rel="stylesheet" type="text/css" />
+    <link href= "modules/Coupons/static/style/Coupons.css" rel="stylesheet" type="text/css" />
+
 
 
 
@@ -55,7 +57,17 @@
 
 <!--瀑布流-->
 
-    <script src="modules/housesBuy/static/scripts/zy_control.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            $(".message img").lazyload({
+                placeholder : "modules/index/static/image/index/loading.gif",
+                effect : "fadeIn"
+            });
+        });
+    </script>
+
+
     <!--控制滑动-->
 
 </head>

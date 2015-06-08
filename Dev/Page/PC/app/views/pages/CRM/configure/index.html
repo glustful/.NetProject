@@ -18,7 +18,7 @@
         <tr ng-repeat="item in list">
             <td >{{item.Name}}</td>
             <td >{{item.Describe}}</td>
-            <td ><img src="{{item.Url}}"/></td>
+            <td ><img src="{{item.Url}}" width="10%" height="10%"/></td>
             <td >
                 <a ui-sref="page.CRM.configure.edit({id: item.Id})"> <span class="label bg-success" title="Active">编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                 <a href="#"> <span class="label yellow" title="Active">删除</span></a>

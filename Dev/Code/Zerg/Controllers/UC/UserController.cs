@@ -4,10 +4,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.UI.WebControls;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
+using CRM.Service.Level;
 using YooPoon.Core.Site;
 using YooPoon.WebFramework.Authentication;
+using YooPoon.WebFramework.Authentication.Entity;
 using YooPoon.WebFramework.User;
 using YooPoon.WebFramework.User.Entity;
 using YooPoon.WebFramework.User.Services;
@@ -25,13 +28,23 @@ namespace Zerg.Controllers.UC
         private readonly IAuthenticationService _authenticationService;
         private readonly IWorkContext _workContext;
         private readonly IBrokerService _brokerService;
+        private readonly IRoleService _roleService;
+        private readonly ILevelService _levelService;
 
-        public UserController(IUserService userService, IAuthenticationService authenticationService, IWorkContext workContext,IBrokerService brokerService)
+        public UserController(IUserService userService, 
+            IAuthenticationService authenticationService, 
+            IWorkContext workContext,
+            IBrokerService brokerService,
+            IRoleService roleService,
+            ILevelService levelService
+            )
         {
             _userService = userService;
             _authenticationService = authenticationService;
             _workContext = workContext;
             _brokerService = brokerService;
+            _roleService = roleService;
+            _levelService = levelService;
         }
 
         /// <summary>
@@ -116,31 +129,26 @@ namespace Zerg.Controllers.UC
             };
 
             //判断user表和Broker表中是否存在用户名
-            var user2 = _brokerService.GetBrokerCount(condition);
-            if (user != null || user2 != 0)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
-            }
+            int user2 = _brokerService.GetBrokerCount(condition);
+
+            if (user2 != 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
+
             var newUser = new UserBase
             {
-                UserName = brokerModel.UserName,
+                UserName = brokerModel.Brokername,
                 Password = brokerModel.Password,
                 RegTime = DateTime.Now,
                 NormalizedName = brokerModel.UserName.ToLower(),
                 Status = 0
             };
             PasswordHelper.SetPasswordHashed(newUser, brokerModel.Password);
-            if (_userService.InsertUser(newUser).Id <= 0)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "注册用户失败，请重试"));
-            }
 
             #endregion
 
             #region Broker用户创建 杨定鹏 2015年5月28日14:53:32
 
             var model = new BrokerEntity();
-            model.UserId = _userService.GetUserByName(brokerModel.UserName).Id;
+            model.UserId = _userService.InsertUser(newUser).Id;
             model.Brokername = brokerModel.Brokername;
             model.Phone = brokerModel.Phone;
             model.Totalpoints = 0;
@@ -153,7 +161,20 @@ namespace Zerg.Controllers.UC
             model.Upuser = 0;
             model.Uptime = DateTime.Now;
 
-            //缺少等级
+            //判断初始等级是否存在,否则创建
+            var level = _levelService.GetLevelsByCondition(new LevelSearchCondition { Name = "默认等级" }).FirstOrDefault();
+            if (level == null)
+            {
+                var levelModel = new LevelEntity
+                {
+                    Name = "默认等级",
+                    Describe = "系统默认初始创建",
+                    Url = "",
+                    Uptime = DateTime.Now,
+                    Addtime = DateTime.Now,
+                };
+                _levelService.Create(levelModel);
+            }
 
             _brokerService.Create(model);
 
@@ -161,6 +182,7 @@ namespace Zerg.Controllers.UC
 
             return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
         }
+
 
 
         [HttpGet]
@@ -219,6 +241,14 @@ namespace Zerg.Controllers.UC
         [HttpPost]
         public HttpResponseMessage ChangePassword([FromBody]ChangePasswordModel model)
         {
+            //首先判断发送到手机的验证码是否正确
+
+            //判断两次新密码是否一致
+            if (model.NewPassword!=model.NewTwoPassword)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "密码不一致！"));
+            }
+            //判读旧密码
             var user =(UserBase) _workContext.CurrentUser;
             if (user!=null && PasswordHelper.ValidatePasswordHashed(user,model.OldPassword))
             {
