@@ -4,7 +4,7 @@
  * Created by gaofengming on 2015/5/28.
  */
 var app = angular.module("zergApp");
-app.controller('personsettingController',['$scope','$http','AuthService',function($scope,AuthService,$http){
+app.controller('personsettingController',['$scope','$http','AuthService',function($scope,$http,AuthService){
     $scope.olduser={
         Brokername:'',
         Realname:'',
@@ -20,6 +20,12 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
             console.log(response);
             $scope.olduser=response
         });
+    $scope.save = function()
+    {
+        $http.post(SETTING.ApiUrl+'/BrokerInfo/UpdateBroker', $scope.olduser)
+            .success(function(data) {
+            });
+    }
     //$scope.user = {
     //    userType: 122,
     //    name: "ggg",
