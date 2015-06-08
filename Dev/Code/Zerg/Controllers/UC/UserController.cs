@@ -7,7 +7,7 @@ using System.Web.Http.Cors;
 using System.Web.UI.WebControls;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
-using YooPoon.Core.Data;
+using CRM.Service.Level;
 using YooPoon.Core.Site;
 using YooPoon.WebFramework.Authentication;
 using YooPoon.WebFramework.Authentication.Entity;
@@ -29,14 +29,14 @@ namespace Zerg.Controllers.UC
         private readonly IWorkContext _workContext;
         private readonly IBrokerService _brokerService;
         private readonly IRoleService _roleService;
-        private readonly IBaseEntity _baseEntity;
+        private readonly ILevelService _levelService;
 
         public UserController(IUserService userService, 
             IAuthenticationService authenticationService, 
             IWorkContext workContext,
             IBrokerService brokerService,
             IRoleService roleService,
-            IBaseEntity baseEntity
+            ILevelService levelService
             )
         {
             _userService = userService;
@@ -44,7 +44,7 @@ namespace Zerg.Controllers.UC
             _workContext = workContext;
             _brokerService = brokerService;
             _roleService = roleService;
-            _baseEntity = baseEntity;
+            _levelService = levelService;
         }
 
         /// <summary>
@@ -129,14 +129,13 @@ namespace Zerg.Controllers.UC
             };
 
             //判断user表和Broker表中是否存在用户名
-            var user2 = _brokerService.GetBrokerCount(condition);
-            if (user != null || user2 != 0)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
-            }
+            int user2 = _brokerService.GetBrokerCount(condition);
+
+            if (user2 != 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
+
             var newUser = new UserBase
             {
-                UserName = brokerModel.UserName,
+                UserName = brokerModel.Brokername,
                 Password = brokerModel.Password,
                 RegTime = DateTime.Now,
                 NormalizedName = brokerModel.UserName.ToLower(),
@@ -144,42 +143,12 @@ namespace Zerg.Controllers.UC
             };
             PasswordHelper.SetPasswordHashed(newUser, brokerModel.Password);
 
-            #region 权限创建 杨定鹏 2015年6月4日16:38:54
-            //取得经纪人信息
-            const string roleName = "Broker";
-            var role = _roleService.GetRoleByName(roleName);
-            //查询经纪人规则信息是否存在
-            if (role == null)   //存在则添加规则
-            {
-                role = new Role
-                {
-                    RoleName = roleName,
-                    Description = "经纪人角色",
-                    Status = RoleStatus.Normal
-                };
-                _roleService.CreateRole(role);
-
-            }
-
-            newUser.UserRoles.Add(new UserRole
-            {
-                Role = role,
-                User = newUser
-            });
-
-            #endregion
-
-            if (_userService.InsertUser(newUser).Id <= 0)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "注册用户失败，请重试"));
-            }
-
             #endregion
 
             #region Broker用户创建 杨定鹏 2015年5月28日14:53:32
 
             var model = new BrokerEntity();
-            model.UserId = newUser.Id;
+            model.UserId = _userService.InsertUser(newUser).Id;
             model.Brokername = brokerModel.Brokername;
             model.Phone = brokerModel.Phone;
             model.Totalpoints = 0;
@@ -192,16 +161,18 @@ namespace Zerg.Controllers.UC
             model.Upuser = 0;
             model.Uptime = DateTime.Now;
 
-            //缺少等级
+            //判断初始等级是否存在
+            var level = _levelService.GetLevelsByCondition(new LevelSearchCondition { Name = "默认等级" }).FirstOrDefault();
+            if (level == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "默认等级不存在，请联系管理员"));
+            model.Level = level;
 
-           
+            _brokerService.Create(model);
 
             #endregion
 
-
-            _brokerService.Create(model);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
         }
+
 
 
         [HttpGet]

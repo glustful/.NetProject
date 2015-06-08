@@ -31,9 +31,6 @@ namespace Trading.Entity.Model
 		public OrderDetailEntity[] OrderDetails { get; set; }
 
 
-
-
-
 		public string Ordercode { get; set; }
 
 

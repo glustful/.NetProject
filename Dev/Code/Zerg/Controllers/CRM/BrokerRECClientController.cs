@@ -130,31 +130,29 @@ namespace Zerg.Controllers.CRM
              var num = _orderService.CreateOrderNumber();
 
              //查询商品详情
-             var product = _productService.GetProductById(brokerrecclient.Projectid);
+             var product = _productService.GetProductById(1);
 
              //创建订单详情
-             OrderDetailEntity ode = new OrderDetailEntity()
-             {
-                 Adddate = DateTime.Now,
-                 Adduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
-                 Commission = product.Commission,
-                 RecCommission = product.RecCommission,
-                 Dealcommission = product.Dealcommission,
-                 Price = product.Price,
-                 Product = product,
-                 Productname = product.Productname,
-                 //Remark = product.
-                 //Snapshoturl = orderDetailModel.Snapshoturl,
-                 Upddate = DateTime.Now,
-                 Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture)
-             };
+             OrderDetailEntity ode = new OrderDetailEntity();
+             ode.Adddate = DateTime.Now;
+             ode.Adduser = "2";//_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
+             ode.Commission = product.Commission;
+             ode.RecCommission = product.RecCommission;
+             ode.Dealcommission = product.Dealcommission;
+             ode.Price = product.Price;
+             ode.Product = product;
+             ode.Productname = product.Productname;
+                 //ode.Remark = product.
+                 //ode.Snapshoturl = orderDetailModel.Snapshoturl,
+             ode.Upddate = DateTime.Now;
+             ode.Upduser = "2";//_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture)
 
              //创建订单
              OrderEntity oe = new OrderEntity
              {
                  Adddate = DateTime.Now,
-                 Adduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
-                 AgentId = _workContext.CurrentUser.Id,
+                 Adduser ="2", //_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
+                 AgentId = 2, //_workContext.CurrentUser.Id,
                  Agentname = brokerrecclient.Brokername,
                  Agenttel = brokerrecclient.Phone,
                  BusId = product.Bussnessid,
@@ -167,7 +165,7 @@ namespace Zerg.Controllers.CRM
                  Shipstatus = (int)EnumBRECCType.审核中,
                  Status = (int)EnumOrderStatus.默认,
                  Upddate = DateTime.Now,
-                 Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture)
+                 Upduser ="2" //_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture)
              };
 
              //创建成交订单
@@ -185,11 +183,11 @@ namespace Zerg.Controllers.CRM
              //创建推荐流程
              var model = new BrokerRECClientEntity
              {
-                 Broker = _brokerService.GetBrokerById(_workContext.CurrentUser.Id),
+                 Broker = _brokerService.GetBrokerById(2),
                  ClientInfo = cmodel,
-                 Adduser = _workContext.CurrentUser.Id,
+                 Adduser =2, //_workContext.CurrentUser.Id,
                  Addtime = DateTime.Now,
-                 Upuser = _workContext.CurrentUser.Id,
+                 Upuser =2, //_workContext.CurrentUser.Id,
                  Uptime = DateTime.Now,
                  Projectid = brokerrecclient.Projectid,
                  Status = EnumBRECCType.等待上访,
