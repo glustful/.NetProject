@@ -12,7 +12,7 @@ app.controller('personsettingController',function($scope,$http){
         phone: 111111,
         page: 1,
         pageSize: 10,
-        Headphoto:''
+        Headphoto:'http://img.yoopoon.com/20150604/20150604_205817_807_191.jpg'
     }
     $scope.newuser = {
         Id:11,
