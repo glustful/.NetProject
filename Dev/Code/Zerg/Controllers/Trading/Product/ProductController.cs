@@ -211,6 +211,7 @@ namespace Zerg.Controllers.Trading.Product
                 BrandImg = product.ProductBrand.Bimg,
                 Price = product.Price,
                 SubTitle = product.SubTitle,
+                Phone = product.ContactPhone,
                 Advertisement=product.ProductDetail.Ad2,
                 Productimg1 = product.ProductDetail.Productimg1,
                 Productimg2 = product.ProductDetail.Productimg2,

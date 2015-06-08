@@ -74,6 +74,10 @@ namespace Zerg.Models.CRM
         /// </summary>
         public virtual int Zip { get; set; }
         /// <summary>
+        /// EmAIL
+        /// </summary>
+        public virtual string Email { get; set; }
+        /// <summary>
         /// 身份证
         /// </summary>
         public virtual string Email { get; set; }

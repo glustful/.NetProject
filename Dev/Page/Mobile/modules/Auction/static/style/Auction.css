@@ -1,0 +1,162 @@
+/* 拍卖页 Auction */
+.auctionLp{
+    padding:0 10px 10px;
+}
+.auctionLp li{
+    margin-top: 10px;
+}
+.LpMessage{
+   position:relative;
+}
+.LpMessage span{
+    display: block;
+    height: 37px;
+    line-height: 37px;
+    position: absolute;
+    top:18px;
+    right: 15px;
+    color: #fff;
+}
+.LpMessage span small{
+    display: inline-block;
+    width: 28px;
+    text-align: center;
+    background:url("../image/Auction/djs.png") no-repeat 0 0;
+    margin:0 5px;
+}
+.LpMessage a{
+    display: block;
+    width:86px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 1.2em;
+    color: #fff;
+    background-color: #f12c00;
+    border-radius: 5px;
+    position: absolute;
+    top:96px;
+    right: 15px;
+}
+.LpDetail{
+    height: 60px;
+    line-height:30px;
+    background-color: #fff;
+    padding-left:15px;
+}
+.LpDetail .apartment{
+    color: #333333;
+    font-weight: bold;
+}
+.LpDetail span b{
+    color: #40ad32;
+    font-size: 0.8em;
+    font-weight: normal;
+    margin-right: 15px;
+}
+.LpDetail span small{
+    margin-right: 35px;
+    color: #8b8b8b;
+    font-weight: normal;
+}
+.LpDetail .overTime{
+    height: 27px;
+    background-color:#e61611;
+    color: #fff;
+    margin-top:17px;
+    padding:0 10px;
+}
+.LpDetail .overTime-green{
+    background-color: #449f24;
+}
+/* 拍卖专题页 */
+.specialIntro{
+    margin:0 10px 10px;
+    background-color: #fff;
+}
+.specialIntro .toBegin{
+    position:relative;
+    z-index: 1;
+}
+.specialIntro .toBegin span{
+    display: block;
+    height: 31px;
+    width: 620px;
+    line-height: 31px;
+    position: absolute;
+    top:0;
+    padding-left: 20px;
+    color: #fff;
+    background:url("../image/Auction/qgt.png") no-repeat 0 0;
+    z-index: 2;
+}
+.specialIntro .toBegin span .month{
+    margin-right: 30px;
+}
+.specialIntro .toBegin span .start{
+    margin-right: 20px;
+}
+.specialIntro .toBegin span .stop{
+    margin-right: 70px;
+}
+.specialIntro .equalHigh{
+    height:56px;
+    line-height: 56px;
+    border-bottom: 1px solid #ebebeb;
+    padding-left: 23px;
+    font-weight: bold;
+}
+.specialIntro .currentPrice small{
+    color:#f13800;
+    font-size: 1em;
+    padding:0 130px 0 10px;
+}
+.specialIntro .currentPrice span{
+    font-size: 1.4em;
+    color:#f13800;
+}
+.specialIntro .currentPrice .watch{
+    padding-left: 50px;
+    color: #4ab340;
+}
+.specialIntro .Bond{
+    padding:0 160px 0 20px;
+}
+.specialIntro .StartPrice{
+    padding-left: 23px;
+    font-weight: bold;
+    line-height: 40px;
+    border-bottom: 8px solid #ebebeb;
+}
+.specialIntro .ReservePrice{
+    padding-left: 140px;
+}
+.specialIntro .equalHigh a{
+    display: inline-block;
+    padding-right: 24px;
+    width: 17px;
+    height: 32px;
+    background:url("../image/Auction/jt.png") no-repeat 0 0;
+    margin-top: 10px;
+}
+/* 拍卖用户信息  AuctionUserInformation*/
+.userInformation{
+    padding:20px 0 285px 60px;
+}
+.userInformation input{
+    width: 518px;
+    height: 50px;
+    padding-left:10px;
+}
+.userInformation .names{
+    margin-bottom: 20px;
+}
+.userInformation .phones{
+    margin-bottom: 85px;
+}
+.userInformation .submitBtn{
+    background-color:#f13a07;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 1.5em;
+}

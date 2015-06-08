@@ -1,3 +1,6 @@
+.StormRoom-content{
+    /*padding-bottom: 200px;*/
+}
 .nav-storeroom{
     height: 70px;
     line-height: 70px;
@@ -26,7 +29,7 @@
 }
  .zg{
     height:58px;
-    line-height: 58px;
+    line-height: 75px;
     color: #878787;
     font-size: 16px;
     padding-left: 50px;
@@ -85,4 +88,50 @@
 }
  .sub-nav-storeroom .int-storeroom{
     border-right: none;
+}
+ #area,#type,#price{
+     float: left
+ }
+ #condition{
+     background-color: #ffffff;width: 640px;
+     /*border-radius: 10px;*/
+ }
+#province{
+    float:left;margin-left: 40px;width: 150px;
+    background-color: #ffffff;
+    border: 1px solid #ebebeb
+}
+#city,#county{
+    float:left;width: 150px;
+    background-color: #ffffff;
+    border: 1px solid #ebebeb
+}
+.type{
+    margin-left: 165px;
+    text-align: center;
+    width: 150px;
+    border: 1px solid #ebebeb
+}
+#priceCondition{
+    margin-left: 325px;
+    text-align: center;
+    width: 150px;
+    border: 1px solid #ebebeb
+}
+.li{
+    height: 35px;width:70px;line-height: 35px;
+    float: left;
+    font-size: 18px;
+    /*vertical-align:middle;*/
+    text-align: center;
+    /*border-bottom:1px dashed #ebebeb;*/
+}
+.typeOption,.priceOption{
+    height: 35px;line-height: 35px;font-size: 18px;
+    border-bottom:2px solid #ebebeb;
+}
+.selected {
+    background-color: #c0c0c0;
+    /*width:70px;*/
+    border-radius: 5px;
 }
