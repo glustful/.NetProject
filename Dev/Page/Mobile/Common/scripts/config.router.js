@@ -167,7 +167,8 @@ app  .run(
         })
         .state('app.myPurse',{
             url:'/myPurse',
-            templateUrl:'modules/myPurse/view/myPurse.html'
+            templateUrl:'modules/myPurse/view/myPurse.html',
+            resolve:load('modules/myPurse/render/controller.js')
         })
         .state('app.personal',{
             url:'/personal',
@@ -216,7 +217,8 @@ app  .run(
         })
         .state('app.credit_add',{
             url:'/credit_add',
-            templateUrl:'modules/credit_add/view/credit_add.html'
+            templateUrl:'modules/credit_add/view/credit_add.html',
+            resolve:load('modules/myPurse/render/controller.js')
         })
         .state('app.recommendedBroker',{
             url:'/recommendedBroker',
