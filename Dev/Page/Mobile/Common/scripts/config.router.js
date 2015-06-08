@@ -137,7 +137,7 @@ app  .run(
             templateUrl:'modules/partner_insert1/view/partner_insert1.html'
         })
         .state('app.groom',{
-            url:'/groom',
+            url:'/groom?name&type',
             templateUrl:'modules/groom/view/groom.html',
             resolve:load('modules/groom/controller/controller.js')
         })
@@ -210,10 +210,11 @@ app  .run(
         })
         .state('app.nominate',{
             url:'/nominate',
-            templateUrl:'modules/nominate/view/nominate.html'
+            templateUrl:'modules/nominate/view/nominate.html',
+            resolve:load('modules///storeroom/scripts/StoreRoom.js')
         })
         .state('app.carry_client',{
-            url:'/carry_client',
+            url:'/carry_client?name&type',
             templateUrl:'modules/carry_client/view/carry_client.html',
             resolve:load('modules/carry_client/controller/controller.js')
         })
