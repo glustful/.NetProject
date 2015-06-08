@@ -185,9 +185,10 @@ namespace Zerg.Controllers.Trading.Product
 
                 b.SubTitle,
                 b.ProductDetailed,
-                StockRule = b.Stockrule,
+                b.StockRule,
                 b.Acreage,
-                b.Type
+                b.Type,
+                b.Advertisement
             });
             var totalCount = _productService.GetProductCount(PSC);
             return PageHelper.toJson(new { List =productList,Condition=PSC, TotalCount = totalCount });

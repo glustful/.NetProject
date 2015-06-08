@@ -7,7 +7,7 @@ app.controller('partnerListController',['$http','$scope','$stateParams',function
     };
     //查询合伙人
     var getPartnerList  = function() {
-        $http.get(SETTING.ApiUrl+'/PartnerList/PartnerListDetailed?userId='+4,{'withCredentials':true}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/PartnerList/PartnerListDetailed?userId='+6,{'withCredentials':true}).success(function(data){
             console.log(data);
             $scope.list = data.list;
         });
@@ -22,7 +22,7 @@ app.controller ('searchInviteController',['$http','$scope','$stateParams',functi
         brokerId:0
     };
     var getInvite = function(){
-        $http.get(SETTING.ApiUrl + '/PartnerList/GetInviteForBroker?brokerId='+1, {'withCredentials': true}).success(function (data) {
+        $http.get(SETTING.ApiUrl + '/PartnerList/GetInviteForBroker?brokerId='+4, {'withCredentials': true}).success(function (data) {
          console.log(data);
          $scope.list=data.list;
         })

@@ -1,24 +1,33 @@
 <!--个人设置-->
 <!--required:../static/style/setting.css" rel="stylesheet-->
-           <div class="setting_personal">
+           <div class="setting_personal" ng-controller="personsettingController">
 	               <div class="headphoto">
 	               	
 	                   <div class="touxiang" id="preview">
-	                       <img src="" id="imghead">
+	                       <img src="{{olduser.Headphoto}}" id="imghead">
 	                   </div>
 	                   <span class="input-file">
-	                   	修改头像
+	                   	<a id="Uptext">修改头像</a>
 	                   	<input name="fileToUpload" type="file" onchange="previewImage(this)"/>
 	                   </span>
 	               </div>
-               <div class="person_revise" ng-controller="personsettingController">
+               <div class="person_revise">
                    <form>
-                       <p>姓名</p>
+
+                       <p>用户名</p>
                        <input type="text" class="password old" placeholder="用户名" ng-model="olduser.Brokername" required/><br/>
+                       <p>姓名</p>
+                       <input type="text" class="password old" placeholder="姓名" ng-model="olduser.Realname" required/><br/>
+                       <!--<p>昵称</p>-->
+                       <!--<input type="text" class="password old" placeholder="昵称" ng-model="olduser.Nickname" required/><br/>-->
+                       <p> 性别</p>
+                       <input type="text" class="password old" placeholder="性别" ng-model="olduser.Sexy" required/><br/>
                        <p> 电话</p>
-                       <input type="text" class="password old" placeholder="用户手机号码"  required/><br/>
+                       <input type="text" class="password old" placeholder="用户手机号码"  ng-model="olduser.Phone" required/><br/>
                        <p>身份证</p>
-                       <input type="text" class="password old" placeholder="保护账号安全"  required/><br/>
+                       <input type="text" class="password old" placeholder="保护账号安全" ng-model="olduser.Sfz" required/><br/>
+                       <p> 邮箱</p>
+                       <input type="text" class="password old" placeholder="用户邮箱"  ng-model="olduser.Email" required/><br/>
 
                        <button class="save_button" ng-click="save()">保存</button>
                    </form>
