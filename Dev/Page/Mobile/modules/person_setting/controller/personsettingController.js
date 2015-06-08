@@ -21,12 +21,23 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
        .success(function(response) {
             console.log(response);
             $scope.olduser=response
+            console.log($scope.olduser);
+            //添加判断,如果用户没有头像,隐藏IMG标签SRC为空的样式
+            if($scope.olduser.Headphoto.length<15){
+            	//操作IMG标签的SRC为空
+            	var img = document.getElementById('imghead');
+            	img.src = "";
+            	
+            }
         });
     $scope.save = function()
     {
         if(httpimguri.length>15)
         {
             $scope.olduser.Headphoto = SETTING.ImgUrl+httpimguri;
+            //如果服务器返回了用户的头像地址,操作IMG标签的SRC为angularjs绑定
+            var img = document.getElementById('imghead');
+            img.src = "{{olduser.Headphoto}}";    
         }
 
         $http.post(SETTING.ApiUrl+'/BrokerInfo/UpdateBroker', $scope.olduser)
