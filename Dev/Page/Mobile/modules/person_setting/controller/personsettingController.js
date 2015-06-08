@@ -11,9 +11,10 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
         Nickname:'',
         Sexy:'',
         Sfz:'',
-        Email:''
+        Email:'',
+        Phone:''
     };
-    $scope.currentuser= AuthService.CurrentUser;
+    $scope.currentuser= AuthService.CurrentUser();
     $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
        .success(function(response) {
             console.log(response);

@@ -116,31 +116,26 @@ namespace Zerg.Controllers.UC
             };
 
             //判断user表和Broker表中是否存在用户名
-            var user2 = _brokerService.GetBrokerCount(condition);
-            if (user != null || user2 != 0)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
-            }
+            int user2 = _brokerService.GetBrokerCount(condition);
+
+            if (user2 != 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
+
             var newUser = new UserBase
             {
-                UserName = brokerModel.UserName,
+                UserName = brokerModel.Brokername,
                 Password = brokerModel.Password,
                 RegTime = DateTime.Now,
                 NormalizedName = brokerModel.UserName.ToLower(),
                 Status = 0
             };
             PasswordHelper.SetPasswordHashed(newUser, brokerModel.Password);
-            if (_userService.InsertUser(newUser).Id <= 0)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "注册用户失败，请重试"));
-            }
 
             #endregion
 
             #region Broker用户创建 杨定鹏 2015年5月28日14:53:32
 
             var model = new BrokerEntity();
-            model.UserId = _userService.GetUserByName(brokerModel.UserName).Id;
+            model.UserId = _userService.InsertUser(newUser).Id;
             model.Brokername = brokerModel.Brokername;
             model.Phone = brokerModel.Phone;
             model.Totalpoints = 0;
