@@ -1,0 +1,204 @@
+/* 优惠劵页 Coupons */
+.Coupons-content{
+    padding:15px 10px;
+}
+.Coupons-content .saveMoney{
+    height: 80px;
+    line-height: 80px;
+    background: url("../image/Coupons/bsq.png") no-repeat 20px center #fff;
+    padding-left: 380px;
+    font-size: 1.2em;
+}
+.Coupons-content .couponsList{
+    padding:10px 0;
+}
+.Coupons-content .couponsList ul .distance{
+    margin-bottom: 20px;
+}
+.Coupons-content .couponsList ul li{
+    width: 630px;
+    height: 222px;
+    position: relative;
+}
+.Coupons-content .couponsList ul li .lpIntro{
+    width:317px;
+    height: 93px;
+    background-color: #000;
+    opacity: 0.6;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding:15px 0 0 15px;
+    font-size: 0.9em;
+    color: #fff;
+    z-index: 2;
+}
+.Coupons-content .couponsList ul li .lpIntro p{
+    color: #ccccca;
+}
+.Coupons-content .couponsList ul li .lpIntro a{
+    display: block;
+    height: 38px;
+    line-height: 38px;
+    color: #4e9eb5;
+}
+.Coupons-content .couponsList ul li .juan{
+    color:#ff6c00;
+    font-size: 2.5em;
+    position: absolute;
+    top:15px;
+    left:373px;
+    font-weight: bold;
+}
+.Coupons-content .couponsList ul li .specialUse{
+    color: #b08d5a;
+    font-size: 1.3em;
+    font-weight: bold;
+    position: absolute;
+    top:75px;
+    left: 373px;
+}
+.Coupons-content .couponsList ul li button{
+    display: inline-block;
+    width: 220px;
+    height: 50px;
+    color: #fff;
+    position: absolute;
+    top:123px;
+    left: 373px;
+    background-color: #ff3000;
+    border-radius: 5px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.Coupons-content .couponsList ul li small{
+    color: #cfa56f;
+    display: block;
+    position: absolute;
+    bottom:20px;
+    left: 373px;
+}
+.Coupons-content .fullName{
+    height: 80px;
+    line-height: 80px;
+    color:#fe562f;
+    background-color: #fff;
+    font-size: 1.8em;
+    padding-left: 27px;
+    margin-bottom: 5px;
+}
+.Coupons-content .resources{
+    background-color: #fff;
+    padding:10px;
+}
+.Coupons-content .resources ul{
+    margin-bottom: 10px;
+}
+.Coupons-content .resources ul li{
+    width: 294px;
+    height: 234px;
+    position: relative;
+}
+.Coupons-content .resources ul li.distance{
+    margin-right: 10px;
+}
+.Coupons-content .resources ul li .juan{
+    color:#8c8e44;
+    font-size:2.5em;
+    position: absolute;
+    top:10px;
+    left: 70px;
+    font-weight: bold;
+}
+.Coupons-content .resources ul li .specialUse{
+    color:#a3aa5e;
+    font-size: 1.3em;
+    font-weight: bold;
+    position: absolute;
+    top:76px;
+    left: 38px;
+}
+.Coupons-content .resources ul li button{
+    display: inline-block;
+    width: 220px;
+    height: 50px;
+    color: #fff;
+    position: absolute;
+    top:124px;
+    left: 38px;
+    background-color: #8f9147;
+    border-radius: 5px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.Coupons-content .resources ul li a{
+    color: #278ba2;
+    display: block;
+    position: absolute;
+    bottom:20px;
+    left: 90px;
+}
+/* 领取优惠劵页 CouponsOwn */
+.CouponsOwn-content{
+    background-color: #fff;
+    text-align: center;
+}
+.CouponsOwn-content .successOwn{
+    padding:90px 0 53px 0;
+    width: 455px;
+    border-bottom: 1px solid #ebebeb;
+    margin: 0 auto;
+    color: #838383;
+}
+.CouponsOwn-content .successOwn .Congratulations{
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+.CouponsOwn-content .successOwn .juan{
+    color: #ff3000;
+    font-size: 2.5em;
+    font-weight: bold;
+    line-height: 40px;
+    margin-bottom: 15px;
+}
+.CouponsOwn-content .successOwn .specialUse{
+    color: #ff6440;
+    font-size:1.2em;
+}
+.CouponsOwn-content .Verification-code{
+    padding:40px 0 37px 0;
+    width: 455px;
+    border-bottom: 1px solid #ebebeb;
+    margin: 0 auto;
+}
+.CouponsOwn-content .Verification-code .figure{
+    width:430px;
+    line-height: 120px;
+    background-color: #ff3000;
+    font-size: 3.5em;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.CouponsOwn-content .Verification-code p{
+    color: #ff6440;
+    font-size:1.2em;
+}
+.CouponsOwn-content .Carrying{
+    font-size: 1.2em;
+    padding:40px 0;
+    line-height: 30px;
+    border-bottom: 1px solid #ebebeb;
+}
+.CouponsOwn-content .Carrying p span{
+    color: #333333;
+}
+.CouponsOwn-content .lookOver{
+    margin-top:60px;
+}
+.CouponsOwn-content .lookOver a{
+    font-size: 1.2em;
+    color: #00a4e5;
+    padding:0 100px 0 50px;
+}

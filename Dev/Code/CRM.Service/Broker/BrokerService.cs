@@ -348,6 +348,7 @@ namespace CRM.Service.Broker
             return query.Where(o => o.Amount>0).OrderByDescending(o => o.Amount).Take(10);
         }
 
+
         public BrokerEntity GetBrokerByUserId(int userId)
         {
             try

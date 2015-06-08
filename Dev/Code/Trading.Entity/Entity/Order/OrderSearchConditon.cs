@@ -31,14 +31,11 @@ namespace Trading.Entity.Model
 		public OrderDetailEntity[] OrderDetails { get; set; }
 
 
-
-
-
 		public string Ordercode { get; set; }
 
 
 
-		public int? Ordertype { get; set; }
+		public EnumOrderType? Ordertype { get; set; }
 
 
 

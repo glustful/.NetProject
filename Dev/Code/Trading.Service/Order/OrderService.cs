@@ -6,6 +6,7 @@
 
 
 using System;
+using System.Data.Entity;
 using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
@@ -147,6 +148,7 @@ namespace Trading.Service.Order
                 {
                     query = query.Where(q => q.Ordertype == condition.Ordertype.Value);
                 }
+
 
 
 
@@ -403,21 +405,14 @@ namespace Trading.Service.Order
         /// <returns></returns>
         public string CreateOrderNumber()
         {
-            var query = _orderRepository.Table;
-            int num;
-
-            if (!query.Any())
+            //获取当日流水号
+            var num = GetOrderCount(new OrderSearchCondition
             {
-                //获取当日流水号
-                num = query.Count(q => q.Adddate.Date == DateTime.Now.Date) + 1;
-            }
-            else
-            {
-                //生成订单
-                num = 000001;
-            }
+                AdddateBegin = DateTime.Today,
+                AdddateEnd = DateTime.Today.AddDays(1)
+            });
 
-            return DateTime.Now.ToString("yyyyMMddHHmmss")+num.ToString("000000");
+            return DateTime.Now.ToString("yyyyMMddHHmmss")+(num+1).ToString("000000");
         }
     }
 }

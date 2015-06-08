@@ -245,6 +245,28 @@ app  .run(
             url:'/chip',
             templateUrl:'modules/chip/view/chip.html'
         })
+        .state('app.Auction',{
+            url:'/Auction',
+            templateUrl:'modules/Auction/view/Auction.html'
+        })
+        .state('app.AuctionSpecial',{
+            url:'/AuctionSpecial',
+            templateUrl:'modules/AuctionSpecial/view/AuctionSpecial.html'
+        })
+        .state('app.AuctionUserInformation',{
+            url:'/AuctionUserInformation',
+            templateUrl:'modules/AuctionUserInformation/view/AuctionUserInformation.html'
+        })
+        .state('app.Coupons',{
+            url:'/Coupons',
+            templateUrl:'modules/Coupons/view/Coupons.html'
+        })
+        .state('app.CouponsOwn',{
+            url:'/CouponsOwn',
+            templateUrl:'modules/CouponsOwn/view/CouponsOwn.html'
+        })
+
+
 
 
         function load(srcs, callback) {

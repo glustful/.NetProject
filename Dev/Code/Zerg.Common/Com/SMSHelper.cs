@@ -12,9 +12,10 @@ namespace Zerg.Common
     /// <summary>
     /// 短信发送帮助类
     /// </summary>
-    public  class SMSHelper
+    public class SMSHelper
     {
-
+      
+      // public   static List<string> vali = new List<string>();//定义一个列表，用于保存短信发送的验证码
         #region 中国网建 SMS短信发送平台
 
         /// <summary>

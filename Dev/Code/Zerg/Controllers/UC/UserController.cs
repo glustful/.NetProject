@@ -4,10 +4,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.UI.WebControls;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
+using CRM.Service.Level;
 using YooPoon.Core.Site;
 using YooPoon.WebFramework.Authentication;
+using YooPoon.WebFramework.Authentication.Entity;
 using YooPoon.WebFramework.User;
 using YooPoon.WebFramework.User.Entity;
 using YooPoon.WebFramework.User.Services;
@@ -25,13 +28,23 @@ namespace Zerg.Controllers.UC
         private readonly IAuthenticationService _authenticationService;
         private readonly IWorkContext _workContext;
         private readonly IBrokerService _brokerService;
+        private readonly IRoleService _roleService;
+        private readonly ILevelService _levelService;
 
-        public UserController(IUserService userService, IAuthenticationService authenticationService, IWorkContext workContext,IBrokerService brokerService)
+        public UserController(IUserService userService, 
+            IAuthenticationService authenticationService, 
+            IWorkContext workContext,
+            IBrokerService brokerService,
+            IRoleService roleService,
+            ILevelService levelService
+            )
         {
             _userService = userService;
             _authenticationService = authenticationService;
             _workContext = workContext;
             _brokerService = brokerService;
+            _roleService = roleService;
+            _levelService = levelService;
         }
 
         /// <summary>
@@ -148,7 +161,10 @@ namespace Zerg.Controllers.UC
             model.Upuser = 0;
             model.Uptime = DateTime.Now;
 
-            //缺少等级
+            //判断初始等级是否存在
+            var level = _levelService.GetLevelsByCondition(new LevelSearchCondition { Name = "默认等级" }).FirstOrDefault();
+            if (level == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "默认等级不存在，请联系管理员"));
+            model.Level = level;
 
             _brokerService.Create(model);
 
@@ -156,6 +172,7 @@ namespace Zerg.Controllers.UC
 
             return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
         }
+
 
 
         [HttpGet]
