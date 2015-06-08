@@ -98,7 +98,7 @@ form a{
     margin-left: 268px;
     width: 128px;
     height: 128px;
-    /*background: url("../../../person_setting/static/image/touxiang.png") no-repeat center center;*/
+    background: url("../../../person_setting/static/image/touxiang.png") no-repeat center center;
     background-color: #ffffff;
     border-radius: 500px;
 }
