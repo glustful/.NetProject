@@ -9,7 +9,7 @@ app.controller("tuijianController",['$http','$scope','$stateParams',function($ht
         Brokername:'',
         Brokerlevel:'',
         ProjectName:'',
-        Projectid:'',
+        ProjectId:1,
         Houses:'',
         HouseType:'',
         Clientname:'',
@@ -17,7 +17,7 @@ app.controller("tuijianController",['$http','$scope','$stateParams',function($ht
         Note:''
     };
     //$scope.BrokerRECClient.Broker_Id=$stateParams.Broker_Id;
-    //$scope.BrokerRECClient.Brokername=$stateParams.Brokername;
+    $scope.BrokerRECClient.ProjectId=$stateParams.projectid;
     $scope.BrokerRECClientEntity.Houses=$stateParams.name;
     $scope.BrokerRECClientEntity.HouseType=$stateParams.type;
     var getBrokerResult  = function() {

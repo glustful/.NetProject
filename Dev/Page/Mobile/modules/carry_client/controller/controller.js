@@ -4,6 +4,8 @@
 app.controller('daikeController',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
     $scope.BrokerLeadClient={
         Broker:1,
+        Projectname:'',
+        ProjectId:1,
         Brokername:'',
         Appointmenttime:'',
         Houses:'',
@@ -11,12 +13,11 @@ app.controller('daikeController',['$http','$scope','$stateParams',function($http
         Clientname:'',
         Phone:'',
         Note:'',
-        Stats:'0',
-        Projectname:'',
-        Projectid:1
+        Stats:'0'
+
     };
     //$scope.BrokerLeadClient.Broker_Id=$stateParams.Broker_Id;
-    //$scope.BrokerLeadClient.Brokername=$stateParams.Brokername;
+    $scope.BrokerLeadClient.ProjectId=$stateParams.Projectid;
     $scope.BrokerLeadClient.Houses=$stateParams.name;
     $scope.BrokerLeadClient.HouseType=$stateParams.type;
     var getBrokerResult  = function() {
