@@ -246,6 +246,18 @@ app  .run(
             url:'/chip',
             templateUrl:'modules/chip/view/chip.html'
         })
+        .state('app.chipDetail',{
+            url:'/chipDetail',
+            templateUrl:'modules/chipDetail/view/chipDetail.html'
+        })
+        .state('app.chipEle',{
+            url:'/chipEle',
+            templateUrl:'modules/chipEle/view/chipEle.html'
+        })
+        .state('app.chipPartake',{
+            url:'/chipPartake',
+            templateUrl:'modules/chipPartake/view/chipPartake.html'
+        })
         .state('app.Auction',{
             url:'/Auction',
             templateUrl:'modules/Auction/view/Auction.html'
@@ -266,6 +278,19 @@ app  .run(
             url:'/CouponsOwn',
             templateUrl:'modules/CouponsOwn/view/CouponsOwn.html'
         })
+        .state('app.withdrawals',{
+            url:'/withdrawals',
+            templateUrl:'modules/withdrawals/view/withdrawals.html'
+        })
+        .state('app.withdrawalsDetail',{
+            url:'/withdrawalsDetail',
+            templateUrl:'modules/withdrawalsDetail/view/withdrawalsDetail.html'
+        })
+        .state('app.NoviceTask',{
+            url:'/NoviceTask',
+            templateUrl:'modules/NoviceTask/view/NoviceTask.html'
+        })
+
 
 
 

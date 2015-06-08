@@ -27,11 +27,18 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
             	//没图片隐藏
             	img.style.display = 'none';
             	img.src = "";
+            }else{
+            	//隐藏默认头像
+            	var defaultHeadImg = document.getElementById("preview");
+            	defaultHeadImg.style.background = 'white';
             }
         });
     $scope.save = function()
     {
-    	
+    	if(document.getElementById("Uptext").innerText=='正在上传..'){
+    		alert("头像正在上传,请稍等!");
+    		return;
+    	}
         if(httpimguri.length>0)
         {
             $scope.olduser.Headphoto = SETTING.ImgUrl+httpimguri;
@@ -40,6 +47,7 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
             img.src = "{{olduser.Headphoto}}";
             //有图片就显示
             img.style.display = 'block';
+            
         }else{
         	httpimguri='';
         }
@@ -90,6 +98,9 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
                 var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
                 img.width  =  128;
                 img.height =  128;
+                //隐藏默认头像
+            	var defaultHeadImg = document.getElementById("preview");
+            	defaultHeadImg.style.background = 'white';
               }
               var reader = new FileReader();
               reader.onload = function(evt){
@@ -110,6 +121,10 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
 				fd.append("fileToUpload",files);
                 xmlhttp.withCredentials = true;
 				xmlhttp.send(fd);
+				var headtext = document.getElementById("Uptext");
+				headtext.innerHTML = '正在上传..';
+				headtext.style.color ='#40AD32'
+				
 				//回调函数
 				function callback () {
 				//将response提取出来分割出文件名
@@ -118,6 +133,9 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
 				var g2= httpimguri.split(',')[1].split(':"')[1];
 				//将分割好的文件名赋予给img全局变量
 				httpimguri=g2.substring(0,g2.length-1);
+				//图片上传成功字样样式
+				headtext.innerHTML = '上传成功!';
+				headtext.style.color ='red';
 				}
               }
               reader.readAsDataURL(files);
