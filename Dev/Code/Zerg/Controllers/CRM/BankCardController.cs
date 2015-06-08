@@ -54,7 +54,7 @@ namespace Zerg.Controllers.CRM
            {
                Id = p.Id,
                bankName = p.Bank.Codeid,
-               p.Num,             
+               p.Num,
                p.Addtime
 
            }).ToList();

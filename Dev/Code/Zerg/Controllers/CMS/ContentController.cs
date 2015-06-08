@@ -39,13 +39,14 @@ namespace Zerg.Controllers.CMS
         /// <returns></returns>
         [HttpGet]
        
-        public HttpResponseMessage Index(string title=null,int page = 1, int pageSize = 10)
+        public HttpResponseMessage Index(string title=null,int page = 1, string TitleImg=null, int pageSize = 10)
         {
             var contentCon = new ContentSearchCondition
             {
                 Title=title,
                 Page = page,
-                PageCount = pageSize
+                PageCount = pageSize,
+                TitleImg=TitleImg,
             };
             var contentList = _contentService.GetContentsByCondition(contentCon).Select(a => new ContentModel
             { 
@@ -53,6 +54,7 @@ namespace Zerg.Controllers.CMS
                 Title=a.Title,
                 Status=a.Status,
                 Channel=a.Channel.Name,
+                TitleImg = a.TitleImg,
                 ChannelId = a.Channel.Id,
                 AddUser = a.Adduser
             }).ToList();
