@@ -28,3 +28,26 @@ function check()
         tips.innerHTML="";
     }
 }
+
+
+
+
+var countdown=60;
+function settime(obj) {
+    if (countdown == 0) {
+        obj.removeAttribute("disabled");
+        obj.innerHTML="获取验证码";
+        obj.style.background="#fc3b00";
+        countdown = 60;
+        return;
+    } else {
+        obj.setAttribute("disabled", true);
+
+        obj.style.background="#996c33";
+        obj.innerHTML="重新发送(" + countdown + ")";
+        countdown--;
+    }
+    setTimeout(function() {
+            settime(obj) }
+        ,1000)
+}
