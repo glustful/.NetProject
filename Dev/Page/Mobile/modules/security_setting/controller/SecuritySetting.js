@@ -7,7 +7,10 @@ app.controller('SecuritySettingController',function($scope,$http){
         newPassword:''
     } ;
     $scope.saveInfo=function(){
-        $http.post(SETTING.ApiUrl+'/User/ChangePassword',$scope.password,{'withCredentials':true}).success(function(data){ })
+        $http.post(SETTING.ApiUrl+'/User/ChangePassword',$scope.password,{'withCredentials':true}).success(function(data){
+
+        alert(data);
+        })
     }
 
 })

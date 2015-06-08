@@ -231,6 +231,14 @@ namespace Zerg.Controllers.UC
         [HttpPost]
         public HttpResponseMessage ChangePassword([FromBody]ChangePasswordModel model)
         {
+            //首先判断发送到手机的验证码是否正确
+
+            //判断两次新密码是否一致
+            if (model.NewPassword!=model.NewTwoPassword)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "密码不一致！"));
+            }
+            //判读旧密码
             var user =(UserBase) _workContext.CurrentUser;
             if (user!=null && PasswordHelper.ValidatePasswordHashed(user,model.OldPassword))
             {
