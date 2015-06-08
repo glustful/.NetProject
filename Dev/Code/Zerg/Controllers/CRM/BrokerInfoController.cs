@@ -299,6 +299,19 @@ namespace Zerg.Controllers.CRM
 
             return PageHelper.toJson(new { List = brokersList });
         }
+
+        [HttpPost]
+
+        /// <summary>
+        /// 发送短信
+        /// </summary>
+        /// <returns></returns>
+        public HttpResponseMessage SendSMS([FromBody] string  mobile)
+        {
+            return PageHelper.toJson(  SMSHelper.Sending(mobile, "[创富宝]短信接口测试，发送时间："+DateTime.Now.ToString()));
+
+        }
+
         #endregion
 
 

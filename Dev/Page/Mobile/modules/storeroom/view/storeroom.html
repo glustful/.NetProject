@@ -1,49 +1,48 @@
 <!--房源库-->
 <!--required:../static/style/storeroom.css-->
-<div ng-controller="StormRoomController" style="position: relative" class="panel b-a">
+<div ng-controller="StormRoomController" style="position: relative" class="StormRoom-content">
             <!--<div class="nav-storeroom">-->
                 <!--<a class="area-storeroom" href="#" ng-click="toggleProvince()">区域<span class="icon-storeroom"></span></a>-->
                 <!--<a class="type-storeroom" href="#" ng-click="toggleType()">类型<span class="icon-storeroom"></span></a>-->
                 <!--<a class="price-storer" href="#" ng-click="togglePrice()">价格<span class="icon-storeroom"></span></a>-->
                 <!--&lt;!&ndash;<a class="more-storeroom" href="#">更多<span class="icon-storeroom"></span></a>&ndash;&gt;-->
             <!--</div>-->
-
     <div class="nav-storeroom cf" style="position: absolute;z-index:4;">
-        <div id="area" style="float: left"><a class="area-storeroom" href="#" ng-click="toggleProvince()">区域<span class="icon-storeroom"></span></a>
+        <div id="area"><a class="area-storeroom" href="#" ng-click="toggleProvince()">{{selectArea}}<span class="icon-storeroom"></span></a>
         </div>
-        <div id="type" style="float: left"><a class="type-storeroom" href="#" ng-click="toggleType()">类型<span class="icon-storeroom"></span></a>
+        <div id="type"><a class="type-storeroom" href="#" ng-click="toggleType()">{{selectType}}<span class="icon-storeroom"></span></a>
         </div>
-        <div id="price" style="float: left"><a class="price-storer" href="#" ng-click="togglePrice()">价格<span class="icon-storeroom"></span></a></div>
-        <div class="cf" style="background-color:#fbfbfb;width: 640px;border-radius: 10px;">
-            <div ng-hide="province" style="float:left;margin-left: 20px">
-               <ul style="width: 80px;"><li style="height: 26px;line-height: 26px;" ng-repeat="area in Area" ng-click="getCityList(area.Id,area.AreaName)">{{area.AreaName}}
-                   <!--<li style="height: 1px;margin: 9px 0;overflow: hidden;background-color: #e5e5e5;"></li>-->
-               </li>
-               </ul>
+        <div id="price"><a class="price-storer" href="#" ng-click="togglePrice()">{{selectPrice}}<span class="icon-storeroom"></span></a></div>
+        <!--<div><span>{{provice}}</span><span>{{city1}}</span><span>{{searchCondition.AreaName}}</span><span>{{TypeName}}</span></div>-->
+        <div id="condition" class="cf" ng-hide="condition">
+            <div id="province" ng-hide="province">
+                <ul>
+                    <li class="li" ng-class='{selected: $index==selectedRow}' ng-repeat="area in Area" ng-click="getCityList(area.Id,$index)">{{area.AreaName}}</li>
+                </ul>
             </div>
-            <div ng-hide="city" style="float: left;">
-                <ul style="width: 80px"><li style="height: 26px;line-height: 26px;" ng-repeat="areaCity in AreaCity" ng-click="getCountyList(areaCity.Id)">{{areaCity.AreaName}}</li></ul>
+            <div id="city" ng-hide="city">
+                <ul><li class="li" ng-class='{selected: $index==selectedRow1}' ng-repeat="areaCity in AreaCity" ng-click="getCountyList(areaCity.Id,$index)">{{areaCity.AreaName}}</li></ul>
             </div>
-            <div ng-hide="county"style="float: left;">
-                <ul style="width: 100px"><li style="height: 26px;line-height: 26px;" ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li></ul>
+            <div id="county" ng-hide="county">
+                <ul><li class="li" ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li></ul>
             </div>
-            <div ng-hide="type" style="margin-left: 20px">
-                <ul style="width: 100px"><li style="height: 26px;line-height: 26px;" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId)">{{type.TypeName}}</li></ul>
+            <div class="type" ng-hide="type">
+                <ul><li class="typeOption" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId,type.TypeName)">{{type.TypeName}}</li></ul>
             </div>
-            <div ng-hide="price" style="margin-left: 20px">
-                <ul style="width: 100px">
-                    <li style="height: 26px;line-height: 26px;" ng-click="getPriceCondition(0,4000)"><span>4000以下</span></a></li>
-                    <li style="height: 26px;line-height: 26px;" ng-click="getPriceCondition(4000,5000)"><span>4000</span>-<span>5000</span></a></li>
-                    <li style="height: 26px;line-height: 26px;" ng-click="getPriceCondition(5000,6000)"><span>5000</span>-<span>6000</span></a></li>
-                    <li style="height: 26px;line-height: 26px;" ng-click="getPriceCondition(6000,7000)"><span>6000</span>-<span>7000</span></a></li>
-                    <li style="height: 26px;line-height: 26px;" ng-click="getPriceCondition(7000,8000)"><span>7000</span>-<span>8000</span></a></li>
-                    <li style="height: 26px;line-height: 26px;" ng-click="getPriceCondition(8000,9000)"><span>8000</span>-<span>9000</span></a></li>
-                    <li style="height: 26px;line-height: 26px;" ng-click="getPriceCondition(10000,50000)"><span>10000以上</span></a></li>
+            <div id="priceCondition" ng-hide="price">
+                <ul>
+                    <li class="priceOption" ng-click="getPriceCondition(0,4000)"><span>4000以下</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(4000,5000)"><span>4000</span>-<span>5000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(5000,6000)"><span>5000</span>-<span>6000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(6000,7000)"><span>6000</span>-<span>7000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(7000,8000)"><span>7000</span>-<span>8000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(8000,9000)"><span>8000</span>-<span>9000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(10000,50000)"><span>10000以上</span></li>
                 </ul>
             </div>
      </div>
     </div>
-    <div style="position: absolute;z-index: 3;top:50px">
+    <div style="padding-top: 50px;">
              <p class="zg">共{{Count}}个楼盘</p>
             <div class=" message-storeroom" ng-repeat="item in List">
                  <!--<div class="main-storeroom cf">-->
@@ -55,16 +54,17 @@
                            <!--<p class="yh">按揭9%优惠&nbsp;&nbsp;大户型&nbsp;&nbsp;二环边</p>-->
                        <!--</div>-->
                     <!--</div>-->
+                <!--{{item.Productimg}}-->
                 <div class="main-storeroom cf">
-                    <a class="fl img" href="#/app/housesPic?productId={{item.Id}}"><img src="http://img.yoopoon.com/{{item.Productimg}}" alt="蓝光&nbsp;·&nbsp;颐明园"width="224" height="170"/></a>
-                    <div class="detail-storeroom fl ">
-                        <p class="yhy">{{item.Productname}}</p>
-                        <p class="yuan">{{item.Price}}/m²</p>
-                        <p class="bj">{{item.Type}}&nbsp;/&nbsp;{{item.Acreage}}m²&nbsp;/&nbsp;在售{{item.StockRule}}套</p>
-                        <p class="yh">按揭9%优惠&nbsp;&nbsp;大户型&nbsp;&nbsp;二环边</p>
-                    </div>
+                <a class="fl img" href="#/app/housesPic?productId={{item.Id}}"><img src="http://img.yoopoon.com/{{item.Productimg}}" alt="蓝光&nbsp;·&nbsp;颐明园"width="224" height="170"/></a>
+                <div class="detail-storeroom fl ">
+                    <p class="yhy">{{item.Productname}}</p>
+                    <p class="yuan">{{item.Price}}/m²</p>
+                    <p class="bj">{{item.Type}}&nbsp;/&nbsp;{{item.Acreage}}m²&nbsp;/&nbsp;在售{{item.StockRule}}套</p>
+                    <p class="yh">{{item.Advertisement}}</p>
                 </div>
-                    <div class="sub-nav-storeroom"><a class="red-storeroom" href="#">带客</a><a class="red-storeroom" href="#">推荐</a><a href="#/app/redPaper-1">红包</a><a  class="int-storeroom" href="#/app/myInt">积分</a></div>
+            </div>
+                    <div class="sub-nav-storeroom"><a class="red-storeroom" href="#app/takeOff">带客</a><a class="red-storeroom" href="#app/recommend">推荐</a><a href="#/app/redPaper-1">红包</a><a  class="int-storeroom" href="#/app/myInt">积分</a></div>
             </div>
             <!--<div class=" message-storeroom">-->
                 <!--<div class="main-storeroom cf">-->

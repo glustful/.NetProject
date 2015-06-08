@@ -10,9 +10,21 @@
 //]);
     var app = angular.module("zergApp");
 app.controller('LoginController',['$scope','$state','AuthService',function($scope,$state,AuthService){
+    $scope.user={
+        name:"",
+        password:''
+    }
     $scope.Login = function(){
+        //var UserName=document.getElementById("Name_blank").value;
+        //var Password=document.getElementById("Password").value;
         AuthService.doLogin($scope.user.name,$scope.user.password,function(){
           $state.go('app.partner_list')
-        })
+        },
+            function(){
+                $scope.errorTips='用户名或密码错误！';
+            }
+        )
     }
+
 }]);
+
