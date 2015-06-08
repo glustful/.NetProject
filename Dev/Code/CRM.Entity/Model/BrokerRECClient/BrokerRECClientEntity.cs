@@ -25,7 +25,7 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// 电话
 		/// </summary>
-		public virtual int Phone { get; set; }
+		public virtual string Phone { get; set; }
 		/// <summary>
 		/// QQ
 		/// </summary>
@@ -82,5 +82,13 @@ namespace CRM.Entity.Model
 		/// 带客人员电话
 		/// </summary>
 		public virtual string WriterPhone { get; set; }
+        /// <summary>
+        /// 推荐订单
+        /// </summary>
+	    public virtual int RecOrder { get; set; }
+        /// <summary>
+        /// 成交订单
+        /// </summary>
+	    public virtual int DealOrder { get; set; }
 	}
 }

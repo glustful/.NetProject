@@ -36,7 +36,7 @@ namespace CRM.Entity.Model
 
 		public string Sexy { get; set; }
 
-		public int[] Phones { get; set; }
+		public string Phone { get; set; }
 
 		public int[] Qqs { get; set; }
 

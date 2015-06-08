@@ -13,6 +13,7 @@ using Zerg.Common;
 namespace Zerg.Controllers.CRM
 {
 
+   [AllowAnonymous]
    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 银行卡管理  李洪亮  2015-05-05
@@ -53,7 +54,7 @@ namespace Zerg.Controllers.CRM
            {
                Id = p.Id,
                bankName = p.Bank.Codeid,
-               p.Num,             
+               p.Num,
                p.Addtime
 
            }).ToList();

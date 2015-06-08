@@ -1,4 +1,6 @@
-
+.content-housesPic{
+    padding-bottom: 90px;
+}
 .content-housesPic .syj{
     height: 74px;
     line-height: 74px;
@@ -56,49 +58,39 @@
     background-color: #fff;
 }
 .content-housesPic .sun{
-    padding:28px 0 0 77px;
+    /*padding:28px 0 0 77px;*/
     color: #333333;
     background-color: #fff;
     font-size: 1.3em;
 }
-.content-housesPic .intro{
-    padding:50px 0 10px 77px;
-    background-color: #fff;
-    color: #333333;
-    line-height: 30px;
-    position: relative;
-    z-index: 2;
-}
-.content-housesPic .intro p{
-    color: #333333;
-    font-size: 1.3em;
-}
-.content-housesPic .intro .summary{
+
+.content-housesPic a{
     position: absolute;
-    left: 50px;
-    z-index: 3;
-    bottom: 20px;
-}
-.content-housesPic .intro .summary a{
     color: #fff;
     font-size: 1.4em;
+    z-index: 9;
 }
-.content-housesPic .intro .summary .dk{
-    margin-right: 96px;
+.content-housesPic .dk{
+   left: 50px;
+   top:0;
 }
-.content-housesPic .intro .summary .tj{
-    margin-right: 100px;
+.content-housesPic .tj{
+    left: 200px;
+    top:0;
 }
-.content-housesPic .intro .summary .ask{
+.content-housesPic .ask{
     padding-left: 30px;
+    left: 400px;
+    top:0;
     background:url("../image/housePic/cell.png") no-repeat 0 center;
 }
-.content-housesPic .intro .summaryBg{
-    position: absolute;
+.content-housesPic .summaryBg{
+    position: fixed;
     height: 90px;
+    line-height: 90px;
     width: 640px;
     opacity: 0.65;
-    left: 0;
-    bottom: 0;
-    background: url("../image/housePic/sx.png") no-repeat 380px 40px #000;
+    bottom: 110px;
+    background: url("../image/housePic/sx.png") no-repeat 350px 33px #000;
+    z-index: 8;
 }

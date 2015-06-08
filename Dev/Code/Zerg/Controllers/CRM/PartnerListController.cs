@@ -68,20 +68,22 @@ namespace Zerg.Controllers.CRM
         /// <returns></returns>
         [Description("查询经纪人下的合伙人List")]
         [HttpGet]
-        public HttpResponseMessage PartnerListDetailed(string userId)
+        public HttpResponseMessage PartnerListDetailed(int userId)
         {
             var partnerlistsearchcon = new PartnerListSearchCondition
             {
-                Brokers = _brokerService.GetBrokerById(Convert.ToInt32(userId))
+                Brokers = _brokerService.GetBrokerById(userId)
             };
-            var partnerList = _partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).Select(p => new
+            var partnerList = _partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).Where(p=>p.Broker.Id==userId).Select(p => new
                 {
                  Name=p.Brokername,
                  AddTime =p.Addtime,
                  regtime=p.Regtime, 
                  Phone=p.Phone,
                 Headphoto= p.Broker .Headphoto ,
-
+                Id=p.Id,
+                PartnerId=p.PartnerId
+              
                 }).ToList();
 
             return PageHelper.toJson(new { list = partnerList });
@@ -98,7 +100,7 @@ namespace Zerg.Controllers.CRM
         {
             var sech = new BrokerSearchCondition
             {
-                Phones = new[] { partnerList.Phone}
+                Phone = partnerList.Phone
             };
             var list = _brokerService.GetBrokersByCondition(sech).FirstOrDefault();
             if (list != null)
@@ -112,7 +114,7 @@ namespace Zerg.Controllers.CRM
                             Agentlevel = "",
                             Brokername = "",
                             PartnerId = 0,
-                            Phone = 0,
+                            Phone = partnerList.Phone,
                             Regtime = DateTime.Now,
                             Broker = null,
                             Uptime = DateTime.Now,
@@ -150,19 +152,30 @@ namespace Zerg.Controllers.CRM
         {
             if (brokerId == 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
 
-            var list = _partnerlistService.GetInviteForBroker(brokerId).Where(p => p.Status == EnumPartnerType.默认).Select(a => new
-            {
-                a.Id,
-                HeadPhoto = a.Broker.Headphoto,
-                BrokerName = a.Broker.Brokername,
-                AddTime = a.Addtime
-            }).ToList().Select(b => new
-            {
-                b.Id,
-                b.HeadPhoto,
-                b.BrokerName,
-                AddTime = b.AddTime.ToString("yyyy-MM-dd")
-            });
+            object list = null;
+
+          if(  _partnerlistService.GetInviteForBroker(brokerId).Where(p => p.Status == EnumPartnerType.默认).Count()>0)
+          {
+
+
+              list = _partnerlistService.GetInviteForBroker(brokerId).Where(p => p.Status == EnumPartnerType.默认).Select(a => new
+              {
+                  a.Id,
+                  HeadPhoto = a.Broker.Headphoto,
+                  BrokerName = a.Broker.Brokername,
+                  AddTime = a.Addtime
+              }).ToList().Select(b => new
+              {
+                  b.Id,
+                  b.HeadPhoto,
+                  b.BrokerName,
+                  AddTime = b.AddTime.ToString("yyyy-MM-dd")
+              });
+
+
+          }
+
+          
             return PageHelper.toJson(list);
         }
 

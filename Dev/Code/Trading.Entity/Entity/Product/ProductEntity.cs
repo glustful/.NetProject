@@ -30,11 +30,15 @@ namespace Trading.Entity.Model
         /// 商家名称
         /// </summary>
         public virtual string BussnessName { get; set; }
-		/// <summary>
+        /// <summary>
+        /// 推荐佣金
+        /// </summary>
+	    public virtual decimal RecCommission { get; set; }
+	    /// <summary>
 		/// 带客佣金
 		/// </summary>
 		public virtual decimal Commission { get; set; }
-            		/// <summary>
+        /// <summary>
 		/// 成交佣金
 		/// </summary>
         public virtual decimal Dealcommission { get; set; }

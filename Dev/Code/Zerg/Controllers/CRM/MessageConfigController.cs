@@ -154,6 +154,38 @@ namespace Zerg.Controllers.CRM
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
         }
+
+
+
+
+        [HttpGet]
+        public HttpResponseMessage  GetMessageConfigNameList()
+        {
+           
+
+            List<string> list = EnumToList(typeof(MessageConfigTypeEnum));         
+            return PageHelper.toJson(new { List = list});
+        }
+
+
+
+        /// <summary>
+        /// 将枚举转换成ArrayList
+        /// </summary>
+        /// <returns></returns>
+        public  List<string> EnumToList(Type enumType)
+        {
+            List<string> list = new List<string>();
+            foreach (int i in Enum.GetValues(enumType))
+            {
+               // ListItem listitem = new ListItem(Enum.GetName(enumType, i), i.ToString());
+                list.Add(Enum.GetName(enumType, i));
+            }
+
+            return list;
+        } 
+
+
         #endregion
     }
 }

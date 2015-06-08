@@ -12,29 +12,30 @@ namespace Trading.Entity.Model
 		/// DealType
 		/// </summary>
 		成交订单,
+        带客订单,
 	}
 }
 
 namespace Trading.Entity.Model
 {
 
-	public enum EnumShipStatus
+	public enum EnumOrderStatus
 	{
 		/// <summary>
-		/// WaitForView
+		/// 默认未处理
 		/// </summary>
-		未看房,
+		默认=0,
 		/// <summary>
-		/// MakeAppointment
+        /// 审核通过，等待流程结转
 		/// </summary>
-		已预约,
+		审核通过=1,
 		/// <summary>
 		/// HasViewedHouse
 		/// </summary>
-		已看房,
+		审核失败=-1,
 		/// <summary>
 		/// HasBuyedHouse
 		/// </summary>
-		已买房,
+		已结转=2,
 	}
 }

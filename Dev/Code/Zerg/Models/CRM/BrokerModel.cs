@@ -64,7 +64,7 @@ namespace Zerg.Models.CRM
         /// <summary>
         /// 电话
         /// </summary>
-        public virtual int Phone { get; set; }
+        public virtual string Phone { get; set; }
         /// <summary>
         /// QQ
         /// </summary>
@@ -73,6 +73,12 @@ namespace Zerg.Models.CRM
         /// 邮编
         /// </summary>
         public virtual int Zip { get; set; }
+        /// <summary>
+        /// EmAIL
+        /// </summary>
+        public virtual string Email { get; set; }
+      
+
         /// <summary>
         /// 头像
         /// </summary>

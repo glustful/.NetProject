@@ -11,9 +11,11 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Zerg.Common;
+using Zerg.Models.CRM;
 
 namespace Zerg.Controllers.CRM
 {
+    [AllowAnonymous ]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 经纪人管理  李洪亮  2015-05-04
@@ -45,7 +47,39 @@ namespace Zerg.Controllers.CRM
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
             }
-            return PageHelper.toJson(_brokerService.GetBrokerById(Convert.ToInt32(id)));
+            var brokerlist = _brokerService.GetBrokerById(Convert.ToInt32(id));
+            return PageHelper.toJson(new { List = brokerlist });
+        }
+
+        /// <summary>
+        /// 通过User查找经纪人
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetBrokerByUserId(string userId)
+        {
+            if (string.IsNullOrEmpty(userId) || !PageHelper.ValidateNumber(userId))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
+            }
+
+            var model = _brokerService.GetBrokerByUserId(Convert.ToInt32(userId));
+
+            if (model == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在！"));
+
+            var brokerInfo = new BrokerModel
+            {
+                Id = model.Id,
+                Brokername = model.Brokername,
+                Realname = model.Realname,
+                Nickname = model.Nickname,
+                Sexy = model.Sexy,
+                Sfz = model.Sfz,
+                Email = model.Email,
+            };
+
+            return PageHelper.toJson(brokerInfo);
         }
 
 
@@ -243,6 +277,40 @@ namespace Zerg.Controllers.CRM
             return PageHelper.toJson(new { List = brokersList});
         }
 
+
+        /// <summary>
+        /// 经纪人排行 返回前3条
+        /// </summary>
+        /// <returns></returns>
+
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage OrderByBrokerTopThree()
+        {
+
+
+            var brokersList = _brokerService.OrderbyBrokersList().Select(p => new
+            {
+                p.Id,
+                p.Brokername,
+                p.Agentlevel,
+                p.Amount
+
+            }).Take(3).ToList();
+
+            return PageHelper.toJson(new { List = brokersList });
+        }
+
+        [HttpPost]
+
+        /// <summary>
+        /// 发送短信
+        /// </summary>
+        /// <returns></returns>
+        public HttpResponseMessage SendSMS([FromBody] string  mobile)
+        {
+            return PageHelper.toJson(  SMSHelper.Sending(mobile, "[创富宝]短信接口测试，发送时间："+DateTime.Now.ToString()));
+
+        }
 
         #endregion
 

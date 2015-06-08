@@ -88,20 +88,12 @@
     display: inline-block;
     text-align: center;
     width:202px;
-    padding:77px 0 26px 0;
+    padding:27px 0 26px 0;
     color: #7a7a7a;
-    margin-top: 27px;
+     border-right: 1px solid #ebebeb;
 }
-.hero .star1{
-    background: url("../image/broker/1.png") no-repeat center 0;
-    border-right: 1px solid #f7f7f7;
-}
-.hero .star2{
-    background: url("../image/broker/2.png") no-repeat center 0;
-    border-right: 1px solid #f7f7f7;
-}
-.hero .star3{
-    background: url("../image/broker/3.png") no-repeat center 0;
+.hero small{
+    color: #f24c02;
 }
 .message .recommend{
     height: 59px;

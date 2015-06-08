@@ -1,14 +1,21 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.UI.WebControls;
+using CRM.Entity.Model;
+using CRM.Service.Broker;
+using CRM.Service.Level;
 using YooPoon.Core.Site;
 using YooPoon.WebFramework.Authentication;
+using YooPoon.WebFramework.Authentication.Entity;
 using YooPoon.WebFramework.User;
 using YooPoon.WebFramework.User.Entity;
 using YooPoon.WebFramework.User.Services;
 using Zerg.Common;
+using Zerg.Models.CRM;
 using Zerg.Models.UC;
 
 namespace Zerg.Controllers.UC
@@ -20,12 +27,24 @@ namespace Zerg.Controllers.UC
         private readonly IUserService _userService;
         private readonly IAuthenticationService _authenticationService;
         private readonly IWorkContext _workContext;
+        private readonly IBrokerService _brokerService;
+        private readonly IRoleService _roleService;
+        private readonly ILevelService _levelService;
 
-        public UserController(IUserService userService, IAuthenticationService authenticationService, IWorkContext workContext)
+        public UserController(IUserService userService, 
+            IAuthenticationService authenticationService, 
+            IWorkContext workContext,
+            IBrokerService brokerService,
+            IRoleService roleService,
+            ILevelService levelService
+            )
         {
             _userService = userService;
             _authenticationService = authenticationService;
             _workContext = workContext;
+            _brokerService = brokerService;
+            _roleService = roleService;
+            _levelService = levelService;
         }
 
         /// <summary>
@@ -45,7 +64,9 @@ namespace Zerg.Controllers.UC
             _authenticationService.SignIn(user, model.Remember);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "登陆成功", new
             {
-                Roles = user.UserRoles.Select(r => new { r.Role.RoleName }).ToArray()
+                user.Id,
+                Roles = user.UserRoles.Select(r => new { r.Role.RoleName }).ToArray(),
+                user.UserName
             }));
         }
 
@@ -89,6 +110,70 @@ namespace Zerg.Controllers.UC
             }
             return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
         }
+
+        /// <summary>
+        /// 前端添加新用户
+        /// </summary>
+        /// <param name="brokerModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage AddBroker([FromBody]BrokerModel brokerModel)
+        {
+            #region UC用户创建 杨定鹏 2015年5月28日14:52:48
+            var user = _userService.GetUserByName(brokerModel.UserName);
+
+            var condition = new BrokerSearchCondition
+            {
+                OrderBy = EnumBrokerSearchOrderBy.OrderById,
+                Phone = brokerModel.Phone
+            };
+
+            //判断user表和Broker表中是否存在用户名
+            int user2 = _brokerService.GetBrokerCount(condition);
+
+            if (user2 != 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
+
+            var newUser = new UserBase
+            {
+                UserName = brokerModel.Brokername,
+                Password = brokerModel.Password,
+                RegTime = DateTime.Now,
+                NormalizedName = brokerModel.UserName.ToLower(),
+                Status = 0
+            };
+            PasswordHelper.SetPasswordHashed(newUser, brokerModel.Password);
+
+            #endregion
+
+            #region Broker用户创建 杨定鹏 2015年5月28日14:53:32
+
+            var model = new BrokerEntity();
+            model.UserId = _userService.InsertUser(newUser).Id;
+            model.Brokername = brokerModel.Brokername;
+            model.Phone = brokerModel.Phone;
+            model.Totalpoints = 0;
+            model.Amount = 0;
+            model.Usertype = brokerModel.UserType;
+            model.Regtime = DateTime.Now;
+            model.State = 1;
+            model.Adduser = 0;
+            model.Addtime = DateTime.Now;
+            model.Upuser = 0;
+            model.Uptime = DateTime.Now;
+
+            //判断初始等级是否存在
+            var level = _levelService.GetLevelsByCondition(new LevelSearchCondition { Name = "默认等级" }).FirstOrDefault();
+            if (level == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "默认等级不存在，请联系管理员"));
+            model.Level = level;
+
+            _brokerService.Create(model);
+
+            #endregion
+
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
+        }
+
+
 
         [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
@@ -144,12 +229,13 @@ namespace Zerg.Controllers.UC
         }
 
         [HttpPost]
-        public HttpResponseMessage ChangePassword(string oldPassword,string newPassword)
+        public HttpResponseMessage ChangePassword([FromBody]ChangePasswordModel model)
         {
             var user =(UserBase) _workContext.CurrentUser;
-            if (user!=null && PasswordHelper.ValidatePasswordHashed(user,newPassword))
+            if (user!=null && PasswordHelper.ValidatePasswordHashed(user,model.OldPassword))
             {
-                PasswordHelper.SetPasswordHashed(user, newPassword);
+                PasswordHelper.SetPasswordHashed(user, model.NewPassword);
+                _userService.ModifyUser(user);
                 return PageHelper.toJson(PageHelper.ReturnValue(true,"数据更新成功！"));
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));

@@ -140,6 +140,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\CRM\AdminPayController.cs" />
+    <Compile Include="Controllers\CRM\BankController.cs" />
     <Compile Include="Controllers\CRM\BrokeAccountController.cs" />
     <Compile Include="Controllers\CRM\AdminRecomController.cs">
       <SubType>Code</SubType>
@@ -179,6 +180,7 @@
     <Compile Include="Controllers\CRM\RecommendAgentController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\CRM\SMSController.cs" />
     <Compile Include="Controllers\CRM\TaskController.cs" />
     <Compile Include="Controllers\CMS\AdvertisementController.cs" />
     <Compile Include="Controllers\CMS\ChannelController.cs" />
@@ -239,6 +241,7 @@
     <Compile Include="Models\CMS\TagModel.cs" />
     <Compile Include="Models\Trading\Product\ProductDetail.cs" />
     <Compile Include="Models\UC\ActionModel.cs" />
+    <Compile Include="Models\UC\ChangePasswordModel.cs" />
     <Compile Include="Models\UC\RoleModel.cs" />
     <Compile Include="Models\UC\UserModel.cs" />
     <Compile Include="Models\Trading\Product\ClassifyModel.cs" />

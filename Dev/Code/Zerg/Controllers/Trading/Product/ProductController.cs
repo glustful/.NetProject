@@ -152,19 +152,46 @@ namespace Zerg.Controllers.Trading.Product
                 OrderBy = EnumProductSearchOrderBy.OrderById
             };
             var productList = _productService.GetProductsByCondition(PSC).Select(a => new ProductDetail
-            {
+            {                
                 Id=a.Id,
                 Productname = a.Productname,
                 Productimg = a.Productimg,
                 Price = a.Price,
+
+                RecCommission=a.RecCommission,
+                Commission=a.Commission,
+                Dealcommission=a.Dealcommission,
+                ClassifyName=a.Classify.Name,
+                Addtime = a.Addtime,
+
                 SubTitle = a.SubTitle,
                 ProductDetailed = a.ProductDetail.Productdetail,
                 StockRule=a.Stockrule,
+                Advertisement = a.ProductDetail.Ad1,
                 Acreage = a.ProductParameter.FirstOrDefault(pp=>pp.Parameter.Name=="面积").ParameterValue.Parametervalue.ToString(),
                 Type = a.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString()
-            }).ToList();
+            }).ToList().Select(b=>new
+            {
+                b.Id,
+                b.Productname,
+                b.Productimg,
+                b.Price,
+
+                b.RecCommission,
+                b.Commission,
+                b.Dealcommission,
+                b.ClassifyName,
+                Addtime=b.Addtime.ToString("yyy-mm-dd"),
+
+                b.SubTitle,
+                b.ProductDetailed,
+                b.StockRule,
+                b.Acreage,
+                b.Type,
+                b.Advertisement
+            });
             var totalCount = _productService.GetProductCount(PSC);
-            return PageHelper.toJson(new { List =productList, TotalCount = totalCount });
+            return PageHelper.toJson(new { List =productList,Condition=PSC, TotalCount = totalCount });
             //return PageHelper.toJson(_productService.GetProductsByCondition(PSC).ToList());
         }
         /// <summary>
@@ -181,13 +208,16 @@ namespace Zerg.Controllers.Trading.Product
             {
                 Productname = product.Productname,
                 Productimg = product.ProductDetail.Productimg,
+                BrandImg = product.ProductBrand.Bimg,
                 Price = product.Price,
                 SubTitle = product.SubTitle,
+                Phone = product.ContactPhone,
+                Advertisement=product.ProductDetail.Ad2,
                 Productimg1 = product.ProductDetail.Productimg1,
                 Productimg2 = product.ProductDetail.Productimg2,
                 Productimg3 = product.ProductDetail.Productimg3,
                 Productimg4 = product.ProductDetail.Productimg4,
-                ProductDetailed = product.ProductDetail.Productdetail
+                ProductDetailed = product.ProductDetail.Productdetail,
             };
             return PageHelper.toJson(productDetail);
         }
@@ -229,20 +259,12 @@ namespace Zerg.Controllers.Trading.Product
         {
             var productList = _productService.GetProductsByCondition(condtion).Select(a => new ProductDetail
             {
-            //    Productname = a.Productname,
-            //    Price = a.Price,
-            //    SubTitle = a.SubTitle,
-            //    Productimg = a.ProductDetail.Productimg,
-            //    Productimg1 = a.ProductDetail.Productimg1,
-            //    Productimg2 = a.ProductDetail.Productimg2,
-            //    Productimg3 = a.ProductDetail.Productimg3,
-            //    Productimg4 = a.ProductDetail.Productimg4,
-            //    ProductDetailed=a.ProductDetail.Productdetail
                 Id =a.Id, 
                 Productname = a.Productname,
                 Productimg = a.Productimg,
                 Price = a.Price,
                 SubTitle = a.SubTitle,
+                Advertisement = a.ProductDetail.Ad1,
                 ProductDetailed = a.ProductDetail.Productdetail,
                 StockRule=a.Stockrule,
                 Acreage = a.ProductParameter.FirstOrDefault(pp=>pp.Parameter.Name=="面积").ParameterValue.Parametervalue.ToString(),

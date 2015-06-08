@@ -5,21 +5,21 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
     //初始化界面；
     $scope.rowCollectionBasic = [];
     $scope.rowCollectionParameter = [];
-    $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0).success(function (data) {
+    $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
         $scope.rowCollectionBasic = data;
     });
 
     //下一页；
     $scope.getAllBrand = function (pageIndex) {
-        $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0).success(function (data) {
+        $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
             $scope.rowCollectionBasic = data;
         });
     };
 
     //删除该项目；
     $scope.delBrand = function (brandId) {
-        $http.get(SETTING.ApiUrl + '/Brand/DelBrandById?brandId=' + brandId).success(function (data) {
-            $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0).success(function (data) {
+        $http.get(SETTING.ApiUrl + '/Brand/DelBrandById?brandId=' + brandId,{'withCredentials':true}).success(function (data) {
+            $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
                 $scope.rowCollectionBasic = data;
             });
             return $scope.output = data;
@@ -39,7 +39,7 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
             'withCredentials': true
         }).success(function (data) {
             WindowClose();
-            $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0).success(function (data) {
+            $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
                 $scope.rowCollectionBasic = data;
             });
             $scope.output = data;
@@ -50,7 +50,7 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
     $scope.selectBrandId=0;
     $scope.getBrandParameter = function (seletId) {
         $scope.selectBrandId=seletId;
-       $http.get(SETTING.ApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' + seletId).success(function (data) {
+       $http.get(SETTING.ApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' + seletId,{'withCredentials':true}).success(function (data) {
             $scope.rowCollectionParameter = data;
         });
     };
@@ -71,7 +71,7 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
             'withCredentials': true
         }).success(function (data) {
             AddParameterWindowClose();
-            $http.get(SETTING.TradingApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' + $scope.selectBrandId).success(function (data) {
+            $http.get(SETTING.TradingApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' + $scope.selectBrandId,{'withCredentials':true}).success(function (data) {
                 $scope.rowCollectionParameter = data;
             });
             $scope.output = data;
@@ -80,8 +80,8 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
 
     //删除项目参数值
     $scope.delBrandParameter=function (brandParameterId) {
-        $http.get(SETTING.ApiUrl + '/Brand/DelBrandParameter?brandParameterId=' + brandParameterId).success(function (data) {
-            $http.get(SETTING.ApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' +  $scope.selectBrandId).success(function (data) {
+        $http.get(SETTING.ApiUrl + '/Brand/DelBrandParameter?brandParameterId=' + brandParameterId,{'withCredentials':true}).success(function (data) {
+            $http.get(SETTING.ApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' +  $scope.selectBrandId,{'withCredentials':true}).success(function (data) {
                 $scope.rowCollectionParameter = data;
             });
             return $scope.output = data;
