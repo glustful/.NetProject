@@ -161,10 +161,20 @@ namespace Zerg.Controllers.UC
             model.Upuser = 0;
             model.Uptime = DateTime.Now;
 
-            //判断初始等级是否存在
+            //判断初始等级是否存在,否则创建
             var level = _levelService.GetLevelsByCondition(new LevelSearchCondition { Name = "默认等级" }).FirstOrDefault();
-            if (level == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "默认等级不存在，请联系管理员"));
-            model.Level = level;
+            if (level == null)
+            {
+                var levelModel = new LevelEntity
+                {
+                    Name = "默认等级",
+                    Describe = "系统默认初始创建",
+                    Url = "",
+                    Uptime = DateTime.Now,
+                    Addtime = DateTime.Now,
+                };
+                _levelService.Create(levelModel);
+            }
 
             _brokerService.Create(model);
 
