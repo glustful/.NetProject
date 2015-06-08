@@ -137,7 +137,7 @@ app  .run(
             templateUrl:'modules/partner_insert1/view/partner_insert1.html'
         })
         .state('app.groom',{
-            url:'/groom',
+            url:'/groom?name&type',
             templateUrl:'modules/groom/view/groom.html',
             resolve:load('modules/groom/controller/controller.js')
         })
@@ -210,10 +210,11 @@ app  .run(
         })
         .state('app.nominate',{
             url:'/nominate',
-            templateUrl:'modules/nominate/view/nominate.html'
+            templateUrl:'modules/nominate/view/nominate.html',
+            resolve:load('modules///storeroom/scripts/StoreRoom.js')
         })
         .state('app.carry_client',{
-            url:'/carry_client',
+            url:'/carry_client?name&type',
             templateUrl:'modules/carry_client/view/carry_client.html',
             resolve:load('modules/carry_client/controller/controller.js')
         })
@@ -245,6 +246,18 @@ app  .run(
             url:'/chip',
             templateUrl:'modules/chip/view/chip.html'
         })
+        .state('app.chipDetail',{
+            url:'/chipDetail',
+            templateUrl:'modules/chipDetail/view/chipDetail.html'
+        })
+        .state('app.chipEle',{
+            url:'/chipEle',
+            templateUrl:'modules/chipEle/view/chipEle.html'
+        })
+        .state('app.chipPartake',{
+            url:'/chipPartake',
+            templateUrl:'modules/chipPartake/view/chipPartake.html'
+        })
         .state('app.Auction',{
             url:'/Auction',
             templateUrl:'modules/Auction/view/Auction.html'
@@ -265,6 +278,19 @@ app  .run(
             url:'/CouponsOwn',
             templateUrl:'modules/CouponsOwn/view/CouponsOwn.html'
         })
+        .state('app.withdrawals',{
+            url:'/withdrawals',
+            templateUrl:'modules/withdrawals/view/withdrawals.html'
+        })
+        .state('app.withdrawalsDetail',{
+            url:'/withdrawalsDetail',
+            templateUrl:'modules/withdrawalsDetail/view/withdrawalsDetail.html'
+        })
+        .state('app.NoviceTask',{
+            url:'/NoviceTask',
+            templateUrl:'modules/NoviceTask/view/NoviceTask.html'
+        })
+
 
 
 
