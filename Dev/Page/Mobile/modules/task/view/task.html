@@ -12,15 +12,18 @@
          <!--</div>-->
      <!--</div>-->
 <div class="task-personal"ng-controller="taskController">
-    <ul ng-repeat="item in list"  >
+    <ul  ng-repeat="item in posts "  >
         <li class="cf">
             <p class="fl">{{item.Taskname}}<br/><span>{{item.awardname}}：{{item.awardvalue}}</span></p>
             <button ng-click="addTaskList(item.Id)" class="fr">去完成</button>
-
         </li>
-
     </ul>
     <label >{{warm}}</label>
-    <!--<input type="button" value="{{msg}} >共{{totalCount}} 条数据" id="nextPage" ng-click="nextPage()"   />-->
-</div>
+    <div style="line-height: 100px;text-align:center;">
+    <p draggable  ng-click="more()">{{tipp}}</p>
+    </div> </div>
 
+<!--<div    ng-controller="ClockCtrl">-->
+    <!--Current time is: {{ time }}-->
+<!--<div class="myDirective">afsd</div>-->
+<!--</div>-->

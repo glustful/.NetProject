@@ -2,27 +2,18 @@
 <!--required:../static/style/setting.css" rel="stylesheet-->
         <div class="security_content" ng-controller="SecuritySettingController">
                <p><label>旧密码</label></p>
-               <p><input type="password" class="form-control old"  placeholder="请输入旧密码"  required/></p>
+               <p><input type="password" class="form-control" placeholder="请输入旧密码" ng-model="password.oldPassword" required/></p>
             <div class="form-group">
-                <p><label  for="userPassword"> 新密码</label></p>
-                <p> <input type="password" class="form-control" id="userPassword" name="userPassword"
-                           placeholder="请输入密码" ng-model="selectedUser.userPassword"></p>
+                <p><label > 新密码</label></p>
+                <p> <input type="password" id="NewPassword1"  class="form-control" name="userPassword" placeholder="请输入密码"  required></p>
             </div>
-            <div class="form-group has-feedback"
-                 ng-class="{'has-success' : !usrMgrForm.confirmPassword.$pristine && usrMgrForm.confirmPassword.$valid,
-              'has-error' : !usrMgrForm.confirmPassword.$pristine && usrMgrForm.confirmPassword.$invalid }">
-                <label for="confirmPassword">确认密码</label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
-                       placeholder="请再次输入密码" ng-model="selectedUser.confirmPassword" pw-check="userPassword">
-                <div ng-show="!usrMgrForm.confirmPassword.$pristine && tagName.confirmPassword.$valid">
-                    <span class="glyphicon glyphicon-ok form-control-feedback"></span>
-                </div>
-                <div ng-show="!usrMgrForm.confirmPassword.$pristine && usrMgrForm.confirmPassword.$invalid">
-                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                </div>
+            <div >
+                <label>确认密码</label>
+                <input type="password" class="form-control" id="NewPassword2" name="confirmPassword" placeholder="请再次输入密码" ng-model="password.newPassword" onchange="check()" >
             </div>
-               <p class="pin"><input type="text" id="pin_blank"/><button>获取验证码</button></p>
-               <p><button class="save_button">保存</button></p>
+               <p class="pin"><input type="text" id="pin_blank" required/><button>获取验证码</button></p>
+            <label id="errorTip"></label>
+               <p><button class="save_button" ng-click="saveInfo()">保存</button></p>
 
         </div>
 
