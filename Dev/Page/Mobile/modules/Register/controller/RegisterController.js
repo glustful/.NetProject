@@ -32,8 +32,6 @@ app.controller('registerController',function($scope,$http,$state){
     $scope.GetSMS = function(){
         if($scope.register.Mobile!=""  && $scope.register.Mobile!=undefined)
         {
-//            var myreg = /^(((13[0-9]{1})|159|153)+\d{8})$/;
-//            if(!myreg.test($scope.register.Mobile))
              if(!/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i.test($scope.register.Mobile))
             {
                 alert('请输入有效的手机号码！');
