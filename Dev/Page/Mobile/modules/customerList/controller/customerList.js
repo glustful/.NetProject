@@ -28,7 +28,7 @@ app.controller('cusListController',['$http','$scope','AuthService',function($htt
 //隐藏显示元素
     $scope.visible = false;
     $scope.toggle = function (id) {
-       $("#"+id).fadeToggle();
+       $("#"+id).slideToggle("slow");
     }
   }]);
 
