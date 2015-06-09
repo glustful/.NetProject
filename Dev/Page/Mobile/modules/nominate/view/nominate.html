@@ -1,39 +1,97 @@
-<div class="nav-storeroom"><a class="area-storeroom" href="#">区域<span class="icon-storeroom"></span></a><a class="type-storeroom" href="#">类型<span class="icon-storeroom"></span></a><a class="price-storer" href="#">价格<span class="icon-storeroom"></span></a><a class="more-storeroom" href="#">更多<span class="icon-storeroom"></span></a></div>
-<p class="zg">共401个楼盘</p>
-<div class=" message-storeroom">
-    <div class="main-storeroom cf">
-        <a class="fl img" href="#/app/housesBuy"><img src="modules/nominate/static/image/nominate/pic1.png" alt="蓝光&nbsp;·&nbsp;颐明园"width="224" height="170"/></a>
-        <div class="detail-storeroom fl ">
-            <p class="yhy">蓝光&nbsp;·&nbsp;颐明园</p>
-            <p class="yuan">9500元/m²</p>
-            <p class="bj">三室两厅一卫一厨&nbsp;/&nbsp;128m²&nbsp;/&nbsp;在售15套</p>
-            <p class="yh">按揭9%优惠&nbsp;&nbsp;大户型&nbsp;&nbsp;二环边</p>
+
+<div ng-controller="StormRoomController" style="position: relative" class="StormRoom-content">
+    <div class="nav-storeroom cf" style="position: absolute;z-index:4;">
+        <div id="area"><a class="area-storeroom" href="#" ng-click="toggleProvince()">{{selectArea}}<span class="icon-storeroom"></span></a>
+        </div>
+        <div id="type"><a class="type-storeroom" href="#" ng-click="toggleType()">{{selectType}}<span class="icon-storeroom"></span></a>
+        </div>
+        <div id="price"><a class="price-storer" href="#" ng-click="togglePrice()">{{selectPrice}}<span class="icon-storeroom"></span></a></div>
+        <div id="condition" class="cf" ng-hide="condition">
+            <div id="province" ng-hide="province">
+                <ul>
+                    <li class="li" ng-class='{selected: $index==selectedRow}' ng-repeat="area in Area" ng-click="getCityList(area.Id,$index,area.AreaName)">{{area.AreaName}}</li>
+                </ul>
+            </div>
+            <div id="city" ng-hide="city">
+                <ul><li class="li" ng-class='{selected: $index==selectedRow1}' ng-repeat="areaCity in AreaCity" ng-click="getCountyList(areaCity.Id,$index,areaCity.AreaName)">{{areaCity.AreaName}}</li></ul>
+            </div>
+            <div id="county" ng-hide="county">
+                <ul><li class="li" ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li></ul>
+            </div>
+            <div class="type" ng-hide="type">
+                <ul><li class="typeOption" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId,type.TypeName)">{{type.TypeName}}</li></ul>
+            </div>
+            <div id="priceCondition" ng-hide="price">
+                <ul>
+                    <li class="priceOption" ng-click="getPriceCondition(0,4000)"><span>4000以下</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(4000,5000)"><span>4000</span>-<span>5000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(5000,6000)"><span>5000</span>-<span>6000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(6000,7000)"><span>6000</span>-<span>7000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(7000,8000)"><span>7000</span>-<span>8000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(8000,9000)"><span>8000</span>-<span>9000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(10000,50000)"><span>10000以上</span></li>
+                </ul>
+            </div>
         </div>
     </div>
-  <div class="IWant"><a href="#/app/carry_client"><button>我要带客</button></a><a href="#/app/groom"><button>我要推荐</button></a><a class="red-nominate" href="#/app/redPaper-1">红包</a><a  href="#/app/myInt">积分</a> </div>
-</div>
-<div class=" message-storeroom">
-    <div class="main-storeroom cf">
-        <a class="fl img" href="#/app/housesBuy"><img src="modules/nominate/static/image/nominate/pic1.png" alt="蓝光&nbsp;·&nbsp;颐明园" width="224" height="170"/></a>
-        <div class="detail-storeroom fl ">
-            <p class="yhy">蓝光&nbsp;·&nbsp;颐明园</p>
-            <p class="yuan">9500元/m²</p>
-            <p class="bj">三室两厅一卫一厨&nbsp;/&nbsp;128m²&nbsp;/&nbsp;在售15套</p>
-            <p class="yh">按揭9%优惠&nbsp;&nbsp;大户型&nbsp;&nbsp;二环边</p>
+    <div style="padding-top: 50px;">
+        <p class="zg">共{{Count}}个楼盘</p>
+        <div class=" message-storeroom" ng-repeat="item in List">
+            <div class="main-storeroom cf">
+                <a class="fl img" href="#/app/housesPic?productId={{item.Id}}"><img src="http://img.yoopoon.com/{{item.Productimg}}" alt="蓝光&nbsp;·&nbsp;颐明园"width="224" height="170"/></a>
+                <div class="detail-storeroom fl ">
+                    <p class="yhy">{{item.Productname}}</p>
+                    <p class="yuan">{{item.Price}}/m²</p>
+                    <p class="bj">{{item.Type}}&nbsp;/&nbsp;{{item.Acreage}}m²&nbsp;/&nbsp;在售{{item.StockRule}}套</p>
+                    <p class="yh">{{item.Advertisement}}</p>
+                </div>
+            </div>
+            <div class="IWant"><a href="#/app/carry_client?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}"><button>我要带客</button></a><a href="#/app/groom?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}"><button>我要推荐</button></a><a class="red-nominate" href="#/app/redPaper-1">红包</a><a  href="#/app/myInt">积分</a> </div>
         </div>
     </div>
-    <div class="IWant"><a href="#/app/carry_client"><button>我要带客</button></a><a href="#/app/groom"><button>我要推荐</button></a><a class="red-nominate" href="#/app/redPaper-1">红包</a><a href="#/app/myInt">积分</a> </div>
 </div>
-<div class=" message-storeroom show-half">
-    <div class="main-storeroom cf">
-        <a class="fl img" href="#/app/housesBuy"><img src="modules/nominate/static/image/nominate/pic1.png" alt="蓝光&nbsp;·&nbsp;颐明园" width="224" height="170"/></a>
-        <div class="detail-storeroom fl ">
-            <p class="yhy">蓝光&nbsp;·&nbsp;颐明园</p>
-            <p class="yuan">9500元/m²</p>
-            <p class="bj">三室两厅一卫一厨&nbsp;/&nbsp;128m²&nbsp;/&nbsp;在售15套</p>
-            <p class="yh">按揭9%优惠&nbsp;&nbsp;大户型&nbsp;&nbsp;二环边</p>
-        </div>
-    </div>
-    <div class="IWant"><a href="#/app/carry_client"><button>我要带客</button></a><a href="#/app/groom"><button>我要推荐</button></a><a class="red-nominate" href="#/app/redPaper-1">红包</a><a href="#/app/myInt">积分</a> </div>
-</div>
+
+
+
+
+
+
+<!--<div class="nav-storeroom"><a class="area-storeroom" href="#">区域<span class="icon-storeroom"></span></a><a class="type-storeroom" href="#">类型<span class="icon-storeroom"></span></a><a class="price-storer" href="#">价格<span class="icon-storeroom"></span></a><a class="more-storeroom" href="#">更多<span class="icon-storeroom"></span></a></div>-->
+<!--<p class="zg">共401个楼盘</p>-->
+<!--<div class=" message-storeroom">-->
+    <!--<div class="main-storeroom cf">-->
+        <!--<a class="fl img" href="#/app/housesBuy"><img src="modules/nominate/static/image/nominate/pic1.png" alt="蓝光&nbsp;·&nbsp;颐明园"width="224" height="170"/></a>-->
+        <!--<div class="detail-storeroom fl ">-->
+            <!--<p class="yhy">蓝光&nbsp;·&nbsp;颐明园</p>-->
+            <!--<p class="yuan">9500元/m²</p>-->
+            <!--<p class="bj">三室两厅一卫一厨&nbsp;/&nbsp;128m²&nbsp;/&nbsp;在售15套</p>-->
+            <!--<p class="yh">按揭9%优惠&nbsp;&nbsp;大户型&nbsp;&nbsp;二环边</p>-->
+        <!--</div>-->
+    <!--</div>-->
+  <!--<div class="IWant"><a href="#/app/carry_client"><button>我要带客</button></a><a href="#/app/groom"><button>我要推荐</button></a><a class="red-nominate" href="#/app/redPaper-1">红包</a><a  href="#/app/myInt">积分</a> </div>-->
+<!--</div>-->
+<!--<div class=" message-storeroom">-->
+    <!--<div class="main-storeroom cf">-->
+        <!--<a class="fl img" href="#/app/housesBuy"><img src="modules/nominate/static/image/nominate/pic1.png" alt="蓝光&nbsp;·&nbsp;颐明园" width="224" height="170"/></a>-->
+        <!--<div class="detail-storeroom fl ">-->
+            <!--<p class="yhy">蓝光&nbsp;·&nbsp;颐明园</p>-->
+            <!--<p class="yuan">9500元/m²</p>-->
+            <!--<p class="bj">三室两厅一卫一厨&nbsp;/&nbsp;128m²&nbsp;/&nbsp;在售15套</p>-->
+            <!--<p class="yh">按揭9%优惠&nbsp;&nbsp;大户型&nbsp;&nbsp;二环边</p>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="IWant"><a href="#/app/carry_client"><button>我要带客</button></a><a href="#/app/groom"><button>我要推荐</button></a><a class="red-nominate" href="#/app/redPaper-1">红包</a><a href="#/app/myInt">积分</a> </div>-->
+<!--</div>-->
+<!--<div class=" message-storeroom show-half">-->
+    <!--<div class="main-storeroom cf">-->
+        <!--<a class="fl img" href="#/app/housesBuy"><img src="modules/nominate/static/image/nominate/pic1.png" alt="蓝光&nbsp;·&nbsp;颐明园" width="224" height="170"/></a>-->
+        <!--<div class="detail-storeroom fl ">-->
+            <!--<p class="yhy">蓝光&nbsp;·&nbsp;颐明园</p>-->
+            <!--<p class="yuan">9500元/m²</p>-->
+            <!--<p class="bj">三室两厅一卫一厨&nbsp;/&nbsp;128m²&nbsp;/&nbsp;在售15套</p>-->
+            <!--<p class="yh">按揭9%优惠&nbsp;&nbsp;大户型&nbsp;&nbsp;二环边</p>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="IWant"><a href="#/app/carry_client"><button>我要带客</button></a><a href="#/app/groom"><button>我要推荐</button></a><a class="red-nominate" href="#/app/redPaper-1">红包</a><a href="#/app/myInt">积分</a> </div>-->
+<!--</div>-->
 
