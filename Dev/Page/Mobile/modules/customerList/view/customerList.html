@@ -4,37 +4,38 @@
     <ul ng-repeat="item in list" >
         <li class="lists">
             <div class="intro cf"><span class="fl name"><b>{{item.Clientname}}</b><br/><small>{{item.Housetype}}&nbsp;&nbsp;{{item.Houses}}</small></span><span class="fr tell">{{item.Phone}}</span></div>
-            &nbsp;
-            <!--<div class="last cf">带客进度：&nbsp;<small>5、返款成功</small><a href="#" class="icon fr"></a></div>-->
-            <!--<div class="detail-customerList" style="display: none">-->
-            <!--<div class="last cf">带客进度：&nbsp;<small>5、返款成功</small><a href="#" class="icon fr"></a>  </div>-->
-            <!--<div class="cf ">-->
-            <!--<div class="imgList fl" ></div>-->
-            <!--<ul class="fl">-->
-            <!--<li>-->
-            <!--<p>信息提交，等待审核</p>-->
-            <!--<p>2015-04-26 11:57:09</p>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<p>审核成功，等待上访</p>-->
-            <!--<p>2015-04-26 18:00:09</p>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<p>上访成功，洽谈中</p>-->
-            <!--<p>2015-04-26 11:57:09</p>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<p>交易成功</p>-->
-            <!--<p>2015-04-26 11:57:09</p>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<p>返款成功</p>-->
-            <!--<p>2015-04-26 11:57:09</p>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</div>-->
-            <!--</div>-->
-        </li>
+
+            <div ng-click="toggle()"ng-show="parentVi" class="last cf">带客进度：&nbsp;<small>5、返款成功</small><a href="#" class="icon fr"></a></div>
+        <div ng-show="visible">
+            <div  class="detail-customerList" >
+            <div class="last cf">带客进度：&nbsp;<small>5、返款成功</small><a href="#" class="icon fr"></a>  </div>
+            <div class="cf ">
+            <div class="imgList fl" ></div>
+            <ul class="fl">
+            <li>
+            <p>信息提交，等待审核</p>
+            <p>2015-04-26 11:57:09</p>
+            </li>
+            <li>
+            <p>审核成功，等待上访</p>
+            <p>2015-04-26 18:00:09</p>
+            </li>
+            <li>
+            <p>上访成功，洽谈中</p>
+            <p>2015-04-26 11:57:09</p>
+            </li>
+            <li>
+            <p>交易成功</p>
+            <p>2015-04-26 11:57:09</p>
+            </li>
+            <li>
+            <p>返款成功</p>
+            <p>2015-04-26 11:57:09</p>
+            </li>
+            </ul>
+            </div>
+            </div>
+        </div>   </li>
         <!--<li class="lists">-->
         <!--<div class="intro cf"><span class="fl name"><b>杨婷</b><br/><small>50万-90万，五华区官渡区，三室/四室...</small></span><span class="fr tell">13987112345</span></div>-->
         <!--<div class="last cf">带客进度：&nbsp;<small>5、返款成功</small><a href="#" class="icon fr"></a></div>-->

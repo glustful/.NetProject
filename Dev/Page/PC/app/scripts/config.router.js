@@ -56,7 +56,7 @@ angular.module('app')
               templateUrl: 'views/pages/dashboard.html',
               data : { title: 'Dashboard' },
               resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js']),
-              access:["admin"]
+              access:["admin","broker"]
             })
 
             .state('app.wall', {
@@ -926,6 +926,33 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/Partner.js')
             })
 
+
+            .state('page.CRM.BankSet', {
+                url: '/BankSet',
+                template: '<div ui-view></div>'
+            })
+            .state('page.CRM.BankSet.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/BankSet/index.html',
+                data: { title: '银行列表' },
+                //controller: 'Message',
+                resolve: load('scripts/controllers/CRM/bankset.js')
+            })
+            .state('page.CRM.BankSet.create', {
+                url: '/create',
+                templateUrl: 'views/pages/CRM/BankSet/create.html',
+                data : { title: '银行新建' },
+                resolve:load('scripts/controllers/CRM/bankset.js')
+            })
+            .state('page.CRM.BankSet.edit', {
+                url: '/edit?id',
+                templateUrl: 'views/pages/CRM/BankSet/edit.html',
+                data : { title: '银行编辑' },
+                resolve:load('scripts/controllers/CRM/bankset.js')
+            })
+
+
+
               .state('page.CRM.configure', {
                   url: '/configure',
                   template: '<div ui-view></div>'
@@ -997,29 +1024,7 @@ angular.module('app')
 
 
 
-            .state('page.CRM.BankSet', {
-                url: '/BankSet',
-                template: '<div ui-view></div>'
-            })
-            .state('page.CRM.BankSet.index', {
-                url: '/index',
-                templateUrl: 'views/pages/CRM/BankSet/index.html',
-                data: { title: '银行列表' },
-                //controller: 'Message',
-                resolve: load('scripts/controllers/CRM/bankset.js')
-            })
-            .state('page.CRM.BankSet.create', {
-                url: '/create',
-                templateUrl: 'views/pages/CRM/BankSet/create.html',
-                data : { title: '银行新建' },
-                resolve:load('scripts/controllers/CRM/bankset.js')
-            })
-            .state('page.CRM.BankSet.edit', {
-                url: '/edit?id',
-                templateUrl: 'views/pages/CRM/BankSet/edit.html',
-                data : { title: '银行编辑' },
-                resolve:load('scripts/controllers/CRM/bankset.js')
-            })
+
 
 
 

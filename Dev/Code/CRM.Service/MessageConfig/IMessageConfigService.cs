@@ -14,6 +14,8 @@ namespace CRM.Service.MessageConfig
 
 		MessageConfigEntity GetMessageConfigById (int id);
 
+        MessageConfigEntity GetMessageConfigByName(string  name);
+
 		IQueryable<MessageConfigEntity> GetMessageConfigsByCondition(MessageConfigSearchCondition condition);
 
 		int GetMessageConfigCount (MessageConfigSearchCondition condition);

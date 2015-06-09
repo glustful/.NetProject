@@ -54,7 +54,7 @@ namespace CRM.Entity.Model
 		public string Taskname { get; set; }
         public string TasknameRe { get; set; }
 
-
+    
 
 		public DateTime? EndtimeBegin { get; set; }
 
