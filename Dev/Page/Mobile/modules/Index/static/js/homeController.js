@@ -7,6 +7,18 @@ app.controller('homeController',['$http','$scope',function($http,$scope){
             $scope.BrandList=data;
 
     });
+    $scope.channelName='banner'
+    $http.get(SETTING.ApiUrl+'/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
+        $scope.content=data;
+
+    });
+    $scope.channelName='活动'
+    $http.get(SETTING.ApiUrl+'/Channel/GetActiveTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
+        $scope.Actcontent=data;
+
+    });
+
+
 
 }]);
 

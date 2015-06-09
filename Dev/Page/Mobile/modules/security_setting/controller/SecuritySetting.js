@@ -1,13 +1,15 @@
 /**
  * Created by gaofengming on 2015/5/28.
  */
-app.controller('SecuritySettingController',function($scope,$http){
+app.controller('SecuritySettingController',function($scope,$http,$state){
     $scope.password ={
         oldPassword:'',
         newPassword:''
     } ;
     $scope.saveInfo=function(){
-        $http.post(SETTING.ApiUrl+'/User/ChangePassword',$scope.password,{'withCredentials':true}).success(function(data){ })
+        $http.post(SETTING.ApiUrl+'/User/ChangePassword',$scope.password,{'withCredentials':true}).success(function(data){
+        $state.go('app.setting')
+        })
     }
 
 })

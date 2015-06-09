@@ -16,6 +16,17 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
     $scope.selectArea='区域';
     $scope.selectType='类型';
     $scope.selectPrice='价格';
+    //条件重置
+    $scope.Reset=function(){
+        $scope.searchCondition.AreaName='';
+        $scope.searchCondition.TypeId='';
+        $scope.searchCondition.PriceBegin='';
+        $scope.searchCondition.PriceEnd='';
+        $scope.searchProduct();
+        $scope.selectArea='区域';
+        $scope.selectType='类型';
+        $scope.selectPrice='价格';
+    }
     //获取户型条件
     $scope.getTypeCondition= function(value,typeName){
         $scope.searchCondition.TypeId = value;
@@ -68,20 +79,25 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
     }
     //根据条件获取product
      $scope.searchProduct=function(){
-         $http.get(SETTING.ApiUrl+'/Product/GetSearchProduct',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
+         $http.get(SETTING.ApiUrl+'/Product/GetSearchProduct',{
+             params:$scope.searchCondition,
+             'withCredentials':true
+         })
+             .success(function(data){
              $scope.List =data.List;
              $scope.Count=data.TotalCount;
          })
      };
+    $scope.searchProduct();
     //获取所有商品
-    $http.get(SETTING.ApiUrl + '/Product/GetAllProduct',{'withCredentials':true}).success(function(data){
-        $scope.List =data.List;
-        $scope.Count=data.TotalCount;
-    });
-    $http.get(SETTING.ApiUrl + '/Condition/GetCondition',{'withCredentials':true}).success(function(data){
-        $scope.Area =data.AreaList;
-        $scope.Type=data.TypeList;
-    });
+//    $http.get(SETTING.ApiUrl + '/Product/GetSearchProduct',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
+//        $scope.List =data.List;
+//        $scope.Count=data.TotalCount;
+//    });
+        $http.get(SETTING.ApiUrl + '/Condition/GetCondition',{'withCredentials':true}).success(function(data){
+            $scope.Area =data.AreaList;
+            $scope.Type=data.TypeList;
+        });
     //获取省对应的市
     $scope.getCityList=function(id,row){
         $scope.selectedRow = row;
@@ -115,7 +131,6 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
         $scope.province=!$scope.province;
         $scope.city=!$scope.city;
         $scope.county=!$scope.county;
-//        $scope.selectedRow=null;
         if($scope.price==false)
         {
             $scope.price=!$scope.price;
@@ -124,14 +139,6 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
         {
             $scope.type=!$scope.type;
         }
-//        if($scope.city==false)
-//        {
-//            $scope.city=!$scope.city;
-//        }
-//        if($scope.county==false)
-//        {
-//            $scope.county=!$scope.county;
-//        }
     }
     //展开户型
     $scope.toggleType = function() {

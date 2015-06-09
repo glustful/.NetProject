@@ -10,18 +10,17 @@
                     <p><a href="#/app/myPurse"><button>提取佣金</button></a></p>
                 </div>
             </div>
-            <div class="task-personal">
-                <div class="todayTask">今日任务（2）</div>
-                <ul>
+            <div class="task-personal" ng-controller="taskController">
+                <div class="todayTask">今日任务({{ttcount}})</div>
+                <ul  ng-repeat="item in posts">
                     <li class="cf">
-                        <p class="fl">1/推荐一个朋友成为经济人<br/><span>获得佣金：20.00元&nbsp;/&nbsp;积分：90分</span></p>
-                        <button class="fr">去完成</button>
-
+                        <p class="fl">{{item.Taskname}}<br/><span>{{item.awardname}}：{{item.awardvalue}}</span></p>
+                        <button ng-click="addTaskList(item.Id)" class="fr">去完成</button>
                     </li>
-                    <li class="cf">
-                       <p class="fl">2/带客上访一次<br/><span>获得佣金：100.00元&nbsp;/&nbsp;积分：300分</span></p>
-                        <button class="fr">去完成</button>
-                    </li>
+                    <!--<li class="cf">-->
+                       <!--<p class="fl">2/带客上访一次<br/><span>获得佣金：100.00元&nbsp;/&nbsp;积分：300分</span></p>-->
+                        <!--<button class="fr">去完成</button>-->
+                    <!--</li>-->
                 </ul>
             </div>
             <div class="activity-personal">
