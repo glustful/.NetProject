@@ -77,6 +77,8 @@ namespace Zerg.Controllers.CRM
                 Sexy = model.Sexy,
                 Sfz = model.Sfz,
                 Email = model.Email,
+                Phone=model.Phone,
+                Headphoto=model.Headphoto
             };
 
             return PageHelper.toJson(brokerInfo);
@@ -187,6 +189,9 @@ namespace Zerg.Controllers.CRM
                 brokerModel.Brokername = broker.Brokername;
                 brokerModel.Phone = broker.Phone;
                 brokerModel.Sfz = broker.Sfz;
+                brokerModel.Email = broker.Email;
+                brokerModel.Realname = broker.Realname;
+                brokerModel.Sexy = broker.Sexy;
 
                 try
                 {
