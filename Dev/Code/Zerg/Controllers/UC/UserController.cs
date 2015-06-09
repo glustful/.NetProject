@@ -122,6 +122,7 @@ namespace Zerg.Controllers.UC
         {
             if (string.IsNullOrEmpty(brokerModel.Brokername)) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名不能为空"));
             if (string.IsNullOrEmpty(brokerModel.Password)) return PageHelper.toJson(PageHelper.ReturnValue(false, "密码不能为空"));
+            if (string.IsNullOrEmpty(brokerModel.Phone)) return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号不能为空"));
 
             #region UC用户创建 杨定鹏 2015年5月28日14:52:48
             var user = _userService.GetUserByName(brokerModel.UserName);
