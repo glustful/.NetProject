@@ -3,7 +3,7 @@
  */
 app.controller("tuijianController",['$http','$scope','$stateParams','AuthService',function($http,$scope,$stateParams,AuthService){
     $scope.BrokerRECClientEntity={
-        UserId:null,
+        AddUser:null,
         ClientInfo:null,
         Qq:'',
         Type:'',
@@ -18,7 +18,7 @@ app.controller("tuijianController",['$http','$scope','$stateParams','AuthService
         Note:''
     };
     $scope.currentUser=AuthService.CurrentUser();
-    $scope.BrokerRECClientEntity.UserId = $scope.currentUser.UserId;
+    $scope.BrokerRECClientEntity.AddUser = $scope.currentUser.UserId;
     $scope.BrokerRECClient.ProjectId=$stateParams.projectid;
     $scope.BrokerRECClientEntity.Houses=$stateParams.name;
     $scope.BrokerRECClientEntity.HouseType=$stateParams.type;
