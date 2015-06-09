@@ -151,7 +151,18 @@ namespace Zerg.Models.CRM
         /// 添加/删除类型
         /// </summary>
         public virtual string Type { get; set; }
-
+        /// <summary>
+        /// 验证码
+        /// </summary>
+        public virtual string MobileYzm { get; set; }
+        /// <summary>
+        /// 验证码密文
+        /// </summary>
+        public virtual string Hidm { get; set; }
+        /// <summary>
+        /// 确认密码
+        /// </summary>
+        public virtual string SecondPassword { get; set; }
 
         /// <summary>
         /// 用户类型枚举 （经纪人 broker  ，  管理员 manager）
