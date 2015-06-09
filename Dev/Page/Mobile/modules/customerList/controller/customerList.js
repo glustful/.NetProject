@@ -1,7 +1,7 @@
 /**
  * Created by 黄秀宇 on 2015/6/1.
  */
-app.controller('cusListController',['$http','$scope',function($http,$scope) {
+app.controller('cusListController',['$http','$scope','AuthService',function($http,$scope,AuthService) {
     $scope.searchCondition = {
         id:5,
         page: 1,
@@ -11,6 +11,7 @@ app.controller('cusListController',['$http','$scope',function($http,$scope) {
     $scope.parentVi=true;
     //查询客户
     var getcustomerList  = function() {
+        //$scope.searchCondition.id=AuthService.userId ;
         $http.get(SETTING.ApiUrl+'/ClientInfo/ClientInfo/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
             console.log(data);
             if(data.clientModel!=null){
