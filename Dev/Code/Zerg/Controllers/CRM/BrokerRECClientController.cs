@@ -130,12 +130,12 @@ namespace Zerg.Controllers.CRM
              var num = _orderService.CreateOrderNumber();
 
              //查询商品详情
-             var product = _productService.GetProductById(1);
+             var product = _productService.GetProductById(brokerrecclient.Projectid);
 
              //创建订单详情
              OrderDetailEntity ode = new OrderDetailEntity();
              ode.Adddate = DateTime.Now;
-             ode.Adduser = "2";//_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
+             ode.Adduser = brokerrecclient.Adduser.ToString();
              ode.Commission = product.Commission;
              ode.RecCommission = product.RecCommission;
              ode.Dealcommission = product.Dealcommission;
@@ -145,14 +145,14 @@ namespace Zerg.Controllers.CRM
                  //ode.Remark = product.
                  //ode.Snapshoturl = orderDetailModel.Snapshoturl,
              ode.Upddate = DateTime.Now;
-             ode.Upduser = "2";//_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture)
+             ode.Upduser = brokerrecclient.Adduser.ToString();
 
              //创建订单
              OrderEntity oe = new OrderEntity
              {
                  Adddate = DateTime.Now,
-                 Adduser ="2", //_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
-                 AgentId = 2, //_workContext.CurrentUser.Id,
+                 Adduser =brokerrecclient.Adduser.ToString(),
+                 AgentId = brokerrecclient.Adduser,
                  Agentname = brokerrecclient.Brokername,
                  Agenttel = brokerrecclient.Phone,
                  BusId = product.Bussnessid,
@@ -165,7 +165,7 @@ namespace Zerg.Controllers.CRM
                  Shipstatus = (int)EnumBRECCType.审核中,
                  Status = (int)EnumOrderStatus.默认,
                  Upddate = DateTime.Now,
-                 Upduser ="2" //_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture)
+                 Upduser =brokerrecclient.Adduser.ToString()
              };
 
              //创建成交订单
@@ -179,21 +179,25 @@ namespace Zerg.Controllers.CRM
              #endregion
 
              cmodel = _clientInfoService.GetClientInfosByCondition(sech).First();
+             var broker = _brokerService.GetBrokerByUserId(brokerrecclient.Adduser);
 
              //创建推荐流程
-             var model = new BrokerRECClientEntity
-             {
-                 Broker = _brokerService.GetBrokerById(2),
-                 ClientInfo = cmodel,
-                 Adduser =2, //_workContext.CurrentUser.Id,
-                 Addtime = DateTime.Now,
-                 Upuser =2, //_workContext.CurrentUser.Id,
-                 Uptime = DateTime.Now,
-                 Projectid = brokerrecclient.Projectid,
-                 Status = EnumBRECCType.等待上访,
-                 RecOrder = _orderService.Create(oe).Id,        //添加推荐订单；
-                 DealOrder = _orderService.Create(oe2).Id,       //添加成交订单
-             };
+             var model = new BrokerRECClientEntity();
+             model.Broker = _brokerService.GetBrokerById(brokerrecclient.Adduser);
+                  model.ClientInfo = cmodel;
+                  model.Clientname = brokerrecclient.Clientname;
+                  model.Phone = brokerrecclient.Qq;
+                  model.Brokername = broker.Brokername;
+                  model.Brokerlevel = broker.Level.Name;
+                  model.Broker = broker;
+                  model.Adduser = brokerrecclient.Adduser;
+                  model.Addtime = DateTime.Now;
+                  model.Upuser = brokerrecclient.Adduser;
+                  model.Uptime = DateTime.Now;
+                  model.Projectid = brokerrecclient.Projectid;
+                  model.Status = EnumBRECCType.等待上访;
+                  model.RecOrder = _orderService.Create(oe).Id;      //添加推荐订单；
+                  model.DealOrder = _orderService.Create(oe2).Id;       //添加成交订单
 
              BrokerRecClientService.Create(model);
 
