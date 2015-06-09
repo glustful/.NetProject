@@ -6,22 +6,15 @@ app.controller('registerController',function($scope,$http,$state){
         UserName:'',
         Password:'',
         SecondPassword:'',
-        Mobile:'',
+        Phone:'',
         MobileYzm:'',
         Hidm:''
     }
     $scope.registerSubmit = function(){
-        //if($scope.Brokername==null||$scope.UserName==null||$scope.Phone==null||$scope.Password==null){
-        //     $scope.register_error='Honey，请填完再走嘛！';
-        //    return;
-        //}
-        //else{
         $http.post(SETTING.ApiUrl+'/User/AddBroker',$scope.register,{'withCredentials':true}).success(function(data){
             console.log(data);
             $state.go('user.login')
         })
-        //}
-
     }
 
 
@@ -30,22 +23,25 @@ app.controller('registerController',function($scope,$http,$state){
         SmsType:'0'
     }
     $scope.GetSMS = function(){
-        if($scope.register.Mobile!=""  && $scope.register.Mobile!=undefined)
+        if($scope.register.Phone!=""  && $scope.register.Phone!=undefined)
         {
-//            var myreg = /^(((13[0-9]{1})|159|153)+\d{8})$/;
-//            if(!myreg.test($scope.register.Mobile))
-             if(!/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i.test($scope.register.Mobile))
+             if(!/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i.test($scope.register.Phone))
             {
                 alert('请输入有效的手机号码！');
                 return false;
             }else
             {
-             $scope.YZM.Mobile=$scope.register.Mobile;
+                settime();
+             $scope.YZM.Mobile=$scope.register.Phone;
              $http.post(SETTING.ApiUrl+'/SMS/SendSMS', $scope.YZM,{'withCredentials':true}).success(function(data){
 
-            // $scope.PinSMS=data
-             // settime();
-
+              alert(data);
+                 if (data.Message=="1")
+                 {
+                     $scope.register.Hidm=data.Desstr;
+                 }else{
+                     alert("短信发送失败，请与客户联系！");
+                 }
             });
             }
 
@@ -54,12 +50,7 @@ app.controller('registerController',function($scope,$http,$state){
         }
 
     }
-
-
-
-
 })
-
 
 var countdown=60;
 function settime() {

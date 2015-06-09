@@ -19,6 +19,7 @@ namespace Zerg.Models.CRM
         /// 经纪人ID
         /// </summary>
         public virtual int  BrokerId { get; set; }
+        public virtual int UserId { get; set; }
         /// <summary>
         /// 任务进度
         /// </summary>
