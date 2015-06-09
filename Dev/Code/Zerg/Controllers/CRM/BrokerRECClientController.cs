@@ -90,7 +90,6 @@ namespace Zerg.Controllers.CRM
              {
                  Clientname = brokerrecclient.Clientname,
                  Phone = brokerrecclient.Phone.ToString(CultureInfo.InvariantCulture)
-
              };
 
              var cmodel = _clientInfoService.GetClientInfosByCondition(sech).FirstOrDefault();

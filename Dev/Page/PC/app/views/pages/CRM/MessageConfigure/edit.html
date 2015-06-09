@@ -1,7 +1,10 @@
 <form name="form" id="form" ng-controller="MessageConfigEditController" ng-submit="Save()">
     <div class="panel panel-default">
         <div class="panel-body">
-            <div class="bottom" ><label for="Title">标题： </label> <input  name="Title" type="text" ng-model="MessageConfigModel.Name"></div>
+            <div class="bottom" ><label for="Title">标题： </label>
+                <select class="card_information" name="Title" placeholder="请选择模板标题" ng-model="MessageConfigModel.Name">
+                <option ng-repeat="item in list" value="{{item}}">{{item}}</option>
+            </select>
 
             <div class="bottom" ><label for="Content">配置： </label>
                 <textarea name="Content" id="Content" cols="42" rows="10" ng-model="MessageConfigModel.Template"></textarea>
