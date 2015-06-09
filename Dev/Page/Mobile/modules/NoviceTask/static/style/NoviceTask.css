@@ -1,0 +1,49 @@
+.NoviceTask-bg{
+    position:relative;
+    background-color:#00ca81;
+    width: 640px;
+    height: 4000px;
+}
+.NoviceTask-content .headImg{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+.NoviceTask-content .flag{
+    position: absolute;
+    z-index: 2;
+    top:491px;
+    left:300px;
+}
+.NoviceTask-content .line{
+    position: absolute;
+    z-index: 2;
+    top:560px;
+    left: 40px;
+}
+.NoviceTask-content .notebook{
+    position: absolute;
+    z-index: 2;
+    top:612px;
+    left: 20px;
+}
+.NoviceTask-content .EnterTask{
+    position: absolute;
+    z-index: 2;
+    top:630px;
+    left: 300px;
+    text-align:center;
+    line-height: 40px;
+}
+.NoviceTask-content .EnterTask .PerfectData{
+    font-size: 1.9em;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px #848484;
+}
+.NoviceTask-content .EnterTask p{
+   font-size: 1.2em;
+   color: #fff;
+    margin-bottom: 10px;
+}
