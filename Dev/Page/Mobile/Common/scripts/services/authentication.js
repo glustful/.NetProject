@@ -72,7 +72,7 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
      * @param callback
      * @param faildCallback
      */
-    this.doLogin = function(userName,password,callback,faildCallback){
+    this.doLogin = function(userName,password,callback,faildCallback,netErrorCallback){
         $http.post(SETTING.ApiUrl+"/user/login",
             {
                 UserName:userName,
@@ -89,11 +89,11 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
                     _isAuthenticated = true;
                     $localStorage.UserRoles=data.Object.Roles;
                     if(typeof(callback) === 'function')
-                        callback();
+                        callback(data);
                 }else{
                     if(typeof(faildCallback) === 'function')
-                        faildCallback();
+                        faildCallback(data);
                 }
-            });
+            }).error(netErrorCallback);
     };
 }]);
