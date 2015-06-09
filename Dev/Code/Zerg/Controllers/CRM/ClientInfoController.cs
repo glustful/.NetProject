@@ -176,20 +176,43 @@ namespace Zerg.Controllers.CRM
                   {
                       Addusers=broker.Id
                   };
-              var list=    _clientInfoService.GetClientInfosByCondition(condition).Select(p => new
+              var list= _clientInfoService.GetClientInfosByCondition(condition).Select(p => new
                   {
                       p.Clientname,
                       p.Phone,
-                      p.Id
+                      p.Id,
+                      p.Housetype,
+                      p.Houses
 
                   }).ToList();
+              int count = _clientInfoService.GetClientInfoCount(condition);
 
               return PageHelper.toJson(new { list = list });
               }
               return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
                     
         }
-       
+         /// <summary>
+         /// 通过经纪人ID查询他的客户数量
+         /// </summary>
+         /// <returns></returns>
+         public HttpResponseMessage GetClientInfoNumByUserId()
+         {
+             var user = (UserBase)_workContext.CurrentUser;
+             if (user != null)
+             {
+                 var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
+                 var condition = new ClientInfoSearchCondition
+                 {
+                     Addusers = broker.Id
+                 };
+                 int count = _clientInfoService.GetClientInfoCount(condition);
+
+                 return PageHelper.toJson(new { tocount = count });
+             }
+             return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+
+         }
 
         #endregion
 

@@ -61,7 +61,7 @@ app.controller('taskController',['$http','$scope','AuthService',function($http,$
     };
     $scope.addcondition={
         TaskId:0,
-        BrokerId:2,//经纪人ID
+        UserId:0,//用户ID
         Taskschedule:'1',
         Type:'add'
     }
@@ -96,21 +96,17 @@ app.controller('taskController',['$http','$scope','AuthService',function($http,$
                     $scope.tipp = "没有更多了";
                 }
             }
-            else {
+            else
+            {
                 $scope.tipp = "没有更多了";
             }
-
-
     };
     pushContent();
-
     $scope.more=pushContent;
-
-
     //接受任务
     var addlist=function(id){
         $scope.addcondition.TaskId=id;
-        $scope.addcondition.brokerId=AuthService.userId ;
+       $scope.addcondition.UserId=AuthService.CurrentUser().UserId ;
         $http.post(SETTING.ApiUrl+'/Task/AddTaskList/',$scope.addcondition).success(function(data){
             console.log(data);
             if(data.Status){
@@ -121,33 +117,5 @@ app.controller('taskController',['$http','$scope','AuthService',function($http,$
         });
     };
     $scope.addTaskList = addlist;
-
 }]);
-//app.controller('ClockCtrl',['$http','$scope','time',function($http,$scope, time) {
-// $scope.time= time ;
-//
-//}]);
-//app.factory('time', function($timeout) {
-//    var time={};
-//
-//    (function tick() {
-//        time.now= new Date().toString();
-//        $timeout(tick, 1000);
-//
-//    })();
-//    return time;
-//});
-//app.directive('whenScrolled', function() {
-//    return function ss(scope, element, attrs) {
-//        var raw = element[0];
-//        alert(raw.scrollTop);
-//        angular.element($window).bind('scroll', function () {
-//            alert(raw.scrollTop);
-//            if (raw.scrollTop+raw.offsetHeight >= raw.scrollHeight) {
-//                scope.$apply(attrs.whenScrolled);
-//            }
-//
-//        });
-//      //  $timeout(alert(raw.scrollTop), 500);
-//    };
-//});
+

@@ -17,6 +17,7 @@ using Zerg.Models.CRM;
 using CRM.Service.Broker;
 using System.Text.RegularExpressions;
 using YooPoon.Core.Site;
+using YooPoon.WebFramework.User.Entity;
 
 namespace Zerg.Controllers.CRM
 {
@@ -397,10 +398,19 @@ namespace Zerg.Controllers.CRM
         [HttpPost]
         public HttpResponseMessage AddTaskList([FromBody]TaskListModel  taskListModel)
         {
-            
-              
-                
-               
+            //var user = (UserBase)_workContext.CurrentUser;
+            //  if (user != null)
+            //  {
+            //      var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
+             
+                var model = new TaskListEntity
+                {
+                    Task = _taskService .GetTaskById (taskListModel.TaskId),
+                    Broker = _brokerService.GetBrokerByUserId(taskListModel .UserId),
+                    Taskschedule =taskListModel .Taskschedule ,
+
+                  
+                };
                 //var mo1 = new TaskListSearchCondition
                 //{
                 //    TaskId  = taskListModel.TaskId 
@@ -413,14 +423,6 @@ namespace Zerg.Controllers.CRM
                 //    {
                         try
                         {
-                            var model = new TaskListEntity
-                            {
-                                Task = _taskService.GetTaskById(taskListModel.TaskId),
-                                Broker = _brokerService.GetBrokerById(_workContext.CurrentUser.Id),
-                                Taskschedule = taskListModel.Taskschedule,
-
-
-                            };
                             if (_taskListService.Create(model) != null)
                             {
                                 return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));

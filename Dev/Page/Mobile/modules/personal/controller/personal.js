@@ -10,7 +10,7 @@ app.controller('personController',['$http','$scope','AuthService',function($http
     };
     $scope.addcondition={
         TaskId:0,
-        BrokerId:2,//经纪人ID
+        UserId:0,//用户ID
         Taskschedule:'1',
         Type:'add'
     }
@@ -26,7 +26,6 @@ app.controller('personController',['$http','$scope','AuthService',function($http
         $scope.searchCondition.type="today";
         if (!loading && page < pages) {                         //如果页面没有正在读取
             loading = true;                     //告知正在读取
-
             $http.get(SETTING.ApiUrl+'/Task/TaskListMobile/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
                   if(!data.Status) {
                       pages = data.totalCount / 10 + 1;
@@ -50,13 +49,18 @@ app.controller('personController',['$http','$scope','AuthService',function($http
         }
     };
     pushContent();
-    //$scope.more=pushContent;
-
+    //查询客户个数
+    var getcustomerList  = function() {
+        $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoNumByUserId/',{'withCredentials':true}).success(function(data){
+                $scope.number = data.tocount;
+        });
+    };
+    getcustomerList();
 
     //接受任务
     var addlist=function(id){
         $scope.addcondition.TaskId=id;
-        $scope.addcondition.brokerId=AuthService.userId ;
+        $scope.addcondition.UserId=AuthService.CurrentUser().UserId ;
         $http.post(SETTING.ApiUrl+'/Task/AddTaskList/',$scope.addcondition).success(function(data){
             console.log(data);
             if(data.Status){
