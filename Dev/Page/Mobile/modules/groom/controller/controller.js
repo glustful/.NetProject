@@ -1,25 +1,28 @@
 /**
  * Created by chenda on 2015/5/27.
  */
-app.controller("tuijianController",['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+app.controller("tuijianController",['$http','$scope','$stateParams','AuthService',function($http,$scope,$stateParams,AuthService){
     $scope.BrokerRECClientEntity={
-        ClientInfo:'1',
+        UserId:null,
+        ClientInfo:null,
         Qq:'',
         Type:'',
         Brokername:'',
         Brokerlevel:'',
         ProjectName:'',
-        ProjectId:1,
+        ProjectId:null,
         Houses:'',
         HouseType:'',
         Clientname:'',
         Phone:'',
         Note:''
     };
-    //$scope.BrokerRECClient.Broker_Id=$stateParams.Broker_Id;
+    $scope.currentUser=AuthService.CurrentUser();
+    $scope.BrokerRECClientEntity.UserId = $scope.currentUser.UserId;
     $scope.BrokerRECClient.ProjectId=$stateParams.projectid;
     $scope.BrokerRECClientEntity.Houses=$stateParams.name;
     $scope.BrokerRECClientEntity.HouseType=$stateParams.type;
+
     var getBrokerResult  = function() {
         console.log(  $scope.BrokerRECClientEntity);
         $http.post(SETTING.ApiUrl+'/BrokerRECClient/Add', $scope.BrokerRECClientEntity).success(function(data){
