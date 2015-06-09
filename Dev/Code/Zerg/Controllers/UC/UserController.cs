@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
@@ -119,6 +120,10 @@ namespace Zerg.Controllers.UC
         [HttpPost]
         public HttpResponseMessage AddBroker([FromBody]BrokerModel brokerModel)
         {
+            if (string.IsNullOrEmpty(brokerModel.Brokername)) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名不能为空"));
+            if (string.IsNullOrEmpty(brokerModel.Password)) return PageHelper.toJson(PageHelper.ReturnValue(false, "密码不能为空"));
+            if (string.IsNullOrEmpty(brokerModel.Phone)) return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号不能为空"));
+
             #region UC用户创建 杨定鹏 2015年5月28日14:52:48
             var user = _userService.GetUserByName(brokerModel.UserName);
 
@@ -133,14 +138,22 @@ namespace Zerg.Controllers.UC
 
             if (user2 != 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
 
+            var brokerRole = _roleService.GetRoleByName("Broker");
+
             var newUser = new UserBase
             {
                 UserName = brokerModel.Brokername,
                 Password = brokerModel.Password,
                 RegTime = DateTime.Now,
                 NormalizedName = brokerModel.UserName.ToLower(),
+                //注册用户添加权限
+                UserRoles = new List<UserRole>(){new UserRole()
+                {
+                    Role = brokerRole
+                }},
                 Status = 0
             };
+
             PasswordHelper.SetPasswordHashed(newUser, brokerModel.Password);
 
             #endregion
@@ -169,12 +182,14 @@ namespace Zerg.Controllers.UC
                 {
                     Name = "默认等级",
                     Describe = "系统默认初始创建",
-                    Url = "",
+                    Url ="",
                     Uptime = DateTime.Now,
                     Addtime = DateTime.Now,
                 };
                 _levelService.Create(levelModel);
             }
+
+            model.Level = level;
 
             _brokerService.Create(model);
 

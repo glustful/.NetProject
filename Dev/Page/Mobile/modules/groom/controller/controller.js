@@ -9,15 +9,24 @@ app.controller("tuijianController",['$http','$scope','$stateParams',function($ht
         Brokername:'',
         Brokerlevel:'',
         ProjectName:'',
-        Projectid:'',
+<<<<<<< HEAD
+        Projectid:'1',
+        Houses:'JSJY',
+        HouseType:'SSYT',
+        Clientname:'nike',
+        Phone:13888888888,
+        Note:'hello'
+=======
+        ProjectId:1,
         Houses:'',
         HouseType:'',
         Clientname:'',
         Phone:'',
         Note:''
+>>>>>>> remotes/origin/Dashboard
     };
     //$scope.BrokerRECClient.Broker_Id=$stateParams.Broker_Id;
-    //$scope.BrokerRECClient.Brokername=$stateParams.Brokername;
+    $scope.BrokerRECClient.ProjectId=$stateParams.projectid;
     $scope.BrokerRECClientEntity.Houses=$stateParams.name;
     $scope.BrokerRECClientEntity.HouseType=$stateParams.type;
     var getBrokerResult  = function() {

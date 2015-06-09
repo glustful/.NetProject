@@ -79,7 +79,11 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
     }
     //根据条件获取product
      $scope.searchProduct=function(){
-         $http.get(SETTING.ApiUrl+'/Product/GetSearchProduct',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
+         $http.get(SETTING.ApiUrl+'/Product/GetSearchProduct',{
+             params:$scope.searchCondition,
+             'withCredentials':true
+         })
+             .success(function(data){
              $scope.List =data.List;
              $scope.Count=data.TotalCount;
          })

@@ -84,7 +84,7 @@ namespace CRM.Service.Task
 			var query = _taskRepository.Table;
 			try
 			{
-
+               
 				if (condition.EndtimeBegin.HasValue)
                 {
                     query = query.Where(q => q.Endtime>= condition.EndtimeBegin.Value);
@@ -205,7 +205,7 @@ namespace CRM.Service.Task
 			var query = _taskRepository.Table;
 			try
 			{
-
+                
 				if (condition.EndtimeBegin.HasValue)
                 {
                     query = query.Where(q => q.Endtime>= condition.EndtimeBegin.Value);
