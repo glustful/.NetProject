@@ -1,41 +1,37 @@
 <!--添加银行卡-->
-<div class="credit_add">
+<div class="credit_add" ng-controller="bankAddController">
     <form>
         <p class="">
             卡类型
         </p>
         <p>
-            <input type="text" list="card_type" name="card_choose" class="card_information" placeholder="请选择银行卡类型">
-            <datalist id="card_type">
-                <option>储蓄卡</option>
-            </datalist>
+<br>
+           <strong> 储蓄卡</strong>
         </p>
         <p class="card_choice">
             卡号
         </p>
-        <p><input type="" class="card_information" placeholder="请填写银行卡号"/><br/></p>
+        <p><input type="" class="card_information" ng-model="bankcard.Num" placeholder="请填写银行卡号"/><br/></p>
         <p class="card_choice">
-            开户行
+            开户银行
         </p>
-        <input type="text" list="bank_type" name="bank_choose" class="card_information" placeholder="请选择开户行">
-        <datalist id="bank_type">
-            <option>中国农业银行</option>
-            <option>中国商业银行</option>
-            <option>中国交通银行</option>
-            <option>中国中信银行</option>
-        </datalist>
+        <select class="card_information" placeholder="请选择开户行" ng-model="bankcard.bankid"  ng-options="item.Id as item.Codeid for item in BankList"></select>
+
         <p class="card_choice">
             持卡人
         </p>
         <p> <input type="" class="card_information" placeholder="请填写持卡人姓名"/><br/></p>
+
         <p class="card_choice">
-            电话
+           开户银行地址
         </p>
-        <p> <input type="" class="card_tel" placeholder="请填写绑定电话"/><button class="bank_button">获取验证码</button></p>
+        <p> <input type="" class="card_information" placeholder="请填写详细开户银行地址"/><br/></p>
+
         <p class="card_choice">
             验证码
         </p>
-        <p><input type="" class="card_information" placeholder="请填写验证码"></p>
+        <p> <input type="" class="card_tel" placeholder="请填写验证码"/><button class="bank_button">获取验证码</button></p>
+
         <button class="add_confirm">确定</button>
 
     </form>

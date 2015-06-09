@@ -9,6 +9,7 @@ using CMS.Service.Channel;
 using YooPoon.Core.Site;
 using Zerg.Common;
 using Zerg.Models.CMS;
+using CMS.Service.Content;
 
 namespace Zerg.Controllers.CMS
 {
@@ -18,10 +19,12 @@ namespace Zerg.Controllers.CMS
     {
         private readonly IChannelService _channelService;
         private readonly IWorkContext _workContent;
+        private readonly IContentService _contentService;
 
-        public ChannelController(IChannelService channelService,IWorkContext workContent) {
+        public ChannelController(IChannelService channelService,IWorkContext workContent,IContentService contentService) {
             _channelService = channelService;
             _workContent = workContent;
+            _contentService = contentService;
         }
         /// <summary>
         /// 首页
@@ -206,5 +209,58 @@ namespace Zerg.Controllers.CMS
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
                 }
          }
+        /// <summary>
+        ///content表的 titleImg  的获取
+        /// </summary>
+        /// <param name="channelId">channel表的name</param>
+        /// <returns></returns>
+       [HttpGet]
+        public HttpResponseMessage GetTitleImg(string channelName)
+        {
+            //var channel = _channelService.GetChannelById(channelId);
+
+            //var contents = channel.Contents.AsQueryable().OrderByDescending(c => c.Addtime).Take(5).Select(c => new
+            //{
+            //    c.Title,
+            //    c.TitleImg,
+            //    c.AdSubTitle
+            //}).ToList();
+
+            var content = _contentService.GetContentsByCondition(new ContentSearchCondition
+            {
+                ChannelName = channelName
+            }).Take(5).Select(c => new
+            {
+                c.Title,
+                c.AdSubTitle,
+                c.TitleImg,
+                c.Id
+            });
+
+            return PageHelper.toJson(content);
+        }
+
+
+        /// <summary>
+        /// 获取活动图片
+        /// </summary>
+        /// <param name="channelName">channel表的name</param>
+        /// <returns></returns>
+       public HttpResponseMessage GetActiveTitleImg(string channelName)
+       {
+        
+           var Actcontent = _contentService.GetContentsByCondition(new ContentSearchCondition
+           {
+               ChannelName = channelName
+           }).Take(6).Select(c => new
+           {
+               c.Title,
+               c.AdSubTitle,
+               c.TitleImg,
+               c.Id
+           });
+
+           return PageHelper.toJson(Actcontent);
+       }
     }
 }

@@ -31,9 +31,8 @@ namespace Zerg.Controllers.CRM
         #region 银行设置
 
         /// <summary>
-        /// 通过经纪人ID 查询该经纪人的银行卡列表
+        ///获取所有银行
         /// </summary>
-        /// <param name="userID">经纪人ID</param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
         public HttpResponseMessage SearchBanks(int page = 1, int pageSize = 10)
@@ -60,8 +59,34 @@ namespace Zerg.Controllers.CRM
         }
 
 
+
         /// <summary>
-        /// 获取一条信息
+        ///获取所有银行
+        /// </summary>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage SearchAllBank()
+        {
+           var bankSearchCon = new BankSearchCondition
+            {            
+            };
+            var bankList = _bankService.GetBanksByCondition(bankSearchCon).Select(p => new
+            {
+                Id = p.Id,
+                p.Codeid,
+                p.Addtime
+
+            }).ToList();
+            var bankListCount = _bankService.GetBankCount(bankSearchCon);
+            return PageHelper.toJson(new { List = bankList });
+        }
+
+
+
+
+
+        /// <summary>
+        /// 获取一条银行信息
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

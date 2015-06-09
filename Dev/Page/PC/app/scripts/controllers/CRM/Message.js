@@ -118,6 +118,16 @@ angular.module("app").controller('MessageConfigCreateController',['$http','$scop
         Template: ''
 
     };
+
+    $scope.getList = function () {
+        $http.get(SETTING.ApiUrl + '/MessageConfig/GetMessageConfigNameList', {
+            'withCredentials':true
+        }).success(function (data) {
+            $scope.list = data.List;
+        });
+    };
+    $scope.getList ();
+
     $scope.Create = function(){
         $http.post(SETTING.ApiUrl + '/MessageConfig/AddMessageConfig', $scope.MessageConfigModel).success(function (data) {
             if(data.Status){
@@ -137,6 +147,15 @@ angular.module("app").controller('MessageConfigEditController',['$http','$scope'
     }).success(function(data){
         $scope.MessageConfigModel =data;
     });
+
+    $scope.getList = function () {
+        $http.get(SETTING.ApiUrl + '/MessageConfig/GetMessageConfigNameList', {
+            'withCredentials':true
+        }).success(function (data) {
+            $scope.list = data.List;
+        });
+    };
+    $scope.getList ();
 
     $scope.Save = function(){
         $http.post(SETTING.ApiUrl + '/MessageConfig/UpdateMessageConfig',$scope.MessageConfigModel,{
