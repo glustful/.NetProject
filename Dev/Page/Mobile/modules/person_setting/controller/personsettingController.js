@@ -68,7 +68,7 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
           files = file.files[0];
           if (file.files && files)
           {
-              div.innerHTML ='<img id=imghead>';
+              div.innerHTML ='<img id="imghead">';
               var img = document.getElementById('imghead');
               img.onload = function(){
                 img.width  =  128;
@@ -86,6 +86,11 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
               	// gif在ie浏览器不显示
 			     if(ext!='png'&&ext!='jpg'&&ext!='jpeg'&&ext!='gif'){
 			         alert("只支持JPG,PNG,JPEG格式的图片"); 
+			         return;
+			     }
+			     if(files.size/1024>1500)
+			     {
+			     	alert("图片尺寸大于1M,请重新选择"); 
 			         return;
 			     }
               	//发送请求
