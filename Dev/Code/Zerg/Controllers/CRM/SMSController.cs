@@ -48,8 +48,8 @@ namespace Zerg.Controllers.CRM
 
                 string strNumber = new Random().Next(100000, 1000000).ToString();//生成大于等于100000，小于等于999999的随机数，也就是六位随机数                                  
                 string nowTimestr = DateTime.Now.ToLongTimeString();
-                var strs = EncrypHelper.Encrypt(strNumber + "$" + nowTimestr, "des");//EMS 加密短信验证码                  
-                messages = string.Format(messageTemplate, ""); //更改模版
+                var strs = EncrypHelper.Encrypt(strNumber + "$" + nowTimestr, "desdesdesdes");//EMS 加密短信验证码                  
+                messages = string.Format(messageTemplate, strNumber); //更改模版
 
                 //返回到前台的加密内容  和短信发送返回值
                 return PageHelper.toJson(new { Desstr = strs, Message = SMSHelper.Sending(yzmsg.Mobile, messages) });
