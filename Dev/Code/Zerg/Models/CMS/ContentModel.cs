@@ -12,6 +12,7 @@ namespace Zerg.Models
         public string Title { get; set; }
         public int AddUser { get; set; }
         public EnumContentStatus Status { get; set; }
+        public string TitleImg { get; set; }
         public string Channel { get; set; }
         public int ChannelId { get; set; }
         public string StatusString

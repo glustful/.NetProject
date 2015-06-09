@@ -28,6 +28,9 @@
             <input type="text"  class="PinInput"  name="Pin_input"/>
             <button ng-click="pinGet()">发送验证码</button>
         </p>
+        <p class="register_error">
+            {{register_error}}
+        </p>
         <button class="register_button" ng-click="registerSubmit()" >注 册</button>
         <p class="LoginExit">
             已有账号？点此<span><a href="#user/login">登录</a> </span>

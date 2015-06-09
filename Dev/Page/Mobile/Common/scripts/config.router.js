@@ -104,6 +104,7 @@ app  .run(
             templateUrl:'modules/person_setting/view/person_setting.html',
             resolve:load('modules/person_setting/controller/personsettingController.js')
         })
+
         .state('app.security_setting',{
             url:'/security_setting',
             templateUrl:'modules/security_setting/view/security_setting.html',
@@ -137,7 +138,7 @@ app  .run(
             templateUrl:'modules/partner_insert1/view/partner_insert1.html'
         })
         .state('app.groom',{
-            url:'/groom',
+            url:'/groom?Projectid&name&type',
             templateUrl:'modules/groom/view/groom.html',
             resolve:load('modules/groom/controller/controller.js')
         })
@@ -171,11 +172,13 @@ app  .run(
         })
         .state('app.myPurse',{
             url:'/myPurse',
-            templateUrl:'modules/myPurse/view/myPurse.html'
+            templateUrl:'modules/myPurse/view/myPurse.html',
+            resolve:load('modules/myPurse/render/controller.js')
         })
         .state('app.personal',{
             url:'/personal',
-            templateUrl:'modules/personal/view/personal.html'
+            templateUrl:'modules/personal/view/personal.html',
+            resolve:load('modules/personal/controller/personal.js')
         })
         .state('app.personalPage',{
             url:'/personalPage',
@@ -210,16 +213,18 @@ app  .run(
         })
         .state('app.nominate',{
             url:'/nominate',
-            templateUrl:'modules/nominate/view/nominate.html'
+            templateUrl:'modules/nominate/view/nominate.html',
+            resolve:load('modules///storeroom/scripts/StoreRoom.js')
         })
         .state('app.carry_client',{
-            url:'/carry_client',
+            url:'/carry_client?Projectid&name&type',
             templateUrl:'modules/carry_client/view/carry_client.html',
             resolve:load('modules/carry_client/controller/controller.js')
         })
         .state('app.credit_add',{
             url:'/credit_add',
-            templateUrl:'modules/credit_add/view/credit_add.html'
+            templateUrl:'modules/credit_add/view/credit_add.html',
+            resolve:load('modules/myPurse/render/controller.js')
         })
         .state('app.recommendedBroker',{
             url:'/recommendedBroker',

@@ -12,13 +12,14 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
     xmlhttp.withCredentials = true;
     xmlhttp.send();
     var data = angular.fromJson(xmlhttp.response);
-    if(data.Status){
+    if (!data.Status) {
+    } else {
         _isAuthenticated = true;
         _currentUser = {
-            UserName:data.Object.UserName,
-            UserId:data.Object.Id
+            UserName: data.Object.UserName,
+            UserId: data.Object.Id
         };
-        $localStorage.UserRoles=data.Object.Roles;
+        $localStorage.UserRoles = data.Object.Roles;
     }
 
     /**
@@ -72,7 +73,7 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
      * @param callback
      * @param faildCallback
      */
-    this.doLogin = function(userName,password,callback,faildCallback){
+    this.doLogin = function(userName,password,callback,faildCallback,netErrorCallback){
         $http.post(SETTING.ApiUrl+"/user/login",
             {
                 UserName:userName,
@@ -89,11 +90,11 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
                     _isAuthenticated = true;
                     $localStorage.UserRoles=data.Object.Roles;
                     if(typeof(callback) === 'function')
-                        callback();
+                        callback(data);
                 }else{
                     if(typeof(faildCallback) === 'function')
-                        faildCallback();
+                        faildCallback(data);
                 }
-            });
+            }).error(netErrorCallback);
     };
 }]);
