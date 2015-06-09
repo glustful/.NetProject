@@ -4,7 +4,7 @@
         var defaultSettings = {
             width: 640, //容器宽度
             height: 320, //容器高度
-            during: 5000, //间隔时间
+            during: 3000, //间隔时间
             speed:30 //滑动速度
         }
         settings = $.extend(true, {}, defaultSettings, settings);

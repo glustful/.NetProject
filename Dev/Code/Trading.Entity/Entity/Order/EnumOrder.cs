@@ -7,12 +7,12 @@ namespace Trading.Entity.Model
 		/// <summary>
 		/// RecoType
 		/// </summary>
-		推荐订单,
+		推荐订单=1,
 		/// <summary>
 		/// DealType
 		/// </summary>
-		成交订单,
-        带客订单,
+		成交订单=2,
+        带客订单=3,
 	}
 }
 

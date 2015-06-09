@@ -1,9 +1,12 @@
 /**
  * Created by chenda on 2015/5/27.
  */
-app.controller('daikeController',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+app.controller('daikeController',['$http','$scope','$stateParams','AuthService',function($http,$scope,$stateParams,AuthService) {
     $scope.BrokerLeadClient={
-        Broker:1,
+        Id:null,
+        Broker:null,
+        Projectname:'',
+        ProjectId:null,
         Brokername:'',
         Appointmenttime:'',
         Houses:'',
@@ -11,14 +14,14 @@ app.controller('daikeController',['$http','$scope','$stateParams',function($http
         Clientname:'',
         Phone:'',
         Note:'',
-        Stats:'0',
-        Projectname:'',
-        Projectid:1
+        Stats:'0'
+
     };
-    //$scope.BrokerLeadClient.Broker_Id=$stateParams.Broker_Id;
-    //$scope.BrokerLeadClient.Brokername=$stateParams.Brokername;
-    //$scope.BrokerLeadClient.Projectid=$stateParams.Projectid;
-    //$scope.BrokerLeadClient.Projectname=$stateParams.Projectname;
+    $scope.currentUser=AuthService.CurrentUser();
+    $scope.BrokerLeadClient.Id = $scope.currentUser.UserId;
+    $scope.BrokerLeadClient.ProjectId=$stateParams.Projectid;
+    $scope.BrokerLeadClient.Houses=$stateParams.name;
+    $scope.BrokerLeadClient.HouseType=$stateParams.type;
     var getBrokerResult  = function() {
         console.log(  $scope.BrokerLeadClient);
         $http.post(SETTING.ApiUrl+'/BrokerLeadClient/Add',$scope.BrokerLeadClient).success(function(data){
