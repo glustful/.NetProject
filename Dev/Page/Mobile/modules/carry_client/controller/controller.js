@@ -1,11 +1,12 @@
 /**
  * Created by chenda on 2015/5/27.
  */
-app.controller('daikeController',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+app.controller('daikeController',['$http','$scope','$stateParams','AuthService',function($http,$scope,$stateParams,AuthService) {
     $scope.BrokerLeadClient={
-        Broker:1,
+        Id:null,
+        Broker:null,
         Projectname:'',
-        ProjectId:1,
+        ProjectId:null,
         Brokername:'',
         Appointmenttime:'',
         Houses:'',
@@ -16,7 +17,8 @@ app.controller('daikeController',['$http','$scope','$stateParams',function($http
         Stats:'0'
 
     };
-    //$scope.BrokerLeadClient.Broker_Id=$stateParams.Broker_Id;
+    $scope.currentUser=AuthService.CurrentUser();
+    $scope.BrokerLeadClient.Id = $scope.currentUser.UserId;
     $scope.BrokerLeadClient.ProjectId=$stateParams.Projectid;
     $scope.BrokerLeadClient.Houses=$stateParams.name;
     $scope.BrokerLeadClient.HouseType=$stateParams.type;

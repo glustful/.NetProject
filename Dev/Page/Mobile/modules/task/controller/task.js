@@ -52,7 +52,7 @@
 /**
  * Created by 黄秀宇 on 2015/5/26.
  */
-app.controller('taskController',['$http','$scope',function($http,$scope) {
+app.controller('taskController',['$http','$scope','AuthService',function($http,$scope,AuthService) {
     $scope.searchCondition = {
          Id:0,
         page: 1,
@@ -78,14 +78,18 @@ app.controller('taskController',['$http','$scope',function($http,$scope) {
           $scope.searchCondition.type="all";
             if (!loading && page < pages) {                         //如果页面没有正在读取
                 loading = true;                     //告知正在读取
-                $http.get(SETTING.ApiUrl+'/Task/TaskListMobile/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
+                $http.get(SETTING.ApiUrl+'/Task/TaskListMobile/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data) {
+                    if (!data.Status) {
 
                     pages = data.totalCount / 10 + 1;
-                        console.log(data);
-                        for (var i = 0; i <= data.list.length - 1; i++) {
-                            $scope.posts.push(data.list[i]);
-                        }
-                        loading = false;            //告知读取结束
+                    console.log(data);
+                    for (var i = 0; i <= data.list.length - 1; i++) {
+                        $scope.posts.push(data.list[i]);
+                    }
+                    loading = false;            //告知读取结束
+                } else{
+                        $scope.tipp = "没有任务";
+            }
                     });
                 page++;                             //翻页
                 if (page > pages) {
@@ -96,6 +100,7 @@ app.controller('taskController',['$http','$scope',function($http,$scope) {
                 $scope.tipp = "没有更多了";
             }
 
+
     };
     pushContent();
 
@@ -105,6 +110,7 @@ app.controller('taskController',['$http','$scope',function($http,$scope) {
     //接受任务
     var addlist=function(id){
         $scope.addcondition.TaskId=id;
+        $scope.addcondition.brokerId=AuthService.userId ;
         $http.post(SETTING.ApiUrl+'/Task/AddTaskList/',$scope.addcondition).success(function(data){
             console.log(data);
             if(data.Status){

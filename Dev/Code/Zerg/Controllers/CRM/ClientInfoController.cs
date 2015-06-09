@@ -13,6 +13,8 @@ using System.Web.Http;
 using Zerg.Common;
 using Zerg.Models.CRM;
 using System.Data;
+using YooPoon.Core.Site;
+using YooPoon.WebFramework.User.Entity;
 
 namespace Zerg.Controllers.CRM
 {
@@ -26,15 +28,18 @@ namespace Zerg.Controllers.CRM
         private IClientInfoService _clientInfoService;
         private IBrokerService _brokerService;
         private IBrokerRECClientService _brokerRecClientService;
+        private readonly IWorkContext _workContext;
         public ClientInfoController(
             IClientInfoService clientInfoService, 
             IBrokerService brokerService,
-            IBrokerRECClientService brokerRecClientService
+            IBrokerRECClientService brokerRecClientService,
+            IWorkContext workContext
             )
         {
             _clientInfoService = clientInfoService;
             _brokerService = brokerService;
             _brokerRecClientService = brokerRecClientService;
+            _workContext = workContext;
         }
 
         #region 客户信息
@@ -133,9 +138,11 @@ namespace Zerg.Controllers.CRM
                     Houses = clientinfo.Houses,
                     Housetype = clientinfo.Housetype,
                     Note = clientinfo.Note,
-                    Phone = "",                  
+                    Phone =clientinfo.Phone,                  
                     Uptime = DateTime.Now,
                     Addtime = DateTime.Now,
+                    Adduser=clientinfo.Adduser,
+                     Upuser=clientinfo.Upuser
                 };
 
                 try
@@ -154,6 +161,23 @@ namespace Zerg.Controllers.CRM
         }
 
 
+
+         /// <summary>
+         /// 通过经纪人ID查询他的客户列表
+         /// </summary>
+         /// <returns></returns>
+         public HttpResponseMessage GetClientInfoListByUserId()
+        {
+              var user = (UserBase)_workContext.CurrentUser;
+              if (user != null)
+              {
+                  var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
+
+                //  _clientInfoService.GetClientInfosByCondition()
+              }
+              return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+                    
+        }
        
 
         #endregion
