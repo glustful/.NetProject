@@ -161,6 +161,7 @@ angular.module("app").controller('CreatProductController', [
                     if (myXhr.upload) { // check if upload property exists
                         myXhr.upload.addEventListener('progress', progressHandlingFunction, false); // for handling the progress of the upload
                     }
+
                     return myXhr;
                 },
                 //Ajax事件
@@ -174,23 +175,17 @@ angular.module("app").controller('CreatProductController', [
                 processData: false
             });
         });
+        $scope.images = [];
         function completeHandler(e) {
-            var str = e.Msg;
-            var strs = new Array();
-            strs = str.split("|");
-            $scope.Productimg = "http://img.yoopoon.com/" + strs[0];
-            $scope.Productimg1 = "http://img.yoopoon.com/" + strs[1];
-            $scope.Productimg2 = "http://img.yoopoon.com/" + strs[2];
-            $scope.Productimg3 = "http://img.yoopoon.com/" + strs[3];
-            $scope.Productimg4 = "http://img.yoopoon.com/" + strs[4];
 
-            $scope.imgUrl = "http://img.yoopoon.com/" + e.Msg;
-            document.getElementById("pimgs").src = $scope.Productimg;
-            document.getElementById("pimgs1").src = $scope.Productimg1;
-            document.getElementById("pimgs2").src = $scope.Productimg2;
-            document.getElementById("pimgs3").src = $scope.Productimg3;
-            document.getElementById("pimgs4").src = $scope.Productimg4;
-            //alert( $scope.imgUrl);
+            $scope.images.push("http://img.yoopoon.com/"  +e);
+//            $scope.Productimg = "http://img.yoopoon.com/" +  strs[0];
+//            $scope.Productimg1 = "http://img.yoopoon.com/" +  strs[1];
+//            $scope.Productimg2 = "http://img.yoopoon.com/" +  strs[2];
+//            $scope.Productimg3 = "http://img.yoopoon.com/" +  strs[3];
+//            $scope.Productimg4 = "http://img.yoopoon.com/" +  strs[4];
+//
+//            $scope.imgUrl = "http://img.yoopoon.com/" + e.Msg;
         }
 
         function errorHandler(e) {
@@ -209,7 +204,7 @@ angular.module("app").controller('CreatProductController', [
         })
         uploader.onSuccessItem = function(fileItem, response, status, headers) {
             console.info('onSuccessItem', fileItem, response, status, headers);
-            $scope.ContentModel.TitleImg=response.Msg;
+            completeHandler(response.Msg);
         };
     }
 ]);

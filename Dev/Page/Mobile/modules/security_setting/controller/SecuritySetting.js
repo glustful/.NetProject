@@ -1,42 +1,19 @@
 /**
  * Created by gaofengming on 2015/5/28.
  */
-var app = angular.module("zergApp");
-app.controller('SecuritySettingController',['$scope','$http','AuthService',function($scope,$http,AuthService){
-    //$scope.user={
-    //    Brokername:'',
-    //    Realname:'',
-    //    Nickname:'',
-    //    Sexy:'',
-    //    Sfz:'',
-    //    Email:'',
-    //    Phone:'',
-    //    Headphoto:''
-    //};
+app.controller('SecuritySettingController',function($scope,$http,$state){
     $scope.password ={
         oldPassword:'',
         newPassword:''
     } ;
-//    $scope.currentuser= AuthService.CurrentUser();
-//    $scope.PinPassword=function(){
-//        $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
-//            .success(function(response) {
-//                $scope.user=response;
-//                $http.post(SETTING.ApiUrl+'/BrokerInfo/SendSMS',$scope.user.Phone,{'withCredentials':true}).success(function(data){
-//                    alert(data);
-//                    $scope.PinSMS=data
-//            })
-//    })
-//
-//};
     $scope.saveInfo=function(){
         $http.post(SETTING.ApiUrl+'/User/ChangePassword',$scope.password,{'withCredentials':true}).success(function(data){
-            alert(data);
+        $state.go('app.setting')
         })
-    };
+    }
 
+})
 
-}])
 function check()
 {
     var pass1 = document.getElementById("NewPassword1");
@@ -52,4 +29,27 @@ function check()
     {
         tips.innerHTML="";
     }
+}
+
+
+
+
+var countdown=60;
+function settime(obj) {
+    if (countdown == 0) {
+        obj.removeAttribute("disabled");
+        obj.innerHTML="获取验证码";
+        obj.style.background="#fc3b00";
+        countdown = 60;
+        return;
+    } else {
+        obj.setAttribute("disabled", true);
+
+        obj.style.background="#996c33";
+        obj.innerHTML="重新发送(" + countdown + ")";
+        countdown--;
+    }
+    setTimeout(function() {
+            settime(obj) }
+        ,1000)
 }

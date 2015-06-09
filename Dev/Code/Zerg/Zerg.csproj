@@ -180,6 +180,7 @@
     <Compile Include="Controllers\CRM\RecommendAgentController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\CRM\SMSController.cs" />
     <Compile Include="Controllers\CRM\TaskController.cs" />
     <Compile Include="Controllers\CMS\AdvertisementController.cs" />
     <Compile Include="Controllers\CMS\ChannelController.cs" />

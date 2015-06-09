@@ -56,7 +56,7 @@ angular.module('app')
               templateUrl: 'views/pages/dashboard.html',
               data : { title: 'Dashboard' },
               resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js']),
-              access:["admin"]
+              access:["admin","broker"]
             })
 
             .state('app.wall', {

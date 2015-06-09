@@ -72,6 +72,22 @@ namespace CRM.Service.MessageConfig
             }
 		}
 
+        public  MessageConfigEntity GetMessageConfigByName(string name)
+        {
+            try
+            {
+                return _messageconfigRepository.Table.FirstOrDefault(o=>o.Name==name);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
+
+
+
+
 		public IQueryable<MessageConfigEntity> GetMessageConfigsByCondition(MessageConfigSearchCondition condition)
 		{
 			var query = _messageconfigRepository.Table;
