@@ -38,21 +38,21 @@ namespace Zerg.Controllers.CRM
         /// <param name="smstype">短信类型( 注册=0,修改密码=1,找回密码=2,添加银行卡=3,佣金提现=4,添加合伙人=5,推荐经纪人=6)</param>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage SendSMS([FromBody] string mobile,string smstype)
+        public HttpResponseMessage SendSMS([FromBody] YzMsg yzmsg )
         {
-            if(!string.IsNullOrEmpty(mobile) && !string.IsNullOrEmpty(smstype))
+            if(!string.IsNullOrEmpty(yzmsg.Mobile) && !string.IsNullOrEmpty(yzmsg.SmsType))
             {
-                var messageConfigName = Enum.GetName(typeof(MessageConfigTypeEnum), Convert.ToInt32(smstype));//获取短信模版名称
+                var messageConfigName = Enum.GetName(typeof(MessageConfigTypeEnum), Convert.ToInt32(yzmsg.SmsType));//获取短信模版名称
                 var messageTemplate = _MessageConfigService.GetMessageConfigByName(messageConfigName).Template;//获取到的短信模版
                 var messages = "";
 
                 string strNumber = new Random().Next(100000, 1000000).ToString();//生成大于等于100000，小于等于999999的随机数，也就是六位随机数                                  
                 string nowTimestr = DateTime.Now.ToLongTimeString();
-                var strs = EncrypHelper.Encrypt(strNumber + "$" + nowTimestr, "des");//EMS 加密短信验证码                  
-                messages = string.Format(messageTemplate, ""); //更改模版
+                var strs = EncrypHelper.Encrypt(strNumber + "$" + nowTimestr, "desdesdesdes");//EMS 加密短信验证码                  
+                messages = string.Format(messageTemplate, strNumber); //更改模版
 
                 //返回到前台的加密内容  和短信发送返回值
-                return PageHelper.toJson(new { Desstr = strs, Message = SMSHelper.Sending(mobile, messages) });
+                return PageHelper.toJson(new { Desstr = strs, Message = SMSHelper.Sending(yzmsg.Mobile, messages) });
                     
             }
 
@@ -82,8 +82,8 @@ namespace Zerg.Controllers.CRM
                 {
                     string strNumber = new Random().Next(100000, 1000000).ToString();//生成大于等于100000，小于等于999999的随机数，也就是六位随机数                                  
                     string nowTimestr = DateTime.Now.ToLongTimeString();
-                    var strs = EncrypHelper.Encrypt(strNumber + "$" + nowTimestr, "des");//EMS 加密短信验证码                  
-                    messages = string.Format(messageTemplate, ""); //更改模版
+                    var strs = EncrypHelper.Encrypt(strNumber + "$" + nowTimestr, "desdesdesdes");//EMS 加密短信验证码                  
+                    messages = string.Format(messageTemplate, strNumber); //更改模版
 
                     //返回到前台的加密内容  和短信发送返回值
                     return PageHelper.toJson(new { Desstr =strs, Message = SMSHelper.Sending(broker.Phone, messages) });
@@ -97,8 +97,30 @@ namespace Zerg.Controllers.CRM
         }
 
 
+ 
 
 
+    }
+
+
+
+
+    /// <summary>
+    /// 验证消息（手机号，验证类型（注册=0,修改密码=1,找回密码=2,添加银行卡=3,佣金提现=4,添加合伙人=5,推荐经纪人=6））
+    /// </summary>
+    public class YzMsg
+    {
+        public string Mobile
+        {
+            get;
+            set;
+        }
+
+        public string SmsType
+        {
+            get;
+            set;
+        }
 
     }
 }

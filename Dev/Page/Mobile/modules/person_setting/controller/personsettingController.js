@@ -58,30 +58,6 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
             	img.src = $scope.olduser.Headphoto;
             });
     }
-    //$scope.user = {
-    //    userType: 122,
-    //    name: "ggg",
-    //    phone: 2445254,
-    //    page: 1,
-    //    pageSize: 10
-    //}
-    //$scope.newuser = {
-    //    Id:11,
-    //    Brokername: "afaf",
-    //    phone: 525424,
-    //    Sfz:1234567891,
-    //    page: 1,
-    //    pageSize: 10
-    //}
-    //$http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{params: $scope.user})
-    //    .success(function(response) {$scope.users = response.List[0];
-    //    });
-    //$scope.save = function()
-    //{
-    //    $http.post(SETTING.ApiUrl+'/BrokerInfo/UpdateBroker', $scope.newuser)
-    //        .success(function(data) {
-    //        });
-    //}
 }])
 /////////////////////////////头像修改////////////////////////////
         function previewImage(file)
@@ -92,10 +68,9 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
           files = file.files[0];
           if (file.files && files)
           {
-              div.innerHTML ='<img id=imghead>';
+              div.innerHTML ='<img id="imghead">';
               var img = document.getElementById('imghead');
               img.onload = function(){
-                var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
                 img.width  =  128;
                 img.height =  128;
                 //隐藏默认头像
@@ -113,6 +88,11 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
 			         alert("只支持JPG,PNG,JPEG格式的图片"); 
 			         return;
 			     }
+			     if(files.size/1024>1500)
+			     {
+			     	alert("图片尺寸大于1M,请重新选择"); 
+			         return;
+			     }
               	//发送请求
 				var xmlhttp=new XMLHttpRequest();
 				xmlhttp.onreadystatechange = callback;
@@ -124,7 +104,6 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
 				var headtext = document.getElementById("Uptext");
 				headtext.innerHTML = '正在上传..';
 				headtext.style.color ='#40AD32'
-				
 				//回调函数
 				function callback () {
 				//将response提取出来分割出文件名
@@ -141,26 +120,5 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
               reader.readAsDataURL(files);
           }
         }
-        function clacImgZoomParam( maxWidth, maxHeight, width, height ){
-            var param = {top:0, left:0, width:width, height:height};
-            if( width>maxWidth || height>maxHeight )
-            {
-                rateWidth = width / maxWidth;
-                rateHeight = height / maxHeight;
-                
-                if( rateWidth > rateHeight )
-                {
-                    param.width =  maxWidth;
-                    param.height = Math.round(height / rateWidth);
-                }else
-                {
-                    param.width = Math.round(width / rateHeight);
-                    param.height = maxHeight;
-                }
-            }
-            
-            param.left = Math.round((maxWidth - param.width) / 2);
-            param.top = Math.round((maxHeight - param.height) / 2);
-            return param;
-        }
+        
 ///////////////////////////头像修改//////////////////////////////////
