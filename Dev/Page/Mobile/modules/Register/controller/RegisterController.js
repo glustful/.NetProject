@@ -15,15 +15,17 @@ app.controller('registerController',function($scope,$http,$state){
         });
     }
     $scope.registerSubmit = function(){
+        //if($scope.Brokername==null||$scope.UserName==null||$scope.Phone==null||$scope.Password==null){
+        //     $scope.register_error='Honey，请填完再走嘛！';
+        //    return;
+        //}
+        //else{
+            $http.post(SETTING.ApiUrl+'/User/AddBroker',$scope.register,{'withCredentials':true}).success(function(data){
+                console.log(data);
+                $state.go('user.login')
+            })
+        //}
 
-        //var username = document.getElementById("username").value;
-        //var userpassword = document.getElementById("userPassword").value;
-        //var phoneNumber = document.getElementById("phoneNumber").value;
-        console.log($scope.register);
-        $http.post(SETTING.ApiUrl+'/User/AddBroker',$scope.register,{'withCredentials':true}).success(function(data){
-            console.log(data);
-            $state.go('user.login')
-        });
     }
 
 })
