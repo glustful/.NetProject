@@ -12,7 +12,8 @@ app.controller('cusListController',['$http','$scope','AuthService',function($htt
     //查询客户
     var getcustomerList  = function() {
         //$scope.searchCondition.id=AuthService.userId ;
-        $http.get(SETTING.ApiUrl+'/ClientInfo/ClientInfo/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
+        //alert("sdf");
+        $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoListByUserId/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
             console.log(data);
             if(data.clientModel!=null){
                 $scope.warm="";

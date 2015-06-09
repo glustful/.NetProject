@@ -400,14 +400,7 @@ namespace Zerg.Controllers.CRM
             
               
                 
-                var model = new TaskListEntity
-                {
-                    Task = _taskService .GetTaskById (taskListModel.TaskId),
-                    Broker = _brokerService.GetBrokerById(_workContext.CurrentUser.Id),
-                    Taskschedule =taskListModel .Taskschedule ,
-
-                  
-                };
+               
                 //var mo1 = new TaskListSearchCondition
                 //{
                 //    TaskId  = taskListModel.TaskId 
@@ -420,6 +413,14 @@ namespace Zerg.Controllers.CRM
                 //    {
                         try
                         {
+                            var model = new TaskListEntity
+                            {
+                                Task = _taskService.GetTaskById(taskListModel.TaskId),
+                                Broker = _brokerService.GetBrokerById(_workContext.CurrentUser.Id),
+                                Taskschedule = taskListModel.Taskschedule,
+
+
+                            };
                             if (_taskListService.Create(model) != null)
                             {
                                 return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));

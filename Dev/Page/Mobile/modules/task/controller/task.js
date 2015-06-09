@@ -116,7 +116,7 @@ app.controller('taskController',['$http','$scope','AuthService',function($http,$
             if(data.Status){
             }
             else{
-                $scope.warm="没有任务可接";
+                //$scope.warm="没有任务可接";
             }
         });
     };
