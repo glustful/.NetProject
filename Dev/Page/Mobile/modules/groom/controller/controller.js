@@ -9,7 +9,7 @@ app.controller("tuijianController",['$http','$scope','$stateParams',function($ht
         Brokername:'',
         Brokerlevel:'',
         ProjectName:'',
-        Projectid:'2',
+        Projectid:'1',
         Houses:'JSJY',
         HouseType:'SSYT',
         Clientname:'nike',
