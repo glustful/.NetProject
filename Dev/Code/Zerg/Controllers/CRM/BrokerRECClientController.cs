@@ -90,7 +90,6 @@ namespace Zerg.Controllers.CRM
              {
                  Clientname = brokerrecclient.Clientname,
                  Phone = brokerrecclient.Phone.ToString(CultureInfo.InvariantCulture)
-
              };
 
              var cmodel = _clientInfoService.GetClientInfosByCondition(sech).FirstOrDefault();
@@ -135,7 +134,7 @@ namespace Zerg.Controllers.CRM
              //创建订单详情
              OrderDetailEntity ode = new OrderDetailEntity();
              ode.Adddate = DateTime.Now;
-             ode.Adduser = "2";//_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
+             ode.Adduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
              ode.Commission = product.Commission;
              ode.RecCommission = product.RecCommission;
              ode.Dealcommission = product.Dealcommission;
@@ -145,14 +144,14 @@ namespace Zerg.Controllers.CRM
                  //ode.Remark = product.
                  //ode.Snapshoturl = orderDetailModel.Snapshoturl,
              ode.Upddate = DateTime.Now;
-             ode.Upduser = "2";//_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture)
+             ode.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
 
              //创建订单
              OrderEntity oe = new OrderEntity
              {
                  Adddate = DateTime.Now,
-                 Adduser ="2", //_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
-                 AgentId = 2, //_workContext.CurrentUser.Id,
+                 Adduser =_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
+                 AgentId = _workContext.CurrentUser.Id,
                  Agentname = brokerrecclient.Brokername,
                  Agenttel = brokerrecclient.Phone,
                  BusId = product.Bussnessid,
@@ -165,7 +164,7 @@ namespace Zerg.Controllers.CRM
                  Shipstatus = (int)EnumBRECCType.审核中,
                  Status = (int)EnumOrderStatus.默认,
                  Upddate = DateTime.Now,
-                 Upduser ="2" //_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture)
+                 Upduser =_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture)
              };
 
              //创建成交订单
@@ -185,9 +184,9 @@ namespace Zerg.Controllers.CRM
              {
                  Broker = _brokerService.GetBrokerById(2),
                  ClientInfo = cmodel,
-                 Adduser =2, //_workContext.CurrentUser.Id,
+                 Adduser =_workContext.CurrentUser.Id,
                  Addtime = DateTime.Now,
-                 Upuser =2, //_workContext.CurrentUser.Id,
+                 Upuser =_workContext.CurrentUser.Id,
                  Uptime = DateTime.Now,
                  Projectid = brokerrecclient.Projectid,
                  Status = EnumBRECCType.等待上访,
