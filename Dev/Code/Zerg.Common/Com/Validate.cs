@@ -16,7 +16,7 @@ namespace Zerg.Common.Com
      /// </summary>
         /// <param name="sourc">加密后的字符串</param>
         /// <param name="messa">验证码</param>
-        /// <param name="userid">用户id,EMS加密用</param>
+        /// <param name="userid">用户密钥,DES加密用</param>
      /// <returns></returns>
      public static HttpResponseMessage validate(string sourc, string messa, string salt)
         {
@@ -49,7 +49,8 @@ namespace Zerg.Common.Com
      /// 发送短信验证码
      /// </summary>
      /// <param name="phone">手机号码</param>
-     ///  /// <param name="salt">用户ID，EMS加密用</param>
+     /// <param name="salt">用户密钥，DES加密用</param>
+     /// 
      /// <returns></returns>
      public static  HttpResponseMessage SendMessage6( string phone, string salt)
      {

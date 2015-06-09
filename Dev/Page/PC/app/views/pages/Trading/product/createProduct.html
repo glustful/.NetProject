@@ -114,19 +114,9 @@
                     <div width="100">
                             <input name="file" type="file" multiple="multiple" />
                      </div>
-                    <img id="pimgs" alt="主图" title="主图"  height="100" width="100" src=""/>
-                    <img id="pimgs1" alt="附图1" title="附图1" height="100" width="100"  src=""/>
-                    <img id="pimgs2" alt="附图2" title="附图2"  height="100" width="100" src=""/>
-                    <img id="pimgs3" alt="附图3" title="附图3"  height="100" width="100" src=""/>
-                    <img id="pimgs4" alt="附图4" title="附图4"  height="100" width="100" src=""/>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right"> 商品数量 </label>
-
-                <div class="col-sm-9">
-                    <input type="number">个/件
+                    <div ng-repeat="item in images">
+                        <img id="pimgs" alt="主图" title="主图"  height="100" width="100" src="{{item}}"/>
+                    </div>
                 </div>
             </div>
 

@@ -16,10 +16,17 @@ app.controller('myPurseController',function($scope,$http){
 
 
 app.controller('bankAddController',['$http','$scope','$state',function($http,$scope,$state){
-$scope.bankcard={
 
-};
+    $http.get(SETTING.ApiUrl+'/Bank/SearchAllBank').success(function(response) {
+        $scope.BankList = response.List;
+    });
 
+     $scope.bankcard={
+         Num:"",
+         Type:"储蓄卡",
+         Address:""
+
+    };
     $scope.Crete = function()
     {
         $http.post(SETTING.ApiUrl+'/BankCard/AddBankCard', $scope.bankcard, {'withCredentials': true}).success(function(datas) {
