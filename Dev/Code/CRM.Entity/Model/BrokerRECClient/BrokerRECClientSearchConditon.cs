@@ -50,7 +50,7 @@ namespace CRM.Entity.Model
 
 
 
-		public int? Qq { get; set; }
+		public string Qq { get; set; }
 
 
 
