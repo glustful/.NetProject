@@ -1,4 +1,4 @@
- <form class="form_content"   ng-controller="LoginController">
+ <form class="form_content"   ng-controller="LoginController" ng-submit="Login()">
         <p class="user_tip">
             请输入用户名
         </p>
@@ -16,7 +16,7 @@
         <p class="MissMe">
             <input type="checkbox" name="box" id="box"/>记住我<span class="fp"><a href="#user/PasswordFound">忘记密码?</a></span>
         </p>
-        <button class="login_button" type="submit" ng-click="Login()">登 录</button>
+        <button class="login_button" type="submit" >登 录</button>
         <p>{{errorTips}}</p>
         <p class="NoAccount">
             没有账号？点此<span><a href="#user/register">注册</a></span>

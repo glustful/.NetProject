@@ -30,7 +30,8 @@ namespace CRM.Entity.Model
 
 		public string Houses { get; set; }
 
-		public int[] Addusers { get; set; }
+		public int Addusers { get; set; }
+     
 
 		public DateTime? AddtimeBegin { get; set; }
 

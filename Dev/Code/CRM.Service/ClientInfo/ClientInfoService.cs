@@ -113,9 +113,9 @@ namespace CRM.Service.ClientInfo
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Addusers != null && condition.Addusers.Any())
+				if (condition.Addusers != null )
                 {
-                    query = query.Where(q => condition.Addusers.Contains(q.Adduser));
+                    query = query.Where(q => (q.Adduser == condition.Addusers));
                 }
 				if (condition.Upusers != null && condition.Upusers.Any())
                 {
@@ -190,9 +190,9 @@ namespace CRM.Service.ClientInfo
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Addusers != null && condition.Addusers.Any())
+                if (condition.Addusers != null)
                 {
-                    query = query.Where(q => condition.Addusers.Contains(q.Adduser));
+                    query = query.Where(q => (q.Adduser == condition.Addusers));
                 }
 				if (condition.Upusers != null && condition.Upusers.Any())
                 {

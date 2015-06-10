@@ -47,7 +47,7 @@ namespace Zerg.Models.CRM
         /// <summary>
         /// QQ
         /// </summary>
-        public virtual int Qq { get; set; }
+        public virtual string Qq { get; set; }
         /// <summary>
         /// 客户意向户型
         /// </summary>

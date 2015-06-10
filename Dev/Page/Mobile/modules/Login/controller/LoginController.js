@@ -8,16 +8,14 @@ app.controller('LoginController',['$scope','$state','AuthService',function($scop
         password:''
     }
     $scope.Login = function(){
-            if($scope.user.name==null||$scope.user.password==null) {
-                $scope.errorTips = '用户名或密码不能为空';
-                return;
-            } else {
+
                 AuthService.doLogin($scope.user.name,$scope.user.password,function(){
+                    console.log("$scope.user");
                 $state.go('app.partner_list')
                 },function(data){
                     $scope.errorTips = data.Msg;
                 })
-    }
 
-}}]);
+    }
+}]);
 
