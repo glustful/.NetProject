@@ -1,4 +1,4 @@
- .pic li{
+﻿ .pic li{
     position: relative;
 }
  .pic .page{
@@ -155,7 +155,8 @@ h3{
 
 
 /*lunbo*/
- /*.slider{display:none}*//*用于获取更加体验*/
- .focus{ width: 640px;}
- .focus span{width:10px;height:10px;margin-right:10px;background:#666;font-size:0;}
- .focus span.current{background:#fff}
+ /* main_image */
+
+/*#btn_prev,#btn_next{z-index:11111;position:absolute;display:block;width:73px!important;height:74px!important;top:50%;margin-top:-37px;display:none;}*/
+/*#btn_prev{background:url(../image/index/hover_left.png) no-repeat left top;left:100px;}*/
+/*#btn_next{background:url(../image/index/hover_right.png) no-repeat right top;right:100px;}*/

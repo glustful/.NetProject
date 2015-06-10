@@ -57,6 +57,7 @@ a{
 .logo{
     margin:13px 0 0 27px;
     background: url("../image/logo.png") no-repeat 0 0;
+    background-size:82px 41px;
     width: 82px;
     height: 41px;
 }

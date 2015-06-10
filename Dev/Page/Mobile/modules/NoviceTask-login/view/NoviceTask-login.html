@@ -1,5 +1,5 @@
 <div class="register_content">
-    <form class="form_register">
+    <form class="form_register" ng-controller="registerController">
         <p class="register_tip">
             用户名
         </p>
@@ -26,14 +26,17 @@
         </p>
         <p class="PinBlank">
             <input type="text"  class="PinInput"  name="Pin_input"/>
-            <button >发送验证码</button>
+            <button ng-click="pinGet()">发送验证码</button>
         </p>
         <p class="register_error">
-
         </p>
-        <button class="register_button" >注 册</button>
+        <button class="register_button" ng-click="registerSubmit()" >注 册</button>
         <p class="LoginExit">
-            已有账号？点此<span><a href="#/app/login">登录</a> </span>
+            已有账号？点此<span><a href="#/user/login">登录</a> </span>
         </p>
     </form>
+    <div class="masked">
+        <img class="innter" src="modules/NoviceTask-login/static/image/content.png" alt="内容"/>
+        <a  class="join" href="#"><img src="modules/NoviceTask-login/static/image/btn.png" alt="火速加入"/></a>
+    </div>
 </div>
