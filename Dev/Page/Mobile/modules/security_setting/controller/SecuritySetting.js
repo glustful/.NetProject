@@ -12,6 +12,7 @@ app.controller('SecuritySettingController',function($scope,$http,$state){
     //提交密码修改信息
     $scope.saveInfo=function(){
         $http.post(SETTING.ApiUrl+'/User/ChangePassword',$scope.password,{'withCredentials':true}).success(function(data){
+            console.log(data);
         $state.go('app.setting')
         })
     }
@@ -39,7 +40,7 @@ function check()
     var tips= document.getElementById("errorTip");
     if(pass1.value!=pass2.value)
     {
-        tips.innerHTML="两次密码不一致";
+        tips.innerHTML="两次密码输入不一致，请重新输入！";
     }else{
         tips.innerHTML="";
     }
