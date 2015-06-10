@@ -16,8 +16,6 @@ using Zerg.Common;
 using Zerg.Models.CRM;
 using CRM.Service.Broker;
 using System.Text.RegularExpressions;
-using YooPoon.Core.Site;
-using YooPoon.WebFramework.User.Entity;
 
 namespace Zerg.Controllers.CRM
 {
@@ -36,7 +34,6 @@ namespace Zerg.Controllers.CRM
         private readonly ITaskPunishmentService _taskPunishmentService;
         private readonly ITaskListService _taskListService;
          private readonly IBrokerService _brokerService;
-         private readonly IWorkContext _workContext;
 
         public TaskController(ITaskService taskService, 
             ITaskTypeService taskTypeService, 
@@ -44,8 +41,7 @@ namespace Zerg.Controllers.CRM
             ITaskTagService taskTagService, 
             ITaskPunishmentService taskPunishmentService,
             ITaskListService taskListService,
-            IBrokerService  brokerService,
-            IWorkContext workContext
+            IBrokerService  brokerService
             )
         {
             _taskService = taskService;
@@ -55,7 +51,6 @@ namespace Zerg.Controllers.CRM
             _taskPunishmentService = taskPunishmentService;
             _taskListService = taskListService;
             _brokerService = brokerService;
-            _workContext = workContext;
         }
 
         #region 单个任务配置 杨定鹏 2015年4月28日10:04:08
@@ -398,15 +393,13 @@ namespace Zerg.Controllers.CRM
         [HttpPost]
         public HttpResponseMessage AddTaskList([FromBody]TaskListModel  taskListModel)
         {
-            //var user = (UserBase)_workContext.CurrentUser;
-            //  if (user != null)
-            //  {
-            //      var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
-             
+            
+              
+                
                 var model = new TaskListEntity
                 {
                     Task = _taskService .GetTaskById (taskListModel.TaskId),
-                    Broker = _brokerService.GetBrokerByUserId(taskListModel .UserId),
+                    Broker =_brokerService .GetBrokerById (taskListModel .BrokerId),
                     Taskschedule =taskListModel .Taskschedule ,
 
                   

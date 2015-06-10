@@ -4,16 +4,34 @@
 app.controller('SecuritySettingController',function($scope,$http,$state){
     $scope.password ={
         oldPassword:'',
-        newPassword:''
-    } ;
+        Password:'',
+        SecondPassword:'',
+        MobileYzm:'',
+        Hidm:''
+    }
+    //提交密码修改信息
     $scope.saveInfo=function(){
         $http.post(SETTING.ApiUrl+'/User/ChangePassword',$scope.password,{'withCredentials':true}).success(function(data){
         $state.go('app.setting')
         })
     }
-
+    //获取验证码
+    //$scope.SmsType='1';
+    $scope.pwSms=function(){
+        settime();
+        $http.post(SETTING.ApiUrl+'/SMS/SendSmsForbroker','1',{'withCredentials':true}).success(function(data){
+            alert(data);
+            if (data.Message=="1")
+            {
+                $scope.password.Hidm=data.Desstr;
+            }else{
+                alert("短信发送失败，请与客户联系！");
+            }
+        })
+    }
 })
 
+//两次密码验证是否一致
 function check()
 {
     var pass1 = document.getElementById("NewPassword1");
@@ -31,11 +49,10 @@ function check()
     }
 }
 
-
-
-
+//获取验证码计时
 var countdown=60;
 function settime(obj) {
+    var obj= document.getElementById("pw_sms");
     if (countdown == 0) {
         obj.removeAttribute("disabled");
         obj.innerHTML="获取验证码";

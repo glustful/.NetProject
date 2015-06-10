@@ -10,6 +10,7 @@ app.controller('registerController',function($scope,$http,$state){
         MobileYzm:'',
         Hidm:''
     }
+    //提交注册信息
     $scope.registerSubmit = function(){
         $http.post(SETTING.ApiUrl+'/User/AddBroker',$scope.register,{'withCredentials':true}).success(function(data){
             console.log(data);
@@ -17,7 +18,7 @@ app.controller('registerController',function($scope,$http,$state){
         })
     }
 
-
+//验证码
     $scope.YZM={
         Mobile:'',
         SmsType:'0'
@@ -51,7 +52,7 @@ app.controller('registerController',function($scope,$http,$state){
 
     }
 })
-
+//计时器
 var countdown=60;
 function settime() {
     var obj= document.getElementById("btnsms");
