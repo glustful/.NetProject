@@ -15,15 +15,19 @@ app.controller('personController',['$http','$scope','AuthService',function($http
         Type:'add'
     }
     $scope.userBroker={
-    	Brokername:'',
-    	Headphoto:'',
-    	Amount:0,
-    	Agentlevel:''
+    	Name:'',
+    	photo:'',
+    	allMoneys:0,
+    	levelStr:'',
+    	partnerCount:0,
+    	refereeCount:0,
+    	orderStr:0,
+    	customerCount:0
     }
     //获取用户信息
     
     $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
-    $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
+    $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerDetails',{'withCredentials':true})
     .success(function(response) {
     	$scope.userBroker = response;
     	console.log(response);

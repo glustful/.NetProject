@@ -362,13 +362,13 @@ namespace Zerg.Controllers.CRM
                      };
                      customerCount = _clientInfoService.GetClientInfoCount(condition);
 
-                     levelStr = broker.Level.Name;
+                     levelStr = broker.Agentlevel;
 
                      allMoneys = broker.Amount.ToString();
 
                      orderStr = GetOrdersByuserId(broker.Id.ToString());
 
-                     return PageHelper.toJson(new { partnerCount = partnerCount, refereeCount = refereeCount, customerCount = customerCount, levelStr = levelStr, orderStr = orderStr, allMoneys = allMoneys ,photo=broker.Headphoto});
+                     return PageHelper.toJson(new { partnerCount = partnerCount, refereeCount = refereeCount, customerCount = customerCount, levelStr = levelStr, orderStr = orderStr, allMoneys = allMoneys ,photo=broker.Headphoto,Name=broker.Brokername});
                  }
              }
              return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
@@ -416,7 +416,7 @@ namespace Zerg.Controllers.CRM
 
            if (listOrder.Count<=0)//无数据
            {
-               return "0";
+               return "1";
            }
             else
             {
