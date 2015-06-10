@@ -159,21 +159,37 @@ namespace Zerg.Controllers.Trading.Trading.Order
         #endregion
 
         #region 订单查询
+
         /// <summary>
-        /// 查询所有推荐订单；
+        /// 查询所有推荐订单；       //原方法变更为根据传入类型返回订单列表——杨定鹏——2015年6月10日10:42:49
         /// </summary>
         /// <param name="pageindex"></param>
+        /// <param name="type"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public HttpResponseMessage GetAllRecommonOrders()
+        public HttpResponseMessage GetAllRecommonOrders(EnumOrderType type)
         {
             OrderSearchCondition OSC = new OrderSearchCondition()
             {
-                Ordertype=0,
+                Ordertype=type,
                 OrderBy = EnumOrderSearchOrderBy.OrderById
             };
-            return PageHelper.toJson(_orderService.GetOrdersByCondition(OSC).ToList());
+            var list = _orderService.GetOrdersByCondition(OSC).Select(p=>new
+            {
+                p.Ordercode,
+                p.Ordertype,
+                p.Status,
+                p.Shipstatus,
+                p.Agentname,
+                p.Agenttel,
+                p.Busname,
+                p.OrderDetail.Price,
+                p.OrderDetail.RecCommission,
+                p.OrderDetail.Commission,
+                p.OrderDetail.Dealcommission
+            }).ToList();
+            return PageHelper.toJson(list);
         }
         /// <summary>
         /// 查询所有成交订单；

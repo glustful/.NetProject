@@ -89,7 +89,10 @@ namespace Zerg.Controllers.CRM
                 var messages = "";
                 if (messageConfigName == "添加合伙人" || messageConfigName == "推荐经纪人")//不需要生成数字验证码
                 {
-                    messages = string.Format(messageTemplate, "");
+                    messages = string.Format(messageTemplate, ""); //更改模版
+                    //添加到短信表中去 
+                    AddMessageDetails(new MessageDetailEntity { Content = messages, Mobile = broker.Phone, Sender = broker.Phone, Title = messageConfigName, Addtime = DateTime.Now });
+
                     return PageHelper.toJson(SMSHelper.Sending(broker.Phone, messages));
 
                 }

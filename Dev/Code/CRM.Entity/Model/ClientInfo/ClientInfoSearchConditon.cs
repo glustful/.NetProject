@@ -44,6 +44,8 @@ namespace CRM.Entity.Model
 		public DateTime? UptimeEnd { get; set; }
 
 		public EnumClientInfoSearchOrderBy? OrderBy { get; set; }
+
+	    public int? Projectid { get; set; }
 	}
 
 	public enum EnumClientInfoSearchOrderBy
