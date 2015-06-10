@@ -180,7 +180,9 @@ namespace Zerg.Controllers.CRM
                   {
                       p.Clientname,
                       p.Phone,
-                      p.Id
+                      p.Id,
+                      p.Houses,
+                      p.Housetype
 
                   }).ToList();
 
@@ -189,8 +191,28 @@ namespace Zerg.Controllers.CRM
               return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
                     
         }
-       
 
+         /// <summary>
+         /// 通过经纪人ID查询他的客户个数
+         /// </summary>
+         /// <returns></returns>
+         public HttpResponseMessage GetClientInfoNumByUserId()
+         {
+             var user = (UserBase)_workContext.CurrentUser;
+             if (user != null)
+             {
+                 var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
+                 var condition = new ClientInfoSearchCondition
+                 {
+                     Addusers = broker.Id
+                 };
+                 var count = _clientInfoService.GetClientInfoCount(condition);
+
+                 return PageHelper.toJson(new {count });
+             }
+             return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+
+         }
         #endregion
 
 

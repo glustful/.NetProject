@@ -14,13 +14,32 @@ app.controller('personController',['$http','$scope','AuthService',function($http
         Taskschedule:'1',
         Type:'add'
     }
+    $scope.userBroker={
+    	Name:'',
+    	photo:'',
+    	allMoneys:0,
+    	levelStr:'',
+    	partnerCount:0,
+    	refereeCount:0,
+    	orderStr:0,
+    	customerCount:0
+    }
+    //获取用户信息
+    
+    $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
+    $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerDetails',{'withCredentials':true})
+    .success(function(response) {
+    	$scope.userBroker = response;
+    	console.log(response);
+    });
+    //获取用户信息
     $scope.warm="";
     $scope.tipp="加载更多。。。"
     //查询任务
     var page = 1                                //读取的页数
         , loading = false
         ,pages=2;                      //判断是否正在读取内容的变量
-    $scope.posts = [];
+    $scope.posts = [];//保存从服务器查来的任务，可累加
     var pushContent= function() {                    //核心是这个函数，向$scope.posts
         //添加内容
         $scope.searchCondition.type="today";
@@ -52,7 +71,8 @@ app.controller('personController',['$http','$scope','AuthService',function($http
     //查询客户个数
     var getcustomerList  = function() {
         $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoNumByUserId/',{'withCredentials':true}).success(function(data){
-                $scope.number = data.tocount;
+                $scope.number = data.count;
+
         });
     };
     getcustomerList();
