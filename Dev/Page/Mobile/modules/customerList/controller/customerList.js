@@ -12,12 +12,14 @@ app.controller('cusListController',['$http','$scope','AuthService',function($htt
     //查询客户
     var getcustomerList  = function() {
         //$scope.searchCondition.id=AuthService.userId ;
-        $http.get(SETTING.ApiUrl+'/ClientInfo/ClientInfo/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
+        //alert("sdf");
+        $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoListByUserId/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
             console.log(data);
-            if(data.clientModel!=null){
+            if(data.list!=null){
                 $scope.warm="";
-                $scope.list = data.clientModel;
+                $scope.list = data.list;
                 $scope.parentVi=true;
+
               }
             else{
                 $scope.parentVi=false;
@@ -28,8 +30,8 @@ app.controller('cusListController',['$http','$scope','AuthService',function($htt
     getcustomerList();
 //隐藏显示元素
     $scope.visible = false;
-    $scope.toggle = function () {
-        $scope.visible = !$scope.visible;
+    $scope.toggle = function (id) {
+       $("#"+id).slideToggle("slow");
     }
   }]);
 

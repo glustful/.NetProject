@@ -25,6 +25,13 @@ namespace CRM.Service.Broker
         /// <returns></returns>
         IQueryable<BrokerEntity> OrderbyBrokersList();
 
+
+        /// <summary>
+        /// 经纪人排行
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<BrokerEntity> OrderbyAllBrokersList();
+
 	    BrokerEntity GetBrokerByUserId(int userId);
 	}
 }

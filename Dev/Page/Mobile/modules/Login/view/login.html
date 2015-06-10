@@ -1,23 +1,25 @@
- <form class="form_content"   ng-controller="LoginController">
+ <form class="form_content"  name="login_form" ng-controller="LoginController" ng-submit="Login()" novalidate>
         <p class="user_tip">
             请输入用户名
         </p>
         <p class="input_blank">
             <span><img src="modules/Login/static/image/login/user.png"  class="UserImg"></span>
-            <input type="text" id="Name_blank" placeholder="User name" name="userName" id="UserName" ng-model="user.name"   required/>
+            <input type="text" id="Name_blank" placeholder="User name" name="login_userName" id="UserName" ng-model="user.name"   required/>
         </p>
+        <div class="login_errorTip" ng-show="login_form.login_userName.$error.required&&login_form.login_password.$dirty">用户名不能为空</div>
         <p class="user_tip">
             密码
         </p>
         <p class="input_blank">
             <span><img src="modules/Login/static/image/login/pword.png" class="UserImg"></span>
-            <input type="password" placeholder="Password" name="password" id="Password" ng-model="user.password" required/>
+            <input type="password" placeholder="Password" name="login_password" id="Password" ng-model="user.password" required/>
         </p>
-        <p class="MissMe">
+     <div class="login_errorTip" ng-show="login_form.login_password.$error.required&&login_form.login_password.$dirty">密码不能为空</div>
+     <p class="MissMe">
             <input type="checkbox" name="box" id="box"/>记住我<span class="fp"><a href="#user/PasswordFound">忘记密码?</a></span>
         </p>
-        <button class="login_button" type="submit" ng-click="Login()">登 录</button>
-        <p>{{errorTips}}</p>
+        <button class="login_button" type="submit" ng-disabled="login_form.$invalid">登 录</button>
+        <p class="login_errorTip">{{errorTips}}</p>
         <p class="NoAccount">
             没有账号？点此<span><a href="#user/register">注册</a></span>
         </p>
