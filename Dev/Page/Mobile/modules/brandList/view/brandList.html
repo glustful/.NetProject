@@ -1,0 +1,19 @@
+<div class="message">
+    <ul>
+        <li class="brand" ng-repeat="item in BrandList">
+            <a href="#/app/housesBuy?BrandId={{item.Id}}">
+                <img src="{{item.Bimg}}" alt="中天·水云间" width="620" height="160"/>
+                <div class="summary"><span>{{ item.Bname }}</span><span>{{item.Adduser}}</span><span>总价：110万</span></div>
+                <div class="summaryBg"></div>
+                <div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>
+                <div class="depreciateBg"></div>
+            </a>
+            <h3>{{item.SubTitle}}</h3>
+            <div class="nav" >
+                <span class="orange ng-re" ng-repeat="item1 in item.ProductPramater"><a href="#"> {{item1.Parametername}}:{{item1.Parametervaule}}</a></span>
+            </div>
+
+        </li>
+    </ul>
+    <div>{{Msg}}</div>
+</div>

@@ -206,6 +206,12 @@ app  .run(
             templateUrl:'modules/storeroom/view/storeroom.html',
             resolve:load('modules/storeroom/scripts/StoreRoom.js')
         })
+        .state('app.brand',{
+            url:'/brand?condition',
+            controller:'BrandController',
+            templateUrl:'modules/brandList/view/brandList.html',
+            resolve:load('modules/brandList/scripts/Brand.js')
+        })
         .state('app.task',{
             url:'/task',
             templateUrl:'modules/task/view/task.html',
