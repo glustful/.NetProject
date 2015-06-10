@@ -5,13 +5,14 @@
                <p><input type="password" class="form-control" placeholder="请输入旧密码" ng-model="password.oldPassword" required/></p>
             <div class="form-group">
                 <p><label > 新密码</label></p>
-                <p> <input type="password" id="NewPassword1"  class="form-control" name="userPassword" placeholder="请输入密码"  required></p>
+                <p> <input type="password" id="NewPassword1"  class="form-control" name="userPassword" ng-model="password.Password"  placeholder="请输入密码"  required></p>
+                <input type="hidden" ng-model="password.Hidm">
             </div>
             <div >
                 <label>确认密码</label>
-                <input type="password" class="form-control" id="NewPassword2" name="confirmPassword" placeholder="请再次输入密码" ng-model="password.newPassword" onchange="check()" >
+                <input type="password" class="form-control" id="NewPassword2" name="confirmPassword" placeholder="请再次输入密码" ng-model="password.SecondPassword" onchange="check()" >
             </div>
-               <p class="pin"><input type="text" id="pin_blank"  required/><button  onclick="settime(this)" >获取验证码</button></p>
+               <p class="pin"><input type="text" id="pin_blank" ng-model="password.MobileYzm" placeholder="请输入验证码" required/><button  ng-click="pwSms()" id="pw_sms">获取验证码</button></p>
             <label id="errorTip"></label>
                <p><button class="save_button" ng-click="saveInfo()">保存</button></p>
 

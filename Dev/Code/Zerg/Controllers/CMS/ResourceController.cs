@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -13,8 +8,10 @@ using System.Web.Http.Cors;
 using CMS.Entity.Model;
 using CMS.Service.Resource;
 using YooPoon.Core.Site;
+using YooPoon.WebFramework.User.Entity;
 using Zerg.Common;
 using Zerg.Common.Oss;
+using YooPoon.Common.Encryption;
 
 namespace Zerg.Controllers.CMS
 {
@@ -121,7 +118,7 @@ namespace Zerg.Controllers.CMS
                         Name = fileNewName,
                         Length = fileLength,
                         Type = info.Extension.Substring(1).ToLower(),
-                        Adduser = _workContent.CurrentUser.Id,
+                        Adduser = ((UserBase)_workContent.CurrentUser).Id,
                         Addtime = DateTime.Now,
                         UpdUser = _workContent.CurrentUser.Id,
                         UpdTime = DateTime.Now,

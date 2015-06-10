@@ -24,8 +24,9 @@ namespace Trading.Service.Order
 
         /// <summary>
         /// 生成订单号
+        /// 订单号由时间+传入的type标识符+流水号组成20位定长string
         /// </summary>
-        /// <returns></returns>
-	    string CreateOrderNumber();
+        /// <returns>type为十万位类型标识符，1为推荐，2为带客，3为成交</returns>
+	    string CreateOrderNumber(int type);
 	}
 }

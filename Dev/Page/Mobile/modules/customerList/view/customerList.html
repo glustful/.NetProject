@@ -5,10 +5,10 @@
         <li class="lists">
             <div class="intro cf"><span class="fl name"><b>{{item.Clientname}}</b><br/><small>{{item.Housetype}}&nbsp;&nbsp;{{item.Houses}}</small></span><span class="fr tell">{{item.Phone}}</span></div>
 
-            <div ng-click="toggle(item.Id)"ng-show="parentVi" class="last cf">带客进度：&nbsp;<small>5、返款成功</small><a href="#" class="icon fr"></a></div>
-        <div id="{{item.Id}}" style="display:none" >
+            <div ng-click="toggle()"ng-show="parentVi" class="last cf">带客进度：&nbsp;<small>5、返款成功</small><a href="#" class="icon fr"></a></div>
+        <div ng-show="visible">
             <div  class="detail-customerList" >
-            <div ng-click="toggle(item.Id)" class="last cf">带客进度：&nbsp;<small>5、返款成功</small><a href="#" class="icon fr"></a>  </div>
+            <div class="last cf">带客进度：&nbsp;<small>5、返款成功</small><a href="#" class="icon fr"></a>  </div>
             <div class="cf ">
             <div class="imgList fl" ></div>
             <ul class="fl">
