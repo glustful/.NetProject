@@ -30,6 +30,7 @@ namespace CRM.Entity.Mappings.BrokerRECClient
             Property(c => c.WriterPhone).HasColumnType("varchar").HasMaxLength(50);
             Property(c => c.RecOrder).HasColumnType("int");
             Property(c => c.DealOrder).HasColumnType("int");
+		    Property(c => c.DelFlag).HasColumnType("int");
 		}
 	}
 }
