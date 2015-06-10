@@ -28,7 +28,7 @@ app.controller('personController',['$http','$scope','AuthService',function($http
     	$scope.userBroker = response;
     	console.log(response);
     });
-    //获取用户信息
+    //获取用户信息结束
     $scope.warm="";
     $scope.tipp="加载更多。。。"
     //查询任务
