@@ -302,10 +302,34 @@ namespace Zerg.Controllers.UC
         [HttpPost]
         public HttpResponseMessage ChangePassword([FromBody]ChangePasswordModel model)
         {
-            //首先判断发送到手机的验证码是否正确
+            
+            #region 首先判断发送到手机的验证码是否正确
+            var strDes = EncrypHelper.Decrypt(model.Hidm, "Hos2xNLrgfaYFY2MKuFf3g==");//解密
+            string[] str = strDes.Split('$');
+            string source = str[0];//获取验证码
+            DateTime date = Convert.ToDateTime(str[1]);//获取发送验证码的时间
+            DateTime dateNow = Convert.ToDateTime(DateTime.Now.ToLongTimeString());//获取当前时间
+            TimeSpan ts = dateNow.Subtract(date);
+            double secMinu = ts.TotalMinutes;//得到发送时间与现在时间的时间间隔分钟数
+            if (secMinu > 3) //发送时间与接受时间是否大于3分钟
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "你已超过时间验证，请重新发送验证码！"));
+            }
+            else
+            {
+                if (model.MobileYzm != source)//判断验证码是否一致
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码错误，请重新发送！"));
+                }
+            }
+
+
+            #endregion
+
+
 
             //判断两次新密码是否一致
-            if (model.NewPassword!=model.NewTwoPassword)
+            if (model.Password!=model.SecondPassword)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "密码不一致！"));
             }
@@ -313,7 +337,7 @@ namespace Zerg.Controllers.UC
             var user =(UserBase) _workContext.CurrentUser;
             if (user!=null && PasswordHelper.ValidatePasswordHashed(user,model.OldPassword))
             {
-                PasswordHelper.SetPasswordHashed(user, model.NewPassword);
+                PasswordHelper.SetPasswordHashed(user, model.Password);
                 _userService.ModifyUser(user);
                 return PageHelper.toJson(PageHelper.ReturnValue(true,"数据更新成功！"));
             }
