@@ -70,6 +70,9 @@ form a{
     color: #ffffff;
     font-family:'microsoft yahei' ;
 }
+.security_error{
+    color: #fc3b00;
+}
 /*个人设置*/
 .setting_personal{
     padding: 40px 0 100px 0;

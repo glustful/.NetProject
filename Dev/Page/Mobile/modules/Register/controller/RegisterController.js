@@ -22,11 +22,11 @@ app.controller('registerController',function($scope,$http,$state){
             else{
                 $state.go('user.login');
             }
-            
+
         })
     }
 
-//验证码
+    //验证码
     $scope.YZM={
         Mobile:'',
         SmsType:'0'
