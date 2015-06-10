@@ -73,8 +73,8 @@ app.controller('taskController',['$http','$scope','AuthService',function($http,$
     //查询任务
    var loading = false
        ,pages=2;                      //判断是否正在读取内容的变量
-    $scope.posts = [];
-$scope.tcount=0;//
+    $scope.posts = [];//保存从服务器查来的任务，可累加
+$scope.tcount=0;//保存任务总数
     var pushContent= function() {                    //核心是这个函数，向$scope.posts
         //添加内容
           $scope.searchCondition.type="all";
@@ -89,6 +89,9 @@ $scope.tcount=0;//
                     }
                     loading = false;            //告知读取结束
                         $scope.tipp="加载更多"+"("+$scope.posts.length+"/"+data.totalCount+")";
+                        if ($scope.posts.length == data.totalCount) {//如果所有数据已查出来
+                            $scope.tipp = "没有更多了,共("+$scope.tcount+")条";
+                        }
                         $scope.tcount=data.totalCount;
                     } else{
                         $scope.tipp = "没有任务";
@@ -96,24 +99,20 @@ $scope.tcount=0;//
                     });
                 $scope.searchCondition.page++;                             //翻页
                 if ($scope.searchCondition.page > pages) {
-                    $scope.tipp = "没有更多了,gong("+$scope.tcount+")tiao";
+                    $scope.tipp = "没有更多了,共("+$scope.tcount+")条";
                 }
             }
             else {
-                $scope.tipp = "没有更多了,gong("+$scope.tcount+")tiao";
+                $scope.tipp = "没有更多了,共("+$scope.tcount+")条";
             }
-
-
     };
     pushContent();
-
     $scope.more=pushContent;
 
     //接受任务
     var addlist=function(id){
         $scope.addcondition.TaskId=id;
         $scope.addcondition.UserId=$scope.currentuser.UserId ;
-
         $http.post(SETTING.ApiUrl+'/Task/AddTaskList/',$scope.addcondition).success(function(data){
             console.log(data);
             if(data.Status){

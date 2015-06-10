@@ -15,15 +15,19 @@ app.controller('personController',['$http','$scope','AuthService',function($http
         Type:'add'
     }
     $scope.userBroker={
-    	Brokername:'',
-    	Headphoto:'',
-    	Amount:0,
-    	Agentlevel:''
+    	Name:'',
+    	photo:'',
+    	allMoneys:0,
+    	levelStr:'',
+    	partnerCount:0,
+    	refereeCount:0,
+    	orderStr:0,
+    	customerCount:0
     }
     //获取用户信息
     
     $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
-    $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
+    $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerDetails',{'withCredentials':true})
     .success(function(response) {
     	$scope.userBroker = response;
     	console.log(response);
@@ -35,7 +39,7 @@ app.controller('personController',['$http','$scope','AuthService',function($http
     var page = 1                                //读取的页数
         , loading = false
         ,pages=2;                      //判断是否正在读取内容的变量
-    $scope.posts = [];
+    $scope.posts = [];//保存从服务器查来的任务，可累加
     var pushContent= function() {                    //核心是这个函数，向$scope.posts
         //添加内容
         $scope.searchCondition.type="today";
