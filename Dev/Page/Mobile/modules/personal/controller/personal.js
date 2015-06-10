@@ -67,7 +67,8 @@ app.controller('personController',['$http','$scope','AuthService',function($http
     //查询客户个数
     var getcustomerList  = function() {
         $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoNumByUserId/',{'withCredentials':true}).success(function(data){
-                $scope.number = data.tocount;
+                $scope.number = data.count;
+
         });
     };
     getcustomerList();

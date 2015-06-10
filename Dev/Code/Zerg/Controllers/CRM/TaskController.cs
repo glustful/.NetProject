@@ -399,7 +399,7 @@ namespace Zerg.Controllers.CRM
                 var model = new TaskListEntity
                 {
                     Task = _taskService .GetTaskById (taskListModel.TaskId),
-                    Broker =_brokerService .GetBrokerById (taskListModel .BrokerId),
+                    Broker = _brokerService.GetBrokerByUserId(taskListModel.UserId),
                     Taskschedule =taskListModel .Taskschedule ,
 
                   
