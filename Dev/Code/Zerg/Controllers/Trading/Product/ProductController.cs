@@ -206,7 +206,6 @@ namespace Zerg.Controllers.Trading.Product
             var product = _productService.GetProductById(productId);
             var productDetail = new ProductDetail
             {
-                Id=product.Id,
                 Productname = product.Productname,
                 Productimg = product.ProductDetail.Productimg,
                 BrandImg = product.ProductBrand.Bimg,

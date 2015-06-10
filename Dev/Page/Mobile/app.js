@@ -14,7 +14,7 @@ app.directive('draggable', function($document) {
         element.css({
             position: 'relative',
             border: '1px solid red',
-            backgroundColor: 'white',
+            backgroundColor: 'lightgrey',
             cursor: 'pointer'
         });
         element.bind('mousedown', function(event) {
