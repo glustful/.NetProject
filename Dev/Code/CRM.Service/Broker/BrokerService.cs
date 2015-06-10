@@ -339,7 +339,7 @@ namespace CRM.Service.Broker
 
 
         /// <summary>
-        /// 经纪人排行
+        /// 经纪人排行top10
         /// </summary>
         /// <returns></returns>
         public IQueryable<BrokerEntity> OrderbyBrokersList()
@@ -348,6 +348,16 @@ namespace CRM.Service.Broker
             return query.Where(o => o.Amount>0).OrderByDescending(o => o.Amount).Take(10);
         }
 
+
+        /// <summary>
+        /// 所有经纪人排行
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<BrokerEntity> OrderbyAllBrokersList()
+        {
+            var query = _brokerRepository.Table;
+            return query.Where(o => o.Amount > 0).OrderByDescending(o => o.Amount);
+        }
 
         public BrokerEntity GetBrokerByUserId(int userId)
         {
