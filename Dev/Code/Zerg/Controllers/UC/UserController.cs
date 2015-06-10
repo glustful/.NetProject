@@ -177,7 +177,13 @@ namespace Zerg.Controllers.UC
             //此处方法缺失，原功能应为Broker权限缺少时自动添加
             if (brokerRole == null)
             {
-
+                brokerRole = new Role
+                {
+                    RoleName = "Broker",
+                    RolePermissions = null,
+                    Status = RoleStatus.Normal,
+                    Description = "经纪人"
+                };
             }
 
             var newUser = new UserBase
