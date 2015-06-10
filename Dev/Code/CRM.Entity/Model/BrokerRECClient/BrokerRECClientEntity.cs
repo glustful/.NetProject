@@ -29,7 +29,7 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// QQ
 		/// </summary>
-		public virtual int Qq { get; set; }
+		public virtual string Qq { get; set; }
 		/// <summary>
 		/// AddUser
 		/// </summary>

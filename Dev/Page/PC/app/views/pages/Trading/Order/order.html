@@ -27,21 +27,27 @@
             <td align="center">{{row.Ordercode }}</td>
             <td align="center" ng-if="row.Ordertype==0">推荐订单</td>
             <td align="center" ng-if="row.Ordertype==1">成交订单</td>
-            <td align="center" ng-if="row.Status==0">未审核</td>
-            <td align="center" ng-if="row.Status==1">审核驳回</td>
-            <td align="center" ng-if="row.Status==2">审核通过</td>
-            <td align="center" ng-if="row.Shipstatus==0">未看房</td>
-            <td align="center" ng-if="row.Shipstatus==1">已预约</td>
-            <td align="center" ng-if="row.Shipstatus==2">已看房</td>
-            <td align="center" ng-if="row.Shipstatus==3">已付佣金</td>
-            <td align="center" ng-if="row.Shipstatus==4">已买房</td>
-            <td align="center" ng-if="row.Shipstatus==5">已付佣金</td>
+            <td align="center" ng-if="row.Ordertype=2">带客订单</td>
+
+            <td align="center" ng-if="row.Status==0">默认</td>
+            <td align="center" ng-if="row.Status==-1">审核失败</td>
+            <td align="center" ng-if="row.Status==1">审核通过</td>
+            <td align="center" ng-if="row.Status==2">已结转</td>
+
+            <td align="center" ng-if="row.Shipstatus==0">审核中</td>
+            <td align="center" ng-if="row.Shipstatus==-1">审核不通过</td>
+            <td align="center" ng-if="row.Shipstatus==1">等待上访</td>
+            <td align="center" ng-if="row.Shipstatus==-2">客人未到</td>
+            <td align="center" ng-if="row.Shipstatus==2">洽谈中</td>
+            <td align="center" ng-if="row.Shipstatus==-3">洽谈失败</td>
+            <td align="center" ng-if="row.Shipstatus==3">洽谈成功</td>
+
             <td align="center">{{row.Agentname }}</td>
             <td align="center">{{row.Agenttel }}</td>
             <td align="center">{{row.Busname }}</td>
-            <td align="center">{{row.OrderDetail.Price }}</td>
-            <td align="center">{{row.OrderDetail.Commission }}</td>
-            <td align="center">{{row.OrderDetail.Dealcommission }}</td>
+            <td align="center">{{row.Price }}</td>
+            <td align="center">{{row.Commission }}</td>
+            <td align="center">{{row.Dealcommission }}</td>
             <td align="center">
                 <button ng-click='Pass(row.Id,2)' class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-edit"></i>通过审核
                 </button>
