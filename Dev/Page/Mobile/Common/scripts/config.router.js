@@ -178,7 +178,7 @@ app  .run(
         .state('app.personal',{
             url:'/personal',
             templateUrl:'modules/personal/view/personal.html',
-            resolve:load('modules/personal/controller/personal.js')
+            //resolve:load('modules/personal/controller/personal.js')
         })
         .state('app.personalPage',{
             url:'/personalPage',

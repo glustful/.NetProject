@@ -129,7 +129,7 @@ namespace Zerg.Controllers.UC
             if (string.IsNullOrEmpty(brokerModel.Hidm)) return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码错误"));
 
             #region 验证码判断 解密
-            var strDes = EncrypHelper.Decrypt(brokerModel.Hidm, "desdesdesdes");//解密
+            var strDes = EncrypHelper.Decrypt(brokerModel.Hidm, "Hos2xNLrgfaYFY2MKuFf3g==");//解密
             string[] str = strDes.Split('$');
             string source = str[0];//获取验证码
             DateTime date = Convert.ToDateTime(str[1]);//获取发送验证码的时间
