@@ -4,7 +4,7 @@
 public enum EnumUserType
 {
     // 经纪人 broker  ，  
-    //管理员 manager   ,   
+    //管理员 admin   ,   
     //商家 merchant    ，   
     //财务 accountant   ，   
     //场秘 secretary    ,   
@@ -14,7 +14,8 @@ public enum EnumUserType
     商家 = 2,
     财务 = 3,
     场秘 = 4,
-    带客人员=5
+    带客人员=5,
+    普通用户=6
 }
 
 

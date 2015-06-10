@@ -400,9 +400,9 @@ namespace Trading.Service.Order
 
         /// <summary>
         /// 生成订单号
-        /// 订单号由时间+传入的type标识符+流水号组成20位定长string
+        /// 订单号由时间+传入的type标识符+流水号组成25位定长string
         /// </summary>
-        /// <returns>type为十万位类型标识符，1为推荐，2为带客，3为成交</returns>
+        /// <returns>type为右起10，11位类型标识符，1为推荐，2为带客，3为成交</returns>
         public string CreateOrderNumber(int type)
         {
             //获取当日流水号
@@ -412,7 +412,7 @@ namespace Trading.Service.Order
                 AdddateEnd = DateTime.Today.AddDays(1)
             });
 
-            return DateTime.Now.ToString("yyyyMMddHHmmss")+(type)+(num+1).ToString("00000");
+            return DateTime.Now.ToString("yyyyMMddHHmmss")+(type).ToString("00")+(num+1).ToString("000000000");
         }
     }
 }

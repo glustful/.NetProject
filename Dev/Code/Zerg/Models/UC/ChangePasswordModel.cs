@@ -21,4 +21,21 @@
         /// </summary>
         public string Hidm { get; set; }
     }
+
+    public class ForgetPasswordModel
+    {
+        public string Phone { get; set; }
+        /// <summary>
+        /// 验证码
+        /// </summary>
+        public string Yzm { get; set; }
+
+        /// <summary>
+        /// 码
+        /// </summary>
+        public string Hidm { get; set; }
+
+        public string first_password { get; set; }
+        public string second_password { get; set; }
+    }
 }
