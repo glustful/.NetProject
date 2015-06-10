@@ -14,6 +14,20 @@ app.controller('personController',['$http','$scope','AuthService',function($http
         Taskschedule:'1',
         Type:'add'
     }
+    $scope.userBroker={
+    	Brokername:'',
+    	Headphoto:'',
+    	Amount:0,
+    	Agentlevel:''
+    }
+    //获取用户信息
+    $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
+    $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
+    .success(function(response) {
+    	$scope.userBroker = response;
+    	console.log(response);
+    });
+    //获取用户信息
     $scope.warm="";
     $scope.tipp="加载更多。。。"
     //查询任务
