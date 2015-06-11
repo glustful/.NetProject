@@ -1,7 +1,9 @@
 /**
  * Created by Administrator on 2015/6/8.
  */
-app.controller('personController',['$http','$scope','AuthService',function($http,$scope,AuthService) {
+app.controller('personController',['$http','$scope','AuthService','$state',function($http,$scope,AuthService,$state) {
+   if(AuthService.IsAuthenticated)
+   {
     $scope.searchCondition = {
         Id:0,
         page: 1,
@@ -91,4 +93,12 @@ app.controller('personController',['$http','$scope','AuthService',function($http
         });
     };
     $scope.addTaskList = addlist;
-}]);
+   }
+        else{
+
+       $state.go("user.login");
+
+   }
+}
+]
+);
