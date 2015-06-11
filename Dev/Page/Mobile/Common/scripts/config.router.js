@@ -201,7 +201,7 @@ app  .run(
         })
         .state('app.storeroom',{
             url:'/storeroom',
-            controller:'StormRoomController',
+           // controller:'StormRoomController',
             templateUrl:'modules/storeroom/view/storeroom.html',
             resolve:load('modules/storeroom/scripts/StoreRoom.js')
         })
