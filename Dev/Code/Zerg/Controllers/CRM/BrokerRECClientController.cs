@@ -95,12 +95,14 @@ namespace Zerg.Controllers.CRM
              var sech = new BrokerRECClientSearchCondition
              {
                  Clientname = brokerrecclient.Clientname,
-                 Phone = brokerrecclient.Phone.ToString(CultureInfo.InvariantCulture),
-                 Projectids = new[] { brokerrecclient.Projectid }
+                 Phone = brokerrecclient.Phone,
+                 Projectids = new[] { brokerrecclient.Projectid },
+                 DelFlag = EnumDelFlag.默认
              };
 
              var cmodel = _brokerRecClientService.GetBrokerRECClientsByCondition(sech).FirstOrDefault();
 
+             //检测客户是否存在于数据库
              if (cmodel == null)
              {
                  //客户信息
@@ -121,11 +123,12 @@ namespace Zerg.Controllers.CRM
              }
              else
              {
-                 //检测是否存在正在上访的推荐
-                 if (_brokerRecClientService.GetBrokerRECClientsByCondition(sech).ToList().Any(p => p.Status == EnumBRECCType.等待上访))
-                 {
-                     return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在上访！"));
-                 }
+                 ////检测是否存在正在上访的推荐
+                 //if (_brokerRecClientService.GetBrokerRECClientsByCondition(sech).ToList().Any(p => p.Status == EnumBRECCType.等待上访))
+                 //{
+                 //    return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在上访！"));
+                 //}
+                 return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在被推荐！"));
              }
 
              #region 创建订单 杨定鹏 2015年6月3日17:21:39
@@ -214,9 +217,9 @@ namespace Zerg.Controllers.CRM
                  Clientname = brokerrecclient.Clientname,
                  Phone = brokerrecclient.Phone.ToString(CultureInfo.InvariantCulture),
              };
-
              var cmodel2 = _clientInfoService.GetClientInfosByCondition(sech2).FirstOrDefault();
 
+             //查询经纪人信息
              var broker = _brokerService.GetBrokerByUserId(brokerrecclient.Adduser);
 
              //创建推荐流程
@@ -236,6 +239,7 @@ namespace Zerg.Controllers.CRM
              model.Projectid = brokerrecclient.Projectid;
              model.Projectname = brokerrecclient.Projectname;
              model.Status = EnumBRECCType.审核中;
+             model.DelFlag = EnumDelFlag.默认;
 
              model.RecOrder = _orderService.Create(oe).Id;      //添加推荐订单；
              model.DealOrder =_orderService.Create(oe2).Id;       //添加成交订单

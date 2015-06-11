@@ -101,5 +101,9 @@ namespace Zerg.Models.CRM
         /// 添加/修改类型
         /// </summary>
         public virtual string Type { get; set; }
+        /// <summary>
+        /// 删除标识
+        /// </summary>
+        public virtual EnumDelFlag DelFlag { get; set; }
     }
 }

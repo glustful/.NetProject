@@ -1,5 +1,6 @@
  .pic li{
     position: relative;
+
 }
  .pic .page{
     position: absolute;
@@ -7,6 +8,11 @@
     top:200px;
 
 }
+ .pic{
+     width: 640px;
+     height: 230px;
+
+ }
  .pic .page span{
     background: url("../image/index/p1-1.png") no-repeat 0 0;
     display: inline-block;
@@ -159,3 +165,13 @@ h3{
  .focus{ width: 640px;}
  .focus span{width:10px;height:10px;margin-right:10px;background:#666;font-size:0;}
  .focus span.current{background:#fff}
+
+
+
+
+
+
+
+
+
+

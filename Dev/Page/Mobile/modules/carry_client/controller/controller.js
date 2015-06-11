@@ -17,6 +17,8 @@ app.controller('daikeController',['$http','$scope','$stateParams','AuthService',
         Stats:'0'
 
     };
+
+
     $scope.currentUser=AuthService.CurrentUser();
     $scope.BrokerLeadClient.AddUser = $scope.currentUser.UserId;
     $scope.BrokerLeadClient.Projectid=$stateParams.Projectid;

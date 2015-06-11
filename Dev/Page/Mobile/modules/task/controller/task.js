@@ -52,7 +52,7 @@
 /**
  * Created by 黄秀宇 on 2015/5/26.
  */
-app.controller('taskController',['$http','$scope','AuthService',function($http,$scope,AuthService) {
+app.controller('taskController',['$http','$scope','AuthService','$timeout',function($http,$scope,AuthService,$timeout) {
     $scope.searchCondition = {
          Id:0,
         page: 0,
@@ -75,7 +75,7 @@ app.controller('taskController',['$http','$scope','AuthService',function($http,$
        ,pages=2;                      //判断是否正在读取内容的变量
     $scope.posts = [];//保存从服务器查来的任务，可累加
 $scope.tcount=0;//保存任务总数
-    var pushContent= function() {                    //核心是这个函数，向$scope.posts
+      function pushContent() {                    //核心是这个函数，向$scope.posts
         //添加内容
           $scope.searchCondition.type="all";
             if (!loading && $scope.searchCondition.page < pages) {                         //如果页面没有正在读取
@@ -100,15 +100,36 @@ $scope.tcount=0;//保存任务总数
                 $scope.searchCondition.page++;                             //翻页
                 if ($scope.searchCondition.page > pages) {
                     $scope.tipp = "没有更多了,共("+$scope.tcount+")条";
-                }
+                };
+
             }
             else {
                 $scope.tipp = "没有更多了,共("+$scope.tcount+")条";
             }
     };
-    pushContent();
-    $scope.more=pushContent;
-
+    pushContent();//初始化加载
+    //自动加载定时器方法,得注入$timeout
+//   $scope.more=pushContent;//手动加载更多
+//    function pushContentMore(){
+//       if ($(document).scrollTop()+5 >= $(document).height() - $(window).height())
+//       {
+//           pushContent();//if判断有没有滑动到底部，到了加载
+//       }
+//        $timeout(pushContentMore, 1000);//定时器，每隔一秒循环调用自身函数
+//    }
+//    pushContentMore();//触发里面的定时器
+    //自动加载jq方法
+$(document).ready(//文档加载完后执行里面的函数
+    function (){
+        $(window).scroll(function(){//滑动时执行
+            if ($(document).scrollTop()+5 >= $(document).height() - $(window).height())
+            {
+                pushContent();//if判断有没有滑动到底部，到了加载
+            }
+        })
+    }
+);
+$scope.more=pushContent;
     //接受任务
     var addlist=function(id){
         $scope.addcondition.TaskId=id;

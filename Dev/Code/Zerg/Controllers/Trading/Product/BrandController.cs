@@ -154,23 +154,33 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="pageindex"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public HttpResponseMessage GetAllBrand()
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage GetAllBrand(int page)
         {
-            ProductBrandSearchCondition PBSC = new ProductBrandSearchCondition()
-            {
-                OrderBy = EnumProductBrandSearchOrderBy.OrderById
-            };
-            var brandList = _productBrandService.GetProductBrandsByCondition(PBSC).Select(a => new
+
+            int pageSize = 6;
+
+            var Brandcondition = new ProductBrandSearchCondition
+
+           {
+               Page = page,
+               PageCount = pageSize,
+
+
+
+           };
+            var totalCount = _productBrandService.GetProductBrandCount(Brandcondition);
+
+            var brandList = _productBrandService.GetProductBrandsByCondition(Brandcondition).Select(a => new
             {
                 a.Id,
                 a.Bimg,
                 a.Bname,
                 a.SubTitle,
                 a.Content,
-                ProductPramater = a.ParameterEntities.Select(p => new { p.Parametername,p.Parametervaule})
+                ProductPramater = a.ParameterEntities.Select(p => new { p.Parametername, p.Parametervaule })
             }).ToList();
-            return PageHelper.toJson(brandList);
+            return PageHelper.toJson(new { brandList=brandList, totalCount=totalCount});
             //return PageHelper.toJson(_productBrandService.GetProductBrandsByCondition(PBSC).ToList());
         }
         /// <summary>
@@ -180,13 +190,13 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns></returns>
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage SearchBrand(string condition,int page)
+        public HttpResponseMessage SearchBrand(string condition,int page,int pageCount)
         {
             ProductBrandSearchCondition bcon = new ProductBrandSearchCondition
             {
                 Bname = condition,
                 Page = page,
-                PageCount = 2
+                PageCount = pageCount
             };
             var brandList = _productBrandService.GetProductBrandsByCondition(bcon).Select(a => new
             {
