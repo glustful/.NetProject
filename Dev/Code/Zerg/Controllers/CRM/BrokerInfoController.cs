@@ -12,6 +12,11 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Zerg.Common;
 using Zerg.Models.CRM;
+using YooPoon.WebFramework.User.Entity;
+using YooPoon.Core.Site;
+using CRM.Service.PartnerList;
+using CRM.Service.RecommendAgent;
+using CRM.Service.ClientInfo;
 
 namespace Zerg.Controllers.CRM
 {
@@ -24,10 +29,18 @@ namespace Zerg.Controllers.CRM
     public class BrokerInfoController : ApiController
     {
         private readonly IBrokerService _brokerService;
+        private readonly IWorkContext _workContext;
+        private IPartnerListService _partnerlistService;//合伙人
+        private readonly IRecommendAgentService _recommendagentService; //推荐经纪人
+        private IClientInfoService _clientInfoService;//客户
 
-        public BrokerInfoController(IBrokerService brokerService)
+        public BrokerInfoController(IClientInfoService clientInfoService, IWorkContext workContext, IBrokerService brokerService, IPartnerListService partnerlistService, IRecommendAgentService recommendagentService)
         {
+            _clientInfoService = clientInfoService;
+            _workContext =workContext;
             _brokerService = brokerService;
+            _partnerlistService = partnerlistService;
+            _recommendagentService = recommendagentService;
         }
 
 
@@ -71,7 +84,7 @@ namespace Zerg.Controllers.CRM
             var brokerInfo = new BrokerModel
             {
                 Id = model.Id,
-                Brokername = model.Brokername,
+            
                 Realname = model.Realname,
                 Nickname = model.Nickname,
                 Sexy = model.Sexy,
@@ -305,20 +318,137 @@ namespace Zerg.Controllers.CRM
             return PageHelper.toJson(new { List = brokersList });
         }
 
-        [HttpPost]
+
 
         /// <summary>
-        /// 发送短信
+        /// 获取经纪人详细信息（合伙人个数  推荐人个数  客户个数  等级 排名 总佣金）
         /// </summary>
         /// <returns></returns>
-        public HttpResponseMessage SendSMS([FromBody] string  mobile)
+        [System.Web.Http.HttpGet]
+       public HttpResponseMessage  GetBrokerDetails()
         {
-            return PageHelper.toJson(  SMSHelper.Sending(mobile, "[创富宝]短信接口测试，发送时间："+DateTime.Now.ToString()));
+             var user = (UserBase)_workContext.CurrentUser;
+             if (user != null)
+             {
+                 var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
+                 if (broker == null)
+                 {
+                     return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+                 }
+                 else
+                 {
+                     var partnerCount = 0;//合伙人个数
+                     var refereeCount = 0;//推荐人个数
+                     var customerCount = 0;//客户个数
+                     var levelStr = "";//等级
+                     var orderStr = "0";//排名
+                     var allMoneys = "0";//总佣金
 
+                     var partnerlistsearchcon = new PartnerListSearchCondition
+                     {
+                          Brokers=broker
+                     };
+                     partnerCount = _partnerlistService.GetPartnerListCount(partnerlistsearchcon);
+
+                     var recomagmentsearchcon = new RecommendAgentSearchCondition
+                     {
+                         BrokerId =broker.Id
+                     };
+                     refereeCount = _recommendagentService.GetRecommendAgentCount(recomagmentsearchcon);
+
+                     var condition = new ClientInfoSearchCondition
+                     {
+                      Addusers=broker.Id
+                     };
+                     customerCount = _clientInfoService.GetClientInfoCount(condition);
+
+                     levelStr = broker.Agentlevel;
+
+                     allMoneys = broker.Amount.ToString();
+
+                     orderStr = GetOrdersByuserId(broker.Id.ToString());
+
+                     return PageHelper.toJson(new { partnerCount = partnerCount, refereeCount = refereeCount, customerCount = customerCount, levelStr = levelStr, orderStr = orderStr, allMoneys = allMoneys ,photo=broker.Headphoto,Name=broker.Brokername});
+                 }
+             }
+             return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+        }
+
+        /// <summary>
+        /// 获取经纪人的排名顺序
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        string GetOrdersByuserId(string userid)
+        {
+            #region 排序实现
+            List<ResultOrder> listOrder = new List<ResultOrder>();
+            var brokerorderList = _brokerService.OrderbyAllBrokersList().ToList();
+            var brokerorderlistArray = brokerorderList.ToArray();
+            int count = 1;
+            for (int i = 0; i < brokerorderlistArray.Length; i++)
+            {
+                 //确定是否到数组边界
+                if (i + 1 < brokerorderlistArray.Length)
+                {
+                    //如果与list中下一位的Num数相等则 排名Count数不变
+                    if (brokerorderlistArray[i].Amount == brokerorderlistArray[i + 1].Amount)
+                    {
+                        var item = new ResultOrder { Id = count, userId = brokerorderlistArray[i].Id.ToString(), Name = brokerorderlistArray[i].Brokername, Moneys = brokerorderlistArray[i].Amount };
+                        listOrder.Add(item);
+                    }
+                    else
+                    {
+                        //如果与list中下一位的Num数不相等则 排名Count加1
+                        var item = new ResultOrder { Id = count, userId = brokerorderlistArray[i].Id.ToString(), Name = brokerorderlistArray[i].Brokername, Moneys = brokerorderlistArray[i].Amount };
+                        listOrder.Add(item);
+                        count++;
+                    }
+                }
+                //如果是最后一位了就直接添加
+                else
+                {
+                    var item = new ResultOrder { Id = count, userId = brokerorderlistArray[i].Id.ToString(), Name = brokerorderlistArray[i].Brokername, Moneys = brokerorderlistArray[i].Amount };
+                    listOrder.Add(item);
+                }
+            }
+            #endregion
+
+           if (listOrder.Count<=0)//无数据
+           {
+               return "1";
+           }
+            else
+            {
+                var resultOrder = listOrder.FirstOrDefault(o => o.userId == userid);
+               if(resultOrder!=null)
+               {
+                   return resultOrder.Id.ToString();
+               }
+               else
+               {
+                   //没找到  
+                   return (listOrder[listOrder.Count - 1].Id + 1).ToString();
+               }
+            }
+           return "0";
         }
 
         #endregion
 
 
+    }
+
+
+    /// <summary>
+    /// 排名类
+    /// </summary>
+    public class ResultOrder
+    {
+        public int Id { get; set; } //排名Id
+
+        public string userId { get; set; }//用户ID
+        public string Name { get; set; }//用户姓名
+        public decimal  Moneys { get; set; }//金额
     }
 }

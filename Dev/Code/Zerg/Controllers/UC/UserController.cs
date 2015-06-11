@@ -18,6 +18,7 @@ using YooPoon.WebFramework.User.Services;
 using Zerg.Common;
 using Zerg.Models.CRM;
 using Zerg.Models.UC;
+using YooPoon.Common.Encryption;
 
 namespace Zerg.Controllers.UC
 {
@@ -120,9 +121,41 @@ namespace Zerg.Controllers.UC
         [HttpPost]
         public HttpResponseMessage AddBroker([FromBody]BrokerModel brokerModel)
         {
-            if (string.IsNullOrEmpty(brokerModel.Brokername)) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名不能为空"));
+            if (string.IsNullOrEmpty(brokerModel.UserName)) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名不能为空"));
             if (string.IsNullOrEmpty(brokerModel.Password)) return PageHelper.toJson(PageHelper.ReturnValue(false, "密码不能为空"));
+            if (string.IsNullOrEmpty(brokerModel.SecondPassword)) return PageHelper.toJson(PageHelper.ReturnValue(false, "确认密码不能为空"));
             if (string.IsNullOrEmpty(brokerModel.Phone)) return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号不能为空"));
+            if (string.IsNullOrEmpty(brokerModel.MobileYzm)) return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码不能为空"));
+            if (string.IsNullOrEmpty(brokerModel.Hidm)) return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码错误"));
+
+            #region 验证码判断 解密
+            var strDes = EncrypHelper.Decrypt(brokerModel.Hidm, "Hos2xNLrgfaYFY2MKuFf3g==");//解密
+            string[] str = strDes.Split('$');
+            string source = str[0];//获取验证码
+            DateTime date = Convert.ToDateTime(str[1]);//获取发送验证码的时间
+            DateTime dateNow = Convert.ToDateTime(DateTime.Now.ToLongTimeString());//获取当前时间
+            TimeSpan ts = dateNow.Subtract(date);
+            double secMinu = ts.TotalMinutes;//得到发送时间与现在时间的时间间隔分钟数
+            if (secMinu >3) //发送时间与接受时间是否大于3分钟
+            {               
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "你已超过时间验证，请重新发送验证码！"));
+            }
+            else
+            {
+                if(brokerModel.MobileYzm!=source)//判断验证码是否一致
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码错误，请重新发送！"));
+                }
+            }
+
+            #endregion
+
+            #region 判断两次密码是否一致
+            if(brokerModel.Password!=brokerModel.SecondPassword)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号不能为空"));
+            }
+            #endregion
 
             #region UC用户创建 杨定鹏 2015年5月28日14:52:48
             var user = _userService.GetUserByName(brokerModel.UserName);
@@ -138,16 +171,23 @@ namespace Zerg.Controllers.UC
 
             if (user2 != 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
 
-            var brokerRole = _roleService.GetRoleByName("Broker");
+            var brokerRole = _roleService.GetRoleByName("user");
 
+            //User权限缺少时自动添加
             if (brokerRole == null)
             {
-
+                brokerRole = new Role
+                {
+                    RoleName = "user",
+                    RolePermissions = null,
+                    Status = RoleStatus.Normal,
+                    Description = "刚注册的用户默认归为普通用户user"
+                };
             }
 
             var newUser = new UserBase
             {
-                UserName = brokerModel.Brokername,
+                UserName = brokerModel.UserName,
                 Password = brokerModel.Password,
                 RegTime = DateTime.Now,
                 NormalizedName = brokerModel.UserName.ToLower(),
@@ -167,11 +207,11 @@ namespace Zerg.Controllers.UC
 
             var model = new BrokerEntity();
             model.UserId = _userService.InsertUser(newUser).Id;
-            model.Brokername = brokerModel.Brokername;
+            model.Brokername = brokerModel.UserName;
             model.Phone = brokerModel.Phone;
             model.Totalpoints = 0;
             model.Amount = 0;
-            model.Usertype = brokerModel.UserType;
+            model.Usertype = EnumUserType.普通用户;
             model.Regtime = DateTime.Now;
             model.State = 1;
             model.Adduser = 0;
@@ -258,13 +298,86 @@ namespace Zerg.Controllers.UC
             return PageHelper.toJson(userDetail);
         }
 
+        /// <summary>
+        /// 忘记密码
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage ForgetPassword([FromBody]ForgetPasswordModel model)
+        {
+            //判断用户是否存在
+            var sech = new BrokerSearchCondition
+            {
+                OrderBy = EnumBrokerSearchOrderBy.OrderById,
+                Phone = model.Phone
+            };
+            var broker = _brokerService.GetBrokersByCondition(sech).FirstOrDefault();
+            if (broker == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在！"));
+
+            #region 首先判断发送到手机的验证码是否正确
+            var strDes = EncrypHelper.Decrypt(model.Hidm, "Hos2xNLrgfaYFY2MKuFf3g==");//解密
+            string[] str = strDes.Split('$');
+            string source = str[0];//获取验证码
+            DateTime date = Convert.ToDateTime(str[1]);//获取发送验证码的时间
+            DateTime dateNow = Convert.ToDateTime(DateTime.Now.ToLongTimeString());//获取当前时间
+            TimeSpan ts = dateNow.Subtract(date);
+            double secMinu = ts.TotalMinutes;//得到发送时间与现在时间的时间间隔分钟数
+            if (secMinu > 3) //发送时间与接受时间是否大于3分钟
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "你已超过时间验证，请重新发送验证码！"));
+            }
+            else
+            {
+                if (model.Yzm != source)//判断验证码是否一致
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码错误，请重新发送！"));
+                }
+            }
+
+
+            #endregion
+
+            //判断两次新密码是否一致
+            if (model.first_password == model.second_password) return PageHelper.toJson(PageHelper.ReturnValue(true, "密码不一致！"));
+
+            //密码修改
+            var user = _userService.FindUser(broker.UserId);
+            PasswordHelper.SetPasswordHashed(user, model.Phone);
+            _userService.ModifyUser(user);
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+        }
+
         [HttpPost]
         public HttpResponseMessage ChangePassword([FromBody]ChangePasswordModel model)
         {
-            //首先判断发送到手机的验证码是否正确
+            
+            #region 首先判断发送到手机的验证码是否正确
+            var strDes = EncrypHelper.Decrypt(model.Hidm, "Hos2xNLrgfaYFY2MKuFf3g==");//解密
+            string[] str = strDes.Split('$');
+            string source = str[0];//获取验证码
+            DateTime date = Convert.ToDateTime(str[1]);//获取发送验证码的时间
+            DateTime dateNow = Convert.ToDateTime(DateTime.Now.ToLongTimeString());//获取当前时间
+            TimeSpan ts = dateNow.Subtract(date);
+            double secMinu = ts.TotalMinutes;//得到发送时间与现在时间的时间间隔分钟数
+            if (secMinu > 3) //发送时间与接受时间是否大于3分钟
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "你已超过时间验证，请重新发送验证码！"));
+            }
+            else
+            {
+                if (model.MobileYzm != source)//判断验证码是否一致
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码错误，请重新发送！"));
+                }
+            }
+
+
+            #endregion
+
+
 
             //判断两次新密码是否一致
-            if (model.NewPassword!=model.NewTwoPassword)
+            if (model.Password!=model.SecondPassword)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "密码不一致！"));
             }
@@ -272,7 +385,7 @@ namespace Zerg.Controllers.UC
             var user =(UserBase) _workContext.CurrentUser;
             if (user!=null && PasswordHelper.ValidatePasswordHashed(user,model.OldPassword))
             {
-                PasswordHelper.SetPasswordHashed(user, model.NewPassword);
+                PasswordHelper.SetPasswordHashed(user, model.Password);
                 _userService.ModifyUser(user);
                 return PageHelper.toJson(PageHelper.ReturnValue(true,"数据更新成功！"));
             }

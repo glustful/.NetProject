@@ -196,6 +196,34 @@ namespace Zerg.Controllers.Trading.Product
             //return PageHelper.toJson(_productBrandService.GetProductBrandsByCondition(PBSC).ToList());
         }
         /// <summary>
+        /// 根据条件查询品牌
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage SearchBrand(string condition,int page)
+        {
+            ProductBrandSearchCondition bcon = new ProductBrandSearchCondition
+            {
+                Bname = condition,
+                Page = page,
+                PageCount = 2
+            };
+            var brandList = _productBrandService.GetProductBrandsByCondition(bcon).Select(a => new
+            {
+                a.Id,
+                a.Bimg,
+                a.Bname,
+                a.SubTitle,
+                a.Content,
+                ProductPramater = a.ParameterEntities.Select(p => new { p.Parametername, p.Parametervaule })
+            }).ToList();
+            var count = _productBrandService.GetProductBrandCount(bcon);
+            return PageHelper.toJson(new {List=brandList,Count=count});
+        }
+
+        /// <summary>
         /// 根据品牌id获取项目参数；
         /// </summary>
         /// <param name="ProductBrandId"></param>

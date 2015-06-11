@@ -62,13 +62,13 @@
 
                 <div class="panel-body revise">
                     <div class="bottom" ><label for="name">选择带客人员： </label>
-                        <select name="" id="name" ng-repeat="item in WaiterList">
-                            <option value="{{item.Id}}">{{item.Brokername}}</option>
+                        <select name="" id="WaiterId">
+                            <option  ng-repeat="item in WaiterList" value="{{item.Id}}">{{item.Brokername}}</option>
 
                         </select></div>
                     <div class="bottom" ><label for="names">选择驻场秘书： </label>
-                        <select name="" id="names"  ng-repeat="item2 in SecretaryList">
-                            <option value="{{item2.Id}}">{{item2.Brokername}}</option>
+                        <select name="" id="SecretaryId" >
+                            <option  ng-repeat="item2 in SecretaryList" value="{{item2.Id}}">{{item2.Brokername}}</option>
 
                         </select>
                     </div>

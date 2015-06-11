@@ -1,37 +1,47 @@
 <div class="register_content">
-    <form class="form_register" ng-controller="registerController">
+    <form class="form_register" name="form_register" ng-controller="registerController" ng-submit="registerSubmit()" novalidate>
         <p class="register_tip">
             用户名
         </p>
         <p class="register_input">
             <span><img src="modules/Register/static/image/register/user.png" class="registerImg"></span>
-            <input type="text"  class="register_blank" placeholder="Username" name="register_blank" id="username"  ng-model="register.Brokername" required/>
+            <input type="text"  class="register_blank" placeholder="请使用字母或数字注册用户名" name="register_Nameblank" id="username"  ng-model="register.UserName" ng-pattern="/[a-zA-Z0-9]/" ng-minlength="6" ng-maxlength="20" required/>
         </p>
+        <div class="error_out" ng-show="form_register.register_Nameblank.$invalid&&form_register.register_Nameblank.$dirty"> 请输入6-20为字母或数字有效用户名</div>
         <p class="register_tip">
             密码
         </p>
         <p class="register_input">
             <span><img src="modules/Register/static/image/register/pass.png" class="registerImg"></span>
-            <input type="password" class="register_blank" placeholder="Password" name="register_blank" id="userPassword"  ng-model="register.Password" required/>
+            <input type="password" class="register_blank" id="first_password" placeholder="请输入6-20位密码" name="register_passwordblank" id="userPassword"  ng-model="register.Password" ng-pattern="/[a-zA-Z0-9]/" ng-minlength="6" ng-maxlength="20" required/>
         </p>
+        <div class="error_out" ng-show="form_register.register_passwordblank.$invalid&&form_register.register_passwordblank.$dirty"> So easy!小心强盗</div>
+        <p class="register_tip">
+            确认密码
+        </p>
+        <p class="register_input">
+            <span><img src="modules/Register/static/image/register/pass.png" class="registerImg"></span>
+            <input type="password" class="register_blank" id="second_password" placeholder="请输入确认密码" name="register_blank" id="ConfirmPassword"  ng-model="register.SecondPassword"  onchange="check()" required/>
+        </p>
+        <div id="errorTip" class="error_out"></div>
         <p class="register_tip">
             手机号码
         </p>
         <p class="register_input">
             <span><img src="modules/Register/static/image/register/phone.png" class="registerImg"></span>
-            <input type="tel" class="register_blank" placeholder="Telephone" name="register_blank" id="phoneNumber"  ng-model="register.Phone" required/>
+            <input type="tel" class="register_blank" placeholder="请输入手机号码" name="register_blank" id="phoneNumber"  ng-model="register.Phone" required/>
+            <input type="hidden" ng-model="register.MobileYzm.Hidm">
         </p>
+        <p class="register_error" ng-model="register_error"></p>
         <p class="register_tip">
             验证码
         </p>
         <p class="PinBlank">
-            <input type="text"  class="PinInput"  name="Pin_input"/>
-            <button ng-click="pinGet()">发送验证码</button>
+            <input type="text"  class="PinInput" placeholder="请输入验证码" ng-model="register.MobileYzm"  name="Pin_input"/>
+            <button  id="btnsms" name="btnsms"  ng-click="GetSMS()">发送验证码</button>
         </p>
-        <p class="register_error">
-            {{register_error}}
-        </p>
-        <button class="register_button" ng-click="registerSubmit()" >注 册</button>
+        <p class="error_out"> {{errorTips}}</p>
+        <button class="register_button"  type="submit" ng-disabled="form_register.$invalid">注 册</button>
         <p class="LoginExit">
             已有账号？点此<span><a href="#user/login">登录</a> </span>
         </p>

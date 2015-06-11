@@ -20,6 +20,10 @@ namespace Zerg.Models.CRM
         /// </summary>
         public virtual int  BrokerId { get; set; }
         /// <summary>
+        /// 用户ID
+        /// </summary>
+        public virtual int UserId { get; set; }
+        /// <summary>
         /// 任务进度
         /// </summary>
         public string Taskschedule { get; set; }

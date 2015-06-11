@@ -47,7 +47,7 @@ namespace Zerg.Models.CRM
         /// <summary>
         /// QQ
         /// </summary>
-        public virtual int Qq { get; set; }
+        public virtual string Qq { get; set; }
         /// <summary>
         /// 客户意向户型
         /// </summary>
@@ -101,5 +101,9 @@ namespace Zerg.Models.CRM
         /// 添加/修改类型
         /// </summary>
         public virtual string Type { get; set; }
+        /// <summary>
+        /// 删除标识
+        /// </summary>
+        public virtual EnumDelFlag DelFlag { get; set; }
     }
 }

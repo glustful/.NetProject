@@ -50,7 +50,7 @@ namespace CRM.Entity.Model
 
 
 
-		public int? Qq { get; set; }
+		public string Qq { get; set; }
 
 
 
@@ -112,6 +112,8 @@ namespace CRM.Entity.Model
 
 
 	    public EnumBrokerRECClientSearchOrderBy? OrderBy { get; set; }
+
+	    public EnumDelFlag? DelFlag { get; set; }
 
 	}
 

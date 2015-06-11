@@ -62,15 +62,13 @@ app  .run(
         .state('user.PasswordFound',{
             url:'/PasswordFound',
             templateUrl:'modules/PasswordFound/view/PasswordFound.html',
-            resolve:load('modules/Register/controller/RegisterController.js'),
+            resolve:load('modules/PasswordFound/controller/PasswordController.js'),
             data:{title:'找回密码'}
         })
         .state('app.home',{
             url:'/home',
             templateUrl:'modules/Index/view/Index.html',
-
-            resolve:load(['modules/Index/render/homeController.js'])
-
+            resolve:load(['modules/Index/static/js/yxMobileSlider.js','modules/Index/static/js/homeController.js'])
         })
 
         .state('app.activity',{
@@ -155,7 +153,7 @@ app  .run(
             url:'/housesBuy?BrandId',
             templateUrl:'modules/housesBuy/view/housesBuy.html',
             controller:'HousesBuyController',
-            resolve:load(['modules/housesBuy/static/scripts/HousesBuy.js'])
+            resolve:load(['modules/housesBuy/static/scripts/HousesBuy.js','modules/housesBuy/static/scripts/water.js'])
         })
         .state('app.housesPic',{
             url:'/housesPic?productId',
@@ -206,6 +204,12 @@ app  .run(
             controller:'StormRoomController',
             templateUrl:'modules/storeroom/view/storeroom.html',
             resolve:load('modules/storeroom/scripts/StoreRoom.js')
+        })
+        .state('app.brand',{
+            url:'/brand?condition',
+            controller:'BrandController',
+            templateUrl:'modules/brandList/view/brandList.html',
+            resolve:load('modules/brandList/scripts/Brand.js')
         })
         .state('app.task',{
             url:'/task',

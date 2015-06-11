@@ -31,6 +31,7 @@ namespace CRM.Entity.Model
 		public string Houses { get; set; }
 
 		public int Addusers { get; set; }
+     
 
 		public DateTime? AddtimeBegin { get; set; }
 
@@ -43,6 +44,8 @@ namespace CRM.Entity.Model
 		public DateTime? UptimeEnd { get; set; }
 
 		public EnumClientInfoSearchOrderBy? OrderBy { get; set; }
+
+	    public int? Projectid { get; set; }
 	}
 
 	public enum EnumClientInfoSearchOrderBy
