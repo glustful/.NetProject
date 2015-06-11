@@ -1,7 +1,8 @@
 /**
  * Created by gaofengming on 2015/6/2.
  */
-app.controller('registerController',function($scope,$http,$state){
+var app = angular.module("zergApp");
+app.controller('registerController',['$scope','$state','$http','AuthService',function($scope,$state,$http,AuthService){
     $scope.register={
         UserName:'',
         Password:'',
@@ -20,7 +21,13 @@ app.controller('registerController',function($scope,$http,$state){
                 return;
             }
             else{
-                $state.go('user.login');
+                AuthService.doLogin($scope.register.UserName,$scope.register.Password,function(){
+                    console.log("$scope.register");
+                    $state.go('app.setting')
+                },function(data){
+                   // $scope.errorTips = data.Msg;
+                })
+               // $state.go('user.login');
             }
 
         })
@@ -62,7 +69,7 @@ app.controller('registerController',function($scope,$http,$state){
         }
 
     }
-})
+}])
 //计时器
 var countdown=60;
 function settime() {

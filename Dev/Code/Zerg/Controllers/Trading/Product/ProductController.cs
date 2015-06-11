@@ -237,29 +237,54 @@ namespace Zerg.Controllers.Trading.Product
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public HttpResponseMessage GetProductsByBrand(int BrandId)
         {
-            var productList = _productService.GetProductsByProductBrand(BrandId).Select(a => new ProductDetail
+            var product = _productService.GetProductsByProductBrand(BrandId).ToList();
+            if(product.Count==0)
             {
-                Productname = a.Productname,
-                Productimg = a.Productimg,
-                Price = a.Price,
-                SubTitle = a.SubTitle,
-                Phone = a.ContactPhone,
-                
-                //Productimg1 = a.ProductDetail.Productimg1,
-                //Productimg2 = a.ProductDetail.Productimg2,
-                //Productimg3 = a.ProductDetail.Productimg3,
-                //Productimg4 = a.ProductDetail.Productimg4,
-                //ProductDetailed = a.ProductDetail.Productdetail
-            }).ToList();
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"数据不存在"));
+            }
+            var productList=product.Select(a => new ProductDetail
+                {
+                    Productname = a.Productname,
+                    Productimg = a.Productimg,
+                    Price = a.Price,
+                    SubTitle = a.SubTitle,
+                    Phone = a.ContactPhone,
 
-            var Content = _productService.GetProductsByProductBrand(BrandId).Select(p => new
+
+                    //Productimg1 = a.ProductDetail.Productimg1,
+                    //Productimg2 = a.ProductDetail.Productimg2,
+                    //Productimg3 = a.ProductDetail.Productimg3,
+                    //Productimg4 = a.ProductDetail.Productimg4,
+                    //ProductDetailed = a.ProductDetail.Productdetail
+                }).ToList();
+            //var productList = _productService.GetProductsByProductBrand(BrandId).Select(a => new ProductDetail
+            //    {
+            //        Productname = a.Productname,
+            //        Productimg = a.Productimg,
+            //        Price = a.Price,
+            //        SubTitle = a.SubTitle,
+            //        Phone = a.ContactPhone,
+
+
+            //        //Productimg1 = a.ProductDetail.Productimg1,
+            //        //Productimg2 = a.ProductDetail.Productimg2,
+            //        //Productimg3 = a.ProductDetail.Productimg3,
+            //        //Productimg4 = a.ProductDetail.Productimg4,
+            //        //ProductDetailed = a.ProductDetail.Productdetail
+            //    }).ToList();
+            var Content = product.Select(p => new
             {
                 p.ProductBrand.Content
-            }).First();
+            }).First(); 
+           
+            //var Content = _productService.GetProductsByProductBrand(BrandId).Select(p => new
+            //{
+            //    p.ProductBrand.Content
+            //}).First();
 
             //return PageHelper.toJson(_productService.GetProductsByProductBrand(BrandId));
             return PageHelper.toJson(new { productList = productList, content = Content });
-        }
+        } 
           [HttpGet]
         public HttpResponseMessage GetSearchProduct([FromUri]ProductSearchCondition condtion)
         {
