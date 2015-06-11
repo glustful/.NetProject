@@ -290,7 +290,8 @@ app  .run(
         })
         .state('app.withdrawals',{
             url:'/withdrawals',
-            templateUrl:'modules/withdrawals/view/withdrawals.html'
+            templateUrl:'modules/withdrawals/view/withdrawals.html',
+            resolve:load('modules/myPurse/render/controller.js')
         })
         .state('app.withdrawalsDetail',{
             url:'/withdrawalsDetail',
