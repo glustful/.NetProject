@@ -153,7 +153,7 @@ app  .run(
             url:'/housesBuy?BrandId',
             templateUrl:'modules/housesBuy/view/housesBuy.html',
             controller:'HousesBuyController',
-            resolve:load(['modules/housesBuy/static/scripts/HousesBuy.js','modules/housesBuy/static/scripts/water.js'])
+            resolve:load(['modules/housesBuy/static/scripts/HousesBuy.js'])
         })
         .state('app.housesPic',{
             url:'/housesPic?productId',
