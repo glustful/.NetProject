@@ -338,11 +338,11 @@ namespace Zerg.Controllers.UC
             #endregion
 
             //判断两次新密码是否一致
-            if (model.first_password == model.second_password) return PageHelper.toJson(PageHelper.ReturnValue(true, "密码不一致！"));
+            if (model.first_password != model.second_password) return PageHelper.toJson(PageHelper.ReturnValue(true, "密码不一致！"));
 
             //密码修改
             var user = _userService.FindUser(broker.UserId);
-            PasswordHelper.SetPasswordHashed(user, model.Phone);
+            PasswordHelper.SetPasswordHashed(user, model.first_password);
             _userService.ModifyUser(user);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
         }

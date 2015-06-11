@@ -68,7 +68,7 @@ app  .run(
         .state('app.home',{
             url:'/home',
             templateUrl:'modules/Index/view/Index.html',
-            resolve:load(['modules/Index/static/js/yxMobileSlider.js','modules/Index/static/js/homeController.js'])
+            resolve:load(['modules/Index/render/homeController.js'])
         })
 
         .state('app.activity',{
@@ -201,7 +201,7 @@ app  .run(
         })
         .state('app.storeroom',{
             url:'/storeroom',
-            controller:'StormRoomController',
+           // controller:'StormRoomController',
             templateUrl:'modules/storeroom/view/storeroom.html',
             resolve:load('modules/storeroom/scripts/StoreRoom.js')
         })
