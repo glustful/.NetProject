@@ -52,6 +52,7 @@
 /**
  * Created by 黄秀宇 on 2015/5/26.
  */
+
 app.controller('taskController',['$http','$scope','AuthService',function($http,$scope,AuthService) {
     $scope.searchCondition = {
          Id:0,
@@ -79,9 +80,9 @@ app.controller('taskController',['$http','$scope','AuthService',function($http,$
             if (!loading && page < pages) {                         //如果页面没有正在读取
                 loading = true;                     //告知正在读取
                 $http.get(SETTING.ApiUrl+'/Task/TaskListMobile/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data) {
-                    if (!data.Status) {
+                    if (!data==null) {
 
-                    pages = data.totalCount / 10 + 1;
+                    pages = data.totalcount/6;
                     console.log(data);
                     for (var i = 0; i <= data.list.length - 1; i++) {
                         $scope.posts.push(data.list[i]);
