@@ -204,6 +204,10 @@ namespace Zerg.Controllers.Trading.Product
         public HttpResponseMessage GetProductById(int productId)
         {
             var product = _productService.GetProductById(productId);
+            if (product == null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不存在"));
+            }
             var productDetail = new ProductDetail
             {
                 Productname = product.Productname,

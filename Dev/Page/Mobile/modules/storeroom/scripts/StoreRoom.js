@@ -12,7 +12,7 @@ app.controller('StormRoomController',['$http','$scope','$rootScope','$timeout',f
         Page:0,
         PageCount:10
     };
-    $scope.tipp="加载更多......";
+    $scope.tipp="正在加载......";
     var loading = false
         ,pages=2;                      //判断是否正在读取内容的变量
     $scope.List = [];//保存从服务器查来的任务，可累加
@@ -20,7 +20,7 @@ app.controller('StormRoomController',['$http','$scope','$rootScope','$timeout',f
         //添加内容
 //        $scope.List=[];
 //        $scope.searchCondition.Page=0;
-        pages=2;
+       // pages=2;
         if (!loading && $scope.searchCondition.Page < pages) {                         //如果页面没有正在读取
             loading = true;                     //告知正在读取
             $http.get(SETTING.ApiUrl+'/Product/GetSearchProduct',{params:$scope.searchCondition,'withCredentials':true}).success(function(data) {
@@ -37,18 +37,19 @@ app.controller('StormRoomController',['$http','$scope','$rootScope','$timeout',f
             });
             $scope.searchCondition.Page++;                             //翻页
         }
-        else {
-            $scope.tipp = "已经是最后一页了";
-        }
+//        else {
+//            $scope.tipp = "已经是最后一页了";
+//        }
     };
     pushContent();
     //$scope.more=pushContent;
     function pushContentMore(){
+
        if ($(document).scrollTop()+5 >= $(document).height() - $(window).height())
        {
           pushContent();//if判断有没有滑动到底部，到了加载
        }
-        $timeout(pushContentMore, 3000);//定时器，每隔一秒循环调用自身函数
+        $timeout(pushContentMore, 2500);//定时器，每隔一秒循环调用自身函数
     }
     pushContentMore();//触发里面的定时器
     /*----------------------------------------------动态加载-------------------------------------------*/
@@ -72,7 +73,7 @@ app.controller('StormRoomController',['$http','$scope','$rootScope','$timeout',f
         $scope.selectArea='区域';
         $scope.selectType='类型';
         $scope.selectPrice='价格';
-        //pages=2;
+        pages=2;
         pushContent();
     }
     //获取户型条件
@@ -86,7 +87,7 @@ app.controller('StormRoomController',['$http','$scope','$rootScope','$timeout',f
         //$scope.searchProduct();
        $scope.List=[];
        $scope.searchCondition.Page=0;
-       // pages=2;
+        pages=2;
         pushContent();
     }
     //获取地区条件
@@ -108,7 +109,7 @@ app.controller('StormRoomController',['$http','$scope','$rootScope','$timeout',f
         //$scope.searchProduct();
         $scope.List=[];
         $scope.searchCondition.Page=0;
-//        pages=2;
+        pages=2;
         pushContent();
     }
     //获取价格条件
@@ -134,10 +135,10 @@ app.controller('StormRoomController',['$http','$scope','$rootScope','$timeout',f
         //$scope.searchProduct();
         $scope.List=[];
         $scope.searchCondition.Page=0;
-//        pages=2;
+        pages=2;
         pushContent();
     }
-
+     //获取省份和户型
         $http.get(SETTING.ApiUrl + '/Condition/GetCondition',{'withCredentials':true}).success(function(data){
             $scope.Area =data.AreaList;
             $scope.Type=data.TypeList;
