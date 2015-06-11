@@ -68,7 +68,7 @@ app  .run(
         .state('app.home',{
             url:'/home',
             templateUrl:'modules/Index/view/Index.html',
-            resolve:load(['modules/Index/static/js/yxMobileSlider.js','modules/Index/static/js/homeController.js'])
+            resolve:load(['modules/Index/render/homeController.js'])
         })
 
         .state('app.activity',{
@@ -153,7 +153,7 @@ app  .run(
             url:'/housesBuy?BrandId',
             templateUrl:'modules/housesBuy/view/housesBuy.html',
             controller:'HousesBuyController',
-            resolve:load(['modules/housesBuy/static/scripts/HousesBuy.js','modules/housesBuy/static/scripts/water.js'])
+            resolve:load(['modules/housesBuy/static/scripts/HousesBuy.js'])
         })
         .state('app.housesPic',{
             url:'/housesPic?productId',
@@ -201,7 +201,7 @@ app  .run(
         })
         .state('app.storeroom',{
             url:'/storeroom',
-            controller:'StormRoomController',
+           // controller:'StormRoomController',
             templateUrl:'modules/storeroom/view/storeroom.html',
             resolve:load('modules/storeroom/scripts/StoreRoom.js')
         })
