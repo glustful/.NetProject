@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015/5/29.
  */
-app.controller('StormRoomController',['$http','$scope','$rootScope','$timeout',function($http,$scope,$rootScope,$timeout){
+app.controller('StormRoomController',['$http','$scope','$timeout',function($http,$scope,$timeout){
 
 /*----------------------------------------------动态加载-------------------------------------------*/
     $scope.searchCondition={
