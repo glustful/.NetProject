@@ -200,6 +200,7 @@ namespace Zerg.Controllers.CRM
                 var brokerModel = _brokerService.GetBrokerById(broker.Id);
                 brokerModel.Headphoto = broker.Headphoto;
                 brokerModel.Brokername = broker.Brokername;
+                brokerModel.Nickname = broker.Nickname;
                 brokerModel.Phone = broker.Phone;
                 brokerModel.Sfz = broker.Sfz;
                 brokerModel.Email = broker.Email;
