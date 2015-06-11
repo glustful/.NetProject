@@ -19,7 +19,7 @@ app.controller('BrandController',['$http','$scope','$stateParams','$timeout',fun
 //                });
 //        };
 //    $scope.getList();
-    $scope.tipp="加载更多......";
+    $scope.tipp="正在加载......";
     var loading = false
         ,pages=2;                      //判断是否正在读取内容的变量
     $scope.BrandList = [];//保存从服务器查来的任务，可累加
@@ -43,9 +43,9 @@ app.controller('BrandController',['$http','$scope','$stateParams','$timeout',fun
             });
             condition.page++;                             //翻页
         }
-        else {
-            $scope.tipp = "已经是最后一页了";
-        }
+//        else {
+//            $scope.tipp = "已经是最后一页了";
+//        }
 
     };
     pushContent();
@@ -55,7 +55,7 @@ app.controller('BrandController',['$http','$scope','$stateParams','$timeout',fun
         {
             pushContent();//if判断有没有滑动到底部，到了加载
         }
-        $timeout(pushContentMore, 3000);//定时器，每隔一秒循环调用自身函数
+        $timeout(pushContentMore, 2500);//定时器，每隔一秒循环调用自身函数
     }
     pushContentMore();//触发里面的定时器
 }]);
