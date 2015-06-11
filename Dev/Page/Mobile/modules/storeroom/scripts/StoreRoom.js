@@ -1,13 +1,96 @@
 /**
  * Created by Administrator on 2015/5/29.
  */
-app.controller('StormRoomController',['$http','$scope',function($http,$scope){
+app.controller('StormRoomController',['$http','$scope','$rootScope',function($http,$scope,$rootScope){
+
+/*----------------------------------------------动态加载-------------------------------------------*/
+//    $rootScope.$on("$routeChangeStart", function() {
+//        $rootScope.loading = true;
+//    });
+//    $rootScope.$on("$routeChangeSuccess", function() {
+//        $rootScope.loading = false;
+//    });
+//    $scope.busy = false;
+//    $scope.pages = 1;
+//    //$scope.currentPage = 1;
+//    //$scope.limit = 20;
+//    $scope.load = function() {
+//        if ($scope.busy) {
+//            return false;
+//        }
+//        $scope.busy = true;
+//        $http.get(SETTING.ApiUrl+'/Product/GetSearchProduct',{
+//            params:$scope.searchCondition,
+//            'withCredentials':true
+//        }).success(function(data){
+//                $scope.busy = false;
+//                $scope.pages = Math.ceil(data.TotalCount/$scope.searchCondition.PageCount);
+//                $scope.List =data.List;
+//                $scope.Count=data.TotalCount;
+//            })
+//    };
+//    $scope.loadMore = function() {
+//        if ($scope.searchCondition.Page< $scope.pages) {
+//            $scope.searchCondition.Page++;
+//            if ($scope.busy) {
+//                return false;
+//            }
+//            $scope.busy = true;
+//            $http.get(SETTING.ApiUrl+'/Product/GetSearchProduct',{
+//                params:$scope.searchCondition,
+//                'withCredentials':true
+//            }).success(function(data){
+//                    $scope.busy = false;
+//                    for (var i in data.List) {
+//                        $scope.List.push(data.List[i]);
+//                    }
+//                    $scope.pages = Math.ceil(data.TotalCount/$scope.searchCondition.PageCount);
+//                    //$scope.List =data.List;
+//                    $scope.Count=data.TotalCount;
+//                });
+//        }
+//    };
     $scope.searchCondition={
         AreaName:'',
         TypeId:'',
         PriceBegin:'',
-        PriceEnd:''
+        PriceEnd:'',
+        Page:0,
+        PageCount:10
     };
+    $scope.tipp="加载更多......";
+    var loading = false
+        ,pages=2;                      //判断是否正在读取内容的变量
+    $scope.List = [];//保存从服务器查来的任务，可累加
+    var pushContent= function() {                    //核心是这个函数，向$scope.posts
+        //添加内容
+        //$scope.searchCondition.type="all";
+        if (!loading && $scope.searchCondition.Page < pages) {                         //如果页面没有正在读取
+            loading = true;                     //告知正在读取
+            $http.get(SETTING.ApiUrl+'/Product/GetSearchProduct',{params:$scope.searchCondition,'withCredentials':true}).success(function(data) {
+                    pages =Math.ceil(data.TotalCount /$scope.searchCondition.PageCount);
+                    for (var i = 0; i <= data.List.length - 1; i++) {
+                        $scope.List.push(data.List[i]);
+                    }
+                    loading = false;            //告知读取结束
+//                    $scope.tipp="加载更多"+"("+$scope.posts.length+"/"+data.totalCount+")";
+                    $scope.tipp="加载更多......";
+                    if ($scope.List.length == data.TotalCount) {//如果所有数据已查出来
+                        $scope.tipp = "已经是最后一页了";
+                    }
+                console.log(data);
+                    $scope.Count=data.TotalCount;
+            });
+            $scope.searchCondition.Page++;                             //翻页
+        }
+        else {
+            $scope.tipp = "已经是最后一页了";
+        }
+    };
+    pushContent();
+    $scope.more=pushContent;
+    /*----------------------------------------------动态加载-------------------------------------------*/
+
     $scope.type = true;
     $scope.province=true;
     $scope.city=true;
@@ -22,10 +105,13 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
         $scope.searchCondition.TypeId='';
         $scope.searchCondition.PriceBegin='';
         $scope.searchCondition.PriceEnd='';
-        $scope.searchProduct();
+        $scope.List=[];
+        $scope.searchCondition.Page=0;
         $scope.selectArea='区域';
         $scope.selectType='类型';
         $scope.selectPrice='价格';
+        pages=2;
+        pushContent();
     }
     //获取户型条件
     $scope.getTypeCondition= function(value,typeName){
@@ -35,7 +121,11 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
         {
             $scope.type = !$scope.type;
         }
-        $scope.searchProduct();
+        //$scope.searchProduct();
+        $scope.List=[];
+        $scope.searchCondition.Page=0;
+        pages=2;
+        pushContent();
     }
     //获取地区条件
     $scope.getAreaCondition= function(value){
@@ -53,7 +143,11 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
         {
             $scope.county = !$scope.county;
         }
-        $scope.searchProduct();
+        //$scope.searchProduct();
+        $scope.List=[];
+        $scope.searchCondition.Page=0;
+        pages=2;
+        pushContent();
     }
     //获取价格条件
     $scope.getPriceCondition= function(priceBegin,priceEnd){
@@ -75,20 +169,23 @@ app.controller('StormRoomController',['$http','$scope',function($http,$scope){
         {
             $scope.price = !$scope.price;
         }
-        $scope.searchProduct();
+        //$scope.searchProduct();
+        $scope.List=[];
+        $scope.searchCondition.Page=0;
+        pushContent();
     }
     //根据条件获取product
-     $scope.searchProduct=function(){
-         $http.get(SETTING.ApiUrl+'/Product/GetSearchProduct',{
-             params:$scope.searchCondition,
-             'withCredentials':true
-         })
-             .success(function(data){
-             $scope.List =data.List;
-             $scope.Count=data.TotalCount;
-         })
-     };
-    $scope.searchProduct();
+//     $scope.searchProduct=function(){
+//         $http.get(SETTING.ApiUrl+'/Product/GetSearchProduct',{
+//             params:$scope.searchCondition,
+//             'withCredentials':true
+//         })
+//             .success(function(data){
+//             $scope.List =data.List;
+//             $scope.Count=data.TotalCount;
+//         })
+//     };
+//    $scope.searchProduct();
     //获取所有商品
 //    $http.get(SETTING.ApiUrl + '/Product/GetSearchProduct',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
 //        $scope.List =data.List;
