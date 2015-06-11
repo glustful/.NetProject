@@ -1,55 +1,9 @@
 /**
  * Created by Administrator on 2015/5/29.
  */
-app.controller('StormRoomController',['$http','$scope','$rootScope',function($http,$scope,$rootScope){
+app.controller('StormRoomController',['$http','$scope','$rootScope','$timeout',function($http,$scope,$rootScope,$timeout){
 
 /*----------------------------------------------动态加载-------------------------------------------*/
-//    $rootScope.$on("$routeChangeStart", function() {
-//        $rootScope.loading = true;
-//    });
-//    $rootScope.$on("$routeChangeSuccess", function() {
-//        $rootScope.loading = false;
-//    });
-//    $scope.busy = false;
-//    $scope.pages = 1;
-//    //$scope.currentPage = 1;
-//    //$scope.limit = 20;
-//    $scope.load = function() {
-//        if ($scope.busy) {
-//            return false;
-//        }
-//        $scope.busy = true;
-//        $http.get(SETTING.ApiUrl+'/Product/GetSearchProduct',{
-//            params:$scope.searchCondition,
-//            'withCredentials':true
-//        }).success(function(data){
-//                $scope.busy = false;
-//                $scope.pages = Math.ceil(data.TotalCount/$scope.searchCondition.PageCount);
-//                $scope.List =data.List;
-//                $scope.Count=data.TotalCount;
-//            })
-//    };
-//    $scope.loadMore = function() {
-//        if ($scope.searchCondition.Page< $scope.pages) {
-//            $scope.searchCondition.Page++;
-//            if ($scope.busy) {
-//                return false;
-//            }
-//            $scope.busy = true;
-//            $http.get(SETTING.ApiUrl+'/Product/GetSearchProduct',{
-//                params:$scope.searchCondition,
-//                'withCredentials':true
-//            }).success(function(data){
-//                    $scope.busy = false;
-//                    for (var i in data.List) {
-//                        $scope.List.push(data.List[i]);
-//                    }
-//                    $scope.pages = Math.ceil(data.TotalCount/$scope.searchCondition.PageCount);
-//                    //$scope.List =data.List;
-//                    $scope.Count=data.TotalCount;
-//                });
-//        }
-//    };
     $scope.searchCondition={
         AreaName:'',
         TypeId:'',
@@ -64,7 +18,9 @@ app.controller('StormRoomController',['$http','$scope','$rootScope',function($ht
     $scope.List = [];//保存从服务器查来的任务，可累加
     var pushContent= function() {                    //核心是这个函数，向$scope.posts
         //添加内容
-        //$scope.searchCondition.type="all";
+//        $scope.List=[];
+//        $scope.searchCondition.Page=0;
+        pages=2;
         if (!loading && $scope.searchCondition.Page < pages) {                         //如果页面没有正在读取
             loading = true;                     //告知正在读取
             $http.get(SETTING.ApiUrl+'/Product/GetSearchProduct',{params:$scope.searchCondition,'withCredentials':true}).success(function(data) {
@@ -73,12 +29,10 @@ app.controller('StormRoomController',['$http','$scope','$rootScope',function($ht
                         $scope.List.push(data.List[i]);
                     }
                     loading = false;            //告知读取结束
-//                    $scope.tipp="加载更多"+"("+$scope.posts.length+"/"+data.totalCount+")";
                     $scope.tipp="加载更多......";
                     if ($scope.List.length == data.TotalCount) {//如果所有数据已查出来
                         $scope.tipp = "已经是最后一页了";
                     }
-                console.log(data);
                     $scope.Count=data.TotalCount;
             });
             $scope.searchCondition.Page++;                             //翻页
@@ -88,7 +42,15 @@ app.controller('StormRoomController',['$http','$scope','$rootScope',function($ht
         }
     };
     pushContent();
-    $scope.more=pushContent;
+    //$scope.more=pushContent;
+    function pushContentMore(){
+       if ($(document).scrollTop()+5 >= $(document).height() - $(window).height())
+       {
+          pushContent();//if判断有没有滑动到底部，到了加载
+       }
+        $timeout(pushContentMore, 3000);//定时器，每隔一秒循环调用自身函数
+    }
+    pushContentMore();//触发里面的定时器
     /*----------------------------------------------动态加载-------------------------------------------*/
 
     $scope.type = true;
@@ -110,7 +72,7 @@ app.controller('StormRoomController',['$http','$scope','$rootScope',function($ht
         $scope.selectArea='区域';
         $scope.selectType='类型';
         $scope.selectPrice='价格';
-        pages=2;
+        //pages=2;
         pushContent();
     }
     //获取户型条件
@@ -122,9 +84,9 @@ app.controller('StormRoomController',['$http','$scope','$rootScope',function($ht
             $scope.type = !$scope.type;
         }
         //$scope.searchProduct();
-        $scope.List=[];
-        $scope.searchCondition.Page=0;
-        pages=2;
+       $scope.List=[];
+       $scope.searchCondition.Page=0;
+       // pages=2;
         pushContent();
     }
     //获取地区条件
@@ -146,7 +108,7 @@ app.controller('StormRoomController',['$http','$scope','$rootScope',function($ht
         //$scope.searchProduct();
         $scope.List=[];
         $scope.searchCondition.Page=0;
-        pages=2;
+//        pages=2;
         pushContent();
     }
     //获取价格条件
@@ -172,25 +134,10 @@ app.controller('StormRoomController',['$http','$scope','$rootScope',function($ht
         //$scope.searchProduct();
         $scope.List=[];
         $scope.searchCondition.Page=0;
+//        pages=2;
         pushContent();
     }
-    //根据条件获取product
-//     $scope.searchProduct=function(){
-//         $http.get(SETTING.ApiUrl+'/Product/GetSearchProduct',{
-//             params:$scope.searchCondition,
-//             'withCredentials':true
-//         })
-//             .success(function(data){
-//             $scope.List =data.List;
-//             $scope.Count=data.TotalCount;
-//         })
-//     };
-//    $scope.searchProduct();
-    //获取所有商品
-//    $http.get(SETTING.ApiUrl + '/Product/GetSearchProduct',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
-//        $scope.List =data.List;
-//        $scope.Count=data.TotalCount;
-//    });
+
         $http.get(SETTING.ApiUrl + '/Condition/GetCondition',{'withCredentials':true}).success(function(data){
             $scope.Area =data.AreaList;
             $scope.Type=data.TypeList;
