@@ -39,10 +39,8 @@
 
 
 
-<!--延迟加载>-->
-    <script type="text/javascript" src="modules/Index/static/js/jquery.min.js"></script>
-    <script type="text/javascript" src="modules/Index/static/js/jquery.lazyload.js"></script>
-    <script type="text/javascript" src="modules/Index/static/js/lad.js"></script>
+
+
     <!--<link href= "modules/syj/static/style/syj.css" rel="stylesheet" type="text/css" />-->
 
     <link href= "modules/zhongtian_HouseDetail/static/style/zhongtian_HouseDetail.css" rel="stylesheet" type="text/css" />
@@ -59,18 +57,19 @@
 <!--瀑布流-->
 
 
-    <script type="text/javascript">
-        $(function() {
-            $(".message img").lazyload({
-                placeholder : "modules/index/static/image/index/loading.gif",
-                effect : "fadeIn"
-            });
-        });
-    </script>
+    <!--<script type="text/javascript">-->
+        <!--$(function() {-->
+            <!--$(".message img").lazyload({-->
+                <!--placeholder : "modules/index/static/image/index/loading.gif",-->
+                <!--effect : "fadeIn"-->
+            <!--});-->
+        <!--});-->
+    <!--</script>-->
 
 
     <!--控制滑动-->
-
+    <!--bootstrap-->
+    <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.css"/>
 </head>
 <body  ng-app="zergApp" ng-controller="appController">
 
@@ -103,45 +102,14 @@
     <!--<script src="modules/partner_details/controller/partner_details.js"></script>-->
     <script src="modules/hero/controller/heroController.js"></script>
     <script src="Common/scripts/services/authentication.js"></script>
-
+    <!--jquery-->
+    <script src="libs/jquery/jquery/dist/jquery.js"></script>
+    <!--bootstrap-->
+    <script src="libs/bootstrap/js/bootstrap.js"></script>
+    <script src="libs/angular/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
     <!--<script src="modules/task/controller/ng-infinite-scroll.min.js"></script>-->
 
     <!--图片轮播-->
-    <!--<script type="text/javascript" src="modules/Index/static/js/jquery.min.js"></script>-->
-    <!--<script type="text/javascript" src="modules/Index/static/js/yxMobileSlider.js"></script>-->
-    <!--<script type="text/javascript" src="modules/Index/static/js/kongzhi.js"></script>-->
 </body>
-
-<!--瀑布流-->
-<script src="modules/housesBuy/static/scripts/water.js"></script>
-
-
-<!--<body ng-app="routeApp">-->
-    <!--<div class="window">-->
-        <!--<div class="bg">-->
-            <!--<div class="hd">-->
-                <!--<div class="header cf">-->
-                    <!--<div class="logo fl"><a href="#">创富宝</a> </div>-->
-                    <!--<div class="search fr">-->
-                        <!--<label for="houses">456</label><input name="" id="houses" type="text" placeholder="搜索楼盘" />-->
-                        <!--<button>搜索</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="content">-->
-
-                <!--<div ng-view></div>-->
-
-            <!--</div>-->
-            <!--<div class="footer">-->
-                <!--<a href="./index.html"><span class="act">活动</span></a>-->
-                <!--<a href="modules/storeroom/view/storeroom.html"><span class="house">房源库</span></a>-->
-                <!--<a href="modules/broker/view/broker.html"><span class="agent">经纪人专区</span></a>-->
-                <!--<a href="modules/personal/view/personal.html"> <span class="personal">个人中心</span></a>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</body>-->
 </html>

@@ -33,4 +33,10 @@ namespace CRM.Entity.Model
 		/// </summary>
         洽谈成功=3,
 	}
+
+    public enum EnumDelFlag
+    {
+        默认=1,
+        删除=0
+    }
 }

@@ -113,6 +113,8 @@ namespace CRM.Entity.Model
 
 	    public EnumBrokerRECClientSearchOrderBy? OrderBy { get; set; }
 
+	    public EnumDelFlag? DelFlag { get; set; }
+
 	}
 
 
