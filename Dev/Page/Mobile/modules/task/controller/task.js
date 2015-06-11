@@ -108,7 +108,7 @@ $scope.tcount=0;//保存任务总数
             }
     };
     pushContent();//初始化加载
-    //自动加载定时器方法
+    //自动加载定时器方法,得注入$timeout
 //   $scope.more=pushContent;//手动加载更多
 //    function pushContentMore(){
 //       if ($(document).scrollTop()+5 >= $(document).height() - $(window).height())
@@ -122,17 +122,14 @@ $scope.tcount=0;//保存任务总数
 $(document).ready(//文档加载完后执行里面的函数
     function (){
         $(window).scroll(function(){//滑动时执行
-           // if($("#taskid").scrollTop>100){
             if ($(document).scrollTop()+5 >= $(document).height() - $(window).height())
             {
                 pushContent();//if判断有没有滑动到底部，到了加载
             }
-               // alert("sdfs");
-           // };
         })
     }
 );
-
+$scope.more=pushContent;
     //接受任务
     var addlist=function(id){
         $scope.addcondition.TaskId=id;
