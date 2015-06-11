@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015/6/10.
  */
-app.controller('BrandController',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+app.controller('BrandController',['$http','$scope','$stateParams','$timeout',function($http,$scope,$stateParams,$timeout){
         var condition = {
             condition:$stateParams.condition==undefined?'':$stateParams.condition,
             page:0,
@@ -35,11 +35,10 @@ app.controller('BrandController',['$http','$scope','$stateParams',function($http
                 }
                 loading = false;            //告知读取结束
 //                    $scope.tipp="加载更多"+"("+$scope.posts.length+"/"+data.totalCount+")";
-//                $scope.tipp="加载更多......";
+                $scope.tipp="加载更多......";
                 if ($scope.BrandList.length == data.Count) {//如果所有数据已查出来
                     $scope.tipp = "已经是最后一页了";
                 }
-                console.log(data);
                 $scope.Count=data.Count;
             });
             condition.page++;                             //翻页
@@ -50,5 +49,13 @@ app.controller('BrandController',['$http','$scope','$stateParams',function($http
 
     };
     pushContent();
-    $scope.more=pushContent;
+    //$scope.more=pushContent;
+    function pushContentMore(){
+        if ($(document).scrollTop()+5 >= $(document).height() - $(window).height())
+        {
+            pushContent();//if判断有没有滑动到底部，到了加载
+        }
+        $timeout(pushContentMore, 3000);//定时器，每隔一秒循环调用自身函数
+    }
+    pushContentMore();//触发里面的定时器
 }]);

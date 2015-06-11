@@ -170,20 +170,8 @@ namespace Zerg.Controllers.Trading.Product
 
            };
             var totalCount = _productBrandService.GetProductBrandCount(Brandcondition);
-            if (totalCount > 0)
-            {
-                return PageHelper.toJson(totalCount);
-            }
-            else
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "不存在数据！"));
-            }
 
-            ProductBrandSearchCondition PBSC = new ProductBrandSearchCondition()
-            {
-                OrderBy = EnumProductBrandSearchOrderBy.OrderById
-            };
-            var brandList = _productBrandService.GetProductBrandsByCondition(PBSC).Select(a => new
+            var brandList = _productBrandService.GetProductBrandsByCondition(Brandcondition).Select(a => new
             {
                 a.Id,
                 a.Bimg,
@@ -192,7 +180,7 @@ namespace Zerg.Controllers.Trading.Product
                 a.Content,
                 ProductPramater = a.ParameterEntities.Select(p => new { p.Parametername, p.Parametervaule })
             }).ToList();
-            return PageHelper.toJson(brandList);
+            return PageHelper.toJson(new { brandList=brandList, totalCount=totalCount});
             //return PageHelper.toJson(_productBrandService.GetProductBrandsByCondition(PBSC).ToList());
         }
         /// <summary>
