@@ -78,6 +78,7 @@ app  .run(
         .state('app.broker',{
             url:'/broker',
             templateUrl:'modules/broker/view/broker.html',
+ 
             resolve:load('modules/broker/controller/broker.js')
         })
         .state('app.customerList',{
@@ -299,6 +300,15 @@ app  .run(
         .state('app.NoviceTask',{
             url:'/NoviceTask',
             templateUrl:'modules/NoviceTask/view/NoviceTask.html'
+        })
+        .state('user.NoviceTask-login',{
+            url:'/NoviceTask-login',
+            templateUrl:'modules/NoviceTask-login/view/NoviceTask-login.html',
+            data:{title:'用户注册'}
+        }) .state('user.NoviceTask-loginEnd',{
+            url:'/NoviceTask-loginEnd',
+            templateUrl:'modules/NoviceTask-loginEnd/view/NoviceTask-loginEnd.html',
+            data:{title:'用户注册'}
         })
 
 

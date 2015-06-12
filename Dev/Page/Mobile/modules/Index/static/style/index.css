@@ -158,20 +158,38 @@ h3{
 }
 
 
+/* ÕÚÕÖÃæ */
+ .masked-content-index{
+     top:5%;
+     left:5%;
+ }
+ .masked-btn-index{
+     bottom:3%;
+     left: 32%;
+ }
+.masked .point{
+    bottom: 2%;
+    left: 6%;
+}
+.masked .Take{
+    top:10%;
+    left: 10%;
+}
+.masked .TakeBtn{
+    bottom:10%;
+    left:30%;
+}
+ .firstStep{
+     bottom: 1%;
+     right: 6%;
+ }
+
+
 
 
 /*lunbo*/
- /*.slider{display:none}*//*ç”¨äºè·å–æ›´åŠ ä½“éªŒ*/
- .focus{ width: 640px;}
- .focus span{width:10px;height:10px;margin-right:10px;background:#666;font-size:0;}
- .focus span.current{background:#fff}
+ /* main_image */
 
-
-
-
-
-
-
-
-
-
+/*#btn_prev,#btn_next{z-index:11111;position:absolute;display:block;width:73px!important;height:74px!important;top:50%;margin-top:-37px;display:none;}*/
+/*#btn_prev{background:url(../image/index/hover_left.png) no-repeat left top;left:100px;}*/
+/*#btn_next{background:url(../image/index/hover_right.png) no-repeat right top;right:100px;}*/

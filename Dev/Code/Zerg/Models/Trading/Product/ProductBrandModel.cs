@@ -32,6 +32,8 @@ namespace Zerg.Models.Trading.Product
         /// UpdTime
         /// </summary>
         public  DateTime Updtime { get; set; }
-        public string Parametername { get; set; }
+        public Dictionary<string,string> Parameters { get; set; }
+
+        public List<ProductModel> Products { get; set; }
     }
 }

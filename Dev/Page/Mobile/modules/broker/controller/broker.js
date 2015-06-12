@@ -1,5 +1,5 @@
 /** create by 杨波 2015.6.5 创富英雄榜**/
-app.controller('BrokerTopThreeController',['$scope','$http',function($scope,$http){
+app.controller('BrokerTopThreeController',['$scope','$http','AuthService',function($scope,$http,AuthService){
     var BrokerTopThree=function() {
         $http.get(SETTING.ApiUrl + '/BrokerInfo/OrderByBrokerTopThree', {'withCredentials': true}).success(function (data) {
 //           $scope.ii=0;
@@ -12,6 +12,18 @@ app.controller('BrokerTopThreeController',['$scope','$http',function($scope,$htt
            $scope.list = data.List;
             console.log($scope.list);
         })
+
     };
     BrokerTopThree();
+    //获取推荐楼盘信息 create by chenda
+    var getAllProdct=function(){
+        $http.get(SETTING.ApiUrl + '/Product/GetAllProduct',{'withCredentials':true}).success(function(product){
+            $scope.List = product.List;
+            console.log($scope.List)
+        })
+    };
+    //判断是否登录
+   if(AuthService.IsAuthenticated) {
+       getAllProdct();
+   }
 }]);
