@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using YooPoon.Core.Data;
 using YooPoon.WebFramework.Authentication.Entity;
 using YooPoon.WebFramework.User;
 using YooPoon.WebFramework.User.Services;
@@ -37,13 +38,15 @@ namespace Zerg.Controllers.CRM
         private readonly IRecommendAgentService _recommendagentService; //推荐经纪人
         private IClientInfoService _clientInfoService;//客户
         private readonly IRoleService _roleService;
+        private readonly IUserService _userService;
 
         public BrokerInfoController(IClientInfoService clientInfoService,
             IWorkContext workContext, 
             IBrokerService brokerService,
             IPartnerListService partnerlistService, 
             IRecommendAgentService recommendagentService,
-            IRoleService roleService
+            IRoleService roleService,
+            IUserService userService
             )
         {
             _clientInfoService = clientInfoService;
@@ -52,6 +55,7 @@ namespace Zerg.Controllers.CRM
             _partnerlistService = partnerlistService;
             _recommendagentService = recommendagentService;
             _roleService = roleService;
+            _userService = userService;
         }
 
 
@@ -210,7 +214,6 @@ namespace Zerg.Controllers.CRM
             {
                 var brokerModel = _brokerService.GetBrokerById(broker.Id);
                 brokerModel.Headphoto = broker.Headphoto;
-                brokerModel.Brokername = broker.Brokername;
                 brokerModel.Nickname = broker.Nickname;
                 brokerModel.Phone = broker.Phone;
                 brokerModel.Sfz = broker.Sfz;
@@ -220,8 +223,8 @@ namespace Zerg.Controllers.CRM
 
                 #region 转职经纪人 杨定鹏 2015年6月11日17:29:58
                 //填写身份证，邮箱，和真实姓名后就能转职经纪人
-                if (string.IsNullOrEmpty(broker.Email) && string.IsNullOrEmpty(broker.Sfz) &&
-                    string.IsNullOrEmpty(broker.Realname))
+                if (!string.IsNullOrEmpty(broker.Email) && !string.IsNullOrEmpty(broker.Sfz) &&
+                    !string.IsNullOrEmpty(broker.Realname))
                 {
                     //权限变更
 
@@ -239,7 +242,17 @@ namespace Zerg.Controllers.CRM
                         };
                     }
 
-
+                    var user = _userService.FindUser(brokerModel.UserId);
+                    user.UserRoles.First().Role = brokerRole;
+                    
+                    //更新用户权限
+                    if (_userService.ModifyUser(user))
+                    {
+                        //更新broker表记录
+                        brokerModel.Usertype = EnumUserType.经纪人;
+                        _brokerService.Update(brokerModel);
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                    }
                 }
 
                 #endregion
