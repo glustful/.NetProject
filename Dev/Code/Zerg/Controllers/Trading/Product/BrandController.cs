@@ -196,7 +196,9 @@ namespace Zerg.Controllers.Trading.Product
             {
                 Bname = condition,
                 Page = page,
-                PageCount = pageCount
+                PageCount = pageCount,
+                OrderBy = EnumProductBrandSearchOrderBy.OrderByAddtime,
+                IsDescending = true
             };
             var brandList = _productBrandService.GetProductBrandsByCondition(bcon).Select(a => new
             {
