@@ -304,7 +304,6 @@ app  .run(
          .state('app.invite',{
             url:'/invite',
             templateUrl:'modules/invite/view/invite.html'
-
         })
 
 
