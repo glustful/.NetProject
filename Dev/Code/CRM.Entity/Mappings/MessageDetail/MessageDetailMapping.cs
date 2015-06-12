@@ -16,6 +16,8 @@ namespace CRM.Entity.Mappings.MessageDetail
 			Property(c => c.Sender).HasColumnType("varchar");
             Property(c => c.Mobile).HasColumnType("varchar");
 			Property(c => c.Addtime).HasColumnType("datetime");
+            Property(c => c.InvitationCode).HasColumnType("varchar").HasMaxLength(50);
+            Property(c => c.InvitationId).HasColumnType("varchar").HasMaxLength(50);
 		}
 	}
 }
