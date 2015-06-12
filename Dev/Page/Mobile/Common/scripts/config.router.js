@@ -78,7 +78,6 @@ app  .run(
         .state('app.broker',{
             url:'/broker',
             templateUrl:'modules/broker/view/broker.html',
- 
             resolve:load('modules/broker/controller/broker.js')
         })
         .state('app.customerList',{
@@ -148,7 +147,8 @@ app  .run(
         })
         .state('app.houses',{
             url:'/houses',
-            templateUrl:'modules/houses/view/houses.html'
+            templateUrl:'modules/houses/view/houses.html',
+            resolve:load('modules/houses/controller/houses.js')
         })
         .state('app.housesBuy',{
             url:'/housesBuy?BrandId',
