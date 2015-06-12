@@ -48,7 +48,7 @@
             <div class="hero">
                 <div class="hd">创富英雄榜</div>
                 <div class="bang" ng-controller="BrokerTopThreeController">
-                    <span ng-repeat="item in list" ng-class={$index:isIndex}> <img src="modules/broker/static/image/broker/{{$index+1}}.png" alt="" width="43" height="60"/><div>{{item.Brokername}}<br/><small>总佣金：{{item.Amount}}</small></div></span>
+                    <span ng-repeat="item in list" ng-class="{moveBorder: $index==2}"> <img src="modules/broker/static/image/broker/{{$index+1}}.png" alt="" width="43" height="60"/><div>{{item.Brokername}}<br/><small>总佣金：{{item.Amount}}</small></div></span>
                     <!--<span > <img src="modules/broker/static/image/broker/1.png" alt="" width="43" height="60"/><div>来自星星的你<br/><small>总佣金：15万/元</small></div></span>-->
                     <!--<span > <img src="modules/broker/static/image/broker/1.png" alt="" width="43" height="60"/><div>来自星星的你<br/><small>总佣金：15万/元</small></div></span>-->
                     <!--<a href="#"><span class="star2">来自星星的你<br/><small>总佣金：15万/元</small></span></a>-->

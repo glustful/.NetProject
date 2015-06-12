@@ -301,6 +301,15 @@ app  .run(
             url:'/NoviceTask',
             templateUrl:'modules/NoviceTask/view/NoviceTask.html'
         })
+        .state('user.NoviceTask-login',{
+            url:'/NoviceTask-login',
+            templateUrl:'modules/NoviceTask-login/view/NoviceTask-login.html',
+            data:{title:'用户注册'}
+        }) .state('user.NoviceTask-loginEnd',{
+            url:'/NoviceTask-loginEnd',
+            templateUrl:'modules/NoviceTask-loginEnd/view/NoviceTask-loginEnd.html',
+            data:{title:'用户注册'}
+        })
 
 
 
