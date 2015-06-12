@@ -93,6 +93,15 @@ namespace CRM.Service.MessageDetail
                 {
                     query = query.Where(q => q.Content.Contains(condition.Content));
                 }
+                if (!string.IsNullOrEmpty(condition.InvitationCode))
+                {
+                    query = query.Where(q => q.InvitationCode == (condition.InvitationCode));
+                }
+                if (!string.IsNullOrEmpty(condition.InvitationId))
+                {
+                    query = query.Where(q => q.InvitationId == (condition.InvitationId));
+                }
+
 				if (condition.Ids != null && condition.Ids.Any())
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
@@ -154,6 +163,15 @@ namespace CRM.Service.MessageDetail
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
+                if (!string.IsNullOrEmpty(condition.InvitationCode))
+                {
+                    query = query.Where(q => q.InvitationCode == (condition.InvitationCode));
+                }
+                if (!string.IsNullOrEmpty(condition.InvitationId))
+                {
+                    query = query.Where(q => q.InvitationId == (condition.InvitationId));
+                }
+
 				if (condition.Senders != null && condition.Senders.Any())
                 {
                     query = query.Where(q => condition.Senders.Contains(q.Sender));

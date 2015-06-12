@@ -32,6 +32,18 @@ namespace CRM.Entity.Model
 
 		public DateTime? AddtimeEnd { get; set; }
 
+
+        /// <summary>
+        /// 邀请码(用于邀请经纪人)
+        /// </summary>
+        public virtual string InvitationCode { get; set; }
+
+        /// <summary>
+        /// 邀请人(用于邀请经纪人) 跟经纪人ID相关
+        /// </summary>
+        public virtual string InvitationId { get; set; }
+
+
 		public EnumMessageDetailSearchOrderBy? OrderBy { get; set; }
 	}
 

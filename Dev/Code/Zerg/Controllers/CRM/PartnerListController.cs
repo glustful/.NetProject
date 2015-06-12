@@ -75,9 +75,11 @@ namespace Zerg.Controllers.CRM
         {
             var partnerlistsearchcon = new PartnerListSearchCondition
             {
-                Brokers = _brokerService.GetBrokerById(userId)
+                Brokers = _brokerService.GetBrokerByUserId(userId),
+                Status=EnumPartnerType.同意,
             };
-            var partnerList = _partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).Where(p=>p.Broker.Id==userId).Select(p => new
+
+            var partnerList = _partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).Where(p => p.Broker.UserId == userId).Select(p => new
                 {
                  Name=p.Brokername,
                  AddTime =p.Addtime,
@@ -176,7 +178,7 @@ namespace Zerg.Controllers.CRM
                   AddTime = b.AddTime.ToString("yyy-mm-dd")
               });
 
-              return PageHelper.toJson(list);
+              return PageHelper.toJson(new { list });
           }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "当前没有邀请"));
         }
@@ -187,6 +189,7 @@ namespace Zerg.Controllers.CRM
         /// <param name="status"></param>
         /// <param name="id"></param>
         /// <returns></returns>
+       [HttpGet]
         public HttpResponseMessage SetPartner(EnumPartnerType status,int id=0)
         {
             if (id == 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
