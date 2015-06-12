@@ -1,14 +1,20 @@
 
 <!--经纪人专区-->
 <!--required:../static/style/broker.css-->
-            <div class="pic">
-                <ul>
-                    <li><a href="#"> <img src="modules/broker/static/image/broker/banner.png" alt="成为经纪人轻松赚大钱 "/><div class="page"><span class="white"></span><span></span><span></span><span></span><span></span></div></a></li>
-                    <!--<li style="display: none"><a href="#"> <img src="./Common/static/image/index/" alt="成为经纪人轻松赚大钱 "/></a></li>-->
-                    <!--<li style="display: none"><a href="#"> <img src="./Common/static/image/index/" alt="成为经纪人轻松赚大钱 "/></a></li>-->
-                    <!--<li style="display: none"><a href="#"> <img src="./Common/static/image/index/" alt="成为经纪人轻松赚大钱 "/></a></li>-->
-                    <!--<li style="display: none"><a href="#"> <img src="./Common/static/image/index/" alt="成为经纪人轻松赚大钱 "/></a></li>-->
-                </ul>
+<div  ng-controller="BrokerTopThreeController">
+            <div class="pic" >
+                <carousel interval="3000">
+                    <slide ng-repeat="slide in content" active="slide.active">
+                        <img src="http://img.yoopoon.com/{{slide.TitleImg}}" class="img-full">
+                    </slide>
+                </carousel>
+                <!--<ul>-->
+                    <!--<li><a href="#"> <img src="modules/broker/static/image/broker/banner.png" alt="成为经纪人轻松赚大钱 "/><div class="page"><span class="white"></span><span></span><span></span><span></span><span></span></div></a></li>-->
+                    <!--&lt;!&ndash;<li style="display: none"><a href="#"> <img src="./Common/static/image/index/" alt="成为经纪人轻松赚大钱 "/></a></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li style="display: none"><a href="#"> <img src="./Common/static/image/index/" alt="成为经纪人轻松赚大钱 "/></a></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li style="display: none"><a href="#"> <img src="./Common/static/image/index/" alt="成为经纪人轻松赚大钱 "/></a></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li style="display: none"><a href="#"> <img src="./Common/static/image/index/" alt="成为经纪人轻松赚大钱 "/></a></li>&ndash;&gt;-->
+                <!--</ul>-->
             </div>
             <div class="bj">
             <div class="nav-broker">
@@ -47,13 +53,13 @@
             </div>
             <div class="hero">
                 <div class="hd">创富英雄榜</div>
-                <div class="bang" ng-controller="BrokerTopThreeController">
+
                     <span ng-repeat="item in list" ng-class="{moveBorder: $index==2}"> <img src="modules/broker/static/image/broker/{{$index+1}}.png" alt="" width="43" height="60"/><div>{{item.Brokername}}<br/><small>总佣金：{{item.Amount}}</small></div></span>
                     <!--<span > <img src="modules/broker/static/image/broker/1.png" alt="" width="43" height="60"/><div>来自星星的你<br/><small>总佣金：15万/元</small></div></span>-->
                     <!--<span > <img src="modules/broker/static/image/broker/1.png" alt="" width="43" height="60"/><div>来自星星的你<br/><small>总佣金：15万/元</small></div></span>-->
                     <!--<a href="#"><span class="star2">来自星星的你<br/><small>总佣金：15万/元</small></span></a>-->
                     <!--<a href="#"><span class="star3">来自星星的你<br/><small>总佣金：15万/元</small></span></a>-->
-                </div>
+
             </div>
            </div>
             <div class="message">
@@ -73,7 +79,7 @@
                     <!--<div class="IWant"><a href="#/app/carry_client?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}"><button>我要带客</button></a><a href="#/app/groom?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}"><button>我要推荐</button></a><a class="red-nominate" href="#/app/redPaper-1">红包</a><a  href="#/app/myInt">积分</a> </div>-->
                 <!--</div>-->
                 <!--<div style="text-align: center;padding-bottom: 20px"><span>{{tipp}}</span></div>-->
-                <div  ng-controller="BrokerTopThreeController">
+
                 <ul>
                     <li class="brand " ng-repeat="item in brandList">
                         <a href="#/app/houses?BrandId={{item.Id}}"><img src="http://img.yoopoon.com/{{item.Bimg}}" alt="蓝光&nbsp;·&nbsp;颐明园" width="620" height="160"/>
