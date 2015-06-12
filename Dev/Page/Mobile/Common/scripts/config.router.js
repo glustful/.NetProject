@@ -17,7 +17,7 @@ app  .run(
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
             $rootScope.$on('$stateChangeStart', function (event,next) {
-                if(next.name==='app.home' || next.name==='user.login' || next.name==='app.storeroom'||next.name==='user.register'||next.name==='user.PasswordFound'){
+                if(next.name==='app.home' || next.name==='user.login' || next.name==='app.storeroom'||next.name==='user.register'||next.name==='user.PasswordFound'||next.name==='app.invite'){
                     return;
                 }
                 if(!AuthService.IsAuthenticated()){
@@ -305,7 +305,8 @@ app  .run(
         })
          .state('app.invite',{
             url:'/invite',
-            templateUrl:'modules/invite/view/invite.html'
+            templateUrl:'modules/invite/view/invite.html',
+            resolve:load('modules/invite/controller/invitecontroller.js')
         })
 
 
