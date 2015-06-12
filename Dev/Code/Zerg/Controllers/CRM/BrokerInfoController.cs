@@ -220,41 +220,27 @@ namespace Zerg.Controllers.CRM
 
                 #region 转职经纪人 杨定鹏 2015年6月11日17:29:58
                 //填写身份证，邮箱，和真实姓名后就能转职经纪人
-                //if (string.IsNullOrEmpty(broker.Email) && string.IsNullOrEmpty(broker.Sfz) && string.IsNullOrEmpty(broker.Realname))
-                //{
-                //    //权限变更
-                //    var brokerRole = _roleService.GetRoleByName("user");
+                if (string.IsNullOrEmpty(broker.Email) && string.IsNullOrEmpty(broker.Sfz) &&
+                    string.IsNullOrEmpty(broker.Realname))
+                {
+                    //权限变更
 
-                //    //User权限缺少时自动添加
-                //    if (brokerRole == null)
-                //    {
-                //        brokerRole = new Role
-                //        {
-                //            RoleName = "user",
-                //            RolePermissions = null,
-                //            Status = RoleStatus.Normal,
-                //            Description = "刚注册的用户默认归为普通用户user"
-                //        };
-                //    }
+                    var brokerRole = _roleService.GetRoleByName("broker");
 
-                //    var newUser = new UserBase
-                //    {
-                //        UserName = brokerModel.UserName,
-                //        Password = brokerModel.Password,
-                //        RegTime = DateTime.Now,
-                //        NormalizedName = brokerModel.UserName.ToLower(),
-                //        //注册用户添加权限
-                //        UserRoles = new List<UserRole>(){new UserRole()
-                //{
-                //    Role = brokerRole
-                //}},
-                //        Status = 0
-                //    };
+                    //User权限缺少时自动添加
+                    if (brokerRole == null)
+                    {
+                        brokerRole = new Role
+                        {
+                            RoleName = "broker",
+                            RolePermissions = null,
+                            Status = RoleStatus.Normal,
+                            Description = "user用户转职为broker"
+                        };
+                    }
 
-                //    PasswordHelper.SetPasswordHashed(newUser, brokerModel.Password);
 
-                //    brokerModel.Usertype=EnumUserType.经纪人;
-                //}
+                }
 
                 #endregion
 
