@@ -165,8 +165,8 @@ namespace Zerg.Controllers.Trading.Product
            {
                Page = page,
                PageCount = pageSize,
-
-
+               IsDescending = true,
+               OrderBy = EnumProductBrandSearchOrderBy.OrderById
 
            };
             var totalCount = _productBrandService.GetProductBrandCount(Brandcondition);
