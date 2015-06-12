@@ -2,7 +2,7 @@
  * Created by Administrator on 2015/6/8.
  */
 app.controller('personController',['$http','$scope','AuthService','$state',function($http,$scope,AuthService,$state) {
-   if(AuthService.IsAuthenticated)
+   if(AuthService.IsAuthenticated())
    {
     $scope.searchCondition = {
         Id:0,
