@@ -56,6 +56,7 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
             .success(function(data) {
             	var img = document.getElementById('imghead');
             	img.src = $scope.olduser.Headphoto;
+            	location.reload([true]);
             });
     }
 }])

@@ -10,11 +10,11 @@
                     <div class="summaryBg"></div>
                 </a>
             </div>
-            <p class="zgyj">最高佣金{{brand.Parameters['最高佣金']}}，带客佣金{{brand.Parameters['带客佣金']}}，推荐佣金{{brand.Parameters['推荐佣金']}}</p>
+            <p class="zgyj">最高佣金:{{brand.Parameters['最高佣金']}} 带客佣金:{{brand.Parameters['带客佣金']}} 推荐佣金:{{brand.Parameters['推荐佣金']}}</p>
             <div class="nav-houses">
-                <a class="dk" href="#/app/carry_client">我要带客 </a>
-                <a class="tj" href="#/app/groom">我要推荐</a>
-                <a  class="cell" href="#">{{tent.Content}}需求帮助</a>
+                <a class="dk" href="#/app/carry_client?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}">我要带客 </a>
+                <a class="tj" href="#/app/groom?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}">我要推荐</a>
+                <a  class="cell" href="#">需求帮助</a>
             </div>
             <div class="type-houses">
                 <div class="hx1" ng-repeat="item in ProductList">
