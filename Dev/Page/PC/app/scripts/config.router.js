@@ -733,33 +733,53 @@ angular.module('app')
             })
 
               .state('page.CRM.WaitCheck', {
-                  url: '/WaitCheck',
-                  template: '<div ui-view></div>'
+                url: '/WaitCheck',
+                template: '<div ui-view></div>'
             })
             .state('page.CRM.WaitCheck.index', {
-              url: '/index',
-              templateUrl: 'views/pages/CRM/WaitCheck/index.html',
-              data : { title: '待审核推荐' },
-              controller:"WaitListController",
-              resolve:load('scripts/controllers/CRM/WaitCheck.js')
+                url: '/index',
+                templateUrl: 'views/pages/CRM/WaitCheck/index.html',
+                data : { title: '待审核推荐' },
+                controller:"WaitListController",
+                resolve:load('scripts/controllers/CRM/WaitCheck.js')
             })
             .state('page.CRM.WaitCheck.check', {
-              url: '/check?id',
-              templateUrl: 'views/pages/CRM/WaitCheck/check.html',
-              data : { title: '审核页' },
-              controller:"ARDetialController",
-              resolve:load('scripts/controllers/CRM/WaitCheck.js')
+                url: '/check?id',
+                templateUrl: 'views/pages/CRM/WaitCheck/check.html',
+                data : { title: '审核页' },
+                controller:"ARDetialController",
+                resolve:load('scripts/controllers/CRM/WaitCheck.js')
             })
             .state('page.CRM.WaitCheck.pass', {
-              url: '/pass',
-              templateUrl: 'views/pages/CRM/WaitCheck/pass.html',
-                  data: { title: '通过页' }
+                url: '/pass',
+                templateUrl: 'views/pages/CRM/WaitCheck/pass.html',
+                data: { title: '通过页' }
             })
             .state('page.CRM.WaitCheck.refuse', {
-              url: '/refuse',
-              templateUrl: 'views/pages/CRM/WaitCheck/refuse.html',
-                  data: { title: '拒绝页' }
+                url: '/refuse',
+                templateUrl: 'views/pages/CRM/WaitCheck/refuse.html',
+                data: { title: '拒绝页' }
             })
+
+            .state('page.CRM.DkRecord', {
+                url: '/DkRecord',
+                template: '<div ui-view></div>'
+            })
+            .state('page.CRM.DkRecord.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/DkRecord/index.html',
+                data : { title: '带客审核' },
+                controller:"DkRecordController",
+                resolve:load('scripts/controllers/CRM/DkRecord.js')
+            })
+            .state('page.CRM.DkRecord.detailed', {
+                url: '/detailed?id',
+                templateUrl: 'views/pages/CRM/DkRecord/detailed.html',
+                data: { title: '详情页' },
+                controller:"DKRDetailedController",
+                resolve:load('scripts/controllers/CRM/DkRecord.js')
+            })
+
 
               .state('page.CRM.WaitPetition', {
                   url: '/WaitPetition',

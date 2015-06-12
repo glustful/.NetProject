@@ -1,9 +1,10 @@
-.register_content{
-    padding: 52px 58px 0 58px;
-}
+
 .register_content .register_tip{
     font-size: 22px;
     margin-top: 25px;
+}
+.form_register{
+    margin: 52px 58px 0 58px;
 }
 .form_content .register_input{
     width: 514px;
@@ -50,6 +51,26 @@
 }
 .LoginExit a{
     color: #fc3b00;
+}
+ .masked .inter{
+     position: absolute;
+     display: block;
+     top:5%;
+     left: 2%;
+}
+ .masked .join{
+    position: absolute;
+    display: block;
+    bottom:8%;
+    left: 32%;
+}
+.masked .finish{
+    top:30%;
+    left: 10%;
+}
+ .masked .back {
+    bottom: 3%;
+     left: 32%;
 }
 .error_out{
     color: #fc3b00;

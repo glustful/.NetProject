@@ -10,6 +10,11 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CRM.Service.ClientInfo;
+using Trading.Entity.Model;
+using Trading.Service.Order;
+using Trading.Service.OrderDetail;
+using Trading.Service.Product;
+using Trading.Service.ProductDetail;
 using YooPoon.Core.Site;
 using Zerg.Common;
 using Zerg.Models.CRM;
@@ -23,22 +28,93 @@ namespace Zerg.Controllers.CRM
     /// </summary>
     public class BrokerLeadClientController : ApiController
     {
-        private IBrokerLeadClientService _brokerleadclientService;
+        private readonly IBrokerLeadClientService _brokerleadclientService;
         private readonly IBrokerService _brokerService;//经纪人
         private readonly IClientInfoService _clientInfoService;
         private readonly IWorkContext _workContext;
+        private readonly IOrderService _orderService;
+        private readonly IProductService _productService;
+        private readonly IOrderDetailService _orderDetailService;
 
         public BrokerLeadClientController(
             IBrokerLeadClientService brokerleadclientService, 
             IBrokerService brokerService,
             IClientInfoService clientInfoService,
-            IWorkContext workContext
+            IWorkContext workContext,
+            IOrderService orderService,
+            IProductService productService,
+            IOrderDetailService orderDetailService
             )
         {
             _brokerleadclientService = brokerleadclientService;
             _brokerService = brokerService;
             _clientInfoService = clientInfoService;
             _workContext = workContext;
+            _orderService = orderService;
+            _productService = productService;
+            _orderDetailService = orderDetailService;
+        }
+
+        /// <summary>
+        /// 通过地区查询带客列表
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetBLCList(int page = 1, int pageSize = 10)
+        {
+            var sech = new BrokerLeadClientSearchCondition
+            {
+                OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderById
+            };
+            var list = _brokerleadclientService.GetBrokerLeadClientsByCondition(sech).Select(p=>new
+            {
+                p.Id,
+                p.Brokername,
+                p.ClientName,
+                p.ClientInfo.Phone,
+                p.ProjectId,
+                p.Appointmenttime
+            }).ToList().Select(a=>new
+            {
+                a.Id,
+                a.Brokername,
+                a.ClientName,
+                a.Phone,
+                ProjectName=_productService.GetProductById(a.ProjectId).Productname,
+                Appointmenttime=a.Appointmenttime.ToString("yyy-MM-dd")
+            });
+            var count = _brokerleadclientService.GetBrokerLeadClientCount(sech);
+            return PageHelper.toJson(new { List = list, Condition = sech, totalCount = count });
+        }
+
+        /// <summary>
+        /// 查询带客详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetBlDetail(int id)
+        {
+            var model = _brokerleadclientService.GetBrokerLeadClientById(id);
+            var detail = new BrokerRECClientModel
+            {
+                Brokername = model.Brokername,
+                Brokerlevel = model.BrokerLevel,
+                NickName = model.Broker.Nickname,
+                BrokerPhone = model.Broker.Phone,
+                Sex = model.Broker.Sexy,
+                RegTime = model.Broker.Regtime.ToString("yyy-mm-dd"),
+                Clientname = model.ClientName,
+                HouseType = _productService.GetProductById(model.ProjectId).Productname,
+                Phone = model.ClientInfo.Phone,
+                Note = model.Details,
+                Houses = _productService.GetProductById(model.ProjectId).SubTitle,
+                Projectname = model.Projectname,
+            };
+
+            return PageHelper.toJson(detail);
         }
 
         /// <summary>
@@ -49,18 +125,23 @@ namespace Zerg.Controllers.CRM
         [HttpPost]
         public HttpResponseMessage Add([FromBody] BrokerRECClientModel brokerleadclient)
         {
-            EnumBLeadType type;
-            //查询客户信息
-            var sech = new ClientInfoSearchCondition
-            {
-                Clientname = brokerleadclient.Clientname,
-                Phone = brokerleadclient.Phone.ToString(CultureInfo.InvariantCulture)
+            if (brokerleadclient.Adduser == 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "经济人ID不能为空！"));
+            if (string.IsNullOrEmpty(brokerleadclient.Clientname)) return PageHelper.toJson(PageHelper.ReturnValue(false, "客户名不能为空"));
+            if (string.IsNullOrEmpty(brokerleadclient.Phone)) return PageHelper.toJson(PageHelper.ReturnValue(false, "客户电话不能为空！"));
 
+            //查询客户信息
+            var sech = new BrokerLeadClientSearchCondition
+            {
+                ClientName = brokerleadclient.Clientname,
+                Phone = brokerleadclient.Phone,
+                Projectids = new[] { brokerleadclient.Projectid },
+                DelFlag = EnumDelFlag.默认
             };
 
-            var Cmodel = _clientInfoService.GetClientInfosByCondition(sech).FirstOrDefault();
+            var cmodel = _brokerleadclientService.GetBrokerLeadClientsByCondition(sech).FirstOrDefault();
 
-            if (Cmodel == null)
+            //检测客户是否存在于数据库
+            if (cmodel == null)
             {
                 //客户信息
                 var client = new ClientInfoEntity
@@ -75,38 +156,136 @@ namespace Zerg.Controllers.CRM
                     Upuser = brokerleadclient.Broker,
                     Uptime = DateTime.Now
                 };
-                _clientInfoService.Create(client);
 
-                type = EnumBLeadType.预约中;
+                _clientInfoService.Create(client);
             }
             else
             {
-                type = _brokerleadclientService.GetBrokerLeadClientById(Cmodel.Id).Status;
+                ////检测是否存在正在上访的推荐
+                //if (_brokerRecClientService.GetBrokerRECClientsByCondition(sech).ToList().Any(p => p.Status == EnumBRECCType.等待上访))
+                //{
+                //    return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在上访！"));
+                //}
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在被推荐！"));
             }
 
-            //检测
-            if (type != EnumBLeadType.等待上访)
+            #region 创建订单 杨定鹏 2015年6月3日17:21:39
+
+            //查询商品详情
+            var product = _productService.GetProductById(brokerleadclient.Projectid);
+
+            #region 创建带客订单 杨定鹏 2015年6月9日17:04:05
+            //创建订单详情
+            OrderDetailEntity ode = new OrderDetailEntity();
+            ode.Adddate = DateTime.Now;
+            ode.Adduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
+            ode.Commission = product.Commission;
+            ode.RecCommission = product.RecCommission;
+            ode.Dealcommission = product.Dealcommission;
+            ode.Price = product.Price;
+            ode.Product = product;
+            ode.Productname = product.Productname;
+            //ode.Remark = product.
+            //ode.Snapshoturl = orderDetailModel.Snapshoturl,
+            ode.Upddate = DateTime.Now;
+            ode.Upduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
+
+            //创建订单
+            OrderEntity oe = new OrderEntity();
+            oe.Adddate = DateTime.Now;
+            oe.Adduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
+            oe.AgentId = brokerleadclient.Adduser;
+            oe.Agentname = _brokerService.GetBrokerByUserId(brokerleadclient.Adduser).Brokername;
+            oe.Agenttel = brokerleadclient.Phone;
+            oe.BusId = product.Bussnessid;
+            oe.Busname = product.BussnessName;
+            oe.Customname = brokerleadclient.Clientname;
+            oe.Ordercode = _orderService.CreateOrderNumber(2);  //创建带客订单号
+            oe.OrderDetail = _orderDetailService.Create(ode);//创建订单详情；
+            oe.Ordertype = EnumOrderType.带客订单;
+            oe.Remark = "前端经纪人提交";
+            oe.Shipstatus = (int)EnumBRECCType.审核中;
+            oe.Status = (int)EnumOrderStatus.默认;
+            oe.Upddate = DateTime.Now;
+            oe.Upduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
+            #endregion
+
+            #region 创建成交订单 杨定鹏 2015年6月9日17:04:05
+
+            //创建订单详情
+            OrderDetailEntity ode2 = new OrderDetailEntity();
+            ode2.Adddate = DateTime.Now;
+            ode2.Adduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
+            ode2.Commission = product.Commission;
+            ode2.RecCommission = product.RecCommission;
+            ode2.Dealcommission = product.Dealcommission;
+            ode2.Price = product.Price;
+            ode2.Product = product;
+            ode2.Productname = product.Productname;
+            //ode.Remark = product.
+            //ode.Snapshoturl = orderDetailModel.Snapshoturl,
+            ode2.Upddate = DateTime.Now;
+            ode2.Upduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
+
+            //创建订单
+            OrderEntity oe2 = new OrderEntity();
+            oe2.Adddate = DateTime.Now;
+            oe2.Adduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
+            oe2.AgentId = brokerleadclient.Adduser;
+            oe2.Agentname = _brokerService.GetBrokerByUserId(brokerleadclient.Adduser).Brokername;
+            oe2.Agenttel = brokerleadclient.Phone;
+            oe2.BusId = product.Bussnessid;
+            oe2.Busname = product.BussnessName;
+            oe2.Customname = brokerleadclient.Clientname;
+            oe2.Ordercode = _orderService.CreateOrderNumber(3); //创建成交订单
+            oe2.OrderDetail = _orderDetailService.Create(ode2);//创建订单详情；
+            oe2.Ordertype = EnumOrderType.成交订单;
+            oe2.Remark = "前端经纪人提交";
+            oe2.Shipstatus = (int)EnumBRECCType.审核中;
+            oe2.Status = (int)EnumOrderStatus.默认;
+            oe2.Upddate = DateTime.Now;
+            oe2.Upduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
+            #endregion
+
+            #endregion
+
+            //查询客户信息
+            var sech2 = new ClientInfoSearchCondition
             {
-                
+                Clientname = brokerleadclient.Clientname,
+                Phone = brokerleadclient.Phone.ToString(CultureInfo.InvariantCulture),
+            };
+            var cmodel2 = _clientInfoService.GetClientInfosByCondition(sech2).FirstOrDefault();
 
-                var cmodel = _clientInfoService.GetClientInfosByCondition(sech).First();
+            //查询经纪人信息
+            var broker = _brokerService.GetBrokerByUserId(brokerleadclient.Adduser);
 
-                var model = new BrokerLeadClientEntity
-                {
-                    Broker = _brokerService.GetBrokerById(brokerleadclient.Broker),
-                    ClientInfo = cmodel,
-                    Adduser = _workContext.CurrentUser.Id,
-                    Addtime = DateTime.Now,
-                    Upuser = _workContext.CurrentUser.Id,
-                    Uptime = DateTime.Now,
-                    ProjectId = brokerleadclient.Projectid,
-                    Status = EnumBLeadType.等待上访,
-                };
-                _brokerleadclientService.Create(model);
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "提交成功"));
-            }
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在上访！"));
+            //创建推荐流程
+            var model = new BrokerLeadClientEntity();
+            model.Broker = _brokerService.GetBrokerById(brokerleadclient.Adduser);
+            model.ClientInfo = cmodel2;
+            model.ClientName = brokerleadclient.Clientname;
+            model.Appointmenttime = DateTime.Now;
+            //model.Qq = Convert.ToInt32(brokerrecclient.Qq);
+            model.Phone = brokerleadclient.Phone;       //客户电话
+            model.Brokername = broker.Brokername;
+            model.BrokerLevel = broker.Level.Name;
+            model.Broker = broker;
+            model.Adduser = brokerleadclient.Adduser;
+            model.Addtime = DateTime.Now;
+            model.Upuser = brokerleadclient.Adduser;
+            model.Uptime = DateTime.Now;
+            model.ProjectId = product.Id;
+            model.Projectname = product.Productname;
+            model.Status = EnumBLeadType.预约中;
+            model.DelFlag = EnumDelFlag.默认;
 
+            model.ComOrder = _orderService.Create(oe).Id;      //添加推荐订单；
+            model.DealOrder = _orderService.Create(oe2).Id;       //添加成交订单
+
+            _brokerleadclientService.Create(model);
+
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "提交成功"));
         }
 
     }

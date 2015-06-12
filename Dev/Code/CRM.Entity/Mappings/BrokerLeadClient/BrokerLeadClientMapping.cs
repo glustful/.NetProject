@@ -29,6 +29,11 @@ namespace CRM.Entity.Mappings.BrokerLeadClient
             Property(c => c.SecretaryPhone).HasColumnType("varchar").HasMaxLength(50);
             HasOptional(c => c.WriterId);
             Property(c => c.WriterPhone).HasColumnType("varchar").HasMaxLength(50);
+            Property(c => c.ClientName).HasColumnType("varchar").HasMaxLength(50);
+            Property(c => c.Phone).HasColumnType("varchar").HasMaxLength(50);
+            Property(c => c.ComOrder).HasColumnType("int");
+            Property(c => c.DealOrder).HasColumnType("int");
+            Property(c => c.DelFlag).HasColumnType("int");
 		}
 	}
 }

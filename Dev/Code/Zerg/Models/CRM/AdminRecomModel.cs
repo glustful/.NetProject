@@ -25,6 +25,10 @@ namespace Zerg.Models.CRM
         /// </summary>
         public virtual string NickName { get; set; }
         /// <summary>
+        /// 经纪人电话
+        /// </summary>
+        public virtual string BrokerPhone { get; set; }
+        /// <summary>
         /// 经纪人性别
         /// </summary>
         public virtual string Sex { get; set; }
@@ -105,5 +109,9 @@ namespace Zerg.Models.CRM
         /// 删除标识
         /// </summary>
         public virtual EnumDelFlag DelFlag { get; set; }
+        /// <summary>
+        /// 预约时间
+        /// </summary>
+        public virtual string Appointmenttime { get; set; }
     }
 }
