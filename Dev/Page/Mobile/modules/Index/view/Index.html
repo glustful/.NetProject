@@ -22,7 +22,7 @@
         <!--<!--<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
     <!--</ul>-->
 
-<!--</div>-->
+
 
 
 
@@ -32,20 +32,20 @@
 
 <div class="activity" >
     <ul  class="cf">
-       
+
         <li class="one" ng-repeat="item in Actcontent"> <a href="#/app/chip"><img   src="http://img.yoopoon.com/{{item.TitleImg}}" alt="百万红包等你抢"  width="200px"/></a></li>
-        <!--<li class="two" ng-repeat="item in Activetwo"> <a href="../../redPaper-1/view/redPaper-1.html"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="开发商疯了吧" width="205px"/></a></li>-->
-        <!--<li class="three" ng-repeat="item in Activethree"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="名校就在小区里"  width="205px"/></a></li>-->
-        <!--<li class="four" ng-repeat="item in Activefour"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="俊发钜惠"  width="205px"/></a></li>-->
-        <!--<li class="five" ng-repeat="item in Activefive"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="水云间大优惠"  width="205px"/></a></li>-->
-        <!--<li class="six" ng-repeat="item in Activesix"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="买房送奔驰"  width="205px"/></a></li>-->
+        <li class="two" ng-repeat="item in Activetwo"> <a href="../../redPaper-1/view/redPaper-1.html"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="开发商疯了吧" width="205px"/></a></li>
+        <li class="three" ng-repeat="item in Activethree"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="名校就在小区里"  width="205px"/></a></li>
+        <li class="four" ng-repeat="item in Activefour"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="俊发钜惠"  width="205px"/></a></li>
+        <li class="five" ng-repeat="item in Activefive"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="水云间大优惠"  width="205px"/></a></li>
+        <li class="six" ng-repeat="item in Activesix"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="买房送奔驰"  width="205px"/></a></li>
     </ul>
     <!--<a href="javascript:;" id="btn_prev"></a>-->
     <!--<a href="javascript:;" id="btn_next"></a>-->
 </div>
 <div class="message" ng-app="app" >
     <ul>
-        <li class="brand" ng-repeat="item in BrandList">
+        <li class="brand" ng-repeat="item in brandList">
             <!--<a href="#/app/housesBuy">-->
                 <!--<img src="modules/Index/static/image/index/lp1.png" alt="中天·水云间" width="620" height="160"/>-->
                 <!--<div class="summary"><span>[曲靖市&nbsp;中天&nbsp;·&nbsp;水云间</span><span>户型：238m²</span><span>总价：110万</span></div>-->
@@ -59,7 +59,7 @@
                 <!--<span class="brokerage"><a href="#">最高佣金：10000元/套</a></span>-->
             <!--</div>-->
             <a href="#/app/housesBuy?BrandId={{item.Id}}">
-                <img src="{{item.Bimg}}" alt="中天·水云间" width="620" height="160"/>
+                <img src="http://img.yoopoon.com/{{item.Bimg}}" alt="中天·水云间" width="620" height="160"/>
                 <div class="summary"><span>[{{ item.Bname }}]</span><span>{{item.Adduser}}</span><span>总价：110万</span></div>
                 <div class="summaryBg"></div>
                 <div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>
@@ -67,8 +67,14 @@
             </a>
             <h3>{{item.SubTitle}}</h3>
             <div class="nav" >
-                <span class="orange ng-re" ng-repeat="item1 in item.ProductPramater"><a href="#"> {{item1.Parametername}}:{{item1.Parametervaule}}</a></span>
-                <!--<span class="brokerage"><a href="#">最高享用优惠：元/套</a></span>-->
+                <span class="orange">
+                    <a href="">
+                        来电咨询:{{item.ProductParamater["来电咨询"]}}
+                    </a>
+                </span>
+                <span class="brokerage">
+                    <a href="#">最高享用优惠：{{item.ProductParamater["最高优惠"]}}元/套</a>
+                </span>
             </div>
         </li>
 

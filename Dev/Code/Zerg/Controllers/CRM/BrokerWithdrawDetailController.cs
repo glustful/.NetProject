@@ -1,4 +1,5 @@
 ﻿using CRM.Entity.Model;
+using CRM.Service.BankCard;
 using CRM.Service.Broker;
 using CRM.Service.BrokerWithdrawDetail;
 using System;
@@ -8,6 +9,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using YooPoon.Common.Encryption;
+using YooPoon.Core.Site;
+using YooPoon.WebFramework.User.Entity;
 using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
@@ -20,10 +24,14 @@ namespace Zerg.Controllers.CRM
     {
         private IBrokerWithdrawDetailService _brokerwithdrawdetailService;
         private  IBrokerService _brokerService;
-        public BrokerWithdrawDetailController(IBrokerWithdrawDetailService brokerwithdrawdetailService, IBrokerService brokerService)
+        private readonly IWorkContext _workContext;
+        private readonly IBankCardService _bankcardService;
+        public BrokerWithdrawDetailController( IBankCardService bankcardService,IWorkContext workContext, IBrokerWithdrawDetailService brokerwithdrawdetailService, IBrokerService brokerService)
         {
             _brokerwithdrawdetailService =brokerwithdrawdetailService;
             _brokerService =brokerService;
+            _workContext = workContext;
+            _bankcardService = bankcardService;
         }
 
         #region 经纪人提现明细详情
@@ -62,39 +70,75 @@ namespace Zerg.Controllers.CRM
        
         }
 
+
+
         /// <summary>
         /// 新增提现详情
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage AddBrokerWithdrawDetail([FromBody] BrokerWithdrawDetailEntity brokerwithDetail)
+        public HttpResponseMessage AddBrokerWithdrawDetail([FromBody] AddMoneyEntity MoneyEntity)
         {
-            if (brokerwithDetail != null)
+            
+            #region 验证码判断 解密
+            var strDes = EncrypHelper.Decrypt(MoneyEntity.Hidm, "Hos2xNLrgfaYFY2MKuFf3g==");//解密
+            string[] str = strDes.Split('$');
+            string source = str[0];//获取验证码
+            DateTime date = Convert.ToDateTime(str[1]);//获取发送验证码的时间
+            DateTime dateNow = Convert.ToDateTime(DateTime.Now.ToLongTimeString());//获取当前时间
+            TimeSpan ts = dateNow.Subtract(date);
+            double secMinu = ts.TotalMinutes;//得到发送时间与现在时间的时间间隔分钟数
+            if (secMinu > 3) //发送时间与接受时间是否大于3分钟
             {
-                var entity = new BrokerWithdrawDetailEntity
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "你已超过时间验证，请重新发送验证码！"));
+            }
+            else
+            {
+                if (MoneyEntity.MobileYzm != source)//判断验证码是否一致
                 {
-                    BankCard=null,
-                    Withdrawnum=brokerwithDetail.Withdrawnum,
-                    Withdrawtime=DateTime.Now,
-                    Broker=null,
-                    Uptime = DateTime.Now,
-                    Addtime = DateTime.Now,
-                };
-
-                try
-                {
-                    if (_brokerwithdrawdetailService.Create(entity) != null)
-                    {
-                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
-                    }
-                }
-                catch
-                {
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码错误，请重新发送！"));
                 }
             }
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
+
+            #endregion
+
+         
+            //非空验证
+
+               var user = (UserBase)_workContext.CurrentUser;
+               if (user != null)
+               {
+                   var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
+                   if (broker == null)
+                   {
+                       // 提现金额逻辑判断
+                       var entity = new BrokerWithdrawDetailEntity
+                       {
+                           BankCard = _bankcardService.GetBankCardById(Convert.ToInt32( MoneyEntity.Bank)),
+                           Withdrawnum =Convert.ToDecimal( MoneyEntity.Money),
+                           Withdrawtime = DateTime.Now,
+                           Broker = broker,
+                           Uptime = DateTime.Now,
+                           Addtime = DateTime.Now,
+                           Adduser=broker.Id,
+                           Upuser=broker.Id
+                       };
+
+                       try
+                       {
+                           if (_brokerwithdrawdetailService.Create(entity) != null)
+                           {
+                               return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                           }
+                       }
+                       catch
+                       {
+                           return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                       }
+                   }
+               }
+               return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
         }
 
 
@@ -104,4 +148,32 @@ namespace Zerg.Controllers.CRM
 
 
     }
+
+   /// <summary>
+   /// 添加到提现表映射实体类
+   /// </summary>
+   public class AddMoneyEntity
+   {
+      
+
+       /// <summary>
+       /// 银行 卡号
+       /// </summary>
+       public string Bank { get; set; }
+
+       /// <summary>
+       /// 提现金额
+       /// </summary>
+       public string Money { get; set; }
+
+       /// <summary>
+       ///验证码
+       /// </summary>
+       public string MobileYzm { get; set; }
+
+       /// <summary>
+       /// 隐藏验证码
+       /// </summary>
+       public string Hidm { get; set; }
+   }
 }

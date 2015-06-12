@@ -62,13 +62,13 @@ app  .run(
         .state('user.PasswordFound',{
             url:'/PasswordFound',
             templateUrl:'modules/PasswordFound/view/PasswordFound.html',
-            resolve:load('modules/Register/controller/RegisterController.js'),
+            resolve:load('modules/PasswordFound/controller/PasswordController.js'),
             data:{title:'找回密码'}
         })
         .state('app.home',{
             url:'/home',
             templateUrl:'modules/Index/view/Index.html',
-            resolve:load(['modules/Index/static/js/yxMobileSlider.js','modules/Index/static/js/homeController.js'])
+            resolve:load(['modules/Index/render/homeController.js'])
         })
 
         .state('app.activity',{
@@ -83,7 +83,7 @@ app  .run(
         .state('app.customerList',{
             url:'/customerList',
             templateUrl:'modules/customerList/view/customerList.html'
-       ,resolve:load('modules/customerList/controller/customerList.js')
+            ,resolve:load('modules/customerList/controller/customerList.js')
         })
         .state('app.detail',{
             url:'/detail',
@@ -153,7 +153,7 @@ app  .run(
             url:'/housesBuy?BrandId',
             templateUrl:'modules/housesBuy/view/housesBuy.html',
             controller:'HousesBuyController',
-            resolve:load(['modules/housesBuy/static/scripts/HousesBuy.js','modules/housesBuy/static/scripts/water.js'])
+            resolve:load(['modules/housesBuy/static/scripts/HousesBuy.js'])
         })
         .state('app.housesPic',{
             url:'/housesPic?productId',
@@ -201,7 +201,7 @@ app  .run(
         })
         .state('app.storeroom',{
             url:'/storeroom',
-            controller:'StormRoomController',
+           // controller:'StormRoomController',
             templateUrl:'modules/storeroom/view/storeroom.html',
             resolve:load('modules/storeroom/scripts/StoreRoom.js')
         })
@@ -289,7 +289,8 @@ app  .run(
         })
         .state('app.withdrawals',{
             url:'/withdrawals',
-            templateUrl:'modules/withdrawals/view/withdrawals.html'
+            templateUrl:'modules/withdrawals/view/withdrawals.html',
+            resolve:load('modules/myPurse/render/controller.js')
         })
         .state('app.withdrawalsDetail',{
             url:'/withdrawalsDetail',

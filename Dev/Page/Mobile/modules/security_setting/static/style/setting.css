@@ -70,6 +70,9 @@ form a{
     color: #ffffff;
     font-family:'microsoft yahei' ;
 }
+.security_error{
+    color: #fc3b00;
+}
 /*个人设置*/
 .setting_personal{
     padding: 40px 0 100px 0;
@@ -124,4 +127,10 @@ form a{
 .information_error{
     font-size: 20px;
     color: #fc3b00;
+}
+.sexy{
+    width: 518px;
+    height: 48px;
+    font-size: 20px;
+    font-family: "microsoft yahei";
 }

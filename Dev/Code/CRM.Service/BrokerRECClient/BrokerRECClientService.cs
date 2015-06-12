@@ -181,6 +181,11 @@ namespace CRM.Service.BrokerRECClient
                     query = query.Where(c => c.Status == condition.Status);
                 }
 
+                if (condition.DelFlag.HasValue)
+                {
+                    query = query.Where(c => c.DelFlag == condition.DelFlag);
+                }
+
 				if (condition.Page.HasValue && condition.PageCount.HasValue)
                 {
                     query = query.Skip((condition.Page.Value - 1)*condition.PageCount.Value).Take(condition.PageCount.Value);
@@ -279,6 +284,14 @@ namespace CRM.Service.BrokerRECClient
 				if (condition.WriterIDs != null && condition.WriterIDs.Any())
                 {
                     query = query.Where(q => condition.WriterIDs.Contains(q.WriterId));
+                }
+                if (condition.DelFlag != null)
+                {
+                    query = query.Where(q => q.DelFlag == condition.DelFlag);
+                }
+                if (condition.Status != null)
+                {
+                    query = query.Where(q => q.Status == condition.Status);
                 }
 
 				return query.Count();

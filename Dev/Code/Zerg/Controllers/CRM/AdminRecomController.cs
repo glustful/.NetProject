@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
@@ -7,11 +8,14 @@ using System.Web.Http.Cors;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
 using CRM.Service.BrokerRECClient;
+using CRM.Service.Level;
 using Trading.Entity.Model;
 using Trading.Service.Order;
 using Trading.Service.OrderDetail;
+using YooPoon.Common.Encryption;
 using YooPoon.Core.Data;
 using YooPoon.Core.Site;
+using YooPoon.WebFramework.Authentication.Entity;
 using YooPoon.WebFramework.User;
 using YooPoon.WebFramework.User.Entity;
 using YooPoon.WebFramework.User.Services;
@@ -32,13 +36,17 @@ namespace Zerg.Controllers.CRM
         private readonly IWorkContext _workContext;
         private readonly IOrderService _orderService;
         private readonly IOrderDetailService _orderDetailService;
+        private readonly ILevelService _levelService;
+        private readonly IRoleService _roleService;
 
         public AdminRecomController(IBrokerRECClientService brokerRecClientService,
             IBrokerService brokerService,
             IUserService userService,
             IWorkContext workContext,
             IOrderService orderService,
-            IOrderDetailService orderDetailService
+            IOrderDetailService orderDetailService,
+            ILevelService levelService,
+            IRoleService roleService
             )
         {
             _brokerRecClientService = brokerRecClientService;
@@ -47,6 +55,8 @@ namespace Zerg.Controllers.CRM
             _workContext = workContext;
             _orderService = orderService;
             _orderDetailService = orderDetailService;
+            _levelService = levelService;
+            _roleService = roleService;
         }
 
         #region 经济人列表 杨定鹏 2015年5月4日14:29:24
@@ -114,54 +124,114 @@ namespace Zerg.Controllers.CRM
         [HttpPost]
         public HttpResponseMessage AddBroker([FromBody]BrokerModel brokerModel)
         {
+            if (string.IsNullOrEmpty(brokerModel.UserName)) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名不能为空"));
+            if (string.IsNullOrEmpty(brokerModel.Password)) return PageHelper.toJson(PageHelper.ReturnValue(false, "密码不能为空"));
+            if (string.IsNullOrEmpty(brokerModel.Phone)) return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号不能为空"));
+
             #region UC用户创建 杨定鹏 2015年5月28日14:52:48
-            var user = _userService.GetUserByName(brokerModel.UserName);
 
             var condition = new BrokerSearchCondition
-            {   
+            {
                 OrderBy = EnumBrokerSearchOrderBy.OrderById,
                 Phone = brokerModel.Phone
             };
 
             //判断user表和Broker表中是否存在用户名
-            var user2 = _brokerService.GetBrokerCount(condition);
-            if (user != null || user2!=0)
+            int user2 = _brokerService.GetBrokerCount(condition);
+
+            if (user2 != 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
+
+            //检测规则表中是否存在权限，不存在则添加
+            var role = "broker";
+            switch (brokerModel.UserType)
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
+                case EnumUserType.经纪人:
+                    role = "broker";
+                    break;
+                case EnumUserType.商家:
+                    role = "merchant";
+                    break;
+                case EnumUserType.场秘:
+                    role = "secretary";
+                    break;
+                case EnumUserType.带客人员:
+                    role = "waiter";
+                    break;
+                case EnumUserType.普通用户:
+                    role = "user";
+                    break;
+                case EnumUserType.管理员:
+                    role = "admin";
+                    break;
+                case EnumUserType.财务:
+                    role = "accountant";
+                    break;
             }
+
+            var brokerRole = _roleService.GetRoleByName(role);
+
+            //User权限缺少时自动添加
+            if (brokerRole == null)
+            {
+                brokerRole = new Role
+                {
+                    RoleName = role,
+                    RolePermissions = null,
+                    Status = RoleStatus.Normal,
+                    Description = "后台添加新权限类别：" + role
+                };
+            }
+
             var newUser = new UserBase
             {
                 UserName = brokerModel.UserName,
                 Password = brokerModel.Password,
                 RegTime = DateTime.Now,
                 NormalizedName = brokerModel.UserName.ToLower(),
+                //注册用户添加权限
+                UserRoles = new List<UserRole>(){new UserRole()
+                {
+                    Role = brokerRole
+                }},
                 Status = 0
             };
+
             PasswordHelper.SetPasswordHashed(newUser, brokerModel.Password);
-            if (_userService.InsertUser(newUser).Id <= 0)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "注册用户失败，请重试"));
-            }
-            
+
             #endregion
 
             #region Broker用户创建 杨定鹏 2015年5月28日14:53:32
 
             var model = new BrokerEntity();
-            model.UserId = _userService.GetUserByName(brokerModel.UserName).Id;
-            model.Brokername = brokerModel.Brokername;
+            model.UserId = _userService.InsertUser(newUser).Id;
+            model.Brokername = brokerModel.UserName;
             model.Phone = brokerModel.Phone;
             model.Totalpoints = 0;
             model.Amount = 0;
             model.Usertype = brokerModel.UserType;
             model.Regtime = DateTime.Now;
             model.State = 1;
-            model.Adduser = _workContext.CurrentUser.Id;
+            model.Adduser = 0;
             model.Addtime = DateTime.Now;
-            model.Upuser = _workContext.CurrentUser.Id;
+            model.Upuser = 0;
             model.Uptime = DateTime.Now;
 
-            //缺少等级
+            //判断初始等级是否存在,否则创建
+            var level = _levelService.GetLevelsByCondition(new LevelSearchCondition { Name = "默认等级" }).FirstOrDefault();
+            if (level == null)
+            {
+                var levelModel = new LevelEntity
+                {
+                    Name = "默认等级",
+                    Describe = "系统默认初始创建",
+                    Url = "",
+                    Uptime = DateTime.Now,
+                    Addtime = DateTime.Now,
+                };
+                _levelService.Create(levelModel);
+            }
+
+            model.Level = level;
 
             _brokerService.Create(model);
 
@@ -228,7 +298,7 @@ namespace Zerg.Controllers.CRM
             dealOrder.Shipstatus = (int)brokerRecClientModel.Status;
 
             //成交订单状态变更
-            dealOrder.Upduser = "2"; //_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+            dealOrder.Upduser =_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
             dealOrder.Upddate = DateTime.Now;
             
             //分支处理
@@ -238,14 +308,23 @@ namespace Zerg.Controllers.CRM
                     //订单作废
                     recOrder.Status = (int)EnumOrderStatus.审核失败;
                     dealOrder.Status = (int)EnumOrderStatus.审核失败;
-                    recOrder.Upduser = "2";//_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    recOrder.Upduser =_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    recOrder.Upddate = DateTime.Now;
+                    break;
+
+                case EnumBRECCType.等待上访:
+                    //审核通过
+                    //添加带客和驻场秘书
+                    //model.WriterId=brokerRecClientModel.
+
+                    recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
                     recOrder.Upddate = DateTime.Now;
                     break;
 
                 case EnumBRECCType.洽谈中:
                     //审核通过推荐订单
                     recOrder.Status = (int) EnumOrderStatus.审核通过;
-                    recOrder.Upduser = "2";//_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
                     recOrder.Upddate = DateTime.Now;
                     break;
 
@@ -253,14 +332,14 @@ namespace Zerg.Controllers.CRM
                     //订单作废
                     recOrder.Status = (int)EnumOrderStatus.审核失败;
                     dealOrder.Status = (int)EnumOrderStatus.审核失败;
-                    recOrder.Upduser = "2";//_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    recOrder.Upduser =_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
                     recOrder.Upddate = DateTime.Now;
                     break;
 
                 case EnumBRECCType.洽谈成功:
                     //审核通过成交订单
                     recOrder.Status = (int) EnumOrderStatus.审核通过;
-                    recOrder.Upduser = "2";//_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
                     recOrder.Upddate = DateTime.Now;
                     break;
 
@@ -272,6 +351,8 @@ namespace Zerg.Controllers.CRM
 
             #endregion
 
+            _orderService.Update(recOrder);
+            _orderService.Update(dealOrder);
             _brokerRecClientService.Update(model);
             return PageHelper.toJson(PageHelper.ReturnValue(true,"确认成功"));
         }

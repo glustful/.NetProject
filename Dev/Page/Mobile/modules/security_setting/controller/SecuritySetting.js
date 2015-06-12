@@ -3,7 +3,7 @@
  */
 app.controller('SecuritySettingController',function($scope,$http,$state){
     $scope.password ={
-        oldPassword:'',
+        OldPassword:'',
         Password:'',
         SecondPassword:'',
         MobileYzm:'',
@@ -12,8 +12,8 @@ app.controller('SecuritySettingController',function($scope,$http,$state){
     //提交密码修改信息
     $scope.saveInfo=function(){
         $http.post(SETTING.ApiUrl+'/User/ChangePassword',$scope.password,{'withCredentials':true}).success(function(data){
-            console.log(data);
-        $state.go('app.setting')
+                $scope.changeError=data.Msg;
+                $state.go('app.setting')
         })
     }
     //获取验证码

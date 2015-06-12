@@ -154,24 +154,68 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="pageindex"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public HttpResponseMessage GetAllBrand()
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage GetAllBrand(int page,int pageSize)
         {
-            ProductBrandSearchCondition PBSC = new ProductBrandSearchCondition()
-            {
-                OrderBy = EnumProductBrandSearchOrderBy.OrderById
-            };
-            var brandList = _productBrandService.GetProductBrandsByCondition(PBSC).Select(a => new
+
+           // int pageSize = 6;
+
+             ProductBrandSearchCondition Brandcondition = new ProductBrandSearchCondition
+
+           {
+               Page = page,
+               PageCount = pageSize,
+
+
+
+           };
+            var totalCount = _productBrandService.GetProductBrandCount(Brandcondition);
+
+            var BrandList = _productBrandService.GetProductBrandsByCondition(Brandcondition).Select(a => new
             {
                 a.Id,
                 a.Bimg,
                 a.Bname,
                 a.SubTitle,
                 a.Content,
-                ProductPramater = a.ParameterEntities.Select(p => new { p.Parametername,p.Parametervaule})
+                ProductParamater = a.ParameterEntities.Select(p => new { p.Parametername, p.Parametervaule })
             }).ToList();
-            return PageHelper.toJson(brandList);
+            return PageHelper.toJson(new { brandList = BrandList.Select(b => new { 
+                b.Id,
+                b.Bimg,
+                b.Bname,
+                b.SubTitle,
+                b.Content,
+                ProductParamater=b.ProductParamater.ToDictionary(k=>k.Parametername,v=>v.Parametervaule)
+            }), totalCount = totalCount });
             //return PageHelper.toJson(_productBrandService.GetProductBrandsByCondition(PBSC).ToList());
+        }
+        [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage GetByBrandId(int BrandId)
+        {
+            var Brand = _productBrandService.GetProductBrandById(BrandId);
+            var model = new ProductBrandModel
+            {
+                Addtime = Brand.Addtime,
+                Adduser = Brand.Adduser,
+                Bimg = Brand.Bimg,
+                Bname = Brand.Bname,
+                SubTitle = Brand.SubTitle,
+                //Parameters = Brand.ParameterEntities.Select(p => new ProductBrandParameterModel
+                //{
+                //    Parametername = p.Parametername,
+                //    Parametervaule = p.Parametervaule
+                //}).ToList()
+                Parameters = Brand.ParameterEntities.ToDictionary(k=> k.Parametername,v=>v.Parametervaule)
+            };
+            var products = _productService.GetProductsByProductBrand(Brand.Id);
+            model.Products = products.Select(p => new ProductModel {
+                Productname = p.Productname,
+                Id = p.Id,
+                Productimg = p.Productimg
+            }).ToList();
+            return PageHelper.toJson(model);
         }
         /// <summary>
         /// 根据条件查询品牌
@@ -180,13 +224,13 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns></returns>
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage SearchBrand(string condition,int page)
+        public HttpResponseMessage SearchBrand(string condition,int page,int pageCount)
         {
             ProductBrandSearchCondition bcon = new ProductBrandSearchCondition
             {
                 Bname = condition,
                 Page = page,
-                PageCount = 2
+                PageCount = pageCount
             };
             var brandList = _productBrandService.GetProductBrandsByCondition(bcon).Select(a => new
             {
