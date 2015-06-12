@@ -160,11 +160,7 @@ h3{
 
 
 
-/*lunbo*/
- /*.slider{display:none}*//*用于获取更加体验*/
- .focus{ width: 640px;}
- .focus span{width:10px;height:10px;margin-right:10px;background:#666;font-size:0;}
- .focus span.current{background:#fff}
+
 
 
 

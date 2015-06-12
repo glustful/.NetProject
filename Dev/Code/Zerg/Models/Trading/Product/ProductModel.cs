@@ -8,6 +8,7 @@ namespace Zerg.Models.Trading.Product
     public class ProductModel
     {
 
+        public int Id { get; set; }
 
         /// <summary>
         /// 平台商品分类ID
