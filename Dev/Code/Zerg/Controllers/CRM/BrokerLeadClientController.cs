@@ -56,6 +56,68 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
+        /// 通过地区查询带客列表
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetBLCList(int page = 1, int pageSize = 10)
+        {
+            var sech = new BrokerLeadClientSearchCondition
+            {
+                OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderById
+            };
+            var list = _brokerleadclientService.GetBrokerLeadClientsByCondition(sech).Select(p=>new
+            {
+                p.Id,
+                p.Brokername,
+                p.ClientName,
+                p.ClientInfo.Phone,
+                p.ProjectId,
+                p.Appointmenttime
+            }).ToList().Select(a=>new
+            {
+                a.Id,
+                a.Brokername,
+                a.ClientName,
+                a.Phone,
+                ProjectName=_productService.GetProductById(a.ProjectId).Productname,
+                Appointmenttime=a.Appointmenttime.ToString("yyy-MM-dd")
+            });
+            var count = _brokerleadclientService.GetBrokerLeadClientCount(sech);
+            return PageHelper.toJson(new { List = list, Condition = sech, totalCount = count });
+        }
+
+        /// <summary>
+        /// 查询带客详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetBlDetail(int id)
+        {
+            var model = _brokerleadclientService.GetBrokerLeadClientById(id);
+            var detail = new BrokerRECClientModel
+            {
+                Brokername = model.Brokername,
+                Brokerlevel = model.BrokerLevel,
+                NickName = model.Broker.Nickname,
+                BrokerPhone = model.Broker.Phone,
+                Sex = model.Broker.Sexy,
+                RegTime = model.Broker.Regtime.ToString("yyy-mm-dd"),
+                Clientname = model.ClientName,
+                HouseType = _productService.GetProductById(model.ProjectId).Productname,
+                Phone = model.ClientInfo.Phone,
+                Note = model.Details,
+                Houses = _productService.GetProductById(model.ProjectId).SubTitle,
+                Projectname = model.Projectname,
+            };
+
+            return PageHelper.toJson(detail);
+        }
+
+        /// <summary>
         /// 添加一个带客记录
         /// </summary>
         /// <param name="brokerrecclient"></param>
@@ -203,6 +265,7 @@ namespace Zerg.Controllers.CRM
             model.Broker = _brokerService.GetBrokerById(brokerleadclient.Adduser);
             model.ClientInfo = cmodel2;
             model.ClientName = brokerleadclient.Clientname;
+            model.Appointmenttime = DateTime.Now;
             //model.Qq = Convert.ToInt32(brokerrecclient.Qq);
             model.Phone = brokerleadclient.Phone;       //客户电话
             model.Brokername = broker.Brokername;
@@ -212,8 +275,8 @@ namespace Zerg.Controllers.CRM
             model.Addtime = DateTime.Now;
             model.Upuser = brokerleadclient.Adduser;
             model.Uptime = DateTime.Now;
-            model.ProjectId = brokerleadclient.Projectid;
-            model.Projectname = brokerleadclient.Projectname;
+            model.ProjectId = product.Id;
+            model.Projectname = product.Productname;
             model.Status = EnumBLeadType.预约中;
             model.DelFlag = EnumDelFlag.默认;
 

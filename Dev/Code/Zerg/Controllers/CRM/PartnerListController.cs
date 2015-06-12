@@ -161,12 +161,14 @@ namespace Zerg.Controllers.CRM
               list = _partnerlistService.GetInviteForBroker(brokerId).Where(p => p.Status == EnumPartnerType.默认).Select(a => new
               {
                   a.Id,
+                  a.PartnerId,
                   HeadPhoto = a.Broker.Headphoto,
                   BrokerName = a.Broker.Brokername,
                   AddTime = a.Addtime
               }).ToList().Select(b => new
               {
                   b.Id,
+                  b.PartnerId,
                   b.HeadPhoto,
                   b.BrokerName,
                   AddTime = b.AddTime.ToString("yyyy-MM-dd")
