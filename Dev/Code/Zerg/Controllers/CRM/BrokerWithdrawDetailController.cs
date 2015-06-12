@@ -1,5 +1,6 @@
 ﻿using CRM.Entity.Model;
 using CRM.Service.BankCard;
+using CRM.Service.BrokeAccount;
 using CRM.Service.Broker;
 using CRM.Service.BrokerWithdrawDetail;
 using System;
@@ -23,11 +24,13 @@ namespace Zerg.Controllers.CRM
     public class BrokerWithdrawDetailController : ApiController
     {
         private IBrokerWithdrawDetailService _brokerwithdrawdetailService;
+        private IBrokeAccountService _brokeaccountService;
         private  IBrokerService _brokerService;
         private readonly IWorkContext _workContext;
         private readonly IBankCardService _bankcardService;
-        public BrokerWithdrawDetailController( IBankCardService bankcardService,IWorkContext workContext, IBrokerWithdrawDetailService brokerwithdrawdetailService, IBrokerService brokerService)
+        public BrokerWithdrawDetailController(IBrokeAccountService brokeaccountService, IBankCardService bankcardService,IWorkContext workContext, IBrokerWithdrawDetailService brokerwithdrawdetailService, IBrokerService brokerService)
         {
+            _brokeaccountService = brokeaccountService;
             _brokerwithdrawdetailService =brokerwithdrawdetailService;
             _brokerService =brokerService;
             _workContext = workContext;
@@ -110,9 +113,21 @@ namespace Zerg.Controllers.CRM
                if (user != null)
                {
                    var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
-                   if (broker == null)
+                   if (broker != null)
                    {
-                       // 提现金额逻辑判断
+                       decimal getMoney= Convert.ToDecimal(GetBrokerAmount());//计算得到的剩余总金额                   
+                       decimal syMoney = 0;//剩余金额
+                       // 提现金额逻辑判断(账户金额表 和提现表相减 跟经纪人表中‘提现金额’字段一致)
+                      
+                       if(Convert.ToDecimal( MoneyEntity.Money)>getMoney)
+                       {
+                           return PageHelper.toJson(PageHelper.ReturnValue(false, "账户余额不足，不能提现")); 
+                       }
+                       syMoney = getMoney - Convert.ToDecimal(MoneyEntity.Money);
+                       broker.Amount=syMoney;//将剩余金额更新到经纪人表中金额字段
+                       _brokerService.Update(broker);
+
+
                        var entity = new BrokerWithdrawDetailEntity
                        {
                            BankCard = _bankcardService.GetBankCardById(Convert.ToInt32( MoneyEntity.Bank)),
@@ -141,7 +156,34 @@ namespace Zerg.Controllers.CRM
                return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
         }
 
+       /// <summary>
+        /// 计算经纪人的剩余账户金额 （账户金额表 和提现表相减）
+       /// </summary>
+       /// <returns></returns>
+       public string GetBrokerAmount()
+        {
+             var user = (UserBase)_workContext.CurrentUser;
+               if (user != null)
+               {
+                   var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
+                   if (broker != null)
+                   {
+                         BrokeAccountSearchCondition broconditon=new BrokeAccountSearchCondition{
+                              Brokers=broker
+                         };
+                        BrokerWithdrawDetailSearchCondition browithdetailcon=new BrokerWithdrawDetailSearchCondition{
+                              Brokers=broker
+                         };
+                         Decimal AddMoneys = _brokeaccountService.GetBrokeAccountsByCondition(broconditon).Sum(o => o.Balancenum);//新增的金额总和
+                         decimal TxMoneys = _brokerwithdrawdetailService.GetBrokerWithdrawDetailsByCondition(browithdetailcon).Sum(o => o.Withdrawnum);//提现的总金额
+                         return (AddMoneys - TxMoneys).ToString();
+                   }
+               }
+             return "";
+          
+        }
 
+ 
 
         #endregion
 
