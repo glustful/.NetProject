@@ -165,8 +165,8 @@ namespace Zerg.Controllers.Trading.Product
            {
                Page = page,
                PageCount = pageSize,
-
-
+               IsDescending = true,
+               OrderBy = EnumProductBrandSearchOrderBy.OrderById
 
            };
             var totalCount = _productBrandService.GetProductBrandCount(Brandcondition);
@@ -230,7 +230,9 @@ namespace Zerg.Controllers.Trading.Product
             {
                 Bname = condition,
                 Page = page,
-                PageCount = pageCount
+                PageCount = pageCount,
+                OrderBy = EnumProductBrandSearchOrderBy.OrderByAddtime,
+                IsDescending = true
             };
             var brandList = _productBrandService.GetProductBrandsByCondition(bcon).Select(a => new
             {
