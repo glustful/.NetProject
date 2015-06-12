@@ -52,7 +52,7 @@ app.controller('registerController',['$scope','$state','$http','AuthService',fun
              $scope.YZM.Mobile=$scope.register.Phone;
              $http.post(SETTING.ApiUrl+'/SMS/SendSMS', $scope.YZM,{'withCredentials':true}).success(function(data){
 
-              alert(data);
+             // alert(data);
                  if (data.Message=="1")
                  {
                      $scope.register.Hidm=data.Desstr;

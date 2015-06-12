@@ -73,4 +73,9 @@ app.controller('BrokerTopThreeController',['$scope','$http','AuthService','$stat
             })
         });
 
+    //经纪人专区图片轮播
+    $scope.channelName='banner';
+    $http.get(SETTING.ApiUrl+'/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
+        $scope.content=data;
+    });
 }]);
