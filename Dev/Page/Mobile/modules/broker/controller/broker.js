@@ -12,6 +12,15 @@ app.controller('BrokerTopThreeController',['$scope','$http',function($scope,$htt
            $scope.list = data.List;
             console.log($scope.list);
         })
+
     };
     BrokerTopThree();
+    //获取推荐楼盘信息 create by chenda
+    var getAllProdct=function(){
+        $http.get(SETTING.ApiUrl + '/Product/GetAllProduct',{'withCredentials':true}).success(function(product){
+            $scope.List = product.List;
+            console.log($scope.List)
+        })
+    };
+    getAllProdct();
 }]);

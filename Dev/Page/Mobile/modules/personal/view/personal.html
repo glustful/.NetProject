@@ -10,12 +10,12 @@
                     	<!--<a href="#/app/customerList">客户：</a>{{number}}</p>-->
                     <!--<p class="sum">总佣金：&nbsp;{{userBroker.Amount}}</p>-->
 
-                    <p class="pm">{{userBroker.Name}} <span>{{userBroker.levelStr}}牌</span><small>总排名：{{userBroker.orderStr}}</small></p>
-                    <p class="number"><a href="#/app/partner_list">合伙人：</a>&nbsp;{{userBroker.partnerCount}}&nbsp;/&nbsp;<a href="#">推荐:</a>&nbsp;{{userBroker.refereeCount}}&nbsp;/&nbsp; 
+                    <p class="pm">{{userBroker.Name}} <span access="broker">{{userBroker.levelStr}}牌</span><small access="broker">总排名：{{userBroker.orderStr}}</small></p>
+                    <p class="number" access="broker"><a href="#/app/partner_list">合伙人：</a>&nbsp;{{userBroker.partnerCount}}&nbsp;/&nbsp;<a href="#">推荐:</a>&nbsp;{{userBroker.refereeCount}}&nbsp;/&nbsp;
                     	<a href="#/app/customerList">客户：</a>{{number}}</p>
-                    <p class="sum">总佣金：&nbsp;{{userBroker.allMoneys}}</p>
+                    <p class="sum" access="broker">总佣金：&nbsp;{{userBroker.allMoneys}}</p>
 
-                    <p><a href="#/app/myPurse"><button>提取佣金</button></a></p>
+                    <p><a href="#/app/myPurse" access="broker"><button>提取佣金</button></a></p>
                 </div>
             </div>
             <div class="task-personal" >
@@ -33,11 +33,11 @@
             </div>
             <div class="activity-personal">
                 <ul class="cf">
-                    <li class="one"> <a href="#/app/nominate"><img src="modules/personal/static/image/personal/p1.png" alt="" width="49" height="58" /><br/>我要带客</a></li>
-                    <li class="two"> <a href="#/app/nominate"><img src="modules/personal/static/image/personal/p2.png" alt="" width="49" height="58" /><br/>我要推荐</a></li>
-                    <li class="three"> <a href="#/app/partner_list"><img src="modules/personal/static/image/personal/p3.png" alt="" width="49" height="58" /><br/>我的合伙人</a></li>
-                    <li class="four"> <a href="#/app/recommendedBroker"><img src="modules/personal/static/image/personal/p4.png" alt="" width="49" height="58" /><br/>推荐经纪人</a></li>
-                    <li class="five"> <a href="#/app/hero"><img src="modules/personal/static/image/personal/p5.png" alt="" width="49" height="58" /><br/>经纪人排行</a></li>
+                    <li class="one" access="broker"> <a href="#/app/nominate"><img src="modules/personal/static/image/personal/p1.png" alt="" width="49" height="58" /><br/>我要带客</a></li>
+                    <li class="two"access="broker"> <a href="#/app/nominate"><img src="modules/personal/static/image/personal/p2.png" alt="" width="49" height="58" /><br/>我要推荐</a></li>
+                    <li class="three"access="broker"> <a href="#/app/partner_list"><img src="modules/personal/static/image/personal/p3.png" alt="" width="49" height="58" /><br/>我的合伙人</a></li>
+                    <li class="four"access="broker"> <a href="#/app/recommendedBroker"><img src="modules/personal/static/image/personal/p4.png" alt="" width="49" height="58" /><br/>推荐经纪人</a></li>
+                    <li class="five"access="broker"> <a href="#/app/hero"><img src="modules/personal/static/image/personal/p5.png" alt="" width="49" height="58" /><br/>经纪人排行</a></li>
                     <li class="six"> <a href="#/app/setting"><img src="modules/personal/static/image/personal/p6.png" alt="" width="49" height="58" /><br/>设置</a></li>
                 </ul>
             </div>

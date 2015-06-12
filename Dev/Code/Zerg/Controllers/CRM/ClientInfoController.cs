@@ -202,13 +202,20 @@ namespace Zerg.Controllers.CRM
              if (user != null)
              {
                  var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
+                 if (broker != null) {
                  var condition = new ClientInfoSearchCondition
                  {
                      Addusers = broker.Id
                  };
                  var count = _clientInfoService.GetClientInfoCount(condition);
 
-                 return PageHelper.toJson(new {count });
+                 return PageHelper.toJson(new {count }); }
+                 else
+                 {
+                     var count =0;
+
+                     return PageHelper.toJson(new { count }); 
+                 }
              }
              return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
 

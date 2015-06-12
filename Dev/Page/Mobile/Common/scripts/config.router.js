@@ -83,7 +83,7 @@ app  .run(
         .state('app.customerList',{
             url:'/customerList',
             templateUrl:'modules/customerList/view/customerList.html'
-       ,resolve:load('modules/customerList/controller/customerList.js')
+            ,resolve:load('modules/customerList/controller/customerList.js')
         })
         .state('app.detail',{
             url:'/detail',
@@ -289,7 +289,8 @@ app  .run(
         })
         .state('app.withdrawals',{
             url:'/withdrawals',
-            templateUrl:'modules/withdrawals/view/withdrawals.html'
+            templateUrl:'modules/withdrawals/view/withdrawals.html',
+            resolve:load('modules/myPurse/render/controller.js')
         })
         .state('app.withdrawalsDetail',{
             url:'/withdrawalsDetail',
