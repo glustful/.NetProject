@@ -20,6 +20,7 @@ using YooPoon.Core.Site;
 using CRM.Service.PartnerList;
 using CRM.Service.RecommendAgent;
 using CRM.Service.ClientInfo;
+using CRM.Service.MessageDetail;
 
 namespace Zerg.Controllers.CRM
 {
@@ -37,13 +38,15 @@ namespace Zerg.Controllers.CRM
         private readonly IRecommendAgentService _recommendagentService; //推荐经纪人
         private IClientInfoService _clientInfoService;//客户
         private readonly IRoleService _roleService;
+        private readonly IMessageDetailService _MessageService;
 
         public BrokerInfoController(IClientInfoService clientInfoService,
             IWorkContext workContext, 
             IBrokerService brokerService,
             IPartnerListService partnerlistService, 
             IRecommendAgentService recommendagentService,
-            IRoleService roleService
+            IRoleService roleService,
+            IMessageDetailService MessageService
             )
         {
             _clientInfoService = clientInfoService;
@@ -52,6 +55,7 @@ namespace Zerg.Controllers.CRM
             _partnerlistService = partnerlistService;
             _recommendagentService = recommendagentService;
             _roleService = roleService;
+            _MessageService = MessageService; 
         }
 
 
@@ -490,6 +494,28 @@ namespace Zerg.Controllers.CRM
         #endregion
 
 
+        /// <summary>
+        /// 通过 邀请码获取发送者信息
+        /// </summary>
+        /// <param name="invitationCode"></param>
+        /// <returns></returns>
+        public HttpResponseMessage  GetBrokerByInvitationCode([FromBody] string invitationCode)
+        {
+            if(!string.IsNullOrEmpty(invitationCode))
+            {
+                MessageDetailSearchCondition messageSearchcondition=new MessageDetailSearchCondition{
+                      InvitationCode=invitationCode,
+                       Title="推荐经纪人"
+                };
+                var messageDetail = _MessageService.GetMessageDetailsByCondition(messageSearchcondition).FirstOrDefault();
+                if(messageDetail!=null)
+                {
+                    return PageHelper.toJson(new { invitationuserid=messageDetail.InvitationId });  
+                }
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));  
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));  
+        }
     }
 
 
