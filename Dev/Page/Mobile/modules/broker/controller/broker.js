@@ -1,5 +1,5 @@
 /** create by 杨波 2015.6.5 创富英雄榜**/
-app.controller('BrokerTopThreeController',['$scope','$http','AuthService',function($scope,$http,AuthService){
+app.controller('BrokerTopThreeController',['$scope','$http','AuthService','$state',function($scope,$http,AuthService,$state){
     var BrokerTopThree=function() {
         $http.get(SETTING.ApiUrl + '/BrokerInfo/OrderByBrokerTopThree', {'withCredentials': true}).success(function (data) {
 //           $scope.ii=0;
@@ -25,5 +25,7 @@ app.controller('BrokerTopThreeController',['$scope','$http','AuthService',functi
     //判断是否登录
    if(AuthService.IsAuthenticated) {
        getAllProdct();
+   }else{
+       $state.go("user.login");
    }
 }]);
