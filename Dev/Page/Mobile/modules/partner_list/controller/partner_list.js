@@ -1,13 +1,14 @@
 /**
  * Created by 杨波 on 2015/5/29.
  */
-app.controller('partnerListController',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+app.controller('partnerListController',['$http','$scope','$stateParams','AuthService',function($http,$scope,$stateParams,AuthService) {
     $scope.searchCondition = {
       userId:4
     };
     //查询合伙人
+    $scope.currentuser= AuthService.CurrentUser();
     var getPartnerList  = function() {
-        $http.get(SETTING.ApiUrl+'/PartnerList/PartnerListDetailed?userId='+6,{'withCredentials':true}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/PartnerList/PartnerListDetailed?userId='+$scope.currentuser.UserId,{'withCredentials':true}).success(function(data){
             console.log(data);
             $scope.list = data.list;
         });
@@ -17,13 +18,15 @@ app.controller('partnerListController',['$http','$scope','$stateParams',function
 }
 ]);
 //查询经纪人收到的邀请
-app.controller ('searchInviteController',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+app.controller ('searchInviteController',['$http','$scope','$stateParams','AuthService',function($http,$scope,$stateParams,AuthService){
     $scope.searchCondition={
         brokerId:0
     };
+    $scope.currentuser= AuthService.CurrentUser();
     var getInvite = function(){
-        $http.get(SETTING.ApiUrl + '/PartnerList/GetInviteForBroker?brokerId='+4, {'withCredentials': true}).success(function (data) {
-         console.log(data);
+        $http.get(SETTING.ApiUrl + '/PartnerList/GetInviteForBroker?brokerId='+$scope.currentuser.UserId,{'withCredentials': true}).success(function (data) {
+            console.log(123);
+            console.log(data.Brokername);
          $scope.list=data.list;
         })
     };

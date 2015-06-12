@@ -31,6 +31,6 @@ namespace CRM.Service.PartnerList
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        List<PartnerListEntity> GetInviteForBroker(int id);
+        List<PartnerListEntity> GetInviteForBroker(int id,EnumPartnerType type);
 	}
 }

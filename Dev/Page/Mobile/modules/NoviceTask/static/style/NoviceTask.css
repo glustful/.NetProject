@@ -193,33 +193,14 @@
     top:2760px;
     left: 40px;
 }
-.register_content{
-    position: relative;
-    z-index: 1;
-}
-.register_content .masked{
-    position: absolute;
-    z-index: 2;
+ .masked{
+    position:fixed;
+    z-index: 20;
     background-color: rgba(0,0,0,0.85);
-    width: 640px;
-    height: auto;
-    top: -70px;
-    left: 0;
-    padding:120px 0 0 0;
+    width:100%;
+    top: 0;
+    bottom:0;
 }
-.register_content .masked .inter{
-    display: block;
-   margin-left: 20px;
-}
-.register_content .masked .join{
-    display: block;
-    margin:50px 0 0 200px;
-}
-.register_content .masked .finish{
-
-    padding-top: 70px;
-    margin-left: 60px;
-}
-.register_content .masked .back img{
-   margin: 15px 0 0 200px;
+.location{
+    position: absolute;
 }

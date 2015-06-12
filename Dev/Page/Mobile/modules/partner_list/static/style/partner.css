@@ -62,7 +62,7 @@ ul li{
     color: #848484;
 }
 /*???????*/
-.add_content{
+.add_content form{
     padding: 30px 0 600px 50px;
 }
 .add_blank{
@@ -128,4 +128,20 @@ ul li{
 }
 .others .othersInformation li span .agree{
 
+}
+/* 遮罩 */
+.masked .request{
+    top:10%;
+    left: 5%;
+}
+.masked .requestFinish{
+    top:10%;
+    left: 8%;
+}
+.masked .requestBack{
+    bottom: 8%;
+    left:30%;
+}
+.masked .applyPartner{
+    left: 9%;
 }

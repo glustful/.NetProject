@@ -152,6 +152,33 @@ h3{
 }
 
 
+/* 遮罩面 */
+ .masked-content-index{
+     top:5%;
+     left:5%;
+ }
+ .masked-btn-index{
+     bottom:3%;
+     left: 32%;
+ }
+.masked .point{
+    bottom: 2%;
+    left: 6%;
+}
+.masked .Take{
+    top:10%;
+    left: 10%;
+}
+.masked .TakeBtn{
+    bottom:10%;
+    left:30%;
+}
+ .firstStep{
+     bottom: 1%;
+     right: 6%;
+ }
+
+
 
 
 /*lunbo*/

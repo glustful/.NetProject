@@ -135,3 +135,38 @@
     /*width:70px;*/
     border-radius: 5px;
 }
+
+/* 遮罩 */
+.masked .Brush{
+    top:7%;
+    left: 2%;
+}
+.masked .clickMore{
+    top:3%;
+    left: 6%;
+}
+.masked .dropDown{
+    top:20%;
+    left: 10%;
+}
+.masked .clickKnow{
+    top:15%;
+    left: 2%;
+}
+.masked .finishTask{
+    top:10%;
+    left: 5%;
+}
+.masked .btn-back{
+    bottom: 15%;
+    left: 25%;
+}
+.masked .nominateFinish{
+    top:10%;
+    left: 10%;
+}
+.masked .nominateBack{
+    bottom: 15%;
+    left: 30%;
+}
+
