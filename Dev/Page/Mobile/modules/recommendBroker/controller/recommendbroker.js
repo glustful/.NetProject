@@ -16,11 +16,17 @@ app.controller('recommendBrokerController',function($scope,$http){
 
 
 app.controller('recommendBrokerAddController',['$http','$scope','$state',function($http,$scope,$state){
-
+    $scope.YZM={
+        phone:'',
+        SmsType:'6'
+    }
     $scope.Crete = function()
     {
-        $http.post(SETTING.ApiUrl+'/RecommendAgent/SendRecommendAgentSms', $scope.phone, {'withCredentials': true}).success(function(datas) {
-           alert(datas.toString());
+        $http.post(SETTING.ApiUrl+'/SMS/SendSMS', $scope.YZM, {'withCredentials': true}).success(function(datas) {
+            if (data.Message=="1")
+            {
+               alert("邀请成功");
+            }
      });
     };
 

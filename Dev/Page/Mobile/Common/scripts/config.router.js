@@ -12,26 +12,26 @@
  * 由于不适用项目老方法是用的路由策略被抛弃
  */
 app  .run(
-    ['$rootScope', '$state', '$stateParams',
-        function ($rootScope, $state, $stateParams) {
+    ['$rootScope', '$state', '$stateParams','AuthService',
+        function ($rootScope, $state, $stateParams,AuthService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
-            //$rootScope.$on('$stateChangeStart', function (event,next) {
-            //    if(next.name==='access.signin' || next.name==='access.signup' || next.name==='access.forgot-password'){
-            //        return;
-            //    }
-            //    if(!AuthService.IsAuthenticated()){
-            //        event.preventDefault();
-            //        $state.go('access.signin');
-            //    }
-            //    if(next.access !== undefined){
-            //        if(!AuthService.IsAuthorized(next.access)){
-            //            event.preventDefault();
-            //            //TODO:跳转到权限提示页
-            //        }
-            //
-            //    }
-            //});
+            $rootScope.$on('$stateChangeStart', function (event,next) {
+                if(next.name==='app.home' || next.name==='user.login' || next.name==='app.storeroom'||next.name==='user.register'||next.name==='user.PasswordFound'||next.name==='app.invite'){
+                    return;
+                }
+                if(!AuthService.IsAuthenticated()){
+                    event.preventDefault();
+                    $state.go('user.login');
+                }
+                if(next.access !== undefined){
+                    if(!AuthService.IsAuthorized(next.access)){
+                        event.preventDefault();
+                        //TODO:跳转到权限提示页
+                    }
+
+                }
+            });
         }
     ]
 )
@@ -101,13 +101,15 @@ app  .run(
         .state('app.person_setting',{
             url:'/person_setting',
             templateUrl:'modules/person_setting/view/person_setting.html',
-            resolve:load('modules/person_setting/controller/personsettingController.js')
+            resolve:load('modules/person_setting/controller/personsettingController.js'),
+            access:['broker','user']
         })
 
         .state('app.security_setting',{
             url:'/security_setting',
             templateUrl:'modules/security_setting/view/security_setting.html',
-            resolve:load('modules/security_setting/controller/SecuritySetting.js')
+            resolve:load('modules/security_setting/controller/SecuritySetting.js'),
+            access:['broker','user']
         })
         .state('app.zhongtian_HouseDetail',{
             url:'/zhongtian_HouseDetail',
@@ -301,14 +303,10 @@ app  .run(
             url:'/NoviceTask',
             templateUrl:'modules/NoviceTask/view/NoviceTask.html'
         })
-        .state('user.NoviceTask-login',{
-            url:'/NoviceTask-login',
-            templateUrl:'modules/NoviceTask-login/view/NoviceTask-login.html',
-            data:{title:'用户注册'}
-        }) .state('user.NoviceTask-loginEnd',{
-            url:'/NoviceTask-loginEnd',
-            templateUrl:'modules/NoviceTask-loginEnd/view/NoviceTask-loginEnd.html',
-            data:{title:'用户注册'}
+         .state('app.invite',{
+            url:'/invite',
+            templateUrl:'modules/invite/view/invite.html',
+            resolve:load('modules/invite/controller/invitecontroller.js')
         })
 
 
