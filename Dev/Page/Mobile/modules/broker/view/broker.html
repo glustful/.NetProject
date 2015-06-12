@@ -86,11 +86,11 @@
                             <!--<img src="modules/broker//static/image/broker/lp1.png" alt="中天·水云间" width="620" height="160"/>-->
                             <div class="summary"><span>[{{ item.Bname }}]</span>
                                 <span>户型:{{item.ProductParamater["户型"]}}</span>
-                                <span>价格:{{item.ProductParamater["价格"]}}</span>
+                                <span>价格:{{item.ProductParamater["最小价格"]}}</span>
                             </div>
                             <div class="summaryBg"></div>
                             <div class="tiptop">最高佣金：&nbsp;{{item.ProductParamater["最高佣金"]}}/套</div>
-                            <div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>
+                            <div class="depreciate"><span>{{item.SubTitle}}</span></div>
                             <div class="depreciateBg"></div>
                         </a>
                         <div class="sub-nav-broker" access="broker">
