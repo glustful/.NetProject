@@ -12,8 +12,8 @@
             </div>
             <div class="bj">
             <div class="nav-broker">
-                <a href="#/app/nominate"><span class="dk"> 我要带客</span></a>
-                <a href="#/app/nominate"><span class="tj"> 我要推荐</span></a>
+                <a href="#/app/nominate" access="broker"><span class="dk"> 我要带客</span></a>
+                <a href="#/app/nominate" access="broker"><span class="tj"> 我要推荐</span></a>
                 <a href="#/app/task"><span class="rw">我的任务</span></a>
                 <a href="#/app/redPaper-1"> <span class="hb">抢红包</span></a>
             </div>
@@ -48,7 +48,7 @@
             <div class="hero">
                 <div class="hd">创富英雄榜</div>
                 <div class="bang" ng-controller="BrokerTopThreeController">
-                    <span ng-repeat="item in list" ng-class={$index:isIndex}> <img src="modules/broker/static/image/broker/{{$index+1}}.png" alt="" width="43" height="60"/><div>{{item.Brokername}}<br/><small>总佣金：{{item.Amount}}</small></div></span>
+                    <span ng-repeat="item in list" ng-class="{moveBorder: $index==2}"> <img src="modules/broker/static/image/broker/{{$index+1}}.png" alt="" width="43" height="60"/><div>{{item.Brokername}}<br/><small>总佣金：{{item.Amount}}</small></div></span>
                     <!--<span > <img src="modules/broker/static/image/broker/1.png" alt="" width="43" height="60"/><div>来自星星的你<br/><small>总佣金：15万/元</small></div></span>-->
                     <!--<span > <img src="modules/broker/static/image/broker/1.png" alt="" width="43" height="60"/><div>来自星星的你<br/><small>总佣金：15万/元</small></div></span>-->
                     <!--<a href="#"><span class="star2">来自星星的你<br/><small>总佣金：15万/元</small></span></a>-->
@@ -57,55 +57,76 @@
             </div>
            </div>
             <div class="message">
+                <!--<div ng-controller="StormRoomController" style="..."></div>-->
                 <div class="recommend">推荐楼房</div>
+                <!--&lt;!&ndash;<div ng-controller="StormRoomController" style="..."></div>&ndash;&gt;-->
+                <!--<div class=" message-storeroom" ng-repeat="item in List">-->
+                    <!--<div class="main-storeroom cf">-->
+                        <!--<a class="fl img" href="#/app/housesPic?productId={{item.Id}}"><img src="http://img.yoopoon.com/{{item.Productimg}}" alt="蓝光&nbsp;·&nbsp;颐明园"width="224" height="170"/></a>-->
+                        <!--<div class="detail-storeroom fl ">-->
+                            <!--<p class="yhy">{{item.Productname}}</p>-->
+                            <!--<p class="yuan">{{item.Price}}/m²</p>-->
+                            <!--<p class="bj">{{item.Type}}&nbsp;/&nbsp;{{item.Acreage}}m²&nbsp;/&nbsp;在售{{item.StockRule}}套</p>-->
+                            <!--<p class="yh">{{item.Advertisement}}</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="IWant"><a href="#/app/carry_client?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}"><button>我要带客</button></a><a href="#/app/groom?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}"><button>我要推荐</button></a><a class="red-nominate" href="#/app/redPaper-1">红包</a><a  href="#/app/myInt">积分</a> </div>-->
+                <!--</div>-->
+                <!--<div style="text-align: center;padding-bottom: 20px"><span>{{tipp}}</span></div>-->
+                <div  ng-controller="BrokerTopThreeController">
                 <ul>
-                    <li class="brand ">
-                        <a href="#/app/houses">
-                            <img src="modules/broker//static/image/broker/lp1.png" alt="中天·水云间" width="620" height="160"/>
-                            <div class="summary"><span>[曲靖市]&nbsp;中天&nbsp;·&nbsp;水云间</span><span>户型：238m²</span><span>总价：110万</span></div>
-                            <div class="summaryBg"></div><div class="tiptop">最高佣金：&nbsp;10000元/套</div>
-                            <div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>
-                            <div class="depreciateBg"></div>
-                        </a>
-                        <div class="sub-nav-broker">
-                            <span class="orange"><a href="#">带客佣金</a></span>
-                            <span class="orange"><a href="#">推荐佣金</a></span>
-                            <span class="blue"><a href="#/app/redPaper-1">抢红包</a></span>
-                            <span class="blue lt"><a href="#/app/myInt">拿积分</a></span>
-                        </div>
-                    </li>
-                    <li class="brand ">
-                        <a href="#/app/houses">
-                            <img src="modules/broker/static/image/broker/lp2.png" alt="实力·壹方城" width="620" height="160"/>
-                            <div class="summary"><span>[昆明市]实力·壹方城</span><span>户型：76m²</span><span>总价：55万</span></div>
+                    <li class="brand " ng-repeat="item in brandList">
+                        <a href="#/app/houses?BrandId={{item.Id}}"><img src="http://img.yoopoon.com/{{item.Bimg}}" alt="蓝光&nbsp;·&nbsp;颐明园" width="620" height="160"/>
+                            <!--<img src="modules/broker//static/image/broker/lp1.png" alt="中天·水云间" width="620" height="160"/>-->
+                            <div class="summary"><span>[{{ item.Bname }}]</span>
+                                <span>户型:{{item.ProductParamater["户型"]}}</span>
+                                <span>价格:{{item.ProductParamater["价格"]}}</span>
+                            </div>
                             <div class="summaryBg"></div>
-                            <div class="tiptop">最高佣金：&nbsp;10000元/套</div>
+                            <div class="tiptop">最高佣金：&nbsp;{{item.ProductParamater["最高佣金"]}}/套</div>
                             <div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>
                             <div class="depreciateBg"></div>
                         </a>
-                        <div class="sub-nav-broker">
-                            <span class="orange"><a href="#">带客佣金</a></span>
-                            <span class="orange"><a href="#">推荐佣金</a></span>
+                        <div class="sub-nav-broker" access="broker">
+                            <span class="orange"><a href="#/app/carry_client?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}">我要带客</a></span>
+                            <span class="orange"><a href="#/app/groom?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}">我要推荐</a></span>
                             <span class="blue"><a href="#/app/redPaper-1">抢红包</a></span>
                             <span class="blue lt"><a href="#/app/myInt">拿积分</a></span>
                         </div>
                     </li>
-                    <li> <a href="broker.html"><img  class="img-inner" src="modules/broker/static/image/broker/l.png" alt="实力·壹方城" width="620" height="142"/></a></li>
-                    <li class="brand ">
-                        <a href="#/app/houses.html">
-                            <img src="modules/broker/static/image/broker/lp3.png" alt="实力·壹方城" width="620" height="160"/>
-                            <div class="summary"><span>[昆明市]实力·壹方城</span><span>户型：76m²</span><span>总价：55万</span></div>
-                            <div class="summaryBg"></div>
-                            <div class="tiptop">最高佣金：&nbsp;10000元/套</div>
-                            <div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>
-                            <div class="depreciateBg"></div>
-                        </a>
-                        <div class="sub-nav-broker">
-                            <span class="orange"><a href="#">带客佣金</a></span>
-                            <span class="orange"><a href="#">推荐佣金</a></span>
-                            <span class="blue"><a href="#/app/redPaper-1">抢红包</a></span>
-                            <span class="blue lt"><a href="#/app/myInt">拿积分</a></span>
-                        </div>
-                    </li>
+                    <!--<li class="brand ">-->
+                        <!--<a href="#/app/houses">-->
+                            <!--<img src="modules/broker/static/image/broker/lp2.png" alt="实力·壹方城" width="620" height="160"/>-->
+                            <!--<div class="summary"><span>[昆明市]实力·壹方城</span><span>户型：76m²</span><span>总价：55万</span></div>-->
+                            <!--<div class="summaryBg"></div>-->
+                            <!--<div class="tiptop">最高佣金：&nbsp;10000元/套</div>-->
+                            <!--<div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>-->
+                            <!--<div class="depreciateBg"></div>-->
+                        <!--</a>-->
+                        <!--<div class="sub-nav-broker">-->
+                            <!--<span class="orange"><a href="#">带客佣金</a></span>-->
+                            <!--<span class="orange"><a href="#">推荐佣金</a></span>-->
+                            <!--<span class="blue"><a href="#/app/redPaper-1">抢红包</a></span>-->
+                            <!--<span class="blue lt"><a href="#/app/myInt">拿积分</a></span>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li> <a href="broker.html"><img  class="img-inner" src="modules/broker/static/image/broker/l.png" alt="实力·壹方城" width="620" height="142"/></a></li>-->
+                    <!--<li class="brand ">-->
+                        <!--<a href="#/app/houses.html">-->
+                            <!--<img src="modules/broker/static/image/broker/lp3.png" alt="实力·壹方城" width="620" height="160"/>-->
+                            <!--<div class="summary"><span>[昆明市]实力·壹方城</span><span>户型：76m²</span><span>总价：55万</span></div>-->
+                            <!--<div class="summaryBg"></div>-->
+                            <!--<div class="tiptop">最高佣金：&nbsp;10000元/套</div>-->
+                            <!--<div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>-->
+                            <!--<div class="depreciateBg"></div>-->
+                        <!--</a>-->
+                        <!--<div class="sub-nav-broker">-->
+                            <!--<span class="orange"><a href="#">带客佣金</a></span>-->
+                            <!--<span class="orange"><a href="#">推荐佣金</a></span>-->
+                            <!--<span class="blue"><a href="#/app/redPaper-1">抢红包</a></span>-->
+                            <!--<span class="blue lt"><a href="#/app/myInt">拿积分</a></span>-->
+                        <!--</div>-->
+                    <!--</li>-->
                 </ul>
+                </div>
             </div>

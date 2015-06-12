@@ -1,30 +1,24 @@
 <!--首页-->
 <!--required:../static/style/index.css-->
 <div ng-controller="homeController">
-
-
-
-
 <div class="pic" >
-<div class="slider">
-    <!--<ul >-->
-
-        <!--<li ng-repeat="item in content"><a href="#" ><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
-
-        <!--&lt;!&ndash;<li ><a href="#" ><img src="modules/Index/static/image/index/ad-2.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>&ndash;&gt;-->
-        <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-3.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>&ndash;&gt;-->
-        <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-4.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>&ndash;&gt;-->
-        <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-5.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>&ndash;&gt;-->
-
-
-    <!--</ul>-->
+<div class="slider" >
     <carousel interval="3000">
         <slide ng-repeat="slide in content" active="slide.active">
             <img src="http://img.yoopoon.com/{{slide.TitleImg}}" class="img-full">
         </slide>
     </carousel>
+ </div>
 </div>
-</div>
+    <!--<ul>-->
+        <!--<li ng-repeat="item in content"><a href="#" ><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+        <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-2.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+        <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-3.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+        <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-4.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+        <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-5.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+    <!--</ul>-->
+<!--</div>-->
+<!--</div>-->
 
 <!--<div class="pic">-->
     <!--<ul>-->
@@ -53,8 +47,8 @@
         <li class="five" ng-repeat="item in Activefive"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="水云间大优惠"  width="205px"/></a></li>
         <li class="six" ng-repeat="item in Activesix"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="买房送奔驰"  width="205px"/></a></li>
     </ul>
-    <a href="javascript:;" id="btn_prev"></a>
-    <a href="javascript:;" id="btn_next"></a>
+    <!--<a href="javascript:;" id="btn_prev"></a>-->
+    <!--<a href="javascript:;" id="btn_next"></a>-->
 </div>
 <div class="message" ng-app="app" >
     <ul>
@@ -72,7 +66,7 @@
                 <!--<span class="brokerage"><a href="#">最高佣金：10000元/套</a></span>-->
             <!--</div>-->
             <a href="#/app/housesBuy?BrandId={{item.Id}}">
-                <img src="{{item.Bimg}}" alt="中天·水云间" width="620" height="160"/>
+                <img src="http://img.yoopoon.com/{{item.Bimg}}" alt="中天·水云间" width="620" height="160"/>
                 <div class="summary"><span>[{{ item.Bname }}]</span><span>{{item.Adduser}}</span><span>总价：110万</span></div>
                 <div class="summaryBg"></div>
                 <div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>
@@ -80,8 +74,14 @@
             </a>
             <h3>{{item.SubTitle}}</h3>
             <div class="nav" >
-                <span class="orange ng-re" ng-repeat="item1 in item.ProductPramater"><a href="#"> {{item1.Parametername}}:{{item1.Parametervaule}}</a></span>
-                <!--<span class="brokerage"><a href="#">最高享用优惠：元/套</a></span>-->
+                <span class="orange">
+                    <a href="">
+                        来电咨询:{{item.ProductParamater["来电咨询"]}}
+                    </a>
+                </span>
+                <span class="brokerage">
+                    <a href="#">最高享用优惠：{{item.ProductParamater["最高优惠"]}}元/套</a>
+                </span>
             </div>
         </li>
 
@@ -132,7 +132,20 @@
             <!--</div>-->
         <!--</li>-->
     </ul>
-
+    </div>
    </div>
-</div>
+        <div class="masked" style="display: none">
+            <img class="masked-content-index location" src="modules/Index/static/image/index/content.png" alt="内容" width="578" height="697"/>
+            <a href="#" class="masked-btn-index location"><img src="modules/Index/static/image/index/btn-start.png" alt="开始搜房" width="219" height="93"/></a>
+        </div>
+        <div class="masked" style="display: none">
+            <a href="#"><img class="point location" src="modules/Index/static/image/index/point.png" alt="指向房源库" width="561" height="604"/></a>
+        </div>
+        <div class="masked" style="display: none">
+            <img class="Take location" src="modules/Index/static/image/index/Take.png" alt="内容" width="465" height="565"/>
+            <a href="#" class="TakeBtn location"><img src="modules/Index/static/image/index/btn-start.png" alt="开始搜房" width="219" height="93"/></a>
+        </div>
+    <div class="masked" style="display: none">
+        <a href="#"><img class="firstStep location" src="modules/Index/static/image/index/firstStep.png" alt="指向房源库" width="452" height="646"/></a>
+    </div>
 </div>

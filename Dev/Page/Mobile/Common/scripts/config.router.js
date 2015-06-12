@@ -147,7 +147,8 @@ app  .run(
         })
         .state('app.houses',{
             url:'/houses',
-            templateUrl:'modules/houses/view/houses.html'
+            templateUrl:'modules/houses/view/houses.html',
+            resolve:load('modules/houses/controller/houses.js')
         })
         .state('app.housesBuy',{
             url:'/housesBuy?BrandId',
@@ -299,6 +300,15 @@ app  .run(
         .state('app.NoviceTask',{
             url:'/NoviceTask',
             templateUrl:'modules/NoviceTask/view/NoviceTask.html'
+        })
+        .state('user.NoviceTask-login',{
+            url:'/NoviceTask-login',
+            templateUrl:'modules/NoviceTask-login/view/NoviceTask-login.html',
+            data:{title:'用户注册'}
+        }) .state('user.NoviceTask-loginEnd',{
+            url:'/NoviceTask-loginEnd',
+            templateUrl:'modules/NoviceTask-loginEnd/view/NoviceTask-loginEnd.html',
+            data:{title:'用户注册'}
         })
 
 

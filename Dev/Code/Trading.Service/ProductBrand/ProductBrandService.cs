@@ -148,7 +148,9 @@ namespace Trading.Service.ProductBrand
                         case EnumProductBrandSearchOrderBy.OrderById:
                             query = condition.IsDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
                             break;
-
+                        case EnumProductBrandSearchOrderBy.OrderByAddtime:
+                            query=condition.IsDescending ? query.OrderByDescending(q => q.Addtime) : query.OrderBy(q => q.Addtime);
+                            break;
                     }
 
                 }

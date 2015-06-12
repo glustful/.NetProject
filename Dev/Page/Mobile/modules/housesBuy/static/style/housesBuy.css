@@ -50,13 +50,16 @@
 
 }
 .content-housesBuy .di a button{
+
     width: 130px;
     height: 50px;
+    line-height: 50px;
     font-size: 1em;
     color: #fff;
     border-radius: 8px;
     background:url("../image/housesBuy/cell.png") no-repeat 10px 15px #f13800;
     padding-left: 20px;
+
 }
 
 .content-housesBuy .type{
@@ -112,7 +115,7 @@
 }
 .content-housesBuy .type .ask{
 
-    width: 290px;
+
     height: auto;
     background:url("../image/housesBuy/ask.png") no-repeat 30px center;
     font-size: 18px;

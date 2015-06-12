@@ -113,9 +113,25 @@ namespace CRM.Service.BrokerLeadClient
                 {
                     query = query.Where(q =>q.Broker.Id== condition.Brokers.Id);
                 }
+                if (condition.DelFlag != null)
+                {
+                    query = query.Where(q => q.DelFlag== condition.DelFlag);
+                }
+                if (condition.Projectids != null && condition.Projectids.Any())
+                {
+                    query = query.Where(q => condition.Projectids.Contains(q.ProjectId));
+                }
 				if (condition.ClientInfos != null && condition.ClientInfos.Any())
                 {
                     query = query.Where(q => condition.ClientInfos.Contains(q.ClientInfo));
+                }
+                if (condition.ClientName != null && condition.ClientName.Any())
+                {
+                    query = query.Where(q => condition.ClientName.Contains(q.ClientName));
+                }
+                if (condition.Phone != null && condition.Phone.Any())
+                {
+                    query = query.Where(q => condition.Phone.Contains(q.Phone));
                 }
 				if (condition.Addusers != null && condition.Addusers.Any())
                 {

@@ -10,7 +10,9 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         PriceBegin:'',
         PriceEnd:'',
         Page:0,
-        PageCount:10
+        PageCount:10,
+        OrderBy:'OrderByAddtime',
+        IsDescending:true
     };
     $scope.tipp="正在加载......";
     var loading = false
@@ -73,6 +75,7 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         $scope.selectArea='区域';
         $scope.selectType='类型';
         $scope.selectPrice='价格';
+        $scope.tipp="正在加载......";
         pages=2;
         pushContent();
     }
@@ -87,6 +90,7 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         //$scope.searchProduct();
        $scope.List=[];
        $scope.searchCondition.Page=0;
+        $scope.tipp="正在加载......";
         pages=2;
         pushContent();
     }
@@ -107,6 +111,7 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
             $scope.county = !$scope.county;
         }
         //$scope.searchProduct();
+        $scope.tipp="正在加载......";
         $scope.List=[];
         $scope.searchCondition.Page=0;
         pages=2;
@@ -133,6 +138,7 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
             $scope.price = !$scope.price;
         }
         //$scope.searchProduct();
+        $scope.tipp="正在加载......";
         $scope.List=[];
         $scope.searchCondition.Page=0;
         pages=2;

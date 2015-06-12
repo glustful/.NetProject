@@ -4,21 +4,10 @@
 app.controller('BrandController',['$http','$scope','$stateParams','$timeout',function($http,$scope,$stateParams,$timeout){
         var condition = {
             condition:$stateParams.condition==undefined?'':$stateParams.condition,
+            //condition:$stateParams.condition,
             page:0,
             PageCount:10
         };
-//        $scope.getList = function() {
-//            $http.get(SETTING.ApiUrl + '/Brand/SearchBrand', {params: condition, withCredentials: true})
-//                .success(function (data) {
-//                    if (data.Count == 0) {
-//                        $scope.Msg = '未查询到该数据';
-//                    }
-//                    else {
-//                        $scope.BrandList = data.List;
-//                    }
-//                });
-//        };
-//    $scope.getList();
     $scope.tipp="正在加载......";
     var loading = false
         ,pages=2;                      //判断是否正在读取内容的变量

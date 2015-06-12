@@ -82,5 +82,25 @@ namespace CRM.Entity.Model
 		/// 带客人员电话
 		/// </summary>
 		public virtual string WriterPhone { get; set; }
+        /// <summary>
+        /// 客户名
+        /// </summary>
+	    public virtual string ClientName { get; set; }
+        /// <summary>
+        /// 客户电话
+        /// </summary>
+	    public virtual string Phone { get; set; }
+        /// <summary>
+        /// 带客订单
+        /// </summary>
+	    public virtual int ComOrder { get; set; }
+        /// <summary>
+        /// 成交订单
+        /// </summary>
+	    public virtual int DealOrder { get; set; }
+        /// <summary>
+        /// 删除标识
+        /// </summary>
+	    public virtual EnumDelFlag DelFlag { get; set; }
 	}
 }

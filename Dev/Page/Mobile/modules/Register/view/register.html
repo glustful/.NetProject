@@ -43,7 +43,16 @@
         <p class="error_out"> {{errorTips}}</p>
         <button class="register_button"  type="submit" ng-disabled="form_register.$invalid">注 册</button>
         <p class="LoginExit">
-            已有账号？点此<span><a href="#user/login">登录</a> </span>
+            已有账号？点此<span><a href="#/app/login">登录</a> </span>
         </p>
     </form>
+    <div class="masked" style="display: none">
+        <img class="inter location" src="modules/Register/static/image/register/finish.png" alt="内容"/>
+        <a  class="join location" href="#"><img src="modules/NoviceTask-login/static/image/btn.png" alt="火速加入"/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <img class="finish location" src="modules/Register/static/image/register/finish.png" alt="完成了注册任务"/>
+        <a  class="back location" href="#"><img src="modules/Register/static/image/register/back.png" alt="返回"/></a>
+    </div>
+
 </div>

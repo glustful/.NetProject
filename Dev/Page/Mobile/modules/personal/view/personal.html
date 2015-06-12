@@ -2,7 +2,7 @@
 <!--required:../static/style/personal.css-->
 <div  ng-controller="personController">
             <div class="main-personal cf">
-               <a class="fl img" href="#"><img src="{{userBroker.photo}}" alt=" 头像" width="174" height="174"/></a>
+               <a class="fl img" href="#"><img id="img" src="{{userBroker.photo}}" alt="" width="174" height="174"/></a>
                 <div class="detail fl">
 
                     <!--<p class="pm">{{userBroker.Brokername}} <span>{{userBroker.Agentlevel}}牌</span><small>总排名：1922</small></p>-->
@@ -41,4 +41,35 @@
                     <li class="six"> <a href="#/app/setting"><img src="modules/personal/static/image/personal/p6.png" alt="" width="49" height="58" /><br/>设置</a></li>
                 </ul>
             </div>
+    <div class="masked" style="display: none">
+        <img class="Recruit location" src="modules/personal/static/image/personal/Recruit.png" alt="招募合伙人" width="497" height="769"/>
+        <a href="#" class="btn-partner location"><img src="modules/personal/static/image/personal/btn-partner.png" alt="合伙人"/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <a href="#" class="myPartner location"><img src="modules/personal/static/image/personal/myPartner.png" alt="我的合伙人" width="513" height="619"/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <a href="#" class="myPartner location"><img src="modules/personal/static/image/personal/myPartner.png" alt="我的合伙人" width="513" height="619"/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <a href="#" class="nominate location"><img src="modules/personal/static/image/personal/nominate.png" alt="我要推荐" width="530" height="857"/></a>
+    </div>
+    <div class="masked" style="display: none" >
+        <img class="SecStep location" src="modules/personal/static/image/personal/SecStep.png" alt="第二步" width="449" height="769"/>
+        <a href="#" class="upWard location"><img src="modules/personal/static/image/personal/upWard.png" alt=""/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <img class="ThStep location" src="modules/personal/static/image/personal/ThStep.png" alt="第三步" width="449" height="769"/>
+        <a href="#" class="nominateBtn location"><img src="modules/personal/static/image/personal/nominateBtn.png" alt=""/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <a href="#" class="takeOff location"><img src="modules/personal/static/image/personal/take.png" alt="我要带客" width="580" height="430"/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <img class="Commission location" src="modules/personal/static/image/personal/Commission.png" alt="红包" width="612" height="480"/>
+        <a href="#" class="cashBtn location"><img src="modules/personal/static/image/personal/cashBtn.png" alt=""/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <a href="#" class="Extraction location"><img src="modules/personal/static/image/personal/Extraction.png" alt="我要带客" width="555" height="633"/></a>
+    </div>
 </div>

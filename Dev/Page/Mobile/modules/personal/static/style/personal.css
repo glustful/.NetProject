@@ -107,6 +107,56 @@
 .activity-personal .two a{
     color: #f13800;
 }
-.fl img{
+#img{
 	border-radius:500px;
+}
+
+/* 遮罩 */
+.masked .Recruit{
+    top:5%;
+    left: 10%;
+}
+.masked .btn-partner{
+    bottom: 10%;
+    left: 32%;
+}
+.masked .myPartner{
+    right:5%;
+    top:20%;
+}
+.masked .nominate{
+    top:10%;
+    left: 10%;
+}
+.masked .SecStep{
+    top:5%;
+    left: 15%;
+}
+.masked .upWard{
+    bottom:5%;
+    left: 40%;
+}
+.masked .ThStep{
+    top:5%;
+    left: 10%;
+}
+.masked .nominateBtn{
+    bottom:6%;
+    left: 28%;
+}
+.masked .takeOff{
+    bottom: 20%;
+    left: 6%;
+}
+.masked .Commission{
+    top:10%;
+    left: 2%;
+}
+.masked .cashBtn{
+    bottom:18%;
+    left: 17%;
+}
+.masked .Extraction{
+    top:10%;
+    left: 20%;
 }
