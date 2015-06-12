@@ -67,7 +67,7 @@ app.controller('taskController',['$http','$scope','AuthService','$timeout',funct
         UserId:0
     }
     $scope.warm="";
-    $scope.tipp="加载更多。。。";
+    $scope.tipp="正在加载。。。";
     $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
 
     //查询任务
