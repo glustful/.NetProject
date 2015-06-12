@@ -10,7 +10,9 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         PriceBegin:'',
         PriceEnd:'',
         Page:0,
-        PageCount:10
+        PageCount:10,
+        OrderBy:'OrderByAddtime',
+        IsDescending:true
     };
     $scope.tipp="正在加载......";
     var loading = false

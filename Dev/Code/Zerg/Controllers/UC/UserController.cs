@@ -121,12 +121,11 @@ namespace Zerg.Controllers.UC
         [HttpPost]
         public HttpResponseMessage AddBroker([FromBody]BrokerModel brokerModel)
         {
-            if (string.IsNullOrEmpty(brokerModel.UserName)) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名不能为空"));
-            if (string.IsNullOrEmpty(brokerModel.Password)) return PageHelper.toJson(PageHelper.ReturnValue(false, "密码不能为空"));
-            if (string.IsNullOrEmpty(brokerModel.SecondPassword)) return PageHelper.toJson(PageHelper.ReturnValue(false, "确认密码不能为空"));
-            if (string.IsNullOrEmpty(brokerModel.Phone)) return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号不能为空"));
-            if (string.IsNullOrEmpty(brokerModel.MobileYzm)) return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码不能为空"));
-            if (string.IsNullOrEmpty(brokerModel.Hidm)) return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码错误"));
+            var validMsg = "";
+            if (!brokerModel.ValidateModel(out validMsg))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, validMsg));
+            }
 
             #region 验证码判断 解密
             var strDes = EncrypHelper.Decrypt(brokerModel.Hidm, "Hos2xNLrgfaYFY2MKuFf3g==");//解密
@@ -400,6 +399,28 @@ namespace Zerg.Controllers.UC
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功"));
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
+        }
+
+        [HttpPost]
+        public HttpResponseMessage EditUser(UserModel model)
+        {
+            var user = _userService.FindUser(model.Id);
+            var role = _roleService.GetRoleById(model.RoleId);
+            user.Password = model.Password;
+            user.Status = model.Status;
+
+            if (user.UserRoles == null)
+                user.UserRoles = new List<UserRole> { new UserRole() { Role = role, User = user } };
+            else
+            {
+                user.UserRoles.First().Role = role;
+            }
+
+            if (_userService.ModifyUser(user))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
         }
     }
 }
