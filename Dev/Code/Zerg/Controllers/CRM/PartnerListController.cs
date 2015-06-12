@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Zerg.Common;
+using YooPoon.Core.Site;
 
 namespace Zerg.Controllers.CRM
 {
@@ -18,12 +19,14 @@ namespace Zerg.Controllers.CRM
     /// </summary>
     public class PartnerListController : ApiController
     {
-        private IPartnerListService _partnerlistService;
-        private IBrokerService _brokerService;
-        public PartnerListController(IPartnerListService partnerlistService, IBrokerService brokerService)
+        private readonly IPartnerListService _partnerlistService;
+        private readonly IBrokerService _brokerService;
+        private readonly IWorkContext _workContext;
+        public PartnerListController(IPartnerListService partnerlistService, IBrokerService brokerService, IWorkContext workContext)
         {
             _partnerlistService = partnerlistService;
             _brokerService = brokerService;
+            _workContext = workContext;
         }
 
         #region 合伙人详情
@@ -109,18 +112,21 @@ namespace Zerg.Controllers.CRM
                 {
                     if (partnerList != null)
                     {
-                        var entity = new PartnerListEntity
-                        {
-                            Agentlevel = "",
-                            Brokername = "",
-                            PartnerId = 0,
-                            Phone = partnerList.Phone,
-                            Regtime = DateTime.Now,
-                            Broker = null,
-                            Uptime = DateTime.Now,
-                            Addtime = DateTime.Now,
-                            Status = EnumPartnerType.默认
-                        };
+                        var entity = new PartnerListEntity();
+                        entity.PartnerId = list.Id;     //添加的下家
+                             entity.Phone = partnerList.Phone;
+                            //上家的属性
+                             entity.Agentlevel = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Level.Name;
+                             entity.Brokername = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Brokername;
+
+                             entity.Regtime = DateTime.Now;
+                             entity.Broker = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id);
+
+                             entity.Upuser = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Id;
+                             entity.Uptime = DateTime.Now;
+                             entity.Adduser = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Id;
+                             entity.Addtime = DateTime.Now;
+                             entity.Status = EnumPartnerType.默认;
 
                         try
                         {
@@ -152,33 +158,31 @@ namespace Zerg.Controllers.CRM
         {
             if (brokerId == 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
 
-            object list = null;
-
-          if(  _partnerlistService.GetInviteForBroker(brokerId).Where(p => p.Status == EnumPartnerType.默认).Count()>0)
+            if (_partnerlistService.GetInviteForBroker(_brokerService.GetBrokerByUserId(brokerId).Id,EnumPartnerType.默认).Count() > 0)
           {
-
-
-              list = _partnerlistService.GetInviteForBroker(brokerId).Where(p => p.Status == EnumPartnerType.默认).Select(a => new
+              var aa = _partnerlistService.GetInviteForBroker(_brokerService.GetBrokerByUserId(brokerId).Id, EnumPartnerType.默认).Select(a => new
               {
-                  a.Id,
-                  a.PartnerId,
-                  HeadPhoto = a.Broker.Headphoto,
-                  BrokerName = a.Broker.Brokername,
-                  AddTime = a.Addtime
-              }).ToList().Select(b => new
-              {
-                  b.Id,
-                  b.PartnerId,
-                  b.HeadPhoto,
-                  b.BrokerName,
-                  AddTime = b.AddTime.ToString("yyyy-MM-dd")
+                  a.Broker.Brokername
               });
+              //var list = _partnerlistService.GetInviteForBroker(_brokerService.GetBrokerByUserId(brokerId).Id,EnumPartnerType.默认).Select(a => new
+              //{
+              //    a.Id,
+              //    a.PartnerId,
+              //    HeadPhoto = a.Broker.Headphoto,
+              //    BrokerName = a.Broker.Brokername,
+              //    AddTime = a.Addtime
+              //}).ToList().Select(b => new
+              //{
+              //    b.Id,
+              //    b.PartnerId,
+              //    b.HeadPhoto,
+              //    b.BrokerName,
+              //    AddTime = b.AddTime.ToString("yyyy-MM-dd")
+              //});
 
-
+              return PageHelper.toJson(aa);
           }
-
-          
-            return PageHelper.toJson(list);
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "当前没有邀请"));
         }
 
         /// <summary>

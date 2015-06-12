@@ -251,11 +251,11 @@ namespace CRM.Service.PartnerList
 
 
 
-        public List<PartnerListEntity> GetInviteForBroker(int id)
+        public List<PartnerListEntity> GetInviteForBroker(int id,EnumPartnerType type)
         {
             try
             {
-                return _partnerlistRepository.Table.Where(p => p.PartnerId == id).ToList();
+                return _partnerlistRepository.Table.Where(p => p.PartnerId == id && p.Status==type).ToList();
             }
             catch (Exception e)
             {

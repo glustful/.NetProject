@@ -83,7 +83,7 @@ app  .run(
         .state('app.customerList',{
             url:'/customerList',
             templateUrl:'modules/customerList/view/customerList.html'
-       ,resolve:load('modules/customerList/controller/customerList.js')
+            ,resolve:load('modules/customerList/controller/customerList.js')
         })
         .state('app.detail',{
             url:'/detail',
@@ -289,7 +289,8 @@ app  .run(
         })
         .state('app.withdrawals',{
             url:'/withdrawals',
-            templateUrl:'modules/withdrawals/view/withdrawals.html'
+            templateUrl:'modules/withdrawals/view/withdrawals.html',
+            resolve:load('modules/myPurse/render/controller.js')
         })
         .state('app.withdrawalsDetail',{
             url:'/withdrawalsDetail',
@@ -298,6 +299,15 @@ app  .run(
         .state('app.NoviceTask',{
             url:'/NoviceTask',
             templateUrl:'modules/NoviceTask/view/NoviceTask.html'
+        })
+        .state('user.NoviceTask-login',{
+            url:'/NoviceTask-login',
+            templateUrl:'modules/NoviceTask-login/view/NoviceTask-login.html',
+            data:{title:'用户注册'}
+        }) .state('user.NoviceTask-loginEnd',{
+            url:'/NoviceTask-loginEnd',
+            templateUrl:'modules/NoviceTask-loginEnd/view/NoviceTask-loginEnd.html',
+            data:{title:'用户注册'}
         })
 
 
