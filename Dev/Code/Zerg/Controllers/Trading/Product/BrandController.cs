@@ -165,8 +165,8 @@ namespace Zerg.Controllers.Trading.Product
            {
                Page = page,
                PageCount = pageSize,
-
-
+               IsDescending = true,
+               OrderBy = EnumProductBrandSearchOrderBy.OrderById
 
            };
             var totalCount = _productBrandService.GetProductBrandCount(Brandcondition);
@@ -230,7 +230,9 @@ namespace Zerg.Controllers.Trading.Product
             {
                 Bname = condition,
                 Page = page,
-                PageCount = pageCount
+                PageCount = pageCount,
+                OrderBy = EnumProductBrandSearchOrderBy.OrderByAddtime,
+                IsDescending = true
             };
             var brandList = _productBrandService.GetProductBrandsByCondition(bcon).Select(a => new
             {
@@ -242,7 +244,20 @@ namespace Zerg.Controllers.Trading.Product
                 ProductPramater = a.ParameterEntities.Select(p => new { p.Parametername, p.Parametervaule })
             }).ToList();
             var count = _productBrandService.GetProductBrandCount(bcon);
-            return PageHelper.toJson(new {List=brandList,Count=count});
+            return PageHelper.toJson(new
+            {
+                List = brandList.Select(c => new
+                {
+                    c.Id,
+                    c.Bimg,
+                    c.Bname,
+                    c.SubTitle,
+                    c.Content,
+                    ProductParamater = c.ProductPramater.ToDictionary(k => k.Parametername, v => v.Parametervaule)
+                }),
+                Count = count
+            });
+            //return PageHelper.toJson(new {List=brandList,Count=count});
         }
 
         /// <summary>

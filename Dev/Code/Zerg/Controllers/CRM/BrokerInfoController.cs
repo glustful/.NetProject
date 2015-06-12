@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using YooPoon.Core.Data;
 using YooPoon.WebFramework.Authentication.Entity;
 using YooPoon.WebFramework.User;
 using YooPoon.WebFramework.User.Services;
@@ -39,6 +40,7 @@ namespace Zerg.Controllers.CRM
         private IClientInfoService _clientInfoService;//客户
         private readonly IRoleService _roleService;
         private readonly IMessageDetailService _MessageService;
+        private readonly IUserService _userService;
 
         public BrokerInfoController(IClientInfoService clientInfoService,
             IWorkContext workContext, 
@@ -46,7 +48,8 @@ namespace Zerg.Controllers.CRM
             IPartnerListService partnerlistService, 
             IRecommendAgentService recommendagentService,
             IRoleService roleService,
-            IMessageDetailService MessageService
+            IMessageDetailService MessageService,
+            IUserService userService
             )
         {
             _clientInfoService = clientInfoService;
@@ -56,6 +59,7 @@ namespace Zerg.Controllers.CRM
             _recommendagentService = recommendagentService;
             _roleService = roleService;
             _MessageService = MessageService; 
+            _userService = userService;
         }
 
 
@@ -214,7 +218,6 @@ namespace Zerg.Controllers.CRM
             {
                 var brokerModel = _brokerService.GetBrokerById(broker.Id);
                 brokerModel.Headphoto = broker.Headphoto;
-                brokerModel.Brokername = broker.Brokername;
                 brokerModel.Nickname = broker.Nickname;
                 brokerModel.Phone = broker.Phone;
                 brokerModel.Sfz = broker.Sfz;
@@ -224,41 +227,37 @@ namespace Zerg.Controllers.CRM
 
                 #region 转职经纪人 杨定鹏 2015年6月11日17:29:58
                 //填写身份证，邮箱，和真实姓名后就能转职经纪人
-                //if (string.IsNullOrEmpty(broker.Email) && string.IsNullOrEmpty(broker.Sfz) && string.IsNullOrEmpty(broker.Realname))
-                //{
-                //    //权限变更
-                //    var brokerRole = _roleService.GetRoleByName("user");
+                if (!string.IsNullOrEmpty(broker.Email) && !string.IsNullOrEmpty(broker.Sfz) &&
+                    !string.IsNullOrEmpty(broker.Realname))
+                {
+                    //权限变更
 
-                //    //User权限缺少时自动添加
-                //    if (brokerRole == null)
-                //    {
-                //        brokerRole = new Role
-                //        {
-                //            RoleName = "user",
-                //            RolePermissions = null,
-                //            Status = RoleStatus.Normal,
-                //            Description = "刚注册的用户默认归为普通用户user"
-                //        };
-                //    }
+                    var brokerRole = _roleService.GetRoleByName("broker");
 
-                //    var newUser = new UserBase
-                //    {
-                //        UserName = brokerModel.UserName,
-                //        Password = brokerModel.Password,
-                //        RegTime = DateTime.Now,
-                //        NormalizedName = brokerModel.UserName.ToLower(),
-                //        //注册用户添加权限
-                //        UserRoles = new List<UserRole>(){new UserRole()
-                //{
-                //    Role = brokerRole
-                //}},
-                //        Status = 0
-                //    };
+                    //User权限缺少时自动添加
+                    if (brokerRole == null)
+                    {
+                        brokerRole = new Role
+                        {
+                            RoleName = "broker",
+                            RolePermissions = null,
+                            Status = RoleStatus.Normal,
+                            Description = "user用户转职为broker"
+                        };
+                    }
 
-                //    PasswordHelper.SetPasswordHashed(newUser, brokerModel.Password);
-
-                //    brokerModel.Usertype=EnumUserType.经纪人;
-                //}
+                    var user = _userService.FindUser(brokerModel.UserId);
+                    user.UserRoles.First().Role = brokerRole;
+                    
+                    //更新用户权限
+                    if (_userService.ModifyUser(user))
+                    {
+                        //更新broker表记录
+                        brokerModel.Usertype = EnumUserType.经纪人;
+                        _brokerService.Update(brokerModel);
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                    }
+                }
 
                 #endregion
 

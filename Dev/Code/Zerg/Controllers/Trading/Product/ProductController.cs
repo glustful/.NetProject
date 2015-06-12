@@ -249,6 +249,7 @@ namespace Zerg.Controllers.Trading.Product
                     Price = a.Price,
                     SubTitle = a.SubTitle,
                     Phone = a.ContactPhone,
+                    Id = a.Id,
 
 
                     //Productimg1 = a.ProductDetail.Productimg1,

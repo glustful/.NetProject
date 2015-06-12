@@ -178,6 +178,22 @@ namespace Zerg.Models.CRM
             Cancel = -1,
             OK = 1
         }
+
+        public bool ValidateModel(out string msg)
+        {
+            msg = "";
+            if (string.IsNullOrEmpty(UserName))
+            {
+                msg = "用户名不能为空";
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password)) return false;
+            if (string.IsNullOrEmpty(SecondPassword)) return false;
+            if (string.IsNullOrEmpty(Phone)) return false;
+            if (string.IsNullOrEmpty(MobileYzm)) return false;
+            if (string.IsNullOrEmpty(Hidm)) return false;
+            return true;
+        }
     }
 
     /// <summary>
