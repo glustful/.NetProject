@@ -25,8 +25,6 @@ app.controller ('searchInviteController',['$http','$scope','$stateParams','AuthS
     $scope.currentuser= AuthService.CurrentUser();
     var getInvite = function(){
         $http.get(SETTING.ApiUrl + '/PartnerList/GetInviteForBroker?brokerId='+$scope.currentuser.UserId,{'withCredentials': true}).success(function (data) {
-            console.log(123);
-            console.log(data.Brokername);
          $scope.list=data.list;
         })
     };

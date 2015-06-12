@@ -158,29 +158,25 @@ namespace Zerg.Controllers.CRM
         {
             if (brokerId == 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
 
-            if (_partnerlistService.GetInviteForBroker(_brokerService.GetBrokerByUserId(brokerId).Id,EnumPartnerType.默认).Count() > 0)
+            if (_partnerlistService.GetInviteForBroker(_brokerService.GetBrokerByUserId(brokerId).Id,EnumPartnerType.默认).Any())
           {
-              var aa = _partnerlistService.GetInviteForBroker(_brokerService.GetBrokerByUserId(brokerId).Id, EnumPartnerType.默认).Select(a => new
+              var list = _partnerlistService.GetInviteForBroker(_brokerService.GetBrokerByUserId(brokerId).Id, EnumPartnerType.默认).Select(a=>new
               {
-                  a.Broker.Brokername
+                  a.Id,
+                  a.PartnerId,
+                  HeadPhoto = a.Broker.Headphoto,
+                  BrokerName = a.Broker.Brokername,
+                  AddTime = a.Addtime
+              }).ToList().Select(b=>new
+              {
+                  b.Id,
+                  b.PartnerId,
+                  b.HeadPhoto,
+                  b.BrokerName,
+                  AddTime = b.AddTime.ToString("yyy-mm-dd")
               });
-              //var list = _partnerlistService.GetInviteForBroker(_brokerService.GetBrokerByUserId(brokerId).Id,EnumPartnerType.默认).Select(a => new
-              //{
-              //    a.Id,
-              //    a.PartnerId,
-              //    HeadPhoto = a.Broker.Headphoto,
-              //    BrokerName = a.Broker.Brokername,
-              //    AddTime = a.Addtime
-              //}).ToList().Select(b => new
-              //{
-              //    b.Id,
-              //    b.PartnerId,
-              //    b.HeadPhoto,
-              //    b.BrokerName,
-              //    AddTime = b.AddTime.ToString("yyyy-MM-dd")
-              //});
 
-              return PageHelper.toJson(aa);
+              return PageHelper.toJson(list);
           }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "当前没有邀请"));
         }
