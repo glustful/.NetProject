@@ -285,8 +285,9 @@ namespace Zerg.Controllers.Trading.Product
 
             //return PageHelper.toJson(_productService.GetProductsByProductBrand(BrandId));
             return PageHelper.toJson(new { productList = productList, content = Content });
-        } 
-          [HttpGet]
+        }
+      
+         [HttpGet]
         public HttpResponseMessage GetSearchProduct([FromUri]ProductSearchCondition condtion)
         {
             var productList = _productService.GetProductsByCondition(condtion).Select(a => new ProductDetail
@@ -422,4 +423,5 @@ namespace Zerg.Controllers.Trading.Product
         }
         #endregion
     }
+   
 }
