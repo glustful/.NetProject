@@ -21,6 +21,7 @@ using YooPoon.Core.Site;
 using CRM.Service.PartnerList;
 using CRM.Service.RecommendAgent;
 using CRM.Service.ClientInfo;
+using CRM.Service.MessageDetail;
 
 namespace Zerg.Controllers.CRM
 {
@@ -38,6 +39,7 @@ namespace Zerg.Controllers.CRM
         private readonly IRecommendAgentService _recommendagentService; //推荐经纪人
         private IClientInfoService _clientInfoService;//客户
         private readonly IRoleService _roleService;
+        private readonly IMessageDetailService _MessageService;
         private readonly IUserService _userService;
 
         public BrokerInfoController(IClientInfoService clientInfoService,
@@ -46,6 +48,7 @@ namespace Zerg.Controllers.CRM
             IPartnerListService partnerlistService, 
             IRecommendAgentService recommendagentService,
             IRoleService roleService,
+            IMessageDetailService MessageService,
             IUserService userService
             )
         {
@@ -55,6 +58,7 @@ namespace Zerg.Controllers.CRM
             _partnerlistService = partnerlistService;
             _recommendagentService = recommendagentService;
             _roleService = roleService;
+            _MessageService = MessageService; 
             _userService = userService;
         }
 
@@ -398,7 +402,8 @@ namespace Zerg.Controllers.CRM
 
                      var partnerlistsearchcon = new PartnerListSearchCondition
                      {
-                          Brokers=broker
+                          Brokers=broker,
+                          //Status = EnumPartnerType.同意
                      };
                      partnerCount = _partnerlistService.GetPartnerListCount(partnerlistsearchcon);
 
@@ -489,6 +494,29 @@ namespace Zerg.Controllers.CRM
         #endregion
 
 
+        /// <summary>
+        /// 通过 邀请码获取发送者信息
+        /// </summary>
+        /// <param name="invitationCode"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage  GetBrokerByInvitationCode([FromBody] string invitationCode)
+        {
+            if(!string.IsNullOrEmpty(invitationCode))
+            {
+                MessageDetailSearchCondition messageSearchcondition=new MessageDetailSearchCondition{
+                      InvitationCode=invitationCode,
+                       Title="推荐经纪人"
+                };
+                var messageDetail = _MessageService.GetMessageDetailsByCondition(messageSearchcondition).FirstOrDefault();
+                if(messageDetail!=null)
+                {
+                    return PageHelper.toJson(new { invitationuserid=messageDetail.InvitationId });  
+                }
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));  
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));  
+        }
     }
 
 

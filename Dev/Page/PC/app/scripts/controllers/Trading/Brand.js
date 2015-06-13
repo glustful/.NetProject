@@ -1,30 +1,100 @@
 /**
  * Created by AddBean on 2015/5/10 0010.
  */
-app.controller('BrandController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
-    //初始化界面；
-    $scope.rowCollectionBasic = [];
-    $scope.rowCollectionParameter = [];
-    $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
-        $scope.rowCollectionBasic = data;
-    });
 
-    //下一页；
-    $scope.getAllBrand = function (pageIndex) {
-        $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
-            $scope.rowCollectionBasic = data;
-        });
-    };
+angular.module("app").controller('BrandListController', [
+    '$http','$scope',function($http,$scope) {
+        $scope.img=SETTING.ImgUrl;
+        $scope.searchCondition = {
+            page: 1,
+            pageSize: 10
+        };
 
-    //删除该项目；
-    $scope.delBrand = function (brandId) {
-        $http.get(SETTING.ApiUrl + '/Brand/DelBrandById?brandId=' + brandId,{'withCredentials':true}).success(function (data) {
-            $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
-                $scope.rowCollectionBasic = data;
+        //--------------------------------------------获取项目列表----------------------------------------------//
+        $scope.getList  = function() {
+            $http.get(SETTING.ApiUrl+'/Brand/GetAllBrand',{
+                params:$scope.searchCondition,
+                'withCredentials':true
+            }).success(function(data){
+                $scope.list = data.List;
+                $scope.searchCondition.page = data.Condition.Page;
+                $scope.searchCondition.pageSize = data.Condition.PageCount;
+                $scope.totalCount = data.totalCount;
             });
-            return $scope.output = data;
+        };
+        $scope.getList();
+
+        //---------------------------------------------删除单个项目----------------------------------------------//
+        $scope.delBrand  = function(brandId) {
+            $http.get(SETTING.ApiUrl + '/Brand/DelBrandById?brandId=' + brandId,{
+                'withCredentials':true
+            }).success(function(data){
+                alert(data);
+            });
+        };
+    }
+]);
+
+//----------------------------------------新增品牌----------------------------------------------//
+angular.module("app").controller('CreatBrandController', [
+    '$http', '$scope', '$state','FileUploader', function ($http, $scope, $state,FileUploader) {
+
+        //--------添加项目 start---------//
+        $scope.addBrand = function () {
+            var brand = {
+                Bname: $scope.brandName,
+                Bimg: $scope.imgUrl
+            };
+            var Json = JSON.stringify(brand);
+            $http.post(SETTING.ApiUrl + '/Brand/AddProductBrand', Json, {
+                'withCredentials': true
+            }).success(function (data) {
+                WindowClose();
+                $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
+                    $scope.rowCollectionBasic = data;
+                });
+                $scope.output = data;
+            });
+        };
+        //--------添加项目 end-----------//
+
+        //---------图片上传 start--------//
+        $scope.image="";
+        function completeHandler(e) {
+            $scope.image=("http://img.yoopoon.com/"  +e);
+        }
+
+        function errorHandler(e) {
+            // console.log(e);
+        }
+
+        var uploader = $scope.uploader = new FileUploader({
+            url: SETTING.ApiUrl+'/Resource/Upload',
+            'withCredentials':true
         });
-    };
+        uploader.onSuccessItem = function(fileItem, response, status, headers) {
+            console.info('onSuccessItem', fileItem, response, status, headers);
+            completeHandler(response.Msg);
+        };
+        //---------图片上传 end---------//
+    }
+]);
+
+
+app.controller('BrandController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
+//    //初始化界面；
+//    $scope.rowCollectionBasic = [];
+//    $scope.rowCollectionParameter = [];
+//    $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
+//        $scope.rowCollectionBasic = data;
+//    });
+//
+//    //下一页；
+//    $scope.getAllBrand = function (pageIndex) {
+//        $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
+//            $scope.rowCollectionBasic = data;
+//        });
+//    };
 
     //添加项目
     $scope.brandName = "";

@@ -117,7 +117,13 @@ namespace Zerg.Controllers.CRM
                         var entity = new PartnerListEntity();
                         entity.PartnerId = list.Id;     //添加的下家
                              entity.Phone = partnerList.Phone;
-                            //上家的属性
+
+                        if (list.Id == _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Id)
+                        {
+                            return PageHelper.toJson(PageHelper.ReturnValue(false, "不能添加自身！"));
+                        }
+
+                        //上家的属性
                              entity.Agentlevel = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Level.Name;
                              entity.Brokername = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Brokername;
 
