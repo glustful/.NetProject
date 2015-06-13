@@ -192,6 +192,22 @@ namespace Zerg.Controllers.Trading.Product
         }
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage GetBrandList()
+        {
+            ProductBrandSearchCondition Brandcondition = new ProductBrandSearchCondition
+            {               
+                IsDescending = true,
+                OrderBy = EnumProductBrandSearchOrderBy.OrderById
+            };         
+            var BrandList = _productBrandService.GetProductBrandsByCondition(Brandcondition).Select(a => new
+            {
+                a.Id,
+                a.Bname,                     
+            }).ToList();           
+            return PageHelper.toJson(BrandList);
+        }
+        [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetByBrandId(int BrandId)
         {
             var Brand = _productBrandService.GetProductBrandById(BrandId);

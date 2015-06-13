@@ -17,7 +17,7 @@ app  .run(
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
             $rootScope.$on('$stateChangeStart', function (event,next) {
-                if(next.name==='app.home' || next.name==='user.login' || next.name==='app.storeroom'||next.name==='user.register'||next.name==='user.PasswordFound'){
+                if(next.name==='app.home' || next.name==='user.login' || next.name==='app.storeroom'||next.name==='user.register'||next.name==='user.PasswordFound'||next.name==='app.invite'){
                     return;
                 }
                 if(!AuthService.IsAuthenticated()){
@@ -102,14 +102,14 @@ app  .run(
             url:'/person_setting',
             templateUrl:'modules/person_setting/view/person_setting.html',
             resolve:load('modules/person_setting/controller/personsettingController.js'),
-            access:['broker']
+            access:['broker','user']
         })
 
         .state('app.security_setting',{
             url:'/security_setting',
             templateUrl:'modules/security_setting/view/security_setting.html',
             resolve:load('modules/security_setting/controller/SecuritySetting.js'),
-            access:['broker']
+            access:['broker','user']
         })
         .state('app.zhongtian_HouseDetail',{
             url:'/zhongtian_HouseDetail',
@@ -222,7 +222,7 @@ app  .run(
         .state('app.nominate',{
             url:'/nominate',
             templateUrl:'modules/nominate/view/nominate.html',
-            resolve:load('modules///storeroom/scripts/StoreRoom.js')
+            resolve:load('modules/nominate/controller/nominate.js')
         })
         .state('app.carry_client',{
             url:'/carry_client?Projectid&name&type',
@@ -305,7 +305,8 @@ app  .run(
         })
          .state('app.invite',{
             url:'/invite',
-            templateUrl:'modules/invite/view/invite.html'
+            templateUrl:'modules/invite/view/invite.html',
+            resolve:load('modules/invite/controller/invitecontroller.js')
         })
 
 

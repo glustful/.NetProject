@@ -498,6 +498,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
+        [HttpPost]
         public HttpResponseMessage  GetBrokerByInvitationCode([FromBody] string invitationCode)
         {
             if(!string.IsNullOrEmpty(invitationCode))
