@@ -40,28 +40,30 @@ angular.module("app").controller('CreatBrandController', [
     '$http', '$scope', '$state','FileUploader', function ($http, $scope, $state,FileUploader) {
 
         //--------添加项目 start---------//
-        $scope.addBrand = function () {
-            var brand = {
-                Bname: $scope.brandName,
-                Bimg: $scope.imgUrl
-            };
-            var Json = JSON.stringify(brand);
-            $http.post(SETTING.ApiUrl + '/Brand/AddProductBrand', Json, {
-                'withCredentials': true
-            }).success(function (data) {
-                WindowClose();
-                $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
-                    $scope.rowCollectionBasic = data;
-                });
-                $scope.output = data;
-            });
+        $scope.BrandModel={
+            Bname:"",
+            Bimg:""
         };
+
+        $scope.Save = function(){
+            $scope.BrandModel.Bimg=$scope.image;
+            $http.post(SETTING.ApiUrl + '/Brand/AddProductBrand',$scope.BrandModel,{
+                'withCredentials':true
+            }).success(function(data){
+                if(data.Status){
+                    console.log(data);
+                }else{
+                    console.log("error");
+                }
+            });
+        }
         //--------添加项目 end-----------//
 
         //---------图片上传 start--------//
         $scope.image="";
+        $scope.SImg=SETTING.ImgUrl;
         function completeHandler(e) {
-            $scope.image=("http://img.yoopoon.com/"  +e);
+            $scope.image=(e);
         }
 
         function errorHandler(e) {
