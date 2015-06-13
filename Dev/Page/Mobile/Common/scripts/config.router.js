@@ -222,7 +222,7 @@ app  .run(
         .state('app.nominate',{
             url:'/nominate',
             templateUrl:'modules/nominate/view/nominate.html',
-            resolve:load('modules///storeroom/scripts/StoreRoom.js')
+            resolve:load('modules/nominate/controller/nominate.js')
         })
         .state('app.carry_client',{
             url:'/carry_client?Projectid&name&type',
