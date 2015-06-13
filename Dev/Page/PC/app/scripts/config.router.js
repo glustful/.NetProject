@@ -1300,8 +1300,17 @@ angular.module('app')
                 url: '/brand',
                 templateUrl: 'views/pages/Trading/product/brand.html',
                 data : { title: '品牌项目' },
-                resolve: load(['scripts/controllers/Trading/Brand.js','scripts/controllers/vectormap.js'])
+                controller: 'BrandListController',
+                resolve: load('scripts/controllers/Trading/Brand.js')
             })
+            .state('page.Trading.product.createbrand', {
+                url: '/createbrand',
+                templateUrl: 'views/pages/Trading/product/createbrand.html',
+                data : { title: '新建品牌' },
+                controller: 'CreatBrandController',
+                resolve: load(['scripts/controllers/Trading/Brand.js','angularFileUpload'])
+            })
+
             .state('page.Trading.product.brandParameter', {
                 url: '/brandParameter',
                 templateUrl: 'views/pages/Trading/product/brandParameter.html',

@@ -3,6 +3,7 @@
  */
 angular.module("app").controller('ProductController', [
     '$http','$scope',function($http,$scope) {
+        $scope.img=SETTING.ImgUrl;
         $scope.product = {
             tag: '2213412341235',
             page: 1,
