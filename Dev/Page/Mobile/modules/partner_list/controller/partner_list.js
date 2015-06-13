@@ -25,7 +25,11 @@ app.controller ('searchInviteController',['$http','$scope','$stateParams','AuthS
     $scope.currentuser= AuthService.CurrentUser();
     var getInvite = function(){
         $http.get(SETTING.ApiUrl + '/PartnerList/GetInviteForBroker?brokerId='+$scope.currentuser.UserId,{'withCredentials': true}).success(function (data) {
-         $scope.list=data.list;
+           console.log(data);
+
+                $scope.list=data.list;
+
+
         })
     };
     getInvite();
@@ -35,6 +39,7 @@ app.controller ('searchInviteController',['$http','$scope','$stateParams','AuthS
                 getInvite();
 
             }
+            else{alert(data.Status);}
         })
     };
     $scope.agreeAddPartner = agreeAdd;

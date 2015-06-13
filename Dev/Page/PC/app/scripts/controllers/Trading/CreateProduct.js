@@ -44,7 +44,7 @@ angular.module("app").controller('CreatProductController', [
 
         //选择品牌项目
         var brands = $scope.brands = {};
-        $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
+        $http.get(SETTING.ApiUrl + '/Brand/GetBrandList',{'withCredentials':true}).success(function (data) {
             brands.optionsData = data;
         });
         $scope.selectBrandChange = function () {

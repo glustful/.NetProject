@@ -117,22 +117,22 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns></returns>
         [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public string DelProduct(int productId)
+        public HttpResponseMessage DelProduct(int productId)
         {
             try
             {
                 ProductEntity PE = _productService.GetProductById(productId);
                 if (_productService.Delete(PE)) {
-                    return "删除商品成功";
+                    return PageHelper.toJson(PageHelper.ReturnValue(true,"数据删除成功"));
                 }
                 else {
-                    return "删除商品失败，该商品可能有关联项！";
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "删除商品失败，该商品可能有关联项！"));                  
                 }
                
             }
             catch (Exception e)
             {
-                return "删除商品失败";
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "删除商品失败"));             
             }
         }
         #endregion
@@ -145,10 +145,12 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns></returns>
         [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public HttpResponseMessage GetAllProduct()
+        public HttpResponseMessage GetAllProduct(int page=1,int pageSize=10)
         {
             ProductSearchCondition PSC = new ProductSearchCondition()
             {
+                Page = page,
+                PageCount = pageSize,
                 OrderBy = EnumProductSearchOrderBy.OrderById
             };
             var productList = _productService.GetProductsByCondition(PSC).Select(a => new ProductDetail
@@ -249,6 +251,7 @@ namespace Zerg.Controllers.Trading.Product
                     Price = a.Price,
                     SubTitle = a.SubTitle,
                     Phone = a.ContactPhone,
+                    Id = a.Id,
 
 
                     //Productimg1 = a.ProductDetail.Productimg1,
@@ -284,8 +287,9 @@ namespace Zerg.Controllers.Trading.Product
 
             //return PageHelper.toJson(_productService.GetProductsByProductBrand(BrandId));
             return PageHelper.toJson(new { productList = productList, content = Content });
-        } 
-          [HttpGet]
+        }
+      
+         [HttpGet]
         public HttpResponseMessage GetSearchProduct([FromUri]ProductSearchCondition condtion)
         {
             var productList = _productService.GetProductsByCondition(condtion).Select(a => new ProductDetail
@@ -421,4 +425,5 @@ namespace Zerg.Controllers.Trading.Product
         }
         #endregion
     }
+   
 }

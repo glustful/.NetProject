@@ -220,6 +220,22 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns></returns>
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage GetBrandList()
+        {
+            ProductBrandSearchCondition Brandcondition = new ProductBrandSearchCondition
+            {               
+                IsDescending = true,
+                OrderBy = EnumProductBrandSearchOrderBy.OrderById
+            };         
+            var BrandList = _productBrandService.GetProductBrandsByCondition(Brandcondition).Select(a => new
+            {
+                a.Id,
+                a.Bname,                     
+            }).ToList();           
+            return PageHelper.toJson(BrandList);
+        }
+        [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetByBrandId(int BrandId)
         {
             var Brand = _productBrandService.GetProductBrandById(BrandId);
@@ -258,7 +274,9 @@ namespace Zerg.Controllers.Trading.Product
             {
                 Bname = condition,
                 Page = page,
-                PageCount = pageCount
+                PageCount = pageCount,
+                OrderBy = EnumProductBrandSearchOrderBy.OrderByAddtime,
+                IsDescending = true
             };
             var brandList = _productBrandService.GetProductBrandsByCondition(bcon).Select(a => new
             {
@@ -270,7 +288,20 @@ namespace Zerg.Controllers.Trading.Product
                 ProductPramater = a.ParameterEntities.Select(p => new { p.Parametername, p.Parametervaule })
             }).ToList();
             var count = _productBrandService.GetProductBrandCount(bcon);
-            return PageHelper.toJson(new {List=brandList,Count=count});
+            return PageHelper.toJson(new
+            {
+                List = brandList.Select(c => new
+                {
+                    c.Id,
+                    c.Bimg,
+                    c.Bname,
+                    c.SubTitle,
+                    c.Content,
+                    ProductParamater = c.ProductPramater.ToDictionary(k => k.Parametername, v => v.Parametervaule)
+                }),
+                Count = count
+            });
+            //return PageHelper.toJson(new {List=brandList,Count=count});
         }
 
         /// <summary>

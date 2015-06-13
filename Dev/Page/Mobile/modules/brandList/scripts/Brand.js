@@ -4,6 +4,7 @@
 app.controller('BrandController',['$http','$scope','$stateParams','$timeout',function($http,$scope,$stateParams,$timeout){
         var condition = {
             condition:$stateParams.condition==undefined?'':$stateParams.condition,
+            //condition:$stateParams.condition,
             page:0,
             PageCount:10
         };
