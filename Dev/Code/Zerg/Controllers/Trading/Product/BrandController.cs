@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
@@ -12,6 +13,7 @@ using Trading.Service.ProductParameter;
 using Trading.Service.Classify;
 using Trading.Service.BrandParameter;
 using System.Web.Http;
+using YooPoon.Core.Site;
 using Zerg.Models.Trading.Product;
 using Zerg.Common;
 using System.Web.Http.Cors;
@@ -27,6 +29,7 @@ namespace Zerg.Controllers.Trading.Product
         private readonly IProductParameterService _productParameterService;
         private readonly IClassifyService _classifyService;
         private readonly IBrandParameterService _brandParameterService;
+        private readonly IWorkContext _workContext;
         /// <summary>
         /// 构造函数（操作函数注入）
         /// </summary>
@@ -36,7 +39,8 @@ namespace Zerg.Controllers.Trading.Product
             IProductDetailService productDetailService,
             IProductParameterService productParameterService,
             IClassifyService classifyService,
-            IBrandParameterService brandParameterService)
+            IBrandParameterService brandParameterService,
+            IWorkContext workContext)
         {
             _productService = productService;
             _productBrandService = productBrandService;
@@ -44,6 +48,7 @@ namespace Zerg.Controllers.Trading.Product
             _productParameterService = productParameterService;
             _classifyService = classifyService;
             _brandParameterService = brandParameterService;
+            _workContext = workContext;
         }
         #region 商品项目管理
         /// <summary>
@@ -52,26 +57,26 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="productBrandModel">品牌项目和数据模型</param>
         /// <returns>添加结果</returns>
         [System.Web.Http.HttpPost]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public string AddProductBrand([FromBody]ProductBrandModel productBrandModel)
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage AddProductBrand([FromBody]ProductBrandModel productBrandModel)
         {
             ProductBrandEntity PBE = new ProductBrandEntity()
             {
                 Addtime = DateTime.Now,
-                Adduser = productBrandModel.Adduser,
+                Adduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
                 Bimg = productBrandModel.Bimg,
                 Bname = productBrandModel.Bname,
                 Updtime = DateTime.Now,
-                Upduser = productBrandModel.Upduser,
+                Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture)
             };
             try
             {
                 _productBrandService.Create(PBE);
-                return "添加品牌项目" + PBE.Bname + "成功";
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功！"));
             }
             catch (Exception e)
             {
-                return "添加品牌项目" + PBE.Bname + "失败";
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "不能添加自身！"));
             }
         }
         /// <summary>
@@ -148,47 +153,86 @@ namespace Zerg.Controllers.Trading.Product
                  return "无法删除";
             }
         }
+
         /// <summary>
         /// 获取所有品牌；
         /// </summary>
-        /// <param name="pageindex"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage GetAllBrand(int page,int pageSize)
+        public HttpResponseMessage GetAllBrand(int page=1,int pageSize=10)
         {
-
-           // int pageSize = 6;
-
-             ProductBrandSearchCondition Brandcondition = new ProductBrandSearchCondition
-
-           {
-               Page = page,
-               PageCount = pageSize,
-               IsDescending = true,
-               OrderBy = EnumProductBrandSearchOrderBy.OrderById
-
-           };
-            var totalCount = _productBrandService.GetProductBrandCount(Brandcondition);
-
-            var BrandList = _productBrandService.GetProductBrandsByCondition(Brandcondition).Select(a => new
+             var sech = new ProductBrandSearchCondition
+             {
+                 Page = page,
+                 PageCount = pageSize,
+             };
+             var list = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
             {
                 a.Id,
                 a.Bimg,
                 a.Bname,
                 a.SubTitle,
                 a.Content,
-                ProductParamater = a.ParameterEntities.Select(p => new { p.Parametername, p.Parametervaule })
-            }).ToList();
-            return PageHelper.toJson(new { brandList = BrandList.Select(b => new { 
+                a.Addtime
+            }).ToList().Select(b=>new
+            {
                 b.Id,
                 b.Bimg,
                 b.Bname,
                 b.SubTitle,
                 b.Content,
-                ProductParamater=b.ProductParamater.ToDictionary(k=>k.Parametername,v=>v.Parametervaule)
-            }), totalCount = totalCount });
-            //return PageHelper.toJson(_productBrandService.GetProductBrandsByCondition(PBSC).ToList());
+                Addtime=b.Addtime.ToString("yyy-mm-dd")
+            });
+
+            var totalCount1 = _productBrandService.GetProductBrandCount(sech);
+
+            return PageHelper.toJson(new { List = list, Condition = sech, totalCount = totalCount1 });
+
+            //var totalCount = _productBrandService.GetProductBrandCount(Brandcondition);
+
+            //var BrandList = _productBrandService.GetProductBrandsByCondition(Brandcondition).Select(a => new
+            //{
+            //    a.Id,
+            //    a.Bimg,
+            //    a.Bname,
+            //    a.SubTitle,
+            //    a.Content,
+            //    ProductParamater = a.ParameterEntities.Select(p => new { p.Parametername, p.Parametervaule })
+            //}).ToList();
+            //return PageHelper.toJson(new { brandList = BrandList.Select(b => new { 
+            //    b.Id,
+            //    b.Bimg,
+            //    b.Bname,
+            //    b.SubTitle,
+            //    b.Content,
+            //    ProductParamater=b.ProductParamater.ToDictionary(k=>k.Parametername,v=>v.Parametervaule)
+            //}), totalCount = totalCount });
+            ////return PageHelper.toJson(_productBrandService.GetProductBrandsByCondition(PBSC).ToList());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="BrandId"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage GetBrandList()
+        {
+            ProductBrandSearchCondition Brandcondition = new ProductBrandSearchCondition
+            {               
+                IsDescending = true,
+                OrderBy = EnumProductBrandSearchOrderBy.OrderById
+            };         
+            var BrandList = _productBrandService.GetProductBrandsByCondition(Brandcondition).Select(a => new
+            {
+                a.Id,
+                a.Bname,                     
+            }).ToList();           
+            return PageHelper.toJson(BrandList);
         }
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
@@ -244,7 +288,20 @@ namespace Zerg.Controllers.Trading.Product
                 ProductPramater = a.ParameterEntities.Select(p => new { p.Parametername, p.Parametervaule })
             }).ToList();
             var count = _productBrandService.GetProductBrandCount(bcon);
-            return PageHelper.toJson(new {List=brandList,Count=count});
+            return PageHelper.toJson(new
+            {
+                List = brandList.Select(c => new
+                {
+                    c.Id,
+                    c.Bimg,
+                    c.Bname,
+                    c.SubTitle,
+                    c.Content,
+                    ProductParamater = c.ProductPramater.ToDictionary(k => k.Parametername, v => v.Parametervaule)
+                }),
+                Count = count
+            });
+            //return PageHelper.toJson(new {List=brandList,Count=count});
         }
 
         /// <summary>

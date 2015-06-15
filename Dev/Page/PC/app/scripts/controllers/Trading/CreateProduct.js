@@ -44,7 +44,7 @@ angular.module("app").controller('CreatProductController', [
 
         //选择品牌项目
         var brands = $scope.brands = {};
-        $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
+        $http.get(SETTING.ApiUrl + '/Brand/GetBrandList',{'withCredentials':true}).success(function (data) {
             brands.optionsData = data;
         });
         $scope.selectBrandChange = function () {
@@ -77,9 +77,9 @@ angular.module("app").controller('CreatProductController', [
                 Productimg2: $scope.Productimg2,// 商品附图2
                 Productimg3: $scope.Productimg3,// 商品附图3
                 Productimg4: $scope.Productimg4,// 商品附图4
-                Sericeinstruction: "售后说明",// 售后说明
-                Adduser: "UserId",
-                Upduser: "UserId"
+                Sericeinstruction: $scope.Sericeinstruction// 售后说明
+                //Adduser: "UserId",
+                //Upduser: "UserId"
             };
             if (
                 //product.ClassifyId == undefined ||
@@ -178,12 +178,18 @@ angular.module("app").controller('CreatProductController', [
         $scope.images = [];
         function completeHandler(e) {
 
-            $scope.images.push("http://img.yoopoon.com/"  +e);
+//            $scope.images.push("http://img.yoopoon.com/"  +e);
 //            $scope.Productimg = "http://img.yoopoon.com/" +  strs[0];
 //            $scope.Productimg1 = "http://img.yoopoon.com/" +  strs[1];
 //            $scope.Productimg2 = "http://img.yoopoon.com/" +  strs[2];
 //            $scope.Productimg3 = "http://img.yoopoon.com/" +  strs[3];
 //            $scope.Productimg4 = "http://img.yoopoon.com/" +  strs[4];
+            $scope.images.push(e);
+            $scope.Productimg =$scope.images[0];
+            $scope.Productimg1 =$scope.images[1];
+            $scope.Productimg2 =$scope.images[2];
+            $scope.Productimg3 =$scope.images[3];
+            $scope.Productimg4 =$scope.images[4];
 //
 //            $scope.imgUrl = "http://img.yoopoon.com/" + e.Msg;
         }

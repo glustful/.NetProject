@@ -38,8 +38,8 @@ app.controller('BrokerTopThreeController',['$scope','$http','AuthService','$stat
                     pages = data.totalCount / 6 ;
 
                     console.log(data);
-                    for (var i = 0; i <= data.brandList.length - 1; i++) {
-                        $scope.brandList.push(data.brandList[i]);
+                    for (var i = 0; i <= data.List.length - 1; i++) {
+                        $scope.brandList.push(data.List[i]);
                     }
                     loading = false;            //告知读取结束
                     $scope.tipp="加载更多"+"("+$scope.brandList.length+"/"+data.totalCount+")";
@@ -73,4 +73,9 @@ app.controller('BrokerTopThreeController',['$scope','$http','AuthService','$stat
             })
         });
 
+    //经纪人专区图片轮播
+    $scope.channelName='banner';
+    $http.get(SETTING.ApiUrl+'/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
+        $scope.content=data;
+    });
 }]);
