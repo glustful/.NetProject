@@ -27,9 +27,16 @@
 <fullyQualifiedTypeName name="com.example.logansquare.logansquare.annotation.JsonField"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.io.InputStream"/>
-<fullyQualifiedTypeName name="com.yoopoon.home.ui.home.FramHouseFragment"/>
 <fullyQualifiedTypeName name="com.yoopoon.home.data.json.ParserJSON"/>
 <fullyQualifiedTypeName name="com.yoopoon.home.data.json.ParserJSON.ParseListener"/>
 <fullyQualifiedTypeName name="com.example.logansquare.logansquare.LoganSquare"/>
+<fullyQualifiedTypeName name="com.bluelinelabs.logansquare.LoganSquare"/>
+<fullyQualifiedTypeName name="com.bluelinelabs.logansquare.annotation.JsonField"/>
+<fullyQualifiedTypeName name="com.bluelinelabs.logansquare.annotation.JsonObject"/>
+<fullyQualifiedTypeName name="java.lang.annotation.RetentionPolicy"/>
+<fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonProperty"/>
+<fullyQualifiedTypeName name="com.yoopoon.home.ui.home.FramHouseFragment"/>
+<fullyQualifiedTypeName name="com.yoopoon.home.data.json.Serializer.SerializeListener"/>
+<fullyQualifiedTypeName name="com.fasterxml.jackson.databind.ObjectMapper"/>
 <fullyQualifiedTypeName name="com.yoopoon.home.data.json.model.TestModel"/>
 </qualifiedTypeNameHistroy>

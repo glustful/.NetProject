@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<item value="D:\logansquare" key="org.eclipse.jdt.ui.lastextjar"/>
 	<section name="org.eclipse.ltk.ui.refactoring.settings">
 		<item value="false" key="renameSubpackages"/>
 		<item value="false" key="updateQualifiedNames"/>
@@ -48,7 +49,7 @@
 	</section>
 	<section name="NewClassWizardPage">
 		<item value="false" key="create_constructor"/>
-		<item value="false" key="create_main"/>
+		<item value="true" key="create_main"/>
 		<item value="true" key="create_unimplemented"/>
 	</section>
 	<section name="OptionalMessageDialog.hide.">
@@ -72,6 +73,13 @@
 			<item value="215" key="DIALOG_Y_ORIGIN"/>
 		</section>
 	</section>
+	<section name="DialogBounds_GenerateToStringDialog">
+		<item value="516" key="DIALOG_WIDTH"/>
+		<item value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI" key="DIALOG_FONT_NAME"/>
+		<item value="759" key="DIALOG_HEIGHT"/>
+		<item value="710" key="DIALOG_X_ORIGIN"/>
+		<item value="22" key="DIALOG_Y_ORIGIN"/>
+	</section>
 	<section name="org.eclipse.jdt.internal.ui.text.QuickOutline">
 		<item value="true" key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_USE_PERSISTED_SIZE"/>
 		<item value="550" key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_WIDTH"/>
@@ -87,6 +95,21 @@
 		<item value="false" key="expanded2"/>
 		<item value="false" key="expanded1"/>
 		<item value="true" key="expanded0"/>
+	</section>
+	<section name="SourceActionDialog.methods">
+		<item value="true" key="IgnoreDefault"/>
+		<item value="false" key="SynchronizedModifier"/>
+		<item value="false" key="Comments"/>
+		<item value="1" key="VisibilityModifier"/>
+		<item value="0" key="StringStyle"/>
+		<item value="0" key="ToStringTemplateSelected"/>
+		<item value="false" key="LimitElements"/>
+		<item value="false" key="SkipNull"/>
+		<item value="10" key="LimitValue"/>
+		<item value="false" key="FinalModifier"/>
+	</section>
+	<section name="ClasspathContainerSelectionPage">
+		<item value="3" key="index"/>
 	</section>
 	<section name="quick_assist_proposal_size">
 	</section>

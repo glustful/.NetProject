@@ -21,4 +21,6 @@
 		<item value="679" key="DIALOG_X_ORIGIN"/>
 		<item value="280" key="DIALOG_Y_ORIGIN"/>
 	</section>
+	<section name="ExternalProjectImportWizard">
+	</section>
 </section>
