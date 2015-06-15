@@ -9,6 +9,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Zerg.Common;
 using YooPoon.Core.Site;
+using YooPoon.WebFramework.User.Entity;
 
 namespace Zerg.Controllers.CRM
 {
@@ -107,52 +108,127 @@ namespace Zerg.Controllers.CRM
             {
                 Phone = partnerList.Phone
             };
-            var list = _brokerService.GetBrokersByCondition(sech).FirstOrDefault();
-            if (list != null)
-            {
-                if (list.PartnersId != 0)
-                {
-                    if (partnerList != null)
-                    {
-                        var entity = new PartnerListEntity();
-                        entity.PartnerId = list.Id;     //添加的下家
-                             entity.Phone = partnerList.Phone;
+              var user = (UserBase)_workContext.CurrentUser;
+              if (user != null)
+              {
+                  var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前用户
+                  if (broker != null)
+                  {
+                           var getbroker = _brokerService.GetBrokersByCondition(sech).FirstOrDefault();//通过手机号查询经纪人
+                           if (getbroker != null)
+                           {
+                               //判断是否是本身
+                               if (broker.Id==getbroker.Id)
+                               {
+                                   return PageHelper.toJson(PageHelper.ReturnValue(false, "对不起，不能添加本身"));
+                               }
+                               //判断要添加的这个经纪人是否有上家
+                               if (getbroker.PartnersId== null || getbroker.PartnersId==0)//查询他的上家是否存在
+                               {                                                                  
+                                   //1 添加到partnerList表中  
+                                                                   
+                                   var entity = new PartnerListEntity();
+                                   entity.PartnerId = getbroker.Id;     //添加的下家
+                                   entity.Brokername =getbroker.Brokername;
+                                   entity.Phone = getbroker.Phone;
+                                   entity.Agentlevel = getbroker.Level.Name;
+                                   entity.Regtime = getbroker.Regtime;
 
-                        if (list.Id == _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Id)
-                        {
-                            return PageHelper.toJson(PageHelper.ReturnValue(false, "不能添加自身！"));
-                        }
+                                   entity.Adduser = broker.Id;
+                                   entity.Addtime = DateTime.Now;
+                                   entity.Upuser = broker.Id;
+                                   entity.Uptime = DateTime.Now;                               
+                                   entity.Broker = broker;                                                               
+                                   entity.Status = EnumPartnerType.默认;
+                                   //判断当前用户的合伙人个数是否》=3
+                                   
+                                   PartnerListSearchCondition plsearCon=new PartnerListSearchCondition
+                                   {
+                                        Brokers=broker,
+                                        Status = EnumPartnerType.同意
+                                   };
+                                if( _partnerlistService.GetPartnerListCount(plsearCon)>=3)
+                                {
+                                    return   PageHelper.toJson(PageHelper.ReturnValue(true, "对不起，您的合伙人数已满 不能添加"));
+                                }
 
-                        //上家的属性
-                             entity.Agentlevel = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Level.Name;
-                             entity.Brokername = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Brokername;
+                                   if (_partnerlistService.Create(entity) != null)
+                                   {
+                                   
+                                         return PageHelper.toJson(PageHelper.ReturnValue(true, "邀请成功！等待对方同意"));                                  
+                                  
+                                   }else
+                                   {
+                                       return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新失败！请与客服联系"));   
+                                   }
+                                  
 
-                             entity.Regtime = DateTime.Now;
-                             entity.Broker = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id);
+                               }else
+                               {
+                                   return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户已经是别人的合伙人了！"));
 
-                             entity.Upuser = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Id;
-                             entity.Uptime = DateTime.Now;
-                             entity.Adduser = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Id;
-                             entity.Addtime = DateTime.Now;
-                             entity.Status = EnumPartnerType.默认;
+                               }
 
-                        try
-                        {
-                            if (_partnerlistService.Create(entity) != null)
-                            {
-                                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！等待对方同意"));
-                            }
-                        }
-                        catch
-                        {
-                            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
-                        }
-                    }
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
-                }
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户已经是别人的合伙人了！"));
-            }
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在"));
+
+                           }else
+                           {
+                               return PageHelper.toJson(PageHelper.ReturnValue(false, "该经纪人不存在"));
+                           }
+                  }
+              }
+              return PageHelper.toJson(PageHelper.ReturnValue(false, "对不起，请登录"));
+
+
+
+
+
+
+            //var list = _brokerService.GetBrokersByCondition(sech).FirstOrDefault();//通过手机号查询经纪人
+            //if (list != null)
+            //{
+            //    if (list.PartnersId != 0)//查询他的上家是否存在
+            //    {
+            //        if (partnerList != null)
+            //        {
+            //            var entity = new PartnerListEntity();
+            //            entity.PartnerId = list.Id;     //添加的下家
+            //            entity.Phone = partnerList.Phone;
+
+            //            if (list.Id == _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Id)
+            //            {
+            //                return PageHelper.toJson(PageHelper.ReturnValue(false, "不能添加自身！"));
+            //            }
+
+            //            //上家的属性
+            //                 entity.Agentlevel = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Level.Name;
+            //                 entity.Brokername = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Brokername;
+
+            //                 entity.Regtime = DateTime.Now;
+            //                 entity.Broker = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id);
+
+            //                 entity.Upuser = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Id;
+            //                 entity.Uptime = DateTime.Now;
+            //                 entity.Adduser = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Id;
+            //                 entity.Addtime = DateTime.Now;
+            //                 entity.Status = EnumPartnerType.默认;
+
+            //            try
+            //            {
+            //                if (_partnerlistService.Create(entity) != null)
+            //                {
+            //                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！等待对方同意"));
+            //                }
+            //            }
+            //            catch
+            //            {
+            //                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+            //            }
+            //        }
+            //        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
+            //    }
+            //    return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户已经是别人的合伙人了！"));
+            //}
+            //return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在"));
 
 
         }
@@ -202,9 +278,51 @@ namespace Zerg.Controllers.CRM
 
             var model = _partnerlistService.GetPartnerListById(id);
             model.Status = status;
-            _partnerlistService.Update(model);
+           if(status==EnumPartnerType.拒绝)
+           {
+               _partnerlistService.Update(model);
+               return   PageHelper.toJson(PageHelper.ReturnValue(true, "拒绝成功！"));
+           }
 
-            return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));
+           else
+           {
+
+
+
+             var user = (UserBase)_workContext.CurrentUser;
+             if (user != null)
+             {
+                 var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前用户
+                 if (broker != null)
+                 {
+                       //判断要添加的这个经纪人是否有上家
+                     if (broker.PartnersId == null || broker.PartnersId == 0)//查询他的上家是否存在
+                     {
+
+                         // 更改状态为同意 1 ，  
+                         if (_partnerlistService.Update(model) != null)
+                         {
+                             //2更新 当前要添加的这个经纪人的PartnersId字段为当前用户
+                             broker.PartnersId = model.Broker.Id;
+                             broker.PartnersName = model.Broker.Brokername;
+                             if (_brokerService.Update(broker) != null)
+                             {
+                                 return PageHelper.toJson(PageHelper.ReturnValue(true, "邀请成功！"));
+                             }
+
+                         }
+                     }
+                     else
+                     {
+                         return PageHelper.toJson(PageHelper.ReturnValue(false, "对不起,您已经是别人的合伙人了！"));
+                     }
+
+                 }
+             }
+             return PageHelper.toJson(PageHelper.ReturnValue(false, "对不起，请先登录"));
+
+           }
+           return PageHelper.toJson(PageHelper.ReturnValue(false, "对不起，数据错误"));
         }
 
 

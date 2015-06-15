@@ -123,14 +123,15 @@ ul li{
 .others .othersInformation li span button{
     height: 40px;
     width: 80px;
+    line-height: 40px;
     margin-right: 20px;
     border-radius: 5px;
     color: #fff;
     font-size: 1em;
     background-color:#fc3b00;
 }
-.others .othersInformation li span .agree{
-
+.add_content .warm{
+    color: #f14800;
 }
 /* 遮罩 */
 .masked .request{

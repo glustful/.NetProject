@@ -175,6 +175,7 @@
 .partake .Consultation{
     width: 260px;
     height: 83px;
+    line-height: 83px;
     background-color: #46a1e8;
     top:18px;
     left: 18px;

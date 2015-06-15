@@ -35,11 +35,12 @@ app.controller ('searchInviteController',['$http','$scope','$stateParams','AuthS
     getInvite();
     var agreeAdd = function(status,id){
         $http.get(SETTING.ApiUrl + '/PartnerList/SetPartner?status='+status+"&id="+id, {'withCredentials': true}).success(function (data) {
+
             if(data.Status){
                 getInvite();
-
+                $scope.warming=data.Msg;
             }
-            else{alert(data.Status);}
+
         })
     };
     $scope.agreeAddPartner = agreeAdd;
