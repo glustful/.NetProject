@@ -99,10 +99,10 @@ namespace Zerg.Controllers.CRM
                 var entity = new RecommendAgentEntity
                 {
                     PresenteebId=recommendAgent.PresenteebId,
-                     Qq=0,
+                     Qq="",
                     Agentlevel = "",
                     Brokername = "",
-                    Phone = 0,
+                    Phone ="",
                     Regtime = DateTime.Now,
                     Broker = null,
                     Uptime = DateTime.Now,
@@ -129,15 +129,6 @@ namespace Zerg.Controllers.CRM
 
         #endregion
 
-       [HttpPost]
-        public HttpResponseMessage SendRecommendAgentSms([FromBody] string phone)
-        {
-           if (!string.IsNullOrEmpty(phone))
-           {
-              
-           }
-           var p = SMSHelper.Sending(phone, "你好，感谢你使用创富宝软件！发送时间是：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-           return PageHelper.toJson(p);
-        }
+      
     }
 }
