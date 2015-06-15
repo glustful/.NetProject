@@ -1,15 +1,15 @@
 <!--首页-->
 <!--required:../static/style/index.css-->
 <div ng-controller="homeController">
-<div class="pic" >
-<div class="slider" >
+
+<div id="carousel-bg" >
     <carousel interval="3000">
         <slide ng-repeat="slide in content" active="slide.active">
-            <img src="http://img.yoopoon.com/{{slide.TitleImg}}" class="img-full">
+            <img src="http://img.yoopoon.com/{{slide.TitleImg}}" class="img-full" alt="成为经济人轻松赚大钱" width="640" height="230" />
         </slide>
     </carousel>
  </div>
-</div>
+
     <!--<ul>-->
         <!--<li ng-repeat="item in content"><a href="#" ><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
         <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-2.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->

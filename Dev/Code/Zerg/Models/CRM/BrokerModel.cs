@@ -159,6 +159,15 @@ namespace Zerg.Models.CRM
         /// 验证码密文
         /// </summary>
         public virtual string Hidm { get; set; }
+
+        /// <summary>
+        /// 邀请码
+        /// </summary>
+        public virtual string inviteCode { get; set; }
+      
+
+
+
         /// <summary>
         /// 确认密码
         /// </summary>
@@ -171,7 +180,7 @@ namespace Zerg.Models.CRM
 
         /// <summary>
         /// 用户状态 （删除0 注销-1 正常1）
-        /// </summary>
+        /// </summary>    
         public enum EnumUserState
         {
             Delete = 0,

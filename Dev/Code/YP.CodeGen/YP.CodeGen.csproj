@@ -110,6 +110,12 @@
       <DependentUpon>ConditionTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="Templates\ConditionTemplatePartial.cs" />
+    <Compile Include="Templates\ControllerTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControllerTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\ControllerTemplatePartial.cs" />
     <Compile Include="Templates\EnumTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -140,6 +146,12 @@
       <DependentUpon>ServiceTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="Templates\ServiceTemplatePartial.cs" />
+    <Compile Include="Templates\ViewModelTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewModelTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\ViewModelTemplatePartial.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -150,6 +162,10 @@
     <None Include="Templates\ConditionTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ConditionTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="Templates\ControllerTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ControllerTemplate1.cs</LastGenOutput>
     </None>
     <None Include="Templates\EnumTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -170,6 +186,10 @@
     <None Include="Templates\ServiceTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ServiceTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="Templates\ViewModelTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ViewModelTemplate.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

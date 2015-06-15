@@ -57,8 +57,8 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="productBrandModel">品牌项目和数据模型</param>
         /// <returns>添加结果</returns>
         [System.Web.Http.HttpPost]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public string AddProductBrand([FromBody]ProductBrandModel productBrandModel)
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage AddProductBrand([FromBody]ProductBrandModel productBrandModel)
         {
             ProductBrandEntity PBE = new ProductBrandEntity()
             {
@@ -72,11 +72,11 @@ namespace Zerg.Controllers.Trading.Product
             try
             {
                 _productBrandService.Create(PBE);
-                return "添加品牌项目" + PBE.Bname + "成功";
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功！"));
             }
             catch (Exception e)
             {
-                return "添加品牌项目" + PBE.Bname + "失败";
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "不能添加自身！"));
             }
         }
         /// <summary>

@@ -54,7 +54,7 @@ app  .run(
             data:{title:'用户登录'}
         })
         .state('user.register',{
-            url:'/register',
+            url:'/register?yqm',
             templateUrl:'modules/Register/view/register.html',
             resolve:load('modules/Register/controller/RegisterController.js'),
             data:{title:'用户注册'}
@@ -102,14 +102,14 @@ app  .run(
             url:'/person_setting',
             templateUrl:'modules/person_setting/view/person_setting.html',
             resolve:load('modules/person_setting/controller/personsettingController.js'),
-            access:['broker','user']
+            access:['Broker','user']
         })
 
         .state('app.security_setting',{
             url:'/security_setting',
             templateUrl:'modules/security_setting/view/security_setting.html',
             resolve:load('modules/security_setting/controller/SecuritySetting.js'),
-            access:['broker','user']
+            access:['Broker','user']
         })
         .state('app.zhongtian_HouseDetail',{
             url:'/zhongtian_HouseDetail',

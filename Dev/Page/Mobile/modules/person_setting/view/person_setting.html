@@ -7,7 +7,7 @@
 	                       <img src="{{olduser.Headphoto}}" id="imghead">
 	                   </div>
 	                   <span class="input-file">
-	                   	<a id="Uptext">修改头像</a>
+	                   	<a id="Uptext">头像设置</a>
 	                   	<input name="fileToUpload" type="file" onchange="previewImage(this)"/>
 	                   </span>
 	               </div>
@@ -19,8 +19,8 @@
                        <input type="text" class="password old" placeholder="姓名" name="information_name" ng-model="olduser.Realname" ng-pattern="/^[\u4e00-\u9fa5]+$/" required/><br/>
                        <div class="information_error" ng-show="information_form.information_name.$invalid&&information_form.information_name.$dirty">请正确输入姓名</div>
                        <p> 性别</p>
-                       <select name="sexy"  class="sexy" ng-model="olduser.Sexy">
-                           <option value="先生" selected="selected">先生</option>
+                       <select name="sexy"  class="sexy" ng-model="olduser.Sexy" >
+                           <option value="先生">先生</option>
                            <option value="女士">女士</option>
                        </select>
                        <p> 电话</p>
@@ -30,7 +30,7 @@
                        <div class="information_error" ng-show="information_form.information_sfz.$invalid&&information_form.information_sfz.$dirty">请正确输入身份证号码</div>
                        <p> 邮箱</p>
                        <input type="email" class="password old" placeholder="用户邮箱" name="information_mail" ng-model="olduser.Email" /><br/>
-                       <!--<div class="information_error" ng-show="information_form.information_mail.$error&&information_form.information_mail.$dirty">请正确输入邮箱</div>-->
+                       <div class="information_error" ng-show="information_form.information_mail.$error.email&&information_form.information_mail.$dirty">请正确输入邮箱</div>
                        <button class="save_button" type="submit" ng-diabled="information_form.$invalid">保存</button>
                    </form>
                </div>

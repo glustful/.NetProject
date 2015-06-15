@@ -4,7 +4,8 @@
     margin-top: 25px;
 }
 .form_register{
-    margin: 52px 58px 0 58px;
+    padding: 52px 58px 0 58px;
+    font-family: "microsoft yahei";
 }
 .form_content .register_input{
     width: 514px;
@@ -74,6 +75,8 @@
 }
 .error_out{
     color: #fc3b00;
+    font-size: 20px;
+    font-family: "microsoft yahei";
 }
 
 

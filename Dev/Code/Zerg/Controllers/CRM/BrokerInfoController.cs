@@ -495,7 +495,7 @@ namespace Zerg.Controllers.CRM
 
 
         /// <summary>
-        /// 通过 邀请码获取发送者信息
+        /// 通过 邀请码获取发送者信息 (UserController注册也同一判断)
         /// </summary>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
@@ -511,7 +511,7 @@ namespace Zerg.Controllers.CRM
                 var messageDetail = _MessageService.GetMessageDetailsByCondition(messageSearchcondition).FirstOrDefault();
                 if(messageDetail!=null)
                 {
-                    return PageHelper.toJson(new { invitationuserid=messageDetail.InvitationId });  
+                    return PageHelper.toJson(new { invitationCode =invitationCode });  
                 }
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));  
             }
