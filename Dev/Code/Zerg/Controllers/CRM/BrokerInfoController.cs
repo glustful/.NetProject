@@ -510,7 +510,7 @@ namespace Zerg.Controllers.CRM
                 var messageDetail = _MessageService.GetMessageDetailsByCondition(messageSearchcondition).FirstOrDefault();
                 if(messageDetail!=null)
                 {
-                    return PageHelper.toJson(new { invitationuserid=messageDetail.InvitationId });  
+                    return PageHelper.toJson(new { invitationCode =invitationCode });  
                 }
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));  
             }
