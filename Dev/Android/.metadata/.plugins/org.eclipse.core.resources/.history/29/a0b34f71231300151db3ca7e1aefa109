@@ -1,0 +1,87 @@
+package com.yoopoon.home.ui.home;
+
+import java.io.IOException;
+
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.EFragment;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yoopoon.home.R;
+import com.yoopoon.home.data.json.ParserJSON;
+import com.yoopoon.home.data.json.ParserJSON.ParseListener;
+import com.yoopoon.home.data.json.SerializerJSON;
+import com.yoopoon.home.data.json.SerializerJSON.SerializeListener;
+import com.yoopoon.home.data.json.model.TestModel;
+
+@EFragment(R.layout.home_fram_house_fragment)
+public class FramHouseFragment extends FramSuper{
+	public static FramHouseFragment instance = null;
+
+
+@AfterInject
+void afterInject(){
+	instance = this;
+	final TestModel tm = new TestModel(1, "zhangsan", "class");
+	final String json = "{\"id\":2,\"name\":\"456\",\"content-Type\":\"json\"}";
+	new ParserJSON(new ParseListener() {
+		
+		@Override
+		public Object onParse() {
+			
+				ObjectMapper om = new ObjectMapper();
+				try {
+					return om.readValue(json, TestModel.class);
+				} catch (JsonParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (JsonMappingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			return null;
+		}
+		
+		@Override
+		public void onComplete(Object parseResult) {
+			System.out.println("result="+parseResult);
+			
+		}
+	}).execute();
+	new SerializerJSON(new SerializeListener(){
+
+		@Override
+		public void onComplete(String serializeResult) {
+			
+			System.out.println("serializer="+serializeResult);
+		}
+
+		@Override
+		public String onSerialize() {
+			ObjectMapper om = new ObjectMapper();
+			try {
+				return om.writeValueAsString(tm);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+	}).execute();
+}
+
+
+@Override
+public String getTitle() {
+	// TODO Auto-generated method stub
+	return "房源库";
+}
+
+
+}

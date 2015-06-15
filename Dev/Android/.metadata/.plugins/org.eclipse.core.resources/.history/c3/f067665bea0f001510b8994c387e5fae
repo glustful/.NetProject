@@ -1,0 +1,75 @@
+package com.yoopoon.home.ui.home;
+
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
+import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.text.format.DateUtils;
+import android.widget.ListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yoopoon.home.R;
+
+@EFragment(R.layout.home_fram_active_fragment)
+public class FramActiveFragment extends FramSuper {
+
+	static String TAG = "FramActivityFragment";
+
+	ListView refreshView;
+	Context mContext;
+	public static FramActiveFragment instance;
+
+	@ViewById(R.id.matter_list_view)
+	PullToRefreshListView listView;
+
+	@AfterInject
+	void afterInject() {
+		instance = this;
+
+	}
+
+	public static FramActiveFragment getInstance() {
+		return instance;
+	}
+
+	@AfterViews
+	void afterViews() {
+		mContext = getActivity();
+
+		initViews();
+	}
+
+	void initViews() {
+
+		listView.setOnRefreshListener(new HowWillIrefresh());
+		listView.setMode(PullToRefreshBase.Mode.BOTH);
+		refreshView = listView.getRefreshableView();
+
+		refreshView.setFastScrollEnabled(false);
+		refreshView.setFadingEdgeLength(0);
+
+	}
+
+	class HowWillIrefresh implements
+			PullToRefreshBase.OnRefreshListener2<ListView> {
+
+		@Override
+		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+			String label = DateUtils.formatDateTime(getActivity(),
+					System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME
+							| DateUtils.FORMAT_SHOW_DATE
+							| DateUtils.FORMAT_ABBREV_ALL);
+			refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+
+		}
+
+		@Override
+		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+
+		}
+
+	}
+
+}

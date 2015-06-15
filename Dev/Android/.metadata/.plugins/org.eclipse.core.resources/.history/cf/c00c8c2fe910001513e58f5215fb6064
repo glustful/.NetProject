@@ -1,0 +1,32 @@
+package com.yoopoon.home.data.json;
+
+import android.os.AsyncTask;
+
+public class ParserJSON extends AsyncTask<Void, Void, Boolean> {
+
+    public interface ParseListener {
+        public void onComplete(Boolean parseResult);
+        public boolean onParse();
+    }
+
+    private final ParseListener mParseListener;
+  
+
+    public ParserJSON(ParseListener parseListener) {
+        mParseListener = parseListener;
+        
+    }
+
+    @Override
+    protected Boolean doInBackground(Void... params) {
+        
+
+        return mParseListener.onParse();
+    }
+
+    @Override
+    protected void onPostExecute(Boolean parseResult) {
+        mParseListener.onComplete(parseResult);
+    }
+
+}

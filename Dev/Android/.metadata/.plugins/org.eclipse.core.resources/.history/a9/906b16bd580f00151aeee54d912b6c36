@@ -1,0 +1,108 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+	<dimen name="head_size_small">30dp</dimen>
+	<dimen name="head_size_large">50dp</dimen>
+    <!-- h-54px -->
+    <dimen name="icon_size_small">36dp</dimen>
+    <!-- h-60px -->
+    <dimen name="icon_size_normal">40dp</dimen>
+    <!-- h-72px -->
+    <dimen name="icon_size_bigger">48dp</dimen>
+    <!-- h-96px -->
+    <dimen name="icon_size_biggest">64dp</dimen>
+    
+    <!-- h-18px -->
+    <dimen name="spacing_horizontal">12dp</dimen>
+    <!-- h-12px -->
+    <dimen name="spacing_vertical">8dp</dimen>
+    
+    <!-- h-12px -->
+    <dimen name="spacing_horizontal_small">8dp</dimen>
+    <!-- h-8px -->
+    <dimen name="spacing_vertical_small">6dp</dimen>
+    
+    <dimen name="list_item_contact_select_h">48dp</dimen>
+    
+    <!-- h- 48px 32px -->
+    <dimen name="grid_item_biaoqing_size">24dp</dimen>
+    
+    <!-- h-36px -->
+    <dimen name="divider_bar_h">24dp</dimen>
+    
+    <dimen name="divider_line_small_h">1px</dimen>
+    
+    <dimen name="divider_line_big_h">1dp</dimen>
+    
+    <!-- h-80px -->
+    <dimen name="main_tab_h">53.333dp</dimen>
+    
+    <!-- h-72px -->
+    <dimen name="btn_green_h">48dp</dimen>
+    
+    <!-- h-72px -->
+    <dimen name="item_h">48dp</dimen>
+    
+     <dimen name="rcd_size">185dp</dimen>
+    
+    <!-- h-51px -->
+    <dimen name="rcd_cancel_bg_h">34dp</dimen>
+    
+    <dimen name="chat_item_img_from_iv_maxSize">160dp</dimen>
+    <dimen name="chat_item_img_to_iv_maxSize">120dp</dimen>
+    
+    <dimen name="iv_resend_size">20dp</dimen>
+    
+    <dimen name="textSizeChat">15sp</dimen>
+      <!--miicaa-->
+
+    <color name="normal_button_press">#017258</color>
+    <color name="item_line_color_press">#CACACA</color>
+    <color name="item_normal_color">@android:color/transparent</color>
+    <color name="item_white_color">@android:color/white</color>
+    <color name="item_gray_color">#F8F8F7</color>
+    <color name="item_press_color">#999999</color>
+    <color name="item_text_normal_color">#333333</color>
+    <color name="item_text_press_color">#999999</color>
+    <dimen name="slidingmenu_width">40dp</dimen>
+    <dimen name="slidingmenu_offset">280dp</dimen>  
+    <dimen name="shadow_width">15dp</dimen>  
+    <dimen name="plantext_size">15dp</dimen>
+    <dimen name="framText">20dp</dimen>
+    <dimen name="screen_text_size">15dp</dimen>
+    <dimen name="do_text_size">18dp</dimen>
+    <dimen  name="time_size">10dp</dimen>
+    <dimen name="narmal_left">10dp</dimen>
+    <dimen name="normal_top">5dp</dimen>
+    <dimen name="tabText">15dp</dimen>
+    <dimen name="tabTextSelect">20dp</dimen>
+    <dimen name="labelW">13dp</dimen>
+    <dimen name="headHight">50dp</dimen>
+    <dimen name="labelH">3dp</dimen>
+    <dimen name="nameTextsize">17dp</dimen>
+    <dimen name="contentTextSize">15dp</dimen>
+    <dimen name="paddingleft">15dp</dimen>
+    <dimen name="paddingright">10dp</dimen>
+    <dimen name="discovertitle">12dp</dimen>
+    <dimen name="discoverchild">16dp</dimen>
+    <dimen name="timesize">12sp</dimen>
+    <dimen name="screenVitarlSpacing">10dp</dimen>
+    <dimen name="payPadding">10dp</dimen>
+    <dimen name="payPaddinghalf">5dp</dimen>
+    <dimen name="bigsize">14sp</dimen>
+    <dimen name="middlesize">12sp</dimen>
+    <dimen name="smallsize">10sp</dimen>
+    <dimen name="tongji_item_height">40dp</dimen>
+    <dimen name="toast_height">100dp</dimen>
+    <dimen name="search_text_size">14dp</dimen>
+    <dimen name="normal_little_head">30dp</dimen>
+    <dimen name="normal_large_head">50dp</dimen>
+    <dimen name="check_name_size">17dp</dimen>
+    <dimen name="matter_editor_textsize">16dp</dimen>
+    <dimen name="picture_button_size">50dp</dimen>
+     <dimen name="main_tab_bageSize">10dp</dimen>
+     <dimen name="login_view_height">30dp</dimen>
+     <dimen name="login_view_textSize">15sp</dimen>
+</resources>

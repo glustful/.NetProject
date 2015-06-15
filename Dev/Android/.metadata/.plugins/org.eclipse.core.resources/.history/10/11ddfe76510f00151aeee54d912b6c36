@@ -1,0 +1,528 @@
+package com.miicaa.home.ui.home;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.Touch;
+import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.text.format.DateUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.miicaa.common.base.BottomScreenPopup;
+import com.miicaa.common.base.MatterRequest;
+import com.miicaa.common.base.MatterRequest.MatterHomeCallBackListener;
+import com.miicaa.common.base.OnMessageListener;
+import com.miicaa.common.base.PopupItem;
+import com.miicaa.common.base.SearchFunction;
+import com.miicaa.common.base.SearchFunction.OnSearchCallBack;
+import com.miicaa.common.base.Utils;
+import com.miicaa.home.R;
+import com.miicaa.home.data.net.ResponseData;
+import com.miicaa.home.data.net.ResponseData.ResultState;
+import com.miicaa.home.ui.home.MatterScreenView.RemoveScreenTypeListener;
+import com.miicaa.home.ui.matter.MatterBuilder;
+import com.miicaa.home.ui.menu.ScreenType;
+import com.miicaa.utils.AllUtils;
+@EFragment(R.layout.home_fram_matter_fragment)
+public class FramMatterFragment extends Fragment{
+	
+	static String TAG = "FramMatterFragment";
+	
+	ListView refreshView;
+	Context mContext;
+	public static FramMatterFragment instance;
+	public ProgressDialog progressDialog;
+	HashMap<String,String> codeMap;//筛选条件参数
+	ProgressState state;
+	SearchFunction searchFunction;
+	@ViewById(R.id.headView)
+	RelativeLayout headView;
+
+	ImageButton screenView;
+	
+	RelativeLayout serchLayout;
+	@ViewById(R.id.matter_list_view)
+	PullToRefreshListView listView;
+	@ViewById(R.id.matterScreenView)
+	MatterScreenView matterScreenView;
+	
+	@AfterInject
+	void afterInject(){
+		instance = this;
+		codeMap = new HashMap<String, String>();
+		progressDialog = new ProgressDialog(getActivity());
+		state = ProgressState.eManual;
+		progressDialog.setTitle("miicaa");
+		progressDialog.setCanceledOnTouchOutside(false);
+		/*
+		 * 初始化请求参数
+		 */
+		initParams();
+		showRefresh();
+//		requestFirst();
+	}
+    public static FramMatterFragment getInstance(){
+    	return instance;
+    }
+    
+	void createButtonClick(){
+		 ArrayList<com.miicaa.common.base.PopupItem> items = new ArrayList<PopupItem>();
+         items.add(new PopupItem("任务","arrangement"));
+         items.add(new PopupItem("审批", "approval"));
+         items.add(new PopupItem("取消","cancel"));
+         BottomScreenPopup.builder(getActivity())
+                 .setItems(items)
+                 .setDrawable(R.drawable.white_color_selector)
+				
+				.setMargin(false)
+                 .setOnMessageListener(new OnMessageListener() {
+                     @Override
+                     public void onClick(PopupItem msg) {
+                         if (msg.mCode.equals("arrangement")) {
+                             Intent intent = new Intent(getActivity(), MatterBuilder.class);
+                             Bundle bundle = new Bundle();
+                             bundle.putString("dataType","1");
+                             intent.putExtra("bundle",bundle);
+                             getActivity().startActivity(intent);
+                             ((Activity) getActivity()).overridePendingTransition(R.anim.my_slide_in_right, R.anim.my_slide_out_left);
+                         } else if (msg.mCode.equals("approval")) {
+                             Intent intent = new Intent(getActivity(), MatterBuilder.class);
+                             Bundle bundle = new Bundle();
+                             bundle.putString("dataType","2");
+                             intent.putExtra("bundle",bundle);
+                             getActivity().startActivity(intent);
+                             ((Activity	) getActivity()).overridePendingTransition(R.anim.my_slide_in_right, R.anim.my_slide_out_left);
+                         }
+                     }
+                 })
+                 .show();
+	}
+	
+	View.OnClickListener screenClick = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			AllUtils.hiddenSoftBorad(getActivity());
+			FramMainActivity.instance.slidingFragment.screenWhat();
+			FramMainActivity.instance.menuDrawer.toggleMenu();
+			
+		}
+	};
+		
+	@Touch(R.id.topView)
+	boolean onTouch(MotionEvent event,View view){
+		Utils.hiddenSoftBorad(mContext);
+		searchFunction.cleanFocus();
+		return false;
+	}
+	
+	
+	Button cretaeButton;
+	@AfterViews
+	void afterViews(){
+		mContext = getActivity();
+		matterScreenView.setRemoveScreenTypeListener(new RemoveScreenTypeListener() {
+			/*
+			 * 在列表页删除筛选条件后刷新列表
+			 * @see com.miicaa.home.ui.home.MatterScreenView.RemoveScreenTypeListener#removeType(com.miicaa.home.ui.menu.ScreenType)
+			 */
+			@Override
+			public void removeType(ScreenType screenType) {
+				HashMap<String, String> paramMap = screenType.getScreenCondition();
+				serScreenCode(paramMap);
+			}
+		});
+		
+	   
+		matterCell = new MatterCell(getActivity(), jsonObjects, MatterType.eDo);
+		initViews();
+	}
+	
+	private void initSearch(View view){
+		serchLayout = (RelativeLayout) view.findViewById(R.id.searchKuang);
+		screenView = (ImageButton) view.findViewById(R.id.fram_matter_screen_view);
+		screenView.setOnClickListener(screenClick);
+		View v = LayoutInflater.from(mContext).inflate(R.layout.matter_home_view, null);
+		serchLayout.addView(v);
+		 searchFunction = new SearchFunction(getActivity(), "/home/phone/thing/getallwork",v,false);
+		    searchFunction.setParam(paramMap);
+		    searchFunction.setHint("查找标题");
+			searchFunction.setSearchCallBack(new OnSearchCallBack() {
+				
+				@Override
+				public void textChange(Boolean isText) {
+					if(isText){
+						state = ProgressState.eSearch;
+					}else{
+						state = ProgressState.eManual;
+					}
+				}
+				
+				@Override
+				public void search(ResponseData data) {
+					if(data.getResultState() == ResultState.eSuccess){
+						listView.onRefreshComplete();
+						resetList();
+						callBackInRequest(data.getJsonObject().optJSONArray("workList"));
+					}else{
+						showWhat(data.getCode(),data.getMsg());
+					}
+				}
+				
+				@Override
+				public void deltext() {
+					state = ProgressState.eManual;
+					showRefresh();
+					resetList();
+					if(codeMap.size() > 0){
+	        			/*带条件刷新*/
+	        		requestMatter(codeMap);
+	        		}else{
+	        			requestMatter(paramMap);
+	        		}
+				}
+
+				@Override
+				public void addMore(ResponseData data) {
+					if(data.getResultState() == ResultState.eSuccess){
+						callBackInRequest(data.getJsonObject().optJSONArray("workList"));
+					}else{
+						showWhat(data.getCode(), data.getMsg());
+					}
+				}
+
+				@Override
+				public void clearRefresh() {
+					state = ProgressState.eManual;
+					requestFirst();
+				}
+			});
+	}
+	
+	HashMap<String, String> paramMap;
+	int pageCount = 1;
+	MatterCell matterCell ;
+	ArrayList<JSONObject> jsonObjects = new ArrayList<JSONObject>();
+	
+	void initViews(){
+		//serchLayout.addView(searchFunction.getSearchView());
+		listView.setOnRefreshListener(new HowWillIrefresh());
+		listView.setMode(PullToRefreshBase.Mode.BOTH);
+		refreshView = listView.getRefreshableView();
+		View headView = LayoutInflater.from(mContext).inflate(R.layout.home_fram_matter_headview, null);
+		refreshView.addHeaderView(headView);
+		initSearch(headView);
+		refreshView.setFastScrollEnabled(false);
+		refreshView.setFadingEdgeLength(0);
+		refreshView.setAdapter(matterCell);
+		/*
+		 */
+		matterCell.refresh(jsonObjects);
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+	}
+	public interface MenuClickListener{
+		void menuCLick();
+	}
+	
+	MenuClickListener clickListener;
+	public void setMenuCLickListener(MenuClickListener listener){
+		clickListener = listener;
+	}
+	
+	public void requestMatter(HashMap<String,String> map){
+		String url = "/home/phone/thing/getallwork";
+		Log.d(TAG, "requestMatter param:"+map);
+		 MatterRequest.requestMatterHome(url,map,new MatterHomeCallBackListener() {
+			
+			@Override
+			public void callBack(ResponseData data) {
+				try{
+				progressDialog.dismiss();
+				}catch(Exception e){
+					
+				}
+				if(data.getResultState() == ResultState.eSuccess){
+					if(listView != null){
+					listView.onRefreshComplete();
+					Log.d(TAG, "requestMatter data :"+ data.getJsonObject().optJSONArray("workList"));
+					callBackInRequest(data.getJsonObject().optJSONArray("workList"));
+					}
+				}else{
+					if(getActivity() != null)
+					Toast.makeText(getActivity(), "网络错误:"+data.getMsg(), Toast.LENGTH_SHORT).show();
+				}
+				
+			}
+		}); 
+		
+	}
+	
+//	Boolean isDataEmpty = false;
+	void showWhat(int code,String msg){
+		if(code == -1){
+			if(getActivity() != null){
+			if(jsonObjects.size()>0 )
+				Toast.makeText(getActivity(), "没有更多数据！", Toast.LENGTH_SHORT).show();
+		    	else{
+		    		Toast.makeText(getActivity(), "没有数据！", Toast.LENGTH_SHORT).show();
+		    	}
+			}else{
+				Toast.makeText(getActivity(), "网络错误！请稍后再试！"+msg, Toast.LENGTH_SHORT).show();
+			}
+		}
+		
+	}
+	
+	/*
+	 * 刷新
+	 */
+	void requestOut(){
+		resetList();
+		showRefresh();
+		state = ProgressState.eManual;
+		if(codeMap.size() > 0){
+		requestMatter(codeMap);
+		}else{
+			requestMatter(paramMap);
+		}
+	}
+	
+	
+	
+	void callBackInRequest(JSONArray workList){
+		
+		Log.d(TAG, "callBackInRequest jsonList size:"+jsonObjects.size());
+			ArrayList<JSONObject> jsObject = new ArrayList<JSONObject>();
+
+            if (workList != null && workList.length() > 0) {
+            	
+                for (int j = 0; j < workList.length(); j++) {
+                    jsObject.add(workList.optJSONObject(j));
+                }
+                jsonObjects.addAll(jsObject);
+    }else {
+    	if(getActivity() != null){
+    	if(jsonObjects.size()>0)
+		Toast.makeText(getActivity(), "没有更多数据！", Toast.LENGTH_SHORT).show();
+    	else{
+    		Toast.makeText(getActivity(), "没有数据！", Toast.LENGTH_SHORT).show();
+    	}
+    	}
+	}		
+            matterCell.refresh(jsonObjects);
+            listView.onRefreshComplete();
+	}
+	
+	class HowWillIrefresh implements PullToRefreshBase.OnRefreshListener2<ListView>{
+
+		@Override
+		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+			String label = DateUtils.formatDateTime(getActivity(),
+                    System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME
+                            | DateUtils.FORMAT_SHOW_DATE
+                            | DateUtils.FORMAT_ABBREV_ALL);
+			refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+            /*
+             * 重置分页数据
+             */
+            resetList();
+            if(state == ProgressState.eManual){
+//			requestMatter(paramMap);
+            	if(codeMap.size() > 0){
+        			/*带条件刷新*/
+        		requestMatter(codeMap);
+        		}else{
+        			requestMatter(paramMap);
+        		}
+            }else if(state == ProgressState.eSearch){
+            	searchFunction.setPageCount(1);
+            	searchFunction.search();
+            }else if(state == ProgressState.eScreen){
+            	requestMatter(codeMap);
+            }
+			
+		}
+
+		@Override
+		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+			pageCount += 1;
+			setPageCount(pageCount);
+			if(state == ProgressState.eManual){
+				if(codeMap.size() > 0){
+        			/*带条件刷新*/
+        		requestMatter(codeMap);
+        		}else{
+        			requestMatter(paramMap);
+        		}
+			}else if(state == ProgressState.eSearch){
+				searchFunction.search();
+			}else if(state == ProgressState.eScreen){
+				requestMatter(codeMap);
+			}
+		}
+
+		
+	}
+	
+	void initParams(){
+		paramMap  = new HashMap<String, String>();
+		paramMap.put("pageSize", "20");
+        paramMap.put("pageNo",pageCount+"");
+        paramMap.put("type", "todo");
+        paramMap.put("srcCode", "");
+        paramMap.put("viewType", "");
+       
+        
+	}
+	
+	void setPageCount(int count){
+		if(state == ProgressState.eManual){
+		paramMap.put("pageNo", count + "");
+		}else if(state == ProgressState.eScreen){
+			codeMap.put("pageNo", count + "");
+		}
+		
+	}
+	
+	public void setType(String typeCode){
+		paramMap.put("viewType", typeCode);
+		if(codeMap.size() > 0){
+		codeMap.put("viewType", typeCode);
+		}
+	}
+	
+
+	void resetList(){
+		jsonObjects.clear();
+		pageCount = 1;
+		setPageCount(1);
+	}
+	
+	void serScreenCode(HashMap<String, String> map){
+		Log.d(TAG, "serScreenCode map:"+map);
+		/*
+		 * 将分页设为第一页
+		 */
+		resetList();
+		int count = 0;
+		for(Map.Entry<String, String> m: map.entrySet()){
+			if(!"".equals(m.getValue())){
+				break;
+			}
+			count++;
+		}
+		if(count == map.size()){
+			codeMap.clear();
+			state = ProgressState.eManual;
+			requestMatter(paramMap);
+		}
+		/*
+		 * 改变成筛选状态
+		 */
+		else{
+		state = ProgressState.eScreen;
+		codeMap.clear();
+		codeMap.putAll(paramMap);
+		codeMap.putAll(map);
+		codeMap.put("pageSize", "20");
+        codeMap.put("pageNo",pageCount+"");
+		progressDialog.setMessage("正在筛选，请稍后...");
+        progressDialog.show();
+		requestMatter(codeMap);
+		}
+		matterScreenView.refreshView();
+	}
+	
+	
+	public void showRefresh(){
+		 progressDialog.setMessage("正在刷新，请稍后...");
+         progressDialog.show();
+	}
+	
+	/*
+	 * 第一次启动时
+	 */
+	void requestFirst(){
+		resetList();
+		showRefresh();
+		requestMatter(paramMap);
+	}
+	
+	enum ProgressState{
+		eSearch,
+		eScreen,
+		eManual
+	}
+	
+	
+	void resetManual(){
+		state = ProgressState.eManual;
+		searchFunction.clearSearch();
+	}
+	
+	public void refreshScreen(){
+		matterScreenView.refreshView();
+	}
+	@Override
+	public void onStart() {
+		if(searchFunction != null)
+			searchFunction.clearSearch();
+		
+		Log.d(TAG, "onStart yes");
+		matterScreenView.onRestart();
+		matterScreenView.refreshView();
+		
+		if(codeMap.size() > 0){
+			/*带条件刷新*/
+			resetList();
+		requestMatter(codeMap);
+		}else{
+			resetList();
+			requestMatter(paramMap);
+		}
+		
+		super.onStart();
+	}
+	
+//	@Override
+//	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//			Bundle savedInstanceState) {
+//		// TODO Auto-generated method stub
+//		if(matterScreenView != null)
+//		matterScreenView.refreshView();
+//		return super.onCreateView(inflater, container, savedInstanceState);
+//	}
+	
+	
+	
+	
+	
+}

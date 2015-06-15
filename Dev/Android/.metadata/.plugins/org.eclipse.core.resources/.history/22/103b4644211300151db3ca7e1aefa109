@@ -1,0 +1,15 @@
+package com.yoopoon.home.data.json.model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
+public class TestModel {
+
+	@JsonProperty
+	public int id;
+	@JsonProperty
+	public String name;
+	@JsonProperty("content-type")
+	public String contentType;
+	
+}

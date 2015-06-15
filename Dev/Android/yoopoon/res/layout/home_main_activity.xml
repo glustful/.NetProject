@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/home_main_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        
+        >
+        </android.support.v4.view.ViewPager>
+        <RelativeLayout
+            android:id="@+id/home_main_loading_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@android:color/transparent">
+        <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"/>
+
+        <ProgressBar
+                android:id="@+id/progressBar"
+                style="@style/login_loading_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:maxHeight="120dp"
+                android:maxWidth="180dp"
+                android:minHeight="120dp"
+                android:minWidth="180dp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正在初始化..."
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:layout_alignRight="@+id/progressBar"
+                android:layout_alignLeft="@+id/progressBar"
+                android:layout_alignBottom="@+id/progressBar"/>
+    </RelativeLayout>
+    </RelativeLayout>
+        
+     <!-- 底层菜单 -->
+     <TabHost
+         android:id="@android:id/tabhost"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         >
+         <FrameLayout
+             android:id="@android:id/tabcontent"
+             android:layout_width="0dp"
+             android:layout_height="0dp"
+             android:layout_weight="0" >
+         </FrameLayout>
+         <TabWidget
+             android:id="@android:id/tabs"
+             android:background="@drawable/main_bottom"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"/>
+     </TabHost>
+         
+      
+</LinearLayout>
+ 

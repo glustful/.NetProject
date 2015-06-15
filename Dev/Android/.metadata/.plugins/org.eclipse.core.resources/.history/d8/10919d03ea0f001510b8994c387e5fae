@@ -1,0 +1,12 @@
+package com.yoopoon.home.ui.home;
+
+import org.androidannotations.annotations.EFragment;
+import com.yoopoon.home.R;
+
+import android.support.v4.app.Fragment;
+
+@EFragment(R.layout.home_fram_me_fragment)
+public class FramMeFragment extends Fragment {
+	
+
+}

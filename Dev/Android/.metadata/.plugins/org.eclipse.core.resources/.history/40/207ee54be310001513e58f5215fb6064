@@ -1,0 +1,5 @@
+package com.yoopoon.home.data.json.model;
+
+public class TestModel {
+
+}

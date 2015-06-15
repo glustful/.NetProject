@@ -1,0 +1,25 @@
+package com.yoopoon.home.data.json;
+
+import java.io.IOException;
+
+import com.example.logansquare.logansquare.LoganSquare;
+
+public class ParserJSON extends Parser {
+
+    public ParserJSON(ParseListener parseListener, String jsonString) {
+        super(parseListener, jsonString);
+    }
+
+    @Override
+    protected boolean parse(String json,Class mClass) {
+    	try {
+			LoganSquare.parse(json, mClass);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+        return true;
+    }
+
+}

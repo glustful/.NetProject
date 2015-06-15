@@ -1,0 +1,22 @@
+package com.yoopoon.home.data.json;
+
+import com.bluelinelabs.logansquare.LoganSquare;
+import com.bluelinelabs.logansquare.demo.model.Response;
+
+public class SerializerJSON extends Serializer {
+
+    public SerializerJSON(SerializeListener parseListener, Response response) {
+        super(parseListener, response);
+    }
+
+    @Override
+    protected String serialize(Response response) {
+        try {
+            return LoganSquare.serialize(response);
+        } catch (Exception e) {
+            return null;
+        } finally {
+            System.gc();
+        }
+    }
+}

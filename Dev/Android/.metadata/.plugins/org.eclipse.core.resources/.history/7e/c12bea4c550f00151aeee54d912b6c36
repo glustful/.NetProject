@@ -1,0 +1,95 @@
+package com.miicaa.home.ui.home;
+
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
+import org.json.JSONObject;
+
+import android.support.v4.app.Fragment;
+import android.widget.LinearLayout;
+
+import com.miicaa.home.R;
+import com.miicaa.home.data.net.ProgressMessage;
+import com.miicaa.home.data.net.RequestAdpater;
+import com.miicaa.home.data.net.ResponseData;
+import com.miicaa.home.data.net.ResponseData.ResultState;
+import com.miicaa.home.ui.frame.FrameDetection;
+@EFragment(R.layout.home_fram_dicover_fragment)
+public class FramDisCoverFragment extends Fragment{
+	@Override
+	public void onResume() {
+		
+		super.onResume();
+		
+		requestAnnouncement(getString(R.string.announcement_list_url));
+	}
+	@ViewById
+	LinearLayout framDiscoverBody;
+	FrameDetection fDis;
+	
+	@AfterViews
+	void initData(){
+		
+		fDis = new FrameDetection(getActivity());
+		framDiscoverBody.addView(fDis.getRootView());
+		//
+	}
+	
+	
+    @Override
+	public void onStart() {
+	 fDis.setEnterprise();
+		super.onStart();
+	}
+
+
+	//	@Override
+//	public void onCreate(Bundle savedInstanceState) {
+//		// TODO Auto-generated method stub
+//		super.onCreate(savedInstanceState);
+//	}
+	public void requestAnnouncement(String url) {
+		new RequestAdpater() {
+			
+			@Override
+			public void onReponse(ResponseData data) {
+				
+				if(data.getResultState()==ResultState.eSuccess&&data.getJsonArray().length()>0){
+					JSONObject obj =data.getJsonArray().optJSONObject(0);
+					fDis.setAnnouncementNotify(obj);
+				}else{
+					fDis.setAnnouncementNotify(null);
+				}
+				
+			}
+			
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+				
+			}
+		}.setUrl(url)
+		.addParam("readType", "unread")
+		.addParam("searchText", "")
+		.addParam("pageNum", "1")
+		.addParam("pageCount", "1")
+		.notifyRequest()
+		;
+		
+	}
+
+//	@Override
+//	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//			Bundle savedInstanceState) {
+//		rootView = LayoutInflater.from(getActivity()).inflate(R.layout.home_fram_dicover_fragment, null);
+//		if(container == null){
+//			container = (ViewGroup)rootView.getParent();
+//			container.removeAllViewsInLayout();
+//		}
+//		
+//		// TODO Auto-generated method stub
+//		return rootView;
+//	}
+
+}

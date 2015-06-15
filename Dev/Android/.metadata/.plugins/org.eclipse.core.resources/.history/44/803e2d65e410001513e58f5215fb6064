@@ -1,0 +1,10 @@
+package com.yoopoon.home.data.json;
+
+import com.example.logansquare.logansquare.LoganSquare;
+
+public class ParseJSON<T> {
+
+	public void parse(String json,T t){
+		LoganSquare.parse(json, t);
+	}
+}

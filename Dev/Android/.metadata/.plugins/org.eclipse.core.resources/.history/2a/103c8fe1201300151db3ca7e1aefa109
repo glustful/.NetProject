@@ -1,0 +1,52 @@
+package com.yoopoon.home.ui.home;
+
+import java.io.IOException;
+
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.EFragment;
+
+import com.bluelinelabs.logansquare.LoganSquare;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yoopoon.home.R;
+import com.yoopoon.home.data.json.ParserJSON;
+import com.yoopoon.home.data.json.ParserJSON.ParseListener;
+import com.yoopoon.home.data.json.model.TestModel;
+
+@EFragment(R.layout.home_fram_house_fragment)
+public class FramHouseFragment extends FramSuper{
+	public static FramHouseFragment instance = null;
+
+
+@AfterInject
+void afterInject(){
+	instance = this;
+	//TestModel tm = new TestModel(1, "zhangsan", "class");
+	final String json = "{id:2,name:'456',content-Type:'json'}";
+	new ParserJSON(new ParseListener() {
+		
+		@Override
+		public Object onParse() {
+			
+				ObjectMapper om = new ObjectMapper();
+				return om.readValue(json, TestModel.class);
+			
+			return null;
+		}
+		
+		@Override
+		public void onComplete(Object parseResult) {
+			System.out.println("result="+parseResult);
+			
+		}
+	}).execute();
+}
+
+
+@Override
+public String getTitle() {
+	// TODO Auto-generated method stub
+	return "房源库";
+}
+
+
+}
