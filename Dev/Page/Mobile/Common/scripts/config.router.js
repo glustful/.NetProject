@@ -54,7 +54,7 @@ app  .run(
             data:{title:'用户登录'}
         })
         .state('user.register',{
-            url:'/register',
+            url:'/register?yzm',
             templateUrl:'modules/Register/view/register.html',
             resolve:load('modules/Register/controller/RegisterController.js'),
             data:{title:'用户注册'}

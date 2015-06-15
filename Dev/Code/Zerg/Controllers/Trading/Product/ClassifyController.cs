@@ -354,10 +354,17 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="parameterId"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetParameterByClassify(int classifyId)
         {
-            return PageHelper.toJson(_parameterService.GetParameterEntitysByClassifyId(classifyId).ToList());
+            var parameterList = _parameterService.GetParameterEntitysByClassifyId(classifyId).Select(p => new
+            {
+                p.Id,
+                p.Name,
+                p.Addtime
+            });
+            //return PageHelper.toJson(_parameterService.GetParameterEntitysByClassifyId(classifyId).ToList());
+            return PageHelper.toJson(parameterList);
         }
 
         /// <summary>
@@ -366,10 +373,16 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="parameterId"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetParameterValueByParameter(int parameterId)
         {
-            return PageHelper.toJson(_parameterValueService.GetParameterValuesByParameter(parameterId).ToList());
+            var parameterValueList = _parameterValueService.GetParameterValuesByParameter(parameterId).Select(p => new
+            {
+                p.Id,
+                p.Parametervalue
+            });
+            //return PageHelper.toJson(_parameterValueService.GetParameterValuesByParameter(parameterId).ToList());
+            return PageHelper.toJson(parameterValueList);
         }
         #endregion
 

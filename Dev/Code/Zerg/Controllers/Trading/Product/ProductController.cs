@@ -12,6 +12,7 @@ using Trading.Service.Product;
 using Trading.Service.ProductBrand;
 using Trading.Service.ProductDetail;
 using Trading.Service.ProductParameter;
+using YooPoon.Core.Site;
 using Zerg.Common;
 using Zerg.Models.Trading.Product;
 
@@ -26,6 +27,7 @@ namespace Zerg.Controllers.Trading.Product
         private readonly IProductDetailService _productDetailService;
         private readonly IProductParameterService _productParameterService;
         private readonly IClassifyService _classifyService;
+        private readonly IWorkContext _workContent;
         /// <summary>
         /// 构造函数（操作函数注入）
         /// </summary>
@@ -34,13 +36,14 @@ namespace Zerg.Controllers.Trading.Product
             IProductBrandService productBrandService,
             IProductDetailService productDetailService,
             IProductParameterService productParameterService,
-            IClassifyService classifyService)
+            IClassifyService classifyService, IWorkContext workContent)
         {
             _productService = productService;
             _productBrandService = productBrandService;
             _productDetailService = productDetailService;
             _productParameterService = productParameterService;
             _classifyService = classifyService;
+            _workContent = workContent;
         }
 
 
@@ -72,9 +75,11 @@ namespace Zerg.Controllers.Trading.Product
                 Productname = productDetail.Productname,
                 Sericeinstruction = productDetail.Sericeinstruction,
                 Addtime = DateTime.Now,
-                Adduser = productDetail.Adduser,
+                //Adduser = productDetail.Adduser,
+                Adduser = _workContent.CurrentUser.Id.ToString(),
                 Updtime = DateTime.Now,
-                Upduser = productDetail.Upduser
+                //Upduser = productDetail.Upduser
+                Upduser = _workContent.CurrentUser.Id.ToString()
             };
 
             ProductDetailEntity PDE2 = _productDetailService.Create(PDE);
@@ -97,9 +102,11 @@ namespace Zerg.Controllers.Trading.Product
                 Status = product.Status,
                 Stockrule = product.Stockrule,
                 Updtime = DateTime.Now,
-                Upduser = PDE.Upduser,
+                //Upduser = PDE.Upduser,
+                Upduser = _workContent.CurrentUser.Id.ToString(),
                 Addtime = DateTime.Now,
-                Adduser = PDE.Adduser
+                //Adduser = PDE.Adduser
+                Adduser = _workContent.CurrentUser.Id.ToString()
             };
             try
             {
