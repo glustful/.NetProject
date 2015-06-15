@@ -1,28 +1,4 @@
- .pic li{
-    position: relative;
 
-}
- .pic .page{
-    position: absolute;
-    left: 255px;
-    top:200px;
-
-}
- .pic{
-     width: 640px;
-     height: 230px;
-
- }
- .pic .page span{
-    background: url("../image/index/p1-1.png") no-repeat 0 0;
-    display: inline-block;
-    width: 9px;
-    height: 9px;
-    margin-right: 20px;
-}
- .pic .page .white{
-     background: url("../image/index/p2-2.png") no-repeat 0 0;
- }
 .activity{
     padding: 10px;
 }
@@ -158,7 +134,7 @@ h3{
 }
 
 
-/* ÕÚÕÖÃæ */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
  .masked-content-index{
      top:5%;
      left:5%;
@@ -193,3 +169,18 @@ h3{
 /*#btn_prev,#btn_next{z-index:11111;position:absolute;display:block;width:73px!important;height:74px!important;top:50%;margin-top:-37px;display:none;}*/
 /*#btn_prev{background:url(../image/index/hover_left.png) no-repeat left top;left:100px;}*/
 /*#btn_next{background:url(../image/index/hover_right.png) no-repeat right top;right:100px;}*/
+ /*#carousel-bg {*/
+ /**/
+ /*}*/
+
+ /*#carousel-bg img {*/
+     /*width: 100%;*/
+     /*height: auto;*/
+ /*}*/
+.img-responsive,
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+    display: block;
+    width:640px;
+    height:230px;
+}
