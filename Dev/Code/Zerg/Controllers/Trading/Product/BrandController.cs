@@ -86,17 +86,18 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns></returns>
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public string DelBrandById(int brandId)
+        public HttpResponseMessage DelBrandById(int brandId)
         {
             try
             {
                 if(_productBrandService.Delete(_productBrandService.GetProductBrandById(brandId))){
-                    return "删除品牌成功";
+
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功！"));
                 }else{
-                      return "删除品牌失败，该品牌可能有商品已被添加";
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "删除品牌失败，该品牌可能有商品已被添加")); 
                 }
             }catch(Exception e){
-                  return "删除品牌失败";
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
             }
             
         } 
@@ -142,8 +143,9 @@ namespace Zerg.Controllers.Trading.Product
             try
             {
                 if (_brandParameterService.Delete(_brandParameterService.GetBrandParameterById(brandParameterId)))
-                {
+                { 
                     return "删除成功";
+                   
                 }else{
                     return "无法删除，可能该项目下有商品";
                 }
@@ -184,7 +186,7 @@ namespace Zerg.Controllers.Trading.Product
                 b.Bname,
                 b.SubTitle,
                 b.Content,
-                Addtime=b.Addtime.ToString("yyy-mm-dd")
+                Addtime=b.Addtime
             });
 
             var totalCount1 = _productBrandService.GetProductBrandCount(sech);
