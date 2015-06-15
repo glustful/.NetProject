@@ -19,6 +19,7 @@ using Zerg.Common;
 using Zerg.Models.CRM;
 using Zerg.Models.UC;
 using YooPoon.Common.Encryption;
+using CRM.Service.MessageDetail;
 
 namespace Zerg.Controllers.UC
 {
@@ -32,13 +33,17 @@ namespace Zerg.Controllers.UC
         private readonly IBrokerService _brokerService;
         private readonly IRoleService _roleService;
         private readonly ILevelService _levelService;
+        private readonly IMessageDetailService _MessageService;
+
+
 
         public UserController(IUserService userService, 
             IAuthenticationService authenticationService, 
             IWorkContext workContext,
             IBrokerService brokerService,
             IRoleService roleService,
-            ILevelService levelService
+            ILevelService levelService,
+            IMessageDetailService MessageService
             )
         {
             _userService = userService;
@@ -47,6 +52,7 @@ namespace Zerg.Controllers.UC
             _brokerService = brokerService;
             _roleService = roleService;
             _levelService = levelService;
+            _MessageService= MessageService;
         }
 
         /// <summary>
@@ -155,6 +161,27 @@ namespace Zerg.Controllers.UC
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号不能为空"));
             }
             #endregion
+
+            #region 判断邀请码是否存在真实  （brokerInfoController 中GetBrokerByInvitationCode方法也同一判断）
+            if (!string.IsNullOrEmpty(brokerModel.inviteCode))
+            {
+                
+                MessageDetailSearchCondition messageSearchcondition=new MessageDetailSearchCondition{
+                    InvitationCode = brokerModel.inviteCode,
+                    Title="推荐经纪人"
+                };
+                var messageDetail = _MessageService.GetMessageDetailsByCondition(messageSearchcondition).FirstOrDefault();//判断邀请码是否存在
+                if (messageDetail != null)
+                {
+                    //添加经纪人
+
+                }else
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "邀请码错误！"));
+                }
+            }
+            #endregion
+
 
             #region UC用户创建 杨定鹏 2015年5月28日14:52:48
             var user = _userService.GetUserByName(brokerModel.UserName);
