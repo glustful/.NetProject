@@ -402,7 +402,8 @@ namespace Zerg.Controllers.CRM
 
                      var partnerlistsearchcon = new PartnerListSearchCondition
                      {
-                          Brokers=broker
+                          Brokers=broker,
+                          //Status = EnumPartnerType.同意
                      };
                      partnerCount = _partnerlistService.GetPartnerListCount(partnerlistsearchcon);
 
