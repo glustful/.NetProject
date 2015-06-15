@@ -495,7 +495,7 @@ namespace Zerg.Controllers.CRM
 
 
         /// <summary>
-        /// 通过 邀请码获取发送者信息
+        /// 通过 邀请码获取发送者信息 (UserController注册也同一判断)
         /// </summary>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
