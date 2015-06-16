@@ -7,6 +7,7 @@ angular.module("app").controller('PartnerIndexController', [
         $scope.searchCondition = {
             name: '',
             page: 1,
+            status:1,
             pageSize: 10
         };
         $scope.getList  = function() {
@@ -27,12 +28,12 @@ angular.module("app").controller('PartnerIndexController', [
 ]);
 
 angular.module("app").controller('PartnerDetailedController', [
-    '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+            '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
 
 
-        $http.get(SETTING.ApiUrl+'/PartnerList/PartnerListDetailed?userId=' + $stateParams.userId,{
-            'withCredentials':true
-        }).success(function(data){
+                $http.get(SETTING.ApiUrl+'/PartnerList/PartnerListDetailed?userId=' + $stateParams.userId,{
+                    'withCredentials':true
+                }).success(function(data){
             $scope.list = data;
         });
 
@@ -45,7 +46,7 @@ function ConvertJSONDateToJSDateObject(JSONDateString) {
     jsondate = JSONDateString.replace("/Date(", "").replace(")/", "");
     if (jsondate.indexOf("+") > 0) {
         jsondate = jsondate.substring(0, jsondate.indexOf("+"));
-    }
+}
     else if (jsondate.indexOf("-") > 0) {
         jsondate = jsondate.substring(0, jsondate.indexOf("-"));
     }

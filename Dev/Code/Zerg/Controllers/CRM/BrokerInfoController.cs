@@ -80,7 +80,15 @@ namespace Zerg.Controllers.CRM
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
             }
             var brokerlist = _brokerService.GetBrokerById(Convert.ToInt32(id));
-            return PageHelper.toJson(new { List = brokerlist });
+            var dd = new BrokerModel
+            {
+                Address = brokerlist.Address,
+                Adduser = brokerlist.Adduser,
+                Brokername = brokerlist.Brokername,
+                Phone = brokerlist.Phone,
+                rgtime  = brokerlist.Regtime.ToShortDateString ()
+            };
+            return PageHelper.toJson(new { List = dd});
         }
 
         /// <summary>

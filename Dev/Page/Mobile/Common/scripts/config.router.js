@@ -102,14 +102,14 @@ app  .run(
             url:'/person_setting',
             templateUrl:'modules/person_setting/view/person_setting.html',
             resolve:load('modules/person_setting/controller/personsettingController.js'),
-            access:['Broker','user']
+            access:['broker','user']
         })
 
         .state('app.security_setting',{
             url:'/security_setting',
             templateUrl:'modules/security_setting/view/security_setting.html',
             resolve:load('modules/security_setting/controller/SecuritySetting.js'),
-            access:['Broker','user']
+            access:['broker','user']
         })
         .state('app.zhongtian_HouseDetail',{
             url:'/zhongtian_HouseDetail',

@@ -133,6 +133,9 @@ ul li{
 .add_content .warm{
     color: #f14800;
 }
+.others .warming{
+    color: #f14800;
+}
 /* 遮罩 */
 .masked .request{
     top:10%;

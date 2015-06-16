@@ -13,8 +13,8 @@ using YooPoon.WebFramework.User.Entity;
 
 namespace Zerg.Controllers.CRM
 {
-    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 合伙人  李洪亮  2015-05-05
     /// </summary>
@@ -307,6 +307,7 @@ namespace Zerg.Controllers.CRM
                              broker.PartnersName = model.Broker.Brokername;
                              if (_brokerService.Update(broker) != null)
                              {
+
                                  return PageHelper.toJson(PageHelper.ReturnValue(true, "邀请成功！"));
                              }
 
@@ -314,6 +315,8 @@ namespace Zerg.Controllers.CRM
                      }
                      else
                      {
+                         model.Status = EnumPartnerType.拒绝;
+                         _partnerlistService.Update(model);
                          return PageHelper.toJson(PageHelper.ReturnValue(false, "对不起,您已经是别人的合伙人了！"));
                      }
 
