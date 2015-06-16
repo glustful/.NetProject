@@ -74,6 +74,7 @@ angular.module("app").controller('CreatBrandController', [
         };
 
         $scope.Save = function(){
+            document.getElementById("btnok").setAttribute("disabled", true);
             $scope.BrandModel.Bimg=$scope.image;
             $http.post(SETTING.ApiUrl + '/Brand/AddProductBrand',$scope.BrandModel,{
                 'withCredentials':true
@@ -83,10 +84,14 @@ angular.module("app").controller('CreatBrandController', [
                     $state.go('page.Trading.product.brand');
                     console.log(data);
                 }else{
-                    console.log("error");
+                    $scope.alerts=[{type:'danger',msg:data.Msg}];
                 }
             });
         }
+        $scope.closeAlert = function(index) {
+            $scope.alerts.splice(index, 1);
+            $scope.BrandModel.Bname=''
+        };
 
 
         //---------------------------------------------图片上传 start------------------------------------//
@@ -165,6 +170,7 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
         $scope.selectBrandId=seletId;
        $http.get(SETTING.ApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' + seletId,{'withCredentials':true}).success(function (data) {
             $scope.rowCollectionParameter = data;
+
         });
     };
 

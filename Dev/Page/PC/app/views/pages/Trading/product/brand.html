@@ -14,7 +14,7 @@
         <div class="panel-heading">项目列表</div>
         <table st-table="rowCollectionPage" class="table table-striped" align="center">
             <thead>
-            <tr>
+            <tr >
                 <th align="center">缩略图</th>
                 <th align="center">项目名</th>
                 <th align="center">项目ID</th>
@@ -29,7 +29,7 @@
                 <td align="center">{{item.Id }}</td>
                 <td align="center">{{item.Addtime |dateFilter}}</td>
                 <td align="center">
-                    <button class="btn btn-info btn-sm"  ng-click="getBrandParameter(item.Id)" onclick="ParameterWindowShow()"><i class="fa fa-fw m-r-xs fa-edit"></i>参数管理
+                    <button class="btn btn-info btn-sm"  ng-click="getBrandParameter(item.Id)" onclick="ParameterWindowShow();func()"><i class="fa fa-fw m-r-xs fa-edit" ></i>参数管理
                     </button>
                     <button ng-click='open(item.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
                     </button>

@@ -9,6 +9,7 @@
 
 <div class="panel-body">
     <form class="form-horizontal" ng-submit="Save()" name="form">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
         <div class="form-group">
             <label for="UserName" class="col-sm-2 control-label">请输入品牌名：</label>
             <div class="col-sm-10">
@@ -22,7 +23,7 @@
             </div>
             <label class="col-sm-2 control-label">请输入品牌内容：</label>
             <div class="col-sm-10">
-                <input name="Content" id="Content" type="text" style="width: 500px" class="form-control" required ng-model="BrandModel.Content" required/>
+                <textarea name="Content" id="Content" type="text" style="width:500px;height:80px;" class="form-control" required ng-model="BrandModel.Content" required/>
                 <span ng-show="form.Content.$error.required" style="color: red;">*必填项</span>
             </div>
 
@@ -45,11 +46,11 @@
                     <table class="table bg-white b-a">
                         <thead>
                         <tr>
-                            <th width="50%">Name</th>
-                            <th ng-show="uploader.isHTML5">Size</th>
-                            <th ng-show="uploader.isHTML5">Progress</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th width="50%">名字</th>
+                            <th ng-show="uploader.isHTML5">大小</th>
+                            <th ng-show="uploader.isHTML5">进程</th>
+                            <th>状态</th>
+                            <th>功能</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -68,10 +69,10 @@
                             </td>
                             <td nowrap>
                                 <button type="button" class="btn btn-default btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                    Upload
+                                    上传
                                 </button>
                                 <button type="button" class="btn btn-default btn-xs" ng-click="item.remove()">
-                                    Remove
+                                    移除
                                 </button>
                             </td>
                         </tr>
@@ -83,8 +84,8 @@
 
         <div class="form-group">
             <div class="col-sm-offset-1 col-sm-11">
-                <button type="submit" class="md-btn md-raised m-b btn-fw green"><i class="glyphicon glyphicon-ok m-r-sm"></i>提交<div class="md-ripple-container"></div></button>
-                <a ui-sref="page.CRM.AdmMan.index"><button class="md-btn md-raised m-b btn-fw pink"><i class="fa fa-reply  m-r-sm"></i>返回<div class="md-ripple-container"></div></button></a>
+                <button class="md-btn md-raised m-b btn-fw green" id="btnok"><i class="glyphicon glyphicon-ok m-r-sm"></i>提交<div class="md-ripple-container"></div></button>
+                <a ui-sref="page.Trading.product.brand"><button class="md-btn md-raised m-b btn-fw pink" ><i class="fa fa-reply  m-r-sm"></i>返回<div class="md-ripple-container "></div></button></a>
             </div>
         </div>
 
