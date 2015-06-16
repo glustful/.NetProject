@@ -240,12 +240,16 @@ namespace Zerg.Controllers.Trading.Product
             }
             var productDetail = new ProductDetail
             {
+                Id = product.Id,
                 Productname = product.Productname,
                 Productimg = product.ProductDetail.Productimg,
                 BrandImg = product.ProductBrand.Bimg,
                 Price = product.Price,
                 SubTitle = product.SubTitle,
                 Phone = product.ContactPhone,
+                RecCommission = product.RecCommission,
+                Dealcommission = product.Dealcommission,
+                Commission = product.Commission,
                 // ReSharper disable once PossibleNullReferenceException
                 Type = product.ProductParameter.FirstOrDefault(p=>p.Parameter.Name=="户型").ParameterValue.Parametervalue,
                 Advertisement=product.ProductDetail.Ad2,

@@ -6,11 +6,15 @@ app.controller('HousesController',['$http','$scope','$stateParams',function($htt
         $scope.ProductList=data.productList;
         $scope.tent=data.content;
     })
+    //
+    //
+    //$http.get(SETTING.ApiUrl+'/Brand/GetByBrandId?BrandId='+$stateParams.BrandId,{'withCredentials':true}).success(function (data1) {
+    //    $scope.brand=data1;
+    //
+    //})
 
-
-    $http.get(SETTING.ApiUrl+'/Brand/GetByBrandId?BrandId='+$stateParams.BrandId,{'withCredentials':true}).success(function (data1) {
-        $scope.brand=data1;
-
+    $http.get(SETTING.ApiUrl+'/Product/GetProductById?ProductId='+$stateParams.ProductId,{'withCredentials':true}).success(function (data) {
+        $scope.List=data;
     })
 }]);
 
