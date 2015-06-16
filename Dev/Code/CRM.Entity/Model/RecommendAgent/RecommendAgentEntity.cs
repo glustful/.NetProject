@@ -25,11 +25,11 @@ namespace CRM.Entity.Model
 		/// <summary>
         ///  被推荐经纪人电话
 		/// </summary>
-		public virtual int Phone { get; set; }
+		public virtual string Phone { get; set; }
 		/// <summary>
         ///  被推荐经纪人QQ
 		/// </summary>
-		public virtual int Qq { get; set; }
+		public virtual string Qq { get; set; }
 		/// <summary>
         ///  被推荐经纪人经纪人等级
 		/// </summary>

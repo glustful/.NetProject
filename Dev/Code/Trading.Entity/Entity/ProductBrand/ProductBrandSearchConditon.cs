@@ -23,7 +23,7 @@ namespace Trading.Entity.Model
 		public int[] Ids { get; set; }
 
 
-
+        public int? ProductBrand { get; set; }
 
 
 		public string Bname { get; set; }

@@ -137,7 +137,10 @@ namespace Trading.Service.ProductBrand
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
 
-
+                if (condition.ProductBrand != null)
+                {
+                    query = query.Where(q => q.Id == condition.ProductBrand);
+                }
 
 
                 if (condition.OrderBy.HasValue)
@@ -204,7 +207,10 @@ namespace Trading.Service.ProductBrand
                     query = query.Where(q => q.Bname.Contains(condition.Bname));
                 }
 
-
+                if (condition.ProductBrand != null)
+                {
+                    query = query.Where(q => q.Id == condition.ProductBrand);
+                }
 
                 if (!string.IsNullOrEmpty(condition.Bimg))
                 {

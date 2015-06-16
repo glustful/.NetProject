@@ -81,15 +81,15 @@
                 <!--<div style="text-align: center;padding-bottom: 20px"><span>{{tipp}}</span></div>-->
 
                 <ul>
-                    <li class="brand " ng-repeat="item in brandList">
-                        <a href="#/app/houses?BrandId={{item.Id}}"><img src="http://img.yoopoon.com/{{item.Bimg}}" alt="蓝光&nbsp;·&nbsp;颐明园" width="620" height="160"/>
+                    <li class="brand " ng-repeat="item in List">
+                        <a href="#/app/houses?ProductId={{item.ProductId}}"><img src="http://img.yoopoon.com/{{item.Bimg}}" alt="蓝光&nbsp;·&nbsp;颐明园" width="620" height="160"/>
                             <!--<img src="modules/broker//static/image/broker/lp1.png" alt="中天·水云间" width="620" height="160"/>-->
-                            <div class="summary"><span>[{{ item.Bname }}]</span>
-                                <span>户型:{{item.ProductParamater["户型"]}}</span>
-                                <span>价格:{{item.ProductParamater["最小价格"]}}</span>
+                            <div class="summary"><span>[{{ item.BrandName}}]</span>
+                                <span>户型:{{item.HouseType}}</span>
+                                <span>价格:{{item.Price}}</span>
                             </div>
                             <div class="summaryBg"></div>
-                            <div class="tiptop">最高佣金：&nbsp;{{item.ProductParamater["最高佣金"]}}/套</div>
+                            <div class="tiptop">最高佣金：&nbsp;{{item.Commition}}/套</div>
                             <div class="depreciate"><span>{{item.SubTitle}}</span></div>
                             <div class="depreciateBg"></div>
                         </a>

@@ -61,6 +61,8 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
     $scope.city=true;
     $scope.county=true;
     $scope.price=true;
+    $scope.selectCity=false;
+    $scope.selectCounty=false;
     $scope.selectArea='区域';
     $scope.selectType='类型';
     $scope.selectPrice='价格';
@@ -161,6 +163,8 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         if($scope.city) {
             $scope.city = !$scope.city;
         }
+        $scope.selectCity=true;
+        $scope.selectCounty=false;
         $scope.AreaCity=null;
         $scope.AreaCounty=null;
     };
@@ -176,6 +180,7 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         if($scope.county) {
             $scope.county = !$scope.county;
         }
+        $scope.selectCounty=true;
     };
 //展开地区
     $scope.toggleProvince=function(){
