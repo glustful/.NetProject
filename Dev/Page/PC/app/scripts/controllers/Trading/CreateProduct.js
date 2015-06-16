@@ -67,7 +67,9 @@ angular.module("app").controller('CreatProductController', [
                 Status: $scope.Status == 0 ? true : false,// 商品上架状态
                 Recommend: $scope.Recommend == 0 ? true : false,// 商家推荐标识
                 Sort: 1,// 分类排序
-                Stockrule: $scope.Stockrule// 库存计数（拍下、付款）
+                Stockrule: $scope.Stockrule,// 库存计数（拍下、付款）
+                SubTitle:$scope.SubTitle,
+                ContactPhone:$scope.ContactPhone
             };
             var productDetail = {
                 Productname: $scope.ProductName,// 商品名称
@@ -99,28 +101,42 @@ angular.module("app").controller('CreatProductController', [
                 alert("添加失败，请认真检查是否有漏填项！");
             } else {
                 var classifyJson = JSON.stringify({ product: product, productDetail: productDetail });
+//                $http.post(SETTING.ApiUrl + '/Product/AddProduct', classifyJson, {
+//                    'withCredentials': true
+//                }).success(function (productId) {
+//                    if (productId > 0) {
+//                        //遍历添加参数
+//                        valueClick();
+//                        for (var i = 0; i < $scope.selectParameterValue.length; i++) {
+//                            $http.get(SETTING.ApiUrl + '/Classify/AddProductParameterVaule?parameterValueId=' + $scope.selectParameterValue[i] + "&productId=" + productId,{'withCredentials':true}).success(function (data) {
+//
+//                            });
+//                        }
+//                        alert("添加成功");
+//                        $state.go('page.Trading.product.product');
+//                    } else {
+//                       alert("添加失败");
+//                    }
+//                    ;
+//
+//                })
                 $http.post(SETTING.ApiUrl + '/Product/AddProduct', classifyJson, {
                     'withCredentials': true
-                }).success(function (productId) {
-                    if (productId > 0) {
-                        //遍历添加参数
-                        valueClick();
-                        for (var i = 0; i < $scope.selectParameterValue.length; i++) {
-                            $http.get(SETTING.ApiUrl + '/Classify/AddProductParameterVaule?parameterValueId=' + $scope.selectParameterValue[i] + "&productId=" + productId,{'withCredentials':true}).success(function (data) {
+                }).success(function(data){
+                    if(data.Status) {
+                            valueClick();
+                            for (var i = 0; i < $scope.selectParameterValue.length; i++) {
+                                $http.get(SETTING.ApiUrl + '/Classify/AddProductParameterVaule?parameterValueId=' + $scope.selectParameterValue[i] + "&productId=" + data.Object, {'withCredentials': true}).success(function (data) {
 
-                            });
+                                });
+                            }
+                            alert("添加成功");
+                            $state.go('page.Trading.product.product');
+                        } else {
+                        $scope.alerts=[{type:'danger',msg:data.Msg}];
                         }
-                        alert("添加成功");
-                        $state.go('page.Trading.product.product');
-                    } else {
-                        alert("添加失败");
-                    }
-                    ;
-
-                });
+                })
             }
-
-
         };
         function valueClick() {
             $scope.selectParameterValue = [];
@@ -214,3 +230,5 @@ angular.module("app").controller('CreatProductController', [
         };
     }
 ]);
+
+

@@ -191,7 +191,27 @@ namespace Zerg.Controllers.CRM
               return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
                     
         }
-
+         /// <summary>
+         /// 判断当前用户是否是经济人
+         /// </summary>
+         /// <returns></returns>
+         [HttpGet]
+         public HttpResponseMessage Getbroker()
+         {
+               var user = (UserBase)_workContext.CurrentUser;
+               if (user != null)
+               {
+                   var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
+                   if(broker !=null){
+                      return PageHelper.toJson(new {count=1});
+                   }
+                   else
+                   {
+                       return PageHelper.toJson(new { count = 0});
+                   }
+               }
+               return null;
+         }
          /// <summary>
          /// 通过经纪人ID查询他的客户个数
          /// </summary>

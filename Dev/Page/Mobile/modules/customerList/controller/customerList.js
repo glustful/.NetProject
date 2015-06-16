@@ -9,9 +9,11 @@ app.controller('cusListController',['$http','$scope','AuthService',function($htt
     };
     $scope.warm="";
     $scope.parentVi=true;
+    $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
+
     //查询客户
     var getcustomerList  = function() {
-        //$scope.searchCondition.id=AuthService.userId ;
+        $scope.searchCondition.id=$scope.currentuser.userId ;
         //alert("sdf");
         $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoListByUserId/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
             console.log(data);

@@ -16,7 +16,7 @@ app.controller('taskaddcontroller',['$http','$scope','$stateParams','$modal',fun
         Status: '',
         warm:''
     };
-
+    $scope.addcondition.warm="带有*为必填项";
     //绑定任务
     if($stateParams.id){
 
@@ -45,6 +45,7 @@ app.controller('taskaddcontroller',['$http','$scope','$stateParams','$modal',fun
     //修改任务
 
     var UpdateTaskResult  = function() {
+
         $http.post(SETTING.ApiUrl+'/Task/AddTask',$scope.addcondition,{'withCredentials':true
         }).success(function(data){
 
@@ -82,7 +83,8 @@ var dd=function (){
         $scope.delTipsTag="";
         $scope.delTipsAward="";
         $scope.delTipsPunish="";
-       }
+        document.getElementById("taskname").focus();
+    }
    else if($scope.addcondition.Endtime ==""){
         $scope.addcondition.warm="结束时间不能为空";
         $scope.delTipsName="";
@@ -90,16 +92,19 @@ var dd=function (){
         $scope.delTipsType="";
         $scope.delTipsTag="";
         $scope.delTipsAward="";
-        $scope.delTipsPunish="";}
+        $scope.delTipsPunish="";
+        document.getElementById("endtime").focus();
+    }
    else if($scope.addcondition.TaskTypeId==0){
         $scope.addcondition.warm="请选择任务类型";
-
         $scope.delTipsName="";
         $scope.delTipsTime="";
         $scope.delTipsType=dTips;
         $scope.delTipsTag="";
         $scope.delTipsAward="";
-        $scope.delTipsPunish="";}
+        $scope.delTipsPunish="";
+        document.getElementById("type").focus();
+    }
    else if($scope.addcondition.TaskTagId==0){
         $scope.addcondition.warm="请选择任务目标";
         $scope.delTipsName="";
@@ -107,7 +112,8 @@ var dd=function (){
         $scope.delTipsType="";
         $scope.delTipsTag=dTips;
         $scope.delTipsAward="";
-        $scope.delTipsPunish="";}
+        $scope.delTipsPunish="";
+        document.getElementById("tag").focus();}
    else if($scope.addcondition.TaskAwardId==0){
         $scope.addcondition.warm="请选择任务奖励";
         $scope.delTipsName="";
@@ -115,7 +121,9 @@ var dd=function (){
         $scope.delTipsType="";
         $scope.delTipsTag="";
         $scope.delTipsAward=dTips;
-        $scope.delTipsPunish="";}
+        $scope.delTipsPunish="";
+        document.getElementById("award").focus();
+    }
    else if($scope.addcondition.TaskPunishmentId==0){
         $scope.addcondition.warm="请选择任务惩罚";
         $scope.delTipsName="";
@@ -123,7 +131,13 @@ var dd=function (){
         $scope.delTipsType="";
         $scope.delTipsTag="";
         $scope.delTipsAward="";
-        $scope.delTipsPunish=dTips;}
+        $scope.delTipsPunish=dTips;
+        document.getElementById("punish").focus();
+    }
+else if(!$scope.addcondition.Endtime){
+        $scope.addcondition.warm="日期格式错误";
+        document.getElementById("endtime").focus();
+    }
 
     else{
         getTaskResult();
@@ -150,6 +164,7 @@ var dd=function (){
               // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
             }
                 else{
+
                $scope.addcondition.warm=data.Msg;
 
            }

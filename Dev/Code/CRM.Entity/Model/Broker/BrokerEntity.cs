@@ -114,6 +114,13 @@ namespace CRM.Entity.Model
 
 
 
+        /// <summary>
+        /// 微信号 OpenId
+        /// </summary>
+        public virtual string OpenId { get; set; }
+
+
+
 
 		/// <summary>
 		/// AddUser

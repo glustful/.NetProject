@@ -85,28 +85,34 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="brandId"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public string DelBrandById(int brandId)
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage DelBrandById(int brandId)
         {
             try
             {
-                if(_productBrandService.Delete(_productBrandService.GetProductBrandById(brandId))){
-                    return "删除品牌成功";
-                }else{
-                      return "删除品牌失败，该品牌可能有商品已被添加";
+                if (_productBrandService.Delete(_productBrandService.GetProductBrandById(brandId)))
+                {
+
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功！"));
                 }
-            }catch(Exception e){
-                  return "删除品牌失败";
+                else
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "删除品牌失败，该品牌可能有商品已被添加"));
+                }
             }
-            
-        } 
+            catch (Exception e)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
+            }
+
+        }
         /// <summary>
         /// 添加品牌项目参数
         /// </summary>
         /// <param name="productBrandModel">品牌项目参数数据模型</param>
         /// <returns>添加结果</returns>
         [System.Web.Http.HttpPost]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public string AddProductBrandParameter([FromBody]ProductBrandParameterModel productBrandParameterModel)
         {
             ProductBrandEntity PBE = _productBrandService.GetProductBrandById(productBrandParameterModel.ProductBrandId);
@@ -136,7 +142,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="brandParameterId"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public string DelBrandParameter(int brandParameterId)
         {
             try
@@ -144,15 +150,96 @@ namespace Zerg.Controllers.Trading.Product
                 if (_brandParameterService.Delete(_brandParameterService.GetBrandParameterById(brandParameterId)))
                 {
                     return "删除成功";
-                }else{
+
+                }
+                else
+                {
                     return "无法删除，可能该项目下有商品";
                 }
             }
             catch (Exception e)
             {
-                 return "无法删除";
+                return "无法删除";
             }
         }
+
+        /// <summary>
+        /// 获取推荐商品
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage GetOneBrand(int page = 1, int pageSize = 10)
+        {
+            var sech = new ProductBrandSearchCondition
+            {
+                Page = page,
+                PageCount = pageSize,
+            };
+            //取出所有品牌
+            var BrandList = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
+           {
+               a.Id,
+               a.Bimg,
+               a.Bname
+
+           }).ToList();
+
+            //通过品牌取出该品牌下的价格最低的一个商品
+            var product = new ProductEntity();
+            List<RecProdcut> listRecProdcut = new List<RecProdcut>();
+            foreach (var i in BrandList)
+            {
+                product = GetProductByBrand(i.Id);
+
+                if(product!=null)
+                { 
+                listRecProdcut.Add(new RecProdcut
+                {
+                    Bimg = i.Bimg,
+                    BrandId = i.Id.ToString(),
+                    BrandName = i.Bname,
+                    Commition =product.Dealcommission.ToString(),
+                    HouseType = product.ProductParameter.FirstOrDefault(o => o.Parameter.Name == "户型")==null?"":product.ProductParameter.FirstOrDefault(o => o.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString(),
+                    Price =product.Price.ToString(),
+                    ProductId = product.Id.ToString(),
+                    SubTitle = product.SubTitle
+                });
+                }
+            }
+            var totalCount1 = _productBrandService.GetProductBrandCount(sech);
+          //  return PageHelper.toJson(new { List = BrandList, Product = product, Condition = sech, totalCount = totalCount1 });
+            return PageHelper.toJson(new { List = listRecProdcut, Condition = sech, totalCount = totalCount1 });
+        }
+
+        /// <summary>
+        /// 通过BrandID获取该品牌下的最小价格商品
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public ProductEntity GetProductByBrand(int BrandId)
+        {
+            var sech = new ProductSearchCondition
+            {
+                OrderBy = EnumProductSearchOrderBy.Price,
+                ProductBrand = BrandId
+            };
+            var model = _productService.GetProductsByCondition(sech).FirstOrDefault();
+            if (model == null)
+            {
+                return null;
+            }
+            return model;
+        }
+
+     
+
+
+
 
         /// <summary>
         /// 获取所有品牌；
@@ -162,30 +249,30 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns></returns>
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage GetAllBrand(int page=1,int pageSize=10)
+        public HttpResponseMessage GetAllBrand(int page = 1, int pageSize = 10)
         {
-             var sech = new ProductBrandSearchCondition
-             {
-                 Page = page,
-                 PageCount = pageSize,
-             };
-             var list = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
+            var sech = new ProductBrandSearchCondition
             {
-                a.Id,
-                a.Bimg,
-                a.Bname,
-                a.SubTitle,
-                a.Content,
-                a.Addtime
-            }).ToList().Select(b=>new
-            {
-                b.Id,
-                b.Bimg,
-                b.Bname,
-                b.SubTitle,
-                b.Content,
-                Addtime=b.Addtime.ToString("yyy-mm-dd")
-            });
+                Page = page,
+                PageCount = pageSize,
+            };
+            var list = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
+           {
+               a.Id,
+               a.Bimg,
+               a.Bname,
+               a.SubTitle,
+               a.Content,
+               a.Addtime
+           }).ToList().Select(b => new
+           {
+               b.Id,
+               b.Bimg,
+               b.Bname,
+               b.SubTitle,
+               b.Content,
+               Addtime = b.Addtime
+           });
 
             var totalCount1 = _productBrandService.GetProductBrandCount(sech);
 
@@ -223,15 +310,15 @@ namespace Zerg.Controllers.Trading.Product
         public HttpResponseMessage GetBrandList()
         {
             ProductBrandSearchCondition Brandcondition = new ProductBrandSearchCondition
-            {               
+            {
                 IsDescending = true,
                 OrderBy = EnumProductBrandSearchOrderBy.OrderById
-            };         
+            };
             var BrandList = _productBrandService.GetProductBrandsByCondition(Brandcondition).Select(a => new
             {
                 a.Id,
-                a.Bname,                     
-            }).ToList();           
+                a.Bname,
+            }).ToList();
             return PageHelper.toJson(BrandList);
         }
         [System.Web.Http.HttpGet]
@@ -251,10 +338,11 @@ namespace Zerg.Controllers.Trading.Product
                 //    Parametername = p.Parametername,
                 //    Parametervaule = p.Parametervaule
                 //}).ToList()
-                Parameters = Brand.ParameterEntities.ToDictionary(k=> k.Parametername,v=>v.Parametervaule)
+                Parameters = Brand.ParameterEntities.ToDictionary(k => k.Parametername, v => v.Parametervaule)
             };
             var products = _productService.GetProductsByProductBrand(Brand.Id);
-            model.Products = products.Select(p => new ProductModel {
+            model.Products = products.Select(p => new ProductModel
+            {
                 Productname = p.Productname,
                 Id = p.Id,
                 Productimg = p.Productimg
@@ -268,7 +356,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns></returns>
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage SearchBrand(string condition,int page,int pageCount)
+        public HttpResponseMessage SearchBrand(string condition, int page, int pageCount)
         {
             ProductBrandSearchCondition bcon = new ProductBrandSearchCondition
             {
@@ -311,11 +399,58 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="pageindex"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetBrandParameterByBrand(int ProductBrandId)
         {
             return PageHelper.toJson(_brandParameterService.GetBrandParametersByBrandId(ProductBrandId).ToList());
         }
         #endregion
     }
+
+
+    /// <summary>
+    /// 推荐商品 （经纪人专区 推荐楼房）
+    /// </summary>
+    public class RecProdcut
+    {
+        /// <summary>
+        /// 品牌ID
+        /// </summary>
+        public string BrandId { get; set; }
+
+        /// <summary>
+        /// 品牌名称
+        /// </summary>
+        public string BrandName { get; set; }
+
+        /// <summary>
+        /// 品牌图
+        /// </summary>
+        public string Bimg { get; set; }
+        /// <summary>
+        /// 商品Id
+        /// </summary>
+        public string ProductId { get; set; }
+        /// <summary>
+        /// 户型
+        /// </summary>
+        public string HouseType { get; set; }
+
+        /// <summary>
+        /// 价格
+        /// </summary>
+        public string Price { get; set; }
+        /// <summary>
+        /// 最高佣金
+        /// </summary>
+        public string Commition { get; set; }
+        /// <summary>
+        /// 广告标题
+        /// </summary>
+        public string SubTitle { get; set; }
+
+    }
+
+
+
 }

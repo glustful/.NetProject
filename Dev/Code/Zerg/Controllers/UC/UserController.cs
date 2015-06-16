@@ -20,6 +20,7 @@ using Zerg.Models.CRM;
 using Zerg.Models.UC;
 using YooPoon.Common.Encryption;
 using CRM.Service.MessageDetail;
+using CRM.Service.RecommendAgent;
 
 namespace Zerg.Controllers.UC
 {
@@ -34,7 +35,7 @@ namespace Zerg.Controllers.UC
         private readonly IRoleService _roleService;
         private readonly ILevelService _levelService;
         private readonly IMessageDetailService _MessageService;
-
+        private readonly IRecommendAgentService _recommendagentService;
 
 
         public UserController(IUserService userService, 
@@ -43,7 +44,8 @@ namespace Zerg.Controllers.UC
             IBrokerService brokerService,
             IRoleService roleService,
             ILevelService levelService,
-            IMessageDetailService MessageService
+            IMessageDetailService MessageService,
+            IRecommendAgentService recommendagentService
             )
         {
             _userService = userService;
@@ -53,6 +55,7 @@ namespace Zerg.Controllers.UC
             _roleService = roleService;
             _levelService = levelService;
             _MessageService= MessageService;
+            _recommendagentService = recommendagentService;
         }
 
         /// <summary>
@@ -163,6 +166,7 @@ namespace Zerg.Controllers.UC
             #endregion
 
             #region 判断邀请码是否存在真实  （brokerInfoController 中GetBrokerByInvitationCode方法也同一判断）
+             MessageDetailEntity messageDetail=null;
             if (!string.IsNullOrEmpty(brokerModel.inviteCode))
             {
                 
@@ -170,12 +174,8 @@ namespace Zerg.Controllers.UC
                     InvitationCode = brokerModel.inviteCode,
                     Title="推荐经纪人"
                 };
-                var messageDetail = _MessageService.GetMessageDetailsByCondition(messageSearchcondition).FirstOrDefault();//判断邀请码是否存在
-                if (messageDetail != null)
-                {
-                    //添加经纪人
-
-                }else
+                 messageDetail = _MessageService.GetMessageDetailsByCondition(messageSearchcondition).FirstOrDefault();//判断邀请码是否存在
+                if (messageDetail == null)             
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "邀请码错误！"));
                 }
@@ -262,11 +262,34 @@ namespace Zerg.Controllers.UC
 
             model.Level = level;
 
-            _brokerService.Create(model);
+         var newBroker=_brokerService.Create(model);
+
+      
 
             #endregion
 
-            return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
+            #region 推荐经纪人
+         if (!string.IsNullOrEmpty(brokerModel.inviteCode))
+         {
+             //添加经纪人
+             var entity = new RecommendAgentEntity
+             {
+                 PresenteebId = newBroker.Id,
+                 Qq = newBroker.Qq.ToString(),
+                 Agentlevel = newBroker.Agentlevel,
+                 Brokername = newBroker.Brokername,
+                 Phone = newBroker.Phone,
+                 Regtime = DateTime.Now,
+                 Broker = _brokerService.GetBrokerById(Convert.ToInt32(messageDetail.InvitationId)),
+                 Uptime = DateTime.Now,
+                 Addtime = DateTime.Now,
+             };
+
+             _recommendagentService.Create(entity);
+         }
+         #endregion
+
+         return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
         }
 
 
