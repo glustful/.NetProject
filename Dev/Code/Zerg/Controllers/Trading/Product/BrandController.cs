@@ -178,12 +178,10 @@ namespace Zerg.Controllers.Trading.Product
             {
                 Page = page,
                 PageCount = pageSize,
-            };
+            });
             //取出所有品牌
             var BrandList = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
-           {
-               a.Id,
-               a.Bimg,
+           {             
                 a.Id,
                 a.Bimg,
                 a.Bname,
