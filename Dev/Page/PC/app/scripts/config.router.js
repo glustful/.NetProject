@@ -532,6 +532,7 @@ angular.module('app')
                 url: '/strike',
                 templateUrl: 'views/ui/material/strike.html',
                   data: { title: '所有成交' }
+
             })
 
             .state('ui.form.comBroker', {
