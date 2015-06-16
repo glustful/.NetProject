@@ -67,9 +67,15 @@ namespace Zerg.Controllers.CRM
                          return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
                    }else
                    {
+                       if(broker.Phone==yzmsg.Mobile) //不能给自己发
+                       {
+                          
+                           return PageHelper.toJson(PageHelper.ReturnValue(false, "对不起，不能给自己发送短信")); 
+                       }
+
                          //添加到短信表中去 
+                           messages = string.Format(messageTemplate, strNumber, broker.Brokername); //更改模版 
                           AddMessageDetails(new MessageDetailEntity { Content = messages, InvitationCode=strNumber, InvitationId=broker.Id.ToString(), Mobile = yzmsg.Mobile, Sender = yzmsg.Mobile, Title = messageConfigName, Addtime = DateTime.Now });
-                          messages = string.Format(messageTemplate, ""); //更改模版                              
                           return PageHelper.toJson(SMSHelper.Sending(yzmsg.Mobile, messages));
                    }
                    }

@@ -3,7 +3,7 @@
  */
 
 angular.module("app").controller('BrandListController', [
-    '$http','$scope',function($http,$scope) {
+    '$http','$scope','$modal',function($http,$scope,$modal) {
         $scope.img=SETTING.ImgUrl;
         $scope.searchCondition = {
             page: 1,
@@ -25,14 +25,39 @@ angular.module("app").controller('BrandListController', [
         $scope.getList();
 
         //---------------------------------------------删除单个项目----------------------------------------------//
-        $scope.delBrand  = function(brandId) {
-            $http.get(SETTING.ApiUrl + '/Brand/DelBrandById?brandId=' + brandId,{
-                'withCredentials':true
-            }).success(function(data){
-                alert(data);
+        $scope.open=function(brandId){
+            $scope.selectedId=brandId;
+            var modalInstance=$modal.open({
+                templateUrl:'myModalContent.html',
+                controller:'ModalInstanceCtrl',
+                resolve:{
+                    msg:function(){
+                        return "你确定要删除吗？";
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                $http.get(SETTING.ApiUrl+'/Brand/DelBrandById',{
+                    params:{
+                        brandId:$scope.selectedId
+                    },
+                    'withCredentials':true
+                }).success(function(data){
+                    if(data.Status){
+                        $scope.getList();//成功刷新列表
+                    }
+                    else{
+                        $scope.alerts=[{type:'danger',msg:data.Msg}];
+                    }
+                })
             });
         };
+        $scope.closeAlert = function(Brand) {
+            $scope.alerts.splice(Brand, 1);
+        };
     }
+
 ]);
 
 //----------------------------------------新增品牌----------------------------------------------//
@@ -51,13 +76,15 @@ angular.module("app").controller('CreatBrandController', [
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
+
+                    $state.go('page.Trading.product.brand');
                     console.log(data);
                 }else{
                     console.log("error");
                 }
             });
         }
-        //--------添加项目 end-----------//
+
 
         //---------图片上传 start--------//
         $scope.image="";
@@ -99,24 +126,34 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
 //    };
 
     //添加项目
-    $scope.brandName = "";
-    $scope.iconPath = "";
-    $scope.addBrand = function () {
-        var brand = {
-            Bname: $scope.brandName,
-            Bimg: $scope.imgUrl
-        };
-        var Json = JSON.stringify(brand);
-        $http.post(SETTING.ApiUrl + '/Brand/AddProductBrand', Json, {
-            'withCredentials': true
-        }).success(function (data) {
-            WindowClose();
-            $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
-                $scope.rowCollectionBasic = data;
-            });
-            $scope.output = data;
-        });
-    };
+//    $scope.brandName = "";
+//    $scope.iconPath = "";
+//    $scope.addBrand = function () {
+//        var brand = {
+//            Bname: $scope.brandName,
+//            Bimg: $scope.imgUrl
+//        };
+//        var Json = JSON.stringify(brand);
+//        $http.post(SETTING.ApiUrl + '/Brand/AddProductBrand', Json, {
+//            'withCredentials': true
+//        }).success(function (data) {
+//            if(data.Status)
+//            {
+//                $state.go('page.Trading.product.brand')
+//            }
+//            else{
+//                alert(["添加失败！"])
+//
+//            }
+//            $http.get(SETTING.ApiUrl + '/Brand/GetAllBrand?pageindex=' + 0,{'withCredentials':true}).success(function (data) {
+//                $scope.rowCollectionBasic = data;
+//            });
+//            $scope.output = data;
+
+
+
+//        });
+//    };
 
     //根据项目查找项目参数值；
     $scope.selectBrandId=0;
@@ -204,3 +241,35 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
         }
     }
 }]);
+app.filter('dateFilter',function(){
+    return function(date){
+        return FormatDate(date);
+    }
+})
+function FormatDate(JSONDateString) {
+    jsondate = JSONDateString.replace("/Date(", "").replace(")/", "");
+    if (jsondate.indexOf("+") > 0) {
+        jsondate = jsondate.substring(0, jsondate.indexOf("+"));
+    }
+    else if (jsondate.indexOf("-") > 0) {
+        jsondate = jsondate.substring(0, jsondate.indexOf("-"));
+    }
+
+    var date = new Date(parseInt(jsondate, 10));
+    var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+    var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+
+    return date.getFullYear()
+        + "-"
+        + month
+        + "-"
+        + currentDate
+        + "-"
+        + date.getHours()
+        + ":"
+        + date.getMinutes()
+        + ":"
+        + date.getSeconds()
+        ;
+
+}
