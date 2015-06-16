@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Newtonsoft.Json.Linq;
@@ -55,67 +56,87 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns></returns>
         [HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public int AddProduct([FromBody]JObject obj)
+        public HttpResponseMessage AddProduct([FromBody]JObject obj)
         {
             dynamic json = obj;
             JObject JProduct = json.product;
             JObject JProductDetail = json.productDetail;
             var product = JProduct.ToObject<ProductModel>();
             var productDetail = JProductDetail.ToObject<ProductDetailModel>();
-            //先创建productDetail，跟据部分productDetail部分重叠信息创建product；
-            ProductDetailEntity PDE = new ProductDetailEntity()
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            var m = reg.IsMatch(productDetail.Productname);
+            if (!m)
             {
-                Id = 0,
-                Productdetail = productDetail.Productdetail,
-                Productimg = productDetail.Productimg,
-                Productimg1 = productDetail.Productimg1,
-                Productimg2 = productDetail.Productimg2,
-                Productimg3 = productDetail.Productimg3,
-                Productimg4 = productDetail.Productimg4,
-                Productname = productDetail.Productname,
-                Sericeinstruction = productDetail.Sericeinstruction,
-                Addtime = DateTime.Now,
-                //Adduser = productDetail.Adduser,
-                Adduser = _workContent.CurrentUser.Id.ToString(),
-                Updtime = DateTime.Now,
-                //Upduser = productDetail.Upduser
-                Upduser = _workContent.CurrentUser.Id.ToString()
-            };
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
+            }
+            else
+            {
+                //先创建productDetail，跟据部分productDetail部分重叠信息创建product；
+                ProductDetailEntity PDE = new ProductDetailEntity()
+                {
+                    Id = 0,
+                    Productdetail = productDetail.Productdetail,
+                    Productimg = productDetail.Productimg,
+                    Productimg1 = productDetail.Productimg1,
+                    Productimg2 = productDetail.Productimg2,
+                    Productimg3 = productDetail.Productimg3,
+                    Productimg4 = productDetail.Productimg4,
+                    Productname = productDetail.Productname,
+                    Sericeinstruction = productDetail.Sericeinstruction,
+                    Addtime = DateTime.Now,
+                    //Adduser = productDetail.Adduser,
+                    Adduser = _workContent.CurrentUser.Id.ToString(),
+                    Updtime = DateTime.Now,
+                    //Upduser = productDetail.Upduser
+                    Upduser = _workContent.CurrentUser.Id.ToString()
+                };
 
-            ProductDetailEntity PDE2 = _productDetailService.Create(PDE);
-            ClassifyEntity CE = _classifyService.GetClassifyById(product.ClassifyId);
-            ProductBrandEntity CBE = _productBrandService.GetProductBrandById(product.ProductBrandId);
-            ProductEntity PE = new ProductEntity()
-            {
-                Bussnessid = product.Bussnessid,
-                BussnessName="yoopoon",
-                Commission=product.Commission,
-                Dealcommission=product.Dealcommission,
-                Price=product.Price,
-                Classify = CE,
-                ProductBrand = CBE,
-                ProductDetail = PDE2,
-                Productimg = PDE.Productimg,
-                Productname = PDE.Productname,
-                Recommend = product.Recommend,
-                Sort = product.Sort,
-                Status = product.Status,
-                Stockrule = product.Stockrule,
-                Updtime = DateTime.Now,
-                //Upduser = PDE.Upduser,
-                Upduser = _workContent.CurrentUser.Id.ToString(),
-                Addtime = DateTime.Now,
-                //Adduser = PDE.Adduser
-                Adduser = _workContent.CurrentUser.Id.ToString()
-            };
-            try
-            {
-                return _productService.Create(PE).Id;
+                ProductDetailEntity PDE2 = _productDetailService.Create(PDE);
+                ClassifyEntity CE = _classifyService.GetClassifyById(product.ClassifyId);
+                ProductBrandEntity CBE = _productBrandService.GetProductBrandById(product.ProductBrandId);
+                ProductEntity PE = new ProductEntity()
+                {
+                    Bussnessid = product.Bussnessid,
+                    BussnessName = "yoopoon",
+                    Commission = product.Commission,
+                    Dealcommission = product.Dealcommission,
+                    Price = product.Price,
+                    Classify = CE,
+                    ProductBrand = CBE,
+                    ProductDetail = PDE2,
+                    Productimg = PDE.Productimg,
+                    Productname = PDE.Productname,
+                    Recommend = product.Recommend,
+                    Sort = product.Sort,
+                    Status = product.Status,
+                    Stockrule = product.Stockrule,
+                    SubTitle = product.SubTitle,
+                    ContactPhone = product.ContactPhone,
+                    Updtime = DateTime.Now,
+                    //Upduser = PDE.Upduser,
+                    Upduser = _workContent.CurrentUser.Id.ToString(),
+                    Addtime = DateTime.Now,
+                    //Adduser = PDE.Adduser
+                    Adduser = _workContent.CurrentUser.Id.ToString()
+                };
+                var Product = _productService.Create(PE);
+                if (Product != null)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！", Product.Id));
+                }
+                else
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                }
             }
-            catch (Exception e)
-            {
-                return -1;
-            }
+            //try
+            //{
+            //    return _productService.Create(PE).Id;
+            //}
+            //catch (Exception e)
+            //{
+            //    return -1;
+            //}
         }
         /// <summary>
         /// 删除商品
@@ -190,7 +211,7 @@ namespace Zerg.Controllers.Trading.Product
                 b.Commission,
                 b.Dealcommission,
                 b.ClassifyName,
-                Addtime=b.Addtime.ToString("yyy-mm-dd"),
+                b.Addtime,
 
                 b.SubTitle,
                 b.ProductDetailed,
