@@ -10,7 +10,7 @@ namespace Event.Entity.Mappings.Follower
 		{
 			ToTable("Follower");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
+
 			Property(c => c.Openid).HasColumnType("varchar").HasMaxLength(30).IsOptional();
 			Property(c => c.Nickname).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Sex).HasColumnType("varchar").HasMaxLength(1);

@@ -10,7 +10,7 @@ namespace Event.Entity.Mappings.RedConfig
 		{
 			ToTable("RedConfig");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
+
 			Property(c => c.商家关联id).HasColumnType("int");
 			Property(c => c.Ttitle).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Intro).HasColumnType("varchar").HasMaxLength(256);

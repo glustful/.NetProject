@@ -10,7 +10,7 @@ namespace Event.Entity.Mappings.Participation
 		{
 			ToTable("Participation");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
+
 			HasOptional(c =>c.Crowd);
 			Property(c => c.Username).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.UseId).HasColumnType("int");

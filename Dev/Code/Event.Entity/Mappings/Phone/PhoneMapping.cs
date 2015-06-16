@@ -10,7 +10,7 @@ namespace Event.Entity.Mappings.Phone
 		{
 			ToTable("Phone");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
+
 			HasOptional(c =>c.Follower);
 			Property(c => c.Openid).HasColumnType("varchar").HasMaxLength(30).IsOptional();
 			Property(c => c.Phone).HasColumnType("varchar").HasMaxLength(11);
