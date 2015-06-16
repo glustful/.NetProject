@@ -100,16 +100,19 @@ $scope.warnType='';
                 getTaskType();
                 $scope.warnType=data.Msg;
                  }
-            else{ $scope.warnType=data.Msg;}
+            else{ $scope.warnType=data.Msg;
+              }
 
         });
     };
     var typeTest=function(){
         if($scope.typeCondition.Name==""){
             $scope.warnType='请输入类型名称';
+            document.getElementById("type1").focus();
         }
         else if($scope.typeCondition.Describe==""){
             $scope.warnType='请输入描述';
+            document.getElementById("typeDe").focus();
         }
         else{getTypeResult(); }
     }
@@ -135,14 +138,14 @@ $scope.warnType='';
     var tagTest=function(){
         if($scope.tagCondition.Name==""){
             $scope.warnTag='请输入目标名称';
-
+            document.getElementById("tagn").focus();
         }
         else if($scope.tagCondition.Describe==""){
-
+            document.getElementById("tagd").focus();
             $scope.warnTag='请输入描述';
         }
         else if($scope.tagCondition.Value==""){
-
+            document.getElementById("tagv").focus();
             $scope.warnTag='请输入目标值';
         }
         else{getTagResult(); }
@@ -171,14 +174,14 @@ $scope.warnType='';
     var awardTest=function(){
         if($scope.awardCondition.Name==""){
             $scope.warnAward='请输入奖励名称';
-
+            document.getElementById("awardn").focus();
         }
         else if($scope.awardCondition.Describe==""){
-
+            document.getElementById("awardd").focus();
             $scope.warnAward='请输入描述';
         }
         else if($scope.awardCondition.Value==""){
-
+            document.getElementById("awardv").focus();
             $scope.warnAward='请输入目标值';
         }
         else{getAwardResult(); }
@@ -205,14 +208,14 @@ $scope.warnType='';
     var punishTest=function(){
         if($scope.punishmentCondition.Name==""){
             $scope.warnPunish='请输入惩罚名称';
-
+            document.getElementById("punishn").focus();
         }
         else if($scope.punishmentCondition.Describe==""){
-
+            document.getElementById("punishd").focus();
             $scope.warnPunish='请输入描述';
         }
         else if($scope.punishmentCondition.Value==""){
-
+            document.getElementById("punishv").focus();
             $scope.warnPunish='请输入目标值';
         }
         else{getPunishResult(); }

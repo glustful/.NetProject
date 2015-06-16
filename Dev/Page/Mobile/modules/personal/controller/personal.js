@@ -2,8 +2,18 @@
  * Created by Administrator on 2015/6/8.
  */
 app.controller('personController',['$http','$scope','AuthService','$state',function($http,$scope,AuthService,$state) {
-   if(AuthService.IsAuthenticated())
+        $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
+   var coun=2;
+        //判断是否是经纪人
+    $http.get(SETTING.ApiUrl+'/ClientInfo/Getbroker/',{'withCredentials':true})
+        .success(function(response) {
+          coun=response.count;
+            action();
+        });
+        function action(){
+        if(coun===1)
    {
+
     $scope.searchCondition = {
         Id:0,
         page: 1,
@@ -27,8 +37,7 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
     	customerCount:0
     }
     //获取用户信息
-    
-    $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
+
     $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerDetails',{'withCredentials':true})
     .success(function(response) {
     	$scope.userBroker = response;
@@ -101,10 +110,9 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
     $scope.addTaskList = addlist;
    }
         else{
-
        $state.go("user.login");
 
-   }
+   }}
 }
 ]
 );
