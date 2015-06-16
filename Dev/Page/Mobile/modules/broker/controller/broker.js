@@ -77,8 +77,6 @@ app.controller('BrokerTopThreeController',['$scope','$http','AuthService','$stat
     var getRecProduct=function() {
         $http.get(SETTING.ApiUrl + '/Brand/GetOneBrand', {params: $scope.searchCondition, 'withCredentials': true}).success(function (data) {
             $scope.List = data.List;
-            $scope.RecProduct = data.Product;
-
         });
     };
     getRecProduct();
