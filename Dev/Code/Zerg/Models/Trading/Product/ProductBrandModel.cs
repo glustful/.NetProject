@@ -25,6 +25,10 @@ namespace Zerg.Models.Trading.Product
         /// </summary>
         public  DateTime Addtime { get; set; }
         /// <summary>
+        /// Content
+        /// </summary>
+        public string Content    { get; set;  }
+        /// <summary>
         /// UpdUser
         /// </summary>
         public  string Upduser { get; set; }
@@ -35,5 +39,6 @@ namespace Zerg.Models.Trading.Product
         public Dictionary<string,string> Parameters { get; set; }
 
         public List<ProductModel> Products { get; set; }
+       
     }
 }

@@ -67,7 +67,10 @@ angular.module("app").controller('CreatBrandController', [
         //--------添加项目 start---------//
         $scope.BrandModel={
             Bname:"",
-            Bimg:""
+            Bimg:"",
+            SubTitle:"",
+            Content:""
+
         };
 
         $scope.Save = function(){
@@ -86,7 +89,7 @@ angular.module("app").controller('CreatBrandController', [
         }
 
 
-        //---------图片上传 start--------//
+        //---------------------------------------------图片上传 start------------------------------------//
         $scope.image="";
         $scope.SImg=SETTING.ImgUrl;
         function completeHandler(e) {
@@ -105,9 +108,10 @@ angular.module("app").controller('CreatBrandController', [
             console.info('onSuccessItem', fileItem, response, status, headers);
             completeHandler(response.Msg);
         };
-        //---------图片上传 end---------//
+        //-------------------------------------------图片上传 end------------------------------------------//
     }
 ]);
+
 
 
 app.controller('BrandController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
@@ -171,9 +175,8 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
         var brand = {
             ProductBrandId:  $scope.selectBrandId,
             Parametername: $scope.brandParameterName,
-            Parametervaule:  $scope.brandParameterValue,
-            Adduser: 2,
-            Upduser: 'jiadou'
+            Parametervaule:  $scope.brandParameterValue
+
         };
         var Json = JSON.stringify(brand);
         $http.post(SETTING.ApiUrl + '/Brand/AddProductBrandParameter', Json, {

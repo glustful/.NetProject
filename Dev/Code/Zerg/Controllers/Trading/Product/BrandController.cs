@@ -67,8 +67,11 @@ namespace Zerg.Controllers.Trading.Product
                 Bimg = productBrandModel.Bimg,
                 Bname = productBrandModel.Bname,
                 Updtime = DateTime.Now,
-                Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture)
+                Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
+                SubTitle=productBrandModel.SubTitle,
+                Content=productBrandModel.Content,
             };
+            
             try
             {
                 _productBrandService.Create(PBE);
@@ -137,22 +140,22 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="brandParameterId"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public string DelBrandParameter(int brandParameterId)
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage DelBrandParameter(int brandParameterId)
         {
             try
             {
                 if (_brandParameterService.Delete(_brandParameterService.GetBrandParameterById(brandParameterId)))
-                { 
-                    return "删除成功";
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功！"));
                    
                 }else{
-                    return "无法删除，可能该项目下有商品";
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "无法删除，可能该项目下有商品"));
                 }
             }
             catch (Exception e)
             {
-                 return "无法删除";
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！")); 
             }
         }
 
@@ -178,7 +181,8 @@ namespace Zerg.Controllers.Trading.Product
                 a.Bname,
                 a.SubTitle,
                 a.Content,
-                a.Addtime
+                a.Addtime,
+                ProductParamater = a.ParameterEntities.Select(p => new { p.Parametername, p.Parametervaule })
             }).ToList().Select(b=>new
             {
                 b.Id,
@@ -186,6 +190,7 @@ namespace Zerg.Controllers.Trading.Product
                 b.Bname,
                 b.SubTitle,
                 b.Content,
+                ProductParamater = b.ProductParamater.ToDictionary(k => k.Parametername, v => v.Parametervaule),
                 Addtime=b.Addtime
             });
 
@@ -316,7 +321,14 @@ namespace Zerg.Controllers.Trading.Product
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
         public HttpResponseMessage GetBrandParameterByBrand(int ProductBrandId)
         {
-            return PageHelper.toJson(_brandParameterService.GetBrandParametersByBrandId(ProductBrandId).ToList());
+            var brandParameter = _brandParameterService.GetBrandParametersByBrandId(ProductBrandId).Select(p => new
+            {
+                p.Id,
+                p.Parametername,
+                p.Parametervaule
+            }).ToList();
+            return PageHelper.toJson(brandParameter);
+           // return PageHelper.toJson(_brandParameterService.GetBrandParametersByBrandId(ProductBrandId).ToList());
         }
         #endregion
     }

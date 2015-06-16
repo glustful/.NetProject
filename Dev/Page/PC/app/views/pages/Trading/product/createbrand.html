@@ -8,14 +8,26 @@
 <script type="text/javascript" charset="utf-8" src="../libs/ueditor/lang/zh-cn/zh-cn.js"></script>
 
 <div class="panel-body">
-    <form class="form-horizontal" ng-submit="Save()">
+    <form class="form-horizontal" ng-submit="Save()" name="form">
         <div class="form-group">
-            <label for="UserName" class="col-sm-2 control-label">请输入项目名：</label>
+            <label for="UserName" class="col-sm-2 control-label">请输入品牌名：</label>
             <div class="col-sm-10">
-                <input name="Bname" id="Bname" type="text" class="form-control" required ng-model="BrandModel.Bname" required/>
+                <input name="Bname" id="Bname" type="text" style="width: 180px" class="form-control" required ng-model="BrandModel.Bname" required/>
+                <span ng-show="form.Bname.$error.required" style="color: red;">*必填项</span>
+            </div>
+            <label for="UserName" class="col-sm-2 control-label">请输入品牌标题：</label>
+            <div class="col-sm-10">
+                <input name="SubTitle" id="Subtitle" type="text"  style="width: 500px"  class="form-control" required ng-model="BrandModel.SubTitle" required/>
+                <span ng-show="form.SubTitle.$error.required" style="color: red;">*必填项</span>
+            </div>
+            <label class="col-sm-2 control-label">请输入品牌内容：</label>
+            <div class="col-sm-10">
+                <input name="Content" id="Content" type="text" style="width: 500px" class="form-control" required ng-model="BrandModel.Content" required/>
+                <span ng-show="form.Content.$error.required" style="color: red;">*必填项</span>
             </div>
 
-            <div>
+
+            <div class="loadimg">
                 <img height="100" width="100" src="{{SImg+image}}" tittle="图片" />
                 <input name="Bimg" id="Bimg" type="hidden" class="form-control" required ng-model="BrandModel.Bimg" required value="{{image}}"/>
             </div>
@@ -26,6 +38,8 @@
             <p class="m-t-md">上传图片</p>
             <input type="file" nv-file-select="" uploader="uploader" />
             <div>
+
+
                 <div class="p-md">
                     <!--<div class="m-b"><b class="badge bg-info pos-rlt m-r-xs"><i class="arrow right b-info pull-in"></i>{{ uploader.queue.length }}</b> file(s)</div>-->
                     <table class="table bg-white b-a">
