@@ -42,10 +42,6 @@ namespace Event.Entity.Model
 
 
 
-		public int[] UseIds { get; set; }
-
-
-
 		public string Phone { get; set; }
 
 
@@ -57,6 +53,16 @@ namespace Event.Entity.Model
 		public DateTime? AddtimeBegin { get; set; }
 
 		public DateTime? AddtimeEnd { get; set; }
+
+
+
+		public int[] Upusers { get; set; }
+
+
+
+		public DateTime? UptimeBegin { get; set; }
+
+		public DateTime? UptimeEnd { get; set; }
 
 
 

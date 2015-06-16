@@ -54,8 +54,6 @@
     <Compile Include="Phone\IPhoneService.cs" />
     <Compile Include="Phone\PhoneService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RedConfig\IRedConfigService.cs" />
-    <Compile Include="RedConfig\RedConfigService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Event.Entity\Event.Entity.csproj">
@@ -69,6 +67,10 @@
     <ProjectReference Include="..\YooPoon.Data\YooPoon.Data.csproj">
       <Project>{2c74c9cf-a131-49e2-99bf-717315b46b4b}</Project>
       <Name>YooPoon.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zerg.Common\Zerg.Common.csproj">
+      <Project>{db11f281-e24f-4237-b77f-0cfdcf8dd647}</Project>
+      <Name>Zerg.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

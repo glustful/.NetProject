@@ -82,6 +82,26 @@ namespace Event.Entity.Model
 
 
 
+		public int[] Addusers { get; set; }
+
+
+
+		public DateTime? AddtimeBegin { get; set; }
+
+		public DateTime? AddtimeEnd { get; set; }
+
+
+
+		public int[] Upusers { get; set; }
+
+
+
+		public DateTime? UptimeBegin { get; set; }
+
+		public DateTime? UptimeEnd { get; set; }
+
+
+
 
 		public EnumFollowerSearchOrderBy? OrderBy { get; set; }
 

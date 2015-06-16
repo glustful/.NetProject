@@ -3,15 +3,16 @@ using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 using Event.Entity.Model;
+using Zerg.Common.Data;
 
 namespace Event.Service.PartImage
 {
 	public class PartImageService : IPartImageService
 	{
-		private readonly IRepository<PartImageEntity> _partimageRepository;
+		private readonly IEventRepository<PartImageEntity> _partimageRepository;
 		private readonly ILog _log;
 
-		public PartImageService(IRepository<PartImageEntity> partimageRepository,ILog log)
+		public PartImageService(IEventRepository<PartImageEntity> partimageRepository,ILog log)
 		{
 			_partimageRepository = partimageRepository;
 			_log = log;

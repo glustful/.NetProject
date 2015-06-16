@@ -11,7 +11,7 @@ namespace Event.Entity.Model
 		/// </summary>
 		public virtual int Id { get; set; }
 		/// <summary>
-		/// 项目ID
+		/// Crowd_Id
 		/// </summary>
 		public virtual CrowdEntity Crowd { get; set; }
 		/// <summary>

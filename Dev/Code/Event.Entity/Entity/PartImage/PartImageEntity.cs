@@ -11,15 +11,15 @@ namespace Event.Entity.Model
 		/// </summary>
 		public virtual int Id { get; set; }
 		/// <summary>
-		/// 项目ID
+		/// Crowd_Id
 		/// </summary>
 		public virtual CrowdEntity Crowd { get; set; }
 		/// <summary>
-		/// 排序权重
+		/// 图片排序
 		/// </summary>
 		public virtual int Orderby { get; set; }
 		/// <summary>
-		/// 图片地址
+		/// 图片链接
 		/// </summary>
 		public virtual string Imgurl { get; set; }
 		/// <summary>

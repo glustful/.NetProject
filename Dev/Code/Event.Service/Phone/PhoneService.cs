@@ -3,15 +3,16 @@ using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 using Event.Entity.Model;
+using Zerg.Common.Data;
 
 namespace Event.Service.Phone
 {
 	public class PhoneService : IPhoneService
 	{
-		private readonly IRepository<PhoneEntity> _phoneRepository;
+		private readonly IEventRepository<PhoneEntity> _phoneRepository;
 		private readonly ILog _log;
 
-		public PhoneService(IRepository<PhoneEntity> phoneRepository,ILog log)
+		public PhoneService(IEventRepository<PhoneEntity> phoneRepository,ILog log)
 		{
 			_phoneRepository = phoneRepository;
 			_log = log;
@@ -85,6 +86,14 @@ namespace Event.Service.Phone
                 {
                     query = query.Where(q => q.Addtime < condition.AddtimeEnd.Value);
                 }
+				if (condition.UptimeBegin.HasValue)
+                {
+                    query = query.Where(q => q.Uptime>= condition.UptimeBegin.Value);
+                }
+                if (condition.UptimeEnd.HasValue)
+                {
+                    query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
+                }
 				if (!string.IsNullOrEmpty(condition.Openid))
                 {
                     query = query.Where(q => q.Openid.Contains(condition.Openid));
@@ -104,6 +113,10 @@ namespace Event.Service.Phone
 				if (condition.Addusers != null && condition.Addusers.Any())
                 {
                     query = query.Where(q => condition.Addusers.Contains(q.Adduser));
+                }
+				if (condition.Upusers != null && condition.Upusers.Any())
+                {
+                    query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
 				if(condition.OrderBy.HasValue)
 				{
@@ -146,6 +159,14 @@ namespace Event.Service.Phone
                 {
                     query = query.Where(q => q.Addtime < condition.AddtimeEnd.Value);
                 }
+				if (condition.UptimeBegin.HasValue)
+                {
+                    query = query.Where(q => q.Uptime>= condition.UptimeBegin.Value);
+                }
+                if (condition.UptimeEnd.HasValue)
+                {
+                    query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
+                }
 				if (!string.IsNullOrEmpty(condition.Openid))
                 {
                     query = query.Where(q => q.Openid.Contains(condition.Openid));
@@ -165,6 +186,10 @@ namespace Event.Service.Phone
 				if (condition.Addusers != null && condition.Addusers.Any())
                 {
                     query = query.Where(q => condition.Addusers.Contains(q.Adduser));
+                }
+				if (condition.Upusers != null && condition.Upusers.Any())
+                {
+                    query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
 				return query.Count();
 			}
