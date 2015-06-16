@@ -2,14 +2,17 @@
  * Created by gaofengming on 2015/6/2.
  */
 var app = angular.module("zergApp");
-app.controller('registerController',['$scope','$state','$http','AuthService',function($scope,$state,$http,AuthService){
+app.controller('registerController',['$scope','$state','$http','$stateParams','AuthService',function($scope,$state,$http,$stateParams,AuthService){
+   console.log($stateParams.yqm);
+
     $scope.register={
         UserName:'',
         Password:'',
         SecondPassword:'',
         Phone:'',
         MobileYzm:'',
-        Hidm:''
+        Hidm:'',
+        inviteCode:$stateParams.yqm
     }
     //提交注册信息
     $scope.registerSubmit = function(){

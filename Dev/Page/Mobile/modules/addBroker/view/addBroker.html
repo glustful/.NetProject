@@ -1,11 +1,12 @@
 <!--添加经纪人-->
 <!--required：../static/style/partner.css" rel="stylesheet-->
-<div class="add_content"  ng-controller="recommendBrokerAddController" >
-    <form  name="form" id="form"  ng-submit="Crete()">
+<div class="add_content"  ng-controller="AddBrokerController" >
+    <form  name="form" id="form"  ng-submit="Invite()">
         <p>
             电话
         </p>
-        <p><input type="tel" class="add_blank" ng-model="phone" ng-model="YZM.phone"   placeholder="请输入被邀请人电话" required/></p>
-        <p><button class="add_button"  >邀请</button></p>
+        <p><input type="tel" class="add_blank" ng-model="YQM.Mobile"   placeholder="请输入被邀请人电话" required/></p>
+        <p><button class="add_button" type="submit" >邀请</button></p>
+        <div>{{errorTip}}</div>
     </form>
 </div>

@@ -135,6 +135,10 @@ a{
 	height: 128px;
 	width: 128px;
 }
-
+.errorTip{
+    color: #fc3b00;
+    font-size: 20px;
+    font-family: 'microsoft yahei';
+}
 
 

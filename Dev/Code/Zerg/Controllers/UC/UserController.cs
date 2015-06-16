@@ -19,6 +19,8 @@ using Zerg.Common;
 using Zerg.Models.CRM;
 using Zerg.Models.UC;
 using YooPoon.Common.Encryption;
+using CRM.Service.MessageDetail;
+using CRM.Service.RecommendAgent;
 
 namespace Zerg.Controllers.UC
 {
@@ -32,13 +34,18 @@ namespace Zerg.Controllers.UC
         private readonly IBrokerService _brokerService;
         private readonly IRoleService _roleService;
         private readonly ILevelService _levelService;
+        private readonly IMessageDetailService _MessageService;
+        private readonly IRecommendAgentService _recommendagentService;
+
 
         public UserController(IUserService userService, 
             IAuthenticationService authenticationService, 
             IWorkContext workContext,
             IBrokerService brokerService,
             IRoleService roleService,
-            ILevelService levelService
+            ILevelService levelService,
+            IMessageDetailService MessageService,
+            IRecommendAgentService recommendagentService
             )
         {
             _userService = userService;
@@ -47,6 +54,8 @@ namespace Zerg.Controllers.UC
             _brokerService = brokerService;
             _roleService = roleService;
             _levelService = levelService;
+            _MessageService= MessageService;
+            _recommendagentService = recommendagentService;
         }
 
         /// <summary>
@@ -156,6 +165,24 @@ namespace Zerg.Controllers.UC
             }
             #endregion
 
+            #region 判断邀请码是否存在真实  （brokerInfoController 中GetBrokerByInvitationCode方法也同一判断）
+             MessageDetailEntity messageDetail=null;
+            if (!string.IsNullOrEmpty(brokerModel.inviteCode))
+            {
+                
+                MessageDetailSearchCondition messageSearchcondition=new MessageDetailSearchCondition{
+                    InvitationCode = brokerModel.inviteCode,
+                    Title="推荐经纪人"
+                };
+                 messageDetail = _MessageService.GetMessageDetailsByCondition(messageSearchcondition).FirstOrDefault();//判断邀请码是否存在
+                if (messageDetail == null)             
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "邀请码错误！"));
+                }
+            }
+            #endregion
+
+
             #region UC用户创建 杨定鹏 2015年5月28日14:52:48
             var user = _userService.GetUserByName(brokerModel.UserName);
 
@@ -235,11 +262,34 @@ namespace Zerg.Controllers.UC
 
             model.Level = level;
 
-            _brokerService.Create(model);
+         var newBroker=_brokerService.Create(model);
+
+      
 
             #endregion
 
-            return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
+            #region 推荐经纪人
+         if (!string.IsNullOrEmpty(brokerModel.inviteCode))
+         {
+             //添加经纪人
+             var entity = new RecommendAgentEntity
+             {
+                 PresenteebId = newBroker.Id,
+                 Qq = newBroker.Qq.ToString(),
+                 Agentlevel = newBroker.Agentlevel,
+                 Brokername = newBroker.Brokername,
+                 Phone = newBroker.Phone,
+                 Regtime = DateTime.Now,
+                 Broker = _brokerService.GetBrokerById(Convert.ToInt32(messageDetail.InvitationId)),
+                 Uptime = DateTime.Now,
+                 Addtime = DateTime.Now,
+             };
+
+             _recommendagentService.Create(entity);
+         }
+         #endregion
+
+         return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
         }
 
 
