@@ -18,8 +18,8 @@
             </div>
             <div class="bj">
             <div class="nav-broker">
-                <a href="#/app/nominate"><span class="dk"> 我要带客</span></a>
-                <a href="#/app/nominate"><span class="tj"> 我要推荐</span></a>
+                <a href="#/app/nominate"><span class="dk"access="broker"> 我要带客</span></a>
+                <a href="#/app/nominate"><span class="tj" access="broker"> 我要推荐</span></a>
                 <a href="#/app/task"><span class="rw">我的任务</span></a>
                 <a href="#/app/redPaper-1"> <span class="hb">抢红包</span></a>
             </div>
@@ -81,22 +81,22 @@
                 <!--<div style="text-align: center;padding-bottom: 20px"><span>{{tipp}}</span></div>-->
 
                 <ul>
-                    <li class="brand " ng-repeat="item in brandList">
-                        <a href="#/app/houses?BrandId={{item.Id}}"><img src="http://img.yoopoon.com/{{item.Bimg}}" alt="蓝光&nbsp;·&nbsp;颐明园" width="620" height="160"/>
+                    <li class="brand " ng-repeat="item in List">
+                        <a href="#/app/houses?BrandId={{item.BrandId}}"><img src="http://img.yoopoon.com/{{item.Bimg}}" alt="蓝光&nbsp;·&nbsp;颐明园" width="620" height="160"/>
                             <!--<img src="modules/broker//static/image/broker/lp1.png" alt="中天·水云间" width="620" height="160"/>-->
-                            <div class="summary"><span>[{{ item.Bname }}]</span>
-                                <span>户型:{{item.ProductParamater["户型"]}}</span>
-                                <span>价格:{{item.ProductParamater["最小价格"]}}</span>
+                            <div class="summary"><span>[{{ item.BrandName}}]</span>
+                                <span>户型:{{item.HouseType}}</span>
+                                <span>价格:{{item.Price}}</span>
                             </div>
                             <div class="summaryBg"></div>
-                            <div class="tiptop">最高佣金：&nbsp;{{item.ProductParamater["最高佣金"]}}/套</div>
+                            <div class="tiptop">最高佣金：&nbsp;{{item.Commition}}/套</div>
                             <div class="depreciate"><span>{{item.SubTitle}}</span></div>
                             <div class="depreciateBg"></div>
                         </a>
                         <div class="sub-nav-broker">
-                            <span class="orange" ><a href="#/app/carry_client?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}">我要带客</a></span>
-                            <span class="orange" ><a href="#/app/groom?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}">我要推荐</a></span>
-                            <span class="blue" access="broker"<a href="#/app/redPaper-1">抢红包</a></span>
+                            <span class="orange" access="broker"><a href="#/app/carry_client?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}">我要带客</a></span>
+                            <span class="orange" access="broker"><a href="#/app/groom?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}">我要推荐</a></span>
+                            <span class="blue" access="broker"><a href="#/app/redPaper-1">抢红包</a></span>
                             <span class="blue lt" access="broker"><a href="#/app/myInt">拿积分</a></span>
                         </div>
                     </li>

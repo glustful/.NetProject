@@ -18,6 +18,7 @@ using Zerg.Models.Trading.Product;
 using Zerg.Common;
 using System.Net;
 using System.Web.Http.Cors;
+using YooPoon.Core.Site;
 
 namespace Zerg.Controllers.Trading.Product
 {
@@ -30,6 +31,7 @@ namespace Zerg.Controllers.Trading.Product
         private readonly IClassifyService _classifyService;
         private readonly IParameterService _parameterService;
         private readonly IParameterValueService _parameterValueService;
+        private readonly IWorkContext _workContext;
         /// <summary>
         /// 构造函数（操作函数注入）
         /// </summary>
@@ -40,7 +42,8 @@ namespace Zerg.Controllers.Trading.Product
             IProductParameterService productParameterService,
             IClassifyService classifyService,
             IParameterValueService parameterValueService,
-            IParameterService parameterService)
+            IParameterService parameterService,
+            IWorkContext workContext)
         {
             _productService = productService;
             _productBrandService = productBrandService;
@@ -49,6 +52,7 @@ namespace Zerg.Controllers.Trading.Product
             _classifyService = classifyService;
             _parameterService = parameterService;
             _parameterValueService = parameterValueService;
+            _workContext = workContext;
         }
 
 
@@ -74,9 +78,11 @@ namespace Zerg.Controllers.Trading.Product
                 Name = classify.Name,
                 Sort = sort,
                 Addtime = DateTime.Now,
-                Adduser = classify.Adduser,
+               // Adduser = classify.Adduser,
+                Adduser = _workContext.CurrentUser.Id.ToString(),
                 Updtime = DateTime.Now,
-                Upduser = classify.Upduser
+                Upduser = _workContext.CurrentUser.Id.ToString()
+                //Upduser = classify.Upduser
 
             };
             try
@@ -227,7 +233,8 @@ namespace Zerg.Controllers.Trading.Product
                 Sort = parameter.Sort,
                 Name = parameter.Name,
                 Classify = ce,
-                Adduser = parameter.Adduser,
+                //Adduser = parameter.Adduser,
+                Adduser = _workContext.CurrentUser.Id.ToString(),
                 Addtime = DateTime.Now,
             };
             try
@@ -257,7 +264,8 @@ namespace Zerg.Controllers.Trading.Product
                 Sort = parameterValueModel.Sort,
                 Parametervalue = parameterValueModel.Parametervalue,
                 Parameter = pe,
-                Adduser = parameterValueModel.Adduser,
+               // Adduser = parameterValueModel.Adduser,
+                Adduser = _workContext.CurrentUser.Id.ToString(),
                 Addtime = DateTime.Now,
             };
             try
@@ -288,13 +296,15 @@ namespace Zerg.Controllers.Trading.Product
                 ProductParameterEntity PPE = new ProductParameterEntity()
                 {
                     Addtime = DateTime.Now,
-                    Adduser = PE.Adduser,
+                    //Adduser = PE.Adduser,
+                    Adduser = _workContext.CurrentUser.Id.ToString(),
                     Parameter = ParE,
                     ParameterValue = PVE,
                     Product = PE,
                     Sort = 0,
                     Updtime = DateTime.Now,
-                    Upduser = PE.Upduser
+                    //Upduser = PE.Upduser
+                    Upduser =_workContext.CurrentUser.Id.ToString(),
                 };
                 _productParameterService.Create(PPE);
                 return "绑定商品属性值成功";
@@ -354,10 +364,17 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="parameterId"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetParameterByClassify(int classifyId)
         {
-            return PageHelper.toJson(_parameterService.GetParameterEntitysByClassifyId(classifyId).ToList());
+            var parameterList = _parameterService.GetParameterEntitysByClassifyId(classifyId).Select(p => new
+            {
+                p.Id,
+                p.Name,
+                p.Addtime
+            });
+            //return PageHelper.toJson(_parameterService.GetParameterEntitysByClassifyId(classifyId).ToList());
+            return PageHelper.toJson(parameterList);
         }
 
         /// <summary>
@@ -366,15 +383,23 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="parameterId"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetParameterValueByParameter(int parameterId)
         {
-            return PageHelper.toJson(_parameterValueService.GetParameterValuesByParameter(parameterId).ToList());
+            var parameterValueList = _parameterValueService.GetParameterValuesByParameter(parameterId).Select(p => new
+            {
+                p.Id,
+                p.Parametervalue
+            });
+            //return PageHelper.toJson(_parameterValueService.GetParameterValuesByParameter(parameterId).ToList());
+            return PageHelper.toJson(parameterValueList);
         }
         #endregion
 
         #region 公用方法
         List<ClassifyEntity> _CEList = new List<ClassifyEntity>();
+     
+
         /// <summary>
         /// 获取分类树枝下的每个终节点；
         /// </summary>

@@ -19,8 +19,6 @@ app.controller('ProductTreeCtrl', ['$scope', '$http', '$state', function ($scope
 
     //添加类别
     $scope.addClassify = function () {
-        var selectedBranch= tree.get_selected_branch();
-        if(selectedBranch!=null){
             $scope.output = "您正在为添加 " + $scope.classifyValue + " 分类!  ";
             var selectedFatherBranch;
             var cla;
@@ -50,10 +48,6 @@ app.controller('ProductTreeCtrl', ['$scope', '$http', '$state', function ($scope
                     $scope.my_tree.expand_all();
                 });
             });
-        }else{
-            alert("请至少选择一个分类");
-        }
-
     };
     //添加子类别
     $scope.addSubClassify = function () {

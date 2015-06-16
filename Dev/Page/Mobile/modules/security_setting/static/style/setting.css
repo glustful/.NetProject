@@ -27,6 +27,7 @@
 .security_content{
     padding: 30px 55px 440px 58px;
     color: #848484;
+    font-family: "microsoft yahei";
 }
 .security_content p{
     font-size: 24px;
@@ -70,13 +71,13 @@ form a{
     color: #ffffff;
     font-family:'microsoft yahei' ;
 }
-.security_error{
+.errorTip{
     color: #fc3b00;
 }
 /*个人设置*/
 .setting_personal{
     padding: 40px 0 100px 0;
-
+    font-family: "microsoft yahei";
 }
 .person_revise{
     padding: 20px 55px 0 55px;
@@ -89,7 +90,7 @@ form a{
 .person_revise input {
     width: 518px;
     height: 48px;
-    font-size: 20px;
+    font-size: 22px;
     font-family: "microsoft yahei";
 }
 .headphoto{

@@ -24,7 +24,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="row in list">
-                <td align="center"><img width="40" height="40" src={{row.Productimg}}></td>
+                <td align="center"><img width="40" height="40" src={{img+row.Productimg}}></td>
                 <td align="center">{{row.Productname }}</td>
                 <td align="center">{{row.Price }}</td>
                 <td align="center">{{row.RecCommission }}</td>
@@ -32,7 +32,7 @@
                 <td align="center">{{row.Dealcommission }}</td>
                 <td align="center">{{row.ClassifyName }}</td>
                 <td align="center">{{row.StockRule }}</td>
-                <td align="center">{{row.Addtime }}</td>
+                <td align="center">{{row.Addtime | dateFilter }}</td>
                 <td align="center">
                     <button ng-click='del(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
                     </button>
@@ -41,7 +41,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="5" class="text-center">
+                <td colspan="5" class="text-center footable-visible">
                     <pagination boundary-links="true" total-items="totalCount" items-per-page="product.pageSize" ng-model="product.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
                 </td>
             </tr>

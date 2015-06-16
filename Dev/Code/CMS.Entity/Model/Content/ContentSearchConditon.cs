@@ -27,10 +27,6 @@ namespace CMS.Entity.Model
 
 		public string Title { get; set; }
 
-
-        public string TitleImg { get; set;}
-
-
 		public int[] Addusers { get; set; }
 
 		public DateTime? AddtimeBegin { get; set; }

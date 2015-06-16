@@ -101,13 +101,13 @@ namespace CRM.Service.RecommendAgent
                 {
                     query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
                 }
-				if (condition.Phone.HasValue)
+				if (!string.IsNullOrEmpty( condition.Phone))
                 {
-                    query = query.Where(q => q.Phone == condition.Phone.Value);
+                    query = query.Where(q => q.Phone == condition.Phone);
                 }
-				if (condition.Qq.HasValue)
+				if (!string.IsNullOrEmpty(condition.Qq))
                 {
-                    query = query.Where(q => q.Qq == condition.Qq.Value);
+                    query = query.Where(q => q.Qq == condition.Qq);
                 }
 				if (!string.IsNullOrEmpty(condition.Brokername))
                 {
@@ -194,13 +194,13 @@ namespace CRM.Service.RecommendAgent
                 {
                     query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
                 }
-				if (condition.Phone.HasValue)
+                if (!string.IsNullOrEmpty(condition.Phone))
                 {
-                    query = query.Where(q => q.Phone == condition.Phone.Value);
+                    query = query.Where(q => q.Phone == condition.Phone);
                 }
-				if (condition.Qq.HasValue)
+                if (!string.IsNullOrEmpty(condition.Qq))
                 {
-                    query = query.Where(q => q.Qq == condition.Qq.Value);
+                    query = query.Where(q => q.Qq == condition.Qq);
                 }
 				if (!string.IsNullOrEmpty(condition.Brokername))
                 {

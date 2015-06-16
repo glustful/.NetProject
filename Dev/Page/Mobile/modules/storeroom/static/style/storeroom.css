@@ -97,28 +97,38 @@
      /*border-radius: 10px;*/
  }
 #province{
-    float:left;margin-left: 40px;width: 150px;
+    float:left;
+    margin-left: 40px;
+    width: 150px;
     background-color: #ffffff;
     border: 1px solid #ebebeb
 }
 #city,#county{
-    float:left;width: 150px;
+    float:left;
+    width: 150px;
     background-color: #ffffff;
-    border: 1px solid #ebebeb
+}
+.select{
+    border: 1px solid #ebebeb;
 }
 .type{
     margin-left: 165px;
     text-align: center;
     width: 150px;
-    border: 1px solid #ebebeb
+    /*border: 1px solid #ebebeb*/
+    border-top: 1px solid #ebebeb;
+    border-left: 1px solid #ebebeb;
+    border-right:1px solid #ebebeb
 }
 #priceCondition{
     margin-left: 325px;
     text-align: center;
     width: 150px;
-    border: 1px solid #ebebeb
+    border-top: 1px solid #ebebeb;
+    border-left: 1px solid #ebebeb;
+    border-right:1px solid #ebebeb
 }
-.li{
+#condition .li{
     height: 35px;width:70px;line-height: 35px;
     float: left;
     font-size: 18px;
@@ -128,12 +138,12 @@
 }
 .typeOption,.priceOption{
     height: 35px;line-height: 35px;font-size: 18px;
-    border-bottom:2px solid #ebebeb;
+    border-bottom:1px solid #ebebeb;
 }
 .selected {
     background-color: #dbdbdb;
     /*width:70px;*/
-    border-radius: 5px;
+    border-radius: 5px;+-874`
 }
 
 /* 遮罩 */
@@ -164,7 +174,7 @@
 .masked .nominateFinish{
     top:10%;
     left: 10%;
-}
+" "}
 .masked .nominateBack{
     bottom: 15%;
     left: 30%;
