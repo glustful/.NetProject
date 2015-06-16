@@ -208,9 +208,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CRM\AdminPayModel.cs" />
-    <Compile Include="Models\CRM\AdminRecomModel.cs">
+    <Compile Include="Models\CRM\BrokerRECClientModel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\CRM\BrokerLeadClientModel.cs" />
     <Compile Include="Models\CRM\BrokerModel.cs">
       <SubType>Code</SubType>
     </Compile>

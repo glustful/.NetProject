@@ -85,7 +85,7 @@ namespace Zerg.Controllers.CRM
          /// <param name="brokerrecclient">大堆要填的...你看着办</param>
          /// <returns></returns>
          [System.Web.Http.HttpPost]
-         public HttpResponseMessage Add([FromBody]  BrokerRECClientModel  brokerrecclient)
+         public HttpResponseMessage Add([FromBody]BrokerRECClientModel  brokerrecclient)
          {
              if (brokerrecclient.Adduser == 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "经济人ID不能为空！"));
              if (string.IsNullOrEmpty(brokerrecclient.Clientname)) return PageHelper.toJson(PageHelper.ReturnValue(false, "客户名不能为空"));
@@ -100,10 +100,10 @@ namespace Zerg.Controllers.CRM
                  DelFlag = EnumDelFlag.默认
              };
 
-             var cmodel = _brokerRecClientService.GetBrokerRECClientsByCondition(sech).FirstOrDefault();
+             var cmodel = _brokerRecClientService.GetBrokerRECClientsByCondition(sech);
 
              //检测客户是否存在于数据库
-             if (cmodel == null)
+             if (cmodel.Any())
              {
                  //客户信息
                  var client = new ClientInfoEntity
@@ -131,85 +131,86 @@ namespace Zerg.Controllers.CRM
                  return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在被推荐！"));
              }
 
-             #region 创建订单 杨定鹏 2015年6月3日17:21:39
-
-             //查询商品详情
-             var product = _productService.GetProductById(brokerrecclient.Projectid);
-
-             #region 创建推荐订单 杨定鹏 2015年6月9日17:04:05
-             //创建订单详情
-             OrderDetailEntity ode = new OrderDetailEntity();
-             ode.Adddate = DateTime.Now;
-             ode.Adduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
-             ode.Commission = product.Commission;
-             ode.RecCommission = product.RecCommission;
-             ode.Dealcommission = product.Dealcommission;
-             ode.Price = product.Price;
-             ode.Product = product;
-             ode.Productname = product.Productname;
-             //ode.Remark = product.
-             //ode.Snapshoturl = orderDetailModel.Snapshoturl,
-             ode.Upddate = DateTime.Now;
-             ode.Upduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
-
-             //创建订单
-             OrderEntity oe = new OrderEntity();
-             oe.Adddate = DateTime.Now;
-             oe.Adduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
-             oe.AgentId = brokerrecclient.Adduser;
-             oe.Agentname = _brokerService.GetBrokerByUserId(brokerrecclient.Adduser).Brokername;
-             oe.Agenttel = brokerrecclient.Phone;
-             oe.BusId = product.Bussnessid;
-             oe.Busname = product.BussnessName;
-             oe.Customname = brokerrecclient.Clientname;
-             oe.Ordercode = _orderService.CreateOrderNumber(1); 
-             oe.OrderDetail = _orderDetailService.Create(ode);//创建订单详情；
-             oe.Ordertype = EnumOrderType.推荐订单;
-             oe.Remark = "前端经纪人提交";
-             oe.Shipstatus = (int) EnumBRECCType.审核中;
-             oe.Status = (int) EnumOrderStatus.默认;
-             oe.Upddate = DateTime.Now;
-             oe.Upduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
-             #endregion
-
-             #region 创建成交订单 杨定鹏 2015年6月9日17:04:05
-
-             //创建订单详情
-             OrderDetailEntity ode2 = new OrderDetailEntity();
-             ode2.Adddate = DateTime.Now;
-             ode2.Adduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
-             ode2.Commission = product.Commission;
-             ode2.RecCommission = product.RecCommission;
-             ode2.Dealcommission = product.Dealcommission;
-             ode2.Price = product.Price;
-             ode2.Product = product;
-             ode2.Productname = product.Productname;
-             //ode.Remark = product.
-             //ode.Snapshoturl = orderDetailModel.Snapshoturl,
-             ode2.Upddate = DateTime.Now;
-             ode2.Upduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
-
-             //创建订单
-             OrderEntity oe2 = new OrderEntity();
-             oe2.Adddate = DateTime.Now;
-             oe2.Adduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
-             oe2.AgentId = brokerrecclient.Adduser;
-             oe2.Agentname = _brokerService.GetBrokerByUserId(brokerrecclient.Adduser).Brokername;
-             oe2.Agenttel = brokerrecclient.Phone;
-             oe2.BusId = product.Bussnessid;
-             oe2.Busname = product.BussnessName;
-             oe2.Customname = brokerrecclient.Clientname;
-             oe2.Ordercode = _orderService.CreateOrderNumber(3); 
-             oe2.OrderDetail = _orderDetailService.Create(ode2);//创建订单详情；
-             oe2.Ordertype = EnumOrderType.成交订单;
-             oe2.Remark = "前端经纪人提交";
-             oe2.Shipstatus = (int)EnumBRECCType.审核中;
-             oe2.Status = (int)EnumOrderStatus.默认;
-             oe2.Upddate = DateTime.Now;
-             oe2.Upduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
-             #endregion
-
-             #endregion
+//创建订单逻辑白在审核通过后再传教 --Craig.Y.Duan
+//             #region 创建订单 杨定鹏 2015年6月3日17:21:39
+//
+//             //查询商品详情
+//             var product = _productService.GetProductById(brokerrecclient.Projectid);
+//
+//             #region 创建推荐订单 杨定鹏 2015年6月9日17:04:05
+//             //创建订单详情
+//             OrderDetailEntity ode = new OrderDetailEntity();
+//             ode.Adddate = DateTime.Now;
+//             ode.Adduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
+//             ode.Commission = product.Commission;
+//             ode.RecCommission = product.RecCommission;
+//             ode.Dealcommission = product.Dealcommission;
+//             ode.Price = product.Price;
+//             ode.Product = product;
+//             ode.Productname = product.Productname;
+//             //ode.Remark = product.
+//             //ode.Snapshoturl = orderDetailModel.Snapshoturl,
+//             ode.Upddate = DateTime.Now;
+//             ode.Upduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
+//
+//             //创建订单
+//             OrderEntity oe = new OrderEntity();
+//             oe.Adddate = DateTime.Now;
+//             oe.Adduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
+//             oe.AgentId = brokerrecclient.Adduser;
+//             oe.Agentname = _brokerService.GetBrokerByUserId(brokerrecclient.Adduser).Brokername;
+//             oe.Agenttel = brokerrecclient.Phone;
+//             oe.BusId = product.Bussnessid;
+//             oe.Busname = product.BussnessName;
+//             oe.Customname = brokerrecclient.Clientname;
+//             oe.Ordercode = _orderService.CreateOrderNumber(1);
+//             oe.OrderDetail = _orderDetailService.Create(ode);//创建订单详情；
+//             oe.Ordertype = EnumOrderType.推荐订单;
+//             oe.Remark = "前端经纪人提交";
+//             oe.Shipstatus = (int)EnumBRECCType.审核中;
+//             oe.Status = (int)EnumOrderStatus.默认;
+//             oe.Upddate = DateTime.Now;
+//             oe.Upduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
+//             #endregion
+//
+//             #region 创建成交订单 杨定鹏 2015年6月9日17:04:05
+//
+//             //创建订单详情
+//             OrderDetailEntity ode2 = new OrderDetailEntity();
+//             ode2.Adddate = DateTime.Now;
+//             ode2.Adduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
+//             ode2.Commission = product.Commission;
+//             ode2.RecCommission = product.RecCommission;
+//             ode2.Dealcommission = product.Dealcommission;
+//             ode2.Price = product.Price;
+//             ode2.Product = product;
+//             ode2.Productname = product.Productname;
+//             //ode.Remark = product.
+//             //ode.Snapshoturl = orderDetailModel.Snapshoturl,
+//             ode2.Upddate = DateTime.Now;
+//             ode2.Upduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
+//
+//             //创建订单
+//             OrderEntity oe2 = new OrderEntity();
+//             oe2.Adddate = DateTime.Now;
+//             oe2.Adduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
+//             oe2.AgentId = brokerrecclient.Adduser;
+//             oe2.Agentname = _brokerService.GetBrokerByUserId(brokerrecclient.Adduser).Brokername;
+//             oe2.Agenttel = brokerrecclient.Phone;
+//             oe2.BusId = product.Bussnessid;
+//             oe2.Busname = product.BussnessName;
+//             oe2.Customname = brokerrecclient.Clientname;
+//             oe2.Ordercode = _orderService.CreateOrderNumber(3);
+//             oe2.OrderDetail = _orderDetailService.Create(ode2);//创建订单详情；
+//             oe2.Ordertype = EnumOrderType.成交订单;
+//             oe2.Remark = "前端经纪人提交";
+//             oe2.Shipstatus = (int)EnumBRECCType.审核中;
+//             oe2.Status = (int)EnumOrderStatus.默认;
+//             oe2.Upddate = DateTime.Now;
+//             oe2.Upduser = brokerrecclient.Adduser.ToString(CultureInfo.InvariantCulture);
+//             #endregion
+//
+//             #endregion
 
              //查询客户信息
              var sech2 = new ClientInfoSearchCondition
@@ -241,8 +242,8 @@ namespace Zerg.Controllers.CRM
              model.Status = EnumBRECCType.审核中;
              model.DelFlag = EnumDelFlag.默认;
 
-             model.RecOrder = _orderService.Create(oe).Id;      //添加推荐订单；
-             model.DealOrder =_orderService.Create(oe2).Id;       //添加成交订单
+//             model.RecOrder = _orderService.Create(oe).Id;      //添加推荐订单；
+//             model.DealOrder =_orderService.Create(oe2).Id;       //添加成交订单
 
              _brokerRecClientService.Create(model);
 
