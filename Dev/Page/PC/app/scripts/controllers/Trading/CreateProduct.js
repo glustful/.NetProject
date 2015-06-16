@@ -130,12 +130,15 @@ angular.module("app").controller('CreatProductController', [
 
                                 });
                             }
-                            alert("添加成功");
+                           // alert("添加成功");
                             $state.go('page.Trading.product.product');
                         } else {
                         $scope.alerts=[{type:'danger',msg:data.Msg}];
                         }
                 })
+                $scope.closeAlert = function(index) {
+                    $scope.alerts.splice(index, 1);
+                };
             }
         };
         function valueClick() {
