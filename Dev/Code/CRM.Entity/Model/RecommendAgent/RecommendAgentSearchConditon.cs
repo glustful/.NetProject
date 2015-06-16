@@ -28,9 +28,9 @@ namespace CRM.Entity.Model
 
 		public string Brokername { get; set; }
 
-		public int? Phone { get; set; }
+		public string Phone { get; set; }
 
-		public int? Qq { get; set; }
+		public string Qq { get; set; }
 
 		public string Agentlevel { get; set; }
 

@@ -68,6 +68,15 @@ namespace Zerg.Models.Trading.Product
         /// </summary>
         public  int Stockrule { get; set; }
         /// <summary>
+        /// 副标题
+        /// </summary>
+        public string SubTitle { get; set; }
+        /// <summary>
+        /// 联系电话
+        /// </summary>
+        public string ContactPhone { get; set; }
+
+        /// <summary>
         /// AddUser
         /// </summary>
         public  string Adduser { get; set; }

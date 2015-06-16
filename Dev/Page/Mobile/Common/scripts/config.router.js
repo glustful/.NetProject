@@ -11,13 +11,28 @@
 /**
  * 由于不适用项目老方法是用的路由策略被抛弃
  */
+
+var allowState = [
+    'app.home',
+    'user.login',
+    'app.storeroom',
+    'app.housesPic',
+    'user.register',
+    'user.PasswordFound',
+    'app.invite'
+];
+
 app  .run(
     ['$rootScope', '$state', '$stateParams','AuthService',
         function ($rootScope, $state, $stateParams,AuthService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
             $rootScope.$on('$stateChangeStart', function (event,next) {
-                if(next.name==='app.home' || next.name==='user.login' || next.name==='app.storeroom'||next.name==='user.register'||next.name==='user.PasswordFound'||next.name==='app.invite'){
+//                if(next.name==='app.home' || next.name==='user.login' || next.name==='app.storeroom'||next.name==='user.register'||next.name==='user.PasswordFound'||next.name==='app.invite'){
+////                    allowState.indexOf(next.name) > -1;
+//                    return;
+//                }
+                if(allowState.indexOf(next.name) > -1){
                     return;
                 }
                 if(!AuthService.IsAuthenticated()){
@@ -102,14 +117,14 @@ app  .run(
             url:'/person_setting',
             templateUrl:'modules/person_setting/view/person_setting.html',
             resolve:load('modules/person_setting/controller/personsettingController.js'),
-            access:['Broker','user']
+            access:['broker','user']
         })
 
         .state('app.security_setting',{
             url:'/security_setting',
             templateUrl:'modules/security_setting/view/security_setting.html',
             resolve:load('modules/security_setting/controller/SecuritySetting.js'),
-            access:['Broker','user']
+            access:['broker','user']
         })
         .state('app.zhongtian_HouseDetail',{
             url:'/zhongtian_HouseDetail',
@@ -240,7 +255,8 @@ app  .run(
         })
         .state('app.addBroker',{
             url:'/addBroker',
-            templateUrl:'modules/addBroker/view/addBroker.html'
+            templateUrl:'modules/addBroker/view/addBroker.html',
+            resolve:load('modules/addBroker/controller/AddBrokerController.js')
         })
         .state('app.grabPacket',{
             url:'/grabPacket',

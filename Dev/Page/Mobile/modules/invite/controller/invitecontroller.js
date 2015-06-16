@@ -6,20 +6,20 @@ app.controller('invitecontroller',['$scope','$state','$http',function($scope,$st
     $scope.invitecod='';
     $scope.invite= function(){
 
-        $state.go('user.register',{yqm: $scope.invitecod});
-        //$http.post(SETTING.ApiUrl+'/BrokerInfo/GetBrokerByInvitationCode',$scope.invitecod,{'withCredentials':true}).success(function(data){
-        //  if(data.invitationCode!=undefined && data.invitationCode!="")
-        //  {
-        //
-        //     $state.go('user.register',{yzm:data.invitationCode});
-        //  }else{
-        //
-        //      alert("该邀请码不存在");
-        //
-        //  }
-        //
-        //})
-        //
-        //
+       // $state.go('user.register',{yqm: $scope.invitecod});
+
+        $http.post(SETTING.ApiUrl+'/BrokerInfo/GetBrokerByInvitationCode',$scope.invitecod,{'withCredentials':true}).success(function(data){
+          if(data.invitationCode!=undefined && data.invitationCode!="")
+          {
+              $state.go('user.register',{yqm: $scope.invitecod});
+          }else{
+
+              $scope.errorTip="该邀请码不存在";
+
+          }
+
+        })
+
+
     }
 }])

@@ -46,7 +46,7 @@
                     <tr ng-repeat="row in rowParameter">
                         <td align="center">{{row.Name }}</td>
                         <td align="center">{{row.Id }}</td>
-                        <td align="center">{{row.Addtime| date }}</td>
+                        <td align="center">{{row.Addtime| dateFilter }}</td>
                         <td align="center">
                             <button class="btn btn-info btn-sm"  ng-click="getParameterValue(row.Id)" onclick="ParameterValueWindowShow()"><i class="fa fa-fw m-r-xs fa-edit"></i>参数值管理
                             </button>

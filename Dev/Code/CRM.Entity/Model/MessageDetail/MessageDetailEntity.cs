@@ -42,7 +42,7 @@ namespace CRM.Entity.Model
         public virtual string InvitationCode { get; set; }
 
         /// <summary>
-        /// 邀请人(用于邀请经纪人) 跟经纪人ID相关
+        /// 邀请人(用于邀请经纪人) 跟经纪人ID挂钩
         /// </summary>
         public virtual string InvitationId { get; set; }
 	}
