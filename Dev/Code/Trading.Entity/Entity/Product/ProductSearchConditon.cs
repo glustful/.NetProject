@@ -35,7 +35,7 @@ namespace Trading.Entity.Model
 
 		public ProductBrandEntity[] ProductBrands { get; set; }
 
-
+        public int? ProductBrand { get; set; }
 
 		public int? Bussnessid { get; set; }
 
@@ -108,8 +108,8 @@ namespace Trading.Entity.Model
 	{
 
 		OrderById,
-        OrderByAddtime
-
+        OrderByAddtime,
+        Price
 	}
 
 }

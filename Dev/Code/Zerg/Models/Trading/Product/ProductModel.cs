@@ -39,6 +39,8 @@ namespace Zerg.Models.Trading.Product
         /// 商品名称
         /// </summary>
         public  string Productname { get; set; }
+     
+      
         /// <summary>
         /// 商品状态
         /// </summary>
