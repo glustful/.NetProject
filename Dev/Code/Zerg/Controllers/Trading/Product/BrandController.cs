@@ -155,6 +155,72 @@ namespace Zerg.Controllers.Trading.Product
         }
 
         /// <summary>
+        /// 获取推荐商品
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage GetOneBrand(int page=1,int pageSize=10)
+        {
+             var sech = new ProductBrandSearchCondition
+             {
+                 Page = page,
+                 PageCount = pageSize,
+             };
+             var list = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
+            {
+                a.Id,
+                a.Bimg,
+                a.Bname,
+                a.SubTitle,
+                a.Content,
+                a.Addtime
+            }).ToList().Select(b=>new
+            {
+                b.Id,
+                b.Bimg,
+                b.Bname,
+                b.SubTitle,
+                b.Content,
+                Addtime=b.Addtime.ToString("yyy-mm-dd")
+            });
+            var  product= new ProductModel();
+             foreach (var i in list) {
+                 product = GetProductByBrand(i.Id);
+             }
+            var totalCount1 = _productBrandService.GetProductBrandCount(sech);
+
+            return PageHelper.toJson(new { List = list, Product = product, Condition = sech, totalCount = totalCount1 });
+        }
+
+        /// <summary>
+        /// 通过BrandID获取该品牌下的最小价格商品
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+          [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public ProductModel GetProductByBrand(int BrandId) { 
+            var sech= new ProductSearchCondition
+            {
+                OrderBy=EnumProductSearchOrderBy.Price,
+                ProductBrand=BrandId
+            };
+            var model = _productService.GetProductsByCondition(sech).FirstOrDefault();
+            if (model == null) {
+                return null;
+            }
+            var model2 = new ProductModel();
+            model2.Productname = model.Productname;
+            model2.Price = model.Price;
+            model2.SubTitle = model.SubTitle;
+            model2.ContactPhone = model.ContactPhone;
+            return model2;
+        }
+
+        /// <summary>
         /// 获取所有品牌；
         /// </summary>
         /// <param name="page"></param>

@@ -40,6 +40,14 @@ namespace Zerg.Models.Trading.Product
         /// </summary>
         public  string Productname { get; set; }
         /// <summary>
+        /// 联系电话
+        /// </summary>
+        public string ContactPhone { get; set; }
+        /// <summary>
+        /// 子标题
+        /// </summary>
+        public string SubTitle { get; set; }
+        /// <summary>
         /// 商品状态
         /// </summary>
         public  bool Status { get; set; }
