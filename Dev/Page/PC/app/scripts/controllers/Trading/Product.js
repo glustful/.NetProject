@@ -81,12 +81,12 @@ function FormatDate(JSONDateString) {
         + month
         + "-"
         + currentDate
-        + "-"
-        + date.getHours()
-        + ":"
-        + date.getMinutes()
-        + ":"
-        + date.getSeconds()
+//        + "-"
+//        + date.getHours()
+//        + ":"
+//        + date.getMinutes()
+//        + ":"
+//        + date.getSeconds()
         ;
 
 }

@@ -12,6 +12,10 @@ app.controller('HousesController',['$http','$scope','$stateParams',function($htt
         $scope.brand=data1;
 
     })
+
+    $http.get(SETTING.ApiUrl+'/Product/GetProductById?ProductId='+$stateParams.ProductId,{'withCredentials':true}).success(function (data) {
+        $scope.List=data;
+    })
 }]);
 
 

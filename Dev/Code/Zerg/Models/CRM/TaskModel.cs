@@ -44,7 +44,7 @@ namespace Zerg.Models.CRM
         /// <summary>
         /// 结束时间
         /// </summary>
-        public DateTime Endtime { get; set; }
+        public string  Endtime { get; set; }
         /// <summary>
         /// AddUser
         /// </summary>

@@ -25,12 +25,12 @@ angular.js路径app/scrips/controller/CRM/taskList.js-->
             <li>{{item.Taskname}}</li>
             <li>{{item.Brokername}}</li>
             <li>{{item.Taskschedule}}</li>
-            <li>{{item.Endtime|toDate |date}}</li>
+            <li>{{item.Endtime}}</li>
         </ul>
 
     </div>
 
-    <div style="width:800px;"  class="text-center footable-visible ng-scope">
+    <div style="text-align: center;"  class="text-center footable-visible ng-scope">
         <pagination boundary-links="true" total-items="searchCondition1.totalCount" items-per-page="searchCondition1.pageSize" ng-model="searchCondition1.page" ng-change="getList1()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
 
     </div>

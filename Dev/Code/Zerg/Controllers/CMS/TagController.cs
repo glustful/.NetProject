@@ -100,8 +100,7 @@ namespace Zerg.Controllers.CMS
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
             }
-            else
-            {               
+                        
                 var tagCon = new TagSearchCondition
                 {
                     Tag = tag.Tag
@@ -131,7 +130,7 @@ namespace Zerg.Controllers.CMS
                     }
                 }
             }
-        }
+        
 
         /// <summary>
         /// 保存修改
