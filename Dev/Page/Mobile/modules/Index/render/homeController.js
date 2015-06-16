@@ -26,8 +26,8 @@ app.controller('homeController',['$http','$scope',function($http,$scope){
                         pages = data.totalCount / 6 ;
 
                         console.log(data);
-                        for (var i = 0; i <= data.brandList.length - 1; i++) {
-                            $scope.brandList.push(data.brandList[i]);
+                        for (var i = 0; i <= data.List.length - 1; i++) {
+                            $scope.brandList.push(data.List[i]);
                         }
                         loading = false;            //告知读取结束
                         $scope.tipp="加载更多"+"("+$scope.brandList.length+"/"+data.totalCount+")";
