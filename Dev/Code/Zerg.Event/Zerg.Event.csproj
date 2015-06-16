@@ -128,6 +128,12 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Controllers\Crowd\Static\image\chip\cy.png" />
+    <Content Include="Controllers\Crowd\Static\image\chip\cyzk.png" />
+    <Content Include="Controllers\Crowd\Static\image\chip\logo-syj.png" />
+    <Content Include="Controllers\Crowd\Static\image\chip\p.png" />
+    <Content Include="Controllers\Crowd\Static\Js\crowdjs.js" />
+    <Content Include="Controllers\Crowd\Static\style\chip.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
@@ -145,6 +151,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\web.config" />
+    <Content Include="Views\Crowd\crowd.cshtml" />
+    <Content Include="Views\CrowdAdd\crowdadd.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -160,6 +168,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CrowdAddController.cs" />
+    <Compile Include="Controllers\Crowd\CrowdController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

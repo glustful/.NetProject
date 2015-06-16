@@ -12,7 +12,7 @@ namespace Event.Entity.Mappings.Discount
 			ToTable("Discount");
 			HasKey(c => c.Id);
 
-			HasRequired(c =>c.Crowd).WithOptional();
+		    HasOptional(c => c.Crowd);
 			Property(c => c.Number).HasColumnType("int");
 			Property(c => c.Discount).HasColumnType("int");
 			Property(c => c.Adduser).HasColumnType("int");

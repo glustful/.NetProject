@@ -17,5 +17,7 @@ namespace Event.Service.PartImage
 		IQueryable<PartImageEntity> GetPartImagesByCondition(PartImageSearchCondition condition);
 
 		int GetPartImageCount (PartImageSearchCondition condition);
+
+        IQueryable<PartImageEntity> GetPartImageByCrowdId(int crowdId);
 	}
 }

@@ -12,7 +12,7 @@ namespace Event.Entity.Mappings.PartImage
 			ToTable("PartImage");
 			HasKey(c => c.Id);
 
-			HasRequired(c =>c.Crowd).WithOptional();
+		    HasOptional(c => c.Crowd);
 			Property(c => c.Orderby).HasColumnType("int");
 			Property(c => c.Imgurl).HasColumnType("varchar").HasMaxLength(256);
 			Property(c => c.Adduser).HasColumnType("int");

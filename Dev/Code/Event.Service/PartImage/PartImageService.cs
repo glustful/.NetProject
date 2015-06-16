@@ -199,5 +199,24 @@ namespace Event.Service.PartImage
                 return -1;
 			}
 		}
-	}
+
+
+        public IQueryable<PartImageEntity> GetPartImageByCrowdId(int crowdId)
+        {
+            try
+            {
+                var query = _partimageRepository.Table;
+                if (crowdId != 0)
+                {
+                    return query.Where(q => q.Crowd.Id == crowdId);
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
+    }
 }
