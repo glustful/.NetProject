@@ -67,7 +67,7 @@ app.controller('taskController',['$http','$scope','AuthService','$timeout',funct
         UserId:0
     }
     $scope.warm="";
-    $scope.tipp="加载更多。。。";
+    $scope.tipp="正在加载。。。";
     $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
 
     //查询任务
@@ -82,7 +82,8 @@ $scope.tcount=0;//保存任务总数
                 loading = true;                     //告知正在读取
                 $http.get(SETTING.ApiUrl+'/Task/TaskListMobile/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data) {
                     if (!data.Status) {
-                    pages = data.totalCount / 10 ;
+                    pages = data.totalCount / 10 ;//计算总页数
+                    $scope.tcount=data.totalCount;//保存任务个数
                     console.log(data);
                     for (var i = 0; i <= data.list.length - 1; i++) {
                         $scope.posts.push(data.list[i]);
@@ -92,7 +93,7 @@ $scope.tcount=0;//保存任务总数
                         if ($scope.posts.length == data.totalCount) {//如果所有数据已查出来
                             $scope.tipp = "没有更多了,共("+$scope.tcount+")条";
                         }
-                        $scope.tcount=data.totalCount;
+
                     } else{
                         $scope.tipp = "没有任务";
             }

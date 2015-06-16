@@ -17,6 +17,7 @@ using System.Web.Http;
 using Zerg.Models.Trading.Product;
 using Zerg.Common;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web.Http.Cors;
 using YooPoon.Core.Site;
 
@@ -64,8 +65,14 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns></returns>
         [System.Web.Http.HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public string AddClassify([FromBody]ClassifyModel classify)
+        public HttpResponseMessage AddClassify([FromBody]ClassifyModel classify)
         {
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            var m = reg.IsMatch(classify.Name);
+            if (!m)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
+            }
             ClassifyEntity superCe = _classifyService.GetClassifyById(classify.ClassifyId);
             int sort = 0;
             if (superCe != null)//有上级分类则次级排序加1；
@@ -88,11 +95,11 @@ namespace Zerg.Controllers.Trading.Product
             try
             {
                 _classifyService.Create(ce);
-                return "添加分类成功";
+                return PageHelper.toJson(PageHelper.ReturnValue(true,"添加分类成功！"));
             }
             catch (Exception error)
             {
-                return "添加分类失败";
+               return PageHelper.toJson(PageHelper.ReturnValue(false,"添加分类失败！"));;
             }
         }
         /// <summary>
@@ -172,19 +179,19 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns></returns>
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public string DelClassify(int classifyId)
+        public HttpResponseMessage DelClassify(int classifyId)
         {
             try{
                 if (_classifyService.Delete(_classifyService.GetClassifyById(classifyId)))
                 {
-                    return "删除成功";
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功！"));
                 }
                 else {
-                    return "删除失败，此分类下有子分类或商品，您不能删除此分类！";
+                    return PageHelper.toJson(PageHelper.ReturnValue(false,"存在子分类关联不能删除！"));
                 }
               
             }catch(Exception e){
-                return "删除失败";
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"删除失败！"));
             }
         }
         /// <summary>
@@ -223,8 +230,14 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns>查询结果</returns>
         [System.Web.Http.HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public string AddParameter([FromBody]ParameterModel parameter)
+        public HttpResponseMessage AddParameter([FromBody]ParameterModel parameter)
         {
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            var m = reg.IsMatch(parameter.Name);
+            if (!m)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
+            }
             ClassifyEntity ce = _classifyService.GetClassifyById(parameter.ClassifyId);
             ParameterEntity pe = new ParameterEntity()
             {
@@ -240,11 +253,11 @@ namespace Zerg.Controllers.Trading.Product
             try
             {
                 _parameterService.Create(pe);
-                return "添加参数" + pe.Name + "成功";
+                return PageHelper.toJson(PageHelper.ReturnValue(true,"添加参数" + pe.Name + "成功" ));               
             }
             catch (Exception e)
             {
-                return "添加参数" + pe.Name + "失败";
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "添加参数" + pe.Name + "失败"));
             }
         }
         /// <summary>
@@ -254,8 +267,14 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns>查询结果</returns>
         [System.Web.Http.HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public string AddParameterValue([FromBody]ParameterValueModel parameterValueModel)
+        public HttpResponseMessage AddParameterValue([FromBody]ParameterValueModel parameterValueModel)
         {
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            var m = reg.IsMatch(parameterValueModel.Parametervalue);
+            if (!m)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
+            }
             ParameterEntity pe = _parameterService.GetParameterById(parameterValueModel.ParameterId);
             ParameterValueEntity pev = new ParameterValueEntity()
             {
@@ -271,11 +290,11 @@ namespace Zerg.Controllers.Trading.Product
             try
             {
                 _parameterValueService.Create(pev);
-                return "添加参数值" + pev.Parametervalue + "成功";
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "添加参数值" + pev.Parametervalue + "成功"));              
             }
             catch (Exception e)
             {
-                return "添加参数值" + pev.Parametervalue + "失败";
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "添加参数值" + pev.Parametervalue + "失败"));
             }
         }
 
@@ -319,7 +338,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns></returns>
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public string DelParameter(int parameterId)
+        public HttpResponseMessage DelParameter(int parameterId)
         {
             ParameterEntity pe = _parameterService.GetParameterById(parameterId);
             try
@@ -330,11 +349,11 @@ namespace Zerg.Controllers.Trading.Product
                     _parameterValueService.Delete(parameter);
                 }
                 _parameterService.Delete(pe);//删除该参数；
-                return "删除参数成功";
+                return PageHelper.toJson(PageHelper.ReturnValue(true,"删除成功！"));
             }
             catch (Exception e)
             {
-                return "删除参数失败";
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"删除失败！"));
             }
         }
         /// <summary>
@@ -344,17 +363,17 @@ namespace Zerg.Controllers.Trading.Product
         /// <returns></returns>
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public string DelParameterValue(int parameterValueId)
+        public HttpResponseMessage DelParameterValue(int parameterValueId)
         {
             ParameterValueEntity pve = _parameterValueService.GetParameterValueById(parameterValueId);
             try
             {
                 _parameterValueService.Delete(pve);
-                return "删除参数值成功";
+                return PageHelper.toJson(PageHelper.ReturnValue(true,"删除成功！"));
             }
             catch (Exception e)
             {
-                return "删除参数值失败";
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"删除失败！"));
             }
         }
 
