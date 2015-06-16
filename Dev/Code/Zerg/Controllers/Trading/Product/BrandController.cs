@@ -17,6 +17,7 @@ using YooPoon.Core.Site;
 using Zerg.Models.Trading.Product;
 using Zerg.Common;
 using System.Web.Http.Cors;
+using System.Text.RegularExpressions;
 
 namespace Zerg.Controllers.Trading.Product
 {
@@ -59,7 +60,14 @@ namespace Zerg.Controllers.Trading.Product
         [System.Web.Http.HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage AddProductBrand([FromBody]ProductBrandModel productBrandModel)
-        {
+        {  
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            var m = reg.IsMatch(productBrandModel.Bname);
+            if (!m)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
+            }
+            else { 
             ProductBrandEntity PBE = new ProductBrandEntity()
             {
                 Addtime = DateTime.Now,
@@ -71,7 +79,7 @@ namespace Zerg.Controllers.Trading.Product
                 SubTitle=productBrandModel.SubTitle,
                 Content=productBrandModel.Content,
             };
-            
+          
             try
             {
                 _productBrandService.Create(PBE);
@@ -81,6 +89,7 @@ namespace Zerg.Controllers.Trading.Product
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "不能添加自身！"));
             }
+         }
         }
         /// <summary>
         /// 删除品牌；
