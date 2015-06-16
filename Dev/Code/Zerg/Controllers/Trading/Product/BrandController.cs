@@ -174,15 +174,15 @@ namespace Zerg.Controllers.Trading.Product
                  Page = page,
                  PageCount = pageSize,
              };
-             var list = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
-            {
-                Page = page,
-                PageCount = pageSize,
-            });
+            // var list = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
+            //{
+            //    Page = page,
+            //    PageCount = pageSize,
+            //});
             //取出所有品牌
-            var BrandList = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
-           {
-               a.Id,
+            var List = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
+           
+           {   a.Id,
                a.Bimg,
                 a.Bname,
                 a.SubTitle,
@@ -202,7 +202,7 @@ namespace Zerg.Controllers.Trading.Product
 
             var totalCount1 = _productBrandService.GetProductBrandCount(sech);
 
-            return PageHelper.toJson(new { List = list, Condition = sech, totalCount = totalCount1 });
+            return PageHelper.toJson(new { List = List, Condition = sech, totalCount = totalCount1 });
 
             //var totalCount = _productBrandService.GetProductBrandCount(Brandcondition);
 
