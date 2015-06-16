@@ -1,28 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.Security;
-using System.Web.SessionState;
+using Autofac.Integration.WebApi;
 using YooPoon.Core.Autofac;
 using YooPoon.WebFramework.Dependency;
 using Yunjoy.Web.Admin;
 using Zerg.Event.App_Start;
-using System.Web;
-using System.Web.Http;
-
 
 namespace Zerg.Event
 {
-    public class Global : System.Web.HttpApplication
+    public class Global : HttpApplication
     {
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            AreaRegistration.RegisterAllAreas();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
+
 
             //注册依赖容器
             var initialize = new InitializeContainer();
@@ -34,8 +28,15 @@ namespace Zerg.Event
             //注册全局Filter
             //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
+            AreaRegistration.RegisterAllAreas();
+
             GlobalConfiguration.Configuration.EnableCors();
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(initialize.ContainerManager.Container);
             GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            //BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
         //protected void Session_Start(object sender, EventArgs e)

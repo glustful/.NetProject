@@ -7,7 +7,7 @@ namespace Yunjoy.Web.Admin
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(DependencyResolver.Current.GetService<YpHandleErrorAttribute>());
+//            filters.Add(DependencyResolver.Current.GetService<YpHandleErrorAttribute>());
         }
     }
 }
