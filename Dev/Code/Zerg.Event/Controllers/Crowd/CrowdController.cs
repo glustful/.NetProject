@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Event.Entity.Model;
+using Event.Models;
 using Event.Service.Crowd;
 using Event.Service.Follower;
 using Event.Service.PartImage;
@@ -39,25 +40,12 @@ namespace Zerg.Event.Controllers.Crowd
                 //Statuss = new[] { status }
             };
 
-            //var list = _crowdService.GetCrowdsByCondition(sech).Select(p => new
-            //{
-            //    p.Ttitle
-            //}).ToList();
-            //@ViewBag.list = list;
+            var list = _crowdService.GetCrowdsByCondition(sech).Select(p=>new CrowdModel
+            {
+                Ttitle = p.Ttitle
+            });
 
-
-
-            ////遍历出项目表中的所有图片
-            //List<CrowdEntity> arr = _crowdService.GetCrowdsByCondition(sech).ToList();
-            //for (int i = 0; i < arr.Count; i++)
-            //{
-            //    //循环去取出对应项目的IMG地址
-            //    for (int j = 0; j < UPPER; j++)
-            //    {
-                    
-            //    }
-            //}
-            return View();
+            return View(list);
         }
     }
 }

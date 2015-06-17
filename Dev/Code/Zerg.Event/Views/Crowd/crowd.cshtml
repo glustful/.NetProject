@@ -1,6 +1,7 @@
 ﻿@{
     Layout = null;
 }
+@model dynamic
 <link href="~/Controllers/Crowd/Static/style/chip.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="~/Controllers/Crowd/Static/Js/crowdjs.js"></script>
 <div class="chip-nav"><span class="all">全部</span><span>众筹中</span><span class="selecting">选房中</span></div>
@@ -16,19 +17,19 @@
                 <span class="fl">已有467人参与众筹</span>
                 <span class="fr">剩余天数：6天</span>
             </div>
-            @ViewBag.list
+
+                @foreach (var p in Model)
+                {
+                    <span class="fl">@p.Ttitle</span>
+                }
+            
             <div class="favourable-nav">
                 <span class="all">9折优惠<br /><small>众筹人数100人</small></span>
                 <span class="all">8折优惠<br /><small>众筹人数200人</small></span>
                 <span class="all">7折优惠<br /><small>众筹人数300人</small></span>
                 <span class="half">5折优惠<br /><small>众筹人数500人</small></span>
             </div>
-            @{
-                foreach (var p in ViewBag.list)
-                {
-                    <span class="all">9折优惠<br /><small>@p.Ttitle</small></span>
-                }
-            }
+
         </div>
         <div class="partIn"><a href="#/app/chipPartake"><button>参与众筹</button></a></div>
     </div>

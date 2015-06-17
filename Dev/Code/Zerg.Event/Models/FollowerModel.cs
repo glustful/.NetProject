@@ -89,6 +89,30 @@ namespace Event.Models
 		public string Groupid {get;set;}
 
 
+		/// <summary>
+        /// AddUser
+        /// </summary>
+		public int Adduser {get;set;}
+
+
+		/// <summary>
+        /// AddTime
+        /// </summary>
+		public DateTime Addtime {get;set;}
+
+
+		/// <summary>
+        /// UpUser
+        /// </summary>
+		public int Upuser {get;set;}
+
+
+		/// <summary>
+        /// UpTime
+        /// </summary>
+		public DateTime Uptime {get;set;}
+
+
 
 	}
 }
