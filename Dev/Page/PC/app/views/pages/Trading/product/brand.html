@@ -1,10 +1,13 @@
 <div class="p-md" ng-app="App" ng-controller="BrandController">
+<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
     <link href="scripts/ext/uploadify-v3.1/uploadify.css" rel="stylesheet" type="text/css" />
     <script src="scripts/ext/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="scripts/ext/uploadify-v3.1/jquery.uploadify-3.1.min.js" type="text/javascript"></script>
+
     <div>
         <!--<button  onclick="WindowShow()" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加项目-->
         <!--</button>-->
+
         <a href="#/page/Trading/product/createbrand" access="superAdmin,admin">
             <button id="btntask" md-ink-ripple=""style="width:150px;margin-left: 150px;" class="md-btn md-raised m-b btn-fw indigo">添加品牌</button></a>
         <div class="line b-b m-v-md"></div>
