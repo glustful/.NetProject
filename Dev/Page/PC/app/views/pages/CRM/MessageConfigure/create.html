@@ -1,7 +1,7 @@
 <form name="form" id="form" ng-controller="MessageConfigCreateController" ng-submit="Create()">
     <div class="panel panel-default">
         <div class="panel-body">
-            <div class="bottom" ><label for="Title">标题： </label>
+            <div class="bottom" ><label for="Title">配置名称： </label>
 
                 <!--<select class="card_information" name="Title" placeholder="请选择模板标题" ng-model="MessageConfigModel.Name"  ng-options="item in getList">-->
                 <!--<option ng-repeat="item in list">{{item}}</option></select>-->
@@ -11,8 +11,8 @@
 
                 <!--<input  name="Title"   placeholder="请输入模板标题"  type="text" ng-model="MessageConfigModel.Name"></div>-->
 
-            <div class="bottom" ><label for="Content">配置： </label>
-                <textarea name="Content" id="Content" cols="42" rows="10" placeholder="通配符又{}组成，在使用通配符的时候，请将通配字段名字与其绑定。例如需要绑定名字通配符请添加{name}" ng-model="MessageConfigModel.Template"></textarea>
+            <div class="bottom" ><label for="Content">配置模版： </label>
+                <textarea name="Content" id="Content" cols="42" rows="10" placeholder="通配符又{}组成，在使用通配符的时候，请将通配字段名字与其绑定。" ng-model="MessageConfigModel.Template"></textarea>
             </div>
 
         <div>

@@ -1,4 +1,4 @@
-<div ng-app="App" ng-controller="CreatProductController">
+<div ng-app="App" ng-controller="CreatProductController" ng-submit="addProduct()">
     <script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.all.min.js"> </script>
     <script type="text/javascript" charset="utf-8" src="../libs/ueditor/lang/zh-cn/zh-cn.js"></script>
@@ -28,7 +28,7 @@
                         <a>{{classifyMsg}}</a>
                         <select ng-model="classifys.selectClassifyId" id="classifySelectId"
                                 ng-options="o.Id as o.label for o in classifys.optionsData"
-                                ng-change="selectclassifyChange()">
+                                ng-change="selectclassifyChange()" required>
                             <option value="">请选择分类</option>
                         </select>
                         <a>{{classifyMsg1}}</a>
@@ -42,7 +42,7 @@
                 <label class="col-sm-3 control-label no-padding-right"> {{row.Name}} </label>
                 <div class="col-sm-9">
                     <div  ng-repeat="v in row.ValueList">
-                        <input type="radio" class="ace" name={{row.Name}} value={{v.Id}} ng-model="selectParameterValue" />
+                        <input type="radio" class="ace" name={{row.Name}} value={{v.Id}} ng-model="selectParameterValue" required/>
                         <span class="lbl" name={{row.Name}}>{{v.Value}}</span>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                 <div class="col-sm-9">
                     <div>
                         <select ng-model="brands.selectBrandVal" ng-options="o.Id as o.Bname for o in brands.optionsData"
-                                ng-change="selectBrandChange()">
+                                ng-change="selectBrandChange()" required>
                             <option value="">请选择品牌</option>
                         </select>
                     </div>
@@ -72,11 +72,11 @@
                         <table class="table bg-white b-a">
                             <thead>
                             <tr>
-                                <th width="50%">Name</th>
-                                <th ng-show="uploader.isHTML5">Size</th>
-                                <th ng-show="uploader.isHTML5">Progress</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <th width="50%">名称</th>
+                                <th ng-show="uploader.isHTML5">大小</th>
+                                <th ng-show="uploader.isHTML5">进度</th>
+                                <th>状态</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -95,10 +95,10 @@
                                 </td>
                                 <td nowrap>
                                     <button type="button" class="btn btn-default btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                        Upload
+                                        上传
                                     </button>
                                     <button type="button" class="btn btn-default btn-xs" ng-click="item.remove()">
-                                        Remove
+                                        移除
                                     </button>
                                 </td>
                             </tr>
@@ -165,9 +165,9 @@
 
                 <div class="col-sm-9">
                     <div>
-                        <input type="radio" class="ace" name="Status" value="0"/>
+                        <input type="radio" class="ace" name="Status" ng-model="Status" value="0" required />
                         <span class="lbl" name="Status">上架</span>
-                        <input type="radio" class="ace" name="Status" value="1"/>
+                        <input type="radio" class="ace" name="Status" ng-model="Status" value="1" required/>
                         <span class="lbl">暂存</span>
                     </div>
                 </div>
@@ -178,9 +178,9 @@
 
                 <div class="col-sm-9">
                     <div>
-                        <input type="radio" class="ace" name="Recommend" value="0"/>
+                        <input type="radio" class="ace" name="Recommend" ng-model="Recommend" value="0" required/>
                         <span class="lbl" name="Status">推荐</span>
-                        <input type="radio" class="ace" name="Recommend" value="1"/>
+                        <input type="radio" class="ace" name="Recommend" ng-model="Recommend" value="1" required/>
                         <span class="lbl">一般</span>
                     </div>
                 </div>
@@ -217,7 +217,11 @@
             </div>
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
-                    <button class="btn btn-info" ng-click="addProduct()">
+                    <!--<button class="btn btn-info" ng-click="addProduct()">-->
+                        <!--<i class="icon-ok bigger-110"></i>-->
+                        <!--提交-->
+                    <!--</button>-->
+                    <button class="btn btn-info" type="submit">
                         <i class="icon-ok bigger-110"></i>
                         提交
                     </button>

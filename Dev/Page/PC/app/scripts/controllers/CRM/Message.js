@@ -81,7 +81,14 @@ angular.module("app").controller('MessageSeachController', ['$http', '$scope', f
     $scope.getDataByTime = getData;
     getData();
 
-
+    $scope.getList = function () {
+        $http.get(SETTING.ApiUrl + '/MessageConfig/GetMessageConfigNameList', {
+            'withCredentials':true
+        }).success(function (data) {
+            $scope.listtype = data.List;
+        });
+    };
+    $scope.getList ();
     $scope.GetSMSCount= function () {
         $http.get(SETTING.ApiUrl + '/MessageDetail/GetSMSCount').success(function (data) {
             $scope.SMSCounts = data;
@@ -92,7 +99,7 @@ angular.module("app").controller('MessageSeachController', ['$http', '$scope', f
 }]);
 
 
-angular.module("app").controller('MessageConfigController', ['$http', '$scope', '$state', function ($http, $scope, $state) {
+angular.module("app").controller('MessageConfigController', ['$http', '$scope', '$state','$modal', function ($http, $scope, $state,$modal) {
     $scope.searchCondition = {
         page: 1,
         pageSize: 10
@@ -109,6 +116,38 @@ angular.module("app").controller('MessageConfigController', ['$http', '$scope', 
         });
     };
     $scope.getList ();
+
+    $scope.open=function(brandId){
+        $scope.selectedId=brandId;
+        var modalInstance=$modal.open({
+            templateUrl:'myModalContent.html',
+            controller:'ModalInstanceCtrl',
+            resolve:{
+                msg:function(){
+                    return "你确定要删除吗？";
+                }
+            }
+        });
+
+        modalInstance.result.then(function () {
+            $http.get(SETTING.ApiUrl+'/MessageConfig/DeleteMessageConfig',{
+                params:{
+                    Id:$scope.selectedId
+                },
+                'withCredentials':true
+            }).success(function(data){
+                if(data.Status){
+                    $scope.getList();//成功刷新列表
+                }
+                else{
+                    $scope.alerts=[{type:'danger',msg:data.Msg}];
+                }
+            })
+        });
+    };
+    $scope.closeAlert = function(Brand) {
+        $scope.alerts.splice(Brand, 1);
+    };
 }]);
 
 
@@ -129,6 +168,17 @@ angular.module("app").controller('MessageConfigCreateController',['$http','$scop
     $scope.getList ();
 
     $scope.Create = function(){
+        if( $scope.MessageConfigModel.Name==undefined || $scope.MessageConfigModel.Name=="")
+        {
+            alert("请选择配置名称");
+            return;
+        }
+        if( $scope.MessageConfigModel.Template==undefined || $scope.MessageConfigModel.Template=="")
+        {
+            alert("请输入配置模版");
+            return;
+        }
+
         $http.post(SETTING.ApiUrl + '/MessageConfig/AddMessageConfig', $scope.MessageConfigModel).success(function (data) {
             if(data.Status){
                 $state.go("page.CRM.MessageConfigure.index");
@@ -158,6 +208,16 @@ angular.module("app").controller('MessageConfigEditController',['$http','$scope'
     $scope.getList ();
 
     $scope.Save = function(){
+        if( $scope.MessageConfigModel.Name==undefined || $scope.MessageConfigModel.Name=="")
+        {
+            alert("请选择配置名称");
+            return;
+        }
+        if( $scope.MessageConfigModel.Template==undefined || $scope.MessageConfigModel.Template=="")
+        {
+            alert("请输入配置模版");
+            return;
+        }
         $http.post(SETTING.ApiUrl + '/MessageConfig/UpdateMessageConfig',$scope.MessageConfigModel,{
 
         }).success(function(data){
