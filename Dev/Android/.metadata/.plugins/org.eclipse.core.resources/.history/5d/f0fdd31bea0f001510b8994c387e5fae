@@ -1,7 +1,0 @@
-package com.yoopoon.home.ui.home;
-
-import android.support.v4.app.Fragment;
-
-public class FramSuper extends Fragment {
-
-}
