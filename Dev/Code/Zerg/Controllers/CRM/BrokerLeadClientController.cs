@@ -322,30 +322,39 @@ namespace Zerg.Controllers.CRM
                 //ode.Snapshoturl = orderDetailModel.Snapshoturl,
 
                 //创建订单
-                OrderEntity oe = new OrderEntity
+                try 
                 {
-                    Adddate = DateTime.Now,
-                    Adduser = model.Adduser.ToString(CultureInfo.InvariantCulture),
-                    AgentId = model.Adduser,
-                    Agentname = _brokerService.GetBrokerByUserId(model.Adduser).Brokername,
-                    Agenttel = model.Phone,
-                    BusId = product.Bussnessid,
-                    Busname = product.BussnessName,
-                    Customname = model.Clientname,
-                    Ordercode = _orderService.CreateOrderNumber(2),
-                    OrderDetail = ode,
-                    Ordertype = EnumOrderType.带客订单,
-                    Remark = "前端经纪人提交",
-                    Shipstatus = (int) EnumBRECCType.等待上访,
-                    Status = (int) EnumOrderStatus.审核通过,
-                    Upddate = DateTime.Now,
-                    Upduser = model.Adduser.ToString(CultureInfo.InvariantCulture)
-                };
-                //创建带客订单号
-                //订单详情；
-                _orderService.Create(oe);
+                    OrderEntity oe = new OrderEntity
+                    {
+                        Adddate = DateTime.Now,
+                        Adduser = model.Adduser.ToString(CultureInfo.InvariantCulture),
+                        AgentId = model.Adduser,
+                        Agentname = _brokerService.GetBrokerByUserId(model.Adduser).Brokername,
+                        Agenttel = model.Phone,
+                        BusId = product.Bussnessid,
+                        Busname = product.BussnessName,
+                        Customname = model.Clientname,
+                        Ordercode = _orderService.CreateOrderNumber(2),
+                        OrderDetail = ode,
+                        Ordertype = EnumOrderType.带客订单,
+                        Remark = "前端经纪人提交",
+                        Shipstatus = (int)EnumBRECCType.等待上访,
+                        Status = (int)EnumOrderStatus.审核通过,
+                        Upddate = DateTime.Now,
+                        Upduser = model.Adduser.ToString(CultureInfo.InvariantCulture)
+                    };
+                    //创建带客订单号
+                    //订单详情；
+                    _orderService.Create(oe);
 
                 #endregion
+
+                }
+                catch (Exception err)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "操作失败"));
+                }
+              
             }
             entity.Uptime = DateTime.Now;
             entity.Upuser = _workContext.CurrentUser.Id;
