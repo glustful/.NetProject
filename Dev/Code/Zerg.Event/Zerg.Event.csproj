@@ -174,7 +174,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CrowdModel.cs" />
+    <Compile Include="Models\DiscountModel.cs" />
     <Compile Include="Models\FollowerModel.cs" />
+    <Compile Include="Models\ParticipationModel.cs" />
+    <Compile Include="Models\PartImageModel.cs" />
+    <Compile Include="Models\PhoneModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
