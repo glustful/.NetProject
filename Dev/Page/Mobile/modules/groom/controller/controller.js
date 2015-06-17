@@ -34,5 +34,4 @@ app.controller("tuijianController",['$http','$scope','$stateParams','AuthService
         });
     };
     $scope.add=getBrokerResult;
-
 }])

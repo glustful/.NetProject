@@ -10,6 +10,7 @@ namespace Trading.Service.Area
         AreaEntity Update(AreaEntity entity);
         bool Delete(AreaEntity entity);
         AreaEntity GetAreaById(int id);
+        IQueryable<AreaEntity> GetBySuperArea(int id);
         IQueryable<AreaEntity> GetAreaByCondition(AreaSearchCondition condition);
         int GetAreaCount(AreaSearchCondition condition);
     }
