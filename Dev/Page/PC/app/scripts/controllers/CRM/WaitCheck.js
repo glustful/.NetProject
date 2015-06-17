@@ -18,6 +18,9 @@ var getTagList = function() {
         'withCredentials':true
     }).success(function(data){
         $scope.Brokerlist = data.list1;
+        if (data.list1 == ""){
+            $scope.errorTip="当前没有需要审核的推荐信息";
+        }
         $scope.searchCondition.page=data.condition1.Page;
         $scope.searchCondition.PageCount=data.condition1.PageCount;
         $scope.searchCondition.totalCount=data.totalCont1;

@@ -37,7 +37,7 @@ angular.module('app')
     ['$stateProvider', '$urlRouterProvider', 'MODULE_CONFIG',
       function ($stateProvider, $urlRouterProvider, MODULE_CONFIG) {
         $urlRouterProvider
-          .otherwise('/page/CMS/tag/index');
+          .otherwise('/page/Trading/product/product');
         $stateProvider
           .state('app', {
             abstract: true,
@@ -368,21 +368,20 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            },
-                service:"AuthService",
-                resolve:load('scripts/services/authentication.js')
+            }
           })
+
             .state('page.profile', {
               url: '/profile',
               templateUrl: 'views/pages/profile.html',
                   data: { title: 'Profile', theme: { primary: 'green' } }
             })
 
-            .state('page.settings', {
-              url: '/settings',
-              templateUrl: 'views/pages/settings.html',
-                  data: { title: 'Settings' }
-            })
+            //.state('page.settings', {
+            //  url: '/settings',
+            //  templateUrl: 'views/pages/settings.html',
+            //      data: { title: 'Settings' }
+            //})
             .state('page.blank', {
               url: '/blank',
               templateUrl: 'views/pages/blank.html',
@@ -555,11 +554,11 @@ angular.module('app')
                 resolve: load('scripts/controllers/vectormap.js')
             })
 
-            .state('page.setting', {
-                url: '/setting',
-                templateUrl: 'views/pages/setting.html',
-                  data: { title: '短信列表', theme: { primary: 'green' } }
-            })
+            //.state('page.setting', {
+            //    url: '/setting',
+            //    templateUrl: 'views/pages/setting.html',
+            //      data: { title: '短信列表', theme: { primary: 'green' } }
+            //})
 
             .state('page.allocation', {
                 url: '/allocation',
@@ -1201,14 +1200,14 @@ angular.module('app')
                   resolve:load('angularFileUpload')
             })
 
-            .state('page.CMS.set', { url: '/set', template: '<div ui-view></div>' })
-            .state('page.CMS.set.index', {
-              url: '/index',
-              templateUrl: 'views/pages/CMS/set/index.html',
-                data: { title: '设置' },
-              controller: 'SettingController',
-                resolve: load('scripts/controllers/CMS/Setting.js')
-            })
+            //.state('page.CMS.set', { url: '/set', template: '<div ui-view></div>' })
+            //.state('page.CMS.set.index', {
+            //  url: '/index',
+            //  templateUrl: 'views/pages/CMS/set/index.html',
+            //    data: { title: '设置' },
+            //  controller: 'SettingController',
+            //    resolve: load('scripts/controllers/CMS/Setting.js')
+            //})
 
             .state('page.CMS.fileManager', { url: '/fileManager', template: '<div ui-view></div>' })
             .state('page.CMS.fileManager.index', {

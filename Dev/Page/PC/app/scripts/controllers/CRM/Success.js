@@ -18,6 +18,9 @@ angular.module("app").controller('SuccessListController', [
                 'withCredentials':true
             }).success(function(data){
                 $scope.Brokerlist = data.list1;
+                if(data.list1 == ""){
+                    $scope.errorTip="当前不存在洽谈成功业务";
+                }
                 $scope.searchCondition.page=data.condition1.Page;
                 $scope.searchCondition.PageCount=data.condition1.PageCount;
                 $scope.searchCondition.totalCount=data.totalCont1;
