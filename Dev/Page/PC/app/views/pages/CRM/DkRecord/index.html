@@ -43,7 +43,7 @@
         <td data-value="78025368997" class="footable-visible">{{item.Phone}}</td>
         <td class="footable-visible">{{item.ProjectName}}</td>
         <td data-value="78025368997" class="footable-visible">{{item.Appointmenttime}}</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.DkRecord.detailed({id:item.Id})"><span class="label bg-success" title="Active">审核</span></a></td>
+        <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.DkRecord.detailed({id:item.Id})"><span class="label bg-success">审核</span></a></td>
     </tr>
 
 
@@ -87,6 +87,9 @@
     </tr>
     </tbody>
     <tfoot class="hide-if-no-paging">
+    <tr>
+        <td colspan="6" class="text-center">{{errorTip}}</td>
+    </tr>
     <tr>
         <td colspan="5" class="text-center footable-visible">
             <pagination boundary-links="true" total-items="searchCondition.totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
