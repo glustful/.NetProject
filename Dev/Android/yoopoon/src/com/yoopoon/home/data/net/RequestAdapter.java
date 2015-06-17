@@ -41,6 +41,7 @@ public abstract class RequestAdapter implements Serializable
     protected RequestMode mHowSyncMode;
     protected CallMethod mCallMethod;
     protected RequestMethod mMethod;
+    protected RequestContentType mContentType;
     protected String mId;
 
     protected Bitmap mBitmap;
@@ -57,12 +58,18 @@ public abstract class RequestAdapter implements Serializable
         setRequestMode(RequestMode.eAntsynC);
         setRequestMethod(RequestMethod.ePost);//请求方法
         setCallMethod(CallMethod.eDispersion);
+        setRequestContentType(RequestContentType.eJSON);
         setFileName("temp");
         setLocalDir("");//本地路径
         setSaveSession(false);
     }
 
-    final protected String getHost()
+    
+    final protected RequestContentType getContentType(){
+    	return mContentType;
+    }
+
+	final protected String getHost()
     {
         return mHost;
     }
@@ -149,6 +156,11 @@ public abstract class RequestAdapter implements Serializable
         mId = id;
     }
 
+    final public void setRequestContentType(RequestContentType ejson) {
+		mContentType = ejson;
+		
+	}
+    
     final public RequestAdapter addParam(HashMap<String,String> map)
     {
         mParams.putAll(map);
@@ -360,6 +372,11 @@ public abstract class RequestAdapter implements Serializable
     public enum RequestMode{
         eSync,
         eAntsynC;
+    }
+    
+    public enum RequestContentType{
+    	eGeneral,
+    	eJSON;
     }
    
 }
