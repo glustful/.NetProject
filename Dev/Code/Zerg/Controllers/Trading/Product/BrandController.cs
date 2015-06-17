@@ -119,30 +119,45 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="productBrandModel">品牌项目参数数据模型</param>
         /// <returns>添加结果</returns>
         [System.Web.Http.HttpPost]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public string AddProductBrandParameter([FromBody]ProductBrandParameterModel productBrandParameterModel)
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage AddProductBrandParameter([FromBody]ProductBrandParameterModel productBrandParameterModel)
         {
+           
             ProductBrandEntity PBE = _productBrandService.GetProductBrandById(productBrandParameterModel.ProductBrandId);
-            BrandParameterEntity BPE = new BrandParameterEntity()
-             {
-                 Addtime = DateTime.Now,
-                 Adduser = productBrandParameterModel.Adduser,
-                 Updtime = DateTime.Now,
-                 Upduser = productBrandParameterModel.Upduser,
-                 Parametername = productBrandParameterModel.Parametername,
-                 Parametervaule = productBrandParameterModel.Parametervaule,
-                 ProductBrand = PBE
-             };
-            try
+           
+             var ProductPramater =  PBE.ParameterEntities.Select(p => new { p.Parametername }).Select(pp=>new {
+             pp.Parametername
+             }).ToList();
+            foreach(var i in ProductPramater)
             {
-                _brandParameterService.Create(BPE);
-                return "添加品牌项目" + PBE.Bname + "成功";
-            }
-            catch (Exception e)
+                 if (i.Parametername==productBrandParameterModel.Parametername)
             {
-                return "添加品牌项目" + PBE.Bname + "失败";
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据已经存在，请重新编辑！")); ;
             }
-        }
+            }
+
+                BrandParameterEntity BPE = new BrandParameterEntity()
+                 {
+
+                     Addtime = DateTime.Now,
+                     Adduser = productBrandParameterModel.Adduser,
+                     Updtime = DateTime.Now,
+                     Upduser = productBrandParameterModel.Upduser,
+                     Parametername = productBrandParameterModel.Parametername,
+                     Parametervaule = productBrandParameterModel.Parametervaule,
+                     ProductBrand = PBE
+                 };
+                try
+                {
+                    _brandParameterService.Create(BPE);
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功！"));
+                }
+                catch (Exception e)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功！"));
+                }
+            }
+        
         /// <summary>
         /// 删除商品参数值
         /// </summary>
@@ -207,9 +222,11 @@ namespace Zerg.Controllers.Trading.Product
                 b.Content,
                 ProductParamater = b.ProductParamater.ToDictionary(k => k.Parametername, v => v.Parametervaule),
                 Addtime=b.Addtime
+    
             });
-
+            
             var totalCount1 = _productBrandService.GetProductBrandCount(sech);
+           
 
             return PageHelper.toJson(new { List = List, Condition = sech, totalCount = totalCount1 });
 
