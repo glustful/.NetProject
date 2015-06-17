@@ -1,7 +1,7 @@
 /**
  * Created by chenda on 2015/5/27.
  */
-app.controller('daikeController',['$http','$scope','$stateParams','AuthService',function($http,$scope,$stateParams,AuthService) {
+app.controller('daikeController',['$http','$scope','$stateParams','AuthService','$state',function($http,$scope,$stateParams,AuthService,$state) {
     $scope.BrokerLeadClient={
         AddUser:null,
         Broker:null,
@@ -28,9 +28,14 @@ app.controller('daikeController',['$http','$scope','$stateParams','AuthService',
         console.log(  $scope.BrokerLeadClient);
         $http.post(SETTING.ApiUrl+'/BrokerLeadClient/Add',$scope.BrokerLeadClient).success(function(data){
             if(data.Status){
-                alert(data.Msg)
+                $state.go("app.nominate")
+            }else{
+                $scope.alerts=[{type:'danger',msg:data.Msg}];
             }
         });
     };
     $scope.add=getBrokerResult;
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
 }])
