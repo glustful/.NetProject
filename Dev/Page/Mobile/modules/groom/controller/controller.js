@@ -29,12 +29,10 @@ app.controller("tuijianController",['$http','$scope','$stateParams','AuthService
             if(data.Status){
                 $state.go("app.nominate")
             }else{
-                $scope.alerts=[{type:'danger',msg:data.Msg}];
+              alert(data.Msg)
             }
         });
     };
     $scope.add=getBrokerResult;
-    $scope.closeAlert = function(index) {
-        $scope.alerts.splice(index, 1);
-    };
+
 }])
