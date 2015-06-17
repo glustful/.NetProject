@@ -70,6 +70,20 @@ namespace Trading.Service.Area
                 return null;
             }
         }
+        public IQueryable<AreaEntity> GetBySuperArea(int parentId)
+        {
+            var query = _areaRepository.Table;
+            try
+            {
+                query = query.Where(q => q.ParentId == parentId);
+                return query.OrderBy(q => q.Id);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
         public IQueryable<AreaEntity> GetAreaByCondition(AreaSearchCondition condition)
         {
             var query = _areaRepository.Table;

@@ -1324,6 +1324,12 @@ angular.module('app')
                 data : { title: '分类参数' },
                 resolve: load(['scripts/controllers/Trading/Parameter.js','scripts/controllers/vectormap.js'])
             })
+            .state('page.Trading.product.area', {
+                url: '/area',
+                templateUrl: 'views/pages/Trading/area/index.html',
+                data : { title: '商品分类' },
+                resolve: load(['scripts/controllers/Trading/Area.js','scripts/controllers/vectormap.js'])
+            })
             .state('page.Trading.product.classify', {
                 url: '/classify',
                 templateUrl: 'views/pages/Trading/product/classify.html',
