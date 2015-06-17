@@ -14,6 +14,9 @@ angular.module("app").controller('configureIndexController', [
                 'withCredentials':true
             }).success(function(data){
                 $scope.list = data.List;
+                if (data.List==""){
+                    $scope.errorTip = "不存在数据";
+                }
                 $scope.searchCondition.page = data.Condition.Page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
                 $scope.totalCount = data.totalCount;

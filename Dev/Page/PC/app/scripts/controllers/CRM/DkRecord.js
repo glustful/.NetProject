@@ -16,6 +16,9 @@ angular.module("app").controller('DkRecordController', [
                 'withCredentials':true
             }).success(function(data){
                 $scope.Brokerlist = data.List;
+                if(data.List == ""){
+                    $scope.errorTip == "不存在数据"
+                }
                 $scope.searchCondition.page=data.Condition.Page;
                 $scope.searchCondition.PageCount=data.Condition.PageCount;
                 $scope.searchCondition.totalCount=data.totalCount;
