@@ -125,9 +125,9 @@
                 <label class="col-sm-3 control-label no-padding-right"> 商品单价 </label>
 
                 <div class="col-sm-9">
-                    <input type="number" ng-model="price" ng-min="1" name="price" required>元
+                    <input type="number" ng-model="price" step="0.1" ng-min="1" name="price" required>元
                     <span ng-show="form.price.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
-                    <span ng-show="form.price.$error.min" style="font-size:20px;color: #ff0000">*必须是大于零的整数</span>
+                    <span ng-show="form.price.$error.min" style="font-size:20px;color: #ff0000">*必须大于一</span>
                 </div>
             </div>
 
@@ -135,9 +135,9 @@
                 <label class="col-sm-3 control-label no-padding-right"> 推荐佣金 </label>
 
                 <div class="col-sm-9">
-                    <input type="number" ng-model="commission" ng-min="1" name="commission" required>元
+                    <input type="number" ng-model="commission" ng-min="1" step="0.1" name="commission" required>元
                     <span ng-show="form.commission.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
-                    <span ng-show="form.commission.$error.min" style="font-size:20px;color: #ff0000">*必须是大于零的整数</span>
+                    <span ng-show="form.commission.$error.min" style="font-size:20px;color: #ff0000">*必须是大于一的整数</span>
                 </div>
             </div>
 
@@ -147,7 +147,7 @@
                 <div class="col-sm-9">
                     <input type="number" ng-model="Stockrule" ng-min="1" name="Stockrule" required>个
                     <span ng-show="form.Stockrule.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
-                    <span ng-show="form.Stockrule.$error.min" style="font-size:20px;color: #ff0000">*必须是大于零的整数</span>
+                    <span ng-show="form.Stockrule.$error.min" style="font-size:20px;color: #ff0000">*必须是大于一的整数</span>
                 </div>
             </div>
 
@@ -155,7 +155,7 @@
                 <label class="col-sm-3 control-label no-padding-right"> 成交佣金 </label>
 
                 <div class="col-sm-9">
-                    <input type="number" ng-model="dealCommission" ng-min="1" name="dealCommission" required>元
+                    <input type="number" ng-model="dealCommission" ng-min="1" step="0.1" name="dealCommission" required>元
                     <span ng-show="form.dealCommission.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
                     <span ng-show="form.dealCommission.$error.min" style="font-size:20px;color: #ff0000">*必须是大于零的整数</span>
                 </div>
@@ -196,7 +196,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> 商品副标题 </label>
                 <div class="col-sm-9" >
-                    <textarea class="form-control" ng-model="Sericeinstruction" name="Sericeinstruction" style="width: 400px" required></textarea>
+                    <textarea class="form-control" ng-model="Sericeinstruction" name="Sericeinstruction" style="width: 400px" required ng-maxlength="100"></textarea>
                     <span ng-show="form.Sericeinstruction.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
                 </div>
             </div>
