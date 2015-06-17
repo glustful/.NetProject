@@ -5,14 +5,13 @@
 .activity ul li{
     width: 200px;
     float: left;
-    background:#ffffff;
     text-align: center;
     padding:27px 0 20px 0;
 }
 
-.activity .one{
-    padding: 1px 3px  ;
-}
+/*.activity .one{*/
+    /*padding: 1px 3px  ;*/
+/*}*/
 /*.activity .two{*/
     /*margin-right: 2px;*/
 /*}*/
