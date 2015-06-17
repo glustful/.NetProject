@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using Event.Entity.Model;
 using Event.Service.Crowd;
 using Event.Service.Follower;
@@ -38,25 +40,15 @@ namespace Zerg.Event.Controllers.Crowd
                 OrderBy = EnumCrowdSearchOrderBy.OrderById,
                 //Statuss = new[] { status }
             };
-
-            //var list = _crowdService.GetCrowdsByCondition(sech).Select(p => new
-            //{
-            //    p.Ttitle
-            //}).ToList();
-            //@ViewBag.list = list;
-
-
-
-            ////遍历出项目表中的所有图片
-            //List<CrowdEntity> arr = _crowdService.GetCrowdsByCondition(sech).ToList();
-            //for (int i = 0; i < arr.Count; i++)
-            //{
-            //    //循环去取出对应项目的IMG地址
-            //    for (int j = 0; j < UPPER; j++)
-            //    {
-                    
-            //    }
-            //}
+            ////遍历出项目表中的所有项目
+            List<CrowdEntity> arr = _crowdService.GetCrowdsByCondition(sech).ToList();
+            foreach (var corwdlist in arr)
+            {
+                //这里是获取到每个项目表对应图片表中的图片list
+                var CrowdDataImgList = _partImageService.GetPartImageByCrowdId(corwdlist.Id);
+                //这是取得图片list中的对应项目数据
+                var CrowdData = CrowdDataImgList[0].Crowd;
+            }
             return View();
         }
     }

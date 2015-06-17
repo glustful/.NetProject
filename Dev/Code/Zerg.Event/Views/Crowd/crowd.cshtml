@@ -16,7 +16,6 @@
                 <span class="fl">已有467人参与众筹</span>
                 <span class="fr">剩余天数：6天</span>
             </div>
-            @ViewBag.list
             <div class="favourable-nav">
                 <span class="all">9折优惠<br /><small>众筹人数100人</small></span>
                 <span class="all">8折优惠<br /><small>众筹人数200人</small></span>
@@ -26,7 +25,7 @@
             @{
                 foreach (var p in ViewBag.list)
                 {
-                    <span class="all">9折优惠<br /><small>@p.Ttitle</small></span>
+                    
                 }
             }
         </div>

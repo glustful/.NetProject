@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Event.Entity.Model;
 using YooPoon.Core.Autofac;
@@ -18,6 +19,6 @@ namespace Event.Service.PartImage
 
 		int GetPartImageCount (PartImageSearchCondition condition);
 
-        IQueryable<PartImageEntity> GetPartImageByCrowdId(int crowdId);
+        List<PartImageEntity> GetPartImageByCrowdId(int crowdId);
 	}
 }

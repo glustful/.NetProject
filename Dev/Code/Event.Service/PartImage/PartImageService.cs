@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
@@ -201,16 +202,28 @@ namespace Event.Service.PartImage
 		}
 
 
-        public IQueryable<PartImageEntity> GetPartImageByCrowdId(int crowdId)
+        //public IQueryable<PartImageEntity> GetPartImageByCrowdId(int crowdId)
+        //{
+        //    try
+        //    {
+        //        var query = _partimageRepository.Table;
+        //        if (crowdId != 0)
+        //        {
+        //            return query.Where(q => q.Crowd.Id == crowdId);
+        //        }
+        //        return null;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _log.Error(e, "数据库操作出错");
+        //        return null;
+        //    }
+        //}
+        public List<PartImageEntity> GetPartImageByCrowdId(int crowdId)
         {
             try
             {
-                var query = _partimageRepository.Table;
-                if (crowdId != 0)
-                {
-                    return query.Where(q => q.Crowd.Id == crowdId);
-                }
-                return null;
+                return _partimageRepository.Table.Where(p => p.Crowd.Id==crowdId).ToList();
             }
             catch (Exception e)
             {
