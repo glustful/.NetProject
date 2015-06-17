@@ -84,14 +84,16 @@
                             <div class="space-4"></div>
                             <div class="form-group" style="text-align:center">
                                 <label for="parameterName">参数名称</label>
-                                <input class="input-large" type="text" ng-model="parameterName" name="parameterName" id="parameterName" placeholder="" value="" required>
+                                <input class="input-large" type="text" ng-model="parameterName" name="parameterName" id="parameterName"
+                                       placeholder="" value="" required ng-maxlength="20">
                                 <span ng-show="form.parameterName.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                                <span ng-show="form.parameterName.$error.maxlength" style="font-size:20px;color: #ff0000">*输入字符在20以内</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-info btn-sm" type="submit">
+                    <button class="btn btn-info btn-sm" type="submit" ng-disabled="form.$invalid" aria-disabled="true" disabled="disabled">
                         <i class="fa fa-fw m-r-xs fa-plus"></i>
                         添 加
                     </button>
@@ -169,14 +171,16 @@
                             <div class="space-4"></div>
                             <div class="form-group" style="text-align:center">
                                 <label for="ClassifyParameterValue">参数值</label>
-                                <input class="input-large" type="text" ng-model="ClassifyParameterValue" name="ClassifyParameterValue" id="ClassifyParameterValue" placeholder="" value="" required>
+                                <input class="input-large" type="text" ng-model="ClassifyParameterValue" name="ClassifyParameterValue"
+                                       id="ClassifyParameterValue" placeholder="" value="" required ng-maxlength="20">
                                 <span ng-show="form1.ClassifyParameterValue.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                                <span ng-show="form1.ClassifyParameterValue.$error.maxlength" style="font-size:20px;color: #ff0000">*输入字符在20以内</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-info btn-sm" type="submit">
+                    <button class="btn btn-info btn-sm" type="submit" ng-disabled="form1.$invalid" aria-disabled="true" disabled="disabled">
                         <i class="fa fa-fw m-r-xs fa-plus"></i>
                         添 加
                     </button>

@@ -14,8 +14,9 @@
                 <label class="col-sm-3 control-label no-padding-right"> 商品名称 </label>
 
                 <div class="col-sm-9">
-                    <input type="text" ng-model="ProductName" name="ProductName" required/>
+                    <input type="text" ng-model="ProductName" name="ProductName" required ng-maxlength="20"/>
                     <span ng-show="form.ProductName.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                    <span ng-show="form.ProductName.$error.maxlength" style="font-size:20px;color: #ff0000">*输入字符长度20以内</span>
                 </div>
             </div>
 
@@ -221,7 +222,7 @@
                         <!--<i class="icon-ok bigger-110"></i>-->
                         <!--提交-->
                     <!--</button>-->
-                    <button class="btn btn-info" type="submit">
+                    <button class="btn btn-info" type="submit" ng-disabled="form.$invalid" aria-disabled="true" disabled="disabled">
                         <i class="icon-ok bigger-110"></i>
                         提交
                     </button>
