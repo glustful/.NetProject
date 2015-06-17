@@ -52,14 +52,16 @@
                             <div class="space-4"></div>
                             <div class="form-group" style="text-align:center">
                                 <label for="txtflname">分类名称</label>
-                                <input class="input-large" type="text" ng-model="classifyValue" id="txtflname" name="txtflname" placeholder="" value="" required>
+                                <input class="input-large" type="text" ng-model="classifyValue" id="txtflname" name="txtflname" placeholder=""
+                                       value="" required ng-maxlength="20">
                                 <span ng-show="form.txtflname.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                                <span ng-show="form.txtflname.$error.maxlength" style="font-size:20px;color: #ff0000">*输入字符在20以内</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-info btn-sm" type="submit">
+                    <button class="btn btn-info btn-sm" type="submit" ng-disabled="form.$invalid" aria-disabled="true" disabled="disabled">
                         <i class="fa fa-fw m-r-xs fa-plus"></i>
                         添加分类
                     </button>
