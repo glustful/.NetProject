@@ -161,18 +161,32 @@
                         <div class="col-xs-12 ">
                             <div class="space-4"></div>
                             <div class="form-group" style="text-align:center">
-                                <label for="brandName">参数名称</label>
-                                <select  class="input-large" type="text" ng-model="brandParameterName" id="brandParameterName" placeholder="" style="width: 158px; height: 26px">
+                                <div id="xxx">
+                                    <label for="brandName">参数名称</label>
+                                 <select onChange="change(this.value)" class="input-large" type="text" ng-model="brandParameterName" id="brandParameterName" placeholder="" style="width: 163px; height: 26px">
                                     <option value="最高优惠">最高优惠</option>
                                     <option value="来电咨询">来电咨询</option>
-                                    <option value="图片Banner">图片Banner</option>
+                                    <option value="图片banner">图片banner</option>
+
 
                                 </select>
+
+                            <div id="最高优惠" class="form-group" style="text-align:center; ">
+                                <label >参数的值</label>
+                                <input class="input-large" type="text" ng-model="brandParameterValue"  placeholder="" value="">
                             </div>
-                            <div class="form-group" style="text-align:center">
-                                <label for="brandParameterValue">参数值</label>
-                                <input class="input-large" type="text" ng-model="brandParameterValue" id="brandParameterValue" placeholder="" value="">
+
+                            <div id="来电咨询" class="form-group" style="text-align:center;display: none">
+                                <label >参数的值</label>
+                                <input class="input-large" type="text" ng-model="brandParameterValue"  placeholder="" value="">
                             </div>
+                            <div id="图片banner" class="form-group" style="display: none">
+                                <label >图片地址</label> <input class="input-large" type="text" ng-model="brandParameterValue"  placeholder="" value="">
+
+                                <input type="file" nv-file-select="" uploader="uploader" />
+                            </div>
+                           </div>
+                            <div>
                         </div>
                     </div>
                 </div>
@@ -188,6 +202,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!--弹出层结束  -->
     <script>
@@ -211,7 +226,17 @@
             $("#modal-form-addParameter").show();
 
         }
-
+        function change(a){
+            var xxx = document.getElementById("xxx");
+            var divArray = xxx.getElementsByTagName("div");
+            for (var i=0;i<divArray.length;i++) {
+                if (divArray[i].id == a) {
+                    divArray[i].style.display='';
+                }else {
+                    divArray[i].style.display='none';
+                }
+            }
+        }
 
     </script>
     <div colspan="5" class="text-center footable-visible">
@@ -220,4 +245,5 @@
     <script type="text/ng-template" id="myModalContent.html">
         <div ng-include="'views/partials/modal.html'"></div>
     </script>
+</div>
 </div>
