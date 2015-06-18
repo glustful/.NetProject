@@ -82,9 +82,13 @@
 .add_blank{
     width: 516px;
     height: 46px;
-    font-size: 1em;
+    font-size: 20px;
     font-family: "microsoft yahei";
     border: 1px solid #eeeeee;
+}
+.errorTip{
+    color: #fc3b00;
+    font-size: 20px;
 }
 .add_button{
     width: 516px;

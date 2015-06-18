@@ -67,26 +67,37 @@ angular.module("app").controller('CreatBrandController', [
         //--------添加项目 start---------//
         $scope.BrandModel={
             Bname:"",
-            Bimg:""
+            Bimg:"",
+            SubTitle:"",
+            Content:""
+
         };
 
         $scope.Save = function(){
+            document.getElementById("btnok").setAttribute("disabled", true);
             $scope.BrandModel.Bimg=$scope.image;
             $http.post(SETTING.ApiUrl + '/Brand/AddProductBrand',$scope.BrandModel,{
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
-
+                    document.getElementById("btnok").removeAttribute("disabled");
                     $state.go('page.Trading.product.brand');
-                    console.log(data);
+
                 }else{
-                    console.log("error");
+                    document.getElementById("btnok").removeAttribute("disabled");
+                    $scope.alerts=[{type:'danger',msg:data.Msg}];
+
+
                 }
             });
         }
+        $scope.closeAlert = function(index) {
+            $scope.alerts.splice(index, 1);
+            $scope.BrandModel.Bname=''
+        };
 
 
-        //---------图片上传 start--------//
+        //---------------------------------------------图片上传 start------------------------------------//
         $scope.image="";
         $scope.SImg=SETTING.ImgUrl;
         function completeHandler(e) {
@@ -105,9 +116,10 @@ angular.module("app").controller('CreatBrandController', [
             console.info('onSuccessItem', fileItem, response, status, headers);
             completeHandler(response.Msg);
         };
-        //---------图片上传 end---------//
+        //-------------------------------------------图片上传 end------------------------------------------//
     }
 ]);
+
 
 
 app.controller('BrandController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
@@ -161,6 +173,7 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
         $scope.selectBrandId=seletId;
        $http.get(SETTING.ApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' + seletId,{'withCredentials':true}).success(function (data) {
             $scope.rowCollectionParameter = data;
+
         });
     };
 
@@ -171,9 +184,8 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
         var brand = {
             ProductBrandId:  $scope.selectBrandId,
             Parametername: $scope.brandParameterName,
-            Parametervaule:  $scope.brandParameterValue,
-            Adduser: 2,
-            Upduser: 'jiadou'
+            Parametervaule:  $scope.brandParameterValue
+
         };
         var Json = JSON.stringify(brand);
         $http.post(SETTING.ApiUrl + '/Brand/AddProductBrandParameter', Json, {

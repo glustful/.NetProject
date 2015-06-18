@@ -16,6 +16,9 @@ angular.module("app").controller('DkRecordController', [
                 'withCredentials':true
             }).success(function(data){
                 $scope.Brokerlist = data.List;
+                if(data.List == ""){
+                    $scope.errorTip == "不存在数据"
+                }
                 $scope.searchCondition.page=data.Condition.Page;
                 $scope.searchCondition.PageCount=data.Condition.PageCount;
                 $scope.searchCondition.totalCount=data.totalCount;
@@ -38,4 +41,20 @@ angular.module("app").controller('DKRDetailedController',['$http','$scope','$sta
     }).success(function(data){
         $scope.ARDetialModel =data;
     });
+    //获取驻场秘书列表
+    $http.get(SETTING.ApiUrl + '/AdminRecom/SecretaryList',{
+        'withCredentials':true
+    }).success(function (data) {
+        $scope.SecretaryList = data;
+    });
+    $scope.updateDKRecord = function(type){
+        $scope.ARDetialModel.Status = type;
+        $http.post(SETTING.ApiUrl +'/BrokerLeadClient/UpdateLeadClient',$scope.ARDetialModel,{ 'withCredentials':true}).success(function(data){
+            if(data.Status){
+                $state.go('page.CRM.DkRecord.index');
+            }else{
+                alert(data.Msg);
+            }
+        });
+    };
 }]);

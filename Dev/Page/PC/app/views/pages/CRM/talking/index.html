@@ -76,6 +76,9 @@
     </tbody>
     <tfoot class="hide-if-no-paging">
     <tr>
+        <td colspan="6" class="text-center" style="font-size:20px;color: #ff0000">{{errorTip}}</td>
+    </tr>
+    <tr>
         <td colspan="5" class="text-center footable-visible">
             <pagination boundary-links="true" total-items="searchCondition.totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
         </td>

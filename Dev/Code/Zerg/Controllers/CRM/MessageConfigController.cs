@@ -99,17 +99,18 @@ namespace Zerg.Controllers.CRM
 
 
         }
+      
         /// <summary>
         /// 删除短信配置
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
-        public HttpResponseMessage DeleteMessageConfig(MessageConfigModel messageConfigModel)
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage DeleteMessageConfig(string  Id)
         {
-            if (!string.IsNullOrEmpty(messageConfigModel.Id) && PageHelper.ValidateNumber(messageConfigModel.Id))
+            if (!string.IsNullOrEmpty(Id) && PageHelper.ValidateNumber(Id))
             {
-                if (_MessageConfigService.Delete(_MessageConfigService.GetMessageConfigById(Convert.ToInt32(messageConfigModel.Id))))
+                if (_MessageConfigService.Delete(_MessageConfigService.GetMessageConfigById(Convert.ToInt32(Id))))
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(true, "数据成功删除！"));
                 }
@@ -122,6 +123,7 @@ namespace Zerg.Controllers.CRM
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
 
         }
+     
         /// <summary>
         /// 更新短信配置模板
         /// </summary>

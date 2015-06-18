@@ -1,5 +1,6 @@
 <div class="padding-out" ng-app="App" ng-controller="ParameterController">
-    <div class="box">
+<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+<div class="box">
         <div class="col-md-3 col-sm-6">
             <div class="p-md">
                 <div class="m-v-sm btn-groups">
@@ -76,27 +77,32 @@
                     <button type="button" onclick="AddParameterWindowClose()" class="close" data-dismiss="modal">×</button>
                     <h4 id="eidt-msg">请填写编辑信息</h4>
                 </div>
+                <form name="form" ng-submit="addParameter()">
                 <div class="modal-body overflow-visible">
                     <div class="row">
                         <div class="col-xs-12 ">
                             <div class="space-4"></div>
                             <div class="form-group" style="text-align:center">
                                 <label for="parameterName">参数名称</label>
-                                <input class="input-large" type="text" ng-model="parameterName" id="parameterName" placeholder="" value="">
+                                <input class="input-large" type="text" ng-model="parameterName" name="parameterName" id="parameterName"
+                                       placeholder="" value="" required ng-maxlength="20">
+                                <span ng-show="form.parameterName.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                                <span ng-show="form.parameterName.$error.maxlength" style="font-size:20px;color: #ff0000">*输入字符在20以内</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-info btn-sm" ng-click="addParameter()">
+                    <button class="btn btn-info btn-sm" type="submit" ng-disabled="form.$invalid" aria-disabled="true" disabled="disabled">
                         <i class="fa fa-fw m-r-xs fa-plus"></i>
                         添 加
                     </button>
-                    <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="AddParameterWindowClose()">
+                    <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="AddParameterWindowClose()" type="button">
                         <i class="icon-remove"></i>
                         取 消
                     </button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -141,7 +147,7 @@
                         <i class="fa fa-fw m-r-xs fa-plus"></i>
                         添 加
                     </button>
-                    <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="ParameterValueWindowClose()">
+                    <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="ParameterValueWindowClose()" type="button">
                         <i class="icon-remove"></i>
                         取 消
                     </button>
@@ -158,27 +164,32 @@
                     <button type="button" onclick="AddValueWindowClose()" class="close" data-dismiss="modal">×</button>
                     <h4 id="addmsg">添加分类参数值</h4>
                 </div>
+                <form name="form1" ng-submit="addParameterValue()">
                 <div class="modal-body overflow-visible">
                     <div class="row">
                         <div class="col-xs-12 ">
                             <div class="space-4"></div>
                             <div class="form-group" style="text-align:center">
                                 <label for="ClassifyParameterValue">参数值</label>
-                                <input class="input-large" type="text" ng-model="ClassifyParameterValue" id="ClassifyParameterValue" placeholder="" value="">
+                                <input class="input-large" type="text" ng-model="ClassifyParameterValue" name="ClassifyParameterValue"
+                                       id="ClassifyParameterValue" placeholder="" value="" required ng-maxlength="20">
+                                <span ng-show="form1.ClassifyParameterValue.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                                <span ng-show="form1.ClassifyParameterValue.$error.maxlength" style="font-size:20px;color: #ff0000">*输入字符在20以内</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-info btn-sm" ng-click="addParameterValue()">
+                    <button class="btn btn-info btn-sm" type="submit" ng-disabled="form1.$invalid" aria-disabled="true" disabled="disabled">
                         <i class="fa fa-fw m-r-xs fa-plus"></i>
                         添 加
                     </button>
-                    <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="AddValueWindowClose()">
+                    <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="AddValueWindowClose()" type="button">
                         <i class="icon-remove"></i>
                         取 消
                     </button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -207,3 +218,6 @@
         }
         </script>
 </div>
+<script type="text/ng-template" id="myModalContent.html">
+    <div ng-include="'views/partials/modal.html'"></div>
+</script>

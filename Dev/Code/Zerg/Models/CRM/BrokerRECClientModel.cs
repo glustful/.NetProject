@@ -113,5 +113,10 @@ namespace Zerg.Models.CRM
         /// 预约时间
         /// </summary>
         public virtual string Appointmenttime { get; set; }
+
+        public int SecretaryId { get; set; }
+
+        public int WriterId { get; set; }
+
     }
 }

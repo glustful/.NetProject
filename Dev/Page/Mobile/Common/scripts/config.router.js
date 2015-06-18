@@ -19,7 +19,8 @@ var allowState = [
     'app.housesPic',
     'user.register',
     'user.PasswordFound',
-    'app.invite'
+    'app.invite',
+    'app.housesBuy'
 ];
 
 app  .run(
@@ -163,7 +164,7 @@ app  .run(
             templateUrl:'modules/houseDetail/view/houseDetail.html'
         })
         .state('app.houses',{
-            url:'/houses',
+            url:'/houses?BrandId&ProductId',
             templateUrl:'modules/houses/view/houses.html',
             resolve:load('modules/houses/controller/houses.js')
         })

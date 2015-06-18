@@ -1,6 +1,6 @@
 
 <div class="row">
-    <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入搜索条件" ng-model="searchCondition.Brokername" required="" tabindex="0" aria-required="true" aria-invalid="true">
+    <input type="text" class="form-control form-control-1 " placeholder="请输入客户姓名关键字" ng-model="searchCondition.clientName" tabindex="0" >
     <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo"  ng-click="getList()">搜索<div class="md-ripple-container"></div></button>
 </div>
 <table class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" data-page-size="5">
@@ -25,59 +25,24 @@
             操作
             <span class="footable-sort-indicator"></span></th>
     </tr>
-    </thead>
-    <tbody>
+    </thead >
 
-    <tr class="footable-even" style="display: table-row;" ng-repeat="item in Brokerlist">
+    <tbody >
+    <tr class="footable-even" style="display: table-row;" ng-repeat="item in Brokerlist" >
         <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>{{item.Id}}</td>
         <td class="footable-visible"><a href="">{{item.Clientname}}</a></td>
         <td class="footable-visible">{{item.Phone}}</td>
         <td data-value="78025368997" class="footable-visible">{{item.Brokername}}</td>
-        <td class="footable-visible">{{item.Uptime}}</td>
+        <td class="footable-visible">{{item.Uptime | dateFilter}}</td>
         <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.CustomerInformation.detailed({id:item.Id})"><span class="label bg-success" title="Active">详情</span></a></td>
     </tr>
 
-
-
-    <tr class="footable-odd" style="display: none;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>Maxine</td>
-        <td class="footable-visible"><a href="">Woldt</a></td>
-        <td class="footable-visible"><a href="">Business Services Sales Representative</a></td>
-        <td data-value="561440464855" class="footable-visible">17 Oct 1987</td>
-        <td data-value="2" class="footable-visible footable-last-column"><span class="label bg-light" title="Disabled">Disabled</span></td>
-    </tr>
-    <tr class="footable-even" style="display: none;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>Lorraine</td>
-        <td class="footable-visible">Mcgaughy</td>
-        <td class="footable-visible">Hemodialysis Technician</td>
-        <td data-value="437400551390" class="footable-visible">11 Nov 1983</td>
-        <td data-value="2" class="footable-visible footable-last-column"><span class="label bg-light" title="Disabled">Disabled</span></td>
-    </tr>
-    <tr class="footable-odd" style="display: none;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>Lizzee</td>
-        <td class="footable-visible"><a href="">Goodlow</a></td>
-        <td class="footable-visible">Technical Services Librarian</td>
-        <td data-value="-257733999319" class="footable-visible">1 Nov 1961</td>
-        <td data-value="3" class="footable-visible footable-last-column"><span class="label bg-warning" title="Suspended">Suspended</span>
-        </td>
-    </tr>
-    <tr class="footable-even" style="display: none;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>Judi</td>
-        <td class="footable-visible">Badgett</td>
-        <td class="footable-visible">Electrical Lineworker</td>
-        <td data-value="362134712000" class="footable-visible">23 Jun 1981</td>
-        <td data-value="1" class="footable-visible footable-last-column"><span class="label bg-success" title="Active">Active</span></td>
-    </tr>
-    <tr class="footable-odd" style="display: none;">
-        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>Lauri</td>
-        <td class="footable-visible">Hyland</td>
-        <td class="footable-visible">Blackjack Supervisor</td>
-        <td data-value="500874333932" class="footable-visible">15 Nov 1985</td>
-        <td data-value="3" class="footable-visible footable-last-column"><span class="label bg-warning" title="Suspended">Suspended</span>
-        </td>
-    </tr>
     </tbody>
     <tfoot class="hide-if-no-paging">
+    <tr>
+       <td colspan="6" class="text-center">{{errorTip}}</td>
+    </tr>
+
     <tr>
         <td colspan="5" class="text-center footable-visible">
             <pagination boundary-links="true" total-items="searchCondition.totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
