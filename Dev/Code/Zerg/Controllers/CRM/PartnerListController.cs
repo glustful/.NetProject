@@ -13,7 +13,7 @@ using YooPoon.WebFramework.User.Entity;
 
 namespace Zerg.Controllers.CRM
 {
-    [AllowAnonymous]
+     [AllowAnonymous ]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 合伙人  李洪亮  2015-05-05
@@ -51,7 +51,8 @@ namespace Zerg.Controllers.CRM
             var partnerList = _brokerService.GetBrokersByCondition(brokerSearchCondition).Select(p => new
             {
                 p.Id,
-                p.PartnersName,
+                p.UserId,
+                PartnersName = p.PartnersName ==null ? "无" : p.PartnersName,
                 p.PartnersId,
                 BrokerName = p.Brokername,
                 Phone = p.Phone,
@@ -64,6 +65,58 @@ namespace Zerg.Controllers.CRM
             return PageHelper.toJson(new { List = partnerList, Condition = brokerSearchCondition, totalCount = partnerListCount });
              
         }
+        /// <summary>
+        /// 查询经纪人的合伙人
+        /// </summary>
+        /// <returns></returns>
+
+        [HttpGet]
+        public HttpResponseMessage SearchPartnerList1( int PartnersId )
+        {
+            if (PartnersId > 0) { 
+            var brokerSearchCondition = new BrokerSearchCondition
+            {
+                
+                PartnersId = PartnersId
+            };
+            var partnerList = _brokerService.GetBrokersByCondition(brokerSearchCondition).Select(p => new
+            {
+                p.Id,
+                p.UserId,
+                p.PartnersName,
+                p.PartnersId,
+                BrokerName = p.Brokername,
+                Nickname=p.Nickname,
+                Phone = p.Phone,
+                Regtime = p.Regtime,
+                Agentlevel = p.Agentlevel,
+                Headphoto = p.Headphoto,
+                Sfz = p.Sfz,
+                Amount = p.Amount,
+                status = EnumPartnerType.同意
+            }).ToList().Select(p => new
+            {
+                p.Id,
+                p.UserId,
+                p.PartnersName,
+                p.PartnersId,
+                BrokerName = p.BrokerName,
+                Nickname = p.Nickname,
+                Phone = p.Phone,
+                Regtime = p.Regtime.ToString("yyyy-MM-dd"),
+                Agentlevel = p.Agentlevel,
+                Headphoto = p.Headphoto,
+                Sfz = p.Sfz,
+                Amount = p.Amount,
+                status = EnumPartnerType.同意
+            });
+            var partnerListCount = _brokerService.GetBrokerCount(brokerSearchCondition);
+            return PageHelper.toJson(new { List = partnerList, Condition = brokerSearchCondition, totalCount = partnerListCount });
+            }
+            else { return null; }
+
+        }
+
 
         /// <summary>
         /// 查询经纪人下的合伙人List
@@ -80,19 +133,32 @@ namespace Zerg.Controllers.CRM
                 Status=EnumPartnerType.同意,
             };
 
-            var partnerList = _partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).Where(p => p.Broker.UserId == userId).Select(p => new
+            var partnerList = _partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).Where(p => p.Broker.UserId == userId).ToList().Select(c => new
                 {
-                 Name=p.Brokername,
-                 AddTime =p.Addtime,
-                 regtime=p.Regtime, 
-                 Phone=p.Phone,
-                Headphoto= p.Broker .Headphoto ,
-                Id=p.Id,
-                PartnerId=p.PartnerId
-              
-                }).ToList();
+                    Name = c.Brokername,
+                    AddTime = c.Addtime,
+                    regtime = c.Regtime.ToString("yyyy-MM-dd"),
+                    Phone = c.Phone,
+                    Headphoto = _brokerService.GetBrokerById(Convert.ToInt32(c.PartnerId)).Headphoto,
+                    Id = c.Id,
+                    PartnerId = c.PartnerId,
+                    Agentlevel = c.Broker.Agentlevel,
+                    Nickname = c.Broker.Nickname,
+                }).ToList().Select(c => new {
+                    Name = c.Name,
+                    AddTime = c.AddTime,
+                    regtime = c.regtime,
+                    Phone = c.Phone,
+                    Headphoto = _brokerService.GetBrokerById(Convert.ToInt32(c.PartnerId)).Headphoto,
+                    Id = c.Id,
+                    PartnerId = c.PartnerId,
+                    Agentlevel = _brokerService.GetBrokerById(c.PartnerId).Agentlevel,
+                    Amount = _brokerService.GetBrokerById(c.PartnerId).Amount,
+                    Sfz = _brokerService.GetBrokerById(c.PartnerId).Sfz,
+                    Nickname = _brokerService.GetBrokerById(c.PartnerId).Nickname ,
+                });
 
-            return PageHelper.toJson(new { list = partnerList });
+            return PageHelper.toJson(new { partnerList });
 
         }
 

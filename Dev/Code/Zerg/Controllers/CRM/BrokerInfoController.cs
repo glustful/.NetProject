@@ -86,6 +86,12 @@ namespace Zerg.Controllers.CRM
                 Adduser = brokerlist.Adduser,
                 Brokername = brokerlist.Brokername,
                 Phone = brokerlist.Phone,
+                Realname = brokerlist.Realname,
+                Nickname = brokerlist.Nickname,
+                Sexy = brokerlist.Sexy,
+                Sfz = brokerlist.Sfz,
+                Email = brokerlist.Email,               
+                Headphoto = brokerlist.Headphoto,
                 rgtime  = brokerlist.Regtime.ToShortDateString ()
             };
             return PageHelper.toJson(new { List = dd});

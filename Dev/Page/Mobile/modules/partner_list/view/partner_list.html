@@ -6,9 +6,9 @@
 <div class="list_content" ng-controller="partnerListController" >
         <ul>
 
-            <li ng-repeat="item in list"><a href="#/app/partner_details?Id={{item.PartnerId}}"> <button class="partner"><span class="p_photo"><img ng-src={{item.headphoto}}></span>
-                <span class="name">{{item.Name}}</span><span>{{item.Phone}}</span>
-                <!--<span>{{item.Phone}}</span>-->
+            <li ng-repeat="item in list"><a href="#/app/partner_details?Id={{item.PartnerId}}"> <button class="partner"><span class="p_photo"><img src="http://img.yoopoon.com/{{item.Headphoto}}" width="62" height="62"></span>
+                <span class="name">{{item.Name}}</span>
+                <span class="partnerPhone">{{item.Phone}}</span>
                 <span class="jiantou"><img src="modules/partner_list/static/image/partner/jiantou.png"></span>
             </button>
             </a></li>
