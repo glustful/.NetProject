@@ -1,10 +1,14 @@
-
+.list_content{
+    background-color: #fff;
+}
 .list_content p{
     margin-left: 30px;
     font-weight:600;
 }
-ul li{
-    list-style: none;
+.list_content ul li{
+    height: 80px;
+    line-height: 80px;
+    border-bottom: 1px solid #ebebeb;
 }
 .partner{
     height: 60px;
@@ -19,6 +23,13 @@ ul li{
 .name{
     float: left;
     margin-left: 45px;
+    display: inline-block;
+    width: 150px;
+    text-align: left;
+}
+.list_content .partnerPhone{
+   display: inline-block;
+    width: 120px;
 }
 .jiantou{
     float: right;
@@ -108,7 +119,7 @@ ul li{
 }
 .others{
     background-color: #fff;
-    margin-top: 20px;
+    margin-top: 1px;
 }
 .others .invite{
     height: 60px;
@@ -127,14 +138,18 @@ ul li{
 .others .othersInformation li span button{
     height: 40px;
     width: 80px;
+    line-height: 40px;
     margin-right: 20px;
     border-radius: 5px;
     color: #fff;
     font-size: 1em;
     background-color:#fc3b00;
 }
-.others .othersInformation li span .agree{
-
+.add_content .warm{
+    color: #f14800;
+}
+.others .warming{
+    color: #f14800;
 }
 /* 遮罩 */
 .masked .request{

@@ -945,6 +945,12 @@ angular.module('app')
                 data : { title: '合伙人详情页' },
                 resolve:load('scripts/controllers/CRM/Partner.js')
             })
+            .state('page.CRM.partner.former', {
+                url: '/former?PartnersId',
+                templateUrl: 'views/pages/CRM/partner/former.html',
+                data : { title: '他的上家详情' },
+                resolve:load('scripts/controllers/CRM/Partner.js')
+            })
 
 
             .state('page.CRM.BankSet', {
