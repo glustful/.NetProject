@@ -135,7 +135,7 @@ app.controller('ParameterController', ['$scope', '$http', '$state','$modal', fun
                 $http.get(SETTING.ApiUrl + '/Classify/GetParameterValueByParameter?parameterId=' + $scope.selectParameterId,{'withCredentials':true}).success(function (data) {
                     $scope.rowParameterValue = data;
                 });
-                $scope.output = data;
+//                $scope.output = data;
             }
            else{
                 $scope.alerts = [ {type: 'danger', msg: data.Msg} ];
