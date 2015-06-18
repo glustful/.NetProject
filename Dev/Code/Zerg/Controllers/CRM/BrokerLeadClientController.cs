@@ -77,15 +77,25 @@ namespace Zerg.Controllers.CRM
                 p.ClientInfo.Phone,
                 p.ProjectId,
                 p.Appointmenttime
+            }).ToList()==null? null : _brokerleadclientService.GetBrokerLeadClientsByCondition(sech).Select(p => new
+            {
+                p.Id,
+                p.Brokername,
+                p.ClientName,
+                p.ClientInfo.Phone,
+                p.ProjectId,
+                p.Appointmenttime
             }).ToList().Select(a => new
             {
                 a.Id,
                 a.Brokername,
                 a.ClientName,
                 a.Phone,
-                ProjectName = _productService.GetProductById(a.ProjectId).Productname,
+                ProjectName =a.ProjectId==0?"":  _productService.GetProductById(a.ProjectId).Productname,
                 Appointmenttime = a.Appointmenttime.ToString("yyy-MM-dd")
             });
+            
+
             var count = _brokerleadclientService.GetBrokerLeadClientCount(sech);
             return PageHelper.toJson(new { List = list, Condition = sech, totalCount = count });
         }
@@ -109,10 +119,11 @@ namespace Zerg.Controllers.CRM
                 Sex = model.Broker.Sexy,
                 RegTime = model.Broker.Regtime.ToString("yyy-mm-dd"),
                 Clientname = model.ClientName,
-                HouseType = _productService.GetProductById(model.ProjectId).Productname,
+                HouseType = model.ProjectId == 0 ? "" : _productService.GetProductById(model.ProjectId).Productname,
+                //HouseType = _productService.GetProductById(model.ProjectId).Productname,
                 Phone = model.ClientInfo.Phone,
                 Note = model.Details,
-                Houses = _productService.GetProductById(model.ProjectId).SubTitle,
+                Houses = model.ProjectId == 0 ? "" : _productService.GetProductById(model.ProjectId).SubTitle,
                 Projectname = model.Projectname,
                 Projectid = model.ProjectId,
                 
@@ -322,14 +333,13 @@ namespace Zerg.Controllers.CRM
                 //ode.Snapshoturl = orderDetailModel.Snapshoturl,
 
                 //创建订单
-                try 
-                {
                     OrderEntity oe = new OrderEntity
                     {
                         Adddate = DateTime.Now,
                         Adduser = model.Adduser.ToString(CultureInfo.InvariantCulture),
                         AgentId = model.Adduser,
-                        Agentname = _brokerService.GetBrokerByUserId(model.Adduser).Brokername,
+                        //HouseType = model.ProjectId == 0 ? "" : _productService.GetProductById(model.ProjectId).Productname,
+                        Agentname = model.Adduser == 0 ? "" : _brokerService.GetBrokerByUserId(model.Adduser).Brokername,
                         Agenttel = model.Phone,
                         BusId = product.Bussnessid,
                         Busname = product.BussnessName,
@@ -350,12 +360,6 @@ namespace Zerg.Controllers.CRM
                 #endregion
 
                 }
-                catch (Exception err)
-                {
-                    return PageHelper.toJson(PageHelper.ReturnValue(true, "操作失败"));
-                }
-              
-            }
             entity.Uptime = DateTime.Now;
             entity.Upuser = _workContext.CurrentUser.Id;
             _brokerleadclientService.Update(entity);

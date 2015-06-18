@@ -3,7 +3,7 @@
  */
 app.controller('StormRoomController',['$http','$scope','$timeout',function($http,$scope,$timeout){
 
-    /*----------------------------------------------¶¯Ì¬¼ÓÔØ-------------------------------------------*/
+    /*----------------------------------------------åŠ¨æ€åŠ è½½-------------------------------------------*/
     $scope.searchCondition={
         AreaName:'',
         TypeId:'',
@@ -14,33 +14,33 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         OrderBy:'OrderByAddtime',
         IsDescending:true
     };
-    $scope.tipp="ÕıÔÚ¼ÓÔØ......";
+    $scope.tipp="æ­£åœ¨åŠ è½½......";
     var loading = false
-        ,pages=2;                      //ÅĞ¶ÏÊÇ·ñÕıÔÚ¶ÁÈ¡ÄÚÈİµÄ±äÁ¿
-    $scope.List = [];//±£´æ´Ó·şÎñÆ÷²éÀ´µÄÈÎÎñ£¬¿ÉÀÛ¼Ó
-    var pushContent= function() {                    //ºËĞÄÊÇÕâ¸öº¯Êı£¬Ïò$scope.posts
-        //Ìí¼ÓÄÚÈİ
+        ,pages=2;                      //åˆ¤æ–­æ˜¯å¦æ­£åœ¨è¯»å–å†…å®¹çš„å˜é‡
+    $scope.List = [];//ä¿å­˜ä»æœåŠ¡å™¨æŸ¥æ¥çš„ä»»åŠ¡ï¼Œå¯ç´¯åŠ 
+    var pushContent= function() {                    //æ ¸å¿ƒæ˜¯è¿™ä¸ªå‡½æ•°ï¼Œå‘$scope.posts
+        //æ·»åŠ å†…å®¹
 //        $scope.List=[];
 //        $scope.searchCondition.Page=0;
         // pages=2;
-        if (!loading && $scope.searchCondition.Page < pages) {                         //Èç¹ûÒ³ÃæÃ»ÓĞÕıÔÚ¶ÁÈ¡
-            loading = true;                     //¸æÖªÕıÔÚ¶ÁÈ¡
+        if (!loading && $scope.searchCondition.Page < pages) {                         //å¦‚æœé¡µé¢æ²¡æœ‰æ­£åœ¨è¯»å–
+            loading = true;                     //å‘ŠçŸ¥æ­£åœ¨è¯»å–
             $http.get(SETTING.ApiUrl+'/Product/GetSearchProduct',{params:$scope.searchCondition,'withCredentials':true}).success(function(data) {
                 pages =Math.ceil(data.TotalCount /$scope.searchCondition.PageCount);
                 for (var i = 0; i <= data.List.length - 1; i++) {
                     $scope.List.push(data.List[i]);
                 }
-                loading = false;            //¸æÖª¶ÁÈ¡½áÊø
-                $scope.tipp="¼ÓÔØ¸ü¶à......";
-                if ($scope.List.length == data.TotalCount) {//Èç¹ûËùÓĞÊı¾İÒÑ²é³öÀ´
-                    $scope.tipp = "ÒÑ¾­ÊÇ×îºóÒ»Ò³ÁË";
+                loading = false;            //å‘ŠçŸ¥è¯»å–ç»“æŸ
+                $scope.tipp="åŠ è½½æ›´å¤š......";
+                if ($scope.List.length == data.TotalCount) {//å¦‚æœæ‰€æœ‰æ•°æ®å·²æŸ¥å‡ºæ¥
+                    $scope.tipp = "å·²ç»æ˜¯æœ€åä¸€é¡µäº†";
                 }
                 $scope.Count=data.TotalCount;
             });
-            $scope.searchCondition.Page++;                             //·­Ò³
+            $scope.searchCondition.Page++;                             //ç¿»é¡µ
         }
 //        else {
-//            $scope.tipp = "ÒÑ¾­ÊÇ×îºóÒ»Ò³ÁË";
+//            $scope.tipp = "å·²ç»æ˜¯æœ€åä¸€é¡µäº†";
 //        }
     };
     pushContent();
@@ -49,12 +49,12 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
 
         if ($(document).scrollTop()+5 >= $(document).height() - $(window).height())
         {
-            pushContent();//ifÅĞ¶ÏÓĞÃ»ÓĞ»¬¶¯µ½µ×²¿£¬µ½ÁË¼ÓÔØ
+            pushContent();//ifåˆ¤æ–­æœ‰æ²¡æœ‰æ»‘åŠ¨åˆ°åº•éƒ¨ï¼Œåˆ°äº†åŠ è½½
         }
-        $timeout(pushContentMore, 2500);//¶¨Ê±Æ÷£¬Ã¿¸ôÒ»ÃëÑ­»·µ÷ÓÃ×ÔÉíº¯Êı
+        $timeout(pushContentMore, 2500);//å®šæ—¶å™¨ï¼Œæ¯éš”ä¸€ç§’å¾ªç¯è°ƒç”¨è‡ªèº«å‡½æ•°
     }
-    pushContentMore();//´¥·¢ÀïÃæµÄ¶¨Ê±Æ÷
-    /*----------------------------------------------¶¯Ì¬¼ÓÔØ-------------------------------------------*/
+    pushContentMore();//è§¦å‘é‡Œé¢çš„å®šæ—¶å™¨
+    /*----------------------------------------------åŠ¨æ€åŠ è½½-------------------------------------------*/
 
     $scope.type = true;
     $scope.province=true;
@@ -63,10 +63,10 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
     $scope.price=true;
     $scope.selectCity=false;
     $scope.selectCounty=false;
-    $scope.selectArea='ÇøÓò';
-    $scope.selectType='ÀàĞÍ';
-    $scope.selectPrice='¼Û¸ñ';
-    //Ìõ¼şÖØÖÃ
+    $scope.selectArea='åŒºåŸŸ';
+    $scope.selectType='ç±»å‹';
+    $scope.selectPrice='ä»·æ ¼';
+    //æ¡ä»¶é‡ç½®
     $scope.Reset=function(){
         $scope.searchCondition.AreaName='';
         $scope.searchCondition.TypeId='';
@@ -74,14 +74,14 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         $scope.searchCondition.PriceEnd='';
         $scope.List=[];
         $scope.searchCondition.Page=0;
-        $scope.selectArea='ÇøÓò';
-        $scope.selectType='ÀàĞÍ';
-        $scope.selectPrice='¼Û¸ñ';
-        $scope.tipp="ÕıÔÚ¼ÓÔØ......";
+        $scope.selectArea='åŒºåŸŸ';
+        $scope.selectType='ç±»å‹';
+        $scope.selectPrice='ä»·æ ¼';
+        $scope.tipp="æ­£åœ¨åŠ è½½......";
         pages=2;
         pushContent();
     }
-    //»ñÈ¡»§ĞÍÌõ¼ş
+    //è·å–æˆ·å‹æ¡ä»¶
     $scope.getTypeCondition= function(value,typeName){
         $scope.searchCondition.TypeId = value;
         $scope.selectType=typeName;
@@ -92,11 +92,11 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         //$scope.searchProduct();
         $scope.List=[];
         $scope.searchCondition.Page=0;
-        $scope.tipp="ÕıÔÚ¼ÓÔØ......";
+        $scope.tipp="æ­£åœ¨åŠ è½½......";
         pages=2;
         pushContent();
     }
-    //»ñÈ¡µØÇøÌõ¼ş
+    //è·å–åœ°åŒºæ¡ä»¶
     $scope.getAreaCondition= function(value){
         $scope.searchCondition.AreaName = value;
         $scope.selectArea=value;
@@ -113,23 +113,23 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
             $scope.county = !$scope.county;
         }
         //$scope.searchProduct();
-        $scope.tipp="ÕıÔÚ¼ÓÔØ......";
+        $scope.tipp="æ­£åœ¨åŠ è½½......";
         $scope.List=[];
         $scope.searchCondition.Page=0;
         pages=2;
         pushContent();
     }
-    //»ñÈ¡¼Û¸ñÌõ¼ş
+    //è·å–ä»·æ ¼æ¡ä»¶
     $scope.getPriceCondition= function(priceBegin,priceEnd){
         $scope.searchCondition.PriceBegin =priceBegin;
         $scope.searchCondition.PriceEnd=priceEnd;
         if(priceBegin==0)
         {
-            $scope.selectPrice='4000ÒÔÏÂ';
+            $scope.selectPrice='4000ä»¥ä¸‹';
         }
         else if(priceBegin==10000)
         {
-            $scope.selectPrice='10000ÒÔÉÏ'
+            $scope.selectPrice='10000ä»¥ä¸Š'
         }
         else{
             $scope.selectPrice=priceBegin+'-'+priceEnd;
@@ -140,18 +140,18 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
             $scope.price = !$scope.price;
         }
         //$scope.searchProduct();
-        $scope.tipp="ÕıÔÚ¼ÓÔØ......";
+        $scope.tipp="æ­£åœ¨åŠ è½½......";
         $scope.List=[];
         $scope.searchCondition.Page=0;
         pages=2;
         pushContent();
     }
-    //»ñÈ¡Ê¡·İºÍ»§ĞÍ
+    //è·å–çœä»½å’Œæˆ·å‹
     $http.get(SETTING.ApiUrl + '/Condition/GetCondition',{'withCredentials':true}).success(function(data){
         $scope.Area =data.AreaList;
         $scope.Type=data.TypeList;
     });
-    //»ñÈ¡Ê¡¶ÔÓ¦µÄÊĞ
+    //è·å–çœå¯¹åº”çš„å¸‚
     $scope.getCityList=function(id,row){
         $scope.selectedRow = row;
         $scope.parentId=id;
@@ -168,7 +168,7 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         $scope.AreaCity=null;
         $scope.AreaCounty=null;
     };
-    //»ñÈ¡ÊĞ¶ÔÓ¦µÄÇøÏØ
+    //è·å–å¸‚å¯¹åº”çš„åŒºå¿
     $scope.getCountyList=function(id,row){
         $scope.selectedRow1 = row;
         $scope.parentId=id;
@@ -182,7 +182,7 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         }
         $scope.selectCounty=true;
     };
-//Õ¹¿ªµØÇø
+//å±•å¼€åœ°åŒº
     $scope.toggleProvince=function(){
         $scope.province=!$scope.province;
         $scope.city=!$scope.city;
@@ -196,7 +196,7 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
             $scope.type=!$scope.type;
         }
     }
-    //Õ¹¿ª»§ĞÍ
+    //å±•å¼€æˆ·å‹
     $scope.toggleType = function() {
         $scope.type = !$scope.type;
         if($scope.price==false)
@@ -216,7 +216,7 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
             $scope.county=!$scope.county;
         }
     };
-    //Õ¹¿ª¼Û¸ñ
+    //å±•å¼€ä»·æ ¼
     $scope.togglePrice=function(){
         $scope.price=!$scope.price;
         if($scope.type==false)
