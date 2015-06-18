@@ -922,8 +922,8 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/Recommend.js')
             })
             .state('page.CRM.recommend.detailed', {
-                url: '/detailed?userId',
-                templateUrl: '../views/pages/CRM/configure/indexset.html',
+                url: '/detailed?id',
+                templateUrl: 'views/pages/CRM/recommend/detailed.html',
                 resolve:load('scripts/controllers/CRM/Recommend.js'),
                 data : { title: '推荐人详情页' }
             })

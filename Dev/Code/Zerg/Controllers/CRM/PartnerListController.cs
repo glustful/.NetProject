@@ -142,8 +142,8 @@ namespace Zerg.Controllers.CRM
                     Headphoto = _brokerService.GetBrokerById(Convert.ToInt32(c.PartnerId)).Headphoto,
                     Id = c.Id,
                     PartnerId = c.PartnerId,
-                    Agentlevel = c.Broker.Agentlevel,
-                    Nickname = c.Broker.Nickname,
+         
+            
                 }).ToList().Select(c => new {
                     Name = c.Name,
                     AddTime = c.AddTime,
