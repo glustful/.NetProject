@@ -51,7 +51,7 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
        {
           pushContent();//if判断有没有滑动到底部，到了加载
        }
-        $timeout(pushContentMore, 2500);//定时器，每隔一秒循环调用自身函数
+        $timeout(pushContentMore, 2000);//定时器，每隔一秒循环调用自身函数
     }
     pushContentMore();//触发里面的定时器
     /*----------------------------------------------动态加载-------------------------------------------*/
@@ -103,18 +103,6 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         $scope.province = !$scope.province;
         $scope.city = !$scope.city;
         $scope.county = !$scope.county;
-//        if($scope.province==false)
-//        {
-//
-//        }
-//        if($scope.city==false)
-//        {
-//
-//        }
-//        if($scope.county==false)
-//        {
-//
-//        }
         //$scope.searchProduct();
         $scope.tipp="正在加载......";
         $scope.List=[];
