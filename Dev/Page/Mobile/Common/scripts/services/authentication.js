@@ -2,7 +2,7 @@
  * Created by Yunjoy on 2015/5/6.
  * 用户验证登陆service
  */
-angular.module("zergApp").service("AuthService",["$http",'$localStorage','$sessionStorage',function($http,$localStorage,$sessionStorage){
+angular.module("zergApp").service("AuthService",["$http",'$sessionStorage',function($http,$sessionStorage){
     var _isAuthenticated = false;
     var _currentUser;
 
@@ -74,7 +74,7 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage','$sessi
      * @param callback
      * @param faildCallback
      */
-    this.doLogin = function(userName,password,callback,faildCallback,netErrorCallback){
+    this.doLogin = function(userName,password,callback,faildCallback){
         $http.post(SETTING.ApiUrl+"/user/login",
             {
                 UserName:userName,
@@ -96,6 +96,6 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage','$sessi
                     if(typeof(faildCallback) === 'function')
                         faildCallback(data);
                 }
-            }).error(netErrorCallback);
+            });
     };
 }]);
