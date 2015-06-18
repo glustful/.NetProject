@@ -51,7 +51,7 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
        {
           pushContent();//if判断有没有滑动到底部，到了加载
        }
-        $timeout(pushContentMore, 2500);//定时器，每隔一秒循环调用自身函数
+        $timeout(pushContentMore, 2000);//定时器，每隔一秒循环调用自身函数
     }
     pushContentMore();//触发里面的定时器
     /*----------------------------------------------动态加载-------------------------------------------*/
@@ -81,7 +81,7 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         pages=2;
         pushContent();
     }
-    //获取户型条件
+    //点击户型条件
     $scope.getTypeCondition= function(value,typeName){
         $scope.searchCondition.TypeId = value;
         $scope.selectType=typeName;
@@ -96,22 +96,13 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         pages=2;
         pushContent();
     }
-    //获取地区条件
+    //点击地区条件
     $scope.getAreaCondition= function(value){
         $scope.searchCondition.AreaName = value;
         $scope.selectArea=value;
-        if($scope.province==false)
-        {
-            $scope.province = !$scope.province;
-        }
-        if($scope.city==false)
-        {
-            $scope.city = !$scope.city;
-        }
-        if($scope.county==false)
-        {
-            $scope.county = !$scope.county;
-        }
+        $scope.province = !$scope.province;
+        $scope.city = !$scope.city;
+        $scope.county = !$scope.county;
         //$scope.searchProduct();
         $scope.tipp="正在加载......";
         $scope.List=[];
@@ -119,7 +110,7 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         pages=2;
         pushContent();
     }
-    //获取价格条件
+    //点击价格条件
     $scope.getPriceCondition= function(priceBegin,priceEnd){
         $scope.searchCondition.PriceBegin =priceBegin;
         $scope.searchCondition.PriceEnd=priceEnd;

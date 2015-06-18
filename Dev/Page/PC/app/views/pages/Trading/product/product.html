@@ -24,16 +24,16 @@
             </thead>
             <tbody>
             <tr ng-repeat="row in list">
-                <td align="center"><img width="40" height="40" src={{img+row.Productimg}}></td>
-                <td align="center">{{row.Productname }}</td>
-                <td align="center">{{row.Price }}</td>
-                <td align="center">{{row.RecCommission }}</td>
-                <td align="center">{{row.Commission }}</td>
-                <td align="center">{{row.Dealcommission }}</td>
-                <td align="center">{{row.ClassifyName }}</td>
-                <td align="center">{{row.StockRule }}</td>
-                <td align="center">{{row.Addtime | dateFilter }}</td>
-                <td align="center">
+                <td><img width="40" height="40" src={{img+row.Productimg}}></td>
+                <td>{{row.Productname }}</td>
+                <td>{{row.Price }}</td>
+                <td>{{row.RecCommission }}</td>
+                <td>{{row.Commission }}</td>
+                <td>{{row.Dealcommission }}</td>
+                <td>{{row.ClassifyName }}</td>
+                <td>{{row.StockRule }}</td>
+                <td>{{row.Addtime | dateFilter }}</td>
+                <td>
                     <button ng-click='del(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
                     </button>
                 </td>
