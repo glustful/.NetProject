@@ -1,19 +1,18 @@
 <form name="form" id="form" ng-controller="configureCreateController" ng-submit="Create()">
     <div class="panel panel-default">
         <div class="panel-body">
-            <div class="bottom" ><label for="Title">标题： </label> <input  name="Title" type="text" ng-model="LevelModel.Name"></div>
-            <div class="bottom" ><label for="Title">图片： </label> <input  name="Title" type="text" ng-model="LevelModel.Url"></div>
+            <div class="bottom" ><span style="color: red">*</span><label for="Title">标题： </label> <input  name="Title" type="text" ng-model="LevelModel.Name" required></div>
+            <div class="bottom" ><span style="color: red">*</span><label for="Title">图片： </label> <input  name="Title" type="text" ng-model="LevelModel.Url" required></div>
 
-            <div class="bottom" ><label for="Content">描述： </label>
-                <textarea name="Content" id="Content" cols="42" rows="10" ng-model="LevelModel.Describe"></textarea>
+            <div class="bottom" ><span style="color: red">*</span><label for="Content">描述： </label>
+                <textarea name="Content" id="Content" cols="42" rows="10" ng-model="LevelModel.Describe" required></textarea>
             </div>
 
         <div>
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" type="submit">确认<div class="md-ripple-container"></div></button>
+            <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" type="submit" ng-disabled="form.$invalid">确认<div class="md-ripple-container"></div></button>
             <a href="#/page/CRM/configure/index"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink">取消<div class="md-ripple-container"></div></button></a>
         </div>
         </div>
     </div>
-
 </form>

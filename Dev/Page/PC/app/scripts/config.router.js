@@ -1000,19 +1000,19 @@ angular.module('app')
             .state('page.CRM.configure.indexset', {
                 url: '/indexset',
                 templateUrl: 'views/pages/CRM/configure/indexset.html',
-                data : { title: '等级配置列表' },
+                data : { title: '等级设置' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
             .state('page.CRM.configure.setcreate', {
                 url: '/setcreate',
                 templateUrl: 'views/pages/CRM/configure/setcreate.html',
-                data : { title: '等级配置新建' },
+                data : { title: '新建等级配置' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
             .state('page.CRM.configure.setedit', {
                 url: '/setedit?id',
                 templateUrl: 'views/pages/CRM/configure/setedit.html',
-                data : { title: '等级配置编辑' },
+                data : { title: '编辑等级配置' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
 

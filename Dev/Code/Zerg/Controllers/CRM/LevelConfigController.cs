@@ -9,6 +9,7 @@ using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
+    [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 等级配置设置
