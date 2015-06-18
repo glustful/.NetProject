@@ -17,7 +17,12 @@ angular.module("app").controller('configureIndexController', [
                 $scope.searchCondition.page = data.Condition.Page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
                 $scope.totalCount = data.totalCount;
-
+                if (data.List==""){
+                    $scope.errorTip = "不存在数据";
+                }
+                else{
+                    $scope.errorTip = "";
+                }
                 console.log(data);
             });
         };
@@ -78,7 +83,7 @@ angular.module("app").controller('configureSetIndexController', [
         $scope.searchCondition = {
             name:'',
             page: 1,
-            pageSize: 1
+            pageSize: 10
         };
         $scope.getList  = function() {
             $http.get(SETTING.ApiUrl+'/LevelConfig/SearchLevelConfig',{
@@ -89,6 +94,12 @@ angular.module("app").controller('configureSetIndexController', [
                 $scope.searchCondition.page = data.Condition.Page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
                 $scope.totalCount = data.totalCount;
+                if(data.List==""){
+                    $scope.errorTip="不存在数据";
+                }
+                else{
+                    $scope.errorTip="";
+                }
             });
         };
         $scope.getList();
@@ -126,7 +137,6 @@ angular.module("app").controller('configureSetEditController',['$http','$scope',
 
     $scope.Save = function(){
         $http.post(SETTING.ApiUrl + '/LevelConfig/DoEdit',$scope.LevelConfig,{
-
         }).success(function(data){
             if(data.Status){
                 $state.go("page.CRM.configure.indexset");

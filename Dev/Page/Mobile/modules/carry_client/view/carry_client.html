@@ -20,7 +20,7 @@
             客户姓名
         </p>
         <p>
-            <input type="" required ng-model="BrokerLeadClient.Clientname" name="clientName" class="client_information" placeholder="客户姓名"/>
+            <input type="" required ng-model="BrokerLeadClient.Clientname" name="clientName" class="client_information" ng-pattern="/^[\u4e00-\u9fa5]+$/"  autofocus="autofocus" placeholder="客户姓名"/>
             <span ng-show="form.clientName.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
         </p>
         <p class="client_choice">

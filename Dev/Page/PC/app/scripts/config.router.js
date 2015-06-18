@@ -37,7 +37,7 @@ angular.module('app')
     ['$stateProvider', '$urlRouterProvider', 'MODULE_CONFIG',
       function ($stateProvider, $urlRouterProvider, MODULE_CONFIG) {
         $urlRouterProvider
-          .otherwise('/page/CMS/tag/index');
+          .otherwise('/page/Trading/product/product');
         $stateProvider
           .state('app', {
             abstract: true,
@@ -368,21 +368,20 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            },
-                service:"AuthService",
-                resolve:load('scripts/services/authentication.js')
+            }
           })
+
             .state('page.profile', {
               url: '/profile',
               templateUrl: 'views/pages/profile.html',
                   data: { title: 'Profile', theme: { primary: 'green' } }
             })
 
-            .state('page.settings', {
-              url: '/settings',
-              templateUrl: 'views/pages/settings.html',
-                  data: { title: 'Settings' }
-            })
+            //.state('page.settings', {
+            //  url: '/settings',
+            //  templateUrl: 'views/pages/settings.html',
+            //      data: { title: 'Settings' }
+            //})
             .state('page.blank', {
               url: '/blank',
               templateUrl: 'views/pages/blank.html',
@@ -555,11 +554,11 @@ angular.module('app')
                 resolve: load('scripts/controllers/vectormap.js')
             })
 
-            .state('page.setting', {
-                url: '/setting',
-                templateUrl: 'views/pages/setting.html',
-                  data: { title: '短信列表', theme: { primary: 'green' } }
-            })
+            //.state('page.setting', {
+            //    url: '/setting',
+            //    templateUrl: 'views/pages/setting.html',
+            //      data: { title: '短信列表', theme: { primary: 'green' } }
+            //})
 
             .state('page.allocation', {
                 url: '/allocation',
@@ -946,6 +945,12 @@ angular.module('app')
                 data : { title: '合伙人详情页' },
                 resolve:load('scripts/controllers/CRM/Partner.js')
             })
+            .state('page.CRM.partner.former', {
+                url: '/former?PartnersId',
+                templateUrl: 'views/pages/CRM/partner/former.html',
+                data : { title: '他的上家详情' },
+                resolve:load('scripts/controllers/CRM/Partner.js')
+            })
 
 
             .state('page.CRM.BankSet', {
@@ -1001,19 +1006,19 @@ angular.module('app')
             .state('page.CRM.configure.indexset', {
                 url: '/indexset',
                 templateUrl: 'views/pages/CRM/configure/indexset.html',
-                data : { title: '等级配置列表' },
+                data : { title: '等级设置' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
             .state('page.CRM.configure.setcreate', {
                 url: '/setcreate',
                 templateUrl: 'views/pages/CRM/configure/setcreate.html',
-                data : { title: '等级配置新建' },
+                data : { title: '新建等级配置' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
             .state('page.CRM.configure.setedit', {
                 url: '/setedit?id',
                 templateUrl: 'views/pages/CRM/configure/setedit.html',
-                data : { title: '等级配置编辑' },
+                data : { title: '编辑等级配置' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
 
@@ -1201,14 +1206,14 @@ angular.module('app')
                   resolve:load('angularFileUpload')
             })
 
-            .state('page.CMS.set', { url: '/set', template: '<div ui-view></div>' })
-            .state('page.CMS.set.index', {
-              url: '/index',
-              templateUrl: 'views/pages/CMS/set/index.html',
-                data: { title: '设置' },
-              controller: 'SettingController',
-                resolve: load('scripts/controllers/CMS/Setting.js')
-            })
+            //.state('page.CMS.set', { url: '/set', template: '<div ui-view></div>' })
+            //.state('page.CMS.set.index', {
+            //  url: '/index',
+            //  templateUrl: 'views/pages/CMS/set/index.html',
+            //    data: { title: '设置' },
+            //  controller: 'SettingController',
+            //    resolve: load('scripts/controllers/CMS/Setting.js')
+            //})
 
             .state('page.CMS.fileManager', { url: '/fileManager', template: '<div ui-view></div>' })
             .state('page.CMS.fileManager.index', {
@@ -1323,6 +1328,12 @@ angular.module('app')
                 templateUrl: 'views/pages/Trading/product/parameter.html',
                 data : { title: '分类参数' },
                 resolve: load(['scripts/controllers/Trading/Parameter.js','scripts/controllers/vectormap.js'])
+            })
+            .state('page.Trading.product.area', {
+                url: '/area',
+                templateUrl: 'views/pages/Trading/area/index.html',
+                data : { title: '商品分类' },
+                resolve: load(['scripts/controllers/Trading/Area.js','scripts/controllers/vectormap.js'])
             })
             .state('page.Trading.product.classify', {
                 url: '/classify',

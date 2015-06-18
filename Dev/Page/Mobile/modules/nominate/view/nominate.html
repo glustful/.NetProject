@@ -12,10 +12,10 @@
                     <li class="li" ng-class='{selected: $index==selectedRow}' ng-repeat="area in Area" ng-click="getCityList(area.Id,$index,area.AreaName)">{{area.AreaName}}</li>
                 </ul>
             </div>
-            <div id="city" ng-hide="city">
+            <div id="city" ng-hide="city" ng-class="{select:selectCity}">
                 <ul><li class="li" ng-class='{selected: $index==selectedRow1}' ng-repeat="areaCity in AreaCity" ng-click="getCountyList(areaCity.Id,$index,areaCity.AreaName)">{{areaCity.AreaName}}</li></ul>
             </div>
-            <div id="county" ng-hide="county">
+            <div id="county" ng-hide="county" ng-class="{select:selectCounty}">
                 <ul><li class="li" ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li></ul>
             </div>
             <div class="type" ng-hide="type">

@@ -8,7 +8,7 @@ app.controller('partnerDetailedController',['$http','$scope','$stateParams',func
     var getPersonalInformation=function(){
 
         $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBroker?Id='+$stateParams.Id,{'withCredentials':true}).success(function(data){
-            console.log(data.Id);
+            console.log(data);
             $scope.list=data;
         })
     };

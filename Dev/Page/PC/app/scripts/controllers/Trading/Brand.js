@@ -80,11 +80,14 @@ angular.module("app").controller('CreatBrandController', [
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
-
+                    document.getElementById("btnok").removeAttribute("disabled");
                     $state.go('page.Trading.product.brand');
-                    console.log(data);
+
                 }else{
+                    document.getElementById("btnok").removeAttribute("disabled");
                     $scope.alerts=[{type:'danger',msg:data.Msg}];
+
+
                 }
             });
         }
