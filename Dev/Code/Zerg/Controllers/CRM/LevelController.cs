@@ -11,6 +11,7 @@ using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.CRM
 {
+    [AllowAnonymous]
    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 等级设置
@@ -37,7 +38,9 @@ namespace Zerg.Controllers.CRM
             {   
                 Name=name,
                 Page =page,
-                PageCount = pageSize
+                PageCount = pageSize,
+                OrderBy = EnumLevelSearchOrderBy.OrderById,
+                isDescending = true
             };
             var levelList = _levelService.GetLevelsByCondition(leSearchCon).ToList();
 

@@ -117,9 +117,9 @@ namespace CRM.Service.BankCard
                 {
                     query = query.Where(q => (q.Broker.Id == condition.Brokers.Id));
                 }
-				if (condition.Nums != null && condition.Nums.Any())
+				if (!string.IsNullOrEmpty( condition.Nums) )
                 {
-                    query = query.Where(q => condition.Nums.Contains(q.Num));
+                    query = query.Where(q => (q.Num == condition.Nums));
                 }
 				if (condition.Addusers != null && condition.Addusers.Any())
                 {
@@ -202,9 +202,9 @@ namespace CRM.Service.BankCard
                 {
                     query = query.Where(q => condition.Brokers.Id ==(q.Broker.Id ));
                 }
-				if (condition.Nums != null && condition.Nums.Any())
+                if (!string.IsNullOrEmpty(condition.Nums))
                 {
-                    query = query.Where(q => condition.Nums.Contains(q.Num));
+                    query = query.Where(q => (q.Num == condition.Nums));
                 }
 				if (condition.Addusers != null && condition.Addusers.Any())
                 {

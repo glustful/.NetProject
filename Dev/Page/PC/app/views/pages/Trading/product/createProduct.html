@@ -1,4 +1,4 @@
-<div ng-app="App" ng-controller="CreatProductController">
+<div ng-app="App" ng-controller="CreatProductController" ng-submit="addProduct()">
     <script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.all.min.js"> </script>
     <script type="text/javascript" charset="utf-8" src="../libs/ueditor/lang/zh-cn/zh-cn.js"></script>
@@ -14,8 +14,9 @@
                 <label class="col-sm-3 control-label no-padding-right"> 商品名称 </label>
 
                 <div class="col-sm-9">
-                    <input type="text" ng-model="ProductName" name="ProductName" required/>
+                    <input type="text" ng-model="ProductName" name="ProductName" required ng-maxlength="20"/>
                     <span ng-show="form.ProductName.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                    <span ng-show="form.ProductName.$error.maxlength" style="font-size:20px;color: #ff0000">*输入字符长度20以内</span>
                 </div>
             </div>
 
@@ -28,7 +29,7 @@
                         <a>{{classifyMsg}}</a>
                         <select ng-model="classifys.selectClassifyId" id="classifySelectId"
                                 ng-options="o.Id as o.label for o in classifys.optionsData"
-                                ng-change="selectclassifyChange()">
+                                ng-change="selectclassifyChange()" required>
                             <option value="">请选择分类</option>
                         </select>
                         <a>{{classifyMsg1}}</a>
@@ -42,7 +43,7 @@
                 <label class="col-sm-3 control-label no-padding-right"> {{row.Name}} </label>
                 <div class="col-sm-9">
                     <div  ng-repeat="v in row.ValueList">
-                        <input type="radio" class="ace" name={{row.Name}} value={{v.Id}} ng-model="selectParameterValue" />
+                        <input type="radio" class="ace" name={{row.Name}} value={{v.Id}} ng-model="selectParameterValue" required/>
                         <span class="lbl" name={{row.Name}}>{{v.Value}}</span>
                     </div>
                 </div>
@@ -55,7 +56,7 @@
                 <div class="col-sm-9">
                     <div>
                         <select ng-model="brands.selectBrandVal" ng-options="o.Id as o.Bname for o in brands.optionsData"
-                                ng-change="selectBrandChange()">
+                                ng-change="selectBrandChange()" required>
                             <option value="">请选择品牌</option>
                         </select>
                     </div>
@@ -72,11 +73,11 @@
                         <table class="table bg-white b-a">
                             <thead>
                             <tr>
-                                <th width="50%">Name</th>
-                                <th ng-show="uploader.isHTML5">Size</th>
-                                <th ng-show="uploader.isHTML5">Progress</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <th width="50%">名称</th>
+                                <th ng-show="uploader.isHTML5">大小</th>
+                                <th ng-show="uploader.isHTML5">进度</th>
+                                <th>状态</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -95,10 +96,10 @@
                                 </td>
                                 <td nowrap>
                                     <button type="button" class="btn btn-default btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                        Upload
+                                        上传
                                     </button>
                                     <button type="button" class="btn btn-default btn-xs" ng-click="item.remove()">
-                                        Remove
+                                        移除
                                     </button>
                                 </td>
                             </tr>
@@ -109,7 +110,6 @@
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> 商品图片(5张) </label>
-
                 <div class="col-sm-9">
                     <div width="100">
                             <input name="file" type="file" multiple="multiple" />
@@ -124,9 +124,9 @@
                 <label class="col-sm-3 control-label no-padding-right"> 商品单价 </label>
 
                 <div class="col-sm-9">
-                    <input type="number" ng-model="price" ng-min="1" name="price" required>元
+                    <input type="number" ng-model="price" step="0.1" ng-min="1" name="price" required>元
                     <span ng-show="form.price.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
-                    <span ng-show="form.price.$error.min" style="font-size:20px;color: #ff0000">*必须是大于零的整数</span>
+                    <span ng-show="form.price.$error.min" style="font-size:20px;color: #ff0000">*必须大于一</span>
                 </div>
             </div>
 
@@ -134,19 +134,27 @@
                 <label class="col-sm-3 control-label no-padding-right"> 推荐佣金 </label>
 
                 <div class="col-sm-9">
-                    <input type="number" ng-model="commission" ng-min="1" name="commission" required>元
+                    <input type="number" ng-model="RecCommission" ng-min="1" step="0.1" name="commission" required>元
                     <span ng-show="form.commission.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
-                    <span ng-show="form.commission.$error.min" style="font-size:20px;color: #ff0000">*必须是大于零的整数</span>
+                    <span ng-show="form.commission.$error.min" style="font-size:20px;color: #ff0000">*必须是大于一的整数</span>
                 </div>
             </div>
+           <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"> 带客佣金 </label>
 
+            <div class="col-sm-9">
+                <input type="number" ng-model="commission" ng-min="1" step="0.1" name="commission" required>元
+                <span ng-show="form.commission.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                <span ng-show="form.commission.$error.min" style="font-size:20px;color: #ff0000">*必须是大于一的整数</span>
+            </div>
+        </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> 库存 </label>
 
                 <div class="col-sm-9">
                     <input type="number" ng-model="Stockrule" ng-min="1" name="Stockrule" required>个
                     <span ng-show="form.Stockrule.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
-                    <span ng-show="form.Stockrule.$error.min" style="font-size:20px;color: #ff0000">*必须是大于零的整数</span>
+                    <span ng-show="form.Stockrule.$error.min" style="font-size:20px;color: #ff0000">*必须是大于一的整数</span>
                 </div>
             </div>
 
@@ -154,7 +162,7 @@
                 <label class="col-sm-3 control-label no-padding-right"> 成交佣金 </label>
 
                 <div class="col-sm-9">
-                    <input type="number" ng-model="dealCommission" ng-min="1" name="dealCommission" required>元
+                    <input type="number" ng-model="dealCommission" ng-min="1" step="0.1" name="dealCommission" required>元
                     <span ng-show="form.dealCommission.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
                     <span ng-show="form.dealCommission.$error.min" style="font-size:20px;color: #ff0000">*必须是大于零的整数</span>
                 </div>
@@ -165,9 +173,9 @@
 
                 <div class="col-sm-9">
                     <div>
-                        <input type="radio" class="ace" name="Status" value="0"/>
+                        <input type="radio" class="ace" name="Status" ng-model="Status" value="0" required />
                         <span class="lbl" name="Status">上架</span>
-                        <input type="radio" class="ace" name="Status" value="1"/>
+                        <input type="radio" class="ace" name="Status" ng-model="Status" value="1" required/>
                         <span class="lbl">暂存</span>
                     </div>
                 </div>
@@ -178,9 +186,9 @@
 
                 <div class="col-sm-9">
                     <div>
-                        <input type="radio" class="ace" name="Recommend" value="0"/>
+                        <input type="radio" class="ace" name="Recommend" ng-model="Recommend" value="0" required/>
                         <span class="lbl" name="Status">推荐</span>
-                        <input type="radio" class="ace" name="Recommend" value="1"/>
+                        <input type="radio" class="ace" name="Recommend" ng-model="Recommend" value="1" required/>
                         <span class="lbl">一般</span>
                     </div>
                 </div>
@@ -192,21 +200,24 @@
                     <div class="ueditor" ng-model="productContent" width="600" heigth="1500"></div>
                 </div>
             </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">商品副标题</label>
+            <div class="col-sm-9" >
+                <textarea class="form-control" ng-model="SubTitle" name="SubTitle" ng-change="checkText()"
+                          style="width: 600px;height: 200px" required maxlength="100" placeholder="请输入不要超过100个字符"></textarea>
+                <span ng-show="form.SubTitle.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+            </div>
+        </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right"> 商品副标题 </label>
+                <label class="col-sm-3 control-label no-padding-right"> 售后说明 </label>
                 <div class="col-sm-9" >
-                    <textarea class="form-control" ng-model="Sericeinstruction" name="Sericeinstruction" style="width: 400px" required></textarea>
+                    <textarea class="form-control" ng-model="Sericeinstruction" name="Sericeinstruction"
+                              style="width: 600px;height: 200px" required maxlength="200" placeholder="请输入不要超过200个字符"></textarea>
                     <span ng-show="form.Sericeinstruction.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right"> 售后说明 </label>
-                <div class="col-sm-9" >
-                    <textarea class="form-control" ng-model="SubTitle" name="SubTitle" style="width: 400px" required></textarea>
-                    <span ng-show="form.SubTitle.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
-                </div>
-            </div>
+
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> 联系电话 </label>
                 <div class="col-sm-9" >
@@ -217,7 +228,11 @@
             </div>
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
-                    <button class="btn btn-info" ng-click="addProduct()">
+                    <!--<button class="btn btn-info" ng-click="addProduct()">-->
+                        <!--<i class="icon-ok bigger-110"></i>-->
+                        <!--提交-->
+                    <!--</button>-->
+                    <button class="btn btn-info" type="submit" ng-disabled="form.$invalid" aria-disabled="true" disabled="disabled">
                         <i class="icon-ok bigger-110"></i>
                         提交
                     </button>

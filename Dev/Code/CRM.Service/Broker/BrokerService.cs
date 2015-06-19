@@ -153,6 +153,10 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
+                if (condition.PartnersId >0)
+                {
+                    query = query.Where(q => condition .PartnersId ==q.Id);
+                }
                 if (condition.Levels != null && condition.Levels.Any())
                 {
                     query = query.Where(q => condition.Levels.Contains(q.Level));

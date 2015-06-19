@@ -99,6 +99,7 @@ namespace Zerg.Controllers.Trading.Product
                     Bussnessid = product.Bussnessid,
                     BussnessName = "yoopoon",
                     Commission = product.Commission,
+                    RecCommission = product.RecCommission,
                     Dealcommission = product.Dealcommission,
                     Price = product.Price,
                     Classify = CE,
@@ -240,14 +241,25 @@ namespace Zerg.Controllers.Trading.Product
             }
             var productDetail = new ProductDetail
             {
+                Id = product.Id,
                 Productname = product.Productname,
                 Productimg = product.ProductDetail.Productimg,
                 BrandImg = product.ProductBrand.Bimg,
                 Price = product.Price,
                 SubTitle = product.SubTitle,
-                Phone = product.ContactPhone,
+                Phone = product.ContactPhone,              
+                Status = product.Status==true?0:1,
+                Recommend = product.Recommend==true?0:1,
+                Stockrule = product.Stockrule,
+                RecCommission = product.RecCommission,
+                Dealcommission = product.Dealcommission,
+                Commission = product.Commission,
+                Sericeinstruction=product.ProductDetail.Sericeinstruction,  
+               // Bname = product.ProductBrand.Bname,
+                BrandId = product.ProductBrand.Id,
+                ClassId = product.Classify.Id,
                 // ReSharper disable once PossibleNullReferenceException
-                Type = product.ProductParameter.FirstOrDefault(p=>p.Parameter.Name=="户型").ParameterValue.Parametervalue,
+                Type =  product.ProductParameter.FirstOrDefault(p=>p.Parameter.Name=="户型")== null? "":product.ProductParameter.FirstOrDefault(p=>p.Parameter.Name=="户型").ParameterValue.Parametervalue,
                 Advertisement=product.ProductDetail.Ad2,
                 Productimg1 = product.ProductDetail.Productimg1,
                 Productimg2 = product.ProductDetail.Productimg2,
@@ -420,6 +432,59 @@ namespace Zerg.Controllers.Trading.Product
                 return "修改商品状态失败";
             }
         }
+        /// <summary>
+        /// 更新商品信息
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage EditProduct(JObject obj)
+        {
+            dynamic json = obj;
+            JObject JProduct = json.product;
+            JObject JProductDetail = json.productDetail;
+            var newProduct = JProduct.ToObject<ProductModel>();
+            var newProductDetail = JProductDetail.ToObject<ProductDetailModel>();
+            var oldProduct = _productService.GetProductById(newProduct.Id);
+            var oldProductDetail = _productDetailService.GetProductDetailById(oldProduct.ProductDetail.Id);
+            ClassifyEntity CE = _classifyService.GetClassifyById(newProduct.ClassifyId);
+            ProductBrandEntity CBE = _productBrandService.GetProductBrandById(newProduct.ProductBrandId);
+            //商品
+            oldProduct.Price = newProduct.Price;
+            oldProduct.ProductBrand = CBE;
+            oldProduct.Classify = CE;
+            oldProduct.Productname = newProduct.Productname;
+            oldProduct.Commission = newProduct.Commission;
+            oldProduct.ContactPhone = newProduct.ContactPhone;
+            oldProduct.Dealcommission = newProduct.Dealcommission;
+            oldProduct.Productimg = newProduct.Productimg;
+            oldProduct.Status = newProduct.Status;
+            oldProduct.Recommend = newProduct.Recommend;
+            oldProduct.Stockrule = newProduct.Stockrule;
+            oldProduct.SubTitle = newProduct.SubTitle;
+            oldProduct.Upduser = _workContent.CurrentUser.Id.ToString();
+            oldProduct.Updtime=DateTime.Now;
+            //商品详细
+            oldProductDetail.Productname = newProduct.Productname;
+            oldProductDetail.Productdetail = newProductDetail.Productdetail;
+            oldProductDetail.Productimg = newProduct.Productimg;
+            oldProductDetail.Sericeinstruction = newProductDetail.Sericeinstruction;
+            oldProductDetail.Productimg1 = newProductDetail.Productimg1;
+            oldProductDetail.Productimg2 = newProductDetail.Productimg2;
+            oldProductDetail.Productimg3 = newProductDetail.Productimg3;
+            oldProductDetail.Productimg4 = newProductDetail.Productimg4;
+            oldProductDetail.Updtime=DateTime.Now;
+            oldProductDetail.Upduser = _workContent.CurrentUser.Id.ToString();
+            if(_productService.Update(oldProduct)!=null&&_productDetailService.Update(oldProductDetail)!=null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "修改成功"));
+            }
+            else
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "修改失败"));
+            }
+        }
+
         #endregion
 
         #region 公用方法

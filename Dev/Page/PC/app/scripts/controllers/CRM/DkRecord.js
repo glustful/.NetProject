@@ -9,6 +9,9 @@ angular.module("app").controller('DkRecordController', [
             page: 1,
             pageSize: 10
         };
+        $scope.searchCondition1 = {
+            userId:''
+        }
 
         var getTagList = function() {
             $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetBLCList',{
@@ -16,6 +19,9 @@ angular.module("app").controller('DkRecordController', [
                 'withCredentials':true
             }).success(function(data){
                 $scope.Brokerlist = data.List;
+                if(data.List == ""){
+                    $scope.errorTip == "不存在数据"
+                }
                 $scope.searchCondition.page=data.Condition.Page;
                 $scope.searchCondition.PageCount=data.Condition.PageCount;
                 $scope.searchCondition.totalCount=data.totalCount;
@@ -28,6 +34,20 @@ angular.module("app").controller('DkRecordController', [
         $http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=推荐订单',{'withCredentials':true}).success(function (data) {
             $scope.rowCollectionBasic = data;
         });
+        //根据经纪人名字搜索该经纪人带客记录信息
+        var getRecClientByUser = function(){
+            $http.get(SETTING.ApiUrl+'/BrokerLeadClient/SearchBrokerLeadClient',{
+                    params:$scope.searchCondition1,
+                    'withCredentials':true
+                }).success(function(data){
+                    $scope.Brokerlist =data.list;
+                    if (data.list == ""){
+                        $scope.errorTip == "该经纪人没有带客记录信息"
+                    }
+                });
+        };
+        $scope.getRecClientByUser= getRecClientByUser;
+        getRecClientByUser();
     }
 ]);
 
@@ -38,4 +58,20 @@ angular.module("app").controller('DKRDetailedController',['$http','$scope','$sta
     }).success(function(data){
         $scope.ARDetialModel =data;
     });
+    //获取驻场秘书列表
+    $http.get(SETTING.ApiUrl + '/AdminRecom/SecretaryList',{
+        'withCredentials':true
+    }).success(function (data) {
+        $scope.SecretaryList = data;
+    });
+    $scope.updateDKRecord = function(type){
+        $scope.ARDetialModel.Status = type;
+        $http.post(SETTING.ApiUrl +'/BrokerLeadClient/UpdateLeadClient',$scope.ARDetialModel,{ 'withCredentials':true}).success(function(data){
+            if(data.Status){
+                $state.go('page.CRM.DkRecord.index');
+            }else{
+                alert(data.Msg);
+            }
+        });
+    };
 }]);

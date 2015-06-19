@@ -54,9 +54,17 @@ angular.module("app").controller('dkIndexController', [
                     }
                 }
                 else{
+                    $scope.errorTip="不存在数据";
                     $scope.visibleif=false;
                     $scope.tips="没有数据"
                 }
+                $scope.list = data.List;
+                if(data.List == ""){
+                    $scope.errorTip="不存在数据";
+                }
+                $scope.searchCondition.page = data.Condition.Page;
+                $scope.searchCondition.pageSize = data.Condition.PageCount;
+                $scope.totalCount = data.totalCount;
 
             });
         };

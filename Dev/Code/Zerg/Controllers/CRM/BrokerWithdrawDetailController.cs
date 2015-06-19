@@ -88,6 +88,27 @@ namespace Zerg.Controllers.CRM
         [System.Web.Http.HttpPost]
         public HttpResponseMessage AddBrokerWithdrawDetail([FromBody] AddMoneyEntity MoneyEntity)
         {
+            int bankId=0;
+            int withdrawMoney = 0;
+            if(string.IsNullOrEmpty(MoneyEntity.Bank) || string.IsNullOrEmpty(MoneyEntity.Hidm) || string.IsNullOrEmpty(MoneyEntity.MobileYzm) || string.IsNullOrEmpty(MoneyEntity.Money))
+            {
+                return    PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误"));
+            }
+            if(!Int32.TryParse(MoneyEntity.Bank,out bankId))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误"));
+            }
+            if (!Int32.TryParse(MoneyEntity.Money, out withdrawMoney))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误"));
+            }else
+            {
+                if(withdrawMoney<=0)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "提现金额必须大于零"));
+                }
+            }
+
             
             #region 验证码判断 解密
             var strDes = EncrypHelper.Decrypt(MoneyEntity.Hidm, "Hos2xNLrgfaYFY2MKuFf3g==");//解密
@@ -149,7 +170,7 @@ namespace Zerg.Controllers.CRM
                        {
                            if (_brokerwithdrawdetailService.Create(entity) != null)
                            {
-                               return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                               return PageHelper.toJson(PageHelper.ReturnValue(true, entity.Id.ToString()));
                            }
                        }
                        catch

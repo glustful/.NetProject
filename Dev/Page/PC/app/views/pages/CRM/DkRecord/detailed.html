@@ -61,15 +61,8 @@
         <div class="panel panel-default">
 
             <div class="panel-body revise">
-                <div class="bottom" ><label for="name">选择带客人员： </label>
-                    <select name="" id="WaiterId">
-                        <option  ng-repeat="item in WaiterList" value="{{item.Id}}">{{item.Brokername}}</option>
-
-                    </select></div>
-                <div class="bottom" ><label for="names">选择驻场秘书： </label>
-                    <select name="" id="SecretaryId" >
-                        <option  ng-repeat="item2 in SecretaryList" value="{{item2.Id}}">{{item2.Brokername}}</option>
-
+                <div class="bottom" ><label for="SecretaryId">选择驻场秘书： </label>
+                    <select name="" id="SecretaryId" ng-options="list.Id as list.Brokername for list in SecretaryList" ng-model="ARDetialModel.SecretaryId">
                     </select>
                 </div>
             </div>
@@ -77,8 +70,8 @@
     </form>
 </div>
 <div style="text-align: center;">
-    <a href="#/page/CRM/WaitCheck/pass"> <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" ng-click="passAudit1('等待上访')">审核通过<div class="md-ripple-container"></div></button></a>
-    <a href="#page/CRM/WaitCheck/refuse"> <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink" ng-click="passAudit1('审核不通过')">拒绝<div class="md-ripple-container"></div></button></a>
-    <a href="#page/CRM/WaitCheck/index"> <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">返回<div class="md-ripple-container"></div></button></a>
+    <button type="submit" md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" ng-click="updateDKRecord(1)">审核通过<div class="md-ripple-container"></div></button>
+    <button type="submit" md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink" ng-click="updateDKRecord(-1)">拒绝<div class="md-ripple-container"></div></button>
+    <a href="#/page/CRM/DkRecord/index"> <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">返回<div class="md-ripple-container"></div></button></a>
 
 </div>

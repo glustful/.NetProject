@@ -115,6 +115,7 @@ namespace Zerg.Models.CRM
         /// 注册时间
         /// </summary>
         public virtual DateTime Regtime { get; set; }
+        public virtual string rgtime { get; set; }
         /// <summary>
         /// 注册时间
         /// </summary>

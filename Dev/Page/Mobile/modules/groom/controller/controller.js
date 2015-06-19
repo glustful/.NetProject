@@ -1,7 +1,7 @@
 /**
  * Created by chenda on 2015/5/27.
  */
-app.controller("tuijianController",['$http','$scope','$stateParams','AuthService',function($http,$scope,$stateParams,AuthService){
+app.controller("tuijianController",['$http','$scope','$stateParams','AuthService','$state',function($http,$scope,$stateParams,AuthService,$state){
     $scope.BrokerRECClientEntity={
         AddUser:null,
         ClientInfo:null,
@@ -20,6 +20,7 @@ app.controller("tuijianController",['$http','$scope','$stateParams','AuthService
     $scope.currentUser=AuthService.CurrentUser();
     $scope.BrokerRECClientEntity.AddUser = $scope.currentUser.UserId;
     $scope.BrokerRECClientEntity.Projectid=$stateParams.Projectid;
+    $scope.BrokerRECClientEntity.ProjectName=$stateParams.name;
     $scope.BrokerRECClientEntity.Houses=$stateParams.name;
     $scope.BrokerRECClientEntity.HouseType=$stateParams.type;
 
@@ -27,7 +28,9 @@ app.controller("tuijianController",['$http','$scope','$stateParams','AuthService
         console.log(  $scope.BrokerRECClientEntity);
         $http.post(SETTING.ApiUrl+'/BrokerRECClient/Add', $scope.BrokerRECClientEntity).success(function(data){
             if(data.Status){
-                alert(data.Msg)
+                $state.go("app.nominate")
+            }else{
+              alert(data.Msg)
             }
         });
     };

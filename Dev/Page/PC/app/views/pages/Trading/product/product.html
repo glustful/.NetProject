@@ -24,24 +24,26 @@
             </thead>
             <tbody>
             <tr ng-repeat="row in list">
-                <td align="center"><img width="40" height="40" src={{img+row.Productimg}}></td>
-                <td align="center">{{row.Productname }}</td>
-                <td align="center">{{row.Price }}</td>
-                <td align="center">{{row.RecCommission }}</td>
-                <td align="center">{{row.Commission }}</td>
-                <td align="center">{{row.Dealcommission }}</td>
-                <td align="center">{{row.ClassifyName }}</td>
-                <td align="center">{{row.StockRule }}</td>
-                <td align="center">{{row.Addtime | dateFilter }}</td>
-                <td align="center">
+                <td><img width="40" height="40" src={{img+row.Productimg}}></td>
+                <td>{{row.Productname }}</td>
+                <td>{{row.Price }}</td>
+                <td>{{row.RecCommission }}</td>
+                <td>{{row.Commission }}</td>
+                <td>{{row.Dealcommission }}</td>
+                <td>{{row.ClassifyName }}</td>
+                <td>{{row.StockRule }}</td>
+                <td>{{row.Addtime | dateFilter }}</td>
+                <td>
+                    <a ui-sref="page.Trading.product.edit({productId:row.Id})" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 编辑
+                    </a>
                     <button ng-click='del(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
                     </button>
                 </td>
             </tr>
             </tbody>
-            <tfoot>
+            <tfoot class="hide-if-no-paging">
             <tr>
-                <td colspan="5" class="text-center footable-visible">
+                <td colspan="10" class="text-center">
                     <pagination boundary-links="true" total-items="totalCount" items-per-page="product.pageSize" ng-model="product.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
                 </td>
             </tr>

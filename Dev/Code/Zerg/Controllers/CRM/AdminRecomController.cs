@@ -12,6 +12,7 @@ using CRM.Service.Level;
 using Trading.Entity.Model;
 using Trading.Service.Order;
 using Trading.Service.OrderDetail;
+using Trading.Service.Product;
 using YooPoon.Common.Encryption;
 using YooPoon.Core.Data;
 using YooPoon.Core.Site;
@@ -38,6 +39,7 @@ namespace Zerg.Controllers.CRM
         private readonly IOrderDetailService _orderDetailService;
         private readonly ILevelService _levelService;
         private readonly IRoleService _roleService;
+        private readonly IProductService _productService;
 
         public AdminRecomController(IBrokerRECClientService brokerRecClientService,
             IBrokerService brokerService,
@@ -46,9 +48,11 @@ namespace Zerg.Controllers.CRM
             IOrderService orderService,
             IOrderDetailService orderDetailService,
             ILevelService levelService,
-            IRoleService roleService
+            IRoleService roleService,
+            IProductService productService
             )
         {
+            _productService = productService;
             _brokerRecClientService = brokerRecClientService;
             _brokerService = brokerService;
             _userService = userService;
@@ -66,17 +70,17 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage BrokerList(EnumBRECCType status, string brokername,int page, int pageSize)
+        public HttpResponseMessage BrokerList(EnumBRECCType status, string brokername, int page, int pageSize)
         {
-           
+
             var condition = new BrokerRECClientSearchCondition
             {
                 OrderBy = EnumBrokerRECClientSearchOrderBy.OrderById,
                 Page = page,
                 PageCount = pageSize,
                 Status = status,
-                Brokername=brokername
-                    
+                Brokername = brokername
+
             };
             var list = _brokerRecClientService.GetBrokerRECClientsByCondition(condition).Select(a => new
             {
@@ -84,31 +88,31 @@ namespace Zerg.Controllers.CRM
                 a.Brokername,
                 a.Brokerlevel,
                 a.ClientInfo.Phone,
-                a.Projectname, 
+                a.Projectname,
                 a.Addtime,
 
                 a.Clientname,
-                SecretaryName=a.SecretaryId.Brokername,
+                SecretaryName = a.SecretaryId.Brokername,
                 a.SecretaryPhone,
-                Waiter=a.WriterId.Brokername,
+                Waiter = a.WriterId.Brokername,
                 a.WriterPhone,
                 a.Uptime
 
-            }).ToList().Select(b=>new
+            }).ToList().Select(b => new
             {
                 b.Id,
                 b.Brokername,
                 b.Brokerlevel,
                 b.Phone,
                 b.Projectname,
-                Addtime =b.Addtime.ToString("yyy-MM-dd"),
+                Addtime = b.Addtime.ToString("yyy-MM-dd"),
 
                 b.Clientname,
                 SecretaryName = b.Brokername,
                 b.SecretaryPhone,
                 Waiter = b.Brokername,
                 b.WriterPhone,
-                Uptime=b.Uptime.ToString("yyy-MM-dd")
+                Uptime = b.Uptime.ToString("yyy-MM-dd")
             });
 
             var totalCont = _brokerRecClientService.GetBrokerRECClientCount(condition);
@@ -285,7 +289,7 @@ namespace Zerg.Controllers.CRM
         [HttpPost]
         public HttpResponseMessage PassAudit([FromBody]BrokerRECClientModel brokerRecClientModel)
         {
-            if (brokerRecClientModel.Id==0)
+            if (brokerRecClientModel.Id == 0)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "Id不能为空"));
             }
@@ -294,73 +298,122 @@ namespace Zerg.Controllers.CRM
             model.Status = brokerRecClientModel.Status;
             model.Uptime = DateTime.Now;
 
-            #region 推荐订单变更 杨定鹏 2015年6月4日17:38:08
-
-            var recOrder =_orderService.GetOrderById(model.RecOrder);
-            var dealOrder = _orderService.GetOrderById(model.DealOrder);
-
-            //变更订单状态
-            recOrder.Shipstatus = (int)brokerRecClientModel.Status;
-            dealOrder.Shipstatus = (int)brokerRecClientModel.Status;
-
-            //成交订单状态变更
-            dealOrder.Upduser =_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-            dealOrder.Upddate = DateTime.Now;
-            
-            //分支处理
-            switch (brokerRecClientModel.Status)
+            if (brokerRecClientModel.Status == EnumBRECCType.等待上访)
             {
-                case EnumBRECCType.审核不通过:
-                    //订单作废
-                    recOrder.Status = (int)EnumOrderStatus.审核失败;
-                    dealOrder.Status = (int)EnumOrderStatus.审核失败;
-                    recOrder.Upduser =_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                    recOrder.Upddate = DateTime.Now;
-                    break;
+                #region 创建订单 杨定鹏 2015年6月3日17:21:39
 
-                case EnumBRECCType.等待上访:
-                    //审核通过
-                    //添加带客和驻场秘书
-                    //model.WriterId=brokerRecClientModel.
+                //查询商品详情
+                var product = _productService.GetProductById(model.Projectid);
 
-                    recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                    recOrder.Upddate = DateTime.Now;
-                    break;
+                //创建订单详情
+                OrderDetailEntity ode = new OrderDetailEntity();
+                ode.Adddate = DateTime.Now;
+                ode.Adduser = model.Adduser.ToString(CultureInfo.InvariantCulture);
+                ode.Commission = product.Commission;
+                ode.RecCommission = product.RecCommission;
+                ode.Dealcommission = product.Dealcommission;
+                ode.Price = product.Price;
+                ode.Product = product;
+                ode.Productname = product.Productname;
+                //ode.Remark = product.
+                //ode.Snapshoturl = orderDetailModel.Snapshoturl,
+                ode.Upddate = DateTime.Now;
+                ode.Upduser = model.Adduser.ToString(CultureInfo.InvariantCulture);
 
-                case EnumBRECCType.洽谈中:
-                    //审核通过推荐订单
-                    recOrder.Status = (int) EnumOrderStatus.审核通过;
-                    recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                    recOrder.Upddate = DateTime.Now;
-                    break;
+                //创建订单
+                OrderEntity oe = new OrderEntity();
+                oe.Adddate = DateTime.Now;
+                oe.Adduser = model.Adduser.ToString(CultureInfo.InvariantCulture);
+                oe.AgentId = model.Adduser;
+                oe.Agentname = _brokerService.GetBrokerByUserId(model.Adduser).Brokername;
+                oe.Agenttel = model.Phone;
+                oe.BusId = product.Bussnessid;
+                oe.Busname = product.BussnessName;
+                oe.Customname = model.Clientname;
+                oe.Ordercode = _orderService.CreateOrderNumber(1);
+                oe.OrderDetail = ode;//订单详情；
+                oe.Ordertype = EnumOrderType.推荐订单;
+                oe.Remark = "前端经纪人提交";
+                oe.Shipstatus = (int)EnumBRECCType.审核中;
+                oe.Status = (int)EnumOrderStatus.默认;
+                oe.Upddate = DateTime.Now;
+                oe.Upduser = model.Adduser.ToString(CultureInfo.InvariantCulture);
 
-                case EnumBRECCType.客人未到:
-                    //订单作废
-                    recOrder.Status = (int)EnumOrderStatus.审核失败;
-                    dealOrder.Status = (int)EnumOrderStatus.审核失败;
-                    recOrder.Upduser =_workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                    recOrder.Upddate = DateTime.Now;
-                    break;
+                _orderService.Create(oe);
 
-                case EnumBRECCType.洽谈成功:
-                    //审核通过成交订单
-                    recOrder.Status = (int) EnumOrderStatus.审核通过;
-                    recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                    recOrder.Upddate = DateTime.Now;
-                    break;
+                #endregion
+            }else if(brokerRecClientModel.Status == EnumBRECCType.审核不通过){}
+          
+            else
+            {
+                #region 推荐订单变更 杨定鹏 2015年6月4日17:38:08
 
-                case EnumBRECCType.洽谈失败:
-                    //成交订单作废
-                    dealOrder.Status = (int)EnumOrderStatus.审核失败;
-                    break;
+                var recOrder = _orderService.GetOrderById(model.RecOrder);
+
+                //变更订单状态
+                int a = (int)Enum.Parse(typeof(EnumBRECCType), brokerRecClientModel.Status.ToString());
+                recOrder.Shipstatus = a;  //(int)Enum.Parse(typeof(EnumBRECCType), brokerRecClientModel.Status.ToString()); //(int)brokerRecClientModel.Status;
+                //dealOrder.Shipstatus = (int)Enum.Parse(typeof(EnumBRECCType), brokerRecClientModel.Status.ToString()); //(int)brokerRecClientModel.Status;
+
+                ////成交订单状态变更
+                //dealOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                //dealOrder.Upddate = DateTime.Now;
+
+                //分支处理
+                switch (brokerRecClientModel.Status)
+                {
+                    //case EnumBRECCType.审核不通过:
+                    //    //订单作废
+                    //    recOrder.Status = (int)EnumOrderStatus.审核失败;
+                    //    dealOrder.Status = (int)EnumOrderStatus.审核失败;
+                    //    recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    //    recOrder.Upddate = DateTime.Now;
+                    //    break;
+
+                    //                case EnumBRECCType.等待上访:
+                    //                    //审核通过
+                    //                    //添加带客和驻场秘书
+                    //                    model.WriterId=brokerRecClientModel.
+                    //
+                    //                    recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    //                    recOrder.Upddate = DateTime.Now;
+                    //
+                    //                    //新业务规定：审核通过后再创建订单
+                    //                    break;
+
+                    case EnumBRECCType.洽谈中:
+                        //审核通过推荐订单
+                        recOrder.Status = (int)EnumOrderStatus.审核通过;
+                        recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                        recOrder.Upddate = DateTime.Now;
+                        break;
+
+                    case EnumBRECCType.客人未到:
+                        //订单作废
+                        recOrder.Status = (int)EnumOrderStatus.审核失败;
+                        //dealOrder.Status = (int)EnumOrderStatus.审核失败;
+                        recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                        recOrder.Upddate = DateTime.Now;
+                        break;
+
+                    case EnumBRECCType.洽谈成功:
+                        //审核通过成交订单
+                        recOrder.Status = (int)EnumOrderStatus.审核通过;
+                        recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                        recOrder.Upddate = DateTime.Now;
+                        break;
+
+                    //case EnumBRECCType.洽谈失败:
+                    //    //成交订单作废
+                    //    //dealOrder.Status = (int)EnumOrderStatus.审核失败;
+                    //    break;
+                }
+                _orderService.Update(recOrder);
+                #endregion
             }
 
-            #endregion
-
-            _orderService.Update(recOrder);
-            _orderService.Update(dealOrder);
             _brokerRecClientService.Update(model);
-            return PageHelper.toJson(PageHelper.ReturnValue(true,"确认成功"));
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "确认成功"));
         }
 
         #region 选择带客人 杨定鹏 2015年5月5日19:45:14
@@ -379,7 +432,7 @@ namespace Zerg.Controllers.CRM
             var list = _brokerService.GetBrokersByCondition(condition).Select(a => new
             {
                 a.Id,
-                a.Brokername, 
+                a.Brokername,
                 a.Phone
             }).ToList();
             return PageHelper.toJson(list);
@@ -421,7 +474,7 @@ namespace Zerg.Controllers.CRM
             if (brokerRecClientModel == null) throw new ArgumentNullException("brokerRecClientModel");
             var model = new BrokerRECClientEntity
             {
-                Id=brokerRecClientModel.Id,
+                Id = brokerRecClientModel.Id,
                 Status = brokerRecClientModel.Status
             };
             _brokerRecClientService.Update(model);

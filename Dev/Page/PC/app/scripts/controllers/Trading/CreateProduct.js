@@ -60,7 +60,8 @@ angular.module("app").controller('CreatProductController', [
             var product = {
                 ClassifyId: classifys.selectClassifyId,// 平台商品分类ID
                 ProductBrandId: brands.selectBrandVal,// 品牌ID
-                Commission: $scope.commission,//佣金
+                Commission: $scope.commission,//带客佣金
+                RecCommission: $scope.RecCommission,//推荐佣金
                 Dealcommission: $scope.dealCommission,//成交佣金；
                 Price: $scope.price,//价格；
                 BussnessId: 1,// 商家ID
@@ -130,12 +131,15 @@ angular.module("app").controller('CreatProductController', [
 
                                 });
                             }
-                            alert("添加成功");
+                           // alert("添加成功");
                             $state.go('page.Trading.product.product');
                         } else {
                         $scope.alerts=[{type:'danger',msg:data.Msg}];
                         }
                 })
+                $scope.closeAlert = function(index) {
+                    $scope.alerts.splice(index, 1);
+                };
             }
         };
         function valueClick() {
