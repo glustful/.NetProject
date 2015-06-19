@@ -36,7 +36,9 @@ namespace Zerg.Controllers.CRM
             {
                 Name = name,
                 Page = Convert.ToInt32(page),
-                PageCount = pageSize
+                PageCount = pageSize,
+                OrderBy=EnumLevelConfigSearchOrderBy.OrderById,
+                isDescending=true
             };
             var levelconfigList = _levelconfigService.GetLevelConfigsByCondition(leconfigSearchCon).Select(
                 p => new

@@ -922,8 +922,8 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/Recommend.js')
             })
             .state('page.CRM.recommend.detailed', {
-                url: '/detailed?userId',
-                templateUrl: '../views/pages/CRM/configure/indexset.html',
+                url: '/detailed?id',
+                templateUrl: 'views/pages/CRM/recommend/detailed.html',
                 resolve:load('scripts/controllers/CRM/Recommend.js'),
                 data : { title: '推荐人详情页' }
             })
@@ -999,12 +999,12 @@ angular.module('app')
                 url: '/edit?id',
                 templateUrl: 'views/pages/CRM/configure/edit.html',
                 data : { title: '等级编辑' },
-                resolve:load('scripts/controllers/CRM/configure.js')
+                resolve:load(['scripts/controllers/CRM/configure.js','angularFileUpload'])
             })
 
 
             .state('page.CRM.configure.indexset', {
-                url: '/indexset',
+                url: '/indexset?id',
                 templateUrl: 'views/pages/CRM/configure/indexset.html',
                 data : { title: '等级设置' },
                 resolve:load('scripts/controllers/CRM/configure.js')
@@ -1313,7 +1313,14 @@ angular.module('app')
                 templateUrl: 'views/pages/Trading/product/brand.html',
                 data : { title: '品牌项目' },
                 controller: 'BrandListController',
-                resolve: load('scripts/controllers/Trading/Brand.js')
+                resolve: load(['scripts/controllers/Trading/Brand.js','angularFileUpload'])
+            })
+            .state('page.Trading.product.upProductBrand', {
+                url: '/upProductBrand?brandId',
+                templateUrl: 'views/pages/Trading/product/upProductBrand.html',
+                data: { title: '品牌修改' },
+                controller: 'upProductBrandController'
+
             })
             .state('page.Trading.product.createbrand', {
                 url: '/createbrand',

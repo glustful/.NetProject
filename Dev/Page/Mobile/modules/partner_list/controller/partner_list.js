@@ -10,8 +10,8 @@ app.controller('partnerListController',['$http','$scope','$stateParams','AuthSer
     var getPartnerList  = function() {
         $http.get(SETTING.ApiUrl+'/PartnerList/PartnerListDetailed?userId='+$scope.currentuser.UserId,{'withCredentials':true}).success(function(data){
             console.log(data);
-            $scope.list = data;
-            $scope.headImg = SETTING.ImgUrl
+            $scope.list = data.partnerList;
+            $scope.headImg = SETTING.ImgUrl;
         });
     };
     getPartnerList();

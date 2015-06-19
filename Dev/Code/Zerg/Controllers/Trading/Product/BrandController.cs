@@ -92,6 +92,38 @@ namespace Zerg.Controllers.Trading.Product
          }
         }
         /// <summary>
+        /// 修改品牌项目
+        /// </summary>
+        /// <param name="productBrandModel">品牌项目和数据模型</param>
+        /// <returns>修改结果</returns>
+        public HttpResponseMessage UpProductBrand(ProductBrandModel productBrandModel)
+        {
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            var m = reg.IsMatch(productBrandModel.Bname);
+            if (!m)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
+            }
+            else
+            {
+                var PB=_productBrandService.GetProductBrandById(productBrandModel.Id);
+                    PB.Updtime =DateTime.Now;
+                    PB.Bname = productBrandModel.Bname;
+                    PB.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    PB.SubTitle = productBrandModel.SubTitle;
+                    PB.Content = productBrandModel.Content;
+                if(_productBrandService.Update(PB)!=null)
+                {
+                     return PageHelper.toJson(PageHelper.ReturnValue(true, "数据修改成功！"));
+                }
+
+                else
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+                }
+            }
+        }
+        /// <summary>
         /// 删除品牌；
         /// </summary>
         /// <param name="brandId"></param>
