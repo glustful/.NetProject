@@ -41,7 +41,7 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
     	}
         if(httpimguri.length>0)
         {
-            $scope.olduser.Headphoto = SETTING.ImgUrl+httpimguri;
+            $scope.olduser.Headphoto =httpimguri;
             //如果服务器返回了用户的头像地址,操作IMG标签的SRC为angularjs绑定
             var img = document.getElementById('imghead');
             img.src = "{{olduser.Headphoto}}";

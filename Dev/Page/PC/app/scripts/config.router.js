@@ -922,8 +922,8 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/Recommend.js')
             })
             .state('page.CRM.recommend.detailed', {
-                url: '/detailed?userId',
-                templateUrl: '../views/pages/CRM/configure/indexset.html',
+                url: '/detailed?id',
+                templateUrl: 'views/pages/CRM/recommend/detailed.html',
                 resolve:load('scripts/controllers/CRM/Recommend.js'),
                 data : { title: '推荐人详情页' }
             })
@@ -943,6 +943,12 @@ angular.module('app')
                 url: '/detailed?userId',
                 templateUrl: 'views/pages/CRM/partner/detailed.html',
                 data : { title: '合伙人详情页' },
+                resolve:load('scripts/controllers/CRM/Partner.js')
+            })
+            .state('page.CRM.partner.former', {
+                url: '/former?PartnersId',
+                templateUrl: 'views/pages/CRM/partner/former.html',
+                data : { title: '他的上家详情' },
                 resolve:load('scripts/controllers/CRM/Partner.js')
             })
 

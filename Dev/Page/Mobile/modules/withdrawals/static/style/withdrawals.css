@@ -33,10 +33,12 @@
 .verification-code input{
     border: 1px solid #ebebeb;
     height: 40px;
+    line-height: 40px;
 }
 .verification-code button{
     width: 100px;
     height: 40px;
+    line-height: 40px;
     background-color: #f13a07;
     color: #fff;
     border-radius: 5px;

@@ -25,6 +25,7 @@ namespace CRM.Entity.Model
 		public int BrokerId{ get; set; }
 
 		public int[] PresenteebIds { get; set; }
+        public int  PresenteebId { get; set; }
 
 		public string Brokername { get; set; }
 
