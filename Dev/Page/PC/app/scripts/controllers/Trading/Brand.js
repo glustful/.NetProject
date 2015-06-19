@@ -117,12 +117,19 @@ angular.module("app").controller('CreatBrandController', [
             completeHandler(response.Msg);
         };
         //-------------------------------------------图片上传 end------------------------------------------//
+
+
+
     }
+
+
+
+
 ]);
 
 
 
-app.controller('BrandController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
+app.controller('BrandController', ['$scope', '$http', '$state','FileUploader', function ($scope, $http, $state,FileUploader) {
 //    //初始化界面；
 //    $scope.rowCollectionBasic = [];
 //    $scope.rowCollectionParameter = [];
@@ -191,12 +198,24 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
         $http.post(SETTING.ApiUrl + '/Brand/AddProductBrandParameter', Json, {
             'withCredentials': true
         }).success(function (data) {
-            AddParameterWindowClose();
-            $http.get(SETTING.TradingApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' + $scope.selectBrandId,{'withCredentials':true}).success(function (data) {
+
+            $http.get(SETTING.ApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' + $scope.selectBrandId,{'withCredentials':true}).success(function (data) {
                 $scope.rowCollectionParameter = data;
             });
-            $scope.output = data;
+            return $scope.output = data;
         });
+    };
+    $scope.closeAlert = function(Brand) {
+        $scope.alerts.splice(Brand, 1);
+    };
+    var uploader = $scope.uploader = new FileUploader({
+        url: SETTING.ApiUrl+'/Resource/Upload',
+        'withCredentials':true
+    });
+    uploader.onSuccessItem = function(fileItem, response, status, headers) {
+        console.info('onSuccessItem', fileItem, response, status, headers);
+        //completeHandler(response.Msg);
+        $scope.brandParameterValue=response.Msg
     };
 
     //删除项目参数值
@@ -205,7 +224,8 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
             $http.get(SETTING.ApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' +  $scope.selectBrandId,{'withCredentials':true}).success(function (data) {
                 $scope.rowCollectionParameter = data;
             });
-            return $scope.output = data;
+
+            $scope.alerts=[{type:'danger',msg:data.Msg}];
         });
     };
 
@@ -239,6 +259,9 @@ app.controller('BrandController', ['$scope', '$http', '$state', function ($scope
             processData: false
         });
     });
+
+
+
     function completeHandler(e){
         $scope.imgUrl="http://img.yoopoon.com/"+e.Msg;
         document.getElementById("Brandimg").src=$scope.imgUrl;

@@ -993,18 +993,18 @@ angular.module('app')
                 url: '/create',
                 templateUrl: 'views/pages/CRM/configure/create.html',
                 data : { title: '等级新建' },
-                resolve:load('scripts/controllers/CRM/configure.js')
+                resolve:load(['scripts/controllers/CRM/configure.js','angularFileUpload'])
             })
             .state('page.CRM.configure.edit', {
                 url: '/edit?id',
                 templateUrl: 'views/pages/CRM/configure/edit.html',
                 data : { title: '等级编辑' },
-                resolve:load('scripts/controllers/CRM/configure.js')
+                resolve:load(['scripts/controllers/CRM/configure.js','angularFileUpload'])
             })
 
 
             .state('page.CRM.configure.indexset', {
-                url: '/indexset',
+                url: '/indexset?id',
                 templateUrl: 'views/pages/CRM/configure/indexset.html',
                 data : { title: '等级设置' },
                 resolve:load('scripts/controllers/CRM/configure.js')
@@ -1296,6 +1296,12 @@ angular.module('app')
                 data : { title: '商品管理' },
                 resolve: load(['scripts/controllers/Trading/Product.js','scripts/controllers/vectormap.js'])
             })
+            .state('page.Trading.product.edit', {
+                url: '/edit?productId',
+                templateUrl: 'views/pages/Trading/product/editProduct.html',
+                data : { title: '商品编辑' },
+                resolve:load('scripts/controllers/Trading/EditProduct.js')
+            })
             .state('page.Trading.product.createProduct', {
                 url: '/createProduct',
                 templateUrl: 'views/pages/Trading/product/createProduct.html',
@@ -1307,7 +1313,14 @@ angular.module('app')
                 templateUrl: 'views/pages/Trading/product/brand.html',
                 data : { title: '品牌项目' },
                 controller: 'BrandListController',
-                resolve: load('scripts/controllers/Trading/Brand.js')
+                resolve: load(['scripts/controllers/Trading/Brand.js','angularFileUpload'])
+            })
+            .state('page.Trading.product.upProductBrand', {
+                url: '/upProductBrand?brandId',
+                templateUrl: 'views/pages/Trading/product/upProductBrand.html',
+                data: { title: '品牌修改' },
+                //controller: 'upProductBrandController'
+               resolve:load(['scripts/controllers/Trading/UpProductBrand.js','angularFileUpload'])
             })
             .state('page.Trading.product.createbrand', {
                 url: '/createbrand',

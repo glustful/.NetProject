@@ -229,7 +229,7 @@ namespace Zerg.Controllers.CMS
             var content = _contentService.GetContentsByCondition(new ContentSearchCondition
             {
                 ChannelName = channelName
-            }).Take(5).Select(c => new
+            }).OrderByDescending(c => c.Addtime).Take(5).Select(c => new
             {
                 c.Title,
                 c.AdSubTitle,
@@ -252,7 +252,7 @@ namespace Zerg.Controllers.CMS
            var Actcontent = _contentService.GetContentsByCondition(new ContentSearchCondition
            {
                ChannelName = channelName
-           }).Take(6).Select(c => new
+           }).OrderByDescending(c => c.Addtime).Take(6).Select(c => new
            {
                c.Title,
                c.AdSubTitle,

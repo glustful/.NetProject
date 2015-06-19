@@ -1,0 +1,177 @@
+<div ng-app="App" ng-controller="EditProductController" ng-submit="">
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/lang/zh-cn/zh-cn.js"></script>
+<div class="row">
+<form class="form-horizontal" role="form" name="form"
+      enctype="multipart/form-data">
+<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right"> 商品名称 </label>
+
+    <div class="col-sm-9">
+        <input type="text" ng-model="product.Productname" name="ProductName" required ng-maxlength="20"/>
+        <span ng-show="form.ProductName.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+        <span ng-show="form.ProductName.$error.maxlength" style="font-size:20px;color: #ff0000">*输入字符长度20以内</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <!--分类-->
+    <label class="col-sm-3 control-label no-padding-right"> 商品分类 </label>
+
+    <div class="col-sm-9">
+        <div>
+            <a>{{classifyMsg}}</a>
+            <select ng-model="product.ClassId" id="classifySelectId"
+                    ng-options="o.Id as o.label for o in classifys.optionsData"
+                    ng-change="selectclassifyChange()" required>
+                <option value="">请选择分类</option>
+            </select>
+            <a>{{classifyMsg1}}</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="form-group"  ng-repeat="row in parameterValueList">
+    <label class="col-sm-3 control-label no-padding-right"> {{row.Name}} </label>
+    <div class="col-sm-9">
+        <div  ng-repeat="v in row.ValueList">
+            <input type="radio" class="ace" name={{row.Name}} value={{v.Id}} ng-model="selectParameterValue" required/>
+            <span class="lbl" name={{row.Name}}>{{v.Value}}</span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <!--分类-->
+    <label class="col-sm-3 control-label no-padding-right"> 品牌项目</label>
+
+    <div class="col-sm-9">
+        <div>
+            <!--<input ng-model="product.Bname">-->
+            <select ng-model="product.BrandId" ng-options="o.Id as o.Bname for o in BrandList"required>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right"> 商品单价 </label>
+
+    <div class="col-sm-9">
+        <input type="number" ng-model="product.Price" step="0.1" ng-min="1" name="price" required>元
+        <span ng-show="form.price.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+        <span ng-show="form.price.$error.min" style="font-size:20px;color: #ff0000">*必须大于一</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right"> 推荐佣金 </label>
+
+    <div class="col-sm-9">
+        <input type="number" ng-model="product.RecCommission" ng-min="1" step="0.1" name="commission" required>元
+        <span ng-show="form.commission.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+        <span ng-show="form.commission.$error.min" style="font-size:20px;color: #ff0000">*必须是大于一的整数</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right"> 库存 </label>
+
+    <div class="col-sm-9">
+        <input type="number" ng-model="product.Stockrule" ng-min="1" name="Stockrule" required>个
+        <span ng-show="form.Stockrule.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+        <span ng-show="form.Stockrule.$error.min" style="font-size:20px;color: #ff0000">*必须是大于一的整数</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right"> 成交佣金 </label>
+
+    <div class="col-sm-9">
+        <input type="number" ng-model="product.Dealcommission" ng-min="1" step="0.1" name="dealCommission" required>元
+        <span ng-show="form.dealCommission.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+        <span ng-show="form.dealCommission.$error.min" style="font-size:20px;color: #ff0000">*必须是大于零的整数</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right"> 商品状态 </label>
+
+    <div class="col-sm-9">
+        <div>
+            <select name="Status" ng-model="product.Status" id="name1">
+                <option value="0">上架</option>
+                <option value="1">暂存</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right"> 商家推荐 </label>
+
+    <div class="col-sm-9">
+        <div>
+            <select name="Status" ng-model="product.Recommend">
+                <option value="0">推荐</option>
+                <option value="1">一般</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right"> 商品内容 </label>
+    <div class="col-sm-9" >
+        <div class="ueditor" ng-model="product.ProductDetailed" width="600" heigth="1500"></div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right">商品副标题</label>
+    <div class="col-sm-9" >
+        <textarea class="form-control" ng-model="product.SubTitle" name="SubTitle" ng-change="checkText()"
+                  style="width: 600px;height: 200px" required maxlength="100" placeholder="请输入不要超过100个字符"></textarea>
+        <span ng-show="form.SubTitle.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right"> 售后说明 </label>
+    <div class="col-sm-9" >
+        <textarea class="form-control" ng-model="product.Sericeinstruction" name="Sericeinstruction"
+                  style="width: 600px;height: 200px" required maxlength="200" placeholder="请输入不要超过200个字符"></textarea>
+        <span ng-show="form.Sericeinstruction.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right"> 联系电话 </label>
+    <div class="col-sm-9" >
+        <input class="form-control" ng-model="product.Phone" name="ContactPhone" required ng-pattern="/^1[3|4|5|7|8][0-9]\d{8}$/"/>
+        <span ng-show="form.ContactPhone.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+        <span ng-show="form.ContactPhone.$error.pattern" style="font-size:20px;color: #ff0000">*输入正确的号码</span>
+    </div>
+</div>
+<div class="clearfix form-actions">
+    <div class="col-md-offset-3 col-md-9">
+        <!--<button class="btn btn-info" ng-click="addProduct()">-->
+        <!--<i class="icon-ok bigger-110"></i>-->
+        <!--提交-->
+        <!--</button>-->
+        <button class="btn btn-info" type="submit">
+            <i class="icon-ok bigger-110"></i>
+            提交
+        </button>
+    </div>
+</div>
+
+</form>
+</div>
+
+</div>

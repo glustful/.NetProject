@@ -99,6 +99,91 @@ namespace Zerg.Controllers.CRM
             var count = _brokerleadclientService.GetBrokerLeadClientCount(sech);
             return PageHelper.toJson(new { List = list, Condition = sech, totalCount = count });
         }
+        /// <summary>
+        /// 查询某经纪人带客记录
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage SearchBrokerLeadClient(string userid)
+        {
+            var sech = new BrokerLeadClientSearchCondition
+            {
+                Brokers = _brokerService.GetBrokerById(Convert.ToInt32(userid))
+            };
+            var list = _brokerleadclientService.GetBrokerLeadClientsByCondition(sech).Select(p => new
+            {
+                p.Id,
+                p.Brokername,
+                p.ClientName,
+                p.ClientInfo.Phone,
+                p.ProjectId,
+                p.Appointmenttime
+            }).ToList().Select(a => new 
+            {
+                a.Id,
+                a.Brokername,
+                a.ClientName,
+                a.Phone,
+                ProjectName = a.ProjectId == 0 ? "" : _productService.GetProductById(a.ProjectId).Productname,
+                Appointmenttime = a.Appointmenttime.ToString("yyy-MM-dd")
+            });
+            return PageHelper.toJson(new { List = list});
+
+        }
+        /// <summary>
+        /// 经纪人列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetLeadCientInfoByBrokerName(EnumBLeadType status, string brokername, int page, int pageSize)
+        {
+
+            var condition = new BrokerLeadClientSearchCondition
+            {
+                OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderById,
+                Page = page,
+                PageCount = pageSize,
+                Status = status,
+                Brokername = brokername
+
+            };
+            var list = _brokerleadclientService.GetBrokerLeadClientsByCondition(condition).Select(a => new
+            {
+                a.Id,
+                a.Brokername,
+                a.ClientInfo.Phone,
+                a.Projectname,
+                a.Addtime,
+
+                
+                SecretaryName = a.SecretaryId.Brokername,
+                a.SecretaryPhone,
+                Waiter = a.WriterId.Brokername,
+                a.WriterPhone,
+                a.Uptime
+
+            }).ToList().Select(b => new
+            {
+                b.Id,
+                b.Brokername,
+               
+                b.Phone,
+                b.Projectname,
+                Addtime = b.Addtime.ToString("yyy-MM-dd"),
+
+                
+                SecretaryName = b.Brokername,
+                b.SecretaryPhone,
+                Waiter = b.Brokername,
+                b.WriterPhone,
+                Uptime = b.Uptime.ToString("yyy-MM-dd")
+            });
+
+            var totalCont = _brokerleadclientService.GetBrokerLeadClientCount(condition);
+
+            return PageHelper.toJson(new { list1 = list, condition1 = condition, totalCont1 = totalCont });
+        }
 
         /// <summary>
         /// 查询带客详情
@@ -290,7 +375,8 @@ namespace Zerg.Controllers.CRM
             model.Addtime = DateTime.Now;
             model.Upuser = brokerleadclient.Adduser;
             model.Uptime = DateTime.Now;
-            model.ProjectId = brokerleadclient.Id;
+            //model.ProjectId = brokerleadclient.Id;
+            model.ProjectId = brokerleadclient.Projectid;
             model.Projectname = brokerleadclient.Projectname;
             model.Status = EnumBLeadType.预约中;
             model.DelFlag = EnumDelFlag.默认;

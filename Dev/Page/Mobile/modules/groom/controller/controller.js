@@ -20,6 +20,7 @@ app.controller("tuijianController",['$http','$scope','$stateParams','AuthService
     $scope.currentUser=AuthService.CurrentUser();
     $scope.BrokerRECClientEntity.AddUser = $scope.currentUser.UserId;
     $scope.BrokerRECClientEntity.Projectid=$stateParams.Projectid;
+    $scope.BrokerRECClientEntity.ProjectName=$stateParams.name;
     $scope.BrokerRECClientEntity.Houses=$stateParams.name;
     $scope.BrokerRECClientEntity.HouseType=$stateParams.type;
 
