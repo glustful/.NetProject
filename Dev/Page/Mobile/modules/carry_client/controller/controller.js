@@ -5,7 +5,7 @@ app.controller('daikeController',['$http','$scope','$stateParams','AuthService',
     $scope.BrokerLeadClient={
         AddUser:null,
         Broker:null,
-        Projectname:null,
+        Projectname:'',
         Projectid:null,
         Brokername:'',
         Appointmenttime:'',
