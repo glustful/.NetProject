@@ -79,12 +79,12 @@ namespace Zerg.Controllers.CRM
         [System.Web.Http.HttpGet]
         public HttpResponseMessage SearchAllBankByUser()
         {
-            var user = (UserBase)_workContext.CurrentUser;
-            if (user != null)
-            {
+             var user = (UserBase)_workContext.CurrentUser;
+             if (user != null)
+             {
                 var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
                 if (broker == null)
-                {
+                {           
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
                 }
                 else
@@ -124,7 +124,7 @@ namespace Zerg.Controllers.CRM
             DateTime dateNow = Convert.ToDateTime(DateTime.Now.ToLongTimeString());//获取当前时间
             TimeSpan ts = dateNow.Subtract(date);
             double secMinu = ts.TotalMinutes;//得到发送时间与现在时间的时间间隔分钟数
-            if (secMinu > 3) //发送时间与接受时间是否大于3分钟
+            if (secMinu > 30) //发送时间与接受时间是否大于3分钟
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "你已超过时间验证，请重新发送验证码！"));
             }
@@ -143,7 +143,7 @@ namespace Zerg.Controllers.CRM
                if (user != null)
                {
                    var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
-                   if (broker == null)
+                   if (broker != null)
                    {
                        var entity = new BankCardEntity
                        {
@@ -155,8 +155,8 @@ namespace Zerg.Controllers.CRM
                            Upuser = broker.Id,
                            Bank = _bankService.GetBankById(Convert.ToInt32(bankcard.Bank)),
                            Broker = broker,
-                           Num = Convert.ToInt32(bankcard.Num),
-                           Deadline =Convert.ToDateTime("1900-0-0")
+                           Num = bankcard.Num,
+                           Deadline =Convert.ToDateTime("2000-01-01 00:00:00")
                        };
 
                        try
