@@ -1301,7 +1301,14 @@ angular.module('app')
                 templateUrl: 'views/pages/Trading/product/brand.html',
                 data : { title: '品牌项目' },
                 controller: 'BrandListController',
-                resolve: load('scripts/controllers/Trading/Brand.js')
+                resolve: load(['scripts/controllers/Trading/Brand.js','angularFileUpload'])
+            })
+            .state('page.Trading.product.upProductBrand', {
+                url: '/upProductBrand?brandId',
+                templateUrl: 'views/pages/Trading/product/upProductBrand.html',
+                data: { title: '品牌修改' },
+                controller: 'upProductBrandController'
+
             })
             .state('page.Trading.product.createbrand', {
                 url: '/createbrand',
