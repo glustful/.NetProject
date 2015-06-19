@@ -70,6 +70,10 @@ namespace Trading.Entity.Model
 
 
 
+        public int ProductBrand_Id { get; set; }
+
+
+
 
 		public EnumBrandParameterSearchOrderBy? OrderBy { get; set; }
 

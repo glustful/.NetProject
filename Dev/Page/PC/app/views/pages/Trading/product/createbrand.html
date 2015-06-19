@@ -29,8 +29,8 @@
 
 
             <div class="loadimg">
-                <img height="100" width="100"  />
-                <input name="Bimg" id="Bimg" type="hidden" class="form-control"/>
+                <img height="100" width="100" src="{{SImg+image}}" tittle="图片" />
+                <input name="Bimg" id="Bimg" type="hidden" class="form-control"  ng-model="BrandModel.Bimg" required value="{{image}}"/>
             </div>
         </div>
 

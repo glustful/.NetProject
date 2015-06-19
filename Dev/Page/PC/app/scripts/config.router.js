@@ -993,18 +993,18 @@ angular.module('app')
                 url: '/create',
                 templateUrl: 'views/pages/CRM/configure/create.html',
                 data : { title: '等级新建' },
-                resolve:load('scripts/controllers/CRM/configure.js')
+                resolve:load(['scripts/controllers/CRM/configure.js','angularFileUpload'])
             })
             .state('page.CRM.configure.edit', {
                 url: '/edit?id',
                 templateUrl: 'views/pages/CRM/configure/edit.html',
                 data : { title: '等级编辑' },
-                resolve:load('scripts/controllers/CRM/configure.js')
+                resolve:load(['scripts/controllers/CRM/configure.js','angularFileUpload'])
             })
 
 
             .state('page.CRM.configure.indexset', {
-                url: '/indexset',
+                url: '/indexset?id',
                 templateUrl: 'views/pages/CRM/configure/indexset.html',
                 data : { title: '等级设置' },
                 resolve:load('scripts/controllers/CRM/configure.js')
