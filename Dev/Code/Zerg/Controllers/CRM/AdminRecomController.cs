@@ -342,32 +342,33 @@ namespace Zerg.Controllers.CRM
                 _orderService.Create(oe);
 
                 #endregion
-            }
+            }else if(brokerRecClientModel.Status == EnumBRECCType.审核不通过){}
+          
             else
             {
                 #region 推荐订单变更 杨定鹏 2015年6月4日17:38:08
 
                 var recOrder = _orderService.GetOrderById(model.RecOrder);
-                var dealOrder = _orderService.GetOrderById(model.DealOrder);
 
                 //变更订单状态
-                recOrder.Shipstatus = (int)brokerRecClientModel.Status;
-                dealOrder.Shipstatus = (int)brokerRecClientModel.Status;
+                int a = (int)Enum.Parse(typeof(EnumBRECCType), brokerRecClientModel.Status.ToString());
+                recOrder.Shipstatus = a;  //(int)Enum.Parse(typeof(EnumBRECCType), brokerRecClientModel.Status.ToString()); //(int)brokerRecClientModel.Status;
+                //dealOrder.Shipstatus = (int)Enum.Parse(typeof(EnumBRECCType), brokerRecClientModel.Status.ToString()); //(int)brokerRecClientModel.Status;
 
-                //成交订单状态变更
-                dealOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                dealOrder.Upddate = DateTime.Now;
+                ////成交订单状态变更
+                //dealOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                //dealOrder.Upddate = DateTime.Now;
 
                 //分支处理
                 switch (brokerRecClientModel.Status)
                 {
-                    case EnumBRECCType.审核不通过:
-                        //订单作废
-                        recOrder.Status = (int)EnumOrderStatus.审核失败;
-                        dealOrder.Status = (int)EnumOrderStatus.审核失败;
-                        recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                        recOrder.Upddate = DateTime.Now;
-                        break;
+                    //case EnumBRECCType.审核不通过:
+                    //    //订单作废
+                    //    recOrder.Status = (int)EnumOrderStatus.审核失败;
+                    //    dealOrder.Status = (int)EnumOrderStatus.审核失败;
+                    //    recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    //    recOrder.Upddate = DateTime.Now;
+                    //    break;
 
                     //                case EnumBRECCType.等待上访:
                     //                    //审核通过
@@ -390,7 +391,7 @@ namespace Zerg.Controllers.CRM
                     case EnumBRECCType.客人未到:
                         //订单作废
                         recOrder.Status = (int)EnumOrderStatus.审核失败;
-                        dealOrder.Status = (int)EnumOrderStatus.审核失败;
+                        //dealOrder.Status = (int)EnumOrderStatus.审核失败;
                         recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
                         recOrder.Upddate = DateTime.Now;
                         break;
@@ -402,13 +403,12 @@ namespace Zerg.Controllers.CRM
                         recOrder.Upddate = DateTime.Now;
                         break;
 
-                    case EnumBRECCType.洽谈失败:
-                        //成交订单作废
-                        dealOrder.Status = (int)EnumOrderStatus.审核失败;
-                        break;
+                    //case EnumBRECCType.洽谈失败:
+                    //    //成交订单作废
+                    //    //dealOrder.Status = (int)EnumOrderStatus.审核失败;
+                    //    break;
                 }
                 _orderService.Update(recOrder);
-                _orderService.Update(dealOrder);
                 #endregion
             }
 

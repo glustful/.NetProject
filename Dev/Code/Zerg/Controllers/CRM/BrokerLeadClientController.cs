@@ -131,6 +131,59 @@ namespace Zerg.Controllers.CRM
             return PageHelper.toJson(new { List = list});
 
         }
+        /// <summary>
+        /// 经纪人列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetLeadCientInfoByBrokerName(EnumBLeadType status, string brokername, int page, int pageSize)
+        {
+
+            var condition = new BrokerLeadClientSearchCondition
+            {
+                OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderById,
+                Page = page,
+                PageCount = pageSize,
+                Status = status,
+                Brokername = brokername
+
+            };
+            var list = _brokerleadclientService.GetBrokerLeadClientsByCondition(condition).Select(a => new
+            {
+                a.Id,
+                a.Brokername,
+                a.ClientInfo.Phone,
+                a.Projectname,
+                a.Addtime,
+
+                
+                SecretaryName = a.SecretaryId.Brokername,
+                a.SecretaryPhone,
+                Waiter = a.WriterId.Brokername,
+                a.WriterPhone,
+                a.Uptime
+
+            }).ToList().Select(b => new
+            {
+                b.Id,
+                b.Brokername,
+               
+                b.Phone,
+                b.Projectname,
+                Addtime = b.Addtime.ToString("yyy-MM-dd"),
+
+                
+                SecretaryName = b.Brokername,
+                b.SecretaryPhone,
+                Waiter = b.Brokername,
+                b.WriterPhone,
+                Uptime = b.Uptime.ToString("yyy-MM-dd")
+            });
+
+            var totalCont = _brokerleadclientService.GetBrokerLeadClientCount(condition);
+
+            return PageHelper.toJson(new { list1 = list, condition1 = condition, totalCont1 = totalCont });
+        }
 
         /// <summary>
         /// 查询带客详情
@@ -322,7 +375,8 @@ namespace Zerg.Controllers.CRM
             model.Addtime = DateTime.Now;
             model.Upuser = brokerleadclient.Adduser;
             model.Uptime = DateTime.Now;
-            model.ProjectId = brokerleadclient.Id;
+            //model.ProjectId = brokerleadclient.Id;
+            model.ProjectId = brokerleadclient.Projectid;
             model.Projectname = brokerleadclient.Projectname;
             model.Status = EnumBLeadType.预约中;
             model.DelFlag = EnumDelFlag.默认;
