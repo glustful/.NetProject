@@ -24,6 +24,10 @@ namespace Zerg.Models.Trading.Product
         /// </summary>
         public  decimal Commission { get; set; }
         /// <summary>
+        /// 推荐佣金
+        /// </summary>
+        public decimal RecCommission { get; set; }
+        /// <summary>
         /// 成交佣金
         /// </summary>
         public decimal Dealcommission { get; set; }

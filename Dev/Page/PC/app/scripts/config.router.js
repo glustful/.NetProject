@@ -993,7 +993,7 @@ angular.module('app')
                 url: '/create',
                 templateUrl: 'views/pages/CRM/configure/create.html',
                 data : { title: '等级新建' },
-                resolve:load('scripts/controllers/CRM/configure.js')
+                resolve:load(['scripts/controllers/CRM/configure.js','angularFileUpload'])
             })
             .state('page.CRM.configure.edit', {
                 url: '/edit?id',
@@ -1295,6 +1295,12 @@ angular.module('app')
                 templateUrl: 'views/pages/Trading/product/product.html',
                 data : { title: '商品管理' },
                 resolve: load(['scripts/controllers/Trading/Product.js','scripts/controllers/vectormap.js'])
+            })
+            .state('page.Trading.product.edit', {
+                url: '/edit?productId',
+                templateUrl: 'views/pages/Trading/product/editProduct.html',
+                data : { title: '商品编辑' },
+                resolve:load('scripts/controllers/Trading/EditProduct.js')
             })
             .state('page.Trading.product.createProduct', {
                 url: '/createProduct',
