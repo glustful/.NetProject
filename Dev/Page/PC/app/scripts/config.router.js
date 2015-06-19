@@ -1319,8 +1319,8 @@ angular.module('app')
                 url: '/upProductBrand?brandId',
                 templateUrl: 'views/pages/Trading/product/upProductBrand.html',
                 data: { title: '品牌修改' },
-                controller: 'upProductBrandController'
-
+                //controller: 'upProductBrandController'
+               resolve:load(['scripts/controllers/Trading/UpProductBrand.js','angularFileUpload'])
             })
             .state('page.Trading.product.createbrand', {
                 url: '/createbrand',
