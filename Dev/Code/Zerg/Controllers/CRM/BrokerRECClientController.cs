@@ -66,12 +66,18 @@ namespace Zerg.Controllers.CRM
          [System.Web.Http.HttpGet]
          public HttpResponseMessage SearchBrokerRecClient(string userid)
          {
-             var p = new BrokerRECClientSearchCondition
+             var sech = new BrokerRECClientSearchCondition
              {
                  Brokers = _brokerService.GetBrokerById(Convert.ToInt32(userid))
              };
-             var list = _brokerRecClientService.GetBrokerRECClientsByCondition(p).ToList();
-             return PageHelper.toJson(list);
+             var list = _brokerRecClientService.GetBrokerRECClientsByCondition(sech).Select(p => new
+             {
+                 p.Brokerlevel,
+                 p.Brokername,
+                 p.ClientInfo.Phone,
+                 ProjectName = p.Projectid == 0 ? "" : _productService.GetProductById(p.Projectid).Productname,
+             }).ToList();
+             return PageHelper.toJson(new { List = list});
 
          }
 
@@ -103,7 +109,7 @@ namespace Zerg.Controllers.CRM
              var cmodel = _brokerRecClientService.GetBrokerRECClientsByCondition(sech);
 
              //检测客户是否存在于数据库
-             if (cmodel.Any())
+             if (!cmodel.Any())
              {
                  //客户信息
                  var client = new ClientInfoEntity
