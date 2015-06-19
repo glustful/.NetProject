@@ -1296,6 +1296,12 @@ angular.module('app')
                 data : { title: '商品管理' },
                 resolve: load(['scripts/controllers/Trading/Product.js','scripts/controllers/vectormap.js'])
             })
+            .state('page.Trading.product.edit', {
+                url: '/edit?productId',
+                templateUrl: 'views/pages/Trading/product/editProduct.html',
+                data : { title: '商品编辑' },
+                resolve:load('scripts/controllers/Trading/EditProduct.js')
+            })
             .state('page.Trading.product.createProduct', {
                 url: '/createProduct',
                 templateUrl: 'views/pages/Trading/product/createProduct.html',
