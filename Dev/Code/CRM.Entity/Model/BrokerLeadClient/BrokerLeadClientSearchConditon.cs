@@ -52,7 +52,7 @@ namespace CRM.Entity.Model
 	    public string ClientName { get; set; }
 	    public string Phone { get; set; }
 	    public EnumDelFlag? DelFlag { get; set; }
-        public int[] Projectids { get; set; }
+        public int[]Projectids { get; set; }
 	}
 
 	public enum EnumBrokerLeadClientSearchOrderBy

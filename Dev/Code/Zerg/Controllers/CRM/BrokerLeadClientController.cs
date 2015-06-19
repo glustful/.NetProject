@@ -375,7 +375,8 @@ namespace Zerg.Controllers.CRM
             model.Addtime = DateTime.Now;
             model.Upuser = brokerleadclient.Adduser;
             model.Uptime = DateTime.Now;
-            model.ProjectId = brokerleadclient.Id;
+            //model.ProjectId = brokerleadclient.Id;
+            model.ProjectId = brokerleadclient.Projectid;
             model.Projectname = brokerleadclient.Projectname;
             model.Status = EnumBLeadType.预约中;
             model.DelFlag = EnumDelFlag.默认;
