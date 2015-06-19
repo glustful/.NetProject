@@ -44,10 +44,12 @@ namespace Zerg.Controllers.CRM
                 
                 Brokername = name,
                 Page = Convert.ToInt32(page),
-                PageCount = pageSize
+                PageCount = pageSize,
+              
             };
             var recommendAgentList = _recommendagentService.GetRecommendAgentsByCondition(recomagmentsearchcon).Select(p => new {               
               BBrokername= p.Brokername,
+              PresenteebId = p.PresenteebId,
               Brokername=p.Broker.Brokername,
               
             
@@ -55,6 +57,39 @@ namespace Zerg.Controllers.CRM
             var partnerListCount = _recommendagentService.GetRecommendAgentCount(recomagmentsearchcon);
             return PageHelper.toJson(new { List = recommendAgentList, Condition = recomagmentsearchcon, totalCount = partnerListCount });
           
+        }
+
+        /// <summary>
+        /// 查询推荐经纪人表中的所有数据
+        /// </summary>
+        /// <param name="userId">经纪人ID</param>
+        /// <returns></returns>
+
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetRecommendAgentListById(int id=0)
+        {
+            var recomagmentsearchcon = new RecommendAgentSearchCondition
+            {
+                PresenteebId =id
+               
+            };
+            var recommendAgentList = _recommendagentService.GetRecommendAgentsByCondition(recomagmentsearchcon).Select(p => new
+            {
+                BBrokername = p.Brokername,
+                phone = p.Broker.Phone,
+                regtime = p.Broker.Regtime,
+                agentlevel = p.Broker.Agentlevel,
+                Brokername = p.Broker.Brokername,
+                Nickname = p.Broker.Nickname,
+                Headphono = p.Broker.Headphoto,
+                Amount = p.Broker.Amount,
+                Sfz = p.Broker.Sfz,
+
+
+            }).ToList();
+            var partnerListCount = _recommendagentService.GetRecommendAgentCount(recomagmentsearchcon);
+            return PageHelper.toJson(new { List = recommendAgentList, Condition = recomagmentsearchcon, totalCount = partnerListCount });
+
         }
 
 

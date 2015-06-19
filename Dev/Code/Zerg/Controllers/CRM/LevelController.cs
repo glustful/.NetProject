@@ -11,6 +11,7 @@ using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.CRM
 {
+    [AllowAnonymous]
    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 等级设置

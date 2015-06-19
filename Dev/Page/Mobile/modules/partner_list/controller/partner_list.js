@@ -10,7 +10,8 @@ app.controller('partnerListController',['$http','$scope','$stateParams','AuthSer
     var getPartnerList  = function() {
         $http.get(SETTING.ApiUrl+'/PartnerList/PartnerListDetailed?userId='+$scope.currentuser.UserId,{'withCredentials':true}).success(function(data){
             console.log(data);
-            $scope.list = data.list;
+            $scope.list = data.partnerList;
+            $scope.headImg = SETTING.ImgUrl;
         });
     };
     getPartnerList();
@@ -37,9 +38,14 @@ app.controller ('searchInviteController',['$http','$scope','$stateParams','AuthS
         $http.get(SETTING.ApiUrl + '/PartnerList/SetPartner?status='+status+"&id="+id, {'withCredentials': true}).success(function (data) {
             if(data.Status){
                 getInvite();
+                $scope.warming=data.Msg;
+            }else{
+                $scope.warming=data.Msg;
+                getInvite()
+
 
             }
-            else{alert(data.Status);}
+
         })
     };
     $scope.agreeAddPartner = agreeAdd;

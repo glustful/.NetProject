@@ -465,7 +465,7 @@ namespace Zerg.Controllers.UC
             {
                 user.UserRoles.First().Role = role;
             }
-
+            PasswordHelper.SetPasswordHashed(user, model.Password);
             if (_userService.ModifyUser(user))
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));

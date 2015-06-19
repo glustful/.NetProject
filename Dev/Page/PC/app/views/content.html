@@ -11,30 +11,30 @@
     <div class="navbar-item pull-left h4" ng-bind="$state.current.data.title"></div>
     <!-- / -->
     <!-- Common tools -->
-    <ul class="nav navbar-tool pull-right" ng-hide="$state.current.data.child">
-      <li>
-        <a md-ink-ripple ng-click="app.search.show = true">
-          <i class="mdi-action-search i-24"></i>
-        </a>
-      </li>
-      <li>
-        <a md-ink-ripple data-toggle="modal" data-target="#user">
-          <i class="mdi-social-people-outline i-24"></i>
-        </a>
-      </li>
-      <li class="dropdown">
-        <a md-ink-ripple data-toggle="dropdown">
-          <i class="mdi-navigation-more-vert i-24"></i>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-scale pull-right pull-up text-color">
-          <li><a href>Single-column view</a></li>
-          <li><a href>Sort by date</a></li>
-          <li><a href>Sort by name</a></li>
-          <li class="divider"></li>
-          <li><a href>Help &amp; feedback</a></li>
-        </ul>
-      </li>
-    </ul>
+    <!--<ul class="nav navbar-tool pull-right" ng-hide="$state.current.data.child">-->
+      <!--&lt;!&ndash;<li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<a md-ink-ripple ng-click="app.search.show = true">&ndash;&gt;-->
+          <!--&lt;!&ndash;<i class="mdi-action-search i-24"></i>&ndash;&gt;-->
+        <!--&lt;!&ndash;</a>&ndash;&gt;-->
+      <!--&lt;!&ndash;</li>&ndash;&gt;-->
+      <!--&lt;!&ndash;<li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<a md-ink-ripple data-toggle="modal" data-target="#user">&ndash;&gt;-->
+          <!--&lt;!&ndash;<i class="mdi-social-people-outline i-24"></i>&ndash;&gt;-->
+        <!--&lt;!&ndash;</a>&ndash;&gt;-->
+      <!--&lt;!&ndash;</li>&ndash;&gt;-->
+      <!--&lt;!&ndash;<li class="dropdown">&ndash;&gt;-->
+        <!--&lt;!&ndash;<a md-ink-ripple data-toggle="dropdown">&ndash;&gt;-->
+          <!--&lt;!&ndash;<i class="mdi-navigation-more-vert i-24"></i>&ndash;&gt;-->
+        <!--&lt;!&ndash;</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;<ul class="dropdown-menu dropdown-menu-scale pull-right pull-up text-color">&ndash;&gt;-->
+          <!--&lt;!&ndash;<li><a href>Single-column view</a></li>&ndash;&gt;-->
+          <!--&lt;!&ndash;<li><a href>Sort by date</a></li>&ndash;&gt;-->
+          <!--&lt;!&ndash;<li><a href>Sort by name</a></li>&ndash;&gt;-->
+          <!--&lt;!&ndash;<li class="divider"></li>&ndash;&gt;-->
+          <!--&lt;!&ndash;<li><a href>Help &amp; feedback</a></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+      <!--&lt;!&ndash;</li>&ndash;&gt;-->
+    <!--</ul>-->
     <div class="pull-right" ui-view="navbar@"></div>
     <!-- / -->
     <!-- Search form -->
@@ -48,9 +48,9 @@
           <!-- bind to app.search.content -->
           <input class="form-control input-lg no-bg no-border" placeholder="Search" ng-model="app.search.content">
         </div>
-        <div class="box-col w-56 text-center">
-          <a md-ink-ripple class="navbar-item inline"><i class="mdi-av-mic i-24"></i></a>
-        </div>
+        <!--<div class="box-col w-56 text-center">-->
+          <!--<a md-ink-ripple class="navbar-item inline"><i class="mdi-av-mic i-24"></i></a>-->
+        <!--</div>-->
       </div>
     </div>
     <!-- / -->

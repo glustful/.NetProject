@@ -111,6 +111,7 @@ namespace Zerg.Models.CRM
         /// 注册时间
         /// </summary>
         public virtual DateTime Regtime { get; set; }
+        public virtual string rgtime { get; set; }
         /// <summary>
         /// 用户状态（删除0 注销-1 正常1）
         /// </summary>
