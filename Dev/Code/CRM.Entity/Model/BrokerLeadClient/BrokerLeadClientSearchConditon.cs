@@ -47,6 +47,7 @@ namespace CRM.Entity.Model
 		public EnumBrokerLeadClientSearchOrderBy? OrderBy { get; set; }
 
 	    public EnumBLeadType? Status { get; set; }
+        public string Brokername { get; set; }
 
 	    public string ClientName { get; set; }
 	    public string Phone { get; set; }
