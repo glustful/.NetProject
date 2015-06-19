@@ -9,6 +9,9 @@ angular.module("app").controller('DkRecordController', [
             page: 1,
             pageSize: 10
         };
+        $scope.searchCondition1 = {
+            userId:''
+        }
 
         var getTagList = function() {
             $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetBLCList',{
@@ -31,6 +34,18 @@ angular.module("app").controller('DkRecordController', [
         $http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=推荐订单',{'withCredentials':true}).success(function (data) {
             $scope.rowCollectionBasic = data;
         });
+        var getRecClientByUser = function(){
+            $http.get(SETTING.ApiUrl+'/BrokerLeadClient/SearchBrokerLeadClient',{
+                    params:$scope.searchCondition1,
+                    'withCredentials':true
+                }).success(function(data){
+                    $scope.record =data.list;
+                    if (data.list == ""){
+                        $scope.errorTip == "该经纪人没有带客记录信息"
+                    }
+
+                });
+        };
     }
 ]);
 

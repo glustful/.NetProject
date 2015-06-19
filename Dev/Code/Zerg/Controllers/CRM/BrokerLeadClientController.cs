@@ -99,6 +99,38 @@ namespace Zerg.Controllers.CRM
             var count = _brokerleadclientService.GetBrokerLeadClientCount(sech);
             return PageHelper.toJson(new { List = list, Condition = sech, totalCount = count });
         }
+        /// <summary>
+        /// 查询某经纪人带客记录
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage SearchBrokerLeadClient(string userid)
+        {
+            var sech = new BrokerLeadClientSearchCondition
+            {
+                Brokers = _brokerService.GetBrokerById(Convert.ToInt32(userid))
+            };
+            var list = _brokerleadclientService.GetBrokerLeadClientsByCondition(sech).Select(p => new
+            {
+                p.Id,
+                p.Brokername,
+                p.ClientName,
+                p.ClientInfo.Phone,
+                p.ProjectId,
+                p.Appointmenttime
+            }).ToList().Select(a => new 
+            {
+                a.Id,
+                a.Brokername,
+                a.ClientName,
+                a.Phone,
+                ProjectName = a.ProjectId == 0 ? "" : _productService.GetProductById(a.ProjectId).Productname,
+                Appointmenttime = a.Appointmenttime.ToString("yyy-MM-dd")
+            });
+            return PageHelper.toJson(new { List = list});
+
+        }
 
         /// <summary>
         /// 查询带客详情
