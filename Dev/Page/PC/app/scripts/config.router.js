@@ -1074,8 +1074,7 @@ angular.module('app')
 
                 data : { title: '任务主页' },
 
-                resolve:load(['scripts/controllers/CRM/taskList.js',
-          'scripts/filters/toDate.js'])
+                resolve:load(['scripts/controllers/CRM/taskList.js'])
             })
             .state('page.CRM.TaskList.taskList', {
                 url: '/taskList?id',

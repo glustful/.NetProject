@@ -62,12 +62,17 @@ namespace Zerg.Controllers.CRM
             var PointDetailList = _brokerwithdrawdetailService.GetBrokerWithdrawDetailsByCondition(brokerwithdrawdetailcon).Select(p => new
             {
                 Id = p.Id,
-                bankname=p.BankCard.Bank.Codeid,
-                banknumber= p.BankCard.Num,
+                bankname = p.BankCard.Bank.Codeid,
+                banknumber = p.BankCard.Num,
                 p.Withdrawnum,
-                p.Withdrawtime
-
-            }).ToList();
+                Withdrawtime = p.Withdrawtime
+            }).ToList().Select(p => new {
+                Id = p.Id,
+                bankname = p.bankname,
+                banknumber = p.banknumber,
+                p.Withdrawnum,
+                Withdrawtime = p.Withdrawtime.ToString("yyyy-MM-dd")
+            });
             var PointDetailListCount = _brokerwithdrawdetailService.GetBrokerWithdrawDetailCount(brokerwithdrawdetailcon);
             return PageHelper.toJson(new { List = PointDetailList, Condition = brokerwithdrawdetailcon, totalCount = PointDetailListCount });       
        

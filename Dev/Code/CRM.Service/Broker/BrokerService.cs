@@ -178,6 +178,10 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => condition.Addusers.Contains(q.Adduser));
                 }
+                if (condition.State!=2)
+                {
+                    query = query.Where(q => condition.State ==q.State);
+                }
                 if (condition.Upusers != null && condition.Upusers.Any())
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
@@ -240,6 +244,10 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => q.Addtime < condition.AddtimeEnd.Value);
                 }
+                if (condition.State != 2)
+                {
+                    query = query.Where(q => condition.State == q.State);
+                }
                 if (condition.UptimeBegin.HasValue)
                 {
                     query = query.Where(q => q.Uptime >= condition.UptimeBegin.Value);
@@ -288,10 +296,10 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => q.Agentlevel.Contains(condition.Agentlevel));
                 }
-                //if (!string.IsNullOrEmpty(condition.Usertype))
-                //{
-                //    query = query.Where(q => q.Usertype.Contains(condition.Usertype));
-                //}
+                if (condition.UserType.HasValue)
+                {
+                    query = query.Where(c => c.Usertype == condition.UserType);
+                }
                 if (!string.IsNullOrEmpty(condition.Address))
                 {
                     query = query.Where(q => q.Address.Contains(condition.Address));
