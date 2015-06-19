@@ -17,12 +17,12 @@
             <span class="footable-sort-indicator"></span></th>
     </tr>
     </thead>
-    <tbody ng-repeat="item in list">
-    <tr class="footable-even" >
+    <tbody >
+    <tr class="footable-even" ng-repeat="item in list">
         <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>{{item.BrokerName}}</td>
-        <td class="footable-visible"><a href="">{{item.PartnersName}}</a></td>
+        <td class="footable-visible"><a href="#/page/CRM/partner/former?PartnersId={{item.PartnersId}}">{{item.PartnersName }}</a></td>
         <td data-value="1" class="footable-visible footable-last-column">
-         <a   href="#/page/CRM/partner/detailed?userId={{item.Id}}" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">他的合伙人<div class="md-ripple-container"></div></button>
+         <a href="#/page/CRM/partner/detailed?userId={{item.UserId}}" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">他的合伙人<div class="md-ripple-container"></div></button>
          </a></td>
          </a></td>
     </tr>

@@ -21,7 +21,7 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// 卡号
 		/// </summary>
-		public virtual int Num { get; set; }
+		public virtual string Num { get; set; }
 		/// <summary>
 		/// 卡种
 		/// </summary>

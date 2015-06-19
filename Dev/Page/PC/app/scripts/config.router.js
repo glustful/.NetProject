@@ -922,8 +922,8 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/Recommend.js')
             })
             .state('page.CRM.recommend.detailed', {
-                url: '/detailed?userId',
-                templateUrl: '../views/pages/CRM/configure/indexset.html',
+                url: '/detailed?id',
+                templateUrl: 'views/pages/CRM/recommend/detailed.html',
                 resolve:load('scripts/controllers/CRM/Recommend.js'),
                 data : { title: '推荐人详情页' }
             })
@@ -943,6 +943,12 @@ angular.module('app')
                 url: '/detailed?userId',
                 templateUrl: 'views/pages/CRM/partner/detailed.html',
                 data : { title: '合伙人详情页' },
+                resolve:load('scripts/controllers/CRM/Partner.js')
+            })
+            .state('page.CRM.partner.former', {
+                url: '/former?PartnersId',
+                templateUrl: 'views/pages/CRM/partner/former.html',
+                data : { title: '他的上家详情' },
                 resolve:load('scripts/controllers/CRM/Partner.js')
             })
 
@@ -1000,19 +1006,19 @@ angular.module('app')
             .state('page.CRM.configure.indexset', {
                 url: '/indexset',
                 templateUrl: 'views/pages/CRM/configure/indexset.html',
-                data : { title: '等级配置列表' },
+                data : { title: '等级设置' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
             .state('page.CRM.configure.setcreate', {
                 url: '/setcreate',
                 templateUrl: 'views/pages/CRM/configure/setcreate.html',
-                data : { title: '等级配置新建' },
+                data : { title: '新建等级配置' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
             .state('page.CRM.configure.setedit', {
                 url: '/setedit?id',
                 templateUrl: 'views/pages/CRM/configure/setedit.html',
-                data : { title: '等级配置编辑' },
+                data : { title: '编辑等级配置' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
 

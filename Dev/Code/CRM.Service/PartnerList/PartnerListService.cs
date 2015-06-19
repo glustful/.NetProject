@@ -134,6 +134,9 @@ namespace CRM.Service.PartnerList
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
+                query = query.Where(q => q.Status == condition.Status);
+
+
 				if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
@@ -221,11 +224,14 @@ namespace CRM.Service.PartnerList
 				if (condition.Addusers != null && condition.Addusers.Any())
                 {
                     query = query.Where(q => condition.Addusers.Contains(q.Adduser));
-                }
+                }               
+
 				if (condition.Upusers != null && condition.Upusers.Any())
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
+                query = query.Where(q => q.Status == condition.Status);
+
 				return query.Count();
 			}
 			catch(Exception e)

@@ -80,7 +80,21 @@ namespace Zerg.Controllers.CRM
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
             }
             var brokerlist = _brokerService.GetBrokerById(Convert.ToInt32(id));
-            return PageHelper.toJson(new { List = brokerlist });
+            var dd = new BrokerModel
+            {
+                Address = brokerlist.Address,
+                Adduser = brokerlist.Adduser,
+                Brokername = brokerlist.Brokername,
+                Phone = brokerlist.Phone,
+                Realname = brokerlist.Realname,
+                Nickname = brokerlist.Nickname,
+                Sexy = brokerlist.Sexy,
+                Sfz = brokerlist.Sfz,
+                Email = brokerlist.Email,               
+                Headphoto = brokerlist.Headphoto,
+                rgtime  = brokerlist.Regtime.ToShortDateString ()
+            };
+            return PageHelper.toJson(new { List = dd});
         }
 
         /// <summary>
@@ -403,7 +417,7 @@ namespace Zerg.Controllers.CRM
                      var partnerlistsearchcon = new PartnerListSearchCondition
                      {
                           Brokers=broker,
-                          //Status = EnumPartnerType.同意
+                          Status = EnumPartnerType.同意
                      };
                      partnerCount = _partnerlistService.GetPartnerListCount(partnerlistsearchcon);
 

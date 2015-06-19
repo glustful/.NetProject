@@ -164,7 +164,7 @@ namespace Zerg.Controllers.Trading.Product
             {
                  if (i.Parametername==productBrandParameterModel.Parametername)
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据已经存在，请重新编辑！")); ;
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已经存在，请重新编辑！")); ;
             }
             }
 
@@ -186,7 +186,7 @@ namespace Zerg.Controllers.Trading.Product
                 }
                 catch (Exception e)
                 {
-                    return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功！"));
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败！"));
                 }
             }
         

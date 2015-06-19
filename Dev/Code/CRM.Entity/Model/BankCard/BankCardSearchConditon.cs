@@ -26,7 +26,7 @@ namespace CRM.Entity.Model
 
 		public BrokerEntity Brokers { get; set; }
 
-		public int[] Nums { get; set; }
+		public string Nums { get; set; }
 
 		public string Type { get; set; }
 
