@@ -10,7 +10,8 @@ namespace Zerg.Models.Trading.Product
         /// <summary>
         /// 品牌名称
         /// </summary>
-        public  string Bname { get; set; }
+        /// 
+         public  string Bname { get; set; }
         /// <summary>
         /// 品牌图片(存图片URL)
         /// </summary>
@@ -25,13 +26,25 @@ namespace Zerg.Models.Trading.Product
         /// </summary>
         public  DateTime Addtime { get; set; }
         /// <summary>
+        /// Content
+        /// </summary>
+        public string Content    { get; set;  }
+        /// <summary>
         /// UpdUser
         /// </summary>
         public  string Upduser { get; set; }
+
+        /// <summary>
+        /// Id
+        /// </summary>
+        public int Id { get; set; }
         /// <summary>
         /// UpdTime
         /// </summary>
         public  DateTime Updtime { get; set; }
-        public string Parametername { get; set; }
+        public Dictionary<string,string> Parameters { get; set; }
+
+        public List<ProductModel> Products { get; set; }
+       
     }
 }

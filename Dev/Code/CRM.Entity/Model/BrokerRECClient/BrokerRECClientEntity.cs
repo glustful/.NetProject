@@ -29,7 +29,7 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// QQ
 		/// </summary>
-		public virtual int Qq { get; set; }
+		public virtual string Qq { get; set; }
 		/// <summary>
 		/// AddUser
 		/// </summary>
@@ -90,5 +90,9 @@ namespace CRM.Entity.Model
         /// 成交订单
         /// </summary>
 	    public virtual int DealOrder { get; set; }
+        /// <summary>
+        /// 删除标识
+        /// </summary>
+        public virtual EnumDelFlag DelFlag { get; set; }
 	}
 }

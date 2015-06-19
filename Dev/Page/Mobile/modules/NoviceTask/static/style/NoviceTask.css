@@ -1,0 +1,206 @@
+.NoviceTask-bg{
+    position:relative;
+    background-color:#00ca81;
+    width: 640px;
+    height: 4000px;
+}
+.NoviceTask-content .headImg{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+.NoviceTask-content .flag{
+    position: absolute;
+    z-index: 2;
+    top:491px;
+    left:300px;
+}
+.NoviceTask-content .line{
+    position: absolute;
+    z-index: 2;
+    top:560px;
+    left: 40px;
+}
+.NoviceTask-content .notebook{
+    position: absolute;
+    z-index: 2;
+    top:612px;
+    left: 20px;
+}
+.NoviceTask-content .EnterTask{
+    position: absolute;
+    z-index: 2;
+    top:630px;
+    left: 300px;
+    text-align:center;
+    line-height: 40px;
+}
+.NoviceTask-content .EnterTask .PerfectData{
+    font-size: 1.9em;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px #848484;
+}
+.NoviceTask-content .EnterTask p{
+   font-size: 1.2em;
+   color: #fff;
+    margin-bottom: 10px;
+}
+.NoviceTask-content .grass-1{
+    position: absolute;
+    z-index: 2;
+    top:780px;
+    right: 30px;
+}
+.NoviceTask-content .Mobile{
+    position: absolute;
+    z-index: 2;
+    top:905px;
+    right: 80px;
+}
+.NoviceTask-content .bind{
+    position: absolute;
+    z-index: 2;
+    top:930px;
+    left: 100px;
+    text-align: center;
+    line-height: 40px;
+}
+.NoviceTask-content .bind .bindWeixin,.NoviceTask-content .model-1 .tj,.NoviceTask-content .model-2 .dk,.NoviceTask-content .partners .tj{
+    font-size: 2em;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px #848484;
+}
+.NoviceTask-content .bind p,.NoviceTask-content .model-1 p,.NoviceTask-content .model-2 p,.NoviceTask-content .partners p{
+    font-size: 1.3em;
+    color: #fff;
+    margin-bottom: 10px;
+}
+.NoviceTask-content .grass-2{
+    position: absolute;
+    z-index: 2;
+    top:1100px;
+    left: 10px;
+}
+.NoviceTask-content .grass-3{
+    position: absolute;
+    z-index: 2;
+    top:1110px;
+    right: 70px;
+}
+.NoviceTask-content .lead{
+    position: absolute;
+    z-index:2;
+    top:1160px;
+    left:100px;
+    background-color: rgba(0,0,0,0);
+}
+.NoviceTask-content .person{
+    position: absolute;
+    z-index:2;
+    top:1420px;
+    left: -10px;
+}
+.NoviceTask-content .grass-4{
+    position: absolute;
+    z-index: 2;
+    top:1390px;
+    left: 230px;
+}
+.NoviceTask-content .grass-5{
+    position: absolute;
+    z-index: 2;
+    top:1670px;
+    left: 40px;
+}
+.NoviceTask-content .model-1{
+    position:absolute;
+    z-index: 2;
+    top:1490px;
+    left: 300px;
+    text-align: center;
+    line-height: 40px;
+}
+.NoviceTask-content .grass-6{
+    position: absolute;
+    z-index: 2;
+    top:1710px;
+    right: 70px;
+}
+.NoviceTask-content .model-2{
+    position:absolute;
+    z-index: 2;
+    top:1775px;
+    left: 80px;
+    text-align: center;
+    line-height: 40px;
+}
+.NoviceTask-content .house{
+    position: absolute;
+    z-index: 2;
+    top:1775px;
+    right: 5px;
+}
+.NoviceTask-content .grass-7{
+    position: absolute;
+    z-index: 2;
+    top:1950px;
+    right: 250px;
+}
+.NoviceTask-content .leadL{
+    position: absolute;
+    z-index: 3;
+    top:1960px;
+    left: 10px;
+}
+.NoviceTask-content .grass-8{
+    position: absolute;
+    z-index: 2;
+    top:2000px;
+    left: 13px;
+}
+.NoviceTask-content .three{
+    position: absolute;
+    z-index: 2;
+    top:2250px;
+    left: 30px;
+}
+.NoviceTask-content .partners{
+    position: absolute;
+    z-index: 2;
+    text-align: center;
+    top:2350px;
+    left:300px;
+    line-height: 40px;
+}
+.NoviceTask-content .red{
+    position: absolute;
+    z-index: 2;
+    top:2625px ;
+    left: 80px;
+}
+.NoviceTask-content .grass-9{
+    position: absolute;
+    z-index: 2;
+    top:2550px;
+    right: 40px;
+}
+.NoviceTask-content .grass-10{
+    position: absolute;
+    z-index: 2;
+    top:2760px;
+    left: 40px;
+}
+ .masked{
+    position:fixed;
+    z-index: 20;
+    background-color: rgba(0,0,0,0.85);
+    width:100%;
+    top: 0;
+    bottom:0;
+}
+.location{
+    position: absolute;
+}

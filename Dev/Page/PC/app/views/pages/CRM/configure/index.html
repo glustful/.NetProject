@@ -12,17 +12,22 @@
             <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">描述<span class="footable-sort-indicator"></span></th>
             <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">图标<span class="footable-sort-indicator"></span></th>
             <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">操作<span class="footable-sort-indicator"></span></th>
+            <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">时间<span class="footable-sort-indicator"></span></th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="item in list">
             <td >{{item.Name}}</td>
             <td >{{item.Describe}}</td>
-            <td ><img src="{{item.Url}}" width="10%" height="10%"/></td>
+            <td ><img src="http://img.yoopoon.com/{{item.Url}}" width="10%" height="10%"/></td>
             <td >
                 <a ui-sref="page.CRM.configure.edit({id: item.Id})"> <span class="label bg-success" title="Active">编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                <a href="#"> <span class="label yellow" title="Active">删除</span></a>
+                <a href="#"> <span class="label yellow" title="Active" ng-click="open(item.Id)">删除</span></a>
             </td>
+            <td>{{item.Addtime | dateFilter}}</td>
+        </tr>
+        <tr>
+            <td class="text-center" colspan="4">{{errorTip}}</td>
         </tr>
         </tbody>
 
@@ -30,4 +35,7 @@
     <div colspan="5" class="text-center footable-visible">
         <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
     </div>
+    <script type="text/ng-template" id="myModalContent.html">
+        <div ng-include="'views/partials/modal.html'"></div>
+    </script>
 </div>

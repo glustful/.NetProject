@@ -1,26 +1,37 @@
 <!--个人设置-->
 <!--required:../static/style/setting.css" rel="stylesheet-->
-           <div class="setting_personal">
+           <div class="setting_personal" ng-controller="personsettingController" ng-submit="save()" novalidate>
 	               <div class="headphoto">
 	               	
 	                   <div class="touxiang" id="preview">
-	                       <img src="" id="imghead">
+	                       <img src="http://img.yoopoon.com/{{olduser.Headphoto}}" id="imghead">
 	                   </div>
 	                   <span class="input-file">
-	                   	修改头像
+	                   	<a id="Uptext">头像设置</a>
 	                   	<input name="fileToUpload" type="file" onchange="previewImage(this)"/>
 	                   </span>
 	               </div>
-               <div class="person_revise" ng-controller="personsettingController">
-                   <form>
+               <div class="person_revise">
+                   <form name="information_form" >
+                       <p>昵称</p>
+                       <input type="text" class="password old" placeholder="昵称" ng-model="olduser.Nickname"  /><br/>
                        <p>姓名</p>
-                       <input type="text" class="password old" placeholder="用户名" ng-model="olduser.Brokername" required/><br/>
+                       <input type="text" class="password old" placeholder="姓名" name="information_name" ng-model="olduser.Realname" ng-pattern="/^[\u4e00-\u9fa5]+$/" required/><br/>
+                       <div class="information_error" ng-show="information_form.information_name.$invalid&&information_form.information_name.$dirty">请正确输入姓名</div>
+                       <p> 性别</p>
+                       <select name="sexy"  class="sexy" ng-model="olduser.Sexy" >
+                           <option value="先生">先生</option>
+                           <option value="女士">女士</option>
+                       </select>
                        <p> 电话</p>
-                       <input type="text" class="password old" placeholder="用户手机号码"  required/><br/>
+                       <input type="text" class="password old" placeholder="用户手机号码"  ng-model="olduser.Phone" required/><br/>
                        <p>身份证</p>
-                       <input type="text" class="password old" placeholder="保护账号安全"  required/><br/>
-
-                       <button class="save_button" ng-click="save()">保存</button>
+                       <input type="text" class="password old" placeholder="保护账号安全" name="information_sfz" ng-model="olduser.Sfz" ng-pattern="/^(\d{15}|\d{17}[\dx])$/" required/><br/>
+                       <div class="information_error" ng-show="information_form.information_sfz.$invalid&&information_form.information_sfz.$dirty">请正确输入身份证号码</div>
+                       <p> 邮箱</p>
+                       <input type="email" class="password old" placeholder="用户邮箱" name="information_mail" ng-model="olduser.Email" /><br/>
+                       <div class="information_error" ng-show="information_form.information_mail.$error.email&&information_form.information_mail.$dirty">请正确输入邮箱</div>
+                       <button class="save_button" type="submit" ng-diabled="information_form.$invalid">保存</button>
                    </form>
                </div>
            </div>

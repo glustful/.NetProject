@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Trading.Entity.Entity.Area;
+using Trading.Entity.Model;
 using Trading.Service.Area;
 using Zerg.Common;
+using Zerg.Models.Trading.Area;
+using Zerg.Models.Trading.Product;
 
 namespace Zerg.Controllers.Trading.Area
 {
-    public class AreaController : ApiController
+    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+     public class AreaController : ApiController
     {
         private readonly IAreaService _areaService;
 
@@ -18,19 +25,138 @@ namespace Zerg.Controllers.Trading.Area
         {
             _areaService = areaService;
         }
-
-        public HttpResponseMessage GetArea(int parentId=0)
+        public HttpResponseMessage GetAllClassify()
         {
-            var areaCon = new AreaSearchCondition
+            AreaSearchCondition csc = new AreaSearchCondition()
             {
-                ParentId = parentId
+                OrderBy = EnumAreaSearchOrderBy.OrderById
             };
-            var areaList = _areaService.GetAreaByCondition(areaCon).Select(a=>new
+            return PageHelper.toJson(GetAllTree().ToList());
+        }
+        public List<TreeJsonModel> GetAllTree()
+        {
+            AreaSearchCondition csc = new AreaSearchCondition()
             {
-                Id=a.Id,
-                AreaName=a.AreaName
-            }).ToList();
-            return PageHelper.toJson(areaList);
+                OrderBy = EnumAreaSearchOrderBy.OrderById
+            };
+            List<AreaEntity> ceListBuffer = new List<AreaEntity>();
+            List<TreeJsonModel> treeJsonModelBuffer = new List<TreeJsonModel>();
+            List<AreaEntity> ceList =_areaService.GetAreaByCondition(csc).ToList();
+            foreach (var ce in ceList)
+            {
+                if (ce.ParentId==0)
+                {
+                    ceListBuffer.Add(ce);//查找第一级；
+                }
+            }
+            foreach (var ce in ceListBuffer)
+            {
+                TreeJsonModel TJM = new TreeJsonModel()
+                {
+                    label = ce.AreaName,
+                    Id = ce.Id
+                };
+                treeJsonModelBuffer.Add(TJM);
+                TJM.children = GetJsonFromTreeModel(TJM.Id);
+            }
+            return treeJsonModelBuffer;
+        }
+        public List<TreeJsonModel> GetJsonFromTreeModel(int nodeId)
+        {
+            AreaSearchCondition csc = new AreaSearchCondition()
+            {
+                OrderBy = EnumAreaSearchOrderBy.OrderById
+            };
+            List<TreeJsonModel> datalist = new List<TreeJsonModel>();
+            List<AreaEntity> ceList = _areaService.GetBySuperArea(nodeId).ToList();//找出该级的子集；
+            foreach (var ce in ceList)
+            {
+                TreeJsonModel TJM = new TreeJsonModel()
+                {
+                    label = ce.AreaName,
+                    Id = ce.Id
+                };
+                datalist.Add(TJM);
+                TJM.children = GetJsonFromTreeModel(TJM.Id);//自迭代;
+
+            }
+            if (ceList.Count == 0)//若遍历到末端，则：
+            {
+                return null;
+            }
+            else
+            {
+                return datalist;
+            }
+        }
+        public class TreeJsonModel
+        {
+            public string label { set; get; }
+            public List<TreeJsonModel> children { set; get; }
+            public int Id { set; get; }
+        }
+       
+        //public HttpResponseMessage GetArea(int parentId=0)
+        //{
+        //    var areaCon = new AreaSearchCondition
+        //    {
+        //        ParentId = parentId
+        //    };
+        //    var areaList = _areaService.GetAreaByCondition(areaCon).Select(a=>new
+        //    {
+        //        Id=a.Id,
+        //        AreaName=a.AreaName
+        //    }).ToList();
+        //    return PageHelper.toJson(areaList);
+        //}
+          [HttpPost]
+        public HttpResponseMessage AddArea([FromBody]AreaModel model)
+        {
+            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            var m = reg.IsMatch(model.AreaName);
+            if (!m)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
+            }
+            else
+            {
+                AreaEntity fatherArea = _areaService.GetAreaById(model.Id);
+                int Level = 1;
+                int parentId = 0;
+                if (fatherArea != null) //有上级分类则次级排序加1；
+                {
+                    Level = fatherArea.Level + 1;
+                    parentId = fatherArea.Id;
+                }
+                AreaEntity ce = new AreaEntity()
+                {
+                    AreaName = model.AreaName,
+                    Level = Level,               
+                    ParentId = parentId
+                };
+                try
+                {
+                    _areaService.Create(ce);
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功！"));
+                }
+                catch (Exception error)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败！"));
+                    ;
+                }
+            }
+        }
+        [HttpGet]
+        public HttpResponseMessage Delete(int id)
+        {
+            var area = _areaService.GetAreaById(id);
+            var SubArea = _areaService.GetBySuperArea(area.Id);
+            if (SubArea.Count() ==0)
+            {
+                _areaService.Delete(area);
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功！"));
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "存在关联不能删除！"));           
         }
     }
 }

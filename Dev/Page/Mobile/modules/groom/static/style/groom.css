@@ -21,3 +21,24 @@
     font-family: "microsoft yahei";
     margin-top: 78px;
 }
+/* 遮罩 */
+.masked .fillIn{
+    top: 6%;
+    left: 5%;
+}
+.masked .wantTake{
+    top:5%;
+    left: 15%;
+}
+.masked .upWardTake{
+    bottom:9%;
+    left: 40%;
+}
+.masked .takeFinish{
+    top:10%;
+    left: 10%;
+}
+.masked .takeBack{
+    bottom:5%;
+    left:35%;
+}

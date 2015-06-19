@@ -37,7 +37,7 @@ angular.module('app')
     ['$stateProvider', '$urlRouterProvider', 'MODULE_CONFIG',
       function ($stateProvider, $urlRouterProvider, MODULE_CONFIG) {
         $urlRouterProvider
-          .otherwise('/page/CMS/tag/index');
+          .otherwise('/page/Trading/product/product');
         $stateProvider
           .state('app', {
             abstract: true,
@@ -368,21 +368,20 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            },
-                service:"AuthService",
-                resolve:load('scripts/services/authentication.js')
+            }
           })
+
             .state('page.profile', {
               url: '/profile',
               templateUrl: 'views/pages/profile.html',
                   data: { title: 'Profile', theme: { primary: 'green' } }
             })
 
-            .state('page.settings', {
-              url: '/settings',
-              templateUrl: 'views/pages/settings.html',
-                  data: { title: 'Settings' }
-            })
+            //.state('page.settings', {
+            //  url: '/settings',
+            //  templateUrl: 'views/pages/settings.html',
+            //      data: { title: 'Settings' }
+            //})
             .state('page.blank', {
               url: '/blank',
               templateUrl: 'views/pages/blank.html',
@@ -532,6 +531,7 @@ angular.module('app')
                 url: '/strike',
                 templateUrl: 'views/ui/material/strike.html',
                   data: { title: '所有成交' }
+
             })
 
             .state('ui.form.comBroker', {
@@ -554,11 +554,11 @@ angular.module('app')
                 resolve: load('scripts/controllers/vectormap.js')
             })
 
-            .state('page.setting', {
-                url: '/setting',
-                templateUrl: 'views/pages/setting.html',
-                  data: { title: '短信列表', theme: { primary: 'green' } }
-            })
+            //.state('page.setting', {
+            //    url: '/setting',
+            //    templateUrl: 'views/pages/setting.html',
+            //      data: { title: '短信列表', theme: { primary: 'green' } }
+            //})
 
             .state('page.allocation', {
                 url: '/allocation',
@@ -733,33 +733,53 @@ angular.module('app')
             })
 
               .state('page.CRM.WaitCheck', {
-                  url: '/WaitCheck',
-                  template: '<div ui-view></div>'
+                url: '/WaitCheck',
+                template: '<div ui-view></div>'
             })
             .state('page.CRM.WaitCheck.index', {
-              url: '/index',
-              templateUrl: 'views/pages/CRM/WaitCheck/index.html',
-              data : { title: '待审核推荐' },
-              controller:"WaitListController",
-              resolve:load('scripts/controllers/CRM/WaitCheck.js')
+                url: '/index',
+                templateUrl: 'views/pages/CRM/WaitCheck/index.html',
+                data : { title: '待审核推荐' },
+                controller:"WaitListController",
+                resolve:load('scripts/controllers/CRM/WaitCheck.js')
             })
             .state('page.CRM.WaitCheck.check', {
-              url: '/check?id',
-              templateUrl: 'views/pages/CRM/WaitCheck/check.html',
-              data : { title: '审核页' },
-              controller:"ARDetialController",
-              resolve:load('scripts/controllers/CRM/WaitCheck.js')
+                url: '/check?id',
+                templateUrl: 'views/pages/CRM/WaitCheck/check.html',
+                data : { title: '审核页' },
+                controller:"ARDetialController",
+                resolve:load('scripts/controllers/CRM/WaitCheck.js')
             })
             .state('page.CRM.WaitCheck.pass', {
-              url: '/pass',
-              templateUrl: 'views/pages/CRM/WaitCheck/pass.html',
-                  data: { title: '通过页' }
+                url: '/pass',
+                templateUrl: 'views/pages/CRM/WaitCheck/pass.html',
+                data: { title: '通过页' }
             })
             .state('page.CRM.WaitCheck.refuse', {
-              url: '/refuse',
-              templateUrl: 'views/pages/CRM/WaitCheck/refuse.html',
-                  data: { title: '拒绝页' }
+                url: '/refuse',
+                templateUrl: 'views/pages/CRM/WaitCheck/refuse.html',
+                data: { title: '拒绝页' }
             })
+
+            .state('page.CRM.DkRecord', {
+                url: '/DkRecord',
+                template: '<div ui-view></div>'
+            })
+            .state('page.CRM.DkRecord.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/DkRecord/index.html',
+                data : { title: '带客审核' },
+                controller:"DkRecordController",
+                resolve:load('scripts/controllers/CRM/DkRecord.js')
+            })
+            .state('page.CRM.DkRecord.detailed', {
+                url: '/detailed?id',
+                templateUrl: 'views/pages/CRM/DkRecord/detailed.html',
+                data: { title: '详情页' },
+                controller:"DKRDetailedController",
+                resolve:load('scripts/controllers/CRM/DkRecord.js')
+            })
+
 
               .state('page.CRM.WaitPetition', {
                   url: '/WaitPetition',
@@ -902,8 +922,8 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/Recommend.js')
             })
             .state('page.CRM.recommend.detailed', {
-                url: '/detailed?userId',
-                templateUrl: '../views/pages/CRM/configure/indexset.html',
+                url: '/detailed?id',
+                templateUrl: 'views/pages/CRM/recommend/detailed.html',
                 resolve:load('scripts/controllers/CRM/Recommend.js'),
                 data : { title: '推荐人详情页' }
             })
@@ -923,6 +943,12 @@ angular.module('app')
                 url: '/detailed?userId',
                 templateUrl: 'views/pages/CRM/partner/detailed.html',
                 data : { title: '合伙人详情页' },
+                resolve:load('scripts/controllers/CRM/Partner.js')
+            })
+            .state('page.CRM.partner.former', {
+                url: '/former?PartnersId',
+                templateUrl: 'views/pages/CRM/partner/former.html',
+                data : { title: '他的上家详情' },
                 resolve:load('scripts/controllers/CRM/Partner.js')
             })
 
@@ -967,32 +993,32 @@ angular.module('app')
                 url: '/create',
                 templateUrl: 'views/pages/CRM/configure/create.html',
                 data : { title: '等级新建' },
-                resolve:load('scripts/controllers/CRM/configure.js')
+                resolve:load(['scripts/controllers/CRM/configure.js','angularFileUpload'])
             })
             .state('page.CRM.configure.edit', {
                 url: '/edit?id',
                 templateUrl: 'views/pages/CRM/configure/edit.html',
                 data : { title: '等级编辑' },
-                resolve:load('scripts/controllers/CRM/configure.js')
+                resolve:load(['scripts/controllers/CRM/configure.js','angularFileUpload'])
             })
 
 
             .state('page.CRM.configure.indexset', {
-                url: '/indexset',
+                url: '/indexset?id',
                 templateUrl: 'views/pages/CRM/configure/indexset.html',
-                data : { title: '等级配置列表' },
+                data : { title: '等级设置' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
             .state('page.CRM.configure.setcreate', {
                 url: '/setcreate',
                 templateUrl: 'views/pages/CRM/configure/setcreate.html',
-                data : { title: '等级配置新建' },
+                data : { title: '新建等级配置' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
             .state('page.CRM.configure.setedit', {
                 url: '/setedit?id',
                 templateUrl: 'views/pages/CRM/configure/setedit.html',
-                data : { title: '等级配置编辑' },
+                data : { title: '编辑等级配置' },
                 resolve:load('scripts/controllers/CRM/configure.js')
             })
 
@@ -1180,14 +1206,14 @@ angular.module('app')
                   resolve:load('angularFileUpload')
             })
 
-            .state('page.CMS.set', { url: '/set', template: '<div ui-view></div>' })
-            .state('page.CMS.set.index', {
-              url: '/index',
-              templateUrl: 'views/pages/CMS/set/index.html',
-                data: { title: '设置' },
-              controller: 'SettingController',
-                resolve: load('scripts/controllers/CMS/Setting.js')
-            })
+            //.state('page.CMS.set', { url: '/set', template: '<div ui-view></div>' })
+            //.state('page.CMS.set.index', {
+            //  url: '/index',
+            //  templateUrl: 'views/pages/CMS/set/index.html',
+            //    data: { title: '设置' },
+            //  controller: 'SettingController',
+            //    resolve: load('scripts/controllers/CMS/Setting.js')
+            //})
 
             .state('page.CMS.fileManager', { url: '/fileManager', template: '<div ui-view></div>' })
             .state('page.CMS.fileManager.index', {
@@ -1270,6 +1296,12 @@ angular.module('app')
                 data : { title: '商品管理' },
                 resolve: load(['scripts/controllers/Trading/Product.js','scripts/controllers/vectormap.js'])
             })
+            .state('page.Trading.product.edit', {
+                url: '/edit?productId',
+                templateUrl: 'views/pages/Trading/product/editProduct.html',
+                data : { title: '商品编辑' },
+                resolve:load('scripts/controllers/Trading/EditProduct.js')
+            })
             .state('page.Trading.product.createProduct', {
                 url: '/createProduct',
                 templateUrl: 'views/pages/Trading/product/createProduct.html',
@@ -1280,8 +1312,24 @@ angular.module('app')
                 url: '/brand',
                 templateUrl: 'views/pages/Trading/product/brand.html',
                 data : { title: '品牌项目' },
-                resolve: load(['scripts/controllers/Trading/Brand.js','scripts/controllers/vectormap.js'])
+                controller: 'BrandListController',
+                resolve: load(['scripts/controllers/Trading/Brand.js','angularFileUpload'])
             })
+            .state('page.Trading.product.upProductBrand', {
+                url: '/upProductBrand?brandId',
+                templateUrl: 'views/pages/Trading/product/upProductBrand.html',
+                data: { title: '品牌修改' },
+                controller: 'upProductBrandController'
+
+            })
+            .state('page.Trading.product.createbrand', {
+                url: '/createbrand',
+                templateUrl: 'views/pages/Trading/product/createbrand.html',
+                data : { title: '新建品牌' },
+                controller: 'CreatBrandController',
+                resolve: load(['scripts/controllers/Trading/Brand.js','angularFileUpload'])
+            })
+
             .state('page.Trading.product.brandParameter', {
                 url: '/brandParameter',
                 templateUrl: 'views/pages/Trading/product/brandParameter.html',
@@ -1293,6 +1341,12 @@ angular.module('app')
                 templateUrl: 'views/pages/Trading/product/parameter.html',
                 data : { title: '分类参数' },
                 resolve: load(['scripts/controllers/Trading/Parameter.js','scripts/controllers/vectormap.js'])
+            })
+            .state('page.Trading.product.area', {
+                url: '/area',
+                templateUrl: 'views/pages/Trading/area/index.html',
+                data : { title: '商品分类' },
+                resolve: load(['scripts/controllers/Trading/Area.js','scripts/controllers/vectormap.js'])
             })
             .state('page.Trading.product.classify', {
                 url: '/classify',

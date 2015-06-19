@@ -31,50 +31,51 @@
 
 <div  ng-controller="tuijianController">
     <div class="groom">
-        <form  ng-submit="addBrokerREC()">
+        <form  ng-submit="addBrokerREC()" name="form">
             <p class="client_choice">
                 意向楼盘
             </p>
             <p>
-                <input type="" required ng-model="BrokerRECClientEntity.Houses" list="house_type" name="house_choose" class="client_information" placeholder="意向楼盘">
+                <input readonly="true" type="" required ng-model="BrokerRECClientEntity.Houses" list="house_type" name="houses" class="client_information" placeholder="意向楼盘">
+                <span ng-show="form.houses.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
             </p>
             <p class="client_choice">
                 意向户型
             </p>
-            <p><input type="" required ng-model="BrokerRECClientEntity.HouseType" class="client_information" placeholder="意向户型"/><br/></p>
-            <p class="client_choice">
+            <p>
+                <input readonly="true" type="" required ng-model="BrokerRECClientEntity.HouseType" name="housetype" class="client_information" placeholder="意向户型"/>
+                <span ng-show="form.housetype.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+            </p>
+                <p class="client_choice">
                 客户姓名
             </p>
-            <p><input type="" required ng-model="BrokerRECClientEntity.Clientname" class="client_information" placeholder="客户姓名"/><br/></p>
-            <p class="client_choice">
+            <p>
+                <input type="" required ng-model="BrokerRECClientEntity.Clientname" name="clientName" class="client_information"  autofocus="autofocus" placeholder="客户姓名"/>
+                <span ng-show="form.clientName.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+            </p>
+                <p class="client_choice">
                 客户电话
             </p>
-            <p><input type="" required ng-model="BrokerRECClientEntity.Phone" class="client_information" ng-pattern="/^[1][3-8]+\\d{9}/" placeholder="请填写客户姓名"/><br/></p>
+            <p>
+                <input type="" required ng-model="BrokerRECClientEntity.Phone" name="phone" ng-pattern="/^1[3|4|5|7|8][0-9]\d{8}$/" class="client_information"  autofocus="autofocus" placeholder="请填写电话号码"/>
+                <span ng-show="form.phone.$error.pattern" style="font-size:20px;color: #ff0000">*号码格式错误</span>
+            </p>
             <p class="client_choice">
                 备注
             </p>
-            <p><input type="" required ng-model="BrokerRECClientEntity.Note" class="client_information" placeholder="备注"/><br/></p>
-            <!--<p class="client_choice">-->
-            <!--经纪人等级-->
-            <!--</p>-->
-            <!--<p> <input type="" ng-model="BrokerRECClientEntity.Brokerlevel" class="client_information" placeholder=""/><br/></p>-->
-            <!--<p class="client_choice">-->
-            <!--客户电话-->
-            <!--</p>-->
-            <!--<p> <input type="" class="client_information" placeholder="请填写客户电话"/><br/></p>-->
-            <!--<p><button class="submit_button">提交信息</button></p>-->
-            <!--<p><input type="" ng-model="BrokerRECClientEntity.ClientName" class="client_information" placeholder=""/><br/></p>-->
-            <!--<p class="client_choice">-->
-            <!--客户电话-->
-            <!--</p>-->
-            <!--<p> <input type="" ng-model="BrokerRECClientEntity.Phone" class="client_information" placeholder=""/><br/></p>-->
-
-            <!--<p class="client_choice">-->
-            <!--QQ-->
-            <!--</p>-->
-            <!--<p><input type="" ng-model="BrokerRECClientEntity.QQ" class="client_information" placeholder=""/><br/></p>-->
-
+            <p><input type="" required ng-model="BrokerRECClientEntity.Note" class="client_information"  autofocus="autofocus" placeholder="备注"/><br/></p>
             <p><button class="submit_button" ng-click="add()" >提交信息</button></p>
         </form>
+    </div>
+    <div class="masked" style="display: none">
+        <a href="#" class="fillIn location"><img src="modules/personal/static/image/personal/fillIn.png" alt="填写表单" width="568" height="897"/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <img class="wantTake location" src="modules/personal/static/image/personal/wantTake.png" alt="带客" width="439" height="726"/>
+        <a href="#" class="upWardTake location"><img src="modules/personal/static/image/personal/upWard.png" alt="向上"/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <img class="takeFinish location" src="modules/personal/static/image/personal/takeFinish.png" alt="带客完成" width="508" height="746"/>
+        <a href="#" class="takeBack location"><img src="modules/personal/static/image/personal/btn.png" alt=""/></a>
     </div>
 </div>

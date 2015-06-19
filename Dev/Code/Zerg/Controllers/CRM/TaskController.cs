@@ -16,6 +16,8 @@ using Zerg.Common;
 using Zerg.Models.CRM;
 using CRM.Service.Broker;
 using System.Text.RegularExpressions;
+using YooPoon.WebFramework.User.Entity;
+using YooPoon.Core.Site;
 
 namespace Zerg.Controllers.CRM
 {
@@ -34,6 +36,8 @@ namespace Zerg.Controllers.CRM
         private readonly ITaskPunishmentService _taskPunishmentService;
         private readonly ITaskListService _taskListService;
          private readonly IBrokerService _brokerService;
+         private readonly IWorkContext _workContext;
+       
 
         public TaskController(ITaskService taskService, 
             ITaskTypeService taskTypeService, 
@@ -41,7 +45,8 @@ namespace Zerg.Controllers.CRM
             ITaskTagService taskTagService, 
             ITaskPunishmentService taskPunishmentService,
             ITaskListService taskListService,
-            IBrokerService  brokerService
+            IBrokerService  brokerService,
+            IWorkContext  workContext
             )
         {
             _taskService = taskService;
@@ -51,6 +56,7 @@ namespace Zerg.Controllers.CRM
             _taskPunishmentService = taskPunishmentService;
             _taskListService = taskListService;
             _brokerService = brokerService;
+            _workContext = workContext;
         }
 
         #region 单个任务配置 杨定鹏 2015年4月28日10:04:08
@@ -80,6 +86,7 @@ namespace Zerg.Controllers.CRM
       
         public HttpResponseMessage TaskList(string Taskname, int page, int pageSize)
         {
+            //验证是否有非法字符
             Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
 
             if (!string.IsNullOrEmpty(Taskname))
@@ -98,16 +105,22 @@ namespace Zerg.Controllers.CRM
                 PageCount = pageSize 
               
             };
-       
+            try { 
+           
             var taskList = _taskService.GetTasksByCondition(taskcondition).Select(p => new
             {
-                Taskname=p.Taskname ,
-                Name=p.TaskType.Name ,
-               
-                Endtime=p.Endtime ,
-                Adduser=p.Adduser ,
-                Id=p.Id 
-            }).ToList ();
+                Taskname = p.Taskname,
+                Name = p.TaskType.Name,
+                Endtime = p.Endtime,
+                Adduser = p.Adduser,
+                Id = p.Id
+            }).ToList().Select(p => new {
+                Taskname = p.Taskname,
+                Name = p.Name,
+                Endtime = p.Endtime.ToShortDateString (),
+                Adduser =_brokerService.GetBrokerByUserId(p.Adduser).Brokername,
+                Id = p.Id
+            });
             var taskCount = _taskService.GetTaskCount(taskcondition);
             if (taskCount > 0) {
             return PageHelper.toJson(new { list = taskList, totalCount = taskCount, condition=taskcondition  }); 
@@ -116,6 +129,9 @@ namespace Zerg.Controllers.CRM
             {
              return PageHelper.toJson(PageHelper.ReturnValue(true, "不存在数据！"));
             }
+            }
+            catch { }
+            return null;
         }
         /// <summary>
         /// 返回手机端任务列表
@@ -175,7 +191,7 @@ namespace Zerg.Controllers.CRM
               model.Id=task.Id;
               model.Taskname = task.Taskname;
               model.tagName =task.TaskTag.Name;
-              model.Endtime = task.Endtime;
+              model.Endtime = task.Endtime.ToShortDateString();
               model.awardName = task.TaskAward.Name;
               model.Describe =task.Describe;
               model.TaskPunishment = task.TaskPunishment.Name;
@@ -226,7 +242,7 @@ namespace Zerg.Controllers.CRM
                 Taskname=p.Task .Taskname ,
                 Brokername=p.Broker .Brokername ,
                 Taskschedule=p.Taskschedule ,
-                Endtime=p.Task .Endtime 
+                Endtime=p.Task .Endtime.ToShortDateString (), 
             }).ToList ();
 
             var taskCount = _taskListService.GetTaskListCount(taskCondition);
@@ -267,6 +283,13 @@ namespace Zerg.Controllers.CRM
                  Brokername = p.Broker.Brokername,
                  Taskschedule = p.Taskschedule,
                  Endtime = p.Task.Endtime
+             }).ToList().Select(
+             p => new
+             {
+                 Taskname =p.Taskname,
+                 Brokername = p.Brokername,
+                 Taskschedule = p.Taskschedule,
+                 Endtime = p.Endtime.ToString ()
              });
 
              var taskCount = _taskListService.GetTaskListCount(taskCondition);
@@ -290,12 +313,23 @@ namespace Zerg.Controllers.CRM
         {
             if (!string.IsNullOrEmpty(taskModel.Taskname))
             {
-                //用正则表达式验证是否存在非法字符
+                //用正则表达式验证是否存在非法字符/^(\d{4})-(0\d{1}|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$/
                 Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
                 var m = reg.IsMatch(taskModel.Taskname);
                 if (!m)
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "任务名称存在非法字符！"));
+                }
+             
+                //验证日期格式
+                if (taskModel.Endtime == null) { 
+               
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "结束时间格式错误！"));
+                }
+               
+                if(DateTime .Today >=Convert .ToDateTime ( taskModel .Endtime ))
+                {
+                     return PageHelper.toJson(PageHelper.ReturnValue(false, "结束时间至少是明天！"));
                 }
                 if (!string.IsNullOrEmpty(taskModel.Describe )) { 
                 var m1 = reg.IsMatch(taskModel.Describe);
@@ -304,19 +338,20 @@ namespace Zerg.Controllers.CRM
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "描述存在非法字符！"));
                 }}
+                var user = (UserBase)_workContext.CurrentUser;
                 var model = new TaskEntity
                 {
-                    Id = taskModel.Id,
+                    Id = user.Id,
                     TaskPunishment = _taskPunishmentService.GetTaskPunishmentById(taskModel.TaskPunishmentId),
                     TaskAward = _taskAwardService.GetTaskAwardById(taskModel.TaskAwardId),
                     TaskTag = _taskTagService.GetTaskTagById(taskModel.TaskTagId),
                     TaskType = _taskTypeService.GetTaskTypeById(taskModel.TaskTypeId),
                     Taskname = taskModel.Taskname,
                     Describe = taskModel.Describe,
-                    Endtime = taskModel.Endtime,
-                    Adduser = 1,
+                    Endtime =Convert .ToDateTime ( taskModel.Endtime),
+                    Adduser =_workContext .CurrentUser .Id ,
                     Addtime = DateTime.Now,
-                    Upuser = 1,
+                    Upuser =0,
                     Uptime = DateTime.Now,
                 };
                 var mo1 = new TaskSearchCondition
@@ -371,10 +406,8 @@ namespace Zerg.Controllers.CRM
                     mdel.TaskType = _taskTypeService.GetTaskTypeById(taskModel.TaskTypeId);
                     mdel.Taskname = taskModel.Taskname;
                     mdel.Describe = taskModel.Describe;
-                    mdel.Endtime = taskModel.Endtime;
-                    mdel.Adduser = 1;
-                    mdel.Addtime = DateTime.Now;
-                    mdel.Upuser = 1;
+                    mdel.Endtime =Convert .ToDateTime ( taskModel.Endtime);
+                    mdel.Upuser = _workContext .CurrentUser .Id ;
                     mdel.Uptime = DateTime.Now;
                     try
                     {
@@ -388,8 +421,17 @@ namespace Zerg.Controllers.CRM
                 }
                 }
             }
+            else
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "任务名称不能为空！"));
+            }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证失败"));
         }
+        /// <summary>
+        /// 接手任务
+        /// </summary>
+        /// <param name="taskListModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage AddTaskList([FromBody]TaskListModel  taskListModel)
         {
@@ -399,7 +441,7 @@ namespace Zerg.Controllers.CRM
                 var model = new TaskListEntity
                 {
                     Task = _taskService .GetTaskById (taskListModel.TaskId),
-                    Broker =_brokerService .GetBrokerById (taskListModel .BrokerId),
+                    Broker = _brokerService.GetBrokerByUserId(taskListModel.UserId),
                     Taskschedule =taskListModel .Taskschedule ,
 
                   

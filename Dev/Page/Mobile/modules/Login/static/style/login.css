@@ -2,6 +2,7 @@
     width: 640px;
     margin: 0 auto;
     background-color: #eeeeee;
+    font-family: "microsoft yahei";
 }
 .login_title{
     position: fixed;
@@ -17,6 +18,8 @@
     padding: 20px 50px 0 50px;
     font-size: 20px;
     margin-top: 20px;
+    height: 1400px;
+    font-family: "microsoft yahei";
 }
 .form_content .user_tip{
     font-size: 22px;
@@ -62,5 +65,8 @@
     margin-top: 48px;
 }
 .NoAccount a{
+    color: #fc3b00;
+}
+.login_errorTip{
     color: #fc3b00;
 }

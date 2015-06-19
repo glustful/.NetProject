@@ -134,6 +134,9 @@ namespace CRM.Service.PartnerList
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
+                query = query.Where(q => q.Status == condition.Status);
+
+
 				if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
@@ -212,7 +215,7 @@ namespace CRM.Service.PartnerList
                 }
 				if (condition.Brokers != null )
                 {
-                    query = query.Where(q => condition.Brokers==(q.Broker));
+                    query = query.Where(q =>q.Broker.Id== condition.Brokers.Id);
                 }
 				if (condition.PartnerIds != null && condition.PartnerIds.Any())
                 {
@@ -221,11 +224,14 @@ namespace CRM.Service.PartnerList
 				if (condition.Addusers != null && condition.Addusers.Any())
                 {
                     query = query.Where(q => condition.Addusers.Contains(q.Adduser));
-                }
+                }               
+
 				if (condition.Upusers != null && condition.Upusers.Any())
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
+                query = query.Where(q => q.Status == condition.Status);
+
 				return query.Count();
 			}
 			catch(Exception e)
@@ -251,11 +257,11 @@ namespace CRM.Service.PartnerList
 
 
 
-        public List<PartnerListEntity> GetInviteForBroker(int id)
+        public List<PartnerListEntity> GetInviteForBroker(int id,EnumPartnerType type)
         {
             try
             {
-                return _partnerlistRepository.Table.Where(p => p.PartnerId == id).ToList();
+                return _partnerlistRepository.Table.Where(p => p.PartnerId == id && p.Status==type).ToList();
             }
             catch (Exception e)
             {

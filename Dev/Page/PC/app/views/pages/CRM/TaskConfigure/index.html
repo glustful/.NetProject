@@ -3,60 +3,72 @@
 自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />
 angular.js路径app/scrips/controller/CRM/taskConfig.js-->
 <div id="divTaskCon" ng-controller="taskconfigcontroller">
-    <div class="taskCon bord">
+    <div class="taskCon "onkeydown='if(event.keyCode==13){ add1.click()}'>
         <p style="height:30px"></p>
-        <p ><select ng-click="delWarn()" ng-model="mainCondition.TaskTypeId"  class="ptaskConfiga bordhtml form-control"  name="" >
+        <p > &nbsp;&nbsp;&nbsp;&nbsp;<select ng-click="delWarn()" ng-model="mainCondition.TaskTypeId"  class="inpuWid ptaskConfiga bordhtml form-control"  name="" >
             <option ng-repeat="item in taskType" value={{item.Id}}>{{item.Name}}</option>
         </select></p>
-        <p ><input ng-click="delWarn()" ng-model="typeCondition.Name" class="ptaskConfiga bordhtml form-control" type="text"  placeholder="新增任务类型"></p>
-        <p> <textarea ng-click="delWarn()" ng-model="typeCondition.Describe"  style="height:100px;" class="ptaskConfiga bordhtml form-control" type="text"
+        <p ><span class="reds">*&nbsp;&nbsp;</span><input id="type1"maxlength="30" ng-click="delWarn()" ng-model="typeCondition.Name" class="inpuWid ptaskConfiga bordhtml form-control" type="text"  placeholder="新增任务类型"></p>
+        <p><span class="reds">*&nbsp; </span><textarea id="typeDe"maxlength="256" ng-click="delWarn()" ng-model="typeCondition.Describe"  style="height:100px;" class=" inpuWid ptaskConfiga bordhtml form-control" type="text"
                       placeholder="任务类型描述"></textarea></p>
 
-        <div style="text-align:center;width:500px;margin-top:30px;"><button ng-click="addType()" md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">确认增加</button>
+        <div class="divmh"><button id="add1" ng-click="addType()" md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">确认增加</button>
             <button ng-click="delType()" md-ink-ripple="" style="margin-left:40px;" class="md-btn md-raised m-b btn-fw blue">删除</button>
         </div>
-        <p style="height:20px"></p>
+
+        <p style="height:50px"></p>
+
     </div>
-    <div class="taskCon bord">
+    <!--<hr style="height:30px;border:none;border-top:2px double  #185598;" />-->
+    <!--<hr style=" height:2px;border:none;border-top:2px dotted #185598;" />-->
+    <!--<hr style="height:1px;border:none;border-top:1px solid #555555;" />-->
+    <hr class="hrcss" />
+    <hr class="hrcss" />
+       <div class="taskCon bord"onkeydown='if(event.keyCode==13){ add2.click()}'>
         <p style="height:30px"></p>
-        <p><select ng-click="delWarn()" ng-model="mainCondition.TaskTagId" class="ptaskConfiga bordhtml form-control"  name="" >
+
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;<select ng-click="delWarn()" ng-model="mainCondition.TaskTagId" class="inpuWid ptaskConfiga bordhtml form-control"  name="" >
             <option ng-repeat="item in tasktag"  value={{item.Id}}>{{item.Name}}</option>
         </select></p>
-        <p ><input ng-click="delWarn()" ng-model="tagCondition.Name" class="ptaskConfiga bordhtml form-control" type="text"  placeholder="目标名称"></p>
-        <p> <textarea ng-click="delWarn()" ng-model="tagCondition.Describe" style="height:100px;" class="ptaskConfiga bordhtml form-control" type="text"
+        <p ><span class="reds">*&nbsp;&nbsp;</span><input maxlength="30" id="tagn" ng-click="delWarn()" ng-model="tagCondition.Name" class="inpuWid ptaskConfiga bordhtml form-control" type="text"  placeholder="目标名称"></p>
+        <p><span class="reds">*&nbsp;</span> <textarea maxlength="256" id="tagd" ng-click="delWarn()" ng-model="tagCondition.Describe" style="height:100px;" class="inpuWid ptaskConfiga bordhtml form-control" type="text"
                       placeholder="目标描述"></textarea></p>
-        <p ><input ng-click="delWarn()" ng-model="tagCondition.Value" class="ptaskConfiga bordhtml form-control" type="text"  placeholder="目标值"></p>
+        <p ><span class="reds">*&nbsp;&nbsp;</span><input id="tagv"maxlength="50" ng-click="delWarn()" ng-model="tagCondition.Value" class="inpuWid ptaskConfiga bordhtml form-control" type="text"  placeholder="目标值"></p>
 
-        <div style="text-align:center;width:500px;margin-top:30px;"><button ng-click="AddTaskTag()" md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">确认增加</button>
+        <div class="divmh"><button id="add2" ng-click="AddTaskTag()" md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">确认增加</button>
             <button md-ink-ripple=""ng-click="delTag()" style="margin-left:40px;" class="md-btn md-raised m-b btn-fw blue">删除</button>
         </div>
         <p style="height:20px"></p>
     </div>
-    <div class="taskCon bord">
+    <hr class="hrcss"/>
+    <hr class="hrcss"/>
+    <div class="taskCon bord"onkeydown='if(event.keyCode==13){ add3.click()}'>
         <p style="height:30px"></p>
-        <p><select ng-click="delWarn()" ng-model="mainCondition.TaskAwardId" class="ptaskConfiga bordhtml form-control"  name="" >
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;<select ng-click="delWarn()" ng-model="mainCondition.TaskAwardId" class="inpuWid ptaskConfiga bordhtml form-control"  name="" >
             <option  ng-repeat="item in taskaward" value={{item.Id}}>{{item.Name}}</option>
         </select></p>
-        <p ><input ng-click="delWarn()" ng-model="awardCondition.Name" class="ptaskConfiga bordhtml form-control" type="text"  placeholder="奖励名称"></p>
-        <p> <textarea ng-click="delWarn()" ng-model="awardCondition.Describe"  style="height:100px;" class="ptaskConfiga bordhtml form-control" type="text"
+        <p ><span class="reds">*&nbsp;&nbsp;</span><input maxlength="30" id="awardn" ng-click="delWarn()" ng-model="awardCondition.Name" class="inpuWid ptaskConfiga bordhtml form-control" type="text"  placeholder="奖励名称"></p>
+        <p> <span class="reds">*&nbsp;&nbsp;</span><textarea maxlength="256" id="awardd" ng-click="delWarn()" ng-model="awardCondition.Describe"  style="height:100px;" class="inpuWid ptaskConfiga bordhtml form-control" type="text"
                       placeholder="奖励描述"></textarea></p>
-        <p ><input ng-click="delWarn()" ng-model="awardCondition.Value" class="ptaskConfiga bordhtml form-control" type="text"  placeholder="目标值"></p>
-        <div style="text-align:center;width:500px;margin-top:30px;"><button ng-click="AddTaskAward()" md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">确认增加</button>
+        <p ><span class="reds">*&nbsp;&nbsp;</span><input maxlength="50" id="awardv" ng-click="delWarn()" ng-model="awardCondition.Value" class="inpuWid ptaskConfiga bordhtml form-control" type="text"  placeholder="目标值"></p>
+        <div class="divmh"><button id="add3" ng-click="AddTaskAward()" md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">确认增加</button>
             <button md-ink-ripple=""ng-click="delAward()" style="margin-left:40px;" class="md-btn md-raised m-b btn-fw blue">删除</button>
         </div>
         <p style="height:20px"></p>
     </div>
-    <div class="taskCon bord">
+    <hr class="hrcss"/>
+    <hr class="hrcss"/>
+    <div class="taskCon bord"onkeydown='if(event.keyCode==13){ add4.click()}'>
         <p style="height:30px"></p>
-        <p><select ng-click="delWarn()" ng-model="mainCondition.TaskPunishmentId"  class="ptaskConfiga bordhtml form-control"  name="" >
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;<select ng-click="delWarn()" ng-model="mainCondition.TaskPunishmentId"  class="inpuWid ptaskConfiga bordhtml form-control"  name="" >
             <option ng-repeat="item in taskpunishment" value={{item.Id}}>{{item.Name}}</option>
         </select></p>
-        <p ><input ng-click="delWarn()" ng-model="punishmentCondition.Name" class="ptaskConfiga bordhtml form-control" type="text"  placeholder="惩罚名称"></p>
-        <p> <textarea ng-click="delWarn()" ng-model="punishmentCondition.Describe" style="height:100px;" class="ptaskConfiga bordhtml form-control" type="text"
+        <p ><span class="reds">*&nbsp;&nbsp;</span><input maxlength="30" id="punishn" ng-click="delWarn()" ng-model="punishmentCondition.Name" class="inpuWid ptaskConfiga bordhtml form-control" type="text"  placeholder="惩罚名称"></p>
+        <p> <span class="reds">*&nbsp;&nbsp;</span><textarea maxlength="256" id="punishd" ng-click="delWarn()" ng-model="punishmentCondition.Describe" style="height:100px;" class="inpuWid ptaskConfiga bordhtml form-control" type="text"
                       placeholder="惩罚描述"></textarea></p>
-        <p ><input ng-click="delWarn()" ng-model="punishmentCondition.Value" class="ptaskConfiga bordhtml form-control" type="text"  placeholder="目标值"></p>
+        <p ><span class="reds">*&nbsp;&nbsp;</span><input maxlength="50" id="punishv" ng-click="delWarn()" ng-model="punishmentCondition.Value" class="inpuWid ptaskConfiga bordhtml form-control" type="text"  placeholder="目标值"></p>
 
-        <div style="text-align:center;width:500px;margin-top:30px;"><button ng-click="AddTaskPunishment()" md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">确认增加</button>
+        <div class="divmh"><button id="add4" ng-click="AddTaskPunishment()" md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">确认增加</button>
             <button md-ink-ripple=""ng-click="delPunish()" style="margin-left:40px;" class="md-btn md-raised m-b btn-fw blue">删除</button>
         </div>
         <p style="height:20px"></p>

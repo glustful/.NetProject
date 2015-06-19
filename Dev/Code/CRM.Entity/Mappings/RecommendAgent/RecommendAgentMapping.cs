@@ -14,8 +14,8 @@ namespace CRM.Entity.Mappings.RecommendAgent
 			HasOptional(c =>c.Broker);
 			Property(c => c.PresenteebId).HasColumnType("int");
 			Property(c => c.Brokername).HasColumnType("varchar").HasMaxLength(50);
-			Property(c => c.Phone).HasColumnType("int");
-			Property(c => c.Qq).HasColumnType("int");
+            Property(c => c.Phone).HasColumnType("varchar").HasMaxLength(50);
+            Property(c => c.Qq).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Agentlevel).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Regtime).HasColumnType("datetime");
 			Property(c => c.Adduser).HasColumnType("int");

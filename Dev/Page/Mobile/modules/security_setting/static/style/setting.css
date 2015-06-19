@@ -27,6 +27,11 @@
 .security_content{
     padding: 30px 55px 440px 58px;
     color: #848484;
+    font-family: "microsoft yahei";
+}
+.security_content p{
+    font-size: 24px;
+    margin-top: 15px;
 }
 form a{
     color: #848484;
@@ -34,7 +39,7 @@ form a{
 .form-control{
     width: 520px;
     height: 46px;
-    font-size: 16px;
+    font-size: 20px;
     font-family: "microsoft yahei";
     border: 1px solid #eeeeee;
 }
@@ -49,14 +54,13 @@ form a{
     font-family: "microsoft yahei";
     color: white;
 }
-.pin{
-    margin-top: 40px;
-}
 .pin input{
     width: 145px;
     height: 46px;
     border: 1px solid #eeeeee;
     background-color: white;
+    font-size: 20px;
+    font-family:'microsoft yahei' ;
 }
 .pin button{
     width: 147px;
@@ -67,10 +71,13 @@ form a{
     color: #ffffff;
     font-family:'microsoft yahei' ;
 }
+.errorTip{
+    color: #fc3b00;
+}
 /*个人设置*/
 .setting_personal{
     padding: 40px 0 100px 0;
-
+    font-family: "microsoft yahei";
 }
 .person_revise{
     padding: 20px 55px 0 55px;
@@ -83,7 +90,7 @@ form a{
 .person_revise input {
     width: 518px;
     height: 48px;
-    font-size: 20px;
+    font-size: 22px;
     font-family: "microsoft yahei";
 }
 .headphoto{
@@ -117,4 +124,14 @@ form a{
 	width: 130px;
 	left: -29px;
 	padding-bottom: 120px;
+}
+.information_error{
+    font-size: 20px;
+    color: #fc3b00;
+}
+.sexy{
+    width: 518px;
+    height: 48px;
+    font-size: 20px;
+    font-family: "microsoft yahei";
 }

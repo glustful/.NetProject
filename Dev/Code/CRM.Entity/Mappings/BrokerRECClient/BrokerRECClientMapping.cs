@@ -14,7 +14,7 @@ namespace CRM.Entity.Mappings.BrokerRECClient
 			HasOptional(c =>c.ClientInfo);
 			Property(c => c.Clientname).HasColumnType("varchar").HasMaxLength(50);
             Property(c => c.Phone).HasColumnType("varchar").HasMaxLength(50);
-			Property(c => c.Qq).HasColumnType("int");
+            Property(c => c.Qq).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Adduser).HasColumnType("int");
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upuser).HasColumnType("int");
@@ -30,6 +30,7 @@ namespace CRM.Entity.Mappings.BrokerRECClient
             Property(c => c.WriterPhone).HasColumnType("varchar").HasMaxLength(50);
             Property(c => c.RecOrder).HasColumnType("int");
             Property(c => c.DealOrder).HasColumnType("int");
+		    Property(c => c.DelFlag).HasColumnType("int");
 		}
 	}
 }

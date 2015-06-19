@@ -1,0 +1,182 @@
+.StormRoom-content{
+    /*padding-bottom: 200px;*/
+}
+.nav-storeroom{
+    height: 70px;
+    line-height: 70px;
+    background: #fff;
+}
+.nav-storeroom a{
+    display: inline-block;
+    width: 159px;
+    height:35px;
+    line-height: 35px;
+    text-align: center;
+    color: #838383;
+    font-size: 18px;
+    border-right:1px solid #ebebeb;
+
+}
+.nav-storeroom .more-storeroom{
+    border-right: none;
+}
+.nav-storeroom .icon-storeroom{
+    display: inline-block;
+    width: 12px;
+    height: 7px;
+    margin-left: 10px;
+    background: url("../image/nominate/arrow.png") no-repeat 0 0;
+}
+ .zg{
+    height:58px;
+    line-height: 75px;
+    color: #878787;
+    font-size: 16px;
+    padding-left: 50px;
+    border-bottom: 1px solid #e2e2e2;
+}
+.message-storeroom{
+    margin:0 0 20px 0;
+}
+ .main-storeroom{
+    background: #fff;
+    padding:20px 0 15px 15px;
+    border-bottom: 1px solid #e2e2e2;
+}
+ .detail-storeroom{
+    width: 350px;
+}
+.yhy{
+    padding: 5px 0 20px 0;
+    color: #333333;
+    border-bottom:1px solid #ebebeb;
+    font-size: 1.2em;
+}
+.yuan{
+  padding-top:20px;
+  color: #ff3000;
+  font-size: 20px;
+}
+.bj{
+    padding-top: 10px;
+    color: #8b8b8b;
+}
+.yh{
+    padding-top: 18px;
+    color: #ffa800;
+    font-size: 16px;
+}
+ .sub-nav-storeroom{
+    background: #fff;
+    height: 66px;
+    line-height: 66px;
+    border-top:1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+}
+ .sub-nav-storeroom a{
+    display: inline-block;
+    font-size: 20px;
+    color:#707070;
+    text-align: center;
+    width: 154px;
+    height: 30px;
+    line-height: 30px;
+    border-right:1px solid #ebebeb;
+}
+ .sub-nav-storeroom .red-storeroom{
+    color: #ff3000;
+}
+ .sub-nav-storeroom .int-storeroom{
+    border-right: none;
+}
+ #area,#type,#price{
+     float: left
+ }
+ #condition{
+     background-color: #ffffff;width: 640px;
+     /*border-radius: 10px;*/
+ }
+#province{
+    float:left;
+    margin-left: 40px;
+    width: 150px;
+    background-color: #ffffff;
+    border: 1px solid #ebebeb
+}
+#city,#county{
+    float:left;
+    width: 150px;
+    background-color: #ffffff;
+}
+.select{
+    border: 1px solid #ebebeb;
+}
+.type{
+    margin-left: 165px;
+    text-align: center;
+    width: 150px;
+    /*border: 1px solid #ebebeb*/
+    border-top: 1px solid #ebebeb;
+    border-left: 1px solid #ebebeb;
+    border-right:1px solid #ebebeb
+}
+#priceCondition{
+    margin-left: 325px;
+    text-align: center;
+    width: 150px;
+    border-top: 1px solid #ebebeb;
+    border-left: 1px solid #ebebeb;
+    border-right:1px solid #ebebeb
+}
+#condition .li{
+    height: 35px;width:70px;line-height: 35px;
+    float: left;
+    font-size: 18px;
+    /*vertical-align:middle;*/
+    text-align: center;
+    /*border-bottom:1px dashed #ebebeb;*/
+}
+.typeOption,.priceOption{
+    height: 35px;line-height: 35px;font-size: 18px;
+    border-bottom:1px solid #ebebeb;
+}
+.selected {
+    background-color: #dbdbdb;
+    /*width:70px;*/
+    border-radius: 5px;
+}
+
+/* 遮罩 */
+.masked .Brush{
+    top:7%;
+    left: 2%;
+}
+.masked .clickMore{
+    top:3%;
+    left: 6%;
+}
+.masked .dropDown{
+    top:20%;
+    left: 10%;
+}
+.masked .clickKnow{
+    top:15%;
+    left: 2%;
+}
+.masked .finishTask{
+    top:10%;
+    left: 5%;
+}
+.masked .btn-back{
+    bottom: 15%;
+    left: 25%;
+}
+.masked .nominateFinish{
+    top:10%;
+    left: 10%;
+" "}
+.masked .nominateBack{
+    bottom: 15%;
+    left: 30%;
+}
+

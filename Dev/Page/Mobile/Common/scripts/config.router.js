@@ -11,27 +11,43 @@
 /**
  * 由于不适用项目老方法是用的路由策略被抛弃
  */
+
+var allowState = [
+    'app.home',
+    'user.login',
+    'app.storeroom',
+    'app.housesPic',
+    'user.register',
+    'user.PasswordFound',
+    'app.invite',
+    'app.housesBuy'
+];
+
 app  .run(
-    ['$rootScope', '$state', '$stateParams',
-        function ($rootScope, $state, $stateParams) {
+    ['$rootScope', '$state', '$stateParams','AuthService',
+        function ($rootScope, $state, $stateParams,AuthService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
-            //$rootScope.$on('$stateChangeStart', function (event,next) {
-            //    if(next.name==='access.signin' || next.name==='access.signup' || next.name==='access.forgot-password'){
-            //        return;
-            //    }
-            //    if(!AuthService.IsAuthenticated()){
-            //        event.preventDefault();
-            //        $state.go('access.signin');
-            //    }
-            //    if(next.access !== undefined){
-            //        if(!AuthService.IsAuthorized(next.access)){
-            //            event.preventDefault();
-            //            //TODO:跳转到权限提示页
-            //        }
-            //
-            //    }
-            //});
+            $rootScope.$on('$stateChangeStart', function (event,next) {
+//                if(next.name==='app.home' || next.name==='user.login' || next.name==='app.storeroom'||next.name==='user.register'||next.name==='user.PasswordFound'||next.name==='app.invite'){
+////                    allowState.indexOf(next.name) > -1;
+//                    return;
+//                }
+                if(allowState.indexOf(next.name) > -1){
+                    return;
+                }
+                if(!AuthService.IsAuthenticated()){
+                    event.preventDefault();
+                    $state.go('user.login');
+                }
+                if(next.access !== undefined){
+                    if(!AuthService.IsAuthorized(next.access)){
+                        event.preventDefault();
+                        //TODO:跳转到权限提示页
+                    }
+
+                }
+            });
         }
     ]
 )
@@ -54,7 +70,7 @@ app  .run(
             data:{title:'用户登录'}
         })
         .state('user.register',{
-            url:'/register',
+            url:'/register?yqm',
             templateUrl:'modules/Register/view/register.html',
             resolve:load('modules/Register/controller/RegisterController.js'),
             data:{title:'用户注册'}
@@ -62,14 +78,13 @@ app  .run(
         .state('user.PasswordFound',{
             url:'/PasswordFound',
             templateUrl:'modules/PasswordFound/view/PasswordFound.html',
-            resolve:load('modules/Register/controller/RegisterController.js'),
+            resolve:load('modules/PasswordFound/controller/PasswordController.js'),
             data:{title:'找回密码'}
         })
         .state('app.home',{
             url:'/home',
             templateUrl:'modules/Index/view/Index.html',
-
-            resolve:load(['modules/Index/static/js/yxMobileSlider.js','modules/Index/static/js/homeController.js'])
+            resolve:load(['modules/Index/render/homeController.js'])
         })
 
         .state('app.activity',{
@@ -84,7 +99,7 @@ app  .run(
         .state('app.customerList',{
             url:'/customerList',
             templateUrl:'modules/customerList/view/customerList.html'
-       ,resolve:load('modules/customerList/controller/customerList.js')
+            ,resolve:load('modules/customerList/controller/customerList.js')
         })
         .state('app.detail',{
             url:'/detail',
@@ -102,12 +117,15 @@ app  .run(
         .state('app.person_setting',{
             url:'/person_setting',
             templateUrl:'modules/person_setting/view/person_setting.html',
-            resolve:load('modules/person_setting/controller/personsettingController.js')
+            resolve:load('modules/person_setting/controller/personsettingController.js'),
+            access:['broker','user']
         })
+
         .state('app.security_setting',{
             url:'/security_setting',
             templateUrl:'modules/security_setting/view/security_setting.html',
-            resolve:load('modules/security_setting/controller/SecuritySetting.js')
+            resolve:load('modules/security_setting/controller/SecuritySetting.js'),
+            access:['broker','user']
         })
         .state('app.zhongtian_HouseDetail',{
             url:'/zhongtian_HouseDetail',
@@ -137,7 +155,7 @@ app  .run(
             templateUrl:'modules/partner_insert1/view/partner_insert1.html'
         })
         .state('app.groom',{
-            url:'/groom',
+            url:'/groom?Projectid&name&type',
             templateUrl:'modules/groom/view/groom.html',
             resolve:load('modules/groom/controller/controller.js')
         })
@@ -146,14 +164,15 @@ app  .run(
             templateUrl:'modules/houseDetail/view/houseDetail.html'
         })
         .state('app.houses',{
-            url:'/houses',
-            templateUrl:'modules/houses/view/houses.html'
+            url:'/houses?BrandId&ProductId',
+            templateUrl:'modules/houses/view/houses.html',
+            resolve:load('modules/houses/controller/houses.js')
         })
         .state('app.housesBuy',{
             url:'/housesBuy?BrandId',
             templateUrl:'modules/housesBuy/view/housesBuy.html',
             controller:'HousesBuyController',
-            resolve:load(['modules/housesBuy/static/scripts/HousesBuy.js','modules/housesBuy/static/scripts/water.js'])
+            resolve:load(['modules/housesBuy/static/scripts/HousesBuy.js'])
         })
         .state('app.housesPic',{
             url:'/housesPic?productId',
@@ -176,7 +195,8 @@ app  .run(
         })
         .state('app.personal',{
             url:'/personal',
-            templateUrl:'modules/personal/view/personal.html'
+            templateUrl:'modules/personal/view/personal.html',
+            resolve:load('modules/personal/controller/personal.js')
         })
         .state('app.personalPage',{
             url:'/personalPage',
@@ -200,9 +220,15 @@ app  .run(
         })
         .state('app.storeroom',{
             url:'/storeroom',
-            controller:'StormRoomController',
+           // controller:'StormRoomController',
             templateUrl:'modules/storeroom/view/storeroom.html',
             resolve:load('modules/storeroom/scripts/StoreRoom.js')
+        })
+        .state('app.brand',{
+            url:'/brand?condition',
+            controller:'BrandController',
+            templateUrl:'modules/brandList/view/brandList.html',
+            resolve:load('modules/brandList/scripts/Brand.js')
         })
         .state('app.task',{
             url:'/task',
@@ -211,10 +237,11 @@ app  .run(
         })
         .state('app.nominate',{
             url:'/nominate',
-            templateUrl:'modules/nominate/view/nominate.html'
+            templateUrl:'modules/nominate/view/nominate.html',
+            resolve:load('modules/nominate/controller/nominate.js')
         })
         .state('app.carry_client',{
-            url:'/carry_client',
+            url:'/carry_client?Projectid&name&type',
             templateUrl:'modules/carry_client/view/carry_client.html',
             resolve:load('modules/carry_client/controller/controller.js')
         })
@@ -229,7 +256,8 @@ app  .run(
         })
         .state('app.addBroker',{
             url:'/addBroker',
-            templateUrl:'modules/addBroker/view/addBroker.html'
+            templateUrl:'modules/addBroker/view/addBroker.html',
+            resolve:load('modules/addBroker/controller/AddBrokerController.js')
         })
         .state('app.grabPacket',{
             url:'/grabPacket',
@@ -246,6 +274,18 @@ app  .run(
         .state('app.chip',{
             url:'/chip',
             templateUrl:'modules/chip/view/chip.html'
+        })
+        .state('app.chipDetail',{
+            url:'/chipDetail',
+            templateUrl:'modules/chipDetail/view/chipDetail.html'
+        })
+        .state('app.chipEle',{
+            url:'/chipEle',
+            templateUrl:'modules/chipEle/view/chipEle.html'
+        })
+        .state('app.chipPartake',{
+            url:'/chipPartake',
+            templateUrl:'modules/chipPartake/view/chipPartake.html'
         })
         .state('app.Auction',{
             url:'/Auction',
@@ -267,6 +307,25 @@ app  .run(
             url:'/CouponsOwn',
             templateUrl:'modules/CouponsOwn/view/CouponsOwn.html'
         })
+        .state('app.withdrawals',{
+            url:'/withdrawals',
+            templateUrl:'modules/withdrawals/view/withdrawals.html',
+            resolve:load('modules/myPurse/render/controller.js')
+        })
+        .state('app.withdrawalsDetail',{
+            url:'/withdrawalsDetail',
+            templateUrl:'modules/withdrawalsDetail/view/withdrawalsDetail.html'
+        })
+        .state('app.NoviceTask',{
+            url:'/NoviceTask',
+            templateUrl:'modules/NoviceTask/view/NoviceTask.html'
+        })
+         .state('app.invite',{
+            url:'/invite',
+            templateUrl:'modules/invite/view/invite.html',
+            resolve:load('modules/invite/controller/invitecontroller.js')
+        })
+
 
 
 

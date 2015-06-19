@@ -87,10 +87,16 @@
 .hero span{
     display: inline-block;
     text-align: center;
-    width:202px;
+    width:205px;
     padding:27px 0 26px 0;
     color: #7a7a7a;
-     border-right: 1px solid #ebebeb;
+    border-right: 1px solid #ebebeb;
+}
+.hero span.moveBorder{
+    border-right: none;
+}
+.hero {
+    border-right:none;
 }
 .hero small{
     color: #f24c02;

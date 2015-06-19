@@ -6,7 +6,7 @@
 }
 body{
     color:#686868;
-    font-family: 'microsoft yahei';
+    font-family:'Microsoft YaHei';
     padding: 70px 0 110px 0;
 }
 .clear{
@@ -57,6 +57,7 @@ a{
 .logo{
     margin:13px 0 0 27px;
     background: url("../image/logo.png") no-repeat 0 0;
+    background-size: 82px 41px;
     width: 82px;
     height: 41px;
 }
@@ -95,6 +96,9 @@ a{
     color: #ffffff;
     background: none;
 }
+.content{
+    position: relative;
+}
 .footer {
     background: #f13800;
     width:640px;
@@ -114,9 +118,6 @@ a{
     background: url("../image/hd1.png") no-repeat center 20px;
     background-size: 40px 40px;
 }
-/*.footer .act{*/
-    /*color: #f9e700;*/
-/*}*/
 .house{
     background: url("../image/fyk1.png") no-repeat center 20px;
     background-size: 40px 40px;
@@ -131,7 +132,13 @@ a{
 }
 #imghead{
 	border-radius: 500px;
+	height: 128px;
+	width: 128px;
 }
-
+.errorTip{
+    color: #fc3b00;
+    font-size: 20px;
+    font-family: 'microsoft yahei';
+}
 
 

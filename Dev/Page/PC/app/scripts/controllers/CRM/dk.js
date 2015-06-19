@@ -16,6 +16,9 @@ angular.module("app").controller('dkIndexController', [
                 'withCredentials':true
             }).success(function(data){
                 $scope.list = data.List;
+                if(data.List == ""){
+                    $scope.errorTip="不存在数据";
+                }
                 $scope.searchCondition.page = data.Condition.Page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
                 $scope.totalCount = data.totalCount;
@@ -43,12 +46,12 @@ angular.module("app").controller('UserCreateController',['$http','$scope','$stat
         Password:"",
         Brokername:"",
         Phone:"",
-        UserType:"财务",
+        UserType:"带客人员",
         UserName:""
     };
 
     $scope.Save = function(){
-        console.log($scope.UserModel.Phone);
+        console.log($scope.UserModel.UserType);
         $http.post(SETTING.ApiUrl + '/AdminRecom/AddBroker',$scope.UserModel,{
             'withCredentials':true
         }).success(function(data){

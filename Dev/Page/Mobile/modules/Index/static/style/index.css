@@ -1,47 +1,29 @@
- .pic li{
-    position: relative;
-}
- .pic .page{
-    position: absolute;
-    left: 255px;
-    top:200px;
 
-}
- .pic .page span{
-    background: url("../image/index/p1-1.png") no-repeat 0 0;
-    display: inline-block;
-    width: 9px;
-    height: 9px;
-    margin-right: 20px;
-}
- .pic .page .white{
-     background: url("../image/index/p2-2.png") no-repeat 0 0;
- }
 .activity{
     padding: 10px;
 }
 .activity ul li{
-    width: 205px;
+    width: 200px;
     float: left;
-    background:#ffffff;
     text-align: center;
     padding:27px 0 20px 0;
 }
-.activity .one{
-    margin: 0 2px 0 0;
-}
-.activity .two{
-    margin-right: 2px;
-}
-.activity .four{
-    margin:2px 2px 0 0;
-}
-.activity .five{
-    margin:2px 2px 10px 0;
-}
-.activity .six{
-    margin-top: 2px;
-}
+
+/*.activity .one{*/
+    /*padding: 1px 3px  ;*/
+/*}*/
+/*.activity .two{*/
+    /*margin-right: 2px;*/
+/*}*/
+/*.activity .four{*/
+    /*margin:2px 2px 0 0;*/
+/*}*/
+/*.activity .five{*/
+    /*margin:2px 2px 10px 0;*/
+/*}*/
+/*.activity .six{*/
+    /*margin-top: 2px;*/
+/*}*/
 .message{
     padding:0 10px 10px 10px;
 }
@@ -151,10 +133,53 @@ h3{
 }
 
 
+/* ������ */
+ .masked-content-index{
+     top:5%;
+     left:5%;
+ }
+ .masked-btn-index{
+     bottom:3%;
+     left: 32%;
+ }
+.masked .point{
+    bottom: 2%;
+    left: 6%;
+}
+.masked .Take{
+    top:10%;
+    left: 10%;
+}
+.masked .TakeBtn{
+    bottom:10%;
+    left:30%;
+}
+ .firstStep{
+     bottom: 1%;
+     right: 6%;
+ }
+
+
 
 
 /*lunbo*/
- /*.slider{display:none}*//*用于获取更加体验*/
- .focus{ width: 640px;}
- .focus span{width:10px;height:10px;margin-right:10px;background:#666;font-size:0;}
- .focus span.current{background:#fff}
+ /* main_image */
+
+/*#btn_prev,#btn_next{z-index:11111;position:absolute;display:block;width:73px!important;height:74px!important;top:50%;margin-top:-37px;display:none;}*/
+/*#btn_prev{background:url(../image/index/hover_left.png) no-repeat left top;left:100px;}*/
+/*#btn_next{background:url(../image/index/hover_right.png) no-repeat right top;right:100px;}*/
+ /*#carousel-bg {*/
+ /**/
+ /*}*/
+
+ /*#carousel-bg img {*/
+     /*width: 100%;*/
+     /*height: auto;*/
+ /*}*/
+.img-responsive,
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+    display: block;
+    width:640px;
+    height:230px;
+}

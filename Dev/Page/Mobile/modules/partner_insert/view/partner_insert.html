@@ -6,7 +6,14 @@
                     电话
                 </p>
                 <p><input type="tel" class="add_blank" ng-model="addCondition.Phone"  laceholder="请输入被邀请人电话" required/></p>
-                <p>{{warm}}</p>
+                <p class="warm">{{warm}}</p>
                 <p><button class="add_button" >邀请</button></p>
             </form>
+            <div class="masked" style="display: none">
+                <a  href="#" class="request location"><img src="modules/partner_list/static/image/partner/request.png" alt="我的合伙人" width="561" height="719"/></a>
+            </div>
+            <div class="masked" style="display: none">
+              <img class="requestFinish location" src="modules/partner_list/static/image/partner/requestFinish.png" alt="我的合伙人" width="522" height="680"/>
+                <a href="#" class="requestBack location"><img src="modules/partner_list/static/image/partner/btn.png" alt="返回"/></a>
+            </div>
         </div>

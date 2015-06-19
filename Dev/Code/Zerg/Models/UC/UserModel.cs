@@ -10,5 +10,7 @@
 
         public string Phone { get; set; }
         public int Status { get; set; }
+
+        public int RoleId { get; set; }
     }
 }

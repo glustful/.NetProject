@@ -1,7 +1,7 @@
 /**
  * Created by 黄秀宇 on 2015/6/1.
  */
-app.controller('cusListController',['$http','$scope',function($http,$scope) {
+app.controller('cusListController',['$http','$scope','AuthService',function($http,$scope,AuthService) {
     $scope.searchCondition = {
         id:5,
         page: 1,
@@ -9,14 +9,19 @@ app.controller('cusListController',['$http','$scope',function($http,$scope) {
     };
     $scope.warm="";
     $scope.parentVi=true;
+    $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
+
     //查询客户
     var getcustomerList  = function() {
-        $http.get(SETTING.ApiUrl+'/ClientInfo/ClientInfo/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
+        $scope.searchCondition.id=$scope.currentuser.userId ;
+        //alert("sdf");
+        $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoListByUserId/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
             console.log(data);
-            if(data.clientModel!=null){
+            if(data.list!=null){
                 $scope.warm="";
-                $scope.list = data.clientModel;
+                $scope.list = data.list;
                 $scope.parentVi=true;
+
               }
             else{
                 $scope.parentVi=false;
@@ -27,8 +32,8 @@ app.controller('cusListController',['$http','$scope',function($http,$scope) {
     getcustomerList();
 //隐藏显示元素
     $scope.visible = false;
-    $scope.toggle = function () {
-        $scope.visible = !$scope.visible;
+    $scope.toggle = function (id) {
+       $("#"+id).slideToggle("slow");
     }
   }]);
 

@@ -77,8 +77,6 @@ namespace Zerg.Models.CRM
         /// EmAIL
         /// </summary>
         public virtual string Email { get; set; }
-      
-
         /// <summary>
         /// 头像
         /// </summary>
@@ -113,6 +111,7 @@ namespace Zerg.Models.CRM
         /// 注册时间
         /// </summary>
         public virtual DateTime Regtime { get; set; }
+        public virtual string rgtime { get; set; }
         /// <summary>
         /// 用户状态（删除0 注销-1 正常1）
         /// </summary>
@@ -153,7 +152,27 @@ namespace Zerg.Models.CRM
         /// 添加/删除类型
         /// </summary>
         public virtual string Type { get; set; }
+        /// <summary>
+        /// 验证码
+        /// </summary>
+        public virtual string MobileYzm { get; set; }
+        /// <summary>
+        /// 验证码密文
+        /// </summary>
+        public virtual string Hidm { get; set; }
 
+        /// <summary>
+        /// 邀请码
+        /// </summary>
+        public virtual string inviteCode { get; set; }
+      
+
+
+
+        /// <summary>
+        /// 确认密码
+        /// </summary>
+        public virtual string SecondPassword { get; set; }
 
         /// <summary>
         /// 用户类型枚举 （经纪人 broker  ，  管理员 manager）
@@ -162,12 +181,28 @@ namespace Zerg.Models.CRM
 
         /// <summary>
         /// 用户状态 （删除0 注销-1 正常1）
-        /// </summary>
+        /// </summary>    
         public enum EnumUserState
         {
             Delete = 0,
             Cancel = -1,
             OK = 1
+        }
+
+        public bool ValidateModel(out string msg)
+        {
+            msg = "";
+            if (string.IsNullOrEmpty(UserName))
+            {
+                msg = "用户名不能为空";
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password)) return false;
+            if (string.IsNullOrEmpty(SecondPassword)) return false;
+            if (string.IsNullOrEmpty(Phone)) return false;
+            if (string.IsNullOrEmpty(MobileYzm)) return false;
+            if (string.IsNullOrEmpty(Hidm)) return false;
+            return true;
         }
     }
 

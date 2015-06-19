@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Trading.Entity.Model;
 
 namespace Zerg.Models.Trading.Product
 {
@@ -26,9 +27,16 @@ namespace Zerg.Models.Trading.Product
         public decimal Dealcommission { get; set; }
         public string Advertisement { get; set; }      
         public string BrandImg { get; set; }
+        public string Bname { get; set; }
         public decimal Commission { get; set; }
         public string ClassifyName { get; set; }
         public int Stockrule { get; set; }
         public DateTime Addtime { get; set; }
+        public string Sericeinstruction { get; set; }
+        public int Status { get; set; }
+        public int Recommend { get; set; }
+        public virtual ClassifyEntity Classify { get; set; }
+        public int BrandId { get; set; }
+        public int ClassId { get; set; }
     }
 }

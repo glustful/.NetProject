@@ -18,8 +18,6 @@ namespace Trading.Entity.Model
 		/// 是否降序
 		/// </summary>
 		public bool IsDescending { get; set; }
-
-
 		public int[] Ids { get; set; }
 
 
@@ -37,7 +35,7 @@ namespace Trading.Entity.Model
 
 		public ProductBrandEntity[] ProductBrands { get; set; }
 
-
+        public int? ProductBrand { get; set; }
 
 		public int? Bussnessid { get; set; }
 
@@ -110,7 +108,8 @@ namespace Trading.Entity.Model
 	{
 
 		OrderById,
-
+        OrderByAddtime,
+        Price
 	}
 
 }

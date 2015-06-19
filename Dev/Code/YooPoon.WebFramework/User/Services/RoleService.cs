@@ -90,7 +90,7 @@ namespace YooPoon.WebFramework.User.Services
         {
             try
             {
-                return _roleRepository.Table.FirstOrDefault(c=>c.RoleName == roleName);
+                return _roleRepository.Table.FirstOrDefault(c => c.RoleName == roleName);
             }
             catch (Exception e)
             {

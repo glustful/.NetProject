@@ -3,8 +3,9 @@
 /**
  * Created by gaofengming on 2015/5/28.
  */
+var httpimguri='';
 var app = angular.module("zergApp");
-app.controller('personsettingController',['$scope','$http','AuthService',function($scope,AuthService,$http){
+app.controller('personsettingController',['$scope','$http','AuthService',function($scope,$http,AuthService){
     $scope.olduser={
         Brokername:'',
         Realname:'',
@@ -12,38 +13,52 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
         Sexy:'',
         Sfz:'',
         Email:'',
-        Phone:''
+        Phone:'',
+        Headphoto:''
     };
     $scope.currentuser= AuthService.CurrentUser();
     $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
        .success(function(response) {
-            console.log(response);
-            $scope.olduser=response
+            $scope.olduser=response;
+            //添加判断,如果用户没有头像,隐藏IMG标签
+            if($scope.olduser.Headphoto.length<15){
+            	//操作IMG标签的SRC为空
+            	var img = document.getElementById('imghead');
+            	//没图片隐藏
+            	img.style.display = 'none';
+            	img.src = "";
+            }else{
+            	//隐藏默认头像
+            	var defaultHeadImg = document.getElementById("preview");
+            	defaultHeadImg.style.background = 'white';
+            }
         });
-    //$scope.user = {
-    //    userType: 122,
-    //    name: "ggg",
-    //    phone: 2445254,
-    //    page: 1,
-    //    pageSize: 10
-    //}
-    //$scope.newuser = {
-    //    Id:11,
-    //    Brokername: "afaf",
-    //    phone: 525424,
-    //    Sfz:1234567891,
-    //    page: 1,
-    //    pageSize: 10
-    //}
-    //$http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{params: $scope.user})
-    //    .success(function(response) {$scope.users = response.List[0];
-    //    });
-    //$scope.save = function()
-    //{
-    //    $http.post(SETTING.ApiUrl+'/BrokerInfo/UpdateBroker', $scope.newuser)
-    //        .success(function(data) {
-    //        });
-    //}
+    $scope.save = function()
+    {
+    	if(document.getElementById("Uptext").innerText=='正在上传..'){
+    		alert("头像正在上传,请稍等!");
+    		return;
+    	}
+        if(httpimguri.length>0)
+        {
+            $scope.olduser.Headphoto =httpimguri;
+            //如果服务器返回了用户的头像地址,操作IMG标签的SRC为angularjs绑定
+            var img = document.getElementById('imghead');
+            img.src = "{{olduser.Headphoto}}";
+            //有图片就显示
+            img.style.display = 'block';
+            
+        }else{
+        	httpimguri='';
+        }
+
+        $http.post(SETTING.ApiUrl+'/BrokerInfo/UpdateBroker', $scope.olduser)
+            .success(function(data) {
+            	var img = document.getElementById('imghead');
+            	img.src = $scope.olduser.Headphoto;
+            	location.reload([true]);
+            });
+    }
 }])
 /////////////////////////////头像修改////////////////////////////
         function previewImage(file)
@@ -57,9 +72,11 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
               div.innerHTML ='<img id=imghead>';
               var img = document.getElementById('imghead');
               img.onload = function(){
-                var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
                 img.width  =  128;
                 img.height =  128;
+                //隐藏默认头像
+            	var defaultHeadImg = document.getElementById("preview");
+            	defaultHeadImg.style.background = 'white';
               }
               var reader = new FileReader();
               reader.onload = function(evt){
@@ -78,43 +95,26 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
 				var fd = new FormData();
 				xmlhttp.open("POST",SETTING.ApiUrl+'/Resource/Upload');
 				fd.append("fileToUpload",files);
-				console.log(img.src);
                 xmlhttp.withCredentials = true;
 				xmlhttp.send(fd);
+				var headtext = document.getElementById("Uptext");
+				headtext.innerHTML = '正在上传..';
+				headtext.style.color ='#40AD32'
+				//回调函数
 				function callback () {
-				//1：请求已经建立，但是还没有发送（还没有调用 send()）。
-				//2：请求已发送，正在处理中（通常现在可以从响应中获取内容头）。
-				//3：请求在处理中；通常响应中已有部分数据可用了，但是服务器还没有完成响应的生成。
-				//4：响应已完成；您可以获取并使用服务器的响应了。
-					if(xmlhttp.readyState==4)
-					{
-						
-					}
+				//将response提取出来分割出文件名
+				httpimguri =  xmlhttp.response;
+				var g1=httpimguri.split(':"');
+				var g2= httpimguri.split(',')[1].split(':"')[1];
+				//将分割好的文件名赋予给img全局变量
+				httpimguri=g2.substring(0,g2.length-1);
+				//图片上传成功字样样式
+				headtext.innerHTML = '上传成功!';
+				headtext.style.color ='red';
 				}
               }
               reader.readAsDataURL(files);
           }
         }
-        function clacImgZoomParam( maxWidth, maxHeight, width, height ){
-            var param = {top:0, left:0, width:width, height:height};
-            if( width>maxWidth || height>maxHeight )
-            {
-                rateWidth = width / maxWidth;
-                rateHeight = height / maxHeight;
-                
-                if( rateWidth > rateHeight )
-                {
-                    param.width =  maxWidth;
-                    param.height = Math.round(height / rateWidth);
-                }else
-                {
-                    param.width = Math.round(width / rateHeight);
-                    param.height = maxHeight;
-                }
-            }
-            
-            param.left = Math.round((maxWidth - param.width) / 2);
-            param.top = Math.round((maxHeight - param.height) / 2);
-            return param;
-        }
+        
 ///////////////////////////头像修改//////////////////////////////////

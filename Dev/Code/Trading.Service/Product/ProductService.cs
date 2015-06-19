@@ -238,7 +238,10 @@ namespace Trading.Service.Product
                     query = query.Where(q => condition.Stockrules.Contains(q.Stockrule));
                 }
 
-
+                if (condition.ProductBrand != null)
+                {
+                    query = query.Where(q => q.ProductBrand.Id == condition.ProductBrand);
+                }
 
 
                 if (condition.OrderBy.HasValue)
@@ -248,6 +251,13 @@ namespace Trading.Service.Product
 
                         case EnumProductSearchOrderBy.OrderById:
                             query = condition.IsDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
+                            break;
+
+                        case EnumProductSearchOrderBy.OrderByAddtime:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Addtime) : query.OrderBy(q => q.Addtime);
+                            break;
+                        case EnumProductSearchOrderBy.Price:
+                            query = condition.IsDescending ? query.OrderBy(q => q.Price) : query.OrderBy(q => q.Price);
                             break;
 
                     }
@@ -294,6 +304,10 @@ namespace Trading.Service.Product
                     query = query.Where(q => q.Commission < condition.CommissionEnd.Value);
                 }
 
+                if (condition.ProductBrand != null)
+                {
+                    query = query.Where(q => q.ProductBrand.Id == condition.ProductBrand);
+                }
 
                 if (condition.PriceBegin.HasValue)
                 {

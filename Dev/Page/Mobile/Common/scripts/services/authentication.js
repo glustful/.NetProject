@@ -2,7 +2,7 @@
  * Created by Yunjoy on 2015/5/6.
  * 用户验证登陆service
  */
-angular.module("zergApp").service("AuthService",["$http",'$localStorage',function($http,$localStorage){
+angular.module("zergApp").service("AuthService",["$http",'$sessionStorage',function($http,$sessionStorage){
     var _isAuthenticated = false;
     var _currentUser;
 
@@ -12,13 +12,15 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
     xmlhttp.withCredentials = true;
     xmlhttp.send();
     var data = angular.fromJson(xmlhttp.response);
-    if(data.Status){
+    if (!data.Status) {
+    } else {
         _isAuthenticated = true;
         _currentUser = {
-            UserName:data.Object.UserName,
-            UserId:data.Object.Id
+            UserName: data.Object.UserName,
+            UserId: data.Object.Id
         };
-        $localStorage.UserRoles=data.Object.Roles;
+        //$localStorage.UserRoles = data.Object.Roles;
+        $sessionStorage.UserRoles=data.Object.Roles;
     }
 
     /**
@@ -27,11 +29,11 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
      * @constructor
      */
     this.IsAuthorized = function(access){
-        if(!access || !access instanceof  Array || !$localStorage.UserRoles)
+        if(!access || !access instanceof  Array || !$sessionStorage.UserRoles)
             return false;
         var hasRole = false;
-        for(var i = 0;i<$localStorage.UserRoles.length;i++){
-            hasRole = access.indexOf($localStorage.UserRoles[i].RoleName) >-1;
+        for(var i = 0;i<$sessionStorage.UserRoles.length;i++){
+            hasRole = access.indexOf($sessionStorage.UserRoles[i].RoleName) >-1;
             if(hasRole)
                 break;
         }
@@ -87,12 +89,12 @@ angular.module("zergApp").service("AuthService",["$http",'$localStorage',functio
                         UserId:data.Object.Id
                     };
                     _isAuthenticated = true;
-                    $localStorage.UserRoles=data.Object.Roles;
+                    $sessionStorage.UserRoles=data.Object.Roles;
                     if(typeof(callback) === 'function')
-                        callback();
+                        callback(data);
                 }else{
                     if(typeof(faildCallback) === 'function')
-                        faildCallback();
+                        faildCallback(data);
                 }
             });
     };

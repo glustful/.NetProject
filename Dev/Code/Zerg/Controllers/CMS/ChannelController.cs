@@ -210,7 +210,7 @@ namespace Zerg.Controllers.CMS
                 }
          }
         /// <summary>
-        ///content表的 titleImg  的获取
+        ///content表的 titleImg banner 的获取
         /// </summary>
         /// <param name="channelId">channel表的name</param>
         /// <returns></returns>
@@ -229,7 +229,7 @@ namespace Zerg.Controllers.CMS
             var content = _contentService.GetContentsByCondition(new ContentSearchCondition
             {
                 ChannelName = channelName
-            }).Take(5).Select(c => new
+            }).OrderByDescending(c => c.Addtime).Take(5).Select(c => new
             {
                 c.Title,
                 c.AdSubTitle,
@@ -242,7 +242,7 @@ namespace Zerg.Controllers.CMS
 
 
         /// <summary>
-        /// 获取活动图片
+        /// 获取活动频道图片
         /// </summary>
         /// <param name="channelName">channel表的name</param>
         /// <returns></returns>
@@ -252,7 +252,7 @@ namespace Zerg.Controllers.CMS
            var Actcontent = _contentService.GetContentsByCondition(new ContentSearchCondition
            {
                ChannelName = channelName
-           }).Take(6).Select(c => new
+           }).OrderByDescending(c => c.Addtime).Take(6).Select(c => new
            {
                c.Title,
                c.AdSubTitle,

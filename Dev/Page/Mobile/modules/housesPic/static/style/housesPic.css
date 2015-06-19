@@ -80,7 +80,8 @@
 }
 .content-housesPic .ask{
     padding-left: 30px;
-    left: 400px;
+    left: 360px;
+
     top:0;
     background:url("../image/housePic/cell.png") no-repeat 0 center;
 }

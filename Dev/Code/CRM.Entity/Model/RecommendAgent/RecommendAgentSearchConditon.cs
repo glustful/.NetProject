@@ -25,12 +25,13 @@ namespace CRM.Entity.Model
 		public int BrokerId{ get; set; }
 
 		public int[] PresenteebIds { get; set; }
+        public int  PresenteebId { get; set; }
 
 		public string Brokername { get; set; }
 
-		public int? Phone { get; set; }
+		public string Phone { get; set; }
 
-		public int? Qq { get; set; }
+		public string Qq { get; set; }
 
 		public string Agentlevel { get; set; }
 
