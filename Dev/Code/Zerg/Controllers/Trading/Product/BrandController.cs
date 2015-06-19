@@ -317,6 +317,8 @@ namespace Zerg.Controllers.Trading.Product
                 Bimg = Brand.Bimg,
                 Bname = Brand.Bname,
                 SubTitle = Brand.SubTitle,
+                Upduser=Brand.Upduser,
+
                 //Parameters = Brand.ParameterEntities.Select(p => new ProductBrandParameterModel
                 //{
                 //    Parametername = p.Parametername,
