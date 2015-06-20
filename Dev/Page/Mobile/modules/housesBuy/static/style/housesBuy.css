@@ -47,7 +47,8 @@
 }
 .content-housesBuy .di a{
     margin-left: 225px;
-
+    position: absolute;
+    right: 10px;
 }
 .content-housesBuy .brokerbar{
     width: 640px;
