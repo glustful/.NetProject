@@ -96,6 +96,35 @@ namespace Zerg.Controllers.CRM
             };
             return PageHelper.toJson(new { List = dd});
         }
+        public HttpResponseMessage GetBrokerByAgent(string id)
+        {
+            if (string.IsNullOrEmpty(id) || !PageHelper.ValidateNumber(id))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
+            }
+            var brokerlist = _brokerService.GetBrokerById(Convert.ToInt32(id));
+            var model = new BrokerModel
+            {
+                Headphoto = brokerlist.Headphoto,
+                Nickname = brokerlist.Nickname,
+                Brokername = brokerlist.Brokername,
+                Realname = brokerlist.Realname,
+                Sexy = brokerlist.Sexy,
+                Totalpoints = brokerlist.Totalpoints,
+                Amount = brokerlist.Amount,
+                Phone = brokerlist.Phone,
+                Qq = brokerlist.Qq,
+                Email = brokerlist.Email,
+                Sfz = brokerlist.Sfz,
+                Regtime1 = brokerlist.Regtime.ToShortDateString (),
+                Usertype1 = brokerlist.Usertype.ToString (),
+                State = brokerlist.State,
+                PartnersName = brokerlist.PartnersName,
+                Address = brokerlist.Address
+
+            };
+            return PageHelper.toJson(new { List = model });
+        }
 
         /// <summary>
         /// 通过User查找经纪人
@@ -141,18 +170,20 @@ namespace Zerg.Controllers.CRM
         /// <param name="pageSize"></param>
         /// <returns></returns>
        [System.Web.Http.HttpGet]
-        public HttpResponseMessage SearchBrokers(EnumUserType userType,int? phone, string name = null,  int page = 1, int pageSize = 10)
+        public HttpResponseMessage SearchBrokers(EnumUserType userType, string phone, string name = null, int page = 1, int pageSize = 10, int state=2)
         {
             //var phones = new int[1];
 
             var brokerSearchCondition = new BrokerSearchCondition
             {
                 Brokername=name,
-                //Phones=phones,
+                Phone=phone,
                 OrderBy = EnumBrokerSearchOrderBy.OrderById,
                 Page=Convert.ToInt32(page),
                 PageCount=10,
-                UserType = userType
+                UserType = userType,
+                State =state 
+                
             };
            
             var brokersList = _brokerService.GetBrokersByCondition(brokerSearchCondition).Select(p => new
@@ -166,7 +197,11 @@ namespace Zerg.Controllers.CRM
                 p.Amount,
                 p.Agentlevel,
                 p.Regtime,
-                p.Headphoto
+                p.Headphoto,
+                p.State ,
+                p.Usertype ,
+                btnVisibleDel=true,
+                btnVisibleCan=true
             }).ToList().Select(b => new
             {
                 b.Id,
@@ -178,7 +213,11 @@ namespace Zerg.Controllers.CRM
                 b.Amount,
                 b.Agentlevel,
                 Regtime = b.Regtime.ToString("yyyy-MM-dd"),
-                b.Headphoto
+                b.Headphoto,
+                b.State ,
+                b.Usertype,
+                btnVisibleDel = true,
+                btnVisibleCan = true  
             });
             var brokerListCount = _brokerService.GetBrokerCount(brokerSearchCondition);
             return PageHelper.toJson(new { List = brokersList, Condition = brokerSearchCondition, totalCount = brokerListCount });
@@ -305,7 +344,9 @@ namespace Zerg.Controllers.CRM
         {
             if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id))
             {
-                if (_brokerService.Delete(_brokerService.GetBrokerById(Convert.ToInt32(id))))
+                var broker = _brokerService.GetBrokerById(Convert.ToInt32(id));
+                broker.State = 0;
+                if (_brokerService.Update(broker)!=null)
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(true, "数据成功删除！"));
                 }
@@ -329,13 +370,15 @@ namespace Zerg.Controllers.CRM
         {
             if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id))
             {
-                if (_brokerService.Delete(_brokerService.GetBrokerById(Convert.ToInt32(id))))
+                var broker = _brokerService.GetBrokerById(Convert.ToInt32(id));
+                broker.State =-1;
+                if (_brokerService.Update(broker)!=null)
                 {
-                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据成功删除！"));
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据成功注销！"));
                 }
                 else
                 {
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据注销失败！"));
                 }
             }
 

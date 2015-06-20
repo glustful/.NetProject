@@ -28,10 +28,32 @@ app.controller('withdrawalsController',['$http','$scope','$state',function($http
 
     $scope.Crete = function()
     {
+        if( $scope.TxDecimal.Bank==undefined || $scope.TxDecimal.Bank=="")
+        {
+            alert("请选择银行");
+            return false;
+        }
+        if( $scope.bankcard.Money==undefined || $scope.bankcard.Money=="")
+        {
+            alert("请输入提现金额");
+            return false;
+        }
+        var num = /^\d*$/;  //全数字
+        if (!num.exec( $scope.bankcard.Money)) {
+            alert("提现金额必须为数字");
+            return false;
+        }
+
+        if( $scope.bankcard.MobileYzm==undefined || $scope.bankcard.MobileYzm=="")
+        {
+            alert("请输入验证码");
+            return false;
+        }
+
         $http.post(SETTING.ApiUrl+'/BrokerWithdrawDetail/AddBrokerWithdrawDetail', $scope.TxDecimal, {'withCredentials': true}).success(function(datas) {
             if(datas.status=="1")
             {
-                $http.go("");
+                $http.go("app.withdrawalsDetail");
             }else
             {
                 alert("提现错误,请与客户联系");
@@ -93,6 +115,21 @@ app.controller('bankAddController',['$http','$scope','$state',function($http,$sc
                 return false;
             }
 
+        }
+        if( $scope.bankcard.Bank==undefined || $scope.bankcard.Bank=="")
+        {
+            alert("请选择开户银行");
+            return false;
+        }
+        if( $scope.bankcard.Address==undefined || $scope.bankcard.Address=="")
+        {
+            alert("请输入开户银行地址");
+            return false;
+        }
+        if( $scope.bankcard.MobileYzm==undefined || $scope.bankcard.MobileYzm=="")
+        {
+            alert("请输入验证码");
+            return false;
         }
 
         $http.post(SETTING.ApiUrl+'/BankCard/AddBankCard', $scope.bankcard, {'withCredentials': true}).success(function(datas) {

@@ -44,7 +44,8 @@ angular.js路径app/scrips/controller/CRM/taskList.js-->
 
 </div>
 
-<div onkeydown='if(event.keyCode==13){uc.click()}'  id="divTaskListB" class="divTaskD bord" >
+<div onkeydown='var keynum;
+        keynum = window.event ? event.keyCode : event.which;if(keynum==13){uc.click()}'  id="divTaskListB" class="divTaskD bord" >
         <div class="taskd  bord">
             <div style="text-align: left;margin-left:10%;">
                 <p >任务名称<span >
