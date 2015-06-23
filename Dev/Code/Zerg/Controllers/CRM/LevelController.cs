@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Zerg.Common;
 using System.Web.Http.Cors;
+using System.ComponentModel;
 
 namespace Zerg.Controllers.CRM
 {
@@ -16,10 +17,14 @@ namespace Zerg.Controllers.CRM
     /// <summary>
     /// 等级设置
     /// </summary>
+   [Description("等级设置类")]
     public class LevelController : ApiController
     {
         private readonly ILevelService _levelService;
-
+        /// <summary>
+        /// 等级设置初始化
+        /// </summary>
+        /// <param name="levelService">levelService</param>
         public LevelController(ILevelService levelService)
         {
             _levelService = levelService;
@@ -30,7 +35,15 @@ namespace Zerg.Controllers.CRM
         #region 等级明细  李洪亮 2015 4 28
 
 
-
+        /// <summary>
+        /// 传入等级名称，检索等级信息，返回等级信息
+        /// </summary>
+        /// <param name="name">等级名称</param>
+        /// <param name="page">页码</param>
+        /// <param name="pageSize">页面数量</param>
+        /// <returns>等级信息</returns>
+       
+        [Description("检索返回等级信息")]
         [System.Web.Http.HttpGet]
         public HttpResponseMessage SearchLevel(string name, int page = 1, int pageSize = 10)
         {
@@ -60,10 +73,12 @@ namespace Zerg.Controllers.CRM
 
 
         /// <summary>
-        /// 新增等级  
+        /// 传入等级参数，新增等级，返回新增等级结果状态信息  
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="Level">等级参数</param>
+        /// <returns>返回新增等级结果状态信息</returns>
+         
+        [Description("新增等级信息")]
         [System.Web.Http.HttpPost]
         public HttpResponseMessage DoCreate( LevelEntity Level)
         {
@@ -98,10 +113,12 @@ namespace Zerg.Controllers.CRM
 
 
         /// <summary>
-        /// 修改等级
+        /// 传入等级参数，修改等级，返回修改等级结果状态信息  
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="Level">等级参数</param>
+        /// <returns>修改等级结果状态信息 </returns>
+         
+        [Description("修改等级信息")]
         [System.Web.Http.HttpPost]
         public HttpResponseMessage DoEdit([FromBody] LevelEntity Level)
         {
@@ -131,12 +148,13 @@ namespace Zerg.Controllers.CRM
 
         }
 
-
         /// <summary>
-        /// 删除等级
+        ///传入等级ID，删除等级，返回删除等级结果状态信息
         /// </summary>
         /// <param name="name"></param>
-        /// <returns></returns>
+        /// <returns><删除等级结果状态信息 /returns>
+        [Description("删除等级")]
+         
         [System.Web.Http.HttpPost]
         public HttpResponseMessage DeleteLevel([FromBody] string id)
         {
