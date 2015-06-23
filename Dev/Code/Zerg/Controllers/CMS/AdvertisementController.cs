@@ -9,14 +9,22 @@ using CMS.Service.Content;
 using YooPoon.Core.Site;
 using Zerg.Common;
 using Zerg.Models.CMS;
+using System.ComponentModel;
 
 namespace Zerg.Controllers.CMS
 {
+    [Description("广告控制类")]
     public class AdvertisementController : ApiController
     {
         private readonly IAdvertisementService _advertisementService;
         private readonly IContentService _contentService;
         private readonly IWorkContext _workContent;
+        /// <summary>
+        /// 广告控制初始化
+        /// </summary>
+        /// <param name="advertisementService">advertisementService</param>
+        /// <param name="contentService">contentService</param>
+        /// <param name="workContent">workContent</param>
         public AdvertisementController(IAdvertisementService advertisementService,IContentService contentService,IWorkContext workContent)
         {
             _advertisementService = advertisementService;
@@ -24,13 +32,14 @@ namespace Zerg.Controllers.CMS
             _workContent = workContent;
         }
         /// <summary>
-        /// 首页
+        /// 广告首页,根据页面数量设置,返回广告列表
         /// </summary>
         /// <param name="title">广告标题</param>
         /// <param name="page">页码</param>
         /// <param name="pageSize">页面记录</param>
         /// <returns>广告列表</returns>
         [HttpGet]
+        [Description("广告首页,返回列表")]
         public HttpResponseMessage Index(string title=null, int page=1, int pageSize=10) 
         {
             var advertisementCon = new AdvertisementSearchCondition
@@ -47,11 +56,12 @@ namespace Zerg.Controllers.CMS
             return PageHelper.toJson(advertisementList);
         }
         /// <summary>
-        /// 详细信息
+        /// 根据广告Id查询广告的详细信息
         /// </summary>
         /// <param name="id">广告ID</param>
-        /// <returns>广告详细</returns>
+        /// <returns>广告详细信息</returns>
         [HttpGet]
+        [Description("查询广告详细信息")]
         public HttpResponseMessage Detailed(int id)
         {
             var advertisement = _advertisementService.GetAdvertisementById(id);
@@ -73,11 +83,12 @@ namespace Zerg.Controllers.CMS
             }
         }
         /// <summary>
-        /// 新建
+        /// 传入广告参数,创建广告,返回创建成功或是失败状态信息,成功返回"数据添加成功",失败返回"数据添加失败"
         /// </summary>
         /// <param name="model">广告参数</param>
-        /// <returns></returns>
+        /// <returns>创建广告结果状态信息</returns>
         [HttpPost]
+        [Description("输入参数,创建广告")]
         public HttpResponseMessage Create(AdvertisementModel model)
         {
             var newContent=_contentService.GetContentById(model.ContentId);
@@ -102,11 +113,12 @@ namespace Zerg.Controllers.CMS
             }
         }
         /// <summary>
-        /// 更新
+        /// 传入广告参数,更新公告信息,返回更新广告成功还是失败结果信息,失败提示"数据更新失败",成功提示＂数据更新成功＂
         /// </summary>
-        /// <param name="model">数据</param>
-        /// <returns></returns>
+        /// <param name="model">广告参数</param>
+        /// <returns>广告更新结果状态信息</returns>
         [HttpPost]
+        [Description("编辑更新公告信息")]
         public HttpResponseMessage Edit(AdvertisementModel model)
         {
             var newContent = _contentService.GetContentById(model.ContentId);
@@ -125,11 +137,12 @@ namespace Zerg.Controllers.CMS
             return PageHelper.toJson(PageHelper.ReturnValue(false,"数据更新失败"));
         }
         /// <summary>
-        /// 删除
+        /// 传入广告Id,删除该条广告,返回删除结果,成功提示"数据删除成功",失败提示"数据删除失败"
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">广告Id</param>
+        /// <returns>广告删除结果状态信息</returns>
         [HttpPost]
+        [Description("删除广告")]
         public HttpResponseMessage Delete(int id)
         {
            var advertisement=_advertisementService.GetAdvertisementById(id);
