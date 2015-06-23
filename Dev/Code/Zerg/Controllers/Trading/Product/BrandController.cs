@@ -475,8 +475,8 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 通过BrandID获取该品牌下的最小价格商品
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">品牌ID</param>
+        /// <returns>最小价格品牌</returns>
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public ProductEntity GetProductByBrand(int BrandId)
@@ -507,6 +507,7 @@ namespace Zerg.Controllers.Trading.Product
     /// <summary>
     /// 推荐商品 （经纪人专区 推荐楼房）
     /// </summary>
+    [Description("推荐商品管理类")]
     public class RecProdcut
     {
         /// <summary>
