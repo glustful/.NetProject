@@ -463,7 +463,8 @@ namespace Zerg.Controllers.Trading.Product
                         HouseType = product.ProductParameter.FirstOrDefault(o => o.Parameter.Name == "户型") == null ? "" : product.ProductParameter.FirstOrDefault(o => o.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString(),
                         Price = product.Price.ToString(),
                         ProductId = product.Id.ToString(),
-                        SubTitle = product.SubTitle
+                        SubTitle = product.SubTitle,
+                        Productname = product.Productname
                     });
                 }
             }
@@ -528,6 +529,10 @@ namespace Zerg.Controllers.Trading.Product
         /// 商品Id
         /// </summary>
         public string ProductId { get; set; }
+       /// <summary>
+       /// 商品名称
+       /// </summary>
+        public string Productname { get; set; }
         /// <summary>
         /// 户型
         /// </summary>
