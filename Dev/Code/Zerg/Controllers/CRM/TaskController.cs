@@ -679,8 +679,8 @@ namespace Zerg.Controllers.CRM
         /// <summary>
         /// 传入任务类型ID，删除任务类型，返回删除结果状态信息
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">任务类型ID</param>
+        /// <returns>删除结果状态信息</returns>
         [HttpGet]
         public HttpResponseMessage DelTaskType(int id)
         {
@@ -708,9 +708,10 @@ namespace Zerg.Controllers.CRM
 
         #region 任务奖励 杨定鹏 2015年4月29日15:15:41
         /// <summary>
-        /// 显示任务奖励列表
+        /// 检索返回当前任务奖励列表
         /// </summary>
-        /// <returns></returns>
+        /// <returns>任务奖励列表</returns>
+        [Description("检索返回当前任务奖励列表")]
         [HttpGet]
         public HttpResponseMessage TaskAwardList()
         {
@@ -732,10 +733,10 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 添加和修改任务奖励
+        /// 添加和修改任务奖励，返回结果状态信息
         /// </summary>
         /// <param name="taskAwardModel">任务奖励数据模型</param>
-        /// <returns></returns>
+        /// <returns>添加或者修改任务奖励结果状态信息</returns>
         [HttpPost]
         public HttpResponseMessage AddTaskAward([FromBody]TaskAwardModel taskAwardModel)
         {
@@ -802,10 +803,11 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 删除任务奖励
+        /// 传入任务奖励ID，删除任务奖励，返回删除结果状态信息
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">任务奖励ID</param>
+        /// <returns>删除结果状态信息</returns>
+        [Description("传入任务奖励ID，删除任务奖励，返回删除结果状态信息")]
         [HttpGet]
         public HttpResponseMessage DelTaskAward(int id)
         {
@@ -837,7 +839,8 @@ namespace Zerg.Controllers.CRM
         /// <summary>
         /// 显示任务目标列表
         /// </summary>
-        /// <returns></returns>
+        /// <returns>任务目标列表</returns>
+        [Description("检索返回任务目标列表")]
         [HttpGet]
         public HttpResponseMessage TaskTagList()
         {
@@ -862,7 +865,8 @@ namespace Zerg.Controllers.CRM
         /// 添加和修改任务目标
         /// </summary>
         /// <param name="taskTagModel">任务目标数据模型</param>
-        /// <returns></returns>
+        /// <returns>添加和修改结果状态信息</returns>
+        [Description("添加或者修改任务目标")]
         [HttpPost]
         public HttpResponseMessage AddTaskTag([FromBody]TaskTagModel taskTagModel)
         {
@@ -929,10 +933,11 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 删除任务奖励
+        /// 传入任务id奖励，删除任务奖励，返回删除结果状态信息
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">任务奖励ID</param>
+        /// <returns>任务奖励删除结果状态信息</returns>
+        [Description("删除任务奖励")]
         [HttpGet]
         public HttpResponseMessage DelTaskTag(int id)
         {
@@ -962,7 +967,7 @@ namespace Zerg.Controllers.CRM
         /// <summary>
         /// 显示任务惩罚列表
         /// </summary>
-        /// <returns></returns>
+        /// <returns>任务惩罚列表</returns>
         [HttpGet]
         public HttpResponseMessage TaskPunishmentList()
         {
@@ -984,10 +989,11 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 添加和修改任务惩罚
+        /// 添加和修改任务惩罚，返回添加或者修改结果状态信息
         /// </summary>
-        /// <param name="taskPunishmentModel"></param>
-        /// <returns></returns>
+        /// <param name="taskPunishmentModel">taskPunishmentModel</param>
+        /// <returns>添加或修改任务惩罚</returns>
+        [Description("添加或修改任务惩罚")]
         [HttpPost]
         public HttpResponseMessage AddTaskPunishment([FromBody]TaskPunishmentModel taskPunishmentModel)
         {
@@ -1054,10 +1060,11 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 删除任务惩罚
+        /// c传入任务惩罚ID，删除任务惩罚，返回删除结果状态信息
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">任务惩罚ID</param>
+        /// <returns>删除结果状态信息</returns>
+        [Description("添加或修改任务惩罚")]
         [HttpGet]
         public HttpResponseMessage DelTaskPunishment(int id)
         {
