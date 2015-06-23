@@ -462,7 +462,7 @@ namespace Zerg.Controllers.Trading.Product
                         Commition = product.Dealcommission.ToString(),
                         HouseType = product.ProductParameter.FirstOrDefault(o => o.Parameter.Name == "户型") == null ? "" : product.ProductParameter.FirstOrDefault(o => o.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString(),
                         Price = product.Price.ToString(),
-                        ProductId = product.Id.ToString(),
+                        ProductId = product.Id,
                         SubTitle = product.SubTitle,
                         Productname = product.Productname
                     });
