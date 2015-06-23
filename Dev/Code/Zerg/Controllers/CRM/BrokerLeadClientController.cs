@@ -442,7 +442,7 @@ namespace Zerg.Controllers.CRM
                     {
                         Adddate = DateTime.Now,
                         Adduser = model.Broker.ToString(),//model.Adduser.ToString(CultureInfo.InvariantCulture),
-                        AgentId = model.Adduser,
+                        AgentId = model.Broker,//model.Adduser,
                         //HouseType = model.ProjectId == 0 ? "" : _productService.GetProductById(model.ProjectId).Productname,
                        // Agentname = model.Adduser == 0 ? "" : _brokerService.GetBrokerByUserId(model.Adduser).Brokername,
                         Agentname = model.Brokername,//_brokerService.GetBrokerByUserId(model.Adduser).Brokername,
