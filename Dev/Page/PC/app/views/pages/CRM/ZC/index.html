@@ -1,9 +1,15 @@
 
-    <div class="row" >
-        <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入经纪人名"  ng-model="searchCondition.name"   required="" tabindex="0" aria-required="true" aria-invalid="true">
-        <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入电话号码" ng-model="searchCondition.phone" required="" tabindex="0" aria-required="true" aria-invalid="true">
-        <button md-ink-ripple=""  ng-click="getList()" class="md-btn md-raised m-b btn-fw indigo">搜索<div class="md-ripple-container"></div></button>
-        <a href="#/page/CRM/ZC/create" access="superAdmin,admin">  <button id="btntask" md-ink-ripple=""style="width:150px;margin-left: 150px;" class="md-btn md-raised m-b btn-fw indigo">添加驻场秘书</button></a>
+<div class="row"onkeydown="key()" >
+    <input style="width:200px;" onfocus="myFunction('name')" id="name" type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入经纪人名"maxlength="50"  ng-model="searchCondition.name"   required="" tabindex="0" aria-required="true" aria-invalid="true">
+    <input style="width:200px;" onfocus="myFunction('phone')" id="phone" type="text" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入电话号码"maxlength="30" ng-model="searchCondition.phone" required="" tabindex="0" aria-required="true" aria-invalid="true">
+    <select style="width:200px;"  ng-focus="initPage()"   onfocus="myFunction('staStatus')" id="staStatus"  ng-model="searchCondition.state" class=" bordhtml form-control"  name="" >
+        <option   value="2">所有</option>
+        <option   value="1">正常</option>
+        <option  value="0">删除</option>
+        <option  value="-1">注销</option>
+    </select>
+    <button md-ink-ripple=""id="btsearch"  ng-click="getList()" class="md-btn md-raised m-b btn-fw indigo">搜索<div class="md-ripple-container"></div></button>
+    <a href="#/page/CRM/ZC/create" access="superAdmin,admin">  <button id="btntask" md-ink-ripple=""style="width:150px;margin-left: 150px;" class="md-btn md-raised m-b btn-fw indigo">添加驻场秘书</button></a>
 
     </div>
     <table class="table table-striped">
@@ -15,7 +21,7 @@
 
         </tr>
         </thead>
-        <tbody ng-repeat="item in list">
+        <tbody ng-show="visibleif" ng-repeat="item in list">
         <tr>
             <td>
                 <div class="md-list-item-left">
@@ -29,15 +35,53 @@
             <td><time>{{item.Regtime}}</time></td>
             <td>
                 <a href="#/page/CRM/ZC/detailed?id={{item.Id}}" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">详情</button></a>
-                <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw yellow">删除</button>
-                <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">注销</button>
+                <button ng-click="deleteBroker(item.Id)"ng-show="item.btnVisibleDel"  md-ink-ripple="" class="md-btn md-raised m-b btn-fw yellow">删除</button>
+                <button ng-click="cancelBroker(item.Id)"ng-show="item.btnVisibleCan" md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">注销</button>
             </td>
 
         </tr>
 
         </tbody>
     </table>
-    <div colspan="5" class="text-center footable-visible">
+    <div ng-show="visibleif" colspan="5" class="text-center footable-visible">
         <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
 
     </div>
+<div ng-bind="tips" style="background-color:#dbdee2; line-height: 50px;text-align: center;" ></div>
+<script type="text/javascript">
+    var keyname="";
+    key=function () {
+        var keynum;
+//三元表达式获取不同浏览器的按下键的代码
+        keynum = window.event ? event.keyCode : event.which;
+        if(keynum==13){btsearch.click()}if(keynum==39){
+            if(keyname=="name"){document.getElementById("phone").focus();}
+            else  if(keyname=="phone"){document.getElementById("staStatus").focus();}
+        }
+        if(keynum==37){
+
+            if(keyname=="staStatus"){
+                //使HTML元素原来默认的事件失效
+                event.returnValue=false;
+                document.getElementById("phone").focus();
+            }
+            else  if(keyname=="phone"){document.getElementById("name").focus();}
+        }
+
+    }
+    //保存获得焦点的id
+    myFunction=function(idif){
+        keyname=idif;
+    }
+    //    $(document).ready(function(){
+    //      var hidden1=  $("#btnmo").click(function(){
+    //            //$(".divtip").css("display","none");
+    //            $("#dividtip").fadeOut(4000);
+    //        });
+    //
+    //    });
+</script>
+
+<script type="text/ng-template" id="myModalContent.html">
+    <div ng-include="'views/partials/modal.html'"></div>
+</script>

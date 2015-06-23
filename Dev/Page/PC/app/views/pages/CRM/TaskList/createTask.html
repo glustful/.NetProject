@@ -2,7 +2,8 @@
 自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />
 angular.js路径app/scrips/controller/CRM/taskList.js-->
 
-<div onkeydown='if(event.keyCode==13){cu.click()}' id="divTaskA"class="marginL"ng-controller="taskaddcontroller" >
+<div onkeydown='var keynum;
+        keynum = window.event ? event.keyCode : event.which;if(keynum==13){cu.click()}' id="divTaskA"class="marginL"ng-controller="taskaddcontroller" >
     <div class="taska">
         <p style="height:30px"></p>
         <p  >*任务名称<input id="taskname" maxlength="30"ng-click="delTipsName()"  class="ptaska  bordhtml form-control"ng-model="addcondition.Taskname" type="text"  placeholder="任务名称"></p>

@@ -1,4 +1,4 @@
-app.controller('taskaddcontroller',['$http','$scope','$stateParams','$modal',function($http,$scope,$stateParams,$modal) {
+app.controller('taskaddcontroller',['$http','$scope','$stateParams','$modal','$state',function($http,$scope,$stateParams,$modal,$state) {
     $scope.addcondition={
 
         Id:0,
@@ -50,17 +50,11 @@ app.controller('taskaddcontroller',['$http','$scope','$stateParams','$modal',fun
         }).success(function(data){
 
             if(data.Status){
-
+                alert(data.Msg);
+               // $state.go("page.CRM.TaskList.taskDetail?id="+$stateParams.id);
+            }
+            else{
                 var modalInstanc = $modal.open({
-                    templateUrl: 'myModalContent.html',
-                    controller: 'ModalInstanceCtrl',
-                    resolve: {
-                        msg: function () {
-                            return data.Msg;
-                        }
-                    }
-                });           }
-            else{ var modalInstanc = $modal.open({
                 templateUrl: 'myModalContent.html',
                 controller: 'ModalInstanceCtrl',
                 resolve: {
@@ -68,7 +62,8 @@ app.controller('taskaddcontroller',['$http','$scope','$stateParams','$modal',fun
                         return data.Msg;
                     }
                 }
-            });}
+            });
+            }
 
         });
     };

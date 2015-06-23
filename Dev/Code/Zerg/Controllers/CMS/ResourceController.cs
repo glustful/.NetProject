@@ -12,21 +12,32 @@ using YooPoon.WebFramework.User.Entity;
 using Zerg.Common;
 using Zerg.Common.Oss;
 using YooPoon.Common.Encryption;
-
+using System.ComponentModel;
 namespace Zerg.Controllers.CMS
 {
     [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    [Description("资源管理类")]
     public class ResourceController : ApiController
     {
-        
+
         private readonly IResourceService _resourceService;
         private readonly IWorkContext _workContent;
-        public ResourceController(IResourceService resourceService,IWorkContext workContent) 
+        /// <summary>
+        /// 资源管理初始化
+        /// </summary>
+        /// <param name="resourceService">resourceService</param>
+        /// <param name="workContent">workContent</param>
+        [Description("资源管理构造函数")]
+        public ResourceController(IResourceService resourceService, IWorkContext workContent)
         {
             _resourceService = resourceService;
             _workContent = workContent;
         }
+        /// <summary>
+        /// 获取一个不重复的资源文件名称,返回文件名
+        /// </summary>
+        /// <returns>资源文件名称</returns>
         private string GetUniquelyString() //获取一个不重复的文件名
         {
             Random rnd = new Random(); //获取一个随机数
@@ -44,10 +55,11 @@ namespace Zerg.Controllers.CMS
             return strTemp;
         }
         /// <summary>
-        /// 文件上传
+        /// 无传入参数,资源文件上传,返回上传后的资源名称(文件名称以"|"分隔开)
         /// </summary>
-        /// <returns></returns>
+        /// <returns>资源文件名称</returns>
         [HttpPost]
+        [Description("资源文件上传")]
         public async Task<HttpResponseMessage> Upload()
         {
             var streamProvider = new MultipartMemoryStreamProvider();
@@ -111,7 +123,7 @@ namespace Zerg.Controllers.CMS
                     //{
                     //    OssHelper.PutThumbnaiObject(ms, fileNewName + info.Extension);
                     //}
-                  
+
                     var resource = new ResourceEntity
                     {
                         Guid = Guid.NewGuid(),
@@ -123,16 +135,27 @@ namespace Zerg.Controllers.CMS
                         UpdUser = _workContent.CurrentUser.Id,
                         UpdTime = DateTime.Now,
                     };
-                    if(_resourceService.Create(resource).Id >0)
+                    if (_resourceService.Create(resource).Id > 0)
                         fileNames.Add(key);
                 }
             }
-            return PageHelper.toJson(PageHelper.ReturnValue(true, string.Join("|",fileNames)));
+            return PageHelper.toJson(PageHelper.ReturnValue(true, string.Join("|", fileNames)));
         }
+        /// <summary>
+        /// 资源文件检索,暂时未实现
+        /// </summary>
+        /// <returns>null(暂时未实现)</returns>
+        [Description("资源文件检索,暂时未实现")]
         public HttpResponseMessage Search()
         {
             return null;
         }
+        /// <summary>
+        /// 资源文件删除,暂时未实现
+        /// </summary>
+        /// <param name="id">资源文件Id</param>
+        /// <returns>null,暂时未实现</returns>
+        [Description("资源文件删除,暂时未实现")]
         public HttpResponseMessage Deltte(int id)
         {
             return null;
