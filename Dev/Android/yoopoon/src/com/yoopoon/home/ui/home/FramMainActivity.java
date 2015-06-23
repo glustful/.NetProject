@@ -75,18 +75,19 @@ public class FramMainActivity extends MainActionBarActivity {
 
 		tabHost.setup();
 		tabHost.getTabWidget().setDividerDrawable(null);
-		tabHost.addTab(getTabSpec("active", R.drawable.me_tab_selector));
-		tabHost.addTab(getTabSpec("house", R.drawable.me_tab_selector));
-		tabHost.addTab(getTabSpec("agent", R.drawable.me_tab_selector));
-		tabHost.addTab(getTabSpec("me", R.drawable.me_tab_selector));
+		tabHost.addTab(getTabSpec("active", R.drawable.active_tab_selector,"活动"));
+		tabHost.addTab(getTabSpec("house", R.drawable.house_tab_selector,"房源库"));
+		tabHost.addTab(getTabSpec("agent", R.drawable.agent_tab_selector,"经纪人专区"));
+		tabHost.addTab(getTabSpec("me", R.drawable.me_tab_selector,"个人中心"));
 		tabHost.setOnTabChangedListener(mainTabChange);
 
 	}
 
-	private TabSpec getTabSpec(String content, int resId) {
+	private TabSpec getTabSpec(String content, int resId,String title) {
 		MainTabView tab = MainTabView_.build(this);
 
 		tab.setIndicator(resId);
+		tab.setTitle(title);
 		TabSpec tabSpec = tabHost.newTabSpec(content).setIndicator(tab)
 				.setContent(new MainTabFactory(FramMainActivity.this));
 		return tabSpec;
@@ -153,6 +154,7 @@ public class FramMainActivity extends MainActionBarActivity {
 	private void begin() {
 		pageAdapter = new HomeMainAdapter(getSupportFragmentManager(), fInfo,
 				FramMainActivity.this);
+		mainPager.setOffscreenPageLimit(3);
 		mainPager.setAdapter(pageAdapter);
 		mainPager.setOnPageChangeListener(pageListener);
 		mainPager.setCurrentItem(0);

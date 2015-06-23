@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.yoopoon.home.R;
 import com.yoopoon.home.ui.view.BadgeView;
 
@@ -20,6 +22,8 @@ public class MainTabView extends LinearLayout{
 	ImageView imageView;
 	@ViewById(R.id.badgeView)
 	BadgeView badgeView;
+	@ViewById(R.id.title)
+	TextView title;
 	
 	public MainTabView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -38,6 +42,14 @@ public class MainTabView extends LinearLayout{
 		imageView.setImageResource(resId);
 		badgeView.setVisibility(View.GONE);
 
+	}
+	
+	public void setTitle(int resid){
+		title.setText(resid);
+	}
+	
+	public void setTitle(String title){
+		this.title.setText(title);
 	}
 	
 	public void setBageViewCount(long num){

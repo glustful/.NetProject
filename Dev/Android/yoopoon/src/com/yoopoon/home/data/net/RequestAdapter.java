@@ -51,7 +51,7 @@ public abstract class RequestAdapter implements Serializable
     {
         mId = UUID.randomUUID().toString();//产生ID
         mParams = new IdentityHashMap<String, String>();
-        setHost(UserAccount.mSeverHost);//得到网络地址
+        setHost(UserAccount.getSeverHost());//得到网络地址
         setUrl("");//不传入Url
         setTimeOutLimit(30);//延时时间
         setRequestType(RequestType.eGeneral);
@@ -156,9 +156,9 @@ public abstract class RequestAdapter implements Serializable
         mId = id;
     }
 
-    final public void setRequestContentType(RequestContentType ejson) {
+    final public RequestAdapter setRequestContentType(RequestContentType ejson) {
 		mContentType = ejson;
-		
+		return this;
 	}
     
     final public RequestAdapter addParam(HashMap<String,String> map)
@@ -357,7 +357,7 @@ public abstract class RequestAdapter implements Serializable
     {
         ePost,
         eGet,
-        ePost1,
+        
         
     }
 

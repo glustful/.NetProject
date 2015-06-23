@@ -8,6 +8,7 @@ package com.yoopoon.home.ui.home;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+import android.widget.TextView;
 import com.yoopoon.home.R.id;
 import com.yoopoon.home.R.layout;
 import com.yoopoon.home.ui.view.BadgeView;
@@ -90,8 +91,9 @@ public final class MainTabView_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        imageView = ((ImageView) hasViews.findViewById(id.imageView));
         badgeView = ((BadgeView) hasViews.findViewById(id.badgeView));
+        title = ((TextView) hasViews.findViewById(id.title));
+        imageView = ((ImageView) hasViews.findViewById(id.imageView));
     }
 
 }

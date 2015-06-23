@@ -622,7 +622,7 @@ public class RequestTask implements Runnable {
 			try {
 				JSONArray array = new JSONArray();
 				for (Cookie c : cookie.getCookies()) {
-					System.out.println("cookie=" + c);
+					
 					JSONObject o = new JSONObject();
 					o.put("name", c.getName());
 					o.put("value", c.getValue());

@@ -44,16 +44,26 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <!-- 测试配置选项 -->
+        <uses-library android:name="android.test.runner"/>
         <activity
             android:name="com.yoopoon.home.ui.home.FramMainActivity_"
             android:label="@string/app_name" 
-            android:theme="@style/ActionbarTheme">
+            android:theme="@style/ActionbarTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity 
+            android:name="com.yoopoon.home.ui.login.HomeLoginActivity_"
+            android:theme="@style/ActionbarTheme"
+            android:screenOrientation="portrait"></activity>
     </application>
-
+<!-- 测试配置选项 -->
+<instrumentation android:name="android.test.InstrumentationTestRunner"
+                     android:targetPackage="com.yoopoon"
+                     android:label="Tests for yoopoon"/>
 </manifest>

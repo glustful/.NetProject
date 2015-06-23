@@ -9,15 +9,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.yoopoon.home.R.layout;
 import org.androidannotations.api.view.HasViews;
-import org.androidannotations.api.view.OnViewChangedListener;
 import org.androidannotations.api.view.OnViewChangedNotifier;
 
 public final class FramActiveFragment_
     extends FramActiveFragment
-    implements HasViews, OnViewChangedListener
+    implements HasViews
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
@@ -41,15 +38,10 @@ public final class FramActiveFragment_
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         contentView_ = super.onCreateView(inflater, container, savedInstanceState);
-        if (contentView_ == null) {
-            contentView_ = inflater.inflate(layout.home_fram_active_fragment, container, false);
-        }
         return contentView_;
     }
 
     private void init_(Bundle savedInstanceState) {
-        OnViewChangedNotifier.registerOnViewChangedListener(this);
-        afterInject();
     }
 
     @Override
@@ -60,12 +52,6 @@ public final class FramActiveFragment_
 
     public static FramActiveFragment_.FragmentBuilder_ builder() {
         return new FramActiveFragment_.FragmentBuilder_();
-    }
-
-    @Override
-    public void onViewChanged(HasViews hasViews) {
-        listView = ((PullToRefreshListView) hasViews.findViewById(com.yoopoon.home.R.id.matter_list_view));
-        afterViews();
     }
 
     public static class FragmentBuilder_ {

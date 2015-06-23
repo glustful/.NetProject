@@ -1,0 +1,18 @@
+
+    <com.yoopoon.home.ui.view.MyGridView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+        android:padding="10dp"
+      
+        android:id="@+id/myGrid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        
+        android:scrollbars="none"
+        android:stretchMode="columnWidth">
+ </com.yoopoon.home.ui.view.MyGridView>
+
+

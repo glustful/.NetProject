@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- server host -->
+	<string name="url_host">http://192.168.1.199:9010</string>
+    <!-- userController -->
+    <string name="url_signup">/api/user/SignUp</string>
+	<string name="url_login">/api/user/Login</string>
+	<!-- advertismentController -->
+	<string name="url_ad_index">/API/Advertisement/Index</string>
+	<!-- productController -->
+	<string name="url_product_all">/API/product/GetAllProduct</string>
+	<!-- channelController -->
+	<string name="url_channel_index">/API/channel/index</string>
+	<string name="url_channel_titleimg">/api/channel/GetTitleImg</string>
+	<string name="url_channel_active_titleimg">/api/channel/GetActiveTitleImg</string>
+	
+	<!-- 图片服务器地址 -->
+	<string name="url_host_img">http://img.yoopoon.com/</string>
+</resources>

@@ -1,5 +1,7 @@
 package com.yoopoon.home.data.json;
 
+
+
 import android.os.AsyncTask;
 
 public class SerializerJSON extends AsyncTask<Void, Void, String> {
@@ -12,12 +14,12 @@ public class SerializerJSON extends AsyncTask<Void, Void, String> {
     private final SerializeListener mParseListener;
     
 
-    public SerializerJSON(SerializeListener parseListener) {
-        mParseListener = parseListener;
+    public SerializerJSON(SerializeListener serializeListener) {
+        mParseListener = serializeListener;
         
     }
 
-    @Override
+	@Override
     protected String doInBackground(Void... params) {
         
 

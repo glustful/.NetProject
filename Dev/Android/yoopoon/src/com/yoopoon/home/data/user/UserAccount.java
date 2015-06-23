@@ -7,21 +7,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.yoopoon.home.MyApplication;
+import com.yoopoon.home.R;
+
 import android.os.Environment;
 
-/**
- * Created by Administrator on 13-11-22.
- * 
- */
-public class UserAccount {
-    //服务器地址
 
-	public static String mSeverHost = "http://192.168.1.16";
+public class UserAccount {
+    
 
     private static String mLocalDir = Environment.getExternalStorageDirectory().getPath() + "/yunjoy/";
 
-    private UserInfo mCurrentUser;
-    private ArrayList<OrgInfo> mOrgOthers;   
+    private User mCurrentUser;  
     public String mEmail;
 
     private static UserAccount mInstance;
@@ -39,7 +36,7 @@ public class UserAccount {
     }
 
     public static String getSeverHost() {
-        return mSeverHost;
+        return MyApplication.getInstance().getString(R.string.url_host);
     }
 
     public static String getLocalDir(String subDir) {
@@ -54,11 +51,11 @@ public class UserAccount {
 
     private UserAccount() {
         mCurrentUser = null;
-        mOrgOthers = new ArrayList<OrgInfo>();
+        
     }
 
     public int changeCurrentAccount(String account) {
-        mOrgOthers.clear();
+       
         mCurrentUser = null;
         return readCurrentAccount(account);
     }
@@ -76,29 +73,8 @@ public class UserAccount {
                 JSONObject jUser = jRoot.optJSONObject("data");
                 String name = jUser.optString("userName");
                 String code = jUser.optString("userCode");
-                mCurrentUser = new UserInfo(name, code);
-                JSONObject jCurrOrg = jUser.optJSONObject("currentOrg");
-                String orgCode = "";
-                if (jCurrOrg != null) {
-                    orgCode = jCurrOrg.optString("code");
-                    OrgInfo orgInfo = new OrgInfo();
-                    orgInfo.mOrgCode = jCurrOrg.optString("code");
-                    orgInfo.mOrgName = jCurrOrg.optString("name");
-                    mCurrentUser.setOrg(orgInfo);
-                }
-                JSONArray jOrgArray = jUser.optJSONArray("orgs");
-                if (jOrgArray != null) {
-                    for (int i = 0; i < jOrgArray.length(); i++) {
-                        JSONObject jOrg = jOrgArray.optJSONObject(i);
-                        if (jOrg == null) {
-                            continue;
-                        }
-                        OrgInfo orgInfo = new OrgInfo();
-                        orgInfo.mOrgCode = jOrg.optString("code");
-                        orgInfo.mOrgName = jOrg.optString("name");
-                        mOrgOthers.add(orgInfo);
-                    }
-                }
+               // mCurrentUser = new User(name, code);
+                
                 res = 1;
             } else {
                 res = 0;
@@ -111,21 +87,8 @@ public class UserAccount {
         return res;
     }
 
-    public UserInfo getCurrentUser() {
+    public User getCurrentUser() {
         return mCurrentUser;
     }
-
-    public int orgSize() {
-        return mOrgOthers.size();
-    }
-
-    public OrgInfo getOrg(int i) {
-        return mOrgOthers.get(i);
-    }
-
-    protected ArrayList<OrgInfo> getOrgOther() {
-        return mOrgOthers;
-    }
-
 
 }

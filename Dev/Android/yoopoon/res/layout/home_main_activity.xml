@@ -66,8 +66,10 @@
              android:layout_weight="0" >
          </FrameLayout>
          <TabWidget
+             android:background="@color/red"
              android:id="@android:id/tabs"
-             android:background="@drawable/main_bottom"
+             android:paddingTop="10dp"
+             android:paddingBottom="10dp"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"/>
      </TabHost>

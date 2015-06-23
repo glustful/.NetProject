@@ -67,7 +67,7 @@ public class ResponseData
       {
           return null;
       }
-      return mRootData.optJSONObject("data");
+      return mRootData.optJSONObject("Object");
     }
 
     public JSONArray getJsonArray()
@@ -76,14 +76,14 @@ public class ResponseData
         {
             return null;
         }
-        return mRootData.optJSONArray("data");
+        return mRootData.optJSONArray("Object");
     }
     
     public Object getData(){
     	if(mRootData == null){
     		return null;
     	}
-    	return mRootData.opt("data");
+    	return mRootData.opt("Object");
     }
 
     public String getStringData()
@@ -114,10 +114,15 @@ public class ResponseData
         try
         {
             mStringData = new String(receivedData);
-            mRootData = new JSONObject(new String(receivedData));
-			mCode = mRootData.optInt("code");
-			mMsg = mRootData.optString("msg");
-            Boolean success = mRootData.optBoolean("succeed");
+            mStringData = checkJSONArray(mStringData);
+            mRootData = new JSONObject(mStringData);
+			//mCode = mRootData.optInt("code");
+			mMsg = mRootData.optString("Msg");
+			if(mRootData.isNull("Status")){
+				mState = ResultState.eSuccess;
+				return;
+			}
+            Boolean success = mRootData.optBoolean("Status");
             if(success)
             {
                 mState = ResultState.eSuccess;
@@ -137,7 +142,19 @@ public class ResponseData
 
     }
 
-    public JSONObject getMRootData() {
+    private String checkJSONArray(String mStringData2) {
+		try {
+			new JSONArray(mStringData2);
+			String tmp = "{\"Status\":"+true+",\"Object\":"+mStringData2+"}";
+			return tmp;
+		} catch (JSONException e) {
+			
+			e.printStackTrace();
+		}
+		return mStringData2;
+	}
+
+	public JSONObject getMRootData() {
         return mRootData;
     }
 
