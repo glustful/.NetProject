@@ -4,7 +4,8 @@
 
 <div ng-controller="taskIndexController">
 <div id="divTaskH"class="marginL">
-    <input id="type1" onkeydown='if(event.keyCode==13){uc.click()}' style="width:20%;" type="text"ng-model="searchCondition.Taskname" maxlength="30"  class="form-control bordhtml" placeholder="任务名称">
+    <input id="type1" onkeydown=' var keynum;
+        keynum = window.event ? event.keyCode : event.which;if(keynum==13){uc.click()}' style="width:20%;" type="text"ng-model="searchCondition.Taskname" maxlength="30"  class="form-control bordhtml" placeholder="任务名称">
 
     <button md-ink-ripple=""ng-click="getList()" class=" md-btn md-raised m-b btn-fw indigo"id="uc">搜索</button>
     <a href="#page/CRM/TaskList/createTask">  <button id="btntask" md-ink-ripple=""style="width:150px;margin-left: 10%;" class="md-btn md-raised m-b btn-fw indigo">添加新任务</button></a>
@@ -25,7 +26,7 @@
 
     </div>
     <!--列表内容-->
-    <div style="height:auto;"  class="taskcenter bord bordTop0px divodd "ng-repeat="item in list">
+    <div  ng-show="visibleif" style="height:auto;"  class="taskcenter bord bordTop0px divodd "ng-repeat="item in list">
         <ul class="taskheader diveven" >
             <li>{{item.Taskname}}</li>
             <li>{{item.Name}}</li>
@@ -42,10 +43,12 @@
 
     </div>
 
-    <div style="text-align: center"  class="text-center footable-visible ng-scope">
+    <div  ng-show="visibleif" style="text-align: center"  class="text-center footable-visible ng-scope">
         <pagination boundary-links="true" total-items="searchCondition.totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
 
     </div>
+    <div ng-bind="tips" style=" font-size:20px;  line-height: 100px;text-align: center;" ></div>
+
 </div>
 
     <script type="text/ng-template" id="myModalContent.html">

@@ -10,7 +10,7 @@
 }
 
 .activity .one{
-    padding: 1px 3px  ;
+    /*padding: 1px 3px  ;*/
 }
 .activity .two{
     margin-right: 2px;
@@ -183,4 +183,12 @@ h3{
     display: block;
     width:640px;
     height:230px;
+}
+
+.active_title {
+    color: black;
+}
+
+.well {
+    color: grey;
 }

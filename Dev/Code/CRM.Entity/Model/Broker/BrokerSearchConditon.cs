@@ -43,6 +43,7 @@ namespace CRM.Entity.Model
 		public int[] Zips { get; set; }
 
 	    public string Email { get; set; }
+        public int State { get; set; }
 
 	    public string Headphoto { get; set; }
 

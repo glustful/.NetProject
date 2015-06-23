@@ -9,7 +9,7 @@ app.controller("tuijianController",['$http','$scope','$stateParams','AuthService
         Type:'',
         Brokername:'',
         Brokerlevel:'',
-        ProjectName:'',
+        Projectname:'',
         Projectid:null,
         Houses:'',
         HouseType:'',

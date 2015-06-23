@@ -45,7 +45,7 @@ namespace Zerg.Controllers.CRM
 
             var brokeaccountcon = new BrokeAccountSearchCondition
             {
-               Brokers=_brokerService.GetBrokerById(Convert.ToInt32(userId)),
+               Brokers =_brokerService.GetBrokerById(Convert.ToInt32(userId)),
                Page = Convert.ToInt32(page),
                PageCount = pageSize
             };
@@ -54,10 +54,16 @@ namespace Zerg.Controllers.CRM
                 Id = p.Id,
                 p.Balancenum,
                 p.MoneyDesc,
-             
+                brokername = p.Broker.Brokername,
                 p.Addtime
 
-            }).ToList();
+            }).ToList().Select(p => new {
+                Id = p.Id,
+                p.Balancenum,
+                p.MoneyDesc,
+                brokername = p.brokername,
+               Addtime= p.Addtime.ToString ("yyyy-MM-dd")
+            });
             var PointDetailListCount = _brokeaccountService.GetBrokeAccountCount(brokeaccountcon);
             return PageHelper.toJson(new { List = PointDetailList, Condition = brokeaccountcon, totalCount = PointDetailListCount });       
         }

@@ -45,13 +45,20 @@ namespace Zerg.Controllers.CRM
                 PageCount = pageSize
             };
 
-             var PointDetailList = _pointdetailService.GetPointDetailsByCondition(pointdetailCon).Select(p => new { 
-              Id=p.Id,
-             p.Addpoints,
-             p.Pointsds,
-              p.Addtime
+            var PointDetailList = _pointdetailService.GetPointDetailsByCondition(pointdetailCon).Select(p => new
+            {
+                Id = p.Id,
+                p.Addpoints,
+                p.Pointsds,
+                p.Addtime
 
-            }).ToList();
+            }).ToList().Select(p => new {
+                Id = p.Id,
+                p.Addpoints,
+                p.Pointsds,
+               Addtime= p.Addtime.ToString ("yyyy-MM-dd")
+            
+            });
             var PointDetailListCount = _pointdetailService.GetPointDetailCount(pointdetailCon);
             return PageHelper.toJson(new { List = PointDetailList, Condition = pointdetailCon, totalCount = PointDetailListCount });
                   
