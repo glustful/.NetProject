@@ -47,7 +47,8 @@
 }
 .content-housesBuy .di a{
     margin-left: 225px;
-
+    position: absolute;
+    right: 10px;
 }
 .content-housesBuy .brokerbar{
     width: 640px;
@@ -92,96 +93,130 @@ text-decoration: none;
 
 }
 
-.content-housesBuy .type{
-    padding:15px;
-    position: relative;
-    height: 1500px;
-    margin-left: 3px;
-}
-.content-housesBuy .type .hx1{
-    padding-bottom: 40px;
-    margin:5px ;
-    float: left;
-    top: 20px;
-    left: 20px;
-    width: 290px;
-    height: 426px;
-    background-color: #fff;
-    border: 1px solid #ff3e33;
-}
-.content-housesBuy .type .hx2{
-    width: 290px;
-    height: 741px;
-    position: absolute;
-    top: 20px;
-    left: 330px;
-    background-color: #fff;
-}
-.content-housesBuy .type .hx3{
-    position: absolute;
-    top:468px;
-    left: 20px;
-    width: 290px;
-    height: 426px;
-    background-color: #fff;
-}
-.content .type .hx4{
-    position: absolute;
-    top:780px;
-    left: 330px;
-    width: 290px;
-    height: 741px;
-    background-color: #fff;
-}
-.content-housesBuy .type .hx5{
+/*.content-housesBuy .type{*/
+    /*padding:15px;*/
+    /*position: relative;*/
+    /*height: 1500px;*/
+    /*margin-left: 3px;*/
+/*}*/
+/*.content-housesBuy .type .hx1{*/
+    /*padding-bottom: 40px;*/
+    /*margin:5px ;*/
+    /*float: left;*/
+    /*top: 20px;*/
+    /*left: 20px;*/
+    /*width: 290px;*/
+    /*height: 426px;*/
+    /*background-color: #fff;*/
+    /*border: 1px solid #ff3e33;*/
+/*}*/
+/*.content-housesBuy .type .hx2{*/
+    /*width: 290px;*/
+    /*height: 741px;*/
+    /*position: absolute;*/
+    /*top: 20px;*/
+    /*left: 330px;*/
+    /*background-color: #fff;*/
+/*}*/
+/*.content-housesBuy .type .hx3{*/
+    /*position: absolute;*/
+    /*top:468px;*/
+    /*left: 20px;*/
+    /*width: 290px;*/
+    /*height: 426px;*/
+    /*background-color: #fff;*/
+/*}*/
+/*.content .type .hx4{*/
+    /*position: absolute;*/
+    /*top:780px;*/
+    /*left: 330px;*/
+    /*width: 290px;*/
+    /*height: 741px;*/
+    /*background-color: #fff;*/
+/*}*/
+/*.content-housesBuy .type .hx5{*/
 
 
-    position: absolute;
-    top:915px;
-    left: 20px;
-    width: 290px;
-    height: auto;
+    /*position: absolute;*/
+    /*top:915px;*/
+    /*left: 20px;*/
+    /*width: 290px;*/
+    /*height: auto;*/
+    /*background-color: #fff;*/
+/*}*/
+/*.content-housesBuy .type .ask{*/
+
+
+    /*height: auto;*/
+    /*background:url("../image/housesBuy/ask.png") no-repeat 30px center;*/
+    /*font-size: 18px;*/
+    /*left: 100px;*/
+    /*text-align: center;*/
+    /*margin-top:20px;*/
+    /*border-top:1px solid #ebebeb;*/
+    /*line-height: 60px;*/
+/*}*/
+/*.content-housesBuy .type .ask a{*/
+
+    /*color: #f13800;*/
+/*}*/
+/*.content-housesBuy  .HX{*/
+    /*font-size:1.2em;*/
+    /*color: #000;*/
+    /*padding:20px 0 10px 25px;*/
+    /*font-weight:bold;*/
+/*}*/
+/*.content-housesBuy  .gift{*/
+    /*font-size: 0.95em;*/
+    /*color: #858585;*/
+    /*line-height: 20px;*/
+    /*padding-left: 25px;*/
+/*}*/
+/*.content-housesBuy .JJ{*/
+    /*font-size: 1.2em;*/
+    /*color: #f13800;*/
+    /*padding:20px 0 15px 25px;*/
+/*}*/
+/*.content-housesBuy  .HXT{*/
+    /*padding-left: 25px;*/
+    /*width: 200px; height: auto; display: block; border: 0;*/
+/*}*/
+
+
+/*户型图新样式*/
+.content-housesBuy .typeHouses{
+
+}
+.content-housesBuy .typeHouses ul li{
     background-color: #fff;
+    width: 290px;
+    margin: 20px 0 0 20px;
+    padding:20px 0 0 0;
 }
-.content-housesBuy .type .ask{
-
-
-    height: auto;
-    background:url("../image/housesBuy/ask.png") no-repeat 30px center;
-    font-size: 18px;
-    left: 100px;
-    text-align: center;
-    margin-top:20px;
-    border-top:1px solid #ebebeb;
-    line-height: 60px;
+.content-housesBuy .typeHouses .inside{
+    padding-left: 25px;
 }
-.content-housesBuy .type .ask a{
-
-    color: #f13800;
-}
-.content-housesBuy  .HX{
-    font-size:1.2em;
+.content-housesBuy .typeHouses .housesType{
     color: #000;
-    padding:20px 0 10px 25px;
-    font-weight:bold;
-}
-.content-housesBuy  .gift{
-    font-size: 0.95em;
-    color: #858585;
-    line-height: 20px;
-    padding-left: 25px;
-}
-.content-housesBuy .JJ{
     font-size: 1.2em;
+}
+.content-housesBuy .typeHouses .average{
+   color:#f13800 ;
+    font-size: 1.2em;
+    padding-bottom: 20px;
+    display: block;
+}
+.content-housesBuy .typeHouses .ask{
+    display: block;
+    margin-top: 30px;
+    height: 60px;
+    line-height: 60px;
+    border-top:1px solid #ebebeb;
+
+    background: url("../image/housesBuy/ask.png") no-repeat 95px center;
     color: #f13800;
-    padding:20px 0 15px 25px;
+    text-align: center;
 }
-.content-housesBuy  .HXT{
-    padding-left: 25px;
-    width: 200px; height: auto; display: block; border: 0;
-}
-
-
 
 
 

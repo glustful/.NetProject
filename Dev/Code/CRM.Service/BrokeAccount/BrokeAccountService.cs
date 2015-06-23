@@ -172,7 +172,7 @@ namespace CRM.Service.BrokeAccount
                 }
 				if (condition.Brokers != null )
                 {
-                    query = query.Where(q => condition.Brokers==(q.Broker));
+                    query = query.Where(q => condition.Brokers.Id==(q.Broker.Id));
                 }
 				if (condition.Addusers != null && condition.Addusers.Any())
                 {

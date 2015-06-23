@@ -41,7 +41,16 @@
     <ul  class="cf">
 
 
-        <li class="one" ng-repeat="item in Actcontent"> <a href="#/app/chip"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="开发商疯了"  width="200px"/></a></li>
+        <li  class="{{$index==0?'one':$index==1?'two':$index==2?'three':$index==3?'four':$index==4?'five':$index==5?'six':''}}"  ng-repeat="item in Actcontent">
+            <!--<a href="#/app/chip">-->
+                <!--<img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="开发商疯了"  width="205px" />-->
+            <!--</a>-->
+            <a href="#">
+                <p class="active_title">{{item.Title}}</p>
+                <p class="well">{{item.AdSubTitle}}</p>
+                <img src="http://img.yoopoon.com/{{item.TitleImg}}" width="95" height="95">
+            </a>
+        </li>
         <!--<li class="two" ng-repeat="item in Activetwo"> <a href="#/app/redPaper-1.html"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="吧百万红包等你抢" width="205px"/></a></li>-->
         <!--<li class="three" ng-repeat="item in Activethree"> <a href="#/app/Auction"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="pao"  width="205px"/></a></li>-->
         <!--<li class="four" ng-repeat="item in Activefour"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="俊发钜惠"  width="205px"/></a></li>-->

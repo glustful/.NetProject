@@ -14,20 +14,15 @@ app.controller('taskIndexController',['$http','$scope','$modal',function($http,$
         $http.get(SETTING.ApiUrl+'/Task/TaskList/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
            console.log(data);
             if(data.totalCount>0){
+                $scope.visibleif=true;
+                $scope.tips="";
             $scope.list = data.list;
             $scope.searchCondition.page=data.condition.Page;
             $scope.searchCondition.pageSize=data.condition.PageCount;
             $scope.searchCondition.totalCount=data.totalCount;}
             else{
-                var modalInstanc = $modal.open({
-                    templateUrl: 'myModalContent.html',
-                    controller: 'ModalInstanceCtrl',
-                    resolve: {
-                        msg: function () {
-                            return data.Msg;
-                        }
-                    }
-                });
+                $scope.visibleif=false;
+                $scope.tips="没有数据";
             }
         });
     };
@@ -103,21 +98,15 @@ app.controller('taskListcontroller',['$http','$scope','$stateParams','$modal',fu
     var getTaskList1  = function() {
         $http.get(SETTING.ApiUrl+'/Task/taskListByuser',{params:$scope.searchCondition1, 'withCredentials':true}).success(function(data){
             if(data.totalCount>0){
-            console.log(data);
+                $scope.visibleif=true;
+                $scope.tips="";
             $scope.taskModel = data.list;
             $scope.searchCondition1.page=data.condition.Page;
             $scope.searchCondition1.pageSize=data.condition.PageCount;
             $scope.searchCondition1.totalCount=data.totalCount;}
             else{
-    var modalInstanc = $modal.open({
-        templateUrl: 'myModalContent.html',
-        controller: 'ModalInstanceCtrl',
-        resolve: {
-            msg: function () {
-                return data.Msg;
-            }
-        }
-    });
+                $scope.visibleif=false;
+                $scope.tips="没有数据";
 }
 
         });

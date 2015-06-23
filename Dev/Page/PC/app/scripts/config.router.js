@@ -1080,8 +1080,7 @@ angular.module('app')
 
                 data : { title: '任务主页' },
 
-                resolve:load(['scripts/controllers/CRM/taskList.js',
-          'scripts/filters/toDate.js'])
+                resolve:load(['scripts/controllers/CRM/taskList.js'])
             })
             .state('page.CRM.TaskList.taskList', {
                 url: '/taskList?id',
@@ -1319,8 +1318,8 @@ angular.module('app')
                 url: '/upProductBrand?brandId',
                 templateUrl: 'views/pages/Trading/product/upProductBrand.html',
                 data: { title: '品牌修改' },
-                controller: 'upProductBrandController'
-
+                //controller: 'upProductBrandController'
+               resolve:load(['scripts/controllers/Trading/UpProductBrand.js','angularFileUpload'])
             })
             .state('page.Trading.product.createbrand', {
                 url: '/createbrand',

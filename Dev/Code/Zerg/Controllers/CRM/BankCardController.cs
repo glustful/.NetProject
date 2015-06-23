@@ -67,7 +67,7 @@ namespace Zerg.Controllers.CRM
 
             }).ToList();
             var bankListCount = _bankcardService.GetBankCardCount(bankcardSearchCon);
-            return PageHelper.toJson(new { List = bankList, Condition = bankcardSearchCon, totalCount = bankListCount });
+            return PageHelper.toJson(new { List = bankList, Condition = bankcardSearchCon, totalCount1 = bankListCount });
 
         }
 

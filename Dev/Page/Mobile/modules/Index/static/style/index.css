@@ -9,21 +9,21 @@
     padding:27px 0 20px 0;
 }
 
-/*.activity .one{*/
+.activity .one{
     /*padding: 1px 3px  ;*/
-/*}*/
-/*.activity .two{*/
-    /*margin-right: 2px;*/
-/*}*/
-/*.activity .four{*/
-    /*margin:2px 2px 0 0;*/
-/*}*/
-/*.activity .five{*/
-    /*margin:2px 2px 10px 0;*/
-/*}*/
-/*.activity .six{*/
-    /*margin-top: 2px;*/
-/*}*/
+}
+.activity .two{
+    margin-right: 2px;
+}
+.activity .four{
+    margin:2px 2px 0 0;
+}
+.activity .five{
+    margin:2px 2px 10px 0;
+}
+.activity .six{
+    margin-top: 2px;
+}
 .message{
     padding:0 10px 10px 10px;
 }
@@ -32,6 +32,7 @@
 }
 .brand a{
     display: block;
+    text-decoration: none;
 }
 .brand a .summary{
     position: absolute;
@@ -182,4 +183,12 @@ h3{
     display: block;
     width:640px;
     height:230px;
+}
+
+.active_title {
+    color: black;
+}
+
+.well {
+    color: grey;
 }

@@ -62,6 +62,10 @@ namespace Zerg.Models.CRM
         /// </summary>
         public virtual string Sexy { get; set; }
         /// <summary>
+        /// 状态
+        /// </summary>
+        public virtual string strState { get; set; }
+        /// <summary>
         /// 电话
         /// </summary>
         public virtual string Phone { get; set; }
@@ -113,6 +117,10 @@ namespace Zerg.Models.CRM
         public virtual DateTime Regtime { get; set; }
         public virtual string rgtime { get; set; }
         /// <summary>
+        /// 注册时间
+        /// </summary>
+        public virtual string  Regtime1 { get; set; }
+        /// <summary>
         /// 用户状态（删除0 注销-1 正常1）
         /// </summary>
         public virtual int State { get; set; }
@@ -122,8 +130,7 @@ namespace Zerg.Models.CRM
         /// 所属的合伙人ID（同ID）
         /// </summary>
         public virtual int PartnersId { get; set; }
-
-
+ 
         /// <summary>
         /// 所属的合伙人姓名（同经纪人名）
         /// </summary>
@@ -178,7 +185,7 @@ namespace Zerg.Models.CRM
         /// 用户类型枚举 （经纪人 broker  ，  管理员 manager）
         /// </summary>
         public virtual EnumUserType UserType { get; set; }
-
+        public virtual string  Usertype1 { get; set; }
         /// <summary>
         /// 用户状态 （删除0 注销-1 正常1）
         /// </summary>    
