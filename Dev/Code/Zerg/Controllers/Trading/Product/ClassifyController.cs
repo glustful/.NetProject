@@ -349,7 +349,7 @@ namespace Zerg.Controllers.Trading.Product
         /// </summary>
         /// <param name="parameterId"></param>
         /// <returns>删除结果状态信息</returns>
-         [Description("删除参数")]
+        [Description("删除参数")]
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage DelParameter(int parameterId)
@@ -371,10 +371,10 @@ namespace Zerg.Controllers.Trading.Product
             }
         }
         /// <summary>
-        /// 删除参数；
+        /// 传入分类id，删除参数，返回删除结果状态信息；
         /// </summary>
         /// <param name="parameterId">参数ID/param>
-        /// <returns></returns>
+        /// <returns>删除结果状态信息</returns>
         [Description("删除参数")]
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
@@ -395,8 +395,9 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 根据分类查询分类参数列表；
         /// </summary>
-        /// <param name="parameterId"></param>
-        /// <returns></returns>
+        /// <param name="parameterId">分类id</param>
+        /// <returns>商品分类列表</returns>
+        [Description("查询分类参数列表")]
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetParameterByClassify(int classifyId)
@@ -415,7 +416,8 @@ namespace Zerg.Controllers.Trading.Product
         /// 根据分类查参数值列表；
         /// </summary>
         /// <param name="parameterId"></param>
-        /// <returns></returns>
+        /// <returns>参数值列表</returns>
+        [Description("根据分类查参数值列表")]
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetParameterValueByParameter(int parameterId)
@@ -437,8 +439,9 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 获取分类树枝下的每个终节点；
         /// </summary>
-        /// <param name="ClassfiyId"></param>
-        /// <returns></returns>
+        /// <param name="ClassfiyId">分类ID</param>
+        /// <returns>该类下的每个终结点</returns>
+        [Description(" 获取分类树枝下的每个终节点")]
         public List<ClassifyEntity> GetTreeAllEndPoints(int ClassfiyId)
         {
             _CEList.Clear();
@@ -448,7 +451,8 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 递归遍历树状节点,并找出末端节点；
         /// </summary>
-        /// <param name="nodeId"></param>
+        /// <param name="nodeId">节点ID</param>
+        [Description(" 递归遍历树状节点,并找出末端节点")]
         public void RecursionTree(int nodeId)
         {
             List<ClassifyEntity> CEList = _classifyService.GetClassifysBySuperClassify(nodeId).ToList<ClassifyEntity>();
@@ -467,6 +471,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 支持angularjs中tree插件的模型；
         /// </summary>
+        [Description("支持angularjs中tree插件的模型")]
         public class TreeJsonModel
         {
             public string label { set; get; }
@@ -478,7 +483,8 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 自上而下获取树状根节点列表；
         /// </summary>
-        /// <returns></returns>
+        /// <returns>树状根节点列表</returns>
+        [Description("自上而下获取树状根节点列表")]
         public List<TreeJsonModel> GetAllTree()
         {
             ClassifySearchCondition csc = new ClassifySearchCondition()
@@ -511,8 +517,9 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 自迭代获取所有树子节点；
         /// </summary>
-        /// <param name="nodeId"></param>
-        /// <returns></returns>
+        /// <param name="nodeId">节点ID</param>
+        /// <returns>所有树子节点</returns>
+        [Description("自迭代获取所有树子节点；")]
         public List<TreeJsonModel> GetJsonFromTreeModel(int nodeId)
         {
             ClassifySearchCondition csc = new ClassifySearchCondition()
@@ -547,8 +554,9 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 获取树状json格式的分类参数
         /// </summary>
-        /// <param name="classifyId"></param>
-        /// <returns></returns>
+        /// <param name="classifyId">分类ID</param>
+        /// <returns>树状json格式的分类参数</returns>
+        [Description("获取树状json格式的分类参数")]
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetParameterTreeData(int classifyId)
@@ -583,6 +591,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 分类模型
         /// </summary>
+        [Description("分类模型")]
         public class ParameterTreeModel
         {
             public string Name { set; get; }//分类名称；
@@ -592,6 +601,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 分类值模型
         /// </summary>
+        [Description("分类值模型")]
         public class ParameterValueTreeModel
         {
             public string Value { set; get; }//分类值名称；
