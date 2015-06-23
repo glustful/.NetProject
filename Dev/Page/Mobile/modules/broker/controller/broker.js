@@ -29,7 +29,7 @@ app.controller('BrokerTopThreeController',['$scope','$http','AuthService','$stat
     $scope.channelName='banner';
     $http.get(SETTING.ApiUrl+'/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
         $scope.content=data;
-    })
+    });
     //经纪人专区活动图片轮播
     $scope.channelName='活动';
     $http.get(SETTING.ApiUrl+'/Channel/GetActiveTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){

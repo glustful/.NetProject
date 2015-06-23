@@ -68,6 +68,7 @@ angular.module("app").controller('DKRDetailedController',['$http','$scope','$sta
         $scope.ARDetialModel.Status = type;
         $http.post(SETTING.ApiUrl +'/BrokerLeadClient/UpdateLeadClient',$scope.ARDetialModel,{ 'withCredentials':true}).success(function(data){
             if(data.Status){
+                alert(data.Msg);
                 $state.go('page.CRM.DkRecord.index');
             }else{
                 alert(data.Msg);
