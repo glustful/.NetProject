@@ -9,11 +9,13 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Zerg.Common;
 using Zerg.Models.CRM;
+using System.ComponentModel;
 
 namespace Zerg.Controllers.CRM
 {
     // 商家管理
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    [Description("商家管理类")]
     public class MerchantInfoController : ApiController
     {
         private readonly IMerchantInfoService _merchantInfoService;
@@ -26,10 +28,11 @@ namespace Zerg.Controllers.CRM
 
 
         /// <summary>
-        /// 新增商家
+        /// 传入商家参数，新增商家，返回新增商家结果状态信息
         /// </summary>
-        /// <param name="merchantInfoModel"></param>
-        /// <returns></returns>
+        /// <param name="merchantInfoModel">商家参数</param>
+        /// <returns>新增商家结果状态信息</returns>
+     
         [System.Web.Http.HttpPost]
         public HttpResponseMessage AddMerchantInfo(MerchantInfoModel merchantInfoModel)
         {
@@ -61,10 +64,11 @@ namespace Zerg.Controllers.CRM
 
 
         /// <summary>
-        /// 撤掉商家
+        /// 传入商家ID，撤掉商家，返回撤掉商家结果状态信息
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">商家ID</param>
+        /// <returns>撤掉商家结果状态信息</returns>
+         
         [System.Web.Http.HttpPost]
         public HttpResponseMessage DeleteMerchantInfo(string id)
         {
@@ -84,12 +88,13 @@ namespace Zerg.Controllers.CRM
 
 
         /// <summary>
-        /// 查找商家
+        /// 传入商家名称，查询商家，返回新增商家列表
         /// </summary>
-        /// <param name="Page"></param>
-        /// <param name="PageCount"></param>
-        /// <param name="isDescending"></param>
-        /// <returns></returns>
+        /// <param name="Page">页码</param>
+        /// <param name="PageCount">页面数量</param>
+        /// <param name="isDescending">是否降序排列</param>
+        /// <returns>商家列表</returns>
+        
         [System.Web.Http.HttpGet]
 
         public HttpResponseMessage SearchMerchantInfo(string name = null, int page = 1, int pageSize = 10)
@@ -112,9 +117,9 @@ namespace Zerg.Controllers.CRM
 
 
         /// <summary>
-        /// 修改商家信息
+        /// 传入商家参数，修改商家，返回修改商家结果状态信息
         /// </summary>
-        /// <param name="merchantInfoModel"></param>
+        /// <param name="merchantInfoModel">商家参数</param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
         public HttpResponseMessage UpdateMerchantInfo(MerchantInfoModel merchantInfoModel)
@@ -150,10 +155,10 @@ namespace Zerg.Controllers.CRM
 
 
         /// <summary>
-        /// 注销商家
+        /// 传入商家参数，注销商家，返回注销商家结果状态信息
         /// </summary>
-        /// <param name="merchantInfoModel"></param>
-        /// <returns></returns>
+        /// <param name="merchantInfoModel">商家参数</param>
+        /// <returns>注销商家结果状态信息</returns>
         [System.Web.Http.HttpPost]
         public HttpResponseMessage LogoffMerchantInfo(MerchantInfoModel merchantInfoModel)
         {
@@ -179,10 +184,10 @@ namespace Zerg.Controllers.CRM
 
 
         /// <summary>
-        /// 查找商家详情
+        /// 传入商家ID，查找商家详情，返回商家详细信息
         /// </summary>
-        /// <param name="merchantInfoModel"></param>
-        /// <returns></returns>
+        /// <param name="merchantInfoModel">商家ID</param>
+        /// <returns>商家详细信息</returns>
         [System.Web.Http.HttpGet]
         public HttpResponseMessage GetDetailMerchantInfo(string id)
         {

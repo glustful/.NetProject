@@ -22,10 +22,11 @@ using CRM.Service.PartnerList;
 using CRM.Service.RecommendAgent;
 using CRM.Service.ClientInfo;
 using CRM.Service.MessageDetail;
+using System.ComponentModel;
 
 namespace Zerg.Controllers.CRM
 {
-    [AllowAnonymous ]
+    [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// 经纪人管理  李洪亮  2015-05-04
@@ -41,11 +42,21 @@ namespace Zerg.Controllers.CRM
         private readonly IRoleService _roleService;
         private readonly IMessageDetailService _MessageService;
         private readonly IUserService _userService;
-
+        /// <summary>
+        /// 经纪人管理初始化
+        /// </summary>
+        /// <param name="clientInfoService">clientInfoService</param>
+        /// <param name="workContext">workContext</param>
+        /// <param name="brokerService">brokerService</param>
+        /// <param name="partnerlistService">partnerlistService</param>
+        /// <param name="recommendagentService">recommendagentService</param>
+        /// <param name="roleService">roleService</param>
+        /// <param name="MessageService">MessageService</param>
+        /// <param name="userService">userService</param>
         public BrokerInfoController(IClientInfoService clientInfoService,
-            IWorkContext workContext, 
+            IWorkContext workContext,
             IBrokerService brokerService,
-            IPartnerListService partnerlistService, 
+            IPartnerListService partnerlistService,
             IRecommendAgentService recommendagentService,
             IRoleService roleService,
             IMessageDetailService MessageService,
@@ -53,26 +64,27 @@ namespace Zerg.Controllers.CRM
             )
         {
             _clientInfoService = clientInfoService;
-            _workContext =workContext;
+            _workContext = workContext;
             _brokerService = brokerService;
             _partnerlistService = partnerlistService;
             _recommendagentService = recommendagentService;
             _roleService = roleService;
-            _MessageService = MessageService; 
+            _MessageService = MessageService;
             _userService = userService;
         }
 
 
-        #region 经纪人管理 
-       
-        
-        
+        #region 经纪人管理
+
+
+
         /// <summary>
-        /// 获取经纪人
+        /// 传入Id,检索经纪人,返回经纪人列表
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="id">经纪人Id</param>
+        /// <returns>经纪人列表</returns>
         [System.Web.Http.HttpGet]
+        [Description("检索返回经纪人列表")]
         public HttpResponseMessage GetBroker(string id)
         {
             if (string.IsNullOrEmpty(id) || !PageHelper.ValidateNumber(id))
@@ -90,11 +102,11 @@ namespace Zerg.Controllers.CRM
                 Nickname = brokerlist.Nickname,
                 Sexy = brokerlist.Sexy,
                 Sfz = brokerlist.Sfz,
-                Email = brokerlist.Email,               
+                Email = brokerlist.Email,
                 Headphoto = brokerlist.Headphoto,
-                rgtime  = brokerlist.Regtime.ToShortDateString ()
+                rgtime = brokerlist.Regtime.ToShortDateString()
             };
-            return PageHelper.toJson(new { List = dd});
+            return PageHelper.toJson(new { List = dd });
         }
         public HttpResponseMessage GetBrokerByAgent(string id)
         {
@@ -116,8 +128,8 @@ namespace Zerg.Controllers.CRM
                 Qq = brokerlist.Qq,
                 Email = brokerlist.Email,
                 Sfz = brokerlist.Sfz,
-                Regtime1 = brokerlist.Regtime.ToShortDateString (),
-                Usertype1 = brokerlist.Usertype.ToString (),
+                Regtime1 = brokerlist.Regtime.ToShortDateString(),
+                Usertype1 = brokerlist.Usertype.ToString(),
                 State = brokerlist.State,
                 PartnersName = brokerlist.PartnersName,
                 Address = brokerlist.Address
@@ -127,11 +139,12 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 通过User查找经纪人
+        /// 传入经纪人Id,检索经纪人信息,返回经纪人信息
         /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
+        /// <param name="userId">经纪人Id</param>
+        /// <returns>经纪人信息</returns>
         [System.Web.Http.HttpGet]
+        [Description("获取经纪人信息")]
         public HttpResponseMessage GetBrokerByUserId(string userId)
         {
             if (string.IsNullOrEmpty(userId) || !PageHelper.ValidateNumber(userId))
@@ -146,46 +159,48 @@ namespace Zerg.Controllers.CRM
             var brokerInfo = new BrokerModel
             {
                 Id = model.Id,
-            
+
                 Realname = model.Realname,
                 Nickname = model.Nickname,
                 Sexy = model.Sexy,
                 Sfz = model.Sfz,
                 Email = model.Email,
-                Phone=model.Phone,
-                Headphoto=model.Headphoto
+                Phone = model.Phone,
+                Headphoto = model.Headphoto
             };
 
             return PageHelper.toJson(brokerInfo);
         }
 
 
+
         /// <summary>
-        /// 会员列表查询操作
+        /// 传入会员参数,检索会员信息,返回会员列表
         /// </summary>
-        /// <param name="userType"></param>
-        /// <param name="name"></param>
-        /// <param name="phone"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
+        /// <param name="userType">用户类型</param>
+        /// <param name="name">用户名称</param>
+        /// <param name="phone">电话</param>
+        /// <param name="page">页码</param>
+        /// <param name="pageSize">页面数量</param>
         /// <returns></returns>
-       [System.Web.Http.HttpGet]
-        public HttpResponseMessage SearchBrokers(EnumUserType userType, string phone, string name = null, int page = 1, int pageSize = 10, int state=2)
+        [System.Web.Http.HttpGet]
+        [Description("传入会员参数,获取会员列表")]
+        public HttpResponseMessage SearchBrokers(EnumUserType userType, string phone, string name = null, int page = 1, int pageSize = 10, int state = 2)
         {
             //var phones = new int[1];
 
             var brokerSearchCondition = new BrokerSearchCondition
             {
-                Brokername=name,
-                Phone=phone,
+                Brokername = name,
+                Phone = phone,
                 OrderBy = EnumBrokerSearchOrderBy.OrderById,
-                Page=Convert.ToInt32(page),
-                PageCount=10,
+                Page = Convert.ToInt32(page),
+                PageCount = 10,
                 UserType = userType,
-                State =state 
-                
+                State = state
+
             };
-           
+
             var brokersList = _brokerService.GetBrokersByCondition(brokerSearchCondition).Select(p => new
             {
                 p.Id,
@@ -198,10 +213,10 @@ namespace Zerg.Controllers.CRM
                 p.Agentlevel,
                 p.Regtime,
                 p.Headphoto,
-                p.State ,
-                p.Usertype ,
-                btnVisibleDel=true,
-                btnVisibleCan=true
+                p.State,
+                p.Usertype,
+                btnVisibleDel = true,
+                btnVisibleCan = true
             }).ToList().Select(b => new
             {
                 b.Id,
@@ -214,29 +229,30 @@ namespace Zerg.Controllers.CRM
                 b.Agentlevel,
                 Regtime = b.Regtime.ToString("yyyy-MM-dd"),
                 b.Headphoto,
-                b.State ,
+                b.State,
                 b.Usertype,
                 btnVisibleDel = true,
-                btnVisibleCan = true  
+                btnVisibleCan = true
             });
             var brokerListCount = _brokerService.GetBrokerCount(brokerSearchCondition);
             return PageHelper.toJson(new { List = brokersList, Condition = brokerSearchCondition, totalCount = brokerListCount });
         }
 
         /// <summary>
-        /// 新增经纪人
+        /// 传入经纪人参数,增加经纪人,返回增加结果状态信息
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="broker">经纪人参数</param>
+        /// <returns>新增经纪人结果状态信息</returns>
         [System.Web.Http.HttpPost]
+        [Description("新增经纪人")]
         public HttpResponseMessage AddBroker([FromBody] BrokerEntity broker)
         {
 
-            if (!string.IsNullOrEmpty(broker.Brokername) )
+            if (!string.IsNullOrEmpty(broker.Brokername))
             {
                 var brokerEntity = new BrokerEntity
                 {
-                    Brokername=broker.Brokername,
+                    Brokername = broker.Brokername,
                     Uptime = DateTime.Now,
                     Addtime = DateTime.Now,
 
@@ -258,16 +274,16 @@ namespace Zerg.Controllers.CRM
 
         }
 
-
         /// <summary>
-        /// 修改经纪人
+        /// 传入经纪人参数,编辑修改经纪人信息,返回修改保存成功状态信息,成功返回"数据更新成功",失败返回"数据更新失败"
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="broker">经纪人信息</param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
+        [Description("修改经纪人信息")]
         public HttpResponseMessage UpdateBroker([FromBody] BrokerEntity broker)
         {
-            if (broker != null && !string.IsNullOrEmpty(broker.Id.ToString()) && PageHelper.ValidateNumber(broker.Id.ToString()) )
+            if (broker != null && !string.IsNullOrEmpty(broker.Id.ToString()) && PageHelper.ValidateNumber(broker.Id.ToString()))
             {
                 var brokerModel = _brokerService.GetBrokerById(broker.Id);
                 brokerModel.Headphoto = broker.Headphoto;
@@ -301,7 +317,7 @@ namespace Zerg.Controllers.CRM
 
                     var user = _userService.FindUser(brokerModel.UserId);
                     user.UserRoles.First().Role = brokerRole;
-                    
+
                     //更新用户权限
                     if (_userService.ModifyUser(user))
                     {
@@ -335,18 +351,19 @@ namespace Zerg.Controllers.CRM
 
 
         /// <summary>
-        /// 删除经纪人(标为删除状态 不可恢复)
+        /// 传入经纪人ID,删除经纪人,返回删除结果状态信息,成功提示＂数据删除成功＂，失败提示＂数据删除失败＂
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="id">经纪人ID</param>
+        /// <returns>经纪人删除结果状态信息</returns>
         [System.Web.Http.HttpPost]
+        [Description("删除经纪人")]
         public HttpResponseMessage DeleteBroker([FromBody] string id)
         {
             if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id))
             {
                 var broker = _brokerService.GetBrokerById(Convert.ToInt32(id));
                 broker.State = 0;
-                if (_brokerService.Update(broker)!=null)
+                if (_brokerService.Update(broker) != null)
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(true, "数据成功删除！"));
                 }
@@ -361,18 +378,18 @@ namespace Zerg.Controllers.CRM
 
 
         /// <summary>
-        /// 注销经纪人(以后能够恢复)
+        /// 传入经纪人Id,注销经纪人(不是物理删除,只是逻辑上的删除,以后可以恢复),返回注销结果状态提示,成功提示"数据删除成功",失败提示"数据删除失败"
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="id">经纪人ID</param>
+        /// <returns>经纪人数据删除结果状态信息</returns>
         [System.Web.Http.HttpPost]
         public HttpResponseMessage CancelBroker([FromBody] string id)
         {
             if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id))
             {
                 var broker = _brokerService.GetBrokerById(Convert.ToInt32(id));
-                broker.State =-1;
-                if (_brokerService.Update(broker)!=null)
+                broker.State = -1;
+                if (_brokerService.Update(broker) != null)
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(true, "数据成功注销！"));
                 }
@@ -387,14 +404,15 @@ namespace Zerg.Controllers.CRM
 
 
         /// <summary>
-        /// 经纪人排行 返回前10条
+        /// 检索经纪人列表,返回经纪人列表前10条
         /// </summary>
-        /// <returns></returns>
+        /// <returns>经纪人列表</returns>
 
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage  OrderByBrokerList()
+        [Description("检索经纪人列表,返回经纪人列表前10条")]
+        public HttpResponseMessage OrderByBrokerList()
         {
-          
+
 
             var brokersList = _brokerService.OrderbyBrokersList().Select(p => new
             {
@@ -404,15 +422,17 @@ namespace Zerg.Controllers.CRM
                 p.Amount
 
             }).ToList();
-            
-            return PageHelper.toJson(new { List = brokersList});
+
+            return PageHelper.toJson(new { List = brokersList });
         }
 
 
+
         /// <summary>
-        /// 经纪人排行 返回前3条
+        /// 检索经纪人列表,返回经纪人列表前3条
         /// </summary>
-        /// <returns></returns>
+        /// <returns>经纪人列表</returns>
+        [Description("获取前3的经纪人列表")]
 
         [System.Web.Http.HttpGet]
         public HttpResponseMessage OrderByBrokerTopThree()
@@ -436,63 +456,65 @@ namespace Zerg.Controllers.CRM
         /// <summary>
         /// 获取经纪人详细信息（合伙人个数  推荐人个数  客户个数  等级 排名 总佣金）
         /// </summary>
-        /// <returns></returns>
+        /// <returns>经纪人详细信息</returns>
         [System.Web.Http.HttpGet]
-       public HttpResponseMessage  GetBrokerDetails()
+        [Description("获取经纪人详细信息")]
+        public HttpResponseMessage GetBrokerDetails()
         {
-             var user = (UserBase)_workContext.CurrentUser;
-             if (user != null)
-             {
-                 var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
-                 if (broker == null)
-                 {
-                     return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
-                 }
-                 else
-                 {
-                     var partnerCount = 0;//合伙人个数
-                     var refereeCount = 0;//推荐人个数
-                     var customerCount = 0;//客户个数
-                     var levelStr = "";//等级
-                     var orderStr = "0";//排名
-                     var allMoneys = "0";//总佣金
+            var user = (UserBase)_workContext.CurrentUser;
+            if (user != null)
+            {
+                var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
+                if (broker == null)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+                }
+                else
+                {
+                    var partnerCount = 0;//合伙人个数
+                    var refereeCount = 0;//推荐人个数
+                    var customerCount = 0;//客户个数
+                    var levelStr = "";//等级
+                    var orderStr = "0";//排名
+                    var allMoneys = "0";//总佣金
 
-                     var partnerlistsearchcon = new PartnerListSearchCondition
-                     {
-                          Brokers=broker,
-                          Status = EnumPartnerType.同意
-                     };
-                     partnerCount = _partnerlistService.GetPartnerListCount(partnerlistsearchcon);
+                    var partnerlistsearchcon = new PartnerListSearchCondition
+                    {
+                        Brokers = broker,
+                        Status = EnumPartnerType.同意
+                    };
+                    partnerCount = _partnerlistService.GetPartnerListCount(partnerlistsearchcon);
 
-                     var recomagmentsearchcon = new RecommendAgentSearchCondition
-                     {
-                         BrokerId =broker.Id
-                     };
-                     refereeCount = _recommendagentService.GetRecommendAgentCount(recomagmentsearchcon);
+                    var recomagmentsearchcon = new RecommendAgentSearchCondition
+                    {
+                        BrokerId = broker.Id
+                    };
+                    refereeCount = _recommendagentService.GetRecommendAgentCount(recomagmentsearchcon);
 
-                     var condition = new ClientInfoSearchCondition
-                     {
-                      Addusers=broker.Id
-                     };
-                     customerCount = _clientInfoService.GetClientInfoCount(condition);
+                    var condition = new ClientInfoSearchCondition
+                    {
+                        Addusers = broker.Id
+                    };
+                    customerCount = _clientInfoService.GetClientInfoCount(condition);
 
-                     levelStr = broker.Agentlevel;
+                    levelStr = broker.Agentlevel;
 
-                     allMoneys = broker.Amount.ToString();
+                    allMoneys = broker.Amount.ToString();
 
-                     orderStr = GetOrdersByuserId(broker.Id.ToString());
+                    orderStr = GetOrdersByuserId(broker.Id.ToString());
 
-                     return PageHelper.toJson(new { partnerCount = partnerCount, refereeCount = refereeCount, customerCount = customerCount, levelStr = levelStr, orderStr = orderStr, allMoneys = allMoneys ,photo=broker.Headphoto,Name=broker.Brokername});
-                 }
-             }
-             return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+                    return PageHelper.toJson(new { partnerCount = partnerCount, refereeCount = refereeCount, customerCount = customerCount, levelStr = levelStr, orderStr = orderStr, allMoneys = allMoneys, photo = broker.Headphoto, Name = broker.Brokername });
+                }
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
         }
-
         /// <summary>
-        /// 获取经纪人的排名顺序
+        /// 传入经纪人ID,检索经纪人,返回经纪人排名顺序
         /// </summary>
-        /// <param name="userid"></param>
-        /// <returns></returns>
+        /// <param name="userid">经纪人ID</param>
+        /// <returns>经纪人排名顺序</returns>
+        /// 
+        [Description("获取经纪人排名顺序")]
         string GetOrdersByuserId(string userid)
         {
             #region 排序实现
@@ -502,7 +524,7 @@ namespace Zerg.Controllers.CRM
             int count = 1;
             for (int i = 0; i < brokerorderlistArray.Length; i++)
             {
-                 //确定是否到数组边界
+                //确定是否到数组边界
                 if (i + 1 < brokerorderlistArray.Length)
                 {
                     //如果与list中下一位的Num数相等则 排名Count数不变
@@ -528,24 +550,24 @@ namespace Zerg.Controllers.CRM
             }
             #endregion
 
-           if (listOrder.Count<=0)//无数据
-           {
-               return "1";
-           }
+            if (listOrder.Count <= 0)//无数据
+            {
+                return "1";
+            }
             else
             {
                 var resultOrder = listOrder.FirstOrDefault(o => o.userId == userid);
-               if(resultOrder!=null)
-               {
-                   return resultOrder.Id.ToString();
-               }
-               else
-               {
-                   //没找到  
-                   return (listOrder[listOrder.Count - 1].Id + 1).ToString();
-               }
+                if (resultOrder != null)
+                {
+                    return resultOrder.Id.ToString();
+                }
+                else
+                {
+                    //没找到  
+                    return (listOrder[listOrder.Count - 1].Id + 1).ToString();
+                }
             }
-           return "0";
+            return "0";
         }
 
         #endregion
@@ -554,25 +576,27 @@ namespace Zerg.Controllers.CRM
         /// <summary>
         /// 通过 邀请码获取发送者信息 (UserController注册也同一判断)
         /// </summary>
-        /// <param name="invitationCode"></param>
-        /// <returns></returns>
+        /// <param name="invitationCode">邀请码</param>
+        /// <returns>发送者信息</returns>
         [HttpPost]
-        public HttpResponseMessage  GetBrokerByInvitationCode([FromBody] string invitationCode)
+        [Description("邀请码发送者信息")]
+        public HttpResponseMessage GetBrokerByInvitationCode([FromBody] string invitationCode)
         {
-            if(!string.IsNullOrEmpty(invitationCode))
+            if (!string.IsNullOrEmpty(invitationCode))
             {
-                MessageDetailSearchCondition messageSearchcondition=new MessageDetailSearchCondition{
-                      InvitationCode=invitationCode,
-                       Title="推荐经纪人"
+                MessageDetailSearchCondition messageSearchcondition = new MessageDetailSearchCondition
+                {
+                    InvitationCode = invitationCode,
+                    Title = "推荐经纪人"
                 };
                 var messageDetail = _MessageService.GetMessageDetailsByCondition(messageSearchcondition).FirstOrDefault();
-                if(messageDetail!=null)
+                if (messageDetail != null)
                 {
-                    return PageHelper.toJson(new { invitationCode =invitationCode });  
+                    return PageHelper.toJson(new { invitationCode = invitationCode });
                 }
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));  
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));
             }
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));  
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));
         }
     }
 
@@ -580,12 +604,13 @@ namespace Zerg.Controllers.CRM
     /// <summary>
     /// 排名类
     /// </summary>
+    [Description("排名类")]
     public class ResultOrder
     {
         public int Id { get; set; } //排名Id
 
         public string userId { get; set; }//用户ID
         public string Name { get; set; }//用户姓名
-        public decimal  Moneys { get; set; }//金额
+        public decimal Moneys { get; set; }//金额
     }
 }
