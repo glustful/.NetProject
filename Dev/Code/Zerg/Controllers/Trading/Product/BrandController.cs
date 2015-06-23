@@ -96,6 +96,8 @@ namespace Zerg.Controllers.Trading.Product
         /// </summary>
         /// <param name="productBrandModel">品牌项目和数据模型</param>
         /// <returns>修改结果</returns>
+        [System.Web.Http.HttpPost]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage UpProductBrand(ProductBrandModel productBrandModel)
         {
             Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
@@ -112,6 +114,7 @@ namespace Zerg.Controllers.Trading.Product
                     PB.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
                     PB.SubTitle = productBrandModel.SubTitle;
                     PB.Content = productBrandModel.Content;
+                    PB.Bimg = productBrandModel.Bimg;
                 if(_productBrandService.Update(PB)!=null)
                 {
                      return PageHelper.toJson(PageHelper.ReturnValue(true, "数据修改成功！"));
@@ -319,7 +322,7 @@ namespace Zerg.Controllers.Trading.Product
                 SubTitle = Brand.SubTitle,
                 Upduser=Brand.Upduser,
                 Content=Brand.Content,
-                
+                Id=Brand.Id,
 
                 //Parameters = Brand.ParameterEntities.Select(p => new ProductBrandParameterModel
                 //{
