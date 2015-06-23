@@ -79,7 +79,9 @@ namespace Zerg.Controllers.CRM
         {
             var sech = new BrokerLeadClientSearchCondition
             {
-                OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderById
+                OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderById,
+                Status = EnumBLeadType.预约中,
+               
             };
             var list = _brokerleadclientService.GetBrokerLeadClientsByCondition(sech).Select(p => new
             {
