@@ -68,7 +68,9 @@ angular.module("app").controller('ContentCreateController',['$http','$scope','$s
         Content:'',
         TitleImg:'',
         ChannelId: 0,
-        AddUser:0
+        AddUser:0,
+        AdSubTitle:''
+
     };
 
     $http.get(SETTING.ApiUrl + '/Channel/Index',{'withCredentials':true}).success(function(data){

@@ -101,7 +101,8 @@ namespace Zerg.Controllers.Trading.Product
         /// </summary>
         /// <param name="productBrandModel">品牌项目和数据模型</param>
         /// <returns>修改结果</returns>
-        [Description("修改商品品牌")]
+        [System.Web.Http.HttpPost]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage UpProductBrand(ProductBrandModel productBrandModel)
         {
             Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
@@ -112,13 +113,14 @@ namespace Zerg.Controllers.Trading.Product
             }
             else
             {
-                var PB = _productBrandService.GetProductBrandById(productBrandModel.Id);
-                PB.Updtime = DateTime.Now;
-                PB.Bname = productBrandModel.Bname;
-                PB.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                PB.SubTitle = productBrandModel.SubTitle;
-                PB.Content = productBrandModel.Content;
-                if (_productBrandService.Update(PB) != null)
+                var PB=_productBrandService.GetProductBrandById(productBrandModel.Id);
+                    PB.Updtime =DateTime.Now;
+                    PB.Bname = productBrandModel.Bname;
+                    PB.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    PB.SubTitle = productBrandModel.SubTitle;
+                    PB.Content = productBrandModel.Content;
+                    PB.Bimg = productBrandModel.Bimg;
+                if(_productBrandService.Update(PB)!=null)
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(true, "数据修改成功！"));
                 }
@@ -336,9 +338,7 @@ namespace Zerg.Controllers.Trading.Product
                 Bimg = Brand.Bimg,
                 Bname = Brand.Bname,
                 SubTitle = Brand.SubTitle,
-                Upduser = Brand.Upduser,
-                Content = Brand.Content,
-
+             
 
                 //Parameters = Brand.ParameterEntities.Select(p => new ProductBrandParameterModel
                 //{
@@ -462,9 +462,9 @@ namespace Zerg.Controllers.Trading.Product
                         Commition = product.Dealcommission.ToString(),
                         HouseType = product.ProductParameter.FirstOrDefault(o => o.Parameter.Name == "户型") == null ? "" : product.ProductParameter.FirstOrDefault(o => o.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString(),
                         Price = product.Price.ToString(),
-                        ProductId = product.Id.ToString(),
+                        ProductId = product.ProductDetail.Id,
                         SubTitle = product.SubTitle,
-                        Productname = product.Productname
+                        Productname = product.ProductDetail.Productname
                     });
                 }
             }
@@ -528,7 +528,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 商品Id
         /// </summary>
-        public string ProductId { get; set; }
+        public int ProductId { get; set; }
        /// <summary>
        /// 商品名称
        /// </summary>
