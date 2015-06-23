@@ -8,7 +8,9 @@ var allowState = [
     'app.housesPic',
     'user.register',
     'user.PasswordFound',
-    'app.invite'
+    'app.invite',
+    'app.housesBuy'
+
 ];
 app.run(
     ['$rootScope', '$state', '$stateParams', 'AuthService',

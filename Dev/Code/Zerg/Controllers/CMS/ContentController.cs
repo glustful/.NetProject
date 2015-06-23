@@ -89,7 +89,8 @@ namespace Zerg.Controllers.CMS
                 Content = content.Content,
                 ChannelName = content.Channel.Name,
                 ChannelId = content.Channel.Id,
-                Status = content.Status
+                Status=content.Status
+                AdSubTitle=content.AdSubTitle
             };
             return PageHelper.toJson(contentDetail);
         }
@@ -115,6 +116,7 @@ namespace Zerg.Controllers.CMS
                 content.Title = model.Title;
                 content.Content = model.Content;
                 content.Status = model.Status;
+                content.AdSubTitle = model.AdSubTitle;
                 content.UpdUser = _workContent.CurrentUser.Id;
                 content.UpdTime = DateTime.Now;
                 content.Channel = newChannel;
@@ -144,32 +146,33 @@ namespace Zerg.Controllers.CMS
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "标题存在非法字符！"));
             }
             else
-            {
-                var newChannel = _channelService.GetChannelById(model.ChannelId);
-                if (newChannel == null)
-                {
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "请选择频道！"));
-                }
-                var content = new ContentEntity
-                {
-                    Title = model.Title,
-                    TitleImg = model.TitleImg,
-                    Content = model.Content,
-                    Status = model.Status,
-                    Channel = newChannel,
-                    Adduser = _workContent.CurrentUser.Id,
-                    Addtime = DateTime.Now,
-                    UpdUser = _workContent.CurrentUser.Id,
-                    UpdTime = DateTime.Now
-                };
-                if (_contentService.Create(content) != null)
-                {
-                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
-                }
-                else
-                {
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
-                }
+            {                              
+                    var newChannel = _channelService.GetChannelById(model.ChannelId);
+                    if (newChannel == null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "请选择频道！"));
+                    }
+                    var content = new ContentEntity
+                    {
+                        Title = model.Title,
+                        TitleImg = model.TitleImg,
+                        Content = model.Content,
+                        Status = model.Status,
+                        Channel = newChannel,
+                        Adduser = _workContent.CurrentUser.Id,
+                        Addtime = DateTime.Now,
+                        UpdUser = _workContent.CurrentUser.Id,
+                        UpdTime = DateTime.Now,
+                        AdSubTitle=model.AdSubTitle
+                    };
+                    if (_contentService.Create(content) != null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                    }
+                    else
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                    }
             }
         }
         /// <summary>
