@@ -22,6 +22,7 @@ using YooPoon.WebFramework.User.Entity;
 using YooPoon.WebFramework.User.Services;
 using Zerg.Common;
 using Zerg.Models.CRM;
+using System.ComponentModel;
 
 namespace Zerg.Controllers.CRM
 {
@@ -29,6 +30,7 @@ namespace Zerg.Controllers.CRM
     /// <summary>
     /// admin的推荐至平台流程处理
     /// </summary>
+    [Description("Andmin的推荐平台流程处理")]
     public class AdminRecomController : ApiController
     {
         private readonly IBrokerRECClientService _brokerRecClientService;
@@ -40,7 +42,18 @@ namespace Zerg.Controllers.CRM
         private readonly ILevelService _levelService;
         private readonly IRoleService _roleService;
         private readonly IProductService _productService;
-
+        /// <summary>
+        /// andmin推荐平台流程处理
+        /// </summary>
+        /// <param name="brokerRecClientService">brokerRecClientService</param>
+        /// <param name="brokerService">brokerService</param>
+        /// <param name="userService">userService</param>
+        /// <param name="workContext">workContext</param>
+        /// <param name="orderService">orderService</param>
+        /// <param name="orderDetailService">orderDetailService</param>
+        /// <param name="levelService">levelService</param>
+        /// <param name="roleService">roleService</param>
+        /// <param name="productService">productService</param>
         public AdminRecomController(IBrokerRECClientService brokerRecClientService,
             IBrokerService brokerService,
             IUserService userService,
@@ -64,12 +77,16 @@ namespace Zerg.Controllers.CRM
         }
 
         #region 经济人列表 杨定鹏 2015年5月4日14:29:24
-
         /// <summary>
-        /// 经纪人列表
+        /// 传入经纪人推荐类型,经纪人名称,页面设置等,查询经济人列表,返回经纪人列表 
         /// </summary>
-        /// <returns></returns>
+        /// <param name="status">状态</param>
+        /// <param name="brokername">经纪人名称</param>
+        /// <param name="page">页码</param>
+        /// <param name="pageSize">页面数量</param>
+        /// <returns>经纪人列表</returns>
         [HttpGet]
+        [Description("查询经纪人列表")]
         public HttpResponseMessage BrokerList(EnumBRECCType status, string brokername, int page, int pageSize)
         {
 
@@ -121,11 +138,12 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 添加新用户
+        /// 传入经济人参数,添加一个经济人,返回添加结果状态信息.成功提示"注册成功"
         /// </summary>
-        /// <param name="brokerModel"></param>
-        /// <returns></returns>
+        /// <param name="brokerModel">经济人参数</param>
+        /// <returns>注册结果状态信息</returns>
         [HttpPost]
+        [Description("经济人注册")]
         public HttpResponseMessage AddBroker([FromBody]BrokerModel brokerModel)
         {
             if (string.IsNullOrEmpty(brokerModel.UserName)) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名不能为空"));
@@ -250,9 +268,10 @@ namespace Zerg.Controllers.CRM
         /// <summary>
         /// 审核状态变更
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">ID</param>
+        /// <returns>审核后的经纪人</returns>
         [HttpGet]
+        [Description("审核状态变更")]
         public HttpResponseMessage GetAuditDetail(int id)
         {
             var model = _brokerRecClientService.GetBrokerRECClientById(id);
@@ -285,8 +304,10 @@ namespace Zerg.Controllers.CRM
         /// 洽谈成功，成交订单转入结转状态，应生成账单（此处未实现 2015-6-15 10:50:08）
         /// 洽谈失败，成交订单转入作废状态
         /// </summary>
-        /// <returns></returns>
+        /// <param name="brokerRecClientModel">经济人推荐参数</param>
+        /// <returns>确认结果状态信息</returns>
         [HttpPost]
+        [Description("通过推荐")]
         public HttpResponseMessage PassAudit([FromBody]BrokerRECClientModel brokerRecClientModel)
         {
             if (brokerRecClientModel.Id == 0)
@@ -342,8 +363,9 @@ namespace Zerg.Controllers.CRM
                 _orderService.Create(oe);
 
                 #endregion
-            }else if(brokerRecClientModel.Status == EnumBRECCType.审核不通过){}
-          
+            }
+            else if (brokerRecClientModel.Status == EnumBRECCType.审核不通过) { }
+
             else
             {
                 #region 推荐订单变更 杨定鹏 2015年6月4日17:38:08
@@ -418,10 +440,11 @@ namespace Zerg.Controllers.CRM
 
         #region 选择带客人 杨定鹏 2015年5月5日19:45:14
         /// <summary>
-        /// 带客人列表
+        /// 查询待客列表,返回待客列表
         /// </summary>
-        /// <returns></returns>
+        /// <returns>待客列表</returns>
         [HttpGet]
+        [Description("查询待客列表,返回待客列表")]
         public HttpResponseMessage WaiterList()
         {
             var condition = new BrokerSearchCondition
@@ -442,10 +465,11 @@ namespace Zerg.Controllers.CRM
 
         #region 场秘管理 杨定鹏 2015年5月5日19:45:40
         /// <summary>
-        /// 场秘列表
+        /// 查询场秘列表,返回场秘列表
         /// </summary>
-        /// <returns></returns>
+        /// <returns>场秘列表</returns>
         [HttpGet]
+        [Description("查询场秘列表")]
         public HttpResponseMessage SecretaryList()
         {
             var condition = new BrokerSearchCondition
@@ -465,10 +489,12 @@ namespace Zerg.Controllers.CRM
         #endregion
 
         /// <summary>
-        /// 确认成功/失败
+        /// 传入经济人推荐参数,确认成功提交
         /// </summary>
-        /// <param name="brokerRecClientModel"></param>
-        /// <returns></returns>
+        /// <param name="brokerRecClientModel">经济人参数</param>
+        /// <returns>提交结果状态信息</returns>
+
+        [Description("经纪人推荐确认提交")]
         public HttpResponseMessage Access([FromBody]BrokerRECClientModel brokerRecClientModel)
         {
             if (brokerRecClientModel == null) throw new ArgumentNullException("brokerRecClientModel");

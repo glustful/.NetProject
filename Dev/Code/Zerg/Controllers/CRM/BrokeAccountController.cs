@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Zerg.Common;
+using System.ComponentModel;
 
 namespace Zerg.Controllers.CRM
 {
@@ -17,10 +18,17 @@ namespace Zerg.Controllers.CRM
     /// <summary>
     /// 账户明细管理  李洪亮  2015-05-05
     /// </summary>
+    [Description("账户明细管理类")]
     public class BrokeAccountController : ApiController
     {
         private IBrokeAccountService _brokeaccountService;
         private  IBrokerService _brokerService;
+        /// <summary>
+        /// 账户明细管理初始化
+        /// </summary>
+        /// <param name="brokeaccountService">brokeaccountService</param>
+        /// <param name="brokerService">brokerService</param>
+        [Description("账户明细管理初始化构造器")]
         public BrokeAccountController(IBrokeAccountService brokeaccountService, IBrokerService brokerService)
         {
             _brokeaccountService = brokeaccountService;
@@ -29,12 +37,14 @@ namespace Zerg.Controllers.CRM
 
         #region 经纪人账户明细详情
 
-      /// <summary>
-        /// 经纪人账户明细详情
-      /// </summary>
-      /// <param name="userId">经纪人ID</param>
-      /// <returns></returns>
-
+        /// <summary>
+        /// 传入用户id,页码,压面数量设置,检索经纪人账户明细,返回经纪人账户明细
+        /// </summary>
+        /// <param name="userId">经纪人ID</param>
+        /// <param name="page">页码</param>
+        /// <param name="pageSize">页面数量</param>
+        /// <returns>经纪人账户详细信息</returns>
+        [Description("获取经纪人账户详细信息")]
         [System.Web.Http.HttpGet]
         public HttpResponseMessage GetPointDetailListByUserId(string userId=null, int page = 1, int pageSize = 10)
         {
@@ -45,7 +55,7 @@ namespace Zerg.Controllers.CRM
 
             var brokeaccountcon = new BrokeAccountSearchCondition
             {
-               Brokers=_brokerService.GetBrokerById(Convert.ToInt32(userId)),
+               Brokers =_brokerService.GetBrokerById(Convert.ToInt32(userId)),
                Page = Convert.ToInt32(page),
                PageCount = pageSize
             };
@@ -54,20 +64,28 @@ namespace Zerg.Controllers.CRM
                 Id = p.Id,
                 p.Balancenum,
                 p.MoneyDesc,
-             
+                brokername = p.Broker.Brokername,
                 p.Addtime
 
-            }).ToList();
+            }).ToList().Select(p => new {
+                Id = p.Id,
+                p.Balancenum,
+                p.MoneyDesc,
+                brokername = p.brokername,
+               Addtime= p.Addtime.ToString ("yyyy-MM-dd")
+            });
             var PointDetailListCount = _brokeaccountService.GetBrokeAccountCount(brokeaccountcon);
             return PageHelper.toJson(new { List = PointDetailList, Condition = brokeaccountcon, totalCount = PointDetailListCount });       
         }
 
         /// <summary>
-        /// 新增详情
+        /// 传入经纪人账户信息参数,新增经纪人账户信息,返回新增经纪人账户信息结果状态,成功则返回"数据添加成功",失败返回"数据添加失败"
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="brokeAccount">经纪人账户参数</param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
+        [Description("新增经纪人账户信息")]
+        
         public HttpResponseMessage AddBrokeAccount([FromBody] BrokeAccountEntity brokeAccount)
         {
 

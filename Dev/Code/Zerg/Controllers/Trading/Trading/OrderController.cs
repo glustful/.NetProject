@@ -20,6 +20,7 @@ using Zerg.Models.Trading.Trading;
 using System.Web.Http.Cors;
 namespace Zerg.Controllers.Trading.Trading.Order
 {
+    [System.Web.Http.AllowAnonymous]
     //订单推送（Status）：0：未审核；
     //                    1：审核未通过；
     //                    2: 审核已通过；
@@ -191,6 +192,39 @@ namespace Zerg.Controllers.Trading.Trading.Order
             }).ToList();
             return PageHelper.toJson(list);
         }
+        /// <summary>
+        /// 获取洽谈后的订单
+        /// </summary>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        public HttpResponseMessage GetOrders()
+        {
+            var shipStatus = 3;
+            var status = 1;
+            OrderSearchCondition OSC = new OrderSearchCondition()
+            {
+                Shipstatus = shipStatus,
+                Status = status
+            };
+            var OrderList = _orderService.GetOrdersByCondition(OSC).Select(a => new
+            {
+                a.Ordercode,
+                a.Ordertype,
+                a.Status,
+                a.Shipstatus,
+                a.Agentname,
+                a.Agenttel,
+                a.Busname,
+                a.OrderDetail.Price,
+                a.OrderDetail.RecCommission,
+                a.OrderDetail.Commission,
+                a.OrderDetail.Dealcommission
+            }).ToList();
+            return PageHelper.toJson(OrderList);
+            
+        }
+
         /// <summary>
         /// 查询所有成交订单；
         /// </summary>

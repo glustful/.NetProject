@@ -3,7 +3,8 @@
 自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css" />
 angular.js路径app/scrips/controller/CRM/taskConfig.js-->
 <div id="divTaskCon" ng-controller="taskconfigcontroller">
-    <div class="taskCon "onkeydown='if(event.keyCode==13){ add1.click()}'>
+    <div class="taskCon "onkeydown='var keynum;
+        keynum = window.event ? event.keyCode : event.which;if(keynum==13){ add1.click()}'>
         <p style="height:30px"></p>
         <p > &nbsp;&nbsp;&nbsp;&nbsp;<select ng-click="delWarn()" ng-model="mainCondition.TaskTypeId"  class="inpuWid ptaskConfiga bordhtml form-control"  name="" >
             <option ng-repeat="item in taskType" value={{item.Id}}>{{item.Name}}</option>
@@ -24,7 +25,8 @@ angular.js路径app/scrips/controller/CRM/taskConfig.js-->
     <!--<hr style="height:1px;border:none;border-top:1px solid #555555;" />-->
     <hr class="hrcss" />
     <hr class="hrcss" />
-       <div class="taskCon bord"onkeydown='if(event.keyCode==13){ add2.click()}'>
+       <div class="taskCon bord"onkeydown='var keynum;
+        keynum = window.event ? event.keyCode : event.which;if(keynum==13){ add2.click()}'>
         <p style="height:30px"></p>
 
         <p>&nbsp;&nbsp;&nbsp;&nbsp;<select ng-click="delWarn()" ng-model="mainCondition.TaskTagId" class="inpuWid ptaskConfiga bordhtml form-control"  name="" >
@@ -42,7 +44,8 @@ angular.js路径app/scrips/controller/CRM/taskConfig.js-->
     </div>
     <hr class="hrcss"/>
     <hr class="hrcss"/>
-    <div class="taskCon bord"onkeydown='if(event.keyCode==13){ add3.click()}'>
+    <div class="taskCon bord"onkeydown='var keynum;
+        keynum = window.event ? event.keyCode : event.which;if(keynum==13){ add3.click()}'>
         <p style="height:30px"></p>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;<select ng-click="delWarn()" ng-model="mainCondition.TaskAwardId" class="inpuWid ptaskConfiga bordhtml form-control"  name="" >
             <option  ng-repeat="item in taskaward" value={{item.Id}}>{{item.Name}}</option>
@@ -58,7 +61,8 @@ angular.js路径app/scrips/controller/CRM/taskConfig.js-->
     </div>
     <hr class="hrcss"/>
     <hr class="hrcss"/>
-    <div class="taskCon bord"onkeydown='if(event.keyCode==13){ add4.click()}'>
+    <div class="taskCon bord"onkeydown='var keynum;
+        keynum = window.event ? event.keyCode : event.which;if(keynum==13){ add4.click()}'>
         <p style="height:30px"></p>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;<select ng-click="delWarn()" ng-model="mainCondition.TaskPunishmentId"  class="inpuWid ptaskConfiga bordhtml form-control"  name="" >
             <option ng-repeat="item in taskpunishment" value={{item.Id}}>{{item.Name}}</option>
