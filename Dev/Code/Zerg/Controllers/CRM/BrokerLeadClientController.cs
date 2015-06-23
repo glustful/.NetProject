@@ -197,6 +197,7 @@ namespace Zerg.Controllers.CRM
             var detail = new BrokerLeadClientModel
             {
                 Id = model.Id,
+                Broker = model.Broker.Id,
                 Brokername = model.Brokername,
                 Brokerlevel = model.BrokerLevel,
                 NickName = model.Broker.Nickname,
@@ -422,10 +423,11 @@ namespace Zerg.Controllers.CRM
                     OrderEntity oe = new OrderEntity
                     {
                         Adddate = DateTime.Now,
-                        Adduser = model.Adduser.ToString(CultureInfo.InvariantCulture),
+                        Adduser = model.Broker.ToString(),//model.Adduser.ToString(CultureInfo.InvariantCulture),
                         AgentId = model.Adduser,
                         //HouseType = model.ProjectId == 0 ? "" : _productService.GetProductById(model.ProjectId).Productname,
-                        Agentname = model.Adduser == 0 ? "" : _brokerService.GetBrokerByUserId(model.Adduser).Brokername,
+                       // Agentname = model.Adduser == 0 ? "" : _brokerService.GetBrokerByUserId(model.Adduser).Brokername,
+                        Agentname = model.Brokername,//_brokerService.GetBrokerByUserId(model.Adduser).Brokername,
                         Agenttel = model.Phone,
                         BusId = product.Bussnessid,
                         Busname = product.BussnessName,
@@ -437,7 +439,7 @@ namespace Zerg.Controllers.CRM
                         Shipstatus = (int)EnumBRECCType.等待上访,
                         Status = (int)EnumOrderStatus.审核通过,
                         Upddate = DateTime.Now,
-                        Upduser = model.Adduser.ToString(CultureInfo.InvariantCulture)
+                        Upduser = model.Broker.ToString(),//model.Adduser.ToString(CultureInfo.InvariantCulture)
                     };
                     //创建带客订单号
                     //订单详情；
