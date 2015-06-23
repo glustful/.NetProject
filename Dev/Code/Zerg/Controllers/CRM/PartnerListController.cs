@@ -81,7 +81,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="PartnersId">经纪人id</param>
         /// <returns>经纪人的合伙人列表</returns>
-        [Description("查询返回经纪人关联的合伙人列表")]
+        [Description("返回经纪人关联的合伙人列表")]
         [HttpGet]
         public HttpResponseMessage SearchPartnerList1(int PartnersId)
         {
