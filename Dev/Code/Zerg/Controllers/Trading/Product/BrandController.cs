@@ -462,9 +462,9 @@ namespace Zerg.Controllers.Trading.Product
                         Commition = product.Dealcommission.ToString(),
                         HouseType = product.ProductParameter.FirstOrDefault(o => o.Parameter.Name == "户型") == null ? "" : product.ProductParameter.FirstOrDefault(o => o.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString(),
                         Price = product.Price.ToString(),
-                        ProductId = product.Id.ToString(),
+                        ProductId = product.ProductDetail.Id,
                         SubTitle = product.SubTitle,
-                        Productname = product.Productname
+                        Productname = product.ProductDetail.Productname
                     });
                 }
             }
@@ -528,7 +528,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 商品Id
         /// </summary>
-        public string ProductId { get; set; }
+        public int ProductId { get; set; }
        /// <summary>
        /// 商品名称
        /// </summary>
