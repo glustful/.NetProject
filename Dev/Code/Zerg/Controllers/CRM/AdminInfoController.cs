@@ -7,6 +7,7 @@ using CRM.Entity.Model;
 using CRM.Service.Broker;
 using Zerg.Common;
 using Zerg.Models.CRM;
+using System.ComponentModel;
 
 namespace Zerg.Controllers.CRM
 {
@@ -14,10 +15,16 @@ namespace Zerg.Controllers.CRM
     /// <summary>
     /// CRM 个人信息管理/admin管理
     /// </summary>
+
+    [Description("CRM个人信息管理/Admin管理")]
     public class AdminInfoController : ApiController
     {
         private readonly IBrokerService _brokerService;
-
+        /// <summary>
+        /// 个人信息管理初始化
+        /// </summary>
+        /// <param name="brokerService"></param>
+        [Description("个人信息管理初始化构造器")]
         public AdminInfoController(IBrokerService brokerService
             )
         {
@@ -26,10 +33,12 @@ namespace Zerg.Controllers.CRM
 
         #region 管理员明细 杨定鹏2015年5月5日18:45:52
         /// <summary>
-        /// 管理员列表
+        /// 传入管理员参数,查询管理员,返回管理员列表
         /// </summary>
-        /// <param name="brokerSearchModel"></param>
-        /// <returns></returns>
+        /// <param name="brokerSearchModel">经纪人参数</param>
+        /// <returns>管理员列表</returns>
+        /// 
+        [Description("检索管理员,返回管理员列表")]
         public HttpResponseMessage GetAdminList([FromBody]BrokerSearchModel brokerSearchModel)
         {
             var condition = new BrokerSearchCondition
@@ -40,20 +49,22 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 获取管理员
+        /// 传入经纪人参数,获取经纪人,返回经纪人信息
         /// </summary>
-        /// <param name="brokerModel"></param>
-        /// <returns></returns>
+        /// <param name="brokerModel">经纪人参数</param>
+        /// <returns>经纪人信息</returns>
+        [Description("检索经纪人信息")]
         public HttpResponseMessage GetAdmin([FromBody] BrokerModel brokerModel)
         {
             return PageHelper.toJson(_brokerService.GetBrokerById(brokerModel.Id));
         }
 
         /// <summary>
-        /// 添加/修改管理员
+        /// 传入经纪人参数,添加或者修改经纪人信息,返回添加或者修改结果状态信息,成功添加返回"添加成功",添加失败返回"添加失败",成功修改返回"修改成功",修改失败返回"修改失败"
         /// </summary>
-        /// <param name="brokerModel"></param>
-        /// <returns></returns>
+        /// <param name="brokerModel">经纪人参数</param>
+        /// <returns>添加或修改经纪人结果状态信息</returns>
+        [Description("添加或者修改经纪人信息")]
         public HttpResponseMessage AddAdmin([FromBody] BrokerModel brokerModel)
         {
             var model = new BrokerEntity
@@ -94,17 +105,19 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 删除管理员
+        /// 传入管理员ID,删除管理员,返回删除结果状态信息
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">管理员Id</param>
+        /// <returns>删除结果状态信息</returns>
+        /// 
+        [Description("管理员删除")]
         public HttpResponseMessage DelAdmin([FromBody]int id)
         {
             try
             {
                 var model = new BrokerEntity
                 {
-                    Id=id,
+                    Id = id,
                     State = 0,
                     Usertype = EnumUserType.管理员
                 };
@@ -118,10 +131,11 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 注销管理员
+        /// 传入管理员Id,注销管理员,返回注销结果状态信息
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">管理员Id</param>
+        /// <returns>管理员注销结果状态信息</returns>
+        [Description("管理员注销")]
         public HttpResponseMessage LogoutAdmin([FromBody] int id)
         {
             try
