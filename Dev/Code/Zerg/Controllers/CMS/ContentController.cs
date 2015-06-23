@@ -89,7 +89,7 @@ namespace Zerg.Controllers.CMS
                 Content = content.Content,
                 ChannelName = content.Channel.Name,
                 ChannelId = content.Channel.Id,
-                Status=content.Status
+                Status=content.Status,
                 AdSubTitle=content.AdSubTitle
             };
             return PageHelper.toJson(contentDetail);
