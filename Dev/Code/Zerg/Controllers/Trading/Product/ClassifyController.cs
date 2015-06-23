@@ -348,7 +348,8 @@ namespace Zerg.Controllers.Trading.Product
         /// 删除参数；
         /// </summary>
         /// <param name="parameterId"></param>
-        /// <returns></returns>
+        /// <returns>删除结果状态信息</returns>
+         [Description("删除参数")]
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage DelParameter(int parameterId)
@@ -372,8 +373,9 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 删除参数；
         /// </summary>
-        /// <param name="parameterId"></param>
+        /// <param name="parameterId">参数ID/param>
         /// <returns></returns>
+        [Description("删除参数")]
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage DelParameterValue(int parameterValueId)
