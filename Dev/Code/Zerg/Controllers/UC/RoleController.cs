@@ -31,7 +31,7 @@ namespace Zerg.Controllers.UC
         /// 获取角色列表
         /// </summary>
         /// <returns>角色列表</returns>
-       [Description("获取角色列表")]
+        [Description("获取角色列表")]
         public HttpResponseMessage GetRoles()
         {
             var list = _roleService.ListRoles().Select(r => new RoleModel
@@ -121,7 +121,7 @@ namespace Zerg.Controllers.UC
         /// </summary>
         /// <param name="roleId">角色ID</param>
         /// <returns>角色权限</returns>
-         [Description("获取角色权限")]
+        [Description("获取角色权限")]
         public HttpResponseMessage GetRolePermission(int roleId)
         {
             var role = _roleService.GetRoleById(roleId);
