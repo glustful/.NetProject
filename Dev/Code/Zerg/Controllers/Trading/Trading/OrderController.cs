@@ -19,6 +19,7 @@ using Zerg.Models.Trading.Product;
 using Zerg.Models.Trading.Trading;
 using System.Web.Http.Cors;
 using System.ComponentModel;
+using System.Net;
 
 
 namespace Zerg.Controllers.Trading.Trading.Order
@@ -205,22 +206,22 @@ namespace Zerg.Controllers.Trading.Trading.Order
         /// <summary>
         /// 获取洽谈后的订单
         /// </summary>
-        /// <returns>订单列表</returns>
-        [Description("获取洽谈后的订单")]
+        /// <returns>订单列表</returns>        
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage GetOrders()
-        {
-            var shipStatus = 3;
-            var status = 1;
+        public HttpResponseMessage GetNegotiateOrders(int page,int pageSize,int status)
+        {            
             OrderSearchCondition OSC = new OrderSearchCondition()
-            {
-                Shipstatus = shipStatus,
-                Status = status
-            };
-            var OrderList = _orderService.GetOrdersByCondition(OSC).Select(a => new
+            {                
+                Page = page,
+                PageCount = pageSize,
+                Status = status,
+                Shipstatuses = new []{3,-3}
+            };          
+            var orderList = _orderService.GetOrdersByCondition(OSC).Select(a => new
             {
                 a.Ordercode,
+                a.Id,
                 a.Ordertype,
                 a.Status,
                 a.Shipstatus,
@@ -232,8 +233,25 @@ namespace Zerg.Controllers.Trading.Trading.Order
                 a.OrderDetail.Commission,
                 a.OrderDetail.Dealcommission
             }).ToList();
-            return PageHelper.toJson(OrderList);
-
+            var totalCount = _orderService.GetOrderCount(OSC);
+            return PageHelper.toJson(new{OrderList=orderList,TotalCount=totalCount,Condition=OSC});
+        }
+        /// <summary>
+        /// 更新订单状态
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage EditStatus(int orderId)
+        {
+            var order = _orderService.GetOrderById(orderId);
+            order.Status = 2;
+            if (_orderService.Update(order) != null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "状态更新成功"));
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "状态更新失败"));
         }
 
         /// <summary>
