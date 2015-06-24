@@ -1,0 +1,55 @@
+<div class="p-md" ng-app="App" ng-controller="NegotiateOrderController">
+    <div class="panel panel-default" align="center">
+        <div class="panel-heading">订单列表</div>
+        <table class="table table-striped" align="center">
+            <thead>
+            <tr>
+                <th align="center">编码</th>
+                <th align="center">类型</th>
+                <th align="center">流程</th>
+                <th align="center">经纪人名称</th>
+                <th align="center">经纪人电话</th>
+                <th align="center">地产商名称</th>
+                <th align="center">价格</th>
+                <th align="center">推荐佣金</th>
+                <th align="center">带客佣金</th>
+                <th align="center">成交佣金</th>
+                <th align="center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in List">
+                <td>{{item.Ordercode }}</td>
+                <td ng-if="item.Ordertype==1">推荐订单</td>
+                <td ng-if="item.Ordertype==2">成交订单</td>
+                <td ng-if="item.Ordertype==3">带客订单</td>
+
+                <td ng-if="item.Shipstatus==0">审核中</td>
+                <td ng-if="item.Shipstatus==-1">审核不通过</td>
+                <td ng-if="item.Shipstatus==1">等待上访</td>
+                <td ng-if="item.Shipstatus==-2">客人未到</td>
+                <td ng-if="item.Shipstatus==2">洽谈中</td>
+                <td ng-if="item.Shipstatus==-3">洽谈失败</td>
+                <td ng-if="item.Shipstatus==3">洽谈成功</td>
+
+                <td>{{item.Agentname }}</td>
+                <td>{{item.Agenttel }}</td>
+                <td>{{item.Busname }}</td>
+                <td>{{item.Price }}</td>
+                <td>{{item.RecCommission}}</td>
+                <td>{{item.Commission }}</td>
+                <td>{{item.Dealcommission }}</td>
+                <td> <a ui-sref="page.Trading.bill.createBill({orderId:item.Id})" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-edit"></i>生成账单
+                </a></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="10" class="text-center">
+                    <pagination boundary-links="true" total-items="totalCount" items-per-page="order.pageSize" ng-model="order.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

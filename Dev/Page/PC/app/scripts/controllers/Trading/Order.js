@@ -56,8 +56,27 @@ angular.module("app").controller('orderController', [
                     });
                 }
             });
-
         }
-
     }
 ]);
+angular.module("app").controller('NegotiateOrderController', [
+    '$http', '$scope', function ($http, $scope) {
+        //获取洽谈后的订单
+        $scope.order={
+            status:1,
+            page: 1,
+            pageSize: 10
+        };
+        var getOrderList=function(){
+            $http.get(SETTING.ApiUrl+'/order/GetNegotiateOrders',{
+                params:$scope.order,'withCredentials':true
+            }).success(function(data){
+                $scope.List=data.OrderList;
+                $scope.order.page=data.Condition.Page;
+                $scope.order.pageSize=data.Condition.PageCount;
+                $scope.totalCount=data.TotalCount
+            })
+        }
+        getOrderList();
+        $scope.getList=getOrderList;
+    }])

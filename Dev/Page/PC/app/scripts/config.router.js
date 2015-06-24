@@ -1359,10 +1359,24 @@ angular.module('app')
                 data : { title: '账单管理' },
                 resolve: load(['scripts/controllers/Trading/Bill.js','scripts/controllers/vectormap.js'])
             })
+            .state('page.Trading.bill.createBill', {
+                url: '/createBill?orderId',
+                templateUrl: 'views/pages/Trading/bill/createBill.html',
+                data : { title: '生成账单' },
+                controller:'createBillController',
+                resolve: load(['scripts/controllers/Trading/Bill.js','scripts/controllers/vectormap.js'])
+            })
             .state('page.Trading.order.order', {
                 url: '/order',
                 templateUrl: 'views/pages/Trading/order/order.html',
                 data : { title: '订单管理' },
+                resolve: load(['scripts/controllers/Trading/Order.js','scripts/controllers/vectormap.js'])
+            })
+            .state('page.Trading.order.Negotiateorder', {
+                url: '/Negotiateorder',
+                templateUrl: 'views/pages/Trading/order/NegotiateOrderList.html',
+                data : { title: '洽谈后订单' },
+                controller:'NegotiateOrderController',
                 resolve: load(['scripts/controllers/Trading/Order.js','scripts/controllers/vectormap.js'])
             })
             //-----------------------end-------------------

@@ -150,11 +150,15 @@ namespace Trading.Service.Order
                 }
 
 
+			    if (condition.Shipstatus.HasValue)
+			    {
+			        query = query.Where(q => q.Shipstatus == condition.Shipstatus);
+			    }
 
 
-				if (condition.Shipstatus.HasValue)
+			    if (condition.Shipstatuses.Any())
                 {
-                    query = query.Where(q => q.Shipstatus == condition.Shipstatus.Value);
+                    query = query.Where(q => condition.Shipstatuses.Contains(q.Shipstatus));
                 }
 
 
@@ -235,7 +239,7 @@ namespace Trading.Service.Order
                     query = query.Where(q => q.AgentId == condition.AgentId.Value);
                 }
 
-
+             
 
 
 
@@ -302,12 +306,17 @@ namespace Trading.Service.Order
                     query = query.Where(q => q.Ordertype == condition.Ordertype.Value);
                 }
 
-
-
-				if (condition.Shipstatus.HasValue)
+                if (condition.Shipstatus.HasValue)
                 {
-                    query = query.Where(q => q.Shipstatus == condition.Shipstatus.Value);
+                    query = query.Where(q => q.Shipstatus == condition.Shipstatus);
                 }
+
+
+                if (condition.Shipstatuses.Any())
+                {
+                    query = query.Where(q => condition.Shipstatuses.Contains(q.Shipstatus));
+                }
+
 
 
 

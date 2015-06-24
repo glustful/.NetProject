@@ -22,6 +22,7 @@ using System.ComponentModel;
 
 namespace Zerg.Controllers.Trading.Trading
 {
+     [System.Web.Http.AllowAnonymous]
     [Description("账单管理类")]
     public class BillController : ApiController
     {
@@ -67,95 +68,121 @@ namespace Zerg.Controllers.Trading.Trading
         /// <param name="user">当前用户</param>
         /// <returns>账单创建结果状态信息</returns>
         [Description("创建三个账单（zerg、经纪人、地产商")]
-        [System.Web.Http.HttpGet]
+        [System.Web.Http.HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public string CreateBillsByOrder(int orderId, string beneficiarynumber, string remark, string user)
+        public HttpResponseMessage CreateBillsByOrder(BillModel model)
         {
             try
             {
-                OrderEntity OE = _orderService.GetOrderById(orderId);
+                OrderEntity OE = _orderService.GetOrderById(model.orderId);
                 OrderDetailEntity ODE = OE.OrderDetail;
-                decimal amount = 0;
-                if (OE.Ordertype == 0)
-                {//如果是推荐订单；
-                    amount = ODE.Commission;
+                decimal CFBamount = 0, LandAgentamount = 0, Agentamount=0;
+                if (OE.Ordertype == EnumOrderType.推荐订单)
+                {//如果是推荐订单；                   
+                    if (OE.Shipstatus == 3)
+                    {
+                        CFBamount = ODE.Dealcommission * (decimal) 0.7;
+                        Agentamount = ODE.Dealcommission*(decimal)0.27 +ODE.RecCommission;
+                        LandAgentamount = ODE.Dealcommission*(decimal)0.03 ;
+                    }
+                    else
+                    {
+                        Agentamount = ODE.RecCommission;
+                    }
                 }
-                else if (OE.Ordertype == EnumOrderType.成交订单)//如果是成交订单；
+                else if (OE.Ordertype == EnumOrderType.带客订单)//如果是带客订单；
                 {
-                    amount = ODE.Dealcommission;
+                    if (OE.Shipstatus == 3)
+                    {
+                        CFBamount = ODE.Dealcommission * (decimal) 0.3;
+                        Agentamount = ODE.Dealcommission * (decimal) 0.63 + ODE.Commission;
+                        LandAgentamount = ODE.Dealcommission * (decimal)0.07;
+                    }
+                    else
+                    {
+                        Agentamount = ODE.Commission;
+                    }
+                    
                 }
                 CFBBillEntity CBE = new CFBBillEntity()
                 {
-                    Actualamount = amount,
-                    Amount = amount,
+                    Actualamount = model.Actualamount,
+                    Amount = CFBamount,
                     AgentId = OE.AgentId,//经纪人Id；
                     Agentname = OE.Agentname,//经纪人名字；
                     LandagentId = OE.BusId,//地产商Id；
                     Landagentname = OE.Busname,//地产商名字；
                     Beneficiary = OE.Agentname,
-                    Beneficiarynumber = beneficiarynumber,
-                    Cardnumber = beneficiarynumber,
+                    Beneficiarynumber = model.beneficiarynumber,
+                    Cardnumber = model.beneficiarynumber,
                     Checkoutdate = DateTime.Now,
                     Customname = OE.Agentname,
                     Isinvoice = false,
                     Order = OE,
-                    Remark = remark,
+                    Remark = model.remark,
                     Addtime = DateTime.Now,
-                    Adduser = user,
+                   // Adduser = user,
                     Updtime = DateTime.Now,
-                    Upduser = user
+                   // Upduser = user
                 };
                 LandAgentBillEntity LABE = new LandAgentBillEntity()
                 {
-                    Actualamount = amount,
-                    Amount = amount,
+                    Actualamount = model.Actualamount,
+                    Amount = LandAgentamount,
                     AgentId = OE.AgentId,//经纪人Id；
                     Agentname = OE.Agentname,//经纪人名字；
                     LandagentId = OE.BusId,//地产商Id；
                     Landagentname = OE.Busname,//地产商名字；
                     Beneficiary = OE.Agentname,
-                    Beneficiarynumber = beneficiarynumber,
-                    Cardnumber = beneficiarynumber,
+                    Beneficiarynumber = model.beneficiarynumber,
+                    Cardnumber = model.beneficiarynumber,
                     Checkoutdate = DateTime.Now,
                     Customname = OE.Agentname,
                     Isinvoice = false,
                     Order = OE,
-                    Remark = remark,
+                    Remark = model.remark,
                     Addtime = DateTime.Now,
-                    Adduser = user,
+                   // Adduser = user,
                     Updtime = DateTime.Now,
-                    Upduser = user
+                    //Upduser = user
                 };
                 AgentBillEntity ABE = new AgentBillEntity()
                 {
 
-                    Actualamount = amount,
-                    Amount = amount,
+                    Actualamount = model.Actualamount,
+                    Amount = Agentamount,
                     AgentId = OE.AgentId,//经纪人Id；
                     Agentname = OE.Agentname,//经纪人名字；
                     LandagentId = OE.BusId,//地产商Id；
                     Landagentname = OE.Busname,//地产商名字；
                     Beneficiary = OE.Agentname,
-                    Beneficiarynumber = beneficiarynumber,
-                    Cardnumber = beneficiarynumber,
+                    Beneficiarynumber = model.beneficiarynumber,
+                    Cardnumber = model.beneficiarynumber,
                     Checkoutdate = DateTime.Now,
                     Customname = OE.Agentname,
                     Isinvoice = false,
                     Order = OE,
-                    Remark = remark,
+                    Remark = model.remark,
                     Addtime = DateTime.Now,
-                    Adduser = user,
+                  //  Adduser = user,
                     Updtime = DateTime.Now,
-                    Upduser = user
+                   // Upduser = user
                 };
-                _CFBBillService.Create(CBE);
-                _landAgentBillService.Create(LABE);
-                _agentBillService.Create(ABE);
-                return "创建账单成功";
+                if (OE.Shipstatus == 3)
+                {
+                     _CFBBillService.Create(CBE);
+                     _landAgentBillService.Create(LABE);
+                     _agentBillService.Create(ABE);
+                }
+                else
+                {
+                    _agentBillService.Create(ABE);
+                }
+                return PageHelper.toJson(PageHelper.ReturnValue(true,"账单生成成功"));
             }
             catch (Exception e)
             {
-                return "创建账单失败";
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"账单生成失败"));
             }
         }
         #endregion
