@@ -1,5 +1,5 @@
 <div class="p-md" ng-app="App" ng-controller="BrandController">
-<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+
     <link href="scripts/ext/uploadify-v3.1/uploadify.css" rel="stylesheet" type="text/css" />
     <script src="scripts/ext/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="scripts/ext/uploadify-v3.1/jquery.uploadify-3.1.min.js" type="text/javascript"></script>
@@ -7,7 +7,7 @@
     <div>
         <!--<button  onclick="WindowShow()" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加项目-->
         <!--</button>-->
-
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
         <a href="#/page/Trading/product/createbrand" access="superAdmin,admin">
             <button id="btntask" md-ink-ripple=""style="width:150px;margin-left: 150px;" class="md-btn md-raised m-b btn-fw indigo">添加品牌</button></a>
         <div class="line b-b m-v-md"></div>
@@ -36,13 +36,15 @@
                     </button>
                     <button ng-click='open(item.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
                     </button>
+                   <a href="#/page/Trading/product/upProductBrand?brandId={{item.Id}}"> <button   class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 编辑
+                    </button></a>
                 </td>
             </tr>
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="5" class="text-center">
-                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7" class="no-margin"></div>
+                <td colspan="5" class="text-center footable-visible">
+                    <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
                 </td>
             </tr>
             </tfoot>
@@ -121,17 +123,18 @@
                             <td align="center">{{item.Parametervaule }}</td>
                             <td align="center">{{item.Id }}</td>
                             <td align="center">
+
                                 <button  ng-click='delBrandParameter(item.Id)' class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-minus"></i> 删除
                                 </button></td>
                         </tr>
                         </tbody>
-                        <!--<tfoot>-->
-                        <!--<tr>-->
+                        <tfoot>
+                        <tr>
                             <!--<td colspan="5" class="text-center">-->
                                 <!--<pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>-->
                             <!--</td>-->
-                        <!--</tr>-->
-                        <!--</tfoot>-->
+                        </tr>
+                        </tfoot>
                     </table>
                 </div>
                 <div class="modal-footer">
@@ -166,24 +169,71 @@
                                  <select onChange="change(this.value)" class="input-large" type="text" ng-model="brandParameterName" id="brandParameterName" placeholder="" style="width: 163px; height: 26px">
                                     <option value="最高优惠">最高优惠</option>
                                     <option value="来电咨询">来电咨询</option>
+                                    <option value="占地面积">占地面积</option>
+                                    <option value="所属城市">所属城市</option>
                                     <option value="图片banner">图片banner</option>
-
 
                                 </select>
 
                             <div id="最高优惠" class="form-group" style="text-align:center; ">
-                                <label >参数的值</label>
-                                <input class="input-large" type="text" ng-model="brandParameterValue"  placeholder="" value="">
+                                <label >优惠金额</label>
+                                <input class="input-large" type="number" ng-model="brandParameterValue"  placeholder="" value="">
                             </div>
+                                    <div id="占地面积" class="form-group" style="display: none ">
+                                        <label >面积大小</label>
+                                        <input class="input-large" type="text" ng-model="brandParameterValue"  placeholder="" value="">
+                                    </div>
+                                    <div id="所属城市" class="form-group"  style="display: none ">
+                                        <label >城市名称</label>
+                                        <input class="input-large" type="text" ng-model="brandParameterValue"  placeholder="" value="">
+                                    </div>
 
                             <div id="来电咨询" class="form-group" style="text-align:center;display: none">
-                                <label >参数的值</label>
-                                <input class="input-large" type="text" ng-model="brandParameterValue"  placeholder="" value="">
+                                <label >联系电话</label>
+                                <input class="input-large" maxlength="12"  type="text" ng-model="brandParameterValue"  placeholder="" value="" name="iphon" required>
+                                <span ng-show="iphon.$error.required" style="color: red;">*必填项</span>
+
                             </div>
-                            <div id="图片banner" class="form-group" style="display: none">
-                                <label >图片地址</label> <input class="input-large" type="text" ng-model="brandParameterValue"  placeholder="" value="">
+                            <div id="图片banner" class="form-group" style="display: none; height:150px; text-align: center">
+                                <label >图片地址</label> <input id="Url" name="Url" type="text" ng-model="brandParameterValue"  required>
 
                                 <input type="file" nv-file-select="" uploader="uploader" />
+
+                                <table  style="width: 100%;">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 100px;">名字</th>
+                                        <th style="width: 100px;" ng-show="uploader.isHTML5">大小</th>
+                                        <th style="width: 100px;" ng-show="uploader.isHTML5">进程</th>
+                                        <th style="width:100px; text-align: center">状态</th>
+                                        <th >功能</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in uploader.queue" style="text-align: left">
+                                        <td style="width:50px;"><strong>{{ item.file.name }}</strong></td>
+                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                        <td ng-show="uploader.isHTML5">
+                                            <div >
+                                                <div  role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center" >
+                                            <span ng-show="item.isSuccess" class="text-success"><i class="glyphicon glyphicon-ok"></i></span>
+                                            <span ng-show="item.isCancel" class="text-warning"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                            <span ng-show="item.isError" class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>
+                                        </td>
+                                        <td nowrap>
+                                            <button type="button" class="btn btn-default btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                上传
+                                            </button>
+                                            <button type="button" class="btn btn-default btn-xs" ng-click="item.remove()">
+                                                移除
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                            </div>
                             <div>
@@ -239,9 +289,9 @@
         }
 
     </script>
-    <div colspan="5" class="text-center footable-visible">
-        <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
-    </div>
+    <!--<div colspan="5" class="text-center footable-visible">-->
+        <!--<pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>-->
+    <!--</div>-->
     <script type="text/ng-template" id="myModalContent.html">
         <div ng-include="'views/partials/modal.html'"></div>
     </script>

@@ -9,6 +9,9 @@ angular.module("app").controller('DkRecordController', [
             page: 1,
             pageSize: 10
         };
+        $scope.searchCondition1 = {
+            userId:''
+        }
 
         var getTagList = function() {
             $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetBLCList',{
@@ -31,6 +34,20 @@ angular.module("app").controller('DkRecordController', [
         $http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=推荐订单',{'withCredentials':true}).success(function (data) {
             $scope.rowCollectionBasic = data;
         });
+        //根据经纪人名字搜索该经纪人带客记录信息
+        var getRecClientByUser = function(){
+            $http.get(SETTING.ApiUrl+'/BrokerLeadClient/SearchBrokerLeadClient',{
+                    params:$scope.searchCondition1,
+                    'withCredentials':true
+                }).success(function(data){
+                    $scope.Brokerlist =data.list;
+                    if (data.list == ""){
+                        $scope.errorTip == "该经纪人没有带客记录信息"
+                    }
+                });
+        };
+        $scope.getRecClientByUser= getRecClientByUser;
+        getRecClientByUser();
     }
 ]);
 
@@ -51,6 +68,7 @@ angular.module("app").controller('DKRDetailedController',['$http','$scope','$sta
         $scope.ARDetialModel.Status = type;
         $http.post(SETTING.ApiUrl +'/BrokerLeadClient/UpdateLeadClient',$scope.ARDetialModel,{ 'withCredentials':true}).success(function(data){
             if(data.Status){
+                alert(data.Msg);
                 $state.go('page.CRM.DkRecord.index');
             }else{
                 alert(data.Msg);

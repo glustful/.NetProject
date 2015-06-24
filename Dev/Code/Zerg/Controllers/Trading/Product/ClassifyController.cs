@@ -20,9 +20,11 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web.Http.Cors;
 using YooPoon.Core.Site;
+using System.ComponentModel;
 
 namespace Zerg.Controllers.Trading.Product
 {
+    [Description("商品分类管理类")]
     public class ClassifyController : ApiController
     {
         private readonly IProductService _productService;
@@ -61,10 +63,11 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 添加分类；
         /// </summary>
-        /// <param name="classify">所要添加的分类</param>
-        /// <returns></returns>
+        /// <param name="classify">所要添加的分类参数</param>
+        /// <returns>添加结果状态信息</returns>
+        [Description("添加商品分类")]
         [System.Web.Http.HttpPost]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage AddClassify([FromBody]ClassifyModel classify)
         {
             Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
@@ -85,7 +88,7 @@ namespace Zerg.Controllers.Trading.Product
                 Name = classify.Name,
                 Sort = sort,
                 Addtime = DateTime.Now,
-               // Adduser = classify.Adduser,
+                // Adduser = classify.Adduser,
                 Adduser = _workContext.CurrentUser.Id.ToString(),
                 Updtime = DateTime.Now,
                 Upduser = _workContext.CurrentUser.Id.ToString()
@@ -95,11 +98,11 @@ namespace Zerg.Controllers.Trading.Product
             try
             {
                 _classifyService.Create(ce);
-                return PageHelper.toJson(PageHelper.ReturnValue(true,"添加分类成功！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "添加分类成功！"));
             }
             catch (Exception error)
             {
-               return PageHelper.toJson(PageHelper.ReturnValue(false,"添加分类失败！"));;
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "添加分类失败！")); ;
             }
         }
         /// <summary>
@@ -107,9 +110,10 @@ namespace Zerg.Controllers.Trading.Product
         /// </summary>
         /// <param name="pageindex">当前翻页页数</param>
         /// <returns>查询结果</returns>
+        
         [Description("获取所有分类(使用Angular中Tree的数据格式)")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAllClassify()
         {
             ClassifySearchCondition csc = new ClassifySearchCondition()
@@ -122,14 +126,15 @@ namespace Zerg.Controllers.Trading.Product
         /// 根据Id查名称
         /// </summary>
         /// <param name="classifyId">分类id</param>
-        /// <returns></returns>
+        /// <returns>商品分类名称</returns>
+        [Description("查询商品分类名称")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public string GetClassifyNameById(int classifyId)
         {
             try
             {
-                ClassifyEntity ce=_classifyService.GetClassifyById(classifyId);
+                ClassifyEntity ce = _classifyService.GetClassifyById(classifyId);
 
                 return ce.Name;
             }
@@ -141,9 +146,10 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 获取某根节点下的树状图数据（使用AngluarJs是里的Tree数据格式）；
         /// </summary>
-        /// <returns></returns>
+        /// <returns>根节点下的树状图数据</returns>
+        [Description("获取某根节点下的树状图数据")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetNextNodesById(int nodeId)
         {
             try
@@ -173,25 +179,29 @@ namespace Zerg.Controllers.Trading.Product
 
         }
         /// <summary>
-        /// 删除分类；
+        /// 传入分类ID，删除分类；
         /// </summary>
-        /// <param name="classifyId"></param>
-        /// <returns></returns>
+        /// <param name="classifyId">分类ID</param>
+        /// <returns>删除结果状态信息</returns>
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage DelClassify(int classifyId)
         {
-            try{
+            try
+            {
                 if (_classifyService.Delete(_classifyService.GetClassifyById(classifyId)))
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功！"));
                 }
-                else {
-                    return PageHelper.toJson(PageHelper.ReturnValue(false,"存在子分类关联不能删除！"));
+                else
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "存在子分类关联不能删除！"));
                 }
-              
-            }catch(Exception e){
-                return PageHelper.toJson(PageHelper.ReturnValue(false,"删除失败！"));
+
+            }
+            catch (Exception e)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "删除失败！"));
             }
         }
         /// <summary>
@@ -201,7 +211,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="pageindex">查询的页数</param>
         /// <returns>查询结果</returns>
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetSubClassify(int classifyId, int pageindex)
         {
             return PageHelper.toJson(_classifyService.GetClassifysBySuperClassify(classifyId).ToList());
@@ -213,8 +223,9 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="classifyId"></param>
         /// <param name="pageindex"></param>
         /// <returns></returns>
+        [Description(" 查询该分类下的末级分类（")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetActivityClassify(int classifyId)
         {
             return PageHelper.toJson(GetTreeAllEndPoints(classifyId).ToList());
@@ -229,7 +240,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="pageindex">当前翻页页数</param>
         /// <returns>查询结果</returns>
         [System.Web.Http.HttpPost]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage AddParameter([FromBody]ParameterModel parameter)
         {
             Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
@@ -253,7 +264,7 @@ namespace Zerg.Controllers.Trading.Product
             try
             {
                 _parameterService.Create(pe);
-                return PageHelper.toJson(PageHelper.ReturnValue(true,"添加参数" + pe.Name + "成功" ));               
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "添加参数" + pe.Name + "成功"));
             }
             catch (Exception e)
             {
@@ -266,7 +277,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="pageindex">当前翻页页数</param>
         /// <returns>查询结果</returns>
         [System.Web.Http.HttpPost]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage AddParameterValue([FromBody]ParameterValueModel parameterValueModel)
         {
             Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
@@ -283,14 +294,14 @@ namespace Zerg.Controllers.Trading.Product
                 Sort = parameterValueModel.Sort,
                 Parametervalue = parameterValueModel.Parametervalue,
                 Parameter = pe,
-               // Adduser = parameterValueModel.Adduser,
+                // Adduser = parameterValueModel.Adduser,
                 Adduser = _workContext.CurrentUser.Id.ToString(),
                 Addtime = DateTime.Now,
             };
             try
             {
                 _parameterValueService.Create(pev);
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "添加参数值" + pev.Parametervalue + "成功"));              
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "添加参数值" + pev.Parametervalue + "成功"));
             }
             catch (Exception e)
             {
@@ -304,7 +315,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="pageindex">当前翻页页数</param>
         /// <returns>查询结果</returns>
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public string AddProductParameterVaule(int parameterValueId, int productId)
         {
             try
@@ -323,21 +334,24 @@ namespace Zerg.Controllers.Trading.Product
                     Sort = 0,
                     Updtime = DateTime.Now,
                     //Upduser = PE.Upduser
-                    Upduser =_workContext.CurrentUser.Id.ToString(),
+                    Upduser = _workContext.CurrentUser.Id.ToString(),
                 };
                 _productParameterService.Create(PPE);
                 return "绑定商品属性值成功";
-            }catch(Exception e){
+            }
+            catch (Exception e)
+            {
                 return "绑定商品属性值失败";
             }
-          }
+        }
         /// <summary>
         /// 删除参数；
         /// </summary>
         /// <param name="parameterId"></param>
-        /// <returns></returns>
+        /// <returns>删除结果状态信息</returns>
+        [Description("删除参数")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage DelParameter(int parameterId)
         {
             ParameterEntity pe = _parameterService.GetParameterById(parameterId);
@@ -349,39 +363,41 @@ namespace Zerg.Controllers.Trading.Product
                     _parameterValueService.Delete(parameter);
                 }
                 _parameterService.Delete(pe);//删除该参数；
-                return PageHelper.toJson(PageHelper.ReturnValue(true,"删除成功！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功！"));
             }
             catch (Exception e)
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(false,"删除失败！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "删除失败！"));
             }
         }
         /// <summary>
-        /// 删除参数；
+        /// 传入分类id，删除参数，返回删除结果状态信息；
         /// </summary>
-        /// <param name="parameterId"></param>
-        /// <returns></returns>
+        /// <param name="parameterId">参数ID/param>
+        /// <returns>删除结果状态信息</returns>
+        [Description("删除参数")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage DelParameterValue(int parameterValueId)
         {
             ParameterValueEntity pve = _parameterValueService.GetParameterValueById(parameterValueId);
             try
             {
                 _parameterValueService.Delete(pve);
-                return PageHelper.toJson(PageHelper.ReturnValue(true,"删除成功！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功！"));
             }
             catch (Exception e)
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(false,"删除失败！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "删除失败！"));
             }
         }
 
         /// <summary>
         /// 根据分类查询分类参数列表；
         /// </summary>
-        /// <param name="parameterId"></param>
-        /// <returns></returns>
+        /// <param name="parameterId">分类id</param>
+        /// <returns>商品分类列表</returns>
+        [Description("查询分类参数列表")]
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetParameterByClassify(int classifyId)
@@ -400,7 +416,8 @@ namespace Zerg.Controllers.Trading.Product
         /// 根据分类查参数值列表；
         /// </summary>
         /// <param name="parameterId"></param>
-        /// <returns></returns>
+        /// <returns>参数值列表</returns>
+        [Description("根据分类查参数值列表")]
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetParameterValueByParameter(int parameterId)
@@ -417,13 +434,14 @@ namespace Zerg.Controllers.Trading.Product
 
         #region 公用方法
         List<ClassifyEntity> _CEList = new List<ClassifyEntity>();
-     
+
 
         /// <summary>
         /// 获取分类树枝下的每个终节点；
         /// </summary>
-        /// <param name="ClassfiyId"></param>
-        /// <returns></returns>
+        /// <param name="ClassfiyId">分类ID</param>
+        /// <returns>该类下的每个终结点</returns>
+        [Description(" 获取分类树枝下的每个终节点")]
         public List<ClassifyEntity> GetTreeAllEndPoints(int ClassfiyId)
         {
             _CEList.Clear();
@@ -433,7 +451,8 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 递归遍历树状节点,并找出末端节点；
         /// </summary>
-        /// <param name="nodeId"></param>
+        /// <param name="nodeId">节点ID</param>
+        [Description(" 递归遍历树状节点,并找出末端节点")]
         public void RecursionTree(int nodeId)
         {
             List<ClassifyEntity> CEList = _classifyService.GetClassifysBySuperClassify(nodeId).ToList<ClassifyEntity>();
@@ -447,11 +466,12 @@ namespace Zerg.Controllers.Trading.Product
             }
         }
         #endregion
-       
+
         #region 获取支持angularjs的tree模型列表；
         /// <summary>
         /// 支持angularjs中tree插件的模型；
         /// </summary>
+        [Description("支持angularjs中tree插件的模型")]
         public class TreeJsonModel
         {
             public string label { set; get; }
@@ -463,7 +483,8 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 自上而下获取树状根节点列表；
         /// </summary>
-        /// <returns></returns>
+        /// <returns>树状根节点列表</returns>
+        [Description("自上而下获取树状根节点列表")]
         public List<TreeJsonModel> GetAllTree()
         {
             ClassifySearchCondition csc = new ClassifySearchCondition()
@@ -496,8 +517,9 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 自迭代获取所有树子节点；
         /// </summary>
-        /// <param name="nodeId"></param>
-        /// <returns></returns>
+        /// <param name="nodeId">节点ID</param>
+        /// <returns>所有树子节点</returns>
+        [Description("自迭代获取所有树子节点；")]
         public List<TreeJsonModel> GetJsonFromTreeModel(int nodeId)
         {
             ClassifySearchCondition csc = new ClassifySearchCondition()
@@ -532,48 +554,54 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 获取树状json格式的分类参数
         /// </summary>
-        /// <param name="classifyId"></param>
-        /// <returns></returns>
+        /// <param name="classifyId">分类ID</param>
+        /// <returns>树状json格式的分类参数</returns>
+        [Description("获取树状json格式的分类参数")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetParameterTreeData(int classifyId)
         {
 
-                List<ParameterTreeModel> PTMList = new List<ParameterTreeModel>();
-               var PList= _parameterService.GetParameterEntitysByClassifyId(classifyId);
-                foreach(var p in PList){
-                    ParameterTreeModel PT = new ParameterTreeModel()
+            List<ParameterTreeModel> PTMList = new List<ParameterTreeModel>();
+            var PList = _parameterService.GetParameterEntitysByClassifyId(classifyId);
+            foreach (var p in PList)
+            {
+                ParameterTreeModel PT = new ParameterTreeModel()
+                {
+                    Name = p.Name,
+                    Id = p.Id
+                };
+                List<ParameterValueEntity> PVList = _parameterValueService.GetParameterValuesByParameter(p.Id).ToList();
+                List<ParameterValueTreeModel> PVTMList = new List<ParameterValueTreeModel>();
+                foreach (var pv in PVList)
+                {
+                    ParameterValueTreeModel PVTM = new ParameterValueTreeModel()
                     {
-                        Name = p.Name,
-                        Id = p.Id
+                        Value = pv.Parametervalue,
+                        Id = pv.Id
                     };
-                    List<ParameterValueEntity> PVList=_parameterValueService.GetParameterValuesByParameter(p.Id).ToList();
-                    List<ParameterValueTreeModel> PVTMList=new List<ParameterValueTreeModel>();
-                    foreach(var pv in PVList){
-                        ParameterValueTreeModel PVTM=new ParameterValueTreeModel(){
-                            Value=pv.Parametervalue,
-                            Id=pv.Id
-                        };
-                        PVTMList.Add(PVTM);
-                    };
-                    PT.ValueList = PVTMList;
-                    PTMList.Add(PT);
-                }
-                return PageHelper.toJson(PTMList.ToList());
-  
+                    PVTMList.Add(PVTM);
+                };
+                PT.ValueList = PVTMList;
+                PTMList.Add(PT);
+            }
+            return PageHelper.toJson(PTMList.ToList());
+
         }
         /// <summary>
         /// 分类模型
         /// </summary>
+        [Description("分类模型")]
         public class ParameterTreeModel
         {
-            public string Name { set;get;}//分类名称；
-            public int Id{set;get;}//分类Id；
+            public string Name { set; get; }//分类名称；
+            public int Id { set; get; }//分类Id；
             public List<ParameterValueTreeModel> ValueList { set; get; }//分类参数值；
         }
         /// <summary>
         /// 分类值模型
         /// </summary>
+        [Description("分类值模型")]
         public class ParameterValueTreeModel
         {
             public string Value { set; get; }//分类值名称；

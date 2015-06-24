@@ -41,19 +41,22 @@
     <ul  class="cf">
 
 
-        <li class="one" ng-repeat="item in Actcontent"> <a href="#/app/chip"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="开发商疯了"  width="200px"/></a></li>
-        <li class="two" ng-repeat="item in Activetwo"> <a href="#/app/redPaper-1.html"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="吧百万红包等你抢" width="205px"/></a></li>
-        <li class="three" ng-repeat="item in Activethree"> <a href="#/app/Auction"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="pao"  width="205px"/></a></li>
-        <li class="four" ng-repeat="item in Activefour"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="俊发钜惠"  width="205px"/></a></li>
-        <li class="five" ng-repeat="item in Activefive"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="水云间大优惠"  width="205px"/></a></li>
-        <li class="six" ng-repeat="item in Activesix"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="买房送奔驰"  width="205px"/></a></li>
-
-        <li class="one" ng-repeat="item in Actcontent"> <a href="#/app/chip"><img   src="http://img.yoopoon.com/{{item.TitleImg}}" alt="百万红包等你抢"  width="135" height="149"/></a></li>
-        <!--<li class="two" ng-repeat="item in Activetwo"> <a href="../../redPaper-1/view/redPaper-1.html"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="开发商疯了吧" width="5px"/></a></li>-->
-        <!--<li class="three" ng-repeat="item in Activethree"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="名校就在小区里"  width="205px"/></a></li>-->
+        <li  class="{{$index==0?'one':$index==1?'two':$index==2?'three':$index==3?'four':$index==4?'five':$index==5?'six':''}}"  ng-repeat="item in Actcontent">
+            <!--<a href="#/app/chip">-->
+                <!--<img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="开发商疯了"  width="205px" />-->
+            <!--</a>-->
+            <a href="#">
+                <p class="active_title">{{item.Title}}</p>
+                <p class="well">{{item.AdSubTitle}}</p>
+                <img src="http://img.yoopoon.com/{{item.TitleImg}}" width="95" height="95">
+            </a>
+        </li>
+        <!--<li class="two" ng-repeat="item in Activetwo"> <a href="#/app/redPaper-1.html"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="吧百万红包等你抢" width="205px"/></a></li>-->
+        <!--<li class="three" ng-repeat="item in Activethree"> <a href="#/app/Auction"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="pao"  width="205px"/></a></li>-->
         <!--<li class="four" ng-repeat="item in Activefour"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="俊发钜惠"  width="205px"/></a></li>-->
         <!--<li class="five" ng-repeat="item in Activefive"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="水云间大优惠"  width="205px"/></a></li>-->
         <!--<li class="six" ng-repeat="item in Activesix"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="买房送奔驰"  width="205px"/></a></li>-->
+
 
     </ul>
     <!--<a href="javascript:;" id="btn_prev"></a>-->
@@ -76,7 +79,7 @@
             <!--</div>-->
             <a href="#/app/housesBuy?BrandId={{item.Id}}">
                 <img src="http://img.yoopoon.com/{{item.Bimg}}" alt="中天·水云间" width="620" height="160"/>
-                <div class="summary"><span>[{{ item.Bname }}]</span><span>{{item.Adduser}}</span><span>总价：110万</span></div>
+                <div class="summary"><span>[{{ item.ProductParamater["所属城市"] }}]</span><span>{{item.Bname}}</span></span><span>{{item.ProductParamater["占地面积"] }}</span></div>
                 <div class="summaryBg"></div>
                 <div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>
                 <div class="depreciateBg"></div>
@@ -84,7 +87,7 @@
             <h3>{{item.SubTitle}}</h3>
             <div class="nav" >
                 <span class="orange">
-                    <a href="">
+                    <a href="tel:{{item.ProductParamater['来电咨询']}}">
                         来电咨询:{{item.ProductParamater["来电咨询"]}}
                     </a>
                 </span>

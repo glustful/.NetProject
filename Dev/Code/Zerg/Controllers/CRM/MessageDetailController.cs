@@ -11,6 +11,7 @@ using YooPoon.Common.Encryption;
 using Zerg.Common.Com;
 using CRM.Service.Broker;
 using YooPoon.WebFramework.User.Services;
+using System.ComponentModel;
 
 //using System.Collections.Generic;
 
@@ -21,29 +22,35 @@ namespace Zerg.Controllers.CRM
     /// <summary>
     /// 短信发送明细
     /// </summary>
+    [Description("短信发送明细类")]
     public class MessageDetailController : ApiController
     {
 
         private readonly IMessageDetailService _messageDetailService;
         private readonly IUserService _userService;
+        /// <summary>
+        /// 短信发送明细类初始化
+        /// </summary>
+        /// <param name="messageDetailService">messageDetailService</param>
+        /// <param name="UserService">UserService</param>
         public MessageDetailController(IMessageDetailService messageDetailService,
              IUserService UserService)
         {
             _messageDetailService = messageDetailService;
             _userService = UserService;
         }
-      
+
         #region 短信发送明细  黄秀宇  2015.04.28
         /// <summary>
-        /// 查询短信明细
+        /// 传入短信参数，检索查询短信详细信息，返回短信详细信息
         /// </summary>
-        /// <param name="Page"></param>
-        /// <param name="PageCount"></param>
-        /// <param name="isDescending"></param>
-        /// <param name="Ids"></param>
-        /// <param name="AddtimeBegin"></param>
-        /// <param name="AddtimeEnd"></param>
-        /// <returns></returns> 
+        /// <param name="endTime">结束时间</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="type">类型</param>
+        /// <param name="page">页码</param>
+        /// <param name="pageSize">页面大小</param>
+        /// <returns>短信详细信息</returns>
+        [Description("检索返回短信详细信息")]
         [HttpGet]
         public HttpResponseMessage SearchMessageDetail(string endTime, string startTime, string type, int page = 1, int pageSize = 10)
         {
@@ -66,29 +73,27 @@ namespace Zerg.Controllers.CRM
             var mDetailCondition = new MessageDetailSearchCondition()
             {
                 AddtimeBegin = Convert.ToDateTime(strStarttime),
-                AddtimeEnd = Convert.ToDateTime(strEndtime), 
+                AddtimeEnd = Convert.ToDateTime(strEndtime),
                 Title = strType,
-                 Page = Convert.ToInt32(page),
+                Page = Convert.ToInt32(page),
                 PageCount = pageSize
             };
 
-         
-            var list = _messageDetailService.GetMessageDetailsByCondition(mDetailCondition).Select(c => new { c.Id, c.Title, c.Sender, c.Mobile, c.Content,c.Addtime }).ToList();
+
+            var list = _messageDetailService.GetMessageDetailsByCondition(mDetailCondition).Select(c => new { c.Id, c.Title, c.Sender, c.Mobile, c.Content, c.Addtime }).ToList();
             var listCount = _messageDetailService.GetMessageDetailsByCondition(mDetailCondition);
             return PageHelper.toJson(new { List = list, Condition = mDetailCondition, totalCount = listCount });
-          
+
             //================================================赵旭初 by 2015-05-13 end===============================================================
         }
 
 
         /// <summary>
-        /// /发送短信
+        /// 传入短信参数，添加短信信息，返回添加结果状态信息
         /// </summary>
-        /// <param name="Title"></param>
-        /// <param name="content"></param>
-        /// <param name="sender"></param>
-        /// <param name="addtime"></param>
-        /// <param name="mobile"></param>
+        /// <param name="messageDetailModel">短信参数</param>
+        /// <returns>短信发送结果状态信息</returns>
+        [Description("添加短信详情")]
         [System.Web.Http.HttpPost]
         public HttpResponseMessage AddMessageDetail(MessageDetailModel messageDetailModel)
         {
@@ -128,8 +133,9 @@ namespace Zerg.Controllers.CRM
         /// <summary>
         /// 获取SMS平台可用数量
         /// </summary>
-        /// <returns></returns>
+        /// <returns>SMS平台可用数量</returns>
         [HttpGet]
+        [Description("获取SMS平台可用数量")]
         public HttpResponseMessage GetSMSCount()
         {
             return PageHelper.toJson(SMSHelper.GetSMSCount());
@@ -138,32 +144,33 @@ namespace Zerg.Controllers.CRM
 
         #region 黄秀宇 发送短信验证码 2015.06.05
         /// <summary>
-        /// 发送短信验证码
+        /// 发送短信验证码，返回发送结果状态信息
         /// </summary>
         /// <param name="phone">手机号码</param>
         ///  /// <param name="userid">用户ID</param>
-        /// <returns></returns>
-     
+        /// <returns>短信验证码</returns>
+        [Description("发送短信验证码，返回发送结果状态信息")]
         [HttpPost]
-      public HttpResponseMessage SendMessage([FromBody] string phone,int userid)
+        public HttpResponseMessage SendMessage([FromBody] string phone, int userid)
         {
-           string salt= _userService.FindUser(userid).PasswordSalt.ToString ();//查找用户密钥
-           return ValidateMessage.SendMessage6(phone, salt);//发送短信验证码
+            string salt = _userService.FindUser(userid).PasswordSalt.ToString();//查找用户密钥
+            return ValidateMessage.SendMessage6(phone, salt);//发送短信验证码
         }
         /// <summary>
-        /// 验证短信验证码
+        /// 验证短信验证码，返回发送结果状态信息
         /// </summary>
         /// <param name="sourc">加密后的字符串</param>
         /// <param name="messa">验证码</param>
         /// <param name="userid">用户id,EMS加密用</param>
-        /// <returns></returns>
+        /// <returns>短信验证码</returns>
+        [Description("发送短信验证码，返回发送结果状态信息")]
         [HttpGet]
-        public HttpResponseMessage validate([FromBody] string sourc,string messa , int userid)
+        public HttpResponseMessage validate([FromBody] string sourc, string messa, int userid)
         {
-           
+
             string salt = _userService.FindUser(userid).PasswordSalt.ToString();//查找用户密钥
             return ValidateMessage.validate(sourc, messa, salt);//验证短信验证码
-        
+
 
         }
         #endregion

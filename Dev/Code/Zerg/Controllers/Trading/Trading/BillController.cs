@@ -18,8 +18,11 @@ using Newtonsoft.Json.Linq;
 using Zerg.Models.Trading.Product;
 using Zerg.Models.Trading.Trading;
 using System.Web.Http.Cors;
+using System.ComponentModel;
+
 namespace Zerg.Controllers.Trading.Trading
 {
+    [Description("账单管理类")]
     public class BillController : ApiController
     {
         private readonly IProductService _productService;
@@ -28,6 +31,15 @@ namespace Zerg.Controllers.Trading.Trading
         private readonly IAgentBillService _agentBillService;
         private readonly ICFBBillService _CFBBillService;
         private readonly ILandAgentBillService _landAgentBillService;
+        /// <summary>
+        /// 账单管理初始化
+        /// </summary>
+        /// <param name="productService">productService</param>
+        /// <param name="orderDetailService">orderDetailService</param>
+        /// <param name="orderService">orderService</param>
+        /// <param name="agentBillService">agentBillService</param>
+        /// <param name="CFBBillService">CFBBillService</param>
+        /// <param name="landAgentBillService">landAgentBillService</param>
         public BillController(
                 IProductService productService,
                 IOrderDetailService orderDetailService,
@@ -53,9 +65,10 @@ namespace Zerg.Controllers.Trading.Trading
         /// <param name="beneficiarynumber">打款账号</param>
         /// <param name="remark">备注</param>
         /// <param name="user">当前用户</param>
-        /// <returns></returns>
+        /// <returns>账单创建结果状态信息</returns>
+        [Description("创建三个账单（zerg、经纪人、地产商")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public string CreateBillsByOrder(int orderId, string beneficiarynumber, string remark, string user)
         {
             try
@@ -151,9 +164,10 @@ namespace Zerg.Controllers.Trading.Trading
         /// <summary>
         /// 查询所有Admin账单；
         /// </summary>
-        /// <returns></returns>
+        /// <returns>账单详细信息</returns>
+        [Description("查询账单")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAdminBill()
         {
             CFBBillSearchCondition CFBSC = new CFBBillSearchCondition()
@@ -165,9 +179,10 @@ namespace Zerg.Controllers.Trading.Trading
         /// <summary>
         /// 查询所有经纪人账单；
         /// </summary>
-        /// <returns></returns>
+        /// <returns>经纪人账单详情</returns>
+        [Description("查询所有经纪人账单")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAgentBill()
         {
             AgentBillSearchCondition CFBSC = new AgentBillSearchCondition()
@@ -179,9 +194,10 @@ namespace Zerg.Controllers.Trading.Trading
         /// <summary>
         /// 查询所有地产商账单；
         /// </summary>
-        /// <returns></returns>
+        /// <returns>地产商账单</returns>
+        [Description(" 查询所有地产商账单")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetLandAgentBill()
         {
             LandAgentBillSearchCondition LABSC = new LandAgentBillSearchCondition()
@@ -193,14 +209,15 @@ namespace Zerg.Controllers.Trading.Trading
         /// <summary>
         /// 查询经纪人Id所有经纪人账单；
         /// </summary>
-        /// <returns></returns>
+        /// <returns>所有经纪人账单</returns>
+        [Description("查询经纪人Id所有经纪人账单")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAgentBillById(int agentId)
         {
             AgentBillSearchCondition ABSC = new AgentBillSearchCondition()
             {
-                AgentId=agentId,
+                AgentId = agentId,
                 OrderBy = EnumAgentBillSearchOrderBy.OrderById
             };
             return PageHelper.toJson(_agentBillService.GetAgentBillsByCondition(ABSC).ToList());
@@ -208,14 +225,15 @@ namespace Zerg.Controllers.Trading.Trading
         /// <summary>
         /// 根据地产商ID查询所有账单；
         /// </summary>
-        /// <returns></returns>
+        /// <returns>地产商Id对应的所有账单</returns>
+        [Description(" 根据地产商ID查询所有账单")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetLandAgentBillById(int LandagentId)
         {
             LandAgentBillSearchCondition LABSC = new LandAgentBillSearchCondition()
             {
-                LandagentId=LandagentId,
+                LandagentId = LandagentId,
                 OrderBy = EnumLandAgentBillSearchOrderBy.OrderById
             };
             return PageHelper.toJson(_landAgentBillService.GetLandAgentBillsByCondition(LABSC).ToList());

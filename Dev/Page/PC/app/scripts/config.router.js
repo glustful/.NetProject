@@ -1080,8 +1080,7 @@ angular.module('app')
 
                 data : { title: '任务主页' },
 
-                resolve:load(['scripts/controllers/CRM/taskList.js',
-          'scripts/filters/toDate.js'])
+                resolve:load(['scripts/controllers/CRM/taskList.js'])
             })
             .state('page.CRM.TaskList.taskList', {
                 url: '/taskList?id',
@@ -1296,6 +1295,12 @@ angular.module('app')
                 data : { title: '商品管理' },
                 resolve: load(['scripts/controllers/Trading/Product.js','scripts/controllers/vectormap.js'])
             })
+            .state('page.Trading.product.edit', {
+                url: '/edit?productId',
+                templateUrl: 'views/pages/Trading/product/editProduct.html',
+                data : { title: '商品编辑' },
+                resolve:load('scripts/controllers/Trading/EditProduct.js')
+            })
             .state('page.Trading.product.createProduct', {
                 url: '/createProduct',
                 templateUrl: 'views/pages/Trading/product/createProduct.html',
@@ -1307,7 +1312,14 @@ angular.module('app')
                 templateUrl: 'views/pages/Trading/product/brand.html',
                 data : { title: '品牌项目' },
                 controller: 'BrandListController',
-                resolve: load('scripts/controllers/Trading/Brand.js')
+                resolve: load(['scripts/controllers/Trading/Brand.js','angularFileUpload'])
+            })
+            .state('page.Trading.product.upProductBrand', {
+                url: '/upProductBrand?brandId',
+                templateUrl: 'views/pages/Trading/product/upProductBrand.html',
+                data: { title: '品牌修改' },
+                //controller: 'upProductBrandController'
+               resolve:load(['scripts/controllers/Trading/UpProductBrand.js','angularFileUpload'])
             })
             .state('page.Trading.product.createbrand', {
                 url: '/createbrand',

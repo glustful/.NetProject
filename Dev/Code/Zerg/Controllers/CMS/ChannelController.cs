@@ -10,30 +10,38 @@ using YooPoon.Core.Site;
 using Zerg.Common;
 using Zerg.Models.CMS;
 using CMS.Service.Content;
+using System.ComponentModel;
 
 namespace Zerg.Controllers.CMS
 {
     [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    [Description("频道管理类")]
     public class ChannelController : ApiController
     {
         private readonly IChannelService _channelService;
         private readonly IWorkContext _workContent;
         private readonly IContentService _contentService;
-
+        /// <summary>
+        /// 频道管理初始化
+        /// </summary>
+        /// <param name="channelService">channelService</param>
+        /// <param name="workContent">workContent</param>
+        /// <param name="contentService">contentService</param>
         public ChannelController(IChannelService channelService,IWorkContext workContent,IContentService contentService) {
             _channelService = channelService;
             _workContent = workContent;
             _contentService = contentService;
         }
         /// <summary>
-        /// 首页
+        /// 频道管理首页,根据页面数量设置频道数量,返回频道列表
         /// </summary>
         /// <param name="name">频道名称</param>
         /// <param name="page">页码</param>
-        /// <param name="pageSize">页记录数</param>
-        /// <returns></returns>
+        /// <param name="pageSize">页面记录数</param>
+        /// <returns>频道列表</returns>
         [HttpGet]
+        [Description("频道管理首页,返回频道列表")]
        
         public HttpResponseMessage Index(string name = null,int page = 1, int pageSize = 10)
         {
@@ -53,11 +61,12 @@ namespace Zerg.Controllers.CMS
             return PageHelper.toJson(new{List=channelList,Condition=channelCon,TotalCount=totalCount});
         }
         /// <summary>
-        /// 新建频道
+        /// 传入频道参数,创建一个频道,返回创建成功还是失败的提示,成功提示"数据添加成功",失败提示"数据添加失败"
         /// </summary>
         /// <param name="model">频道参数</param>
-        /// <returns></returns>
+        /// <returns>频道创建结果状态信息</returns>
         [HttpPost]
+        [Description("创建一个频道")]
         public HttpResponseMessage Create(ChannelModel model)
         {
             Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
@@ -102,11 +111,12 @@ namespace Zerg.Controllers.CMS
             }
         }
         /// <summary>
-        /// 频道详细信息
+        /// 传入频道Id,查询频道信息,返回频道详细信息
         /// </summary>
         /// <param name="id">频道id</param>
-        /// <returns></returns>
-         [HttpGet]
+        /// <returns>频道详细信息</returns>
+        [HttpGet]
+        [Description("查询频道详细信息")]
         public HttpResponseMessage Detailed(int id)
         {
             var channel = _channelService.GetChannelById(id);
@@ -123,11 +133,12 @@ namespace Zerg.Controllers.CMS
             return PageHelper.toJson(channelDetail);
         }
         /// <summary>
-        /// 保存修改信息
+        /// 传入频道参数,修改频道信息,返回修改结果状态信息,成功提示"数据更新成功",失败提示"数据更新失败"
         /// </summary>
         /// <param name="model">频道参数</param>
-        /// <returns></returns>  
+        /// <returns>频道更新结果状态信息</returns>  
         [HttpPost]
+        [Description("编辑修改频道信息")]
          public HttpResponseMessage Edit(ChannelModel model)
          {
              Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
@@ -188,10 +199,11 @@ namespace Zerg.Controllers.CMS
             }          
          }
         /// <summary>
-        /// 频道删除
+        /// 传入频道Id,判断频道是否为空,无关联信息,返回删除结果状态信息,成功提示"数据删除成功",失败提示"数据删除失败"
         /// </summary>
         /// <param name="id">频道id</param>
-        /// <returns></returns>
+        /// <returns>频道删除结果状态信息</returns>
+        [Description("传入Id,删除频道")]
         [HttpGet]
          public HttpResponseMessage Delete(int id)
          {
@@ -210,11 +222,12 @@ namespace Zerg.Controllers.CMS
                 }
          }
         /// <summary>
-        ///content表的 titleImg banner 的获取
+        /// 传入频道名称,查询频道内容,返回频道中五条图片内容
         /// </summary>
-        /// <param name="channelId">channel表的name</param>
-        /// <returns></returns>
-       [HttpGet]
+        /// <param name="channelName">频道名称</param>
+        /// <returns>频道内容列表</returns>
+        [HttpGet]
+        [Description("查询频道下前五条内容")]
         public HttpResponseMessage GetTitleImg(string channelName)
         {
             //var channel = _channelService.GetChannelById(channelId);
@@ -229,7 +242,7 @@ namespace Zerg.Controllers.CMS
             var content = _contentService.GetContentsByCondition(new ContentSearchCondition
             {
                 ChannelName = channelName
-            }).Take(5).Select(c => new
+            }).OrderByDescending(c => c.Addtime).Take(5).Select(c => new
             {
                 c.Title,
                 c.AdSubTitle,
@@ -240,19 +253,20 @@ namespace Zerg.Controllers.CMS
             return PageHelper.toJson(content);
         }
 
-
         /// <summary>
-        /// 获取活动频道图片
+        /// 传入频道名称,查询频道下前6条活动内容,返回活动内容列表
         /// </summary>
-        /// <param name="channelName">channel表的name</param>
-        /// <returns></returns>
+        /// <param name="channelName">频道名称</param>
+        /// <returns>活动列表</returns>
+    
+        [Description("查询频道下前6条活动信息")]
        public HttpResponseMessage GetActiveTitleImg(string channelName)
        {
         
            var Actcontent = _contentService.GetContentsByCondition(new ContentSearchCondition
            {
                ChannelName = channelName
-           }).Take(6).Select(c => new
+           }).OrderByDescending(c => c.Addtime).Take(6).Select(c => new
            {
                c.Title,
                c.AdSubTitle,
