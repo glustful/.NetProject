@@ -22,6 +22,10 @@ namespace Trading.Entity.Model
 		/// AddUser
 		/// </summary>
 		public virtual string Adduser { get; set; }
+        /// <summary>
+        /// AdTitle
+        /// </summary>
+        public virtual string AdTitle { get; set; }
 		/// <summary>
 		/// AddTime
 		/// </summary>

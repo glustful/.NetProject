@@ -131,7 +131,7 @@ namespace CRM.Service.Broker
                 }
                 if (!string.IsNullOrEmpty(condition.Phone))
                 {
-                    query = query.Where(q => q.Phone.Contains(condition.Phone));
+                    query = query.Where(q => q.Phone==condition.Phone);
                 }
                 if (!string.IsNullOrEmpty(condition.Email))
                 {
@@ -184,7 +184,7 @@ namespace CRM.Service.Broker
                 }
                 if (condition.State!=2)
                 {
-                    query = query.Where(q => condition.State ==q.State);
+                    query = query.Where(q => q.State == condition.State);
                 }
                 if (condition.Upusers != null && condition.Upusers.Any())
                 {
