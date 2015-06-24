@@ -13,7 +13,7 @@
         </p>
         <p class="register_input">
             <span><img src="modules/Register/static/image/register/pass.png" class="registerImg"></span>
-            <input type="password" class="register_blank" id="first_password" placeholder="请输入6-20位密码" name="register_passwordblank" id="userPassword"  ng-model="register.Password" ng-pattern="/[a-zA-Z0-9]/" ng-minlength="6" ng-maxlength="20" required/>
+            <input type="password" class="register_blank" id="first_password" placeholder="请输入6-20位密码" name="register_passwordblank" id="userPassword"  ng-model="register.Password" ng-pattern="/^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{6,20}$/"  required/>
         </p>
         <div class="error_out" ng-show="form_register.register_passwordblank.$invalid&&form_register.register_passwordblank.$dirty"> So easy!小心强盗</div>
         <p class="register_tip"><span>*</span>
@@ -38,10 +38,10 @@
             验证码
         </p>
         <p class="PinBlank">
-            <input type="text"  class="PinInput" placeholder="请输入验证码"  ng-model="register.MobileYzm"  name="Pin_input" required/>
+            <input type="text"  class="PinInput" placeholder="请输入验证码"  ng-model="register.MobileYzm"  name="Pin_input" ng-pattern="/^\d{6}$/" required/>
             <button  id="btnsms" name="btnsms"  ng-click="GetSMS()">发送验证码</button>
         </p>
-        <div class="error_out" ng-show="form_register.Pin_input.$error.required&&form_register.Pin_input.$dirty">注册码不能为空</div>
+        <div class="error_out" ng-show="form_register.Pin_input.$invalid&&form_register.Pin_input.$dirty">请正确输入验证码</div>
         <p class="error_out"> {{errorTips}}</p>
         <button class="register_button"  type="submit" ng-disabled="form_register.$invalid">注 册</button>
         <p class="LoginExit">

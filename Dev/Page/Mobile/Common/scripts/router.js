@@ -95,7 +95,9 @@ app.run(
             })
             .state('app.setting',{
                 url:'/setting',
-                templateUrl:'modules/setting/view/setting.html'
+                templateUrl:'modules/setting/view/setting.html',
+                resolve:load('modules/security_setting/controller/SecuritySetting.js'),
+                controller:'loginOutController'
             })
             .state('app.person_setting',{
                 url:'/person_setting',

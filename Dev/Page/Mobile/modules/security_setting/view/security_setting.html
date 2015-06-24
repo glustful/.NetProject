@@ -14,9 +14,9 @@
                     <p><span>*</span><label>确认密码</label></p>
                     <input type="password" class="form-control" id="NewPassword2" name="confirmPassword" placeholder="请再次输入密码" ng-model="password.SecondPassword" onchange="check()" >
                 </div>
-                <p class="pin"><input type="text" id="pin_blank" ng-model="password.MobileYzm"  name="YzmPIN" placeholder="请输入验证码" required/>
+                <p class="pin"><span>*</span><input type="text" id="pin_blank" ng-model="password.MobileYzm"  name="YzmPIN" placeholder="请输入验证码"    ng-pattern="/^\d{6}$/" required/>
                 <button  ng-click="pwSms()" id="pw_sms">获取验证码</button></p>
-                <div class="errorTip" ng-show="security_form.YzmPIN.$error.required&&security_form.YzmPIN.$dirty"></div>
+                <div class="errorTip" ng-show="security_form.YzmPIN.$invalid&&security_form.YzmPIN.$dirty">请正确输入验证码</div>
                 <input type="hidden" ng-model="password.Hidm">
                 <label id="errorTip" class="errorTip"></label>
                 <label class="errorTip">{{changeError}}</label>
