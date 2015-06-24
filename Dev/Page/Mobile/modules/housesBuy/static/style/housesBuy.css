@@ -184,30 +184,30 @@ text-decoration: none;
 
 
 /*户型图新样式*/
-.content-housesBuy .typeHouses{
+ .typeHouses{
 
 }
-.content-housesBuy .typeHouses ul li{
+ .typeHouses ul li{
     background-color: #fff;
     width: 290px;
     height: 426px;
     margin: 20px 0 0 20px;
     padding:20px 0 0 0;
 }
-.content-housesBuy .typeHouses .inside{
+.typeHouses .inside{
     padding-left: 25px;
 }
-.content-housesBuy .typeHouses .housesType{
+ .typeHouses .housesType{
     color: #000;
     font-size: 1.2em;
 }
-.content-housesBuy .typeHouses .average{
+ .typeHouses .average{
    color:#f13800 ;
     font-size: 1.2em;
     padding-bottom: 20px;
     display: block;
 }
-.content-housesBuy .typeHouses .ask{
+.typeHouses .ask{
     display: block;
     margin-top: 30px;
     height: 60px;
