@@ -2,8 +2,9 @@
  * Created by Administrator on 2015/6/8.
  */
 app.controller('personController',['$http','$scope','AuthService','$state',function($http,$scope,AuthService,$state) {
+
         $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
-   var coun=2;
+   var coun=2;//1为经纪人
         //判断是否是经纪人
     $http.get(SETTING.ApiUrl+'/ClientInfo/Getbroker/',{'withCredentials':true})
         .success(function(response) {
@@ -11,7 +12,7 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
             action();
         });
         function action(){
-        if(coun===1)
+        if(coun===1)//为经纪人状态
    {
 
     $scope.searchCondition = {
@@ -109,10 +110,13 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
     };
     $scope.addTaskList = addlist;
    }
-        else{
-       $state.go("user.login");
-
-   }}
+        else if (coun === 0) {//一般用户
+            $state.go("app.person_setting");//调到设置页面
+        }
+        else if (coun === 2) {//未登录
+            $state.go("user.login");//调到登录页面
+        }
+        }
 }
 ]
 );
