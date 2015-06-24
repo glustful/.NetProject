@@ -205,7 +205,7 @@ namespace Zerg.Controllers.CRM
 
         }
         /// <summary>
-        /// 判断当前用户是否是经济人，返回结果状态值，是经纪人返回"1",否则返回"1"
+        /// 判断当前用户是否是经济人，返回结果状态值，是经纪人返回"1",否则返回"0"
         /// </summary>
         /// <returns>是否是经纪人结果状态信息</returns>
 
@@ -219,14 +219,22 @@ namespace Zerg.Controllers.CRM
                 var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
                 if (broker != null)
                 {
-                    return PageHelper.toJson(new { count = 1 });
+                    if (broker.Usertype ==EnumUserType .普通用户)
+                    {
+                        return PageHelper.toJson(new { count = 0 });//返回0，为普通用户
+                    }
+                    else
+                    {
+                        return PageHelper.toJson(new { count = 1 });//返回1，为经纪人、财务、admin、带客人员、驻秘、商家
+                    }
+                    
                 }
                 else
                 {
-                    return PageHelper.toJson(new { count = 0 });
+                    return PageHelper.toJson(new { count = 0 });//返回0，不是经纪人
                 }
             }
-            return null;
+            return PageHelper.toJson(new { count = 2 }); //返回2，未登录
         }
         /// <summary>
         /// 获取当前经纪人，通过经纪人ID查询他的客户个数，返回客户数
