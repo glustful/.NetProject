@@ -460,9 +460,9 @@ namespace Zerg.Controllers.UC
             {
                 PasswordHelper.SetPasswordHashed(user, model.Password);
                 _userService.ModifyUser(user);
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "密码修改成功！"));
             }
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "密码修改失败！请检查输入是否正确！"));
         }
         /// <summary>
         /// 删除用户
