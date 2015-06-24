@@ -36,3 +36,11 @@ app.controller('BrokerTopThreeController',['$scope','$http','AuthService','$stat
         $scope.Actcontent=data;
     });
 }]);
+app.filter('subtitle', function ($sce) {
+
+    return function (input) {
+
+        return $sce.trustAsHtml(input);
+
+    }
+});
