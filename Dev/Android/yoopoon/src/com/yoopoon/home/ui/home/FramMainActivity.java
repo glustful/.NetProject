@@ -24,9 +24,10 @@ import android.widget.Toast;
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
+import com.yoopoon.home.SearchActionBarActivity;
 
 @EActivity(R.layout.home_main_activity)
-public class FramMainActivity extends MainActionBarActivity {
+public class FramMainActivity extends SearchActionBarActivity {
 	
 	static String tag = "FramMainActivity";
 	@ViewById(android.R.id.tabhost)
@@ -97,9 +98,7 @@ public class FramMainActivity extends MainActionBarActivity {
 
 		@Override
 		public void onPageSelected(int position) {
-			FramSuper fs = (FramSuper) pageAdapter.getItem(position);
-			getCenterButton().setText(fs.getTitle());
-			getCenterButton().setVisibility(View.VISIBLE);
+			
 			tabHost.setCurrentTab(position);
 			
 		}
@@ -158,8 +157,7 @@ public class FramMainActivity extends MainActionBarActivity {
 		mainPager.setAdapter(pageAdapter);
 		mainPager.setOnPageChangeListener(pageListener);
 		mainPager.setCurrentItem(0);
-		getCenterButton().setText("活动");
-		getCenterButton().setVisibility(View.VISIBLE);
+		
 	}
 
 	@Override
@@ -213,25 +211,5 @@ public class FramMainActivity extends MainActionBarActivity {
 
 		super.finish();
 	}
-	@Override
-	public void backButtonClick(View v) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void titleButtonClick(View v) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void rightButtonClick(View v) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public Boolean showHeadView() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
+	
 }

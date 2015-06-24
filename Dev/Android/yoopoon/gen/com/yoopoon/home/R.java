@@ -1136,6 +1136,7 @@ containing a value of this type.
         public static final int indicator_right_padding=0x7f050000;
         public static final int login_view_textSize=0x7f05001b;
         public static final int main_tab_bageSize=0x7f05001a;
+        public static final int search_text_size=0x7f05001c;
     }
     public static final class drawable {
         public static final int abc_ab_bottom_solid_dark_holo=0x7f020000;
@@ -1246,32 +1247,39 @@ containing a value of this type.
         public static final int an_login_loading_16=0x7f020069;
         public static final int an_login_loading_17=0x7f02006a;
         public static final int an_login_loading_18=0x7f02006b;
-        public static final int back_ico=0x7f02006c;
-        public static final int clean_text_selector=0x7f02006d;
-        public static final int clear_text_normal=0x7f02006e;
-        public static final int clear_text_select=0x7f02006f;
-        public static final int default_ptr_flip=0x7f020070;
-        public static final int default_ptr_rotate=0x7f020071;
-        public static final int home_login_button=0x7f020072;
-        public static final int home_register=0x7f020073;
-        public static final int house_tab_selector=0x7f020074;
-        public static final int ic_launcher=0x7f020075;
-        public static final int icon_active_normal=0x7f020076;
-        public static final int icon_active_selected=0x7f020077;
-        public static final int icon_agent_normal=0x7f020078;
-        public static final int icon_agent_selected=0x7f020079;
-        public static final int icon_house_normal=0x7f02007a;
-        public static final int icon_house_selected=0x7f02007b;
-        public static final int icon_me_normal=0x7f02007c;
-        public static final int icon_me_selected=0x7f02007d;
-        public static final int indicator_arrow=0x7f02007e;
-        public static final int indicator_bg_bottom=0x7f02007f;
-        public static final int indicator_bg_top=0x7f020080;
-        public static final int login_in_edit=0x7f020081;
-        public static final int me_tab_selector=0x7f020082;
-        public static final int point_focused=0x7f020083;
-        public static final int point_unfocused=0x7f020084;
-        public static final int text_tab_selector=0x7f020085;
+        public static final int an_save_hover=0x7f02006c;
+        public static final int an_save_normal=0x7f02006d;
+        public static final int back_ico=0x7f02006e;
+        public static final int clean_text_selector=0x7f02006f;
+        public static final int clear_button_selector=0x7f020070;
+        public static final int clear_text_normal=0x7f020071;
+        public static final int clear_text_select=0x7f020072;
+        public static final int default_ptr_flip=0x7f020073;
+        public static final int default_ptr_rotate=0x7f020074;
+        public static final int home_login_button=0x7f020075;
+        public static final int home_register=0x7f020076;
+        public static final int house_tab_selector=0x7f020077;
+        public static final int ic_launcher=0x7f020078;
+        public static final int icon_active_normal=0x7f020079;
+        public static final int icon_active_selected=0x7f02007a;
+        public static final int icon_agent_normal=0x7f02007b;
+        public static final int icon_agent_selected=0x7f02007c;
+        public static final int icon_house_normal=0x7f02007d;
+        public static final int icon_house_selected=0x7f02007e;
+        public static final int icon_me_normal=0x7f02007f;
+        public static final int icon_me_selected=0x7f020080;
+        public static final int indicator_arrow=0x7f020081;
+        public static final int indicator_bg_bottom=0x7f020082;
+        public static final int indicator_bg_top=0x7f020083;
+        public static final int login_in_edit=0x7f020084;
+        public static final int logo=0x7f020085;
+        public static final int me_tab_selector=0x7f020086;
+        public static final int point_focused=0x7f020087;
+        public static final int point_unfocused=0x7f020088;
+        public static final int save_selector=0x7f020089;
+        public static final int search_ico=0x7f02008a;
+        public static final int search_input=0x7f02008b;
+        public static final int text_tab_selector=0x7f02008c;
     }
     public static final class id {
         public static final int action_bar=0x7f060028;
@@ -1328,6 +1336,9 @@ containing a value of this type.
         public static final int login_id_pwd=0x7f060052;
         public static final int manualOnly=0x7f06000b;
         public static final int matter_list_view=0x7f06004e;
+        public static final int matter_search_button=0x7f060066;
+        public static final int matter_search_del_view=0x7f060065;
+        public static final int matter_search_text=0x7f060064;
         public static final int middle=0x7f060024;
         public static final int myGrid=0x7f06004a;
         public static final int never=0x7f06001e;
@@ -1439,7 +1450,9 @@ containing a value of this type.
         public static final int main_tab_view=0x7f030023;
         public static final int pull_to_refresh_header_horizontal=0x7f030024;
         public static final int pull_to_refresh_header_vertical=0x7f030025;
-        public static final int support_simple_spinner_dropdown_item=0x7f030026;
+        public static final int search_action_bar=0x7f030026;
+        public static final int search_action_view=0x7f030027;
+        public static final int support_simple_spinner_dropdown_item=0x7f030028;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1496,6 +1509,9 @@ containing a value of this type.
         /**  advertismentController 
          */
         public static final int url_ad_index=0x7f070018;
+        /**  brandController 
+         */
+        public static final int url_brand_GetAllBrand=0x7f07001d;
         public static final int url_channel_active_titleimg=0x7f07001c;
         /**  channelController 
          */
@@ -1506,7 +1522,7 @@ containing a value of this type.
         public static final int url_host=0x7f070015;
         /**  图片服务器地址 
          */
-        public static final int url_host_img=0x7f07001d;
+        public static final int url_host_img=0x7f07001e;
         public static final int url_login=0x7f070017;
         /**  productController 
          */
