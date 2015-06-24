@@ -1,6 +1,14 @@
 <!--房源库-->
 <!--required:../static/style/storeroom.css-->
+
 <div ng-controller="StormRoomController" style="position: relative" class="StormRoom-content">
+    <div id="carousel-bg" >
+        <carousel interval="2000">
+            <slide ng-repeat="slide in content" active="slide.active">
+                <img src="http://img.yoopoon.com/{{slide.TitleImg}}" class="img-full" alt="成为经济人轻松赚大钱" width="640" height="230" />
+            </slide>
+        </carousel>
+    </div>
             <!--<div class="nav-storeroom">-->
                 <!--<a class="area-storeroom" href="#" ng-click="toggleProvince()">区域<span class="icon-storeroom"></span></a>-->
                 <!--<a class="type-storeroom" href="#" ng-click="toggleType()">类型<span class="icon-storeroom"></span></a>-->

@@ -73,6 +73,7 @@ app.controller('homeController',['$http','$scope',function($http,$scope){
 
 
 
+
     $scope.channelName='banner';
     $http.get(SETTING.ApiUrl+'/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
         $scope.content=data;
@@ -84,7 +85,14 @@ app.controller('homeController',['$http','$scope',function($http,$scope){
     });
 
 }]);
+app.filter('adtitle', function ($sce) {
 
+    return function (input) {
+
+        return $sce.trustAsHtml(input);
+
+    }
+});
 
 
 
