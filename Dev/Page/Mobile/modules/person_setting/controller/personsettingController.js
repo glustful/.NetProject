@@ -20,6 +20,7 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
     $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
        .success(function(response) {
             $scope.olduser=response;
+            console.log(response);
             //添加判断,如果用户没有头像,隐藏IMG标签
             if($scope.olduser.Headphoto.length<15){
             	//操作IMG标签的SRC为空

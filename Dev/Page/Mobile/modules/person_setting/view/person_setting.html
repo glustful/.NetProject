@@ -15,8 +15,9 @@
                    <form name="information_form" >
 
                        <p>昵称</p>
-                       <input type="text" class="password old" placeholder="昵称" name="information_form_nickName" ng-model="olduser.Nickname" ng-pattern="/^[\u4e00-\u9fa5a-zA-Z0-9_]+$/" ng-maxlength="8" ><br/>
-                       <div class="information_error" ng-show="information_form.information_form_nickName.$invalid&&information_form.information_form_nickName.$dirty">请正确输入昵称</div>
+                       <p>{{olduser.Brokername}}</p>
+                       <!--<input type="text" class="password old" placeholder="昵称" name="information_form_nickName" ng-model="olduser.Nickname" ng-pattern="/^[\u4e00-\u9fa5a-zA-Z0-9_]+$/" ng-maxlength="8" ><br/>-->
+                       <!--<div class="information_error" ng-show="information_form.information_form_nickName.$invalid&&information_form.information_form_nickName.$dirty">请正确输入昵称</div>-->
                        <p> <span>*</span>姓名</p>
                        <input type="text" class="password old" placeholder="姓名" name="information_name" ng-model="olduser.Realname" ng-pattern="/^[\u4e00-\u9fa5]+$/" ng-maxlength="5" ng-minlength="2" required/><br/>
                        <div class="information_error" ng-show="information_form.information_name.$invalid&&information_form.information_name.$dirty">请正确输入姓名</div>

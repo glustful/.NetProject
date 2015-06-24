@@ -290,7 +290,7 @@ namespace CRM.Service.Broker
                 }
                 if (!string.IsNullOrEmpty(condition.Phone))
                 {
-                    query = query.Where(q => q.Phone.Contains(condition.Phone));
+                    query = query.Where(q => q.Phone==condition.Phone);
                 }
                 if (!string.IsNullOrEmpty(condition.Headphoto))
                 {
