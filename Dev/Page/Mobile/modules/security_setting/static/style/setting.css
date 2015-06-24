@@ -36,6 +36,9 @@
 form a{
     color: #848484;
 }
+form p span{
+    color: #fc3b00;
+}
 .form-control{
     width: 520px;
     height: 46px;
@@ -92,6 +95,10 @@ form a{
     height: 48px;
     font-size: 22px;
     font-family: "microsoft yahei";
+}
+.person_revise span{
+ color: #fc3b00;
+
 }
 .headphoto{
     text-align: center;

@@ -2,16 +2,16 @@
 <!--required:../static/style/setting.css" rel="stylesheet-->
         <div class="security_content" ng-controller="SecuritySettingController">
             <form name="security_form">
-                <p><label>旧密码</label></p>
+                <p><span>*</span><label>旧密码</label></p>
                 <p><input type="password" class="form-control" name="oldpassword" placeholder="请输入旧密码" ng-model="password.OldPassword" required/></p>
                 <div class="errorTip" ng-show="security_form.oldpassword.$error.required&&security_form.oldpassword.$dirty">请完整填写旧密码</div>
                 <div class="form-group">
-                    <p><label > 新密码</label></p>
-                    <p> <input type="password" id="NewPassword1"  class="form-control" name="newPassword" ng-model="password.Password"  placeholder="请输入密码"  required></p>
-                    <div class="errorTip" ng-show="security_form.newPassword.$error.required&&security_form.newPassword.$dirty">请输入新密码</div>
+                    <p><span>*</span><label > 新密码</label></p>
+                    <p> <input type="password" id="NewPassword1"  class="form-control" name="newPassword" ng-model="password.Password" ng-maxlength="20" ng-minlength="6" placeholder="请输入密码"  required></p>
+                    <div class="errorTip" ng-show="security_form.newPassword.$invalid&&security_form.newPassword.$dirty">请输入6-20位新密码</div>
                 </div>
                 <div >
-                    <p><label>确认密码</label></p>
+                    <p><span>*</span><label>确认密码</label></p>
                     <input type="password" class="form-control" id="NewPassword2" name="confirmPassword" placeholder="请再次输入密码" ng-model="password.SecondPassword" onchange="check()" >
                 </div>
                 <p class="pin"><input type="text" id="pin_blank" ng-model="password.MobileYzm"  name="YzmPIN" placeholder="请输入验证码" required/>
