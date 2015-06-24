@@ -36,7 +36,7 @@
                     </select>
 
 
-                    <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue" ng-click="getDataByTime()">检索</button>
+                    <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue" ng-click="getData()">检索</button>
 
                 </div>
                 <div style="margin-left: 15px"> 短信平台可用短信数量：<span style="color: red" >{{SMSCounts}}</span>条</div>
@@ -88,9 +88,11 @@
             </tbody>
 
         </table>
+
         <div colspan="5" class="text-center footable-visible">
-            <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+            <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getData()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
         </div>
+
     </div>
 
 

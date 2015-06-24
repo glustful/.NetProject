@@ -67,8 +67,12 @@ namespace Zerg.Controllers.CRM
             else
                 strEndtime = endTime.Substring(0, 10);
 
-            strType = type;
+            if(!string.IsNullOrEmpty(type))
+            {
+                strType = type;
 
+            }
+            
 
             var mDetailCondition = new MessageDetailSearchCondition()
             {
@@ -81,7 +85,7 @@ namespace Zerg.Controllers.CRM
 
 
             var list = _messageDetailService.GetMessageDetailsByCondition(mDetailCondition).Select(c => new { c.Id, c.Title, c.Sender, c.Mobile, c.Content, c.Addtime }).ToList();
-            var listCount = _messageDetailService.GetMessageDetailsByCondition(mDetailCondition);
+            var listCount = _messageDetailService.GetMessageDetailCount(mDetailCondition);
             return PageHelper.toJson(new { List = list, Condition = mDetailCondition, totalCount = listCount });
 
             //================================================赵旭初 by 2015-05-13 end===============================================================

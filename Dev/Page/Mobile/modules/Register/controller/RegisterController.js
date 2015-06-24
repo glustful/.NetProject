@@ -26,7 +26,7 @@ app.controller('registerController',['$scope','$state','$http','$stateParams','A
             else{
                 AuthService.doLogin($scope.register.UserName,$scope.register.Password,function(){
                     console.log("$scope.register");
-                    $state.go('app.setting')
+                    $state.go('app.person_setting')
                 },function(data){
                    // $scope.errorTips = data.Msg;
                 })

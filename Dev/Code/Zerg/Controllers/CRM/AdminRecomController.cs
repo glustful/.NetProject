@@ -364,9 +364,9 @@ namespace Zerg.Controllers.CRM
 
                 #endregion
             }
-            else if (brokerRecClientModel.Status == EnumBRECCType.审核不通过) { }
-
-            else
+            else if (brokerRecClientModel.Status == EnumBRECCType.审核不通过) { return PageHelper.toJson(PageHelper.ReturnValue(false, "审核不通过")); }
+                  
+            else if (brokerRecClientModel.Status == EnumBRECCType.审核中)
             {
                 #region 推荐订单变更 杨定鹏 2015年6月4日17:38:08
 
@@ -374,6 +374,7 @@ namespace Zerg.Controllers.CRM
 
                 //变更订单状态
                 int a = (int)Enum.Parse(typeof(EnumBRECCType), brokerRecClientModel.Status.ToString());
+
                 recOrder.Shipstatus = a;  //(int)Enum.Parse(typeof(EnumBRECCType), brokerRecClientModel.Status.ToString()); //(int)brokerRecClientModel.Status;
                 //dealOrder.Shipstatus = (int)Enum.Parse(typeof(EnumBRECCType), brokerRecClientModel.Status.ToString()); //(int)brokerRecClientModel.Status;
 

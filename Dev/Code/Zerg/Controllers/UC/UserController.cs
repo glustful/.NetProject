@@ -70,7 +70,19 @@ namespace Zerg.Controllers.UC
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage Login([FromBody]UserModel model)
         {
-            var user = _userService.GetUserByName(model.UserName);
+            BrokerSearchCondition brokerSearchcon=new BrokerSearchCondition
+            {
+                State=1,
+               Phone=model.UserName
+            };
+            BrokerEntity broker = _brokerService.GetBrokersByCondition(brokerSearchcon).FirstOrDefault();
+            if(broker==null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号或密码错误"));
+            }
+           // var user = _userService.GetUserByName(model.UserName);
+
+            var user =_userService.FindUser(broker.UserId);
             if (user == null)
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名或密码错误"));
             if (!PasswordHelper.ValidatePasswordHashed(user, model.Password))
@@ -191,6 +203,11 @@ namespace Zerg.Controllers.UC
 
             #region UC用户创建 杨定鹏 2015年5月28日14:52:48
             var user = _userService.GetUserByName(brokerModel.UserName);
+            if(user!=null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
+            }
+
 
             var condition = new BrokerSearchCondition
             {
@@ -201,7 +218,7 @@ namespace Zerg.Controllers.UC
             //判断user表和Broker表中是否存在用户名
             int user2 = _brokerService.GetBrokerCount(condition);
 
-            if (user2 != 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
+            if (user2 != 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号已经存在"));
 
             var brokerRole = _roleService.GetRoleByName("user");
 
@@ -240,6 +257,7 @@ namespace Zerg.Controllers.UC
             var model = new BrokerEntity();
             model.UserId = _userService.InsertUser(newUser).Id;
             model.Brokername = brokerModel.UserName;
+            model.Nickname = brokerModel.UserName;
             model.Phone = brokerModel.Phone;
             model.Totalpoints = 0;
             model.Amount = 0;
@@ -460,9 +478,9 @@ namespace Zerg.Controllers.UC
             {
                 PasswordHelper.SetPasswordHashed(user, model.Password);
                 _userService.ModifyUser(user);
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "密码修改成功！"));
             }
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "密码修改失败！请检查输入是否正确！"));
         }
         /// <summary>
         /// 删除用户
