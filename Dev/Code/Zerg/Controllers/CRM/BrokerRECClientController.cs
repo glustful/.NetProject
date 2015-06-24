@@ -260,6 +260,7 @@ namespace Zerg.Controllers.CRM
             model.Projectname = brokerrecclient.Projectname;
             model.Status = EnumBRECCType.审核中;
             model.DelFlag = EnumDelFlag.默认;
+            model.RecOrder = (int)EnumOrderType.推荐订单;
 
             //             model.RecOrder = _orderService.Create(oe).Id;      //添加推荐订单；
             //             model.DealOrder =_orderService.Create(oe2).Id;       //添加成交订单

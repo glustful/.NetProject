@@ -396,6 +396,7 @@ namespace Zerg.Controllers.CRM
             model.Projectname = brokerleadclient.Projectname;
             model.Status = EnumBLeadType.预约中;
             model.DelFlag = EnumDelFlag.默认;
+            model.ComOrder = (int)EnumOrderType.带客订单;
 
             //            model.ComOrder = _orderService.Create(oe).Id;      //添加代客订单；
             //            model.DealOrder = _orderService.Create(oe2).Id;       //添加成交订单
