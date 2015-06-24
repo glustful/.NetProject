@@ -212,6 +212,7 @@ namespace Zerg.Controllers.UC
             var condition = new BrokerSearchCondition
             {
                 OrderBy = EnumBrokerSearchOrderBy.OrderById,
+                State = 1,
                 Phone = brokerModel.Phone
             };
 
