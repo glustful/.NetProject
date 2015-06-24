@@ -67,7 +67,7 @@ angular.module("app").controller('MessageSeachController', ['$http', '$scope', f
     };
 
     // 检索
-    var getData = function () {
+    $scope.getData = function () {
         $http.get(SETTING.ApiUrl + '/MessageDetail/SearchMessageDetail', {
             params: $scope.searchCondition,
             'withCredentials':true
@@ -78,8 +78,8 @@ angular.module("app").controller('MessageSeachController', ['$http', '$scope', f
             $scope.totalCount = data.totalCount;
         });
     };
-    $scope.getDataByTime = getData;
-    getData();
+   // $scope.getDataByTime = getData;
+    $scope.getData();
 
     $scope.getList = function () {
         $http.get(SETTING.ApiUrl + '/MessageConfig/GetMessageConfigNameList', {
