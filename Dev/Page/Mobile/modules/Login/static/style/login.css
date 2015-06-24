@@ -1,0 +1,73 @@
+.user_content{
+    width: 640px;
+    margin: 0 auto;
+    /*background-color: #eeeeee;*/
+    font-family: "microsoft yahei";
+}
+.login_title{
+    position: fixed;
+    top: 0;
+    width: 640px;
+    background-color: #fc3b00;
+    padding: 30px 0 20px 0;
+    text-align: center;
+    font-size: 26px;
+    color: #eeeeee;
+}
+.form_content{
+    padding: 20px 50px 0 50px;
+    font-size: 20px;
+    margin-top: 20px;
+    font-family: "microsoft yahei";
+}
+.form_content .user_tip{
+    font-size: 22px;
+    margin-top: 25px;
+}
+.form_content .input_blank{
+    width: 514px;
+    height: 48px;
+    line-height: 48px;
+    /*background: url("../image/login/tex.png");*/
+}
+ .input_blank input{
+    width: 460px;
+    height: 48px;
+    font-size: 20px;
+     border: none;
+}
+.input_blank .UserImg{
+    vertical-align:middle;
+    width: 40px;
+    height: 40px;
+
+}
+.MissMe{
+    margin: 25px 0 50px 0;
+}
+.MissMe input{
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+}
+.MissMe span{
+    float: right;
+}
+.login_button{
+    width: 515px;
+    height: 45px;
+    font-size: 26px;
+    color: #eeeeee;
+    background-color: #fc3b00;
+    font-family: "microsoft yahei";
+}
+.NoAccount{
+    float: right;
+    margin-top: 48px;
+}
+.NoAccount a{
+    color: #fc3b00;
+}
+.login_errorTip{
+    color: #fc3b00;
+}

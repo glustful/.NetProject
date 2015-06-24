@@ -1,0 +1,199 @@
+.bj{
+    padding:15px 10px 0 10px;
+}
+.nav-broker {
+    background: #fff;
+    padding-top:24px;
+    margin-bottom: 20px;
+}
+.nav-broker span{
+    display: inline-block;
+    text-align: center;
+    width:150px;
+    padding:77px 0 26px 0;
+    color: #7a7a7a;
+}
+.nav-broker .dk{
+    background:url("../image/broker/n1.png") no-repeat center 0;
+}
+.nav-broker .tj{
+    background:url("../image/broker/n2.png") no-repeat center 0;
+}
+.nav-broker .rw{
+    background:url("../image/broker/n3.png") no-repeat center 0;
+}
+.nav-broker .hb{
+    background:url("../image/broker/n4.png") no-repeat center 0;
+}
+.activity-broker .sub-nav{
+    height: 59px;
+    line-height: 59px;
+    background-color: #fafafa;
+    border-bottom: 1px solid #ebebeb;
+    padding:0 25px;
+    color: #f13800;
+    font-size: 20px;
+}
+.activity-broker .sub-nav .yuan-icon a{
+   display: inline-block;
+    width: 9px;
+    height: 9px;
+    background: url("../image/broker/y2.png");
+    margin-left: 15px;
+}
+.activity-broker .sub-nav .yuan-icon .icon-red{
+    background: url("../image/broker/y1.png");
+}
+.activity-broker li{
+    width: 205px;
+    float: left;
+    background:#ffffff;
+    text-align: center;
+    padding:27px 0 20px 0;
+}
+.activity-broker ul li.one{
+    margin: 0 2px 0 0;
+}
+.activity-broker .two{
+    margin-right: 2px;
+}
+
+.activity-broker .wait{
+    color: #484848;
+    font-size: 20px;
+}
+.activity-broker .red-broker{
+    color: #f13800;
+}
+.activity-broker .well{
+  color: #959595;
+  padding:0 0 10px 0;
+  font-size: 16px;
+}
+.hero .hd{
+    height: 59px;
+    line-height: 59px;
+    background-color: #fafafa;
+    border-bottom: 1px solid #ebebeb;
+    padding:0 25px;
+    color: #72c27b;
+    font-size: 20px;
+    margin-top:15px;
+}
+.hero {
+    background: #fff;
+    margin-bottom: 20px;
+}
+.hero span{
+    display: inline-block;
+    text-align: center;
+    width:205px;
+    padding:27px 0 26px 0;
+    color: #7a7a7a;
+    border-right: 1px solid #ebebeb;
+}
+.hero span.moveBorder{
+    border-right: none;
+}
+.hero {
+    border-right:none;
+}
+.hero small{
+    color: #f24c02;
+}
+.message .recommend{
+    height: 59px;
+    line-height: 59px;
+    background-color: #fafafa;
+    border-bottom: 1px solid #ebebeb;
+    padding:0 25px;
+    color: #78baed;
+    font-size: 20px;
+}
+.brand{
+    position: relative;
+}
+.brand a span{
+    margin-right: 30px;
+}
+.brand a .summary{
+    position: absolute;
+    left: 18px;
+    top: 130px;
+    color: #fff;
+    z-index: 3;
+}
+.brand a .summaryBg{
+    background: #000;
+    opacity: 0.6;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 120px;
+    width: 440px;
+    height: 40px;
+}
+.brand a .depreciate{
+    position: absolute;
+    top:20px;
+    right: 30px;
+    z-index: 6;
+    color: #fff;
+}
+.brand a .depreciateBg{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 180px;
+    height: 160px;
+    z-index: 5;
+    background-color: #ff4100;
+    opacity: 0.9;
+}
+.brand a .depreciate span{
+    display: inline-block;
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+.brand a .depreciate b{
+    display: inline-block;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+.brand a .tiptop{
+    position: absolute;
+    width:250px;
+    height: 45px;
+    line-height: 45px;
+    left:0;
+    top: 75px;
+    color: #fff;
+    z-index: 4;
+    background-color: #f14700;
+    font-size: 20px;
+    padding-left: 11px;
+}
+.sub-nav-broker{
+    height: 54px;
+    line-height: 54px;
+    background: #fff;
+    border-bottom: 1px solid #bdbdbd;
+    margin-bottom: 10px;
+}
+.sub-nav-broker a{
+    text-align: center;
+    display: inline-block;
+    width: 150px;
+    height:27px;
+    line-height: 27px;
+    border-right: 1px solid #bdbdbd;
+}
+.brand .sub-nav-broker .lt a{
+    border-right: none;
+}
+.brand .sub-nav-broker .orange a{
+    color: #f13800;
+}
+.brand .sub-nav-broker .blue a{
+    color: #46a1e8;
+}

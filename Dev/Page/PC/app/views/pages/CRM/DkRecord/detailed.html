@@ -1,0 +1,77 @@
+
+<div class="panel panel-card ng-scope">
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>经纪人名：{{ARDetialModel.Brokername}}</td>
+            <td>等级：{{ARDetialModel.Brokerlevel}}</td>
+
+        </tr>
+        <tr>
+            <td>昵称：{{ARDetialModel.NickName}}</td>
+            <td>电话：{{ARDetialModel.Phone}}</td>
+
+        </tr>
+        <tr>
+            <td>性别：{{ARDetialModel.Sex}}</td>
+            <td>注册时间：{{ARDetialModel.RegTime}}</td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="panel panel-card ng-scope">
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>客户姓名：{{ARDetialModel.Clientname}}</td>
+            <td>意向户型：{{ARDetialModel.HouseType}}</td>
+
+        </tr>
+        <tr>
+            <td>电话：{{ARDetialModel.Phone}}</td>
+            <td>备注信息：{{ARDetialModel.Note}}</td>
+
+        </tr>
+        <tr>
+            <td>楼盘信息：{{ARDetialModel.Houses}}</td>
+            <td></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="panel panel-card ng-scope">
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>项目名称：{{ARDetialModel.Projectname}}</td>
+            <td>所属行业：</td>
+
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+<div class="panel panel-card ng-scope">
+    <form name="form" id="form" >
+        <div class="panel panel-default">
+
+            <div class="panel-body revise">
+                <div class="bottom" ><label for="SecretaryId">选择驻场秘书： </label>
+                    <select name="" id="SecretaryId" ng-options="list.Id as list.Brokername for list in SecretaryList" ng-model="ARDetialModel.SecretaryId">
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div style="text-align: center;">
+    <button type="submit" md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" ng-click="updateDKRecord(1)">审核通过<div class="md-ripple-container"></div></button>
+    <button type="submit" md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink" ng-click="updateDKRecord(-1)">拒绝<div class="md-ripple-container"></div></button>
+    <a href="#/page/CRM/DkRecord/index"> <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">返回<div class="md-ripple-container"></div></button></a>
+
+</div>

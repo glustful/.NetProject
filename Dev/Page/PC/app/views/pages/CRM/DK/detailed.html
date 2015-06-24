@@ -1,0 +1,46 @@
+
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a href="" data-toggle="tab" data-target="#tab1" aria-expanded="true">个人信息</a>
+    </li>
+    <li class="">
+
+        <a href="#page/CRM/DK/index" ><span class="label bg-success" title="Active">返回</span></a>
+    </li>
+</ul>
+<div class="tab-content p b-a no-b-t bg-white m-b-md" style="height: 500px">
+
+    <div class="md-list-item">
+        <div class="md-list-item-left">
+            <img src="{{BusmanModel.Headphoto}}" class="w-full circle">
+        </div>
+        <div class="md-list-item-content details"  >
+            <div><small>{{BusmanModel.Nickname}}</small><small> {{BusmanModel.Brokername}}</small></div>
+            <div><small>{{BusmanModel.Realname}}</small><small>{{BusmanModel.Sexy}}</small></div>
+            <div><small>积分总额：{{BrokerModel.Totalpoints}}</small><small>账户余额：{{BusmanModel.Amount}}</small></div>
+        </div>
+    </div>
+    <table class="table">
+
+
+        <tr>
+            <td>电话：{{BusmanModel.Phone}}</td>
+            <td>QQ：{{BusmanModel.Qq}}</td>
+            <td>邮箱：{{BusmanModel.Email}}</td>
+        </tr>
+        <tr>
+            <td>身份证：{{BusmanModel.Sfz}}</td>
+            <td>性别：{{BusmanModel.Sexy}}</td>
+            <td>注册时间：{{BusmanModel.Regtime1}}</td>
+
+        </tr>
+        <tr>
+            <td>用户类型:{{BusmanModel.Usertype1}}</td>
+            <td>状态：{{BusmanModel.State}}</td>
+            <td>所属合伙人：{{BusmanModel.PartnersName}}</td>
+
+        </tr>
+
+    </table>
+    <div>{{BusmanModel.Address}}</div>
+</div>

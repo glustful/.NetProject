@@ -1,0 +1,22 @@
+
+.int-personalPage{
+    margin: 20px 0 0 0;
+}
+
+ .int-personalPage li, .intro-personalPage li{
+    height:78px;
+    line-height: 78px;
+    border-bottom: 1px solid #e7e7e7;
+     background-color: #fff;
+}
+ .int-personalPage li span ,.intro-personalPage li span{
+     color: #706f6f;
+     font-size: 22px;
+     padding-left: 40px;
+ }
+ .int-personalPage li small,.intro-personalPage li small{
+     color: #b5b4b4;
+     font-size: 18px;
+     padding-right:40px;
+
+ }

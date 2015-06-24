@@ -1,0 +1,103 @@
+
+.banner{
+    position: relative;
+    z-index: 9;
+}
+.banner .point{
+    position: absolute;
+    left: 230px;
+    top: 240px;
+}
+.banner .point img{
+    margin-left: 20px;
+}
+.zhongtian_content{
+    z-index: 8;
+    left: 0;
+}
+.h_title{
+    height: 70px;
+    line-height: 70px;
+    z-index: 7;
+    background-color: white;
+    padding: 0 0 0 20px;
+}
+.h_title span{
+    float: right;
+    font-weight: 600;
+    color: black;
+    font-size: 25px;
+    margin-right: 25px;
+}
+.zhongtian_content .h_title img{
+    width: 50px;
+    height: 60px;
+
+}
+.abstract{
+    height: 97px;
+    width: 640px;
+    line-height: 40px;
+    margin: 0 40px 2px 0;
+    background-color: white;
+}
+.abstract p{
+    margin-left: 25px;
+}
+.zhongtian_content .P_title{
+    background-color: white;
+    height: 87px;
+    line-height: 87px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.zhongtian_content h1{
+    margin-left: 25px;
+    color: #f13800;
+}
+.zhongtian_content .main_png{
+    margin-top: 15px;
+}
+.bottom{
+   position: fixed;
+    bottom: 112px;
+}
+.foot {
+    background:black;
+    width: 640px;
+   line-height: 77px;
+    opacity: 0.6;
+}
+.foot span{
+    display: inline-block;
+    text-align: center;
+    width:180px;
+    color: #fff;
+}
+.daike{
+    font-size: 25px;
+}
+.tuijian{
+    font-size: 25px;
+}
+.help{
+    font-size: 25px;
+}
+.foot .help .btn{
+    width: 20px;
+    height: 20px;
+    margin-left: 39px;
+    margin-right: 10px;
+}
+
+
+/*Âò·½*/
+.advice{
+    margin-left: 220px;
+    font-size: 35px;
+}
+.foot .advice .btn1{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}

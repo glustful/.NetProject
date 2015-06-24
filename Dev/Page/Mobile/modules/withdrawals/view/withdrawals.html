@@ -1,0 +1,19 @@
+<div class="content-withdrawals" ng-controller="withdrawalsController">
+    <form ng-submit="Crete()">
+    <div class="Savings-card">
+        <laber>储蓄卡</laber>
+
+        <select class="card_information"  ng-model="TxDecimal.Bank"  placeholder="请选择开户行"   ng-options="item.Id as item.Name for item in BankList"></select>
+
+
+    </div>
+    <div class="Current-balance">金额（元）
+        <input type="" class="card_tel" ng-model="TxDecimal.Money" placeholder="当前可体现金额{{AmountMoney}}元"/>
+        </div>
+    <input type="hidden" ng-model="TxDecimal.Hidm">
+    <div class=" verification-code"><input type="" class="card_tel" ng-model="TxDecimal.MobileYzm" placeholder="请填写验证码"/>
+        <button class="add_confirm" id="btnsms" name="btnsms" style="width: 160px"  ng-click="GetSMS()">发送验证码</button>
+    </div>
+    <div class="next-withdrawals" style="background-color: #ffffff;height: 100px"><button type="submit">确  定</button></div>
+    </form>
+</div>

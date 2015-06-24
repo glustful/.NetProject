@@ -1,0 +1,42 @@
+<!--添加银行卡-->
+<div class="credit_add" ng-controller="bankAddController">
+    <form ng-submit="Crete()">
+        <p class="card_choice">
+           <span style="color: orangered"><strong>请填写自己的银行储蓄卡</strong></span>
+        </p>
+<br>
+        <p class="">
+            卡类型
+        </p>
+        <p>
+<br>
+           <strong> 储蓄卡</strong>
+        </p>
+        <p class="card_choice">
+            卡号
+        </p>
+        <p><input type="" class="card_information" ng-model="bankcard.Num" placeholder="请填写银行卡号"/><br/></p>
+        <p class="card_choice">
+            开户银行
+        </p>
+        <select class="card_information"  ng-model="bankcard.Bank"  placeholder="请选择开户行"   ng-options="item.Id as item.Codeid for item in BankList"></select>
+
+
+        <p class="card_choice">
+           开户银行地址
+        </p>
+        <p> <input type="" class="card_information"  ng-model="bankcard.Address" placeholder="请填写详细开户银行地址"/><br/></p>
+        <input type="hidden" ng-model="bankcard.Hidm">
+        <p class="card_choice">
+            验证码
+        </p>
+        <p> <input type="" class="card_tel" ng-model="bankcard.MobileYzm" placeholder="请填写验证码"/>
+            <button class="add_confirm" id="btnsms" name="btnsms" style="width: 160px"  ng-click="GetSMS()">发送验证码</button>
+        </p>
+
+        <button class="add_confirm" type="submit">确定</button>
+<p style="height: 40px">
+
+</p>
+    </form>
+</div>

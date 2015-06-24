@@ -1,0 +1,36 @@
+<!--<div ng-controller='PostListController'>-->
+         <!--<div infinite-scroll='demo.nextPage()' infinite-scroll-disabled='demo.busy' infinite-scroll-distance='1'>-->
+             <!--<div ng-repeat='item in demo.items'>-->
+
+                 <!--<p class="fl">{{item.Taskname}}<br/>-->
+                     <!--&lt;!&ndash;<span>{{item.awardname}}：{{item.awardvalue}}</span>&ndash;&gt;-->
+                 <!--</p>-->
+
+
+             <!--</div>-->
+             <!--<div ng-show='demo.busy'>Loading data...</div>-->
+         <!--</div>-->
+     <!--</div>-->
+<div id="dd5"  class="task-personal"ng-controller="taskController">
+    <ul   ng-repeat="item in posts "  >
+        <li class="cf">
+            <p class="fl">{{item.Taskname}}<br/><span>{{item.awardname}}：{{item.awardvalue}}</span></p>
+            <button ng-click="addTaskList(item.Id)" class="fr">去完成</button>
+        </li>
+    </ul>
+    <label >{{warm}}</label>
+    <div style="line-height: 100px;text-align:center;">
+    <p draggable  ng-click="more()">{{tipp}}</p>
+    </div>
+</div>
+<!--<script type="text/javascript ">-->
+    <!--$(document).ready(function(){-->
+        <!--$("div").scroll(function() {-->
+            <!--alert("SDf");-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->
+<!--<div    ng-controller="ClockCtrl">-->
+    <!--Current time is: {{ time }}-->
+<!--<div class="myDirective">afsd</div>-->
+<!--</div>-->

@@ -1,0 +1,151 @@
+
+.message-recTake{
+    padding: 0 10px 10px 10px;
+}
+.lead{
+    height: 68px;
+    line-height: 68px;
+    background: #fff;
+}
+.lead a{
+    display: inline-block;
+    width: 212px;
+    height: 30px;
+    line-height: 30px;
+    border-right: 1px solid #a0a0a0;
+    text-align: center;
+    color:#a0a0a0;
+}
+.lead .price{
+    border: none;
+}
+.lead .icon-recTake{
+    display: inline-block;
+    width:18px;
+    height: 12px;
+    margin-left: 10px;
+    background: url("../image/recommend/icon.png");
+}
+.brand-recTake{
+    position: relative;
+}
+.brand-recTake a span{
+    margin-right: 50px;
+}
+.brand-recTake a .summary{
+    position: absolute;
+    left: 18px;
+    top: 118px;
+    color: #fff;
+    z-index: 3;
+}
+.brand-recTake a .summaryBg{
+    background: #000;
+    opacity: 0.6;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 110px;
+    width: 620px;
+    height: 40px;
+}
+.brand-recTake a .point{
+    position: absolute;
+    left: 18px;
+    top: 10px;
+    color: #fff;
+    z-index: 3;
+}
+.brand-recTake a .pointBg{
+    background: #000;
+    opacity: 0.6;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0px;
+    width: 243px;
+    height: 40px;
+}
+.nav-recTake{
+    height: 54px;
+    line-height: 54px;
+    background: #fff;
+    border-bottom: 1px solid #bdbdbd;
+    margin-bottom: 10px;
+}
+.nav-recTake a{
+    text-align: center;
+    display: inline-block;
+    width: 150px;
+    height:27px;
+    line-height: 27px;
+    border-right: 1px solid #bdbdbd;
+    color: #fd816b;
+}
+.nav-recTake .int{
+    border-right: none;
+}
+.wk{
+    position: relative;
+}
+.wk a .summary{
+    position: absolute;
+    left: 18px;
+   bottom:10px;
+    color: #fff;
+    z-index: 3;
+}
+.wk a .summaryBg{
+    background: #000;
+    opacity: 0.6;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    bottom:2px;
+    width: 365px;
+    height: 40px;
+}
+.wk a .diamond{
+    position: absolute;
+    right: 0;
+    top:0;
+    z-index: 3;
+}
+.wk a .diamondBg{
+    background: #000;
+    opacity: 0.7;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    width: 255px;
+    height:127px;
+}
+.wk .summary .small{
+    font-size: 12px;
+    margin-right: 20px;
+}
+.wk .summary span{
+    margin-right: 20px;
+}
+ .nav-recTake .hui{
+    color: #a0a0a0;
+}
+.wk .summary .city{
+    margin-right: 200px;
+}
+.wk .qu{
+    width: 250px;
+    text-align: center;
+    color: #c49845;
+    font-size: 20px;
+    margin-top: 15px;
+}
+.wk .obtain{
+    width: 250px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    color:#c49845;
+    font-size: 18px;
+}

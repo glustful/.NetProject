@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{54B84267-E248-4253-BD2B-D338B06FBB21}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Trading.Service</RootNamespace>
+    <AssemblyName>Trading.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AgentBill\AgentBillService.cs" />
+    <Compile Include="AgentBill\IAgentBillService.cs" />
+    <Compile Include="Area\AreaService.cs" />
+    <Compile Include="Area\IAreaService.cs" />
+    <Compile Include="BrandParameter\BrandParameterService.cs" />
+    <Compile Include="BrandParameter\IBrandParameterService.cs" />
+    <Compile Include="CFBBill\CFBBillService.cs" />
+    <Compile Include="CFBBill\ICFBBillService.cs" />
+    <Compile Include="Classify\ClassifyService.cs" />
+    <Compile Include="Classify\IClassifyService.cs" />
+    <Compile Include="LandAgentBill\ILandAgentBillService.cs" />
+    <Compile Include="LandAgentBill\LandAgentBillService.cs" />
+    <Compile Include="OrderDetail\IOrderDetailService.cs" />
+    <Compile Include="OrderDetail\OrderDetailService.cs" />
+    <Compile Include="Order\IOrderService.cs" />
+    <Compile Include="Order\OrderService.cs" />
+    <Compile Include="ParameterValue\IParameterValueService.cs" />
+    <Compile Include="ParameterValue\ParameterValueService.cs" />
+    <Compile Include="Parameter\IParameterService.cs" />
+    <Compile Include="Parameter\ParameterService.cs" />
+    <Compile Include="ProductBrand\IProductBrandService.cs" />
+    <Compile Include="ProductBrand\ProductBrandService.cs" />
+    <Compile Include="ProductDetail\IProductDetailService.cs" />
+    <Compile Include="ProductDetail\ProductDetailService.cs" />
+    <Compile Include="ProductParameter\IProductParameterService.cs" />
+    <Compile Include="ProductParameter\ProductParameterService.cs" />
+    <Compile Include="Product\IProductService.cs" />
+    <Compile Include="Product\ProductService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Trading.Entity\Trading.Entity.csproj">
+      <Project>{596115c3-b475-4e05-9ffb-678a5683e98a}</Project>
+      <Name>Trading.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YooPoon.Common\YooPoon.Common.csproj">
+      <Project>{a09e564c-ec00-4bfa-acfd-371b45abeeed}</Project>
+      <Name>YooPoon.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YooPoon.Core\YooPoon.Core.csproj">
+      <Project>{9e9ecf02-0eec-449d-8756-e1515d9f8ec8}</Project>
+      <Name>YooPoon.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YooPoon.Data\YooPoon.Data.csproj">
+      <Project>{2c74c9cf-a131-49e2-99bf-717315b46b4b}</Project>
+      <Name>YooPoon.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YooPoon.WebFramework\YooPoon.WebFramework.csproj">
+      <Project>{ae97a52e-b5f5-469d-95cb-94e14883ad01}</Project>
+      <Name>YooPoon.WebFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zerg.Common\Zerg.Common.csproj">
+      <Project>{db11f281-e24f-4237-b77f-0cfdcf8dd647}</Project>
+      <Name>Zerg.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。启用“NuGet 程序包还原”可下载这些程序包。有关详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

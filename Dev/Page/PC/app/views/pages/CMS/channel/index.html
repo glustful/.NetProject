@@ -1,0 +1,134 @@
+<div class="panel panel-card ng-scope" ng-controller="ChannelIndexController">
+    <div class="tm">
+        <a href="#page/CMS/channel/create"> <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw cyan-900 add">新增条目<div class="md-ripple-container"></div></button></a>
+    </div>
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名称</th>
+            <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;状态</th>
+            <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;操作</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in list">
+            <td><span class=" text-danger"><i class="fa fa-circle text-xs"></i></span>&nbsp;&nbsp;{{item.Name}}</td>
+            <td><span class=" text-danger"></span>&nbsp;&nbsp;{{item.StatusString}}</td>
+            <td>
+                <a ui-sref="page.CMS.channel.edit({id:item.Id})"><span class="label bg-success">编辑</span></a>
+                <!--<a><span class="label blue" title="Active">移动</span></a>-->
+                <a ng-click="open(item.Id)"><span class="label yellow">删除</span></a>
+            </td>
+        </tr>
+        <!--<div id="Message" style="text-align: center"><span style="font-size: 20px;color: #ff0000">{{Message}}</span></div>-->
+        <!--<tr>-->
+            <!--<td><span class=" text-danger"><i class="fa fa-circle text-xs"></i></span>&nbsp;&nbsp;信息传输</td>-->
+            <!--<td>-->
+                <!--<a href="#page/CMS/channel/edit"><span class="label bg-success" title="Active">编辑</span></a>-->
+                <!--<a><span class="label blue" title="Active">移动</span></a>-->
+                <!--<a><span class="label yellow" title="Active">删除</span></a>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td><span class="text-success">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-circle text-xs"></i></span>&nbsp;&nbsp;电信</td>-->
+            <!--<td>-->
+                <!--<a href="#page/CMS/cms-edit3"><span class="label bg-success" title="Active">编辑</span></a>-->
+                <!--<a href="#"> <span class="label blue" title="Active">移动</span></a>-->
+                <!--<a href="#"> <span class="label yellow" title="Active">删除</span></a>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=" text-primary"><i class="fa fa-circle text-xs"></i></span>&nbsp;&nbsp;电视广播和微信传输服务</td>-->
+            <!--<td>-->
+                <!--<a href="#page/CMS/cms-edit3"><span class="label bg-success" title="Active">编辑</span></a>-->
+                <!--<a href="#"> <span class="label blue" title="Active">移动</span></a>-->
+                <!--<a href="#"> <span class="label yellow" title="Active">删除</span></a>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=" text-warning"><i class="fa fa-circle text-xs"></i></span>&nbsp;&nbsp;固定电信服务</td>-->
+            <!--<td>-->
+                <!--<a href="#page/CMS/cms-edit3"><span class="label bg-success" title="Active">编辑</span></a>-->
+                <!--<a href="#"> <span class="label blue" title="Active">移动</span></a>-->
+                <!--<a href="#"> <span class="label yellow" title="Active">删除</span></a>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=" text-warning"><i class="fa fa-circle text-xs"></i></span>移动电信服务</td>-->
+            <!--<td>-->
+                <!--<a href="#page/CMS/cms-edit3"><span class="label bg-success" title="Active">编辑</span></a>-->
+                <!--<a href="#"> <span class="label blue" title="Active">移动</span></a>-->
+                <!--<a href="#"> <span class="label yellow" title="Active">删除</span></a>-->
+            <!--</td>-->
+
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=" text-warning"><i class="fa fa-circle text-xs"></i></span>其他电信服务</td>-->
+            <!--<td>-->
+                <!--<a href="#page/CMS/cms-edit3"><span class="label bg-success" title="Active">编辑</span></a>-->
+                <!--<a href="#"> <span class="label blue" title="Active">移动</span></a>-->
+                <!--<a href="#"> <span class="label yellow" title="Active">删除</span></a>-->
+            <!--</td>-->
+
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td><span class=" text-danger"><i class="fa fa-circle text-xs"></i></span>互联网和相关服务</td>-->
+            <!--<td>-->
+                <!--<a href="#page/CMS/cms-edit3"><span class="label bg-success" title="Active">编辑</span></a>-->
+                <!--<a href="#"> <span class="label blue" title="Active">移动</span></a>-->
+                <!--<a href="#"> <span class="label yellow" title="Active">删除</span></a>-->
+            <!--</td>-->
+
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-success"><i class="fa fa-circle text-xs"></i></span>电信</td>-->
+            <!--<td>-->
+                <!--<a href="#page/CMS/cms-edit3"><span class="label bg-success" title="Active">编辑</span></a>-->
+                <!--<a href="#"> <span class="label blue" title="Active">移动</span></a>-->
+                <!--<a href="#"> <span class="label yellow" title="Active">删除</span></a>-->
+            <!--</td>-->
+
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-success"><i class="fa fa-circle text-xs"></i></span>电信</td>-->
+            <!--<td>-->
+                <!--<a href="#page/CMS/cms-edit3"><span class="label bg-success" title="Active">编辑</span></a>-->
+                <!--<a href="#"> <span class="label blue" title="Active">移动</span></a>-->
+                <!--<a href="#"> <span class="label yellow" title="Active">删除</span></a>-->
+            <!--</td>-->
+
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-success"><i class="fa fa-circle text-xs"></i></span>电信</td>-->
+            <!--<td>-->
+                <!--<a href="#page/CMS/cms-edit3"><span class="label bg-success" title="Active">编辑</span></a>-->
+                <!--<a href="#"> <span class="label blue" title="Active">移动</span></a>-->
+                <!--<a href="#"> <span class="label yellow" title="Active">删除</span></a>-->
+            <!--</td>-->
+
+        <!--</tr>-->
+        </tbody>
+        <tfoot class="hide-if-no-paging">
+        <tr>
+            <td colspan="5" class="text-center footable-visible">
+            <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+    <!--<div colspan="5" class="text-center footable-visible">-->
+        <!--<ul class="pagination">-->
+            <!--<li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li>-->
+            <!--<li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li>-->
+            <!--<li class="footable-page active"><a data-page="0" href="#">1</a></li>-->
+            <!--<li class="footable-page"><a data-page="1" href="#">2</a></li>-->
+            <!--<li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li>-->
+            <!--<li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li>-->
+        <!--</ul>-->
+    <!--</div>-->
+    <script type="text/ng-template" id="myModalContent.html">
+        <div ng-include="'views/partials/modal.html'"></div>
+    </script>
+</div>

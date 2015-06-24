@@ -1,0 +1,28 @@
+
+    <form class="form_content"  name="login_form" ng-controller="LoginController" ng-submit="Login()" novalidate>
+        <p class="user_tip">
+            手机号
+        </p>
+        <p class="input_blank">
+            <span><img src="modules/Login/static/image/login/icon1.png"  class="UserImg"></span>
+            <input type="text" id="Name_blank" placeholder="Phone Number" name="login_userName" id="UserName" ng-model="user.name" ng-maxlength="20"  required/>
+        </p>
+        <div class="login_errorTip" ng-show="login_form.login_userName.$invalid&&login_form.login_userName.$dirty">请正确输入用户名</div>
+        <p class="user_tip">
+            密码
+        </p>
+        <p class="input_blank">
+            <span><img src="modules/Login/static/image/login/icon2.png" class="UserImg"></span>
+            <input type="password" placeholder="Password" name="login_password" id="Password" ng-model="user.password"  ng-maxlength="20" required/>
+        </p>
+        <div class="login_errorTip" ng-show="login_form.login_password.$invalid&&login_form.login_password.$dirty">请正确输入密码</div>
+        <p class="MissMe">
+            <input type="checkbox" name="box" id="box"/>记住我<span class="fp"><a href="#user/PasswordFound">忘记密码?</a></span>
+        </p>
+        <button class="login_button" type="submit" ng-disabled="login_form.$invalid">登 录</button>
+        <p class="login_errorTip">{{errorTips}}</p>
+        <p class="NoAccount">
+            没有账号？点此<span><a href="#user/register">注册</a></span>
+        </p>
+    </form>
+

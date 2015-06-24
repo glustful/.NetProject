@@ -1,0 +1,230 @@
+.NoviceTask-bg{
+    position:relative;
+    background-color:#00ca81;
+    width: 640px;
+    height: 4000px;
+}
+.NoviceTask-content .headImg{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+.NoviceTask-content .flag{
+    position: absolute;
+    z-index: 3;
+    top:12.2%;
+    left:45%;
+}
+.NoviceTask-content .line{
+    position: absolute;
+    z-index: 2;
+    top:13.9%;
+    left:6%;
+}
+.NoviceTask-content .notebook{
+    position: absolute;
+    z-index: 2;
+    top:15%;
+    left: 3%;
+}
+.NoviceTask-content .EnterTask{
+    position: absolute;
+    z-index: 2;
+    top:15%;
+    left: 45%;
+    text-align:center;
+    line-height: 40px;
+}
+.NoviceTask-content .EnterTask .PerfectData{
+    font-size: 1.9em;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px #848484;
+}
+.NoviceTask-content .EnterTask p{
+   font-size: 1.2em;
+   color: #fff;
+    margin-bottom: 10px;
+}
+.NoviceTask-content .grass-1{
+    position: absolute;
+    z-index: 2;
+    top:19%;
+    right: 5%;
+}
+.NoviceTask-content .Mobile{
+    position: absolute;
+    z-index: 2;
+    top:20.5%;
+    right: 1%;
+}
+.NoviceTask-content .bind{
+    position: absolute;
+    z-index: 2;
+    top:21%;
+    left: 20%;
+    text-align: center;
+    line-height: 40px;
+}
+.NoviceTask-content .bind .bindWeixin,.NoviceTask-content .model-1 .tj,.NoviceTask-content .model-2 .dk,.NoviceTask-content .partners .tj{
+    font-size: 2em;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px #848484;
+}
+.NoviceTask-content .bind p,.NoviceTask-content .model-1 p,.NoviceTask-content .model-2 p,.NoviceTask-content .partners p{
+    font-size: 1.3em;
+    color: #fff;
+    margin-bottom: 10px;
+}
+.NoviceTask-content .grass-2{
+    position: absolute;
+    z-index: 2;
+    top:25%;
+    left: 3%;
+}
+.NoviceTask-content .grass-3{
+    position: absolute;
+    z-index: 2;
+    top:25.4%;
+    right:3%;
+}
+.NoviceTask-content .red1{
+    position: absolute;
+    z-index:2;
+    top:28%;
+    left: 8%;
+}
+.NoviceTask-content .tear{
+    position:absolute;
+    z-index: 3;
+    top:48%;
+    left: 25%;
+    width: 275px;
+    height: 70px;
+    background: url("../image/NoviceTask/btn.png") no-repeat 0 0;
+    font-size: 2em;
+    font-weight: bolder;
+    color: #9b9b9b;
+    text-shadow: 5px 5px 5px  #fff;
+}
+.NoviceTask-content .lead{
+    position: absolute;
+    z-index:2;
+    top:37%;
+    right:7%;
+    background-color: rgba(0,0,0,0);
+}
+.NoviceTask-content .person{
+    position: absolute;
+    z-index:2;
+    top:43%;
+    left: 0;
+}
+.NoviceTask-content .grass-4{
+    position: absolute;
+    z-index: 2;
+    top:42%;
+    left: 50%;
+}
+.NoviceTask-content .grass-5{
+    position: absolute;
+    z-index: 2;
+    top:37%;
+    left: 40px;
+}
+.NoviceTask-content .model-1{
+    position:absolute;
+    z-index: 2;
+    top:44%;
+    right: 10%;
+    text-align: center;
+    line-height: 40px;
+}
+.NoviceTask-content .grass-6{
+    position: absolute;
+    z-index: 2;
+    top:38%;
+    right: 1%;
+}
+.NoviceTask-content .model-2{
+    position:absolute;
+    z-index: 2;
+    top:49%;
+    left:10%;
+    text-align: center;
+    line-height: 40px;
+}
+.NoviceTask-content .house{
+    position: absolute;
+    z-index: 2;
+    top:49%;
+    right: 0;
+}
+.NoviceTask-content .grass-7{
+    position: absolute;
+    z-index: 2;
+    top:45.5%;
+    right:5%;
+}
+.NoviceTask-content .leadL{
+    position: absolute;
+    z-index: 3;
+    top:53.5%;
+    left: 5%;
+}
+.NoviceTask-content .grass-8{
+    position: absolute;
+    z-index: 2;
+    top:43%;
+    left: 2%;
+}
+.NoviceTask-content .three{
+    position: absolute;
+    z-index: 2;
+    top:60%;
+    left: 5%;
+}
+.NoviceTask-content .partners{
+    position: absolute;
+    z-index: 2;
+    text-align: center;
+    top:62%;
+    right:20%;
+    line-height: 40px;
+}
+.NoviceTask-content .red{
+    position: absolute;
+    z-index: 2;
+    top:68% ;
+    left:12%;
+}
+.NoviceTask-content .tearWt{
+    position: absolute;
+    top:51%;
+    left: 21%;
+}
+.NoviceTask-content .grass-9{
+    position: absolute;
+    z-index: 2;
+    top:55%;
+    right: 0;
+}
+.NoviceTask-content .grass-10{
+    position: absolute;
+    z-index: 2;
+    top:58.5%;
+    left:5%;
+}
+ .masked{
+    position:fixed;
+    z-index: 20;
+    background-color: rgba(0,0,0,0.85);
+    width:100%;
+    top: 0;
+    bottom:0;
+}
+.location{
+    position: absolute;
+}

@@ -1,0 +1,26 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System.Linq;
+using <#=_projectName#>.Entity.Model;
+using YooPoon.Core.Autofac;
+
+namespace <#=_projectName#>.Service.<#=_entityName#>
+{
+	public interface I<#=_entityName#>Service : IDependency
+	{
+		<#=_entityName#>Entity Create (<#=_entityName#>Entity entity);
+
+		bool Delete(<#=_entityName#>Entity entity);
+
+		<#=_entityName#>Entity Update (<#=_entityName#>Entity entity);
+
+		<#=_entityName#>Entity Get<#=_entityName#>ById (int id);
+
+		IQueryable<<#=_entityName#>Entity> Get<#=_entityName#>sByCondition(<#=_entityName#>SearchCondition condition);
+
+		int Get<#=_entityName#>Count (<#=_entityName#>SearchCondition condition);
+	}
+}

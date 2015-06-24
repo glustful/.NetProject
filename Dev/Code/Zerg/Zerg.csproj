@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{71420E36-A2E9-452B-A8D5-28445BE73589}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Zerg</RootNamespace>
+    <AssemblyName>Zerg</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Project_Zerg\Dev\Code\packages\Autofac.Mvc5.3.1.0\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Cors">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Settings.txt" />
+    <Content Include="Global.asax" />
+    <Content Include="index.html" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CRM\AdminInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\AdminPayController.cs" />
+    <Compile Include="Controllers\CRM\BankController.cs" />
+    <Compile Include="Controllers\CRM\BrokeAccountController.cs" />
+    <Compile Include="Controllers\CRM\AdminRecomController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\BrokerLeadClientController.cs" />
+    <Compile Include="Controllers\CRM\BrokerRECClientController.cs" />
+    <Compile Include="Controllers\CRM\ClientInfoController.cs" />
+    <Compile Include="Controllers\CRM\BankCardController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\ClientScheduleController.cs" />
+    <Compile Include="Controllers\CRM\MessageDetailController.cs" />
+    <Compile Include="Controllers\CRM\BrokerInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\BrokerWithdrawDetailController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\LevelConfigController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\LevelController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\MerchantInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\MessageConfigController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\PartnerListController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\PointDetailController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\RecommendAgentController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\SMSController.cs" />
+    <Compile Include="Controllers\CRM\TaskController.cs" />
+    <Compile Include="Controllers\CMS\AdvertisementController.cs" />
+    <Compile Include="Controllers\CMS\ChannelController.cs" />
+    <Compile Include="Controllers\CMS\ResourceController.cs" />
+    <Compile Include="Controllers\CMS\SettingController.cs" />
+    <Compile Include="Controllers\CMS\TagController.cs" />
+    <Compile Include="Controllers\CMS\ContentController.cs" />
+    <Compile Include="Controllers\Trading\Area\AreaController.cs" />
+    <Compile Include="Controllers\Trading\Condition\ConditionController.cs" />
+    <Compile Include="Controllers\UC\RoleController.cs" />
+    <Compile Include="Controllers\UC\UserController.cs" />
+    <Compile Include="Controllers\UEditor\Config.cs" />
+    <Compile Include="Controllers\UEditor\ConfigHandler.cs" />
+    <Compile Include="Controllers\UEditor\CrawlerHandler.cs" />
+    <Compile Include="Controllers\UEditor\Handler.cs" />
+    <Compile Include="Controllers\UEditor\ListFileHandler.cs" />
+    <Compile Include="Controllers\UEditor\NotSupportedHandler.cs" />
+    <Compile Include="Controllers\UEditor\PathFormater.cs" />
+    <Compile Include="Controllers\UEditor\UploadHandler.cs" />
+    <Compile Include="Controllers\Trading\Product\BrandController.cs" />
+    <Compile Include="Controllers\Trading\Product\ClassifyController.cs" />
+    <Compile Include="Controllers\Trading\Product\ProductController.cs" />
+    <Compile Include="Controllers\Trading\Trading\BillController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CRM\AdminPayModel.cs" />
+    <Compile Include="Models\CRM\BrokerRECClientModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CRM\BrokerLeadClientModel.cs" />
+    <Compile Include="Models\CRM\BrokerModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CRM\ClientInfoModel.cs" />
+    <Compile Include="Models\CRM\CreateMessageConfigModel.cs" />
+    <Compile Include="Models\CRM\MerchantInfoModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CRM\MessageConfigModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CRM\MessageDetailModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CMS\AdvertisementModel.cs" />
+    <Compile Include="Models\CMS\ChannelModel.cs" />
+    <Compile Include="Models\CMS\SettingModel.cs" />
+    <Compile Include="Models\CRM\TaskAwardModel.cs" />
+    <Compile Include="Models\CRM\TaskListModel.cs" />
+    <Compile Include="Models\CRM\TaskModel.cs" />
+    <Compile Include="Models\CRM\TaskPunishmentModel.cs" />
+    <Compile Include="Models\CRM\TaskSearchModel.cs" />
+    <Compile Include="Models\CRM\TaskTagModel.cs" />
+    <Compile Include="Models\CRM\TaskTypeModel.cs" />
+    <Compile Include="Models\CMS\ContentDetailModel.cs" />
+    <Compile Include="Models\CMS\ContentModel.cs" />
+    <Compile Include="Models\CMS\TagDetailModel.cs" />
+    <Compile Include="Models\CMS\TagModel.cs" />
+    <Compile Include="Models\Trading\Area\AreaModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductDetail.cs" />
+    <Compile Include="Models\UC\ActionModel.cs" />
+    <Compile Include="Models\UC\ChangePasswordModel.cs" />
+    <Compile Include="Models\UC\RoleModel.cs" />
+    <Compile Include="Models\UC\UserModel.cs" />
+    <Compile Include="Models\Trading\Product\ClassifyModel.cs" />
+    <Compile Include="Models\Trading\Product\ParameterModel.cs" />
+    <Compile Include="Models\Trading\Product\ParameterValueModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductBrandModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductBrandParameterModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductDetailModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductParameterModel.cs" />
+    <Compile Include="Controllers\Trading\Trading\OrderController.cs" />
+    <Compile Include="Models\Trading\Trading\OrderDetailModel.cs" />
+    <Compile Include="Models\Trading\Trading\OrderModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <Content Include="Controllers\UEditor\controller.ashx" />
+    <Content Include="Controllers\UEditor\config.json" />
+    <None Include="Properties\PublishProfiles\Zerg_CMS.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CMS.Entity\CMS.Entity.csproj">
+      <Project>{df25f940-2fea-43f5-bd41-cbe319688651}</Project>
+      <Name>CMS.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMS.Service\CMS.Service.csproj">
+      <Project>{6b9731e4-a77e-4d96-90ea-28032a8ba7e1}</Project>
+      <Name>CMS.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CRM.Entity\CRM.Entity.csproj">
+      <Project>{26e023fe-c94f-440a-8192-d33e22ca09bd}</Project>
+      <Name>CRM.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CRM.Service\CRM.Service.csproj">
+      <Project>{36dc7784-4ba6-467d-a20f-b7dfccf815fc}</Project>
+      <Name>CRM.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Trading.Entity\Trading.Entity.csproj">
+      <Project>{596115c3-b475-4e05-9ffb-678a5683e98a}</Project>
+      <Name>Trading.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Trading.Service\Trading.Service.csproj">
+      <Project>{54b84267-e248-4253-bd2b-d338b06fbb21}</Project>
+      <Name>Trading.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserCenter.Entity\UserCenter.Entity.csproj">
+      <Project>{486df50a-6db7-423e-9f87-a17ea360c284}</Project>
+      <Name>UserCenter.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserCenter.Service\UserCenter.Service.csproj">
+      <Project>{2653e0bf-ab90-4167-b414-51e181ed3957}</Project>
+      <Name>UserCenter.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YooPoon.Common\YooPoon.Common.csproj">
+      <Project>{a09e564c-ec00-4bfa-acfd-371b45abeeed}</Project>
+      <Name>YooPoon.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YooPoon.Core\YooPoon.Core.csproj">
+      <Project>{9e9ecf02-0eec-449d-8756-e1515d9f8ec8}</Project>
+      <Name>YooPoon.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YooPoon.Data\YooPoon.Data.csproj">
+      <Project>{2c74c9cf-a131-49e2-99bf-717315b46b4b}</Project>
+      <Name>YooPoon.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YooPoon.WebFramework\YooPoon.WebFramework.csproj">
+      <Project>{ae97a52e-b5f5-469d-95cb-94e14883ad01}</Project>
+      <Name>YooPoon.WebFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zerg.Base\Zerg.Base.csproj">
+      <Project>{51b7fc52-21e7-40d1-96d2-d0867932b4a5}</Project>
+      <Name>Zerg.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zerg.Common\Zerg.Common.csproj">
+      <Project>{db11f281-e24f-4237-b77f-0cfdcf8dd647}</Project>
+      <Name>Zerg.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>50766</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:50597/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。启用“NuGet 程序包还原”可下载这些程序包。有关详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

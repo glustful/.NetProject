@@ -1,0 +1,96 @@
+
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+<script type="text/javascript" charset="utf-8" src="../libs/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<div class="panel-body">
+    <form class="form-horizontal" ng-submit="Save()" name="form">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">请输入品牌名：</label>
+            <div class="col-sm-10">
+                <input name="Bname" id="Bname" type="text" style="width: 180px" class="form-control" required ng-model="BrandModel.Bname" required/>
+                <span ng-show="form.Bname.$error.required" style="color: red;">*</span>
+            </div>
+            <label  class="col-sm-2 control-label">请输入品牌标题：</label>
+            <div class="col-sm-10">
+                <input name="SubTitle" id="Subtitle" type="text"  style="width: 500px"  class="form-control" required ng-model="BrandModel.SubTitle" required/>
+                <span ng-show="form.SubTitle.$error.required" style="color: red;">*</span>
+            </div>
+            <label class="col-sm-2 control-label">请输入品牌内容：</label>
+            <div class="col-sm-10">
+                <textarea name="Content" maxlength="150" id="Content" type="text" style="width:500px;height:80px;" class="form-control" required ng-model="BrandModel.Content" required/>
+                <span ng-show="form.Content.$error.required" style="color: red;">*</span>
+            </div>
+
+
+            <div class="loadimg">
+                <img height="100" width="100" src="{{SImg+image}}" title="图片" />
+                <input name="Bimg" id="Bimg" type="hidden" class="form-control" required ng-model="BrandModel.Bimg" required value="{{image}}"/>
+            </div>
+        </div>
+
+        <!--上传-->
+        <div>
+            <p class="m-t-md">上传图片</p>
+            <input type="file" nv-file-select="" uploader="uploader" />
+            <div>
+
+
+                <div class="p-md">
+                    <!--<div class="m-b"><b class="badge bg-info pos-rlt m-r-xs"><i class="arrow right b-info pull-in"></i>{{ uploader.queue.length }}</b> file(s)</div>-->
+                    <table class="table bg-white b-a">
+                        <thead>
+                        <tr>
+                            <th width="50%">名字</th>
+                            <th ng-show="uploader.isHTML5">大小</th>
+                            <th ng-show="uploader.isHTML5">进程</th>
+                            <th>状态</th>
+                            <th>功能</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in uploader.queue">
+                            <td><strong>{{ item.file.name }}</strong></td>
+                            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                            <td ng-show="uploader.isHTML5">
+                                <div class="progress progress-sm no-margin m-t-xs">
+                                    <div class="progress-bar bg-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span ng-show="item.isSuccess" class="text-success"><i class="glyphicon glyphicon-ok"></i></span>
+                                <span ng-show="item.isCancel" class="text-warning"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                <span ng-show="item.isError" class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>
+                            </td>
+                            <td nowrap>
+                                <button type="button" class="btn btn-default btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                    上传
+                                </button>
+                                <button type="button" class="btn btn-default btn-xs" ng-click="item.remove()">
+                                    移除
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="bottom" ><label for="AdTitle">内容： </label>
+            <textarea class="ueditor"  name="AdTitle" id="AdTitle" cols="42" rows="10" ng-model="BrandModel.AdTitle" style="height: 400px" required></textarea>
+            <span ng-show="form.alert.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-11">
+                <button class="md-btn md-raised m-b btn-fw green" id="btnok"><i class="glyphicon glyphicon-ok m-r-sm"></i>提交<div class="md-ripple-container"></div></button>
+                <a ui-sref="page.Trading.product.brand"><button class="md-btn md-raised m-b btn-fw pink" ><i class="fa fa-reply  m-r-sm"></i>返回<div class="md-ripple-container "></div></button></a>
+            </div>
+        </div>
+
+    </form>
+</div>

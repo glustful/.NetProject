@@ -1,0 +1,93 @@
+
+.register_content .register_tip{
+    font-size: 22px;
+    margin-top: 25px;
+}
+.register_tip span{
+    color: #fc3b00;
+}
+.form_register{
+    padding: 52px 58px 0 58px;
+    font-family: "microsoft yahei";
+}
+.form_content .register_input{
+    width: 514px;
+    height: 48px;
+    line-height: 48px;
+    background: url("../image/register/tex.png");
+}
+.register_input input{
+    width: 460px;
+    height: 48px;
+    font-size: 20px;
+}
+.register_input .registerImg{
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+}
+.PinBlank .PinInput{
+    width: 200px;
+    height: 48px;
+    margin-right: 20px;
+    font-size: 20px;
+}
+.PinBlank button{
+    width: 148px;
+    height: 48px;
+    background-color: #fc3b00;
+    font-size: 22px;
+    font-family: "microsoft yahei";
+    color: #eeeeee;
+}
+.register_button{
+    width: 514px;
+    height: 48px;
+    background-color: #fc3b00;
+    font-size: 22px;
+    font-family: "microsoft yahei";
+    color: #eeeeee;
+    margin: 80px 0 20px 0;
+}
+.LoginExit{
+    float: right;
+    font-size: 20px;
+}
+.LoginExit a{
+    color: #fc3b00;
+}
+ .masked .inter{
+     position: absolute;
+     display: block;
+     top:5%;
+     left: 2%;
+}
+ .masked .join{
+    position: absolute;
+    display: block;
+    bottom:8%;
+    left: 32%;
+}
+.masked .finish{
+    top:30%;
+    left: 10%;
+}
+ .masked .back {
+    bottom: 3%;
+     left: 32%;
+}
+.error_out{
+    color: #fc3b00;
+    font-size: 20px;
+    font-family: "microsoft yahei";
+}
+
+
+
+
+
+
+
+
+
+

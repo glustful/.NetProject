@@ -1,0 +1,27 @@
+<div class="window">
+    <div class="bg">
+        <div class="hd">
+            <div class="header cf">
+                <div class="logo fl"><a href="#">创富宝</a> </div>
+                <div class="search fr">
+                    <label for="houses">456</label><input name="" id="houses" type="text" placeholder="搜索楼盘" ng-model="Condition"/>
+                    <!--<button ng-click="getBrandList()">搜索</button>-->
+                    <a style="width: 80px;border: none;font-size: 24px;color: #ffffff;background: none;" href="#/app/brand?condition={{Condition}}">搜索</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <div ui-view></div>
+
+        </div>
+
+        <div class="footer">
+            <a href="#/app/home"><span class="act">首页</span></a>
+            <a href="#app/storeroom"><span class="house">房源库</span></a>
+            <a href="#app/broker"><span class="agent">经纪人专区</span></a>
+            <a href="#app/personal"> <span class="personal">个人中心</span></a>
+        </div>
+    </div>
+</div>

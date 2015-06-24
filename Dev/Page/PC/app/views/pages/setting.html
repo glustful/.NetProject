@@ -1,0 +1,128 @@
+<!--黄秀宇 短信  2015.05.06
+自加CSS,路径<link rel="stylesheet" href="styles/task.css" type="text/css" />-->
+<div class="marginL">
+    <div id="divhea">
+        <input type="text" class="form-control" placeholder="开始时间">
+        <input type="text" class="form-control" placeholder="结束时间">
+      <select  class="form-control" name="" id="">
+            <option value="1">类型</option>
+        </select>
+        <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">检索</button>
+        <button md-ink-ripple=""onclick="settingAdd()" class="md-btn md-raised m-b btn-fw blue">发送</button>
+    </div>
+
+        <div id="divSet">
+            <table class="table m-b-none footable-loaded footable default" ui-jp="footable" data-filter="#filter" data-page-size="5">
+                <thead class="divheard">
+                <tr>
+                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">
+                        ID
+                        <span class="footable-sort-indicator"></span></th>
+                    <th class="footable-visible footable-sortable footable-sorted-desc">
+                        发送时间
+                        <span class="footable-sort-indicator"></span></th>
+                    <th data-hide="phone,tablet" class="footable-sortable footable-visible" style="display: table-cell;">
+                        发送人员
+                        <span class="footable-sort-indicator"></span></th>
+                    <th data-hide="phone,tablet" data-name="Date Of Birth" class="footable-sortable footable-visible" style="display: table-cell;">
+                        接收人员
+                        <span class="footable-sort-indicator"></span></th>
+                    <th data-hide="phone" class="footable-visible footable-sortable footable-last-column">
+                        内容
+                        <span class="footable-sort-indicator"></span></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr class="footable-odd" style="display: table-row;">
+                    <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>1003401</td>
+                    <td class="footable-visible">2014年05月14日 15:21</td>
+                    <td class="footable-visible" >admin</td>
+                    <td  class="footable-visible" >ad</td>
+                    <td  class="footable-visible">详细内容</td>
+                </tr>
+                <tr class="footable-even" style="display: table-row;">
+                    <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>1003401</td>
+                    <td class="footable-visible">2014年05月14日 15:21</td>
+                    <td class="footable-visible" >admin</td>
+                    <td  class="footable-visible" >ad</td>
+                    <td  class="footable-visible">详细内容</td>
+                </tr>
+                <tr class="footable-odd" style="display: table-row;">
+                    <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>1003401</td>
+                    <td class="footable-visible">2014年05月14日 15:21</td>
+                    <td class="footable-visible" >admin</td>
+                    <td  class="footable-visible" >ad</td>
+                    <td  class="footable-visible">详细内容</td>
+                </tr>
+                <tr class="footable-even" style="display: table-row;">
+                    <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>1003401</td>
+                    <td class="footable-visible">2014年05月14日 15:21</td>
+                    <td class="footable-visible" >admin</td>
+                    <td  class="footable-visible" >ad</td>
+                    <td  class="footable-visible">详细内容</td>
+                </tr>
+
+                </tbody>
+                <tfoot class="hide-if-no-paging">
+                <tr>
+                    <td colspan="5" class="text-center footable-visible">
+                        <ul class="pagination">
+                            <li class="footable-page-arrow">
+                                <a data-page="first" href="#first">«</a>
+                            </li>
+                            <li class="footable-page-arrow">
+                                <a data-page="prev" href="#prev">‹</a>
+                            </li>
+                            <li class="footable-page">
+                                <a data-page="0" href="#">1</a>
+                            </li>
+                            <li class="footable-page active">
+                                <a data-page="1" href="#">2</a>
+                            </li>
+                            <li class="footable-page-arrow disabled">
+                                <a data-page="next" href="#next">›</a>
+                            </li>
+                            <li class="footable-page-arrow disabled">
+                                <a data-page="last" href="#last">»</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+
+    <div id="divTaskA"class="marginL">
+        <div   class="taska bord">
+            <p style="height:30px"></p>
+            <p >发送主题<input class="ptaska  bordhtml form-control" type="text"  placeholder="发送主题"></p>
+            <p>发送内容<input class="ptaska bordhtml form-control" type="text"  placeholder="发送内容"></p>
+            <p >接收人名<input class="ptaska  bordhtml form-control" type="text"  placeholder="接收人"></p>
+            <p>手机号码<input class="ptaska bordhtml form-control" type="text"  placeholder="手机号"></p>
+
+            <div style="text-align:center;width:500px;margin-left:150px;margin-top:30px;"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw blue">发送</button>
+                <button md-ink-ripple=""onclick="backAdd()" style="margin-left:40px;" class="md-btn md-raised m-b btn-fw blue">返回</button>
+            </div>
+            <p style="height:80px"></p>
+        </div>
+    </div>
+</div>
+        <script type="text/javascript">
+            document.getElementById("divTaskA").style.display="none";
+            function settingAdd(){
+                document.getElementById("divTaskA").style.display="";
+                document.getElementById("divSet").style.display="none";
+                document.getElementById("divhea").style.display="none";
+
+            }
+            function backAdd(){
+                document.getElementById("divTaskA").style.display="none";
+                document.getElementById("divSet").style.display="";
+                document.getElementById("divhea").style.display="";
+
+            }
+        </script>
+
+

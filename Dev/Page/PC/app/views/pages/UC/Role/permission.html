@@ -1,0 +1,38 @@
+<div ng-controller="RolePermissionController">
+    <div class="row  pos-fix" style="width: 100%;left: 0px;">
+        <div class="col-md-12">
+            <button  ng-click="Save()" class="md-btn md-raised m-b btn-fw green pull-right"><i class="glyphicon glyphicon-ok m-r-sm"></i>保存更改<div class="md-ripple-container"></div></button>
+            <a ui-sref="page.UC.role.index"><button class="md-btn md-raised m-b btn-fw pink pull-right"><i class="fa fa-reply  m-r-sm"></i>返回<div class="md-ripple-container"></div></button></a>
+        </div>
+    </div>
+    <accordion close-others="true">
+        <accordion-group ng-repeat="ctrl in Model">
+            <accordion-heading>
+                <h4>{{ctrl.ControllerName}} ({{ctrl.ControllerFullName}})<br></h4>
+                --<span class="text-sm">{{ctrl.Description}}</span>
+            </accordion-heading>
+            <table class="table table-hover m-b-none">
+                <tr>
+                    <th>Action名称</th>
+                    <th>描述</th>
+                    <th>是否允许</th>
+                </tr>
+                <tr ng-repeat="act in ctrl.Actions">
+                    <td>
+                        {{act.ActionName}}
+                    </td>
+                    <td>
+                        {{act.Description}}
+                    </td>
+                    <td>
+
+                        <label class="ui-switch m-t-xs m-r">
+                            <input type="checkbox" ng-model="act.IsAllowed">
+                            <i></i>
+                        </label>
+                    </td>
+                </tr>
+            </table>
+        </accordion-group>
+    </accordion>
+</div>

@@ -1,0 +1,59 @@
+<!--黄秀宇 任务列表  2015.05.06
+自加CSS路径<link rel="stylesheet" href="styles/task.css" type="text/css"
+/>angular.js路径app/scrips/controller/CRM/taskList.js-->
+
+<div ng-controller="taskIndexController">
+<div id="divTaskH"class="marginL">
+    <input id="type1" onkeydown=' var keynum;
+        keynum = window.event ? event.keyCode : event.which;if(keynum==13){uc.click()}' style="width:20%;" type="text"ng-model="searchCondition.Taskname" maxlength="30"  class="form-control bordhtml" placeholder="任务名称">
+
+    <button md-ink-ripple=""ng-click="getList()" class=" md-btn md-raised m-b btn-fw indigo"id="uc">搜索</button>
+    <a href="#page/CRM/TaskList/createTask">  <button id="btntask" md-ink-ripple=""style="width:150px;margin-left: 10%;" class="md-btn md-raised m-b btn-fw indigo">添加新任务</button></a>
+
+</div>
+
+<div id="divTaskL"class="marginL">
+    <!--表头-->
+    <div class="bord taskclear divheard">
+        <ul class="taskheader">
+            <li>任务名称</li>
+            <li>任务类型</li>
+            <li>结束时间</li>
+            <li>创建人</li>
+            <li >操作</li>
+
+        </ul>
+
+    </div>
+    <!--列表内容-->
+    <div  ng-show="visibleif" style="height:auto;"  class="taskcenter bord bordTop0px divodd "ng-repeat="item in list">
+        <ul class="taskheader diveven" >
+            <li>{{item.Taskname}}</li>
+            <li>{{item.Name}}</li>
+            <li>{{item.Endtime}}</li>
+            <li>{{item.Adduser}}</li>
+            <li style="width:40%">
+                <a href="#page/CRM/TaskList/taskList?id={{item.Id}}" ><span class="label bg-success" title="Active">列表</span></a>
+                <a href="#page/CRM/TaskList/taskDetail?id={{ item.Id}}" ><span class="label bg-success" title="Active">详情</span></a>
+                <span class="label yellow"><a ng-click="delTask(item.Id)" tabindex="0">删除</a></span>
+             </li>
+
+        </ul>
+       <!--<alert ng-bing="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>-->
+
+    </div>
+
+    <div  ng-show="visibleif" style="text-align: center"  class="text-center footable-visible ng-scope">
+        <pagination boundary-links="true" total-items="searchCondition.totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+
+    </div>
+    <div ng-bind="tips" style=" font-size:20px;  line-height: 100px;text-align: center;" ></div>
+
+</div>
+
+    <script type="text/ng-template" id="myModalContent.html">
+        <div ng-include="'views/partials/modal.html'"></div>
+    </script>
+</div>
+
+

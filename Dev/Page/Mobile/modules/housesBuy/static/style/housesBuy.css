@@ -1,0 +1,232 @@
+.pic-housesBuy{
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+.pic-housesBuy .syj-2{
+    position: absolute;
+    z-index: 2;
+    top:0;
+    left: 2em;
+}
+
+.pic-housesBuy .summary{
+    position: absolute;
+    top: 9.8em;
+    left: 2em;
+    color: #fff;
+    font-size: 22px;
+    z-index: 4;
+}
+.pic-housesBuy .summary .zt{
+    padding:0 50px 0 0;
+}
+.pic-housesBuy .summary .zt small{
+    color: #929292;
+}
+.pic-housesBuy .summary .lp{
+    padding-left: 65px;
+}
+.pic-housesBuy .summaryBg{
+    width: 640px;
+    position: absolute;
+    z-index: 3;
+    height: auto;
+    opacity: 0.4;
+    bottom:0.2em;
+    left:0;
+    background:url("../image/housesBuy/fgx.png") no-repeat 530px 0 #000;
+}
+.content-housesBuy .di{
+    height: 80px;
+    line-height: 80px;
+    padding-left: 36px;
+    color: #f13800;
+    background-color:#fff;
+    font-size: 20px;
+}
+.content-housesBuy .di a{
+    margin-left: 225px;
+    position: absolute;
+    right: 10px;
+}
+.content-housesBuy .brokerbar{
+    width: 640px;
+    height: 80px;
+    background-color: #f13800;
+    padding: 15px 0;
+
+}
+.content-housesBuy .brokerbar span{
+    color: #fff;
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    width:150px;
+    border-left: 1px solid #fafbfc;
+    font-size: 1.2em;
+    margin-left: 150px;
+
+
+}
+.content-housesBuy .brokerbar a{
+text-decoration: none;
+    color: #fff;
+    line-height:60px ;
+    width: 120px;
+    height: 60px;
+    margin-left: 50px;
+    font-size: 21px;
+}
+
+
+.content-housesBuy .di a button{
+
+    width: 130px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 1em;
+    color: #fff;
+    border-radius: 8px;
+    background:url("../image/housesBuy/cell.png") no-repeat 10px 15px #f13800;
+    padding-left: 20px;
+
+}
+
+/*.content-housesBuy .type{*/
+    /*padding:15px;*/
+    /*position: relative;*/
+    /*height: 1500px;*/
+    /*margin-left: 3px;*/
+/*}*/
+/*.content-housesBuy .type .hx1{*/
+    /*padding-bottom: 40px;*/
+    /*margin:5px ;*/
+    /*float: left;*/
+    /*top: 20px;*/
+    /*left: 20px;*/
+    /*width: 290px;*/
+    /*height: 426px;*/
+    /*background-color: #fff;*/
+    /*border: 1px solid #ff3e33;*/
+/*}*/
+/*.content-housesBuy .type .hx2{*/
+    /*width: 290px;*/
+    /*height: 741px;*/
+    /*position: absolute;*/
+    /*top: 20px;*/
+    /*left: 330px;*/
+    /*background-color: #fff;*/
+/*}*/
+/*.content-housesBuy .type .hx3{*/
+    /*position: absolute;*/
+    /*top:468px;*/
+    /*left: 20px;*/
+    /*width: 290px;*/
+    /*height: 426px;*/
+    /*background-color: #fff;*/
+/*}*/
+/*.content .type .hx4{*/
+    /*position: absolute;*/
+    /*top:780px;*/
+    /*left: 330px;*/
+    /*width: 290px;*/
+    /*height: 741px;*/
+    /*background-color: #fff;*/
+/*}*/
+/*.content-housesBuy .type .hx5{*/
+
+
+    /*position: absolute;*/
+    /*top:915px;*/
+    /*left: 20px;*/
+    /*width: 290px;*/
+    /*height: auto;*/
+    /*background-color: #fff;*/
+/*}*/
+/*.content-housesBuy .type .ask{*/
+
+
+    /*height: auto;*/
+    /*background:url("../image/housesBuy/ask.png") no-repeat 30px center;*/
+    /*font-size: 18px;*/
+    /*left: 100px;*/
+    /*text-align: center;*/
+    /*margin-top:20px;*/
+    /*border-top:1px solid #ebebeb;*/
+    /*line-height: 60px;*/
+/*}*/
+/*.content-housesBuy .type .ask a{*/
+
+    /*color: #f13800;*/
+/*}*/
+/*.content-housesBuy  .HX{*/
+    /*font-size:1.2em;*/
+    /*color: #000;*/
+    /*padding:20px 0 10px 25px;*/
+    /*font-weight:bold;*/
+/*}*/
+/*.content-housesBuy  .gift{*/
+    /*font-size: 0.95em;*/
+    /*color: #858585;*/
+    /*line-height: 20px;*/
+    /*padding-left: 25px;*/
+/*}*/
+/*.content-housesBuy .JJ{*/
+    /*font-size: 1.2em;*/
+    /*color: #f13800;*/
+    /*padding:20px 0 15px 25px;*/
+/*}*/
+/*.content-housesBuy  .HXT{*/
+    /*padding-left: 25px;*/
+    /*width: 200px; height: auto; display: block; border: 0;*/
+/*}*/
+
+
+/*户型图新样式*/
+ .typeHouses{
+
+}
+ .typeHouses ul li{
+    background-color: #fff;
+    width: 290px;
+    height: 426px;
+    margin: 20px 0 0 20px;
+    padding:20px 0 0 0;
+}
+.typeHouses .inside{
+    padding-left: 25px;
+}
+ .typeHouses .housesType{
+    color: #000;
+    font-size: 1.2em;
+}
+ .typeHouses .average{
+   color:#f13800 ;
+    font-size: 1.2em;
+    padding-bottom: 20px;
+    display: block;
+}
+.typeHouses .ask{
+    display: block;
+    margin-top: 30px;
+    height: 60px;
+    line-height: 60px;
+    border-top:1px solid #ebebeb;
+
+    background: url("../image/housesBuy/ask.png") no-repeat 95px center;
+    color: #f13800;
+    text-align: center;
+}
+
+
+
+
+
+/*瀑布流布局样式*/
+.content-housesBuy #lxf-box { position: relative; width: 640px;}
+.content-housesBuy #lxf-box li { width: 200px; position: absolute; background: #fff; border: solid 1px #ccc; text-align: center; padding: 10px; left: 0px; top: 0; }
+
+.content-housesBuy .listbox img { width: 200px; height: auto; display: block; border: 0 }
+.content-housesBuy .listbox li { -webkit-transition: all .7s ease-out .1s; -moz-transition: all .7s ease-out; -o-transition: all .7s ease-out .1s; transition: all .7s ease-out .1s }
+

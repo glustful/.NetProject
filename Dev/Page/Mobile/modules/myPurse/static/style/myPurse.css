@@ -1,0 +1,54 @@
+.money-myPurse {
+    background-color: #fff;
+    padding:47px 0 40px 77px;
+}
+.money-myPurse .balance img{
+    margin-right: 35px;
+}
+.money-myPurse .balance span{
+    line-height: 40px;
+    font-size: 50px;
+    color: #ff4200;
+    font-weight: bolder;
+}
+.money-myPurse .balance small{
+    font-size: 18px;
+    color: #626161;
+    font-weight: normal;
+}
+.money-myPurse  p{
+    margin-top: 43px;
+}
+.money-myPurse p button{
+    width:436px;
+    height: 49px;
+    color: #fff;
+    font-size: 24px;
+    background-color: #fc3b00;
+    border-radius: 5px;
+}
+.bank{
+    margin-top:20px;
+    background-color: #fff;
+    padding:12px 67px 0;
+}
+.bank li{
+    width: 505px;
+    height: 143px;
+    background-color: cornflowerblue;
+    margin: 10px 0;
+    color: #fff;
+    border-radius: 10px;
+
+}
+.bank li .bankName{
+    padding:20px 0 10px 60px;
+}
+.bank li .card{
+    font-size: 0.9em;
+    padding-left:60px;
+}
+.bank li .cardNum{
+    padding:20px 0 0 150px;
+    font-size: 2em;
+}

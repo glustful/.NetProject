@@ -1,0 +1,89 @@
+/* 提现页 withdrawals */
+.Savings-card{
+    background-color: #fff;
+    height: 80px;
+    line-height: 80px;
+    border-bottom: 1px solid #ebebeb;
+    padding-left: 35px;
+    font-size: 1.5em;
+}
+.Savings-card select{
+   width: 200px;
+   margin-left: 20px;
+    font-size: 1em;
+}
+.Current-balance{
+    background-color: #fff;
+    height: 80px;
+    line-height: 80px;
+    padding-left: 35px;
+    font-size: 1.5em;
+    border-bottom: 1px solid #ebebeb;
+}
+.Current-balance small{
+    color: #dadada;
+    margin-left: 30px;
+}
+.verification-code{
+    padding-left: 35px;
+    height: 80px;
+    line-height: 80px;
+    background-color: #fff;
+}
+.verification-code input{
+    border: 1px solid #ebebeb;
+    height: 40px;
+    line-height: 40px;
+}
+.verification-code button{
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #f13a07;
+    color: #fff;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+.next-withdrawals{
+    text-align: center;
+    padding: 115px 0 300px;
+}
+.next-withdrawals button{
+    width: 520px;
+    height: 50px;
+    background-color: #f13a07;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 1.2em;
+}
+/* 体现详情页 */
+.Submitted{
+    background-color:#eeeeee;
+    text-align: center;
+    padding:50px 0 40px 0;
+}
+.submitted{
+    font-size: 1.5em;
+    color: #3d3d3d;
+    margin: 54px 0 15px 0;
+}
+.card-money{
+    background-color: #fff;
+    padding:0 36px;
+    line-height: 40px;
+    font-size: 1.3em;
+}
+.Finish{
+    background-color: #eeeeee;
+    text-align: center;
+    padding:114px 0 125px 60px;
+}
+.Finish button{
+    display: block;
+    width: 517px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #f13a07;
+    color: #fff;
+    font-size: 1.3em;
+}
