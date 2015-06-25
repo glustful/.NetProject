@@ -15,7 +15,10 @@ namespace Event.Models
         /// ID
         /// </summary>
 		public int Id {get;set;}
-
+        /// <summary>
+        /// 图片表的副键用来关联项目表的id
+        /// </summary>
+        public int CrowdId { get; set; }
 
 		/// <summary>
         /// Crowd_Id

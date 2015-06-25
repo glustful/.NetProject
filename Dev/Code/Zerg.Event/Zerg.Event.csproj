@@ -132,7 +132,11 @@
     <Content Include="Controllers\Crowd\Static\image\chip\cyzk.png" />
     <Content Include="Controllers\Crowd\Static\image\chip\logo-syj.png" />
     <Content Include="Controllers\Crowd\Static\image\chip\p.png" />
+    <Content Include="Controllers\Crowd\Static\Js\bootstrap.min.js" />
     <Content Include="Controllers\Crowd\Static\Js\crowdjs.js" />
+    <Content Include="Controllers\Crowd\Static\Js\jquery-1.9.1.min.js" />
+    <Content Include="Controllers\Crowd\Static\style\bootstrap-theme.min.css" />
+    <Content Include="Controllers\Crowd\Static\style\bootstrap.min.css" />
     <Content Include="Controllers\Crowd\Static\style\chip.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -165,10 +169,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Crowd\CrowdApiController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CrowdAddController.cs" />
     <Compile Include="Controllers\Crowd\CrowdController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -215,6 +219,10 @@
     <ProjectReference Include="..\Zerg.Base\Zerg.Base.csproj">
       <Project>{51b7fc52-21e7-40d1-96d2-d0867932b4a5}</Project>
       <Name>Zerg.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zerg.Common\Zerg.Common.csproj">
+      <Project>{db11f281-e24f-4237-b77f-0cfdcf8dd647}</Project>
+      <Name>Zerg.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -2,38 +2,76 @@
     Layout = null;
 }
 @model dynamic
-<link href="~/Controllers/Crowd/Static/style/chip.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="~/Controllers/Crowd/Static/Js/crowdjs.js"></script>
+<link href="/Controllers/Crowd/Static/style/chip.css" type="text/css" rel="stylesheet" />
+@*<link href="/Controllers/Crowd/Static/style/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<link href="~/Controllers/Crowd/Static/style/bootstrap-theme.min.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/Controllers/Crowd/Static/Js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="~/Controllers/Crowd/Static/Js/bootstrap.min.js"></script>*@
 <div class="chip-nav"><span class="all">全部</span><span>众筹中</span><span class="selecting">选房中</span></div>
+
+
 <div class="chip-content">
-    <div class="chipIng"><a href="#/app/chipDetail"><img src="~/Controllers/Crowd/Static/image/chip/p.png" alt="众筹中" width="610" height="340" /><span class="summary">众筹中</span></a></div>
-    <div class="contentIntro">
-        <div class="BriefIntroduction">
-            <div class="lg">蓝光&nbsp;·&nbsp;颐明园</div>
-            <p>270-643m²,一环曲靖一中学位房，均价7000元/m²起；<br />商业巨擘-西南家乐福旗舰店、欢乐影城、洲际品牌店全线入驻。</p>
-        </div>
-        <div class="Discount">
-            <div class="number-days cf">
-                <span class="fl">已有467人参与众筹</span>
-                <span class="fr">剩余天数：6天</span>
-            </div>
+    
+    @foreach (var p in Model)
+    {
+        
+        @*foreach (var a in p.ImgList)
+        {
+            <div class="chipIng"><a href="#/app/chipDetail">
+                                     <img src="@a.Imgurl" alt="众筹中" width="610" height="340" />
+                <span class="summary">@p.Status</span></a></div>
 
-                @foreach (var p in Model)
-                {
-                    <span class="fl">@p.Ttitle</span>
-                }
-            
-            <div class="favourable-nav">
-                <span class="all">9折优惠<br /><small>众筹人数100人</small></span>
-                <span class="all">8折优惠<br /><small>众筹人数200人</small></span>
-                <span class="all">7折优惠<br /><small>众筹人数300人</small></span>
-                <span class="half">5折优惠<br /><small>众筹人数500人</small></span>
-            </div>
-
+        }*@
+        <div class="chipIng">
+            <a href="#/app/chipDetail">
+                <img src="~/Controllers/Crowd/Static/image/chip/p.png" alt="众筹中" width="610" height="340" />
+                <span class="summary">@p.Status</span>
+            </a>
         </div>
-        <div class="partIn"><a href="#/app/chipPartake"><button>参与众筹</button></a></div>
-    </div>
-    <div class="contentIntro selectHouses">
+        <div class="contentIntro">
+            <div class="BriefIntroduction">
+                <div class="lg">@p.Ttitle</div>
+                <p>@p.Intro</p>
+            </div>
+            <div class="Discount">
+                <div class="number-days cf">
+                    <span class="fl">已有 @p.Dislist[0].Number 人参与众筹</span>
+                    <span class="fr">剩余时间：
+                    @{
+                        DateTime nowtime = DateTime.Now;
+                        DateTime endtime = @p.Endtime;
+                        string dateDiff = null;
+                        TimeSpan ts1 = new TimeSpan(nowtime.Ticks);
+                        TimeSpan ts2 = new TimeSpan(endtime.Ticks);
+                        TimeSpan ts = ts1.Subtract(ts2).Duration();
+                        dateDiff = ts.Days.ToString() + "天"
+                        + ts.Hours.ToString() + "小时"
+                        + ts.Minutes.ToString() + "分钟"
+                        //+ ts.Seconds.ToString() + "秒"
+                        ;  
+                        Write(dateDiff);
+                    }
+                     </span>
+                </div>
+                <div class="favourable-nav">
+                    <span class="all">9折优惠<br /><small>众筹人数100人</small></span>
+                    <span class="all">8折优惠<br /><small>众筹人数200人</small></span>
+                    <span class="all">7折优惠<br /><small>众筹人数300人</small></span>
+                    <span class="half">5折优惠<br /><small>众筹人数500人</small></span>
+                </div>
+
+            </div>
+            <div class="partIn"><a href="#/app/chipPartake"><button>参与众筹</button></a></div>
+        </div>
+        @*<span class="fl">@p.Ttitle</span>
+        foreach (var a in p.ImgList)
+        {
+
+            <img src="@a.Imgurl" />
+        }*@
+    }
+    
+    @*<div class="contentIntro selectHouses">
         <div class="chipIng"><a href="#"><img src="/Controllers/Crowd/Static/image/chip/p.png" alt="众筹中" width="610" height="340" /><span class="summary">选房中</span></a></div>
         <div class="BriefIntroduction">
             <div class="lg">蓝光&nbsp;·&nbsp;颐明园</div>
@@ -51,5 +89,5 @@
                 <span class="half">5折优惠<br /><small>众筹人数500人</small></span>
             </div>
         </div>
-    </div>
+    </div>*@
 </div>

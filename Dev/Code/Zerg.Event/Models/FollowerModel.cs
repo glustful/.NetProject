@@ -111,6 +111,14 @@ namespace Event.Models
         /// UpTime
         /// </summary>
 		public DateTime Uptime {get;set;}
+        /// <summary>
+        /// 参加抽奖用户
+        /// </summary>
+        public int FollowerId { get; set; }
+        /// <summary>
+        /// 参加抽奖用户手机
+        /// </summary>
+        public string Phone { get; set; }
 
 
 

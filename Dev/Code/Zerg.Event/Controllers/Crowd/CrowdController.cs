@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Event.Entity.Model;
 using Event.Models;
 using Event.Service.Crowd;
+using Event.Service.Discount;
 using Event.Service.Follower;
 using Event.Service.PartImage;
 using YooPoon.Core.Site;
@@ -16,20 +17,14 @@ namespace Zerg.Event.Controllers.Crowd
     {
         private readonly ICrowdService _crowdService;
         private readonly IPartImageService _partImageService;
-        public CrowdController(ICrowdService crowdService,
-            IPartImageService partImageService
-            )
+        private readonly IDiscountService _discountService;
+        public CrowdController(ICrowdService crowdService,IPartImageService partImageService, IDiscountService discountService)
         {
+            _discountService = discountService;
             _crowdService = crowdService;
             _partImageService = partImageService;
         }
-
-
-        // GET: Crowd
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
+        #region 加载获取项目信息
         [HttpGet]
         public ActionResult crowd()
         {
@@ -39,13 +34,34 @@ namespace Zerg.Event.Controllers.Crowd
                 OrderBy = EnumCrowdSearchOrderBy.OrderById,
                 //Statuss = new[] { status }
             };
-
-            var list = _crowdService.GetCrowdsByCondition(sech).Select(p=>new CrowdModel
+            var list = _crowdService.GetCrowdsByCondition(sech).Select(p => new
             {
-                Ttitle = p.Ttitle
+                //项目表
+                p.Ttitle,
+                p.Id,
+                p.Status,
+                p.Intro,
+                p.Starttime,
+                p.Endtime,
+                p.Uptime,
+                p.Upuser,
+                p.Adduser,
+                p.Addtime
+            }).ToList().Select(a=>new CrowdModel
+            {
+                //返回数据
+                Id = a.Id,
+                Ttitle = a.Ttitle,
+                Intro = a.Intro,
+                Endtime = a.Endtime,
+                Starttime = a.Starttime,
+                Status = a.Status,
+                ImgList = _partImageService.GetPartImageByCrowdId(a.Id),
+                Dislist = _discountService.GetDiscountByCrowdId(a.Id),
             });
 
             return View(list);
         }
+        #endregion
     }
 }

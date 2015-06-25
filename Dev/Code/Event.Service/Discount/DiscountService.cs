@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
@@ -199,5 +200,17 @@ namespace Event.Service.Discount
                 return -1;
 			}
 		}
+        public List<DiscountEntity> GetDiscountByCrowdId(int crowdId)
+        {
+            try
+            {
+                return _discountRepository.Table.Where(p => p.Crowd.Id == crowdId).ToList();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
 	}
 }
