@@ -788,10 +788,24 @@ angular.module('app')
             .state('page.CRM.WaitPetition.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/WaitPetition/index.html',
-                  data: { title: '待上访记录' },
+                  data: { title: '推荐待上访记录' },
                 controller:"PetitionListController",
                 resolve:load('scripts/controllers/CRM/WaitPetition.js')
             })
+
+            /////////////////////带客待上访记录///////////////////////////
+            .state('page.CRM.DKWaitPetition', {
+                url: '/DKWaitPetition',
+                template: '<div ui-view></div>'
+            })
+            .state('page.CRM.DKWaitPetition.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/DKWaitPetition/index.html',
+                data: { title: '带客待上访记录' },
+                controller:"PetitionListController",
+                resolve:load('scripts/controllers/CRM/WaitPetition.js')
+            })
+            /////////////////////////////////////////////////////////////
             .state('page.CRM.WaitPetition.detailed', {
                 url: '/detailed?id',
               templateUrl: 'views/pages/CRM/WaitPetition/detailed.html',
