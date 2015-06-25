@@ -345,7 +345,7 @@ namespace Zerg.Controllers.CRM
                 OrderEntity oe = new OrderEntity();
                 oe.Adddate = DateTime.Now;
                 oe.Adduser = model.Adduser.ToString(CultureInfo.InvariantCulture);
-                oe.AgentId = model.Adduser;
+                oe.AgentId = model.Broker.Id;//model.Adduser;此处存的应该是经纪人ID
                 oe.Agentname = _brokerService.GetBrokerByUserId(model.Adduser).Brokername;
                 oe.Agenttel = model.Phone;
                 oe.BusId = product.Bussnessid;

@@ -1,0 +1,64 @@
+<div class="panel panel-card ng-scope">
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>经纪人名：{{ARDetialModel.Brokername}}</td>
+            <td>等级：{{ARDetialModel.Brokerlevel}}</td>
+
+        </tr>
+        <tr>
+            <td>昵称：{{ARDetialModel.NickName}}</td>
+            <td>电话：{{ARDetialModel.Phone}}</td>
+
+        </tr>
+        <tr>
+            <td>性别：{{ARDetialModel.Sex}}</td>
+            <td>注册时间：{{ARDetialModel.RegTime}}</td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="panel panel-card ng-scope">
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>客户姓名：{{ARDetialModel.Clientname}}</td>
+            <td>意向户型：{{ARDetialModel.HouseType}}</td>
+
+        </tr>
+        <tr>
+            <td>电话：{{ARDetialModel.ClientInfo.Phone}}</td>
+            <td>备注信息：{{ARDetialModel.Note}}</td>
+
+        </tr>
+        <tr>
+            <td>楼盘信息：{{ARDetialModel.Houses}}</td>
+            <td></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="panel panel-card ng-scope">
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>项目名称：{{ARDetialModel.Projectname}}</td>
+            <td>所属行业</td>
+
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<div style="text-align: center;">
+    <a href="#" access="secretary"> <button type="submit" md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" ng-click="passAudit1('洽谈成功')">确认成功<div class="md-ripple-container"></div></button></a>
+    <a href="#" access="secretary"> <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink" ng-click="passAudit1('洽谈失败')">确认失败<div class="md-ripple-container"></div></button></a>
+    <a href="#/page/CRM/success/BLPay?id={{ARDetialModel.Id}}" access="accountant"> <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" ng-click="">进入打款流程<div class="md-ripple-container"></div></button></a>
+</div>
+
