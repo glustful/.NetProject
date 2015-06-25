@@ -1,66 +1,50 @@
-/**
- * Created by yangdingpeng on 2015/5/15.
+/****
+ *
  */
 
-//ä¸Šè®¿åˆ—è¡¨
-angular.module("app").controller('PetitionListController', [
+
+//ÉÏ·ÃÁĞ±í
+angular.module("app").controller('WaitVistController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
-            status:"ç­‰å¾…ä¸Šè®¿",
-            Brokername:"",
+            status:"1",
+            brokername:"",
             page: 1,
             pageSize: 10
         };
-
-        var getTagList = function() {
-            $http.get(SETTING.ApiUrl+'/AdminRecom/BrokerList',{
+        /////////////////////»ñÈ¡´ø¿Í´ıÉÏ·Ã¼ÇÂ¼/////////////////////
+        var getDKpetition = function(){
+            $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
                 params:$scope.searchCondition,
                 'withCredentials':true
             }).success(function(data){
-                $scope.Brokerlist = data.list1;
+                $scope.DKBrokerlist = data.list1;
                 if (data.list1 == ""){
-                    $scope.errorTip="å½“å‰æ²¡æœ‰ä¸Šè®¿å®¢æˆ·"
+                    $scope.errorTip = "µ±Ç°Ã»ÓĞ´ıÉÏ·Â¼ÇÂ¼"
                 }
                 $scope.searchCondition.page=data.condition1.Page;
                 $scope.searchCondition.PageCount=data.condition1.PageCount;
                 $scope.searchCondition.totalCount=data.totalCont1;
             });
         };
-        $scope.getList = getTagList;
-        getTagList();
-        /////////////////////è·å–å¸¦å®¢å¾…ä¸Šè®¿è®°å½•/////////////////////
-        //var getDKpetition = function(){
-        //    $http.get(SETTING.ApiUrl+'BrokerLeadClient/GetLeadClientInfoByBrokerName',{
-        //        params:$scope.searchCondition,
-        //        'withCredentials':true
-        //    }).success(function(data){
-        //        $scope.DKBrokerlist = data.list1;
-        //        if (data.list1 == ""){
-        //            $scope.errorTip = "å½“å‰æ²¡æœ‰å¾…ä¸Šä»¿è®°å½•"
-        //        }
-        //        $scope.searchCondition.page=data.condition1.Page;
-        //        $scope.searchCondition.PageCount=data.condition1.PageCount;
-        //        $scope.searchCondition.totalCount=data.totalCont1;
-        //    });
-        //};
-        //$scope.getDKList = getDKpetition;
-        //getDKpetition();
+        $scope.getDKList = getDKpetition;
+        getDKpetition();
         ////////////////////////////////////////////////////////////
     }
 ]);
 
 
-//è¯¦ç»†ä¿¡æ¯
+//ÏêÏ¸ĞÅÏ¢
 angular.module("app").controller('WPDetialController',[
     '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
-        //è·å–è¯¦ç»†ä¿¡æ¯
+        //»ñÈ¡ÏêÏ¸ĞÅÏ¢
         $http.get(SETTING.ApiUrl + '/AdminRecom/GetAuditDetail/' + $stateParams.id,{
             'withCredentials':true
         }).success(function (data) {
             $scope.ARDetialModel = data;
         });
 
-        //////////////////////è·å–å¾…ä¸Šè®¿å¸¦å®¢è¯¦ç»†ä¿¡æ¯////////////////////////////////
+        //////////////////////»ñÈ¡´ıÉÏ·Ã´ø¿ÍÏêÏ¸ĞÅÏ¢////////////////////////////////
         $http.get(SETTING.ApiUrl + 'BrokerLeadClient/GetBlDetail' + $stateParams.id,{
             'withCredentials':true
         }).success(function(data){
@@ -76,7 +60,7 @@ angular.module("app").controller('WPDetialController',[
         };
 
 
-        //å˜æ›´ç”¨æˆ·çŠ¶æ€
+        //±ä¸üÓÃ»§×´Ì¬
         $scope.passAudit1=function(enum1){
             $scope.PassAudit.Id= $scope.ARDetialModel.Id;
             $scope.PassAudit.Status=enum1;
