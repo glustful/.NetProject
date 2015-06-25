@@ -53,8 +53,12 @@
               <a md-ink-ripple ui-sref="page.CRM.DkRecord.index">带客审核</a>
           </li>
         <li ui-sref-active="active" access="superAdmin,admin,secretary,waiter,merchant">
-          <a md-ink-ripple ui-sref="page.CRM.WaitPetition.index">待上访记录</a>
+          <a md-ink-ripple ui-sref="page.CRM.WaitPetition.index">推荐待上访记录</a>
         </li>
+          <li ui-sref-active="active" access="superAdmin,admin,secretary,waiter,merchant">
+              <a md-ink-ripple ui-sref="page.CRM.DKWaitPetition.index">带客待上访记录</a>
+          </li>
+
         <li ui-sref-active="active" access="superAdmin,admin,secretary,accountant,merchant">
           <a md-ink-ripple ui-sref="page.CRM.talking.index">洽谈中业务</a>
       </li>

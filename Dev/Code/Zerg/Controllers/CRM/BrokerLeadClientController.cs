@@ -146,7 +146,7 @@ namespace Zerg.Controllers.CRM
 
         }
         /// <summary>
-        /// 经纪人列表
+        /// 带客经纪人列表
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -185,7 +185,7 @@ namespace Zerg.Controllers.CRM
                 b.Phone,
                 b.Projectname,
                 Addtime = b.Addtime.ToString("yyy-MM-dd"),
-
+                
                 
                 SecretaryName = b.Brokername,
                 b.SecretaryPhone,
