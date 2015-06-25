@@ -793,11 +793,10 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/WaitPetition.js')
             })
 
-
             .state('page.CRM.WaitPetition.detailed', {
                 url: '/detailed?id',
-              templateUrl: 'views/pages/CRM/WaitPetition/detailed.html',
-                  data: { title: '详情页' },
+                templateUrl: 'views/pages/CRM/WaitPetition/detailed.html',
+                data: { title: '详情页' },
                 controller:"WPDetialController",
                 resolve:load('scripts/controllers/CRM/WaitPetition.js')
             })
@@ -814,6 +813,15 @@ angular.module('app')
                 controller:"WaitVistController",
                 resolve:load('scripts/controllers/CRM/WaitPetitionDK.js')
             })
+
+            .state('page.CRM.DKWaitPetition.detailed', {
+                url: '/detailed?id',
+                templateUrl: 'views/pages/CRM/DKWaitPetition/detailed.html',
+                data: { title: '详情页' },
+                controller:"WPDetialController",
+                resolve:load('scripts/controllers/CRM/WaitPetitionDK.js')
+            })
+
             /////////////////////////////////////////////////////////////
 
 
@@ -824,7 +832,7 @@ angular.module('app')
             .state('page.CRM.talking.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/talking/index.html',
-                  data: { title: '洽谈中业务' },
+                  data: { title: '推荐洽谈中业务' },
                 controller:"TalkingListController",
                 resolve:load('scripts/controllers/CRM/Talking.js')
             })
@@ -836,6 +844,27 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/Talking.js')
             })
 
+            ///////////////////////新增带客洽谈////////////////////////////////
+            .state('page.CRM.DKtalking', {
+                url: '/DKtalking',
+                template: '<div ui-view></div>'
+            })
+            .state('page.CRM.DKtalking.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/DKtalking/index.html',
+                data: { title: '带客洽谈中业务' },
+                controller:"TalkingListController",
+                resolve:load('scripts/controllers/CRM/DKtalking.js')
+            })
+            .state('page.CRM.DKtalking.detailed', {
+                url: '/detailed?id',
+                templateUrl: 'views/pages/CRM/DKtalking/detailed.html',
+                data: { title: '详情页' },
+                controller:"TaklDetialController",
+                resolve:load('scripts/controllers/CRM/DKtalking.js')
+            })
+
+            //////////////////////////////////////////////////////////////////
               .state('page.CRM.fail', {
                   url: '/fail',
                   template: '<div ui-view></div>'

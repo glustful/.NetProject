@@ -94,7 +94,7 @@ namespace Zerg.Controllers.Trading.Trading
                  var partnerlistsearchcon = new PartnerListSearchCondition
                   {
                          Brokers = _brokerService.GetBrokerByUserId(Broker.UserId),
-                         Status = EnumPartnerType.同意,
+                         Status = EnumPartnerType.同意
                  };
                  var partner = _partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).Select(p => new BrokerModel 
                 {
@@ -162,8 +162,8 @@ namespace Zerg.Controllers.Trading.Trading
                     LandagentId = OE.BusId,//地产商Id；
                     Landagentname = OE.Busname,//地产商名字；
                     Beneficiary = OE.Agentname,
-                    Beneficiarynumber = model.beneficiarynumber,
-                    Cardnumber = model.beneficiarynumber,
+                    Beneficiarynumber = null,
+                    Cardnumber = null,
                     Checkoutdate = DateTime.Now,
                     Customname = OE.Agentname,
                     Isinvoice = false,
@@ -184,8 +184,8 @@ namespace Zerg.Controllers.Trading.Trading
                     LandagentId = OE.BusId,//地产商Id；
                     Landagentname = OE.Busname,//地产商名字；
                     Beneficiary = OE.Agentname,
-                    Beneficiarynumber = model.beneficiarynumber,
-                    Cardnumber = model.beneficiarynumber,
+                    Beneficiarynumber =null,
+                    Cardnumber = null,
                     Checkoutdate = DateTime.Now,
                     Customname = OE.Agentname,
                     Isinvoice = false,
@@ -206,8 +206,8 @@ namespace Zerg.Controllers.Trading.Trading
                     LandagentId = OE.BusId,//地产商Id；
                     Landagentname = OE.Busname,//地产商名字；
                     Beneficiary = partner.Brokername,
-                    Beneficiarynumber = model.beneficiarynumber,
-                    Cardnumber = model.beneficiarynumber,
+                    Beneficiarynumber = null,
+                    Cardnumber =null,
                     Checkoutdate = DateTime.Now,
                     Customname = OE.Agentname,
                     Isinvoice = false,
