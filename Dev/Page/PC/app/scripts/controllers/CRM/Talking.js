@@ -2,7 +2,7 @@
  * Created by yangdingpeng on 2015/5/15.
  */
 
-//推荐列表
+//推荐列表//带客列表
 angular.module("app").controller('TalkingListController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
@@ -28,6 +28,24 @@ angular.module("app").controller('TalkingListController', [
         };
         $scope.getList = getTagList;
         getTagList();
+        ////////////////////////带客洽谈列表////////////////////////////////////
+        var  getTagList1 =  function(){
+            $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetLeadCientInfoByBrokerName',{
+                params:$scope.searchCondition,
+                'withCredentials':true
+            }).success(function(data){
+                $scope.Brokerlist1 = data.list1;
+                if(data.list1 == ""){
+                    $scope.errorTip = "当前没有洽谈中的业务";
+                }
+                $scope.searchCondition.page=data.condition1.Page;
+                $scope.searchCondition.PageCount=data.condition1.PageCount;
+                $scope.searchCondition.totalCount=data.totalCont1;
+            });
+        };
+        $scope.getList1 = getTagList1;
+        getTagList1();
+        ///////////////////////////////////////////////////////////////////////
     }
 ]);
 

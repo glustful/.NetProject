@@ -69,7 +69,7 @@ angular.module("app").controller('WPDetialController',[
         ///////////////////////////////////////////////////////////////////////////
 
 
-        
+
         $scope.PassAudit = {
             Id:"",
             Status:""
