@@ -5,7 +5,7 @@
         </p>
         <p class="input_blank">
             <span><img src="modules/Login/static/image/login/icon1.png"  class="UserImg"></span>
-            <input type="text" id="Name_blank" placeholder="Phone Number" name="login_userName" id="UserName" ng-model="user.name" ng-maxlength="20"  required/>
+            <input type="text" id="Name_blank" placeholder="Phone Number" name="login_userName" id="UserName" ng-model="user.name" ng-pattern="/^1[3|4|5|7|8][0-9]\d{8}$/"  required/>
         </p>
         <div class="login_errorTip" ng-show="login_form.login_userName.$invalid&&login_form.login_userName.$dirty">请正确输入用户名</div>
         <p class="user_tip">
