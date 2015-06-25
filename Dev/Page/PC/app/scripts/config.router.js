@@ -793,6 +793,15 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/WaitPetition.js')
             })
 
+
+            .state('page.CRM.WaitPetition.detailed', {
+                url: '/detailed?id',
+              templateUrl: 'views/pages/CRM/WaitPetition/detailed.html',
+                  data: { title: '详情页' },
+                controller:"WPDetialController",
+                resolve:load('scripts/controllers/CRM/WaitPetition.js')
+            })
+
             /////////////////////带客待上访记录///////////////////////////
             .state('page.CRM.DKWaitPetition', {
                 url: '/DKWaitPetition',
@@ -802,17 +811,11 @@ angular.module('app')
                 url: '/index',
                 templateUrl: 'views/pages/CRM/DKWaitPetition/index.html',
                 data: { title: '带客待上访记录' },
-                controller:"PetitionListController",
-                resolve:load('scripts/controllers/CRM/WaitPetition.js')
+                controller:"WaitVistController",
+                resolve:load('scripts/controllers/CRM/WaitPetitionDK.js')
             })
             /////////////////////////////////////////////////////////////
-            .state('page.CRM.WaitPetition.detailed', {
-                url: '/detailed?id',
-              templateUrl: 'views/pages/CRM/WaitPetition/detailed.html',
-                  data: { title: '详情页' },
-                controller:"WPDetialController",
-                resolve:load('scripts/controllers/CRM/WaitPetition.js')
-            })
+
 
               .state('page.CRM.talking', {
                   url: '/talking',

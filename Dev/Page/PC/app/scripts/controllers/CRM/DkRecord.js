@@ -17,7 +17,7 @@ angular.module("app").controller('DkRecordController', [
         }
 
         var getTagList = function() {
-            $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadCientInfoByBrokerName',{
+            $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
                 params:$scope.searchCondition,
                 'withCredentials':true
             }).success(function(data){
