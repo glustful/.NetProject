@@ -38,18 +38,18 @@ angular.module("app").controller('WaitVistController', [
 angular.module("app").controller('WPDetialController',[
     '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
         //获取详细信息
-        $http.get(SETTING.ApiUrl + '/AdminRecom/GetAuditDetail/' + $stateParams.id,{
+        $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/' + $stateParams.id,{
             'withCredentials':true
         }).success(function (data) {
-            $scope.ARDetialModel = data;
+            $scope.detail = data;
         });
 
         //////////////////////获取待上访带客详细信息////////////////////////////////
-        $http.get(SETTING.ApiUrl + 'BrokerLeadClient/GetBlDetail' + $stateParams.id,{
-            'withCredentials':true
-        }).success(function(data){
-            $scope.detail = data;
-        });
+        //$http.get(SETTING.ApiUrl + 'BrokerLeadClient/GetBlDetail' + $stateParams.id,{
+        //    'withCredentials':true
+        //}).success(function(data){
+        //    $scope.detail = data;
+        //});
         ///////////////////////////////////////////////////////////////////////////
 
 
@@ -65,7 +65,7 @@ angular.module("app").controller('WPDetialController',[
             $scope.PassAudit.Id= $scope.ARDetialModel.Id;
             $scope.PassAudit.Status=enum1;
 
-            $http.post(SETTING.ApiUrl + '/AdminRecom/PassAudit',$scope.PassAudit,{
+            $http.post(SETTING.ApiUrl + '/BrokerLeadClient/UpdateLeadClient',$scope.PassAudit,{
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
