@@ -3,7 +3,7 @@
  */
 app.controller('cusListController',['$http','$scope','AuthService',function($http,$scope,AuthService) {
     $scope.searchCondition = {
-        id:5,
+        id:'',
         page: 1,
         pageSize: 10
     };

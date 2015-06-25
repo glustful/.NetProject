@@ -150,7 +150,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetLeadCientInfoByBrokerName(EnumBLeadType status, string brokername, int page, int pageSize)
+        public HttpResponseMessage GetLeadClientInfoByBrokerName(EnumBLeadType status, string brokername, int page, int pageSize)
         {
 
             var condition = new BrokerLeadClientSearchCondition
@@ -165,11 +165,12 @@ namespace Zerg.Controllers.CRM
             var list = _brokerleadclientService.GetBrokerLeadClientsByCondition(condition).Select(a => new
             {
                 a.Id,
+                a.Appointmenttime,
                 a.Brokername,
                 a.ClientInfo.Phone,
                 a.Projectname,
                 a.Addtime,
-
+                a.ClientInfo.Clientname,
                 
                 SecretaryName = a.SecretaryId.Brokername,
                 a.SecretaryPhone,
@@ -181,11 +182,13 @@ namespace Zerg.Controllers.CRM
             {
                 b.Id,
                 b.Brokername,
-               
+                b.Clientname,
+
                 b.Phone,
                 b.Projectname,
+                Appointmenttime = b.Appointmenttime.ToString("yyy-MM-dd"),
                 Addtime = b.Addtime.ToString("yyy-MM-dd"),
-
+                
                 
                 SecretaryName = b.Brokername,
                 b.SecretaryPhone,
