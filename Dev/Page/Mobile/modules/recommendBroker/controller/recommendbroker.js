@@ -20,7 +20,7 @@ app.controller('recommendBrokerController',['$scope','$http','AuthService',funct
 
 }])
 
-//
+
 //app.controller('recommendBrokerAddController',['$http','$scope','$state',function($http,$scope,$state){
 //    $scope.YZM={
 //        phone:'',
@@ -37,4 +37,4 @@ app.controller('recommendBrokerController',['$scope','$http','AuthService',funct
 //    };
 //
 //}]);
-//
+
