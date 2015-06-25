@@ -3,7 +3,7 @@
  */
 app.controller('cusListController',['$http','$scope','AuthService',function($http,$scope,AuthService) {
     $scope.searchCondition = {
-        id:5,
+        id:'',
         page: 1,
         pageSize: 10
     };
@@ -17,7 +17,7 @@ app.controller('cusListController',['$http','$scope','AuthService',function($htt
         //alert("sdf");
         $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoListByUserId/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
             console.log(data);
-            if(data.list!=null){
+            if(data.list.length>0){
                 $scope.warm="";
                 $scope.list = data.list;
                 $scope.parentVi=true;
@@ -25,7 +25,7 @@ app.controller('cusListController',['$http','$scope','AuthService',function($htt
               }
             else{
                 $scope.parentVi=false;
-                $scope.warm="目前没有客户，革命还需努力";
+                $scope.warm="目前没有客户，同志还需努力";
             }
         });
     };

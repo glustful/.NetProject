@@ -273,6 +273,7 @@ app.run(
             })
             .state('app.recommendedBroker',{
                 url:'/recommendedBroker',
+                resolve:load('modules/recommendBroker/controller/recommendbroker.js'),
                 templateUrl:'modules/recommendBroker/view/recommendedBroker.html'
             })
             .state('app.addBroker',{
