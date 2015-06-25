@@ -5,8 +5,10 @@
         <p>
             电话
         </p>
-        <p><input type="tel" class="add_blank" ng-model="YQM.Mobile"   placeholder="请输入被邀请人电话" required/></p>
-        <p><button class="add_button" type="submit" >邀请</button></p>
-        <div>{{errorTip}}</div>
+        <p><input type="tel" class="add_blank" ng-model="YQM.Mobile"  name="invitePhone" placeholder="请输入被邀请人电话" ng-pattern="/^1[3|4|5|7|8][0-9]\d{8}$/" required/></p>
+        <p  class="Tips" ng-show="form.invitePhone.$invalid&&form.invitePhone.$dirty">请正确输入电话</p>
+        <div class="Tips">{{Tip}}</div>
+        <p><button id="inviteSMS" class="add_button" type="submit"  ng-disabled="form.$invalid">邀请</button></p>
+
     </form>
 </div>
