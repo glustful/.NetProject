@@ -58,7 +58,10 @@ angular.module("app").controller('createBillController', [
                    if(data.Status)
                    {
                        $http.get(SETTING.ApiUrl+'/Order/EditStatus?orderId='+$scope.orderId,{'withCredentials':true}).success(function(data){
-                       return data;
+                       if(data.Status)
+                       {
+                          $state.go('page.Trading.order.Negotiateorder');
+                       }
                        });
                    }
             });

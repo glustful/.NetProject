@@ -1,21 +1,23 @@
 <div ng-app="App" ng-controller="createBillController" ng-submit="Create()">
-    <form>
+    <div class="row">
+    <form class="form-horizontal" role="form" name="form"
+          enctype="multipart/form-data">
     <div class="form-group">
         <label class="col-sm-3 control-label no-padding-right">卡号</label>
         <div class="col-sm-9">
-            <input type="text" ng-model="BillModel.beneficiarynumber" name="" required/>
+            <input type="text" ng-model="BillModel.beneficiarynumber" style="width: 300px" name="" required/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-3 control-label no-padding-right">实收金额</label>
         <div class="col-sm-9">
-            <input type="text" ng-model="BillModel.Actualamount" name="" required/>
+            <input type="text" ng-model="BillModel.Actualamount" style="width: 300px" name="" required/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-3 control-label no-padding-right">结账备注</label>
         <div class="col-sm-9">
-            <input type="text" ng-model="BillModel.remark" name="" required/>
+            <textarea ng-model="BillModel.remark" style="width: 300px;height: 150px" name="" required/>
         </div>
     </div>
     <div class="clearfix form-actions">
@@ -27,4 +29,5 @@
             </div>
         </div>
     </form>
+        </div>
 </div>

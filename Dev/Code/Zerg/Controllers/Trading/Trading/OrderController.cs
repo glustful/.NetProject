@@ -167,6 +167,24 @@ namespace Zerg.Controllers.Trading.Trading.Order
             }
 
         }
+
+        /// <summary>
+        /// 更新订单状态
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage EditStatus(int orderId)
+        {
+            var order = _orderService.GetOrderById(orderId);
+            order.Status = 2;
+            if (_orderService.Update(order) != null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "状态更新成功"));
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "状态更新失败"));
+        }
         #endregion
 
         #region 订单查询
@@ -187,6 +205,7 @@ namespace Zerg.Controllers.Trading.Trading.Order
                 Ordertype = type,
                 OrderBy = EnumOrderSearchOrderBy.OrderById
             };
+            var count = _orderService.GetOrderCount(OSC);
             var list = _orderService.GetOrdersByCondition(OSC).Select(p => new
             {
                 p.Ordercode,
@@ -235,24 +254,7 @@ namespace Zerg.Controllers.Trading.Trading.Order
             }).ToList();
             var totalCount = _orderService.GetOrderCount(OSC);
             return PageHelper.toJson(new{OrderList=orderList,TotalCount=totalCount,Condition=OSC});
-        }
-        /// <summary>
-        /// 更新订单状态
-        /// </summary>
-        /// <param name="orderId"></param>
-        /// <returns></returns>
-        [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage EditStatus(int orderId)
-        {
-            var order = _orderService.GetOrderById(orderId);
-            order.Status = 2;
-            if (_orderService.Update(order) != null)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "状态更新成功"));
-            }
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "状态更新失败"));
-        }
+        }      
 
         /// <summary>
         /// 获取洽谈后的订单
