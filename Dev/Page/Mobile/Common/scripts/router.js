@@ -205,7 +205,7 @@ app.run(
                 url:'/myPurse',
                 templateUrl:'modules/myPurse/view/myPurse.html',
                 resolve:load('modules/myPurse/render/controller.js'),
-                data:{title:'我的任务'}
+                data:{title:'提取佣金'}
 
             })
             .state('app.personal',{
@@ -256,43 +256,53 @@ app.run(
             .state('app.task',{
                 url:'/task',
                 templateUrl:'modules/task/view/task.html',
-                resolve:load('modules/task/controller/task.js')
+                resolve:load('modules/task/controller/task.js'),
+                data:{title:'我的任务'}
             })
             .state('app.nominate',{
                 url:'/nominate',
                 templateUrl:'modules/nominate/view/nominate.html',
-                resolve:load('modules/nominate/controller/nominate.js')
+                resolve:load('modules/nominate/controller/nominate.js'),
+                data:{title:'带客/推荐'}
             })
             .state('app.carry_client',{
                 url:'/carry_client?Projectid&name&type',
                 templateUrl:'modules/carry_client/view/carry_client.html',
-                resolve:load('modules/carry_client/controller/controller.js')
+                resolve:load('modules/carry_client/controller/controller.js'),
+                data:{title:'我要带客'}
             })
             .state('app.credit_add',{
                 url:'/credit_add',
                 templateUrl:'modules/credit_add/view/credit_add.html',
-                resolve:load('modules/myPurse/render/controller.js')
+                resolve:load('modules/myPurse/render/controller.js'),
+                data:{title:'添加银行卡'}
             })
             .state('app.recommendedBroker',{
                 url:'/recommendedBroker',
-                templateUrl:'modules/recommendBroker/view/recommendedBroker.html'
+                resolve:load('modules/recommendBroker/controller/recommendbroker.js'),
+                templateUrl:'modules/recommendBroker/view/recommendedBroker.html',
+                data:{title:'推荐经纪人'}
             })
             .state('app.addBroker',{
                 url:'/addBroker',
                 templateUrl:'modules/addBroker/view/addBroker.html',
-                resolve:load('modules/addBroker/controller/AddBrokerController.js')
+                resolve:load('modules/addBroker/controller/AddBrokerController.js'),
+                data:{title:'添加经纪人'}
             })
             .state('app.grabPacket',{
                 url:'/grabPacket',
-                templateUrl:'modules/grabPacket/view/grabPacket.html'
+                templateUrl:'modules/grabPacket/view/grabPacket.html',
+                data:{title:'抢红包'}
             })
             .state('app.luckPacket',{
                 url:'/luckPacket',
-                templateUrl:'modules/luckPacket/view/luckPacket.html'
+                templateUrl:'modules/luckPacket/view/luckPacket.html',
+                data:{title:'运气红包'}
             })
             .state('app.sendPacket',{
                 url:'/sendPacket',
-                templateUrl:'modules/sendPacket/view/sendPacket.html'
+                templateUrl:'modules/sendPacket/view/sendPacket.html',
+                data:{title:'发红包'}
             })
             .state('app.chip',{
                 url:'/chip',
@@ -333,20 +343,24 @@ app.run(
             .state('app.withdrawals',{
                 url:'/withdrawals',
                 templateUrl:'modules/withdrawals/view/withdrawals.html',
-                resolve:load('modules/myPurse/render/controller.js')
+                resolve:load('modules/myPurse/render/controller.js'),
+                data:{title:'提现'}
             })
             .state('app.withdrawalsDetail',{
                 url:'/withdrawalsDetail',
-                templateUrl:'modules/withdrawalsDetail/view/withdrawalsDetail.html'
+                templateUrl:'modules/withdrawalsDetail/view/withdrawalsDetail.html',
+                data:{title:'提现详情'}
             })
             .state('app.NoviceTask',{
                 url:'/NoviceTask',
-                templateUrl:'modules/NoviceTask/view/NoviceTask.html'
+                templateUrl:'modules/NoviceTask/view/NoviceTask.html',
+                data:{title:'我的任务'}
             })
             .state('app.invite',{
                 url:'/invite',
                 templateUrl:'modules/invite/view/invite.html',
-                resolve:load('modules/invite/controller/invitecontroller.js')
+                resolve:load('modules/invite/controller/invitecontroller.js'),
+                data:{title:'注册邀请'}
             })
 
 

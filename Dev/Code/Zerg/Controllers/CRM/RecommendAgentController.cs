@@ -114,6 +114,8 @@ namespace Zerg.Controllers.CRM
         [System.Web.Http.HttpGet]
         public HttpResponseMessage GetRecommendAgentListByUserId(string userId)
         {
+
+
             var recomagmentsearchcon = new RecommendAgentSearchCondition
             {
                 BrokerId = Convert.ToInt32(userId)

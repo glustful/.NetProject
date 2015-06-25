@@ -42,3 +42,28 @@ angular.module("app").controller('billController', [
 
     }
 ]);
+angular.module("app").controller('createBillController', [
+    '$http', '$scope','$state','$stateParams', function ($http, $scope,$state,$stateParams) {
+            $scope.orderId=$stateParams.orderId;
+            $scope.BillModel={
+                orderId:$stateParams.orderId,
+                beneficiarynumber:'',
+                Actualamount:'',
+                remark:''
+            }
+        $scope.Create = function(){
+            $http.post(SETTING.ApiUrl + '/Bill/CreateBillsByOrder',$scope.BillModel,{
+                'withCredentials':true
+            }).success(function(data){
+                   if(data.Status)
+                   {
+                       $http.get(SETTING.ApiUrl+'/Order/EditStatus?orderId='+$scope.orderId,{'withCredentials':true}).success(function(data){
+                       if(data.Status)
+                       {
+                          $state.go('page.Trading.order.Negotiateorder');
+                       }
+                       });
+                   }
+            });
+        }
+    }])

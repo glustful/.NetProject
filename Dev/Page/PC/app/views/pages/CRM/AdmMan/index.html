@@ -52,7 +52,7 @@
     var keyname="";
     key=function () {
         var keynum;
-//三元表达式获取不同浏览器的按下键的代码
+//三目表达式获取不同浏览器的按下键的代码
         keynum = window.event ? event.keyCode : event.which;
         if(keynum==13){btsearch.click()}if(keynum==39){
             if(keyname=="name"){document.getElementById("phone").focus();}

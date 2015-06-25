@@ -150,7 +150,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetLeadCientInfoByBrokerName(EnumBLeadType status, string brokername, int page, int pageSize)
+        public HttpResponseMessage GetLeadClientInfoByBrokerName(EnumBLeadType status, string brokername, int page, int pageSize)
         {
 
             var condition = new BrokerLeadClientSearchCondition
@@ -165,11 +165,12 @@ namespace Zerg.Controllers.CRM
             var list = _brokerleadclientService.GetBrokerLeadClientsByCondition(condition).Select(a => new
             {
                 a.Id,
+                a.Appointmenttime,
                 a.Brokername,
                 a.ClientInfo.Phone,
                 a.Projectname,
                 a.Addtime,
-
+                a.ClientInfo.Clientname,
                 
                 SecretaryName = a.SecretaryId.Brokername,
                 a.SecretaryPhone,
@@ -181,11 +182,13 @@ namespace Zerg.Controllers.CRM
             {
                 b.Id,
                 b.Brokername,
-               
+                b.Clientname,
+
                 b.Phone,
                 b.Projectname,
+                Appointmenttime = b.Appointmenttime.ToString("yyy-MM-dd"),
                 Addtime = b.Addtime.ToString("yyy-MM-dd"),
-
+                
                 
                 SecretaryName = b.Brokername,
                 b.SecretaryPhone,
@@ -468,7 +471,46 @@ namespace Zerg.Controllers.CRM
 
                 #endregion
 
+            }
+            else if (model.Status == EnumBLeadType.预约不通过) { return PageHelper.toJson(PageHelper.ReturnValue(false, "预约不通过")); }
+            else if (model.Status == EnumBLeadType.预约中) 
+            {
+                var comOrder = _orderService.GetOrderById(entity.ComOrder);
+                //变更订单状态
+                int a = (int)Enum.Parse(typeof(EnumBLeadType), model.Status.ToString());
+                comOrder.Shipstatus = a; 
+                // 根据传入状态执行相应操作
+                switch (model.Status)
+                {
+
+                    case EnumBLeadType.洽谈中:
+                        //审核通过推荐订单
+                        comOrder.Status = (int)EnumOrderStatus.审核通过;
+                        comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                        comOrder.Upddate = DateTime.Now;
+                        break;
+
+                    case EnumBLeadType.客人未到:
+                        //订单作废
+                        comOrder.Status = (int)EnumOrderStatus.审核失败;
+                        //dealOrder.Status = (int)EnumOrderStatus.审核失败;
+                        comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                        comOrder.Upddate = DateTime.Now;
+                        break;
+
+                    case EnumBLeadType.洽谈成功:
+                        //审核通过成交订单
+                        comOrder.Status = (int)EnumOrderStatus.审核通过;
+                        comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                        comOrder.Upddate = DateTime.Now;
+                        break;
+
+                    //case EnumBRECCType.洽谈失败:
+                    //    //成交订单作废
+                    //    //dealOrder.Status = (int)EnumOrderStatus.审核失败;
+                    //    break;
                 }
+            }
             entity.Uptime = DateTime.Now;
             entity.Upuser = _workContext.CurrentUser.Id;
             _brokerleadclientService.Update(entity);

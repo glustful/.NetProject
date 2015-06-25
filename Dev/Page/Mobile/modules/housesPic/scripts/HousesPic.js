@@ -8,4 +8,9 @@ app.controller('HousesPicController',['$http','$scope','$stateParams', function 
              $scope.ProductImg=SETTING.ImgUrl+data.Productimg;
          }
      )
-}]);
+    }]);
+app.filter('trustHtml', function ($sce) {
+    return function (input) {
+        return $sce.trustAsHtml(input);
+    }
+})
