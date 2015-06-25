@@ -7,29 +7,49 @@ app.controller('cusListController',['$http','$scope','AuthService',function($htt
         page: 1,
         pageSize: 10
     };
-    $scope.warm="";
+    $scope.warm="点击加载更多。。。";
     $scope.parentVi=true;
     $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
 
     //查询客户
+    var loading = false
+        ,pages=2;                      //判断是否正在读取内容的变量
+    $scope.list = [];//保存从服务器查来的任务，可累加
+
     var getcustomerList  = function() {
         $scope.searchCondition.id=$scope.currentuser.userId ;
-        //alert("sdf");
+        if (!loading &&  $scope.searchCondition.page < pages) {                         //如果页面没有正在读取
+            loading = true;                     //告知正在读取
         $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoListByUserId/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
             console.log(data);
-            if(data.list!=null){
-                $scope.warm="";
-                $scope.list = data.list;
-                $scope.parentVi=true;
-
-              }
-            else{
-                $scope.parentVi=false;
-                $scope.warm="目前没有客户，革命还需努力";
+          pages=data.totalCount/10+1;
+            if(data.totalCount>0) {
+                if (data.list.length>0) {
+                    $scope.parentVi = true;
+                    for (var i = 0; i < data.list.length; i++) {
+                        $scope.list.push(data.list[i]);
+                    }
+                    loading = false;            //告知读取结束
+                    $scope.searchCondition.page++;//翻页
+                    if($scope.searchCondition.page>=pages){
+                      //  $scope.parentVi = false;
+                        $scope.warm = "没有更多了";
+                    }
+                }
+                else {
+                  //  $scope.parentVi = false;
+                    $scope.warm = "没有更多了";
+                }
             }
-        });
+            else{
+               // $scope.parentVi = false;
+                $scope.warm="目前没有客户";
+            }
+        }
+        );}
     };
     getcustomerList();
+    $scope.more=getcustomerList;
 //隐藏显示元素
     $scope.visible = false;
     $scope.toggle = function (id) {
