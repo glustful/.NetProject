@@ -10,4 +10,5 @@ app.controller('personal_userController',['$scope','$http','AuthService',functio
     $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true}).success(function(data){
      $scope.user=data
     });
+
 }])

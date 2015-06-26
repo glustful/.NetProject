@@ -5,7 +5,7 @@
  */
 var httpimguri='';
 var app = angular.module("zergApp");
-app.controller('personsettingController',['$scope','$http','AuthService',function($scope,$http,AuthService){
+app.controller('personsettingController',['$scope','$http','$state','AuthService',function($scope,$http,$state,AuthService){
     $scope.olduser={
         Brokername:'',
         Realname:'',
@@ -21,7 +21,7 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
     $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
        .success(function(response) {
             $scope.olduser=response;
-            console.log(response);
+
             //添加判断,如果用户没有头像,隐藏IMG标签
             if($scope.olduser.Headphoto.length<15){
             	//操作IMG标签的SRC为空
@@ -58,7 +58,8 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
             .success(function(data) {
             	var img = document.getElementById('imghead');
             	img.src = $scope.olduser.Headphoto;
-            	location.reload([true]);
+                $state.go('app.personal');
+            	//location.reload([true]);
             });
     }
 }])
