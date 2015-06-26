@@ -10,6 +10,7 @@ using Event.Service.Crowd;
 using Event.Service.Discount;
 using Event.Service.Follower;
 using Event.Service.PartImage;
+using Event.Service.Phone;
 using Zerg.Common;
 
 namespace Zerg.Event.API.Crowd
@@ -23,12 +24,14 @@ namespace Zerg.Event.API.Crowd
         private readonly IPartImageService _partImageService;
         private readonly IDiscountService _discountService;
         private readonly IFollowerService _followerService;
-        public CrowdApiController(ICrowdService crowdService, IPartImageService partImageService, IDiscountService discountService, IFollowerService followerService)
+        private readonly IPhoneService _phoneService;
+        public CrowdApiController(ICrowdService crowdService, IPartImageService partImageService, IDiscountService discountService, IFollowerService followerService,IPhoneService phoneService)
         {
             _discountService = discountService;
             _crowdService = crowdService;
             _partImageService = partImageService;
             _followerService = followerService;
+            _phoneService = phoneService;
         }
         #region 项目信息
         /// <summary>
@@ -210,7 +213,12 @@ namespace Zerg.Event.API.Crowd
 
         #endregion
         #region 参加活动
-
+        /// <summary>
+        /// 添加参与人活动
+        /// </summary>
+        /// <param name="followerModel">参与人的信息</param>
+        /// <returns></returns>
+        [HttpPost]
         public HttpResponseMessage AddFollower(FollowerModel followerModel)
         {
             if (followerModel!=null)
@@ -230,18 +238,24 @@ namespace Zerg.Event.API.Crowd
                     Remark = followerModel.Remark,
                     Groupid = followerModel.Groupid,
                     Adduser = followerModel.Adduser,
-                    Addtime = followerModel.Addtime
+                    Addtime = DateTime.Now,
+                    Upuser = followerModel.Upuser,
+                    Uptime = DateTime.Now
                 };
-                //var phoneentity = new  PhoneModel
-                //{
-                    
-                //}
+                var phoneentity = new PhoneEntity
+                {
+                    Follower = _followerService.Create(followerentity),
+                    Openid = followerModel.Openid,
+                    Phone = followerModel.Phone,
+                    Adduser = followerModel.Adduser,
+                    Addtime = DateTime.Now,
+                    Upuser = followerModel.Upuser,
+                    Uptime = DateTime.Now
+                };
                 try
                 {
-                    if (_followerService.Create(followerentity) != null)
-                    {
-                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
-                    }
+                    _phoneService.Create(phoneentity);
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
                 }
                 catch
                 {

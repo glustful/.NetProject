@@ -114,7 +114,7 @@ namespace Event.Models
         /// <summary>
         /// 参加抽奖用户
         /// </summary>
-        public int FollowerId { get; set; }
+        //public int FollowerId { get; set; }
         /// <summary>
         /// 参加抽奖用户手机
         /// </summary>
