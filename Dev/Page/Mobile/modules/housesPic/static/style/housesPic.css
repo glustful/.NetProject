@@ -23,10 +23,15 @@
     border-bottom:1px solid #ebebeb;
 }
 .content-housesPic .price{
+    /*background-color: #fff;*/
+    /*padding-left: 30px;*/
+    /*border-bottom: 1px solid #ebebeb;*/
+    /*padding-bottom: 20px;*/
     background-color: #fff;
     padding-left: 30px;
     border-bottom: 1px solid #ebebeb;
     padding-bottom: 20px;
+    margin-top: 20px;
 }
 .content-housesPic .price .qi{
     font-size: 1.5em;
