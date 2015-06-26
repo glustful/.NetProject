@@ -289,7 +289,10 @@ namespace Zerg.Controllers.CRM
                 HouseType = model.ClientInfo.Housetype,
                 Houses = model.ClientInfo.Houses,
                 Note = model.ClientInfo.Note,
-                Phone = model.Phone
+                BrokerPhone = model.Phone,
+                Phone = model.ClientInfo.Phone,
+                Projectname = model.Projectname
+               
             };
 
             return PageHelper.toJson(newModel);
