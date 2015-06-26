@@ -11,28 +11,36 @@ using YooPoon.Core.Site;
 using YooPoon.WebFramework.API;
 using Zerg.Common;
 using Zerg.Models;
+using System.ComponentModel;
 
 namespace Zerg.Controllers.CMS
 {
     [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    [Description("Tag管理类")]
     public class TagController : ApiController
     {
         private readonly ITagService _tagService;
         private readonly IWorkContext _workContext;
+        /// <summary>
+        /// Tag管理初始化
+        /// </summary>
+        /// <param name="tagService">tagService</param>
+        /// <param name="workcontext">workcontext</param>
         public TagController(ITagService tagService,IWorkContext workcontext)
         {
             _tagService = tagService;
             _workContext = workcontext; 
         }
         /// <summary>
-        /// 首页
+        /// Tag首页,根据页面数量设置,返回Tag列表
         /// </summary>
         /// <param name="tag">标签名称</param>
         /// <param name="page">页码</param>
         /// <param name="pageSize">页面记录数</param>
         /// <returns></returns>   
         [HttpGet]
+        [Description("Tag管理首页,返回Tag列表")]
         
         public HttpResponseMessage Index(string tag = null,int page=1,int pageSize=10)
         {

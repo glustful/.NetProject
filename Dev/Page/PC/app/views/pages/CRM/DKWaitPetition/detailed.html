@@ -1,0 +1,63 @@
+<div class="panel panel-card ng-scope">
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>经纪人名：{{detail.Brokername}}</td>
+            <td>等级：{{detail.Brokerlevel}}</td>
+
+        </tr>
+        <tr>
+            <td>昵称：{{detail.NickName}}</td>
+            <td>电话：{{detail.BrokerPhone}}</td>
+
+        </tr>
+        <tr>
+            <td>性别：{{detail.Sex}}</td>
+            <td>注册时间：{{detail.RegTime}}</td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="panel panel-card ng-scope">
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>客户姓名：{{detail.Clientname}}</td>
+            <td>意向户型：{{detail.HouseType}}</td>
+
+        </tr>
+        <tr>
+            <td>电话：{{detail.Phone}}</td>
+            <td>备注信息：{{detail.Note}}</td>
+
+        </tr>
+        <tr>
+            <td>楼盘信息：{{detail.Houses}}</td>
+            <td></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="panel panel-card ng-scope">
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>项目名称：{{detail.Projectname}}</td>
+            <td>所属行业：{{detail.Projectname}}</td>
+
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+<div style="text-align: center;" access="secretary">
+    <a href="#"> <button type="submit" md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" ng-click="UpdateLeadClient('洽谈中')">确认到达<div class="md-ripple-container"></div></button></a>
+    <a href="#"> <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink" ng-click="UpdateLeadClient('客人未到')">客人未到<div class="md-ripple-container"></div></button></a>
+</div>

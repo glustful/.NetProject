@@ -12,8 +12,17 @@ app.controller('SecuritySettingController',function($scope,$http,$state){
     //提交密码修改信息
     $scope.saveInfo=function(){
         $http.post(SETTING.ApiUrl+'/User/ChangePassword',$scope.password,{'withCredentials':true}).success(function(data){
-                $scope.changeError=data.Msg;
-                $state.go('app.setting')
+
+                console.log(data);
+
+               if(data.Status==false){
+                   $scope.changeError=data.Msg;
+               }
+            else{
+                   $state.go('app.setting')
+               }
+
+
         })
     }
     //获取验证码
@@ -21,12 +30,12 @@ app.controller('SecuritySettingController',function($scope,$http,$state){
     $scope.pwSms=function(){
         settime();
         $http.post(SETTING.ApiUrl+'/SMS/SendSmsForbroker','1',{'withCredentials':true}).success(function(data){
-            alert(data);
+
             if (data.Message=="1")
             {
                 $scope.password.Hidm=data.Desstr;
             }else{
-                alert("短信发送失败，请与客户联系！");
+                $scope.changeError="短信发送失败，请与客户联系！";
             }
         })
     }
@@ -71,3 +80,16 @@ function settime(obj) {
             settime(obj) }
         ,1000)
 }
+
+//注销
+app.controller('loginOutController',['$scope','$http','$state',function($scope,$http,$state){
+
+    $scope.loginOut=function(){
+        $http.post(SETTING.ApiUrl+'/User/Logout',{'withCredentials':true}).success(function(data){
+            console.log(data);
+            if(data.Status==true){
+                $state.go('app.home')
+            }
+        })
+    }
+}])

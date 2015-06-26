@@ -12,19 +12,29 @@ using Trading.Service.Area;
 using Zerg.Common;
 using Zerg.Models.Trading.Area;
 using Zerg.Models.Trading.Product;
+using System.ComponentModel;
 
 namespace Zerg.Controllers.Trading.Area
 {
     [AllowAnonymous]
-    [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-     public class AreaController : ApiController
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    [Description("区域字典管理类（包括设置商品所在地）")]
+    public class AreaController : ApiController
     {
         private readonly IAreaService _areaService;
-
+        /// <summary>
+        /// 区域字典初始化
+        /// </summary>
+        /// <param name="areaService"></param>
         public AreaController(IAreaService areaService)
         {
             _areaService = areaService;
         }
+        /// <summary>
+        /// 获取所有的区域分类
+        /// </summary>
+        /// <returns>区域分类</returns>
+        [Description("获取所有的区域分类")]
         public HttpResponseMessage GetAllClassify()
         {
             AreaSearchCondition csc = new AreaSearchCondition()
@@ -33,6 +43,11 @@ namespace Zerg.Controllers.Trading.Area
             };
             return PageHelper.toJson(GetAllTree().ToList());
         }
+        /// <summary>
+        /// 获取区域树
+        /// </summary>
+        /// <returns>返回区域列表</returns>
+        [Description("获取区域列表")]
         public List<TreeJsonModel> GetAllTree()
         {
             AreaSearchCondition csc = new AreaSearchCondition()
@@ -41,10 +56,10 @@ namespace Zerg.Controllers.Trading.Area
             };
             List<AreaEntity> ceListBuffer = new List<AreaEntity>();
             List<TreeJsonModel> treeJsonModelBuffer = new List<TreeJsonModel>();
-            List<AreaEntity> ceList =_areaService.GetAreaByCondition(csc).ToList();
+            List<AreaEntity> ceList = _areaService.GetAreaByCondition(csc).ToList();
             foreach (var ce in ceList)
             {
-                if (ce.ParentId==0)
+                if (ce.ParentId == 0)
                 {
                     ceListBuffer.Add(ce);//查找第一级；
                 }
@@ -61,6 +76,12 @@ namespace Zerg.Controllers.Trading.Area
             }
             return treeJsonModelBuffer;
         }
+        /// <summary>
+        /// 从区域树上获取节点列表
+        /// </summary>
+        /// <param name="nodeId">节点ID</param>
+        /// <returns>节点列表</returns>
+        [Description("获取区域树节点列表")]
         public List<TreeJsonModel> GetJsonFromTreeModel(int nodeId)
         {
             AreaSearchCondition csc = new AreaSearchCondition()
@@ -95,7 +116,7 @@ namespace Zerg.Controllers.Trading.Area
             public List<TreeJsonModel> children { set; get; }
             public int Id { set; get; }
         }
-       
+
         //public HttpResponseMessage GetArea(int parentId=0)
         //{
         //    var areaCon = new AreaSearchCondition
@@ -109,7 +130,13 @@ namespace Zerg.Controllers.Trading.Area
         //    }).ToList();
         //    return PageHelper.toJson(areaList);
         //}
-          [HttpPost]
+        /// <summary>
+        /// 传入区域参数，添加区域，返回添加结果状态信息
+        /// </summary>
+        /// <param name="model">区域参数</param>
+        /// <returns>添加区域结果状态信息</returns>
+        [Description("添加区域")]
+        [HttpPost]
         public HttpResponseMessage AddArea([FromBody]AreaModel model)
         {
             Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
@@ -131,7 +158,7 @@ namespace Zerg.Controllers.Trading.Area
                 AreaEntity ce = new AreaEntity()
                 {
                     AreaName = model.AreaName,
-                    Level = Level,               
+                    Level = Level,
                     ParentId = parentId
                 };
                 try
@@ -146,17 +173,24 @@ namespace Zerg.Controllers.Trading.Area
                 }
             }
         }
+
+        /// <summary>
+        /// 传入区域id，删除区域，返回删除结果状态信息
+        /// </summary>
+        /// <param name="id">区域id</param>
+        /// <returns>删除区域信息结果状态信息</returns>
+        [Description("删除区域")]
         [HttpGet]
         public HttpResponseMessage Delete(int id)
         {
             var area = _areaService.GetAreaById(id);
             var SubArea = _areaService.GetBySuperArea(area.Id);
-            if (SubArea.Count() ==0)
+            if (SubArea.Count() == 0)
             {
                 _areaService.Delete(area);
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功！"));
             }
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "存在关联不能删除！"));           
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "存在关联不能删除！"));
         }
     }
 }

@@ -29,14 +29,13 @@ namespace Zerg.Controllers.CRM
 
 
         #region 短信配置 黄秀宇 2015.04.29
-
         /// <summary>
-        /// 查询短信配置
+        /// 查询短信配置，返回短息配置信息
         /// </summary>
         /// <param name="Page">页码</param>
         /// <param name="PageCount">每页大小</param>
         /// <param name="isDescending">是否降序</param>
-        /// <returns></returns>
+        /// <returns>短信配置信息</returns>
         [HttpGet]
         public HttpResponseMessage SearchMessageConfig(int page = 1, int pageSize = 10)
         {
@@ -55,10 +54,10 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 获取一条配置信息
+        /// 传入短信id，获取一条配置信息，返回配置信息
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">短信id</param>
+        /// <returns>配置信息</returns>
         [HttpGet]
         public HttpResponseMessage GetMessageConfig(string id)
         {
@@ -67,10 +66,10 @@ namespace Zerg.Controllers.CRM
 
 
         /// <summary>
-        /// 添加短信配置模板
+        /// 传入短信配置模板参数，添加短信配置模板，返回添加结果状态信息
         /// </summary>
-        /// <param name="Name">模板名称</param>
-        /// <param name="Template">配置模板</param>
+        /// <param name="messageConfigModel">短信配置模板参数</param>
+        /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage AddMessageConfig(CreateMessageConfigModel messageConfigModel)
         {
@@ -99,12 +98,12 @@ namespace Zerg.Controllers.CRM
 
 
         }
-      
+
         /// <summary>
-        /// 删除短信配置
+        /// 传入短信配置id，删除短信配置，返回删除结果状态信息
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">短信配置ID</param>
+        /// <returns>删除短信配置结果状态信息</returns>
         [System.Web.Http.HttpGet]
         public HttpResponseMessage DeleteMessageConfig(string  Id)
         {
@@ -123,12 +122,12 @@ namespace Zerg.Controllers.CRM
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
 
         }
-     
+
         /// <summary>
-        /// 更新短信配置模板
+        /// 传入短信配置模板参数，更新短信配置模板，返回短信配置模板参数更新结果状态信息。
         /// </summary>
-        /// <param name="Name">模板名称</param>
-        /// <param name="Template">配置模板</param>
+        /// <param name="messageConfigModel">短信配置模板参数</param>
+        /// <returns>短信配置模板参数更新结果状态信息</returns>
         [System.Web.Http.HttpPost]
         public HttpResponseMessage UpdateMessageConfig(MessageConfigModel messageConfigModel)
         {
@@ -183,7 +182,7 @@ namespace Zerg.Controllers.CRM
                // ListItem listitem = new ListItem(Enum.GetName(enumType, i), i.ToString());
                 list.Add(Enum.GetName(enumType, i));
             }
-
+            list.Add("  ");
             return list;
         } 
 

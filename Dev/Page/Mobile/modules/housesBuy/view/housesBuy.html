@@ -6,16 +6,16 @@
                 <a href="#">
                     <img src="http://img.yoopoon.com/{{brand.Parameters['图片banner']}}"  width="640" height="290"/>
 
-                    <!--<div class="summary cf"><span class="zt fl">中天&nbsp;·&nbsp;水云间<br/><small>270-643m²,一环曲靖一中学位房，均价7000元/m²起</small></span><span class="lp fl">楼盘<br/>详情</span></div>-->
-                    <!--<div class="summaryBg"></div>-->
+                    <div class="summary cf"><span class="zt fl">{{brand.Bname}}<br/><small>{{brand.SubTitle}} </small></span><span class="lp fr">楼盘<br/>详情</span></div>
+                    <div class="summaryBg"> </div>
                 </a>
             </div>
-            <div class="di">{{tent.Content}}<a href="#">
+            <div class="di">{{tent.Content}}<a href="tel:{{brand.Parameters['来电咨询']}}">
                 <button>咨询热线</button></a></div>
             <div class="brokerbar"  access="broker">
                 <a href="#/app/nominate">我要带客</a>
                 <a href="#/app/nominate">我要推荐</a>
-               <span > <a href="#">咨询热线</a></span>
+               <span > <a href="tel:{{brand.Parameters['来电咨询']}}">咨询热线</a></span>
             </div>
             <!--<div class="type">-->
 
@@ -81,13 +81,15 @@
 
                     <!--</div>-->
                     <li class="fl" ng-repeat="item in ProductList">
+                        <a href="#/app/housesPic?BrandId={{item.Id}}">
                         <div class="inside">
                             <p class="housesType">{{item.Productname}}</p>
                             <p>{{item.SubTitle}}</p>
                             <span class="average">均价{{item.Price}}元/m²起</span>
                             <div><img src="http://img.yoopoon.com/{{item.Productimg}}" alt="户型图" width="231" height="188"></div>
                         </div>
-                        <span class="ask">咨询热线</span>
+                        <a href="tel:{{item.Phone}}"><span class="ask">咨询热线</span></a>
+                        </a>
                     </li>
                 </ul>
 

@@ -142,3 +142,10 @@
 .content-houses .type-houses .HXT{
     padding-left: 25px;
 }
+
+/*瀑布流布局样式*/
+.content-housesBuy #lxf-box { position: relative; width: 640px;}
+.content-housesBuy #lxf-box li { width: 200px; position: absolute; background: #fff; border: solid 1px #ccc; text-align: center; padding: 10px; left: 0px; top: 0; }
+
+.content-housesBuy .listbox img { width: 200px; height: auto; display: block; border: 0 }
+.content-housesBuy .listbox li { -webkit-transition: all .7s ease-out .1s; -moz-transition: all .7s ease-out; -o-transition: all .7s ease-out .1s; transition: all .7s ease-out .1s }

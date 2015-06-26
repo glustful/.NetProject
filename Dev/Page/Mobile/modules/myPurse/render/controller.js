@@ -4,8 +4,8 @@
  */
 app.controller('myPurseController',['$http','$scope','AuthService','$state',function($http,$scope,AuthService,$state) {
     $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
-    alert(  $scope.currentuser);
-    $http.get(SETTING.ApiUrl+'/BankCard/SearchAllBankByUser').success(function(response) {
+    //alert(  $scope.currentuser);
+    $http.get(SETTING.ApiUrl+'/BankCard/SearchAllBankByUser',{'withCredentials': true}).success(function(response) {
         $scope.List = response.List;
         $scope.AmountMoney=response.AmountMoney;
     });
@@ -21,7 +21,7 @@ app.controller('withdrawalsController',['$http','$scope','$state',function($http
         MobileYzm:'',
         Hidm:''
     }
-    $http.get(SETTING.ApiUrl+'/BankCard/SearchAllBankByUserToSelect').success(function(response) {
+    $http.get(SETTING.ApiUrl+'/BankCard/SearchAllBankByUserToSelect',{'withCredentials': true}).success(function(response) {
         $scope.BankList = response.List;
         $scope.AmountMoney=response.AmountMoney;
     });

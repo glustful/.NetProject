@@ -169,8 +169,9 @@
                                  <select onChange="change(this.value)" class="input-large" type="text" ng-model="brandParameterName" id="brandParameterName" placeholder="" style="width: 163px; height: 26px">
                                     <option value="最高优惠">最高优惠</option>
                                     <option value="来电咨询">来电咨询</option>
+                                    <option value="占地面积">占地面积</option>
+                                    <option value="所属城市">所属城市</option>
                                     <option value="图片banner">图片banner</option>
-
 
                                 </select>
 
@@ -178,6 +179,14 @@
                                 <label >优惠金额</label>
                                 <input class="input-large" type="number" ng-model="brandParameterValue"  placeholder="" value="">
                             </div>
+                                    <div id="占地面积" class="form-group" style="display: none ">
+                                        <label >面积大小</label>
+                                        <input class="input-large" type="text" ng-model="brandParameterValue"  placeholder="" value="">
+                                    </div>
+                                    <div id="所属城市" class="form-group"  style="display: none ">
+                                        <label >城市名称</label>
+                                        <input class="input-large" type="text" ng-model="brandParameterValue"  placeholder="" value="">
+                                    </div>
 
                             <div id="来电咨询" class="form-group" style="text-align:center;display: none">
                                 <label >联系电话</label>
