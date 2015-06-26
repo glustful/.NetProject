@@ -34,8 +34,8 @@ angular.module("app").controller('SuccessListController', [
 //带客洽谈成功列表
 ///////CHEN///////////////////////////////////////////////////////////////////////////////////////////////////////
 angular.module("app").controller('DKSuccessController',[
-    'http','$scope',function($http,$scope){
-        $scope.searchDKConditon = {
+    '$http','$scope',function($http,$scope){
+        $scope.searchDKCondition = {
             status:"洽谈成功",
             BrokerName:"",
             page:1,
@@ -44,16 +44,15 @@ angular.module("app").controller('DKSuccessController',[
 
         var getTagList = function(){
             $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
-               params:$scope.searchDKCondition,
-                'withCredentials':true
+               params:$scope.searchDKCondition
             }).success(function(data){
                 $scope.BrokerDKlist = data.list1;
                 if(data.list1 == ""){
                     $scope.errorTip="当前不存在洽谈成功业务";
                 }
-                $scope.searchCondition.page=data.condition1.Page;
-                $scope.searchCondition.PageCount=data.condition1.PageCount;
-                $scope.searchCondition.totalCount=data.totalCont1;
+                $scope.searchDKCondition.page=data.condition1.Page;
+                $scope.searchDKCondition.PageCount=data.condition1.PageCount;
+                $scope.totalCount=data.totalCont1;
                 console.log($scope.Brokerlist);
             });
         };

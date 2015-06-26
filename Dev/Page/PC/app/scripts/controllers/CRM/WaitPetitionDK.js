@@ -69,6 +69,7 @@ angular.module("app").controller('WPDetialController',[
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
+
                     console.log(data.Msg);
                 }else{
                     console.log(data.Msg);

@@ -2,7 +2,7 @@
  *
  */
 
-//´ø¿ÍÁÐ±í
+//ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
 angular.module("app").controller('DKTalkingList', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
@@ -12,7 +12,7 @@ angular.module("app").controller('DKTalkingList', [
             pageSize: 10
         };
 
-        ////////////////////////´ø¿ÍÇ¢Ì¸ÁÐ±í////////////////////////////////////
+        ////////////////////////ï¿½ï¿½ï¿½Ç¢Ì¸ï¿½Ð±ï¿½////////////////////////////////////
         var  getTagList1 =  function(){
             $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
                 params:$scope.searchCondition,
@@ -20,7 +20,7 @@ angular.module("app").controller('DKTalkingList', [
             }).success(function(data){
                 $scope.Brokerlist = data.list1;
                 if(data.list1 == ""){
-                    $scope.errorTip = "µ±Ç°Ã»ÓÐÇ¢Ì¸ÖÐµÄÒµÎñ";
+                    $scope.errorTip = "ï¿½ï¿½Ç°Ã»ï¿½ï¿½Ç¢Ì¸ï¿½Ðµï¿½Òµï¿½ï¿½";
                 }
                 $scope.searchCondition.page=data.condition1.Page;
                 $scope.searchCondition.PageCount=data.condition1.PageCount;
@@ -33,10 +33,10 @@ angular.module("app").controller('DKTalkingList', [
     }
 ]);
 
-//ÏêÏ¸ÐÅÏ¢
+//ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢
 angular.module("app").controller('DKTaklDetial',[
     '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
-        //»ñÈ¡ÏêÏ¸ÐÅÏ¢
+        //ï¿½ï¿½È¡ï¿½ï¿½Ï¸ï¿½ï¿½Ï¢
         $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/' + $stateParams.id,{
             'withCredentials':true
         }).success(function (data) {
@@ -48,8 +48,8 @@ angular.module("app").controller('DKTaklDetial',[
             Status:""
         };
 
-        //±ä¸üÓÃ»§×´Ì¬
-        $scope.passAudit1=function(enum1){
+        //ï¿½ï¿½ï¿½ï¿½Ã»ï¿½×´Ì¬
+        $scope.UpdateLeadClient=function(enum1){
             $scope.PassAudit.Id= $scope.ARDetialModel.Id;
             $scope.PassAudit.Status=enum1;
 
