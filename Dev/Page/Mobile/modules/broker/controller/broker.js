@@ -48,7 +48,8 @@ app.controller('BrokerTopThreeController',['$scope','$http','AuthService','$stat
         }
 
         else if (coun === 0) {//一般用户
-            $state.go("app.person_setting");//调到设置页面
+
+            $state.go("app.personal_user");//调到设置页面
         }
         else if (coun === 2) {//未登录
             $state.go("user.login");//调到登录页面
