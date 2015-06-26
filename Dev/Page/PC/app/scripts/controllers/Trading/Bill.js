@@ -3,10 +3,20 @@
  */
 angular.module("app").controller('billController', [
     '$http', '$scope', function ($http, $scope) {
-        //默认初始化推荐订单；
-        $http.get(SETTING.ApiUrl + '/bill/GetAdminBill').success(function (data) {
-            $scope.rowCollectionBasic = data;
-        });
+        $scope.CFBill = {
+            page: 1,
+            pageSize: 10
+        }
+        var getBillList = function () {
+            $http.get(SETTING.ApiUrl + '/bill/GetAdminBill',{params:$scope.CFBill}).success(function (data) {
+                $scope.rowCollectionBasic = data.AdminBill;
+                $scope.CFBill.page = data.Condition.Page;
+                $scope.CFBill.pageSize = data.Condition.PageCount;
+                $scope.totalCount = data.BillCount;
+            });
+        }
+            $scope.getList = getBillList;
+            getBillList();
 
 //        var vm = $scope.vm = {};
 //        vm.optionsData = [
@@ -39,7 +49,6 @@ angular.module("app").controller('billController', [
 //                });
 //            }
 //        };
-
     }
 ]);
 angular.module("app").controller('createBillController', [

@@ -1,0 +1,62 @@
+<div class="panel panel-card ng-scope">
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>经纪人名：{{BrokerLeadClientDtail.Brokername}}</td>
+            <td>等级：{{BrokerLeadClientDtail.Brokerlevel}}</td>
+
+        </tr>
+        <tr>
+            <td>昵称：{{BrokerLeadClientDtail.NickName}}</td>
+            <td>电话：{{BrokerLeadClientDtail.Phone}}</td>
+
+        </tr>
+        <tr>
+            <td>性别：{{BrokerLeadClientDtail.Sex}}</td>
+            <td>注册时间：{{BrokerLeadClientDtail.RegTime}}</td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="panel panel-card ng-scope">
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>客户姓名：{{BrokerLeadClientDtail.Clientname}}</td>
+            <td>意向户型：{{BrokerLeadClientDtail.HouseType}}</td>
+
+        </tr>
+        <tr>
+            <td>电话：{{BrokerLeadClientDtail.Phone}}</td>
+            <td>备注信息：{{BrokerLeadClientDtail.Note}</td>
+
+        </tr>
+        <tr>
+            <td>楼盘信息：{{BrokerLeadClientDtail.Houses}}</td>
+            <td></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="panel panel-card ng-scope">
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <td>项目名称：{{BrokerLeadClientDtail.Projectname}}</td>
+            <td>所属行业</td>
+
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<div style="text-align: center;">
+    <a href="#/page/CRM/success/BRECPay?id={{BrokerLeadClientDtail.Id}}" access="accountant"> <button type="submit" md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" ng-click="">进入打款流程<div class="md-ripple-container"></div></button></a>
+    <a href="#"> <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink" ng-click="history.back()">返回<div class="md-ripple-container"></div></button></a>
+</div>

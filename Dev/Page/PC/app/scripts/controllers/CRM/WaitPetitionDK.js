@@ -3,7 +3,7 @@
  */
 
 
-//ÉÏ·ÃÁĞ±í
+//ä¸Šè®¿åˆ—è¡¨
 angular.module("app").controller('WaitVistController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
@@ -12,7 +12,7 @@ angular.module("app").controller('WaitVistController', [
             page: 1,
             pageSize: 10
         };
-        /////////////////////»ñÈ¡´ø¿Í´ıÉÏ·Ã¼ÇÂ¼/////////////////////
+        /////////////////////è·å–å¸¦å®¢å¾…ä¸Šè®¿è®°å½•/////////////////////
         var getDKpetition = function(){
             $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
                 params:$scope.searchCondition,
@@ -20,7 +20,7 @@ angular.module("app").controller('WaitVistController', [
             }).success(function(data){
                 $scope.DKBrokerlist = data.list1;
                 if (data.list1 == ""){
-                    $scope.errorTip = "µ±Ç°Ã»ÓĞ´ıÉÏ·Â¼ÇÂ¼"
+                    $scope.errorTip = "å½“å‰æ²¡æœ‰å¾…ä¸Šä»¿è®°å½•"
                 }
                 $scope.searchCondition.page=data.condition1.Page;
                 $scope.searchCondition.PageCount=data.condition1.PageCount;
@@ -34,17 +34,17 @@ angular.module("app").controller('WaitVistController', [
 ]);
 
 
-//ÏêÏ¸ĞÅÏ¢
+//è¯¦ç»†ä¿¡æ¯
 angular.module("app").controller('WPDetialController',[
     '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
-        //»ñÈ¡ÏêÏ¸ĞÅÏ¢
+        //è·å–è¯¦ç»†ä¿¡æ¯
         $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/' + $stateParams.id,{
             'withCredentials':true
         }).success(function (data) {
             $scope.detail = data;
         });
 
-        //////////////////////»ñÈ¡´ıÉÏ·Ã´ø¿ÍÏêÏ¸ĞÅÏ¢////////////////////////////////
+        //////////////////////è·å–å¾…ä¸Šè®¿å¸¦å®¢è¯¦ç»†ä¿¡æ¯////////////////////////////////
         //$http.get(SETTING.ApiUrl + 'BrokerLeadClient/GetBlDetail' + $stateParams.id,{
         //    'withCredentials':true
         //}).success(function(data){
@@ -60,7 +60,7 @@ angular.module("app").controller('WPDetialController',[
         };
 
 
-        //±ä¸üÓÃ»§×´Ì¬
+        //å˜æ›´ç”¨æˆ·çŠ¶æ€
         $scope.passAudit1=function(enum1){
             $scope.PassAudit.Id= $scope.ARDetialModel.Id;
             $scope.PassAudit.Status=enum1;
