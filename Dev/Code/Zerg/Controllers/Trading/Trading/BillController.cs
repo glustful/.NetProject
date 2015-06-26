@@ -246,10 +246,12 @@ namespace Zerg.Controllers.Trading.Trading
         [Description("查询账单")]
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage GetAdminBill()
+        public HttpResponseMessage GetAdminBill(int page,int pageSize)
         {
             CFBBillSearchCondition CFBSC = new CFBBillSearchCondition()
             {
+                Page = page,
+                PageCount = pageSize,
                 OrderBy = EnumCFBBillSearchOrderBy.OrderById
             };
             var adminBill = _CFBBillService.GetCFBBillsByCondition(CFBSC).Select(p => new
@@ -262,7 +264,8 @@ namespace Zerg.Controllers.Trading.Trading
                 p.Remark,
                 p.Checkoutdate
             }).ToList();
-            return PageHelper.toJson(adminBill);
+            var billCount = _CFBBillService.GetCFBBillCount(CFBSC);
+            return PageHelper.toJson(new{AdminBill=adminBill,BillCount=billCount,Condition=CFBSC});
         }
         /// <summary>
         /// 查询所有经纪人账单；
