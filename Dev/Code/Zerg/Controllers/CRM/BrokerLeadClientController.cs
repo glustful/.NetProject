@@ -485,6 +485,7 @@ namespace Zerg.Controllers.CRM
 
                     case EnumBLeadType.洽谈中:
                         //审核通过推荐订单
+                        comOrder.Shipstatus = (int)EnumBRECCType.洽谈中;
                         comOrder.Status = (int)EnumOrderStatus.审核通过;
                         comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
                         comOrder.Upddate = DateTime.Now;
@@ -492,6 +493,7 @@ namespace Zerg.Controllers.CRM
 
                     case EnumBLeadType.客人未到:
                         //订单作废
+                        comOrder.Shipstatus = (int)EnumBRECCType.客人未到;
                         comOrder.Status = (int)EnumOrderStatus.审核失败;
                         //dealOrder.Status = (int)EnumOrderStatus.审核失败;
                         comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
@@ -500,15 +502,21 @@ namespace Zerg.Controllers.CRM
 
                     case EnumBLeadType.洽谈成功:
                         //审核通过成交订单
+                        comOrder.Shipstatus = (int)EnumBRECCType.洽谈成功;
                         comOrder.Status = (int)EnumOrderStatus.审核通过;
                         comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
                         comOrder.Upddate = DateTime.Now;
                         break;
 
-                    //case EnumBRECCType.洽谈失败:
-                    //    //成交订单作废
-                    //    //dealOrder.Status = (int)EnumOrderStatus.审核失败;
-                    //    break;
+                    case EnumBLeadType.洽谈失败:
+                        //成交订单作废
+                        comOrder.Shipstatus = (int)EnumBRECCType.洽谈失败;
+                        comOrder.Status = (int)EnumOrderStatus.审核失败;
+                        comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                        comOrder.Upddate = DateTime.Now;
+                        model.DelFlag = (int)EnumDelFlag.删除;
+                     
+                        break;
                 }
             }
             entity.Uptime = DateTime.Now;
