@@ -29,7 +29,17 @@ app.run(
                 if(next.access !== undefined){
                     if(!AuthService.IsAuthorized(next.access)){
                         event.preventDefault();
-
+                    }
+                }
+                if(next.access=="app.personal"){
+                    var accessRoles=['broker'];
+                    if(!AuthService.IsAuthorized(accessRoles)) {
+                        event.preventDefault();
+                        $state.go("app.personal_user");
+                        return;
+                    }
+                    else{
+                        $state.go("app.personal");
                     }
                 }
             });
@@ -214,6 +224,13 @@ app.run(
                 resolve:load('modules/personal/controller/personal.js'),
                 data:{title:'个人中心'}
 
+            })
+
+            .state('app.personal_user',{
+                url:'/personal_user',
+                templateUrl:'modules/personal_user/view/personal_user.html',
+                resolve:load('modules/personal_user/controller/personal_user.js'),
+                data:{title:'个人中心'}
             })
             .state('app.personalPage',{
                 url:'/personalPage',

@@ -90,7 +90,6 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
     var getcustomerList  = function() {
         $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoNumByUserId/',{'withCredentials':true}).success(function(data){
                 $scope.number = data.count;
-
         });
     };
     getcustomerList();

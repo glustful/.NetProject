@@ -140,5 +140,6 @@ a{
     font-size: 20px;
     font-family: 'microsoft yahei';
 }
-
-
+a.click:active{
+    color: black;
+}
