@@ -17,25 +17,25 @@
     color: #fff;
     font-size: 22px;
     z-index: 4;
+    width: 560px;
 }
-.pic-housesBuy .summary .zt{
-    padding:0 50px 0 0;
-}
+
 .pic-housesBuy .summary .zt small{
-    color: #929292;
+    color: #fff;
 }
-.pic-housesBuy .summary .lp{
-    padding-left: 65px;
+.pic-housesBuy .summary .span{
+    display: inline-block;
 }
 .pic-housesBuy .summaryBg{
     width: 640px;
     position: absolute;
-    z-index: 3;
-    height: auto;
+    z-index: 9;
+    height:100px;
     opacity: 0.4;
-    bottom:0.2em;
+    bottom:0;
     left:0;
     background:url("../image/housesBuy/fgx.png") no-repeat 530px 0 #000;
+    /*background-color: #fff;*/
 }
 .content-housesBuy .di{
     height: 80px;

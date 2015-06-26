@@ -18,8 +18,8 @@
             </div>
             <label  class="col-sm-2 control-label">请输入品牌标题：</label>
             <div class="col-sm-10">
-                <input name="SubTitle" id="Subtitle" type="text"  style="width: 500px"  class="form-control" required ng-model="BrandModel.SubTitle" required/>
-                <span ng-show="form.SubTitle.$error.required" style="color: red;">*</span>
+                <input name="SubTitle" id="Subtitle" type="text" maxlength="30"  style="width: 500px"  class="form-control" required ng-model="BrandModel.SubTitle" required/>
+                <span ng-show="form.SubTitle.$error.required" style="color: red;">*请输入不要超过30字符</span>
             </div>
             <label class="col-sm-2 control-label">请输入品牌内容：</label>
             <div class="col-sm-10">

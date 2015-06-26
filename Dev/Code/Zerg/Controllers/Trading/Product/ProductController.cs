@@ -202,7 +202,7 @@ namespace Zerg.Controllers.Trading.Product
                 Dealcommission = a.Dealcommission,
                 ClassifyName = a.Classify.Name,
                 Addtime = a.Addtime,
-
+                Phone=a.ContactPhone,
                 SubTitle = a.SubTitle,
                 ProductDetailed = a.ProductDetail.Productdetail,
                 StockRule = a.Stockrule,
@@ -221,6 +221,8 @@ namespace Zerg.Controllers.Trading.Product
                 b.Dealcommission,
                 b.ClassifyName,
                 b.Addtime,
+                b.Phone,
+                
 
                 b.SubTitle,
                 b.ProductDetailed,
@@ -302,6 +304,7 @@ namespace Zerg.Controllers.Trading.Product
                     SubTitle = a.SubTitle,
                     Phone = a.ContactPhone,
                     Id = a.Id,
+                    
 
 
                     //Productimg1 = a.ProductDetail.Productimg1,

@@ -1,64 +1,52 @@
-/****
+/**
  *
  */
 
-
-//上访列表
-angular.module("app").controller('WaitVistController', [
+//带客列表
+angular.module("app").controller('DKTalkingList', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
-            status:"1",
-            brokername:"",
+            status:"2",
+            Brokername:"",
             page: 1,
             pageSize: 10
         };
-        /////////////////////获取带客待上访记录/////////////////////
-        var getDKpetition = function(){
-            $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
+
+        ////////////////////////带客洽谈列表////////////////////////////////////
+        var  getTagList1 =  function(){
+            $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
                 params:$scope.searchCondition,
                 'withCredentials':true
             }).success(function(data){
-                $scope.DKBrokerlist = data.list1;
-                if (data.list1 == ""){
-                    $scope.errorTip = "当前没有待上仿记录"
+                $scope.Brokerlist1 = data.list1;
+                if(data.list1 == ""){
+                    $scope.errorTip = "当前没有洽谈中的业务";
                 }
                 $scope.searchCondition.page=data.condition1.Page;
                 $scope.searchCondition.PageCount=data.condition1.PageCount;
                 $scope.searchCondition.totalCount=data.totalCont1;
             });
         };
-        $scope.getDKList = getDKpetition;
-        getDKpetition();
-        ////////////////////////////////////////////////////////////
+        $scope.getList = getTagList1;
+        getTagList1();
+        ///////////////////////////////////////////////////////////////////////
     }
 ]);
 
-
 //详细信息
-angular.module("app").controller('WPDetialController',[
+angular.module("app").controller('DKTaklDetial',[
     '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
         //获取详细信息
         $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/' + $stateParams.id,{
             'withCredentials':true
         }).success(function (data) {
-            $scope.detail = data;
+            $scope.ARDetialModel = data;
         });
-
-        //////////////////////获取待上访带客详细信息////////////////////////////////
-        //$http.get(SETTING.ApiUrl + 'BrokerLeadClient/GetBlDetail' + $stateParams.id,{
-        //    'withCredentials':true
-        //}).success(function(data){
-        //    $scope.detail = data;
-        //});
-        ///////////////////////////////////////////////////////////////////////////
-
-
 
         $scope.PassAudit = {
             Id:"",
             Status:""
         };
-
 
         //变更用户状态
         $scope.passAudit1=function(enum1){

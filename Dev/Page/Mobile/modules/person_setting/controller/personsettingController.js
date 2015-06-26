@@ -15,6 +15,7 @@ app.controller('personsettingController',['$scope','$http','AuthService',functio
         Email:'',
         Phone:'',
         Headphoto:''
+
     };
     $scope.currentuser= AuthService.CurrentUser();
     $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})

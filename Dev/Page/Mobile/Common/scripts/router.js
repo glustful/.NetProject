@@ -29,7 +29,17 @@ app.run(
                 if(next.access !== undefined){
                     if(!AuthService.IsAuthorized(next.access)){
                         event.preventDefault();
-
+                    }
+                }
+                if(next.access=="app.personal"){
+                    var accessRoles=['broker'];
+                    if(!AuthService.IsAuthorized(accessRoles)) {
+                        event.preventDefault();
+                        $state.go("app.personal_user");
+                        return;
+                    }
+                    else{
+                        $state.go("app.personal");
                     }
                 }
             });
@@ -215,6 +225,13 @@ app.run(
                 data:{title:'个人中心'}
 
             })
+
+            .state('app.personal_user',{
+                url:'/personal_user',
+                templateUrl:'modules/personal_user/view/personal_user.html',
+                resolve:load('modules/personal_user/controller/personal_user.js'),
+                data:{title:'个人中心'}
+            })
             .state('app.personalPage',{
                 url:'/personalPage',
                 templateUrl:'modules/personalPage/view/personalPage.html'
@@ -243,8 +260,9 @@ app.run(
                 url:'/storeroom',
                 // controller:'StormRoomController',
                 templateUrl:'modules/storeroom/view/storeroom.html',
-                resolve:load('modules/storeroom/scripts/StoreRoom.js'),
-                data:{title:"房源库"}
+                data:{title:'房源库'},
+                resolve:load('modules/storeroom/scripts/StoreRoom.js')
+
             })
             .state('app.brand',{
                 url:'/brand?condition',
