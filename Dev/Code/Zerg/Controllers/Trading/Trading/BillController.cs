@@ -91,15 +91,15 @@ namespace Zerg.Controllers.Trading.Trading
             {
                 OrderEntity OE = _orderService.GetOrderById(model.orderId);
                 var Broker = _brokerService.GetBrokerById(OE.AgentId);
-                 var partnerlistsearchcon = new PartnerListSearchCondition
-                  {
-                         Brokers = _brokerService.GetBrokerByUserId(Broker.UserId),
-                         Status = EnumPartnerType.同意
-                 };
+                var partnerlistsearchcon = new PartnerListSearchCondition
+                {
+                       Brokers = _brokerService.GetBrokerByUserId(Broker.UserId),
+                       Status = EnumPartnerType.同意
+                };
                  var partner = _partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).Select(p => new BrokerModel 
                 {
-                    Id=p.Id,
-                    Brokername=p.Brokername
+                     Id=p.Id,
+                     Brokername=p.Brokername
                 }).First();
                 OrderDetailEntity ODE = OE.OrderDetail;
                 decimal CFBamount = 0, LandAgentamount = 0, Agentamount=0,Partneramount=0;
@@ -155,7 +155,7 @@ namespace Zerg.Controllers.Trading.Trading
                 //地产商账单
                 LandAgentBillEntity LABE = new LandAgentBillEntity()
                 {
-                    Actualamount = 0,
+                    Actualamount = null,
                     Amount = LandAgentamount,
                     AgentId = OE.AgentId,//经纪人Id；
                     Agentname = OE.Agentname,//经纪人名字；
@@ -252,7 +252,17 @@ namespace Zerg.Controllers.Trading.Trading
             {
                 OrderBy = EnumCFBBillSearchOrderBy.OrderById
             };
-            return PageHelper.toJson(_CFBBillService.GetCFBBillsByCondition(CFBSC).ToList());
+            var adminBill = _CFBBillService.GetCFBBillsByCondition(CFBSC).Select(p => new
+            {
+                p.Id,
+                p.Agentname,
+                p.Landagentname,
+                p.Amount,
+                p.Isinvoice,
+                p.Remark,
+                p.Checkoutdate
+            }).ToList();
+            return PageHelper.toJson(adminBill);
         }
         /// <summary>
         /// 查询所有经纪人账单；

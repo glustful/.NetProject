@@ -14,13 +14,13 @@
         </thead>
         <tbody>
         <tr ng-repeat="row in rowCollectionBasic">
-            <td align="center">{{row.Agentname }}</td>
-            <td align="center">{{row.Landagentname }}</td>
-            <td align="center">{{row.Amount }}</td>
-            <td align="center" ng-if="row.Isinvoice">有</td>
-            <td align="center" ng-if="!row.Ordertype">无</td>
-            <td align="center">{{row.Remark }}</td>
-            <td align="center">{{row.Checkoutdate }}</td>
+            <td>{{row.Agentname }}</td>
+            <td>{{row.Landagentname }}</td>
+            <td>{{row.Amount }}</td>
+            <td ng-if="row.Isinvoice==true">有</td>
+            <td ng-if="row.Isinvoice==false">无</td>
+            <td>{{row.Remark }}</td>
+            <td>{{row.Checkoutdate|dateFilter }}</td>
 
         </tr>
         </tbody>
