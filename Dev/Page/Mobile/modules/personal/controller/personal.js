@@ -54,9 +54,7 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
     $scope.warm="";
     $scope.tipp="加载更多。。。"
     //查询任务
-    var page = 1                                //读取的页数
-        , loading = false
-        ,pages=2;                      //判断是否正在读取内容的变量
+    var page = 1 ;                             //读取的页数, loading = false,pages=2;                      //判断是否正在读取内容的变量
     $scope.posts = [];//保存从服务器查来的任务，可累加
     var pushContent= function() {                    //核心是这个函数，向$scope.posts
         //添加内容
@@ -71,8 +69,13 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
                           $scope.posts.push(data.list[i]);
                       }
                       loading = false;            //告知读取结束
-                      $scope.ttcount = data.totalCount;
-
+                      if(data.totalCount>=5)
+                      {
+                          $scope.ttcount =5;
+                      }
+                      else {
+                          $scope.ttcount = data.totalCount;//获取今日任务数量
+                      }
             } else{
                       $scope.ttcount = "无";
             }});
@@ -90,7 +93,6 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
     var getcustomerList  = function() {
         $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoNumByUserId/',{'withCredentials':true}).success(function(data){
                 $scope.number = data.count;
-
         });
     };
     getcustomerList();
@@ -111,7 +113,7 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
     $scope.addTaskList = addlist;
    }
         else if (coun === 0) {//一般用户
-            $state.go("app.person_setting");//调到设置页面
+            $state.go("app.personal_user");//调到普通用户页面
         }
         else if (coun === 2) {//未登录
             $state.go("user.login");//调到登录页面

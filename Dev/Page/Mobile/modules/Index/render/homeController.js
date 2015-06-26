@@ -47,7 +47,7 @@ app.controller('homeController',['$http','$scope',function($http,$scope){
             else {
                 $scope.tipp = "没有更多了";
             }
-
+//            $scope.countbrand=data.totalCount;
 
         };
     pushContent();

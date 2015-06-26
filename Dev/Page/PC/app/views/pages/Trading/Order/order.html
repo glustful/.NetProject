@@ -25,9 +25,9 @@
         <tbody>
         <tr ng-repeat="row in rowCollectionBasic">
             <td align="center">{{row.Ordercode }}</td>
-            <td align="center" ng-if="row.Ordertype==0">推荐订单</td>
-            <td align="center" ng-if="row.Ordertype==1">成交订单</td>
-            <td align="center" ng-if="row.Ordertype=2">带客订单</td>
+            <td align="center" ng-if="row.Ordertype==1">推荐订单</td>
+            <td align="center" ng-if="row.Ordertype==2">成交订单</td>
+            <td align="center" ng-if="row.Ordertype==3">带客订单</td>
 
             <td align="center" ng-if="row.Status==0">默认</td>
             <td align="center" ng-if="row.Status==-1">审核失败</td>
