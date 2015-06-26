@@ -62,13 +62,14 @@ angular.module("app").controller('WPDetialController',[
 
         //变更用户状态
         $scope.passAudit1=function(enum1){
-            $scope.PassAudit.Id= $scope.ARDetialModel.Id;
+            $scope.PassAudit.Id= $scope.detail.Id;
             $scope.PassAudit.Status=enum1;
 
             $http.post(SETTING.ApiUrl + '/BrokerLeadClient/UpdateLeadClient',$scope.PassAudit,{
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
+
                     console.log(data.Msg);
                 }else{
                     console.log(data.Msg);
