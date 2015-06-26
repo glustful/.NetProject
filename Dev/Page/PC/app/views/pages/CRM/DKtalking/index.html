@@ -1,6 +1,6 @@
 <div class="row">
     <input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="搜索客户名" ng-model="searchCondition.Brokername" required="" tabindex="0" aria-required="true" aria-invalid="true">
-    <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo"  ng-click="getDKList()">搜索<div class="md-ripple-container"></div></button>
+    <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo"  ng-click="getList()">搜索<div class="md-ripple-container"></div></button>
 </div>
 <table class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" data-page-size="5">
     <thead>
@@ -15,13 +15,10 @@
             负责场秘
             <span class="footable-sort-indicator"></span></th>
         <th data-hide="phone,tablet" class="footable-visible footable-sortable">
-            带客人员
-            <span class="footable-sort-indicator"></span></th>
-        <th data-hide="phone,tablet" class="footable-visible footable-sortable">
             项目名称
             <span class="footable-sort-indicator"></span></th>
         <th data-hide="phone,tablet" data-name="Date Of Birth" class="footable-visible footable-sortable">
-            通过审核时间
+            到场时间
             <span class="footable-sort-indicator"></span></th>
         <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">
             操作
@@ -29,14 +26,14 @@
     </tr>
     </thead>
     <tbody>
-    <tr class="footable-even" style="display: table-row;" ng-repeat="item in DKBrokerlist">
+    <tr class="footable-even" style="display: table-row;" ng-repeat="item in Brokerlist">
         <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>{{item.Id}}</td>
         <td class="footable-visible"><a href="">{{item.Clientname}}</a></td>
-        <td class="footable-visible">{{item.Clientname}}</td>
-        <td data-value="78025368997" class="footable-visible">{{item.Waiter}}</td>
+        <td class="footable-visible">{{item.SecretaryName}}</td>
         <td class="footable-visible">{{item.Projectname}}</td>
         <td data-value="78025368997" class="footable-visible">{{item.Uptime}}</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.WaitPetition.detailed({id:item.Id})"><span class="label bg-success">查看</span></a></td>    </tr>
+        <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.talking.detailed({id:item.Id})"><span class="label bg-success" title="Active">审核</span></a></td>
+    </tr>
 
 
     <tr class="footable-odd" style="display: none;">
@@ -83,7 +80,7 @@
     </tr>
     <tr>
         <td colspan="5" class="text-center footable-visible">
-            <pagination boundary-links="true" total-items="searchCondition.totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getDKList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+            <pagination boundary-links="true" total-items="searchCondition.totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
         </td>
     </tr>
     </tfoot>

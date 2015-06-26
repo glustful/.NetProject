@@ -71,8 +71,13 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
                           $scope.posts.push(data.list[i]);
                       }
                       loading = false;            //告知读取结束
-                      $scope.ttcount = data.totalCount;
-
+                      if(data.totalCount>=5)
+                      {
+                          $scope.ttcount =5;
+                      }
+                      else {
+                          $scope.ttcount = data.totalCount;//获取今日任务数量
+                      }
             } else{
                       $scope.ttcount = "无";
             }});

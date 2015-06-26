@@ -13,6 +13,9 @@ app.controller('HousesBuyController',['$http','$scope','$stateParams',function($
 
 
     })
+
+
+
 }]);
 
 

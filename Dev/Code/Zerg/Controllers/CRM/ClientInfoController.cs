@@ -179,7 +179,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <returns>经纪人客户列表</returns>
         [Description("通过经纪人ID查询他的客户列表，返回经纪人客户列表")]
-        public HttpResponseMessage GetClientInfoListByUserId()
+        public HttpResponseMessage GetClientInfoListByUserId(int page)
         {
             var user = (UserBase)_workContext.CurrentUser;
             if (user != null)
@@ -187,7 +187,9 @@ namespace Zerg.Controllers.CRM
                 var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
                 var condition = new ClientInfoSearchCondition
                 {
-                    Addusers = broker.Id
+                    Addusers = broker.Id,
+                    Page =page ,
+                    PageCount =10
                 };
                 var list = _clientInfoService.GetClientInfosByCondition(condition).Select(p => new
                     {
@@ -198,8 +200,9 @@ namespace Zerg.Controllers.CRM
                         p.Housetype
 
                     }).ToList();
+                int totalCount = _clientInfoService.GetClientInfoCount(condition);
 
-                return PageHelper.toJson(new { list = list });
+                return PageHelper.toJson(new { list = list,totalCount });
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
 

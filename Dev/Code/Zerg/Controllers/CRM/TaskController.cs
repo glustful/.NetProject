@@ -171,8 +171,11 @@ namespace Zerg.Controllers.CRM
             };
             if (type == "today")///查找今天的任务，否则查询所有任务
             {
-                taskcondition.AddtimeBegin = DateTime.Today;
-                taskcondition.AddtimeEnd = DateTime.Today.AddDays(1);
+                //taskcondition.AddtimeBegin = DateTime.Today;
+                //taskcondition.AddtimeEnd = DateTime.Today.AddDays(1);
+                taskcondition.PageCount = 5;
+                taskcondition.Page = 1;
+                taskcondition.IsDescending = true;//降序
             }
             var taskList = _taskService.GetTasksByCondition(taskcondition).Select(p => new
             {

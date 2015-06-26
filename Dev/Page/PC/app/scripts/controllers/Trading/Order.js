@@ -7,6 +7,7 @@ angular.module("app").controller('orderController', [
         $http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=推荐订单',{'withCredentials':true}).success(function (data) {
             $scope.rowCollectionBasic = data;
         });
+
         var vm = $scope.vm = {};
         vm.optionsData = [
             {

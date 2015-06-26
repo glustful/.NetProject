@@ -29,22 +29,22 @@ angular.module("app").controller('PetitionListController', [
         $scope.getList = getTagList;
         getTagList();
         /////////////////////获取带客待上访记录/////////////////////
-        var getDKpetition = function(){
-            $http.get(SETTING.ApiUrl + 'BrokerLeadClient/GetLeadClientInfoByBrokerName',{
-                params:$scope.searchCondition,
-                'withCredentials':true
-            }).success(function(data){
-                $scope.DKBrokerlist = data.list1;
-                if (data.list1 == ""){
-                    $scope.errorTip = "当前没有待上仿记录"
-                }
-                $scope.searchCondition.page=data.condition1.Page;
-                $scope.searchCondition.PageCount=data.condition1.PageCount;
-                $scope.searchCondition.totalCount=data.totalCont1;
-            });
-        };
-        $scope.getDKList =  getDKpetition;
-        getDKpetition();
+        //var getDKpetition = function(){
+        //    $http.get(SETTING.ApiUrl+'BrokerLeadClient/GetLeadClientInfoByBrokerName',{
+        //        params:$scope.searchCondition,
+        //        'withCredentials':true
+        //    }).success(function(data){
+        //        $scope.DKBrokerlist = data.list1;
+        //        if (data.list1 == ""){
+        //            $scope.errorTip = "当前没有待上仿记录"
+        //        }
+        //        $scope.searchCondition.page=data.condition1.Page;
+        //        $scope.searchCondition.PageCount=data.condition1.PageCount;
+        //        $scope.searchCondition.totalCount=data.totalCont1;
+        //    });
+        //};
+        //$scope.getDKList = getDKpetition;
+        //getDKpetition();
         ////////////////////////////////////////////////////////////
     }
 ]);

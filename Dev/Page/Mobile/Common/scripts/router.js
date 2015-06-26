@@ -260,8 +260,9 @@ app.run(
                 url:'/storeroom',
                 // controller:'StormRoomController',
                 templateUrl:'modules/storeroom/view/storeroom.html',
-                resolve:load('modules/storeroom/scripts/StoreRoom.js'),
-                data:{title:"房源库"}
+                data:{title:'房源库'},
+                resolve:load('modules/storeroom/scripts/StoreRoom.js')
+
             })
             .state('app.brand',{
                 url:'/brand?condition',
