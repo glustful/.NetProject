@@ -202,11 +202,10 @@ namespace Zerg.Controllers.Trading.Trading.Order
         {
             OrderSearchCondition OSC = new OrderSearchCondition()
             {
-                Ordertype = type,
+                Ordertype = type,                
                 OrderBy = EnumOrderSearchOrderBy.OrderById
-            };
-            var count = _orderService.GetOrderCount(OSC);
-            var list = _orderService.GetOrdersByCondition(OSC).Select(p => new
+            };          
+            var list = _orderService.GetOrdersByCondition(OSC).Select(p => new 
             {
                 p.Ordercode,
                 p.Ordertype,
