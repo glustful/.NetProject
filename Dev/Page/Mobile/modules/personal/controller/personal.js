@@ -16,17 +16,17 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
    {
 
     $scope.searchCondition = {
-        Id:0,
-        page: 1,
-        pageSize: 10,
-        type:""
-    };
-    $scope.addcondition={
-        TaskId:0,
-        UserId:0,//用户ID
-        Taskschedule:'1',
-        Type:'add'
-    }
+       Id:0,
+       page: 1,
+       pageSize: 10,
+       type:""
+   };
+       $scope.addcondition={
+           TaskId:0,
+           UserId:0,//用户ID
+           Taskschedule:'1',
+           Type:'add'
+       }
     $scope.userBroker={
     	Name:'',
     	photo:'',
