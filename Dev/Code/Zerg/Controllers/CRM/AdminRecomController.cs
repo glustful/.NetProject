@@ -406,6 +406,7 @@ namespace Zerg.Controllers.CRM
 
                     case EnumBRECCType.洽谈中:
                         //审核通过推荐订单
+                        recOrder.Shipstatus = (int)EnumBRECCType.洽谈中;
                         recOrder.Status = (int)EnumOrderStatus.审核通过;
                         recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
                         recOrder.Upddate = DateTime.Now;
@@ -413,6 +414,7 @@ namespace Zerg.Controllers.CRM
 
                     case EnumBRECCType.客人未到:
                         //订单作废
+                        recOrder.Shipstatus = (int)EnumBRECCType.客人未到;
                         recOrder.Status = (int)EnumOrderStatus.审核失败;
                         //dealOrder.Status = (int)EnumOrderStatus.审核失败;
                         recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
@@ -421,15 +423,18 @@ namespace Zerg.Controllers.CRM
 
                     case EnumBRECCType.洽谈成功:
                         //审核通过成交订单
+                        recOrder.Shipstatus = (int)EnumBRECCType.洽谈成功;
                         recOrder.Status = (int)EnumOrderStatus.审核通过;
                         recOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
                         recOrder.Upddate = DateTime.Now;
                         break;
 
-                    //case EnumBRECCType.洽谈失败:
-                    //    //成交订单作废
-                    //    //dealOrder.Status = (int)EnumOrderStatus.审核失败;
-                    //    break;
+                    case EnumBRECCType.洽谈失败:
+                        //成交订单作废
+                        recOrder.Shipstatus = (int)EnumBRECCType.洽谈失败;
+                        model.DelFlag = EnumDelFlag.删除;
+                        //dealOrder.Status = (int)EnumOrderStatus.审核失败;
+                        break;
                 }
                 _orderService.Update(recOrder);
                 #endregion

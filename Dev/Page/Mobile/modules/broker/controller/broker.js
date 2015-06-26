@@ -26,6 +26,7 @@ app.controller('BrokerTopThreeController',['$scope','$http','AuthService','$stat
             };
             BrokerTopThree();
 
+
             //获取推荐楼房信息
             var getRecProduct = function () {
                 $http.get(SETTING.ApiUrl + '/Brand/GetOneBrand', {params: $scope.searchCondition, 'withCredentials': true}).success(function (data) {
