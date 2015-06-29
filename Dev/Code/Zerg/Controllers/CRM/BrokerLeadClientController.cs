@@ -453,6 +453,7 @@ namespace Zerg.Controllers.CRM
                     Adduser = model.Broker.ToString(),//model.Adduser.ToString(CultureInfo.InvariantCulture),
                     AgentId = model.Broker,//model.Adduser,
                     Agenttel = model.Phone,
+                    Agentname = _brokerService.GetBrokerByUserId(model.Broker).Brokername,
                     BusId = product.Bussnessid,
                     Busname = product.BussnessName,
                     Customname = model.Clientname,

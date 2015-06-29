@@ -34,8 +34,8 @@
             <td><time>{{item.Regtime}}</time></td>
             <td>
                 <a href="#/page/CRM/DK/detailed?id={{item.Id}}" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">详情</button></a>
-                <button ng-click="deleteBroker(item.Id)"ng-show="item.btnVisibleDel"  md-ink-ripple="" class="md-btn md-raised m-b btn-fw yellow">删除</button>
-                <button ng-click="cancelBroker(item.Id)"ng-show="item.btnVisibleCan" md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">注销</button>
+                <button ng-style="item.color" ng-click="deleteBroker(item.Id)"ng-disabled="item.btnVisibleDel"  md-ink-ripple="" class="md-btn md-raised m-b btn-fw yellow">删除</button>
+                <button ng-style="item.backcolor" ng-click="cancelBroker(item.Id,item.btnname)"ng-disabled="item.btnVisibleCan" md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">{{item.btnname}}</button>
             </td>
 
         </tr>
