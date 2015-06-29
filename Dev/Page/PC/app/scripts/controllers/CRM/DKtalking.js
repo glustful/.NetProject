@@ -2,7 +2,7 @@
  *
  */
 
-//����б�
+//获取洽谈中业务
 angular.module("app").controller('DKTalkingList', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
@@ -20,7 +20,7 @@ angular.module("app").controller('DKTalkingList', [
             }).success(function(data){
                 $scope.Brokerlist = data.list1;
                 if(data.list1 == ""){
-                    $scope.errorTip = "��ǰû��Ǣ̸�е�ҵ��";
+                    $scope.errorTip = "当前不存在洽谈中的业务";
                 }
                 $scope.searchCondition.page=data.condition1.Page;
                 $scope.searchCondition.PageCount=data.condition1.PageCount;
@@ -33,7 +33,7 @@ angular.module("app").controller('DKTalkingList', [
     }
 ]);
 
-//��ϸ��Ϣ
+//获取洽谈中业务详细
 angular.module("app").controller('DKTaklDetial',[
     '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
         //��ȡ��ϸ��Ϣ
