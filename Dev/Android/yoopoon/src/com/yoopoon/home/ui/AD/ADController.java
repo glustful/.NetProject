@@ -111,9 +111,9 @@ public class ADController {
 
 	private void atomicOption() {
 		atomicInteger.incrementAndGet();
-		if (atomicInteger.get() > imageViews.length - 1) {
-			atomicInteger.getAndAdd(-imageViews.length);
-		}
+		//if (atomicInteger.get() > imageViews.length - 1) {
+			//atomicInteger.getAndAdd(-imageViews.length);
+		//}
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -165,9 +165,9 @@ public class ADController {
 
 			// 初始值, 默认第0个选中
 			if (i == 0) {
-				imageViews[i].setBackgroundResource(R.drawable.point_focused);
+				imageViews[i].setBackgroundResource(R.drawable.black_point);
 			} else {
-				imageViews[i].setBackgroundResource(R.drawable.point_unfocused);
+				imageViews[i].setBackgroundResource(R.drawable.white_point);
 			}
 			// 将小圆点放入到布局中
 			group.addView(imageViews[i],lp);
@@ -202,11 +202,11 @@ public class ADController {
 			atomicInteger.getAndSet(arg0);
 			// 重新设置原点布局集合
 			for (int i = 0; i < imageViews.length; i++) {
-				imageViews[arg0]
-						.setBackgroundResource(R.drawable.point_focused);
-				if (arg0 != i) {
-					imageViews[i]
-							.setBackgroundResource(R.drawable.point_unfocused);
+				imageViews[arg0%imageViews.length]
+						.setBackgroundResource(R.drawable.black_point);
+				if (arg0%imageViews.length != i) {
+					imageViews[i%imageViews.length]
+							.setBackgroundResource(R.drawable.white_point);
 				}
 			}
 		}
@@ -227,7 +227,7 @@ public class ADController {
 		 */
 		@Override
 		public void destroyItem(View container, int position, Object object) {
-			((ViewPager) container).removeView(views.get(position));
+			((ViewPager) container).removeView(views.get(position%views.size()));
 		}
 
 		/**
@@ -235,7 +235,7 @@ public class ADController {
 		 */
 		@Override
 		public int getCount() {
-			return views.size();
+			return Integer.MAX_VALUE;
 		}
 
 		/**
@@ -243,7 +243,8 @@ public class ADController {
 		 */
 		@Override
 		public Object instantiateItem(View container, int position) {
-			ImageView imageView = (ImageView) views.get(position);
+			
+			ImageView imageView = (ImageView) views.get(position%views.size());
 			ImageLoader.getInstance().displayImage(
 					imageView.getTag().toString(), imageView,
 					MyApplication.getOptions(), new ImageLoadingListener() {
@@ -278,6 +279,9 @@ public class ADController {
 
 						}
 					});
+			if(imageView.getParent() != null){
+				((ViewGroup)imageView.getParent()).removeView(imageView);
+			}
 			((ViewPager) container).addView(imageView,new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 			
 			return imageView;

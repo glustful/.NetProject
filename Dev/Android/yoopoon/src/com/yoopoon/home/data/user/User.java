@@ -1,17 +1,24 @@
 package com.yoopoon.home.data.user;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import org.json.JSONObject;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.json.SerializerJSON;
@@ -20,89 +27,117 @@ import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
-
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class User
 {
 	
-	 public int Id ;
-     public String UserName ;
-     public String Password ;
+	 public int id ;
+	
+     public String userName ;
+     public String password ;
 
-     public boolean Remember ;
+     public boolean remember ;
 
-     public String Phone ;
-     public int Status ;
-     
-
-	public int getId() {
-		return Id;
+     public String phone ;
+     public int status ;
+     public ArrayList<Role> roles;
+     public int getId() {
+		return id;
 	}
 
 
 	public void setId(int id) {
-		Id = id;
+		this.id = id;
 	}
 
 
 	public String getUserName() {
-		return UserName;
+		return userName;
 	}
 
 
 	public void setUserName(String userName) {
-		UserName = userName;
+		this.userName = userName;
 	}
 
 
 	public String getPassword() {
-		return Password;
+		return password;
 	}
 
 
 	public void setPassword(String password) {
-		Password = password;
+		this.password = password;
 	}
 
 
 	public boolean isRemember() {
-		return Remember;
+		return remember;
 	}
 
 
 	public void setRemember(boolean remember) {
-		Remember = remember;
+		this.remember = remember;
 	}
 
 
 	public String getPhone() {
-		return Phone;
+		return phone;
 	}
 
 
 	public void setPhone(String phone) {
-		Phone = phone;
+		this.phone = phone;
 	}
 
 
 	public int getStatus() {
-		return Status;
+		return status;
 	}
 
 
 	public void setStatus(int status) {
-		Status = status;
+		this.status = status;
+	}
+
+
+	public ArrayList<Role> getRoles() {
+		return roles;
+	}
+
+
+	public void setRoles(ArrayList<Role> roles) {
+		this.roles = roles;
+	}
+
+	@JsonIgnore
+     private static User mUser;
+    
+	
+	@SuppressLint("DefaultLocale") 
+	public boolean isBroker(){
+		if(this.roles==null || this.roles.size()<1)
+			return false;
+		for(Role r:roles){
+			if(r.roleName.toLowerCase().equals("broker")){
+				return true;
+			}
+		}
+		return false;
 	}
 
 
 	public static User lastLoginUser(Context context) {
-		MyApplication.getInstance();
+		if(mUser != null)
+			return mUser;
 		SharedPreferences spf = PreferenceManager.getDefaultSharedPreferences(context);
 		String user = spf.getString("user", null);
 		if(user==null||user.equals(""))
 		return null;
 		ObjectMapper om = new ObjectMapper();
 		try {
-			return om.readValue(user, User.class);
+			mUser = om.readValue(user, User.class);
+			return mUser;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,6 +152,7 @@ public class User
 			@Override
 			public String onSerialize() {
 				ObjectMapper om = new ObjectMapper();
+				
 				try {
 					return om.writeValueAsString(User.this);
 				} catch (JsonProcessingException e) {
@@ -132,6 +168,7 @@ public class User
 					
 					return;
 				}
+				
 				requestLogin(serializeResult,listener);
 				
 			}
@@ -146,6 +183,18 @@ public class User
 			@Override
 			public void onReponse(ResponseData data) {
 				if(data.getResultState()==ResultState.eSuccess){
+					JSONObject obj = data.getJsonObject();
+					if(obj.isNull("Roles")||obj.optJSONArray("Roles").length()<1)
+					setRoles(null);
+					else{
+						ArrayList<Role> roles = new ArrayList<Role>();
+						for(int i=0;i<obj.optJSONArray("Roles").length();i++){
+							Role r = new Role();
+							r.roleName = obj.optJSONArray("Roles").optJSONObject(i).optString("RoleName");
+							roles.add(r);
+						}
+						setRoles(roles);
+					}
 					lis.success(User.this);
 				}else{
 					lis.faild(data.getMsg());

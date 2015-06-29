@@ -8,15 +8,18 @@ import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -32,6 +35,7 @@ import android.widget.TextView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.common.base.utils.Utils;
+import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.json.SerializerJSON;
 import com.yoopoon.home.data.json.SerializerJSON.SerializeListener;
@@ -39,12 +43,14 @@ import com.yoopoon.home.data.net.RequestTask;
 import com.yoopoon.home.data.storage.LocalPath;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.data.user.User.LoginListener;
+import com.yoopoon.home.ui.home.FramMainActivity_;
 
 @EActivity(R.layout.home_login_activity)
-public class HomeLoginActivity extends Activity{
+public class HomeLoginActivity extends MainActionBarActivity{
 
 	static String TAG = "HomeLoginActivity";
-	
+	@Extra
+	boolean isManual;
 	@ViewById(R.id.login_id_err)
     TextView mErrorText; 
 	@ViewById(R.id.login_id_email)
@@ -61,6 +67,8 @@ public class HomeLoginActivity extends Activity{
     ImageButton delMailButton;
     @ViewById(R.id.delPwdBtn)
     ImageButton delPassWordButton;
+    @ViewById(R.id.loginRegister)
+    Button registerButton;
  
     private Animation animErrOpen = null;
     private Animation animErrClose = null;
@@ -78,6 +86,17 @@ public class HomeLoginActivity extends Activity{
 
     @AfterViews
     void crateData(){
+    	this.titleButton.setText("用户登陆");
+    	this.titleButton.setVisibility(View.VISIBLE);
+    	this.rightButton.setVisibility(View.INVISIBLE);
+    	this.backButton.setVisibility(View.VISIBLE);
+    	this.backButton.setText("返回");
+    	SpannableString span = new SpannableString(this.registerButton.getText());
+    	
+    	ForegroundColorSpan fgcs = new ForegroundColorSpan(getResources().getColor(R.color.second_red));
+    	span.setSpan(fgcs, span.length()-2, span.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    	this.registerButton.setText(span);
+    	
     	
         mAutoCheck.setOnClickListener(new OnClickListener() {
 			
@@ -140,7 +159,8 @@ public class HomeLoginActivity extends Activity{
     
     @Click(R.id.loginRegister)
     void registerClick(View v){
-    	 
+    	 HomeRegisterActivity_.intent(mContext).start();
+    	 this.finish();
     }
     
     
@@ -177,21 +197,19 @@ public class HomeLoginActivity extends Activity{
 		auto = (auto == null) ? false :auto;
 		if(auto)
 		{
-			if(pwd != null)
-			{
+			
 				mEmailText.setText(eMail);
 				mPwdText.setText(pwd);
 				requestLogin(eMail, pwd, auto);
-			}
-			else
-			{
-				mEmailText.setText("");
-				mPwdText.setText("");
-			}
+			
 		}
 		else
 		{
 			mPwdText.setText("");
+			if(!isManual){
+			FramMainActivity_.intent(mContext).start();
+			finish();
+			}
 		}
 		mAutoCheck.setChecked(auto);
     }
@@ -276,6 +294,7 @@ public class HomeLoginActivity extends Activity{
 					
 					@Override
 					public void onComplete(String serializeResult) {
+						
 						if(serializeResult != null)
 						PreferenceManager.getDefaultSharedPreferences(mContext).edit().putString("user", serializeResult).commit();
 						
@@ -288,8 +307,13 @@ public class HomeLoginActivity extends Activity{
 			
 			@Override
 			public void faild(String msg) {
-				showError(msg);
 				mLoadingLayout.setVisibility(View.GONE);
+				if(isManual)
+				showError(msg);
+				else{
+				com.yoopoon.home.ui.home.FramMainActivity_.intent(mContext).start();
+				finish();
+				}
 			}
 		});
     }
@@ -346,6 +370,30 @@ public class HomeLoginActivity extends Activity{
 	            cookieFile.delete();
 	        }
 	        RequestTask.setmCookieStore(null);
+	}
+
+	@Override
+	public void backButtonClick(View v) {
+		finish();
+		
+	}
+
+	@Override
+	public void titleButtonClick(View v) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void rightButtonClick(View v) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Boolean showHeadView() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 	

@@ -43,22 +43,33 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme" 
+        >
         <!-- 测试配置选项 -->
         <uses-library android:name="android.test.runner"/>
         <activity
-            android:name="com.yoopoon.home.ui.home.FramMainActivity_"
+            android:name="com.yoopoon.home.ui.login.HomeLoginActivity_"
             android:label="@string/app_name" 
             android:theme="@style/ActionbarTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
-            android:name="com.yoopoon.home.ui.login.HomeLoginActivity_"
+         <activity
+            android:name="com.yoopoon.home.ui.home.FramMainActivity_"
+            android:label="@string/app_name" 
+            android:theme="@style/ActionbarTheme"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+            </activity>
+       
+         <activity 
+            android:name="com.yoopoon.home.ui.login.HomeRegisterActivity_"
             android:theme="@style/ActionbarTheme"
             android:screenOrientation="portrait"></activity>
     </application>

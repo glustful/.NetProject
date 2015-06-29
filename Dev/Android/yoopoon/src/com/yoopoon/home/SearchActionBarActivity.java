@@ -1,24 +1,26 @@
 package com.yoopoon.home;
 
+import java.util.HashMap;
+
 import org.androidannotations.annotations.EActivity;
+
+import com.yoopoon.home.SearchFunction.OnSearchCallBack;
+import com.yoopoon.home.data.net.ResponseData;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 
-@EActivity(R.layout.search_action_bar)
+@EActivity(R.layout.main_action_bar)
 public abstract class SearchActionBarActivity extends ActionBarActivity{
 
 	View headView;
 	ActionBar actionBar;
-	
+	protected HashMap<String, String> SearchParameter;
 	SearchFunction mSearchFunction;
 	
 	@SuppressLint("InflateParams")
@@ -26,9 +28,10 @@ public abstract class SearchActionBarActivity extends ActionBarActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		actionBar = getSupportActionBar();
-		
-		//headView = LayoutInflater.from(this).inflate(R.layout.main_action_title, null);
-		mSearchFunction = new SearchFunction(this, null);
+		initSearchParam();
+		mSearchFunction = new SearchFunction(this, getString(R.string.url_brand_searchBrand));
+		mSearchFunction.setParam(SearchParameter);
+		mSearchFunction.setSearchCallBack(setSearchCallBack());
 		headView = mSearchFunction.getSearchView();
 		backShow();
 	}
@@ -76,5 +79,11 @@ public abstract class SearchActionBarActivity extends ActionBarActivity{
    protected void activityYMove(){
 		
 	}
-	
+   
+   public abstract void initSearchParam();
+   public abstract OnSearchCallBack setSearchCallBack();
+   public enum CurrentState{
+	   eManual,
+	   eSearch
+   }
 }

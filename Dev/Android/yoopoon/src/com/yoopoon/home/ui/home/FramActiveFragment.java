@@ -1,9 +1,11 @@
 package com.yoopoon.home.ui.home;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.androidannotations.annotations.EFragment;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -25,11 +27,14 @@ import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.ui.AD.ADController;
 import com.yoopoon.home.ui.AD.ActiveController;
+import com.yoopoon.home.ui.active.ActiveBrandAdapter;
 
 @EFragment()
 public class FramActiveFragment extends FramSuper {
 
 	View rootView;
+	HashMap<String,String> parameter;
+	ArrayList<JSONObject> mJsonObjects;
 
 	@Override
 	@Nullable
@@ -47,6 +52,8 @@ public class FramActiveFragment extends FramSuper {
 			listView = (PullToRefreshListView) rootView
 					.findViewById(R.id.matter_list_view);
 			instance = this;
+			mJsonObjects = new ArrayList<JSONObject>();
+			initParameter();
 			mContext = getActivity();
 			mAdController = new ADController(mContext);
 			mActiveController = new ActiveController(mContext);
@@ -54,6 +61,17 @@ public class FramActiveFragment extends FramSuper {
 		}
 
 		return rootView;
+	}
+
+	private void initParameter() {
+		if(parameter == null){
+			parameter = new HashMap<String, String>();
+		}
+		parameter.clear();
+		parameter.put("page", "1");
+		parameter.put("pageSize", "6");
+		parameter.put("type", "all");
+		
 	}
 
 	static String TAG = "FramActivityFragment";
@@ -64,6 +82,7 @@ public class FramActiveFragment extends FramSuper {
 	ADController mAdController;
 	ActiveController mActiveController;
 	PullToRefreshListView listView;
+	ActiveBrandAdapter mActiveBrandAdapter;
 
 	public static FramActiveFragment getInstance() {
 		return instance;
@@ -80,11 +99,11 @@ public class FramActiveFragment extends FramSuper {
 
 		refreshView.setFastScrollEnabled(false);
 		refreshView.setFadingEdgeLength(0);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
-				android.R.layout.simple_list_item_1, new String[] { "房源列表" });
-		refreshView.setAdapter(adapter);
+		mActiveBrandAdapter = new ActiveBrandAdapter(mContext);
+		refreshView.setAdapter(mActiveBrandAdapter);
 		requestList();
 		requestActiveList();
+		requestBrandList();
 	}
 
 	class HowWillIrefresh implements
@@ -107,12 +126,7 @@ public class FramActiveFragment extends FramSuper {
 
 	}
 
-	@Override
-	public String getTitle() {
-		// TODO Auto-generated method stub
-		return "活动";
-	}
-
+	
 	void requestList() {
 		new RequestAdapter() {
 
@@ -168,5 +182,37 @@ public class FramActiveFragment extends FramSuper {
 
 				.addParam("channelName", "活动").notifyRequest();
 	}
+	
+	private void requestBrandList() {
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+
+				if (data.getResultState() == ResultState.eSuccess) {
+					
+					JSONArray list = data.getMRootData().optJSONArray("List");
+					if (list == null || list.length() < 1)
+						return;
+					for(int i=0;i<list.length();i++){
+						mJsonObjects.add(list.optJSONObject(i));
+					}
+					mActiveBrandAdapter.refresh(mJsonObjects);
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_brand_GetAllBrand))
+				.setRequestMethod(RequestMethod.eGet)
+
+				.addParam(parameter)
+				.notifyRequest();
+		
+	}
+
 
 }

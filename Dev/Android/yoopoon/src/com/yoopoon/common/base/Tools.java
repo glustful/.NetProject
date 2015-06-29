@@ -6,6 +6,9 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+
+import org.json.JSONObject;
+
 import android.os.Environment;
 
 
@@ -63,5 +66,17 @@ public class Tools {
             deleteAllFilesOfDir(files[i]);
         }
         path.delete();
+    }
+    
+    public static String optString(JSONObject obj,String key,String defaultValue){
+    	if(obj.isNull(key))
+    		return defaultValue;
+    	return obj.optString(key, defaultValue);
+    }
+    
+    public static int optInt(JSONObject obj,String key,int defaultValue){
+    	if(obj.isNull(key))
+    		return defaultValue;
+    	return obj.optInt(key, defaultValue);
     }
 }

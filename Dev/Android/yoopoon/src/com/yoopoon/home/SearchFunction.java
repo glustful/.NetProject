@@ -44,12 +44,10 @@ public class SearchFunction  {
     String url;
     View searchView;
     HashMap<String,String> paramMap;
-    int pageCount;
+    int pageCount = 1;
     protected ProgressDialog progressDialog;
     OnSearchCallBack listener;
     Button serachButton ;
-    boolean isCustom = false;
-    String customName = "";
    
     public SearchFunction(Context context,String url){
         mContext = context;
@@ -160,27 +158,17 @@ public class SearchFunction  {
     };
     //数据参数
     public void setParam(HashMap<String,String> paramMap){
-
+    	this.paramMap.clear();
     	this.paramMap.putAll(paramMap);
 
     }
     
-    public void setCustomParam(HashMap<String, String> param,String name){
-    	customName = name;
-    	isCustom = true;
-    	this.paramMap.clear();
-    	this.paramMap.putAll(param);
-    }
-
+   
 
     public  void search(){
-    	if(isCustom){
-    		paramMap.put(customName, searchText);
-    	}else{
-    		Log.d("SearchFunction", "searchText:"+searchText);
-        paramMap.put("searchText",searchText);
-    	}
-    	Log.d("SearchFunction", "param:"+paramMap+"url:"+url);
+    	
+        paramMap.put("condition",searchText);
+    	
         new RequestAdapter(){
 
             @Override
@@ -195,7 +183,7 @@ public class SearchFunction  {
                     listener.search(data);
                     }
                 pageCount ++;
-                paramMap.put("pageNo", pageCount+"");
+                paramMap.put("page", pageCount+"");
             }
 
             @Override
@@ -210,7 +198,7 @@ public class SearchFunction  {
     //分页
     public void setPageCount(int count){
         pageCount = count;
-        paramMap.put("pageNo", pageCount+"");
+        paramMap.put("page", pageCount+"");
 
     }
 

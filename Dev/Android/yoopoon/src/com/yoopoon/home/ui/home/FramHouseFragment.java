@@ -17,11 +17,6 @@ void afterInject(){
 }
 
 
-@Override
-public String getTitle() {
-	
-	return "房源库";
-}
 
 
 }

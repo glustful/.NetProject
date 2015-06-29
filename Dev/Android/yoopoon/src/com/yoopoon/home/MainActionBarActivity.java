@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-@EActivity(R.layout.main_action_title)
+@EActivity()
 public abstract class MainActionBarActivity extends ActionBarActivity{
 
 	String showBackStr = null;
@@ -21,11 +21,11 @@ public abstract class MainActionBarActivity extends ActionBarActivity{
 	View headView;
 	ActionBar actionBar;
 	
-	Button rightButton;
+	protected Button rightButton;
 	
-	Button titleButton;
+	protected Button titleButton;
 	
-	Button backButton;
+	protected Button backButton;
 
 
 	LayoutInflater inflater;
@@ -37,7 +37,7 @@ public abstract class MainActionBarActivity extends ActionBarActivity{
 		super.onCreate(savedInstanceState);
 		actionBar = getSupportActionBar();
 		inflater = 	LayoutInflater.from(this);
-		headView = inflater.inflate(R.layout.main_action_title, null);
+		headView = inflater.inflate(R.layout.main_action_bar, null);
 		backShow();
 	}
 	

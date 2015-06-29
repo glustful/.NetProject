@@ -27,6 +27,7 @@ public class ActiveController {
 	LayoutInflater inflater;
 	GridView mGridView;
 	GridAdapter adapter;
+	LinearLayout mHeadView;
 	
 
 	public View getRootView() {
@@ -48,13 +49,17 @@ public class ActiveController {
 		
 		mGridView.setAdapter(adapter);
 	}
+	
+	public void showHeadView(){
+		mHeadView.setVisibility(View.VISIBLE);
+	}
 
 	private void initView() {
 
 		rootView = inflater.inflate(R.layout.active_page_view, null);
 
-		mGridView = (GridView) (rootView);
-
+		mGridView = (GridView) (rootView.findViewById(R.id.myGrid));
+		mHeadView = (LinearLayout) rootView.findViewById(R.id.headView);
 		mGridView.setOnItemClickListener(null);
 
 	}

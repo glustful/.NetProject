@@ -1,6 +1,8 @@
 package com.yoopoon.home.ui.home;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -21,10 +23,11 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
 
-import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.SearchActionBarActivity;
+import com.yoopoon.home.SearchFunction.OnSearchCallBack;
+import com.yoopoon.home.data.net.ResponseData;
 
 @EActivity(R.layout.home_main_activity)
 public class FramMainActivity extends SearchActionBarActivity {
@@ -210,6 +213,52 @@ public class FramMainActivity extends SearchActionBarActivity {
 		MyApplication.getInstance().removeActivity(this);
 
 		super.finish();
+	}
+	@Override
+	public void initSearchParam() {
+		if(this.SearchParameter==null){
+			this.SearchParameter = new HashMap<String, String>();
+		}
+		this.SearchParameter.clear();
+		this.SearchParameter.put("page", "1");
+		this.SearchParameter.put("pageSize", "10");
+		this.SearchParameter.put("condition", "");
+	}
+	@Override
+	public OnSearchCallBack setSearchCallBack() {
+		
+		return new OnSearchCallBack() {
+			
+			@Override
+			public void textChange(Boolean isText) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void search(ResponseData data) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void deltext() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void clearRefresh() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void addMore(ResponseData data) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
 	}
 	
 }

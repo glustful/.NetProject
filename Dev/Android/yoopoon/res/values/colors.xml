@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="red">#ff0000</color>
+    <color name="red">#f13800</color>
+    <color name="second_red">#fc3b00</color>
     <color name="tab_text">#faf300</color>
+    <color name="appBackground">#eeeeee</color>
+    <color name="green">#36ac38</color>
+    <color name="drak_red">#f58672</color>
+    <color name="little_whitle">#fafafa</color>
 </resources>

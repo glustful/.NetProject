@@ -4,5 +4,5 @@ import android.support.v4.app.Fragment;
 
 public abstract class FramSuper extends Fragment {
 
-	public abstract String getTitle();
+	//public abstract String getTitle();
 }
