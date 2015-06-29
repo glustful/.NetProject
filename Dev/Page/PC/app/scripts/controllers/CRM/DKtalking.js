@@ -47,8 +47,6 @@ angular.module("app").controller('DKTaklDetial',[
             Id:"",
             Status:""
         };
-
-        //����û�״̬
         $scope.UpdateLeadClient=function(enum1){
             $scope.PassAudit.Id= $scope.ARDetialModel.Id;
             $scope.PassAudit.Status=enum1;

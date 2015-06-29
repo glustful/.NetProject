@@ -636,7 +636,6 @@ angular.module('app')
               url: '/index',
               templateUrl: 'views/pages/CRM/AdmMan/index.html',
                   data: { title: 'Admin管理' },
-                controller:"agentmanagerIndexController",
                 resolve:load('scripts/controllers/CRM/AdmMan.js')
             })
             .state('page.CRM.AdmMan.detailed', {
