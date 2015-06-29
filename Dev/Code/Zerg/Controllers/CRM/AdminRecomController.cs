@@ -482,8 +482,6 @@ namespace Zerg.Controllers.CRM
             };
             _brokerRecClientService.Update(model);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "提交成功"));
-        }
-
-        #endregion
+        }       
     }
 }
