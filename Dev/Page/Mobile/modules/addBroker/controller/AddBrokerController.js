@@ -32,7 +32,7 @@ function settime() {
     if (countdown == 0) {
 
         document.getElementById("inviteSMS").removeAttribute("disabled");
-        document.getElementById("inviteSMS").innerHTML="发送邀请";
+        document.getElementById("inviteSMS").innerHTML="邀请";
         document.getElementById("inviteSMS").style.background="#fc3b00";
         countdown = 60;
         return;
@@ -40,7 +40,7 @@ function settime() {
         document.getElementById("inviteSMS").setAttribute("disabled", true);
 
         document.getElementById("inviteSMS").style.background="#996c33";
-        document.getElementById("inviteSMS").innerHTML="重新发送(" + countdown + ")";
+        document.getElementById("inviteSMS").innerHTML="邀请中...(" + countdown + ")";
         countdown--;
     }
     setTimeout(function() {
