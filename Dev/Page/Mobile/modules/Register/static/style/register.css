@@ -3,6 +3,9 @@
     font-size: 22px;
     margin-top: 25px;
 }
+.register_tip span{
+    color: #fc3b00;
+}
 .form_register{
     padding: 52px 58px 0 58px;
     font-family: "microsoft yahei";

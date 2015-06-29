@@ -3,14 +3,14 @@
         <div class="content-housesPic" ng-controller="HousesPicController">
             <!--{{ProductDetail.Productimg}}-->
             <div class="syj cf"><img src="http://img.yoopoon.com/{{ProductDetail.BrandImg}}" alt="水云间" width="85" height="75"/><span class="fr A1" ng-bind="ProductDetail.Productname"></span></div>
-            <div class="brokerage">{{ProductDetail.Advertisement}}</div>
+            <!--<div class="brokerage">{{ProductDetail.Advertisement}}</div>-->
             <div class="price">
                 <p class="qi">均价{{ProductDetail.Price}}元/m²起</p>
                 <p>{{ProductDetail.SubTitle}}</p>
                 <!--<p>四室、两厅、一厨、双卫、双阳台</p>-->
             </div>
             <div><img src="http://img.yoopoon.com/{{ProductDetail.Productimg}}" alt="户型图" width="640" height="400"/></div>
-                <p class="tw">图文详情</p>
+              <h3 style="width: 640px; font-weight: 900;">图文详情</h3>
                  <div class="hjt">
                      <img src="http://img.yoopoon.com/{{ProductDetail.Productimg1}}" alt="海景图"width="300" height="200"/>
                      <img src="http://img.yoopoon.com/{{ProductDetail.Productimg2}}" alt="海景图"width="300" height="200"/>
@@ -18,14 +18,14 @@
                      <img src="http://img.yoopoon.com/{{ProductDetail.Productimg4}}" alt="海景图"width="300" height="200"/>
                  </div>
                 <!--<p class="jp"></p>-->
-                <p class="sun">{{ProductDetail.ProductDetailed}}</p>
+                <p class="sun" ng-bind-html="ProductDetail.ProductDetailed|trustHtml"></p>
 
 
                 <!--<p>经典三房，方正明亮，动静分区明晰</p>-->
                 <!--<p>客厅外接景观阳台，空间更显宽松舒畅</p>-->
                  <div access="broker" class="summaryBg">
                     <a  class="dk" href="#app/carry_client?Projectid={{ProductDetail.Id}}&name={{ProductDetail.Productname}}&type={{ProductDetail.Type}}">我要带客</a><a class="tj" href="#app/groom?Projectid={{ProductDetail.Id}}&name={{ProductDetail.Productname}}&type={{ProductDetail.Type}}">我要推荐</a>
-                     <a class="ask" href="tel://{{ProductDetail.Phone}}">咨询热线:{{ProductDetail.Phone}}</a>
+                     <a class="ask" href="tel:{{ProductDetail.Phone}}">咨询热线:{{ProductDetail.Phone}}</a>
                  </div>
 
             <!--<div class="syj cf"><img src="modules/housesPic/static/image/housePic/logo-syj.png" alt="水云间" width="85" height="75"/><span class="fr A1">A1/A2户型</span></div>-->

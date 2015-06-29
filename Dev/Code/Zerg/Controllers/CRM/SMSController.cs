@@ -14,6 +14,7 @@ using YooPoon.Core.Site;
 using YooPoon.WebFramework.User.Entity;
 using Zerg.Common;
 using Zerg.Models.CRM;
+using System.ComponentModel;
 
 namespace Zerg.Controllers.CRM
 {
@@ -22,13 +23,21 @@ namespace Zerg.Controllers.CRM
     /// </summary>
     [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    [Description("通用短信发送管理类")]
     public class SMSController : ApiController
     {
         private readonly IWorkContext _workContext;
         private readonly IBrokerService _brokerService;
         private readonly IMessageConfigService _MessageConfigService;
         private readonly IMessageDetailService _MessageService;
-
+        /// <summary>
+        /// 通用短信发送管理类
+        /// </summary>
+        /// <param name="workContext">workContext</param>
+        /// <param name="brokerService">brokerService</param>
+        /// <param name="MessageConfigService">MessageConfigService</param>
+        /// <param name="MessageService">MessageService</param>
+        [Description("通用短信发送管理初始化")]
         public SMSController(IWorkContext workContext, IBrokerService brokerService, IMessageConfigService MessageConfigService, IMessageDetailService MessageService)
         {
             _workContext = workContext;
@@ -38,11 +47,12 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 通过用户输入手机号发送短信
+        /// 通过用户输入手机号发送短信，返回短信发送结果状态信息。
         /// </summary>
         /// <param name="mobile">手机号</param>
         /// <param name="smstype">短信类型( 注册=0,修改密码=1,找回密码=2,添加银行卡=3,佣金提现=4,添加合伙人=5,推荐经纪人=6)</param>
-        /// <returns></returns>
+        /// <returns>短信发送结果状态信息</returns>
+        [Description("用户输入手机号发送短信")]
         [HttpPost]
         public HttpResponseMessage SendSMS([FromBody] YzMsg yzmsg)
         {
@@ -100,7 +110,7 @@ namespace Zerg.Controllers.CRM
         /// 发送短信
         /// </summary>
         /// <param name="smstype">短信类型(修改密码=1,找回密码=2,添加银行卡=3,佣金提现=4,)</param>
-        /// <returns></returns>
+        /// <returns>发送短信结果状态信息</returns>
         public HttpResponseMessage SendSmsForbroker([FromBody] string smstype)
         {
             var user = (UserBase)_workContext.CurrentUser;
@@ -147,7 +157,7 @@ namespace Zerg.Controllers.CRM
         /// <summary>
         /// 添加到短信表中
         /// </summary>
-        /// <param name="messageDetail"></param>
+        /// <param name="messageDetail">短信参数</param>
         public void AddMessageDetails(MessageDetailEntity messageDetail)
         {
            _MessageService.Create(messageDetail);
@@ -162,6 +172,7 @@ namespace Zerg.Controllers.CRM
     /// <summary>
     /// 验证消息（手机号，验证类型（注册=0,修改密码=1,找回密码=2,添加银行卡=3,佣金提现=4,添加合伙人=5,推荐经纪人=6））
     /// </summary>
+    [Description("验证消息类")]
     public class YzMsg
     {
         public string Mobile

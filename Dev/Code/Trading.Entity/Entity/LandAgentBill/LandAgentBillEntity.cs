@@ -37,7 +37,7 @@ namespace Trading.Entity.Model
 		/// <summary>
 		/// 实收金额
 		/// </summary>
-		public virtual decimal Actualamount { get; set; }
+		public virtual decimal? Actualamount { get; set; }
 		/// <summary>
 		/// 卡号
 		/// </summary>

@@ -21,11 +21,13 @@ using Zerg.Models.UC;
 using YooPoon.Common.Encryption;
 using CRM.Service.MessageDetail;
 using CRM.Service.RecommendAgent;
+using System.ComponentModel;
 
 namespace Zerg.Controllers.UC
 {
     [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    [Description("用户管理类")]
     public class UserController : ApiController
     {
         private readonly IUserService _userService;
@@ -38,8 +40,8 @@ namespace Zerg.Controllers.UC
         private readonly IRecommendAgentService _recommendagentService;
 
 
-        public UserController(IUserService userService, 
-            IAuthenticationService authenticationService, 
+        public UserController(IUserService userService,
+            IAuthenticationService authenticationService,
             IWorkContext workContext,
             IBrokerService brokerService,
             IRoleService roleService,
@@ -54,20 +56,33 @@ namespace Zerg.Controllers.UC
             _brokerService = brokerService;
             _roleService = roleService;
             _levelService = levelService;
-            _MessageService= MessageService;
+            _MessageService = MessageService;
             _recommendagentService = recommendagentService;
         }
 
         /// <summary>
-        /// 登陆
+        /// 后台登陆
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">登陆参数</param>
+        /// <returns>登陆结果</returns>
+        [Description("登陆")]
         [HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage Login([FromBody]UserModel model)
         {
+            //BrokerSearchCondition brokerSearchcon=new BrokerSearchCondition
+            //{
+            //    State=1,
+            //   Phone=model.UserName
+            //};
+            //BrokerEntity broker = _brokerService.GetBrokersByCondition(brokerSearchcon).FirstOrDefault();
+            //if(broker==null)
+            //{
+            //    return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号或密码错误"));
+            //}
             var user = _userService.GetUserByName(model.UserName);
+
+           
             if (user == null)
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名或密码错误"));
             if (!PasswordHelper.ValidatePasswordHashed(user, model.Password))
@@ -81,10 +96,56 @@ namespace Zerg.Controllers.UC
             }));
         }
 
+
+
+
+        /// <summary>
+        /// 前台登陆
+        /// </summary>
+        /// <param name="model">登陆参数</param>
+        /// <returns>登陆结果</returns>
+        [Description("登陆")]
+        [HttpPost]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage IndexLogin([FromBody]UserModel model)
+        {
+            BrokerSearchCondition brokerSearchcon = new BrokerSearchCondition
+            {
+                State = 1,
+                Phone = model.UserName
+            };
+            BrokerEntity broker = _brokerService.GetBrokersByCondition(brokerSearchcon).FirstOrDefault();
+            if (broker == null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号或密码错误"));
+            }
+            // var user = _userService.GetUserByName(model.UserName);
+
+            var user = _userService.FindUser(broker.UserId);
+            if (user == null)
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名或密码错误"));
+            if (!PasswordHelper.ValidatePasswordHashed(user, model.Password))
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名或密码错误"));
+            _authenticationService.SignIn(user, model.Remember);
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "登陆成功", new
+            {
+                user.Id,
+                Roles = user.UserRoles.Select(r => new { r.Role.RoleName }).ToArray(),
+                user.UserName
+            }));
+        }
+
+
+
+
+
+
+
         /// <summary>
         /// 登出
         /// </summary>
-        /// <returns></returns>
+        /// <returns>注销结果</returns>
+        [Description("用户注销")]
         [HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage Logout()
@@ -95,8 +156,9 @@ namespace Zerg.Controllers.UC
         /// <summary>
         /// 注册用户
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">用户参数</param>
+        /// <returns>注册结果</returns>
+        [Description("用户注册")]
         [HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage SignUp([FromBody] UserModel model)
@@ -125,8 +187,8 @@ namespace Zerg.Controllers.UC
         /// <summary>
         /// 前端添加新用户
         /// </summary>
-        /// <param name="brokerModel"></param>
-        /// <returns></returns>
+        /// <param name="brokerModel">经纪人参数</param>
+        /// <returns>添加经纪人结果</returns>
         [HttpPost]
         public HttpResponseMessage AddBroker([FromBody]BrokerModel brokerModel)
         {
@@ -144,13 +206,13 @@ namespace Zerg.Controllers.UC
             DateTime dateNow = Convert.ToDateTime(DateTime.Now.ToLongTimeString());//获取当前时间
             TimeSpan ts = dateNow.Subtract(date);
             double secMinu = ts.TotalMinutes;//得到发送时间与现在时间的时间间隔分钟数
-            if (secMinu >3) //发送时间与接受时间是否大于3分钟
-            {               
+            if (secMinu > 3) //发送时间与接受时间是否大于3分钟
+            {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "你已超过时间验证，请重新发送验证码！"));
             }
             else
             {
-                if(brokerModel.MobileYzm!=source)//判断验证码是否一致
+                if (brokerModel.MobileYzm != source)//判断验证码是否一致
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码错误，请重新发送！"));
                 }
@@ -159,23 +221,24 @@ namespace Zerg.Controllers.UC
             #endregion
 
             #region 判断两次密码是否一致
-            if(brokerModel.Password!=brokerModel.SecondPassword)
+            if (brokerModel.Password != brokerModel.SecondPassword)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号不能为空"));
             }
             #endregion
 
             #region 判断邀请码是否存在真实  （brokerInfoController 中GetBrokerByInvitationCode方法也同一判断）
-             MessageDetailEntity messageDetail=null;
+            MessageDetailEntity messageDetail = null;
             if (!string.IsNullOrEmpty(brokerModel.inviteCode))
             {
-                
-                MessageDetailSearchCondition messageSearchcondition=new MessageDetailSearchCondition{
+
+                MessageDetailSearchCondition messageSearchcondition = new MessageDetailSearchCondition
+                {
                     InvitationCode = brokerModel.inviteCode,
-                    Title="推荐经纪人"
+                    Title = "推荐经纪人"
                 };
-                 messageDetail = _MessageService.GetMessageDetailsByCondition(messageSearchcondition).FirstOrDefault();//判断邀请码是否存在
-                if (messageDetail == null)             
+                messageDetail = _MessageService.GetMessageDetailsByCondition(messageSearchcondition).FirstOrDefault();//判断邀请码是否存在
+                if (messageDetail == null)
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "邀请码错误！"));
                 }
@@ -185,17 +248,23 @@ namespace Zerg.Controllers.UC
 
             #region UC用户创建 杨定鹏 2015年5月28日14:52:48
             var user = _userService.GetUserByName(brokerModel.UserName);
+            if(user!=null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
+            }
+
 
             var condition = new BrokerSearchCondition
             {
                 OrderBy = EnumBrokerSearchOrderBy.OrderById,
+                State = 1,
                 Phone = brokerModel.Phone
             };
 
             //判断user表和Broker表中是否存在用户名
             int user2 = _brokerService.GetBrokerCount(condition);
 
-            if (user2 != 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
+            if (user2 != 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号已经存在"));
 
             var brokerRole = _roleService.GetRoleByName("user");
 
@@ -234,6 +303,7 @@ namespace Zerg.Controllers.UC
             var model = new BrokerEntity();
             model.UserId = _userService.InsertUser(newUser).Id;
             model.Brokername = brokerModel.UserName;
+            model.Nickname = brokerModel.UserName;
             model.Phone = brokerModel.Phone;
             model.Totalpoints = 0;
             model.Amount = 0;
@@ -253,7 +323,7 @@ namespace Zerg.Controllers.UC
                 {
                     Name = "默认等级",
                     Describe = "系统默认初始创建",
-                    Url ="",
+                    Url = "",
                     Uptime = DateTime.Now,
                     Addtime = DateTime.Now,
                 };
@@ -262,38 +332,42 @@ namespace Zerg.Controllers.UC
 
             model.Level = level;
 
-         var newBroker=_brokerService.Create(model);
+            var newBroker = _brokerService.Create(model);
 
-      
+
 
             #endregion
 
             #region 推荐经纪人
-         if (!string.IsNullOrEmpty(brokerModel.inviteCode))
-         {
-             //添加经纪人
-             var entity = new RecommendAgentEntity
-             {
-                 PresenteebId = newBroker.Id,
-                 Qq = newBroker.Qq.ToString(),
-                 Agentlevel = newBroker.Agentlevel,
-                 Brokername = newBroker.Brokername,
-                 Phone = newBroker.Phone,
-                 Regtime = DateTime.Now,
-                 Broker = _brokerService.GetBrokerById(Convert.ToInt32(messageDetail.InvitationId)),
-                 Uptime = DateTime.Now,
-                 Addtime = DateTime.Now,
-             };
+            if (!string.IsNullOrEmpty(brokerModel.inviteCode))
+            {
+                //添加经纪人
+                var entity = new RecommendAgentEntity
+                {
+                    PresenteebId = newBroker.Id,
+                    Qq = newBroker.Qq.ToString(),
+                    Agentlevel = newBroker.Agentlevel,
+                    Brokername = newBroker.Brokername,
+                    Phone = newBroker.Phone,
+                    Regtime = DateTime.Now,
+                    Broker = _brokerService.GetBrokerById(Convert.ToInt32(messageDetail.InvitationId)),
+                    Uptime = DateTime.Now,
+                    Addtime = DateTime.Now,
+                };
 
-             _recommendagentService.Create(entity);
-         }
-         #endregion
+                _recommendagentService.Create(entity);
+            }
+            #endregion
 
-         return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
         }
 
 
-
+        /// <summary>
+        /// 获取当前用户
+        /// </summary>
+        /// <returns>当前用户列表</returns>
+        [Description("获取当前用户")]
         [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetCurrentUser()
@@ -302,34 +376,47 @@ namespace Zerg.Controllers.UC
             return PageHelper.toJson(user == null ? PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆") :
                 PageHelper.ReturnValue(true, "获取用户成功", new
                 {
-                    user.Id, 
-                    user.UserName, 
+                    user.Id,
+                    user.UserName,
                     Roles = user.UserRoles.Select(r => new
                     {
                         r.Role.RoleName
                     }).ToArray()
                 }));
         }
+        /// <summary>
+        /// 获取用户列表
+        /// </summary>
+        /// <param name="userName">用户名</param>
+        /// <param name="page">页码</param>
+        /// <param name="pageSize">页面数量</param>
+        /// <returns>用户列表</returns>
+        [Description("获取用户列表")]
         [HttpGet]
-        
-        public HttpResponseMessage GetUserList(string userName=null,int page=1,int pageSize=10)
+        public HttpResponseMessage GetUserList(string userName = null, int page = 1, int pageSize = 10)
         {
             var userCondition = new UserSearchCondition
-            {             
+            {
                 UserName = userName,
                 Page = page,
                 PageSize = pageSize
             };
-           
-            var userList = _userService.GetUserByCondition(userCondition).Select(a=>new UserModel
+
+            var userList = _userService.GetUserByCondition(userCondition).Select(a => new UserModel
             {
                 Id = a.Id,
                 UserName = a.UserName,
-                Status =a.Status
+                Status = a.Status
             }).ToList();
             var userCount = _userService.GetUserCountByCondition(userCondition);
-            return PageHelper.toJson(new{ List=userList, Condition=userCondition, TotalCount=userCount});
+            return PageHelper.toJson(new { List = userList, Condition = userCondition, TotalCount = userCount });
         }
+        /// <summary>
+        /// 查询用户详细信息
+        /// </summary>
+        /// <param name="id">用户ID</param>
+        /// <returns>用户详细信息</returns>
+        [Description("查询用户详细信息")]
         [HttpGet]
         public HttpResponseMessage Detailed(int id)
         {
@@ -341,16 +428,17 @@ namespace Zerg.Controllers.UC
             var userDetail = new UserModel
             {
                 Id = user.Id,
-                UserName = user.UserName,              
-                Status =user.Status
+                UserName = user.UserName,
+                Status = user.Status
             };
             return PageHelper.toJson(userDetail);
         }
 
         /// <summary>
-        /// 忘记密码
+        /// 忘记密码找回密码
         /// </summary>
-        /// <returns></returns>
+        /// <returns>返回密码找回结果状态信息</returns>
+        [Description("忘记密码找回密码")]
         [HttpPost]
         public HttpResponseMessage ForgetPassword([FromBody]ForgetPasswordModel model)
         {
@@ -399,7 +487,7 @@ namespace Zerg.Controllers.UC
         [HttpPost]
         public HttpResponseMessage ChangePassword([FromBody]ChangePasswordModel model)
         {
-            
+
             #region 首先判断发送到手机的验证码是否正确
             var strDes = EncrypHelper.Decrypt(model.Hidm, "Hos2xNLrgfaYFY2MKuFf3g==");//解密
             string[] str = strDes.Split('$');
@@ -426,20 +514,25 @@ namespace Zerg.Controllers.UC
 
 
             //判断两次新密码是否一致
-            if (model.Password!=model.SecondPassword)
+            if (model.Password != model.SecondPassword)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "密码不一致！"));
             }
             //判读旧密码
-            var user =(UserBase) _workContext.CurrentUser;
-            if (user!=null && PasswordHelper.ValidatePasswordHashed(user,model.OldPassword))
+            var user = (UserBase)_workContext.CurrentUser;
+            if (user != null && PasswordHelper.ValidatePasswordHashed(user, model.OldPassword))
             {
                 PasswordHelper.SetPasswordHashed(user, model.Password);
                 _userService.ModifyUser(user);
-                return PageHelper.toJson(PageHelper.ReturnValue(true,"数据更新成功！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "密码修改成功！"));
             }
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "密码修改失败！请检查输入是否正确！"));
         }
+        /// <summary>
+        /// 删除用户
+        /// </summary>
+        /// <param name="id">用户id</param>
+        /// <returns>删除结果状态信息</returns>
         [HttpGet]
         public HttpResponseMessage Delete(int id)
         {
@@ -450,7 +543,11 @@ namespace Zerg.Controllers.UC
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
         }
-
+        /// <summary>
+        /// 编辑用户信息
+        /// </summary>
+        /// <param name="model">用户参数</param>
+        /// <returns>编辑结果状态信息</returns>
         [HttpPost]
         public HttpResponseMessage EditUser(UserModel model)
         {

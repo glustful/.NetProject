@@ -17,25 +17,25 @@
     color: #fff;
     font-size: 22px;
     z-index: 4;
+    width: 560px;
 }
-.pic-housesBuy .summary .zt{
-    padding:0 50px 0 0;
-}
+
 .pic-housesBuy .summary .zt small{
-    color: #929292;
+    color: #fff;
 }
-.pic-housesBuy .summary .lp{
-    padding-left: 65px;
+.pic-housesBuy .summary .span{
+    display: inline-block;
 }
 .pic-housesBuy .summaryBg{
     width: 640px;
     position: absolute;
-    z-index: 3;
-    height: auto;
+    z-index: 9;
+    height:100px;
     opacity: 0.4;
-    bottom:0.2em;
+    bottom:0;
     left:0;
     background:url("../image/housesBuy/fgx.png") no-repeat 530px 0 #000;
+    /*background-color: #fff;*/
 }
 .content-housesBuy .di{
     height: 80px;
@@ -184,29 +184,30 @@ text-decoration: none;
 
 
 /*户型图新样式*/
-.content-housesBuy .typeHouses{
+ .typeHouses{
 
 }
-.content-housesBuy .typeHouses ul li{
+ .typeHouses ul li{
     background-color: #fff;
     width: 290px;
+    height: 426px;
     margin: 20px 0 0 20px;
     padding:20px 0 0 0;
 }
-.content-housesBuy .typeHouses .inside{
+.typeHouses .inside{
     padding-left: 25px;
 }
-.content-housesBuy .typeHouses .housesType{
+ .typeHouses .housesType{
     color: #000;
     font-size: 1.2em;
 }
-.content-housesBuy .typeHouses .average{
+ .typeHouses .average{
    color:#f13800 ;
     font-size: 1.2em;
     padding-bottom: 20px;
     display: block;
 }
-.content-housesBuy .typeHouses .ask{
+.typeHouses .ask{
     display: block;
     margin-top: 30px;
     height: 60px;

@@ -636,7 +636,6 @@ angular.module('app')
               url: '/index',
               templateUrl: 'views/pages/CRM/AdmMan/index.html',
                   data: { title: 'Admin管理' },
-                controller:"agentmanagerIndexController",
                 resolve:load('scripts/controllers/CRM/AdmMan.js')
             })
             .state('page.CRM.AdmMan.detailed', {
@@ -788,17 +787,42 @@ angular.module('app')
             .state('page.CRM.WaitPetition.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/WaitPetition/index.html',
-                  data: { title: '待上访记录' },
+                  data: { title: '推荐待上访记录' },
                 controller:"PetitionListController",
                 resolve:load('scripts/controllers/CRM/WaitPetition.js')
             })
+
             .state('page.CRM.WaitPetition.detailed', {
                 url: '/detailed?id',
-              templateUrl: 'views/pages/CRM/WaitPetition/detailed.html',
-                  data: { title: '详情页' },
+                templateUrl: 'views/pages/CRM/WaitPetition/detailed.html',
+                data: { title: '详情页' },
                 controller:"WPDetialController",
                 resolve:load('scripts/controllers/CRM/WaitPetition.js')
             })
+
+            /////////////////////带客待上访记录///////////////////////////
+            .state('page.CRM.DKWaitPetition', {
+                url: '/DKWaitPetition',
+                template: '<div ui-view></div>'
+            })
+            .state('page.CRM.DKWaitPetition.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/DKWaitPetition/index.html',
+                data: { title: '带客待上访记录' },
+                controller:"WaitVistController",
+                resolve:load('scripts/controllers/CRM/WaitPetitionDK.js')
+            })
+
+            .state('page.CRM.DKWaitPetition.detailed', {
+                url: '/detailed?id',
+                templateUrl: 'views/pages/CRM/DKWaitPetition/detailed.html',
+                data: { title: '详情页' },
+                controller:"DKDetialController",
+                resolve:load('scripts/controllers/CRM/WaitPetitionDK.js')
+            })
+
+            /////////////////////////////////////////////////////////////
+
 
               .state('page.CRM.talking', {
                   url: '/talking',
@@ -807,7 +831,7 @@ angular.module('app')
             .state('page.CRM.talking.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/talking/index.html',
-                  data: { title: '洽谈中业务' },
+                  data: { title: '推荐洽谈中业务' },
                 controller:"TalkingListController",
                 resolve:load('scripts/controllers/CRM/Talking.js')
             })
@@ -819,6 +843,27 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/Talking.js')
             })
 
+            ///////////////////////新增带客洽谈////////////////////////////////
+            .state('page.CRM.DKtalking', {
+                url: '/DKtalking',
+                template: '<div ui-view></div>'
+            })
+            .state('page.CRM.DKtalking.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/DKtalking/index.html',
+                data: { title: '带客洽谈中业务' },
+                controller:"DKTalkingList",
+                resolve:load('scripts/controllers/CRM/DKtalking.js')
+            })
+            .state('page.CRM.DKtalking.detailed', {
+                url: '/detailed?id',
+                templateUrl: 'views/pages/CRM/DKtalking/detailed.html',
+                data: { title: '详情页' },
+                controller:"DKTaklDetial",
+                resolve:load('scripts/controllers/CRM/DKtalking.js')
+            })
+
+            //////////////////////////////////////////////////////////////////
               .state('page.CRM.fail', {
                   url: '/fail',
                   template: '<div ui-view></div>'
@@ -826,7 +871,7 @@ angular.module('app')
             .state('page.CRM.fail.index', {
               url: '/index',
               templateUrl: 'views/pages/CRM/fail/index.html',
-                  data: { title: '洽谈失败' },
+                  data: { title: '推荐洽谈失败' },
                 controller:"FailListController",
                 resolve:load('scripts/controllers/CRM/fail.js')
             })
@@ -838,6 +883,51 @@ angular.module('app')
                 resolve:load('scripts/controllers/CRM/fail.js')
             })
 
+
+
+
+            /////////////////////////////////////带客成功失败/////////////////////////////////////////////////////////
+
+            .state('page.CRM.DKFail', {
+                url: '/DKFail',
+                template: '<div ui-view></div>'
+            })
+            .state('page.CRM.DKFail.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/DKFail/index.html',
+                data: { title: '推荐洽谈失败' },
+                controller:"DKFailListController",
+                resolve:load('scripts/controllers/CRM/fail.js')
+            })
+            .state('page.CRM.DKFail.detailed', {
+                url: '/detailed?id',
+                templateUrl: 'views/pages/CRM/DKFail/detailed.html',
+                data: { title: '详情页' },
+                controller:"DKFailDetialController",
+                resolve:load('scripts/controllers/CRM/fail.js')
+            })
+
+            .state('page.CRM.DKSuccess', {
+                url: '/DKSuccess',
+                template: '<div ui-view></div>'
+            })
+            .state('page.CRM.DKSuccess.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/DKSuccess/index.html',
+                data: { title: '洽谈成功' },
+                controller:"DKSuccessController",
+                resolve:load('scripts/controllers/CRM/Success.js')
+            })
+            .state('page.CRM.DKSuccess.detailed', {
+                url: '/detailed?id',
+                templateUrl: 'views/pages/CRM/DKSuccess/detailed.html',
+                data: { title: '详情页' },
+                controller:"DKSuccessDetialController",
+                resolve:load('scripts/controllers/CRM/Success.js')
+            })
+
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
               .state('page.CRM.success', {
                   url: '/success',
                   template: '<div ui-view></div>'
@@ -1359,10 +1449,24 @@ angular.module('app')
                 data : { title: '账单管理' },
                 resolve: load(['scripts/controllers/Trading/Bill.js','scripts/controllers/vectormap.js'])
             })
+            .state('page.Trading.bill.createBill', {
+                url: '/createBill?orderId',
+                templateUrl: 'views/pages/Trading/bill/createBill.html',
+                data : { title: '生成账单' },
+                controller:'createBillController',
+                resolve: load(['scripts/controllers/Trading/Bill.js','scripts/controllers/vectormap.js'])
+            })
             .state('page.Trading.order.order', {
                 url: '/order',
                 templateUrl: 'views/pages/Trading/order/order.html',
                 data : { title: '订单管理' },
+                resolve: load(['scripts/controllers/Trading/Order.js','scripts/controllers/vectormap.js'])
+            })
+            .state('page.Trading.order.Negotiateorder', {
+                url: '/Negotiateorder',
+                templateUrl: 'views/pages/Trading/order/NegotiateOrderList.html',
+                data : { title: '洽谈后订单' },
+                controller:'NegotiateOrderController',
                 resolve: load(['scripts/controllers/Trading/Order.js','scripts/controllers/vectormap.js'])
             })
             //-----------------------end-------------------

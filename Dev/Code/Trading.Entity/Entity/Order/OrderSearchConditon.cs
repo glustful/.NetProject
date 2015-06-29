@@ -39,7 +39,9 @@ namespace Trading.Entity.Model
 
 
 
-		public int? Shipstatus { get; set; }
+		public int[] Shipstatuses { get; set; }
+
+        public int? Shipstatus { get; set; }
 
 
 

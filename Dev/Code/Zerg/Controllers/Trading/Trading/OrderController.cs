@@ -18,6 +18,10 @@ using Newtonsoft.Json.Linq;
 using Zerg.Models.Trading.Product;
 using Zerg.Models.Trading.Trading;
 using System.Web.Http.Cors;
+using System.ComponentModel;
+using System.Net;
+
+
 namespace Zerg.Controllers.Trading.Trading.Order
 {
     [System.Web.Http.AllowAnonymous]
@@ -32,6 +36,7 @@ namespace Zerg.Controllers.Trading.Trading.Order
     //                      4：已付佣金（推荐）；
     //                      5：已买房（成交）；
     //                      6：已付佣金（成交）
+    [Description("订单管理类")]
     public class OrderController : ApiController
     {
         private readonly IProductService _productService;
@@ -50,10 +55,11 @@ namespace Zerg.Controllers.Trading.Trading.Order
         /// <summary>
         /// 生成订单；
         /// </summary>
-        /// <param name="jOject"></param>
+        /// <param name="jOject">订单参数</param>
         /// <returns>生成结果</returns>
+        [Description("生成订单")]
         [System.Web.Http.HttpPost]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public string AddRecommonOrder([FromBody]JObject jOject)
         {
             try
@@ -116,11 +122,12 @@ namespace Zerg.Controllers.Trading.Trading.Order
         /// <summary>
         /// 修改订单流程状态
         /// </summary>
-        /// <param name="orderId"></param>
-        /// <param name="shipStatus"></param>
-        /// <returns></returns>
+        /// <param name="orderId">订单ID</param>
+        /// <param name="shipStatus">流程状态</param>
+        /// <returns>订单流程状态</returns>
+        [Description("修改订单流程状态")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public string EditOrderShipstatus(int orderId, int shipStatus)
         {
             try
@@ -129,7 +136,9 @@ namespace Zerg.Controllers.Trading.Trading.Order
                 OE.Shipstatus = shipStatus;
                 _orderService.Update(OE);
                 return "修改流程状态成功";
-            }catch(Exception e){
+            }
+            catch (Exception e)
+            {
                 return "修改流程状态失败";
             }
 
@@ -137,11 +146,12 @@ namespace Zerg.Controllers.Trading.Trading.Order
         /// <summary>
         /// 修改订单推送状态；
         /// </summary>
-        /// <param name="orderId"></param>
-        /// <param name="status"></param>
-        /// <returns></returns>
+        /// <param name="orderId">订单ID</param>
+        /// <param name="status">订单状态</param>
+        /// <returns>推送结果</returns>
+        [Description("修改订单推送状态")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public string EditOrderStatus(int orderId, int status)
         {
             try
@@ -157,6 +167,24 @@ namespace Zerg.Controllers.Trading.Trading.Order
             }
 
         }
+
+        /// <summary>
+        /// 更新订单状态
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage EditStatus(int orderId)
+        {
+            var order = _orderService.GetOrderById(orderId);
+            order.Status = 2;
+            if (_orderService.Update(order) != null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "状态更新成功"));
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "状态更新失败"));
+        }
         #endregion
 
         #region 订单查询
@@ -165,18 +193,19 @@ namespace Zerg.Controllers.Trading.Trading.Order
         /// 查询所有推荐订单；       //原方法变更为根据传入类型返回订单列表——杨定鹏——2015年6月10日10:42:49
         /// </summary>
         /// <param name="pageindex"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
+        /// <param name="type">类型</param>
+        /// <returns>推荐订单列表</returns>
+        [Description("查询所有推荐订单")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAllRecommonOrders(EnumOrderType type)
         {
             OrderSearchCondition OSC = new OrderSearchCondition()
             {
-                Ordertype=type,
+                Ordertype = type,                
                 OrderBy = EnumOrderSearchOrderBy.OrderById
-            };
-            var list = _orderService.GetOrdersByCondition(OSC).Select(p=>new
+            };          
+            var list = _orderService.GetOrdersByCondition(OSC).Select(p => new 
             {
                 p.Ordercode,
                 p.Ordertype,
@@ -195,21 +224,22 @@ namespace Zerg.Controllers.Trading.Trading.Order
         /// <summary>
         /// 获取洽谈后的订单
         /// </summary>
-        /// <returns></returns>
+        /// <returns>订单列表</returns>        
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
-        public HttpResponseMessage GetOrders()
-        {
-            var shipStatus = 3;
-            var status = 1;
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage GetNegotiateOrders(int page,int pageSize,int status)
+        {            
             OrderSearchCondition OSC = new OrderSearchCondition()
-            {
-                Shipstatus = shipStatus,
-                Status = status
-            };
-            var OrderList = _orderService.GetOrdersByCondition(OSC).Select(a => new
+            {                
+                Page = page,
+                PageCount = pageSize,
+                Status = status,
+                Shipstatuses = new []{3,-3}
+            };          
+            var orderList = _orderService.GetOrdersByCondition(OSC).Select(a => new
             {
                 a.Ordercode,
+                a.Id,
                 a.Ordertype,
                 a.Status,
                 a.Shipstatus,
@@ -221,17 +251,17 @@ namespace Zerg.Controllers.Trading.Trading.Order
                 a.OrderDetail.Commission,
                 a.OrderDetail.Dealcommission
             }).ToList();
-            return PageHelper.toJson(OrderList);
-            
-        }
+            var totalCount = _orderService.GetOrderCount(OSC);
+            return PageHelper.toJson(new{OrderList=orderList,TotalCount=totalCount,Condition=OSC});
+        }      
 
         /// <summary>
-        /// 查询所有成交订单；
+        /// 获取洽谈后的订单
         /// </summary>
-        /// <param name="pageindex"></param>
-        /// <returns></returns>
+        /// <returns>成交订单列表</returns>
+        [Description("获取洽谈后的订单")]
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAllDealOrders()
         {
             OrderSearchCondition OSC = new OrderSearchCondition()
@@ -242,12 +272,12 @@ namespace Zerg.Controllers.Trading.Trading.Order
             return PageHelper.toJson(_orderService.GetOrdersByCondition(OSC).ToList());
         }
         /// <summary>
-        /// 按审核结果查询订单；
+        /// 按照审核的结果查找订单
         /// </summary>
-        /// <param name="pageindex"></param>
-        /// <returns></returns>
+        /// <param name="status">状态</param>
+        /// <returns>订单列表</returns>
         [System.Web.Http.HttpGet]
-        [EnableCors("*", "*", "*", SupportsCredentials = true)] 
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetOrdersByStatus(int status)
         {
             OrderSearchCondition OSC = new OrderSearchCondition()

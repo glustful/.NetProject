@@ -4,8 +4,8 @@
  */
 app.controller('myPurseController',['$http','$scope','AuthService','$state',function($http,$scope,AuthService,$state) {
     $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
-    alert(  $scope.currentuser);
-    $http.get(SETTING.ApiUrl+'/BankCard/SearchAllBankByUser').success(function(response) {
+    //alert(  $scope.currentuser);
+    $http.get(SETTING.ApiUrl+'/BankCard/SearchAllBankByUser',{'withCredentials': true}).success(function(response) {
         $scope.List = response.List;
         $scope.AmountMoney=response.AmountMoney;
     });
@@ -21,7 +21,7 @@ app.controller('withdrawalsController',['$http','$scope','$state',function($http
         MobileYzm:'',
         Hidm:''
     }
-    $http.get(SETTING.ApiUrl+'/BankCard/SearchAllBankByUserToSelect').success(function(response) {
+    $http.get(SETTING.ApiUrl+'/BankCard/SearchAllBankByUserToSelect',{'withCredentials': true}).success(function(response) {
         $scope.BankList = response.List;
         $scope.AmountMoney=response.AmountMoney;
     });
@@ -33,18 +33,18 @@ app.controller('withdrawalsController',['$http','$scope','$state',function($http
             alert("请选择银行");
             return false;
         }
-        if( $scope.bankcard.Money==undefined || $scope.bankcard.Money=="")
+        if( $scope.TxDecimal.Money==undefined || $scope.TxDecimal.Money=="")
         {
             alert("请输入提现金额");
             return false;
         }
         var num = /^\d*$/;  //全数字
-        if (!num.exec( $scope.bankcard.Money)) {
+        if (!num.exec( $scope.TxDecimal.Money)) {
             alert("提现金额必须为数字");
             return false;
         }
 
-        if( $scope.bankcard.MobileYzm==undefined || $scope.bankcard.MobileYzm=="")
+        if( $scope.TxDecimal.MobileYzm==undefined || $scope.TxDecimal.MobileYzm=="")
         {
             alert("请输入验证码");
             return false;
@@ -53,10 +53,10 @@ app.controller('withdrawalsController',['$http','$scope','$state',function($http
         $http.post(SETTING.ApiUrl+'/BrokerWithdrawDetail/AddBrokerWithdrawDetail', $scope.TxDecimal, {'withCredentials': true}).success(function(datas) {
             if(datas.status=="1")
             {
-                $http.go("app.withdrawalsDetail");
+                $state.go("app.withdrawalsDetail");
             }else
             {
-                alert("提现错误,请与客户联系");
+                alert(datas.Msg);
             }
         });
     };
@@ -133,7 +133,15 @@ app.controller('bankAddController',['$http','$scope','$state',function($http,$sc
         }
 
         $http.post(SETTING.ApiUrl+'/BankCard/AddBankCard', $scope.bankcard, {'withCredentials': true}).success(function(datas) {
-            alert(datas.toString());
+            if(datas.Status)
+            {
+                $state.go("app.myPurse");
+            }else
+            {
+                alert(datas.Msg);
+            }
+
+
         });
     };
 
@@ -144,8 +152,8 @@ app.controller('bankAddController',['$http','$scope','$state',function($http,$sc
                     {
                         $scope.bankcard.Hidm=data.Desstr;
                     }else{
-                        //alert("短信发送失败，请与客户联系！");
-                        console.log("短信发送失败，请与客户联系！");
+                        alert("短信发送失败，请与客户联系！");
+                      //  console.log("短信发送失败，请与客户联系！");
                     }
                 });
 

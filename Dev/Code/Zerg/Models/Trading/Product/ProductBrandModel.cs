@@ -17,6 +17,11 @@ namespace Zerg.Models.Trading.Product
         /// </summary>
         public  string Bimg { get; set; }
         public string SubTitle { get; set; }
+
+        /// <summary>
+        /// AdTitle
+        /// </summary>
+        public string AdTitle { get; set; }
         /// <summary>
         /// AddUser
         /// </summary>

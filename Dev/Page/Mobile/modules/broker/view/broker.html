@@ -18,38 +18,55 @@
             </div>
             <div class="bj">
             <div class="nav-broker">
-                <a href="#/app/nominate"><span class="dk"> 我要带客</span></a>
-                <a href="#/app/nominate"><span class="tj"> 我要推荐</span></a>
+                <a href="#/app/nominate" access="broker"><span class="dk"> 我要带客</span></a>
+                <a href="#/app/nominate" access="broker"><span class="tj"> 我要推荐</span></a>
                 <a href="#/app/task"><span class="rw">我的任务</span></a>
                 <a href="#/app/redPaper-1"> <span class="hb">抢红包</span></a>
             </div>
             <div class="activity-broker">
-                <div class="sub-nav">创富活动<span class="yuan-icon fr"><a class="icon-red" href="#"></a><a href="#"></a><a
-                        href="#"></a></span></div>
-                <ul class="cf">
-                    <li class="one">
-                        <a href="#/app/redPaper-1">
-                            <p class="red-broker wait">百万红包等你抢</p>
-                            <p class="well">创富宝送出100W福利</p>
-                            <img src="modules/broker/static/image/broker/p1.png" alt="百万红包等你抢"/>
-                        </a>
-                    </li>
-                    <li class="two">
-                        <a href="#">
-                            <p class="wait">开发商疯了吧</p>
-                            <p class="well">最高折扣70W,白送</p>
-                            <img src="modules/broker/static/image/broker/p2.png" alt="开发商疯了吧"/>
-                        </a>
-                    </li>
-                    <li class="three">
-                        <a href="#">
-                            <p class="wait">名校就在小区里</p>
-                            <p class="well">最高享受6万元优惠</p>
-                            <img src="modules/broker/static/image/broker/p3.png" alt="名校就在小区里" />
-                        </a>
-                    </li>
+                <div class="sub-nav">创富活动<span class="yuan-icon fr">
+                    <!--<a class="icon-red" href="#"></a><a href="#"></a><a href="#"></a>-->
+                </span>
+                </div>
 
+                <ul  class="cf">
+
+
+                    <li class="{{$index==0?'one':$index==1?'two':$index==2?'three':$index==3?'four':$index==4?'five':$index==5?'six':''}}"  ng-repeat="item in Actcontent">
+                        <!--<a href="#/app/chip">-->
+                        <!--<img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="开发商疯了"  width="205px" />-->
+                        <!--</a>-->
+                        <a href="#">
+                            <p class="active_title">{{item.Title}}</p>
+                            <p class="well">{{item.AdSubTitle}}</p>
+                            <img src="http://img.yoopoon.com/{{item.TitleImg}}" width="95" height="95">
+                        </a>
+                    </li>
                 </ul>
+                <!--<ul class="cf">-->
+                    <!--<li class="one">-->
+                        <!--<a href="#/app/redPaper-1">-->
+                            <!--<p class="red-broker wait">百万红包等你抢</p>-->
+                            <!--<p class="well">创富宝送出100W福利</p>-->
+                            <!--<img src="modules/broker/static/image/broker/p1.png" alt="百万红包等你抢"/>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li class="two">-->
+                        <!--<a href="#">-->
+                            <!--<p class="wait">开发商疯了吧</p>-->
+                            <!--<p class="well">最高折扣70W,白送</p>-->
+                            <!--<img src="modules/broker/static/image/broker/p2.png" alt="开发商疯了吧"/>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li class="three">-->
+                        <!--<a href="#">-->
+                            <!--<p class="wait">名校就在小区里</p>-->
+                            <!--<p class="well">最高享受6万元优惠</p>-->
+                            <!--<img src="modules/broker/static/image/broker/p3.png" alt="名校就在小区里" />-->
+                        <!--</a>-->
+                    <!--</li>-->
+
+                <!--</ul>-->
             </div>
             <div class="hero">
                 <div class="hd">创富英雄榜</div>
@@ -65,7 +82,7 @@
             <div class="message">
                 <!--<div ng-controller="StormRoomController" style="..."></div>-->
                 <div class="recommend">推荐楼房</div>
-                <!--&lt;!&ndash;<div ng-controller="StormRoomController" style="..."></div>&ndash;&gt;-->
+                <!--<!--<div ng-controller="StormRoomController" style="..."></div>-->
                 <!--<div class=" message-storeroom" ng-repeat="item in List">-->
                     <!--<div class="main-storeroom cf">-->
                         <!--<a class="fl img" href="#/app/housesPic?productId={{item.Id}}"><img src="http://img.yoopoon.com/{{item.Productimg}}" alt="蓝光&nbsp;·&nbsp;颐明园"width="224" height="170"/></a>-->
@@ -94,8 +111,8 @@
                             <div class="depreciateBg"></div>
                         </a>
                         <div class="sub-nav-broker">
-                            <span class="orange" access="broker"><a href="#/app/carry_client?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}">我要带客</a></span>
-                            <span class="orange" access="broker"><a href="#/app/groom?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}">我要推荐</a></span>
+                            <span class="orange" access="broker"><a href="#/app/carry_client?Projectid={{item.ProductId}}&name={{item.Productname}}&type={{item.HouseType}}">我要带客</a></span>
+                            <span class="orange"  access="broker"><a href="#/app/groom?Projectid={{item.ProductId}}&name={{item.Productname}}&type={{item.HouseType}}">我要推荐</a></span>
                             <span class="blue" access="broker"><a href="#/app/redPaper-1">抢红包</a></span>
                             <span class="blue lt" access="broker"><a href="#/app/myInt">拿积分</a></span>
                         </div>

@@ -1,9 +1,9 @@
 <!--首页-->
 <!--required:../static/style/index.css-->
-<div ng-controller="homeController">
+<div class="index" ng-controller="homeController" xmlns="http://www.w3.org/1999/html">
 
 <div id="carousel-bg" >
-    <carousel interval="3000">
+    <carousel interval="2000">
         <slide ng-repeat="slide in content" active="slide.active">
             <img src="http://img.yoopoon.com/{{slide.TitleImg}}" class="img-full" alt="成为经济人轻松赚大钱" width="640" height="230" />
         </slide>
@@ -78,22 +78,26 @@
                 <!--<span class="brokerage"><a href="#">最高佣金：10000元/套</a></span>-->
             <!--</div>-->
             <a href="#/app/housesBuy?BrandId={{item.Id}}">
-                <img src="http://img.yoopoon.com/{{item.Bimg}}" alt="中天·水云间" width="620" height="160"/>
-                <div class="summary"><span>[{{ item.Bname }}]</span><span>{{item.Adduser}}</span><span>总价：110万</span></div>
+                <img src="http://img.yoopoon.com/{{item.Bimg}}" width="620" height="160"/>
+
+                <div class="summary"><span>[{{ item.ProductParamater["所属城市"] }}]</span><span>{{item.Bname}}</span></span><span>{{item.ProductParamater["占地面积"] }}</span></div>
                 <div class="summaryBg"></div>
-                <div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>
+                <div class="depreciate"><p ng-bind-html="item.AdTitle|adtitle"></p></div>
                 <div class="depreciateBg"></div>
             </a>
             <h3>{{item.SubTitle}}</h3>
             <div class="nav" >
                 <span class="orange">
-                    <a href="">
+                    <a href="tel:{{item.ProductParamater['来电咨询']}}">
                         来电咨询:{{item.ProductParamater["来电咨询"]}}
                     </a>
                 </span>
                 <span class="brokerage">
                     <a href="#">最高享用优惠：{{item.ProductParamater["最高优惠"]}}元/套</a>
                 </span>
+            </div>
+            <div ng-if="$index % 3==2">
+                <img src="modules/Index/static/image/index/l.png" >
             </div>
         </li>
 
@@ -160,4 +164,13 @@
     <div class="masked" style="display: none">
         <a href="#"><img class="firstStep location" src="modules/Index/static/image/index/firstStep.png" alt="指向房源库" width="452" height="646"/></a>
     </div>
+    <div class="broker-index">
+    <div  access="broker" class="summaryBg">
+        <a  class="dk" href="#">我要带客</a><a class="tj" href="#">我要推荐</a>
+        <a class="ask" href="#">咨询热线:</a>
+    </div>
+     </div>
 </div>
+
+
+

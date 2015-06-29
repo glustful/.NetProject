@@ -33,37 +33,40 @@
     color: #878787;
     font-size: 16px;
     padding-left: 50px;
-    border-bottom: 1px solid #e2e2e2;
+
 }
 .message-storeroom{
     margin:0 0 20px 0;
 }
  .main-storeroom{
-    background: #fff;
+     background-color: #f8f8f8;
     padding:20px 0 15px 15px;
     border-bottom: 1px solid #e2e2e2;
 }
  .detail-storeroom{
     width: 350px;
 }
-.yhy{
-    padding: 5px 0 20px 0;
+ .main-storeroom .img{
+     margin-right: 15px;
+ }
+ .yhy{
+    padding: 0px 0 20px 0;
     color: #333333;
     border-bottom:1px solid #ebebeb;
     font-size: 1.2em;
 }
 .yuan{
-  padding-top:20px;
+  padding-top:5px;
   color: #ff3000;
   font-size: 20px;
 }
-.bj{
-    padding-top: 10px;
+.main-storeroom .bj{
+    padding:0 10px 0 0;
     color: #8b8b8b;
 }
 .yh{
-    padding-top: 18px;
-    color: #ffa800;
+    padding-top:8px;
+    color: #f5ab00;
     font-size: 16px;
 }
  .sub-nav-storeroom{

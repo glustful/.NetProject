@@ -131,8 +131,9 @@
   <ItemGroup>
     <Content Include="App_Data\Settings.txt" />
     <Content Include="Global.asax" />
-    <Content Include="index.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -242,6 +243,7 @@
     <Compile Include="Models\CMS\TagModel.cs" />
     <Compile Include="Models\Trading\Area\AreaModel.cs" />
     <Compile Include="Models\Trading\Product\ProductDetail.cs" />
+    <Compile Include="Models\Trading\Trading\BillModel.cs" />
     <Compile Include="Models\UC\ActionModel.cs" />
     <Compile Include="Models\UC\ChangePasswordModel.cs" />
     <Compile Include="Models\UC\RoleModel.cs" />
@@ -263,7 +265,9 @@
     <Content Include="packages.config" />
     <Content Include="Controllers\UEditor\controller.ashx" />
     <Content Include="Controllers\UEditor\config.json" />
+    <Content Include="log.config" />
     <None Include="Properties\PublishProfiles\Zerg_CMS.pubxml" />
+    <None Include="Properties\PublishProfiles\Zerg_Publish_Server1.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

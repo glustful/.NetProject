@@ -116,7 +116,7 @@ namespace Zerg.Controllers.CRM
             }
             var brokerlist = _brokerService.GetBrokerById(Convert.ToInt32(id));
             var model = new BrokerModel
-            {
+            { 
                 Headphoto = brokerlist.Headphoto,
                 Nickname = brokerlist.Nickname,
                 Brokername = brokerlist.Brokername,
@@ -159,7 +159,7 @@ namespace Zerg.Controllers.CRM
             var brokerInfo = new BrokerModel
             {
                 Id = model.Id,
-
+                Brokername=model.Brokername,
                 Realname = model.Realname,
                 Nickname = model.Nickname,
                 Sexy = model.Sexy,
@@ -216,7 +216,10 @@ namespace Zerg.Controllers.CRM
                 p.State,
                 p.Usertype,
                 btnVisibleDel = true,
-                btnVisibleCan = true
+                btnVisibleCan = true,
+                btnname="注销",
+                btncolor="",
+                backcolor=""
             }).ToList().Select(b => new
             {
                 b.Id,
@@ -383,19 +386,28 @@ namespace Zerg.Controllers.CRM
         /// <param name="id">经纪人ID</param>
         /// <returns>经纪人数据删除结果状态信息</returns>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage CancelBroker([FromBody] string id)
+        public HttpResponseMessage CancelBroker( string id,string btnname="")
         {
             if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id))
             {
                 var broker = _brokerService.GetBrokerById(Convert.ToInt32(id));
-                broker.State = -1;
+                if (btnname == "注销")
+                    broker.State = -1;
+                else if (btnname == "恢复")
+                    broker.State = 1;
                 if (_brokerService.Update(broker) != null)
                 {
-                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据成功注销！"));
+                    if (btnname == "注销")                 
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据成功注销！"));
+                    else if (btnname == "恢复")
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据成功恢复！"));
                 }
                 else
                 {
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据注销失败！"));
+                    if (btnname == "注销")
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据注销失败！"));
+                    else if (btnname == "恢复")
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据恢复失败！"));
                 }
             }
 

@@ -75,7 +75,7 @@ angular.module("zergApp").service("AuthService",["$http",'$sessionStorage',funct
      * @param faildCallback
      */
     this.doLogin = function(userName,password,callback,faildCallback){
-        $http.post(SETTING.ApiUrl+"/user/login",
+        $http.post(SETTING.ApiUrl+"/user/IndexLogin",
             {
                 UserName:userName,
                 Password:password
@@ -85,7 +85,7 @@ angular.module("zergApp").service("AuthService",["$http",'$sessionStorage',funct
             .success(function(data){
                 if(data.Status){
                     _currentUser ={
-                        UserName:userName,
+                        UserName:data.Object.UserName,
                         UserId:data.Object.Id
                     };
                     _isAuthenticated = true;

@@ -47,7 +47,7 @@ app.controller('homeController',['$http','$scope',function($http,$scope){
             else {
                 $scope.tipp = "没有更多了";
             }
-
+//            $scope.countbrand=data.totalCount;
 
         };
     pushContent();
@@ -73,6 +73,7 @@ app.controller('homeController',['$http','$scope',function($http,$scope){
 
 
 
+
     $scope.channelName='banner';
     $http.get(SETTING.ApiUrl+'/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
         $scope.content=data;
@@ -84,7 +85,14 @@ app.controller('homeController',['$http','$scope',function($http,$scope){
     });
 
 }]);
+app.filter('adtitle', function ($sce) {
 
+    return function (input) {
+
+        return $sce.trustAsHtml(input);
+
+    }
+});
 
 
 

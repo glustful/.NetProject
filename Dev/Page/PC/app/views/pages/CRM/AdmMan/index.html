@@ -1,5 +1,5 @@
-
-<div class="row"onkeydown="key()"  >
+<div ng-controller="adminIndexController">
+<div class="row"onkeydown="key()"   >
     <input style="width:200px;" onfocus="myFunction('name')" id="name" type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入经纪人名"maxlength="50"  ng-model="searchCondition.name"   required="" tabindex="0" aria-required="true" aria-invalid="true">
     <input style="width:200px;" onfocus="myFunction('phone')" id="phone" type="text" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入电话号码"maxlength="30" ng-model="searchCondition.phone" required="" tabindex="0" aria-required="true" aria-invalid="true">
     <select style="width:200px;"  ng-focus="initPage()"   onfocus="myFunction('staStatus')" id="staStatus"  ng-model="searchCondition.state" class=" bordhtml form-control"  name="" >
@@ -34,8 +34,8 @@
             <td><time>{{item.Regtime}}</time></td>
             <td>
                 <a href="#/page/CRM/AdmMan/detailed?id={{item.Id}}" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">详情</button></a>
-                <button ng-click="deleteBroker(item.Id)"ng-show="item.btnVisibleDel"  md-ink-ripple="" class="md-btn md-raised m-b btn-fw yellow">删除</button>
-                <button ng-click="cancelBroker(item.Id)"ng-show="item.btnVisibleCan" md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">注销</button>
+                <button ng-style="item.color" ng-click="deleteBroker(item.Id)"ng-disabled="item.btnVisibleDel"  md-ink-ripple="" class="md-btn md-raised m-b btn-fw yellow">删除</button>
+                <button ng-style="item.backcolor" ng-click="cancelBroker(item.Id,item.btnname)"ng-disabled="item.btnVisibleCan" md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo">{{item.btnname}}</button>
             </td>
 
         </tr>
@@ -48,11 +48,12 @@
         <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
 
     </div>
+</div>
 <script type="text/javascript">
     var keyname="";
     key=function () {
         var keynum;
-//三元表达式获取不同浏览器的按下键的代码
+//三目表达式获取不同浏览器的按下键的代码
         keynum = window.event ? event.keyCode : event.which;
         if(keynum==13){btsearch.click()}if(keynum==39){
             if(keyname=="name"){document.getElementById("phone").focus();}
