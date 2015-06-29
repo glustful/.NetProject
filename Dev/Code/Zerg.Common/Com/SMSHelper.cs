@@ -150,10 +150,10 @@ namespace Zerg.Common
         /// <returns></returns>
         //public static string Sending(string mobile, string contexts)
         //{
-        //    GetSMSCounts();
-        //    发送短信
+        
+          
         //    string param = "action=send&userid=95&account=ypkj&password=123456&content=" + contexts + "&mobile=" + mobile + "&sendtime=";
-        //      param = param + "0";//不需要定时发送，也需要带上0            
+                   
         //    byte[] bs = Encoding.UTF8.GetBytes(param);
         //    HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create("http://115.29.242.32:8888/sms.aspx");
         //    req.Method = "POST";
@@ -166,8 +166,8 @@ namespace Zerg.Common
         //    }
         //    using (WebResponse wr = req.GetResponse())
         //    {
-        //        StreamReader sr = new StreamReader(wr.GetResponseStream(), System.Text.Encoding.Default);
-        //         return sr.ReadToEnd().Trim();
+        //        StreamReader sr = new StreamReader(wr.GetResponseStream(), System.Text.Encoding.UTF8);
+                
         //        returnsms returns = XmlSerialize.DeserializeXML<returnsms>(sr.ReadToEnd().Trim());
 
         //        if (returns.returnstatus == "Success" && returns.successCounts == "1")
@@ -183,34 +183,43 @@ namespace Zerg.Common
         /// 获取短信剩余量
         /// </summary>
         /// <returns></returns>
-        //public static string GetSMSCounts()
-        //{
-        //    //查询余额
-        //    string param = "userid=95&account=ypkj&password=123456&action=overage";
-        //    byte[] bs = Encoding.UTF8.GetBytes(param);
+        public static string GetSMSCounts()
+        {
+            //查询余额
+            string param = "userid=95&account=ypkj&password=123456&action=overage";
+            byte[] bs = Encoding.UTF8.GetBytes(param);
 
-        //    HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create("http://115.29.242.32:8888/sms.aspx");
-        //    req.Method = "POST";
-        //    req.ContentType = "application/x-www-form-urlencoded";
-        //    req.ContentLength = bs.Length;
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create("http://115.29.242.32:8888/sms.aspx");
+            req.Method = "POST";
+            req.ContentType = "application/x-www-form-urlencoded";
+            req.ContentLength = bs.Length;
 
-        //    using (Stream reqStream = req.GetRequestStream())
-        //    {
-        //        reqStream.Write(bs, 0, bs.Length);
-        //    }
-        //    using (WebResponse wr = req.GetResponse())
-        //    {
-        //        StreamReader sr = new StreamReader(wr.GetResponseStream(), System.Text.Encoding.Default);
-        //        string str = sr.ReadToEnd().Trim();
-        //        returnsms returns = XmlSerialize.DeserializeXML<returnsms>(str);
+            using (Stream reqStream = req.GetRequestStream())
+            {
+                reqStream.Write(bs, 0, bs.Length);
+            }
+            using (WebResponse wr = req.GetResponse())
+            {
+                try
+                { 
+                StreamReader sr = new StreamReader(wr.GetResponseStream(), System.Text.Encoding.UTF8);
+                string str = sr.ReadToEnd().Trim();
+                returnsms returns = XmlSerialize.DeserializeXML<returnsms>(str);
+                if (returns.returnstatus == "Sucess")
+                {
+                    return returns.overage.ToString();
+                }
+                }
+                catch
+                {
+                    return "获取总量错误";
+                }
 
 
-
-
-        //        return "短信发送失败";
-        //    }
-        //    return "";
-        //}
+               
+            }
+            return "获取总量错误";
+        }
 
         #endregion
     }

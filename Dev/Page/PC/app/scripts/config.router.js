@@ -817,7 +817,7 @@ angular.module('app')
                 url: '/detailed?id',
                 templateUrl: 'views/pages/CRM/DKWaitPetition/detailed.html',
                 data: { title: '详情页' },
-                controller:"WPDetialController",
+                controller:"DKDetialController",
                 resolve:load('scripts/controllers/CRM/WaitPetitionDK.js')
             })
 

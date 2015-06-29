@@ -61,7 +61,7 @@ namespace Zerg.Controllers.UC
         }
 
         /// <summary>
-        /// 登陆
+        /// 后台登陆
         /// </summary>
         /// <param name="model">登陆参数</param>
         /// <returns>登陆结果</returns>
@@ -70,19 +70,19 @@ namespace Zerg.Controllers.UC
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage Login([FromBody]UserModel model)
         {
-            BrokerSearchCondition brokerSearchcon=new BrokerSearchCondition
-            {
-                State=1,
-               Phone=model.UserName
-            };
-            BrokerEntity broker = _brokerService.GetBrokersByCondition(brokerSearchcon).FirstOrDefault();
-            if(broker==null)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号或密码错误"));
-            }
-           // var user = _userService.GetUserByName(model.UserName);
+            //BrokerSearchCondition brokerSearchcon=new BrokerSearchCondition
+            //{
+            //    State=1,
+            //   Phone=model.UserName
+            //};
+            //BrokerEntity broker = _brokerService.GetBrokersByCondition(brokerSearchcon).FirstOrDefault();
+            //if(broker==null)
+            //{
+            //    return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号或密码错误"));
+            //}
+            var user = _userService.GetUserByName(model.UserName);
 
-            var user =_userService.FindUser(broker.UserId);
+           
             if (user == null)
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名或密码错误"));
             if (!PasswordHelper.ValidatePasswordHashed(user, model.Password))
@@ -95,6 +95,51 @@ namespace Zerg.Controllers.UC
                 user.UserName
             }));
         }
+
+
+
+
+        /// <summary>
+        /// 前台登陆
+        /// </summary>
+        /// <param name="model">登陆参数</param>
+        /// <returns>登陆结果</returns>
+        [Description("登陆")]
+        [HttpPost]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage IndexLogin([FromBody]UserModel model)
+        {
+            BrokerSearchCondition brokerSearchcon = new BrokerSearchCondition
+            {
+                State = 1,
+                Phone = model.UserName
+            };
+            BrokerEntity broker = _brokerService.GetBrokersByCondition(brokerSearchcon).FirstOrDefault();
+            if (broker == null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号或密码错误"));
+            }
+            // var user = _userService.GetUserByName(model.UserName);
+
+            var user = _userService.FindUser(broker.UserId);
+            if (user == null)
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名或密码错误"));
+            if (!PasswordHelper.ValidatePasswordHashed(user, model.Password))
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名或密码错误"));
+            _authenticationService.SignIn(user, model.Remember);
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "登陆成功", new
+            {
+                user.Id,
+                Roles = user.UserRoles.Select(r => new { r.Role.RoleName }).ToArray(),
+                user.UserName
+            }));
+        }
+
+
+
+
+
+
 
         /// <summary>
         /// 登出
