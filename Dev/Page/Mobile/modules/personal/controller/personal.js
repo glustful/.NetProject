@@ -55,7 +55,8 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
     $scope.warm="";
     $scope.tipp="加载更多。。。"
     //查询任务
-    var page = 1 ;                             //读取的页数, loading = false,pages=2;                      //判断是否正在读取内容的变量
+    var page = 1 ;                             //读取的页数,
+    var loading = false,pages=2;                      //判断是否正在读取内容的变量
     $scope.posts = [];//保存从服务器查来的任务，可累加
     var pushContent= function() {                    //核心是这个函数，向$scope.posts
         //添加内容
@@ -90,7 +91,7 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
         }
     };
     pushContent();
-    //查询客户个数
+//    //查询客户个数
 //    var getcustomerList  = function() {
 //        $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoNumByUserId/',{'withCredentials':true}).success(function(data){
 //                $scope.number = data.count;
