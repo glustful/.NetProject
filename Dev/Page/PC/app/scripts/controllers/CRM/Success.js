@@ -66,11 +66,11 @@ angular.module("app").controller('DKSuccessController',[
 angular.module("app").controller('SuccessDetialController',[
     '$http','$scope','$stateParams',function($http,$state,$scope,$stateParams) {
         //获取详细信息
-        $http.get(SETTING.ApiUrl + '/AdminRecom/GetAuditDetail/' + $stateParams.id,{
+        $http.get(SETTING.ApiUrl+ '/AdminRecom/GetAuditDetail/'+ $stateParams.id,{
             'withCredentials':true
         }).success(function (data) {
             $scope.ARDetialModel = data;
-            console.log(data);
+            console.log($scope.ARDetialModel);
         });
 
         $scope.PassAudit = {
@@ -168,7 +168,7 @@ angular.module("app").controller('BLPayController',[
 angular.module("app").controller('DKSuccessDetialController',[
     '$http','$scope','$stateParams',function($http,$state,$scope,$stateParams) {
         //获取详细信息
-        $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/' + $stateParams.id,{
+        $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/'+ $stateParams.id,{
             'withCredentials':true
         }).success(function (data) {
             $scope.BrokerLeadClientDtail = data;
