@@ -64,7 +64,7 @@ angular.module("app").controller('DKSuccessController',[
 
 //详细信息
 angular.module("app").controller('SuccessDetialController',[
-    '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+    '$http','$scope','$stateParams',function($http,$state,$scope,$stateParams) {
         //获取详细信息
         $http.get(SETTING.ApiUrl + '/AdminRecom/GetAuditDetail/' + $stateParams.id,{
             'withCredentials':true
@@ -87,7 +87,9 @@ angular.module("app").controller('SuccessDetialController',[
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
-                    console.log(data.Msg);
+                    alert(data.Msg);
+                    $state.go('page.CRM.talking.index');
+
                 }else{
                     console.log(data.Msg);
                 }
@@ -164,7 +166,7 @@ angular.module("app").controller('BLPayController',[
 ///////////////////////////////////////带客洽谈详细  Begin ///////////////////////////////////////////////////////////
 
 angular.module("app").controller('DKSuccessDetialController',[
-    '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+    '$http','$scope','$stateParams',function($http,$state,$scope,$stateParams) {
         //获取详细信息
         $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/' + $stateParams.id,{
             'withCredentials':true
@@ -187,7 +189,9 @@ angular.module("app").controller('DKSuccessDetialController',[
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
-                    console.log(data.Msg);
+                    alert(data.Msg);
+                    $state.go('page.CRM.DKSuccess.index');
+
                 }else{
                     console.log(data.Msg);
                 }
