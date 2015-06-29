@@ -14,20 +14,20 @@
         </thead>
         <tbody>
         <tr ng-repeat="row in rowCollectionBasic">
-            <td align="center">{{row.Agentname }}</td>
-            <td align="center">{{row.Landagentname }}</td>
-            <td align="center">{{row.Amount }}</td>
-            <td align="center" ng-if="row.Isinvoice">有</td>
-            <td align="center" ng-if="!row.Ordertype">无</td>
-            <td align="center">{{row.Remark }}</td>
-            <td align="center">{{row.Checkoutdate }}</td>
+            <td>{{row.Agentname }}</td>
+            <td>{{row.Landagentname }}</td>
+            <td>{{row.Amount }}</td>
+            <td ng-if="row.Isinvoice==true">有</td>
+            <td ng-if="row.Isinvoice==false">无</td>
+            <td>{{row.Remark }}</td>
+            <td>{{row.Checkoutdate|dateFilter }}</td>
 
         </tr>
         </tbody>
         <tfoot>
         <tr>
-            <td colspan="5" class="text-center">
-                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7" class="no-margin"></div>
+            <td colspan="10" class="text-center">
+                <pagination boundary-links="true" total-items="totalCount" items-per-page="CFBill.pageSize" ng-model="CFBill.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
             </td>
         </tr>
         </tfoot>

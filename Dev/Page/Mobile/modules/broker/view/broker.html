@@ -24,32 +24,49 @@
                 <a href="#/app/redPaper-1"> <span class="hb">抢红包</span></a>
             </div>
             <div class="activity-broker">
-                <div class="sub-nav">创富活动<span class="yuan-icon fr"><a class="icon-red" href="#"></a><a href="#"></a><a
-                        href="#"></a></span></div>
-                <ul class="cf">
-                    <li class="one">
-                        <a href="#/app/redPaper-1">
-                            <p class="red-broker wait">百万红包等你抢</p>
-                            <p class="well">创富宝送出100W福利</p>
-                            <img src="modules/broker/static/image/broker/p1.png" alt="百万红包等你抢"/>
-                        </a>
-                    </li>
-                    <li class="two">
-                        <a href="#">
-                            <p class="wait">开发商疯了吧</p>
-                            <p class="well">最高折扣70W,白送</p>
-                            <img src="modules/broker/static/image/broker/p2.png" alt="开发商疯了吧"/>
-                        </a>
-                    </li>
-                    <li class="three">
-                        <a href="#">
-                            <p class="wait">名校就在小区里</p>
-                            <p class="well">最高享受6万元优惠</p>
-                            <img src="modules/broker/static/image/broker/p3.png" alt="名校就在小区里" />
-                        </a>
-                    </li>
+                <div class="sub-nav">创富活动<span class="yuan-icon fr">
+                    <!--<a class="icon-red" href="#"></a><a href="#"></a><a href="#"></a>-->
+                </span>
+                </div>
 
+                <ul  class="cf">
+
+
+                    <li  class="{{$index==0?'one':$index==1?'two':$index==2?'three':''}}"  ng-repeat="item in Actcontent">
+                        <!--<a href="#/app/chip">-->
+                        <!--<img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="开发商疯了"  width="205px" />-->
+                        <!--</a>-->
+                        <a href="#">
+                            <p class="active_title">{{item.Title}}</p>
+                            <p class="well">{{item.AdSubTitle}}</p>
+                            <img src="http://img.yoopoon.com/{{item.TitleImg}}" width="95" height="95">
+                        </a>
+                    </li>
                 </ul>
+                <!--<ul class="cf">-->
+                    <!--<li class="one">-->
+                        <!--<a href="#/app/redPaper-1">-->
+                            <!--<p class="red-broker wait">百万红包等你抢</p>-->
+                            <!--<p class="well">创富宝送出100W福利</p>-->
+                            <!--<img src="modules/broker/static/image/broker/p1.png" alt="百万红包等你抢"/>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li class="two">-->
+                        <!--<a href="#">-->
+                            <!--<p class="wait">开发商疯了吧</p>-->
+                            <!--<p class="well">最高折扣70W,白送</p>-->
+                            <!--<img src="modules/broker/static/image/broker/p2.png" alt="开发商疯了吧"/>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li class="three">-->
+                        <!--<a href="#">-->
+                            <!--<p class="wait">名校就在小区里</p>-->
+                            <!--<p class="well">最高享受6万元优惠</p>-->
+                            <!--<img src="modules/broker/static/image/broker/p3.png" alt="名校就在小区里" />-->
+                        <!--</a>-->
+                    <!--</li>-->
+
+                <!--</ul>-->
             </div>
             <div class="hero">
                 <div class="hd">创富英雄榜</div>
@@ -90,7 +107,7 @@
                             </div>
                             <div class="summaryBg"></div>
                             <div class="tiptop">最高佣金：&nbsp;{{item.Commition}}/套</div>
-                            <div class="depreciate"><span>{{item.SubTitle}}</span></div>
+                            <div class="depreciate"><span><p ng-bind-html="item.SubTitle|subtitle"></p></span></div>
                             <div class="depreciateBg"></div>
                         </a>
                         <div class="sub-nav-broker">

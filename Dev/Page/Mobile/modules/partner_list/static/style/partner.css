@@ -27,6 +27,11 @@
     width: 150px;
     text-align: left;
 }
+.Tips{
+
+    color: #fc3b00;
+    font-size: 20px;
+}
 .list_content .partnerPhone{
    display: inline-block;
     width: 120px;

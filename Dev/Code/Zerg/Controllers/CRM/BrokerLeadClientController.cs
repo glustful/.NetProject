@@ -79,7 +79,9 @@ namespace Zerg.Controllers.CRM
         {
             var sech = new BrokerLeadClientSearchCondition
             {
-                OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderById
+                OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderById,
+                Status = EnumBLeadType.预约中,
+               
             };
             var list = _brokerleadclientService.GetBrokerLeadClientsByCondition(sech).Select(p => new
             {
@@ -148,7 +150,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetLeadCientInfoByBrokerName(EnumBLeadType status, string brokername, int page, int pageSize)
+        public HttpResponseMessage GetLeadClientInfoByBrokerName(EnumBLeadType status, string brokername, int page, int pageSize)
         {
 
             var condition = new BrokerLeadClientSearchCondition
@@ -163,11 +165,12 @@ namespace Zerg.Controllers.CRM
             var list = _brokerleadclientService.GetBrokerLeadClientsByCondition(condition).Select(a => new
             {
                 a.Id,
+                a.Appointmenttime,
                 a.Brokername,
                 a.ClientInfo.Phone,
                 a.Projectname,
                 a.Addtime,
-
+                a.ClientInfo.Clientname,
                 
                 SecretaryName = a.SecretaryId.Brokername,
                 a.SecretaryPhone,
@@ -179,11 +182,13 @@ namespace Zerg.Controllers.CRM
             {
                 b.Id,
                 b.Brokername,
-               
+                b.Clientname,
+
                 b.Phone,
                 b.Projectname,
+                Appointmenttime = b.Appointmenttime.ToString("yyy-MM-dd"),
                 Addtime = b.Addtime.ToString("yyy-MM-dd"),
-
+                
                 
                 SecretaryName = b.Brokername,
                 b.SecretaryPhone,
@@ -394,6 +399,7 @@ namespace Zerg.Controllers.CRM
             model.Projectname = brokerleadclient.Projectname;
             model.Status = EnumBLeadType.预约中;
             model.DelFlag = EnumDelFlag.默认;
+            model.ComOrder = (int)EnumOrderType.带客订单;
 
             //            model.ComOrder = _orderService.Create(oe).Id;      //添加代客订单；
             //            model.DealOrder = _orderService.Create(oe2).Id;       //添加成交订单
@@ -413,39 +419,42 @@ namespace Zerg.Controllers.CRM
         {
             var entity = _brokerleadclientService.GetBrokerLeadClientById(model.Id);
             entity.Status = model.Status;
-            if (model.Status == EnumBLeadType.等待上访)
+           
+            var comOrder = _orderService.GetOrderById(entity.ComOrder);
+            //变更订单状态
+            int a = (int)Enum.Parse(typeof(EnumBLeadType), model.Status.ToString());
+            comOrder.Shipstatus = a;
+            // 根据传入状态执行相应操作
+            switch (model.Status)
             {
-                entity.SecretaryId = _brokerService.GetBrokerByUserId(model.SecretaryId);
-                //查询商品详情
-                var product = _productService.GetProductById(model.Projectid);
+                case EnumBLeadType.预约中:
+                    break;
+                case EnumBLeadType.等待上访:
+                    entity.SecretaryId = _brokerService.GetBrokerByUserId(model.SecretaryId);
+                    //查询商品详情
+                    var product = _productService.GetProductById(model.Projectid);
 
-                #region 创建带客订单 杨定鹏 2015年6月9日17:04:05
-                //创建订单详情
-                OrderDetailEntity ode = new OrderDetailEntity
-                {
-                    Adddate = DateTime.Now,
-                    Adduser = model.Adduser.ToString(CultureInfo.InvariantCulture),
-                    Commission = product.Commission,
-                    RecCommission = product.RecCommission,
-                    Dealcommission = product.Dealcommission,
-                    Price = product.Price,
-                    Product = product,
-                    Productname = product.Productname,
-                    Upddate = DateTime.Now,
-                    Upduser = model.Adduser.ToString(CultureInfo.InvariantCulture)
-                };
-                //ode.Remark = product.
-                //ode.Snapshoturl = orderDetailModel.Snapshoturl,
+                    //创建订单详情
+                    OrderDetailEntity ode = new OrderDetailEntity
+                    {
+                        Adddate = DateTime.Now,
+                        Adduser = model.Adduser.ToString(CultureInfo.InvariantCulture),
+                        Commission = product.Commission,
+                        RecCommission = product.RecCommission,
+                        Dealcommission = product.Dealcommission,
+                        Price = product.Price,
+                        Product = product,
+                        Productname = product.Productname,
+                        Upddate = DateTime.Now,
+                        Upduser = model.Adduser.ToString(CultureInfo.InvariantCulture)
+                    };
 
-                //创建订单
+                    //创建订单
                     OrderEntity oe = new OrderEntity
                     {
                         Adddate = DateTime.Now,
                         Adduser = model.Broker.ToString(),//model.Adduser.ToString(CultureInfo.InvariantCulture),
                         AgentId = model.Broker,//model.Adduser,
-                        //HouseType = model.ProjectId == 0 ? "" : _productService.GetProductById(model.ProjectId).Productname,
-                       // Agentname = model.Adduser == 0 ? "" : _brokerService.GetBrokerByUserId(model.Adduser).Brokername,
-                        Agentname = model.Brokername,//_brokerService.GetBrokerByUserId(model.Adduser).Brokername,
                         Agenttel = model.Phone,
                         BusId = product.Bussnessid,
                         Busname = product.BussnessName,
@@ -462,15 +471,51 @@ namespace Zerg.Controllers.CRM
                     //创建带客订单号
                     //订单详情；
                     _orderService.Create(oe);
+                    break;
+                case EnumBLeadType.预约不通过:
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "预约不通过"));
+                case EnumBLeadType.洽谈中:
+                    //审核通过推荐订单
+                    comOrder.Shipstatus = (int)EnumBRECCType.洽谈中;
+                    comOrder.Status = (int)EnumOrderStatus.审核通过;
+                    comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    comOrder.Upddate = DateTime.Now;
+                    break;
 
-                #endregion
+                case EnumBLeadType.客人未到:
+                    //订单作废
+                    comOrder.Shipstatus = (int)EnumBRECCType.客人未到;
+                    comOrder.Status = (int)EnumOrderStatus.审核失败;
+                    //dealOrder.Status = (int)EnumOrderStatus.审核失败;
+                    comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    comOrder.Upddate = DateTime.Now;
+                    break;
 
-                }
+                case EnumBLeadType.洽谈成功:
+                    //审核通过成交订单
+                    comOrder.Shipstatus = (int)EnumBRECCType.洽谈成功;
+                    comOrder.Status = (int)EnumOrderStatus.审核通过;
+                    comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    comOrder.Upddate = DateTime.Now;
+                    break;
+
+                case EnumBLeadType.洽谈失败:
+                    //成交订单作废
+                    comOrder.Shipstatus = (int)EnumBRECCType.洽谈失败;
+                    comOrder.Status = (int)EnumOrderStatus.审核失败;
+                    comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    comOrder.Upddate = DateTime.Now;
+                    model.DelFlag = (int)EnumDelFlag.删除;
+
+                    break;
+            }
+
             entity.Uptime = DateTime.Now;
             entity.Upuser = _workContext.CurrentUser.Id;
             _brokerleadclientService.Update(entity);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "操作成功"));
+
+        }
         }
 
-    }
 }

@@ -2,7 +2,7 @@
  * Created by yangdingpeng on 2015/5/15.
  */
 
-//推荐列表
+//推荐洽谈成功列表
 angular.module("app").controller('SuccessListController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
@@ -31,6 +31,36 @@ angular.module("app").controller('SuccessListController', [
         getTagList();
     }
 ]);
+//带客洽谈成功列表
+///////CHEN///////////////////////////////////////////////////////////////////////////////////////////////////////
+angular.module("app").controller('DKSuccessController',[
+    '$http','$scope',function($http,$scope){
+        $scope.searchDKCondition = {
+            status:"洽谈成功",
+            BrokerName:"",
+            page:1,
+            pageSize:10
+        };
+
+        var getTagList = function(){
+            $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
+               params:$scope.searchDKCondition
+            }).success(function(data){
+                $scope.BrokerDKlist = data.list1;
+                if(data.list1 == ""){
+                    $scope.errorTip="当前不存在洽谈成功业务";
+                }
+                $scope.searchDKCondition.page=data.condition1.Page;
+                $scope.searchDKCondition.PageCount=data.condition1.PageCount;
+                $scope.totalCount=data.totalCont1;
+                console.log($scope.Brokerlist);
+            });
+        };
+        $scope.getDKList = getTagList;
+        getTagList();
+    }
+])
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //详细信息
 angular.module("app").controller('SuccessDetialController',[
@@ -127,3 +157,43 @@ angular.module("app").controller('BLPayController',[
         };
     }
 ]);
+
+
+
+
+///////////////////////////////////////带客洽谈详细  Begin ///////////////////////////////////////////////////////////
+
+angular.module("app").controller('DKSuccessDetialController',[
+    '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+        //获取详细信息
+        $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/' + $stateParams.id,{
+            'withCredentials':true
+        }).success(function (data) {
+            $scope.BrokerLeadClientDtail = data;
+            console.log(data);
+        });
+
+        $scope.PassAudit = {
+            Id:"",
+            Status:""
+        };
+
+        //变更用户状态
+        $scope.passAudit1=function(enum1){
+            $scope.PassAudit.Id= $scope.BrokerLeadClientDtail.Id;
+            $scope.PassAudit.Status=enum1;
+
+            $http.post(SETTING.ApiUrl + '/BrokerLeadClient/UpdateLeadClient',$scope.PassAudit,{
+                'withCredentials':true
+            }).success(function(data){
+                if(data.Status){
+                    console.log(data.Msg);
+                }else{
+                    console.log(data.Msg);
+                }
+            });
+        };
+    }
+]);
+
+///////////////////////////////////////////END//////////////////////////////////////////////////////////////////////////

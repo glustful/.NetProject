@@ -2,7 +2,12 @@
  * Created by Administrator on 2015/5/29.
  */
 app.controller('StormRoomController',['$http','$scope','$timeout',function($http,$scope,$timeout){
+//    ----------------------------------------------轮播------------------------------------------------
 
+    $scope.channelName='banner';
+    $http.get(SETTING.ApiUrl+'/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
+        $scope.content=data;
+    });
 /*----------------------------------------------动态加载-------------------------------------------*/
     $scope.searchCondition={
         AreaName:'',

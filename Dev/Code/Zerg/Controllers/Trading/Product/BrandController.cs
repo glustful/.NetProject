@@ -83,6 +83,8 @@ namespace Zerg.Controllers.Trading.Product
                     Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
                     SubTitle = productBrandModel.SubTitle,
                     Content = productBrandModel.Content,
+                    AdTitle=productBrandModel.AdTitle,
+                    
                 };
 
                 try
@@ -120,6 +122,7 @@ namespace Zerg.Controllers.Trading.Product
                     PB.SubTitle = productBrandModel.SubTitle;
                     PB.Content = productBrandModel.Content;
                     PB.Bimg = productBrandModel.Bimg;
+                    PB.AdTitle = productBrandModel.AdTitle;
                 if(_productBrandService.Update(PB)!=null)
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(true, "数据修改成功！"));
@@ -265,6 +268,7 @@ namespace Zerg.Controllers.Trading.Product
                a.SubTitle,
                a.Content,
                a.Addtime,
+               a.AdTitle,
                ProductParamater = a.ParameterEntities.Select(p => new { p.Parametername, p.Parametervaule })
            }).ToList().Select(b => new
             {
@@ -273,6 +277,7 @@ namespace Zerg.Controllers.Trading.Product
                 b.Bname,
                 b.SubTitle,
                 b.Content,
+                b.AdTitle,
                 ProductParamater = b.ProductParamater.ToDictionary(k => k.Parametername, v => v.Parametervaule),
                 Addtime = b.Addtime
 
@@ -338,7 +343,9 @@ namespace Zerg.Controllers.Trading.Product
                 Bimg = Brand.Bimg,
                 Bname = Brand.Bname,
                 SubTitle = Brand.SubTitle,
-             
+                Id=Brand.Id,
+                Content=Brand.Content,
+                AdTitle=Brand.AdTitle,
 
                 //Parameters = Brand.ParameterEntities.Select(p => new ProductBrandParameterModel
                 //{
@@ -462,9 +469,9 @@ namespace Zerg.Controllers.Trading.Product
                         Commition = product.Dealcommission.ToString(),
                         HouseType = product.ProductParameter.FirstOrDefault(o => o.Parameter.Name == "户型") == null ? "" : product.ProductParameter.FirstOrDefault(o => o.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString(),
                         Price = product.Price.ToString(),
-                        ProductId = product.ProductDetail.Id,
+                        ProductId = product.Id,
                         SubTitle = product.SubTitle,
-                        Productname = product.ProductDetail.Productname
+                        Productname = product.Productname
                     });
                 }
             }
