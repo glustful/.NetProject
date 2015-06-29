@@ -419,8 +419,9 @@ namespace Zerg.Controllers.CRM
         {
             var entity = _brokerleadclientService.GetBrokerLeadClientById(model.Id);
             entity.Status = model.Status;
-           
+ 
             var comOrder = _orderService.GetOrderById(entity.ComOrder);
+           
             //变更订单状态
             int a = (int)Enum.Parse(typeof(EnumBLeadType), model.Status.ToString());
             comOrder.Shipstatus = a;
@@ -471,6 +472,8 @@ namespace Zerg.Controllers.CRM
                     //创建带客订单号
                     //订单详情；
                     _orderService.Create(oe);
+                    entity.ComOrder = oe.Id;
+                    _brokerleadclientService.Update(entity);
                     break;
                 case EnumBLeadType.预约不通过:
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "预约不通过"));
@@ -509,7 +512,7 @@ namespace Zerg.Controllers.CRM
 
                     break;
             }
-
+            _orderService.Update(comOrder);
             entity.Uptime = DateTime.Now;
             entity.Upuser = _workContext.CurrentUser.Id;
             _brokerleadclientService.Update(entity);
