@@ -42,9 +42,10 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
     $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerDetails',{'withCredentials':true})
     .success(function(response) {
     	$scope.userBroker = response;
-    	console.log(response);
+
     	if($scope.userBroker.levelStr==null){
-    	$scope.userBroker.levelStr = '铜';}
+    	$scope.userBroker.levelStr = '铜';
+        }
     	if($scope.userBroker.photo.length<10){
     	//没图片地址显示默认头像
         document.getElementById("img").src = "./modules/personal/static/image/personal/t.png";
@@ -90,12 +91,12 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
     };
     pushContent();
     //查询客户个数
-    var getcustomerList  = function() {
-        $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoNumByUserId/',{'withCredentials':true}).success(function(data){
-                $scope.number = data.count;
-        });
-    };
-    getcustomerList();
+//    var getcustomerList  = function() {
+//        $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoNumByUserId/',{'withCredentials':true}).success(function(data){
+//                $scope.number = data.count;
+//        });
+//    };
+//    getcustomerList();
 
     //接受任务
     var addlist=function(id){
