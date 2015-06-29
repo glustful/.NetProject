@@ -157,7 +157,7 @@
     height: 160px;
     z-index: 5;
     background-color: #ff4100;
-    opacity: 0.9;
+    opacity:0.8;
 }
 .brand a .depreciate span{
     display: inline-block;
