@@ -35,4 +35,14 @@ app.controller('BrokerTopThreeController',['$scope','$http','AuthService','$stat
     $http.get(SETTING.ApiUrl+'/Channel/GetActiveTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
         $scope.Actcontent=data;
     });
-}]);
+
+    app.filter('subtitle', function ($sce) {
+
+        return function (input) {
+
+            return $sce.trustAsHtml(input);
+
+        }
+    })
+
+    }]);
