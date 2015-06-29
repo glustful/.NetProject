@@ -19,6 +19,7 @@ using System.ComponentModel;
 namespace Zerg.Controllers.CRM
 {
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    [AllowAnonymous]
     /// <summary>
     /// 经纪人提现明细  李洪亮  2015-05-05
     /// </summary>
