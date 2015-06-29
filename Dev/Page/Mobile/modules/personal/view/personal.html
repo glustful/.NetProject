@@ -12,7 +12,7 @@
 
                     <p class="pm">{{userBroker.Name}} <span access="broker">{{userBroker.levelStr}}牌</span><small access="broker">总排名：{{userBroker.orderStr}}</small></p>
                     <p class="number" access="broker"><a href="#/app/partner_list">合伙人：</a>&nbsp;{{userBroker.partnerCount}}&nbsp;/&nbsp;<a href="#/app/recommendedBroker">推荐:</a>&nbsp;{{userBroker.refereeCount}}&nbsp;/&nbsp;
-                    	<a href="#/app/customerList">客户：</a>{{number}}</p>
+                    	<a href="#/app/customerList">客户：</a>{{userBroker.customerCount}}</p>
                     <p class="sum" access="broker">总佣金：&nbsp;{{userBroker.allMoneys}}</p>
 
                     <p><a href="#/app/myPurse" access="broker"><button>提取佣金</button></a></p>
