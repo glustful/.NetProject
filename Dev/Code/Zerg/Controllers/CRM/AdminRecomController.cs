@@ -363,7 +363,6 @@ namespace Zerg.Controllers.CRM
                 _orderService.Create(oe);
                 model.RecOrder = oe.Id;
                  _brokerRecClientService.Update(model);
-                #endregion
             }
             else if (brokerRecClientModel.Status == EnumBRECCType.审核不通过) { return PageHelper.toJson(PageHelper.ReturnValue(false, "审核不通过")); }
                   
