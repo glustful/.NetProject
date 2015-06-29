@@ -60,14 +60,6 @@ angular.module("app").controller('WPDetialController',[
             $scope.ARDetialModel = data;
         });
 
-        //////////////////////获取待上访带客详细信息////////////////////////////////
-        $http.get(SETTING.ApiUrl + 'BrokerLeadClient/GetBlDetail' + $stateParams.id,{
-            'withCredentials':true
-        }).success(function(data){
-            $scope.detail = data;
-        });
-        ///////////////////////////////////////////////////////////////////////////
-
 
 
         $scope.PassAudit = {
