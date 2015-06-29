@@ -35,9 +35,9 @@ angular.module("app").controller('DKTalkingList', [
 
 //获取洽谈中业务详细
 angular.module("app").controller('DKTaklDetial',[
-    '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+    '$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams) {
         //��ȡ��ϸ��Ϣ
-        $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/' + $stateParams.id,{
+        $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/'+ $stateParams.id,{
             'withCredentials':true
         }).success(function (data) {
             $scope.ARDetialModel = data;
@@ -47,8 +47,6 @@ angular.module("app").controller('DKTaklDetial',[
             Id:"",
             Status:""
         };
-
-        //����û�״̬
         $scope.UpdateLeadClient=function(enum1){
             $scope.PassAudit.Id= $scope.ARDetialModel.Id;
             $scope.PassAudit.Status=enum1;
@@ -57,6 +55,7 @@ angular.module("app").controller('DKTaklDetial',[
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
+                    $state.go('page.CRM.DKtalking.index');
                     console.log(data.Msg);
                 }else{
                     console.log(data.Msg);

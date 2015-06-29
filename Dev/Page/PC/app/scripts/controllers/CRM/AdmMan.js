@@ -1,7 +1,7 @@
 /**
  * Created by lhl on 2015/5/16 经纪人管理
  */
-angular.module("app").controller('agentmanagerIndexController', [
+angular.module("app").controller('adminIndexController', [
     '$http','$scope','$modal',function($http,$scope,$modal) {
         $scope.searchCondition = {
             name:'',
@@ -20,7 +20,6 @@ angular.module("app").controller('agentmanagerIndexController', [
                 params:$scope.searchCondition,
                 'withCredentials':true
             }).success(function(data){
-                // alert(data.list!=null);
                 if(data.List.length>0) {
                     console.log(data);
 
@@ -35,20 +34,32 @@ angular.module("app").controller('agentmanagerIndexController', [
                     for(var i=0;i<data.List.length;i++)
                     {
                         $scope.list.push( data.List[i]);
-                        if($scope.list[i].State==-1)
+                        if($scope.list[i].State==-1)//注销状态，注销按钮无效，删除有效
                         {
-                            $scope.list[i].btnVisibleCan=false;
-                            $scope.list[i].btnVisibleDel=true;
+                            $scope.list[i].btnVisibleCan=false;//注销或回复按钮是否可用
+                            $scope.list[i].btnVisibleDel=false;//删除按钮是否可用
+                            $scope.list[i].btnname="恢复";//按钮名称，恢复或注销
+                            $scope.list[i].backcolor={backgroundColor:'cadetblue'};//恢复按钮颜色
+                            $scope.list[i].color={backgroundColor:'#FFEB3B'};//删除按钮颜色
                         }
-                        else if($scope.list[i].State==0)
-                        {
-                            $scope.list[i].btnVisibleCan=false;
-                            $scope.list[i].btnVisibleDel=false;
-                        }
-                        else if($scope.list[i].State==1)
+                        else if($scope.list[i].State==0)//删除状态
                         {
                             $scope.list[i].btnVisibleCan=true;
                             $scope.list[i].btnVisibleDel=true;
+                            $scope.list[i].btnname="恢复";
+                            $scope.list[i].backcolor={backgroundColor:'lightgrey'};
+                            $scope.list[i].color={backgroundColor:'lightgrey'};
+                        }
+                        else if($scope.list[i].State==1)//正常状态
+                        {
+                            $scope.list[i].btnVisibleCan=false;
+                            $scope.list[i].btnVisibleDel=false;
+                            $scope.list[i].btnname="注销";
+                            $scope.list[i].color={color:'white'};
+                            $scope.list[i].backcolor={backgroundColor:'#3F51B5'};
+                            $scope.list[i].color={backgroundColor:'#FFEB3B'};
+
+
                         }
 
                     }
@@ -127,19 +138,19 @@ angular.module("app").controller('agentmanagerIndexController', [
 //
 //        })}
         //注销经纪人
-        $scope.cancelBroker=function (id) {
+        $scope.cancelBroker=function (id,btnname) {
             $scope.selectedId = id;
             var modalInstance = $modal.open({
                 templateUrl: 'myModalContent.html',
                 controller: 'ModalInstanceCtrl',
                 resolve: {
                     msg: function () {
-                        return "你确定要注销吗？";
+                        return "你确定要"+btnname+"吗？";
                     }
                 }
             });
             modalInstance.result.then(function () {
-                $http.post(SETTING.ApiUrl+'/BrokerInfo/CancelBroker',id,{
+                $http.post(SETTING.ApiUrl+'/BrokerInfo/CancelBroker?id='+id+"&btnname=" +btnname,{
                     'withCredentials':true
                 }).success(function (data) {
                     alert(data.Msg);
@@ -225,7 +236,7 @@ angular.module("app").controller('UserCreateController',['$http','$scope','$stat
                 $scope.UserModel.UserName ="";
                 $scope.UserModel.Phone ="";
             }else{
-                console.log("error");
+                alert(data.Msg);
             }
         });
     }

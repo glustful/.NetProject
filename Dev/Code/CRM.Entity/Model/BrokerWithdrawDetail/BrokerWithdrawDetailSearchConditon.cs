@@ -21,6 +21,10 @@ namespace CRM.Entity.Model
 
 		public int[] Ids { get; set; }
 
+        /// <summary>
+        /// 提现状态 ｛0，处理中   1完成 ok｝
+        /// </summary>
+        public string State { get; set; }
 
 		public BrokerEntity Brokers { get; set; }
 

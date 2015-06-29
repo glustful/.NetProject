@@ -636,7 +636,6 @@ angular.module('app')
               url: '/index',
               templateUrl: 'views/pages/CRM/AdmMan/index.html',
                   data: { title: 'Admin管理' },
-                controller:"agentmanagerIndexController",
                 resolve:load('scripts/controllers/CRM/AdmMan.js')
             })
             .state('page.CRM.AdmMan.detailed', {
@@ -818,7 +817,7 @@ angular.module('app')
                 url: '/detailed?id',
                 templateUrl: 'views/pages/CRM/DKWaitPetition/detailed.html',
                 data: { title: '详情页' },
-                controller:"WPDetialController",
+                controller:"DKDetialController",
                 resolve:load('scripts/controllers/CRM/WaitPetitionDK.js')
             })
 

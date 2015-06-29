@@ -75,7 +75,7 @@ angular.module("zergApp").service("AuthService",["$http",'$sessionStorage',funct
      * @param faildCallback
      */
     this.doLogin = function(userName,password,callback,faildCallback){
-        $http.post(SETTING.ApiUrl+"/user/login",
+        $http.post(SETTING.ApiUrl+"/user/IndexLogin",
             {
                 UserName:userName,
                 Password:password
