@@ -419,39 +419,42 @@ namespace Zerg.Controllers.CRM
         {
             var entity = _brokerleadclientService.GetBrokerLeadClientById(model.Id);
             entity.Status = model.Status;
-            if (model.Status == EnumBLeadType.等待上访)
+           
+            var comOrder = _orderService.GetOrderById(entity.ComOrder);
+            //变更订单状态
+            int a = (int)Enum.Parse(typeof(EnumBLeadType), model.Status.ToString());
+            comOrder.Shipstatus = a;
+            // 根据传入状态执行相应操作
+            switch (model.Status)
             {
-                entity.SecretaryId = _brokerService.GetBrokerByUserId(model.SecretaryId);
-                //查询商品详情
-                var product = _productService.GetProductById(model.Projectid);
+                case EnumBLeadType.预约中:
+                    break;
+                case EnumBLeadType.等待上访:
+                    entity.SecretaryId = _brokerService.GetBrokerByUserId(model.SecretaryId);
+                    //查询商品详情
+                    var product = _productService.GetProductById(model.Projectid);
 
-                #region 创建带客订单 杨定鹏 2015年6月9日17:04:05
-                //创建订单详情
-                OrderDetailEntity ode = new OrderDetailEntity
-                {
-                    Adddate = DateTime.Now,
-                    Adduser = model.Adduser.ToString(CultureInfo.InvariantCulture),
-                    Commission = product.Commission,
-                    RecCommission = product.RecCommission,
-                    Dealcommission = product.Dealcommission,
-                    Price = product.Price,
-                    Product = product,
-                    Productname = product.Productname,
-                    Upddate = DateTime.Now,
-                    Upduser = model.Adduser.ToString(CultureInfo.InvariantCulture)
-                };
-                //ode.Remark = product.
-                //ode.Snapshoturl = orderDetailModel.Snapshoturl,
+                    //创建订单详情
+                    OrderDetailEntity ode = new OrderDetailEntity
+                    {
+                        Adddate = DateTime.Now,
+                        Adduser = model.Adduser.ToString(CultureInfo.InvariantCulture),
+                        Commission = product.Commission,
+                        RecCommission = product.RecCommission,
+                        Dealcommission = product.Dealcommission,
+                        Price = product.Price,
+                        Product = product,
+                        Productname = product.Productname,
+                        Upddate = DateTime.Now,
+                        Upduser = model.Adduser.ToString(CultureInfo.InvariantCulture)
+                    };
 
-                //创建订单
+                    //创建订单
                     OrderEntity oe = new OrderEntity
                     {
                         Adddate = DateTime.Now,
                         Adduser = model.Broker.ToString(),//model.Adduser.ToString(CultureInfo.InvariantCulture),
                         AgentId = model.Broker,//model.Adduser,
-                        //HouseType = model.ProjectId == 0 ? "" : _productService.GetProductById(model.ProjectId).Productname,
-                       // Agentname = model.Adduser == 0 ? "" : _brokerService.GetBrokerByUserId(model.Adduser).Brokername,
-                        Agentname = model.Brokername,//_brokerService.GetBrokerByUserId(model.Adduser).Brokername,
                         Agenttel = model.Phone,
                         BusId = product.Bussnessid,
                         Busname = product.BussnessName,
@@ -468,62 +471,51 @@ namespace Zerg.Controllers.CRM
                     //创建带客订单号
                     //订单详情；
                     _orderService.Create(oe);
+                    break;
+                case EnumBLeadType.预约不通过:
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "预约不通过"));
+                case EnumBLeadType.洽谈中:
+                    //审核通过推荐订单
+                    comOrder.Shipstatus = (int)EnumBRECCType.洽谈中;
+                    comOrder.Status = (int)EnumOrderStatus.审核通过;
+                    comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    comOrder.Upddate = DateTime.Now;
+                    break;
 
-                #endregion
+                case EnumBLeadType.客人未到:
+                    //订单作废
+                    comOrder.Shipstatus = (int)EnumBRECCType.客人未到;
+                    comOrder.Status = (int)EnumOrderStatus.审核失败;
+                    //dealOrder.Status = (int)EnumOrderStatus.审核失败;
+                    comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    comOrder.Upddate = DateTime.Now;
+                    break;
 
+                case EnumBLeadType.洽谈成功:
+                    //审核通过成交订单
+                    comOrder.Shipstatus = (int)EnumBRECCType.洽谈成功;
+                    comOrder.Status = (int)EnumOrderStatus.审核通过;
+                    comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    comOrder.Upddate = DateTime.Now;
+                    break;
+
+                case EnumBLeadType.洽谈失败:
+                    //成交订单作废
+                    comOrder.Shipstatus = (int)EnumBRECCType.洽谈失败;
+                    comOrder.Status = (int)EnumOrderStatus.审核失败;
+                    comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                    comOrder.Upddate = DateTime.Now;
+                    model.DelFlag = (int)EnumDelFlag.删除;
+
+                    break;
             }
-            else if (model.Status == EnumBLeadType.预约不通过) { return PageHelper.toJson(PageHelper.ReturnValue(false, "预约不通过")); }
-            else if (model.Status == EnumBLeadType.预约中) 
-            {
-                var comOrder = _orderService.GetOrderById(entity.ComOrder);
-                //变更订单状态
-                int a = (int)Enum.Parse(typeof(EnumBLeadType), model.Status.ToString());
-                comOrder.Shipstatus = a; 
-                // 根据传入状态执行相应操作
-                switch (model.Status)
-                {
 
-                    case EnumBLeadType.洽谈中:
-                        //审核通过推荐订单
-                        comOrder.Shipstatus = (int)EnumBRECCType.洽谈中;
-                        comOrder.Status = (int)EnumOrderStatus.审核通过;
-                        comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                        comOrder.Upddate = DateTime.Now;
-                        break;
-
-                    case EnumBLeadType.客人未到:
-                        //订单作废
-                        comOrder.Shipstatus = (int)EnumBRECCType.客人未到;
-                        comOrder.Status = (int)EnumOrderStatus.审核失败;
-                        //dealOrder.Status = (int)EnumOrderStatus.审核失败;
-                        comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                        comOrder.Upddate = DateTime.Now;
-                        break;
-
-                    case EnumBLeadType.洽谈成功:
-                        //审核通过成交订单
-                        comOrder.Shipstatus = (int)EnumBRECCType.洽谈成功;
-                        comOrder.Status = (int)EnumOrderStatus.审核通过;
-                        comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                        comOrder.Upddate = DateTime.Now;
-                        break;
-
-                    case EnumBLeadType.洽谈失败:
-                        //成交订单作废
-                        comOrder.Shipstatus = (int)EnumBRECCType.洽谈失败;
-                        comOrder.Status = (int)EnumOrderStatus.审核失败;
-                        comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                        comOrder.Upddate = DateTime.Now;
-                        model.DelFlag = (int)EnumDelFlag.删除;
-                     
-                        break;
-                }
-            }
             entity.Uptime = DateTime.Now;
             entity.Upuser = _workContext.CurrentUser.Id;
             _brokerleadclientService.Update(entity);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "操作成功"));
+
+        }
         }
 
-    }
 }

@@ -116,7 +116,7 @@ namespace Zerg.Controllers.CRM
             }
             var brokerlist = _brokerService.GetBrokerById(Convert.ToInt32(id));
             var model = new BrokerModel
-            {
+            { 
                 Headphoto = brokerlist.Headphoto,
                 Nickname = brokerlist.Nickname,
                 Brokername = brokerlist.Brokername,
