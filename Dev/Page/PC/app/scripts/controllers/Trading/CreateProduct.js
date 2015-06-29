@@ -70,12 +70,13 @@ angular.module("app").controller('CreatProductController', [
                 Sort: 1,// 分类排序
                 Stockrule: $scope.Stockrule,// 库存计数（拍下、付款）
                 SubTitle:$scope.SubTitle,
-                ContactPhone:$scope.ContactPhone
+                ContactPhone:$scope.ContactPhone,
+                Productimg:$scope.Productimg
             };
             var productDetail = {
                 Productname: $scope.ProductName,// 商品名称
                 Productdetail: $scope.productContent,// 商品明细(5000字富文本编辑)
-                Productimg: $scope.Productimg,// 商品图片（主图）
+                Productimg: $scope.ProductDetailImg,// 商品图片（主图）
                 Productimg1: $scope.Productimg1,// 商品附图1
                 Productimg2: $scope.Productimg2,// 商品附图2
                 Productimg3: $scope.Productimg3,// 商品附图3
@@ -163,6 +164,7 @@ angular.module("app").controller('CreatProductController', [
 
         //上传部分
         $scope.Productimg = "";
+        $scope.ProductDetailImg="";
         $scope.Productimg1 = "";
         $scope.Productimg2 = "";
         $scope.Productimg3 = "";
@@ -207,10 +209,11 @@ angular.module("app").controller('CreatProductController', [
 //            $scope.Productimg4 = "http://img.yoopoon.com/" +  strs[4];
             $scope.images.push(e);
             $scope.Productimg =$scope.images[0];
-            $scope.Productimg1 =$scope.images[1];
-            $scope.Productimg2 =$scope.images[2];
-            $scope.Productimg3 =$scope.images[3];
-            $scope.Productimg4 =$scope.images[4];
+            $scope.ProductDetailImg=$scope.images[1];
+            $scope.Productimg1 =$scope.images[2];
+            $scope.Productimg2 =$scope.images[3];
+            $scope.Productimg3 =$scope.images[4];
+            $scope.Productimg4 =$scope.images[5];
 //
 //            $scope.imgUrl = "http://img.yoopoon.com/" + e.Msg;
         }
