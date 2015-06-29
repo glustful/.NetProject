@@ -16,17 +16,17 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
    {
 
     $scope.searchCondition = {
-        Id:0,
-        page: 1,
-        pageSize: 10,
-        type:""
-    };
-    $scope.addcondition={
-        TaskId:0,
-        UserId:0,//用户ID
-        Taskschedule:'1',
-        Type:'add'
-    }
+       Id:0,
+       page: 1,
+       pageSize: 10,
+       type:""
+   };
+       $scope.addcondition={
+           TaskId:0,
+           UserId:0,//用户ID
+           Taskschedule:'1',
+           Type:'add'
+       }
     $scope.userBroker={
     	Name:'',
     	photo:'',
@@ -42,9 +42,10 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
     $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerDetails',{'withCredentials':true})
     .success(function(response) {
     	$scope.userBroker = response;
-    	console.log(response);
+
     	if($scope.userBroker.levelStr==null){
-    	$scope.userBroker.levelStr = '铜';}
+    	$scope.userBroker.levelStr = '铜';
+        }
     	if($scope.userBroker.photo.length<10){
     	//没图片地址显示默认头像
         document.getElementById("img").src = "./modules/personal/static/image/personal/t.png";
@@ -54,9 +55,7 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
     $scope.warm="";
     $scope.tipp="加载更多。。。"
     //查询任务
-    var page = 1                                //读取的页数
-        , loading = false
-        ,pages=2;                      //判断是否正在读取内容的变量
+    var page = 1 ;                             //读取的页数, loading = false,pages=2;                      //判断是否正在读取内容的变量
     $scope.posts = [];//保存从服务器查来的任务，可累加
     var pushContent= function() {                    //核心是这个函数，向$scope.posts
         //添加内容
@@ -92,13 +91,12 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
     };
     pushContent();
     //查询客户个数
-    var getcustomerList  = function() {
-        $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoNumByUserId/',{'withCredentials':true}).success(function(data){
-                $scope.number = data.count;
-
-        });
-    };
-    getcustomerList();
+//    var getcustomerList  = function() {
+//        $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoNumByUserId/',{'withCredentials':true}).success(function(data){
+//                $scope.number = data.count;
+//        });
+//    };
+//    getcustomerList();
 
     //接受任务
     var addlist=function(id){
@@ -116,7 +114,7 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
     $scope.addTaskList = addlist;
    }
         else if (coun === 0) {//一般用户
-            $state.go("app.person_setting");//调到设置页面
+            $state.go("app.personal_user");//调到普通用户页面
         }
         else if (coun === 2) {//未登录
             $state.go("user.login");//调到登录页面

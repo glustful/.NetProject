@@ -156,7 +156,7 @@ namespace Trading.Service.Order
 			    }
 
 
-			    if (condition.Shipstatuses.Any())
+                if (condition.Shipstatuses != null && condition.Shipstatuses.Any())
                 {
                     query = query.Where(q => condition.Shipstatuses.Contains(q.Shipstatus));
                 }
@@ -312,10 +312,11 @@ namespace Trading.Service.Order
                 }
 
 
-                if (condition.Shipstatuses.Any())
+                if (condition.Shipstatuses != null && condition.Shipstatuses.Any())
                 {
                     query = query.Where(q => condition.Shipstatuses.Contains(q.Shipstatus));
                 }
+
 
 
 

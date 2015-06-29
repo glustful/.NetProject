@@ -215,7 +215,7 @@ namespace Zerg.Controllers.CRM
                     var bankList = _bankcardService.GetBankCardsByCondition(bankcardSearchCon).Select(p => new
                     {
                         Id = p.Id,
-                        Name = p.Bank.Codeid + p.Num
+                        Name = p.Bank.Codeid + "[***" + p.Num.ToString().Substring(p.Num.ToString().Length - 4, 4) + "]"
                     }).ToList();
 
                     return PageHelper.toJson(new { List = bankList, AmountMoney = broker.Amount });

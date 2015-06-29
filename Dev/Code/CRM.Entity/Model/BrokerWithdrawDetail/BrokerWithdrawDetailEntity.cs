@@ -42,5 +42,10 @@ namespace CRM.Entity.Model
 		/// UpTime
 		/// </summary>
 		public virtual DateTime Uptime { get; set; }
+
+        /// <summary>
+        /// 提现状态 ｛0，处理中   1完成 ok｝
+        /// </summary>
+        public string State { get; set; }
 	}
 }

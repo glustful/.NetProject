@@ -1,0 +1,61 @@
+<!--个人中心-->
+<!--required:../static/style/personal.css-->
+<div  ng-controller="personal_userController">
+    <div class="main-personal cf">
+        <a class="fl img" href="#/app/person_setting"><img id="img" src="http://img.yoopoon.com/{{user.Headphoto}}" alt="" width="174" height="174"/></a>
+        <div class="detail fl">
+            <p class="pm">{{user.Brokername}}</p>
+            <p style="color: #fc3b00;font-size: 18px;">马上完善资料成为经纪人领取现金大礼包</p>
+        </div>
+    </div>
+    <div class="task-personal" >
+        <div class="todayTask">今日任务({{ttcount}})</div>
+        <ul  ng-repeat="item in posts">
+            <li class="cf">
+                <p class="fl">{{item.Taskname}}<br/><span>{{item.awardname}}：{{item.awardvalue}}</span></p>
+                <button ng-click="addTaskList(item.Id)" class="fr">去完成</button>
+            </li>
+        </ul>
+    </div>
+    <div class="activity-personal">
+        <ul class="cf">
+            <li class="one" > <a href="#/app/person_setting"><img src="modules/personal_user/static/image/p1.jpg" alt="" width="49" height="58" /><br/>注册成为经纪人</a></li>
+            <li class="two"> <a href="#"><img src="modules/personal_user/static/image/p2.jpg" alt="" width="49" height="58" /><br/>会员专属红包</a></li>
+            <li class="three"> <a href="#"><img src="modules/personal_user/static/image/p3.jpg" alt="" width="49" height="58" /><br/>天天领礼包</a></li>
+            <li class="four"> <a href="#"><img src="modules/personal_user/static/image/p4.jpg" alt="" width="49" height="58" /><br/>会员特惠五折房源</a></li>
+            <li class="five"> <a href="#"><img src="modules/personal_user/static/image/p5.jpg" alt="" width="49" height="58" /><br/>会员常见问题</a></li>
+            <li class="six"> <a href="#/app/setting"><img src="modules/personal_user/static/image/p6.jpg" alt="" width="49" height="58" /><br/>设置</a></li>
+        </ul>
+    </div>
+    <div class="masked" style="display: none">
+        <img class="Recruit location" src="modules/personal/static/image/personal/Recruit.png" alt="招募合伙人" width="497" height="769"/>
+        <a href="#" class="btn-partner location"><img src="modules/personal/static/image/personal/btn-partner.png" alt="合伙人"/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <a href="#" class="myPartner location"><img src="modules/personal/static/image/personal/myPartner.png" alt="我的合伙人" width="513" height="619"/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <a href="#" class="myPartner location"><img src="modules/personal/static/image/personal/myPartner.png" alt="我的合伙人" width="513" height="619"/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <a href="#" class="nominate location"><img src="modules/personal/static/image/personal/nominate.png" alt="我要推荐" width="530" height="857"/></a>
+    </div>
+    <div class="masked" style="display: none" >
+        <img class="SecStep location" src="modules/personal/static/image/personal/SecStep.png" alt="第二步" width="449" height="769"/>
+        <a href="#" class="upWard location"><img src="modules/personal/static/image/personal/upWard.png" alt=""/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <img class="ThStep location" src="modules/personal/static/image/personal/ThStep.png" alt="第三步" width="449" height="769"/>
+        <a href="#" class="nominateBtn location"><img src="modules/personal/static/image/personal/nominateBtn.png" alt=""/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <a href="#" class="takeOff location"><img src="modules/personal/static/image/personal/take.png" alt="我要带客" width="580" height="430"/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <img class="Commission location" src="modules/personal/static/image/personal/Commission.png" alt="红包" width="612" height="480"/>
+        <a href="#" class="cashBtn location"><img src="modules/personal/static/image/personal/cashBtn.png" alt=""/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <a href="#" class="Extraction location"><img src="modules/personal/static/image/personal/Extraction.png" alt="我要带客" width="555" height="633"/></a>
+    </div>
+</div>
