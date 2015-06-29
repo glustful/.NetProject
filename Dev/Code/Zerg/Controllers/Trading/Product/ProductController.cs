@@ -86,6 +86,7 @@ namespace Zerg.Controllers.Trading.Product
                     Productimg4 = productDetail.Productimg4,
                     Productname = productDetail.Productname,
                     Sericeinstruction = productDetail.Sericeinstruction,
+                    Ad1 = productDetail.Ad1,
                     Addtime = DateTime.Now,
                     //Adduser = productDetail.Adduser,
                     Adduser = _workContent.CurrentUser.Id.ToString(),

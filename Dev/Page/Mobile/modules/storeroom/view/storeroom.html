@@ -1,14 +1,7 @@
 <!--房源库-->
 <!--required:../static/style/storeroom.css-->
 <title>房源库</title>
-<div ng-controller="StormRoomController" style="position: relative" class="StormRoom-content">
-    <div id="carousel-bg" >
-        <carousel interval="2000">
-            <slide ng-repeat="slide in content" active="slide.active">
-                <img src="http://img.yoopoon.com/{{slide.TitleImg}}" class="img-full" alt="成为经济人轻松赚大钱" width="640" height="230" />
-            </slide>
-        </carousel>
-    </div>
+<div ng-controller="StormRoomController" style="position: relative" class="StormRoom-content cf">
             <!--<div class="nav-storeroom">-->
                 <!--<a class="area-storeroom" href="#" ng-click="toggleProvince()">区域<span class="icon-storeroom"></span></a>-->
                 <!--<a class="type-storeroom" href="#" ng-click="toggleType()">类型<span class="icon-storeroom"></span></a>-->
@@ -21,7 +14,7 @@
         <div id="type"><a class="type-storeroom" href="#" ng-click="toggleType()">{{selectType}}<span class="icon-storeroom"></span></a>
         </div>
         <div id="price"><a class="price-storer" href="#" ng-click="togglePrice()">{{selectPrice}}<span class="icon-storeroom"></span></a></div>
-        <a class="more-storeroom" href="#" ng-click="Reset()">重置</a>
+        <div><a class="more-storeroom" href="#" ng-click="Reset()">重置</a></div>
         <div id="condition" class="cf" ng-hide="condition">
             <div id="province" ng-hide="province">
                 <ul>
@@ -34,8 +27,8 @@
             <div id="county" ng-hide="county" ng-class="{select:selectCounty}">
                 <ul><li class="li" ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li></ul>
             </div>
-            <div class="type" ng-hide="type">
-                <ul><li class="typeOption" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId,type.TypeName)">{{type.TypeName}}</li></ul>
+            <div class="type" ng-hide="type" >
+                <ul style="width: 159px"><li class="typeOption" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId,type.TypeName)">{{type.TypeName}}</li></ul>
             </div>
             <div id="priceCondition" ng-hide="price">
                 <ul>
@@ -45,13 +38,21 @@
                     <li class="priceOption" ng-click="getPriceCondition(6000,7000)"><span>6000</span>-<span>7000</span></li>
                     <li class="priceOption" ng-click="getPriceCondition(7000,8000)"><span>7000</span>-<span>8000</span></li>
                     <li class="priceOption" ng-click="getPriceCondition(8000,9000)"><span>8000</span>-<span>9000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(8000,9000)"><span>9000</span>-<span>10000</span></li>
                     <li class="priceOption" ng-click="getPriceCondition(10000,50000)"><span>10000以上</span></li>
                 </ul>
             </div>
-     </div>
+        </div>
     </div>
-    <div style="padding-top: 50px;">
-             <p class="zg">共{{Count}}个楼盘</p>
+    <div id="carousel-bg" style="padding-top:70px;">
+    <carousel interval="2000">
+        <slide ng-repeat="slide in content" active="slide.active">
+            <img src="http://img.yoopoon.com/{{slide.TitleImg}}" class="img-full" alt="成为经济人轻松赚大钱" width="640" height="230" />
+        </slide>
+    </carousel>
+</div>
+    <div>
+            <p class="zg">共{{Count}}个楼盘</p>
             <div class=" message-storeroom" ng-repeat="item in List">
                  <!--<div class="main-storeroom cf">-->
                     <!--<a class="fl img" href="#/app/housesBuy"><img src="modules/storeroom/static/image/storeroom/pic1.png" alt="蓝光&nbsp;·&nbsp;颐明园"width="224" height="170"/></a>-->
@@ -68,12 +69,12 @@
                     <img src="http://img.yoopoon.com/{{item.Productimg}}" alt="蓝光&nbsp;·&nbsp;颐明园"width="224" height="170"/></a>
                 <div class="detail-storeroom fl ">
                     <p class="yhy">{{item.Productname}}</p>
-                    <p class="yuan">{{item.Price}}/m²</p>
+                    <p class="yuan">{{item.Price}}元/m²</p>
                     <p class="bj">{{item.Type}}&nbsp;/&nbsp;{{item.Acreage}}m²&nbsp;/&nbsp;在售{{item.StockRule}}套</p>
                     <p class="yh">{{item.Advertisement}}</p>
                 </div>
             </div>
-                    <div access="broker" class="sub-nav-storeroom"><a class="red-storeroom" href="#app/carry_client?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}">带客</a><a class="red-storeroom" href="#app/groom?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}">推荐</a><a href="#/app/redPaper-1">红包</a><a class="int-storeroom" href="#/app/myInt">积分</a></div>
+            <div access="broker" class="sub-nav-storeroom"><a class="red-storeroom" href="#app/carry_client?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}">带客</a><a class="red-storeroom" href="#app/groom?Projectid={{item.Id}}&name={{item.Productname}}&type={{item.Type}}">推荐</a><a href="#/app/redPaper-1">红包</a><a class="int-storeroom" href="#/app/myInt">积分</a></div>
             </div>
             <div style="text-align: center;padding-bottom: 20px"><span>{{tipp}}</span></div>
             <!--<div class=" message-storeroom">-->

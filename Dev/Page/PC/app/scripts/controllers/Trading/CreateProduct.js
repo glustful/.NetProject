@@ -80,7 +80,8 @@ angular.module("app").controller('CreatProductController', [
                 Productimg2: $scope.Productimg2,// 商品附图2
                 Productimg3: $scope.Productimg3,// 商品附图3
                 Productimg4: $scope.Productimg4,// 商品附图4
-                Sericeinstruction: $scope.Sericeinstruction// 售后说明
+                Sericeinstruction: $scope.Sericeinstruction,// 售后说明
+                ad1:$scope.ad1//广告语
                 //Adduser: "UserId",
                 //Upduser: "UserId"
             };
