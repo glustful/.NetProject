@@ -1,12 +1,15 @@
 
 .activity{
-    padding: 10px;
+    padding: 16px;
+    height: 450px;
 }
 .activity ul li{
     width: 200px;
     float: left;
     text-align: center;
     padding:27px 0 20px 0;
+    background-color: #ffffff;
+
 }
 
 
@@ -14,7 +17,12 @@
 
 .activity .one{
     /*padding: 1px 3px  ;*/
+   margin-right: 2px;
+
 }
+/*.activity .two .active_title{*/
+    /*color: #ff0000;*/
+/*}*/
 .activity .two{
     margin-right: 2px;
 }
@@ -98,7 +106,7 @@
      padding-left: 11px;
  }
 h3{
-    width: 600px;
+    width: 620px;
     height:55px;
     line-height: 55px;
     color: #686868;
@@ -190,6 +198,8 @@ h3{
 
 .active_title {
     color: black;
+    font-size: 18px;
+    font-weight: 900;
 }
 
 .well {
