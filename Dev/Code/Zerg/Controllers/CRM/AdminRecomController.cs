@@ -323,8 +323,6 @@ namespace Zerg.Controllers.CRM
 
             if (brokerRecClientModel.Status == EnumBRECCType.等待上访)
             {
-                #region 创建订单 杨定鹏 2015年6月3日17:21:39
-
                 //查询商品详情
                 var product = _productService.GetProductById(model.Projectid);
 
