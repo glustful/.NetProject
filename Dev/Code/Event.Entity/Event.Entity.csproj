@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Entity\Coupon\Coupon.cs" />
+    <Compile Include="Entity\Coupon\CouponCategory.cs" />
+    <Compile Include="Entity\Coupon\CouponOwner.cs" />
     <Compile Include="Entity\Crowd\CrowdEntity.cs" />
     <Compile Include="Entity\Crowd\CrowdSearchConditon.cs" />
     <Compile Include="Entity\Crowd\EnumCrowd.cs" />
@@ -61,6 +65,12 @@
     <Compile Include="Entity\Phone\EnumPhone.cs" />
     <Compile Include="Entity\Phone\PhoneEntity.cs" />
     <Compile Include="Entity\Phone\PhoneSearchConditon.cs" />
+    <Compile Include="Entity\RedConfig\EnumRedConfig.cs" />
+    <Compile Include="Entity\RedConfig\RedConfigEntity.cs" />
+    <Compile Include="Entity\RedConfig\RedConfigSearchConditon.cs" />
+    <Compile Include="Mappings\Coupon\CouponCategoryMapping.cs" />
+    <Compile Include="Mappings\Coupon\CouponMapping.cs" />
+    <Compile Include="Mappings\Coupon\CouponOwner.cs" />
     <Compile Include="Mappings\Crowd\CrowdMapping.cs" />
     <Compile Include="Mappings\Discount\DiscountMapping.cs" />
     <Compile Include="Mappings\Follower\FollowerMapping.cs" />
@@ -79,10 +89,11 @@
       <Name>YooPoon.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Zerg.Common\Zerg.Common.csproj">
-      <Project>{db11f281-e24f-4237-b77f-0cfdcf8dd647}</Project>
+      <Project>{DB11F281-E24F-4237-B77F-0CFDCF8DD647}</Project>
       <Name>Zerg.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
