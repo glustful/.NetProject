@@ -10,6 +10,8 @@ namespace Event.Service.Coupon
 
         IQueryable<CouponCategory> GetCouponCategoriesByCondition(CouponCategorySearchCondition condition);
 
+        int GetCouponCategoriesCountByCondition(CouponCategorySearchCondition condition)
+
         CouponCategory GetCouponCategoryById(int id);
 
         bool UpdateCouponCategory(CouponCategory entity);

@@ -10,11 +10,13 @@ namespace Event.Service.Coupon
     {
         private readonly IEventRepository<CouponCategory> _repository;
         private readonly ILog _log;
+        private readonly IEventRepository<Entity.Entity.Coupon.Coupon> _couponService;
 
-        public CouponCategoryService(IEventRepository<CouponCategory> repository,ILog log)
+        public CouponCategoryService(IEventRepository<CouponCategory> repository,ILog log,IEventRepository<Entity.Entity.Coupon.Coupon> couponService)
         {
             _log = log;
             _repository = repository;
+            _couponService = couponService;
         }
 
         public bool CreateCouponCategory(CouponCategory entity)
@@ -43,6 +45,16 @@ namespace Event.Service.Coupon
                 query = query.Skip((condition.Page.Value - 1) * condition.PageSize.Value).Take(condition.PageSize.Value);
             }
             return query;
+        }
+
+        public int GetCouponCategoriesCountByCondition(CouponCategorySearchCondition condition)
+        {
+            var query = _repository.Table;
+            if (condition.BrandId.HasValue)
+            {
+                query = query.Where(c => c.BrandId == condition.BrandId);
+            }
+            return query.Count();
         }
 
         public CouponCategory GetCouponCategoryById(int id)
@@ -91,7 +103,15 @@ namespace Event.Service.Coupon
 
         public int GetCouponNums(int categoryId)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                return _couponService.Table.Count(c => c.CouponCategoryId == categoryId);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e,"数据库操作出错");
+                return -1;
+            }
         }
     }
 }
