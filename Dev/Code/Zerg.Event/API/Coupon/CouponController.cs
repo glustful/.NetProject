@@ -26,6 +26,10 @@ namespace Zerg.Event.API.Coupon
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "激活失败！无法找到该优惠券"));
             }
+            else if(entity.Status ==EnumCouponStatus.Actived)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "激活失败！该优惠券已经激活"));
+            }
             entity.Status = EnumCouponStatus.Actived;
             _couponService.Update(entity);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "激活成功！"));
