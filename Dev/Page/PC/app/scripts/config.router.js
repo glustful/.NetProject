@@ -1437,6 +1437,13 @@ angular.module('app')
                 data : { title: '商品分类' },
                 resolve: load(['scripts/controllers/Trading/Area.js','scripts/controllers/vectormap.js'])
             })
+            .state('page.Trading.product.edit', {
+                url: '/area',
+                templateUrl: 'views/pages/Trading/product/editProduct.html',
+                data : { title: '商品编辑' },
+                resolve: load(['scripts/controllers/Trading/EditProduct.js'])
+            })
+
             .state('page.Trading.product.classify', {
                 url: '/classify',
                 templateUrl: 'views/pages/Trading/product/classify.html',
@@ -1469,6 +1476,65 @@ angular.module('app')
                 controller:'NegotiateOrderController',
                 resolve: load(['scripts/controllers/Trading/Order.js','scripts/controllers/vectormap.js'])
             })
+
+          /*优惠券*/
+
+            // Coupons  router
+            .state('page.event', {
+                url: '/event',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons', {
+                url: '/Coupons',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons.type', {
+                url: '/type',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons.manage', {
+                url: '/manage',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons.user', {
+                url: '/user',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons.type', {
+                url: '/index',
+                templateUrl: 'views/pages/event/Coupons/type/index.html'
+            })
+            .state('page.event.Coupons.type', {
+                url: '/create',
+                templateUrl: 'views/pages/event/Coupons/type/create.html'
+            })
+            .state('page.event.Coupons.type', {
+                url: '/edit',
+                templateUrl: 'views/pages/event/Coupons/type/edit.html'
+            })
+            .state('page.event.Coupons.manage', {
+                url: '/index',
+                templateUrl: 'views/pages/event/Coupons/manage/index.html'
+            })
+            .state('page.event.Coupons.type', {
+                url: '/create',
+                templateUrl: 'views/pages/event/Coupons/manage/create.html'
+            })
+            .state('page.event.Coupons.type', {
+                url: '/edit',
+                templateUrl: 'views/pages/event/Coupons/manger/edit.html'
+            })
+            .state('page.event.Coupons.user', {
+                url: '/query',
+                templateUrl: 'views/pages/event/Coupons/user/query.html'
+            })
+            .state('page.event.Coupons.user', {
+                url: '/list',
+                templateUrl: 'views/pages/event/Coupons/user/list.html'
+            })
+
+
+
             //-----------------------end-------------------
 
           function load(srcs, callback) {

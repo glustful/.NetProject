@@ -4,7 +4,7 @@
 app.controller('HousesBuyController',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
     $http.get(SETTING.ApiUrl+'/Product/GetProductsByBrand?BrandId='+$stateParams.BrandId,{'withCredentials':true}).success(function (data) {
         $scope.ProductList=data.productList;
-        $scope.tent=data.content;
+
     })
 
 
@@ -18,5 +18,12 @@ app.controller('HousesBuyController',['$http','$scope','$stateParams',function($
 
 }]);
 
-
-
+//app.filter('asdasd', function ($sce) {
+//
+//    return function (input) {
+//
+//        return $sce.trustAsHtml(input);
+//
+//    }
+//
+//});
