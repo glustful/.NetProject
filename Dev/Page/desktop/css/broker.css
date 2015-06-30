@@ -1,0 +1,58 @@
+body{
+     padding-top: 100px;
+ }
+.header{
+    background-color: rgba(0, 0 ,0, 0.8);
+    height: 70px;
+    line-height: 70px;
+}
+.header .row .col-md-7{
+   padding-left: 200px;
+}
+.breadcrumb{
+    background-color: inherit;
+    line-height: 60px;
+}
+.breadcrumb li a{
+    font-size: 20px;
+    margin: 0 10px;
+    color: #fff;
+}
+.breadcrumb li a.red{
+    color: #ff3000;
+}
+.next-line{
+    margin-top: 50px;
+}
+.need{
+    display: inline;
+}
+li{
+    float:left;
+    text-align: center;
+}
+.down{
+    margin-bottom: 80px;
+}
+.down h3{
+    margin-bottom: 15px;
+}
+.fast{
+    width:308px ;
+    height: 90px;
+    background-color: #ff3000;
+    line-height: 70px;
+    margin-top: 50px;
+    color: #fff;
+    font-size: 35px;
+}
+.play{
+    padding: 50px 0 100px 0;
+    text-align: center;
+}
+.play p{
+    margin-top: 10px;
+}
+.code{
+    padding-top: 100px;
+}
