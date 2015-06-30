@@ -19,6 +19,7 @@ using System.Text.RegularExpressions;
 using YooPoon.WebFramework.User.Entity;
 using YooPoon.Core.Site;
 using System.ComponentModel;
+using YooPoon.WebFramework.User.Services;
 
 namespace Zerg.Controllers.CRM
 {
@@ -39,6 +40,7 @@ namespace Zerg.Controllers.CRM
         private readonly ITaskListService _taskListService;
         private readonly IBrokerService _brokerService;
         private readonly IWorkContext _workContext;
+        private readonly IUserService _userservice;
 
         /// <summary>
         /// CRM任务管理初始化
@@ -58,7 +60,8 @@ namespace Zerg.Controllers.CRM
             ITaskPunishmentService taskPunishmentService,
             ITaskListService taskListService,
             IBrokerService brokerService,
-            IWorkContext workContext
+            IWorkContext workContext,
+            IUserService userService
             )
         {
             _taskService = taskService;
@@ -69,6 +72,7 @@ namespace Zerg.Controllers.CRM
             _taskListService = taskListService;
             _brokerService = brokerService;
             _workContext = workContext;
+            _userservice = userService;
         }
 
         #region 单个任务配置 杨定鹏 2015年4月28日10:04:08
@@ -132,9 +136,10 @@ namespace Zerg.Controllers.CRM
                     Taskname = p.Taskname,
                     Name = p.Name,
                     Endtime = p.Endtime.ToShortDateString(),
-                    Adduser = _brokerService.GetBrokerByUserId(p.Adduser).Brokername,
+                  //  Adduser = _brokerService.GetBrokerByUserId(p.Adduser).Brokername,
+                    Adduser =_userservice .GetUserById (p.Adduser).UserName,
                     Id = p.Id
-                });
+                }).ToList();
                 var taskCount = _taskService.GetTaskCount(taskcondition);
                 if (taskCount > 0)
                 {

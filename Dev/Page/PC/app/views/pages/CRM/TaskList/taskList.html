@@ -3,9 +3,10 @@
 angular.js路径app/scrips/controller/CRM/taskList.js-->
 <div ng-controller="taskListcontroller">
 <div id="divTaskH"class="marginL">
-    <input style="width:200px;"ng-model="searchCondition1.brokerName" type="text" class="form-control bordhtml" placeholder="接受者">
+    <input style="width:200px;"ng-model="searchCondition1.brokerName" type="text" class="form-control bordhtml" placeholder="接受者"onkeydown=' var keynum;
+        keynum = window.event ? event.keyCode : event.which;if(keynum==13){sea.click()}'>
     <!--<input style="width:200px;" type="text"ng-model="searchCondition1.Brokername" class="form-control bordhtml" placeholder="搜索条件2">-->
-    <button md-ink-ripple=""style="width:100px;"ng-click="getList1()" class="md-btn md-raised m-b btn-fw indigo">检索</button>
+    <button md-ink-ripple=""style="width:100px;"ng-click="getList1()"id="sea" class="md-btn md-raised m-b btn-fw indigo">检索</button>
     </div>
 
 <div id="divTaskC" class="marginL">

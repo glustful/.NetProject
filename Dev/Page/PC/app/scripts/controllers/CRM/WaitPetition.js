@@ -52,7 +52,7 @@ angular.module("app").controller('PetitionListController', [
 
 //详细信息
 angular.module("app").controller('WPDetialController',[
-    '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+    '$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams) {
         //获取详细信息
         $http.get(SETTING.ApiUrl + '/AdminRecom/GetAuditDetail/' + $stateParams.id,{
             'withCredentials':true
@@ -77,6 +77,8 @@ angular.module("app").controller('WPDetialController',[
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
+                    alert("操作成功");
+                    $state.go('page.CRM.WaitPetition.index');
                     console.log(data.Msg);
                 }else{
                     console.log(data.Msg);

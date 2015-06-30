@@ -450,13 +450,13 @@ namespace Zerg.Controllers.CRM
                 OrderEntity oe = new OrderEntity
                 {
                     Adddate = DateTime.Now,
-                    Adduser = model.Broker.ToString(),//model.Adduser.ToString(CultureInfo.InvariantCulture),
-                    AgentId = model.Broker,//model.Adduser,
+                    Adduser = entity.Adduser.ToString(CultureInfo.InvariantCulture),
+                    AgentId = entity.Broker.Id,//model.Broker,//model.Adduser,
                     Agenttel = model.Phone,
-                    Agentname = _brokerService.GetBrokerByUserId(model.Broker).Brokername,
+                    Agentname = _brokerService.GetBrokerByUserId(entity.Adduser).Brokername,
                     BusId = product.Bussnessid,
                     Busname = product.BussnessName,
-                    Customname = model.Clientname,
+                    Customname = entity.ClientInfo.Clientname,
                     Ordercode = _orderService.CreateOrderNumber(2),
                     OrderDetail = ode,
                     Ordertype = EnumOrderType.带客订单,
@@ -464,7 +464,7 @@ namespace Zerg.Controllers.CRM
                     Shipstatus = (int)EnumBLeadType.等待上访,
                     Status = (int)EnumOrderStatus.审核通过,
                     Upddate = DateTime.Now,
-                    Upduser = model.Broker.ToString(),//model.Adduser.ToString(CultureInfo.InvariantCulture)
+                    Upduser = entity.Adduser.ToString(),//model.Adduser.ToString(CultureInfo.InvariantCulture)
                 };
                 _orderService.Create(oe);
                 entity.ComOrder = oe.Id;
