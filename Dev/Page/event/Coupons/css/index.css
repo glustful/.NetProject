@@ -5,7 +5,7 @@
 .Coupons-content .saveMoney{
     height: 80px;
     line-height: 80px;
-    background: url("../image/Coupons/bsq.png") no-repeat 20px center #fff;
+    background: url("../images/bsq.png") no-repeat 20px center #fff;
     padding-left: 380px;
     font-size: 1.2em;
 }
@@ -22,7 +22,7 @@
 }
 .Coupons-content .couponsList ul li .lpIntro{
     width:317px;
-    height: 90px;
+    height: 93px;
     background-color: #000;
     opacity: 0.6;
     position: absolute;
