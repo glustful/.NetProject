@@ -267,6 +267,49 @@ namespace Zerg.Controllers.UC
 
 
         /// <summary>
+        /// 检查手机号是否存在
+        /// </summary>
+        /// <param name="model">只传两个参数：手机号</param>
+        /// <returns></returns>
+        [Description("检查手机号是否存在")]
+        [HttpPost]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage CheckMobile([FromBody]UserModel model)
+        {
+            if (!string.IsNullOrEmpty(model.Phone) )
+            {
+                //1 先判断手机号是否存在
+                var condition = new BrokerSearchCondition
+                {
+                    State = 1,
+                    Phone = model.Phone
+                };
+                //判断Broker表中是否存在手机号
+                int brokerCount = _brokerService.GetBrokerCount(condition);
+                if (brokerCount != 0)
+                {
+                    //存在 
+
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "yes"));
+                }
+                else //不存在  就进行注册
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "no"));
+
+                }
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "请填写手机号和密码"));
+        }
+
+
+
+
+
+
+
+
+
+        /// <summary>
         /// 登出
         /// </summary>
         /// <returns>注销结果</returns>
