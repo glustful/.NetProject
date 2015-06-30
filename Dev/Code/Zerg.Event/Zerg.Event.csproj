@@ -191,6 +191,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Coupons\CouponCategoryModel.cs" />
     <Compile Include="Models\CrowdModel.cs" />
     <Compile Include="Models\DiscountModel.cs" />
     <Compile Include="Models\FollowerModel.cs" />
@@ -212,6 +213,14 @@
     <ProjectReference Include="..\Event.Service\Event.Service.csproj">
       <Project>{f084b802-3896-4300-8a5d-c53ad4b09891}</Project>
       <Name>Event.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Trading.Entity\Trading.Entity.csproj">
+      <Project>{596115C3-B475-4E05-9FFB-678A5683E98A}</Project>
+      <Name>Trading.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Trading.Service\Trading.Service.csproj">
+      <Project>{54B84267-E248-4253-BD2B-D338B06FBB21}</Project>
+      <Name>Trading.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\YooPoon.Common\YooPoon.Common.csproj">
       <Project>{a09e564c-ec00-4bfa-acfd-371b45abeeed}</Project>
