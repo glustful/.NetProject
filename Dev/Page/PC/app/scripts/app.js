@@ -31,12 +31,6 @@ angular
       'ng.ueditor'
   ]);
 
-var SETTING = {
-  BaseUrl:'http://localhost:50597/',
-  ApiUrl:'http://localhost:50597/api',
-  ImgUrl:'http://img.yoopoon.com/'
-};
-
 console.log("////////////////////////////////////////////////////////////////////\n"+
     "//							_ooOoo_								  //\n"+
     "//						   o8888888o							  //\n"+
