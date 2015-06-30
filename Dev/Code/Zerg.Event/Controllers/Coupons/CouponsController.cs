@@ -17,10 +17,12 @@ namespace Zerg.Event.Controllers.Coupons
         private readonly IProductBrandService _productBrandService;
         private readonly ICouponOwnerService _couponOwnerService;
         private readonly IWorkContext _workContent;
+        private readonly ICouponService _couponService;
 
-        public CouponsController(ICouponCategoryService couponCategoryService, IProductBrandService productBrandService, ICouponOwnerService couponOwnerService,IWorkContext workContent)
+        public CouponsController(ICouponCategoryService couponCategoryService,ICouponService couponService, IProductBrandService productBrandService, ICouponOwnerService couponOwnerService,IWorkContext workContent)
         {
             _couponCategoryService = couponCategoryService;
+            _couponService = couponService;
             _productBrandService = productBrandService;
             _couponOwnerService = couponOwnerService;
             _workContent = workContent;
@@ -56,12 +58,18 @@ namespace Zerg.Event.Controllers.Coupons
         public ActionResult couponOwn(int id)
         {
             _couponOwnerService.CreateRecord(_workContent.CurrentUser.Id, id);  
-            var Coupon = _couponCategoryService.GetCouponCategoryById(id);
-            var Brand = _productBrandService.GetProductBrandById(Coupon.BrandId);
+            var couponCategory= _couponCategoryService.GetCouponCategoryById(id);
+            var condition=new CouponSearchCondition
+            {
+                CouponCategoryId =id 
+            };
+            var coupon = _couponService.GetCouponByCondition(condition).FirstOrDefault();
+            var brand = _productBrandService.GetProductBrandById(couponCategory.BrandId);
             var CouponOwn=new CouponCategoryModel
             {
-                 Name = Coupon.Name,
-                 BrandName = Brand.Bname
+                Name = couponCategory.Name,
+                Number = coupon.Number,
+                BrandName = brand.Bname
             };             
             return View(CouponOwn);
         }

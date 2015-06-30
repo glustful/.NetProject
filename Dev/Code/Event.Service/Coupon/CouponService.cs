@@ -70,8 +70,7 @@ namespace Event.Service.Coupon
                 _log.Error(e,"操作数据库出错");
                 return null;
             }
-        }
-
+        }       
         public IQueryable<Entity.Entity.Coupon.Coupon> GetCouponByCondition(CouponSearchCondition condition)
         {
             var query = _couponRepository.Table;
@@ -80,6 +79,10 @@ namespace Event.Service.Coupon
                 if (condition.Ids.HasValue)
                 {
                     query = query.Where(q => condition.Ids==q.Id);
+                }
+                if (condition.CouponCategoryId.HasValue)
+                {
+                    query = query.Where(q => condition.CouponCategoryId == q.CouponCategoryId);
                 }
                 if(condition.OrderBy.HasValue)
 				{
@@ -117,7 +120,11 @@ namespace Event.Service.Coupon
                 if (condition.Ids.HasValue)
                 {
                     query = query.Where(q => condition.Ids == q.Id);
-                }              
+                }
+                if (condition.CouponCategoryId.HasValue)
+                {
+                    query = query.Where(q => condition.CouponCategoryId == q.CouponCategoryId);
+                }
                 return query.Count();
             }
 

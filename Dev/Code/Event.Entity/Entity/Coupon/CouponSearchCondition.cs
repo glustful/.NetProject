@@ -23,6 +23,8 @@ namespace Event.Entity.Entity.Coupon
         /// </summary>
         public bool IsDescending { get; set; }
 
+        public int? CouponCategoryId { get; set; }
+
 
         public int? Ids { get; set; }  
      
