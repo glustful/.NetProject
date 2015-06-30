@@ -182,6 +182,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Coupon\CouponController.cs" />
     <Compile Include="API\Crowd\CrowdApiController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -201,7 +202,9 @@
     <Compile Include="Models\PhoneModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Coupon\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CRM.Service\CRM.Service.csproj">
       <Project>{36DC7784-4BA6-467D-A20F-B7DFCCF815FC}</Project>

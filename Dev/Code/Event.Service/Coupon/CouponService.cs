@@ -134,5 +134,18 @@ namespace Event.Service.Coupon
                 return -1;
             }
         }
+
+        public Entity.Entity.Coupon.Coupon GetCouponByNumber(string number)
+        {
+            try
+            {
+               return  _couponRepository.Table.FirstOrDefault(c => c.Number == number);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
     }
 }
