@@ -64,13 +64,13 @@ angular.module("app").controller('DKSuccessController',[
 
 //详细信息
 angular.module("app").controller('SuccessDetialController',[
-    '$http','$scope','$stateParams',function($http,$state,$scope,$stateParams) {
+    '$http','$state','$scope','$stateParams',function($http,$state,$scope,$stateParams) {
         //获取详细信息
-        $http.get(SETTING.ApiUrl + '/AdminRecom/GetAuditDetail/' + $stateParams.id,{
+        $http.get(SETTING.ApiUrl+ '/AdminRecom/GetAuditDetail?id='+ $stateParams.id,{
             'withCredentials':true
         }).success(function (data) {
             $scope.ARDetialModel = data;
-            console.log(data);
+            console.log($scope.ARDetialModel);
         });
 
         $scope.PassAudit = {
@@ -166,9 +166,9 @@ angular.module("app").controller('BLPayController',[
 ///////////////////////////////////////带客洽谈详细  Begin ///////////////////////////////////////////////////////////
 
 angular.module("app").controller('DKSuccessDetialController',[
-    '$http','$scope','$stateParams',function($http,$state,$scope,$stateParams) {
+    '$http','$state','$scope','$stateParams',function($http,$state,$scope,$stateParams) {
         //获取详细信息
-        $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/' + $stateParams.id,{
+        $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/'+ $stateParams.id,{
             'withCredentials':true
         }).success(function (data) {
             $scope.BrokerLeadClientDtail = data;

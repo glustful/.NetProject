@@ -26,6 +26,7 @@ using System.ComponentModel;
 
 namespace Zerg.Controllers.CRM
 {
+     [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// admin的推荐至平台流程处理
@@ -297,7 +298,7 @@ namespace Zerg.Controllers.CRM
 
             return PageHelper.toJson(newModel);
         }
-
+        #endregion
         /// <summary>
         /// 推荐流程变更操作,审核流程根据传入的Status字段进行相应变更
         /// 审核不通过，所有流程相关订单转入作废状态
@@ -363,7 +364,6 @@ namespace Zerg.Controllers.CRM
                 _orderService.Create(oe);
                 model.RecOrder = oe.Id;
                  _brokerRecClientService.Update(model);
-                #endregion
             }
             else if (brokerRecClientModel.Status == EnumBRECCType.审核不通过) { return PageHelper.toJson(PageHelper.ReturnValue(false, "审核不通过")); }
                   
@@ -414,6 +414,7 @@ namespace Zerg.Controllers.CRM
             _brokerRecClientService.Update(model);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "确认成功"));
         }
+
 
         #region 选择带客人 杨定鹏 2015年5月5日19:45:14
         /// <summary>
@@ -482,8 +483,12 @@ namespace Zerg.Controllers.CRM
             };
             _brokerRecClientService.Update(model);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "提交成功"));
+
+     
+              
+
         }
 
        
     }
-}
+}     

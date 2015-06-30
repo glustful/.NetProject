@@ -109,7 +109,7 @@ namespace Zerg.Controllers.Trading.Product
                     Classify = CE,
                     ProductBrand = CBE,
                     ProductDetail = PDE2,
-                    Productimg = PDE.Productimg,
+                    Productimg = product.Productimg,
                     Productname = PDE.Productname,
                     Recommend = product.Recommend,
                     Sort = product.Sort,
