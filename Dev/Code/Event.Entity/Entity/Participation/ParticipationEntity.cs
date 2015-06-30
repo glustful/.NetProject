@@ -11,17 +11,13 @@ namespace Event.Entity.Model
 		/// </summary>
 		public virtual int Id { get; set; }
 		/// <summary>
-		/// 项目ID
+		/// Crowd_Id
 		/// </summary>
 		public virtual CrowdEntity Crowd { get; set; }
 		/// <summary>
 		/// UserName
 		/// </summary>
 		public virtual string Username { get; set; }
-		/// <summary>
-		/// UseId
-		/// </summary>
-		public virtual int UseId { get; set; }
 		/// <summary>
 		/// Phone
 		/// </summary>
@@ -34,5 +30,13 @@ namespace Event.Entity.Model
 		/// AddTime
 		/// </summary>
 		public virtual DateTime Addtime { get; set; }
+		/// <summary>
+		/// UpUser
+		/// </summary>
+		public virtual int Upuser { get; set; }
+		/// <summary>
+		/// UpTime
+		/// </summary>
+		public virtual DateTime Uptime { get; set; }
 	}
 }

@@ -3,15 +3,16 @@ using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 using Event.Entity.Model;
+using Zerg.Common.Data;
 
 namespace Event.Service.Crowd
 {
 	public class CrowdService : ICrowdService
 	{
-		private readonly IRepository<CrowdEntity> _crowdRepository;
+		private readonly IEventRepository<CrowdEntity> _crowdRepository;
 		private readonly ILog _log;
 
-		public CrowdService(IRepository<CrowdEntity> crowdRepository,ILog log)
+		public CrowdService(IEventRepository<CrowdEntity> crowdRepository,ILog log)
 		{
 			_crowdRepository = crowdRepository;
 			_log = log;

@@ -11,7 +11,7 @@ namespace Event.Entity.Model
 		/// </summary>
 		public virtual int Id { get; set; }
 		/// <summary>
-		/// FD
+		/// Follower_Id
 		/// </summary>
 		public virtual FollowerEntity Follower { get; set; }
 		/// <summary>
@@ -30,5 +30,13 @@ namespace Event.Entity.Model
 		/// AddTime
 		/// </summary>
 		public virtual DateTime Addtime { get; set; }
+		/// <summary>
+		/// UpUser
+		/// </summary>
+		public virtual int Upuser { get; set; }
+		/// <summary>
+		/// UpTime
+		/// </summary>
+		public virtual DateTime Uptime { get; set; }
 	}
 }

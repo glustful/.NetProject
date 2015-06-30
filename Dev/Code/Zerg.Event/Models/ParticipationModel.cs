@@ -18,7 +18,7 @@ namespace Event.Models
 
 
 		/// <summary>
-        /// 项目ID
+        /// Crowd_Id
         /// </summary>
 		public CrowdEntity Crowd {get;set;}
 
@@ -27,12 +27,6 @@ namespace Event.Models
         /// UserName
         /// </summary>
 		public string Username {get;set;}
-
-
-		/// <summary>
-        /// UserId
-        /// </summary>
-		public int Userid {get;set;}
 
 
 		/// <summary>
@@ -51,6 +45,18 @@ namespace Event.Models
         /// AddTime
         /// </summary>
 		public DateTime Addtime {get;set;}
+
+
+		/// <summary>
+        /// UpUser
+        /// </summary>
+		public int Upuser {get;set;}
+
+
+		/// <summary>
+        /// UpTime
+        /// </summary>
+		public DateTime Uptime {get;set;}
 
 
 

@@ -1,17 +1,19 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 using Event.Entity.Model;
+using Zerg.Common.Data;
 
 namespace Event.Service.Discount
 {
 	public class DiscountService : IDiscountService
 	{
-		private readonly IRepository<DiscountEntity> _discountRepository;
+		private readonly IEventRepository<DiscountEntity> _discountRepository;
 		private readonly ILog _log;
 
-		public DiscountService(IRepository<DiscountEntity> discountRepository,ILog log)
+		public DiscountService(IEventRepository<DiscountEntity> discountRepository,ILog log)
 		{
 			_discountRepository = discountRepository;
 			_log = log;
@@ -198,5 +200,17 @@ namespace Event.Service.Discount
                 return -1;
 			}
 		}
+        public List<DiscountEntity> GetDiscountByCrowdId(int crowdId)
+        {
+            try
+            {
+                return _discountRepository.Table.Where(p => p.Crowd.Id == crowdId).ToList();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
 	}
 }

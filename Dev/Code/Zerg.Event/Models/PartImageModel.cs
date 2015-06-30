@@ -15,22 +15,25 @@ namespace Event.Models
         /// ID
         /// </summary>
 		public int Id {get;set;}
-
+        /// <summary>
+        /// 图片表的副键用来关联项目表的id
+        /// </summary>
+        public int CrowdId { get; set; }
 
 		/// <summary>
-        /// 项目ID
+        /// Crowd_Id
         /// </summary>
 		public CrowdEntity Crowd {get;set;}
 
 
 		/// <summary>
-        /// 排序权重
+        /// 图片排序
         /// </summary>
 		public int Orderby {get;set;}
 
 
 		/// <summary>
-        /// 图片地址
+        /// 图片链接
         /// </summary>
 		public string Imgurl {get;set;}
 

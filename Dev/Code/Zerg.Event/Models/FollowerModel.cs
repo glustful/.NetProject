@@ -89,6 +89,38 @@ namespace Event.Models
 		public string Groupid {get;set;}
 
 
+		/// <summary>
+        /// AddUser
+        /// </summary>
+		public int Adduser {get;set;}
+
+
+		/// <summary>
+        /// AddTime
+        /// </summary>
+		public DateTime Addtime {get;set;}
+
+
+		/// <summary>
+        /// UpUser
+        /// </summary>
+		public int Upuser {get;set;}
+
+
+		/// <summary>
+        /// UpTime
+        /// </summary>
+		public DateTime Uptime {get;set;}
+        /// <summary>
+        /// 参加抽奖用户
+        /// </summary>
+        //public int FollowerId { get; set; }
+        /// <summary>
+        /// 参加抽奖用户手机
+        /// </summary>
+        public string Phone { get; set; }
+
+
 
 	}
 }

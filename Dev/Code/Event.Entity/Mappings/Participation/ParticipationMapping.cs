@@ -1,22 +1,23 @@
-using YooPoon.Core.Data;
 using System.Data.Entity.ModelConfiguration;
 using Event.Entity.Model;
+using Zerg.Common.Data;
 
 namespace Event.Entity.Mappings.Participation
 {
-	public class ParticipationMapping : EntityTypeConfiguration<ParticipationEntity>, IMapping
+	public class ParticipationMapping : EntityTypeConfiguration<ParticipationEntity>, IZergMapping
 	{
 		public ParticipationMapping()
 		{
 			ToTable("Participation");
 			HasKey(c => c.Id);
-			Property(c => c.Id).HasColumnType("int").IsOptional();
-			HasOptional(c =>c.Crowd);
+
+		    HasOptional(c => c.Crowd);
 			Property(c => c.Username).HasColumnType("varchar").HasMaxLength(50);
-			Property(c => c.UseId).HasColumnType("int");
 			Property(c => c.Phone).HasColumnType("varchar").HasMaxLength(11);
 			Property(c => c.Adduser).HasColumnType("int");
 			Property(c => c.Addtime).HasColumnType("datetime");
+			Property(c => c.Upuser).HasColumnType("int");
+			Property(c => c.Uptime).HasColumnType("datetime");
 		}
 	}
 }

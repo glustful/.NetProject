@@ -56,6 +56,16 @@ namespace Event.Entity.Model
 
 
 
+		public int[] Upusers { get; set; }
+
+
+
+		public DateTime? UptimeBegin { get; set; }
+
+		public DateTime? UptimeEnd { get; set; }
+
+
+
 
 		public EnumPhoneSearchOrderBy? OrderBy { get; set; }
 

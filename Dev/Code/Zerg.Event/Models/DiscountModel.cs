@@ -18,7 +18,7 @@ namespace Event.Models
 
 
 		/// <summary>
-        /// 项目ID
+        /// Crowd_Id
         /// </summary>
 		public CrowdEntity Crowd {get;set;}
 

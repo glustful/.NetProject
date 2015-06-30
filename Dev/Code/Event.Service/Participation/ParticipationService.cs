@@ -3,15 +3,16 @@ using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 using Event.Entity.Model;
+using Zerg.Common.Data;
 
 namespace Event.Service.Participation
 {
 	public class ParticipationService : IParticipationService
 	{
-		private readonly IRepository<ParticipationEntity> _participationRepository;
+		private readonly IEventRepository<ParticipationEntity> _participationRepository;
 		private readonly ILog _log;
 
-		public ParticipationService(IRepository<ParticipationEntity> participationRepository,ILog log)
+		public ParticipationService(IEventRepository<ParticipationEntity> participationRepository,ILog log)
 		{
 			_participationRepository = participationRepository;
 			_log = log;
@@ -85,6 +86,14 @@ namespace Event.Service.Participation
                 {
                     query = query.Where(q => q.Addtime < condition.AddtimeEnd.Value);
                 }
+				if (condition.UptimeBegin.HasValue)
+                {
+                    query = query.Where(q => q.Uptime>= condition.UptimeBegin.Value);
+                }
+                if (condition.UptimeEnd.HasValue)
+                {
+                    query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
+                }
 				if (!string.IsNullOrEmpty(condition.Username))
                 {
                     query = query.Where(q => q.Username.Contains(condition.Username));
@@ -101,13 +110,13 @@ namespace Event.Service.Participation
                 {
                     query = query.Where(q => condition.Crowds.Contains(q.Crowd));
                 }
-				if (condition.UseIds != null && condition.UseIds.Any())
-                {
-                    query = query.Where(q => condition.UseIds.Contains(q.UseId));
-                }
 				if (condition.Addusers != null && condition.Addusers.Any())
                 {
                     query = query.Where(q => condition.Addusers.Contains(q.Adduser));
+                }
+				if (condition.Upusers != null && condition.Upusers.Any())
+                {
+                    query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
 				if(condition.OrderBy.HasValue)
 				{
@@ -150,6 +159,14 @@ namespace Event.Service.Participation
                 {
                     query = query.Where(q => q.Addtime < condition.AddtimeEnd.Value);
                 }
+				if (condition.UptimeBegin.HasValue)
+                {
+                    query = query.Where(q => q.Uptime>= condition.UptimeBegin.Value);
+                }
+                if (condition.UptimeEnd.HasValue)
+                {
+                    query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
+                }
 				if (!string.IsNullOrEmpty(condition.Username))
                 {
                     query = query.Where(q => q.Username.Contains(condition.Username));
@@ -166,13 +183,13 @@ namespace Event.Service.Participation
                 {
                     query = query.Where(q => condition.Crowds.Contains(q.Crowd));
                 }
-				if (condition.UseIds != null && condition.UseIds.Any())
-                {
-                    query = query.Where(q => condition.UseIds.Contains(q.UseId));
-                }
 				if (condition.Addusers != null && condition.Addusers.Any())
                 {
                     query = query.Where(q => condition.Addusers.Contains(q.Adduser));
+                }
+				if (condition.Upusers != null && condition.Upusers.Any())
+                {
+                    query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
 				return query.Count();
 			}

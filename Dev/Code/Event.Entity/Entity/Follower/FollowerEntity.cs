@@ -58,5 +58,21 @@ namespace Event.Entity.Model
 		/// 用户分组Id
 		/// </summary>
 		public virtual string Groupid { get; set; }
+		/// <summary>
+		/// AddUser
+		/// </summary>
+		public virtual int Adduser { get; set; }
+		/// <summary>
+		/// AddTime
+		/// </summary>
+		public virtual DateTime Addtime { get; set; }
+		/// <summary>
+		/// UpUser
+		/// </summary>
+		public virtual int Upuser { get; set; }
+		/// <summary>
+		/// UpTime
+		/// </summary>
+		public virtual DateTime Uptime { get; set; }
 	}
 }

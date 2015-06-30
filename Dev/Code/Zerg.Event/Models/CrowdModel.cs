@@ -70,7 +70,13 @@ namespace Event.Models
         /// </summary>
 		public DateTime Uptime {get;set;}
 
-
-
+        /// <summary>
+        /// 图片集合
+        /// </summary>
+	    public List<PartImageEntity> ImgList { get; set; }
+        /// <summary>
+        /// 项目参与人数
+        /// </summary>
+        public List<DiscountEntity> Dislist { get; set; }
 	}
 }

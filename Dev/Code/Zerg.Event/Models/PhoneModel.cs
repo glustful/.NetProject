@@ -18,7 +18,7 @@ namespace Event.Models
 
 
 		/// <summary>
-        /// FD
+        /// Follower_Id
         /// </summary>
 		public FollowerEntity Follower {get;set;}
 
@@ -45,6 +45,18 @@ namespace Event.Models
         /// AddTime
         /// </summary>
 		public DateTime Addtime {get;set;}
+
+
+		/// <summary>
+        /// UpUser
+        /// </summary>
+		public int Upuser {get;set;}
+
+
+		/// <summary>
+        /// UpTime
+        /// </summary>
+		public DateTime Uptime {get;set;}
 
 
 

@@ -3,15 +3,16 @@ using System.Linq;
 using YooPoon.Core.Data;
 using YooPoon.Core.Logging;
 using Event.Entity.Model;
+using Zerg.Common.Data;
 
 namespace Event.Service.Follower
 {
 	public class FollowerService : IFollowerService
 	{
-		private readonly IRepository<FollowerEntity> _followerRepository;
+		private readonly IEventRepository<FollowerEntity> _followerRepository;
 		private readonly ILog _log;
 
-		public FollowerService(IRepository<FollowerEntity> followerRepository,ILog log)
+		public FollowerService(IEventRepository<FollowerEntity> followerRepository,ILog log)
 		{
 			_followerRepository = followerRepository;
 			_log = log;
@@ -77,6 +78,22 @@ namespace Event.Service.Follower
 			var query = _followerRepository.Table;
 			try
 			{
+				if (condition.AddtimeBegin.HasValue)
+                {
+                    query = query.Where(q => q.Addtime>= condition.AddtimeBegin.Value);
+                }
+                if (condition.AddtimeEnd.HasValue)
+                {
+                    query = query.Where(q => q.Addtime < condition.AddtimeEnd.Value);
+                }
+				if (condition.UptimeBegin.HasValue)
+                {
+                    query = query.Where(q => q.Uptime>= condition.UptimeBegin.Value);
+                }
+                if (condition.UptimeEnd.HasValue)
+                {
+                    query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
+                }
 				if (!string.IsNullOrEmpty(condition.Openid))
                 {
                     query = query.Where(q => q.Openid.Contains(condition.Openid));
@@ -128,6 +145,14 @@ namespace Event.Service.Follower
 				if (condition.Ids != null && condition.Ids.Any())
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
+                }
+				if (condition.Addusers != null && condition.Addusers.Any())
+                {
+                    query = query.Where(q => condition.Addusers.Contains(q.Adduser));
+                }
+				if (condition.Upusers != null && condition.Upusers.Any())
+                {
+                    query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
 				if(condition.OrderBy.HasValue)
 				{
@@ -162,6 +187,22 @@ namespace Event.Service.Follower
 			var query = _followerRepository.Table;
 			try
 			{
+				if (condition.AddtimeBegin.HasValue)
+                {
+                    query = query.Where(q => q.Addtime>= condition.AddtimeBegin.Value);
+                }
+                if (condition.AddtimeEnd.HasValue)
+                {
+                    query = query.Where(q => q.Addtime < condition.AddtimeEnd.Value);
+                }
+				if (condition.UptimeBegin.HasValue)
+                {
+                    query = query.Where(q => q.Uptime>= condition.UptimeBegin.Value);
+                }
+                if (condition.UptimeEnd.HasValue)
+                {
+                    query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
+                }
 				if (!string.IsNullOrEmpty(condition.Openid))
                 {
                     query = query.Where(q => q.Openid.Contains(condition.Openid));
@@ -213,6 +254,14 @@ namespace Event.Service.Follower
 				if (condition.Ids != null && condition.Ids.Any())
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
+                }
+				if (condition.Addusers != null && condition.Addusers.Any())
+                {
+                    query = query.Where(q => condition.Addusers.Contains(q.Adduser));
+                }
+				if (condition.Upusers != null && condition.Upusers.Any())
+                {
+                    query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
 				return query.Count();
 			}

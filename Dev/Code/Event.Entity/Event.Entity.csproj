@@ -77,7 +77,6 @@
     <Compile Include="Mappings\Participation\ParticipationMapping.cs" />
     <Compile Include="Mappings\PartImage\PartImageMapping.cs" />
     <Compile Include="Mappings\Phone\PhoneMapping.cs" />
-    <Compile Include="Mappings\RedConfig\RedConfigMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
