@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Event.Entity.Entity.Coupon;
 using Event.Service.Coupon;
 using Zerg.Common;
@@ -20,6 +21,7 @@ namespace Zerg.Event.API.Coupon
         }
 
         [HttpPost]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage ActiveCoupon([FromBody]string couponNum)
         {
             var entity = _couponService.GetCouponByNumber(couponNum);
