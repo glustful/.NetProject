@@ -66,9 +66,6 @@
     <Compile Include="Entity\Phone\EnumPhone.cs" />
     <Compile Include="Entity\Phone\PhoneEntity.cs" />
     <Compile Include="Entity\Phone\PhoneSearchConditon.cs" />
-    <Compile Include="Entity\RedConfig\EnumRedConfig.cs" />
-    <Compile Include="Entity\RedConfig\RedConfigEntity.cs" />
-    <Compile Include="Entity\RedConfig\RedConfigSearchConditon.cs" />
     <Compile Include="Mappings\Coupon\CouponCategoryMapping.cs" />
     <Compile Include="Mappings\Coupon\CouponMapping.cs" />
     <Compile Include="Mappings\Coupon\CouponOwner.cs" />
@@ -94,7 +91,9 @@
       <Name>Zerg.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Entity\RedConfig\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
