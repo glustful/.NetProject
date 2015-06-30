@@ -40,7 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Coupon\CouponCategoryService.cs" />
+    <Compile Include="Coupon\CouponOwnerService.cs" />
+    <Compile Include="Coupon\ICouponOwnerService.cs" />
+    <Compile Include="Coupon\ICouponCategoryService.cs" />
     <Compile Include="Crowd\CrowdService.cs" />
     <Compile Include="Crowd\ICrowdService.cs" />
     <Compile Include="Discount\DiscountService.cs" />
@@ -73,6 +76,7 @@
       <Name>Zerg.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

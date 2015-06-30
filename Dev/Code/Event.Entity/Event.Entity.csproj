@@ -43,10 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Entity\Coupon\Coupon.cs" />
     <Compile Include="Entity\Coupon\CouponCategory.cs" />
+    <Compile Include="Entity\Coupon\CouponCategorySearchCondition.cs" />
     <Compile Include="Entity\Coupon\CouponOwner.cs" />
+    <Compile Include="Entity\Coupon\CouponOwnerSearchCondition.cs" />
     <Compile Include="Entity\Crowd\CrowdEntity.cs" />
     <Compile Include="Entity\Crowd\CrowdSearchConditon.cs" />
     <Compile Include="Entity\Crowd\EnumCrowd.cs" />
