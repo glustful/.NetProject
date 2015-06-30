@@ -34,7 +34,7 @@ getTagList();
 
 //详细信息
 angular.module("app").controller('ARDetialController',[
-    '$http','$scope','$stateParams',function($http,$scope,$state,$stateParams) {
+    '$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams) {
         //获取详细信息
         $http.get(SETTING.ApiUrl + '/AdminRecom/GetAuditDetail/' + $stateParams.id,{
             'withCredentials':true
