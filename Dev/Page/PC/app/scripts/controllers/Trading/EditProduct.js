@@ -26,8 +26,8 @@ angular.module("app").controller('EditProductController', [
                 }
             });
         };
-
-        //获取品牌列表
+        //编辑商品信息
+        // 获取品牌列表
         $http.get(SETTING.ApiUrl + '/Brand/GetBrandList',{'withCredentials':true}).success(function (data) {
             $scope.BrandList = data;
         });
@@ -36,5 +36,9 @@ angular.module("app").controller('EditProductController', [
         {
            $scope.product=data
         });
-
+        //编辑商品信息
+        $http.get(SETTING.ApiUrl+'/Product/GetProductById?productId='+$stateParams.productId).success(function(data)
+        {
+            $scope.product=data
+        });
     }]);
