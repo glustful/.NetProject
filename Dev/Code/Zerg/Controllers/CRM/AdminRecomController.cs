@@ -26,6 +26,7 @@ using System.ComponentModel;
 
 namespace Zerg.Controllers.CRM
 {
+     [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     /// <summary>
     /// admin的推荐至平台流程处理
