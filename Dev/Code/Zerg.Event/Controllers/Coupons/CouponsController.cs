@@ -57,9 +57,9 @@ namespace Zerg.Event.Controllers.Coupons
 
         public ActionResult couponOwn(int id)
         {
-            if (_workContext.CurrentUser == null)
+            if (_workContext.CurrentUser== null)
             {
-                return Redirect("http://www.iyookee.cn/#/user/login");
+                return Redirect("http://www.iyookee.cn/#/user/login");                
             }
             _couponOwnerService.CreateRecord(_workContext.CurrentUser.Id, id);  
             var couponCategory= _couponCategoryService.GetCouponCategoryById(id);
@@ -68,6 +68,8 @@ namespace Zerg.Event.Controllers.Coupons
                 CouponCategoryId =id 
             };
             var coupon = _couponService.GetCouponByCondition(condition).FirstOrDefault();
+            coupon.Status = EnumCouponStatus.Owned;
+            _couponService.Update(coupon);
             var brand = _productBrandService.GetProductBrandById(couponCategory.BrandId);
             var CouponOwn=new CouponCategoryModel
             {

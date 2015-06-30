@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "coupons";
+    Layout = null;
 }
 @model dynamic
 <link href="~/Controllers/Coupons/Static/style/Coupons.css" rel="stylesheet" />
@@ -12,17 +13,17 @@
             @foreach (var item in Model)
             {
               <li class="distance">
-                  <img src="http://img.yoopoon.com/@item.BrandImg" width="630" height="222" alt="抢起来" />
-                <div class="lpIntro">
-                    <span>@item.ProductParamater["最高优惠"]&nbsp;&nbsp;@item.ProductParamater["占地面积"]</span>
-                    <p>@item.SubTitle</p>
-                    <a href="#">了解楼盘详情&nbsp;&nbsp;</a>
-                </div>
-                <div class="juan">@item.Name</div>
-                  <div class="specialUse">@item.ReMark</div>
-                @*@Html.ActionLink("抢起来", "couponOwn", new { id = item.Id })*@
-                <a href="/Coupons/couponOwn?id=@item.Id">抢起来</a>
-                <small>还剩 @item.Count 张劵</small>
+                  <img src="http://img.yoopoon.com/@item.BrandImg" width="350px" height="222px" alt="抢起来"/>
+                  <div class="lpIntro">
+                      <span>@item.ProductParamater["最高优惠"]元/m²&nbsp;&nbsp;@item.ProductParamater["占地面积"]</span>
+                      <p>@item.SubTitle</p>
+                      <a href="#">了解楼盘详情&nbsp;&nbsp;</a>
+                  </div>                
+                      <div class="juan">@item.Name</div>
+                      <div class="specialUse">@item.ReMark</div>
+                      @*@Html.ActionLink("抢起来", "couponOwn", new { id = item.Id })*@
+                      <a href="/Coupons/couponOwn?id=@item.Id"><button>抢起来</button></a>
+                      <small>还剩 @item.Count 张劵</small>
               </li>
             }                      
             @*<li class="distance">
