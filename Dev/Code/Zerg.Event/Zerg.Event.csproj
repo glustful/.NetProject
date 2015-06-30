@@ -169,6 +169,7 @@
     <Content Include="Views\Crowd\crowd.cshtml" />
     <Content Include="Views\CrowdAdd\crowdadd.cshtml" />
     <Content Include="Views\Coupons\coupons.cshtml" />
+    <Content Include="Views\Coupons\couponOwn.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -16,6 +16,7 @@ namespace Zerg.Event.Models.Coupons
         public string Price { get; set; }
         public string SubTitle { get; set; }
         public string BrandImg { get; set; }
+        public string BrandName { get; set; }
         public Dictionary<string, string> ProductParamater { get; set; }
         
     }

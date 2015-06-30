@@ -18,13 +18,13 @@
                     <p>@item.SubTitle</p>
                     <a href="#">了解楼盘详情&nbsp;&nbsp;</a>
                 </div>
-                <div class="juan">@item.Price</div>
+                <div class="juan">@item.Name</div>
                   <div class="specialUse">@item.ReMark</div>
-                <a href="#/app/CouponsOwn">抢起来</a>
+                @*@Html.ActionLink("抢起来", "couponOwn", new { id = item.Id })*@
+                <a href="/Coupons/couponOwn?id=@item.Id">抢起来</a>
                 <small>还剩 @item.Count 张劵</small>
               </li>
-            }
-           
+            }                      
             @*<li class="distance">
                 <img src="~/Controllers/Coupons/Static/image/Coupons/1.png" width="630" height="222" alt="抢起来"/>
                 <div class="lpIntro">

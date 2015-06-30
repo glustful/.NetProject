@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Event.Entity.Entity.Coupon;
 using Event.Service.Coupon;
 using Trading.Service.ProductBrand;
+using YooPoon.Core.Site;
 using Zerg.Event.Models.Coupons;
 
 namespace Zerg.Event.Controllers.Coupons
@@ -14,11 +15,15 @@ namespace Zerg.Event.Controllers.Coupons
     {
         private readonly ICouponCategoryService _couponCategoryService;
         private readonly IProductBrandService _productBrandService;
+        private readonly ICouponOwnerService _couponOwnerService;
+        private readonly IWorkContext _workContent;
 
-        public CouponsController(ICouponCategoryService couponCategoryService, IProductBrandService productBrandService)
+        public CouponsController(ICouponCategoryService couponCategoryService, IProductBrandService productBrandService, ICouponOwnerService couponOwnerService,IWorkContext workContent)
         {
             _couponCategoryService = couponCategoryService;
             _productBrandService = productBrandService;
+            _couponOwnerService = couponOwnerService;
+            _workContent = workContent;
         }
         public ActionResult coupons()
         {
@@ -47,5 +52,19 @@ namespace Zerg.Event.Controllers.Coupons
             });
             return View(list);
         }
+
+        public ActionResult couponOwn(int id)
+        {
+            _couponOwnerService.CreateRecord(_workContent.CurrentUser.Id, id);  
+            var Coupon = _couponCategoryService.GetCouponCategoryById(id);
+            var Brand = _productBrandService.GetProductBrandById(Coupon.BrandId);
+            var CouponOwn=new CouponCategoryModel
+            {
+                 Name = Coupon.Name,
+                 BrandName = Brand.Bname
+            };             
+            return View(CouponOwn);
+        }
+
 	}
 }
