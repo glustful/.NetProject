@@ -24,7 +24,7 @@
     <div role="tabpanel" class="tab-pane animated fadeIn " id="tab1">
         <div class="md-list-item">
             <div class="md-list-item-left">
-                <img src="{{BrokerModel.Headphoto}}" class="w-full circle">
+                <img src="http://img.yoopoon.com/{{BrokerModel.Headphoto}}" class="w-full circle">
             </div>
             <div class="md-list-item-content details"  >
                 <div><small>{{BrokerModel.Nickname}}</small><small> {{BrokerModel.Brokername}}</small></div>
@@ -91,7 +91,7 @@
             <pagination boundary-links="true" total-items="totalCountCRZ" items-per-page="searchCRZCondition.pageSize" ng-model="searchCRZCondition.page" ng-change="getCRZList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
              </div>
             </div>
-        <div style="background-color:#EFEFEF;line-height: 50px;"ng-bind="tipsAccount"></div>
+        <div class="posonfont" ng-bind="tipsAccount"></div>
     </div>
 
    <div role="tabpanel" class="tab-pane animated fadeIn" id="tab3">
@@ -127,7 +127,7 @@
            <pagination boundary-links="true" total-items="totalCountTX" items-per-page="searchTXCondition.pageSize" ng-model="searchTXCondition.page" ng-change="getTXList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
        </div>
 </div>
-       <div style="background-color:#EFEFEF;line-height: 50px;"ng-bind="tipsDraw"></div>
+       <div class="posonfont" ng-bind="tipsDraw"></div>
     </div>
 
     <div role="tabpanel" class="tab-pane animated fadeIn" id="tab4">
@@ -151,7 +151,7 @@
             <pagination boundary-links="true" total-items="totalCountBank" items-per-page="searchBankCondition.pageSize" ng-model="searchBankCondition.page" ng-change="getBankList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
         </div>
             </div>
-        <div style="background-color:#EFEFEF;line-height: 50px;"ng-bind="tipsBank"></div>
+        <div class="posonfont" ng-bind="tipsBank"></div>
     </div>
 
     <div role="tabpanel" class="tab-pane animated fadeIn" id="tab5">
@@ -178,7 +178,7 @@
             <pagination boundary-links="true" total-items="totalCountJF" items-per-page="searchJFCondition.pageSize" ng-model="searchJFCondition.page" ng-change="getJFList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
         </div>
        </div>
-        <div style="background-color:#EFEFEF;line-height: 50px;"ng-bind="tipsJF"></div>
+        <div class="posonfont" ng-bind="tipsJF"></div>
           </div>
 
 </div>

@@ -234,7 +234,7 @@ if(data.totalCount>0){
 }
             else{
             $scope.visibleAccount=false;
-            $scope.tipsAccount="当前出入账数据";
+            $scope.tipsAccount="当前没有出入账数据";
 }
         });
     };
@@ -279,12 +279,13 @@ else{
             params:$scope.searchBankCondition,
             'withCredentials':true
         }).success(function(data){
+
             if(data.totalCount1>0) {
                 $scope.listBank = data.List;
                 $scope.searchBankCondition.page = data.Condition.Page;
                 $scope.searchBankCondition.pageSize = data.Condition.PageCount;
                 $scope.totalCountBank = data.totalCount1;
-                $scope.visibleBank=false;
+                $scope.visibleBank=true;
                 $scope.tipsBank="";
             }
             else{
@@ -308,7 +309,6 @@ else{
             'withCredentials':true
         }).success(function(data){
             if(data.totalCount>0){
-            console.log(data);
             $scope.listJF = data.List;
             $scope.searchJFCondition.page = data.Condition.Page;
             $scope.searchJFCondition.pageSize = data.Condition.PageCount;
