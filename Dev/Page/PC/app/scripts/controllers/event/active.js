@@ -4,7 +4,7 @@
 
 angular.module("app").controller('activeController', [
     '$http','$scope','$modal',function($http,$scope,$modal) {
-
+        $scope.ticketNum='';
         $scope.tip = function () {
             var modalInstance = $modal.open({
                 templateUrl: 'myModalContent.html',
@@ -13,7 +13,24 @@ angular.module("app").controller('activeController', [
                     msg:function(){return "你确定要激活吗？";}
                 }
             })};
-         //  modalInstance.result.then(function(){})
+           modalInstance.result.then(function(){
+               $http.post('',$scope.ticketNum,{'withCredentials':true}).success(function(data){
+                   if(data.Status){
+                       var modalInstance = $modal.open({
+                           templateUrl: 'myModalContent.html',
+                           controller: 'ModalInstanceCtrl',
+                           resolve: {
+                               msg: function () {
+                                   return data.Msg;
+                               }
+                           }
+                       });
+                   }
+
+
+
+               })
+           })
 
 
 
