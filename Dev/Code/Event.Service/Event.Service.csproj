@@ -44,6 +44,8 @@
     <Compile Include="Coupon\CouponOwnerService.cs" />
     <Compile Include="Coupon\ICouponOwnerService.cs" />
     <Compile Include="Coupon\ICouponCategoryService.cs" />
+    <Compile Include="Coupon\CouponService.cs" />
+    <Compile Include="Coupon\ICouponService.cs" />
     <Compile Include="Crowd\CrowdService.cs" />
     <Compile Include="Crowd\ICrowdService.cs" />
     <Compile Include="Discount\DiscountService.cs" />

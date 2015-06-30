@@ -47,6 +47,7 @@
     <Compile Include="Entity\Coupon\CouponCategory.cs" />
     <Compile Include="Entity\Coupon\CouponCategorySearchCondition.cs" />
     <Compile Include="Entity\Coupon\CouponOwner.cs" />
+    <Compile Include="Entity\Coupon\CouponSearchCondition.cs" />
     <Compile Include="Entity\Coupon\CouponOwnerSearchCondition.cs" />
     <Compile Include="Entity\Crowd\CrowdEntity.cs" />
     <Compile Include="Entity\Crowd\CrowdSearchConditon.cs" />
