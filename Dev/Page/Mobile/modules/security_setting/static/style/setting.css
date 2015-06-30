@@ -55,7 +55,8 @@ form p span{
     height: 46px;
     font-size: 20px;
     font-family: "microsoft yahei";
-    border: 1px solid #eeeeee;
+    border: solid darkgray 1px;
+
 }
 
 .save_button{
@@ -75,6 +76,8 @@ form p span{
     background-color: white;
     font-size: 20px;
     font-family:'microsoft yahei' ;
+    border: solid darkgray 1px;
+
 }
 .pin button{
     width: 147px;
@@ -106,6 +109,8 @@ form p span{
     height: 48px;
     font-size: 22px;
     font-family: "microsoft yahei";
+    border: solid darkgray 1px;
+
 }
 .person_revise span{
  color: #fc3b00;

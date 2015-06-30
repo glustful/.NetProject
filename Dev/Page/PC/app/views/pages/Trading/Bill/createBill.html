@@ -1,5 +1,6 @@
 <div ng-app="App" ng-controller="createBillController" ng-submit="Create()">
     <div class="row">
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
     <form class="form-horizontal" role="form" name="form"
           enctype="multipart/form-data">
     <div class="form-group">
