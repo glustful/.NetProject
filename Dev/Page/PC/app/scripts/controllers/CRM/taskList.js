@@ -12,8 +12,8 @@ app.controller('taskIndexController',['$http','$scope','$modal',function($http,$
     //查询任务
     var getTaskList  = function() {
         $http.get(SETTING.ApiUrl+'/Task/TaskList/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
-           console.log(data);
             if(data.totalCount>0){
+                console.log(data);
                 $scope.visibleif=true;
                 $scope.tips="";
             $scope.list = data.list;

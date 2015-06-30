@@ -28,7 +28,7 @@
                 <ul><li class="li" ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li></ul>
             </div>
             <div class="type" ng-hide="type" >
-                <ul style="width: 159px"><li class="typeOption" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId,type.TypeName)">{{type.TypeName}}</li></ul>
+                <ul><li class="typeOption" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId,type.TypeName)">{{type.TypeName}}</li></ul>
             </div>
             <div id="priceCondition" ng-hide="price">
                 <ul>
@@ -38,7 +38,7 @@
                     <li class="priceOption" ng-click="getPriceCondition(6000,7000)"><span>6000</span>-<span>7000</span></li>
                     <li class="priceOption" ng-click="getPriceCondition(7000,8000)"><span>7000</span>-<span>8000</span></li>
                     <li class="priceOption" ng-click="getPriceCondition(8000,9000)"><span>8000</span>-<span>9000</span></li>
-                    <li class="priceOption" ng-click="getPriceCondition(8000,9000)"><span>9000</span>-<span>10000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(9000,10000)"><span>9000</span>-<span>10000</span></li>
                     <li class="priceOption" ng-click="getPriceCondition(10000,50000)"><span>10000以上</span></li>
                 </ul>
             </div>
@@ -66,7 +66,7 @@
                 <!--{{item.Productimg}}-->
                 <div class="main-storeroom cf">
                 <a class="fl img" href="#/app/housesPic?productId={{item.Id}}">
-                    <img src="http://img.yoopoon.com/{{item.Productimg}}" alt="蓝光&nbsp;·&nbsp;颐明园"width="224" height="170"/></a>
+                    <img src="http://img.yoopoon.com/{{item.Productimg}}" alt="蓝光&nbsp;·&nbsp;颐明园"width="231px" height="188px"/></a>
                 <div class="detail-storeroom fl ">
                     <p class="yhy">{{item.Productname}}</p>
                     <p class="yuan">{{item.Price}}元/m²</p>

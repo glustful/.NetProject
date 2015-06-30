@@ -57,17 +57,13 @@ angular.module("app").controller('agentmanagerIndexController', [
                             $scope.list[i].color={color:'white'};
                             $scope.list[i].backcolor={backgroundColor:'#3F51B5'};
                             $scope.list[i].color={backgroundColor:'#FFEB3B'};
-
-
                         }
-
                     }
                         }
                 else{
                     $scope.visibleif=false;
                     $scope.tips="没有数据"
                 }
-
             });
         };
         //初始化page
@@ -117,26 +113,7 @@ angular.module("app").controller('agentmanagerIndexController', [
                     });
             });
         }
-//            function(id){
-//        $http.post(SETTING.ApiUrl+'/BrokerInfo/DeleteBroker',id,{
-//            'withCredentials':true
-//        }).success(function(data) {
-//           if(data.Status)
-//           {
-//               alert(data.Msg);
-//               if(howmany==1)
-//               {
-//                   if(page>1){
-//                   $scope.searchCondition.page--;}
-//                   else{
-//                       $scope.searchCondition.page=1;
-//                   }
-//               }
-//               $scope.getList();
-//           }
-//
-//        })}
-        //注销经纪人
+
         $scope.cancelBroker=function (id,btnname) {
             $scope.selectedId = id;
             var modalInstance = $modal.open({
@@ -164,36 +141,13 @@ angular.module("app").controller('agentmanagerIndexController', [
                             }
                         }
                         $scope.getList();
-
-
                     }
                     else{
-
                         //  $scope.alerts=[{type:'danger',msg:data.Msg}];
                     }
                 });
             });
         }
-//        $scope.cancelBroker=function(id){
-//            $http.post(SETTING.ApiUrl+'/BrokerInfo/CancelBroker',id,{
-//                'withCredentials':true
-//            }).success(function(data) {
-//                if(data.Status)
-//                {
-//                    alert(data.Msg);
-//                    if(howmany==1)
-//                    {
-//                        if(page>1){
-//                            $scope.searchCondition.page--;}
-//                        else{
-//                            $scope.searchCondition.page=1;
-//                        }
-//                    }
-//                    $scope.getList();
-//                }
-//
-//            })}
-
     }
 ]);
 
@@ -234,7 +188,7 @@ if(data.totalCount>0){
 }
             else{
             $scope.visibleAccount=false;
-            $scope.tipsAccount="当前出入账数据";
+            $scope.tipsAccount="当前没有出入账数据";
 }
         });
     };
@@ -279,12 +233,13 @@ else{
             params:$scope.searchBankCondition,
             'withCredentials':true
         }).success(function(data){
+
             if(data.totalCount1>0) {
                 $scope.listBank = data.List;
                 $scope.searchBankCondition.page = data.Condition.Page;
                 $scope.searchBankCondition.pageSize = data.Condition.PageCount;
                 $scope.totalCountBank = data.totalCount1;
-                $scope.visibleBank=false;
+                $scope.visibleBank=true;
                 $scope.tipsBank="";
             }
             else{
@@ -308,7 +263,6 @@ else{
             'withCredentials':true
         }).success(function(data){
             if(data.totalCount>0){
-            console.log(data);
             $scope.listJF = data.List;
             $scope.searchJFCondition.page = data.Condition.Page;
             $scope.searchJFCondition.pageSize = data.Condition.PageCount;

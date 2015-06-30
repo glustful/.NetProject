@@ -137,6 +137,131 @@ namespace Zerg.Controllers.UC
 
 
 
+        /// <summary>
+        /// 外接  注册登录逻辑 （先判断手机号是否存在 存在就进行登录  不存在就进行注册 并返回成功） 用于外接 ：众凑 游戏等  by lhl 2015-6-30
+        /// </summary>
+        /// <param name="model">只传两个参数：手机号和密码</param>
+        /// <returns></returns>
+        [Description("登陆")]
+        [HttpPost]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage ExternalLoginOrAdd([FromBody]UserModel model)
+        {
+            if(!string.IsNullOrEmpty( model.Phone)  && !string.IsNullOrEmpty( model.Password))
+            {
+                //1 先判断手机号是否存在
+                var condition = new BrokerSearchCondition
+                {                   
+                    State = 1,
+                    Phone = model.Phone
+                };
+                //判断Broker表中是否存在手机号
+                int brokerCount = _brokerService.GetBrokerCount(condition);
+                if (brokerCount != 0)
+                {
+                    //存在  就进行登录
+
+                    #region 登录
+
+                    BrokerEntity broker = _brokerService.GetBrokersByCondition(condition).FirstOrDefault();
+                    if (broker == null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号或密码错误"));
+                    }
+                 
+                    var user = _userService.FindUser(broker.UserId);
+                    if (user == null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名或密码错误"));
+                    }
+                    if (!PasswordHelper.ValidatePasswordHashed(user, model.Password))
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名或密码错误")); 
+                    }
+                    _authenticationService.SignIn(user, model.Remember);
+
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "ok"));
+
+                    #endregion 
+                }
+                else //不存在  就进行注册
+                {
+
+                    #region UC用户创建 杨定鹏 2015年5月28日14:52:48
+                                     
+                    var brokerRole = _roleService.GetRoleByName("user");
+
+                    //User权限缺少时自动添加
+                    if (brokerRole == null)
+                    {
+                        brokerRole = new Role
+                        {
+                            RoleName = "user",
+                            RolePermissions = null,
+                            Status = RoleStatus.Normal,
+                            Description = "刚注册的用户默认归为普通用户user"
+                        };
+                    }
+
+                    var newUser = new UserBase
+                    {
+                        UserName = model.Phone,
+                        Password = model.Password,
+                        RegTime = DateTime.Now,
+                        NormalizedName = model.Phone,
+                        //注册用户添加权限
+                        UserRoles = new List<UserRole>(){new UserRole()
+                       {
+                         Role = brokerRole
+                       }},
+                        Status = 0
+                    };
+
+                    PasswordHelper.SetPasswordHashed(newUser, model.Password);
+
+                    #endregion
+
+                    #region Broker用户创建 杨定鹏 2015年5月28日14:53:32
+
+                    var models = new BrokerEntity();
+                    models.UserId = _userService.InsertUser(newUser).Id;
+                    models.Brokername = model.Phone;
+                    models.Nickname = model.Phone;
+                    models.Phone = model.Phone;
+                    models.Totalpoints = 0;
+                    models.Amount = 0;
+                    models.Usertype = EnumUserType.普通用户;
+                    models.Regtime = DateTime.Now;
+                    models.State = 1;
+                    models.Adduser = 0;
+                    models.Addtime = DateTime.Now;
+                    models.Upuser = 0;
+                    models.Uptime = DateTime.Now;
+
+                    //判断初始等级是否存在,否则创建
+                    var level = _levelService.GetLevelsByCondition(new LevelSearchCondition { Name = "默认等级" }).FirstOrDefault();
+                    if (level == null)
+                    {
+                        var levelModel = new LevelEntity
+                        {
+                            Name = "默认等级",
+                            Describe = "系统默认初始创建",
+                            Url = "",
+                            Uptime = DateTime.Now,
+                            Addtime = DateTime.Now,
+                        };
+                        _levelService.Create(levelModel);
+                    }
+                    models.Level = level;
+                    var newBroker = _brokerService.Create(models);
+                    #endregion
+                  
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "ok"));
+
+                }                          
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "请填写手机号和密码"));
+        }
 
 
 
