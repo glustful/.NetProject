@@ -1,6 +1,8 @@
-﻿namespace Event.Entity.Entity.Coupon
+﻿using YooPoon.Core.Data;
+
+namespace Event.Entity.Entity.Coupon
 {
-    public class CouponCategory
+    public class CouponCategory:IBaseEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
