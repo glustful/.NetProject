@@ -1500,6 +1500,10 @@ angular.module('app')
                 url: '/user',
                 template: '<div ui-view></div>'
             })
+            .state('page.event.Coupons.active', {
+                url: '/active',
+                template: '<div ui-view></div>'
+            })
             .state('page.event.Coupons.type.index', {
                 url: '/index',
                 templateUrl: 'views/pages/event/Coupons/type/index.html'
@@ -1531,6 +1535,12 @@ angular.module('app')
             .state('page.event.Coupons.user.list', {
                 url: '/list',
                 templateUrl: 'views/pages/event/Coupons/user/list.html'
+            })
+            .state('page.event.Coupons.active.active', {
+                url: '/active',
+                templateUrl: 'views/pages/event/Coupons/active/active.html',
+                data : { title: '激活优惠券' },
+                resolve: load('scripts/controllers/event/active.js')
             })
 
 
