@@ -1,0 +1,209 @@
+/*.navbar-index {*/
+    /*position: absolute;*/
+    /*z-index: 100000;*/
+    /*text-align: center;*/
+/*}*/
+/*.nav-index{*/
+      /*background-color:rgba(0,0,0,0.8);*/
+      /*height: 40px;*/
+/*}*/
+/*.nav-index li a {*/
+    /*color: #fff;*/
+    /*margin: 0 10px;*/
+    /*font-size: 16px;*/
+/*}*/
+/*.nav-index li a.red{*/
+    /*color:#ff3000;*/
+/*}*/
+body{
+    padding-top: 50px;
+}
+.navbar-default{
+    background-color: rgba(0,0,0,0.8);
+}
+.navbar{
+    margin-bottom: 0;
+}
+.navbar-default .navbar-nav li a{
+    color: #fff;
+    font-size: 16px;
+}
+
+.navbar-default .navbar-nav li a:hover{
+    color: red;
+}
+
+.carousel .item img {
+    width: 100%;
+}
+.logo{
+  width: 649px;
+  height: 319px;
+  background: url("../images/logo.png") no-repeat 0 0;
+  margin: -600px auto 0;
+}
+.main{
+    text-align: center;
+}
+.platform{
+    width: 650px;
+    height: 64px;
+    background-color: rgba(0, 0 ,0, 0.2);
+    line-height: 64px;
+    font-size: 24px;
+    margin:30px auto 20px;
+    border-radius: 5px;
+}
+.know{
+    border-radius: 20px;
+    width: 180px;
+    color: #f8774a;
+    background-color:#f83d13;
+    font-size: 20px;
+}
+.service{
+   text-align: center;
+   padding-top: 50px;
+   height: 600px;
+   background: url("../images/houses.png") no-repeat 0 bottom;
+}
+.wel{
+    display: block;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+.min-font{
+    color:#999999;
+}
+.Buyers p,.agents p,.Developers p{
+    font-size: 20px;
+    margin-bottom: 0;
+}
+.agents{
+    border-left: 1px solid #ebebeb;
+    border-right: 1px solid #ebebeb;
+}
+.profit,.taste{
+    padding: 50px 0;
+}
+.profit p,.taste p{
+    line-height: 50px;
+    font-size: 20px;
+}
+.newTaste{
+    text-align: right;
+}
+.profit button,.newTaste button{
+    margin-top: 120px;
+    background-color:#f83d13;
+    width: 130px;
+    height: 40px;
+    color: #f8774a;
+    font-size: 20px;
+}
+.houses{
+    padding:100px 0;
+    text-align: center;
+    background-color: #f5f5f5;
+}
+.houses .col-md-4 .detail{
+    border: 1px solid #ebebeb;
+    background-color: #fff;
+}
+.houses .col-md-4 img{
+    width: 100%;
+}
+.houses .col-one{
+    margin-bottom: 100px;
+}
+.square{
+    font-size: 20px;
+}
+.intro{
+    padding:0 30px 20px 30px;
+}
+.cheap{
+    font-size: 20px;
+    color:#b0b0b0;
+}
+.more{
+    border-color: #ff3000;
+    margin-top: 100px;
+    width: 200px;
+}
+.logo-ft{
+    margin: 80px 0;
+}
+footer h2{
+    margin-bottom: 30px;
+}
+footer p{
+    font-size: 20px;
+    color:#d3d4d5 ;
+}
+.girl {
+    height: 500px;
+}
+
+.girl .item {
+    height: 500px;
+
+}
+
+.girl .item img {
+    width: 100%;
+}
+.headGirl{
+    width: 296px;
+    height: 287px;
+    background: url("../images/girl.jpg") no-repeat 0 0;
+    margin: 0 auto;
+}
+.carousel-caption {
+    z-index: 10;
+}
+
+.girl .glyphicon-chevron-left{
+   background: url("../images/pre.png") no-repeat 50px 0;
+    width: 200px;
+    height: 100px;
+}
+.girl .glyphicon-chevron-right{
+    background: url("../images/next.png") no-repeat 0 0;
+    width: 100px;
+    height: 100px;
+}
+.name{
+    color: #000;
+    margin-top: 30px;
+    font-size: 18px;
+}
+.case .carousel-control{
+    width: 0;
+    bottom: 80px;
+}
+.case {
+  text-align: center;
+}
+.longLine{
+    width: 100px;
+    height: 5px;
+    background: #ebebeb;
+    margin: 0 auto 50px;
+}
+.shortLine{
+    width: 80px;
+    height: 5px;
+    background-color: #ebebeb;
+    margin:20px 0 80px 0;
+}
+.shortLine1{
+    display: block;
+    height: 5px;
+    line-height: 5px;
+    background: url("../images/line.png") no-repeat right 0;
+    margin:20px 0 80px 0;
+}
+h2{
+    font-weight: bolder;
+}
