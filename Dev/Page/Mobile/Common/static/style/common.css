@@ -82,7 +82,7 @@ a{
     width: 50px;
 }
 .search input{
-    width: 297px;
+    width: 315px;
     color: #f1aa94;
     font-size: 24px;
     background: none;
@@ -142,4 +142,19 @@ a{
 }
 a.click:active{
     color: black;
+}
+.footerAfter{
+    background: #f13800;
+    width:640px;
+    position:fixed;
+    bottom:0;
+    z-index: 10;
+}
+.footerAfter span{
+    display: inline-block;
+    text-align: center;
+    width:200px;
+    padding:70px 0 17px 0;
+    color: #fff;
+    font-size: 20px;
 }

@@ -25,8 +25,8 @@ app.controller('registerController',['$scope','$state','$http','$stateParams','A
             }
             else{
                 AuthService.doLogin($scope.register.Phone,$scope.register.Password,function(){
-                    console.log("$scope.register");
-                    $state.go('app.personal_user')
+                   // console.log("$scope.register");
+                    $state.go('app.personal_user');
                 },function(data){
                    // $scope.errorTips = data.Msg;
                 })
@@ -60,8 +60,8 @@ app.controller('registerController',['$scope','$state','$http','$stateParams','A
                  {
                      $scope.register.Hidm=data.Desstr;
                  }else{
-                     //alert("短信发送失败，请与客户联系！");
-                     console.log("短信发送失败，请与客户联系！");
+                     alert("短信发送失败，请与客户联系！");
+                   //  console.log("短信发送失败，请与客户联系！");
                  }
             });
             }

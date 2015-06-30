@@ -636,7 +636,6 @@ angular.module('app')
               url: '/index',
               templateUrl: 'views/pages/CRM/AdmMan/index.html',
                   data: { title: 'Admin管理' },
-                controller:"agentmanagerIndexController",
                 resolve:load('scripts/controllers/CRM/AdmMan.js')
             })
             .state('page.CRM.AdmMan.detailed', {
@@ -818,7 +817,7 @@ angular.module('app')
                 url: '/detailed?id',
                 templateUrl: 'views/pages/CRM/DKWaitPetition/detailed.html',
                 data: { title: '详情页' },
-                controller:"WPDetialController",
+                controller:"DKDetialController",
                 resolve:load('scripts/controllers/CRM/WaitPetitionDK.js')
             })
 
@@ -853,14 +852,14 @@ angular.module('app')
                 url: '/index',
                 templateUrl: 'views/pages/CRM/DKtalking/index.html',
                 data: { title: '带客洽谈中业务' },
-                controller:"TalkingListController",
+                controller:"DKTalkingList",
                 resolve:load('scripts/controllers/CRM/DKtalking.js')
             })
             .state('page.CRM.DKtalking.detailed', {
                 url: '/detailed?id',
                 templateUrl: 'views/pages/CRM/DKtalking/detailed.html',
                 data: { title: '详情页' },
-                controller:"TaklDetialController",
+                controller:"DKTaklDetial",
                 resolve:load('scripts/controllers/CRM/DKtalking.js')
             })
 

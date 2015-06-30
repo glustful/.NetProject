@@ -33,7 +33,7 @@
         <td class="footable-visible">{{item.Projectname}}</td>
         <td data-value="78025368997" class="footable-visible">{{item.Uptime}}</td>
         <td class="footable-visible">是</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.DKSuccess.detailed({id:item.Id})"><span class="label bg-success" >审核</span></a></td>
+        <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.DKSuccess.detailed({id:item.Id})"><span class="label bg-success" >查看</span></a></td>
     </tr>
 
     </tbody>
@@ -43,7 +43,7 @@
     </tr>
     <tr>
         <td colspan="5" class="text-center footable-visible">
-            <pagination boundary-links="true" total-items="searchCondition.totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getDKList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+            <pagination boundary-links="true" total-items="totalCount" items-per-page="searchDKCondition.pageSize" ng-model="searchDKCondition.page" ng-change="getDKList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
         </td>
     </tr>
     </tfoot>

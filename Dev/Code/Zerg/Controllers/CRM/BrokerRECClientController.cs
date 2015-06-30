@@ -250,7 +250,7 @@ namespace Zerg.Controllers.CRM
             //model.Qq = Convert.ToInt32(brokerrecclient.Qq);
             model.Phone = brokerrecclient.Phone;       //客户电话
             model.Brokername = broker.Brokername;
-            model.Brokerlevel = broker.Level.Name;
+            //model.Brokerlevel = broker.Level.Name;
             model.Broker = broker;
             model.Adduser = brokerrecclient.Adduser;
             model.Addtime = DateTime.Now;

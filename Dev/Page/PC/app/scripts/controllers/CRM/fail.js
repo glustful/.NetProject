@@ -23,7 +23,7 @@ angular.module("app").controller('FailListController', [
                 }
                 $scope.searchCondition.page=data.condition1.Page;
                 $scope.searchCondition.PageCount=data.condition1.PageCount;
-                $scope.searchCondition.totalCount=data.totalCont1;
+                $scope.totalCount=data.totalCont1;
             });
         };
         $scope.getList = getTagList;
@@ -90,7 +90,7 @@ angular.module("app").controller('DKFailListController', [
                 }
                 $scope.searchCondition.page=data.condition1.Page;
                 $scope.searchCondition.PageCount=data.condition1.PageCount;
-                $scope.searchCondition.totalCount=data.totalCont1;
+                $scope.totalCount=data.totalCont1;
             });
         };
         $scope.getList = getTagList;

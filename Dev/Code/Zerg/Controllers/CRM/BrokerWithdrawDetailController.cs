@@ -19,6 +19,7 @@ using System.ComponentModel;
 namespace Zerg.Controllers.CRM
 {
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    [AllowAnonymous]
     /// <summary>
     /// 经纪人提现明细  李洪亮  2015-05-05
     /// </summary>
@@ -106,8 +107,8 @@ namespace Zerg.Controllers.CRM
         public HttpResponseMessage AddBrokerWithdrawDetail([FromBody] AddMoneyEntity MoneyEntity)
         {
             int bankId = 0;
-            int withdrawMoney = 0;
-            if (string.IsNullOrEmpty(MoneyEntity.Bank) || string.IsNullOrEmpty(MoneyEntity.Hidm) || string.IsNullOrEmpty(MoneyEntity.MobileYzm) || string.IsNullOrEmpty(MoneyEntity.Money))
+                int withdrawMoney = 0;
+                                                if (string.IsNullOrEmpty(MoneyEntity.Bank) || string.IsNullOrEmpty(MoneyEntity.Hidm) || string.IsNullOrEmpty(MoneyEntity.MobileYzm) || string.IsNullOrEmpty(MoneyEntity.Money))
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误"));
             }
@@ -168,10 +169,13 @@ namespace Zerg.Controllers.CRM
                         return PageHelper.toJson(PageHelper.ReturnValue(false, "账户余额不足，不能提现"));
                     }
                     syMoney = getMoney - Convert.ToDecimal(MoneyEntity.Money);
-                    broker.Amount = syMoney;//将剩余金额更新到经纪人表中金额字段
-                    _brokerService.Update(broker);
+
+                    //将剩余金额更新到经纪人表中金额字段
+                    //broker.Amount = syMoney;
+                    //_brokerService.Update(broker);
 
 
+                    //更新到提现表中
                     var entity = new BrokerWithdrawDetailEntity
                     {
                         BankCard = _bankcardService.GetBankCardById(Convert.ToInt32(MoneyEntity.Bank)),
@@ -181,7 +185,8 @@ namespace Zerg.Controllers.CRM
                         Uptime = DateTime.Now,
                         Addtime = DateTime.Now,
                         Adduser = broker.Id,
-                        Upuser = broker.Id
+                        Upuser = broker.Id,
+                        State="0"
                     };
 
                     try
@@ -220,10 +225,12 @@ namespace Zerg.Controllers.CRM
                     };
                     BrokerWithdrawDetailSearchCondition browithdetailcon = new BrokerWithdrawDetailSearchCondition
                     {
-                        Brokers = broker
+                        Brokers = broker,
+                        State="1"
+                        
                     };
-                    Decimal AddMoneys = _brokeaccountService.GetBrokeAccountsByCondition(broconditon).Sum(o => o.Balancenum);//新增的金额总和
-                    decimal TxMoneys = _brokerwithdrawdetailService.GetBrokerWithdrawDetailsByCondition(browithdetailcon).Sum(o => o.Withdrawnum);//提现的总金额
+                    decimal AddMoneys =_brokeaccountService.GetBrokeAccountsByCondition(broconditon).Count()>0? _brokeaccountService.GetBrokeAccountsByCondition(broconditon).Sum(o => o.Balancenum):0;//新增的金额总和
+                    decimal TxMoneys = _brokerwithdrawdetailService.GetBrokerWithdrawDetailsByCondition(browithdetailcon).Count()>0? _brokerwithdrawdetailService.GetBrokerWithdrawDetailsByCondition(browithdetailcon).Sum(o => o.Withdrawnum):0;//提现的总金额
                     return (AddMoneys - TxMoneys).ToString();
                 }
             }

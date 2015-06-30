@@ -34,8 +34,8 @@ angular.module("app").controller('SuccessListController', [
 //带客洽谈成功列表
 ///////CHEN///////////////////////////////////////////////////////////////////////////////////////////////////////
 angular.module("app").controller('DKSuccessController',[
-    'http','$scope',function($http,$scope){
-        $scope.searchDKConditon = {
+    '$http','$scope',function($http,$scope){
+        $scope.searchDKCondition = {
             status:"洽谈成功",
             BrokerName:"",
             page:1,
@@ -44,16 +44,15 @@ angular.module("app").controller('DKSuccessController',[
 
         var getTagList = function(){
             $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
-               params:$scope.searchDKCondition,
-                'withCredentials':true
+               params:$scope.searchDKCondition
             }).success(function(data){
                 $scope.BrokerDKlist = data.list1;
                 if(data.list1 == ""){
                     $scope.errorTip="当前不存在洽谈成功业务";
                 }
-                $scope.searchCondition.page=data.condition1.Page;
-                $scope.searchCondition.PageCount=data.condition1.PageCount;
-                $scope.searchCondition.totalCount=data.totalCont1;
+                $scope.searchDKCondition.page=data.condition1.Page;
+                $scope.searchDKCondition.PageCount=data.condition1.PageCount;
+                $scope.totalCount=data.totalCont1;
                 console.log($scope.Brokerlist);
             });
         };
@@ -65,13 +64,13 @@ angular.module("app").controller('DKSuccessController',[
 
 //详细信息
 angular.module("app").controller('SuccessDetialController',[
-    '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+    '$http','$scope','$stateParams',function($http,$state,$scope,$stateParams) {
         //获取详细信息
-        $http.get(SETTING.ApiUrl + '/AdminRecom/GetAuditDetail/' + $stateParams.id,{
+        $http.get(SETTING.ApiUrl+ '/AdminRecom/GetAuditDetail/'+ $stateParams.id,{
             'withCredentials':true
         }).success(function (data) {
             $scope.ARDetialModel = data;
-            console.log(data);
+            console.log($scope.ARDetialModel);
         });
 
         $scope.PassAudit = {
@@ -88,7 +87,9 @@ angular.module("app").controller('SuccessDetialController',[
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
-                    console.log(data.Msg);
+                    alert(data.Msg);
+                    $state.go('page.CRM.talking.index');
+
                 }else{
                     console.log(data.Msg);
                 }
@@ -165,9 +166,9 @@ angular.module("app").controller('BLPayController',[
 ///////////////////////////////////////带客洽谈详细  Begin ///////////////////////////////////////////////////////////
 
 angular.module("app").controller('DKSuccessDetialController',[
-    '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+    '$http','$scope','$stateParams',function($http,$state,$scope,$stateParams) {
         //获取详细信息
-        $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/' + $stateParams.id,{
+        $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/'+ $stateParams.id,{
             'withCredentials':true
         }).success(function (data) {
             $scope.BrokerLeadClientDtail = data;
@@ -188,7 +189,9 @@ angular.module("app").controller('DKSuccessDetialController',[
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
-                    console.log(data.Msg);
+                    alert(data.Msg);
+                    $state.go('page.CRM.DKSuccess.index');
+
                 }else{
                     console.log(data.Msg);
                 }

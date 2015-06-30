@@ -3,11 +3,11 @@
 <div class="add_content"  ng-controller="AddBrokerController" >
     <form  name="form" id="form"  ng-submit="Invite()">
         <p>
-            电话
+            手机
         </p>
-        <p><input type="tel" class="add_blank" ng-model="YQM.Mobile"  name="invitePhone" placeholder="请输入被邀请人电话" ng-pattern="/^1[3|4|5|7|8][0-9]\d{8}$/" required/></p>
-        <p  class="Tips" ng-show="form.invitePhone.$invalid&&form.invitePhone.$dirty">请正确输入电话</p>
-        <div class="Tips">{{Tip}}</div>
+        <p><input type="tel" class="add_blank" ng-model="YQM.Mobile"  name="invitePhone" placeholder="请输入被邀请人手机号码" ng-pattern="/^1[3|4|5|7|8][0-9]\d{8}$/" required/></p>
+        <p  class="Tips"  ng-show="form.invitePhone.$invalid&&form.invitePhone.$dirty">请正确输入手机号码</p>
+        <div class="Tips" style="text-align:center">{{Tip}}</div>
         <p><button id="inviteSMS" class="add_button" type="submit"  ng-disabled="form.$invalid">邀请</button></p>
 
     </form>
