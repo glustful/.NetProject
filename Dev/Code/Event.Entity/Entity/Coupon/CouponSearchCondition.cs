@@ -24,13 +24,12 @@ namespace Event.Entity.Entity.Coupon
         public bool IsDescending { get; set; }
 
 
-        public int? Ids { get; set; }       
+        public int? Ids { get; set; }  
+     
         public EnumCouponSearchOrderBy? OrderBy { get; set; }
     }
     public enum EnumCouponSearchOrderBy
     {
-
         OrderById,
-
     }
 }
