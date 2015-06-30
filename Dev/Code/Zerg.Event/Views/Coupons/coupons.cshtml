@@ -1,7 +1,7 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "coupons";
 }
+@model dynamic
 <link href="~/Controllers/Coupons/Static/style/Coupons.css" rel="stylesheet" />
 <link href="~/Controllers/Coupons/Static/style/common.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
@@ -9,23 +9,28 @@
     <div class="saveMoney">距离本场结束：&nbsp;03:47:32</div>
     <div class="couponsList">
         <ul>
-            <li class="distance">
-                <img src="~/Controllers/Coupons/Static/image/Coupons/1.png" width="630" height="222" alt="抢起来" />
+            @foreach (var item in Model)
+            {
+              <li class="distance">
+                  <img src="http://img.yoopoon.com/@item.BrandImg" width="630" height="222" alt="抢起来" />
                 <div class="lpIntro">
-                    <span>均价7000元/m²起；78-345m²</span>
-                    <p>一环边，地铁旁，昆一中学区房，家乐福，购物<br />广场，延安医院已入住。</p>
-                    <a href="#">了解楼盘详情&nbsp;&nbsp;&gt</a>
+                    <span>@item.ProductParamater["最高优惠"]&nbsp;&nbsp;@item.ProductParamater["占地面积"]</span>
+                    <p>@item.SubTitle</p>
+                    <a href="#">了解楼盘详情&nbsp;&nbsp;</a>
                 </div>
-                <div class="juan">10000元券</div>
-                <div class="specialUse">购万科&nbsp;·&nbsp;金域缇香专用</div>
-                <a href="#/app/CouponsOwn"><button>抢起来</button></a>
-                <small>还剩1张劵</small>
-            </li>
-            <li class="distance">
-                <img src="~/Controllers/Coupons/Static/image/Coupons/1.png" width="630" height="222" alt="抢起来" />
+                <div class="juan">@item.Price</div>
+                  <div class="specialUse">@item.ReMark</div>
+                <a href="#/app/CouponsOwn">抢起来</a>
+                <small>还剩 @item.Count 张劵</small>
+              </li>
+            }
+           
+            @*<li class="distance">
+                <img src="~/Controllers/Coupons/Static/image/Coupons/1.png" width="630" height="222" alt="抢起来"/>
                 <div class="lpIntro">
                     <span>均价7000元/m²起；78-345m²</span>
-                    <p>一环边，地铁旁，昆一中学区房，家乐福，购物<br />广场，延安医院已入住。</p>
+                    <p>一环边，地铁旁，昆一中学区房，家乐福，购物<br/>广场，延安医院已入住。
+                    </p>
                     <a href="#">了解楼盘详情&nbsp;&nbsp;&gt</a>
                 </div>
                 <div class="juan">7700元券</div>
@@ -34,17 +39,18 @@
                 <small>还剩6张劵</small>
             </li>
             <li>
-                <img src="~/Controllers/Coupons/Static/image/Coupons/1.png" width="630" height="222" alt="抢起来" />
+                <img src="~/Controllers/Coupons/Static/image/Coupons/1.png" width="630" height="222" alt="抢起来"/>
                 <div class="lpIntro">
                     <span>均价7000元/m²起；78-345m²</span>
-                    <p>一环边，地铁旁，昆一中学区房，家乐福，购物<br />广场，延安医院已入住。</p>
+                    <p>一环边，地铁旁，昆一中学区房，家乐福，购物<br/>广场，延安医院已入住。
+                    </p>
                     <a href="#">了解楼盘详情&nbsp;&nbsp;&gt</a>
                 </div>
                 <div class="juan">5000元券</div>
                 <div class="specialUse">购俊发&nbsp;·&nbsp;金尚俊园专用</div>
                 <a href="#/app/CouponsOwn"><button>抢起来</button></a>
                 <small>还剩11张劵</small>
-            </li>
+            </li>*@
         </ul>
     </div>
     @*<div class="fullName">全民惠</div>
