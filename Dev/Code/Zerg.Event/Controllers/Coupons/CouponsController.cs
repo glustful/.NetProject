@@ -16,16 +16,16 @@ namespace Zerg.Event.Controllers.Coupons
         private readonly ICouponCategoryService _couponCategoryService;
         private readonly IProductBrandService _productBrandService;
         private readonly ICouponOwnerService _couponOwnerService;
-        private readonly IWorkContext _workContent;
+        private readonly IWorkContext _workContext;
         private readonly ICouponService _couponService;
 
-        public CouponsController(ICouponCategoryService couponCategoryService,ICouponService couponService, IProductBrandService productBrandService, ICouponOwnerService couponOwnerService,IWorkContext workContent)
+        public CouponsController(ICouponCategoryService couponCategoryService,ICouponService couponService, IProductBrandService productBrandService, ICouponOwnerService couponOwnerService,IWorkContext workContext)
         {
             _couponCategoryService = couponCategoryService;
             _couponService = couponService;
             _productBrandService = productBrandService;
             _couponOwnerService = couponOwnerService;
-            _workContent = workContent;
+            _workContext = workContext;
         }
         public ActionResult coupons()
         {
@@ -57,7 +57,11 @@ namespace Zerg.Event.Controllers.Coupons
 
         public ActionResult couponOwn(int id)
         {
-            _couponOwnerService.CreateRecord(_workContent.CurrentUser.Id, id);  
+            if (_workContext.CurrentUser == null)
+            {
+                return Redirect("http://www.iyookee.cn/#/user/login");
+            }
+            _couponOwnerService.CreateRecord(_workContext.CurrentUser.Id, id);  
             var couponCategory= _couponCategoryService.GetCouponCategoryById(id);
             var condition=new CouponSearchCondition
             {
