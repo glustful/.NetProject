@@ -128,12 +128,18 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Controllers\Coupons\Static\image\Coupons\1.png" />
+    <Content Include="Controllers\Coupons\Static\image\Coupons\2-1.png" />
+    <Content Include="Controllers\Coupons\Static\image\Coupons\2-2.png" />
+    <Content Include="Controllers\Coupons\Static\image\Coupons\2-3.png" />
+    <Content Include="Controllers\Coupons\Static\image\Coupons\bsq.png" />
+    <Content Include="Controllers\Coupons\Static\style\common.css" />
+    <Content Include="Controllers\Coupons\Static\style\Coupons.css" />
     <Content Include="Controllers\Crowd\Static\image\chip\cy.png" />
     <Content Include="Controllers\Crowd\Static\image\chip\cyzk.png" />
     <Content Include="Controllers\Crowd\Static\image\chip\logo-syj.png" />
     <Content Include="Controllers\Crowd\Static\image\chip\p.png" />
     <Content Include="Controllers\Crowd\Static\Js\bootstrap.min.js" />
-    <Content Include="Controllers\Crowd\Static\Js\crowdjs.js" />
     <Content Include="Controllers\Crowd\Static\Js\jquery-1.9.1.min.js" />
     <Content Include="Controllers\Crowd\Static\style\bootstrap-theme.min.css" />
     <Content Include="Controllers\Crowd\Static\style\bootstrap.min.css" />
@@ -146,6 +152,11 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -157,6 +168,7 @@
     <Content Include="Views\web.config" />
     <Content Include="Views\Crowd\crowd.cshtml" />
     <Content Include="Views\CrowdAdd\crowdadd.cshtml" />
+    <Content Include="Views\Coupons\coupons.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -173,6 +185,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Coupons\CouponsController.cs" />
     <Compile Include="Controllers\Crowd\CrowdController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
