@@ -1500,35 +1500,35 @@ angular.module('app')
                 url: '/user',
                 template: '<div ui-view></div>'
             })
-            .state('page.event.Coupons.type', {
+            .state('page.event.Coupons.type.index', {
                 url: '/index',
                 templateUrl: 'views/pages/event/Coupons/type/index.html'
             })
-            .state('page.event.Coupons.type', {
+            .state('page.event.Coupons.type.create', {
                 url: '/create',
                 templateUrl: 'views/pages/event/Coupons/type/create.html'
             })
-            .state('page.event.Coupons.type', {
+            .state('page.event.Coupons.type.edit', {
                 url: '/edit',
                 templateUrl: 'views/pages/event/Coupons/type/edit.html'
             })
-            .state('page.event.Coupons.manage', {
+            .state('page.event.Coupons.manage.index', {
                 url: '/index',
                 templateUrl: 'views/pages/event/Coupons/manage/index.html'
             })
-            .state('page.event.Coupons.type', {
+            .state('page.event.Coupons.manage.create', {
                 url: '/create',
                 templateUrl: 'views/pages/event/Coupons/manage/create.html'
             })
-            .state('page.event.Coupons.type', {
+            .state('page.event.Coupons.manger.edit', {
                 url: '/edit',
                 templateUrl: 'views/pages/event/Coupons/manger/edit.html'
             })
-            .state('page.event.Coupons.user', {
+            .state('page.event.Coupons.user.query', {
                 url: '/query',
                 templateUrl: 'views/pages/event/Coupons/user/query.html'
             })
-            .state('page.event.Coupons.user', {
+            .state('page.event.Coupons.user.list', {
                 url: '/list',
                 templateUrl: 'views/pages/event/Coupons/user/list.html'
             })
