@@ -1437,6 +1437,7 @@ angular.module('app')
                 data : { title: '商品分类' },
                 resolve: load(['scripts/controllers/Trading/Area.js','scripts/controllers/vectormap.js'])
             })
+
             .state('page.Trading.product.classify', {
                 url: '/classify',
                 templateUrl: 'views/pages/Trading/product/classify.html',

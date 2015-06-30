@@ -26,6 +26,7 @@ angular.module("app").controller('EditProductController', [
                 }
             });
         };
+
         //获取品牌列表
         $http.get(SETTING.ApiUrl + '/Brand/GetBrandList',{'withCredentials':true}).success(function (data) {
             $scope.BrandList = data;
