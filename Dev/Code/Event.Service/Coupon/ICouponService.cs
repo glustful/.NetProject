@@ -21,5 +21,7 @@ namespace Event.Service.Coupon
         IQueryable<Entity.Entity.Coupon.Coupon> GetCouponByCondition(CouponSearchCondition condition);
         int GetCouponCount(CouponSearchCondition condition);
 
+        Entity.Entity.Coupon.Coupon GetCouponByNumber(string number);
+
     }
 }
