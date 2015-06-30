@@ -229,9 +229,10 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> 联系电话 </label>
                 <div class="col-sm-9" >
-                    <input class="form-control" ng-model="ContactPhone" name="ContactPhone" required ng-pattern="/^1[3|4|5|7|8][0-9]\d{8}$/"/>
+                    <input class="form-control" ng-model="ContactPhone" name="ContactPhone" required/>
+                    <!--<input class="form-control" ng-model="ContactPhone" name="ContactPhone" required ng-pattern="/^1[3|4|5|7|8][0-9]\d{8}$/"/>-->
                     <span ng-show="form.ContactPhone.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
-                    <span ng-show="form.ContactPhone.$error.pattern" style="font-size:20px;color: #ff0000">*输入正确的号码</span>
+                    <!--<span ng-show="form.ContactPhone.$error.pattern" style="font-size:20px;color: #ff0000">*输入正确的号码</span>-->
                 </div>
             </div>
             <div class="clearfix form-actions">
