@@ -19,7 +19,8 @@ namespace Zerg.Event.API.Coupon
             _couponService = couponService;
         }
 
-        public HttpResponseMessage ActiveCoupon(string couponNum)
+        [HttpPost]
+        public HttpResponseMessage ActiveCoupon([FromBody]string couponNum)
         {
             var entity = _couponService.GetCouponByNumber(couponNum);
             if (entity == null)
