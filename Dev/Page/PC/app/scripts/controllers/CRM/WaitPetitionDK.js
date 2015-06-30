@@ -36,7 +36,7 @@ angular.module("app").controller('WaitVistController', [
 
 //详细信息
 angular.module("app").controller('DKDetialController',[
-    '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+    '$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams) {
         //获取详细信息
         $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/'+ $stateParams.id,{
             'withCredentials':true
@@ -57,7 +57,8 @@ angular.module("app").controller('DKDetialController',[
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
-
+                    alert(data.Msg);
+                    $state.go('page.CRM.DKWaitPetition.index');
                     console.log(data.Msg);
                 }else{
                     console.log(data.Msg);

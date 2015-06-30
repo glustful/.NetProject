@@ -51,7 +51,7 @@ angular.module("app").controller('TalkingListController', [
 
 //详细信息
 angular.module("app").controller('TaklDetialController',[
-    '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+    '$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams) {
         //获取详细信息
         $http.get(SETTING.ApiUrl + '/AdminRecom/GetAuditDetail/' + $stateParams.id,{
             'withCredentials':true
@@ -73,9 +73,8 @@ angular.module("app").controller('TaklDetialController',[
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
-                    console.log(data.Msg);
-                }else{
-                    console.log(data.Msg);
+                    alert(data.Msg);
+                    $state.go('page.CRM.talking.index');
                 }
             });
         };
