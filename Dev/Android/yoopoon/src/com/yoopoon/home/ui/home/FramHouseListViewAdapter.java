@@ -58,7 +58,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		ViewHandler viewHandler;
 		if (convertView == null) {
 			convertView = LayoutInflater.from(mContext).inflate(
-					R.layout.home_house_listview_item, null);
+					R.layout.home_fram_house_listview_item, null);
 			viewHandler = new ViewHandler();
 			viewHandler.init(convertView);
 			convertView.setTag(viewHandler);
