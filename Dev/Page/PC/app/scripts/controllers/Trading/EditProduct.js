@@ -27,6 +27,26 @@ angular.module("app").controller('EditProductController', [
             });
         };
         //编辑商品信息
+
+        //$scope.save = function(){
+        //
+        //    document.getElementById("btn_ok").setAttribute("disabled", true);
+        //
+        //    $http.post(SETTING.ApiUrl + '/Brand/EditProduct',$scope.list,{
+        //        'withCredentials':true
+        //    }).success(function(data){
+        //        if(data.Status){
+        //            document.getElementById("btn_ok").removeAttribute("disabled");
+        //            $state.go("page.Trading.product.product");
+        //
+        //        }else{
+        //            document.getElementById("btn_ok").removeAttribute("disabled");
+        //            $scope.alerts=[{type:'danger',msg:data.Msg}];
+        //
+        //        }
+        //    });
+        //}
+
         // 获取品牌列表
         $http.get(SETTING.ApiUrl + '/Brand/GetBrandList',{'withCredentials':true}).success(function (data) {
             $scope.BrandList = data;
