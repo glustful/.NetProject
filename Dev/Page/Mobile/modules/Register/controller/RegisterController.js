@@ -79,16 +79,16 @@ function settime() {
     var obj= document.getElementById("btnsms");
     if (countdown == 0) {
 
-        obj.removeAttribute("disabled");
-        obj.innerHTML="获取验证码";
-        obj.style.background="#fc3b00";
+        document.getElementById("btnsms").removeAttribute("disabled");
+        document.getElementById("btnsms").innerHTML="获取验证码";
+        document.getElementById("btnsms").style.background="#fc3b00";
         countdown = 60;
         return;
     } else {
-        obj.setAttribute("disabled", true);
+        document.getElementById("btnsms").setAttribute("disabled", true);
 
-        obj.style.background="#996c33";
-        obj.innerHTML="重新发送(" + countdown + ")";
+        document.getElementById("btnsms").style.background="#996c33";
+        document.getElementById("btnsms").innerHTML="重新发送(" + countdown + ")";
         countdown--;
     }
     setTimeout(function() {

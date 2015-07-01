@@ -200,6 +200,7 @@ namespace Zerg.Controllers.CRM
                         p.Housetype
 
                     }).ToList();
+
                 int totalCount = _clientInfoService.GetClientInfoCount(condition);
 
                 return PageHelper.toJson(new { list = list,totalCount });
