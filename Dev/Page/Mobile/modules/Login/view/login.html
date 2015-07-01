@@ -5,15 +5,15 @@
         </p>
         <p class="input_blank">
             <span><img src="modules/Login/static/image/login/icon1.png"  class="UserImg"></span>
-            <input type="text" id="Name_blank" placeholder="Phone Number" name="login_userName" id="UserName" ng-model="user.name" ng-pattern="/^1[3|4|5|7|8][0-9]\d{8}$/"  required/>
+            <input type="text" id="Name_blank" placeholder="手机号" name="login_userName" id="UserName" ng-model="user.name" ng-pattern="/^1[3|4|5|7|8][0-9]\d{8}$/"  required/>
         </p>
-        <div class="login_errorTip" ng-show="login_form.login_userName.$invalid&&login_form.login_userName.$dirty">请正确输入用户名</div>
+        <div class="login_errorTip" ng-show="login_form.login_userName.$invalid&&login_form.login_userName.$dirty">请正确输入手机号</div>
         <p class="user_tip">
             密码
         </p>
         <p class="input_blank">
             <span><img src="modules/Login/static/image/login/icon2.png" class="UserImg"></span>
-            <input type="password" placeholder="Password" name="login_password" id="Password" ng-model="user.password"  ng-maxlength="20" required/>
+            <input type="password" placeholder="密码" name="login_password" id="Password" ng-model="user.password"  ng-maxlength="20" required/>
         </p>
         <div class="login_errorTip" ng-show="login_form.login_password.$invalid&&login_form.login_password.$dirty">请正确输入密码</div>
         <p class="MissMe">
