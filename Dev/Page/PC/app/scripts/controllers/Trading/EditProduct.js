@@ -2,7 +2,7 @@
  * Created by Administrator on 2015/6/18.
  */
 angular.module("app").controller('EditProductController', [
-    '$http', '$scope','$stateParams', function ($http, $scope,$stateParams) {
+    '$http', '$scope','$state','$stateParams', function ($http, $scope,$state,$stateParams) {
         //选择商品分类；
         var classifys = $scope.classifys = {};
         $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify',{'withCredentials':true}).success(function (data) {
@@ -26,7 +26,6 @@ angular.module("app").controller('EditProductController', [
                 }
             });
         };
-        //编辑商品信息
         // 获取品牌列表
         $http.get(SETTING.ApiUrl + '/Brand/GetBrandList',{'withCredentials':true}).success(function (data) {
             $scope.BrandList = data;
@@ -37,8 +36,35 @@ angular.module("app").controller('EditProductController', [
            $scope.product=data
         });
         //编辑商品信息
-        $http.get(SETTING.ApiUrl+'/Product/GetProductById?productId='+$stateParams.productId).success(function(data)
-        {
-            $scope.product=data
-        });
+         $scope.update=function(){
+            var newproduct = {
+            Id:$scope.product.Id,
+            Price:$scope.product.Price,
+            Productname:$scope.product.Productname,
+            RecCommission:$scope.product.RecCommission,
+            Commission:$scope.product.Commission,
+            ContactPhone:$scope.product.Phone,
+            Dealcommission:$scope.product.Dealcommission,
+            Status:$scope.product.Status,
+            Recommend:$scope.product.Recommend,
+            Stockrule:$scope.product.Stockrule,
+            SubTitle:$scope.product.SubTitle
+            };
+            var newproductDetail = {
+                 Productdetail:$scope.product.ProductDetailed,
+                 Sericeinstruction:$scope.product.Sericeinstruction
+            };
+            var classifyJson = JSON.stringify({ product: newproduct, productDetail: newproductDetail });
+            $http.post(SETTING.ApiUrl + '/Product/EditProduct',classifyJson,{
+                'withCredentials':true
+            }).success(function(data){
+                if(data.Status){
+                    $state.go("");
+                }
+                else{
+                    $scope.alerts=[{type:'danger',msg:data.Msg}];
+                }
+            });
+        };
+
     }]);

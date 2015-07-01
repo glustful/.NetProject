@@ -1,4 +1,4 @@
-<div ng-app="App" ng-controller="EditProductController" ng-submit="">
+<div ng-app="App" ng-controller="EditProductController" ng-submit="update()">
 <script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="../libs/ueditor/ueditor.all.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="../libs/ueditor/lang/zh-cn/zh-cn.js"></script>
@@ -7,8 +7,7 @@
 <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
 <script type="text/javascript" charset="utf-8" src="../libs/ueditor/lang/zh-cn/zh-cn.js"></script>
 <div class="row">
-<form class="form-horizontal" role="form" name="form"
-      enctype="multipart/form-data">
+<form class="form-horizontal" role="form" name="form"enctype="multipart/form-data">
 <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 <div class="form-group">
     <label class="col-sm-3 control-label no-padding-right"> 商品名称 </label>
@@ -74,12 +73,20 @@
     <label class="col-sm-3 control-label no-padding-right"> 推荐佣金 </label>
 
     <div class="col-sm-9">
-        <input type="number" ng-model="product.RecCommission" ng-min="1" step="0.1" name="commission" required>元
-        <span ng-show="form.commission.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
-        <span ng-show="form.commission.$error.min" style="font-size:20px;color: #ff0000">*必须是大于一的整数</span>
+        <input type="number" ng-model="product.RecCommission" ng-min="1" step="0.1" name="reccommission" required>元
+        <span ng-show="form.reccommission.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+        <span ng-show="form.reccommission.$error.min" style="font-size:20px;color: #ff0000">*必须是大于一的整数</span>
     </div>
 </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"> 带客佣金 </label>
 
+        <div class="col-sm-9">
+            <input type="number" ng-model="product.Commission" ng-min="1" step="0.1" name="commission" required>元
+            <span ng-show="form.commission.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+            <span ng-show="form.commission.$error.min" style="font-size:20px;color: #ff0000">*必须是大于一的整数</span>
+        </div>
+    </div>
 <div class="form-group">
     <label class="col-sm-3 control-label no-padding-right"> 库存 </label>
 
