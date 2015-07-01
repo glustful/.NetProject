@@ -107,6 +107,7 @@ namespace Zerg.Controllers.CRM
         public HttpResponseMessage Add([FromBody]BrokerRECClientModel brokerrecclient)
         {
             if (brokerrecclient.Adduser == 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "经济人ID不能为空！"));
+            if (brokerrecclient.Broker == 0) return PageHelper.toJson(PageHelper.ReturnValue(false,"经纪人ID不能为空"))
             if (string.IsNullOrEmpty(brokerrecclient.Clientname)) return PageHelper.toJson(PageHelper.ReturnValue(false, "客户名不能为空"));
             if (string.IsNullOrEmpty(brokerrecclient.Phone)) return PageHelper.toJson(PageHelper.ReturnValue(false, "客户电话不能为空！"));
 
