@@ -132,10 +132,30 @@
         </div>
     </div>
 </div>
+    <div class="loadimg" style=" float: left">
+        <img height="100" width="100" title="图片" src="http://img.yoopoon.com/{{product.Productimg}}" />
+
+    </div>
+    <!--<div class="loadimg" style=" float: left">-->
+        <!--<img height="100" width="100" title="图片" src="http://img.yoopoon.com/{{product.Productimg1}}" />-->
+
+    <!--</div>-->
+    <!--<div class="loadimg" style=" float: left">-->
+        <!--<img height="100" width="100" title="图片" src="http://img.yoopoon.com/{{product.Productimg2}}" />-->
+
+    <!--</div>-->
+    <!--<div class="loadimg" style=" float: left">-->
+        <!--<img height="100" width="100" title="图片" src="http://img.yoopoon.com/{{product.Productimg3}}" />-->
+
+    <!--</div>-->
+    <!--<div class="loadimg" style=" float: left">-->
+        <!--<img height="100" width="100" title="图片" src="http://img.yoopoon.com/{{product.Productimg4}}" />-->
+
+    <!--</div>-->
 
     <div >
-        <p class="m-t-md">品牌图片</p>
-        <input name="brandimg" id="brandimg" type="text"  style="width: 500px" ng-model="Product.Productimg"  class="form-control" required />
+        <p class="m-t-md">商品图片</p>
+        <input name="Productimg" id="Productimg" type="text"  style="width: 500px" ng-model="product.Productimg"  class="form-control" required />
         <input type="file" nv-file-select="" uploader="uploader" />
 
         <div>
@@ -146,7 +166,7 @@
                 <table class="table bg-white b-a">
                     <thead>
                     <tr>
-                        <th width="50%">名字</th>
+                        <th >名字</th>
                         <th ng-show="uploader.isHTML5">大小</th>
                         <th ng-show="uploader.isHTML5">进程</th>
                         <th>状态</th>

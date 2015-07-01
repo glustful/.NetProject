@@ -67,10 +67,15 @@
 }
  .brand a .depreciate{
      position: absolute;
-     top:20px;
-     right: 30px;
-     z-index: 6;
+     top:0;
+     right:0;
+     z-index:6;
      color: #fff;
+     width:180px;
+     height: 160px;
+     text-align: center;
+     padding-top:20px;
+
  }
  .brand a .depreciateBg{
      position: absolute;
