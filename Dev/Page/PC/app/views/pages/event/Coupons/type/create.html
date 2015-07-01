@@ -1,0 +1,72 @@
+<form name="form" id="form" ng-controller="configureCreateController" ng-submit="Create()">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="bottom" ><span style="color: red">*</span><label >名称： </label> <input  name="Title" type="text" ng-model="LevelModel.Name" required></div>
+
+            <div class="bottom" ><span style="color: red">*</span><label for="Content">描述： </label>
+                <textarea name="Content" id="Content" cols="42" rows="10" ng-model="LevelModel.Describe" required></textarea>
+            </div>
+
+            <div class="box" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+                <!--<div class="col-md-3">-->
+                <!--<div class="p-md">-->
+                <!--<p class="m-t-md">Single</p>-->
+                <!--<input type="file" nv-file-select="" uploader="uploader" />-->
+                <!--</div>-->
+                <!--</div>-->
+                <p class="m-t-md"><span style="color: red">*</span>图片
+                    <input type="file" nv-file-select="" uploader="uploader" style="display: inline" required/></p>
+                <div>
+                    <div class="p-md">
+                        <!--<div class="m-b"><b class="badge bg-info pos-rlt m-r-xs"><i class="arrow right b-info pull-in"></i>{{ uploader.queue.length }}</b> file(s)</div>-->
+                        <table class="table bg-white b-a">
+                            <thead>
+                            <tr>
+                                <th width="50%">名称</th>
+                                <th ng-show="uploader.isHTML5">大小</th>
+                                <th ng-show="uploader.isHTML5">进度</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in uploader.queue">
+                                <td><strong>{{ item.file.name }}</strong></td>
+                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                <td ng-show="uploader.isHTML5">
+                                    <div class="progress progress-sm no-margin m-t-xs">
+                                        <div class="progress-bar bg-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span ng-show="item.isSuccess" class="text-success"><i class="glyphicon glyphicon-ok"></i></span>
+                                    <span ng-show="item.isCancel" class="text-warning"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                    <span ng-show="item.isError" class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                                <td nowrap>
+                                    <button type="button" class="btn btn-default btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                        Upload
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-xs" ng-click="item.remove()">
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" type="submit" ng-disabled="form.$invalid">确认<div class="md-ripple-container"></div></button>
+                <a href="#"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink">取消<div class="md-ripple-container"></div></button></a>
+            </div>
+        </div>
+    </div>
+</form>

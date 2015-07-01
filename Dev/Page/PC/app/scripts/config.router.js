@@ -1471,6 +1471,75 @@ angular.module('app')
                 controller:'NegotiateOrderController',
                 resolve: load(['scripts/controllers/Trading/Order.js','scripts/controllers/vectormap.js'])
             })
+
+          /*优惠券*/
+
+            // Coupons  router
+            .state('page.event', {
+                url: '/event',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons', {
+                url: '/Coupons',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons.type', {
+                url: '/type',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons.manage', {
+                url: '/manage',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons.user', {
+                url: '/user',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons.active', {
+                url: '/active',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons.type.index', {
+                url: '/index',
+                templateUrl: 'views/pages/event/Coupons/type/index.html'
+            })
+            .state('page.event.Coupons.type.create', {
+                url: '/create',
+                templateUrl: 'views/pages/event/Coupons/type/create.html'
+            })
+            .state('page.event.Coupons.type.edit', {
+                url: '/edit',
+                templateUrl: 'views/pages/event/Coupons/type/edit.html'
+            })
+            .state('page.event.Coupons.manage.index', {
+                url: '/index',
+                templateUrl: 'views/pages/event/Coupons/manage/index.html'
+            })
+            .state('page.event.Coupons.manage.create', {
+                url: '/create',
+                templateUrl: 'views/pages/event/Coupons/manage/create.html'
+            })
+            .state('page.event.Coupons.manger.edit', {
+                url: '/edit',
+                templateUrl: 'views/pages/event/Coupons/manger/edit.html'
+            })
+            .state('page.event.Coupons.user.query', {
+                url: '/query',
+                templateUrl: 'views/pages/event/Coupons/user/query.html'
+            })
+            .state('page.event.Coupons.user.list', {
+                url: '/list',
+                templateUrl: 'views/pages/event/Coupons/user/list.html'
+            })
+            .state('page.event.Coupons.active.active', {
+                url: '/active',
+                templateUrl: 'views/pages/event/Coupons/active/active.html',
+                data : { title: '激活优惠券' },
+                resolve: load('scripts/controllers/event/active.js')
+            })
+
+
+
             //-----------------------end-------------------
 
           function load(srcs, callback) {
