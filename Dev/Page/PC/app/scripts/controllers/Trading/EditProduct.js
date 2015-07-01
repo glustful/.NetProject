@@ -28,6 +28,17 @@ angular.module("app").controller('EditProductController', [
         };
 
 
+
+
+        var uploader = $scope.uploader = new FileUploader({
+            url: SETTING.ApiUrl+'/Resource/Upload',
+            'withCredentials':true
+        })
+        uploader.onSuccessItem = function(fileItem, response, status, headers) {
+            console.info('onSuccessItem', fileItem, response, status, headers);
+            $scope.product.Productimg=response.Msg;
+        };
+
         // 获取品牌列表
         $http.get(SETTING.ApiUrl + '/Brand/GetBrandList',{'withCredentials':true}).success(function (data) {
             $scope.BrandList = data;
@@ -52,7 +63,8 @@ angular.module("app").controller('EditProductController', [
             Status:$scope.product.Status,
             Recommend:$scope.product.Recommend,
             Stockrule:$scope.product.Stockrule,
-            SubTitle:$scope.product.SubTitle
+            SubTitle:$scope.product.SubTitle,
+                Productimg:$scope.product.Productimg
             };
             var newproductDetail = {
                  Productdetail:$scope.product.ProductDetailed,
