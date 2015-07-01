@@ -1389,7 +1389,7 @@ angular.module('app')
                 url: '/edit?productId',
                 templateUrl: 'views/pages/Trading/product/editProduct.html',
                 data : { title: '商品编辑' },
-                resolve:load('scripts/controllers/Trading/EditProduct.js')
+                resolve:load(['scripts/controllers/Trading/EditProduct.js','angularFileUpload'])
             })
             .state('page.Trading.product.createProduct', {
                 url: '/createProduct',
@@ -1437,12 +1437,7 @@ angular.module('app')
                 data : { title: '商品分类' },
                 resolve: load(['scripts/controllers/Trading/Area.js','scripts/controllers/vectormap.js'])
             })
-            //.state('page.Trading.product.edit', {
-            //    url: '/area',
-            //    templateUrl: 'views/pages/Trading/product/editProduct.html',
-            //    data : { title: '商品编辑' },
-            //    resolve: load(['scripts/controllers/Trading/EditProduct.js'])
-            //})
+
 
             .state('page.Trading.product.classify', {
                 url: '/classify',
