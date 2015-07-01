@@ -8,30 +8,31 @@ angular.module("app").controller('activeController', [
         $scope.tip = function () {
             var modalInstance = $modal.open({
                 templateUrl: 'myModalContent.html',
-                controller:'ModalInstanceCtrl',
+                controller: 'ModalInstanceCtrl',
                 resolve: {
-                    msg:function(){return "你确定要激活吗？";}
+                    msg: function () {
+                        return "你确定要激活吗？";
+                    }
                 }
-            })};
-           modalInstance.result.then(function(){
-               $http.post('',$scope.ticketNum,{'withCredentials':true}).success(function(data){
-                   if(data.Status){
-                       var modalInstance = $modal.open({
-                           templateUrl: 'myModalContent.html',
-                           controller: 'ModalInstanceCtrl',
-                           resolve: {
-                               msg: function () {
-                                   return data.Msg;
-                               }
-                           }
-                       });
-                   }
+            })
+            modalInstance.result.then(function () {
+                $http.post('http://120.55.151.12:8081/api/coupon/ActiveCoupon', {couponNum: $scope.ticketNum}, {'withCredentials': true}).success(function (data) {
+                    if (data.Status) {
+                        var modalInstance = $modal.open({
+                            templateUrl: 'myModalContent.html',
+                            controller: 'ModalInstanceCtrl',
+                            resolve: {
+                                msg: function () {
+                                    return data.Msg;
+                                }
+                            }
+                        });
+                    }
 
 
+                })
+            })
+        };
 
-               })
-           })
 
-
-
-    }])
+    }]);
