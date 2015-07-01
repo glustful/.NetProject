@@ -484,7 +484,6 @@ namespace Zerg.Controllers.Trading.Product
             oldProduct.SubTitle = newProduct.SubTitle;
             oldProduct.Upduser = _workContent.CurrentUser.Id.ToString();
             oldProduct.Updtime = DateTime.Now;
-            oldProduct.Price = newProduct.Price;
             oldProduct.RecCommission = newProduct.RecCommission;
             //商品详细
             oldProductDetail.Productname = newProduct.Productname;
