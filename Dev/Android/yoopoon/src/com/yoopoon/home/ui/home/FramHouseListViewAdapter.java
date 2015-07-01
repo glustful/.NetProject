@@ -74,10 +74,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 				.setLayoutParams(new LinearLayout.LayoutParams(
 						LinearLayout.LayoutParams.MATCH_PARENT, height));
 		viewHandler.houseImageView.setTag(url);
-		/*viewHandler.houseImageView.setImageResource(R.drawable.ic_launcher);
-		if (viewHandler.houseImageView.getTag() != null && viewHandler.houseImageView.getTag().equals(url)) {
-			
-		}*/
+		 
 		ImageLoader.getInstance().displayImage(url, viewHandler.houseImageView,
 				MyApplication.getOptions(), MyApplication.getLoadingListener());
 		viewHandler.houseSubtitleTextView.setText(item.optString("SubTitle"));
