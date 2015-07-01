@@ -28,7 +28,7 @@ app.controller("tuijianController",['$http','$scope','$stateParams','AuthService
         console.log(  $scope.BrokerRECClientEntity);
         $http.post(SETTING.ApiUrl+'/BrokerRECClient/Add', $scope.BrokerRECClientEntity).success(function(data){
             if(data.Status){
-                $state.go("app.nominate")
+                $state.go("app.storeroom")
             }else{
               alert(data.Msg)
             }
