@@ -1389,7 +1389,7 @@ angular.module('app')
                 url: '/edit?productId',
                 templateUrl: 'views/pages/Trading/product/editProduct.html',
                 data : { title: '商品编辑' },
-                resolve:load('scripts/controllers/Trading/EditProduct.js')
+                resolve:load(['scripts/controllers/Trading/EditProduct.js','angularFileUpload'])
             })
             .state('page.Trading.product.createProduct', {
                 url: '/createProduct',
