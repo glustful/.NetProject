@@ -27,7 +27,7 @@ import android.widget.TextView;
  *
  */
 public class FramHouseListViewAdapter extends BaseAdapter {
-  
+
 	Context mContext;
 	ArrayList<JSONObject> datas;
 	int height = 0;
@@ -69,46 +69,47 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		JSONObject item = datas.get(position);
 		String url = mContext.getString(R.string.url_host_img)
 				+ item.optString("Productimg");
-		 
+
 		viewHandler.houseImageView
 				.setLayoutParams(new LinearLayout.LayoutParams(
 						LinearLayout.LayoutParams.MATCH_PARENT, height));
 		viewHandler.houseImageView.setTag(url);
-		 
+
 		ImageLoader.getInstance().displayImage(url, viewHandler.houseImageView,
 				MyApplication.getOptions(), MyApplication.getLoadingListener());
-		viewHandler.houseSubtitleTextView.setText(item.optString("SubTitle"));
-		
+		 
 
 		viewHandler.houseProductnameTextView.setText(item
 				.optString("Productname"));
-		viewHandler.housePriceTextView.setText(item.optString("Price")+"¥/m²");
+		viewHandler.housePriceTextView
+				.setText(item.optString("Price") + "元/m²");
 		viewHandler.houseTypeAcreaqeStockRuleTextView.setText(item
 				.optString("Type")
 				+ "/"
-				+ item.optString("Acreage")+"m²"
-				+ "/"
-				+ "在售"+item.optString("StockRule")+"套");
+				+ item.optString("Acreage")
+				+ "m²"
+				+ "/" + "在售" + item.optString("StockRule") + "套");
+		viewHandler.houseAdvertisementTextView.setText(item.optString("Advertisement"));
+		
 		return convertView;
 	}
 
 	private class ViewHandler {
-		private TextView houseSubtitleTextView;
+		
 		private ImageView houseImageView;
 		private TextView houseProductnameTextView;
 		private TextView housePriceTextView;
 		private TextView houseTypeAcreaqeStockRuleTextView;
+		private TextView houseAdvertisementTextView;
 
 		void init(View root) {
-			houseSubtitleTextView = (TextView) root
-					.findViewById(R.id.house_subtitle);
 			houseImageView = (ImageView) root.findViewById(R.id.house_image);
 			houseProductnameTextView = (TextView) root
 					.findViewById(R.id.house_productname);
 			housePriceTextView = (TextView) root.findViewById(R.id.house_price);
 			houseTypeAcreaqeStockRuleTextView = (TextView) root
 					.findViewById(R.id.tpye_area_stockRule);
-
+			houseAdvertisementTextView=(TextView)root.findViewById(R.id.house_advertisement);
 		}
 	}
 

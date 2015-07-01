@@ -1405,11 +1405,11 @@ containing a value of this type.
         public static final int homeAsUp=0x7f09000d;
         public static final int home_main_loading_layout=0x7f090072;
         public static final int home_main_pager=0x7f090071;
-        public static final int house_image=0x7f09005e;
+        public static final int house_advertisement=0x7f090061;
+        public static final int house_image=0x7f09005d;
         public static final int house_listview_item=0x7f09005c;
-        public static final int house_price=0x7f090060;
-        public static final int house_productname=0x7f09005f;
-        public static final int house_subtitle=0x7f09005d;
+        public static final int house_price=0x7f09005f;
+        public static final int house_productname=0x7f09005e;
         public static final int icon=0x7f090036;
         public static final int ifRoom=0x7f090014;
         public static final int image=0x7f090033;
@@ -1490,7 +1490,7 @@ containing a value of this type.
         public static final int todayTask=0x7f090064;
         public static final int todayTaskCount=0x7f090063;
         public static final int top_action_bar=0x7f09002c;
-        public static final int tpye_area_stockRule=0x7f090061;
+        public static final int tpye_area_stockRule=0x7f090060;
         public static final int up=0x7f09002d;
         public static final int useLogo=0x7f090011;
         public static final int userNameTip=0x7f090066;
