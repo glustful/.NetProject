@@ -187,7 +187,7 @@ namespace Zerg.Controllers.CRM
                 var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
                 var condition = new ClientInfoSearchCondition
                 {
-                    Addusers = broker.Id,
+                    Addusers = broker.UserId,
                     Page =page ,
                     PageCount =10
                 };
