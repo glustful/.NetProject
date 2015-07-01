@@ -2,91 +2,149 @@
 <!--required:../static/style/index.css-->
 <div class="index" ng-controller="homeController" xmlns="http://www.w3.org/1999/html">
 
-<div id="carousel-bg" >
-    <carousel interval="2000">
-        <slide ng-repeat="slide in content" active="slide.active">
-            <img src="http://img.yoopoon.com/{{slide.TitleImg}}" class="img-full" alt="成为经济人轻松赚大钱" width="640" height="230" />
-        </slide>
-    </carousel>
- </div>
+    <div id="carousel-bg">
+        <carousel interval="2000">
+            <slide ng-repeat="slide in content" active="slide.active">
+                <img src="http://img.yoopoon.com/{{slide.TitleImg}}" class="img-full" alt="成为经济人轻松赚大钱" width="640"
+                     height="230"/>
+            </slide>
+        </carousel>
+    </div>
 
     <!--<ul>-->
-        <!--<li ng-repeat="item in content" ><a href="#" ><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
-        <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-2.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
-        <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-3.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
-        <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-4.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
-        <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-5.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+    <!--<li ng-repeat="item in content" ><a href="#" ><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+    <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-2.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+    <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-3.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+    <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-4.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+    <!--&lt;!&ndash;<li><a href="#" ><img src="modules/Index/static/image/index/ad-5.jpg" alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
     <!--</ul>-->
-<!--</div>-->
-<!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
 
-<!--<div class="pic">-->
+    <!--<div class="pic">-->
     <!--<ul>-->
-        <!--<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
-        <!--<!--<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
-        <!--<!--<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
-        <!--<!--<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
-        <!--<!--<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+    <!--<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+    <!--<!--<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+    <!--<!--<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+    <!--<!--<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
+    <!--<!--<li><a href="#"><img src="modules/Index/static/image/index/banner.png " alt="成为经济人轻松赚大钱" width="640"height="230" ></a></li>-->
     <!--</ul>-->
 
 
+    <div class="lazy">
 
 
+        <div class="activity">
+            <!--<ul  class="cf">-->
 
 
-<div class="lazy">
-
-
-<div class="activity" >
-    <ul  class="cf">
-
-
-        <li  class="{{$index==0?'one':$index==1?'two':$index==2?'three':$index==3?'four':$index==4?'five':$index==5?'six':''}}"  ng-repeat="item in Actcontent">
-            <!--<a href="#/app/chip">-->
-                <!--<img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="开发商疯了"  width="205px" />-->
+            <!--<li  class="{{$index==0?'one':$index==1?'two':$index==2?'three':$index==3?'four':$index==4?'five':$index==5?'six':''}}"  ng-repeat="item in Actcontent">-->
+            <!--&lt;!&ndash;<a href="#/app/chip">&ndash;&gt;-->
+            <!--&lt;!&ndash;<img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="开发商疯了"  width="205px" />&ndash;&gt;-->
+            <!--&lt;!&ndash;</a>&ndash;&gt;-->
+            <!--<a href="#">-->
+            <!--<p class="active_title">{{item.Title}}</p>-->
+            <!--<p class="well">{{item.AdSubTitle}}</p>-->
+            <!--<img src="http://img.yoopoon.com/{{item.TitleImg}}" width="95" height="95">-->
             <!--</a>-->
-            <a href="#">
-                <p class="active_title">{{item.Title}}</p>
-                <p class="well">{{item.AdSubTitle}}</p>
-                <img src="http://img.yoopoon.com/{{item.TitleImg}}" width="95" height="95">
-            </a>
-        </li>
-        <!--<li class="two" ng-repeat="item in Activetwo"> <a href="#/app/redPaper-1.html"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="吧百万红包等你抢" width="205px"/></a></li>-->
-        <!--<li class="three" ng-repeat="item in Activethree"> <a href="#/app/Auction"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="pao"  width="205px"/></a></li>-->
-        <!--<li class="four" ng-repeat="item in Activefour"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="俊发钜惠"  width="205px"/></a></li>-->
-        <!--<li class="five" ng-repeat="item in Activefive"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="水云间大优惠"  width="205px"/></a></li>-->
-        <!--<li class="six" ng-repeat="item in Activesix"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="买房送奔驰"  width="205px"/></a></li>-->
+            <!--</li>-->
+            <!--&lt;!&ndash;<li class="two" ng-repeat="item in Activetwo"> <a href="#/app/redPaper-1.html"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="吧百万红包等你抢" width="205px"/></a></li>&ndash;&gt;-->
+            <!--&lt;!&ndash;<li class="three" ng-repeat="item in Activethree"> <a href="#/app/Auction"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="pao"  width="205px"/></a></li>&ndash;&gt;-->
+            <!--&lt;!&ndash;<li class="four" ng-repeat="item in Activefour"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="俊发钜惠"  width="205px"/></a></li>&ndash;&gt;-->
+            <!--&lt;!&ndash;<li class="five" ng-repeat="item in Activefive"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="水云间大优惠"  width="205px"/></a></li>&ndash;&gt;-->
+            <!--&lt;!&ndash;<li class="six" ng-repeat="item in Activesix"> <a href="#"><img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="买房送奔驰"  width="205px"/></a></li>&ndash;&gt;-->
 
 
-    </ul>
-    <!--<a href="javascript:;" id="btn_prev"></a>-->
-    <!--<a href="javascript:;" id="btn_next"></a>-->
-</div>
-<div class="message" ng-app="app" >
-    <ul>
-        <li class="brand" ng-repeat="item in brandList">
-            <!--<a href="#/app/housesBuy">-->
-                <!--<img src="modules/Index/static/image/index/lp1.png" alt="中天·水云间" width="620" height="160"/>-->
-                <!--<div class="summary"><span>[曲靖市&nbsp;中天&nbsp;·&nbsp;水云间</span><span>户型：238m²</span><span>总价：110万</span></div>-->
-                <!--<div class="summaryBg"></div>-->
-                <!--<div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>-->
-                <!--<div class="depreciateBg"></div>-->
-            <!--</a>-->
-            <!--<h3>购房立减5000元，交10000元抵20000元，购房还可以领红包，返积分</h3>-->
-            <!--<div class="nav">-->
-                <!--<span class="orange"><a href="#"> 来电咨询</a></span>-->
-                <!--<span class="brokerage"><a href="#">最高佣金：10000元/套</a></span>-->
-            <!--</div>-->
-            <a href="#/app/housesBuy?BrandId={{item.Id}}">
-                <img src="http://img.yoopoon.com/{{item.Bimg}}" width="620" height="160"/>
+            <!--</ul>-->
+            <!--<a href="javascript:;" id="btn_prev"></a>-->
+            <!--<a href="javascript:;" id="btn_next"></a>-->
+            <ul class="cf">
 
-                <div class="summary"><span>[{{ item.ProductParamater["所属城市"] }}]</span><span>{{item.Bname}}</span></span><span>{{item.ProductParamater["占地面积"] }}</span></div>
-                <div class="summaryBg"></div>
-                <div class="depreciate"><p ng-bind-html="item.AdTitle|adtitle"></p></div>
-                <div class="depreciateBg"></div>
-            </a>
-            <h3>{{item.SubTitle}}</h3>
-            <div class="nav" >
+
+                <li class="one">
+                    <a href="http://newcrowd.iyookee.cn:8080/CrowdList/crowdlist">
+                        <p class="active_title ng-binding">全民众筹</p>
+
+                        <p class="well ng-binding">4999买北市区学区房</p>
+                        <img src="http://img.yoopoon.com/20150630/20150630_160227_637_731.jpg" width="95" height="95">
+                    </a>
+                </li>
+                <li class="two">
+
+                    <a href="#">
+                        <p class="active_title ng-binding">百万红包等你抢</p>
+
+                        <p class="well ng-binding">你有一个大红包未领取</p>
+                        <img src="http://img.yoopoon.com/20150630/20150630_160131_608_77.jpg" width="95" height="95">
+                    </a>
+                </li>
+                <li class="three">
+
+                    <a href="#">
+                        <p class="active_title ng-binding">购房优惠券</p>
+
+                        <p class="well ng-binding">独家钜惠，领劵抵万元</p>
+                        <img src="http://img.yoopoon.com/20150630/20150630_160036_444_828.jpg" width="95" height="95">
+                    </a>
+                </li>
+                <li class="four">
+
+                    <a href="#">
+                        <p class="active_title ng-binding">天天抢礼券</p>
+
+                        <p class="well ng-binding">各类商家折扣优惠，应有尽有</p>
+                        <img src="http://img.yoopoon.com/20150630/20150630_155918_117_134.jpg" width="95" height="95">
+                    </a>
+                </li>
+                <li class="five">
+
+                    <a href="#">
+                        <p class="active_title ng-binding">游戏专区</p>
+
+                        <p class="well ng-binding">挑战游戏，赢神秘大奖</p>
+                        <img src="http://img.yoopoon.com/20150630/20150630_155743_518_998.jpg" width="95" height="95">
+                    </a>
+                </li>
+                <li class="six">
+
+                    <a href="#">
+                        <p class="active_title ng-binding">常见问题</p>
+
+                        <p class="well ng-binding">优惠客使用小贴士</p>
+                        <img src="http://img.yoopoon.com/20150630/20150630_155616_686_853.jpg" width="95" height="95">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="message" ng-app="app">
+            <ul>
+                <li class="brand" ng-repeat="item in brandList">
+                    <!--<a href="#/app/housesBuy">-->
+                    <!--<img src="modules/Index/static/image/index/lp1.png" alt="中天·水云间" width="620" height="160"/>-->
+                    <!--<div class="summary"><span>[曲靖市&nbsp;中天&nbsp;·&nbsp;水云间</span><span>户型：238m²</span><span>总价：110万</span></div>-->
+                    <!--<div class="summaryBg"></div>-->
+                    <!--<div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>-->
+                    <!--<div class="depreciateBg"></div>-->
+                    <!--</a>-->
+                    <!--<h3>购房立减5000元，交10000元抵20000元，购房还可以领红包，返积分</h3>-->
+                    <!--<div class="nav">-->
+                    <!--<span class="orange"><a href="#"> 来电咨询</a></span>-->
+                    <!--<span class="brokerage"><a href="#">最高佣金：10000元/套</a></span>-->
+                    <!--</div>-->
+                    <a href="#/app/housesBuy?BrandId={{item.Id}}">
+                        <img src="http://img.yoopoon.com/{{item.Bimg}}" width="620" height="160"/>
+
+                        <div class="summary">
+                            <span>[{{ item.ProductParamater["所属城市"] }}]</span><span>{{item.Bname}}</span></span><span>{{item.ProductParamater["占地面积"] }}</span>
+                        </div>
+                        <div class="summaryBg"></div>
+                        <div class="depreciate"><p ng-bind-html="item.AdTitle|adtitle"></p></div>
+                        <div class="depreciateBg"></div>
+                    </a>
+
+                    <h3>{{item.SubTitle}}</h3>
+
+                    <div class="nav">
                 <span class="orange">
                     <a href="tel:{{item.ProductParamater['来电咨询']}}">
                         来电咨询:{{item.ProductParamater["来电咨询"]}}
@@ -95,81 +153,84 @@
                 <span class="brokerage">
                     <a href="#">最高享用优惠：{{item.ProductParamater["最高优惠"]}}元/套</a>
                 </span>
-            </div>
-            <div ng-if="$index % 3==2">
-                <img src="modules/Index/static/image/index/l.png" >
-            </div>
-        </li>
+                    </div>
+                    <!--<div ng-if="$index % 3==2">-->
+                        <!--<img src="modules/Index/static/image/index/l.png">-->
+                    <!--</div>-->
+                </li>
 
 
-
-
-        <!--<li class="brand">-->
-            <!--<a href="#/app/housesBuy">-->
+                <!--<li class="brand">-->
+                <!--<a href="#/app/housesBuy">-->
                 <!--<img src="modules/Index/static/image/index/lp2.png" alt="俊发·七彩俊园"  width="620" height="160"/>-->
                 <!--<div class="summary"><span>[昆明市]&nbsp;俊发&nbsp;·&nbsp;七彩俊园</span><span>户型：88m²</span><span>总价：72万</span></div>-->
                 <!--<div class="summaryBg"></div>-->
                 <!--<div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>-->
                 <!--<div class="depreciateBg"></div>-->
-            <!--</a>-->
-            <!--<h3>交认筹金10W元抵15W元，购房还可领红包，返积分</h3>-->
-            <!--<div class="nav">-->
+                <!--</a>-->
+                <!--<h3>交认筹金10W元抵15W元，购房还可领红包，返积分</h3>-->
+                <!--<div class="nav">-->
                 <!--<span class="orange"><a href="#"> 来电咨询</a></span>-->
                 <!--<span class="brokerage"><a href="#">最高享用优惠：10000元</a></span>-->
-            <!--</div>-->
-        <!--</li>-->
-        <!--<li class="brand">-->
-            <!--<a href="#/app/housesBuy">-->
+                <!--</div>-->
+                <!--</li>-->
+                <!--<li class="brand">-->
+                <!--<a href="#/app/housesBuy">-->
                 <!--<img src="modules/Index/static/image/index/lp3.png" alt="实力·壹方城"  width="620" height="160"/>-->
                 <!--<div class="summary"><span>[昆明市]实力·壹方城</span><span>户型：76m²</span><span>总价：55万</span>-->
                 <!--</div><div class="summaryBg"></div>-->
                 <!--<div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>-->
                 <!--<div class="depreciateBg"></div>-->
-            <!--</a>-->
-            <!--<h3>签约立减8888元，购房还可领红包，返积分</h3>-->
-            <!--<div class="nav">-->
+                <!--</a>-->
+                <!--<h3>签约立减8888元，购房还可领红包，返积分</h3>-->
+                <!--<div class="nav">-->
                 <!--<span class="orange"><a href="#"> 来电咨询</a></span>-->
                 <!--<span class="brokerage"><a href="#">最高享用优惠：10000元</a></span>-->
-            <!--</div>-->
-        <!--</li>-->
-         <!--<li><a href="../../housesBuy/view/housesBuy.html"><img class="img-inner" src="modules/Index/static/image/index/banner-foot.png" alt="实力·壹方城"  width="620" height="142"/></a></li>-->
-        <!--<li class="brand">-->
-            <!--<a href="#/app/housesBuy">-->
+                <!--</div>-->
+                <!--</li>-->
+                <!--<li><a href="../../housesBuy/view/housesBuy.html"><img class="img-inner" src="modules/Index/static/image/index/banner-foot.png" alt="实力·壹方城"  width="620" height="142"/></a></li>-->
+                <!--<li class="brand">-->
+                <!--<a href="#/app/housesBuy">-->
                 <!--<img src="modules/Index/static/image/index/lp4.png" alt="实力·壹方城"  width="620" height="160"/>-->
                 <!--<div class="summary"><span>[昆明市]实力·壹方城</span><span>户型：76m²</span><span>总价：55万</span></div>-->
                 <!--<div class="summaryBg"></div>-->
                 <!--<div class="depreciate"><span>每平米直降</span><br/><b>5000元</b><br/><span>1万还可抵3万</span><br/><span>3万抵15万</span></div>-->
                 <!--<div class="depreciateBg"></div>-->
-            <!--</a>-->
-            <!--<h3>签约立减8888元，购房还可领红包，返积分</h3>-->
-            <!--<div class="nav">-->
+                <!--</a>-->
+                <!--<h3>签约立减8888元，购房还可领红包，返积分</h3>-->
+                <!--<div class="nav">-->
                 <!--<span class="orange"><a href="#"> 来电咨询</a></span>-->
                 <!--<span class="brokerage"><a href="#">最高享用优惠：10000元</a></span>-->
-            <!--</div>-->
-        <!--</li>-->
-    </ul>
+                <!--</div>-->
+                <!--</li>-->
+            </ul>
+        </div>
     </div>
-   </div>
-        <div class="masked" style="display: none">
-            <img class="masked-content-index location" src="modules/Index/static/image/index/content.png" alt="内容" width="578" height="697"/>
-            <a href="#" class="masked-btn-index location"><img src="modules/Index/static/image/index/btn-start.png" alt="开始搜房" width="219" height="93"/></a>
-        </div>
-        <div class="masked" style="display: none">
-            <a href="#"><img class="point location" src="modules/Index/static/image/index/point.png" alt="指向房源库" width="561" height="604"/></a>
-        </div>
-        <div class="masked" style="display: none">
-            <img class="Take location" src="modules/Index/static/image/index/Take.png" alt="内容" width="465" height="565"/>
-            <a href="#" class="TakeBtn location"><img src="modules/Index/static/image/index/btn-start.png" alt="开始搜房" width="219" height="93"/></a>
-        </div>
     <div class="masked" style="display: none">
-        <a href="#"><img class="firstStep location" src="modules/Index/static/image/index/firstStep.png" alt="指向房源库" width="452" height="646"/></a>
+        <img class="masked-content-index location" src="modules/Index/static/image/index/content.png" alt="内容"
+             width="578" height="697"/>
+        <a href="#" class="masked-btn-index location"><img src="modules/Index/static/image/index/btn-start.png"
+                                                           alt="开始搜房" width="219" height="93"/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <a href="#"><img class="point location" src="modules/Index/static/image/index/point.png" alt="指向房源库" width="561"
+                         height="604"/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <img class="Take location" src="modules/Index/static/image/index/Take.png" alt="内容" width="465" height="565"/>
+        <a href="#" class="TakeBtn location"><img src="modules/Index/static/image/index/btn-start.png" alt="开始搜房"
+                                                  width="219" height="93"/></a>
+    </div>
+    <div class="masked" style="display: none">
+        <a href="#"><img class="firstStep location" src="modules/Index/static/image/index/firstStep.png" alt="指向房源库"
+                         width="452" height="646"/></a>
     </div>
     <div class="broker-index">
-    <div  access="broker" class="summaryBg">
-        <a  class="dk" href="#">我要带客</a><a class="tj" href="#">我要推荐</a>
-        <a class="ask" href="#">咨询热线:</a>
+        <div access="broker" class="summaryBg">
+            <a class="dk" href="#">我要带客</a><a class="tj" href="#">我要推荐</a>
+            <a class="ask" href="#">咨询热线:</a>
+        </div>
     </div>
-     </div>
 </div>
 
 
