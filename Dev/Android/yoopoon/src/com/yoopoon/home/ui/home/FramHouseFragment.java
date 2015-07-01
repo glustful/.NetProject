@@ -47,7 +47,7 @@ public class FramHouseFragment extends FramSuper {
 
 	Context mContext;
 	ListView refreshView;
-	HouseInfoAdapter mHouseInfoAdapter;
+	FramHouseListViewAdapter mHouseInfoAdapter;
 
 	@Override
 	@Nullable
@@ -83,7 +83,7 @@ public class FramHouseFragment extends FramSuper {
 
 		refreshView.setFastScrollEnabled(false);
 		refreshView.setFadingEdgeLength(0);
-		mHouseInfoAdapter = new HouseInfoAdapter(mContext);
+		mHouseInfoAdapter = new FramHouseListViewAdapter(mContext);
 		refreshView.setAdapter(mHouseInfoAdapter);
 
 		requestHouseList();

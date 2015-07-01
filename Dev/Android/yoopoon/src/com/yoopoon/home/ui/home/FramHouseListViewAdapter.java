@@ -26,13 +26,13 @@ import android.widget.TextView;
  * @author king
  *
  */
-public class HouseInfoAdapter extends BaseAdapter {
+public class FramHouseListViewAdapter extends BaseAdapter {
   
 	Context mContext;
 	ArrayList<JSONObject> datas;
 	int height = 0;
 
-	public HouseInfoAdapter(Context mContext) {
+	public FramHouseListViewAdapter(Context mContext) {
 		this.mContext = mContext;
 		datas = new ArrayList<JSONObject>();
 		height = MyApplication.getInstance().getDeviceInfo((Activity) mContext).heightPixels / 6;
