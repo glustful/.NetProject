@@ -68,9 +68,11 @@ namespace Zerg.Event.API.Coupon
         [HttpPost]
         public HttpResponseMessage Create(CouponModel model)
         {
+            Random random=new Random();
+            int num = random.Next(10000000, 100000000);
             var coupon = new global::Event.Entity.Entity.Coupon.Coupon
             {
-                Number = model.Number,
+                Number = num.ToString(),
                 Price = model.Price,
                 Status = model.Status,
                 CouponCategoryId = model.CouponCategoryId
