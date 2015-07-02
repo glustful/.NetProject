@@ -11,7 +11,7 @@ namespace CRM.Entity.Mappings.BrokerRECClient
 			ToTable("BrokerRECClient");
 			HasKey(c => c.Id);
 			HasOptional(c =>c.Broker);
-			HasOptional(c =>c.ClientInfo);
+            HasOptional(c => c.ClientInfo);
 			Property(c => c.Clientname).HasColumnType("varchar").HasMaxLength(50);
             Property(c => c.Phone).HasColumnType("varchar").HasMaxLength(50);
             Property(c => c.Qq).HasColumnType("varchar").HasMaxLength(50);
