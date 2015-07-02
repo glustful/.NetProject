@@ -29,4 +29,13 @@ namespace Zerg.Common.Data
             AutomaticMigrationDataLossAllowed = true;  //如果数据迁移时会发生数据丢失，false则抛出异常，true不抛出异常
         }
     }
+
+    public class EventConfiguration : DbMigrationsConfiguration<TradingDbContext>
+    {
+        public EventConfiguration()
+        {
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;  //如果数据迁移时会发生数据丢失，false则抛出异常，true不抛出异常
+        }
+    }
 }
