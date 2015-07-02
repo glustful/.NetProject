@@ -1051,13 +1051,14 @@ containing a value of this type.
         public static final int abc_split_action_bar_is_narrow=0x7f050002;
     }
     public static final class color {
-        public static final int abc_search_url_text_holo=0x7f06000a;
+        public static final int abc_search_url_text_holo=0x7f06000b;
         public static final int abc_search_url_text_normal=0x7f060000;
         public static final int abc_search_url_text_pressed=0x7f060002;
         public static final int abc_search_url_text_selected=0x7f060001;
         public static final int appBackground=0x7f060006;
         public static final int drak_red=0x7f060008;
         public static final int green=0x7f060007;
+        public static final int hosue_total_color=0x7f06000a;
         public static final int little_whitle=0x7f060009;
         public static final int red=0x7f060003;
         public static final int second_red=0x7f060004;

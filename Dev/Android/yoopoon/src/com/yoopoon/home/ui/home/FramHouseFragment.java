@@ -9,23 +9,24 @@ import org.androidannotations.annotations.UiThread;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.R.integer;
+import android.R.color;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.appcompat.R.string;
 import android.text.format.DateUtils;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -63,7 +64,7 @@ public class FramHouseFragment extends FramSuper {
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		Log.e(LOGTAG, "Fragment oncreateView");
-		
+
 		if (rootView != null) {
 			ViewGroup parent = (ViewGroup) rootView.getParent();
 			if (null != parent) {
@@ -74,11 +75,13 @@ public class FramHouseFragment extends FramSuper {
 					R.layout.home_fram_house_fragment, null);
 			listView = (PullToRefreshListView) rootView
 					.findViewById(R.id.matter_list_view);
+
 			mContext = getActivity();
 			houseTotalCountTextView = new TextView(mContext);
 			instance = this;
 			mAdController = new ADController(mContext);
 			mJsonObjects = new ArrayList<JSONObject>();
+
 			initParameter();
 
 			initViews();
@@ -91,12 +94,13 @@ public class FramHouseFragment extends FramSuper {
 	 * 初始化界面Fragment
 	 */
 	void initViews() {
-
-		listView.setOnRefreshListener(new HowWillIrefresh());
-		listView.setMode(PullToRefreshBase.Mode.DISABLED);
+		listView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
 		refreshView = listView.getRefreshableView();
+		listView.setOnRefreshListener(new HowWillIrefresh());
 
+		// 添加房源首页广告
 		refreshView.addHeaderView(mAdController.getRootView());
+		// 添加房源首页房屋数量
 		requestHouseTotalCount();
 
 		refreshView.setFastScrollEnabled(false);
@@ -108,7 +112,7 @@ public class FramHouseFragment extends FramSuper {
 	}
 
 	/**
-	 * 检索所有房子Get传入参数
+	 * 获取ListView Items传入的参数
 	 */
 	private void initParameter() {
 		if (parameter == null) {
@@ -126,16 +130,25 @@ public class FramHouseFragment extends FramSuper {
 		parameter.put("TypeId", "");
 	}
 
+	/**
+	 * 初始化房源页面中楼盘数量
+	 * 
+	 * @param houseTotaoCount
+	 *            楼盘数量
+	 */
 	@UiThread
 	public void initHouseTotalCountTextView(String houseTotaoCount) {
-		LinearLayout.LayoutParams houseTotalCountParams = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, 100);
-		houseTotalCountParams.gravity=Gravity.CENTER_HORIZONTAL;
+		AbsListView.LayoutParams houseTotalCountParams = new AbsListView.LayoutParams(
+				LayoutParams.MATCH_PARENT, 50);
 		houseTotalCountTextView.setLayoutParams(houseTotalCountParams);
-		houseTotalCountTextView.setText("总共" + houseTotaoCount + "个楼盘");
-		houseTotalCountTextView.setBackgroundColor(0xBEBEBE);
-		//houseTotalCountTextView.
-		//refreshView.addHeaderView(houseTotalCountTextView);
+
+		houseTotalCountTextView.setText("共" + houseTotaoCount + "个楼盘");
+
+		houseTotalCountTextView.setBackgroundColor(getResources().getColor(
+				R.color.hosue_total_color));
+		houseTotalCountTextView.setGravity(Gravity.CENTER_VERTICAL);
+
+		refreshView.addHeaderView(houseTotalCountTextView);
 	}
 
 	@AfterInject
@@ -151,13 +164,10 @@ public class FramHouseFragment extends FramSuper {
 
 			@Override
 			public void onReponse(ResponseData data) {
-
+				listView.onRefreshComplete();
 				if (data.getResultState() == ResultState.eSuccess) {
 
 					JSONArray list = data.getMRootData().optJSONArray("List");
-					String houseTotalCountJSon = data.getMRootData().optString(
-							"TotalCount");
-					Log.e(LOGTAG, houseTotalCountJSon);
 					if (list == null || list.length() < 1)
 						return;
 					for (int i = 0; i < list.length(); i++) {
@@ -170,7 +180,6 @@ public class FramHouseFragment extends FramSuper {
 
 			@Override
 			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
 
 			}
 		}.setUrl(getString(R.string.url_product_search))
@@ -195,7 +204,6 @@ public class FramHouseFragment extends FramSuper {
 
 			@Override
 			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
 
 			}
 		}.setUrl(getString(R.string.url_product_search))
@@ -240,20 +248,21 @@ public class FramHouseFragment extends FramSuper {
 	 */
 	class HowWillIrefresh implements
 			PullToRefreshBase.OnRefreshListener2<ListView> {
-
 		@Override
 		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+
 			String label = DateUtils.formatDateTime(getActivity(),
 					System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME
 							| DateUtils.FORMAT_SHOW_DATE
 							| DateUtils.FORMAT_ABBREV_ALL);
 			refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
-
+			requestHouseList();
 		}
 
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-
+			Toast.makeText(mContext, "Testing", Toast.LENGTH_SHORT);
+			requestHouseList();
 		}
 
 	}

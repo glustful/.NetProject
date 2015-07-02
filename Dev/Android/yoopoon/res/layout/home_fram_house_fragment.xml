@@ -17,6 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         ptr:ptrAnimationStyle="flip"
+        android:divider="#d0d0d0"
+        android:descendantFocusability="blocksDescendants"
+        android:dividerHeight="10dp"
         />
   
         
