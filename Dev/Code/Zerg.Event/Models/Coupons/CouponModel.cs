@@ -13,5 +13,6 @@ namespace Zerg.Event.Models.Coupons
         public decimal Price { get; set; }
         public EnumCouponStatus Status { get; set; }
         public int CouponCategoryId { get; set; }
+        public int Count { get; set; }
     }
 }

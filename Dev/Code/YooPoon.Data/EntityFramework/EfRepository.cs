@@ -132,9 +132,10 @@ namespace YooPoon.Data.EntityFramework
             {
                 efDbContext.Configuration.AutoDetectChangesEnabled = false;
                 efDbContext.Configuration.ValidateOnSaveEnabled = false;
+                var entitySet = efDbContext.Set<T>();
                 foreach (var entity in entities)
                 {
-                    _entities.Add(entity);
+                    entitySet.Add(entity);
                 }
                 efDbContext.SaveChanges();
             }
