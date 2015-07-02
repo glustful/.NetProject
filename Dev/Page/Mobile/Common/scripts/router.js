@@ -381,7 +381,8 @@ app.run(
             })
             .state('app.cash',{
                 url:'/cash',
-                templateUrl:'modules/cash/view/cash.html'
+                templateUrl:'modules/cash/view/cash.html',
+                data:{title:'提取现金'}
             })
 
 
