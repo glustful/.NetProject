@@ -1,8 +1,12 @@
-﻿using YooPoon.Core.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-namespace Event.Entity.Entity.Coupon
+namespace Zerg.Event.Models.Coupons
 {
-    public class CouponCategory:IBaseEntity
+    //新建CouponCategory所用模型
+    public class CategoryModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

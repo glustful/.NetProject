@@ -128,12 +128,29 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Controllers\Coupons\Static\image\Coupons\1.png" />
+    <Content Include="Controllers\Coupons\Static\image\Coupons\2-1.png" />
+    <Content Include="Controllers\Coupons\Static\image\Coupons\2-2.png" />
+    <Content Include="Controllers\Coupons\Static\image\Coupons\2-3.png" />
+    <Content Include="Controllers\Coupons\Static\image\Coupons\bsq.png" />
+    <Content Include="Controllers\Coupons\Static\image\fyk1.png" />
+    <Content Include="Controllers\Coupons\Static\image\fyk2.png" />
+    <Content Include="Controllers\Coupons\Static\image\grzx1.png" />
+    <Content Include="Controllers\Coupons\Static\image\grzx2.png" />
+    <Content Include="Controllers\Coupons\Static\image\hd1.png" />
+    <Content Include="Controllers\Coupons\Static\image\hd2.png" />
+    <Content Include="Controllers\Coupons\Static\image\jjrzq1.png" />
+    <Content Include="Controllers\Coupons\Static\image\jjrzq2.png" />
+    <Content Include="Controllers\Coupons\Static\image\logo.png" />
+    <Content Include="Controllers\Coupons\Static\image\search.png" />
+    <Content Include="Controllers\Coupons\Static\image\ssk.png" />
+    <Content Include="Controllers\Coupons\Static\style\common.css" />
+    <Content Include="Controllers\Coupons\Static\style\Coupons.css" />
     <Content Include="Controllers\Crowd\Static\image\chip\cy.png" />
     <Content Include="Controllers\Crowd\Static\image\chip\cyzk.png" />
     <Content Include="Controllers\Crowd\Static\image\chip\logo-syj.png" />
     <Content Include="Controllers\Crowd\Static\image\chip\p.png" />
     <Content Include="Controllers\Crowd\Static\Js\bootstrap.min.js" />
-    <Content Include="Controllers\Crowd\Static\Js\crowdjs.js" />
     <Content Include="Controllers\Crowd\Static\Js\jquery-1.9.1.min.js" />
     <Content Include="Controllers\Crowd\Static\style\bootstrap-theme.min.css" />
     <Content Include="Controllers\Crowd\Static\style\bootstrap.min.css" />
@@ -143,6 +160,7 @@
     <Content Include="packages.config" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\publish.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -162,6 +180,8 @@
     <Content Include="Views\web.config" />
     <Content Include="Views\Crowd\crowd.cshtml" />
     <Content Include="Views\CrowdAdd\crowdadd.cshtml" />
+    <Content Include="Views\Coupons\coupons.cshtml" />
+    <Content Include="Views\Coupons\couponOwn.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -174,15 +194,21 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Coupon\CouponCategoryController.cs" />
+    <Compile Include="API\Coupon\CouponController.cs" />
     <Compile Include="API\Crowd\CrowdApiController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Coupons\CouponsController.cs" />
     <Compile Include="Controllers\Crowd\CrowdController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Coupons\CategoryModel.cs" />
+    <Compile Include="Models\Coupons\CouponCategoryModel.cs" />
+    <Compile Include="Models\Coupons\CouponModel.cs" />
     <Compile Include="Models\CrowdModel.cs" />
     <Compile Include="Models\DiscountModel.cs" />
     <Compile Include="Models\FollowerModel.cs" />
@@ -191,7 +217,9 @@
     <Compile Include="Models\PhoneModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Coupon\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CRM.Service\CRM.Service.csproj">
       <Project>{36DC7784-4BA6-467D-A20F-B7DFCCF815FC}</Project>
@@ -204,6 +232,14 @@
     <ProjectReference Include="..\Event.Service\Event.Service.csproj">
       <Project>{f084b802-3896-4300-8a5d-c53ad4b09891}</Project>
       <Name>Event.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Trading.Entity\Trading.Entity.csproj">
+      <Project>{596115C3-B475-4E05-9FFB-678A5683E98A}</Project>
+      <Name>Trading.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Trading.Service\Trading.Service.csproj">
+      <Project>{54B84267-E248-4253-BD2B-D338B06FBB21}</Project>
+      <Name>Trading.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\YooPoon.Common\YooPoon.Common.csproj">
       <Project>{a09e564c-ec00-4bfa-acfd-371b45abeeed}</Project>
