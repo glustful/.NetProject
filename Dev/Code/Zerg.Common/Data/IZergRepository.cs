@@ -16,4 +16,9 @@ namespace Zerg.Common.Data
     {
 
     }
+
+    public interface IEventRepository<T> : IRepository<T> where T : class,IBaseEntity
+    {
+
+    }
 }

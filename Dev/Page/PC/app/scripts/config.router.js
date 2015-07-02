@@ -1532,10 +1532,11 @@ angular.module('app')
             .state('page.event.Coupons.user.query', {
                 url: '/query',
                 templateUrl: 'views/pages/event/Coupons/user/query.html',
-                resolve:load('scripts/controllers/event/Coupon.js')
+                resolve: load('scripts/controllers/event/active.js')
+
             })
             .state('page.event.Coupons.user.list', {
-                url: '/list',
+                url: '/list?username',
                 templateUrl: 'views/pages/event/Coupons/user/list.html'
             })
             .state('page.event.Coupons.active.active', {
