@@ -29,9 +29,13 @@
     border-top: none;
     background-color: #fff;
 }
+ .allcenter{
+     width:640px;margin :0 auto;padding:0;
+ }
  .chipIng {
     position: relative;
     z-index: 2;
+   
 }
  .chipIng a .summary{
     display: block;
@@ -267,4 +271,16 @@
 }
 .chipEle-map a{
     color: #46a1e8;
+}
+body{
+    background-image:url(about:blank); /* for IE6 */ 
+    background-attachment:fixed; /*必须*/
+}
+.ads{
+    width:15px;
+    height:15px;
+    position:absolute;
+    left:25px;
+    top:456px; 
+    border:1px solid red;
 }

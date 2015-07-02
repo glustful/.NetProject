@@ -13,6 +13,7 @@ using YooPoon.Core.Site;
 
 namespace Zerg.Event.Controllers.Crowd
 {
+   // [AllowAnonymous]
     public class CrowdController : Controller
     {
         private readonly ICrowdService _crowdService;
@@ -47,7 +48,7 @@ namespace Zerg.Event.Controllers.Crowd
                 p.Upuser,
                 p.Adduser,
                 p.Addtime
-            }).ToList().Select(a=>new CrowdModel
+            }).ToList().Select(a => new CrowdModel
             {
                 //返回数据
                 Id = a.Id,
