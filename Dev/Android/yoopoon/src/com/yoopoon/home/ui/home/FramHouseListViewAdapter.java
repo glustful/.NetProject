@@ -1,5 +1,6 @@
 package com.yoopoon.home.ui.home;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 
 import org.json.JSONObject;
@@ -78,7 +79,10 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		ImageLoader.getInstance().displayImage(url, viewHandler.houseImageView,
 				MyApplication.getOptions(), MyApplication.getLoadingListener());
 		 
-
+		//viewHandler.houseImageView.
+		
+		
+		
 		viewHandler.houseProductnameTextView.setText(item
 				.optString("Productname"));
 		viewHandler.housePriceTextView
@@ -101,6 +105,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		private TextView housePriceTextView;
 		private TextView houseTypeAcreaqeStockRuleTextView;
 		private TextView houseAdvertisementTextView;
+		
 
 		void init(View root) {
 			houseImageView = (ImageView) root.findViewById(R.id.house_image);
