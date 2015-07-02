@@ -325,6 +325,10 @@ app  .run(
             templateUrl:'modules/invite/view/invite.html',
             resolve:load('modules/invite/controller/invitecontroller.js')
         })
+        .state('app.cash',{
+            url:'/cash',
+            templateUrl:'modules/cash/view/cash.html'
+        })
 
 
 

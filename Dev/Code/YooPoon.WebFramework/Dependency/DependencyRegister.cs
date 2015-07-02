@@ -95,7 +95,7 @@ namespace YooPoon.WebFramework.Dependency
             builder.RegisterType<WorkContext>().As<IWorkContext>().InstancePerRequest();
 
             //filter
-            builder.RegisterFilterProvider();
+            //builder.RegisterFilterProvider(); //todo：此方法会报空
             builder.RegisterWebApiFilterProvider(GlobalConfiguration.Configuration);
             
             //注册YpHnadleError

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
@@ -17,5 +18,7 @@ namespace YooPoon.Core.Data
         IDbSet<T> DbSet { get; }
 
         void AddOrUpdate(T[] entity);
+
+        void BulkInsert(IEnumerable<T> entities);
     }
 }

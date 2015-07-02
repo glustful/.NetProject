@@ -1501,34 +1501,42 @@ angular.module('app')
             })
             .state('page.event.Coupons.type.index', {
                 url: '/index',
-                templateUrl: 'views/pages/event/Coupons/type/index.html'
+                templateUrl: 'views/pages/event/Coupons/type/index.html',
+                resolve:load('scripts/controllers/event/couponCategory.js')
             })
             .state('page.event.Coupons.type.create', {
                 url: '/create',
-                templateUrl: 'views/pages/event/Coupons/type/create.html'
+                templateUrl: 'views/pages/event/Coupons/type/create.html',
+                resolve:load('scripts/controllers/event/couponCategory.js')
             })
             .state('page.event.Coupons.type.edit', {
-                url: '/edit',
-                templateUrl: 'views/pages/event/Coupons/type/edit.html'
+                url: '/edit?id',
+                templateUrl: 'views/pages/event/Coupons/type/edit.html',
+                resolve:load('scripts/controllers/event/couponCategory.js')
             })
             .state('page.event.Coupons.manage.index', {
                 url: '/index',
-                templateUrl: 'views/pages/event/Coupons/manage/index.html'
+                templateUrl: 'views/pages/event/Coupons/manage/index.html',
+                resolve:load('scripts/controllers/event/Coupon.js')
             })
             .state('page.event.Coupons.manage.create', {
                 url: '/create',
-                templateUrl: 'views/pages/event/Coupons/manage/create.html'
+                templateUrl: 'views/pages/event/Coupons/manage/create.html',
+                resolve:load('scripts/controllers/event/Coupon.js')
             })
-            .state('page.event.Coupons.manger.edit', {
-                url: '/edit',
-                templateUrl: 'views/pages/event/Coupons/manger/edit.html'
+            .state('page.event.Coupons.manage.edit', {
+                url: '/edit?id',
+                templateUrl: 'views/pages/event/Coupons/manage/edit.html',
+                resolve:load('scripts/controllers/event/Coupon.js')
             })
             .state('page.event.Coupons.user.query', {
                 url: '/query',
-                templateUrl: 'views/pages/event/Coupons/user/query.html'
+                templateUrl: 'views/pages/event/Coupons/user/query.html',
+                resolve: load('scripts/controllers/event/active.js')
+
             })
             .state('page.event.Coupons.user.list', {
-                url: '/list',
+                url: '/list?username',
                 templateUrl: 'views/pages/event/Coupons/user/list.html'
             })
             .state('page.event.Coupons.active.active', {

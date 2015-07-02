@@ -28,4 +28,17 @@ namespace Zerg.Common.Data
 
         }
     }
+
+    /// <summary>
+    /// Event活动数据仓库
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class EventRepository<T> : EfRepository<T>, IEventRepository<T> where T : class,IBaseEntity
+    {
+        public EventRepository(IDbContext context)
+            : base(context)
+        {
+
+        }
+    }
 }

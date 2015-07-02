@@ -379,6 +379,11 @@ app.run(
                 resolve:load('modules/invite/controller/invitecontroller.js'),
                 data:{title:'注册邀请'}
             })
+            .state('app.cash',{
+                url:'/cash',
+                templateUrl:'modules/cash/view/cash.html',
+                data:{title:'提取现金'}
+            })
 
 
         function load(srcs, callback) {
