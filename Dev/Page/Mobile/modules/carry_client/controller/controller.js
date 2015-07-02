@@ -31,7 +31,7 @@ app.controller('daikeController',['$http','$scope','$stateParams','AuthService',
         console.log(  $scope.BrokerLeadClient);
         $http.post(SETTING.ApiUrl+'/BrokerLeadClient/Add',$scope.BrokerLeadClient).success(function(data){
             if(data.Status){
-                $state.go("app.nominate")
+                $state.go("app.storeroom")
             }else{
                 alert(data.Msg)
             }
