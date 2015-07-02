@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -60,6 +61,15 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(mContext).inflate(
 					R.layout.home_fram_house_listview_item, null);
+			LinearLayout listViewLinearLayout=(LinearLayout) convertView.findViewById(R.id.house_listview_item_linearlayout);
+			LayoutParams layoutParams=(LayoutParams) listViewLinearLayout.getLayoutParams();
+			int screenWidth=mContext.getResources().getDisplayMetrics().widthPixels;
+		 
+			
+			
+			layoutParams.height=screenWidth/3;
+			listViewLinearLayout.setLayoutParams(layoutParams);
+			
 			viewHandler = new ViewHandler();
 			viewHandler.init(convertView);
 			convertView.setTag(viewHandler);
