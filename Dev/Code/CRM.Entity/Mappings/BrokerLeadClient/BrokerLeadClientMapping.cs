@@ -12,7 +12,7 @@ namespace CRM.Entity.Mappings.BrokerLeadClient
 			HasKey(c => c.Id);
 
 			HasOptional(c =>c.Broker);
-			HasOptional(c =>c.ClientInfo);
+            HasOptional(c => c.ClientInfo);
 			Property(c => c.Appointmenttime).HasColumnType("datetime");
 			Property(c => c.Appointmentstatus).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Details).HasColumnType("varchar").HasMaxLength(256);
