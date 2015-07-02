@@ -1,0 +1,17 @@
+
+.withdrawDetail ul li{
+    background-color: #fff;
+    padding:20px 20px 10px 20px;
+    color: #7e7e7e;
+    border-bottom: 1px solid #ebebeb;
+}
+.withdrawDetail ul li p span.bankNum{
+    padding-left:60px;
+}
+.withdrawDetail ul li p span.cash{
+    color: #000000;
+
+}
+.withdrawDetail ul li p{
+    font-size: 1.3em;
+}
