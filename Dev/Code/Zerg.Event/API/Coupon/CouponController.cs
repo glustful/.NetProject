@@ -8,9 +8,12 @@ using System.Web.Http.Cors;
 using Event.Entity.Entity.Coupon;
 using Event.Service.Coupon;
 using Zerg.Common;
+using Zerg.Event.Models.Coupons;
 
 namespace Zerg.Event.API.Coupon
 {
+    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class CouponController : ApiController
     {
         private readonly ICouponService _couponService;
@@ -36,6 +39,71 @@ namespace Zerg.Event.API.Coupon
             entity.Status = EnumCouponStatus.Actived;
             _couponService.Update(entity);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "激活成功！"));
+        }
+        [HttpGet]
+        public HttpResponseMessage Index(int page, int pageSize)
+        {
+            var condition = new CouponSearchCondition
+            {
+                Page = page,
+                PageCount = pageSize,
+                OrderBy = EnumCouponSearchOrderBy.OrderById
+            };
+            var coupon = _couponService.GetCouponByCondition(condition).Select(p => new
+            {
+               p.Id,
+               p.Number,
+               p.Price,
+               p.Status
+            }).ToList();
+            var count = _couponService.GetCouponCount(condition);
+            return PageHelper.toJson(new { List = coupon, TotalCount = count, Condition = condition });
+        }
+        [HttpGet]
+        public HttpResponseMessage Detailed(int id)
+        {
+            var coupon = _couponService.GetCouponById(id);
+            return PageHelper.toJson(coupon);
+        }
+        [HttpPost]
+        public HttpResponseMessage Create(CouponModel model)
+        {
+            var coupon = new global::Event.Entity.Entity.Coupon.Coupon
+            {
+                Number = model.Number,
+                Price = model.Price,
+                Status = model.Status,
+                CouponCategoryId = model.CouponCategoryId
+            };
+            if (_couponService.Create(coupon) != null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功"));
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败"));
+        }
+        [HttpPost]
+        public HttpResponseMessage Edit(CouponModel model)
+        {
+            var coupon = _couponService.GetCouponById(model.Id);
+            coupon.Number = model.Number;
+            coupon.Price = model.Price;
+            coupon.Status = model.Status;
+            coupon.CouponCategoryId = model.CouponCategoryId;
+            if (_couponService.Update(coupon) != null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功"));
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败"));
+        }
+        [HttpGet]
+        public HttpResponseMessage Delete(int id)
+        {
+            var coupon = _couponService.GetCouponById(id);
+            if (_couponService.Delete(coupon))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功"));
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败"));
         }
     }
 }

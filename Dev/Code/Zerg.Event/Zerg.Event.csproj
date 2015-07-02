@@ -133,6 +133,17 @@
     <Content Include="Controllers\Coupons\Static\image\Coupons\2-2.png" />
     <Content Include="Controllers\Coupons\Static\image\Coupons\2-3.png" />
     <Content Include="Controllers\Coupons\Static\image\Coupons\bsq.png" />
+    <Content Include="Controllers\Coupons\Static\image\fyk1.png" />
+    <Content Include="Controllers\Coupons\Static\image\fyk2.png" />
+    <Content Include="Controllers\Coupons\Static\image\grzx1.png" />
+    <Content Include="Controllers\Coupons\Static\image\grzx2.png" />
+    <Content Include="Controllers\Coupons\Static\image\hd1.png" />
+    <Content Include="Controllers\Coupons\Static\image\hd2.png" />
+    <Content Include="Controllers\Coupons\Static\image\jjrzq1.png" />
+    <Content Include="Controllers\Coupons\Static\image\jjrzq2.png" />
+    <Content Include="Controllers\Coupons\Static\image\logo.png" />
+    <Content Include="Controllers\Coupons\Static\image\search.png" />
+    <Content Include="Controllers\Coupons\Static\image\ssk.png" />
     <Content Include="Controllers\Coupons\Static\style\common.css" />
     <Content Include="Controllers\Coupons\Static\style\Coupons.css" />
     <Content Include="Controllers\Crowd\Static\image\chip\cy.png" />
@@ -178,6 +189,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Coupon\CouponCategoryController.cs" />
     <Compile Include="API\Coupon\CouponController.cs" />
     <Compile Include="API\Crowd\CrowdApiController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -189,7 +201,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Coupons\CategoryModel.cs" />
     <Compile Include="Models\Coupons\CouponCategoryModel.cs" />
+    <Compile Include="Models\Coupons\CouponModel.cs" />
     <Compile Include="Models\CrowdModel.cs" />
     <Compile Include="Models\DiscountModel.cs" />
     <Compile Include="Models\FollowerModel.cs" />

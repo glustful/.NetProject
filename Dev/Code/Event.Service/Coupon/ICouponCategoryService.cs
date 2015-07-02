@@ -6,7 +6,7 @@ namespace Event.Service.Coupon
 {
     public interface ICouponCategoryService : IDependency
     {
-        bool CreateCouponCategory(CouponCategory entity);
+       bool CreateCouponCategory(CouponCategory entity);
 
         IQueryable<CouponCategory> GetCouponCategoriesByCondition(CouponCategorySearchCondition condition);
 

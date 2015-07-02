@@ -7,25 +7,35 @@
 <link href="~/Controllers/Coupons/Static/style/common.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <div class="Coupons-content">
+    <div class="hd">
+        <div class="header cf">
+            <div class="logo fl"><a href="#">创富宝</a> </div>
+            <div class="search fr">
+                <label for="houses">456</label><input name="" id="houses" type="text" maxlength="10" placeholder="搜索楼盘" ng-model="Condition" />
+                <!--<button ng-click="getBrandList()">搜索</button>-->
+                <a style="width: 80px;border: none;font-size: 24px;color: #ffffff;background: none;" href="#/app/brand?condition={{Condition}}">搜索</a>
+            </div>
+        </div>
+    </div>
     <div class="saveMoney">距离本场结束：&nbsp;03:47:32</div>
     <div class="couponsList">
         <ul>
             @foreach (var item in Model)
             {
-              <li class="distance">
-                  <img src="http://img.yoopoon.com/@item.BrandImg" width="350px" height="222px" alt="抢起来"/>
-                  <div class="lpIntro">
-                      <span>@item.ProductParamater["最高优惠"]元/m²&nbsp;&nbsp;@item.ProductParamater["占地面积"]</span>
-                      <p>@item.SubTitle</p>
-                      <a href="#">了解楼盘详情&nbsp;&nbsp;</a>
-                  </div>                
-                      <div class="juan">@item.Name</div>
-                      <div class="specialUse">@item.ReMark</div>
-                      @*@Html.ActionLink("抢起来", "couponOwn", new { id = item.Id })*@
-                      <a href="/Coupons/couponOwn?id=@item.Id"><button>抢起来</button></a>
-                      <small>还剩 @item.Count 张劵</small>
-              </li>
-            }                      
+                <li class="distance">
+                    <img src="http://img.yoopoon.com/@item.BrandImg" width="350px" height="222px" alt="抢起来"/>
+                    <div class="lpIntro">
+                        <span>@item.ProductParamater["最高优惠"]元/m²&nbsp;&nbsp;@item.ProductParamater["占地面积"]</span>
+                        <p>@item.SubTitle</p>
+                        <a href="#">了解楼盘详情&nbsp;&nbsp;</a>
+                    </div>
+                    <div class="juan">@item.Name</div>
+                    <div class="specialUse">@item.ReMark</div>
+                    @*@Html.ActionLink("抢起来", "couponOwn", new { id = item.Id })*@
+                    <a href="/Coupons/couponOwn?id=@item.Id"><button>抢起来</button></a>
+                    <small>还剩 @item.Count 张劵</small>
+                </li>
+            }
             @*<li class="distance">
                 <img src="~/Controllers/Coupons/Static/image/Coupons/1.png" width="630" height="222" alt="抢起来"/>
                 <div class="lpIntro">
@@ -53,6 +63,16 @@
                 <small>还剩11张劵</small>
             </li>*@
         </ul>
+    </div>
+    <div class="footerAfter">
+        <a href="#/app/home"><span class="act">首页</span></a>
+
+
+        <a href="#app/storeroom"><span class="house">房源库</span></a>
+
+
+        <a href="#app/personal_user"> <span class="personal">个人中心</span></a>
+
     </div>
     @*<div class="fullName">全民惠</div>
     <div class="resources">

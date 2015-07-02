@@ -40,6 +40,19 @@ namespace Event.Service.Coupon
             {
                 query = query.Where(c => c.BrandId == condition.BrandId);
             }
+            if (condition.OrderBy.HasValue)
+            {
+                switch (condition.OrderBy.Value)
+                {
+                    case EnumCouponCategorySearchOrderBy.OrderById:
+                        query = condition.IsDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
+                        break;
+                }
+            }
+            else
+            {
+                query = query.OrderBy(q => q.Id);
+            }
             if (condition.Page.HasValue && condition.PageSize.HasValue)
             {
                 query = query.Skip((condition.Page.Value - 1) * condition.PageSize.Value).Take(condition.PageSize.Value);

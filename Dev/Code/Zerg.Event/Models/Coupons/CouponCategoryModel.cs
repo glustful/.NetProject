@@ -7,6 +7,7 @@ using Trading.Entity.Model;
 
 namespace Zerg.Event.Models.Coupons
 {
+    //优惠券页面显示所用模型
     public class CouponCategoryModel
     {
         public int Id { get; set; }
