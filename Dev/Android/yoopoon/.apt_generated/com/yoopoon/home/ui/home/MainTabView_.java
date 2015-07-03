@@ -93,7 +93,6 @@ public final class MainTabView_
     public void onViewChanged(HasViews hasViews) {
         imageView = ((ImageView) hasViews.findViewById(id.imageView));
         title = ((TextView) hasViews.findViewById(id.title));
-        badgeView = ((BadgeView) hasViews.findViewById(id.badgeView));
     }
 
 }

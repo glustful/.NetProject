@@ -6,10 +6,11 @@
 package com.yoopoon.home.ui.home;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.yoopoon.home.R.layout;
 import org.androidannotations.api.view.HasViews;
 import org.androidannotations.api.view.OnViewChangedNotifier;
 
@@ -20,6 +21,7 @@ public final class FramHouseFragment_
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
     private View contentView_;
+    private Handler handler_ = new Handler(Looper.getMainLooper());
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,9 +41,6 @@ public final class FramHouseFragment_
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         contentView_ = super.onCreateView(inflater, container, savedInstanceState);
-        if (contentView_ == null) {
-            contentView_ = inflater.inflate(layout.home_fram_house_fragment, container, false);
-        }
         return contentView_;
     }
 
@@ -57,6 +56,20 @@ public final class FramHouseFragment_
 
     public static FramHouseFragment_.FragmentBuilder_ builder() {
         return new FramHouseFragment_.FragmentBuilder_();
+    }
+
+    @Override
+    public void initHouseTotalCountTextView(final String houseTotaoCount) {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                FramHouseFragment_.super.initHouseTotalCountTextView(houseTotaoCount);
+            }
+
+        }
+        );
     }
 
     public static class FragmentBuilder_ {

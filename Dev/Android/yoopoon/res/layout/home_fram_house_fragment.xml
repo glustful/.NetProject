@@ -10,22 +10,92 @@
     android:orientation="vertical" >
 
    
-   
+   <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/area_name_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableRight="@drawable/arrow"
+                    android:textSize="16dp"
+                     android:clickable="true"
+                     android:focusable="true"
+                    android:text="区域" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/type_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                     android:drawableRight="@drawable/arrow"
+                     android:textSize="16dp"
+                      android:clickable="true"
+                    android:text="类型" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/price_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                     android:drawableRight="@drawable/arrow"
+                     android:textSize="16dp"
+                      android:clickable="true"
+                    android:text="价格" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/reset_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="16dp"
+                    android:clickable="true"
+                    android:text="重置" />
+            </LinearLayout>
+        </LinearLayout>
     <com.handmark.pulltorefresh.library.PullToRefreshListView 
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/matter_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         ptr:ptrAnimationStyle="flip"
+        android:divider="#d0d0d0"
+        android:descendantFocusability="blocksDescendants"
+        android:dividerHeight="10dp"
         />
   
         
    
 
 </LinearLayout>
-<TextView 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:text="房源页"/>
 </FrameLayout>

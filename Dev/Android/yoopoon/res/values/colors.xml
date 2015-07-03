@@ -8,5 +8,6 @@
     <color name="green">#36ac38</color>
     <color name="drak_red">#f58672</color>
     <color name="little_whitle">#fafafa</color>
-    <color name="yellow">#4ba4e9</color>
+<color name="yellow">#4ba4e9</color>
+    <color name="hosue_total_color">#d0d0d0</color>
 </resources>
