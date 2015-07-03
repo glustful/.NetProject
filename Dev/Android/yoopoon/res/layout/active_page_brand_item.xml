@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingTop="5dp" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,69 +17,59 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            />
+            android:src="@drawable/default_head_img" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/img"
-            android:orientation="horizontal" 
-            android:background="#55ffffff"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                 />
-
-            <TextView
-                android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:text="总价：110万" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:padding="10dp"
-            android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_alignBottom="@id/img"
-            android:layout_alignParentRight="true"
             android:layout_alignTop="@id/img"
-            android:background="@color/red"
-            android:orientation="vertical" >
+            android:background="@android:color/transparent"
+            android:orientation="horizontal" >
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                
-                android:layout_weight="1"
-                android:text="每平米直降" />
+                android:layout_gravity="bottom"
+                android:layout_weight="3"
+                android:background="#88000000"
+                android:orientation="horizontal"
+                android:padding="5dp" >
+
+                <TextView
+                    android:id="@+id/city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/small_textSize" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/small_textSize" />
+
+                <TextView
+                    android:id="@+id/area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/small_textSize" />
+            </LinearLayout>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/rightAdTitle"
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#88ff0000"
                 android:gravity="center"
-                android:layout_height="wrap_content"
-                
-                android:text="5000元" 
-                android:layout_weight="1"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-               
-                android:layout_weight="1"
-                android:text="1万还可抵3万" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                
-                android:layout_weight="1"
-                android:text="3万抵15万" />
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -91,14 +82,16 @@
             android:id="@+id/adTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:textSize="@dimen/large_textSize" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical" >
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
 
         <com.yoopoon.home.ui.view.AutoAjustSizeTextView
             android:id="@+id/callPhone"
@@ -106,12 +99,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:textColor="@color/second_red"
+            android:textSize="@dimen/middle_textSize" />
 
         <View
-            android:layout_width="2dp"
+            android:layout_width="1dp"
             android:layout_height="fill_parent"
-            android:background="@android:color/black" />
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray" />
 
         <com.yoopoon.home.ui.view.AutoAjustSizeTextView
             android:id="@+id/preferential"
@@ -119,7 +116,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:textSize="@dimen/middle_textSize" />
     </LinearLayout>
 
 </LinearLayout>

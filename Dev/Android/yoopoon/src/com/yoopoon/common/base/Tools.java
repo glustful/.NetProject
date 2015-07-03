@@ -9,6 +9,9 @@ import java.util.Date;
 
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 
 
@@ -68,6 +71,13 @@ public class Tools {
         path.delete();
     }
     
+    public static void callPhone(Context mContext,String number) {
+		Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+number));  
+        mContext.startActivity(intent);  
+		
+	}
+
+    
     public static String optString(JSONObject obj,String key,String defaultValue){
     	if(obj.isNull(key))
     		return defaultValue;
@@ -78,5 +88,11 @@ public class Tools {
     	if(obj.isNull(key))
     		return defaultValue;
     	return obj.optInt(key, defaultValue);
+    }
+    
+    public static double optDouble(JSONObject obj,String key,double defaultValue){
+    	if(obj.isNull(key))
+    		return defaultValue;
+    	return obj.optDouble(key, defaultValue);
     }
 }

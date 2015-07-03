@@ -118,7 +118,7 @@ public class ResponseData
             mRootData = new JSONObject(mStringData);
 			//mCode = mRootData.optInt("code");
 			mMsg = mRootData.optString("Msg");
-			if(mRootData.isNull("Status")){
+			if(mRootData.isNull("Status")||mRootData.isNull("Object")){
 				mState = ResultState.eSuccess;
 				return;
 			}

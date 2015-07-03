@@ -3,6 +3,10 @@ package com.yoopoon.home.ui.agent;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AbsListView.LayoutParams;
+import android.widget.LinearLayout;
+
 import com.yoopoon.home.R;
 
 public class CommentFunction {
@@ -32,7 +36,7 @@ public class CommentFunction {
 	private void initView() {
 
 		rootView = inflater.inflate(R.layout.agent_comment_function_view, null);
-
+	
 		
 	}
 

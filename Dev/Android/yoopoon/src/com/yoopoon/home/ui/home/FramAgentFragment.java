@@ -18,10 +18,17 @@ import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.ui.AD.ADController;
 import com.yoopoon.home.ui.AD.ActiveController;
 import com.yoopoon.home.ui.active.ActiveBrandAdapter;
+import com.yoopoon.home.ui.agent.AgentBrandAdapter;
 import com.yoopoon.home.ui.agent.CommentFunction;
+import com.yoopoon.home.ui.agent.HeroController;
+import com.yoopoon.home.ui.agent.HeroView;
+import com.yoopoon.home.ui.agent.HeroView_;
+import com.yoopoon.home.ui.agent.RichesView;
+import com.yoopoon.home.ui.agent.RichesView_;
 import com.yoopoon.home.ui.home.FramActiveFragment.HowWillIrefresh;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -71,6 +78,9 @@ public class FramAgentFragment extends FramSuper{
 			mAdController = new ADController(mContext);
 			mActiveController = new ActiveController(mContext);
 			mCommentFunction = new CommentFunction(mContext);
+			mHeroController = new HeroController(mContext);
+			mRichesView = RichesView_.build(mContext);
+			mHeroView = HeroView_.build(mContext);
 			initViews();
 		}
 
@@ -96,8 +106,11 @@ public class FramAgentFragment extends FramSuper{
 	ADController mAdController;
 	ActiveController mActiveController;
 	PullToRefreshListView listView;
-	ActiveBrandAdapter mActiveBrandAdapter;
+	AgentBrandAdapter mAgentBrandAdapter;
 	CommentFunction mCommentFunction;
+	HeroController mHeroController;
+	RichesView mRichesView;
+	HeroView mHeroView;
 
 	public static FramAgentFragment getInstance() {
 		return instance;
@@ -108,15 +121,18 @@ public class FramAgentFragment extends FramSuper{
 		listView.setOnRefreshListener(new HowWillIrefresh());
 		listView.setMode(PullToRefreshBase.Mode.DISABLED);
 		refreshView = listView.getRefreshableView();
-		
+				
 		refreshView.addHeaderView(mAdController.getRootView());
 		refreshView.addHeaderView(mCommentFunction.getRootView());
 		refreshView.addHeaderView(mActiveController.getRootView());
-		mActiveController.showHeadView();
+		mActiveController.addHeadView(mRichesView);
+		refreshView.addHeaderView(mHeroController.getRootView());
+		mHeroController.addHeadView(mHeroView);
+		refreshView.addHeaderView(HeroView_.build(mContext).setText("推荐楼盘").setTextColor(getResources().getColor(R.color.yellow)));
 		refreshView.setFastScrollEnabled(false);
 		refreshView.setFadingEdgeLength(0);
-		mActiveBrandAdapter = new ActiveBrandAdapter(mContext);
-		refreshView.setAdapter(mActiveBrandAdapter);
+		mAgentBrandAdapter = new AgentBrandAdapter(mContext);
+		refreshView.setAdapter(mAgentBrandAdapter);
 		
 	}
 
@@ -219,7 +235,7 @@ public class FramAgentFragment extends FramSuper{
 					for(int i=0;i<list.length();i++){
 						mJsonObjects.add(list.optJSONObject(i));
 					}
-					mActiveBrandAdapter.refresh(mJsonObjects);
+					mAgentBrandAdapter.refresh(mJsonObjects);
 				}
 			}
 

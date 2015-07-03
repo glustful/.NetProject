@@ -3,5 +3,6 @@
 
     <string name="app_name">yoopoon</string>
     <string name="hello_world">Hello world!</string>
+    <string name="meter">m²</string>
   
 </resources>
