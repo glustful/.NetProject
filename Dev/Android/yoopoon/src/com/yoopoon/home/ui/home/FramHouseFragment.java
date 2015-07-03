@@ -329,9 +329,10 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					int size = list.length();
 					String[] tempHouseList = new String[size];
 					for (int i = 0; i < list.length(); i++) {
-						tempHouseList[i] = list.optString(i).toString();
+						JSONObject jsonObject=list.optJSONObject(i);
+						tempHouseList[i] = jsonObject.optString("TypeName").toString();
+						Log.e("requestHouseTypeList", tempHouseList[i].toString());
 					}
-					Log.e("requestHouseTypeList", list.toString());
 					initHouseTypeList(tempHouseList);
 				}
 			}
