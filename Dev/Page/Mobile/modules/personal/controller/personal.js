@@ -91,13 +91,20 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
         }
     };
     pushContent();
-//    //查询客户个数
-//    var getcustomerList  = function() {
-//        $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoNumByUserId/',{'withCredentials':true}).success(function(data){
-//                $scope.number = data.count;
-//        });
-//    };
-//    getcustomerList();
+    //查询带客数量
+       $scope.searchConditions = {
+           id:'',
+           page: 1,
+           pageSize: 10
+       };
+       $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
+    var getcustomerList  = function() {
+        $scope.searchConditions.id=$scope.currentuser.userId ;
+        $http.get(SETTING.ApiUrl+'/ClientInfo/GetStatusByUserId/',{params:$scope.searchConditions,'withCredentials':true}).success(function(data){
+                $scope.number = data.totalCount;
+        });
+    };
+    getcustomerList();
 
     //接受任务
     var addlist=function(id){
