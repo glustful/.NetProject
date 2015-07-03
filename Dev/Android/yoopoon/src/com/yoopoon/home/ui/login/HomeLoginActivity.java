@@ -55,7 +55,7 @@ public class HomeLoginActivity extends MainActionBarActivity{
     TextView mErrorText; 
 	@ViewById(R.id.login_id_email)  
     EditText mEmailText;
-	@ViewById(R.id.login_id_pwd)
+	@ViewById(R.id.login_id_pwd) 
     EditText mPwdText;  
 	@ViewById(R.id.login_id_auto)  
     CheckBox mAutoCheck;     

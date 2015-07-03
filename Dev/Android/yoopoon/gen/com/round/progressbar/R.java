@@ -18,13 +18,13 @@ public final class R {
 		public static final int textSize = 0x7f01000c;
 	}
 	public static final class drawable {
-		public static final int ic_launcher = 0x7f02007c;
+		public static final int ic_launcher = 0x7f02007d;
 	}
 	public static final class id {
 		public static final int FILL = 0x7f080009;
 		public static final int STROKE = 0x7f08000a;
 		public static final int button1 = 0x7f080058;
-		public static final int menu_settings = 0x7f080097;
+		public static final int menu_settings = 0x7f0800a2;
 		public static final int progressBar = 0x7f080069;
 		public static final int roundProgressBar1 = 0x7f080054;
 		public static final int roundProgressBar2 = 0x7f080053;
