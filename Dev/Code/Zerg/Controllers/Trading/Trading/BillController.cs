@@ -1,33 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
-using System.Web;
-using System.Web.Mvc;
-using Trading.Entity.Model;
-using Trading.Service.Product;
-using Trading.Service.Classify;
-using Trading.Service.Order;
-using Trading.Service.OrderDetail;
-using Trading.Service.CFBBill;
-using Trading.Service.LandAgentBill;
-using Trading.Service.AgentBill;
 using System.Web.Http;
-using Zerg.Common;
-using Newtonsoft.Json.Linq;
-using Zerg.Models.Trading.Product;
-using Zerg.Models.Trading.Trading;
 using System.Web.Http.Cors;
-using System.ComponentModel;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
 using CRM.Service.PartnerList;
+using Trading.Entity.Model;
+using Trading.Service.AgentBill;
+using Trading.Service.CFBBill;
+using Trading.Service.LandAgentBill;
+using Trading.Service.Order;
+using Trading.Service.OrderDetail;
+using Trading.Service.Product;
 using YooPoon.Core.Site;
+using Zerg.Common;
 using Zerg.Models.CRM;
+using Zerg.Models.Trading.Trading;
 
 namespace Zerg.Controllers.Trading.Trading
 {
-     [System.Web.Http.AllowAnonymous]
+     [AllowAnonymous]
     [Description("账单管理类")]
     public class BillController : ApiController
     {
@@ -83,7 +77,7 @@ namespace Zerg.Controllers.Trading.Trading
         /// <param name="user">当前用户</param>
         /// <returns>账单创建结果状态信息</returns>
         [Description("创建三个账单（zerg、经纪人、地产商")]
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage CreateBillsByOrder(BillModel model)
         { 
@@ -253,7 +247,7 @@ namespace Zerg.Controllers.Trading.Trading
         /// </summary>
         /// <returns>账单详细信息</returns>
         [Description("查询账单")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAdminBill(int page,int pageSize)
         {
@@ -281,7 +275,7 @@ namespace Zerg.Controllers.Trading.Trading
         /// </summary>
         /// <returns>经纪人账单详情</returns>
         [Description("查询所有经纪人账单")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAgentBill()
         {
@@ -296,7 +290,7 @@ namespace Zerg.Controllers.Trading.Trading
         /// </summary>
         /// <returns>地产商账单</returns>
         [Description(" 查询所有地产商账单")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetLandAgentBill()
         {
@@ -311,7 +305,7 @@ namespace Zerg.Controllers.Trading.Trading
         /// </summary>
         /// <returns>所有经纪人账单</returns>
         [Description("查询经纪人Id所有经纪人账单")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAgentBillById(int agentId)
         {
@@ -327,7 +321,7 @@ namespace Zerg.Controllers.Trading.Trading
         /// </summary>
         /// <returns>地产商Id对应的所有账单</returns>
         [Description(" 根据地产商ID查询所有账单")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetLandAgentBillById(int LandagentId)
         {
