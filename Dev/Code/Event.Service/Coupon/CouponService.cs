@@ -84,6 +84,10 @@ namespace Event.Service.Coupon
                 {
                     query = query.Where(q => condition.Ids==q.Id);
                 }
+                if (!string.IsNullOrEmpty(condition.Number))
+                {
+                    query = query.Where(q => q.Number== condition.Number);
+                }
                 if (condition.CouponCategoryId.HasValue)
                 {
                     query = query.Where(q => condition.CouponCategoryId == q.CouponCategoryId);
@@ -124,6 +128,10 @@ namespace Event.Service.Coupon
                 if (condition.Ids.HasValue)
                 {
                     query = query.Where(q => condition.Ids == q.Id);
+                }
+                if (!string.IsNullOrEmpty(condition.Number))
+                {
+                    query = query.Where(q => q.Number == condition.Number);
                 }
                 if (condition.CouponCategoryId.HasValue)
                 {
