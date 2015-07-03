@@ -115,6 +115,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ControllerTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="Templates\ControllerTemplate1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControllerTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Include="Templates\ControllerTemplatePartial.cs" />
     <Compile Include="Templates\EnumTemplate.cs">
       <AutoGen>True</AutoGen>

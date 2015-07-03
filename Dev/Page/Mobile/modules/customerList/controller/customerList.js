@@ -20,7 +20,7 @@ app.controller('cusListController',['$http','$scope','AuthService',function($htt
         $scope.searchCondition.id=$scope.currentuser.userId ;
         if (!loading &&  $scope.searchCondition.page < pages) {                         //如果页面没有正在读取
             loading = true;                     //告知正在读取
-        $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoListByUserId/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
+        $http.get(SETTING.ApiUrl+'/ClientInfo/GetStatusByUserId/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
             console.log(data);
           pages=data.totalCount/10+1;
             if(data.totalCount>0) {
@@ -54,6 +54,7 @@ app.controller('cusListController',['$http','$scope','AuthService',function($htt
     $scope.visible = false;
     $scope.toggle = function (id) {
        $("#"+id).slideToggle("slow");
-    }
+    };
+
   }]);
 
