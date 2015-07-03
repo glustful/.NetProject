@@ -15,6 +15,8 @@ namespace Zerg.Models.Trading.Product
         public string SubTitle { get; set; }
         public string Acreage { get; set; }
         public string Type { get; set; }
+        public string acreage { get; set; }
+        public string area { get; set; }
         public string Phone { get; set; }
         public int StockRule { get; set; }
         public string Content { get; set; }
