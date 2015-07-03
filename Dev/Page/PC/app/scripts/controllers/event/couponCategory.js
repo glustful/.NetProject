@@ -3,6 +3,7 @@
  */
 angular.module("app").controller('CouponCategoryController', ['$http','$scope','$modal',function($http,$scope,$modal) {
     $scope.condition={
+        name:'',
         page:1,
         pageSize:10
     }

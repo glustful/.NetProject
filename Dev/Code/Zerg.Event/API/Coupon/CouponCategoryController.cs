@@ -24,10 +24,11 @@ namespace Zerg.Event.API.Coupon
             _couponCategoryService = couponCategoryService;
         }
         [HttpGet]
-        public HttpResponseMessage Index(int page,int pageSize)
+        public HttpResponseMessage Index(int page, int pageSize,string name=null)
         {
             var condition=new CouponCategorySearchCondition
             {
+                Name = name,
                 Page = page,
                 PageSize =pageSize,
                 OrderBy = EnumCouponCategorySearchOrderBy.OrderById

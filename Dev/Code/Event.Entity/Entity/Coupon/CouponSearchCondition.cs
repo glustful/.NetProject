@@ -26,8 +26,9 @@ namespace Event.Entity.Entity.Coupon
         public int? CouponCategoryId { get; set; }
 
 
-        public int? Ids { get; set; }  
-     
+        public int? Ids { get; set; }
+        public string Number { get; set; }
+
         public EnumCouponSearchOrderBy? OrderBy { get; set; }
     }
     public enum EnumCouponSearchOrderBy
