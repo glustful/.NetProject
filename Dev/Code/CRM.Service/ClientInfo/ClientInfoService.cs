@@ -95,11 +95,11 @@ namespace CRM.Service.ClientInfo
                 }
 				if (!string.IsNullOrEmpty(condition.Clientname))
                 {
-                    query = query.Where(q => q.Clientname.Contains(condition.Clientname));
+                    query = query.Where(q => q.Clientname==condition.Clientname);
                 }
 				if (!string.IsNullOrEmpty(condition.Phone))
                 {
-                    query = query.Where(q => q.Phone.Contains(condition.Phone));
+                    query = query.Where(q => q.Phone==(condition.Phone));
                 }
 				if (!string.IsNullOrEmpty(condition.Housetype))
                 {
@@ -113,7 +113,7 @@ namespace CRM.Service.ClientInfo
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Addusers != null )
+                if (condition.Addusers != null && condition.Addusers!=0)
                 {
                     query = query.Where(q => (q.Adduser == condition.Addusers));
                 }

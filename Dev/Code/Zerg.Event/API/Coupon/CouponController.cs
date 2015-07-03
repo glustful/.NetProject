@@ -65,6 +65,11 @@ namespace Zerg.Event.API.Coupon
             var coupon = _couponService.GetCouponById(id);
             return PageHelper.toJson(coupon);
         }
+        /// <summary>
+        /// 单个新建
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage Create(CouponModel model)
         {
@@ -83,6 +88,28 @@ namespace Zerg.Event.API.Coupon
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败"));
         }
+        [HttpPost]
+        public HttpResponseMessage BlukCreate(CouponModel model)
+        {
+            Random random = new Random();           
+            List<global::Event.Entity.Entity.Coupon.Coupon> list = new List<global::Event.Entity.Entity.Coupon.Coupon>();
+            for (int i = 0; i <model.Count; i++)
+            {
+                list.Add(new global::Event.Entity.Entity.Coupon.Coupon
+                {
+                    Number =DateTime.Now.ToString("HHmmss")+random.Next(10000000, 100000000),
+                    Price = model.Price,
+                    Status = model.Status,
+                    CouponCategoryId = model.CouponCategoryId
+                });               
+            }
+            if (_couponService.BulkCreate(list))
+            {
+                 return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功"));
+            }            
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败"));
+        }
+
         [HttpPost]
         public HttpResponseMessage Edit(CouponModel model)
         {
