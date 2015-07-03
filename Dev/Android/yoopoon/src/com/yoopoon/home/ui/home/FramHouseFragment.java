@@ -28,6 +28,7 @@ import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,6 +90,10 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 
 	// 房源页顶端条件ListView
 	private ListView houseTypeListView;
+	// 房源页顶端条件View（Java代码创建）
+
+	// 房源页顶端PopupWindow
+	private PopupWindow houseTypeWindow;
 
 	@Override
 	@Nullable
@@ -326,6 +331,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					for (int i = 0; i < list.length(); i++) {
 						tempHouseList[i] = list.optString(i).toString();
 					}
+					Log.e("requestHouseTypeList", list.toString());
 					initHouseTypeList(tempHouseList);
 				}
 			}
@@ -346,12 +352,23 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 * @param houseTypeStrings
 	 */
 	private void initHouseTypeList(String[] tempHouseList) {
-		houseTypeListView = new ListView(mContext);
-
+		// houseTypeListView = new ListView(mContext);
+		if (tempHouseList == null && tempHouseList.length < 1) {
+			Toast.makeText(mContext, "获取数据失败，请重刷新", Toast.LENGTH_SHORT).show();
+			return;
+		} else {
+			 
+			for (int i = 0; i < tempHouseList.length; i++) {
+				TextView textView = new TextView(mContext);
+				textView.setText(tempHouseList[i]);
+				 
+			}
+			// 初始化popupwindow
+		}
 	}
 
 	/**
-	 * 控制以什么样的方式显示ListView
+	 * 控制以什么样的方式显示ListView,覆写pullToRefresh
 	 * 
 	 * @author king
 	 *
