@@ -8,12 +8,14 @@ import org.json.JSONObject;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
+import com.yoopoon.home.ui.product.ProductDetailActivity_;
 
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -77,7 +79,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 			viewHandler = (ViewHandler) convertView.getTag();
 		}
 
-		JSONObject item = datas.get(position);
+		final JSONObject item = datas.get(position);
 		String url = mContext.getString(R.string.url_host_img)
 				+ item.optString("Productimg");
 
@@ -104,7 +106,16 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 				+ "m²"
 				+ "/" + "在售" + item.optString("StockRule") + "套");
 		viewHandler.houseAdvertisementTextView.setText(item.optString("Advertisement"));
-		
+		convertView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ProductDetailActivity_.intent(mContext)
+				.productId(item.optString("Id"))
+				.start();
+				
+			}
+		});
 		return convertView;
 	}
 

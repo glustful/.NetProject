@@ -59,7 +59,7 @@ public class HomeLoginActivity extends MainActionBarActivity{
     EditText mPwdText;  
 	@ViewById(R.id.login_id_auto)  
     CheckBox mAutoCheck;     
-	@ViewById(R.id.login_id_login)
+	@ViewById(R.id.login_id_login) 
     Button mLoginBtn;
 	@ViewById(R.id.login_id_loading_layout)
     RelativeLayout mLoadingLayout;
