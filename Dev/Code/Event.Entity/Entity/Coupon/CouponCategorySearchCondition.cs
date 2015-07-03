@@ -8,6 +8,7 @@
 
         public int? BrandId { get; set; }
         public bool IsDescending { get; set; }
+        public string Name { get; set; }
         public EnumCouponCategorySearchOrderBy? OrderBy { get; set; }
     }
     public enum EnumCouponCategorySearchOrderBy

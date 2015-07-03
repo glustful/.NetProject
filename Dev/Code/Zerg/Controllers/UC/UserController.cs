@@ -614,7 +614,8 @@ namespace Zerg.Controllers.UC
             var sech = new BrokerSearchCondition
             {
                 OrderBy = EnumBrokerSearchOrderBy.OrderById,
-                Phone = model.Phone
+                Phone = model.Phone,
+                State=1
             };
             var broker = _brokerService.GetBrokersByCondition(sech).FirstOrDefault();
             if (broker == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在！"));

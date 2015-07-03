@@ -40,6 +40,10 @@ namespace Event.Service.Coupon
             {
                 query = query.Where(c => c.BrandId == condition.BrandId);
             }
+            if (!string.IsNullOrEmpty(condition.Name))
+            {
+                query = query.Where(c => condition.Name == c.Name);
+            }
             if (condition.OrderBy.HasValue)
             {
                 switch (condition.OrderBy.Value)
@@ -66,6 +70,10 @@ namespace Event.Service.Coupon
             if (condition.BrandId.HasValue)
             {
                 query = query.Where(c => c.BrandId == condition.BrandId);
+            }
+            if (!string.IsNullOrEmpty(condition.Name))
+            {
+                query = query.Where(c => condition.Name == c.Name);
             }
             return query.Count();
         }

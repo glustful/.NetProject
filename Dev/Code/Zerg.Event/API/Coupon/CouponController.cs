@@ -50,10 +50,11 @@ namespace Zerg.Event.API.Coupon
             return PageHelper.toJson(PageHelper.ReturnValue(true, "激活成功！"));
         }
         [HttpGet]
-        public HttpResponseMessage Index(int page, int pageSize)
+        public HttpResponseMessage Index(int page, int pageSize,string number)
         {
             var condition = new CouponSearchCondition
             {
+                Number = number,
                 Page = page,
                 PageCount = pageSize,
                 OrderBy = EnumCouponSearchOrderBy.OrderById

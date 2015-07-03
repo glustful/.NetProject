@@ -41,7 +41,7 @@
     <label class="col-sm-3 control-label no-padding-right"> {{row.Name}} </label>
     <div class="col-sm-9">
         <div  ng-repeat="v in row.ValueList">
-            <input type="radio" value={{v.Id}} class="ace" name={{row.Name}} mm="{{selectParameterValue}}" ng-class="selected:selectParameterValue==v.Value"  checked="{{selectParameterValue==v.Value?'checked':''}}"  ng-model="selectParameterValue" required/>
+            <input type="radio" value={{v.Id}} class="ace" name={{row.Name}} mm="{{selectParameterValue}}" ng-class="{selected:selectParameterValue==v.Value}"  checked="{{hasValue(product.ParameterValue,v.Value)?'checked':''}}"  ng-model="selectParameterValue" required/>
             <span class="lbl" name={{row.Name}}>{{v.Value}}</span>
         </div>
     </div>

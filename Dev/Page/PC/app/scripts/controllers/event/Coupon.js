@@ -3,6 +3,7 @@
  */
 angular.module("app").controller('CouponIndexController', ['$http','$scope','$modal',function($http,$scope,$modal) {
     $scope.condition={
+        number:'',
         page:1,
         pageSize:10
     }
@@ -63,6 +64,7 @@ angular.module("app").controller('CouponEditController', ['$http','$scope','$sta
 }])
 angular.module("app").controller('CouponCreateController', ['$http','$scope','$state',function($http,$scope,$state) {
     $scope.condition={
+        name:'',
         page:1,
         pageSize:10
     }
