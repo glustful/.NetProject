@@ -1,6 +1,7 @@
 /**
  * Created by Administrator on 2015/6/18.
  */
+
 angular.module("app").controller('EditProductController', [
     '$http', '$scope','$state','$stateParams','FileUploader', function ($http, $scope,$state,$stateParams,FileUploader) {
         //选择商品分类；
@@ -10,12 +11,25 @@ angular.module("app").controller('EditProductController', [
         });
         $scope.classifyMsg = "";
         $scope.classifyMsg1 = "";
-        $scope.selectclassifyChange = function () {
+
+      //  $scope.selectParameterValue=[];
+
+        $scope.selectclassifyChange = function ( type,acreage,area) {
             $http.get(SETTING.ApiUrl + '/Classify/GetNextNodesById?nodeId=' + $scope.product.ClassId,{'withCredentials':true}).success(function (dataRes) {
                 if (dataRes == "获取失败") {
                     $scope.classifyMsg1 = "选择完成！";
                     $http.get(SETTING.ApiUrl + '/Classify/GetParameterTreeData?classifyId=' + $scope.product.ClassId,{'withCredentials':true}).success(function (data) {
                         $scope.parameterValueList = data;
+
+                       $scope.selectParameterValue=type;
+                       // $scope.selectParameterValue.push(type);
+                       // $scope.selectParameterValue.push(acreage);
+                       // $scope.selectParameterValue.push(area);
+                        //$scope.selectParameterValue[0]=type;
+                        //$scope.selectParameterValue[1]=acreage;
+                        //$scope.selectParameterValue[2]=area;
+
+
                     });
                 } else {
                     $scope.classifyMsg1 = "";
@@ -46,8 +60,38 @@ angular.module("app").controller('EditProductController', [
         //获取商品信息
         $http.get(SETTING.ApiUrl+'/Product/GetProductById?productId='+$stateParams.productId).success(function(data)
         {
-           $scope.product=data
+           $scope.product=data;
+            $scope.selectclassifyChange(data.Type,data.acreage,data.area);
+            // $scope.parameterValueList
+              //type,acreage,area
+
+                 //$scope.selectParameterValue[0]=data.Type;
+                 //$scope.selectParameterValue[1]=data.acreage;
+                 //$scope.selectParameterValue[2]=data.area;
+
+
+            function SetChecked(type,acreage,area,data) {
+                var a=document.getElementsByName(data[0].Name);
+                for (var i = 0; i < a.length; i++) {
+                    if (a[i].value=type) {
+                        a[i].checked=checked;
+                    }
+                }
+            }
+
+
+
         });
+
+
+
+
+
+
+
+
+
+
         //编辑商品信息
          $scope.update=function(){
             var newproduct = {
@@ -84,3 +128,4 @@ angular.module("app").controller('EditProductController', [
         };
 
     }]);
+
