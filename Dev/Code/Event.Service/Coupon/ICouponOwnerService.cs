@@ -1,4 +1,6 @@
-﻿using Event.Entity.Entity.Coupon;
+﻿using System;
+using System.Linq;
+using Event.Entity.Entity.Coupon;
 using YooPoon.Core.Autofac;
 using System.Linq;
 
@@ -12,5 +14,7 @@ namespace Event.Service.Coupon
 
         bool DeleteRecordByCouponId(int couponId);
         IQueryable<CouponOwner> GetCouponByUserId(int userid);
+        IQueryable<CouponOwner> GetCouponOwnByCondition(CouponOwnerSearchCondition condition);
+        IQueryable<CouponOwner> GetCouponOwnCountCondition(CouponOwnerSearchCondition condition);
     }
 }
