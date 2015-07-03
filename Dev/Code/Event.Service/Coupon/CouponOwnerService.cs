@@ -68,5 +68,17 @@ namespace Event.Service.Coupon
                 return false;
             }
         }
+        public IQueryable<CouponOwner> GetCouponByUserId(int userid)
+        {
+            try
+            {
+                return _repository.Table.Where(u => u.UserId == userid);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "获取用户失败");
+                return null;
+            }
+        }
     }
 }

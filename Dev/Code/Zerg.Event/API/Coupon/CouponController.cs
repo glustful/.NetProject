@@ -17,10 +17,19 @@ namespace Zerg.Event.API.Coupon
     public class CouponController : ApiController
     {
         private readonly ICouponService _couponService;
+        private readonly YooPoon.WebFramework.User.Services.IUserService _userService;
+        private readonly  ICouponOwnerService   _couponownerService;
+        private readonly ICouponCategoryService _couponCategoryService;
+        private readonly Trading.Service.ProductBrand.IProductBrandService _productBrandService;
 
-        public CouponController(ICouponService couponService)
+
+        public CouponController(ICouponService couponService, YooPoon.WebFramework.User.Services.IUserService userService, ICouponOwnerService couponownerService,ICouponCategoryService couponCategoryService, Trading.Service.ProductBrand.IProductBrandService productBrandService)
         {
             _couponService = couponService;
+            _userService = userService;
+            _couponownerService = couponownerService;
+            _couponCategoryService=couponCategoryService;
+            _productBrandService = productBrandService;
         }
 
         [HttpPost]
@@ -134,5 +143,80 @@ namespace Zerg.Event.API.Coupon
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败"));
         }
+
+        [HttpGet]
+        public HttpResponseMessage GetUserAllCoupon(string username)
+        {
+            YooPoon.WebFramework.User.Entity.UserBase us = _userService.GetUserByName(username);
+            if (us == null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户不存在！"));
+            }
+            else
+            {   
+                //获取该用户Id对应的优惠卷的CouponId  
+                var co = _couponownerService.GetCouponByUserId(us.Id);
+
+                //var co = _couponownerService.GetCouponByUserId(us.Id).Select(p => new
+                //{
+                //    list = _couponService.GetCouponById(p.CouponId)
+                //});
+
+                List<global::Event.Entity.Entity.Coupon.Coupon> lists = new List<global::Event.Entity.Entity.Coupon.Coupon>();
+                foreach(var p in co)
+                {
+
+                    lists.Add(_couponService.GetCouponById(p.CouponId));
+                    
+                 }
+
+               List< ReturnCoupon> listReCoupon=new List<ReturnCoupon>();
+
+                foreach(var z in lists)
+                {
+                    listReCoupon.Add(new ReturnCoupon
+                    {
+                        ComponCategoryName = _couponCategoryService.GetCouponCategoryById(z.CouponCategoryId).Name,
+                        Number = z.Number,
+                        Brandname = _productBrandService.GetProductBrandById(_couponCategoryService.GetCouponCategoryById(z.CouponCategoryId).BrandId).Bname,
+                        Price = z.Price.ToString()
+                    });
+                }
+
+
+           
+
+
+                if (listReCoupon.Count<=0)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户没有优惠卷！"));
+                }
+
+                //if(co!=null)
+                //{
+                //    foreach(var p in co)
+                //    {
+                //    var m=  _couponService.GetCouponById(p.CouponId);
+
+                //    }
+                //}
+                return PageHelper.toJson(new {list=listReCoupon });
+            }
+
+
+        }
+
     }
+
+    public class ReturnCoupon
+    {
+        public string ComponCategoryName { get; set; }
+
+        public string Price { get; set; }
+
+        public string Brandname { get; set; }
+
+        public string Number { get; set; }
+    }
+
 }

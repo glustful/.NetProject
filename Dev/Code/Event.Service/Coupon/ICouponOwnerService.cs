@@ -1,5 +1,6 @@
 ﻿using Event.Entity.Entity.Coupon;
 using YooPoon.Core.Autofac;
+using System.Linq;
 
 namespace Event.Service.Coupon
 {
@@ -10,5 +11,6 @@ namespace Event.Service.Coupon
         bool DeleteRecordById(int id);
 
         bool DeleteRecordByCouponId(int couponId);
+        IQueryable<CouponOwner> GetCouponByUserId(int userid);
     }
 }
