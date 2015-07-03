@@ -53,13 +53,13 @@ public class HomeLoginActivity extends MainActionBarActivity{
 	boolean isManual;
 	@ViewById(R.id.login_id_err)
     TextView mErrorText; 
-	@ViewById(R.id.login_id_email)
+	@ViewById(R.id.login_id_email)  
     EditText mEmailText;
-	@ViewById(R.id.login_id_pwd)
-    EditText mPwdText;
-	@ViewById(R.id.login_id_auto)
-    CheckBox mAutoCheck;
-	@ViewById(R.id.login_id_login)
+	@ViewById(R.id.login_id_pwd) 
+    EditText mPwdText;  
+	@ViewById(R.id.login_id_auto)  
+    CheckBox mAutoCheck;     
+	@ViewById(R.id.login_id_login) 
     Button mLoginBtn;
 	@ViewById(R.id.login_id_loading_layout)
     RelativeLayout mLoadingLayout;
@@ -76,7 +76,7 @@ public class HomeLoginActivity extends MainActionBarActivity{
     private Timer timer = null;
     private Boolean auto = false;
 
-    Context mContext;
+    Context mContext;  
     User mUser;  
     @AfterInject
     void afterInject(){
@@ -207,7 +207,7 @@ public class HomeLoginActivity extends MainActionBarActivity{
 		{
 			mPwdText.setText("");
 			if(!isManual){
-			FramMainActivity_.intent(mContext).start();
+			FramMainActivity_.intent(mContext).start();   
 			finish();
 			}
 		}

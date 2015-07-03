@@ -1,0 +1,21 @@
+<LinearLayout 
+        xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:visibility="visible"
+        android:paddingTop="5dp"
+       >
+        <TextView 
+            android:background="@color/little_whitle"
+            android:id="@+id/content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="创富英雄榜"
+            android:padding="10dp"
+            android:textColor="@color/green"/>
+        
+    </LinearLayout>

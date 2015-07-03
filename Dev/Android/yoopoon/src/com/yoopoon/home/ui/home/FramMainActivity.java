@@ -39,7 +39,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 	ViewPager mainPager;
 	@ViewById(R.id.home_main_loading_layout)
 	RelativeLayout loadingLayout;
-
+	boolean isOpenAgent = false;
 	public static FramMainActivity instance;
 	HomeMainAdapter pageAdapter;
 	ArrayList<FragmentInfo> fInfo;
@@ -61,15 +61,16 @@ public class FramMainActivity extends SearchActionBarActivity {
 	
 	void initFragments() {
 
-		Bundle argMatter = new Bundle();
-		fInfo.add(new FragmentInfo(FramActiveFragment_.class, argMatter));
+		Bundle argActive = new Bundle();
+		fInfo.add(new FragmentInfo(FramActiveFragment_.class, argActive));
 
-		Bundle argTalk = new Bundle();
+		Bundle argHouse = new Bundle();
 
-		fInfo.add(new FragmentInfo(FramHouseFragment_.class, argTalk));
-		Bundle argContact = new Bundle();
-		fInfo.add(new FragmentInfo(FramAgentFragment_.class, argContact));
-
+		fInfo.add(new FragmentInfo(FramHouseFragment_.class, argHouse));
+		if(isOpenAgent){
+		Bundle argAgent = new Bundle();
+		fInfo.add(new FragmentInfo(FramAgentFragment_.class, argAgent));
+		}
 		Bundle argMe = new Bundle();
 		fInfo.add(new FragmentInfo(FramMeFragment_.class, argMe));
 	}
@@ -81,6 +82,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 		tabHost.getTabWidget().setDividerDrawable(null);
 		tabHost.addTab(getTabSpec("active", R.drawable.active_tab_selector,"活动"));
 		tabHost.addTab(getTabSpec("house", R.drawable.house_tab_selector,"房源库"));
+		if(isOpenAgent)
 		tabHost.addTab(getTabSpec("agent", R.drawable.agent_tab_selector,"经纪人专区"));
 		tabHost.addTab(getTabSpec("me", R.drawable.me_tab_selector,"个人中心"));
 		tabHost.setOnTabChangedListener(mainTabChange);

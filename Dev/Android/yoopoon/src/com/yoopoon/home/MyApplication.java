@@ -143,6 +143,9 @@ public class MyApplication extends Application {
 						Bitmap loadedImage) {
 					
 					if (imageUri.equals(view.getTag().toString())) {
+						if(view.getWidth()>0){
+							//loadedImage
+						}
 						((ImageView) view).setImageBitmap(loadedImage);
 						/*((ImageView) view).setBackgroundDrawable(new
 																		 BitmapDrawable(getInstance().getResources(),

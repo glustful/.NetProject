@@ -12,6 +12,8 @@
 	<string name="url_product_all">/API/product/GetAllProduct</string>
 	<string name="url_product_search">/api/Product/GetSearchProduct</string>
 	<string name="url_house_condition">/api/Condition/GetCondition</string>
+<string name="url_product_GetProductsByBrand">/api/Product/GetProductsByBrand</string>
+	<string name="url_product_GetProductById">/api/Product/GetProductById</string>
 	<!-- channelController -->
 	<string name="url_channel_index">/API/channel/index</string>
 	<string name="url_channel_titleimg">/api/channel/GetTitleImg</string>
