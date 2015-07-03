@@ -22,6 +22,7 @@ namespace Event.Service.Coupon
         int GetCouponCount(CouponSearchCondition condition);
 
         Entity.Entity.Coupon.Coupon GetCouponByNumber(string number);
+        bool BulkCreate(List<Entity.Entity.Coupon.Coupon> entities);
 
     }
 }
