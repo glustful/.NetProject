@@ -122,6 +122,20 @@ namespace Zerg.Controllers.Trading.Product
             };
             return PageHelper.toJson(GetAllTree().ToList());
         }
+        [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage GetClassList()
+        {
+            ClassifySearchCondition csc = new ClassifySearchCondition()
+            {
+                OrderBy = EnumClassifySearchOrderBy.OrderById
+            };
+            var classLsit = _classifyService.GetClassifysByCondition(csc).Select(p => new
+            {
+                p.Id,p.Name
+            }).ToList();
+            return PageHelper.toJson(classLsit);
+        }
         /// <summary>
         /// 根据Id查名称
         /// </summary>

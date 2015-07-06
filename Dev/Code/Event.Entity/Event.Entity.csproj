@@ -58,6 +58,7 @@
     <Compile Include="Entity\Follower\EnumFollower.cs" />
     <Compile Include="Entity\Follower\FollowerEntity.cs" />
     <Compile Include="Entity\Follower\FollowerSearchConditon.cs" />
+    <Compile Include="Entity\OtherCoupon\OtherCoupon.cs" />
     <Compile Include="Entity\Participation\EnumParticipation.cs" />
     <Compile Include="Entity\Participation\ParticipationEntity.cs" />
     <Compile Include="Entity\Participation\ParticipationSearchConditon.cs" />
@@ -94,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entity\RedConfig\" />
+    <Folder Include="Mappings\OtherCoupon\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

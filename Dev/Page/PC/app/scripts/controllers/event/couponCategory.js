@@ -58,6 +58,11 @@ angular.module("app").controller('CouponCategoryEditController', ['$http','$scop
             $scope.BrandList=data.List;
         }
     )
+    $http.get(SETTING.ApiUrl+'/Classify/GetClassList/',{'withCredentials': true}).success(
+        function(data){
+            $scope.ClassList=data;
+        }
+    )
     $scope.update=function(){
         $http.post('http://localhost:16857//api/CouponCategory/Edit',$scope.CouponCategory,{'withCredentials': true}).success(
             function(data){
@@ -84,6 +89,11 @@ angular.module("app").controller('CouponCategoryCreateController', ['$http','$sc
     $http.get(SETTING.ApiUrl+'/Brand/GetAllBrand/',{params:$scope.BrandCondition,'withCredentials': true}).success(
         function(data){
             $scope.BrandList=data.List;
+        }
+    )
+    $http.get(SETTING.ApiUrl+'/Classify/GetClassList/',{'withCredentials': true}).success(
+        function(data){
+            $scope.ClassList=data;
         }
     )
     $scope.create=function(){
