@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBackground" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <com.yoopoon.home.ui.me.BrokerInfoView_
+                android:id="@+id/brokerInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/todayTaskCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:padding="10dp"
+                android:text="今日任务(3)"
+                android:textColor="@color/green"
+                android:textSize="@dimen/large_textSize"
+                android:textStyle="bold" />
+            <com.yoopoon.home.ui.me.TodyTaskView_
+                
+                android:id="@+id/todayTask"
+                
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+                
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:drawablePadding="5dp"
+                    android:drawableTop="@drawable/me_info_custom_icon"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="我要带客"
+                    android:textColor="@color/red" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:drawablePadding="5dp"
+                    android:drawableTop="@drawable/me_info_introduce_icon"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="我要推荐"
+                    android:textColor="@color/red" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:drawablePadding="5dp"
+                    android:drawableTop="@drawable/me_info_partnet_icon"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="我的合伙人" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:drawablePadding="5dp"
+                    android:drawableTop="@drawable/me_info_introduce_agent_icon"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="推荐经纪人" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:drawablePadding="5dp"
+                    android:drawableTop="@drawable/me_info_agent_order_icon"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="经纪人排行" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:drawablePadding="5dp"
+                    android:drawableTop="@drawable/setting_icon"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="设置" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
