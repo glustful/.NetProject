@@ -9,11 +9,9 @@ import org.androidannotations.annotations.UiThread;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.R.color;
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.appcompat.R.string;
@@ -25,7 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.LinearLayout;
+
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -97,8 +95,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 
 	@Override
 	@Nullable
-	public View onCreateView(LayoutInflater inflater,
-			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+			@Nullable Bundle savedInstanceState) {
 		Log.e(LOGTAG, "Fragment oncreateView");
 		/**
 		 * 如果rootView存在则不在重新创建
@@ -109,11 +107,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				parent.removeView(rootView);
 			}
 		} else {
-			rootView = LayoutInflater.from(getActivity()).inflate(
-					R.layout.home_fram_house_fragment, null);
+			rootView = LayoutInflater.from(getActivity()).inflate(R.layout.home_fram_house_fragment, null);
 			// PullToRefreshListView
-			listView = (PullToRefreshListView) rootView
-					.findViewById(R.id.matter_list_view);
+			listView = (PullToRefreshListView) rootView.findViewById(R.id.matter_list_view);
 
 			mContext = getActivity();
 			// 首页楼盘数量
@@ -123,14 +119,10 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			mJsonObjects = new ArrayList<JSONObject>();
 
 			// 房源首页顶端TextView（条件）
-			area_name_textview = (TextView) rootView
-					.findViewById(R.id.area_name_textview);
-			type_textview = (TextView) rootView
-					.findViewById(R.id.type_textview);
-			price_textview = (TextView) rootView
-					.findViewById(R.id.price_textview);
-			reset_textview = (TextView) rootView
-					.findViewById(R.id.reset_textview);
+			area_name_textview = (TextView) rootView.findViewById(R.id.area_name_textview);
+			type_textview = (TextView) rootView.findViewById(R.id.type_textview);
+			price_textview = (TextView) rootView.findViewById(R.id.price_textview);
+			reset_textview = (TextView) rootView.findViewById(R.id.reset_textview);
 			Log.e(LOGTAG, area_name_textview.toString());
 			// 条件点击的事件绑定
 			area_name_textview.setOnClickListener(this);
@@ -200,14 +192,12 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 */
 	@UiThread
 	public void initHouseTotalCountTextView(String houseTotaoCount) {
-		AbsListView.LayoutParams houseTotalCountParams = new AbsListView.LayoutParams(
-				LayoutParams.MATCH_PARENT, 50);
+		AbsListView.LayoutParams houseTotalCountParams = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, 50);
 		houseTotalCountTextView.setLayoutParams(houseTotalCountParams);
 
 		houseTotalCountTextView.setText("共" + houseTotaoCount + "个楼盘");
 
-		houseTotalCountTextView.setBackgroundColor(getResources().getColor(
-				R.color.hosue_total_color));
+		houseTotalCountTextView.setBackgroundColor(getResources().getColor(R.color.hosue_total_color));
 		houseTotalCountTextView.setGravity(Gravity.CENTER_VERTICAL);
 
 		refreshView.addHeaderView(houseTotalCountTextView);
@@ -247,10 +237,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			public void onProgress(ProgressMessage msg) {
 
 			}
-		}.setUrl(getString(R.string.url_product_search))
-				.setRequestMethod(RequestMethod.eGet)
+		}.setUrl(getString(R.string.url_product_search)).setRequestMethod(RequestMethod.eGet)
 
-				.addParam(parameter).notifyRequest();
+		.addParam(parameter).notifyRequest();
 	}
 
 	/**
@@ -264,8 +253,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 
 				if (data.getResultState() == ResultState.eSuccess) {
 
-					String houseTotalCountJSon = data.getMRootData().optString(
-							"TotalCount");
+					String houseTotalCountJSon = data.getMRootData().optString("TotalCount");
 					initHouseTotalCountTextView(houseTotalCountJSon);
 				}
 			}
@@ -274,10 +262,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			public void onProgress(ProgressMessage msg) {
 
 			}
-		}.setUrl(getString(R.string.url_product_search))
-				.setRequestMethod(RequestMethod.eGet)
+		}.setUrl(getString(R.string.url_product_search)).setRequestMethod(RequestMethod.eGet)
 
-				.addParam(parameter).notifyRequest();
+		.addParam(parameter).notifyRequest();
 	}
 
 	/**
@@ -305,8 +292,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			public void onProgress(ProgressMessage msg) {
 
 			}
-		}.setUrl(getString(R.string.url_channel_titleimg))
-				.setRequestMethod(RequestMethod.eGet)
+		}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
 				.addParam("channelName", "banner").notifyRequest();
 	}
 
@@ -319,8 +305,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
-					JSONArray list = data.getMRootData().optJSONArray(
-							"TypeList");
+					JSONArray list = data.getMRootData().optJSONArray("TypeList");
 					if (list == null || list.length() < 1) {
 
 						return;
@@ -329,7 +314,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					int size = list.length();
 					String[] tempHouseList = new String[size];
 					for (int i = 0; i < list.length(); i++) {
-						JSONObject jsonObject=list.optJSONObject(i);
+						JSONObject jsonObject = list.optJSONObject(i);
 						tempHouseList[i] = jsonObject.optString("TypeName").toString();
 						Log.e("requestHouseTypeList", tempHouseList[i].toString());
 					}
@@ -341,10 +326,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			public void onProgress(ProgressMessage msg) {
 
 			}
-		}.setUrl(getString(R.string.url_house_condition))
-				.setRequestMethod(RequestMethod.eGet)
+		}.setUrl(getString(R.string.url_house_condition)).setRequestMethod(RequestMethod.eGet)
 
-				.addParam(parameter).notifyRequest();
+		.addParam(parameter).notifyRequest();
 	}
 
 	/**
@@ -358,11 +342,11 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			Toast.makeText(mContext, "获取数据失败，请重刷新", Toast.LENGTH_SHORT).show();
 			return;
 		} else {
-			 
+
 			for (int i = 0; i < tempHouseList.length; i++) {
 				TextView textView = new TextView(mContext);
 				textView.setText(tempHouseList[i]);
-				 
+
 			}
 			// 初始化popupwindow
 		}
@@ -374,15 +358,12 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 * @author king
 	 *
 	 */
-	class HowWillIrefresh implements
-			PullToRefreshBase.OnRefreshListener2<ListView> {
+	class HowWillIrefresh implements PullToRefreshBase.OnRefreshListener2<ListView> {
 		@Override
 		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 
-			String label = DateUtils.formatDateTime(getActivity(),
-					System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME
-							| DateUtils.FORMAT_SHOW_DATE
-							| DateUtils.FORMAT_ABBREV_ALL);
+			String label = DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(),
+					DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
 			refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 			requestHouseList();
 		}
@@ -390,6 +371,10 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 			Toast.makeText(mContext, "Testing", Toast.LENGTH_SHORT);
+			int tempCount=Integer.parseInt(PageValue);
+			tempCount++;
+			PageValue=tempCount+"";
+			initParameter();
 			requestHouseList();
 		}
 

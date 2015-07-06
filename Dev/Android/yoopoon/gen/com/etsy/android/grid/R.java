@@ -8,28 +8,28 @@ package com.etsy.android.grid;
 
 public final class R {
 	public static final class attr {
-		public static final int column_count = 0x7f010000;
-		public static final int column_count_landscape = 0x7f010002;
-		public static final int column_count_portrait = 0x7f010001;
-		public static final int grid_paddingBottom = 0x7f010007;
-		public static final int grid_paddingLeft = 0x7f010004;
-		public static final int grid_paddingRight = 0x7f010005;
-		public static final int grid_paddingTop = 0x7f010006;
-		public static final int item_margin = 0x7f010003;
+		public static final int column_count = 0x7f01008e;
+		public static final int column_count_landscape = 0x7f010090;
+		public static final int column_count_portrait = 0x7f01008f;
+		public static final int grid_paddingBottom = 0x7f010095;
+		public static final int grid_paddingLeft = 0x7f010092;
+		public static final int grid_paddingRight = 0x7f010093;
+		public static final int grid_paddingTop = 0x7f010094;
+		public static final int item_margin = 0x7f010091;
 	}
 	public static final class drawable {
 		public static final int ic_launcher = 0x7f02007d;
 	}
 	public static final class string {
-		public static final int app_name = 0x7f050000;
-		public static final int hello_world = 0x7f050001;
+		public static final int app_name = 0x7f0a000d;
+		public static final int hello_world = 0x7f0a000e;
 	}
 	public static final class style {
-		public static final int AppBaseTheme = 0x7f060000;
-		public static final int AppTheme = 0x7f060001;
+		public static final int AppBaseTheme = 0x7f0b008b;
+		public static final int AppTheme = 0x7f0b008c;
 	}
 	public static final class styleable {
-		public static final int[] StaggeredGridView = { 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007 };
+		public static final int[] StaggeredGridView = { 0x7f01008e, 0x7f01008f, 0x7f010090, 0x7f010091, 0x7f010092, 0x7f010093, 0x7f010094, 0x7f010095 };
 		public static final int StaggeredGridView_column_count = 0;
 		public static final int StaggeredGridView_column_count_landscape = 2;
 		public static final int StaggeredGridView_column_count_portrait = 1;

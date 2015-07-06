@@ -8,29 +8,29 @@ package com.round.progressbar;
 
 public final class R {
 	public static final class attr {
-		public static final int max = 0x7f01000d;
-		public static final int roundColor = 0x7f010008;
-		public static final int roundProgressColor = 0x7f010009;
-		public static final int roundWidth = 0x7f01000a;
-		public static final int style = 0x7f01000f;
-		public static final int textColor = 0x7f01000b;
-		public static final int textIsDisplayable = 0x7f01000e;
-		public static final int textSize = 0x7f01000c;
+		public static final int max = 0x7f010073;
+		public static final int roundColor = 0x7f01006e;
+		public static final int roundProgressColor = 0x7f01006f;
+		public static final int roundWidth = 0x7f010070;
+		public static final int style = 0x7f010075;
+		public static final int textColor = 0x7f010071;
+		public static final int textIsDisplayable = 0x7f010074;
+		public static final int textSize = 0x7f010072;
 	}
 	public static final class drawable {
 		public static final int ic_launcher = 0x7f02007d;
 	}
 	public static final class id {
-		public static final int FILL = 0x7f080009;
-		public static final int STROKE = 0x7f08000a;
-		public static final int button1 = 0x7f080058;
-		public static final int menu_settings = 0x7f0800a3;
-		public static final int progressBar = 0x7f080069;
-		public static final int roundProgressBar1 = 0x7f080054;
-		public static final int roundProgressBar2 = 0x7f080053;
-		public static final int roundProgressBar3 = 0x7f080056;
-		public static final int roundProgressBar4 = 0x7f080055;
-		public static final int roundProgressBar5 = 0x7f080057;
+		public static final int FILL = 0x7f09001d;
+		public static final int STROKE = 0x7f09001e;
+		public static final int button1 = 0x7f090058;
+		public static final int menu_settings = 0x7f0900a3;
+		public static final int progressBar = 0x7f090069;
+		public static final int roundProgressBar1 = 0x7f090054;
+		public static final int roundProgressBar2 = 0x7f090053;
+		public static final int roundProgressBar3 = 0x7f090056;
+		public static final int roundProgressBar4 = 0x7f090055;
+		public static final int roundProgressBar5 = 0x7f090057;
 	}
 	public static final class layout {
 		public static final int activity_cricle_progress = 0x7f03001b;
@@ -40,16 +40,16 @@ public final class R {
 		public static final int activity_cricle_progress = 0x7f0c0000;
 	}
 	public static final class string {
-		public static final int app_name = 0x7f050000;
-		public static final int hello_world = 0x7f050001;
-		public static final int menu_settings = 0x7f050002;
+		public static final int app_name = 0x7f0a000d;
+		public static final int hello_world = 0x7f0a000e;
+		public static final int menu_settings = 0x7f0a000f;
 	}
 	public static final class style {
-		public static final int AppBaseTheme = 0x7f060000;
-		public static final int AppTheme = 0x7f060001;
+		public static final int AppBaseTheme = 0x7f0b008b;
+		public static final int AppTheme = 0x7f0b008c;
 	}
 	public static final class styleable {
-		public static final int[] RoundProgressBar = { 0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b, 0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f };
+		public static final int[] RoundProgressBar = { 0x7f01006e, 0x7f01006f, 0x7f010070, 0x7f010071, 0x7f010072, 0x7f010073, 0x7f010074, 0x7f010075 };
 		public static final int RoundProgressBar_max = 5;
 		public static final int RoundProgressBar_roundColor = 0;
 		public static final int RoundProgressBar_roundProgressColor = 1;

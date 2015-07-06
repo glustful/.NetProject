@@ -33,8 +33,8 @@ public final class MainTabView_
     private boolean alreadyInflated_ = false;
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
 
-    public MainTabView_(Context context) {
-        super(context);
+    public MainTabView_(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
         init_();
     }
 
@@ -43,13 +43,13 @@ public final class MainTabView_
         init_();
     }
 
-    public MainTabView_(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+    public MainTabView_(Context context) {
+        super(context);
         init_();
     }
 
-    public static MainTabView build(Context context) {
-        MainTabView_ instance = new MainTabView_(context);
+    public static MainTabView build(Context context, AttributeSet attrs, int defStyle) {
+        MainTabView_ instance = new MainTabView_(context, attrs, defStyle);
         instance.onFinishInflate();
         return instance;
     }
@@ -83,17 +83,17 @@ public final class MainTabView_
         return instance;
     }
 
-    public static MainTabView build(Context context, AttributeSet attrs, int defStyle) {
-        MainTabView_ instance = new MainTabView_(context, attrs, defStyle);
+    public static MainTabView build(Context context) {
+        MainTabView_ instance = new MainTabView_(context);
         instance.onFinishInflate();
         return instance;
     }
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        title = ((TextView) hasViews.findViewById(id.title));
-        badgeView = ((BadgeView) hasViews.findViewById(id.badgeView));
         imageView = ((ImageView) hasViews.findViewById(id.imageView));
+        badgeView = ((BadgeView) hasViews.findViewById(id.badgeView));
+        title = ((TextView) hasViews.findViewById(id.title));
     }
 
 }
