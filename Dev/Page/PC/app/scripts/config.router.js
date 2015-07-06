@@ -1535,10 +1535,12 @@ angular.module('app')
                 resolve: load('scripts/controllers/event/active.js')
 
             })
-            .state('page.event.Coupons.user.list', {
-                url: '/list?username',
-                templateUrl: 'views/pages/event/Coupons/user/list.html'
-            })
+            //.state('page.event.Coupons.user.list', {
+            //    url: '/list',
+            //    templateUrl: 'views/pages/event/Coupons/user/list.html',
+            //    resolve: load('scripts/controllers/event/active.js')
+            //
+            //})
             .state('page.event.Coupons.active.active', {
                 url: '/active',
                 templateUrl: 'views/pages/event/Coupons/active/active.html',

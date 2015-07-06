@@ -154,7 +154,6 @@ namespace Zerg.Controllers.Trading.Product
         {
             try
             {
-                List<TreeJsonModel> treeJsonModelBuffer = new List<TreeJsonModel>();
                 ClassifyEntity ce = _classifyService.GetClassifyById(nodeId);
                 TreeJsonModel TJM = new TreeJsonModel()
                 {
@@ -163,10 +162,7 @@ namespace Zerg.Controllers.Trading.Product
                 };
 
                 TJM.children = GetJsonFromTreeModel(TJM.Id);
-                foreach (var ceJson in TJM.children)
-                {
-                    treeJsonModelBuffer.Add(ceJson);
-                }
+                List<TreeJsonModel> treeJsonModelBuffer = TJM.children.ToList();
                 return PageHelper.toJson(treeJsonModelBuffer.ToList());
             }
             catch (Exception e)

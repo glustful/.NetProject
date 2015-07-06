@@ -123,6 +123,9 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Zerg.Event">
+      <HintPath>..\..\..\..\Project_Zerg_Event\Dev\Code\Zerg.Event\bin\Zerg.Event.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -221,10 +224,6 @@
     <Folder Include="Views\Coupon\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CRM.Service\CRM.Service.csproj">
-      <Project>{36DC7784-4BA6-467D-A20F-B7DFCCF815FC}</Project>
-      <Name>CRM.Service</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Event.Entity\Event.Entity.csproj">
       <Project>{3b216e08-d0ec-4aa2-98d3-1eaaca97fe07}</Project>
       <Name>Event.Entity</Name>
@@ -264,6 +263,10 @@
     <ProjectReference Include="..\Zerg.Common\Zerg.Common.csproj">
       <Project>{db11f281-e24f-4237-b77f-0cfdcf8dd647}</Project>
       <Name>Zerg.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zerg\Zerg.csproj">
+      <Project>{71420e36-a2e9-452b-a8d5-28445be73589}</Project>
+      <Name>Zerg</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

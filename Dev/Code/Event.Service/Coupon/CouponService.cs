@@ -92,6 +92,10 @@ namespace Event.Service.Coupon
                 {
                     query = query.Where(q => condition.CouponCategoryId == q.CouponCategoryId);
                 }
+                if (condition.Status.HasValue)
+                {
+                    query = query.Where(q => (EnumCouponStatus)condition.Status == q.Status);
+                }
                 if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
@@ -136,6 +140,10 @@ namespace Event.Service.Coupon
                 if (condition.CouponCategoryId.HasValue)
                 {
                     query = query.Where(q => condition.CouponCategoryId == q.CouponCategoryId);
+                }
+                if (condition.Status.HasValue)
+                {
+                    query = query.Where(q => (EnumCouponStatus)condition.Status == q.Status);
                 }
                 return query.Count();
             }

@@ -34,8 +34,8 @@
                         <div style="background-color: #ffdfa5; width: 280px; height: 222px; float: right;margin-right: 10px">
                             <div class="juan">@item.Name</div>
                             <div class="specialUse">@item.ReMark</div>
-                            @*@Html.ActionLink("抢起来", "couponOwn", new { id = item.Id })*@
-                            <a href="/Coupons/couponOwn?id=@item.Id"><button>抢起来</button></a>
+                            @*@Html.ActionLink("抢起来", "couponOwn", new { id = item.Id })*@                           
+                            <a id="coupon" href="/Coupons/couponOwn?id=@item.Id"><button>抢起来</button></a>
                             <small>还剩 @item.Count 张劵</small>
                         </div>
                     </li>

@@ -19,23 +19,6 @@ app.controller('cusListController',['$http','$scope','AuthService',function($htt
             loading = true;                     //告知正在读取
         $http.get(SETTING.ApiUrl+'/ClientInfo/GetStatusByUserId/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
            $scope.list=data.list;
-//               console.log(data.list.Status);
-                forEach( $scope.list in $scope.list)
-                {
-                    $scope.statuss = $scope.list;
-                    alert($scope.statuss);
-                }
-
-           if ($scope.list.Status == "预约中" || $scope.list.Status == "审核中"){
-               $scope.statusStyle = "信息提交，等待审核";
-           }else if($scope.list.Status == "等待上访"){
-               $scope.statusStyle = "审核成功，等待上访";
-           }else if ($scope.list.Status == "洽谈中"){
-               $scope.statusStyle = "上访成功，洽谈中";
-           }else if ($scope.list.Status == "洽谈成功"){
-               $scope.statusStyle = "交易成功";
-           }
-            console.log($scope.statusStyle);
         }
         );}
     };

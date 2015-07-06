@@ -41,7 +41,17 @@ angular.module("app").controller('EditProductController', [
             });
         };
 
-
+        $scope.hasValue = function(arry,value){
+            var has = false;
+            for(var i = 0;i<arry.length;i++){
+                if(arry[i].Value ==value)
+                {
+                    has = true;
+                    break;
+                }
+            }
+            return has;
+        };
 
 
         var uploader = $scope.uploader = new FileUploader({
