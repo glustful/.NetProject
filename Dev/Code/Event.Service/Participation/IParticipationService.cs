@@ -17,5 +17,7 @@ namespace Event.Service.Participation
 		IQueryable<ParticipationEntity> GetParticipationsByCondition(ParticipationSearchCondition condition);
 
 		int GetParticipationCount (ParticipationSearchCondition condition);
+
+        int GetParticipationCountByCrowdId(int id);
 	}
 }

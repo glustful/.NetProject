@@ -925,7 +925,13 @@ angular.module('app')
                 controller:"DKSuccessDetialController",
                 resolve:load('scripts/controllers/CRM/Success.js')
             })
-
+            .state('page.CRM.DKSuccess.BLPay', {
+                url: '/BLPay?id',
+                templateUrl: 'views/pages/CRM/DKSuccess/BLPay.html',
+                data: { title: '洽谈成功打款' },
+                controller:"BLPayController",
+                resolve:load('scripts/controllers/CRM/Success.js')
+            })
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
               .state('page.CRM.success', {
@@ -953,13 +959,7 @@ angular.module('app')
                 controller:"BRECPayController",
                 resolve:load('scripts/controllers/CRM/Success.js')
             })
-            .state('page.CRM.success.BLPay', {
-                url: '/BLPay?id',
-                templateUrl: 'views/pages/CRM/success/BLPay.html',
-                data: { title: '上访成功打款' },
-                controller:"BLPayController",
-                resolve:load('scripts/controllers/CRM/Success.js')
-            })
+
 
               .state('page.CRM.CustomerInformation', {
                   url: '/CustomerInformation',

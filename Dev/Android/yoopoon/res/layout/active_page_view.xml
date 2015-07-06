@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+     
+      android:animateLayoutChanges="true"
+      
+    >
+    
+    <com.yoopoon.home.ui.view.MyGridView
+        
+      
+        android:id="@+id/myGrid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:verticalSpacing="1dp"
+        android:horizontalSpacing="1dp"
+        
+        android:scrollbars="none"
+        android:stretchMode="columnWidth">
+ </com.yoopoon.home.ui.view.MyGridView>
+</LinearLayout>
+
