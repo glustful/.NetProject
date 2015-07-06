@@ -41,8 +41,7 @@ namespace CRM.Entity.Model
 		public string Name { get; set; }
 
 
-
-		public string Statusname { get; set; }
+		public EnumBLEAD? Statusname { get; set; }
 
 
 

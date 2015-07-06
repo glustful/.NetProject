@@ -116,7 +116,7 @@ angular.module("app").controller('BRECPayController',[
 
         //变更用户状态
         $scope.SetPay=function(){
-            $http.post(SETTING.ApiUrl + '/AdminPay/SetPay',$scope.PayInfo,{
+            $http.post(SETTING.ApiUrl + '/AdminPay/SetBREPay',$scope.PayInfo,{
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
@@ -140,20 +140,20 @@ angular.module("app").controller('BLPayController',[
         $scope.PayInfo = {
             Id:$stateParams.id,
             Name:"",
-            Statusname:"上访成功",
+            Statusname:"洽谈成功",
             Describe:"",
             Amount:""
         };
 
         //变更用户状态
         $scope.SetPay=function(){
-            $http.post(SETTING.ApiUrl + '/AdminPay/SetPay',$scope.PayInfo,{
+            $http.post(SETTING.ApiUrl + '/AdminPay/SetBLPay',$scope.PayInfo,{
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
-                    console.log(data.Msg);
+                    alert(data.Msg);
                 }else{
-                    console.log(data.Msg);
+                    alert(data.Msg);
                 }
             });
         };

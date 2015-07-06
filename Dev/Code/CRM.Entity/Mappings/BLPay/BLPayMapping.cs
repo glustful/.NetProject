@@ -13,7 +13,7 @@ namespace CRM.Entity.Mappings.BLPay
 
 			HasOptional(c =>c.BrokerLeadClient);
 			Property(c => c.Name).HasColumnType("varchar").HasMaxLength(256).IsOptional();
-			Property(c => c.Statusname).HasColumnType("varchar").HasMaxLength(50);
+            Property(c => c.Statusname).HasColumnType("int");
 			Property(c => c.Describe).HasColumnType("varchar").HasMaxLength(256);
 			Property(c => c.Amount).HasColumnType("decimal");
 			Property(c => c.Accountantid).HasColumnType("int");
