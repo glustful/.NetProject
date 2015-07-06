@@ -36,3 +36,19 @@ angular.module("app").controller('activeController', [
 
 
     }]);
+angular.module("app").controller('CouponController', [
+    '$http','$scope','$state',function($http,$scope,$state) {
+       $scope.ti=function(){
+  //  alert("fsd");
+        $http.get('http://localhost:16857/api/Coupon/GetUserAllCoupon?username='+$scope.username,{
+           'withCredentials':true
+        }).success(function(data){
+
+                $scope.Coupon=data.list;
+
+            //console.log(co);
+
+        });}
+
+    }]);
+

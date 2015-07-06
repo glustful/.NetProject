@@ -7,6 +7,7 @@ app.controller('daikeController',['$http','$scope','$stateParams','AuthService',
         Broker:null,
         Projectname:'',
         Projectid:null,
+        ClientInfo:null,
         Brokername:'',
         Appointmenttime:'',
         Houses:'',
@@ -22,9 +23,9 @@ app.controller('daikeController',['$http','$scope','$stateParams','AuthService',
     $scope.currentUser=AuthService.CurrentUser();
     $scope.BrokerLeadClient.AddUser = $scope.currentUser.UserId;
     $scope.BrokerLeadClient.Broker = $scope.currentUser.UserId;
+    $scope.BrokerLeadClient.ClientInfo = $scope.currentUser.UserId;
     $scope.BrokerLeadClient.Projectid=$stateParams.Projectid;
     $scope.BrokerLeadClient.Projectname=$stateParams.name;
-    //$scope.BrokerLeadClient.Broker= $scope.currentUser.UserId;
     $scope.BrokerLeadClient.Houses=$stateParams.name;
     $scope.BrokerLeadClient.HouseType=$stateParams.type;
     var getBrokerResult  = function() {

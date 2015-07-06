@@ -5,9 +5,9 @@
         </p>
         <p class="register_input">
             <span><img src="modules/Register/static/image/register/user.png" class="registerImg"></span>
-            <input type="text"  class="register_blank" placeholder="请使用字母或数字注册用户名" name="register_Nameblank" id="username"  ng-model="register.UserName" ng-pattern="/^[\u4e00-\u9fa5a-zA-Z0-9_]+$/" ng-minlength="3" ng-maxlength="20" required/>
+            <input type="text"  class="register_blank" placeholder="请填写用户名" name="register_Nameblank" id="username"  ng-model="register.UserName" ng-pattern="/^[\u4e00-\u9fa5a-zA-Z0-9_]+$/" ng-minlength="3" ng-maxlength="20" required/>
         </p>
-        <div class="error_out" ng-show="form_register.register_Nameblank.$invalid&&form_register.register_Nameblank.$dirty"> 请输入有效手机号</div>
+        <div class="error_out" ng-show="form_register.register_Nameblank.$invalid&&form_register.register_Nameblank.$dirty"> 请输入有效用户名</div>
         <p class="register_tip"><span>*</span>
             密码
         </p>
@@ -15,7 +15,7 @@
             <span><img src="modules/Register/static/image/register/pass.png" class="registerImg"></span>
             <input type="password" class="register_blank" id="first_password" placeholder="请输入6-20位密码" name="register_passwordblank" id="userPassword"  ng-model="register.Password" ng-pattern="/^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{6,20}$/"  required/>
         </p>
-        <div class="error_out" ng-show="form_register.register_passwordblank.$invalid&&form_register.register_passwordblank.$dirty"> So easy!小心强盗</div>
+        <div class="error_out" ng-show="form_register.register_passwordblank.$invalid&&form_register.register_passwordblank.$dirty"> 密码过于简单，请重新设置！</div>
         <p class="register_tip"><span>*</span>
             确认密码
         </p>

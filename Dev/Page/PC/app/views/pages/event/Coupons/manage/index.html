@@ -1,9 +1,9 @@
 <div ng-controller="CouponIndexController">
-<select class="inpuWid ptaskConfiga bordhtml form-control ng-pristine ng-valid ng-touched" name="" role="button" tabindex="0" aria-invalid="false"><option ></option>
-    <!-- ngRepeat: item in taskType --><option ng-repeat="item in taskType" value="1" class="ng-binding ng-scope">23135</option><!-- end ngRepeat: item in taskType -->
-</select>
-<button md-ink-ripple=""  class="md-btn md-raised m-b btn-fw indigo" id="uc" tabindex="0">查询<div class="md-ripple-container"></div></button>
-    <a href="#page/event/Coupons/manage/create" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw orange-200"style="float:right;;margin-right: 50px;">新建<div class="md-ripple-container"></div></button></a>
+    <div class="row form-control-2">
+        <input type="text" class="form-control form-control-1   ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="请输入优惠券验证码" ng-model="condition.number"  tabindex="0" aria-required="true" aria-invalid="true">
+        <button md-ink-ripple="" ng-click="getList()" class="md-btn md-raised m-b btn-fw indigo">搜索<div class="md-ripple-container"></div></button>
+        <a href="#page/event/Coupons/manage/create" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw orange-200"style="float:right;;margin-right: 50px;">新建<div class="md-ripple-container"></div></button></a>
+    </div>
     <table class="table m-b-none footable-loaded footable default" ui-jp="footable" data-filter="#filter" data-page-size="5">
     <thead class="divheard">
     <tr>
@@ -29,7 +29,10 @@
     <tr ng-repeat="item in List">
         <td>{{item.Id}}</td>
         <td>{{item.Number}}</td>
-        <td>{{item.Status}}</td>
+        <td ng-if="item.Status==0">新建</td>
+        <td ng-if="item.Status==1">拥有</td>
+        <td ng-if="item.Status==2">激活</td>
+        <td ng-if="item.Status==3">使用</td>
         <td>
             <a ui-sref="page.event.Coupons.manage.edit({id: item.Id})"> <span class="label bg-success" title="Active">编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
             <a href="#"> <span class="label yellow" title="Active" ng-click="delete(item.Id)">删除</span></a>
@@ -39,7 +42,7 @@
 
 </table>
     <div colspan="5" class="text-center footable-visible">
-        <pagination boundary-links="true" total-items="Count" items-per-page="Condition.pageSize" ng-model="Condition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+        <pagination boundary-links="true" total-items="Count" max-size="15" items-per-page="condition.pageSize" ng-model="condition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
     </div>
     <script type="text/ng-template" id="myModalContent.html">
         <div ng-include="'views/partials/modal.html'"></div>

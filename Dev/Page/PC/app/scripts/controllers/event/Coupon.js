@@ -3,6 +3,7 @@
  */
 angular.module("app").controller('CouponIndexController', ['$http','$scope','$modal',function($http,$scope,$modal) {
     $scope.condition={
+        number:'',
         page:1,
         pageSize:10
     }
@@ -63,6 +64,7 @@ angular.module("app").controller('CouponEditController', ['$http','$scope','$sta
 }])
 angular.module("app").controller('CouponCreateController', ['$http','$scope','$state',function($http,$scope,$state) {
     $scope.condition={
+        name:'',
         page:1,
         pageSize:10
     }
@@ -75,10 +77,11 @@ angular.module("app").controller('CouponCreateController', ['$http','$scope','$s
         Price:'',
         Number:'',
         Status:'',
-        CouponCategoryId:''
+        CouponCategoryId:'',
+        Count:''
     }
     $scope.create=function(){
-        $http.post('http://localhost:16857//api/Coupon/Create',$scope.Coupon,{'withCredentials': true}).success(function(data){
+        $http.post('http://localhost:16857//api/Coupon/BlukCreate',$scope.Coupon,{'withCredentials': true}).success(function(data){
             if(data.Status)
             {
                 $state.go('page.event.Coupons.manage.index');

@@ -57,27 +57,40 @@ namespace Zerg.Event.Controllers.Coupons
 
         public ActionResult couponOwn(int id)
         {
-            if (_workContext.CurrentUser== null)
+            if (_workContext.CurrentUser == null)
             {
-                return Redirect("http://www.iyookee.cn/#/user/login");                
+                return Redirect("http://www.iyookee.cn/#/user/login");
             }
-            _couponOwnerService.CreateRecord(_workContext.CurrentUser.Id, id);  
             var couponCategory= _couponCategoryService.GetCouponCategoryById(id);
             var condition=new CouponSearchCondition
             {
-                CouponCategoryId =id 
+                CouponCategoryId =id,
+                Status = 0
             };
             var coupon = _couponService.GetCouponByCondition(condition).FirstOrDefault();
-            coupon.Status = EnumCouponStatus.Owned;
-            _couponService.Update(coupon);
-            var brand = _productBrandService.GetProductBrandById(couponCategory.BrandId);
-            var CouponOwn=new CouponCategoryModel
+            var couponOwnCon=new CouponOwnerSearchCondition
             {
-                Name = couponCategory.Name,
-                Number = coupon.Number,
-                BrandName = brand.Bname
-            };             
-            return View(CouponOwn);
+               userId = _workContext.CurrentUser.Id,
+               couponId = coupon.Id
+            };
+            var couponOwn=_couponOwnerService.GetCouponOwnByCondition(couponOwnCon);
+            if (couponOwn == null)
+            {
+                _couponOwnerService.CreateRecord(_workContext.CurrentUser.Id, coupon.Id);
+                coupon.Status = EnumCouponStatus.Owned;
+                _couponService.Update(coupon);
+                couponCategory.Count = couponCategory.Count - 1;
+                _couponCategoryService.UpdateCouponCategory(couponCategory);
+                var brand = _productBrandService.GetProductBrandById(couponCategory.BrandId);
+                var CouponOwn = new CouponCategoryModel
+                {
+                    Name = couponCategory.Name,
+                    Number = coupon.Number,
+                    BrandName = brand.Bname
+                };
+                return View(CouponOwn);
+            }
+            return RedirectToAction("coupons", "Coupons");  
         }
 
 	}

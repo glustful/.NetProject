@@ -17,6 +17,11 @@ namespace Event.Service.Coupon
             _couponRepository = couponRepository;
 			_log = log;
 		}
+        /// <summary>
+        /// 单个新建
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public Entity.Entity.Coupon.Coupon Create(Entity.Entity.Coupon.Coupon entity)
         {
             try
@@ -29,8 +34,7 @@ namespace Event.Service.Coupon
                 _log.Error(e, "数据库操作出错");
                 return null;
             }
-        }
-
+        }     
         public bool Delete(Entity.Entity.Coupon.Coupon entity)
         {
             try
@@ -80,9 +84,17 @@ namespace Event.Service.Coupon
                 {
                     query = query.Where(q => condition.Ids==q.Id);
                 }
+                if (!string.IsNullOrEmpty(condition.Number))
+                {
+                    query = query.Where(q => q.Number== condition.Number);
+                }
                 if (condition.CouponCategoryId.HasValue)
                 {
                     query = query.Where(q => condition.CouponCategoryId == q.CouponCategoryId);
+                }
+                if (condition.Status.HasValue)
+                {
+                    query = query.Where(q => (EnumCouponStatus)condition.Status == q.Status);
                 }
                 if(condition.OrderBy.HasValue)
 				{
@@ -121,9 +133,17 @@ namespace Event.Service.Coupon
                 {
                     query = query.Where(q => condition.Ids == q.Id);
                 }
+                if (!string.IsNullOrEmpty(condition.Number))
+                {
+                    query = query.Where(q => q.Number == condition.Number);
+                }
                 if (condition.CouponCategoryId.HasValue)
                 {
                     query = query.Where(q => condition.CouponCategoryId == q.CouponCategoryId);
+                }
+                if (condition.Status.HasValue)
+                {
+                    query = query.Where(q => (EnumCouponStatus)condition.Status == q.Status);
                 }
                 return query.Count();
             }
@@ -146,6 +166,20 @@ namespace Event.Service.Coupon
                 _log.Error(e, "数据库操作出错");
                 return null;
             }
+        }
+
+        public bool BulkCreate(List<Entity.Entity.Coupon.Coupon> entities)
+        {            
+            try
+            {
+                _couponRepository.BulkInsert(entities);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return false;
+             }
         }
     }
 }
