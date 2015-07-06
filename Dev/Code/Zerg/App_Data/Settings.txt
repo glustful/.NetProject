@@ -3,3 +3,4 @@ DataConnectionString: Data Source=.;Initial Catalog=Zerg.UC;Integrated Security=
 CMSConnection:Data Source=.;Initial Catalog=Zerg.CMS;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=sa;MultipleActiveResultSets=True
 CRMConnection:Data Source=.;Initial Catalog=Zerg.CRM;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=sa;MultipleActiveResultSets=True
 TradingConnection:Data Source=.;Initial Catalog=Zerg.Trading;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=sa;MultipleActiveResultSets=True
+EventConnection:Data Source=.;Initial Catalog=Zerg.Event;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=sa;MultipleActiveResultSets=True

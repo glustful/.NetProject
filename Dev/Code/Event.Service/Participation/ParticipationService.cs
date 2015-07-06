@@ -199,5 +199,17 @@ namespace Event.Service.Participation
                 return -1;
 			}
 		}
+         public int GetParticipationCountByCrowdId(int id)
+        {
+            try
+            {
+                return _participationRepository.Table.Where(p => p.Crowd.Id == id).Count();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return 0;
+            }
+        }
 	}
 }
