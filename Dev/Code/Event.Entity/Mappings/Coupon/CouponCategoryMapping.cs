@@ -16,6 +16,7 @@ namespace Event.Entity.Mappings.Coupon
             Property(c => c.Count).HasColumnType("int").IsOptional();
             Property(c => c.BrandId).HasColumnType("int").IsOptional();
             Property(c => c.Price).HasColumnType("varchar").IsOptional();
+            Property(c => c.ClassId).HasColumnType("int").IsOptional();
         }
     }
 }

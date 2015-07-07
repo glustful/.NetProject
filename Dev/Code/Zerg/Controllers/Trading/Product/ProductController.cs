@@ -66,7 +66,7 @@ namespace Zerg.Controllers.Trading.Product
             JObject JProductDetail = json.productDetail;
             var product = JProduct.ToObject<ProductModel>();
             var productDetail = JProductDetail.ToObject<ProductDetailModel>();
-            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            Regex reg = new Regex(@"^[^%@#!*~&',;=?$\x22]+$");
             var m = reg.IsMatch(productDetail.Productname);
             if (!m)
             {
@@ -271,9 +271,10 @@ namespace Zerg.Controllers.Trading.Product
                 BrandId = product.ProductBrand.Id,
                 ClassId = product.Classify.Id,
                 // ReSharper disable once PossibleNullReferenceException
-                Type = product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型") == null ? "" : product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型").ParameterValue.Parametervalue,
-                acreage = product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "面积") == null ? "" : product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "面积").ParameterValue.Parametervalue,
-                area = product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "地区") == null ? "" : product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "地区").ParameterValue.Parametervalue,
+//                Type = product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型") == null ? "" : product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型").ParameterValue.Parametervalue,
+//                acreage = product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "面积") == null ? "" : product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "面积").ParameterValue.Parametervalue,
+//                area = product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "地区") == null ? "" : product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "地区").ParameterValue.Parametervalue,
+                ParameterValue = product.ProductParameter.Select(c=>new ProductParameterModel{ParameterId = c.Parameter.Id,ParameterString = c.Parameter.Name,ValueId = c.ParameterValue.Id,Value = c.ParameterValue.Parametervalue}).ToArray(),
                 Advertisement = product.ProductDetail.Ad2,
                 Productimg1 = product.ProductDetail.Productimg1,
                 Productimg2 = product.ProductDetail.Productimg2,

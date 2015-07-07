@@ -78,5 +78,13 @@ namespace Event.Models
         /// 项目参与人数
         /// </summary>
         public List<DiscountEntity> Dislist { get; set; }
+        /// <summary>
+        /// 众筹人数
+        /// </summary>
+        public int crowdNum { get; set; }
+        /// <summary>
+        /// 众筹设置最多人数
+        /// </summary>
+        public int crowdMaxNum { get; set; }
 	}
 }

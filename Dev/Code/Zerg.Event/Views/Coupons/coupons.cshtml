@@ -1,12 +1,12 @@
 ﻿@{
-    ViewBag.Title = "coupons";
+    ViewBag.Title = "Coupons";
     Layout = null;
 }
 @model dynamic
 <link href="~/Controllers/Coupons/Static/style/Coupons.css" rel="stylesheet" />
 <link href="~/Controllers/Coupons/Static/style/common.css" rel="stylesheet" />
-<link href="~/Content/bootstrap.css" rel="stylesheet"/>
-    <div class="window">
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<div class="window">
     <div class="hd">
         <div class="header cf">
             <div class="logo fl"><a href="#">创富宝</a> </div>
@@ -35,7 +35,15 @@
                             <div class="juan">@item.Name</div>
                             <div class="specialUse">@item.ReMark</div>
                             @*@Html.ActionLink("抢起来", "couponOwn", new { id = item.Id })*@
-                            <a href="/Coupons/couponOwn?id=@item.Id"><button>抢起来</button></a>
+                            @if (@item.Count == 0)
+                            {
+                                <a id="coupon" href="#"><button disabled="disabled" style="background-color:#faebd7">抢起来</button></a>
+                            }
+                            else
+                            {
+                                <a id="coupon" href="/Coupons/couponOwn?id=@item.Id"><button>抢起来</button></a>
+                            }
+
                             <small>还剩 @item.Count 张劵</small>
                         </div>
                     </li>
@@ -132,3 +140,7 @@
 
     </div>
 </div>
+
+
+
+

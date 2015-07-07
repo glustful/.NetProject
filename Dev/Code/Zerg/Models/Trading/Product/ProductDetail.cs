@@ -40,5 +40,7 @@ namespace Zerg.Models.Trading.Product
         public virtual ClassifyEntity Classify { get; set; }
         public int BrandId { get; set; }
         public int ClassId { get; set; }
+
+        public ProductParameterModel[] ParameterValue { get; set; }
     }
 }

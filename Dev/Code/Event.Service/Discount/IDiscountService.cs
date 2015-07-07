@@ -20,5 +20,6 @@ namespace Event.Service.Discount
 		int GetDiscountCount (DiscountSearchCondition condition);
 
 	    List<DiscountEntity> GetDiscountByCrowdId(int crowdId);
+       int GetDiscountMaxCountByCrowdId(int id);
 	}
 }

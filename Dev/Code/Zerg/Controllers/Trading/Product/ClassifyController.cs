@@ -122,6 +122,20 @@ namespace Zerg.Controllers.Trading.Product
             };
             return PageHelper.toJson(GetAllTree().ToList());
         }
+        [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage GetClassList()
+        {
+            ClassifySearchCondition csc = new ClassifySearchCondition()
+            {
+                OrderBy = EnumClassifySearchOrderBy.OrderById
+            };
+            var classLsit = _classifyService.GetClassifysByCondition(csc).Select(p => new
+            {
+                p.Id,p.Name
+            }).ToList();
+            return PageHelper.toJson(classLsit);
+        }
         /// <summary>
         /// 根据Id查名称
         /// </summary>
@@ -154,7 +168,6 @@ namespace Zerg.Controllers.Trading.Product
         {
             try
             {
-                List<TreeJsonModel> treeJsonModelBuffer = new List<TreeJsonModel>();
                 ClassifyEntity ce = _classifyService.GetClassifyById(nodeId);
                 TreeJsonModel TJM = new TreeJsonModel()
                 {
@@ -163,10 +176,7 @@ namespace Zerg.Controllers.Trading.Product
                 };
 
                 TJM.children = GetJsonFromTreeModel(TJM.Id);
-                foreach (var ceJson in TJM.children)
-                {
-                    treeJsonModelBuffer.Add(ceJson);
-                }
+                List<TreeJsonModel> treeJsonModelBuffer = TJM.children.ToList();
                 return PageHelper.toJson(treeJsonModelBuffer.ToList());
             }
             catch (Exception e)

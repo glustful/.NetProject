@@ -68,5 +68,60 @@ namespace Event.Service.Coupon
                 return false;
             }
         }
+        public IQueryable<CouponOwner> GetCouponByUserId(int userid)
+        {
+            try
+            {
+                return _repository.Table.Where(u => u.UserId == userid);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "获取用户失败");
+                return null;
+            }
+        }
+
+        public IQueryable<CouponOwner> GetCouponOwnByCondition(CouponOwnerSearchCondition condition)
+        {
+            var query = _repository.Table;
+            try
+            {
+                if (condition.userId.HasValue)
+                {
+                    query = query.Where(q => q.UserId == condition.userId);
+                }
+                if (condition.couponId.HasValue)
+                {
+                    query = query.Where(q => q.CouponId == condition.couponId);
+                }
+                return query;
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
+        public IQueryable<CouponOwner> GetCouponOwnCountCondition(CouponOwnerSearchCondition condition)
+        {
+            var query = _repository.Table;
+            try
+            {
+                if (condition.userId.HasValue)
+                {
+                    query = query.Where(q => q.UserId == condition.userId);
+                }
+                if (condition.couponId.HasValue)
+                {
+                    query = query.Where(q => q.CouponId == condition.couponId);
+                }
+                return query;
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
     }
 }

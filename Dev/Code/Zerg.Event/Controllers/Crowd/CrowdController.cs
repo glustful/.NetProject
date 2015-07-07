@@ -10,6 +10,7 @@ using Event.Service.Discount;
 using Event.Service.Follower;
 using Event.Service.PartImage;
 using YooPoon.Core.Site;
+using Event.Service.Participation;
 
 namespace Zerg.Event.Controllers.Crowd
 {
@@ -19,16 +20,19 @@ namespace Zerg.Event.Controllers.Crowd
         private readonly ICrowdService _crowdService;
         private readonly IPartImageService _partImageService;
         private readonly IDiscountService _discountService;
-        public CrowdController(ICrowdService crowdService,IPartImageService partImageService, IDiscountService discountService)
+        private readonly IParticipationService _participationService;
+        public CrowdController(ICrowdService crowdService,IPartImageService partImageService, IDiscountService discountService,IParticipationService  participationService)
         {
             _discountService = discountService;
             _crowdService = crowdService;
             _partImageService = partImageService;
+            _participationService = participationService;
         }
         #region 加载获取项目信息
         [HttpGet]
         public ActionResult crowd()
         {
+            
             //查询项目表所有的数据
             var sech = new CrowdSearchCondition
             {
@@ -59,6 +63,10 @@ namespace Zerg.Event.Controllers.Crowd
                 Status = a.Status,
                 ImgList = _partImageService.GetPartImageByCrowdId(a.Id),
                 Dislist = _discountService.GetDiscountByCrowdId(a.Id),
+                //已参与众筹人数
+                crowdNum = _participationService.GetParticipationCountByCrowdId(a.Id),
+                //众筹最低优惠对应的人数
+                crowdMaxNum = _discountService.GetDiscountMaxCountByCrowdId(a.Id),
             });
 
             return View(list);
