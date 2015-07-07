@@ -127,6 +127,10 @@
                     <img src="@a.Imgurl" />
                 }*@
 }
+ @if (Model==null)
+ {
+     Write("目前没有众筹项目");
+ }
 
         @*<div class="contentIntro selectHouses">
                 <div class="chipIng"><a href="#"><img src="/Controllers/Crowd/Static/image/chip/p.png" alt="众筹中" width="610" height="340" /><span class="summary">选房中</span></a></div>
