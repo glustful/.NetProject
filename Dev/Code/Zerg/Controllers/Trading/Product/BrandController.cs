@@ -249,9 +249,14 @@ namespace Zerg.Controllers.Trading.Product
         public HttpResponseMessage GetAllBrand(int page = 1, int pageSize = 10)
         {
             var sech = new ProductBrandSearchCondition
-            {
+            {  
+                //=========================yangyue 2015/7/7 start=====================================================
+                IsDescending = true,
+                OrderBy =  EnumProductBrandSearchOrderBy.OrderByAddtime,
+                //========================  end   ====================================================================
                 Page = page,
-                PageCount = pageSize,
+                PageCount = pageSize
+                
             };
             // var list = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
             //{
@@ -286,7 +291,7 @@ namespace Zerg.Controllers.Trading.Product
             var totalCount1 = _productBrandService.GetProductBrandCount(sech);
 
 
-            return PageHelper.toJson(new { List = List, Condition = sech, totalCount = totalCount1 });
+            return PageHelper.toJson(new {  List = List, Condition = sech, totalCount = totalCount1 });
 
             //var totalCount = _productBrandService.GetProductBrandCount(Brandcondition);
 
@@ -477,7 +482,7 @@ namespace Zerg.Controllers.Trading.Product
             }
             var totalCount1 = _productBrandService.GetProductBrandCount(sech);
             //  return PageHelper.toJson(new { List = BrandList, Product = product, Condition = sech, totalCount = totalCount1 });
-            return PageHelper.toJson(new { List = listRecProdcut, Condition = sech, totalCount = totalCount1 });
+            return PageHelper.toJson(new {  List = listRecProdcut, Condition = sech, totalCount = totalCount1 });
         }
 
         /// <summary>
