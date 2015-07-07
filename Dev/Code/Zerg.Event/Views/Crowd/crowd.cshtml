@@ -58,7 +58,7 @@
                     </div>
                     <div class="Discount">
                         <div class="number-days cf">
-                            <span class="fl">已有 @p.Dislist[0].Number 人参与众筹</span>
+                            <span class="fl">已有 @p.crowdNum 人参与众筹</span>
                             <span class="fr">
                                 剩余时间：
                                 @{
@@ -77,11 +77,37 @@
                                 }
                             </span>
                         </div>
+                        
+                        @{
+   var widScale =0.5555;
+   var  crowdNum= p.crowdNum ;//已经参加该项目众筹的人数
+   var crowdMaxNum = p.crowdMaxNum ;//该项目最大优惠的众筹人数  
+   widScale =crowdNum *560/crowdMaxNum;//根据众筹人数的比例乘以固定长度560获得进度条的长度
+   var disNum = p.Dislist.Count;//该项目众筹优惠数量
+   var widDes = (560 - 2 * (disNum - 1)) / disNum;//优惠描述
+   var widSpace = 2;
+   var colo="all";
+  // Write(widDes);                  
+   }
                         <div class="favourable-nav">
-                            <span class="all">9折优惠<br /><small>众筹人数100人</small></span>
-                            <span class="all">8折优惠<br /><small>众筹人数200人</small></span>
+                            <div style="width:560px;height :20px;background-color:#DEDEDE;"></div>
+                            <div style="width:@widScale;height :20px;background-color:#53CFB8;margin-top:-20px;"></div>
+                            @foreach (var dis in p.Dislist)
+                            {
+                                if (crowdNum >= dis.Number)
+                                {
+                                    colo = "all";
+                                }
+                                else
+                                {
+                                    colo = "half";
+                                }
+                            <span class="@colo"style="width:@widDes;margin-bottom:4px;">@dis.Discount 折优惠<br /><small>众筹人数 @dis.Number 人</small></span>
+                               <span style="width:@widSpace;"></span>
+                            @*<span class="all">8折优惠<br /><small>众筹人数200人</small></span>
                             <span class="all">7折优惠<br /><small>众筹人数300人</small></span>
-                            <span class="half">5折优惠<br /><small>众筹人数500人</small></span>
+                            <span class="half">5折优惠<br /><small>众筹人数500人</small></span>*@
+                            }
                         </div>
 
                     </div>

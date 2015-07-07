@@ -204,12 +204,24 @@ namespace Event.Service.Discount
         {
             try
             {
-                return _discountRepository.Table.Where(p => p.Crowd.Id == crowdId).ToList();
+                return _discountRepository.Table.Where(p => p.Crowd.Id == crowdId).OrderBy (p=>p.Number).ToList();
             }
             catch (Exception e)
             {
                 _log.Error(e, "数据库操作出错");
                 return null;
+            }
+        }
+        public int  GetDiscountMaxCountByCrowdId(int crowdId)
+        {
+            try
+            {
+                return _discountRepository.Table.Where(p => p.Crowd.Id == crowdId).OrderByDescending (p=>p.Number).First ().Number;
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return 0;
             }
         }
 	}

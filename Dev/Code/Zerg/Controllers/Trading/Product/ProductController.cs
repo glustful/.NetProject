@@ -66,7 +66,7 @@ namespace Zerg.Controllers.Trading.Product
             JObject JProductDetail = json.productDetail;
             var product = JProduct.ToObject<ProductModel>();
             var productDetail = JProductDetail.ToObject<ProductDetailModel>();
-            Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+            Regex reg = new Regex(@"^[^%@#!*~&',;=?$\x22]+$");
             var m = reg.IsMatch(productDetail.Productname);
             if (!m)
             {

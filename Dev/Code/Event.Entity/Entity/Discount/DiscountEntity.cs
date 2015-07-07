@@ -38,5 +38,9 @@ namespace Event.Entity.Model
 		/// UpTime
 		/// </summary>
 		public virtual DateTime Uptime { get; set; }
+        /// <summary>
+        /// 优惠描述
+        /// </summary>
+        public virtual string  Describe { get; set; }
 	}
 }
