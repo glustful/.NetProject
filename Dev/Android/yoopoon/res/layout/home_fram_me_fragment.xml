@@ -29,7 +29,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@android:color/white"
                 android:padding="10dp"
-                android:text="今日任务(3)"
+                android:text="今日任务(无)"
                 android:textColor="@color/green"
                 android:textSize="@dimen/large_textSize"
                 android:textStyle="bold" />
@@ -42,91 +42,11 @@
                 />
                 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:drawablePadding="5dp"
-                    android:drawableTop="@drawable/me_info_custom_icon"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="我要带客"
-                    android:textColor="@color/red" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:drawablePadding="5dp"
-                    android:drawableTop="@drawable/me_info_introduce_icon"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="我要推荐"
-                    android:textColor="@color/red" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:drawablePadding="5dp"
-                    android:drawableTop="@drawable/me_info_partnet_icon"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="我的合伙人" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:drawablePadding="5dp"
-                    android:drawableTop="@drawable/me_info_introduce_agent_icon"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="推荐经纪人" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:drawablePadding="5dp"
-                    android:drawableTop="@drawable/me_info_agent_order_icon"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="经纪人排行" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:drawablePadding="5dp"
-                    android:drawableTop="@drawable/setting_icon"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="设置" />
-            </LinearLayout>
+           	<com.yoopoon.home.ui.me.MeFooterView_
+           	    android:layout_width="match_parent"
+           	    android:layout_height="wrap_content"
+           	    android:id="@+id/footerView">
+           	    </com.yoopoon.home.ui.me.MeFooterView_>
         </LinearLayout>
     </ScrollView>
 

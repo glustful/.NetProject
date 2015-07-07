@@ -86,6 +86,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
+         <activity
+            android:name="com.yoopoon.home.ui.html5.HTML5Activity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+         <activity
+            android:name="com.yoopoon.home.ui.me.SettingActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
     </application>
     <!-- 测试配置选项 -->
     <instrumentation

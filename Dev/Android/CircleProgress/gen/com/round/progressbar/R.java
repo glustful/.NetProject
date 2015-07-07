@@ -91,8 +91,9 @@ containing a value of this type.
         public static int FILL=0x7f070000;
         public static int STROKE=0x7f070001;
         public static int button1=0x7f070007;
-        public static int menu_settings=0x7f070009;
-        public static int progressBar=0x7f070008;
+        public static int menu_settings=0x7f07000a;
+        public static int progressBar=0x7f070009;
+        public static int roundProgressBar=0x7f070008;
         public static int roundProgressBar1=0x7f070003;
         public static int roundProgressBar2=0x7f070002;
         public static int roundProgressBar3=0x7f070005;
@@ -101,7 +102,8 @@ containing a value of this type.
     }
     public static final class layout {
         public static int activity_cricle_progress=0x7f030000;
-        public static int dialog_cricle_progress=0x7f030001;
+        public static int cricle_progress=0x7f030001;
+        public static int dialog_cricle_progress=0x7f030002;
     }
     public static final class menu {
         public static int activity_cricle_progress=0x7f060000;

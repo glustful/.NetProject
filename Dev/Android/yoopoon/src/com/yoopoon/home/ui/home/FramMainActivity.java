@@ -7,6 +7,7 @@ import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,15 +15,20 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
 
+import com.yoopoon.common.base.utils.ToastUtils;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.SearchActionBarActivity;
@@ -37,8 +43,8 @@ public class FramMainActivity extends SearchActionBarActivity {
 	TabHost tabHost;
 	@ViewById(R.id.home_main_pager)
 	ViewPager mainPager;
-	@ViewById(R.id.home_main_loading_layout)
-	RelativeLayout loadingLayout;
+	@ViewById(R.id.search_layout)
+	LinearLayout searchLayout;
 	boolean isOpenAgent = false;
 	public static FramMainActivity instance;
 	HomeMainAdapter pageAdapter;
@@ -52,7 +58,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 	@AfterViews
 	void initUI() {
 		MyApplication.getInstance().addActivity(this);
-
+		searchLayout.addView(rootView,new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		initMenu();
 		initFragments();
 		begin();
@@ -86,7 +92,18 @@ public class FramMainActivity extends SearchActionBarActivity {
 		tabHost.addTab(getTabSpec("agent", R.drawable.agent_tab_selector,"经纪人专区"));
 		tabHost.addTab(getTabSpec("me", R.drawable.me_tab_selector,"个人中心"));
 		tabHost.setOnTabChangedListener(mainTabChange);
-
+		for( int i=0;i<tabHost.getTabWidget().getChildCount();i++){
+			final int j = i;
+		tabHost.getTabWidget().getChildAt(i).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mSearchFunction.clearSearch();
+				mainPager.setCurrentItem(j);
+				
+			}
+		});
+		}
 	}
 
 	private TabSpec getTabSpec(String content, int resId,String title) {
@@ -94,6 +111,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 
 		tab.setIndicator(resId);
 		tab.setTitle(title);
+		
 		TabSpec tabSpec = tabHost.newTabSpec(content).setIndicator(tab)
 				.setContent(new MainTabFactory(FramMainActivity.this));
 		return tabSpec;
@@ -124,19 +142,11 @@ public class FramMainActivity extends SearchActionBarActivity {
 		public void onTabChanged(String tabId) {
 			int position = tabHost.getCurrentTab();
 			mainPager.setCurrentItem(position);
+			
 		}
 	};
 
-	void setIamgeListener(ImageView v, final int i) {
-		v.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				mainPager.setCurrentItem(i);
-			}
-		});
-	}
-
+	
 	private long exitTime = 0;
 
 	@Override
@@ -217,50 +227,24 @@ public class FramMainActivity extends SearchActionBarActivity {
 		super.finish();
 	}
 	@Override
-	public void initSearchParam() {
-		if(this.SearchParameter==null){
-			this.SearchParameter = new HashMap<String, String>();
-		}
-		this.SearchParameter.clear();
-		this.SearchParameter.put("page", "1");
-		this.SearchParameter.put("pageSize", "10");
-		this.SearchParameter.put("condition", "");
+	protected int getHeight() {
+		// TODO Auto-generated method stub
+		return mainPager.getHeight();
 	}
 	@Override
-	public OnSearchCallBack setSearchCallBack() {
+	protected View getParentView() {
+		// TODO Auto-generated method stub
+		return mainPager;
+	}
+	@Override
+	protected void showResult(JSONArray optJSONArray) {
+		searchLayout.setVisibility(View.VISIBLE);
 		
-		return new OnSearchCallBack() {
-			
-			@Override
-			public void textChange(Boolean isText) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void search(ResponseData data) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void deltext() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void clearRefresh() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void addMore(ResponseData data) {
-				// TODO Auto-generated method stub
-				
-			}
-		};
+	}
+	@Override
+	protected void cleanSearch() {
+		searchLayout.setVisibility(View.GONE);
+		System.out.println("cleansearch");
 	}
 	
 }
