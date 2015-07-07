@@ -80,5 +80,15 @@ public class MeFooterView extends LinearLayout {
 			customLayout.setVisibility(View.VISIBLE);
 		}
 	}
+
 	// [end]
+
+	/**
+	 * @Title: hide
+	 * @Description: 隐藏布局文件
+	 */
+	public void hide() {
+		brokerLayout.setVisibility(View.GONE);
+		customLayout.setVisibility(View.GONE);
+	}
 }
