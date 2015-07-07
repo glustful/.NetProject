@@ -67,7 +67,7 @@ namespace Zerg.Event.Controllers.Crowd
                 crowdNum = _participationService.GetParticipationCountByCrowdId(a.Id),
                 //众筹最低优惠对应的人数
                 crowdMaxNum = _discountService.GetDiscountMaxCountByCrowdId(a.Id),
-            });
+            }).Where (p=>p.crowdMaxNum !=0);
 
             return View(list);
         }
