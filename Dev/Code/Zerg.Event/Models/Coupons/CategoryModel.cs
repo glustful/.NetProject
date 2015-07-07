@@ -14,5 +14,6 @@ namespace Zerg.Event.Models.Coupons
         public int Count { get; set; }
         public int BrandId { get; set; }
         public string Price { get; set; }
+        public int ClassId { get; set; }
     }
 }

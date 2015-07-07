@@ -1,8 +1,7 @@
 using System;
 using System.Linq;
-using YooPoon.Core.Data;
-using YooPoon.Core.Logging;
 using Event.Entity.Model;
+using YooPoon.Core.Logging;
 using Zerg.Common.Data;
 
 namespace Event.Service.Follower

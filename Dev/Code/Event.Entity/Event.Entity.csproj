@@ -58,6 +58,12 @@
     <Compile Include="Entity\Follower\EnumFollower.cs" />
     <Compile Include="Entity\Follower\FollowerEntity.cs" />
     <Compile Include="Entity\Follower\FollowerSearchConditon.cs" />
+    <Compile Include="Entity\OtherCoupon\OtherCoupon.cs" />
+    <Compile Include="Entity\OtherCoupon\OtherCouponCategory.cs" />
+    <Compile Include="Entity\OtherCoupon\OtherCouponCategorySearchCondition.cs" />
+    <Compile Include="Entity\OtherCoupon\OtherCouponOwner.cs" />
+    <Compile Include="Entity\OtherCoupon\OtherCouponOwnerSearchCondition.cs" />
+    <Compile Include="Entity\OtherCoupon\OtherCouponSearchCondition.cs" />
     <Compile Include="Entity\Participation\EnumParticipation.cs" />
     <Compile Include="Entity\Participation\ParticipationEntity.cs" />
     <Compile Include="Entity\Participation\ParticipationSearchConditon.cs" />
@@ -73,6 +79,9 @@
     <Compile Include="Mappings\Crowd\CrowdMapping.cs" />
     <Compile Include="Mappings\Discount\DiscountMapping.cs" />
     <Compile Include="Mappings\Follower\FollowerMapping.cs" />
+    <Compile Include="Mappings\OtherCoupon\OtherCouponCategoryMapping.cs" />
+    <Compile Include="Mappings\OtherCoupon\OtherCouponMapping.cs" />
+    <Compile Include="Mappings\OtherCoupon\OtherCouponOwnerMapping.cs" />
     <Compile Include="Mappings\Participation\ParticipationMapping.cs" />
     <Compile Include="Mappings\PartImage\PartImageMapping.cs" />
     <Compile Include="Mappings\Phone\PhoneMapping.cs" />
