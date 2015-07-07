@@ -10,5 +10,6 @@ namespace Event.Entity.Entity.Coupon
         public int Count { get; set; }
         public int BrandId { get; set; }
         public string Price { get; set; }
+        public int ClassId { get; set; }
     }
 }
