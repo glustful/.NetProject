@@ -1,8 +1,11 @@
 package com.yoopoon.home.ui.view;
+import com.yoopoon.home.R;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.util.AttributeSet;
@@ -19,14 +22,18 @@ import android.widget.EditText;
 
 public class Html5View extends WebView {
 
+	boolean autoHeight = false;
 	public Html5View(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.html5View, defStyle, 0);
+		autoHeight = ta.getBoolean(R.styleable.html5View_auto_height, false);
+		ta.recycle();
 		initWebView();
 	}
 
 	public Html5View(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		initWebView();
+		this(context, attrs,0);
+		
 	}
 
 	public Html5View(Context context) {
@@ -240,14 +247,21 @@ public class Html5View extends WebView {
 			return false;
 		}
 	}
+	
+	@SuppressWarnings("deprecation")
 	@Override
 	 public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
 	 //重新排大小
 	 int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,
 	    MeasureSpec.AT_MOST);
-//		 int expandSpec = MeasureSpec.makeMeasureSpec(MeasureSpec.UNSPECIFIED,
-//				    MeasureSpec.UNSPECIFIED);
+	 if(autoHeight)
 	  super.onMeasure(widthMeasureSpec, expandSpec);
+	 else{
+		 
+		 super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 	 }
+	 }
+	
+	
 }

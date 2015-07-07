@@ -48,10 +48,13 @@ namespace Event.Service.Coupon
             {
                 switch (condition.OrderBy.Value)
                 {
+
                     case EnumCouponCategorySearchOrderBy.OrderById:
                         query = condition.IsDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
                         break;
+
                 }
+
             }
             else
             {
