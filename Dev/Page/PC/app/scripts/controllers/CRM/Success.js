@@ -166,9 +166,6 @@ angular.module("app").controller('BLPayController',[
     }
 ]);
 
-
-
-
 ///////////////////////////////////////带客洽谈详细  Begin ///////////////////////////////////////////////////////////
 
 angular.module("app").controller('DKSuccessDetialController',[
