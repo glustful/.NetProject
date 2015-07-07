@@ -1,25 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Event.Entity.Entity.Coupon;
+using System.Text;
+using System.Threading.Tasks;
+using Event.Entity.Entity.OtherCoupon;
 using YooPoon.Core.Logging;
 using Zerg.Common.Data;
 
-namespace Event.Service.Coupon
+namespace Event.Service.OtherCoupon
 {
-    public class CouponCategoryService:ICouponCategoryService
+    public class OtherCouponCategoryService : IOtherCouponCategoryService
     {
-        private readonly IEventRepository<CouponCategory> _repository;
+        private readonly IEventRepository<OtherCouponCategory> _repository;
         private readonly ILog _log;
-        private readonly IEventRepository<Entity.Entity.Coupon.Coupon> _couponService;
+        private readonly IEventRepository<Entity.Entity.OtherCoupon.OtherCoupon> _couponService;
 
-        public CouponCategoryService(IEventRepository<CouponCategory> repository,ILog log,IEventRepository<Entity.Entity.Coupon.Coupon> couponService)
+        public OtherCouponCategoryService(IEventRepository<OtherCouponCategory> repository, ILog log, IEventRepository<Entity.Entity.OtherCoupon.OtherCoupon> couponService)
         {
             _log = log;
             _repository = repository;
             _couponService = couponService;
         }
-
-        public bool CreateCouponCategory(CouponCategory entity)
+        public bool CreateCouponCategory(OtherCouponCategory entity)
         {
             try
             {
@@ -28,12 +30,12 @@ namespace Event.Service.Coupon
             }
             catch (Exception e)
             {
-                _log.Error(e,"数据库操作出错");
+                _log.Error(e, "数据库操作出错");
                 return false;
             }
         }
 
-        public IQueryable<CouponCategory> GetCouponCategoriesByCondition(CouponCategorySearchCondition condition)
+        public IQueryable<OtherCouponCategory> GetCouponCategoriesByCondition(OtherCouponCategorySearchCondition condition)
         {
             var query = _repository.Table;
             if (condition.BrandId.HasValue)
@@ -49,12 +51,11 @@ namespace Event.Service.Coupon
                 switch (condition.OrderBy.Value)
                 {
 
-                    case EnumCouponCategorySearchOrderBy.OrderById:
+                    case EnumOtherCouponCategorySearchOrderBy.OrderById:
                         query = condition.IsDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
                         break;
 
                 }
-
             }
             else
             {
@@ -67,7 +68,7 @@ namespace Event.Service.Coupon
             return query;
         }
 
-        public int GetCouponCategoriesCountByCondition(CouponCategorySearchCondition condition)
+        public int GetCouponCategoriesCountByCondition(OtherCouponCategorySearchCondition condition)
         {
             var query = _repository.Table;
             if (condition.BrandId.HasValue)
@@ -81,7 +82,7 @@ namespace Event.Service.Coupon
             return query.Count();
         }
 
-        public CouponCategory GetCouponCategoryById(int id)
+        public OtherCouponCategory GetCouponCategoryById(int id)
         {
             try
             {
@@ -94,7 +95,7 @@ namespace Event.Service.Coupon
             }
         }
 
-        public bool UpdateCouponCategory(CouponCategory entity)
+        public bool UpdateCouponCategory(OtherCouponCategory entity)
         {
             try
             {
@@ -133,7 +134,7 @@ namespace Event.Service.Coupon
             }
             catch (Exception e)
             {
-                _log.Error(e,"数据库操作出错");
+                _log.Error(e, "数据库操作出错");
                 return -1;
             }
         }

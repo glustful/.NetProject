@@ -7,6 +7,8 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Event.Entity.Entity.Coupon;
 using Event.Service.Coupon;
+using Trading.Service.ProductBrand;
+using YooPoon.WebFramework.User.Services;
 using Zerg.Common;
 using Zerg.Event.Models.Coupons;
 
@@ -17,13 +19,13 @@ namespace Zerg.Event.API.Coupon
     public class CouponController : ApiController
     {
         private readonly ICouponService _couponService;
-        private readonly YooPoon.WebFramework.User.Services.IUserService _userService;
+        private readonly IUserService _userService;
         private readonly  ICouponOwnerService   _couponownerService;
         private readonly ICouponCategoryService _couponCategoryService;
-        private readonly Trading.Service.ProductBrand.IProductBrandService _productBrandService;
+        private readonly IProductBrandService _productBrandService;
 
 
-        public CouponController(ICouponService couponService, YooPoon.WebFramework.User.Services.IUserService userService, ICouponOwnerService couponownerService,ICouponCategoryService couponCategoryService, Trading.Service.ProductBrand.IProductBrandService productBrandService)
+        public CouponController(ICouponService couponService, IUserService userService, ICouponOwnerService couponownerService,ICouponCategoryService couponCategoryService, IProductBrandService productBrandService)
         {
             _couponService = couponService;
             _userService = userService;
@@ -98,6 +100,11 @@ namespace Zerg.Event.API.Coupon
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败"));
         }
+        /// <summary>
+        /// 批量插入
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage BlukCreate(CouponModel model)
         {
