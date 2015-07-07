@@ -209,6 +209,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CRM\AdminPayModel.cs" />
+    <Compile Include="Models\CRM\BrokerLeadClientPay .cs" />
     <Compile Include="Models\CRM\BrokerRECClientModel.cs">
       <SubType>Code</SubType>
     </Compile>

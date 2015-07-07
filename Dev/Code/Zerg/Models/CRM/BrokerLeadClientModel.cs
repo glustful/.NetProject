@@ -116,4 +116,5 @@ namespace Zerg.Models.CRM
 
         public int WriterId { get; set; }
     }
+  
 }

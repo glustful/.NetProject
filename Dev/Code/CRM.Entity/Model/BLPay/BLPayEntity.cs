@@ -21,7 +21,7 @@ namespace CRM.Entity.Model
 		/// <summary>
 		/// 打款阶段
 		/// </summary>
-		public virtual string Statusname { get; set; }
+        public virtual EnumBLEAD Statusname { get; set; }
 		/// <summary>
 		/// 款项描述
 		/// </summary>
@@ -50,5 +50,9 @@ namespace CRM.Entity.Model
 		/// UpTime
 		/// </summary>
 		public virtual DateTime Uptime { get; set; }
+        /// <summary>
+        /// 银行卡
+        /// </summary>
+        public virtual int BankCard { get; set; }
 	}
 }
