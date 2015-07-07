@@ -1,33 +1,25 @@
-﻿using System.Globalization;
-using CRM.Entity.Model;
-using CRM.Service.Broker;
-using CRM.Service.BrokerLeadClient;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using CRM.Entity.Model;
+using CRM.Service.Broker;
+using CRM.Service.BrokerLeadClient;
 using CRM.Service.ClientInfo;
 using Trading.Entity.Model;
 using Trading.Service.Order;
-using Trading.Service.OrderDetail;
 using Trading.Service.Product;
-using Trading.Service.ProductDetail;
 using YooPoon.Core.Site;
-using YooPoon.WebFramework.User.Entity;
 using Zerg.Common;
 using Zerg.Models.CRM;
-using System.ComponentModel;
 
 namespace Zerg.Controllers.CRM
 {
     [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
-    /// <summary>
-    /// 经纪人带客
-    /// </summary>
     [Description("经纪人带客类")]
     public class BrokerLeadClientController : ApiController
     {
@@ -37,7 +29,7 @@ namespace Zerg.Controllers.CRM
         private readonly IWorkContext _workContext;
         private readonly IOrderService _orderService;
         private readonly IProductService _productService;
-        private readonly IOrderDetailService _orderDetailService;
+        //private readonly IOrderDetailService _orderDetailService;
 
         /// <summary>
         /// 经纪人带客初始化
@@ -48,15 +40,13 @@ namespace Zerg.Controllers.CRM
         /// <param name="workContext">workContext</param>
         /// <param name="orderService">orderService</param>
         /// <param name="productService">productService</param>
-        /// <param name="orderDetailService">orderDetailService</param>
         public BrokerLeadClientController(
             IBrokerLeadClientService brokerleadclientService,
             IBrokerService brokerService,
             IClientInfoService clientInfoService,
             IWorkContext workContext,
             IOrderService orderService,
-            IProductService productService,
-            IOrderDetailService orderDetailService
+            IProductService productService
             )
         {
             _brokerleadclientService = brokerleadclientService;
@@ -65,7 +55,7 @@ namespace Zerg.Controllers.CRM
             _workContext = workContext;
             _orderService = orderService;
             _productService = productService;
-            _orderDetailService = orderDetailService;
+            //_orderDetailService = orderDetailService;
         }
 
         /// <summary>
@@ -84,14 +74,6 @@ namespace Zerg.Controllers.CRM
                
             };
             var list = _brokerleadclientService.GetBrokerLeadClientsByCondition(sech).Select(p => new
-            {
-                p.Id,
-                p.Brokername,
-                p.ClientName,
-                p.ClientInfo.Phone,
-                p.ProjectId,
-                p.Appointmenttime
-            }).ToList()==null? null : _brokerleadclientService.GetBrokerLeadClientsByCondition(sech).Select(p => new
             {
                 p.Id,
                 p.Brokername,
@@ -118,7 +100,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="userid"></param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public HttpResponseMessage SearchBrokerLeadClient(string userid)
         {
             var sech = new BrokerLeadClientSearchCondition
@@ -239,7 +221,6 @@ namespace Zerg.Controllers.CRM
         /// <summary>
         /// 添加一个带客记录
         /// </summary>
-        /// <param name="brokerrecclient"></param>
         /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage Add([FromBody] BrokerLeadClientModel brokerleadclient)
@@ -297,14 +278,17 @@ namespace Zerg.Controllers.CRM
             //查询经纪人信息
             var broker = _brokerService.GetBrokerByUserId(brokerleadclient.Adduser);
             //创建代客流程
-            var model = new BrokerLeadClientEntity();
-            model.Broker = _brokerService.GetBrokerById(brokerleadclient.Adduser);
-            model.ClientInfo = cmodel2;
-            model.ClientName = brokerleadclient.Clientname;
-            model.Appointmenttime = DateTime.Now;
+            var model = new BrokerLeadClientEntity
+            {
+                Broker = _brokerService.GetBrokerById(brokerleadclient.Adduser),
+                ClientInfo = cmodel2,
+                ClientName = brokerleadclient.Clientname,
+                Appointmenttime = DateTime.Now,
+                Phone = brokerleadclient.Phone,
+                Brokername = broker.Brokername
+            };
             //model.Qq = Convert.ToInt32(brokerrecclient.Qq);
-            model.Phone = brokerleadclient.Phone;       //客户电话
-            model.Brokername = broker.Brokername;
+            //客户电话
             //model.BrokerLevel = broker.Level.Name;
             model.Broker = broker;
             model.Adduser = brokerleadclient.Adduser;
