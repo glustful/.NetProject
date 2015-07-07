@@ -1,0 +1,49 @@
+*{
+    padding:0;
+    margin:0;
+    list-style: none;
+    border: none;
+}
+.clear{
+    clear:both;
+    height: 0;
+    overflow: hidden;
+}
+.cf:after{
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: "";
+    clear: both;
+    height: 0;
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+.red{
+   color: #ff3000;
+}
+body{
+    font-family:'Microsoft YaHei;
+
+}
+.min-font{
+    color:#999999;
+}
+footer{
+    background:url("../images/ft.jpg") no-repeat 0 0;
+    color: #fff;
+}
+.logo-ft{
+    margin: 80px 0;
+}
+footer h2{
+    margin-bottom: 30px;
+}
+footer p{
+    font-size: 20px;
+    color:#d3d4d5 ;
+}

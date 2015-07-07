@@ -3,33 +3,33 @@
 <div class="information"ng-controller="cusListController">
     <ul ng-repeat="item in list" >
         <li class="lists">
-            <div class="intro cf"><span class="fl name"><b>{{item.Clientname}}</b><br/><small>{{item.Housetype}}&nbsp;&nbsp;{{item.Houses}}</small></span><span class="fr tell">{{item.Phone}}</span></div>
-            <div ng-click="toggle(item.Id)" class="last cf">带客进度：&nbsp;<small>5、返款成功</small><a href="#" class="icon fr"></a></div>
+            <div class="intro cf"><span class="fl names"><b>{{item.StrType}}</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>{{item.Clientname}}</b><br/><small style="font-size: 18px;">{{item.Housetype}}&nbsp;&nbsp;{{item.Houses}}</small></span><span class="fr tell">{{item.Phone}}</span></div>
+            <div ng-click="toggle(item.Id)" class="last cf">详细进度<a href="#" class="icon fr"></a></div>
         <div id={{item.Id}} style="display: none">
             <div  class="detail-customerList" >
-            <div ng-click="toggle(item.Id)" class="last cf">带客进度：&nbsp;<small>5、返款成功</small><a href="#" class="icon fr"></a>  </div>
+            <div ng-click="toggle(item.Id)" class="last cf">详细进度 <a href="#" class="icon fr"></a>  </div>
             <div class="cf ">
             <div class="imgList fl" ></div>
             <ul class="fl">
-            <li>
+            <li ng-class="{style:item.Status=='预约中'||item.Status=='审核中'}">
             <p>信息提交，等待审核</p>
-            <p>2015-04-26 11:57:09</p>
+
+            <span></span>
             </li>
-            <li>
+            <li ng-class="{style:item.Status=='等待上访'}">
             <p>审核成功，等待上访</p>
-            <p>2015-04-26 18:00:09</p>
+
+                <span></span>
             </li>
-            <li>
+            <li ng-class="{style:item.Status=='洽谈中'}">
             <p>上访成功，洽谈中</p>
-            <p>2015-04-26 11:57:09</p>
+
+                <span></span>
             </li>
-            <li>
+            <li  ng-class="{style:item.Status=='洽谈成功'}">
             <p>交易成功</p>
-            <p>2015-04-26 11:57:09</p>
-            </li>
-            <li>
-            <p>返款成功</p>
-            <p>2015-04-26 11:57:09</p>
+
+                <span></span>
             </li>
             </ul>
             </div>
@@ -54,3 +54,4 @@
     </ul>
     <div ng-click="more()" style="line-height: 50px;background-color:#f0ad4e;text-align: center;font-size: 20px;">{{warm}}</div>
 </div>
+

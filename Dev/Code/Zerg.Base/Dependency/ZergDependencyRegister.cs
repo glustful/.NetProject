@@ -25,6 +25,7 @@ namespace Zerg.Base.Dependency
                 builder.Register<IDbContext>(c => new CMSDbContext(dataProviderSettings.RawDataSettings["CMSConnection"])).Named<IDbContext>("CMS").InstancePerRequest();
                 builder.Register<IDbContext>(c => new CRMDbContext(dataProviderSettings.RawDataSettings["CRMConnection"])).Named<IDbContext>("CRM").InstancePerRequest();
                 builder.Register<IDbContext>(c => new TradingDbContext(dataProviderSettings.RawDataSettings["TradingConnection"])).Named<IDbContext>("Trading").InstancePerRequest();
+                builder.Register<IDbContext>(c => new EventDbContext(dataProviderSettings.RawDataSettings["EventConnection"])).Named<IDbContext>("Event").InstancePerRequest();
             }
 
             #region 不同的数据库对应不同仓库
@@ -34,6 +35,8 @@ namespace Zerg.Base.Dependency
                                             (pi, ctx) => ctx.ResolveNamed<IDbContext>("CRM"));
             var tradingParameter = new ResolvedParameter((pi, ctx) => pi.Name == "context",
                                          (pi, ctx) => ctx.ResolveNamed<IDbContext>("Trading"));
+            var eventPrameter = new ResolvedParameter((pi, ctx) => pi.Name == "context",
+                (pi, ctx) => ctx.ResolveNamed<IDbContext>("Event"));
 
             builder.RegisterGeneric(typeof(CMSRepository<>))
                 .WithParameter(cmsParameter)
@@ -49,6 +52,11 @@ namespace Zerg.Base.Dependency
                 .WithParameter(tradingParameter)
                 .As(typeof(ITradingRepository<>))
                 .InstancePerRequest();
+
+            builder.RegisterGeneric(typeof(EventRepository<>))
+    .WithParameter(eventPrameter)
+    .As(typeof(IEventRepository<>))
+    .InstancePerRequest();
             #endregion
             //            builder.RegisterAssemblyTypes(typeFinder.GetAssemblies().ToArray())
             //                .Where(t =>!String.IsNullOrEmpty(t.Namespace)&& t.Namespace.StartsWith("CMS") && t.Name.Contains("Service"))

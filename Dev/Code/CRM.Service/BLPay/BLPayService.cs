@@ -105,9 +105,9 @@ namespace CRM.Service.BLPay
                 {
                     query = query.Where(q => q.Name.Contains(condition.Name));
                 }
-				if (!string.IsNullOrEmpty(condition.Statusname))
+                if (condition.Statusname.HasValue)
                 {
-                    query = query.Where(q => q.Statusname.Contains(condition.Statusname));
+                    query = query.Where(c => c.Statusname == condition.Statusname);
                 }
 				if (!string.IsNullOrEmpty(condition.Describe))
                 {
@@ -194,9 +194,9 @@ namespace CRM.Service.BLPay
                 {
                     query = query.Where(q => q.Name.Contains(condition.Name));
                 }
-				if (!string.IsNullOrEmpty(condition.Statusname))
+                if (condition.Statusname.HasValue)
                 {
-                    query = query.Where(q => q.Statusname.Contains(condition.Statusname));
+                    query = query.Where(c => c.Statusname == condition.Statusname);
                 }
 				if (!string.IsNullOrEmpty(condition.Describe))
                 {

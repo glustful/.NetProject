@@ -245,6 +245,7 @@ namespace Zerg.Controllers.CRM
         public HttpResponseMessage Add([FromBody] BrokerLeadClientModel brokerleadclient)
         {
             if (brokerleadclient.Adduser == 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "经济人ID不能为空！"));
+            if (brokerleadclient.Broker == 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "经纪人ID不能为空！"));
             if (string.IsNullOrEmpty(brokerleadclient.Clientname)) return PageHelper.toJson(PageHelper.ReturnValue(false, "客户名不能为空"));
             if (string.IsNullOrEmpty(brokerleadclient.Phone)) return PageHelper.toJson(PageHelper.ReturnValue(false, "客户电话不能为空！"));
 
@@ -258,7 +259,6 @@ namespace Zerg.Controllers.CRM
             };
 
             var cmodel = _brokerleadclientService.GetBrokerLeadClientsByCondition(sech).FirstOrDefault();
-
             //检测客户是否存在于数据库
             if (cmodel == null)
             {
@@ -280,105 +280,22 @@ namespace Zerg.Controllers.CRM
             }
             else
             {
-                ////检测是否存在正在上访的代客
-                //if (_brokerRecClientService.GetBrokerRECClientsByCondition(sech).ToList().Any(p => p.Status == EnumBRECCType.等待上访))
-                //{
-                //    return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在上访！"));
-                //}
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在被代客！"));
             }
-
-            //            #region 创建订单 杨定鹏 2015年6月3日17:21:39
-            //
-            //查询商品详情
-            //            var product = _productService.GetProductById(brokerleadclient.Projectid);
-            //
-            //            #region 创建带客订单 杨定鹏 2015年6月9日17:04:05
-            //            //创建订单详情
-            //            OrderDetailEntity ode = new OrderDetailEntity();
-            //            ode.Adddate = DateTime.Now;
-            //            ode.Adduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
-            //            ode.Commission = product.Commission;
-            //            ode.RecCommission = product.RecCommission;
-            //            ode.Dealcommission = product.Dealcommission;
-            //            ode.Price = product.Price;
-            //            ode.Product = product;
-            //            ode.Productname = product.Productname;
-            //            //ode.Remark = product.
-            //            //ode.Snapshoturl = orderDetailModel.Snapshoturl,
-            //            ode.Upddate = DateTime.Now;
-            //            ode.Upduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
-            //
-            //            //创建订单
-            //            OrderEntity oe = new OrderEntity();
-            //            oe.Adddate = DateTime.Now;
-            //            oe.Adduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
-            //            oe.AgentId = brokerleadclient.Adduser;
-            //            oe.Agentname = _brokerService.GetBrokerByUserId(brokerleadclient.Adduser).Brokername;
-            //            oe.Agenttel = brokerleadclient.Phone;
-            //            oe.BusId = product.Bussnessid;
-            //            oe.Busname = product.BussnessName;
-            //            oe.Customname = brokerleadclient.Clientname;
-            //            oe.Ordercode = _orderService.CreateOrderNumber(2);  //创建带客订单号
-            //            oe.OrderDetail = _orderDetailService.Create(ode);//创建订单详情；
-            //            oe.Ordertype = EnumOrderType.带客订单;
-            //            oe.Remark = "前端经纪人提交";
-            //            oe.Shipstatus = (int)EnumBRECCType.审核中;
-            //            oe.Status = (int)EnumOrderStatus.默认;
-            //            oe.Upddate = DateTime.Now;
-            //            oe.Upduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
-            //            #endregion
-            //
-            //            #region 创建成交订单 杨定鹏 2015年6月9日17:04:05
-            //
-            //            //创建订单详情
-            //            OrderDetailEntity ode2 = new OrderDetailEntity();
-            //            ode2.Adddate = DateTime.Now;
-            //            ode2.Adduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
-            //            ode2.Commission = product.Commission;
-            //            ode2.RecCommission = product.RecCommission;
-            //            ode2.Dealcommission = product.Dealcommission;
-            //            ode2.Price = product.Price;
-            //            ode2.Product = product;
-            //            ode2.Productname = product.Productname;
-            //            //ode.Remark = product.
-            //            //ode.Snapshoturl = orderDetailModel.Snapshoturl,
-            //            ode2.Upddate = DateTime.Now;
-            //            ode2.Upduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
-            //
-            //            //创建订单
-            //            OrderEntity oe2 = new OrderEntity();
-            //            oe2.Adddate = DateTime.Now;
-            //            oe2.Adduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
-            //            oe2.AgentId = brokerleadclient.Adduser;
-            //            oe2.Agentname = _brokerService.GetBrokerByUserId(brokerleadclient.Adduser).Brokername;
-            //            oe2.Agenttel = brokerleadclient.Phone;
-            //            oe2.BusId = product.Bussnessid;
-            //            oe2.Busname = product.BussnessName;
-            //            oe2.Customname = brokerleadclient.Clientname;
-            //            oe2.Ordercode = _orderService.CreateOrderNumber(3); //创建成交订单
-            //            oe2.OrderDetail = _orderDetailService.Create(ode2);//创建订单详情；
-            //            oe2.Ordertype = EnumOrderType.成交订单;
-            //            oe2.Remark = "前端经纪人提交";
-            //            oe2.Shipstatus = (int)EnumBRECCType.审核中;
-            //            oe2.Status = (int)EnumOrderStatus.默认;
-            //            oe2.Upddate = DateTime.Now;
-            //            oe2.Upduser = brokerleadclient.Adduser.ToString(CultureInfo.InvariantCulture);
-            //            #endregion
-            //
-            //            #endregion
 
             //查询客户信息
             var sech2 = new ClientInfoSearchCondition
             {
-                Clientname = brokerleadclient.Clientname,
+                Clientname = brokerleadclient.Clientname, 
                 Phone = brokerleadclient.Phone.ToString(CultureInfo.InvariantCulture),
             };
             var cmodel2 = _clientInfoService.GetClientInfosByCondition(sech2).FirstOrDefault();
-
+            if (cmodel2 == null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "带客出错！"));
+            }
             //查询经纪人信息
             var broker = _brokerService.GetBrokerByUserId(brokerleadclient.Adduser);
-
             //创建代客流程
             var model = new BrokerLeadClientEntity();
             model.Broker = _brokerService.GetBrokerById(brokerleadclient.Adduser);
@@ -388,7 +305,7 @@ namespace Zerg.Controllers.CRM
             //model.Qq = Convert.ToInt32(brokerrecclient.Qq);
             model.Phone = brokerleadclient.Phone;       //客户电话
             model.Brokername = broker.Brokername;
-            model.BrokerLevel = broker.Level.Name;
+            //model.BrokerLevel = broker.Level.Name;
             model.Broker = broker;
             model.Adduser = brokerleadclient.Adduser;
             model.Addtime = DateTime.Now;
@@ -400,9 +317,7 @@ namespace Zerg.Controllers.CRM
             model.Status = EnumBLeadType.预约中;
             model.DelFlag = EnumDelFlag.默认;
             model.ComOrder = (int)EnumOrderType.带客订单;
-
-            //            model.ComOrder = _orderService.Create(oe).Id;      //添加代客订单；
-            //            model.DealOrder = _orderService.Create(oe2).Id;       //添加成交订单
+            
 
             _brokerleadclientService.Create(model);
 
@@ -417,105 +332,118 @@ namespace Zerg.Controllers.CRM
         [Description("更新经纪人带客管理信息")]
         public HttpResponseMessage UpdateLeadClient([FromBody]BrokerLeadClientModel model)
         {
+            if (model.Id == 0)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "Id不能为空"));
+            }
             var entity = _brokerleadclientService.GetBrokerLeadClientById(model.Id);
             entity.Status = model.Status;
-           
-            var comOrder = _orderService.GetOrderById(entity.ComOrder);
-            //变更订单状态
-            int a = (int)Enum.Parse(typeof(EnumBLeadType), model.Status.ToString());
-            comOrder.Shipstatus = a;
-            // 根据传入状态执行相应操作
-            switch (model.Status)
+            model.Uptime = DateTime.Now;
+
+            if (model.Status == EnumBLeadType.等待上访) 
             {
-                case EnumBLeadType.预约中:
-                    break;
-                case EnumBLeadType.等待上访:
-                    entity.SecretaryId = _brokerService.GetBrokerByUserId(model.SecretaryId);
-                    //查询商品详情
-                    var product = _productService.GetProductById(model.Projectid);
+                entity.SecretaryId = _brokerService.GetBrokerByUserId(model.SecretaryId);
+                //查询商品详情
+                var product = _productService.GetProductById(model.Projectid);
 
-                    //创建订单详情
-                    OrderDetailEntity ode = new OrderDetailEntity
-                    {
-                        Adddate = DateTime.Now,
-                        Adduser = model.Adduser.ToString(CultureInfo.InvariantCulture),
-                        Commission = product.Commission,
-                        RecCommission = product.RecCommission,
-                        Dealcommission = product.Dealcommission,
-                        Price = product.Price,
-                        Product = product,
-                        Productname = product.Productname,
-                        Upddate = DateTime.Now,
-                        Upduser = model.Adduser.ToString(CultureInfo.InvariantCulture)
-                    };
+                //创建订单详情
+                OrderDetailEntity ode = new OrderDetailEntity
+                {
+                    Adddate = DateTime.Now,
+                    Adduser = model.Adduser.ToString(CultureInfo.InvariantCulture),
+                    Commission = product.Commission,
+                    RecCommission = product.RecCommission,
+                    Dealcommission = product.Dealcommission,
+                    Price = product.Price,
+                    Product = product,
+                    Productname = product.Productname,
+                    Upddate = DateTime.Now,
+                    Upduser = model.Adduser.ToString(CultureInfo.InvariantCulture)
+                };
 
-                    //创建订单
-                    OrderEntity oe = new OrderEntity
-                    {
-                        Adddate = DateTime.Now,
-                        Adduser = model.Broker.ToString(),//model.Adduser.ToString(CultureInfo.InvariantCulture),
-                        AgentId = model.Broker,//model.Adduser,
-                        Agenttel = model.Phone,
-                        BusId = product.Bussnessid,
-                        Busname = product.BussnessName,
-                        Customname = model.Clientname,
-                        Ordercode = _orderService.CreateOrderNumber(2),
-                        OrderDetail = ode,
-                        Ordertype = EnumOrderType.带客订单,
-                        Remark = "前端经纪人提交",
-                        Shipstatus = (int)EnumBRECCType.等待上访,
-                        Status = (int)EnumOrderStatus.审核通过,
-                        Upddate = DateTime.Now,
-                        Upduser = model.Broker.ToString(),//model.Adduser.ToString(CultureInfo.InvariantCulture)
-                    };
-                    //创建带客订单号
-                    //订单详情；
-                    _orderService.Create(oe);
-                    break;
-                case EnumBLeadType.预约不通过:
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "预约不通过"));
-                case EnumBLeadType.洽谈中:
-                    //审核通过推荐订单
-                    comOrder.Shipstatus = (int)EnumBRECCType.洽谈中;
-                    comOrder.Status = (int)EnumOrderStatus.审核通过;
-                    comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                    comOrder.Upddate = DateTime.Now;
-                    break;
-
-                case EnumBLeadType.客人未到:
-                    //订单作废
-                    comOrder.Shipstatus = (int)EnumBRECCType.客人未到;
-                    comOrder.Status = (int)EnumOrderStatus.审核失败;
-                    //dealOrder.Status = (int)EnumOrderStatus.审核失败;
-                    comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                    comOrder.Upddate = DateTime.Now;
-                    break;
-
-                case EnumBLeadType.洽谈成功:
-                    //审核通过成交订单
-                    comOrder.Shipstatus = (int)EnumBRECCType.洽谈成功;
-                    comOrder.Status = (int)EnumOrderStatus.审核通过;
-                    comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                    comOrder.Upddate = DateTime.Now;
-                    break;
-
-                case EnumBLeadType.洽谈失败:
-                    //成交订单作废
-                    comOrder.Shipstatus = (int)EnumBRECCType.洽谈失败;
-                    comOrder.Status = (int)EnumOrderStatus.审核失败;
-                    comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                    comOrder.Upddate = DateTime.Now;
-                    model.DelFlag = (int)EnumDelFlag.删除;
-
-                    break;
+                //创建订单
+                OrderEntity oe = new OrderEntity
+                {
+                    Adddate = DateTime.Now,
+                    Adduser = entity.Adduser.ToString(CultureInfo.InvariantCulture),
+                    AgentId = entity.Broker.Id,//model.Broker,//model.Adduser,
+                    Agenttel = model.Phone,
+                    Agentname = _brokerService.GetBrokerByUserId(entity.Adduser).Brokername,
+                    BusId = product.Bussnessid,
+                    Busname = product.BussnessName,
+                    Customname = entity.ClientInfo.Clientname,
+                    Ordercode = _orderService.CreateOrderNumber(2),
+                    OrderDetail = ode,
+                    Ordertype = EnumOrderType.带客订单,
+                    Remark = "前端经纪人提交",
+                    Shipstatus = (int)EnumBLeadType.等待上访,
+                    Status = (int)EnumOrderStatus.审核通过,
+                    Upddate = DateTime.Now,
+                    Upduser = entity.Adduser.ToString(),//model.Adduser.ToString(CultureInfo.InvariantCulture)
+                };
+                _orderService.Create(oe);
+                entity.ComOrder = oe.Id;
+                _brokerleadclientService.Update(entity);
             }
-
+            else if (model.Status == EnumBLeadType.预约不通过) { return PageHelper.toJson(PageHelper.ReturnValue(false, "预约不通过")); }
+            else if (model.Status == EnumBLeadType.预约中) {}
+            else if (model.Status == EnumBLeadType.洽谈中) 
+            {
+                var comOrder = _orderService.GetOrderById(entity.ComOrder);
+                //变更订单状态
+                int a = (int)Enum.Parse(typeof(EnumBLeadType), model.Status.ToString());
+                comOrder.Shipstatus = a;
+                //comOrder.Shipstatus = (int)EnumBRECCType.洽谈中;
+                comOrder.Status = (int)EnumOrderStatus.审核通过;
+                comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                comOrder.Upddate = DateTime.Now;
+                _orderService.Update(comOrder);
+            }
+            else if (model.Status == EnumBLeadType.洽谈成功) 
+            {
+                var comOrder = _orderService.GetOrderById(entity.ComOrder);
+                //变更订单状态
+                int a = (int)Enum.Parse(typeof(EnumBLeadType), model.Status.ToString());
+                comOrder.Shipstatus = a;
+                comOrder.Status = (int)EnumOrderStatus.审核通过;
+                comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                comOrder.Upddate = DateTime.Now;
+                _orderService.Update(comOrder);
+            }
+            else if (model.Status == EnumBLeadType.洽谈失败) 
+            {
+                var comOrder = _orderService.GetOrderById(entity.ComOrder);
+                //变更订单状态
+                int a = (int)Enum.Parse(typeof(EnumBLeadType), model.Status.ToString());
+                comOrder.Shipstatus = a;
+                //comOrder.Shipstatus = (int)EnumBRECCType.洽谈失败;
+                comOrder.Status = (int)EnumOrderStatus.审核失败;
+                comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                comOrder.Upddate = DateTime.Now;
+                model.DelFlag = (int)EnumDelFlag.删除;
+                _orderService.Update(comOrder);
+            }
+            else if (model.Status == EnumBLeadType.客人未到) 
+            {
+                //订单作废
+                var comOrder = _orderService.GetOrderById(entity.ComOrder);
+                //变更订单状态
+                int a = (int)Enum.Parse(typeof(EnumBLeadType), model.Status.ToString());
+                comOrder.Shipstatus = a;
+                //comOrder.Shipstatus = (int)EnumBRECCType.客人未到;
+                comOrder.Status = (int)EnumOrderStatus.审核失败;
+                comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                comOrder.Upddate = DateTime.Now;
+                _orderService.Update(comOrder);
+            }
             entity.Uptime = DateTime.Now;
             entity.Upuser = _workContext.CurrentUser.Id;
             _brokerleadclientService.Update(entity);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "操作成功"));
 
         }
+
         }
+
 
 }

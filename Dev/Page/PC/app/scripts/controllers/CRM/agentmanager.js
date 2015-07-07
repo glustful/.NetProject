@@ -14,17 +14,14 @@ angular.module("app").controller('agentmanagerIndexController', [
         var page= 0,howmany=0;
 
         $scope.getList  = function() {
-
             if($scope.searchCondition.phone==undefined)
             {$scope.searchCondition.phone="";}
             $http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{
                 params:$scope.searchCondition,
                 'withCredentials':true
             }).success(function(data){
-               // alert(data.list!=null);
                 if(data.List.length>0) {
                     console.log(data);
-
                    page= $scope.searchCondition.page = data.Condition.Page;
                     howmany=data.List.length;//保存当页数据数量
                     $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -36,29 +33,37 @@ angular.module("app").controller('agentmanagerIndexController', [
                     for(var i=0;i<data.List.length;i++)
                     {
                         $scope.list.push( data.List[i]);
-                    if($scope.list[i].State==-1)
-                    {
-                        $scope.list[i].btnVisibleCan=false;
-                        $scope.list[i].btnVisibleDel=true;
-                    }
-                   else if($scope.list[i].State==0)
-                    {
-                        $scope.list[i].btnVisibleCan=false;
-                        $scope.list[i].btnVisibleDel=false;
-                    }
-                    else if($scope.list[i].State==1)
-                    {
-                        $scope.list[i].btnVisibleCan=true;
-                        $scope.list[i].btnVisibleDel=true;
-                    }
-
+                        if($scope.list[i].State==-1)//注销状态，注销按钮无效，删除有效
+                        {
+                            $scope.list[i].btnVisibleCan=false;//注销或回复按钮是否可用
+                            $scope.list[i].btnVisibleDel=false;//删除按钮是否可用
+                            $scope.list[i].btnname="恢复";//按钮名称，恢复或注销
+                            $scope.list[i].backcolor={backgroundColor:'cadetblue'};//恢复按钮颜色
+                            $scope.list[i].color={backgroundColor:'#FFEB3B'};//删除按钮颜色
+                        }
+                        else if($scope.list[i].State==0)//删除状态
+                        {
+                            $scope.list[i].btnVisibleCan=true;
+                            $scope.list[i].btnVisibleDel=true;
+                            $scope.list[i].btnname="恢复";
+                            $scope.list[i].backcolor={backgroundColor:'lightgrey'};
+                            $scope.list[i].color={backgroundColor:'lightgrey'};
+                        }
+                        else if($scope.list[i].State==1)//正常状态
+                        {
+                            $scope.list[i].btnVisibleCan=false;
+                            $scope.list[i].btnVisibleDel=false;
+                            $scope.list[i].btnname="注销";
+                            $scope.list[i].color={color:'white'};
+                            $scope.list[i].backcolor={backgroundColor:'#3F51B5'};
+                            $scope.list[i].color={backgroundColor:'#FFEB3B'};
+                        }
                     }
                         }
                 else{
                     $scope.visibleif=false;
                     $scope.tips="没有数据"
                 }
-
             });
         };
         //初始化page
@@ -108,39 +113,20 @@ angular.module("app").controller('agentmanagerIndexController', [
                     });
             });
         }
-//            function(id){
-//        $http.post(SETTING.ApiUrl+'/BrokerInfo/DeleteBroker',id,{
-//            'withCredentials':true
-//        }).success(function(data) {
-//           if(data.Status)
-//           {
-//               alert(data.Msg);
-//               if(howmany==1)
-//               {
-//                   if(page>1){
-//                   $scope.searchCondition.page--;}
-//                   else{
-//                       $scope.searchCondition.page=1;
-//                   }
-//               }
-//               $scope.getList();
-//           }
-//
-//        })}
-        //注销经纪人
-        $scope.cancelBroker=function (id) {
+
+        $scope.cancelBroker=function (id,btnname) {
             $scope.selectedId = id;
             var modalInstance = $modal.open({
                 templateUrl: 'myModalContent.html',
                 controller: 'ModalInstanceCtrl',
                 resolve: {
                     msg: function () {
-                        return "你确定要注销吗？";
+                        return "你确定要"+btnname+"吗？";
                     }
                 }
             });
             modalInstance.result.then(function () {
-                $http.post(SETTING.ApiUrl+'/BrokerInfo/CancelBroker',id,{
+                $http.post(SETTING.ApiUrl+'/BrokerInfo/CancelBroker?id='+id+"&btnname=" +btnname,{
                     'withCredentials':true
                 }).success(function (data) {
                     alert(data.Msg);
@@ -155,36 +141,13 @@ angular.module("app").controller('agentmanagerIndexController', [
                             }
                         }
                         $scope.getList();
-
-
                     }
                     else{
-
                         //  $scope.alerts=[{type:'danger',msg:data.Msg}];
                     }
                 });
             });
         }
-//        $scope.cancelBroker=function(id){
-//            $http.post(SETTING.ApiUrl+'/BrokerInfo/CancelBroker',id,{
-//                'withCredentials':true
-//            }).success(function(data) {
-//                if(data.Status)
-//                {
-//                    alert(data.Msg);
-//                    if(howmany==1)
-//                    {
-//                        if(page>1){
-//                            $scope.searchCondition.page--;}
-//                        else{
-//                            $scope.searchCondition.page=1;
-//                        }
-//                    }
-//                    $scope.getList();
-//                }
-//
-//            })}
-
     }
 ]);
 
@@ -225,7 +188,7 @@ if(data.totalCount>0){
 }
             else{
             $scope.visibleAccount=false;
-            $scope.tipsAccount="当前出入账数据";
+            $scope.tipsAccount="当前没有出入账数据";
 }
         });
     };
@@ -270,12 +233,13 @@ else{
             params:$scope.searchBankCondition,
             'withCredentials':true
         }).success(function(data){
+
             if(data.totalCount1>0) {
                 $scope.listBank = data.List;
                 $scope.searchBankCondition.page = data.Condition.Page;
                 $scope.searchBankCondition.pageSize = data.Condition.PageCount;
                 $scope.totalCountBank = data.totalCount1;
-                $scope.visibleBank=false;
+                $scope.visibleBank=true;
                 $scope.tipsBank="";
             }
             else{
@@ -299,7 +263,6 @@ else{
             'withCredentials':true
         }).success(function(data){
             if(data.totalCount>0){
-            console.log(data);
             $scope.listJF = data.List;
             $scope.searchJFCondition.page = data.Condition.Page;
             $scope.searchJFCondition.pageSize = data.Condition.PageCount;

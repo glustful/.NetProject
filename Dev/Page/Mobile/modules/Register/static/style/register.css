@@ -20,6 +20,7 @@
     width: 460px;
     height: 48px;
     font-size: 20px;
+    border: solid darkgray 1px;
 }
 .register_input .registerImg{
     vertical-align: middle;
@@ -31,6 +32,8 @@
     height: 48px;
     margin-right: 20px;
     font-size: 20px;
+    border: solid darkgray 1px;
+
 }
 .PinBlank button{
     width: 148px;

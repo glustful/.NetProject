@@ -1,0 +1,39 @@
+<form name="form" id="form" ng-controller="CouponCategoryCreateController" ng-submit="create()">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="bottom" ><label>名&nbsp;&nbsp;&nbsp;&nbsp;称： </label>
+                <input id="name" type="text" ng-model="CouponCategoryModel.Name" required>
+            </div>
+            <div class="bottom" ><label>价&nbsp;&nbsp;&nbsp;&nbsp;格： </label>
+                <input id="price" type="text" ng-model="CouponCategoryModel.Price" required>
+            </div>
+            <div class="bottom" ><label>总&nbsp;&nbsp;&nbsp;&nbsp;数： </label>
+                <input id="count" type="text" ng-model="CouponCategoryModel.Count" required>
+            </div>
+            <div class="bottom" ><label>备&nbsp;&nbsp;&nbsp;&nbsp;注： </label>
+                <input id="remark" type="textr" ng-model="CouponCategoryModel.ReMark" required>
+            </div>
+            <!--<div class="bottom" ><label for="status">状态： </label>-->
+            <!--<select name="Status" id="Status" ng-model="">-->
+            <!--<option value="">新建</option>-->
+            <!--<option value="">拥有</option>-->
+            <!--<option value="">激活</option>-->
+            <!--<option value="">使用</option>-->
+            <!--</select>-->
+            <!--</div>-->
+            <div class="bottom" ><label>品&nbsp;&nbsp;&nbsp;&nbsp;牌： </label>
+                <!--<select name="ChannelId" id="ChannelId" ng-model="ContentModel.ChannelId">-->
+                <!--<option ng-repeat="list in ChannelList" value="{{list.Id}}" ng-selected="list.Id==ContentModel.ChannelId">{{list.Name}}</option>-->
+                <!--</select>-->
+                <select name="BrandId" id="BrandId" ng-model="CouponCategoryModel.BrandId" ng-options="list.Id as list.Bname for list in BrandList"></select>
+            </div>
+
+            <div>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" type="submit" ng-disabled="form.$invalid">确认<div class="md-ripple-container"></div></button>
+                <a href="#page/event/Coupons/type/index"><button type="button" md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink">取消<div class="md-ripple-container"></div></button></a>
+            </div>
+        </div>
+    </div>
+
+</form>

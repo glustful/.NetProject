@@ -325,6 +325,10 @@ app  .run(
             templateUrl:'modules/invite/view/invite.html',
             resolve:load('modules/invite/controller/invitecontroller.js')
         })
+        .state('app.cash',{
+            url:'/cash',
+            templateUrl:'modules/cash/view/cash.html'
+        })
 
 
 
@@ -342,7 +346,7 @@ app  .run(
                     }
                     angular.forEach(srcs, function (src) {
                         promise = promise.then(function () {
-                            angular.forEach(MAIN_CONFIG, function (module) {
+                            angular.forEach(MAIN_CONFIG, function (module, name) {
                                 if (module.name == src) {
                                     if (!module.module) {
                                         name = module.files;

@@ -24,7 +24,7 @@
     <tr>
         <td>
             <div class="md-list-item-left">
-                <img src="{{item.Headphoto}}" class="w-full circle">
+                <img src="http://img.yoopoon.com/{{item.Headphoto}}" class="w-full circle">
             </div>
             <div class="information">
                 <p><span>昵称：<small class="small">{{item.Nickname}}</small></span><span>姓名：<small>{{item.Realname}}</small></span><span>手机:<small>{{item.Phone}}</small></span></p>
@@ -34,8 +34,8 @@
         <td><time>{{item.Regtime}}</time></td>
         <td>
             <a href="#/page/CRM/AgentManager/detailed?userid={{item.Id}}" ><button  md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">详情</button></a>
-            <button  md-ink-ripple=""  ng-click="deleteBroker(item.Id)"ng-show="item.btnVisibleDel" class="md-btn md-raised m-b btn-fw yellow">删除</button>
-            <button  md-ink-ripple=""ng-click="cancelBroker(item.Id)"ng-show="item.btnVisibleCan" class="md-btn md-raised m-b btn-fw indigo">注销</button>
+            <button  md-ink-ripple=""  ng-click="deleteBroker(item.Id)"ng-style="item.color"ng-disabled="item.btnVisibleDel" class="md-btn md-raised m-b btn-fw yellow">删除</button>
+            <button  md-ink-ripple=""ng-click="cancelBroker(item.Id,item.btnname)"ng-style="item.backcolor"ng-disabled="item.btnVisibleCan" class="md-btn md-raised m-b btn-fw indigo">{{item.btnname}}</button>
         </td>
 
     </tr>

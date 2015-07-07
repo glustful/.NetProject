@@ -64,5 +64,7 @@ namespace Zerg.Models.Trading.Product
         /// UpdTime
         /// </summary>
         public  DateTime Updtime { get; set; }
+
+        public string Ad1 { get; set; }
     }
 }

@@ -1,0 +1,275 @@
+﻿@{
+    Layout = null;
+}
+<link href="/Controllers/Crowd/Static/style/chip.css" type="text/css" rel="stylesheet" />
+@*<link href="/Controllers/Crowd/Static/style/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<link href="~/Controllers/Crowd/Static/style/bootstrap-theme.min.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/Controllers/Crowd/Static/Js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="~/Controllers/Crowd/Static/Js/bootstrap.min.js"></script>*@
+@*<script type="text/javascript" src="/Controllers/Crowd/Static/Js/jquery-1.9.1.min.js"></script>*@
+<div class="allcenter">
+    <div class="chip-nav"><span class="all">全部</span><span>众筹中</span><span class="selecting">选房中</span></div>
+
+
+    <div class="chip-content">
+        @*//定义栏目序列id*@
+        @{var i = 0;}
+        @foreach (var p in Model)
+        {
+            //下一栏目
+            i++;
+            //定义每个栏目的序列id，最终id由i与j的组合构成
+            var j = 0;//
+            var btnleft = 15;
+            var btntop = 0;
+            <div id="@i" class="cunlumnNum">
+                @foreach (var a in p.ImgList)
+                {
+                    j++;
+                    <div id="id/@i@j" class="chipIng num/@i" style="display:none;">
+                        <a href="#/app/chipDetail">
+                            <img src="@a.Imgurl" alt="众筹中" width="610" height="340" />
+                            <span class="summary">@p.Status</span>
+                            
+                        </a>
+                    </div>
+                    @*<div style="width: 15px; height: 15px; position: absolute; left:15px; top:456px; border: 1px solid red;"></div>
+                     <div style="width: 15px; height: 15px; position: absolute; left:131px; top:456px; border: 1px solid red;"></div>
+                     <div style="width: 15px; height: 15px; position: absolute; left:47px; top:456px; border: 1px solid red;"></div>*@
+          
+            
+
+                }
+                @*//循环生成图片按钮7c89e2*@
+               @{ var btnnum = 1;}
+            @foreach (var a in p.ImgList)
+{
+    <div onclick="imageShow(@i,@btnnum)" id="idIma/@i@btnnum" style="cursor:pointer;width: 15px; height: 15px; position: relative; margin-left:@btnleft;margin-top:@btntop;  border: 0px solid red;padding:0;background-color:#FDF0E8;color:white;text-align:center;">@btnnum</div>
+    btnnum++;//下一序号
+    btnleft = btnleft + 26;
+    btntop =  -15;
+}
+                
+                <div class="contentIntro">
+                    <div class="BriefIntroduction">
+                        <div class="lg">@p.Ttitle</div>
+                        <p>@p.Intro</p>
+                       
+                    </div>
+                    <div class="Discount">
+                        <div class="number-days cf">
+                            <span class="fl">已有 @p.crowdNum 人参与众筹</span>
+                            <span class="fr">
+                                剩余时间：
+                                @{
+    DateTime nowtime = DateTime.Now;
+    DateTime endtime = @p.Endtime;
+    string dateDiff = null;
+    TimeSpan ts1 = new TimeSpan(nowtime.Ticks);
+    TimeSpan ts2 = new TimeSpan(endtime.Ticks);
+    TimeSpan ts = ts1.Subtract(ts2).Duration();
+    dateDiff = ts.Days.ToString() + "天"
+    + ts.Hours.ToString() + "小时"
+    + ts.Minutes.ToString() + "分钟"
+        //+ ts.Seconds.ToString() + "秒"
+    ;
+    Write(dateDiff);
+                                }
+                            </span>
+                        </div>
+                        
+                        @{
+   var widScale =0.5555;
+   var  crowdNum= p.crowdNum ;//已经参加该项目众筹的人数
+   var crowdMaxNum = p.crowdMaxNum ;//该项目最大优惠的众筹人数  
+   widScale =crowdNum *560/crowdMaxNum;//根据众筹人数的比例乘以固定长度560获得进度条的长度
+   var disNum = p.Dislist.Count;//该项目众筹优惠数量
+   var widDes = (560 - 2 * (disNum - 1)) / disNum;//优惠描述
+   var widSpace = 2;
+   var colo="all";
+  // Write(widDes);                  
+   }
+                        <div class="favourable-nav">
+                            <div style="width:560px;height :20px;background-color:#DEDEDE;"></div>
+                            <div style="width:@widScale;height :20px;background-color:#53CFB8;margin-top:-20px;"></div>
+                            @foreach (var dis in p.Dislist)
+                            {
+                                if (crowdNum >= dis.Number)
+                                {
+                                    colo = "all";
+                                }
+                                else
+                                {
+                                    colo = "half";
+                                }
+                            <span class="@colo"style="width:@widDes;margin-bottom:4px;">@dis.Discount 折优惠<br /><small>众筹人数 @dis.Number 人</small></span>
+                               <span style="width:@widSpace;"></span>
+                            @*<span class="all">8折优惠<br /><small>众筹人数200人</small></span>
+                            <span class="all">7折优惠<br /><small>众筹人数300人</small></span>
+                            <span class="half">5折优惠<br /><small>众筹人数500人</small></span>*@
+                            }
+                        </div>
+
+                    </div>
+                    <div class="partIn"><a href="#/app/chipPartake"><button>参与众筹</button></a></div>
+                </div>
+            </div>
+            @*<span class="fl">@p.Ttitle</span>
+                foreach (var a in p.ImgList)
+                {
+
+                    <img src="@a.Imgurl" />
+                }*@
+}
+
+        @*<div class="contentIntro selectHouses">
+                <div class="chipIng"><a href="#"><img src="/Controllers/Crowd/Static/image/chip/p.png" alt="众筹中" width="610" height="340" /><span class="summary">选房中</span></a></div>
+                <div class="BriefIntroduction">
+                    <div class="lg">蓝光&nbsp;·&nbsp;颐明园</div>
+                    <p>270-643m²,一环曲靖一中学位房，均价7000元/m²起；<br />商业巨擘-西南家乐福旗舰店、欢乐影城、洲际品牌店全线入驻。</p>
+                </div>
+                <div class="Discount">
+                    <div class="number-days cf">
+                        <span class="fl">已有467人参与众筹</span>
+                        <span class="fr">已结束</span>
+                    </div>
+                    <div class="favourable-nav">
+                        <span class="all">9折优惠<br /><small>众筹人数100人</small></span>
+                        <span class="all">8折优惠<br /><small>众筹人数200人</small></span>
+                        <span class="all">7折优惠<br /><small>众筹人数300人</small></span>
+                        <span class="half">5折优惠<br /><small>众筹人数500人</small></span>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+
+</div>
+<script type="text/javascript"language="javascript">
+    var h = 1;//图片栏目序列
+    var p = 1;//每一栏图片序列
+    var timer=null; //定时器
+    //初始化，每一栏目显示第一张图片
+    var init = function () {
+        var len1 = document.getElementsByClassName("cunlumnNum").length;//获取栏目个数
+        for (var numr = 0; numr < len1 ; numr++) {      
+            document.getElementById("id/" + h + '1').style.display = "block";//循环显示每一栏的第一个图片
+            document.getElementById("idIma/" + h + '1').style.backgroundColor = "#7c89e2";//循环显示每一栏的图片对应的按钮颜色
+                h++;
+            }
+            h = 1; p = 1;
+        }
+    init();
+  
+
+   // 循环切换每一栏图片
+    function refrech() {
+        var len = document.getElementsByClassName("cunlumnNum").length;//获取栏目个数
+        for (var num = 0; num < len ; num++) {
+            //循环获取每一栏内的图片类名，然后隐藏该图片，显示下一图片
+            for (var pnum = 1; pnum < document.getElementsByClassName("num/" + h).length+1; pnum++) {
+               // alert(document.getElementsByClassName("num/" + h).length);
+                if (document.getElementById("id/" + h + pnum).style.display == "block") {
+                    document.getElementById("id/" + h + pnum).style.display = "none";
+                    document.getElementById("idIma/" + h + pnum).style.backgroundColor = "#FDF0E8";
+                    pnum++;//下一个图片
+            
+                    if (document.getElementById("id/"+h+pnum) ==null)//循环到最后一个图片，回到第一个
+                    {
+                        document.getElementById("id/" + h + "1").style.display = "block";
+                        document.getElementById("idIma/" + h + '1').style.backgroundColor = "#7c89e2";
+                        break;
+                    }
+                    else {
+                        document.getElementById("id/" + h + pnum).style.display = "block";
+                        document.getElementById("idIma/" + h + pnum).style.backgroundColor = "#7c89e2";
+                        break;
+                    }
+
+                    pnum--;//
+                }
+            }
+
+            h++; //下一栏图片
+        }
+        h = 1;//循环玩一次所有栏目，则栏目回到第一个
+    };
+   
+   timer= setInterval(refrech, 3000);//每隔3秒执行图片轮播
+
+    /*单击图片按钮显示对应的图片*/
+    function imageShow(idi ,idj){
+        var len=document.getElementsByClassName("num/" + h).length;//获取该栏的图片个数
+        //循环隐藏正在显示的图片跟更改按钮颜色
+        for(var i=1;i<=len;i++){
+            if(document.getElementById("id/"+idi+i).style.display=="block")
+            {
+                document.getElementById("id/"+idi+i).style.display="none";//隐藏
+                document.getElementById("idIma/"+idi+i).style.backgroundColor= "#FDF0E8";//隐藏
+                document.getElementById("id/"+idi+idj).style.display="block";//显示点击按钮对应的图片
+                document.getElementById("idIma/"+idi+idj).style.backgroundColor="#7c89e2";//更改按钮颜色
+                clearInterval(timer);//清除定时器
+                timer= setInterval(refrech, 3000);//从新添加定时器
+                break;
+            }
+           
+        }
+    }
+</script>
+
+
+@*//jq图片循环轮播*@
+@*<script type="text/javascript">
+        var h = 1;//图片栏目序列
+        var p = 1;//每一栏图片序列
+
+        //初始化，每一栏目显示第一张图片
+        $(document).ready(
+            function () {
+                var len1 = $("#" + h).nextAll().length + 1;//获取栏目个数
+                for (var numr=0; numr <len1 ;numr++){      //循环显示每一栏的第一个图片
+                    $("#" + h + p).css({ "display": "block" });
+                  // $("#" + h + "#" + p).css({"color":"red"});
+                    h++;
+                    //alert(h);
+                }
+                h = 1; p = 1;
+            }
+
+             );
+
+
+        //循环切换每一栏图片
+        function refrech() {
+            var len = $("#" + h).nextAll().length + 1;//获取栏目个数
+            for (var num = 0; num < len ; num++) {
+                //循环获取每一栏所显示的图片ID，然后隐藏该图片，显示下一图片
+                for (var pnum =1; pnum < $("#" + h ).children().length; pnum++)
+                {
+
+                    if ($("#" + h + pnum).css("display") == "block") {
+                        $("#" + h + pnum).fadeOut(1000);
+                        $("#" + h + pnum).css({ "display": "none" });
+                        pnum++;//下一个图片
+                        if ($("#" + h + pnum).length == 0)//循环到最后一个图片，回到第一个
+                        {
+                            $("#" + h + 1).fadeIn(1000);
+                            break;
+                        }
+                        else {
+                            $("#" + h + pnum).fadeIn(1000);
+                            break;
+                        }
+
+                        pnum--;//
+                    }
+                }
+
+            h++; //下一栏图片
+            }
+            h = 1;//循环玩一次所有栏目，则栏目回到第一个
+
+            setTimeout(refrech,3000);//3秒切换图片
+        };
+
+        setTimeout(refrech, 2000);//两秒后开始执行图片循环
+    </script>*@

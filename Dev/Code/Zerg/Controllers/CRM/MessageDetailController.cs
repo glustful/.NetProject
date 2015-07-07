@@ -77,7 +77,7 @@ namespace Zerg.Controllers.CRM
             var mDetailCondition = new MessageDetailSearchCondition()
             {
                 AddtimeBegin = Convert.ToDateTime(strStarttime),
-                AddtimeEnd = Convert.ToDateTime(strEndtime),
+                AddtimeEnd = Convert.ToDateTime(strEndtime).AddDays(1),
                 Title = strType,
                 Page = Convert.ToInt32(page),
                 PageCount = pageSize

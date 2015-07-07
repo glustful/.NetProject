@@ -34,9 +34,10 @@ namespace Zerg.Models.CRM
         /// </summary>
         public virtual string RegTime { get; set; }
         /// <summary>
-        /// 客户信息ID
+        /// 客户信息
         /// </summary>
-        public virtual int ClientInfo { get; set; }
+        public virtual ClientInfoEntity ClientInfo { get; set; }
+  
         /// <summary>
         /// 客户名
         /// </summary>
@@ -115,4 +116,5 @@ namespace Zerg.Models.CRM
 
         public int WriterId { get; set; }
     }
+  
 }

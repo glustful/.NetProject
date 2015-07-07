@@ -87,6 +87,18 @@ namespace YooPoon.WebFramework.User.Services
                 return null;
             }
         }
+        public UserBase GetUserById(int id)
+        {
+            try
+            {
+                return _userRepository.Table.FirstOrDefault(u => u.Id  == id);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "获取用户失败");
+                return null;
+            }
+        }
 
         public IQueryable<UserBase> GetUserByCondition(UserSearchCondition condition)
         {

@@ -86,6 +86,7 @@ namespace Zerg.Controllers.Trading.Product
                     Productimg4 = productDetail.Productimg4,
                     Productname = productDetail.Productname,
                     Sericeinstruction = productDetail.Sericeinstruction,
+                    Ad1 = productDetail.Ad1,
                     Addtime = DateTime.Now,
                     //Adduser = productDetail.Adduser,
                     Adduser = _workContent.CurrentUser.Id.ToString(),
@@ -108,7 +109,7 @@ namespace Zerg.Controllers.Trading.Product
                     Classify = CE,
                     ProductBrand = CBE,
                     ProductDetail = PDE2,
-                    Productimg = PDE.Productimg,
+                    Productimg = product.Productimg,
                     Productname = PDE.Productname,
                     Recommend = product.Recommend,
                     Sort = product.Sort,
@@ -270,7 +271,10 @@ namespace Zerg.Controllers.Trading.Product
                 BrandId = product.ProductBrand.Id,
                 ClassId = product.Classify.Id,
                 // ReSharper disable once PossibleNullReferenceException
-                Type = product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型") == null ? "" : product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型").ParameterValue.Parametervalue,
+//                Type = product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型") == null ? "" : product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型").ParameterValue.Parametervalue,
+//                acreage = product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "面积") == null ? "" : product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "面积").ParameterValue.Parametervalue,
+//                area = product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "地区") == null ? "" : product.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "地区").ParameterValue.Parametervalue,
+                ParameterValue = product.ProductParameter.Select(c=>new ProductParameterModel{ParameterId = c.Parameter.Id,ParameterString = c.Parameter.Name,ValueId = c.ParameterValue.Id,Value = c.ParameterValue.Parametervalue}).ToArray(),
                 Advertisement = product.ProductDetail.Ad2,
                 Productimg1 = product.ProductDetail.Productimg1,
                 Productimg2 = product.ProductDetail.Productimg2,
@@ -483,6 +487,7 @@ namespace Zerg.Controllers.Trading.Product
             oldProduct.SubTitle = newProduct.SubTitle;
             oldProduct.Upduser = _workContent.CurrentUser.Id.ToString();
             oldProduct.Updtime = DateTime.Now;
+            oldProduct.RecCommission = newProduct.RecCommission;
             //商品详细
             oldProductDetail.Productname = newProduct.Productname;
             oldProductDetail.Productdetail = newProductDetail.Productdetail;

@@ -1,0 +1,295 @@
+/* 众筹页 */
+.chip-nav{
+    height:70px;
+    line-height: 70px;
+    border-bottom: 1px solid #d6d6d6;
+    background-color: #fff;
+}
+.chip-nav span{
+    display: inline-block;
+    width: 210px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    border-right: 1px solid #ebebeb;
+    font-size: 1.2em;
+}
+.chip-nav span.selecting{
+    border: none;
+}
+.chip-nav span.all{
+    color:#f13800;
+}
+.chip-content{
+    padding:20px 15px 30px;
+
+}
+ .contentIntro{
+    border: 1px solid #d6d6d6;
+    border-top: none;
+    background-color: #fff;
+}
+ .allcenter{
+     width:640px;margin :0 auto;padding:0;
+ }
+ .chipIng {
+    position: relative;
+    z-index: 2;
+   
+}
+ .chipIng a .summary{
+    display: block;
+    width:130px;
+    height: 66px;
+    background-color:#f13800;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    line-height: 66px;
+    text-align: center;
+    color: #fff;
+    font-size: 1.2em;
+}
+ .BriefIntroduction{
+    border-bottom: 1px solid #d6d6d6;
+    padding:36px 0 35px 30px;
+
+}
+ .BriefIntroduction .lg{
+    font-size: 1.5em;
+    color: #333333;
+    font-weight: bold;
+}
+ .BriefIntroduction p{
+    padding-top:23px;
+    color: #8f8f8f;
+    font-size: 1.2em;
+}
+ .Discount{
+    padding:30px 0;
+}
+ .number-days{
+    padding:0 22px 20px 30px;
+}
+ .favourable-nav{
+    padding-left: 22px;
+
+}
+ .favourable-nav span{
+   display: inline-block;
+   padding:0px;
+   margin:0px;
+   text-align :center;
+}
+.favourable-nav span.all{
+    color:#f13800;
+    background-color:#f4f3f3;
+    margin:0px;
+    padding :0px;
+
+}
+ .favourable-nav span small{
+   font-size: 0.9em;
+    color: #f2795e;
+}
+ .favourable-nav span.half{
+ 
+    color: #7d7d7d;
+    background-color:#f4f3f3;
+    
+      margin:0px;
+    padding :0px;
+}
+ .favourable-nav span.half small{
+    color: #919191;
+}
+ .favourable-nav span.Supplement{
+     padding:15px 25px 10px 25px;
+ }
+.contentIntro .partIn{
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid #ebebeb;
+
+}
+.contentIntro .partIn button{
+    width: 566px;
+    height: 83px;
+    background-color: #f13800;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.selectHouses{
+    margin-top: 20px;
+}
+.selectHouses .chipIng a .summary{
+    background-color: #8fc41e;
+}
+/* 众筹详情页 */
+.detailContent{
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+.topical{
+    padding:10px 25px 10px 20px;
+}
+.topical .item{
+    font-size: 1.5em;
+    color: #000;
+    font-weight: bold;
+    padding-top: 10px;
+}
+.BriefIntroduction-chipDetail{
+    padding:20px;
+    border-bottom: 1px solid #ebebeb;
+    color: #555555;
+    font-size: 1.2em;
+    line-height: 30px;
+}
+.repay{
+    border-bottom: 1px solid #ebebeb;
+    padding:0 0 35px 30px;
+    color:#adadad ;
+}
+.time-place{
+    line-height: 35px;
+    padding:10px 0 10px 30px;
+    color: #333333;
+    font-weight: bold;
+}
+.picDetail{
+    height: 70px;
+    line-height: 70px;
+    padding-left: 30px;
+    background-color: #f9f9f9;
+    color: #666666;
+    font-weight: bold;
+}
+.partake{
+    position: relative;
+    background-color: rgba(0,0,0,0.6);
+    width: 640px;
+    height: 120px;
+    line-height: 120px;
+    position: fixed;
+    bottom: 110px;
+    z-index: 10;
+}
+.partake button{
+    position:absolute;
+    border: 5px solid #fff;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 1.5em;
+}
+.partake .Consultation{
+    width: 260px;
+    height: 83px;
+    background-color: #46a1e8;
+    top:18px;
+    left: 18px;
+}
+.partake .partIn-chip{
+    width: 330px;
+    height: 83px;
+    line-height: 83px;
+    top:20px;
+    left: 292px;
+    background-color: #f13800;
+}
+/* 众筹参与 */
+.content-chipPartake{
+    background-color: #fff;
+    padding: 50px 34px 0 50px;
+}
+.thanks{
+    color: #f13800;
+    font-weight: bold;
+    font-size: 1.4em;
+}
+.Coupon{
+    padding:30px 0 60px 0;
+    line-height: 30px;
+}
+.chipFill input{
+    width: 546px;
+    background-color:#f5f5f5;
+    border: 1px solid #ebebeb;
+    font-size: 1.2em;
+    padding:30px 0 30px 0;
+    margin-bottom: 20px;
+    color: #333333;
+
+}
+.chipFill .name-phone{
+    width: 516px;
+    padding-left: 30px;
+}
+.chipFill .confirm{
+    background-color:#f13800;
+    font-size: 1.6em;
+    color: #fff;
+    font-weight: bold;
+    margin-top: 10px;
+}
+/* 众筹电子劵页 chipEle */
+.content-chipEle{
+    padding:56px 56px 216px;
+}
+.top-content{
+    background-color: #fff;
+    text-align: center;
+    border-bottom: 1px solid #ebebeb;
+    padding:56px 0 48px 0;
+}
+.time-place-map{
+    background-color: #fff;
+    padding:60px 0 54px 62px;
+}
+.headline{
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+.code{
+    font-size: 1.8em;
+    color:#666666;
+    font-weight: bold;
+    margin-top: 48px;
+}
+.codeNum{
+    font-size: 2.5em;
+    color: #f13800;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.Part-in-act{
+    font-size: 1.5em;
+    color: #dfdfdf;
+}
+.time-place-map p{
+    color: #333333;
+    font-weight: bold;
+    line-height: 30px;
+}
+.chipEle-map{
+    margin-top: 50px;
+}
+.chipEle-map a{
+    color: #46a1e8;
+}
+body{
+    background-image:url(about:blank); /* for IE6 */ 
+    background-attachment:fixed; /*必须*/
+}
+.ads{
+    width:15px;
+    height:15px;
+    position:absolute;
+    left:25px;
+    top:456px; 
+    border:1px solid red;
+}

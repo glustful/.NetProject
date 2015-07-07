@@ -131,8 +131,9 @@
   <ItemGroup>
     <Content Include="App_Data\Settings.txt" />
     <Content Include="Global.asax" />
-    <Content Include="index.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -208,6 +209,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CRM\AdminPayModel.cs" />
+    <Compile Include="Models\CRM\BrokerLeadClientPay .cs" />
     <Compile Include="Models\CRM\BrokerRECClientModel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -264,7 +266,9 @@
     <Content Include="packages.config" />
     <Content Include="Controllers\UEditor\controller.ashx" />
     <Content Include="Controllers\UEditor\config.json" />
+    <Content Include="log.config" />
     <None Include="Properties\PublishProfiles\Zerg_CMS.pubxml" />
+    <None Include="Properties\PublishProfiles\Zerg_Publish_Server1.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

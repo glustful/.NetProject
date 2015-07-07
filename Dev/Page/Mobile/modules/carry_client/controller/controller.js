@@ -7,6 +7,7 @@ app.controller('daikeController',['$http','$scope','$stateParams','AuthService',
         Broker:null,
         Projectname:'',
         Projectid:null,
+        ClientInfo:null,
         Brokername:'',
         Appointmenttime:'',
         Houses:'',
@@ -21,16 +22,17 @@ app.controller('daikeController',['$http','$scope','$stateParams','AuthService',
 
     $scope.currentUser=AuthService.CurrentUser();
     $scope.BrokerLeadClient.AddUser = $scope.currentUser.UserId;
+    $scope.BrokerLeadClient.Broker = $scope.currentUser.UserId;
+    $scope.BrokerLeadClient.ClientInfo = $scope.currentUser.UserId;
     $scope.BrokerLeadClient.Projectid=$stateParams.Projectid;
     $scope.BrokerLeadClient.Projectname=$stateParams.name;
-    //$scope.BrokerLeadClient.Broker= $scope.currentUser.UserId;
     $scope.BrokerLeadClient.Houses=$stateParams.name;
     $scope.BrokerLeadClient.HouseType=$stateParams.type;
     var getBrokerResult  = function() {
         console.log(  $scope.BrokerLeadClient);
         $http.post(SETTING.ApiUrl+'/BrokerLeadClient/Add',$scope.BrokerLeadClient).success(function(data){
             if(data.Status){
-                $state.go("app.nominate")
+                $state.go("app.storeroom")
             }else{
                 alert(data.Msg)
             }

@@ -636,7 +636,6 @@ angular.module('app')
               url: '/index',
               templateUrl: 'views/pages/CRM/AdmMan/index.html',
                   data: { title: 'Admin管理' },
-                controller:"agentmanagerIndexController",
                 resolve:load('scripts/controllers/CRM/AdmMan.js')
             })
             .state('page.CRM.AdmMan.detailed', {
@@ -818,7 +817,7 @@ angular.module('app')
                 url: '/detailed?id',
                 templateUrl: 'views/pages/CRM/DKWaitPetition/detailed.html',
                 data: { title: '详情页' },
-                controller:"WPDetialController",
+                controller:"DKDetialController",
                 resolve:load('scripts/controllers/CRM/WaitPetitionDK.js')
             })
 
@@ -926,7 +925,13 @@ angular.module('app')
                 controller:"DKSuccessDetialController",
                 resolve:load('scripts/controllers/CRM/Success.js')
             })
-
+            .state('page.CRM.DKSuccess.BLPay', {
+                url: '/BLPay?id',
+                templateUrl: 'views/pages/CRM/DKSuccess/BLPay.html',
+                data: { title: '洽谈成功打款' },
+                controller:"BLPayController",
+                resolve:load('scripts/controllers/CRM/Success.js')
+            })
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
               .state('page.CRM.success', {
@@ -954,13 +959,7 @@ angular.module('app')
                 controller:"BRECPayController",
                 resolve:load('scripts/controllers/CRM/Success.js')
             })
-            .state('page.CRM.success.BLPay', {
-                url: '/BLPay?id',
-                templateUrl: 'views/pages/CRM/success/BLPay.html',
-                data: { title: '上访成功打款' },
-                controller:"BLPayController",
-                resolve:load('scripts/controllers/CRM/Success.js')
-            })
+
 
               .state('page.CRM.CustomerInformation', {
                   url: '/CustomerInformation',
@@ -1390,7 +1389,7 @@ angular.module('app')
                 url: '/edit?productId',
                 templateUrl: 'views/pages/Trading/product/editProduct.html',
                 data : { title: '商品编辑' },
-                resolve:load('scripts/controllers/Trading/EditProduct.js')
+                resolve:load(['scripts/controllers/Trading/EditProduct.js','angularFileUpload'])
             })
             .state('page.Trading.product.createProduct', {
                 url: '/createProduct',
@@ -1438,6 +1437,8 @@ angular.module('app')
                 data : { title: '商品分类' },
                 resolve: load(['scripts/controllers/Trading/Area.js','scripts/controllers/vectormap.js'])
             })
+
+
             .state('page.Trading.product.classify', {
                 url: '/classify',
                 templateUrl: 'views/pages/Trading/product/classify.html',
@@ -1470,6 +1471,85 @@ angular.module('app')
                 controller:'NegotiateOrderController',
                 resolve: load(['scripts/controllers/Trading/Order.js','scripts/controllers/vectormap.js'])
             })
+
+          /*优惠券*/
+
+            // Coupons  router
+            .state('page.event', {
+                url: '/event',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons', {
+                url: '/Coupons',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons.type', {
+                url: '/type',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons.manage', {
+                url: '/manage',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons.user', {
+                url: '/user',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons.active', {
+                url: '/active',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.Coupons.type.index', {
+                url: '/index',
+                templateUrl: 'views/pages/event/Coupons/type/index.html',
+                resolve:load('scripts/controllers/event/couponCategory.js')
+            })
+            .state('page.event.Coupons.type.create', {
+                url: '/create',
+                templateUrl: 'views/pages/event/Coupons/type/create.html',
+                resolve:load('scripts/controllers/event/couponCategory.js')
+            })
+            .state('page.event.Coupons.type.edit', {
+                url: '/edit?id',
+                templateUrl: 'views/pages/event/Coupons/type/edit.html',
+                resolve:load('scripts/controllers/event/couponCategory.js')
+            })
+            .state('page.event.Coupons.manage.index', {
+                url: '/index',
+                templateUrl: 'views/pages/event/Coupons/manage/index.html',
+                resolve:load('scripts/controllers/event/Coupon.js')
+            })
+            .state('page.event.Coupons.manage.create', {
+                url: '/create',
+                templateUrl: 'views/pages/event/Coupons/manage/create.html',
+                resolve:load('scripts/controllers/event/Coupon.js')
+            })
+            .state('page.event.Coupons.manage.edit', {
+                url: '/edit?id',
+                templateUrl: 'views/pages/event/Coupons/manage/edit.html',
+                resolve:load('scripts/controllers/event/Coupon.js')
+            })
+            .state('page.event.Coupons.user.query', {
+                url: '/query',
+                templateUrl: 'views/pages/event/Coupons/user/query.html',
+                resolve: load('scripts/controllers/event/active.js')
+
+            })
+            //.state('page.event.Coupons.user.list', {
+            //    url: '/list',
+            //    templateUrl: 'views/pages/event/Coupons/user/list.html',
+            //    resolve: load('scripts/controllers/event/active.js')
+            //
+            //})
+            .state('page.event.Coupons.active.active', {
+                url: '/active',
+                templateUrl: 'views/pages/event/Coupons/active/active.html',
+                data : { title: '激活优惠券' },
+                resolve: load('scripts/controllers/event/active.js')
+            })
+
+
+
             //-----------------------end-------------------
 
           function load(srcs, callback) {

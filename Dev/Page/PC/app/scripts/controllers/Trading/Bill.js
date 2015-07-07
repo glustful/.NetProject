@@ -73,8 +73,14 @@ angular.module("app").controller('createBillController', [
                        }
                        });
                    }
+                else{
+                       $scope.alerts=[{type:'danger',msg:data.Msg}];
+                   }
             });
         }
+        $scope.closeAlert = function(index) {
+            $scope.alerts.splice(index, 1);
+        };
     }])
 app.filter('dateFilter',function(){
     return function(date){

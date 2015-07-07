@@ -10,8 +10,8 @@
                     <div class="summaryBg"> </div>
                 </a>
             </div>
-            <div class="di">{{tent.Content}}<a href="tel:{{brand.Parameters['来电咨询']}}">
-                <button>咨询热线</button></a></div>
+            <div class="di"><p style="float: left;  " ng-bind-html="brand.Content|asdasd"></p><a href="tel:{{brand.Parameters['来电咨询']}}">
+                <button style="float: right; margin-top: 15px;">咨询热线</button></a></div>
             <div class="brokerbar"  access="broker">
                 <a href="#/app/nominate">我要带客</a>
                 <a href="#/app/nominate">我要推荐</a>
@@ -81,7 +81,7 @@
 
                     <!--</div>-->
                     <li class="fl" ng-repeat="item in ProductList">
-                        <a href="#/app/housesPic?BrandId={{item.Id}}">
+                        <a href="#/app/housesPic?productId={{item.Id}}">
                         <div class="inside">
                             <p class="housesType">{{item.Productname}}</p>
                             <p>{{item.SubTitle}}</p>

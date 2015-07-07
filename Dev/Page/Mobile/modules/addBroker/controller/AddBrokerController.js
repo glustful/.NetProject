@@ -15,7 +15,8 @@ app.controller('AddBrokerController',function($scope,$http){
                     $scope.Tip="邀请已发送！！"
                 }
                 else{
-                    $scope.Tip="邀请发送失败，请与客服联系！！"
+                   // $scope.Tip="邀请发送失败，请与客服联系！！"
+                    $scope.Tip=data.Msg;
                 }
 
             })
@@ -30,16 +31,16 @@ function settime() {
     var obj= document.getElementById("inviteSMS");
     if (countdown == 0) {
 
-        obj.removeAttribute("disabled");
-        obj.innerHTML="发送邀请";
-        obj.style.background="#fc3b00";
+        document.getElementById("inviteSMS").removeAttribute("disabled");
+        document.getElementById("inviteSMS").innerHTML="邀请";
+        document.getElementById("inviteSMS").style.background="#fc3b00";
         countdown = 60;
         return;
     } else {
-        obj.setAttribute("disabled", true);
+        document.getElementById("inviteSMS").setAttribute("disabled", true);
 
-        obj.style.background="#996c33";
-        obj.innerHTML="重新发送(" + countdown + ")";
+        document.getElementById("inviteSMS").style.background="#996c33";
+        document.getElementById("inviteSMS").innerHTML="邀请中...(" + countdown + ")";
         countdown--;
     }
     setTimeout(function() {

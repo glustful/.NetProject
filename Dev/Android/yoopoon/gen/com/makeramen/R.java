@@ -8,14 +8,14 @@ package com.makeramen;
 
 public final class R {
 	public static final class attr {
-		public static final int border_color = 0x7f010012;
-		public static final int border_width = 0x7f010011;
-		public static final int corner_radius = 0x7f010010;
-		public static final int mutate_background = 0x7f010013;
-		public static final int oval = 0x7f010014;
+		public static final int border_color = 0x7f01008b;
+		public static final int border_width = 0x7f01008a;
+		public static final int corner_radius = 0x7f010089;
+		public static final int mutate_background = 0x7f01008c;
+		public static final int oval = 0x7f01008d;
 	}
 	public static final class styleable {
-		public static final int[] RoundedImageView = { 0x0101011d, 0x7f010010, 0x7f010011, 0x7f010012, 0x7f010013, 0x7f010014 };
+		public static final int[] RoundedImageView = { 0x0101011d, 0x7f010089, 0x7f01008a, 0x7f01008b, 0x7f01008c, 0x7f01008d };
 		public static final int RoundedImageView_android_scaleType = 0;
 		public static final int RoundedImageView_border_color = 3;
 		public static final int RoundedImageView_border_width = 2;

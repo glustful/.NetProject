@@ -1,33 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
-using System.Web;
-using System.Web.Mvc;
-using Trading.Entity.Model;
-using Trading.Service.Product;
-using Trading.Service.Classify;
-using Trading.Service.Order;
-using Trading.Service.OrderDetail;
-using Trading.Service.CFBBill;
-using Trading.Service.LandAgentBill;
-using Trading.Service.AgentBill;
 using System.Web.Http;
-using Zerg.Common;
-using Newtonsoft.Json.Linq;
-using Zerg.Models.Trading.Product;
-using Zerg.Models.Trading.Trading;
 using System.Web.Http.Cors;
-using System.ComponentModel;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
 using CRM.Service.PartnerList;
+using Trading.Entity.Model;
+using Trading.Service.AgentBill;
+using Trading.Service.CFBBill;
+using Trading.Service.LandAgentBill;
+using Trading.Service.Order;
+using Trading.Service.OrderDetail;
+using Trading.Service.Product;
 using YooPoon.Core.Site;
+using Zerg.Common;
 using Zerg.Models.CRM;
+using Zerg.Models.Trading.Trading;
 
 namespace Zerg.Controllers.Trading.Trading
 {
-     [System.Web.Http.AllowAnonymous]
+     [AllowAnonymous]
     [Description("账单管理类")]
     public class BillController : ApiController
     {
@@ -83,47 +77,55 @@ namespace Zerg.Controllers.Trading.Trading
         /// <param name="user">当前用户</param>
         /// <returns>账单创建结果状态信息</returns>
         [Description("创建三个账单（zerg、经纪人、地产商")]
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage CreateBillsByOrder(BillModel model)
-        {
-            try
+        { 
+           
+           // try
+            //{   
+            OrderEntity OE = _orderService.GetOrderById(model.orderId);
+            var Broker = _brokerService.GetBrokerById(OE.AgentId);
+            var partnerlistsearchcon = new PartnerListSearchCondition
             {
-                OrderEntity OE = _orderService.GetOrderById(model.orderId);
-                var Broker = _brokerService.GetBrokerById(OE.AgentId);
-                var partnerlistsearchcon = new PartnerListSearchCondition
-                {
-                       Brokers = _brokerService.GetBrokerByUserId(Broker.UserId),
-                       Status = EnumPartnerType.同意
-                };
-                 var partner = _partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).Select(p => new BrokerModel 
-                {
-                     Id=p.Id,
-                     Brokername=p.Brokername
-                }).First();
+                Brokers = _brokerService.GetBrokerByUserId(Broker.UserId),
+                Status = EnumPartnerType.同意
+            };
+            var partner = _partnerlistService.GetPartnerListsByCondition(partnerlistsearchcon).Select(p => new BrokerModel
+            {
+                Id = p.Id,
+                Brokername = p.Brokername
+            }).FirstOrDefault();
+            if (partner == null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "合伙人不存在"));
+            }
+            else
+            {
                 OrderDetailEntity ODE = OE.OrderDetail;
-                decimal CFBamount = 0, LandAgentamount = 0, Agentamount=0,Partneramount=0;
+                decimal CFBamount = 0, LandAgentamount = 0, Agentamount = 0, Partneramount = 0;
                 if (OE.Ordertype == EnumOrderType.推荐订单)
-                {//如果是推荐订单；                   
+                {
+                   //如果是推荐订单；                   
                     if (OE.Shipstatus == 3)
-                    { 
-                            CFBamount = ODE.Dealcommission*(decimal) 0.7;                                                              
-                            Agentamount = ODE.Dealcommission*(decimal) 0.27 + ODE.RecCommission;
-                            Partneramount = ODE.Dealcommission*(decimal) 0.03;                       
+                    {
+                        CFBamount = ODE.Dealcommission*(decimal) 0.7;
+                        Agentamount = ODE.Dealcommission*(decimal) 0.27 + ODE.RecCommission;
+                        Partneramount = ODE.Dealcommission*(decimal) 0.03;
                     }
                     else
                     {
                         Agentamount = ODE.RecCommission;
                     }
                 }
-                else if (OE.Ordertype == EnumOrderType.带客订单)//如果是带客订单；
+                else if (OE.Ordertype == EnumOrderType.带客订单) //如果是带客订单；
                 {
-                    
+
                     if (OE.Shipstatus == 3)
-                    {       
-                        CFBamount = ODE.Dealcommission * (decimal) 0.3;                                      
+                    {
+                        CFBamount = ODE.Dealcommission*(decimal) 0.3;
                         Agentamount = ODE.Dealcommission*(decimal) 0.63 + ODE.Commission;
-                        Partneramount = ODE.Dealcommission*(decimal) 0.07;                                              
+                        Partneramount = ODE.Dealcommission*(decimal) 0.07;
                     }
                     else
                     {
@@ -135,10 +137,10 @@ namespace Zerg.Controllers.Trading.Trading
                 {
                     Actualamount = model.Actualamount,
                     Amount = CFBamount,
-                    AgentId = OE.AgentId,//经纪人Id；
-                    Agentname = OE.Agentname,//经纪人名字；
-                    LandagentId = OE.BusId,//地产商Id；
-                    Landagentname = OE.Busname,//地产商名字；
+                    AgentId = OE.AgentId, //经纪人Id；
+                    Agentname = OE.Agentname, //经纪人名字；
+                    LandagentId = OE.BusId, //地产商Id；
+                    Landagentname = OE.Busname, //地产商名字；
                     Beneficiary = OE.Agentname,
                     Beneficiarynumber = model.beneficiarynumber,
                     Cardnumber = model.beneficiarynumber,
@@ -148,19 +150,19 @@ namespace Zerg.Controllers.Trading.Trading
                     Order = OE,
                     Remark = model.remark,
                     Addtime = DateTime.Now,
-                    Adduser =_workContext.CurrentUser.Id.ToString(),
+                    Adduser = _workContext.CurrentUser.Id.ToString(),
                     Updtime = DateTime.Now,
-                    Upduser =_workContext.CurrentUser.Id.ToString()
+                    Upduser = _workContext.CurrentUser.Id.ToString()
                 };
                 //地产商账单
                 LandAgentBillEntity LABE = new LandAgentBillEntity()
                 {
                     Actualamount = null,
                     Amount = LandAgentamount,
-                    AgentId = OE.AgentId,//经纪人Id；
-                    Agentname = OE.Agentname,//经纪人名字；
-                    LandagentId = OE.BusId,//地产商Id；
-                    Landagentname = OE.Busname,//地产商名字；
+                    AgentId = OE.AgentId, //经纪人Id；
+                    Agentname = OE.Agentname, //经纪人名字；
+                    LandagentId = OE.BusId, //地产商Id；
+                    Landagentname = OE.Busname, //地产商名字；
                     Beneficiary = OE.Agentname,
                     Beneficiarynumber = null,
                     Cardnumber = null,
@@ -179,12 +181,12 @@ namespace Zerg.Controllers.Trading.Trading
                 {
                     Actualamount = null,
                     Amount = Agentamount,
-                    AgentId = OE.AgentId,//经纪人Id；
-                    Agentname = OE.Agentname,//经纪人名字；
-                    LandagentId = OE.BusId,//地产商Id；
-                    Landagentname = OE.Busname,//地产商名字；
+                    AgentId = OE.AgentId, //经纪人Id；
+                    Agentname = OE.Agentname, //经纪人名字；
+                    LandagentId = OE.BusId, //地产商Id；
+                    Landagentname = OE.Busname, //地产商名字；
                     Beneficiary = OE.Agentname,
-                    Beneficiarynumber =null,
+                    Beneficiarynumber = null,
                     Cardnumber = null,
                     Checkoutdate = DateTime.Now,
                     Customname = OE.Agentname,
@@ -192,7 +194,7 @@ namespace Zerg.Controllers.Trading.Trading
                     Order = OE,
                     Remark = null,
                     Addtime = DateTime.Now,
-                    Adduser =_workContext.CurrentUser.Id.ToString(),
+                    Adduser = _workContext.CurrentUser.Id.ToString(),
                     Updtime = DateTime.Now,
                     Upduser = _workContext.CurrentUser.Id.ToString()
                 };
@@ -201,13 +203,13 @@ namespace Zerg.Controllers.Trading.Trading
                 {
                     Actualamount = null,
                     Amount = Partneramount,
-                    AgentId =partner.Id,//经纪人Id；
-                    Agentname =partner.Brokername,//经纪人名字；
-                    LandagentId = OE.BusId,//地产商Id；
-                    Landagentname = OE.Busname,//地产商名字；
+                    AgentId = partner.Id, //经纪人Id；
+                    Agentname = partner.Brokername, //经纪人名字；
+                    LandagentId = OE.BusId, //地产商Id；
+                    Landagentname = OE.Busname, //地产商名字；
                     Beneficiary = partner.Brokername,
                     Beneficiarynumber = null,
-                    Cardnumber =null,
+                    Cardnumber = null,
                     Checkoutdate = DateTime.Now,
                     Customname = OE.Agentname,
                     Isinvoice = false,
@@ -220,21 +222,22 @@ namespace Zerg.Controllers.Trading.Trading
                 };
                 if (OE.Shipstatus == 3)
                 {
-                     _CFBBillService.Create(CBE);
-                     _landAgentBillService.Create(LABE);
-                     _agentBillService.Create(ABE);
-                     _agentBillService.Create(PBE);
+                    _CFBBillService.Create(CBE);
+                    _landAgentBillService.Create(LABE);
+                    _agentBillService.Create(ABE);
+                    _agentBillService.Create(PBE);
                 }
                 else
                 {
                     _agentBillService.Create(ABE);
                 }
-                return PageHelper.toJson(PageHelper.ReturnValue(true,"账单生成成功"));
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "账单生成成功"));
             }
-            catch (Exception e)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false,"账单生成失败"));
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    return PageHelper.toJson(PageHelper.ReturnValue(false,"账单生成失败"));
+            //}
         }
         #endregion
 
@@ -244,7 +247,7 @@ namespace Zerg.Controllers.Trading.Trading
         /// </summary>
         /// <returns>账单详细信息</returns>
         [Description("查询账单")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAdminBill(int page,int pageSize)
         {
@@ -272,7 +275,7 @@ namespace Zerg.Controllers.Trading.Trading
         /// </summary>
         /// <returns>经纪人账单详情</returns>
         [Description("查询所有经纪人账单")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAgentBill()
         {
@@ -287,7 +290,7 @@ namespace Zerg.Controllers.Trading.Trading
         /// </summary>
         /// <returns>地产商账单</returns>
         [Description(" 查询所有地产商账单")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetLandAgentBill()
         {
@@ -302,7 +305,7 @@ namespace Zerg.Controllers.Trading.Trading
         /// </summary>
         /// <returns>所有经纪人账单</returns>
         [Description("查询经纪人Id所有经纪人账单")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAgentBillById(int agentId)
         {
@@ -318,7 +321,7 @@ namespace Zerg.Controllers.Trading.Trading
         /// </summary>
         /// <returns>地产商Id对应的所有账单</returns>
         [Description(" 根据地产商ID查询所有账单")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetLandAgentBillById(int LandagentId)
         {

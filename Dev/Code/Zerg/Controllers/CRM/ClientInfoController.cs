@@ -3,6 +3,7 @@ using System.Web.Http.Cors;
 using CRM.Entity.Model;
 using CRM.Service.Broker;
 using CRM.Service.BrokerRECClient;
+using CRM.Service.BrokerLeadClient;
 using CRM.Service.ClientInfo;
 using System;
 using System.Collections.Generic;
@@ -30,17 +31,20 @@ namespace Zerg.Controllers.CRM
         private IClientInfoService _clientInfoService;
         private IBrokerService _brokerService;
         private IBrokerRECClientService _brokerRecClientService;
+        private IBrokerLeadClientService _brokerLeadClientService;
         private readonly IWorkContext _workContext;
         public ClientInfoController(
             IClientInfoService clientInfoService,
             IBrokerService brokerService,
             IBrokerRECClientService brokerRecClientService,
+            IBrokerLeadClientService brokerLeadClientService,
             IWorkContext workContext
             )
         {
             _clientInfoService = clientInfoService;
             _brokerService = brokerService;
             _brokerRecClientService = brokerRecClientService;
+            _brokerLeadClientService = brokerLeadClientService;
             _workContext = workContext;
         }
 
@@ -187,7 +191,7 @@ namespace Zerg.Controllers.CRM
                 var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
                 var condition = new ClientInfoSearchCondition
                 {
-                    Addusers = broker.Id,
+                    Addusers = broker.UserId,
                     Page =page ,
                     PageCount =10
                 };
@@ -200,6 +204,7 @@ namespace Zerg.Controllers.CRM
                         p.Housetype
 
                     }).ToList();
+
                 int totalCount = _clientInfoService.GetClientInfoCount(condition);
 
                 return PageHelper.toJson(new { list = list,totalCount });
@@ -207,6 +212,96 @@ namespace Zerg.Controllers.CRM
             return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
 
         }
+
+
+
+
+
+        ///////////新增方法，查询当前经纪人带客信息，以及带客进度反馈信息///////////
+        /// <summary>
+        /// 传入客户ID，检索客户信息，返回客户详细信息
+        /// </summary>
+        /// <param name="id">客户id</param>
+        /// <returns>客户详细信息</returns>
+
+        [Description("传入经纪人ID，检索返回带客详细信息")]
+        [HttpGet]
+        public HttpResponseMessage GetStatusByUserId(int page)
+        {
+          
+            var user = (UserBase)_workContext.CurrentUser;
+            var broker = _brokerService.GetBrokerByUserId(user.Id);
+            
+            if (broker != null) 
+            {
+                var condition = new BrokerLeadClientSearchCondition
+                {
+                    Page = page,
+                    PageCount = 10,
+                    Brokers = broker
+                };
+                var conditon2 = new BrokerRECClientSearchCondition
+                {
+                     Page = page,
+                    PageCount = 10,
+                    Brokers = broker
+                };
+                var model = _brokerLeadClientService.GetBrokerLeadClientsByCondition(condition).ToList();
+                if (model == null)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "当前经纪人没有带过客户"));
+                }
+                var model2 = _brokerRecClientService.GetBrokerRECClientsByCondition(conditon2).ToList();
+                if (model2 == null)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "当前经纪人没有推荐过客户"));
+                }
+
+                List<ReturnCustomModel> listModel = new List<ReturnCustomModel>();
+
+                // 带客
+               var  listdk= model.Select(p => new
+                {
+                    StrType = "带客",
+                    Clientname = p.ClientInfo.Clientname,
+                    Housetype = p.ClientInfo.Housetype,
+                    Houses = p.ClientInfo.Houses,
+                    Phone = p.Broker.Phone,
+                    Status = p.Status,
+                    Id = p.Id,
+                }).ToList().ToList();
+
+                foreach(var p in listdk)
+                {
+                    listModel.Add(new ReturnCustomModel{ Clientname=p.Clientname, Houses=p.Houses, Housetype=p.Housetype, Id=p.Id.ToString(), Phone=p.Phone, Status=p.Status.ToString(), StrType=p.StrType});
+                }
+
+                //推荐
+
+                var  listtj= model2.Select(c => new
+                {
+                        StrType = "推荐",
+                        Clientname = c.ClientInfo.Clientname,
+                        Housetype = c.ClientInfo.Housetype,
+                        Houses = c.ClientInfo.Houses,
+                        Phone = c.Broker.Phone,
+                        Status = c.Status,
+                        Id = c.Id,
+                        Uptime = c.Uptime.ToString(CultureInfo.InvariantCulture)
+                }).ToList();
+
+                foreach (var p in listtj)
+                {
+                    listModel.Add(new ReturnCustomModel { Clientname = p.Clientname, Houses = p.Houses, Housetype = p.Housetype, Id = p.Id.ToString(), Phone = p.Phone, Status = p.Status.ToString(), StrType = p.StrType});
+                }
+
+                int totalCount = _brokerLeadClientService.GetBrokerLeadClientCount(condition) + _brokerRecClientService.GetBrokerRECClientCount(conditon2);
+                return PageHelper.toJson(new { list = listModel, totalCount = totalCount });       
+            
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+        }
+        ///////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// 判断当前用户是否是经济人，返回结果状态值，是经纪人返回"1",否则返回"0"
         /// </summary>
@@ -274,4 +369,27 @@ namespace Zerg.Controllers.CRM
 
 
     }
+
+    /// <summary>
+    /// 返回带客列表信息
+    /// </summary>
+    public class  ReturnCustomModel
+    {
+
+        // 客户相关信息
+        public virtual string Clientname { get; set; }
+        // 经纪人相关信息
+        public virtual string Housetype { get; set; }
+        public virtual string Houses { get; set; }
+        //带客进度
+        public virtual string Status { get; set; }
+        //客户电话
+        public virtual string Phone { get; set; }
+        //Id
+        public virtual string Id { get; set; }
+
+        public string StrType { get; set; }
+    }
+
+
 }

@@ -34,7 +34,7 @@ getTagList();
 
 //详细信息
 angular.module("app").controller('ARDetialController',[
-    '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
+    '$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams) {
         //获取详细信息
         $http.get(SETTING.ApiUrl + '/AdminRecom/GetAuditDetail/' + $stateParams.id,{
             'withCredentials':true
@@ -68,8 +68,12 @@ angular.module("app").controller('ARDetialController',[
                 'withCredentials':true
             }).success(function(data){
                 if(data.Status){
+                    alert(data.Msg);
+                    $state.go('page.CRM.WaitCheck.index');
                     console.log(data.Msg);
                 }else{
+                    alert(data.Msg);
+                    $state.go('page.CRM.WaitCheck.index');
                     console.log(data.Msg);
                 }
             });

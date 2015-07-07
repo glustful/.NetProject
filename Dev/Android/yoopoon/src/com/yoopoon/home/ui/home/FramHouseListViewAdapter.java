@@ -92,7 +92,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 				MyApplication.getOptions(), MyApplication.getLoadingListener());
 		 
 		//viewHandler.houseImageView.
-		
+	 
 		
 		
 		viewHandler.houseProductnameTextView.setText(item

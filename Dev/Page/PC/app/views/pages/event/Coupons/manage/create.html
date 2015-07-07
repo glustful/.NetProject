@@ -1,0 +1,35 @@
+<form name="form" id="form" ng-controller="CouponCreateController" ng-submit="create()">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="bottom" ><label>价&nbsp;&nbsp;&nbsp;&nbsp;格： </label>
+                <input id="price" type="text" ng-model="Coupon.Price" required>
+            </div>
+            <div class="bottom" ><label>数&nbsp;&nbsp;&nbsp;&nbsp;量： </label>
+                <input id="num" type="text" ng-model="Coupon.Count" required>
+            </div>
+            <!--<div class="bottom" ><label>验证&nbsp;&nbsp;码： </label>-->
+                <!--<input id="remark" type="textr" ng-model="Coupon.Number" required>-->
+            <!--</div>-->
+            <div class="bottom" ><label>状&nbsp;&nbsp;&nbsp;&nbsp;态： </label>
+                <select name="Status" id="Status" ng-model="Coupon.Status">
+                    <option value="0">新建</option>
+                    <option value="1">拥有</option>
+                    <option value="2">激活</option>
+                    <option value="3">使用</option>
+                </select>
+            </div>
+            <div class="bottom" ><label>种&nbsp;&nbsp;&nbsp;&nbsp;类： </label>
+                <!--<select name="ChannelId" id="ChannelId" ng-model="ContentModel.ChannelId">-->
+                <!--<option ng-repeat="list in ChannelList" value="{{list.Id}}" ng-selected="list.Id==ContentModel.ChannelId">{{list.Name}}</option>-->
+                <!--</select>-->
+                <select name="CouponCategoryId" id="CouponCategoryId" ng-model="Coupon.CouponCategoryId" ng-options="list.Id as list.Name for list in CouponCategoryList"></select>
+            </div>
+
+            <div>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" type="submit" ng-disabled="form.$invalid">确认<div class="md-ripple-container"></div></button>
+                <a href="#page/event/Coupons/manage/index"><button type="button" md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink">取消<div class="md-ripple-container"></div></button></a>
+            </div>
+        </div>
+    </div>
+</form>
