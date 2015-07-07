@@ -123,9 +123,6 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Zerg.Event">
-      <HintPath>..\..\..\..\Project_Zerg_Event\Dev\Code\Zerg.Event\bin\Zerg.Event.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
