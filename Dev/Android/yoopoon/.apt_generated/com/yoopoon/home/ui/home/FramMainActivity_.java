@@ -13,7 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
 import com.yoopoon.home.R.layout;
 import org.androidannotations.api.SdkVersionHelper;
@@ -82,9 +82,9 @@ public final class FramMainActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        mainPager = ((ViewPager) hasViews.findViewById(com.yoopoon.home.R.id.home_main_pager));
-        loadingLayout = ((RelativeLayout) hasViews.findViewById(com.yoopoon.home.R.id.home_main_loading_layout));
         tabHost = ((TabHost) hasViews.findViewById(android.R.id.tabhost));
+        searchLayout = ((LinearLayout) hasViews.findViewById(com.yoopoon.home.R.id.search_layout));
+        mainPager = ((ViewPager) hasViews.findViewById(com.yoopoon.home.R.id.home_main_pager));
         initUI();
     }
 
