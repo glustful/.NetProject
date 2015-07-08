@@ -1,5 +1,7 @@
 package com.yoopoon.home.ui.agent;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.LinearLayout;
@@ -19,6 +22,8 @@ import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.ui.AD.GridViewController;
 
+import com.yoopoon.home.ui.view.MyGridView;
+
 public class HeroController extends GridViewController {
 
 	public HeroController(Context context) {
@@ -26,13 +31,25 @@ public class HeroController extends GridViewController {
 
 	}
 
-	GridAdapter adapter;
+	//GridAdapter adapter;
+	@Override
+	public void show(ArrayList<JSONArray> urls) {
 
-	public void show(JSONArray urls) {
+		for(int i=0;i<urls.size();i++){
+			MyGridView mGridView = new MyGridView(mContext);
+			mGridView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, GridView.LayoutParams.WRAP_CONTENT));
+			mGridView.setNumColumns(3);
+			mGridView.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
+			mGridView.setHorizontalSpacing(1);
+			mGridView.setVerticalSpacing(1);
+			mGridView.setHorizontalScrollBarEnabled(false);
+			mGridView.setVerticalScrollBarEnabled(false);
+			mGridView.setAdapter(new GridAdapter(mContext, urls.get(i)));    
+			mViews.add(mGridView);
+		}
+		mPagerAdapter.refresh(mViews);
 
-		adapter = new GridAdapter(mContext, urls);
-
-		mGridView.setAdapter(adapter);
+		
 	}
 
 	class GridAdapter extends BaseAdapter {

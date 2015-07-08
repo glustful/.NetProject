@@ -21,6 +21,7 @@ import com.yoopoon.common.base.utils.Utils;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.ResponseData;
+import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
 
 /**
  * 搜索数据用
@@ -153,7 +154,7 @@ public class SearchFunction  {
         @Override
         public void onClick(View view) {
             text.setText("");
-            listener.deltext();
+           // listener.deltext();
         }
     };
     //数据参数
@@ -192,6 +193,7 @@ public class SearchFunction  {
             }
         }.setUrl(url)
                 .addParam(paramMap)
+                .setRequestMethod(RequestMethod.eGet)
                 .notifyRequest();
     }
 
@@ -243,6 +245,12 @@ public class SearchFunction  {
 
 	public void cleanFocus() {
 		this.text.clearFocus();
+		
+	}
+
+	public void descCount() {
+		pageCount --;
+        paramMap.put("page", pageCount+"");
 		
 	}
 

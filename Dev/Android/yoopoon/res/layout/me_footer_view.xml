@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBackground" >
+
+    <LinearLayout
+        android:id="@+id/brokerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/me_info_custom_icon"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="我要带客"
+                android:textColor="@color/red" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/me_info_introduce_icon"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="我要推荐"
+                android:textColor="@color/red" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/me_info_partnet_icon"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="我的合伙人" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/me_info_introduce_agent_icon"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="推荐经纪人" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/me_info_agent_order_icon"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="经纪人排行" />
+
+            <TextView
+                android:id="@+id/brokerSetting"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/setting_icon"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="设置" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/customLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/registerToBroker"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/p1"
+                android:gravity="center"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:text="注册成为经纪人"
+                android:textColor="@color/red" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/p2"
+                android:gravity="center"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:text="会员专属红包"
+                android:textColor="@color/red" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/p3"
+                android:gravity="center"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:text="天天领礼包" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/p4"
+                android:gravity="center"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:text="会员特惠五折房源" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/p5"
+                android:gravity="center"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:text="会员常见问题" />
+
+            <TextView
+                android:id="@+id/setting"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/setting_icon"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="设置" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
