@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.round.progressbar.CircleProgressDialog;
+import com.yoopoon.common.base.utils.ToastUtils;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
@@ -76,6 +78,10 @@ public class FramActiveFragment extends FramSuper {
 		parameter.put("type", "all");
 		
 	}
+	
+	private void autoIncreatePage(){
+		parameter.put("page", (Integer.parseInt(parameter.get("page"))+1)+"");
+	}
 
 	static String TAG = "FramActivityFragment";
 
@@ -94,7 +100,7 @@ public class FramActiveFragment extends FramSuper {
 	void initViews() {
 
 		listView.setOnRefreshListener(new HowWillIrefresh());
-		listView.setMode(PullToRefreshBase.Mode.DISABLED);
+		listView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
 		refreshView = listView.getRefreshableView();
 		//refreshView.setDividerHeight(5);
 		refreshView.addHeaderView(mAdController.getRootView());
@@ -125,7 +131,8 @@ public class FramActiveFragment extends FramSuper {
 
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-
+			autoIncreatePage();
+			requestBrandList();
 		}
 
 	}
@@ -167,12 +174,12 @@ public class FramActiveFragment extends FramSuper {
 			public void onReponse(ResponseData data) {
 
 				if (data.getResultState() == ResultState.eSuccess) {
-					
+					ArrayList<JSONArray> dataSource = new ArrayList<JSONArray>();
 					JSONArray list = data.getJsonArray();
 					if (list == null || list.length() < 1)
 						return;
-					
-					mActiveController.show(list);
+					dataSource.add(list);
+					mActiveController.show(dataSource);
 				}
 			}
 
@@ -192,16 +199,21 @@ public class FramActiveFragment extends FramSuper {
 
 			@Override
 			public void onReponse(ResponseData data) {
-
+				listView.onRefreshComplete();
 				if (data.getResultState() == ResultState.eSuccess) {
 					
 					JSONArray list = data.getMRootData().optJSONArray("List");
-					if (list == null || list.length() < 1)
+					if (list == null || list.length() < 1){
+						ToastUtils.showToast(mContext, "数据已经加载完成", 3000);
+						descCount();
 						return;
+					}
 					for(int i=0;i<list.length();i++){
 						mJsonObjects.add(list.optJSONObject(i));
 					}
 					mActiveBrandAdapter.refresh(mJsonObjects);
+				}else{
+					descCount();
 				}
 			}
 
@@ -215,6 +227,13 @@ public class FramActiveFragment extends FramSuper {
 
 				.addParam(parameter)
 				.notifyRequest();
+		
+	}
+
+	protected void descCount() {
+		int page = Integer.parseInt(parameter.get("page"));
+		page = page>1?page-1:1;
+		parameter.put("page", page+"");
 		
 	}
 

@@ -5,10 +5,15 @@
 var app = angular.module('zergApp', [ 'ui.router','ngCookies','oc.lazyLoad','ngStorage','ui.bootstrap']);
 
 var SETTING = {
-    BaseUrl:'http://localhost:50597/',
+    BaseUrl:'http://192.168.1.199/',
     ApiUrl:'http://localhost:50597/api',
     ImgUrl:'http://img.yoopoon.com/'
 };
+//var SETTING = {
+//    BaseUrl:'http://api.iyookee.cn/',
+//    ApiUrl:'http://api.iyookee.cn/api',
+//    ImgUrl:'http://img.yoopoon.com/'
+//};
 
 app.config(
     [        '$controllerProvider', '$compileProvider', '$filterProvider', '$provide',

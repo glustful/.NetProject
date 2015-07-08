@@ -35,6 +35,7 @@ public class MainTabView extends LinearLayout{
 
 	public MainTabView(Context context) {
 		super(context);
+		
 	}
 	
 	public void setIndicator(int resId){
@@ -74,4 +75,5 @@ public class MainTabView extends LinearLayout{
 //		imageView.set
 	}
 
+	
 }

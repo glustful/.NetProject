@@ -4,15 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>经纪人</title>
-
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/broker.css" rel="stylesheet">
-
-
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -20,22 +16,30 @@
 </head>
 <body>
 <!--导航-->
-<div class="container-fluid header navbar-fixed-top">
-    <div class="row">
-        <div class="col-md-7"><img src="images/headLogo.png" alt=""/></div>
-        <div class="col-md-5">
-            <nav>
-                <ol class="breadcrumb">
+<header>
+    <nav id="main-nav" class="navbar navbar-default navbar-fixed-top myNav" role="navigation">
+        <div class="container">
+
+            <div class="navbar-header">
+                <button type="button" class="toggle navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-top-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/"><img id="navbar-logo" src="images/headLogo.png"></a>
+            </div>
+            <div class="navbar-collapse navbar-top-collapse collapse">
+                <ol class="  breadcrumb pull-right">
                     <li><a href="index.html">首页</a></li>
                     <li><a href="buyer.html">买房者</a></li>
                     <li><a href="broker.html" class="red">经纪人</a></li>
                     <li><a href="Developers.html">开发商</a></li>
                 </ol>
-            </nav>
+            </div>
         </div>
-    </div>
-</div>
-
+    </nav>
+</header>
 <!--经纪人的赚钱利器-->
 <div class="container">
     <div class="row">
@@ -61,9 +65,6 @@
                         <li><img src="images/yjt.png" alt=""/></li>
                         <li class="need"><p><img src="images/rmb3.png" alt=""/></p><span class="min-font">双佣金奖励</span></li>
                         </ul>
-
-
-
                 </div>
             </div>
             <div class="col-md-12 down">
@@ -85,7 +86,6 @@
     <hr/>
 </div>
 <!--玩活动，做任务-->
-
 <div class="container play">
     <div class="row">
         <div class="col-md-4">
@@ -125,15 +125,16 @@
                     <p>公司坐标</p>
                     <p>服务热线</p>
                 </div>
-
             </div>
             <div class="col-md-4 logo-ft"> <img src="images/code.png" alt=""/>
             </div>
         </div>
     </div>
-
 </footer>
 <script src="js/jquery-1.11.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+    <div style="display:none;">
+    <script src="http://s95.cnzz.com/stat.php?id=1255714001&web_id=1255714001" language="JavaScript"></script>
+</div>
 </body>
 </html>

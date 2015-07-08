@@ -25,6 +25,14 @@
    
 
 </LinearLayout>
-
+<TextView 
+    android:id="@android:id/empty"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="没有搜索到任何数据\n\n换个条件试试"
+    android:gravity="center"
+    android:textColor="@color/red"
+    android:textSize="@dimen/login_text_size"
+    android:visibility="gone"/>
 
 </FrameLayout>
