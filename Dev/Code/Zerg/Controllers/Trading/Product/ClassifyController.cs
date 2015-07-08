@@ -124,6 +124,7 @@ namespace Zerg.Controllers.Trading.Product
         }
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        [System.Web.Http. AllowAnonymous]
         public HttpResponseMessage GetClassList()
         {
             ClassifySearchCondition csc = new ClassifySearchCondition()
