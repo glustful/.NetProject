@@ -183,6 +183,12 @@ app.run(
                 data:{title:'楼盘详情'}
 
             })
+            .state('app.BrandDetail',{
+                url:'/BrandDetail?BrandId',
+                templateUrl:'modules/BrandDetail/view/BrandDetail.html',
+                controller:'HousesBuyController',
+                resolve:load(['modules/housesBuy/static/scripts/HousesBuy.js'])
+            })
             .state('app.housesBuy',{
                 url:'/housesBuy?BrandId',
                 templateUrl:'modules/housesBuy/view/housesBuy.html',
