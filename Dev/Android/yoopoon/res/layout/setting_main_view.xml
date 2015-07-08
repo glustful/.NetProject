@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBackground"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <TextView
+        android:id="@+id/person_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:drawableRight="@drawable/right_next_icon"
+        android:padding="10dp"
+        android:text="个人资料"
+        android:textColor="@color/setting_text"
+        android:textSize="@dimen/large_textSize" />
+
+    <TextView
+        android:id="@+id/security_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:drawableRight="@drawable/right_next_icon"
+        android:padding="10dp"
+        android:text="安全设置"
+        android:textColor="@color/setting_text"
+        android:textSize="@dimen/large_textSize" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/cycle_selector"
+        android:text="退出当前账号"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

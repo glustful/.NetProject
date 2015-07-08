@@ -26,6 +26,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.common.base.Tools;
 import com.yoopoon.common.base.photo.PhotoCheck;
 import com.yoopoon.common.base.photo.PhotoCheck_;
+import com.yoopoon.common.base.utils.ToastUtils;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.ui.product.ProductDetailActivity;
@@ -67,6 +68,7 @@ public class BrandDetailAdapter extends BaseAdapter {
 	        TextView content;
 	        TextView price;
 	        TextView title;
+	        TextView callPhone;
 
 	        public ViewHolder(View itemView) {
 	            super(itemView);
@@ -74,6 +76,7 @@ public class BrandDetailAdapter extends BaseAdapter {
 	            title = (TextView) itemView.findViewById(R.id.title);
 	            content = (TextView) itemView.findViewById(R.id.content);
 	            price = (TextView) itemView.findViewById(R.id.price);
+	            callPhone = (TextView) itemView.findViewById(R.id.callPhone);
 	        }
 	    }
 
@@ -112,6 +115,20 @@ public class BrandDetailAdapter extends BaseAdapter {
 		       viewHolder.title.setText(Tools.optString(item, "Productname", ""));
 		       viewHolder.content.setText(Tools.optString(item, "SubTitle", ""));
 		       viewHolder.price.setText("均价"+Tools.optDouble(item, "Price", 0)+"元/m²起");
+		       viewHolder.callPhone.setTag(Tools.optString(item, "Phone", ""));
+		       viewHolder.callPhone.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View view) {
+					String phone = view.getTag()!=null?view.getTag().toString().trim():null;
+					if(phone==null || phone.equals("")){
+						ToastUtils.showToast(mContext, "手机号码为空，联系管理员", 3000);
+						return;
+					}
+					Tools.callPhone(mContext, phone);
+					
+				}
+			});
 		       String url = mContext.getString(R.string.url_host_img)+item.optString("Productimg");
 		       viewHolder.img.setTag(url);
 		       viewHolder.img.setHeightRatio(1);

@@ -122,9 +122,9 @@ namespace CRM.Service.BrokerWithdrawDetail
                     query = query.Where(q => condition.Addusers.Contains(q.Adduser));
                 }
 
-                if (!string.IsNullOrEmpty(condition.State))
+                if (!string.IsNullOrEmpty(condition.Type))
                 {
-                    query = query.Where(q => q.State==condition.State);
+                    query = query.Where(q => q.Type == condition.Type);
                 }
 
 				if (condition.Upusers != null && condition.Upusers.Any())
@@ -185,9 +185,9 @@ namespace CRM.Service.BrokerWithdrawDetail
                     query = query.Where(q => q.Uptime>= condition.UptimeBegin.Value);
                 }
 
-                if (!string.IsNullOrEmpty(condition.State))
+                if (!string.IsNullOrEmpty(condition.Type))
                 {
-                    query = query.Where(q => q.State == condition.State);
+                    query = query.Where(q => q.Type == condition.Type);
                 }
                 if (condition.UptimeEnd.HasValue)
                 {
