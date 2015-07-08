@@ -92,16 +92,7 @@ angular.module("app").controller('EditProductController', [
 
 
         });
-
-
-
-
-
-
-
-
-
-
+        $scope.selectParameterValue = [];
         //编辑商品信息
          $scope.update=function(){
             var newproduct = {
@@ -125,17 +116,44 @@ angular.module("app").controller('EditProductController', [
                  Sericeinstruction:$scope.product.Sericeinstruction
             };
             var classifyJson = JSON.stringify({ product: newproduct, productDetail: newproductDetail });
-            $http.post(SETTING.ApiUrl + '/Product/EditProduct',classifyJson,{
-                'withCredentials':true
-            }).success(function(data){
-                if(data.Status){
-                    $state.go("page.Trading.product.product");
+             $http.post(SETTING.ApiUrl + '/Product/EditProduct',classifyJson,{
+                 'withCredentials':true
+             }).success(function(data){
+                 if(data.Status){
+                     valueClick();
+                     for (var i = 0; i < $scope.selectParameterValue.length; i++) {
+                         $http.get(SETTING.ApiUrl + '/Classify/UpdateProductParameterVaule?parameterValueId=' + $scope.selectParameterValue[i] + "&productId=" + $scope.product.Id, {'withCredentials': true}).success(function (data) {
+
+                         }).success(function(){
+                             if(data.Status)
+                             {
+                                 $state.go("page.Trading.product.product");
+                             }
+                         });
+                     }
+                 }
+                 else{
+                     $scope.alerts=[{type:'danger',msg:data.Msg}];
+                 }
+             });
+         };
+        function valueClick() {
+            $scope.selectParameterValue = [];
+            for (var i = 0; i < $scope.parameterValueList.length; i++) {
+                $scope.selectParameterValue.push(getRadioBoxValue($scope.parameterValueList[i].Name));
+            }
+            //alert($scope.selectParameterValue);
+        }
+
+        function getRadioBoxValue(radioName) {
+            var obj = document.getElementsByName(radioName);  //这个是以标签的name来取控件
+            for (var i = 0; i < obj.length; i++) {
+                if (obj[i].checked) {
+                    return   obj[i].value;
                 }
-                else{
-                    $scope.alerts=[{type:'danger',msg:data.Msg}];
-                }
-            });
-        };
+            }
+            return "undefined";
+        }
 
     }]);
 
