@@ -21,8 +21,6 @@ angular.module("app").controller('adminIndexController', [
                 'withCredentials':true
             }).success(function(data){
                 if(data.List.length>0) {
-                    console.log(data);
-
                     page= $scope.searchCondition.page = data.Condition.Page;
                     howmany=data.List.length;//保存当页数据数量
                     $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -118,26 +116,7 @@ angular.module("app").controller('adminIndexController', [
                 });
             });
         }
-//            function(id){
-//        $http.post(SETTING.ApiUrl+'/BrokerInfo/DeleteBroker',id,{
-//            'withCredentials':true
-//        }).success(function(data) {
-//           if(data.Status)
-//           {
-//               alert(data.Msg);
-//               if(howmany==1)
-//               {
-//                   if(page>1){
-//                   $scope.searchCondition.page--;}
-//                   else{
-//                       $scope.searchCondition.page=1;
-//                   }
-//               }
-//               $scope.getList();
-//           }
-//
-//        })}
-        //注销经纪人
+
         $scope.cancelBroker=function (id,btnname) {
             $scope.selectedId = id;
             var modalInstance = $modal.open({
@@ -175,30 +154,10 @@ angular.module("app").controller('adminIndexController', [
                 });
             });
         }
-//        $scope.cancelBroker=function(id){
-//            $http.post(SETTING.ApiUrl+'/BrokerInfo/CancelBroker',id,{
-//                'withCredentials':true
-//            }).success(function(data) {
-//                if(data.Status)
-//                {
-//                    alert(data.Msg);
-//                    if(howmany==1)
-//                    {
-//                        if(page>1){
-//                            $scope.searchCondition.page--;}
-//                        else{
-//                            $scope.searchCondition.page=1;
-//                        }
-//                    }
-//                    $scope.getList();
-//                }
-//
-//            })}
-
     }
 ]);
 
-angular.module("app").controller('configureDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
+angular.module("app").controller('AdmManDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
 
     //个人信息
     $http.get(SETTING.ApiUrl + '/BrokerInfo/GetBrokerByAgent?id=' + $stateParams.id,{
@@ -215,7 +174,7 @@ angular.module("app").controller('configureDetailedController',['$http','$scope'
 
 }]);
 
-angular.module("app").controller('UserCreateController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
+angular.module("app").controller('AdmManCreateController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
 
     $scope.UserModel={
 

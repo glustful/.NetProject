@@ -185,7 +185,7 @@ namespace Zerg.Controllers.CRM
         /// <returns></returns>
         [System.Web.Http.HttpGet]
         [Description("传入会员参数,获取会员列表")]
-        public HttpResponseMessage SearchBrokers(EnumUserType userType, string phone, string name = null, int page = 1, int pageSize = 10, int state = 2)
+        public HttpResponseMessage SearchBrokers(EnumUserType userType, string phone=null, string name = null, int page = 1, int pageSize = 10, int state = 2)
         {
             //var phones = new int[1];
 

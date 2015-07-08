@@ -24,7 +24,7 @@
         <tr>
             <td>
                 <div class="md-list-item-left">
-                    <img src="images/a0.jpg" class="w-full circle">
+                    <img src="http://img.yoopoon.com/{{item.Headphoto}}" class="w-full circle">
                 </div>
                 <div class="information">
                     <p><span>昵称：<small class="small">{{item.Nickname}}</small></span><span>姓名：<small>{{item.Realname}}</small></span><span>手机:<small>{{item.Phone}}</small></span></p>
@@ -50,41 +50,6 @@
 
 
 </div>
-
-<script type="text/javascript">
-    var keyname="";
-    key=function () {
-        var keynum;
-//三元表达式获取不同浏览器的按下键的代码
-        keynum = window.event ? event.keyCode : event.which;
-        if(keynum==13){btsearch.click()}if(keynum==39){
-            if(keyname=="name"){document.getElementById("phone").focus();}
-            else  if(keyname=="phone"){document.getElementById("staStatus").focus();}
-        }
-        if(keynum==37){
-
-            if(keyname=="staStatus"){
-                //使HTML元素原来默认的事件失效
-                event.returnValue=false;
-                document.getElementById("phone").focus();
-            }
-            else  if(keyname=="phone"){document.getElementById("name").focus();}
-        }
-
-    }
-    //保存获得焦点的id
-    myFunction=function(idif){
-        keyname=idif;
-    }
-    //    $(document).ready(function(){
-    //      var hidden1=  $("#btnmo").click(function(){
-    //            //$(".divtip").css("display","none");
-    //            $("#dividtip").fadeOut(4000);
-    //        });
-    //
-    //    });
-</script>
-
 <script type="text/ng-template" id="myModalContent.html">
     <div ng-include="'views/partials/modal.html'"></div>
 </script>
