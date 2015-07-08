@@ -1,10 +1,14 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CRM.Entity.Model
 {
-	public class BrokerWithdrawDetailSearchCondition
-	{
-		/// <summary>
+    public class BrokerWithdrawSearchCondition
+    {
+        /// <summary>
 		/// 页码
 		/// </summary>
 		public int? Page { get; set; }
@@ -22,19 +26,19 @@ namespace CRM.Entity.Model
 		public int[] Ids { get; set; }
 
         /// <summary>
-        /// 类型（0带客，1推荐）
+        /// 提现状态 ｛0，处理中   1完成 ok｝
         /// </summary>
-        public string Type { get; set; }
+        public string State { get; set; }
 
 		public BrokerEntity Brokers { get; set; }
 
 		public BankCardEntity[] BankCards { get; set; }
 
-		public DateTime? WithdrawtimeBegin { get; set; }
+        public DateTime? WithdrawtimeBegin { get; set; }
 
-		public DateTime? WithdrawtimeEnd { get; set; }
+        public DateTime? WithdrawtimeEnd { get; set; }
 
-		public decimal? Withdrawnum { get; set; }
+        public decimal? WithdrawTotalNum { get; set; }
 
 		public int[] Addusers { get; set; }
 
@@ -48,11 +52,12 @@ namespace CRM.Entity.Model
 
 		public DateTime? UptimeEnd { get; set; }
 
-		public EnumBrokerWithdrawDetailSearchOrderBy? OrderBy { get; set; }
+		public EnumBrokerWithdrawSearchOrderBy? OrderBy { get; set; }
 	}
 
-	public enum EnumBrokerWithdrawDetailSearchOrderBy
+    public enum EnumBrokerWithdrawSearchOrderBy
 	{
 		OrderById,
 	}
+    
 }
