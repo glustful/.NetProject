@@ -190,7 +190,7 @@ namespace CRM.Service.ClientInfo
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-                if (condition.Addusers != null)
+                if (condition.Addusers != 0)
                 {
                     query = query.Where(q => (q.Adduser == condition.Addusers));
                 }
