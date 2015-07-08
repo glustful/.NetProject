@@ -600,7 +600,8 @@ angular.module('app')
               url: '/index',
               templateUrl: 'views/pages/CRM/AgentManager/index.html',
               data: { title: '经纪人管理' },
-              resolve:load('scripts/controllers/CRM/agentmanager.js')
+              resolve:load(['scripts/controllers/CRM/agentmanager.js',
+                  'scripts/controllers/CRM/inforManagement.js'])
             })
             .state('page.CRM.AgentManager.detailed', {
               url: '/detailed?userid',
@@ -617,14 +618,13 @@ angular.module('app')
               url: '/index',
               templateUrl: 'views/pages/CRM/BusMan/index.html',
                   data: { title: '商家管理' },
-                controller:"busmanIndexController",
-                resolve:load('scripts/controllers/CRM/busman.js')
+                resolve:load(['scripts/controllers/CRM/busman.js',
+                    'scripts/controllers/CRM/inforManagement.js'])
             })
             .state('page.CRM.BusMan.detailed', {
               url: '/detailed?id',
               templateUrl: 'views/pages/CRM/BusMan/detailed.html',
                   data: { title: '详情页' },
-                controller:"busmanDetailedController",
                 resolve:load('scripts/controllers/CRM/busman.js')
             })
 
@@ -636,20 +636,19 @@ angular.module('app')
               url: '/index',
               templateUrl: 'views/pages/CRM/AdmMan/index.html',
                   data: { title: 'Admin管理' },
-                resolve:load('scripts/controllers/CRM/AdmMan.js')
+                resolve:load(['scripts/controllers/CRM/AdmMan.js',
+                    'scripts/controllers/CRM/inforManagement.js'])
             })
             .state('page.CRM.AdmMan.detailed', {
               url: '/detailed?id',
               templateUrl: 'views/pages/CRM/AdmMan/detailed.html',
                   data: { title: '详情页' },
-                controller:"configureDetailedController",
                 resolve:load('scripts/controllers/CRM/AdmMan.js')
             })
             .state('page.CRM.AdmMan.create', {
                 url: '/create',
                 templateUrl: 'views/pages/CRM/AdmMan/create.html',
                 data: { title: '新建管理员账号' },
-                controller:"UserCreateController",
                 resolve:load('scripts/controllers/CRM/AdmMan.js')
             })
 
@@ -661,21 +660,19 @@ angular.module('app')
               url: '/index',
               templateUrl: 'views/pages/CRM/CW/index.html',
                   data: { title: '财务账号管理' },
-                controller:"cwIndexController",
-                resolve:load('scripts/controllers/CRM/cw.js')
+                resolve:load(['scripts/controllers/CRM/cw.js',
+                    'scripts/controllers/CRM/inforManagement.js'])
             })
             .state('page.CRM.CW.detailed', {
               url: '/detailed?id',
               templateUrl: 'views/pages/CRM/CW/detailed.html',
                   data: { title: '详情页' },
-                controller:"cwDetailedController",
                 resolve:load('scripts/controllers/CRM/cw.js')
             })
             .state('page.CRM.CW.create', {
                 url: '/create',
                 templateUrl: 'views/pages/CRM/CW/create.html',
                 data: { title: '添加页' },
-                controller:"UserCreateController",
                 resolve:load('scripts/controllers/CRM/cw.js')
             })
 
@@ -687,21 +684,19 @@ angular.module('app')
               url: '/index',
               templateUrl: 'views/pages/CRM/ZC/index.html',
                   data: { title: '驻场秘书账号管理' },
-                controller:"zcIndexController",
-                resolve:load('scripts/controllers/CRM/zc.js')
+                resolve:load(['scripts/controllers/CRM/zc.js',
+                    'scripts/controllers/CRM/inforManagement.js'])
             })
             .state('page.CRM.ZC.detailed', {
               url: '/detailed?id',
               templateUrl: 'views/pages/CRM/ZC/detailed.html',
                   data: { title: '详情页' },
-                controller:"zcDetailedController",
                 resolve:load('scripts/controllers/CRM/zc.js')
             })
             .state('page.CRM.ZC.create', {
                 url: '/create',
                 templateUrl: 'views/pages/CRM/ZC/create.html',
                 data: { title: '新建用户' },
-                controller:"UserCreateController",
                 resolve:load('scripts/controllers/CRM/zc.js')
             })
 
@@ -714,7 +709,8 @@ angular.module('app')
               templateUrl: 'views/pages/CRM/DK/index.html',
                   data: { title: '带客人员账号管理' },
                 controller:"dkIndexController",
-                resolve:load('scripts/controllers/CRM/dk.js')
+                resolve:load(['scripts/controllers/CRM/dk.js',
+                    'scripts/controllers/CRM/inforManagement.js'])
             })
             .state('page.CRM.DK.detailed', {
               url: '/detailed?id',

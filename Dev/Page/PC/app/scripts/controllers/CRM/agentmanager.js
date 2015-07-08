@@ -21,7 +21,6 @@ angular.module("app").controller('agentmanagerIndexController', [
                 'withCredentials':true
             }).success(function(data){
                 if(data.List.length>0) {
-                    console.log(data);
                    page= $scope.searchCondition.page = data.Condition.Page;
                     howmany=data.List.length;//保存当页数据数量
                     $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -152,7 +151,7 @@ angular.module("app").controller('agentmanagerIndexController', [
 ]);
 
 
-angular.module("app").controller('configureDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
+angular.module("app").controller('agentmanagerDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
 
      //个人信息
     $http.get(SETTING.ApiUrl + '/BrokerInfo/GetBrokerByAgent?id=' + $stateParams.userid,{

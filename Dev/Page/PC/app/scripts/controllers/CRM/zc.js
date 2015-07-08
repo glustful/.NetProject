@@ -22,8 +22,6 @@ angular.module("app").controller('zcIndexController', [
             }).success(function(data){
                 // alert(data.list!=null);
                 if(data.List.length>0) {
-                    console.log(data);
-
                     page= $scope.searchCondition.page = data.Condition.Page;
                     howmany=data.List.length;//保存当页数据数量
                     $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -215,7 +213,7 @@ angular.module("app").controller('zcDetailedController',['$http','$scope','$stat
 
 }]);
 
-angular.module("app").controller('UserCreateController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
+angular.module("app").controller('zcCreateController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
 
     $scope.UserModel={
 
