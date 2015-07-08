@@ -186,7 +186,7 @@ namespace Zerg.Controllers.CRM
                         Addtime = DateTime.Now,
                         Adduser = broker.Id,
                         Upuser = broker.Id,
-                        State="0"
+                        Type="0"
                     };
 
                     try
@@ -226,7 +226,7 @@ namespace Zerg.Controllers.CRM
                     BrokerWithdrawDetailSearchCondition browithdetailcon = new BrokerWithdrawDetailSearchCondition
                     {
                         Brokers = broker,
-                        State="1"
+                        Type="1"
                         
                     };
                     decimal AddMoneys =_brokeaccountService.GetBrokeAccountsByCondition(broconditon).Count()>0? _brokeaccountService.GetBrokeAccountsByCondition(broconditon).Sum(o => o.Balancenum):0;//新增的金额总和

@@ -24,6 +24,15 @@ namespace CRM.Entity.Model
 		/// 新增金额
 		/// </summary>
 		public virtual decimal Balancenum { get; set; }
+
+
+        /// <summary>
+        /// 金额类型（0 带客，1 推荐）
+        /// </summary>
+        public virtual int Type { get; set; }
+
+
+
 		/// <summary>
 		/// AddUser
 		/// </summary>

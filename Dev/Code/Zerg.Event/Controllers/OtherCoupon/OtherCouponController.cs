@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using Event.Entity.Entity.Coupon;
 using Event.Entity.Entity.OtherCoupon;
 using Event.Service.OtherCoupon;
 using Trading.Service.ProductBrand;
@@ -31,11 +27,12 @@ namespace Zerg.Event.Controllers.OtherCoupon
         }
         public ActionResult OtherCoupons()
         {
-            var ConConditon = new OtherCouponCategorySearchCondition
+            var conConditon = new OtherCouponCategorySearchCondition
             {
+               // ClassId = classId,
                 OrderBy = EnumOtherCouponCategorySearchOrderBy.OrderById
             };
-            var list = _otherCouponCategoryService.GetCouponCategoriesByCondition(ConConditon).Select(p => new
+            var list = _otherCouponCategoryService.GetCouponCategoriesByCondition(conConditon).Select(p => new
             {
                 p.Id,
                 p.BrandId,
@@ -50,6 +47,7 @@ namespace Zerg.Event.Controllers.OtherCoupon
                 Price = pp.Price,
                 Count = pp.Count,
                 ReMark = pp.ReMark,
+                BrandId = pp.BrandId,
                 BrandImg = _productBrandService.GetProductBrandById(pp.BrandId).Bimg,
                 SubTitle = _productBrandService.GetProductBrandById(pp.BrandId).SubTitle,
                 ProductParamater = _productBrandService.GetProductBrandById(pp.BrandId).ParameterEntities.ToDictionary(k => k.Parametername, v => v.Parametervaule)
@@ -71,21 +69,23 @@ namespace Zerg.Event.Controllers.OtherCoupon
             };
             var coupon = _otherCouponService.GetCouponByCondition(condition).FirstOrDefault();
 
+            if (coupon != null)
+            {
                 _otherCouponOwnerService.CreateRecord(_workContext.CurrentUser.Id, coupon.Id);
                 coupon.Status = EnumOtherCouponStatus.Owned;
                 _otherCouponService.Update(coupon);
                 couponCategory.Count = couponCategory.Count - 1;
                 _otherCouponCategoryService.UpdateCouponCategory(couponCategory);
                 var brand = _productBrandService.GetProductBrandById(couponCategory.BrandId);
-                var CouponOwn = new CouponCategoryModel
+                var couponOwn = new CouponCategoryModel
                 {
                     Name = couponCategory.Name,
                     Number = coupon.Number,
                     BrandName = brand.Bname
                 };
-                return View(CouponOwn);
-
-            //return RedirectToAction("coupons", "Coupons");
+                return View(couponOwn);
+            }
+            return RedirectToAction("coupons", "Coupons");
         }
     }
 }

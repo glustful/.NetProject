@@ -189,7 +189,8 @@ namespace Zerg.Controllers.Trading.Product
             {
                 Page = page,
                 PageCount = pageSize,
-                OrderBy = EnumProductSearchOrderBy.OrderById
+                IsDescending = true,
+                OrderBy = EnumProductSearchOrderBy.OrderByAddtime
             };
             var productList = _productService.GetProductsByCondition(PSC).Select(a => new ProductDetail
             {
