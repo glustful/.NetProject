@@ -28,7 +28,7 @@ namespace CRM.Entity.Model
         /// <summary>
         /// 提现状态 ｛0，处理中   1完成 ok｝
         /// </summary>
-        public string State { get; set; }
+        public int? State { get; set; }
 
 		public BrokerEntity Brokers { get; set; }
 

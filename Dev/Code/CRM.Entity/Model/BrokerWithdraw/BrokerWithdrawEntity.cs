@@ -50,7 +50,7 @@ namespace CRM.Entity.Model
         /// <summary>
         /// 提现状态 ｛0，处理中   1完成 ok｝
         /// </summary>
-        public virtual string State { get; set; }
+        public virtual int State { get; set; }
         /// <summary>
         /// 描述
         /// </summary>

@@ -82,28 +82,34 @@
    var widScale =0.5555;
    var  crowdNum= p.crowdNum ;//已经参加该项目众筹的人数
    var crowdMaxNum = p.crowdMaxNum ;//该项目最大优惠的众筹人数  
-   widScale =crowdNum *560/crowdMaxNum;//根据众筹人数的比例乘以固定长度560获得进度条的长度
+   if (crowdMaxNum == 0)
+   { crowdMaxNum = 1; }
+   widScale =crowdNum *556/crowdMaxNum;//根据众筹人数的比例乘以固定长度560获得进度条的长度
    var disNum = p.Dislist.Count;//该项目众筹优惠数量
-   var widDes = (560 - 2 * (disNum - 1)) / disNum;//优惠描述
+   if(disNum ==0)
+   { disNum = 1; }
+   var widDes = (556 - 2 * (disNum - 1)) / disNum;//优惠描述宽度
    var widSpace = 2;
    var colo="all";
+   var ini = 0;
   // Write(widDes);                  
    }
                         <div class="favourable-nav">
-                            <div style="width:560px;height :20px;background-color:#DEDEDE;"></div>
+                            <div style="width:556px;height :20px;background-color:#DEDEDE;"></div>
                             <div style="width:@widScale;height :20px;background-color:#53CFB8;margin-top:-20px;"></div>
                             @foreach (var dis in p.Dislist)
                             {
                                 if (crowdNum >= dis.Number)
                                 {
-                                    colo = "all";
+                                    colo = "all";//达到优惠人数时的样式
                                 }
                                 else
                                 {
-                                    colo = "half";
+                                    colo = "half";//没达到时的样式
                                 }
-                            <span class="@colo"style="width:@widDes;margin-bottom:4px;">@dis.Discount 折优惠<br /><small>众筹人数 @dis.Number 人</small></span>
-                               <span style="width:@widSpace;"></span>
+                            <span class="@colo"style="width:@widDes;margin-left:@ini">@dis.Discount 折优惠<br /><small>众筹人数 @dis.Number 人</small></span>
+                                ini = -6;
+                               @*<span style=""></span>*@
                             @*<span class="all">8折优惠<br /><small>众筹人数200人</small></span>
                             <span class="all">7折优惠<br /><small>众筹人数300人</small></span>
                             <span class="half">5折优惠<br /><small>众筹人数500人</small></span>*@
@@ -151,10 +157,12 @@
     //初始化，每一栏目显示第一张图片
     var init = function () {
         var len1 = document.getElementsByClassName("cunlumnNum").length;//获取栏目个数
-        for (var numr = 0; numr < len1 ; numr++) {      
+        for (var numr = 0; numr < len1 ; numr++) {    
+            try{
             document.getElementById("id/" + h + '1').style.display = "block";//循环显示每一栏的第一个图片
             document.getElementById("idIma/" + h + '1').style.backgroundColor = "#7c89e2";//循环显示每一栏的图片对应的按钮颜色
-                h++;
+            h++;}
+            catch(exception){h++;}
             }
             h = 1; p = 1;
         }

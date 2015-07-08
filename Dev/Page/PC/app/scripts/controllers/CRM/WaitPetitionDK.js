@@ -5,13 +5,14 @@
 
 //上访列表
 angular.module("app").controller('WaitVistController', [
-    '$http','$scope',function($http,$scope) {
+    '$http','$scope','AuthService',function($http,$scope) {
         $scope.searchCondition = {
             status:"1",
             brokername:"",
             page: 1,
             pageSize: 10
         };
+
         /////////////////////获取带客待上访记录/////////////////////
         var getDKpetition = function(){
             $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
