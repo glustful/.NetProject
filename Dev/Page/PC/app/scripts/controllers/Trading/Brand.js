@@ -69,10 +69,16 @@ angular.module("app").controller('CreatBrandController', [
             Bname:"",
             Bimg:"",
             SubTitle:"",
-            Content:""
+            Content:"",
+            ClassId:""
 
         };
-
+        //------------------------------------------------获取品牌类别----------------------------------------------//
+        //-------by   yangyue   2015/7/7------获取类别信息--------
+        $http.get(SETTING.ApiUrl + '/Classify/GetClassList',{'withCredentials':true}).success(function (data) {
+            $scope.ClassList=data;
+        });
+        //-----------------end----------
         $scope.Save = function(){
             document.getElementById("btnok").setAttribute("disabled", true);
             $scope.BrandModel.Bimg=$scope.image;
@@ -129,7 +135,7 @@ angular.module("app").controller('CreatBrandController', [
 
 
 
-app.controller('BrandController', ['$scope', '$http', '$state','FileUploader', function ($scope, $http, $state,FileUploader) {
+app.controller('BrandController', ['$scope', '$http', '$state','$modal','FileUploader', function ($scope, $http, $state,$modal,FileUploader) {
 //    //初始化界面；
 //    $scope.rowCollectionBasic = [];
 //    $scope.rowCollectionParameter = [];
@@ -201,6 +207,7 @@ app.controller('BrandController', ['$scope', '$http', '$state','FileUploader', f
 
             $http.get(SETTING.ApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' + $scope.selectBrandId,{'withCredentials':true}).success(function (data) {
                 $scope.rowCollectionParameter = data;
+                AddParameterWindowClose();//------by  yangyue   2015/7/8---关闭当前弹出层----end----
             });
             return $scope.output = data;
         });
@@ -218,18 +225,31 @@ app.controller('BrandController', ['$scope', '$http', '$state','FileUploader', f
         $scope.brandParameterValue=response.Msg
     };
 
-    //删除项目参数值
-    $scope.delBrandParameter=function (brandParameterId) {
-        $http.get(SETTING.ApiUrl + '/Brand/DelBrandParameter?brandParameterId=' + brandParameterId,{'withCredentials':true}).success(function (data) {
-            $http.get(SETTING.ApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' +  $scope.selectBrandId,{'withCredentials':true}).success(function (data) {
-                $scope.rowCollectionParameter = data;
-            });
-
-            $scope.alerts=[{type:'danger',msg:data.Msg}];
+    //------------by-----yangyue------2015/7/7--star---删除项目参数值
+    $scope.delBrandParameter=function(brandParameterId) {
+        $scope.selectedId = brandParameterId;
+        var modalInstance = $modal.open({
+            templateUrl: 'myModalContent.html',
+            controller: 'ModalInstanceCtrl',
+            resolve: {
+                msg: function () {
+                    return "你确定要删除吗？";
+                }
+            }
         });
-    };
+        modalInstance.result.then(function () {
+            $http.get(SETTING.ApiUrl + '/Brand/DelBrandParameter?brandParameterId=' + brandParameterId, {'withCredentials': true}).success(function (data) {
+                $http.get(SETTING.ApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' + $scope.selectBrandId, {'withCredentials': true}).success(function (data) {
+                    $scope.rowCollectionParameter = data;
+                });
 
+                $scope.alerts = [{type: 'danger', msg: data.Msg}];
 
+            });
+        });
+    }
+
+//-----------------------------------end-----------------------------------
     //上传部分
     $(':file').change(function(){
         var file = this.files[0];
