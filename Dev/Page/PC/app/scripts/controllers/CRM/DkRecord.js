@@ -69,6 +69,12 @@ angular.module("app").controller('DKRDetailedController',['$http','$scope','$sta
     });
     $scope.updateDKRecord = function(type){
         $scope.ARDetialModel.Status = type;
+
+        if ($scope.ARDetialModel.SecretaryId == 0 || $scope.ARDetialModel.SecretaryId=="" ||  $scope.ARDetialModel.SecretaryId==undefined)
+        {
+            alert("主场秘书不能为空");
+            return;
+        }
         $http.post(SETTING.ApiUrl +'/BrokerLeadClient/UpdateLeadClient',$scope.ARDetialModel,{ 'withCredentials':true}).success(function(data){
             if(data.Status){
                 alert(data.Msg);
