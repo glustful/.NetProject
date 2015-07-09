@@ -45,6 +45,9 @@ import com.yoopoon.home.ui.AD.ADController;
 @SuppressLint("ShowToast")
 @EFragment()
 public class FramHouseFragment extends FramSuper implements OnClickListener {
+	// /////////////////////////////////////////////////////////////////////
+	// 如下是初始化和声明的变量
+	// /////////////////////////////////////////////////////////////////////
 	public static final String LOGTAG = "FramHouseFragment";
 	// 当前Fragment绑定的View
 	View rootView;
@@ -101,10 +104,23 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	// 房源也顶端楼盘类型
 	ArrayList<JSONObject> houseTypeJsonObjects = new ArrayList<JSONObject>();
 
+	// ///////////////////////////////////////////////////////////////////////////////////////////////////
+	// 如上是初始化和声明的变量
+	// ///////////////////////////////////////////////////////////////////////////////////////////////////
+	/*
+	 * (non Javadoc)
+	 * @Title: onCreateView
+	 * @Description: 创建Fragment视图
+	 * @param inflater
+	 * @param container
+	 * @param savedInstanceState
+	 * @return
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
+	 * android.view.ViewGroup, android.os.Bundle)
+	 */
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		Log.e(LOGTAG, "Fragment oncreateView");
 		/**
 		 * 如果rootView存在则不在重新创建
 		 */
@@ -114,6 +130,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				parent.removeView(rootView);
 			}
 		} else {
+			// 获取Fragment对应的视图
 			rootView = LayoutInflater.from(getActivity()).inflate(R.layout.home_fram_house_fragment, null);
 			// PullToRefreshListView
 			listView = (PullToRefreshListView) rootView.findViewById(R.id.matter_list_view);
@@ -128,7 +145,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			type_textview = (TextView) rootView.findViewById(R.id.type_textview);
 			price_textview = (TextView) rootView.findViewById(R.id.price_textview);
 			reset_textview = (TextView) rootView.findViewById(R.id.reset_textview);
-			Log.e(LOGTAG, area_name_textview.toString());
 			// 条件点击的事件绑定
 			area_name_textview.setOnClickListener(this);
 			type_textview.setOnClickListener(this);
@@ -136,6 +152,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			reset_textview.setOnClickListener(this);
 			// 初始化传入参数
 			initParameter();
+			// 初始化Fragment对应的视图，加载控件
 			initViews();
 		}
 		return rootView;
@@ -155,11 +172,13 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		refreshView.setFadingEdgeLength(0);
 		mHouseInfoAdapter = new FramHouseListViewAdapter(mContext);
 		refreshView.setAdapter(mHouseInfoAdapter);
+		// 开启一个异步线程，获取广告数据，同时加载广告数据
 		requestAdvertisements();
+		// 开启一个异步线程，获取广告数据，同事加载楼盘列表
 		requestHouseList();
 	}
 	/**
-	 * 获取ListView Items传入的参数
+	 * 对传输到后端的参数进行初始化
 	 */
 	private void initParameter() {
 		if (parameter == null) {
@@ -196,7 +215,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 * @Description: 开启一个异步的线程，获取房源中楼盘列表
 	 */
 	private void requestHouseList() {
-		Log.e(LOGTAG, parameter.toString());
+		Log.w(LOGTAG, parameter.toString());
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
@@ -345,7 +364,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					public void onClick(View v) {
 						houseType_textview.setText(mesString);
 						houseTypeIdNumber = houseTypeIdString;
-						Log.e(LOGTAG, houseTypeIdNumber);
 						TypeIdValue = houseTypeIdString;
 						// 更新参数
 						mJsonObjects.clear();
@@ -457,7 +475,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			} else {
 				TypeIdValue = houseTypeIdNumber;
 			}
-			Log.e(LOGTAG, TypeIdValue);
 		}
 		// 初始化ArrayList中保存的数据
 		// 配成value.xml中的数组
@@ -484,9 +501,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				public void onClick(View v) {
 					price_textview.setText(msgString);
 					initPrice(msgString);
-					Log.e(LOGTAG, AreaNameValue);
-					Log.e(LOGTAG, PriceBeginValue);
-					Log.e(LOGTAG, PriceEndValue);
 					mJsonObjects.clear();
 					initParameter();
 					requestHouseList();
