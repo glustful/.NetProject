@@ -4,6 +4,11 @@ using YooPoon.Core.Data;
 
 namespace CRM.Entity.Model
 {
+
+
+    /// <summary>
+    /// 提现 主表
+    /// </summary>
     public class BrokerWithdrawEntity : IBaseEntity
     {
         /// <summary>
@@ -52,7 +57,7 @@ namespace CRM.Entity.Model
         /// </summary>
         public virtual int State { get; set; }
         /// <summary>
-        /// 描述
+        /// 财务描述
         /// </summary>
         public virtual string WithdrawDesc { get; set; }
     }

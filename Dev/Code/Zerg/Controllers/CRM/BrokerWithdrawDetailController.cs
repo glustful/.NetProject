@@ -94,8 +94,6 @@ namespace Zerg.Controllers.CRM
 
         }
 
-
-
         /// <summary>
         /// 传入提现参数,增加提现详情,返回结果状态信息,成功提示"数据添加成功",失败提示"数据添加失败"
         /// </summary>
