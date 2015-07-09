@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fram_matter_main_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<LinearLayout 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
-   
-   <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="30dp"
             android:orientation="horizontal" >
 
             <LinearLayout
@@ -22,15 +21,18 @@
                 android:gravity="center"
                 android:orientation="horizontal" >
 
-                <TextView
+                <com.yoopoon.home.ui.view.AutoAjustSizeTextView
+                    android:gravity="center"
+                    android:singleLine="true"
                     android:id="@+id/area_name_textview"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:clickable="true"
+                   
                     android:drawableRight="@drawable/arrow"
-                    android:textSize="16dp"
-                     android:clickable="true"
-                     android:focusable="true"
-                    android:text="区域" />
+                    android:focusable="true"
+                    android:text="区域"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -40,14 +42,17 @@
                 android:gravity="center"
                 android:orientation="horizontal" >
 
-                <TextView
+                <com.yoopoon.home.ui.view.AutoAjustSizeTextView
+                    android:singleLine="true"
+                    android:gravity="center"
                     android:id="@+id/type_textview"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                     android:drawableRight="@drawable/arrow"
-                     android:textSize="16dp"
-                      android:clickable="true"
-                    android:text="类型" />
+                    android:clickable="true"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/arrow"
+                    android:text="类型"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -57,13 +62,14 @@
                 android:gravity="center"
                 android:orientation="horizontal" >
 
-                <TextView
+                <com.yoopoon.home.ui.view.AutoAjustSizeTextView
                     android:id="@+id/price_textview"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                     android:drawableRight="@drawable/arrow"
-                     android:textSize="16dp"
-                      android:clickable="true"
+                    android:clickable="true"
+                    android:drawableRight="@drawable/arrow"
+                    android:singleLine="true"
+                    android:gravity="center"
                     android:text="价格" />
             </LinearLayout>
 
@@ -78,24 +84,22 @@
                     android:id="@+id/reset_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="16dp"
                     android:clickable="true"
-                    android:text="重置" />
+                    android:text="重置"
+                    android:textSize="16dp" />
             </LinearLayout>
         </LinearLayout>
-    <com.handmark.pulltorefresh.library.PullToRefreshListView 
-        xmlns:ptr="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/matter_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        ptr:ptrAnimationStyle="flip"
-        android:divider="#d0d0d0"
-        android:descendantFocusability="blocksDescendants"
-        android:dividerHeight="10dp"
-        />
-  
-        
-   
 
-</LinearLayout>
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            xmlns:ptr="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/matter_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
+            android:divider="#d0d0d0"
+            ptr:ptrAnimationStyle="flip" />
+        <!-- android:dividerHeight="10dp" -->
+
+    </LinearLayout>
+
 </FrameLayout>
