@@ -184,10 +184,10 @@ app.run(
 
             })
             .state('app.BrandDetail',{
-                url:'/BrandDetail?BrandId',
+                url:'/BrandDetail?brandId',
                 templateUrl:'modules/BrandDetail/view/BrandDetail.html',
-                controller:'HousesBuyController',
-                resolve:load(['modules/housesBuy/static/scripts/HousesBuy.js'])
+                controller:'BrandDetailController',
+                resolve:load('modules/BrandDetail/static/script/brandDetail.js')
             })
             .state('app.housesBuy',{
                 url:'/housesBuy?BrandId',

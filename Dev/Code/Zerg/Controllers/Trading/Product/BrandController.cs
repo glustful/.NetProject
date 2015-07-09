@@ -336,14 +336,28 @@ namespace Zerg.Controllers.Trading.Product
             }).ToList();
             return PageHelper.toJson(brandList);
         }
-
+        #region 彭贵飞 获取品牌详细信息
+        /// <summary>
+        /// 获取品牌详细信息
+        /// </summary>
+        /// <param name="brandId"></param>
+        /// <returns></returns>
         [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage GetByBrandId()
+        public HttpResponseMessage GetBrandDetail(int brandId)
         {
-            return GetByBrandId(0);
+            var brand = _productBrandService.GetProductBrandById(brandId);
+            var model = new ProductBrandModel
+            {   
+                Id = brand.Id,               
+                Bname = brand.Bname,
+                SubTitle = brand.SubTitle,                
+                Content = brand.Content,
+                Parameters = brand.ParameterEntities.ToDictionary(k => k.Parametername, v => v.Parametervaule)
+            };
+            return PageHelper.toJson(model);
         }
-
+        #endregion
         [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetByBrandId(int brandId)

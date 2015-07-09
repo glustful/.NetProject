@@ -83,6 +83,7 @@ angular.module("app").controller('CouponCategoryCreateController', ['$http','$sc
         Name:'',
         Price:'',
         BrandId:'',
+        ClassId:'',
         Count:'',
         ReMark:''
     }
