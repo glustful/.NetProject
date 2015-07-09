@@ -4,6 +4,9 @@ using YooPoon.Core.Data;
 
 namespace CRM.Entity.Model
 {
+    /// <summary>
+    /// 提现附表
+    /// </summary>
 	public class BrokerWithdrawDetailEntity : IBaseEntity
 	{
 		/// <summary>
@@ -22,7 +25,10 @@ namespace CRM.Entity.Model
         /// 经纪人提现 ID
         /// </summary>
         public virtual BrokerWithdrawEntity BrokerWithdraw { get; set; }
-
+        /// <summary>
+        /// 经纪人体现明细ID
+        /// </summary>
+        public virtual BrokeAccountEntity BrokeAccount_Id { get; set; }
 		/// <summary>
 		/// 提现时间
 		/// </summary>
