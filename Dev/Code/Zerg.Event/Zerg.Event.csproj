@@ -123,9 +123,6 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Zerg.Event">
-      <HintPath>..\..\..\..\Project_Zerg_Event\Dev\Code\Zerg.Event\bin\Zerg.Event.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -154,6 +151,7 @@
     <Content Include="Controllers\Crowd\Static\image\chip\logo-syj.png" />
     <Content Include="Controllers\Crowd\Static\image\chip\p.png" />
     <Content Include="Controllers\Crowd\Static\Js\bootstrap.min.js" />
+    <Content Include="Controllers\Crowd\Static\Js\crowdjs.js" />
     <Content Include="Controllers\Crowd\Static\Js\jquery-1.9.1.min.js" />
     <Content Include="Controllers\Crowd\Static\style\bootstrap-theme.min.css" />
     <Content Include="Controllers\Crowd\Static\style\bootstrap.min.css" />
@@ -185,6 +183,8 @@
     <Content Include="Views\CrowdAdd\crowdadd.cshtml" />
     <Content Include="Views\Coupons\coupons.cshtml" />
     <Content Include="Views\Coupons\couponOwn.cshtml" />
+    <Content Include="Views\OtherCoupon\OtherCoupons.cshtml" />
+    <Content Include="Views\OtherCoupon\OtherCouponOwn.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -198,7 +198,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\Coupon\CouponCategoryController.cs" />
-    <Compile Include="API\Coupon\CouponController.cs" />
+    <Compile Include="API\Coupon\CouponController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="API\Crowd\CrowdApiController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -206,6 +208,7 @@
     <Compile Include="Controllers\Coupons\CouponsController.cs" />
     <Compile Include="Controllers\Crowd\CrowdController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OtherCoupon\OtherCouponController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

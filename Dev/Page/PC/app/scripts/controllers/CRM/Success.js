@@ -100,20 +100,23 @@ angular.module("app").controller('SuccessDetialController',[
 
 //详细信息
 angular.module("app").controller('BRECPayController',[
-    '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
-        //获取详细信息
-//        $http.get(SETTING.ApiUrl + '/AdminPay/GetAuditDetail/' + $stateParams.id).success(function (data) {
-//            $scope.ARDetialModel = data;
-//            console.log(data);
-//        });
+   'AuthService', '$http','$scope','$stateParams',function(AuthService,$http,$scope,$stateParams) {
+
         $scope.PayInfo = {
             Id:$stateParams.id,
             Name:"",
             Statusname:"洽谈成功",
             Describe:"",
-            Amount:""
+            Amount:"",
+            BankCard:"",
+            Accountantid:"",
+            Upuser:"",
+            Adduser:""
         };
-
+        $scope.currentUser=AuthService.CurrentUser();
+        $scope.PayInfo.Accountantid = $scope.currentUser.UserId;
+        $scope.PayInfo.AddUser = $scope.currentUser.UserId;
+        $scope.PayInfo.Upuser = $scope.currentUser.UserId;
         //变更用户状态
         $scope.SetPay=function(){
             $http.post(SETTING.ApiUrl + '/AdminPay/SetBREPay',$scope.PayInfo,{
@@ -131,20 +134,23 @@ angular.module("app").controller('BRECPayController',[
 
 //详细信息
 angular.module("app").controller('BLPayController',[
-    '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
-        //获取详细信息
-//        $http.get(SETTING.ApiUrl + '/AdminPay/GetAuditDetail/' + $stateParams.id).success(function (data) {
-//            $scope.ARDetialModel = data;
-//            console.log(data);
-//        });
+   'AuthService', '$http','$scope','$stateParams',function(AuthService,$http,$scope,$stateParams) {
+
         $scope.PayInfo = {
             Id:$stateParams.id,
             Name:"",
             Statusname:"洽谈成功",
             Describe:"",
-            Amount:""
+            Amount:"",
+            BankCard:"",
+            Accountantid:"",
+            Adduser:"",
+            Upuser:""
         };
-
+        $scope.currentUser=AuthService.CurrentUser();
+        $scope.PayInfo.Accountantid = $scope.currentUser.UserId;
+        $scope.PayInfo.AddUser = $scope.currentUser.UserId;
+        $scope.PayInfo.Upuser = $scope.currentUser.UserId;
         //变更用户状态
         $scope.SetPay=function(){
             $http.post(SETTING.ApiUrl + '/AdminPay/SetBLPay',$scope.PayInfo,{
@@ -159,9 +165,6 @@ angular.module("app").controller('BLPayController',[
         };
     }
 ]);
-
-
-
 
 ///////////////////////////////////////带客洽谈详细  Begin ///////////////////////////////////////////////////////////
 

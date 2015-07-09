@@ -1515,11 +1515,12 @@ containing a value of this type.
         public static final int right_next_icon=0x7f0200a0;
         public static final int save_selector=0x7f0200a1;
         public static final int search_icon=0x7f0200a2;
-        public static final int setting_icon=0x7f0200a3;
-        public static final int tex=0x7f0200a4;
-        public static final int text_tab_selector=0x7f0200a5;
-        public static final int user=0x7f0200a6;
-        public static final int white_point=0x7f0200a7;
+        public static final int setting_edit_bg=0x7f0200a3;
+        public static final int setting_icon=0x7f0200a4;
+        public static final int tex=0x7f0200a5;
+        public static final int text_tab_selector=0x7f0200a6;
+        public static final int user=0x7f0200a7;
+        public static final int white_point=0x7f0200a8;
     }
     public static final class id {
         public static final int FILL=0x7f09001d;
@@ -1549,6 +1550,7 @@ containing a value of this type.
         public static final int brokerSetting=0x7f0900a2;
         public static final int button1=0x7f090059;
         public static final int callPhone=0x7f09004f;
+        public static final int card=0x7f0900b4;
         public static final int checkbox=0x7f09003b;
         public static final int circle=0x7f0900ad;
         public static final int city=0x7f09004b;
@@ -1568,6 +1570,7 @@ containing a value of this type.
         public static final int disabled=0x7f090020;
         public static final int dropdown=0x7f090018;
         public static final int edit_query=0x7f09003e;
+        public static final int email=0x7f0900b5;
         public static final int end=0x7f09001a;
         public static final int expand_activities_button=0x7f090034;
         public static final int expanded_menu=0x7f09003a;
@@ -1612,7 +1615,7 @@ containing a value of this type.
         public static final int matter_search_button=0x7f0900b0;
         public static final int matter_search_del_view=0x7f0900af;
         public static final int matter_search_text=0x7f0900ae;
-        public static final int menu_settings=0x7f0900b5;
+        public static final int menu_settings=0x7f0900b8;
         public static final int middle=0x7f09001b;
         public static final int money=0x7f09006b;
         public static final int myGrid=0x7f090053;
@@ -1664,6 +1667,7 @@ containing a value of this type.
         public static final int roundProgressBar3=0x7f090057;
         public static final int roundProgressBar4=0x7f090056;
         public static final int roundProgressBar5=0x7f090058;
+        public static final int save=0x7f0900b6;
         public static final int scrollview=0x7f090008;
         public static final int search_badge=0x7f090040;
         public static final int search_bar=0x7f09003f;
@@ -1699,7 +1703,7 @@ containing a value of this type.
         public static final int useLogo=0x7f090011;
         public static final int userNameTip=0x7f090086;
         public static final int vPager=0x7f090052;
-        public static final int value=0x7f0900b4;
+        public static final int value=0x7f0900b7;
         public static final int viewGroup=0x7f09005c;
         public static final int view_pager_content=0x7f09005b;
         public static final int webview=0x7f090007;
@@ -1792,8 +1796,9 @@ containing a value of this type.
         public static final int riches_head_view=0x7f03003a;
         public static final int search_action_view=0x7f03003b;
         public static final int setting_main_view=0x7f03003c;
-        public static final int support_simple_spinner_dropdown_item=0x7f03003d;
-        public static final int today_task_item_view=0x7f03003e;
+        public static final int setting_person_view=0x7f03003d;
+        public static final int support_simple_spinner_dropdown_item=0x7f03003e;
+        public static final int today_task_item_view=0x7f03003f;
     }
     public static final class menu {
         public static final int activity_cricle_progress=0x7f0c0000;

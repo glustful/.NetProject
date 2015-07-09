@@ -13,6 +13,7 @@
 package com.yoopoon.home.ui.me;
 
 import java.io.File;
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import android.preference.PreferenceManager;
@@ -33,16 +34,28 @@ import com.yoopoon.home.ui.home.FramMainActivity_;
 @EActivity(R.layout.setting_main_view)
 public class SettingActivity extends MainActionBarActivity {
 	// [start] onClick
+	/**
+	 * @Title: settingPersonInfo
+	 * @Description: 个人信息设置点击事件
+	 */
 	@Click(R.id.person_info)
 	void settingPersonInfo() {
-
+		PersonSettingActivity_.intent(this).start();
 	}
 
+	/**
+	 * @Title: settingSecurity
+	 * @Description: 安全设置点击事件
+	 */
 	@Click(R.id.security_setting)
 	void settingSecurity() {
 
 	}
 
+	/**
+	 * @Title: logout
+	 * @Description: 登出
+	 */
 	@Click(R.id.logout)
 	void logout() {
 		// 删除以前记录的cookie信息
@@ -58,9 +71,22 @@ public class SettingActivity extends MainActionBarActivity {
 	}
 
 	// [end]
+
+	/**
+	 * @Title: initUI
+	 * @Description: 初始化界面
+	 */
+	@AfterViews
+	void initUI() {
+		backButton.setVisibility(View.VISIBLE);
+		titleButton.setVisibility(View.VISIBLE);
+		backButton.setText("返回");
+		titleButton.setText("设置");
+	}
+
 	@Override
 	public void backButtonClick(View v) {
-
+		finish();
 	}
 
 	@Override
@@ -76,7 +102,7 @@ public class SettingActivity extends MainActionBarActivity {
 	@Override
 	public Boolean showHeadView() {
 
-		return null;
+		return true;
 	}
 
 }

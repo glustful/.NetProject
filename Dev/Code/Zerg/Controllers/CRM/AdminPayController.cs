@@ -14,6 +14,7 @@ using System.ComponentModel;
 //财务人员打款流程处理
 namespace Zerg.Controllers.CRM
 {
+      [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     [Description("财务人员打款流程处理类")]
     public class AdminPayController : ApiController
@@ -22,6 +23,7 @@ namespace Zerg.Controllers.CRM
         private readonly IBrokerRECClientService _brokerRecClientService;
         private readonly IBLPayService _blPayService;
         private readonly IBrokerLeadClientService _brokerLeadClientService;
+        
         /// <summary>
         /// 财务人员打款管理初始化
         /// </summary>
@@ -54,7 +56,7 @@ namespace Zerg.Controllers.CRM
 
             var model = new BRECPayEntity
             {
-                BrokerRECClient = _brokerRecClientService.GetBrokerRECClientById(adminPayModel.BrokerRECClientId),
+                BrokerRECClient = _brokerRecClientService.GetBrokerRECClientById(adminPayModel.Id),
                 Name = adminPayModel.Name,
                 Statusname = adminPayModel.Statusname,
                 Describe = adminPayModel.Describe,
@@ -85,7 +87,7 @@ namespace Zerg.Controllers.CRM
 
             var model = new BLPayEntity
             {
-                BrokerLeadClient = _brokerLeadClientService.GetBrokerLeadClientById(leadClientPay.BrokerLeadClientId),
+                BrokerLeadClient = _brokerLeadClientService.GetBrokerLeadClientById(leadClientPay.Id),
                 Name = leadClientPay.Name,
                 Statusname = leadClientPay.Statusname,
                 Describe = leadClientPay.Describe,
@@ -114,7 +116,7 @@ namespace Zerg.Controllers.CRM
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
 
             var model = _brecPayService.GetBRECPayById(adminPayModel.Id);
-            model.BrokerRECClient = _brokerRecClientService.GetBrokerRECClientById(adminPayModel.BrokerRECClientId);
+            model.BrokerRECClient = _brokerRecClientService.GetBrokerRECClientById(adminPayModel.Id);
             model.Name = adminPayModel.Name;
             model.Statusname = adminPayModel.Statusname;
             model.Describe = adminPayModel.Describe;
@@ -143,7 +145,7 @@ namespace Zerg.Controllers.CRM
             if (leadClientPay.Id == 0 && leadClientPay.Amount == 0)
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
             var model = _blPayService.GetBLPayById(leadClientPay.Id);
-            model.BrokerLeadClient = _brokerLeadClientService.GetBrokerLeadClientById(leadClientPay.BrokerLeadClientId);
+            model.BrokerLeadClient = _brokerLeadClientService.GetBrokerLeadClientById(leadClientPay.Id);
             model.Name = leadClientPay.Name;
             model.Statusname = leadClientPay.Statusname;
             model.Describe = leadClientPay.Describe;
