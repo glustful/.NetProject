@@ -361,7 +361,14 @@ namespace Zerg.Controllers.Trading.Product
                 ProductDetailed = a.ProductDetail.Productdetail,
                 StockRule = a.Stockrule,
                 Acreage = a.ProductParameter.FirstOrDefault(pp => pp.Parameter.Name == "面积").ParameterValue.Parametervalue.ToString(),
-                Type = a.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString()
+                Type = a.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString(),
+                ParameterValue = a.ProductParameter.Select(c => new ProductParameterModel
+                {
+                    ParameterId = c.Parameter.Id,
+                    ParameterString = c.Parameter.Name,
+                    ValueId = c.ParameterValue.Id,
+                    Value = c.ParameterValue.Parametervalue
+                }).ToArray()
             }).ToList();
             // return PageHelper.toJson(productList);
             var totalCount = _productService.GetProductCount(condtion);
