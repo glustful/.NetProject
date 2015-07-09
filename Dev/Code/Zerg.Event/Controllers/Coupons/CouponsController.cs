@@ -19,7 +19,7 @@ namespace Zerg.Event.Controllers.Coupons
         private readonly IWorkContext _workContext;
         private readonly ICouponService _couponService;
 
-        public CouponsController(ICouponCategoryService couponCategoryService,ICouponService couponService, IProductBrandService productBrandService, ICouponOwnerService couponOwnerService,IWorkContext workContext)
+        public CouponsController(ICouponCategoryService couponCategoryService, ICouponService couponService, IProductBrandService productBrandService, ICouponOwnerService couponOwnerService, IWorkContext workContext)
         {
             _couponCategoryService = couponCategoryService;
             _couponService = couponService;
@@ -27,13 +27,18 @@ namespace Zerg.Event.Controllers.Coupons
             _couponOwnerService = couponOwnerService;
             _workContext = workContext;
         }
-        public ActionResult coupons()
+        #region 彭贵飞 获取手机端显示的优惠券种类和对应品牌信息
+        /// <summary>
+        /// 获取优惠券种类
+        /// </summary>
+        /// <returns>list列表</returns>
+        public ActionResult Coupons()
         {
-            var ConConditon=new CouponCategorySearchCondition
+            var Con = new CouponCategorySearchCondition
             {
                 OrderBy = EnumCouponCategorySearchOrderBy.OrderById
             };
-            var list = _couponCategoryService.GetCouponCategoriesByCondition(ConConditon).Select(p=>new
+            var list = _couponCategoryService.GetCouponCategoriesByCondition(Con).Select(p => new
             {
                 p.Id,
                 p.BrandId,
@@ -41,19 +46,27 @@ namespace Zerg.Event.Controllers.Coupons
                 p.ReMark,
                 p.Price,
                 p.Count
-            }).ToList().Select(pp=>new CouponCategoryModel
+            }).ToList().Select(pp => new CouponCategoryModel
             {
                 Id = pp.Id,
                 Name = pp.Name,
                 Price = pp.Price,
                 Count = pp.Count,
                 ReMark = pp.ReMark,
+                BrandId = pp.BrandId,
                 BrandImg = _productBrandService.GetProductBrandById(pp.BrandId).Bimg,
                 SubTitle = _productBrandService.GetProductBrandById(pp.BrandId).SubTitle,
                 ProductParamater = _productBrandService.GetProductBrandById(pp.BrandId).ParameterEntities.ToDictionary(k => k.Parametername, v => v.Parametervaule)
             });
             return View(list);
         }
+        #endregion
+        #region 彭贵飞 抢优惠券
+        /// <summary>
+        /// 抢优惠券
+        /// </summary>
+        /// <param name="id">优惠券种类Id</param>
+        /// <returns></returns>
 
         public ActionResult couponOwn(int id)
         {
@@ -61,37 +74,27 @@ namespace Zerg.Event.Controllers.Coupons
             {
                 return Redirect("http://www.iyookee.cn/#/user/login");
             }
-            var couponCategory= _couponCategoryService.GetCouponCategoryById(id);
-            var condition=new CouponSearchCondition
+            var couponCategory = _couponCategoryService.GetCouponCategoryById(id);
+            var condition = new CouponSearchCondition
             {
-                CouponCategoryId =id,
+                CouponCategoryId = id,
                 Status = 0
             };
             var coupon = _couponService.GetCouponByCondition(condition).FirstOrDefault();
-            var couponOwnCon=new CouponOwnerSearchCondition
+            _couponOwnerService.CreateRecord(_workContext.CurrentUser.Id, coupon.Id);
+            coupon.Status = EnumCouponStatus.Owned;
+            _couponService.Update(coupon);
+            couponCategory.Count = couponCategory.Count - 1;
+            _couponCategoryService.UpdateCouponCategory(couponCategory);
+            var brand = _productBrandService.GetProductBrandById(couponCategory.BrandId);
+            var CouponOwn = new CouponCategoryModel
             {
-               userId = _workContext.CurrentUser.Id,
-               couponId = coupon.Id
+                Name = couponCategory.Name,
+                Number = coupon.Number,
+                BrandName = brand.Bname
             };
-            var couponOwn=_couponOwnerService.GetCouponOwnByCondition(couponOwnCon);
-            if (couponOwn == null)
-            {
-                _couponOwnerService.CreateRecord(_workContext.CurrentUser.Id, coupon.Id);
-                coupon.Status = EnumCouponStatus.Owned;
-                _couponService.Update(coupon);
-                couponCategory.Count = couponCategory.Count - 1;
-                _couponCategoryService.UpdateCouponCategory(couponCategory);
-                var brand = _productBrandService.GetProductBrandById(couponCategory.BrandId);
-                var CouponOwn = new CouponCategoryModel
-                {
-                    Name = couponCategory.Name,
-                    Number = coupon.Number,
-                    BrandName = brand.Bname
-                };
-                return View(CouponOwn);
-            }
-            return RedirectToAction("coupons", "Coupons");  
+            return View(CouponOwn);
         }
-
-	}
+        #endregion
+    }
 }

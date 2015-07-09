@@ -73,6 +73,12 @@
     <Compile Include="Discount\IDiscountService.cs" />
     <Compile Include="Follower\FollowerService.cs" />
     <Compile Include="Follower\IFollowerService.cs" />
+    <Compile Include="OtherCoupon\IOtherCouponCategoryService.cs" />
+    <Compile Include="OtherCoupon\IOtherCouponOwnerService.cs" />
+    <Compile Include="OtherCoupon\IOtherCouponService.cs" />
+    <Compile Include="OtherCoupon\OtherCouponCategoryService.cs" />
+    <Compile Include="OtherCoupon\OtherCouponOwnerService.cs" />
+    <Compile Include="OtherCoupon\OtherCouponService.cs" />
     <Compile Include="Participation\IParticipationService.cs" />
     <Compile Include="Participation\ParticipationService.cs" />
     <Compile Include="PartImage\IPartImageService.cs" />
@@ -102,9 +108,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="OtherCoupon\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

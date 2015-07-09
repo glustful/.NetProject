@@ -24,6 +24,7 @@ import com.etsy.android.grid.util.DynamicHeightImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.round.progressbar.CircleProgressDialog;
 import com.round.progressbar.RoundProgressDialog;
 import com.yoopoon.common.base.Tools;
 import com.yoopoon.common.base.utils.ToastUtils;
@@ -63,7 +64,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
 		titleButton.setText("户型详情");
-		
+		requestProduct();
 	}
 	
 	ImageLoadingListener listen = new ImageLoadingListener() {
@@ -100,22 +101,14 @@ public class ProductDetailActivity extends MainActionBarActivity {
 			
 		}
 	};
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		// TODO Auto-generated method stub
-		super.onWindowFocusChanged(hasFocus);
-		// 弹出PopupWindow的具体代码
-		if(hasFocus)
-		requestProduct();
-	}
+	
 	void requestProduct(){
-		
-		RoundProgressDialog.build(this).show(getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+		CircleProgressDialog.build(mContext, R.style.dialog).show();
 		new RequestAdapter() {
 			
 			@Override
 			public void onReponse(ResponseData data) {
-				RoundProgressDialog.build(mContext).hide();
+				CircleProgressDialog.build(mContext, R.style.dialog).dismiss();
 				
 				if(data.getResultState()==ResultState.eSuccess){
 					callBack(data.getMRootData());

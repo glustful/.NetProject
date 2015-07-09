@@ -1,0 +1,59 @@
+
+<table class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" data-page-size="5">
+    <thead>
+    <tr>
+        <th data-toggle="true" class="footable-visible footable-first-column footable-sortable">
+            序号
+            <span class="footable-sort-indicator"></span></th>
+        <th class="footable-visible footable-sortable">
+            经纪人名
+            <span class="footable-sort-indicator"></span></th>
+
+        <th data-hide="phone,tablet" class="footable-visible footable-sortable">
+            银行名称
+            <span class="footable-sort-indicator"></span></th>
+        <th data-hide="phone,tablet" class="footable-visible footable-sortable">
+            银行卡号
+            <span class="footable-sort-indicator"></span></th>
+        <th data-hide="phone,tablet" data-name="Date Of Birth" class="footable-visible footable-sortable">
+            提现金额
+            <span class="footable-sort-indicator"></span></th>
+        <th data-hide="phone,tablet" class="footable-visible footable-sortable">
+            提现时间
+            <span class="footable-sort-indicator"></span></th>
+        <th data-hide="phone,tablet" class="footable-visible footable-sortable">
+            财务
+            <span class="footable-sort-indicator"></span></th>
+        <th data-hide="phone,tablet" class="footable-visible footable-sortable">
+            状态
+            <span class="footable-sort-indicator"></span></th>
+        <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">
+            操作
+            <span class="footable-sort-indicator"></span></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="footable-even" style="display: table-row;" ng-repeat="item in BrokerWithdraw">
+        <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>{{item.Id}}</td>
+        <td class="footable-visible">{{item.brokername}}</td>
+        <td class="footable-visible">{{item.bankname}}</td>
+        <td class="footable-visible">{{item.banknumber}}</td>
+        <td data-value="78025368997" class="footable-visible">{{item.withdrawnum}}</td>
+        <td data-value="78025368997" class="footable-visible">{{item.WithdrawTime}}</td>
+        <td class="footable-visible">{{item.accacount}}</td>
+        <td data-value="78025368997" class="footable-visible">{{item.state}}</td>
+        <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.PlayMony.detailed({id:item.Id})"><span class="label bg-success" >查看</span></a></td>
+    </tr>
+
+    </tbody>
+    <tfoot class="hide-if-no-paging">
+    <tr>
+        <td colspan="6" class="text-center" style="font-size:20px;color: #ff0000">{{errorTip}}</td>
+    </tr>
+    <tr>
+        <td colspan="5" class="text-center footable-visible">
+            <pagination boundary-links="true" total-items="searchCondition.totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+        </td>
+    </tr>
+    </tfoot>
+</table>

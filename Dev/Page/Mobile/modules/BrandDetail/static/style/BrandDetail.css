@@ -1,0 +1,72 @@
+.pic-housesBuy{
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+.pic-housesBuy .syj-2{
+    position: absolute;
+    z-index: 2;
+    top:0;
+    left: 2em;
+}
+
+.pic-housesBuy .summary{
+    position: absolute;
+    top: 9.8em;
+    left: 2em;
+    color: #fff;
+    font-size: 22px;
+    z-index: 4;
+    width: 560px;
+}
+
+.pic-housesBuy .summary .zt small{
+    color: #fff;
+}
+.pic-housesBuy .summary .span{
+    display: inline-block;
+}
+.pic-housesBuy .summaryBg{
+    width: 640px;
+    position: absolute;
+    z-index: 9;
+    height:100px;
+    opacity: 0.4;
+    bottom:0;
+    left:0;
+    background:url("../image/fgx.png") no-repeat 530px 0 #000;
+    /*background-color: #fff;*/
+}
+.content-housesBuy .brand-btn{
+    height: 80px;
+    line-height: 80px;
+    background-color:#fff;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+.content-housesBuy .brand-btn a{
+   margin-right: 20px;
+}
+.content-housesBuy .brand-btn a button{
+    width: 130px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 1em;
+    color: #fff;
+    border-radius: 8px;
+    /*background:url("../image/cell.png") no-repeat 10px 15px #f13800;*/
+    padding-left: 20px;
+}
+.co{
+    margin-right: 15px;
+    margin-left: 15px;
+    padding-top: 20px;
+}
+.phone{
+    background:url("../image/cell.png") no-repeat 10px 15px #f13800;
+}
+.ho{
+    background:url("../image/cell.png") no-repeat 10px 15px #f13800;
+}
+
+

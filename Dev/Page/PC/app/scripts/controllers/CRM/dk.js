@@ -13,7 +13,6 @@ angular.module("app").controller('dkIndexController', [
         };
         var page= 0,howmany=0;
         $scope.getList  = function() {
-
             if($scope.searchCondition.phone==undefined)
             {$scope.searchCondition.phone="";}
             $http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{
@@ -22,8 +21,6 @@ angular.module("app").controller('dkIndexController', [
             }).success(function(data){
                 // alert(data.list!=null);
                 if(data.List.length>0) {
-                    console.log(data);
-
                     page= $scope.searchCondition.page = data.Condition.Page;
                     howmany=data.List.length;//保存当页数据数量
                     $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -104,8 +101,6 @@ angular.module("app").controller('dkIndexController', [
                     alert(data.Msg);
 
                     if (data.Status) {
-
-                        //  alert(data.Msg);
                         if(howmany==1)
                         {
                             if(page>1){
@@ -119,32 +114,12 @@ angular.module("app").controller('dkIndexController', [
 
                     }
                     else{
+                        alert(data.Msg);
 
-                        //  $scope.alerts=[{type:'danger',msg:data.Msg}];
-                    }
+                                }
                 });
             });
         }
-//            function(id){
-//        $http.post(SETTING.ApiUrl+'/BrokerInfo/DeleteBroker',id,{
-//            'withCredentials':true
-//        }).success(function(data) {
-//           if(data.Status)
-//           {
-//               alert(data.Msg);
-//               if(howmany==1)
-//               {
-//                   if(page>1){
-//                   $scope.searchCondition.page--;}
-//                   else{
-//                       $scope.searchCondition.page=1;
-//                   }
-//               }
-//               $scope.getList();
-//           }
-//
-//        })}
-        //注销经纪人
         $scope.cancelBroker=function (id,btnname) {
             $scope.selectedId = id;
             var modalInstance = $modal.open({

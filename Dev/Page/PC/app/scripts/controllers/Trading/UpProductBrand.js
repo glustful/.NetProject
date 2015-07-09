@@ -18,7 +18,9 @@ angular.module("app").controller('BrandEditController', [
             console.info('onSuccessItem', fileItem, response, status, headers);
             $scope.list.Bimg=response.Msg;
         };
-
+        $http.get(SETTING.ApiUrl + '/Classify/GetClassList',{'withCredentials':true}).success(function (data) {
+            $scope.ClassList=data;
+        });
 
 //-------------------------------------------------修改品牌信息----------------------------------------
 

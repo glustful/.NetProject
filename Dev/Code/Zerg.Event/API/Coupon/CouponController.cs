@@ -7,6 +7,8 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Event.Entity.Entity.Coupon;
 using Event.Service.Coupon;
+using Trading.Service.ProductBrand;
+using YooPoon.WebFramework.User.Services;
 using Zerg.Common;
 using Zerg.Event.Models.Coupons;
 
@@ -17,13 +19,13 @@ namespace Zerg.Event.API.Coupon
     public class CouponController : ApiController
     {
         private readonly ICouponService _couponService;
-        private readonly YooPoon.WebFramework.User.Services.IUserService _userService;
+        private readonly IUserService _userService;
         private readonly ICouponOwnerService _couponownerService;
         private readonly ICouponCategoryService _couponCategoryService;
-        private readonly Trading.Service.ProductBrand.IProductBrandService _productBrandService;
+        private readonly IProductBrandService _productBrandService;
 
 
-        public CouponController(ICouponService couponService, YooPoon.WebFramework.User.Services.IUserService userService, ICouponOwnerService couponownerService, ICouponCategoryService couponCategoryService, Trading.Service.ProductBrand.IProductBrandService productBrandService)
+        public CouponController(ICouponService couponService, IUserService userService, ICouponOwnerService couponownerService,ICouponCategoryService couponCategoryService, IProductBrandService productBrandService)
         {
             _couponService = couponService;
             _userService = userService;
@@ -49,6 +51,14 @@ namespace Zerg.Event.API.Coupon
             _couponService.Update(entity);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "激活成功！"));
         }
+        #region 彭贵飞 获取优惠券列表
+        /// <summary>
+        /// 查询优惠券列表
+        /// </summary>
+        /// <param name="page">当前页</param>
+        /// <param name="pageSize">页面记录数</param>
+        /// <param name="number">优惠券验证码</param>
+        /// <returns>list列表</returns>
         [HttpGet]
         public HttpResponseMessage Index(int page, int pageSize, string number)
         {
@@ -69,16 +79,25 @@ namespace Zerg.Event.API.Coupon
             var count = _couponService.GetCouponCount(condition);
             return PageHelper.toJson(new { List = coupon, TotalCount = count, Condition = condition });
         }
+        #endregion
+        #region 彭贵飞 显示优惠券信息
+        /// <summary>
+        /// 显示单个优惠券信息
+        /// </summary>
+        /// <param name="id">优惠券Id</param>
+        /// <returns>优惠券对象</returns>
         [HttpGet]
         public HttpResponseMessage Detailed(int id)
         {
             var coupon = _couponService.GetCouponById(id);
             return PageHelper.toJson(coupon);
         }
+        #endregion
+        #region 彭贵飞 单个插入优惠券
         /// <summary>
         /// 单个新建
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">优惠券参数</param>
         /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage Create(CouponModel model)
@@ -98,6 +117,13 @@ namespace Zerg.Event.API.Coupon
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败"));
         }
+        #endregion
+        #region 彭贵飞 批量插入优惠券
+        /// <summary>
+        /// 批量插入
+        /// </summary>
+        /// <param name="model">优惠券参数</param>
+        /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage BlukCreate(CouponModel model)
         {
@@ -119,7 +145,13 @@ namespace Zerg.Event.API.Coupon
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败"));
         }
-
+        #endregion
+        #region 彭贵飞 编辑优惠券
+        /// <summary>
+        /// 编辑优惠券
+        /// </summary>
+        /// <param name="model">优惠券参数</param>
+        /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage Edit(CouponModel model)
         {
@@ -134,6 +166,13 @@ namespace Zerg.Event.API.Coupon
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败"));
         }
+        #endregion
+        #region 彭贵飞 删除优惠券
+        /// <summary>
+        /// 删除优惠券
+        /// </summary>
+        /// <param name="id">优惠券Id</param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage Delete(int id)
         {
@@ -144,6 +183,7 @@ namespace Zerg.Event.API.Coupon
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败"));
         }
+        #endregion
         #region  获取该用户所有的优惠劵
         /// <summary>
         /// 获取该用户所有的优惠劵

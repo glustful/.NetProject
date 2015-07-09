@@ -76,6 +76,8 @@
     </Compile>
     <Compile Include="BrokerWithdrawDetail\BrokerWithdrawDetailService.cs" />
     <Compile Include="BrokerWithdrawDetail\IBrokerWithdrawDetailService.cs" />
+    <Compile Include="BrokerWithdraw\BrokerWithdrawService.cs" />
+    <Compile Include="BrokerWithdraw\IBrokerWithdrawService.cs" />
     <Compile Include="Broker\BrokerService.cs" />
     <Compile Include="Broker\IBrokerService.cs" />
     <Compile Include="ClientInfo\ClientInfoService.cs" />
