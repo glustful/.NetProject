@@ -882,7 +882,7 @@ angular.module('app')
 
 
 
-            /////////////////////////////////////带客成功失败/////////////////////////////////////////////////////////
+            /////////////////////////////////////带客成功失败 chen/////////////////////////////////////////////////////////
 
             .state('page.CRM.DKFail', {
                 url: '/DKFail',
@@ -923,10 +923,30 @@ angular.module('app')
             })
             .state('page.CRM.DKSuccess.BLPay', {
                 url: '/BLPay?id',
-                templateUrl: 'views/pages/CRM/DKSuccess/BLPay.html',
+                templateUrl: 'views/pages/CRM/DKSuccess/Pay.html',
                 data: { title: '洽谈成功打款' },
                 controller:"BLPayController",
                 resolve:load('scripts/controllers/CRM/Success.js')
+            })
+
+
+            .state('page.CRM.PlayMoney', {
+                url: '/PlayMoney',
+                template: '<div ui-view></div>'
+            })
+            .state('page.CRM.PlayMoney.index', {
+                url: '/index',
+                templateUrl: 'views/pages/CRM/PlayMoney/index.html',
+                data: { title: '财务打款' },
+                controller:"PlayMoneyController",
+                resolve:load('scripts/controllers/CRM/PlayMoney.js')
+            })
+            .state('page.CRM.PlayMoney.detailed', {
+                url: '/detailed?id',
+                templateUrl: 'views/pages/CRM/PlayMoney/detailed.html',
+                data: { title: '详情页' },
+                controller:"PlayMoneyDetialController",
+                resolve:load('scripts/controllers/CRM/PlayMoney.js')
             })
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
