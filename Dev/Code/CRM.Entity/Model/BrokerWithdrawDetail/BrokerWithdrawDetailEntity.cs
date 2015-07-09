@@ -4,6 +4,9 @@ using YooPoon.Core.Data;
 
 namespace CRM.Entity.Model
 {
+    /// <summary>
+    /// 提现附表
+    /// </summary>
 	public class BrokerWithdrawDetailEntity : IBaseEntity
 	{
 		/// <summary>
