@@ -1,8 +1,8 @@
 /**
- * Created by chen on 2015/7/9.
+ * Created by chenda on 2015/7/9.
  */
 
-
+/*======================================查询所有提现信息==============================================================*/
 angular.module("app").controller('playMoney',[
     '$http','$scope',function($http,$scope){
         $scope.searchCondition = {
@@ -32,3 +32,16 @@ angular.module("app").controller('playMoney',[
         getTagList();
     }
 ])
+/*===================================================   ==============================================================*/
+/*===================================根据经纪人ID查询提现明细=====================================================*/
+angular.module("app").controller('playMoneyDetails',[
+    '$http','$scope','$stateParams',function($http,$scope,$stateParams){
+
+        $http.get(SETTING.ApiUrl+ '/BrokerWithdrawDetail/GetBrokerWithdrawDetailListByUserId?id='+ $stateParams.id,{
+            'withCredentials':true
+        }).success(function (data) {
+            $scope.BrokerWithdrawDetail = data.List;
+        });
+    }
+])
+/*===============================================================================================================*/
