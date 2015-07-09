@@ -110,6 +110,7 @@ namespace Zerg.Event.API.Coupon
             couponCategory.Price = model.Price;
             couponCategory.ReMark = model.ReMark;
             couponCategory.BrandId = model.BrandId;
+            couponCategory.ClassId = model.ClassId;
             if (_couponCategoryService.UpdateCouponCategory(couponCategory))
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "数据修改成功"));
