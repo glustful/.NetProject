@@ -39,6 +39,11 @@ public class BrokerInfoView extends RelativeLayout {
 	@ViewById(R.id.customLayout)
 	View cLayout;
 
+	@Click(R.id.headImg)
+	void headImg() {
+		PersonSettingActivity_.intent(getContext()).start();
+	}
+
 	@Click(R.id.takeMoney)
 	void takeMoney() {
 

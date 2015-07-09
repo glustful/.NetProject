@@ -1,0 +1,145 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBackground"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical" >
+
+            <com.makeramen.RoundedImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:minHeight="50dp"
+                android:minWidth="50dp"
+                android:src="@drawable/default_head_img" />
+
+            <TextView
+                
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="昵称"
+                android:textColor="@color/setting_text"
+                android:textSize="@dimen/large_textSize" />
+
+            <com.yoopoon.home.ui.view.RedStarTextView
+                
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                android:text="*姓名"
+                android:textColor="@color/setting_text"
+                android:textSize="@dimen/large_textSize" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/setting_edit_bg"
+                android:hint="姓名"
+                android:padding="10dp"
+                android:textColor="@color/setting_text"
+                android:textSize="@dimen/large_textSize" />
+
+            <com.yoopoon.home.ui.view.RedStarTextView
+               
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                android:text="*性别"
+                android:textColor="@color/setting_text"
+                android:textSize="@dimen/large_textSize" />
+            <RadioGroup 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                android:orientation="horizontal">
+                <RadioButton 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="男"
+                    />
+                <RadioButton 
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    
+                    android:text="女"
+                    />
+            </RadioGroup>
+
+            <com.yoopoon.home.ui.view.RedStarTextView
+               
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                android:text="*身份证"
+                android:textColor="@color/setting_text"
+                android:textSize="@dimen/large_textSize" />
+
+            <EditText
+                android:id="@+id/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/setting_edit_bg"
+                android:hint="保护账号安全"
+                android:padding="10dp"
+                android:textColor="@color/setting_text"
+                android:textSize="@dimen/large_textSize" />
+
+            <TextView
+                
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                android:text="邮箱"
+                android:textColor="@color/setting_text"
+                android:textSize="@dimen/large_textSize" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/setting_edit_bg"
+                android:hint="用户邮箱"
+                android:padding="10dp"
+                android:textColor="@color/setting_text"
+                android:textSize="@dimen/large_textSize" />
+
+            <Button
+                android:id="@+id/save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/cycle_selector"
+                android:text="保存"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -39,7 +39,7 @@ public class MeFooterView extends LinearLayout {
 	// [start] onClick
 	@Click(R.id.registerToBroker)
 	void registerToBroker() {
-
+		PersonSettingActivity_.intent(getContext()).start();
 	}
 
 	@Click(R.id.setting)
@@ -82,7 +82,6 @@ public class MeFooterView extends LinearLayout {
 	}
 
 	// [end]
-
 	/**
 	 * @Title: hide
 	 * @Description: 隐藏布局文件
