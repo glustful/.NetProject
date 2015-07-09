@@ -1,30 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Printing;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using Event.Entity.Entity.Coupon;
+using Event.Entity.Entity.OtherCoupon;
 using Event.Service.Coupon;
+using Event.Service.OtherCoupon;
 using Trading.Service.ProductBrand;
-using YooPoon.Core.Site;
 using Zerg.Common;
 using Zerg.Event.Models.Coupons;
 
-namespace Zerg.Event.API.Coupon
+namespace Zerg.Event.API.OtherCoupon
 {
-    [AllowAnonymous]
-    [EnableCors("*", "*", "*", SupportsCredentials = true)]
-    public class CouponCategoryController : ApiController
+    public class OtherCouponCategoryController : ApiController
     {
-        private readonly ICouponCategoryService _couponCategoryService;
-        private readonly IProductBrandService _productBrandService;       
+        private readonly IOtherCouponCategoryService _otherCouponCategoryService;
+        private readonly IProductBrandService _productBrandService;
 
-        public CouponCategoryController(ICouponCategoryService couponCategoryService,IProductBrandService productBrandService)
+        public OtherCouponCategoryController(IOtherCouponCategoryService otherCouponCategoryService, IProductBrandService productBrandService)
         {
-            _couponCategoryService = couponCategoryService;
+            _otherCouponCategoryService = otherCouponCategoryService;
             _productBrandService = productBrandService;         
         }
         #region 彭贵飞 获取优惠券种类列表
@@ -38,14 +35,14 @@ namespace Zerg.Event.API.Coupon
         [HttpGet]
         public HttpResponseMessage Index(int page, int pageSize, string name = null)
         {
-            var condition = new CouponCategorySearchCondition
+            var condition = new OtherCouponCategorySearchCondition
             {
                 Name = name,
                 Page = page,
                 PageSize = pageSize,
-                OrderBy = EnumCouponCategorySearchOrderBy.OrderById
+                OrderBy = EnumOtherCouponCategorySearchOrderBy.OrderById
             };
-            var couponCategory = _couponCategoryService.GetCouponCategoriesByCondition(condition).Select(p => new
+            var couponCategory = _otherCouponCategoryService.GetCouponCategoriesByCondition(condition).Select(p => new
             {
                 p.Id,
                 p.Name,
@@ -53,7 +50,7 @@ namespace Zerg.Event.API.Coupon
                 p.Price,
                 p.ReMark
             }).ToList();
-            var count = _couponCategoryService.GetCouponCategoriesCountByCondition(condition);
+            var count = _otherCouponCategoryService.GetCouponCategoriesCountByCondition(condition);
             return PageHelper.toJson(new { List = couponCategory, TotalCount = count, Condition = condition });
         }
         #endregion
@@ -66,7 +63,7 @@ namespace Zerg.Event.API.Coupon
         [HttpPost]
         public HttpResponseMessage Create(CategoryModel model)
         {
-            var couponCategory = new CouponCategory
+            var couponCategory = new OtherCouponCategory
             {
                 Name = model.Name,
                 Price = model.Price,
@@ -75,7 +72,7 @@ namespace Zerg.Event.API.Coupon
                 ReMark = model.ReMark,
                 ClassId = model.ClassId
             };
-            if (_couponCategoryService.CreateCouponCategory(couponCategory))
+            if (_otherCouponCategoryService.CreateCouponCategory(couponCategory))
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功"));
             }
@@ -91,7 +88,7 @@ namespace Zerg.Event.API.Coupon
         [HttpGet]
         public HttpResponseMessage Detailed(int id)
         {
-            var couponCategory = _couponCategoryService.GetCouponCategoryById(id);
+            var couponCategory = _otherCouponCategoryService.GetCouponCategoryById(id);
             return PageHelper.toJson(couponCategory);
         }
         #endregion
@@ -104,13 +101,13 @@ namespace Zerg.Event.API.Coupon
         [HttpPost]
         public HttpResponseMessage Edit(CategoryModel model)
         {
-            var couponCategory = _couponCategoryService.GetCouponCategoryById(model.Id);
+            var couponCategory = _otherCouponCategoryService.GetCouponCategoryById(model.Id);
             couponCategory.Name = model.Name;
             couponCategory.Count = model.Count;
             couponCategory.Price = model.Price;
             couponCategory.ReMark = model.ReMark;
             couponCategory.BrandId = model.BrandId;
-            if (_couponCategoryService.UpdateCouponCategory(couponCategory))
+            if (_otherCouponCategoryService.UpdateCouponCategory(couponCategory))
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "数据修改成功"));
             }
@@ -126,25 +123,25 @@ namespace Zerg.Event.API.Coupon
         [HttpGet]
         public HttpResponseMessage Delete(int id)
         {
-            if (_couponCategoryService.DeleteCouponCategory(id))
+            if (_otherCouponCategoryService.DeleteCouponCategory(id))
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功"));
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败"));
         }
         #endregion
-        #region 彭贵飞 获取手机端显示的优惠券种类和对应品牌信息
+        #region 彭贵飞 获取手机端显示的优惠券种类和对应品牌信息接口
         /// <summary>
         /// 获取优惠券种类
         /// </summary>
         /// <returns>list列表</returns>
         public HttpResponseMessage Coupons()
         {
-            var Con = new CouponCategorySearchCondition
+            var Con = new OtherCouponCategorySearchCondition
             {
-                OrderBy = EnumCouponCategorySearchOrderBy.OrderById
+                OrderBy = EnumOtherCouponCategorySearchOrderBy.OrderById
             };
-            var list = _couponCategoryService.GetCouponCategoriesByCondition(Con).Select(p => new
+            var list = _otherCouponCategoryService.GetCouponCategoriesByCondition(Con).Select(p => new
             {
                 p.Id,
                 p.BrandId,

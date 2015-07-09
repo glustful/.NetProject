@@ -39,6 +39,9 @@ namespace Zerg.Models.Trading.Product
         /// </summary>
         public  string Upduser { get; set; }
 
+
+        public int ClassId { get; set; }
+
         /// <summary>
         /// Id
         /// </summary>

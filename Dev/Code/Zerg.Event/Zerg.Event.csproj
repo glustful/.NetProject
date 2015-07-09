@@ -202,6 +202,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="API\Crowd\CrowdApiController.cs" />
+    <Compile Include="API\OtherCoupon\OtherCouponCategoryController.cs" />
+    <Compile Include="API\OtherCoupon\OtherCouponController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -215,6 +217,7 @@
     <Compile Include="Models\Coupons\CategoryModel.cs" />
     <Compile Include="Models\Coupons\CouponCategoryModel.cs" />
     <Compile Include="Models\Coupons\CouponModel.cs" />
+    <Compile Include="Models\Coupons\OtherCouponModel.cs" />
     <Compile Include="Models\CrowdModel.cs" />
     <Compile Include="Models\DiscountModel.cs" />
     <Compile Include="Models\FollowerModel.cs" />

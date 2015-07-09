@@ -10,12 +10,14 @@
 <div class="panel-body">
     <form class="form-horizontal" ng-submit="Save()" name="form">
         <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
-        <div class="form-group">
+        <div class="form-group" >
+            <div class="row">
             <label  class="col-sm-2 control-label">请输入品牌名：</label>
             <div class="col-sm-10">
                 <input name="Bname" id="Bname" type="text" style="width: 180px" class="form-control" required ng-model="BrandModel.Bname" required/>
                 <span ng-show="form.Bname.$error.required" style="color: red;">*</span>
             </div>
+                </div>
             <label  class="col-sm-2 control-label">请输入品牌标题：</label>
             <div class="col-sm-10">
                 <input name="SubTitle" id="Subtitle" type="text" maxlength="30"  style="width: 500px"  class="form-control" required ng-model="BrandModel.SubTitle" required/>
@@ -30,14 +32,20 @@
                 <textarea name="Content" maxlength="28" id="Content" type="text" style="width:500px;height:80px;" class="form-control" required ng-model="BrandModel.Content" required/>
                 <span ng-show="form.Content.$error.required" style="color: red;">*请输入不要超过30字符</span>
             </div>
+ <!--by   yangyue  2015/7/8    star 品牌分类-->
+            <label  class="col-sm-2 control-label">品牌类别：</label>
 
-
-            <div class="loadimg">
-                <img height="100" width="100" src="{{SImg+image}}" title="图片" />
-                <input name="Bimg" id="Bimg" type="hidden" class="form-control" required ng-model="BrandModel.Bimg" required value="{{image}}"/>
-            </div>
+            <select style="margin-left: 15px;" ng-model="BrandModel.ClassId" id="classifySelectId"
+                    ng-options="list.Id as list.Name for list in ClassList"
+                    >
+                <option value="">请选择分类</option>
+            </select>
+<!--------------------------end------------------------->
         </div>
-
+        <div class="loadimg">
+            <img height="100" width="100" src="{{SImg+image}}" title="图片" />
+            <input name="Bimg" id="Bimg" type="hidden" class="form-control" required ng-model="BrandModel.Bimg" required value="{{image}}"/>
+        </div>
         <!--上传-->
         <div>
             <p class="m-t-md">上传图片</p>
