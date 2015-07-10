@@ -57,7 +57,7 @@ namespace Zerg.Controllers.CRM
         {
             var condition = new BrokerWithdrawSearchCondition
             {
-                isAescending =true,
+                OrderBy = EnumBrokerWithdrawSearchOrderBy.State,
                 Page = Convert.ToInt32(page),
                 PageCount = pageSize
             };
