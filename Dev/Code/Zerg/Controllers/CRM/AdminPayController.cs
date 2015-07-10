@@ -56,7 +56,7 @@ namespace Zerg.Controllers.CRM
 
             var model = new BRECPayEntity
             {
-                BrokerRECClient = _brokerRecClientService.GetBrokerRECClientById(adminPayModel.Id),
+                //BrokerRECClient = _brokerRecClientService.GetBrokerRECClientById(adminPayModel.Id),
                 Name = adminPayModel.Name,
                 Statusname = adminPayModel.Statusname,
                 Describe = adminPayModel.Describe,

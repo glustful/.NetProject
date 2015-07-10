@@ -122,9 +122,9 @@ namespace Event.Service.Crowd
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Statuss != null && condition.Statuss.Any())
+				if (condition.Statuss>=0)
                 {
-                    query = query.Where(q => condition.Statuss.Contains(q.Status));
+                    query = query.Where(q => condition.Statuss==q.Status);
                 }
 				if (condition.Addusers != null && condition.Addusers.Any())
                 {
@@ -211,9 +211,9 @@ namespace Event.Service.Crowd
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Statuss != null && condition.Statuss.Any())
+				if (condition.Statuss>=0)
                 {
-                    query = query.Where(q => condition.Statuss.Contains(q.Status));
+                    query = query.Where(q => condition.Statuss==q.Status);
                 }
 				if (condition.Addusers != null && condition.Addusers.Any())
                 {

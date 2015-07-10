@@ -329,6 +329,10 @@ app  .run(
             url:'/cash',
             templateUrl:'modules/cash/view/cash.html'
         })
+        .state('app.allthechip',{
+            url:'/allthechip',
+            templateUrl:'modules/allthechip/view/allthechip.html'
+        })
 
 
 

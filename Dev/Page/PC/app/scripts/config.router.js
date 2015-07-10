@@ -938,14 +938,14 @@ angular.module('app')
                 url: '/index',
                 templateUrl: 'views/pages/CRM/PlayMoney/index.html',
                 data: { title: '财务打款' },
-                controller:"PlayMoneyController",
+                controller:"playMoney",
                 resolve:load('scripts/controllers/CRM/PlayMoney.js')
             })
             .state('page.CRM.PlayMoney.detailed', {
                 url: '/detailed?id',
                 templateUrl: 'views/pages/CRM/PlayMoney/detailed.html',
                 data: { title: '详情页' },
-                controller:"PlayMoneyDetialController",
+                controller:"playMoneyDetails",
                 resolve:load('scripts/controllers/CRM/PlayMoney.js')
             })
 
@@ -1564,6 +1564,16 @@ angular.module('app')
                 resolve: load('scripts/controllers/event/active.js')
             })
 
+            .state('page.event.chip', {
+                url: '/chip',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.chip.chip', {
+                url: '/chip',
+                templateUrl: 'views/pages/event/chip/chip.html',
+                data : { title: '众筹列表' },
+                resolve: load('scripts/controllers/event/chip.js')
+            })
 
 
             //-----------------------end-------------------
