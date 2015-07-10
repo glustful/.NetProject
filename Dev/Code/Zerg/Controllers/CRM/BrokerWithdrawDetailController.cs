@@ -16,6 +16,7 @@ using YooPoon.Core.Site;
 using YooPoon.WebFramework.User.Entity;
 using Zerg.Common;
 using System.ComponentModel;
+using System.Text;
 
 namespace Zerg.Controllers.CRM
 {
@@ -82,13 +83,19 @@ namespace Zerg.Controllers.CRM
             }).ToList().Select(a =>new
             {
                 a.Id,
-                a.Withdrawnum,
-                a.BrokeAccount_Id,
+                a.Withdrawnum,             
                 a.Type,
                 WithdrawDesc = a.WithdrawDesc,
                 Withdrawtime = a.Withdrawtime.ToString("yyy-MM-dd"),
             });
-            return PageHelper.toJson(new { List = list });
+            //取出所有明细的ID
+            StringBuilder SB = new StringBuilder();
+            foreach(var p in list)
+            {
+                SB.Append(p.Id.ToString() + ",");
+            }
+
+            return PageHelper.toJson(new { List = list,Ids=SB.ToString() });
         }
         #region 经纪人提现明细详情
 
