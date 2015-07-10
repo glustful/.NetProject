@@ -37,10 +37,16 @@ angular.module("app").controller('playMoney',[
 angular.module("app").controller('playMoneyDetails',[
     '$http','$scope','$stateParams',function($http,$scope,$stateParams){
 
-        $http.get(SETTING.ApiUrl+ '/BrokerWithdrawDetail/GetBrokerWithdrawDetailListByUserId?id='+ $stateParams.id,{
+        $http.get(SETTING.ApiUrl+ '/BrokerWithdrawDetail/GetBrokerWithdrawDetailByBrokerWithdrawId?id='+ $stateParams.id,{
             'withCredentials':true
         }).success(function (data) {
             $scope.BrokerWithdrawDetail = data.List;
+            if (data.List.Type == 0){
+                $scope.BrokerWithdrawDetail.Type = "´ø¿Í"
+            }
+            if (data.List.Type == 1){
+                $scope.BrokerWithdrawDetail.Type = "ÍÆ¼ö"
+            }
         });
     }
 ])

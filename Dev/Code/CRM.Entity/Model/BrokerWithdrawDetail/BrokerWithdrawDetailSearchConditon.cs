@@ -27,6 +27,7 @@ namespace CRM.Entity.Model
         public string Type { get; set; }
 
 		public BrokerEntity Brokers { get; set; }
+        public BrokerWithdrawEntity BrokerWithdraw { get; set; }
 
 		public BankCardEntity[] BankCards { get; set; }
 
