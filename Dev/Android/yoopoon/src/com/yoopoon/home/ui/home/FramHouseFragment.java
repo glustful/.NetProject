@@ -82,13 +82,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	private TextView type_textview;
 	private TextView price_textview;
 	private TextView reset_textview;
-	// 全局传入参数（传入到服务器的参数）
-	/*
-	 * private static String AreaNameValue = ""; private static String IsDescendingValue = "true";
-	 * private static String OrderByValue = "OrderByAddtime"; private static String PageValue = "1";
-	 * private static String PageCountValue = "10"; private static String PriceBeginValue = "";
-	 * private static String PriceEndValue = ""; private static String TypeIdValue = "";
-	 */
+	// 传入参数（传入到服务器的参数）
 	private String AreaNameValue = "";
 	private String IsDescendingValue = "true";
 	private String OrderByValue = "OrderByAddtime";
@@ -101,14 +95,20 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	private PopupWindow houseTypeWindow;
 	// 房源页顶端楼盘价格PopupWindow
 	private PopupWindow housePriceWindow;
-	// 房源也顶端楼盘类型
+	// 房源页顶端楼盘省份列表对应的popuwindow
+	private PopupWindow houseProvincePopupWindow;
+	// 房源页顶端楼盘市级列表对应的popuwindow
+	private PopupWindow houseCityPopupWindow;
+	// 房源页顶端楼盘区级列表对应的popuwindow
+	private PopupWindow houseDistrictPopupWindow;
+	// 房源顶端楼盘类型Json数组
 	ArrayList<JSONObject> houseTypeJsonObjects = new ArrayList<JSONObject>();
+	ArrayList<JSONObject> houseProvinceJsonObjects = new ArrayList<JSONObject>();
 
 	// ///////////////////////////////////////////////////////////////////////////////////////////////////
 	// 如上是初始化和声明的变量
 	// ///////////////////////////////////////////////////////////////////////////////////////////////////
 	/*
-	 * (non Javadoc)
 	 * @Title: onCreateView
 	 * @Description: 创建Fragment视图
 	 * @param inflater
@@ -281,6 +281,41 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
 				.addParam("channelName", "banner").notifyRequest();
 	}
+	/**
+	 * @Title: requestHouseAreaList
+	 * @Description: 传入父节点ID，获取子节点区域位置(对应房源页顶端的楼盘区域点击事件)
+	 */
+	private void requestHouseAreaList(String parentIdString, String ParentIdValueString) {
+		new RequestAdapter() {
+			@Override
+			public void onReponse(ResponseData data) {
+				if (data.getResultState() == ResultState.eSuccess) {
+					JSONArray list = data.getMRootData().optJSONArray("AreaList");
+					if (list == null || list.length() < 1) {
+						return;
+					}
+					int size = list.length();
+					for (int i = 0; i < size; i++) {
+						JSONObject jsonObject = list.optJSONObject(i);
+						houseProvinceJsonObjects.add(jsonObject);
+					}
+					Log.e(LOGTAG, houseProvinceJsonObjects.toString());
+					initHouseProvince(houseProvinceJsonObjects);
+				}
+			}
+			/**
+			 * @Title: initHouseProvince
+			 * @Description: 接收多线程获取的房源区域信息，初始化省份popuWindow
+			 * @param houseProvinceJsonObjects
+			 */
+			private void initHouseProvince(ArrayList<JSONObject> houseProvinceJsonObjects) {
+			}
+			@Override
+			public void onProgress(ProgressMessage msg) {
+			}
+		}.setUrl(getString(R.string.url_house_condition)).setRequestMethod(RequestMethod.eGet)
+				.addParam(parentIdString, ParentIdValueString).notifyRequest();
+	}// 不要忘记修改参数
 	/**
 	 * @Title: requestHouseTypeList
 	 * @Description: 开启一个线程，获取楼盘类型，如三室一厅或者五室两厅等，调用initHouseTypeList()初始化Popuwindow
@@ -510,6 +545,10 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			housePriceWindow.showAsDropDown(price_textview, -50, 0);
 		}
 	}
+	/**
+	 * @Title: houseConditionReset
+	 * @Description: 点击房源页重置按钮触发的重置条件操作
+	 */
 	private void houseConditionReset() {
 		AreaNameValue = "";
 		PriceBeginValue = "";
@@ -533,6 +572,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.area_name_textview:
+				requestHouseAreaList(null, null);
 				break;
 			case R.id.type_textview:
 				requestHouseTypeList();
