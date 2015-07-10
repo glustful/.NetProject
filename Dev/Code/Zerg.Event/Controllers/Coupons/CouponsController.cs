@@ -27,12 +27,17 @@ namespace Zerg.Event.Controllers.Coupons
             _couponOwnerService = couponOwnerService;
             _workContext = workContext;
         }
+        #region 彭贵飞 获取手机端显示的优惠券种类和对应品牌信息
+        /// <summary>
+        /// 获取优惠券种类
+        /// </summary>
+        /// <returns>list列表</returns>
         public ActionResult Coupons()
         {
-            var Con= new CouponCategorySearchCondition
+            var Con = new CouponCategorySearchCondition
             {
                 OrderBy = EnumCouponCategorySearchOrderBy.OrderById
-            };          
+            };
             var list = _couponCategoryService.GetCouponCategoriesByCondition(Con).Select(p => new
             {
                 p.Id,
@@ -48,13 +53,20 @@ namespace Zerg.Event.Controllers.Coupons
                 Price = pp.Price,
                 Count = pp.Count,
                 ReMark = pp.ReMark,
+                BrandId = pp.BrandId,
                 BrandImg = _productBrandService.GetProductBrandById(pp.BrandId).Bimg,
                 SubTitle = _productBrandService.GetProductBrandById(pp.BrandId).SubTitle,
                 ProductParamater = _productBrandService.GetProductBrandById(pp.BrandId).ParameterEntities.ToDictionary(k => k.Parametername, v => v.Parametervaule)
             });
-           
             return View(list);
         }
+        #endregion
+        #region 彭贵飞 抢优惠券
+        /// <summary>
+        /// 抢优惠券
+        /// </summary>
+        /// <param name="id">优惠券种类Id</param>
+        /// <returns></returns>
 
         public ActionResult couponOwn(int id)
         {
@@ -83,6 +95,6 @@ namespace Zerg.Event.Controllers.Coupons
             };
             return View(CouponOwn);
         }
-
+        #endregion
     }
 }

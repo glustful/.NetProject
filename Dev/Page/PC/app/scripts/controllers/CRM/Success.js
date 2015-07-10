@@ -7,10 +7,12 @@ angular.module("app").controller('SuccessListController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
             status:"洽谈成功",
-            Brokername:"",
+            brokername:"",
             page: 1,
             pageSize: 10
         };
+        //$scope.currentUser = AuthService.CurrentUser();
+        //$scope.searchCondition.brokername = $scope.currentUser.UserName;
 
         var getTagList = function() {
             $http.get(SETTING.ApiUrl+'/AdminRecom/BrokerList',{
@@ -37,10 +39,12 @@ angular.module("app").controller('DKSuccessController',[
     '$http','$scope',function($http,$scope){
         $scope.searchDKCondition = {
             status:"洽谈成功",
-            BrokerName:"",
+            brokername:"",
             page:1,
             pageSize:10
         };
+        //$scope.currentUser = AuthService.CurrentUser();
+        //$scope.searchDKCondition.brokername = $scope.currentUser.UserName;
 
         var getTagList = function(){
             $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{

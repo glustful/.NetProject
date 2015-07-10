@@ -22,13 +22,17 @@ namespace CRM.Entity.Model
 		/// 是否降序
 		/// </summary>
 		public bool isDescending { get; set; }
+        /// <summary>
+        /// 是否升序
+        /// </summary>
+        public bool isAescending { get; set; }
 
 		public int[] Ids { get; set; }
 
         /// <summary>
         /// 提现状态 ｛0，处理中   1完成 ok｝
         /// </summary>
-        public string State { get; set; }
+        public int? State { get; set; }
 
 		public BrokerEntity Brokers { get; set; }
 
@@ -58,6 +62,7 @@ namespace CRM.Entity.Model
     public enum EnumBrokerWithdrawSearchOrderBy
 	{
 		OrderById,
+        State,
 	}
     
 }

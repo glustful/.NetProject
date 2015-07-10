@@ -18,7 +18,7 @@ namespace YP.CodeGen.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+    #line 1 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
     public partial class ControllerTemplate : ControllerTemplateBase
     {
@@ -28,347 +28,347 @@ namespace YP.CodeGen.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.N" +
-                    "et.Http;\nusing System.Text.RegularExpressions;\nusing System.Web.Http;\nusing Syst" +
-                    "em.Web.Http.Cors;\nusing ");
+            this.Write("using System;\r\nusing System.Collections.Generic;\r\nusing System.Linq;\r\nusing Syste" +
+                    "m.Net.Http;\r\nusing System.Text.RegularExpressions;\r\nusing System.Web.Http;\r\nusin" +
+                    "g System.Web.Http.Cors;\r\nusing ");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 13 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
             
             #line default
             #line hidden
-            this.Write(".Entity.Model;\nusing ");
+            this.Write(".Entity.Model;\r\nusing ");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 14 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
             
             #line default
             #line hidden
             this.Write(".Service.");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 14 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write(";\nusing YooPoon.Core.Site;\nusing YooPoon.WebFramework.API;\nusing ");
+            this.Write(";\r\nusing YooPoon.Core.Site;\r\nusing YooPoon.WebFramework.API;\r\nusing ");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 17 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
             
             #line default
             #line hidden
-            this.Write(".Models;\n\nnamespace ");
+            this.Write(".Models;\r\n\r\nnamespace ");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 19 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_projectName));
             
             #line default
             #line hidden
-            this.Write(".Controllers\n{\n\tpublic class ");
+            this.Write(".Controllers\r\n{\r\n\tpublic class ");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 21 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("Controller : ApiController\n\t{\n\t\tprivate readonly I");
+            this.Write("Controller : ApiController\r\n\t{\r\n\t\tprivate readonly I");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 23 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
             this.Write("Service _");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 23 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("Service;\n\n\t\tpublic ");
+            this.Write("Service;\r\n\r\n\t\tpublic ");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 25 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
             this.Write("Controller(I");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 25 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
             this.Write("Service ");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 25 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("Service)\n\t\t{\n\t\t\t_");
+            this.Write("Service)\r\n\t\t{\r\n\t\t\t_");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 27 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
             this.Write("Service = ");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 27 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("Service;\n\t\t}\n\n\t\tpublic ");
+            this.Write("Service;\r\n\t\t}\r\n\r\n\t\tpublic ");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 30 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("Model Get(int id)\n\t\t{\n\t\t\tvar entity =_");
+            this.Write("Model Get(int id)\r\n\t\t{\r\n\t\t\tvar entity =_");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 32 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
             this.Write("Service.Get");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 32 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("ById(id);\n\t\t\tvar model = new ");
+            this.Write("ById(id);\r\n\t\t\tvar model = new ");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 33 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("Model\n\t\t\t{\n");
+            this.Write("Model\r\n\t\t\t{\r\n");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 35 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
  foreach(var filed in _entityModels){ if(filed.IsVirtual) continue;
             
             #line default
             #line hidden
-            this.Write("\n\t\t\t\t");
+            this.Write("\t\t\t\t");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 36 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(filed.FieldName));
             
             #line default
             #line hidden
             this.Write(" = entity.");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 36 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(filed.FieldName));
             
             #line default
             #line hidden
-            this.Write(",\n");
+            this.Write(",");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 36 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
 }
             
             #line default
             #line hidden
-            this.Write("\n\t\t\t}\n\t\t\treturn model;\n\t\t}\n\n\t\tpublic List<");
+            this.Write("\t\t\t};\r\n\t\t\treturn model;\r\n\t\t}\r\n\r\n\t\tpublic List<");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 41 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
             this.Write("Model> Get(");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 41 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("SearchCondition condition)\n\t\t{\n\t\t\tvar model = _");
+            this.Write("SearchCondition condition)\r\n\t\t{\r\n\t\t\tvar model = _");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 43 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
             this.Write("Service.Get");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 43 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
             this.Write("sByCondition(condition).Select(c=>new ");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 43 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("Model\n\t\t\t{\n");
+            this.Write("Model\r\n\t\t\t{\r\n");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 45 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
  foreach(var filed in _entityModels){ if(filed.IsVirtual) continue;
             
             #line default
             #line hidden
-            this.Write("\n\t\t\t\t");
+            this.Write("\t\t\t\t");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 46 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(filed.FieldName));
             
             #line default
             #line hidden
             this.Write(" = c.");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 46 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(filed.FieldName));
             
             #line default
             #line hidden
-            this.Write(",\n");
+            this.Write(",\r\n");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 47 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
 }
             
             #line default
             #line hidden
-            this.Write("\n\t\t\t}).ToList();\n\t\t\treturn model;\n\t\t}\n\n\t\tpublic bool Post(");
+            this.Write("\t\t\t}).ToList();\r\n\t\t\treturn model;\r\n\t\t}\r\n\r\n\t\tpublic bool Post(");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 52 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("Model model)\n\t\t{\n\t\t\tvar entity = new ");
+            this.Write("Model model)\r\n\t\t{\r\n\t\t\tvar entity = new ");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 54 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("Entity\n\t\t\t{\n");
+            this.Write("Entity\r\n\t\t\t{\r\n");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 56 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
  foreach(var filed in _entityModels){ if(filed.FieldName =="Id" || filed.IsVirtual) continue;
             
             #line default
             #line hidden
-            this.Write("\n\t\t\t\t");
+            this.Write("\t\t\t\t");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 57 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(filed.FieldName));
             
             #line default
             #line hidden
             this.Write(" = model.");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 57 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(filed.FieldName));
             
             #line default
             #line hidden
-            this.Write(",\n");
+            this.Write(",\r\n");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 58 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
 }
             
             #line default
             #line hidden
-            this.Write("\n\t\t\t};\n\t\t\tif(_");
+            this.Write("\t\t\t};\r\n\t\t\tif(_");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 60 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("Service.Create(entity).Id > 0)\n\t\t\t{\n\t\t\t\treturn true;\n\t\t\t}\n\t\t\treturn false;\n\t\t}\n\n\t" +
-                    "\tpublic bool Put(");
+            this.Write("Service.Create(entity).Id > 0)\r\n\t\t\t{\r\n\t\t\t\treturn true;\r\n\t\t\t}\r\n\t\t\treturn false;\r\n\t" +
+                    "\t}\r\n\r\n\t\tpublic bool Put(");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 67 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("Model model)\n\t\t{\n\t\t\tvar entity = _");
+            this.Write("Model model)\r\n\t\t{\r\n\t\t\tvar entity = _");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 69 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
             this.Write("Service.Get");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 69 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("ById(model.Id);\n\t\t\tif(entity == null)\n\t\t\t\treturn false;\n");
+            this.Write("ById(model.Id);\r\n\t\t\tif(entity == null)\r\n\t\t\t\treturn false;\r\n");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 72 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
  foreach(var filed in _entityModels){ if(filed.FieldName =="Id" || filed.IsVirtual) continue;
             
             #line default
             #line hidden
-            this.Write("\n\t\t\tentity.");
+            this.Write("\t\t\tentity.");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 73 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(filed.FieldName));
             
             #line default
             #line hidden
             this.Write(" = model.");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 73 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(filed.FieldName));
             
             #line default
             #line hidden
-            this.Write(";\n");
+            this.Write(";\r\n");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 74 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
 }
             
             #line default
             #line hidden
-            this.Write("\n\t\t\tif(_");
+            this.Write("\t\t\tif(_");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 75 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("Service.Update(entity) != null)\n\t\t\t\treturn true;\n\t\t\treturn false;\n\t\t}\n\n\t\tpublic b" +
-                    "ool Delete(int id)\n\t\t{\n\t\t\tvar entity = _");
+            this.Write("Service.Update(entity) != null)\r\n\t\t\t\treturn true;\r\n\t\t\treturn false;\r\n\t\t}\r\n\r\n\t\tpub" +
+                    "lic bool Delete(int id)\r\n\t\t{\r\n\t\t\tvar entity = _");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 82 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
             this.Write("Service.Get");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 82 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("ById(id);\n\t\t\tif(entity == null)\n\t\t\t\treturn false;\n\t\t\tif(_");
+            this.Write("ById(id);\r\n\t\t\tif(entity == null)\r\n\t\t\t\treturn false;\r\n\t\t\tif(_");
             
-            #line 6 "D:\Project_Protoss\YP.CodeGen\Templates\ControllerTemplate.tt"
+            #line 85 "D:\Project_Zerg\Dev\Code\YP.CodeGen\Templates\ControllerTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_tableName));
             
             #line default
             #line hidden
-            this.Write("Service.Delete(entity))\n\t\t\t\treturn true;\n\t\t\treturn false;\n\t\t}\n\t}\n}");
+            this.Write("Service.Delete(entity))\r\n\t\t\t\treturn true;\r\n\t\t\treturn false;\r\n\t\t}\r\n\t}\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }
