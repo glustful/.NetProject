@@ -48,7 +48,32 @@ namespace Zerg.Controllers.CRM
             _workContext = workContext;
             _bankcardService = bankcardService;
         }
-
+        ///// <summary>
+        ///// 根据经纪人查询提现明细信息
+        ///// </summary>
+        ///// <param name="brokerId"></param>
+        ///// <returns></returns>
+        //[Description("根据经纪人查询提现明细")]
+        //[HttpGet]
+        //public HttpResponseMessage GetBrokerWithdrawDetailByAgentId(string brokerId) 
+        //{
+        //    if (string.IsNullOrEmpty(brokerId)) 
+        //    {
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误！"));
+        //    }
+        //    var model = _brokerwithdrawdetailService.GetBrokerWithdrawDetailById(Convert.ToInt32(brokerId));
+        //    var brokerWithdrawDetail = new BrokerWithdrawDetailEntity
+        //    {
+        //       Brokername = model.Broker.Brokername,
+        //       BankNum = model.BankCard.Num,
+        //       Id = model.Id,
+        //       Type = model.Type,
+        //       Withdrawnum = model.Withdrawnum,
+        //       Withdrawtime = model.Withdrawtime.ToString("YYY--MM--DD"),
+        //       Codeid = model.BankCard.Bank.Codeid
+        //    }
+        //       return PageHelper.toJson(brokerWithdrawDetail);
+        //}
         #region 经纪人提现明细详情
 
         /// <summary>
