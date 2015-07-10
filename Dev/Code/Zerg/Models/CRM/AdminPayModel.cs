@@ -22,7 +22,7 @@ namespace Zerg.Models.CRM
         /// </summary>
         public virtual int BrokerRECClientId { get; set; }
         /// <summary>
-        /// 提现ID
+        /// 提现明ID
         /// </summary>
         public virtual int BrokerWithdrawDetailId { get; set; }
         /// <summary>
