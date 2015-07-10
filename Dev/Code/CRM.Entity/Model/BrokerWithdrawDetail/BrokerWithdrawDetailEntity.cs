@@ -10,7 +10,7 @@ namespace CRM.Entity.Model
 	public class BrokerWithdrawDetailEntity : IBaseEntity
 	{
 		/// <summary>
-		/// 提现ID
+		/// 提现明细ID
 		/// </summary>
 		public virtual int Id { get; set; }
 		/// <summary>

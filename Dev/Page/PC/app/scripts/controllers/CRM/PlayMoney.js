@@ -49,7 +49,7 @@ angular.module("app").controller('playMoneyDetails',[
             }});
         ////////////////////////////////////打款款项表单//////////////////////////////////////////////////////////
         $scope.PayInfo = {
-            BrokerWithdrawDetailId:$stateParams.id,
+            Id:data.List.Id,
             Type:"",
             Name:"",
             Statusname:"",
