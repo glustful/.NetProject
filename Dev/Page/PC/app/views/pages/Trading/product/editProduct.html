@@ -41,7 +41,7 @@
     <label class="col-sm-3 control-label no-padding-right"> {{row.Name}} </label>
     <div class="col-sm-9">
         <div  ng-repeat="v in row.ValueList">
-            <input type="radio" value={{v.Id}} class="ace" name={{row.Name}} mm="{{selectParameterValue}}" ng-class="{selected:selectParameterValue==v.Value}"  checked="{{hasValue(product.ParameterValue,v.Value)?'checked':''}}"  ng-model="selectParameterValue" required/>
+            <input type="radio" value={{v.Id}} class="ace" name={{row.Name}} mm="{{selectParameterValue}}" ng-class="{selected:selectParameterValue==v.Value}" ng-checked="hasValue(product.ParameterValue,v.Value)?'checked':''"  ng-model="selectParameterValue" required/>
             <span class="lbl" name={{row.Name}}>{{v.Value}}</span>
         </div>
     </div>
@@ -132,10 +132,19 @@
         </div>
     </div>
 </div>
-    <div class="loadimg" style=" float: left">
-        <img height="100" width="100" title="图片" src="http://img.yoopoon.com/{{product.Productimg}}" />
+<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right"> 商品图片 </label>
 
+    <div class="col-sm-9">
+        <div>
+            <img height="200" width="200" title="图片" src="http://img.yoopoon.com/{{product.Productimg}}" />
+        </div>
     </div>
+</div>
+    <!--<div class="loadimg" style=" float: left">-->
+        <!--<img height="100" width="100" title="图片" src="http://img.yoopoon.com/{{product.Productimg}}" />-->
+
+    <!--</div>-->
     <!--<div class="loadimg" style=" float: left">-->
         <!--<img height="100" width="100" title="图片" src="http://img.yoopoon.com/{{product.Productimg1}}" />-->
 
@@ -153,15 +162,14 @@
 
     <!--</div>-->
 
-    <div >
-        <p class="m-t-md">商品图片</p>
-        <input name="Productimg" id="Productimg" type="text"  style="width: 500px" ng-model="product.Productimg"  class="form-control" required />
-        <input type="file" nv-file-select="" uploader="uploader" />
-
-        <div>
-
-
-            <div class="p-md">
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"> 上传图片 </label>
+        <!--<input name="Productimg" id="Productimg" type="text"  style="width: 500px" ng-model="product.Productimg"  class="form-control" required />-->
+        <!--<input type="file" nv-file-select="" uploader="uploader" />-->
+        <div class="col-sm-9"><input type="file" nv-file-select="" uploader="uploader" />
+        </div>
+        <div class="col-sm-9 pull-right">
+            <div>
                 <!--<div class="m-b"><b class="badge bg-info pos-rlt m-r-xs"><i class="arrow right b-info pull-in"></i>{{ uploader.queue.length }}</b> file(s)</div>-->
                 <table class="table bg-white b-a">
                     <thead>
