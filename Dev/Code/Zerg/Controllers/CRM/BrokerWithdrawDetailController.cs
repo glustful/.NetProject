@@ -74,13 +74,16 @@ namespace Zerg.Controllers.CRM
             {
                 b.Id,
                 b.Withdrawnum,
+                b.BrokeAccount_Id,
                 b.Withdrawtime,
                 b.Type,
                 b.BrokerWithdraw.WithdrawDesc,
+               
             }).ToList().Select(a =>new
             {
                 a.Id,
                 a.Withdrawnum,
+                a.BrokeAccount_Id,
                 a.Type,
                 WithdrawDesc = a.WithdrawDesc,
                 Withdrawtime = a.Withdrawtime.ToString("yyy-MM-dd"),
