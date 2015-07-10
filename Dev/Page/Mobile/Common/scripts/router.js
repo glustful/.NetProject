@@ -323,7 +323,8 @@ app.run(
             })
             .state('app.chip',{
                 url:'/chip',
-                templateUrl:'modules/chip/view/chip.html'
+                templateUrl:'modules/chip/view/chip.html',
+                resolve:load(["modules/chip/controller/chipcontroller.js"])
             })
             .state('app.chipDetail',{
                 url:'/chipDetail',
@@ -384,7 +385,6 @@ app.run(
                 templateUrl:'modules/cash/view/cash.html',
                 data:{title:'提取现金'}
             })
-
 
         function load(srcs, callback) {
             return {

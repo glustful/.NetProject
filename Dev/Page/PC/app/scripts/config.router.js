@@ -1544,6 +1544,16 @@ angular.module('app')
                 resolve: load('scripts/controllers/event/active.js')
             })
 
+            .state('page.event.chip', {
+                url: '/chip',
+                template: '<div ui-view></div>'
+            })
+            .state('page.event.chip.chip', {
+                url: '/chip',
+                templateUrl: 'views/pages/event/chip/chip.html',
+                data : { title: '众筹列表' },
+                resolve: load('scripts/controllers/event/chip.js')
+            })
 
 
             //-----------------------end-------------------
