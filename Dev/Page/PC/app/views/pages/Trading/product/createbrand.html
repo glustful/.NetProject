@@ -12,13 +12,13 @@
         <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
         <div class="form-group" >
             <div class="row">
-            <label  class="col-sm-2 control-label">请输入品牌名：</label>
+            <label   class="col-sm-2 control-label">请输入品牌名称：</label>
             <div class="col-sm-10">
-                <input name="Bname" id="Bname" type="text" style="width: 180px" class="form-control" required ng-model="BrandModel.Bname" required/>
+                <input  name="Bname" id="Bname" type="text" style="width: 280px;margin-left: 10px;" class="form-control" required ng-model="BrandModel.Bname" required/>
                 <span ng-show="form.Bname.$error.required" style="color: red;">*</span>
             </div>
                 </div>
-            <label  class="col-sm-2 control-label">请输入品牌标题：</label>
+            <label   class="col-sm-2 control-label">请输入品牌标题：</label>
             <div class="col-sm-10">
                 <input name="SubTitle" id="Subtitle" type="text" maxlength="30"  style="width: 500px"  class="form-control" required ng-model="BrandModel.SubTitle" required/>
                 <span ng-show="form.SubTitle.$error.required" style="color: red;">*请输入不要超过30字符</span>
@@ -97,7 +97,7 @@
             <span ng-show="form.alert.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
         </div>
         <div class="form-group">
-            <div class="col-sm-offset-1 col-sm-11">
+            <div class="col-sm-offset-1 col-sm-11" style="text-align: center">
                 <button class="md-btn md-raised m-b btn-fw green" id="btnok"><i class="glyphicon glyphicon-ok m-r-sm"></i>提交<div class="md-ripple-container"></div></button>
                 <a ui-sref="page.Trading.product.brand"><button class="md-btn md-raised m-b btn-fw pink" ><i class="fa fa-reply  m-r-sm"></i>返回<div class="md-ripple-container "></div></button></a>
             </div>
