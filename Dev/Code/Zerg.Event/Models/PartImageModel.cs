@@ -60,8 +60,11 @@ namespace Event.Models
         /// UpTime
         /// </summary>
 		public DateTime Uptime {get;set;}
+        /// <summary>
+        /// 图片序号
+        /// </summary>
 
-
+        public int j { get; set; }
 
 	}
 }

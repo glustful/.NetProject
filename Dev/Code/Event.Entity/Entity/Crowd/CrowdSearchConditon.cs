@@ -54,7 +54,7 @@ namespace Event.Entity.Model
 
 
 
-		public int[] Statuss { get; set; }
+		public int Statuss { get; set; }
 
 
 

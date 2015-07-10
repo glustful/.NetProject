@@ -12,7 +12,8 @@ using Event.Service.Follower;
 using Event.Service.PartImage;
 using Event.Service.Phone;
 using Zerg.Common;
-
+using Event.Service.Participation;
+using Event.Models;
 namespace Zerg.Event.API.Crowd
 {
 
@@ -25,13 +26,15 @@ namespace Zerg.Event.API.Crowd
         private readonly IDiscountService _discountService;
         private readonly IFollowerService _followerService;
         private readonly IPhoneService _phoneService;
-        public CrowdApiController(ICrowdService crowdService, IPartImageService partImageService, IDiscountService discountService, IFollowerService followerService,IPhoneService phoneService)
+        private readonly IParticipationService _participationService;
+        public CrowdApiController(ICrowdService crowdService, IPartImageService partImageService, IDiscountService discountService, IFollowerService followerService, IPhoneService phoneService, IParticipationService participationService)
         {
             _discountService = discountService;
             _crowdService = crowdService;
             _partImageService = partImageService;
             _followerService = followerService;
             _phoneService = phoneService;
+            _participationService = participationService;
         }
         #region 项目信息
         /// <summary>
@@ -39,13 +42,14 @@ namespace Zerg.Event.API.Crowd
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetCrowdInfo()
+        public HttpResponseMessage GetCrowdInfo( int status)
         {
+           
             //查询项目表所有的数据
             var sech = new CrowdSearchCondition
             {
                 OrderBy = EnumCrowdSearchOrderBy.OrderById,
-                //Statuss = new[] { status }
+                Statuss =status 
             };
             var list = _crowdService.GetCrowdsByCondition(sech).Select(p => new
             {
@@ -59,7 +63,8 @@ namespace Zerg.Event.API.Crowd
                 p.Uptime,
                 p.Upuser,
                 p.Adduser,
-                p.Addtime
+                p.Addtime,
+                p.crowdUrl 
             }).ToList().Select(a => new CrowdModel
             {
                 //返回数据
@@ -71,8 +76,14 @@ namespace Zerg.Event.API.Crowd
                 Status = a.Status,
                 ImgList = _partImageService.GetPartImageByCrowdId(a.Id),
                 Dislist = _discountService.GetDiscountByCrowdId(a.Id),
-            });
-            return PageHelper.toJson(new { list1 = list});
+                //已参与众筹人数
+                crowdNum = _participationService.GetParticipationCountByCrowdId(a.Id),
+                //众筹最低优惠对应的人数
+                crowdMaxNum = _discountService.GetDiscountMaxCountByCrowdId(a.Id),
+                crowdUrl =a.crowdUrl ,
+                i = 0
+            }).Where(p => p.crowdMaxNum != 0);
+            return PageHelper.toJson(new {list});
         }
 
         /// <summary>
@@ -85,7 +96,7 @@ namespace Zerg.Event.API.Crowd
         {
             var sech = new CrowdSearchCondition
             {
-                Statuss = new[] { status }
+                Statuss = status 
             };
             
                 var list = _crowdService.GetCrowdsByCondition(sech).Select(p => new

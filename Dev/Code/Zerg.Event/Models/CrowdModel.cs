@@ -15,7 +15,10 @@ namespace Event.Models
         /// ID
         /// </summary>
 		public int Id {get;set;}
-
+        /// <summary>
+        /// 图片栏目序号
+        /// </summary>
+        public int i { get; set; }
 
 		/// <summary>
         /// 项目标题
@@ -86,5 +89,9 @@ namespace Event.Models
         /// 众筹设置最多人数
         /// </summary>
         public int crowdMaxNum { get; set; }
+        /// <summary>
+        /// 众筹url
+        /// </summary>
+        public string crowdUrl { get; set; }
 	}
 }
