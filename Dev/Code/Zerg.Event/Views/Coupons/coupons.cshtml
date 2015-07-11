@@ -5,7 +5,8 @@
 @model dynamic
 <link href="~/Controllers/Coupons/Static/style/Coupons.css" rel="stylesheet" />
 <link href="~/Controllers/Coupons/Static/style/common.css" rel="stylesheet" />
-<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet"/>
+<title>优惠券</title>
 <div class="window">
     <div class="hd">
         <div class="header cf">
@@ -29,7 +30,7 @@
                         <div class="lpIntro">
                             <span>@item.ProductParamater["最高优惠"]元/m²&nbsp;&nbsp;@item.ProductParamater["占地面积"]</span>
                             <p>@item.SubTitle</p>
-                            <a href="#">了解楼盘详情&nbsp;&nbsp;</a>
+                            <a href="http://www.iyookee.cn/#/app/housesBuy?BrandId=@item.BrandId">了解楼盘详情&nbsp;&nbsp;</a>
                         </div>
                         <div style="background-color: #ffdfa5; width: 280px; height: 222px; float: right;margin-right: 10px">
                             <div class="juan">@item.Name</div>

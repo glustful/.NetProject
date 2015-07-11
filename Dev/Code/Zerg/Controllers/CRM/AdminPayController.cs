@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CRM.Entity.Model;
+using CRM.Service.BrokerWithdrawDetail;
 using CRM.Service.BRECPay;
 using CRM.Service.BrokerRECClient;
 using CRM.Service.BLPay;
@@ -10,6 +11,9 @@ using CRM.Service.BrokerLeadClient;
 using Zerg.Common;
 using Zerg.Models.CRM;
 using System.ComponentModel;
+using YooPoon.WebFramework.User.Entity;
+using CRM.Service.Broker;
+using YooPoon.Core.Site;
 
 //财务人员打款流程处理
 namespace Zerg.Controllers.CRM
@@ -19,10 +23,14 @@ namespace Zerg.Controllers.CRM
     [Description("财务人员打款流程处理类")]
     public class AdminPayController : ApiController
     {
+        private readonly IBrokerWithdrawDetailService _brokerwithdrawDetailService;
         private readonly IBRECPayService _brecPayService;
         private readonly IBrokerRECClientService _brokerRecClientService;
         private readonly IBLPayService _blPayService;
         private readonly IBrokerLeadClientService _brokerLeadClientService;
+        private readonly IBrokerService _brokerService;    
+        private readonly IWorkContext _workContext;
+
         
         /// <summary>
         /// 财务人员打款管理初始化
@@ -30,15 +38,19 @@ namespace Zerg.Controllers.CRM
         /// <param name="brecPayService">brecPayService</param>
         /// <param name="brokerRecClientService">brokerRecClientService</param>
         public AdminPayController(IBRECPayService brecPayService,
+            IBrokerWithdrawDetailService brokerwithdrawDetailService,
             IBrokerRECClientService brokerRecClientService,
             IBLPayService blPayService,
-            IBrokerLeadClientService brokerLeadClientService
+            IBrokerLeadClientService brokerLeadClientService,IWorkContext workContext, IBrokerService brokerService
             )
         {
+            _brokerwithdrawDetailService = brokerwithdrawDetailService;
             _brecPayService = brecPayService;
             _brokerRecClientService = brokerRecClientService;
             _blPayService = blPayService;
             _brokerLeadClientService = brokerLeadClientService;
+            _workContext = workContext;
+            _brokerService = brokerService;
         }
 
         #region 财务打款确认流程 杨定鹏 2015年5月19日10:24:34
@@ -56,7 +68,7 @@ namespace Zerg.Controllers.CRM
 
             var model = new BRECPayEntity
             {
-                BrokerRECClient = _brokerRecClientService.GetBrokerRECClientById(adminPayModel.Id),
+                //BrokerRECClient = _brokerRecClientService.GetBrokerRECClientById(adminPayModel.Id),
                 Name = adminPayModel.Name,
                 Statusname = adminPayModel.Statusname,
                 Describe = adminPayModel.Describe,
@@ -161,5 +173,104 @@ namespace Zerg.Controllers.CRM
         }
 
         #endregion
+        #region  财务确认打款
+        /// <summary>
+          /// chenda  财务打款
+          /// </summary>
+          /// <param name="payModel"></param>
+          /// <returns></returns>
+        [HttpPost]
+        [Description("财务管理员打款")]
+        public HttpResponseMessage SetPay([FromBody]PayModel payModel)
+        {
+            var user = (UserBase) _workContext.CurrentUser;
+            var broker = new BrokerEntity { };
+            if (user != null)
+            {
+                broker = _brokerService.GetBrokerByUserId(user.Id); //获取当前经纪人
+                if (broker == null)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+                }
+                else
+                {
+                         
+                }
+            }
+            if (string.IsNullOrEmpty(payModel.Ids)) 
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
+            }
+            string[] strIds = payModel.Ids.Split(',');
+            foreach (var id in strIds)
+            {
+                if(string.IsNullOrEmpty(id))
+                {
+                    break;
+                }
+                var model = _brokerwithdrawDetailService.GetBrokerWithdrawDetailById(Convert.ToInt32(id));
+                if (Convert.ToInt32(model.Type) == 0) 
+                {
+                    var blModel = new BLPayEntity
+                    {
+                        Name = payModel.Name,
+                        Describe = payModel.Describe,
+                        BankCard = Convert.ToInt32(model.BankCard.Num),
+                        Accountantid = broker.Id,
+                        Amount = model.Withdrawnum,
+                        Adduser = broker.Id,
+                        //Adduser = Convert.ToInt32(payModel.Adduser),
+                        Upuser = broker.Id,
+                        Addtime = DateTime.Now,
+                        Uptime = DateTime.Now,
+                    };
+                    _blPayService.Create(blModel);
+                }
+                if (Convert.ToInt32(model.Type) == 1) 
+                {
+                    var breModel = new BRECPayEntity
+                    {
+                        Name = payModel.Name,
+                        Describe = payModel.Describe,
+                        BankCard = Convert.ToInt32(model.BankCard.Num),
+                        Accountantid = broker.Id,
+                        Amount = model.Withdrawnum,
+                        Adduser = broker.Id,
+                        //Adduser = Convert.ToInt32(payModel.Adduser),
+                        Upuser = broker.Id,
+                        Addtime = DateTime.Now,
+                        Uptime = DateTime.Now,
+                    };
+                    _brecPayService.Create(breModel);
+                }
+               
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "打款成功"));
+        }
+        #endregion
     }
+    /// <summary>
+    /// 打款实体
+    /// </summary>
+      public class PayModel 
+      {
+          /// <summary>
+          /// 提现明细Id
+          /// </summary>
+          public string Ids { get; set; }
+          /// <summary>
+          /// 描述
+          /// </summary>
+          public string Describe { get; set; }
+          /// <summary>
+          /// 款项名称
+          /// </summary>
+          public string Name { get; set; }
+          /// <summary>
+          /// 财务ID
+          /// </summary>
+          public string  Accountantid{get;set;}
+          public string   Upuser{get;set;}
+          public string Adduser { get; set; }
+      }
 }

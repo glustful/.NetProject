@@ -22,8 +22,6 @@ angular.module("app").controller('busmanIndexController', [
             }).success(function(data){
                 // alert(data.list!=null);
                 if(data.List.length>0) {
-                    console.log(data);
-
                     page= $scope.searchCondition.page = data.Condition.Page;
                     howmany=data.List.length;//保存当页数据数量
                     $scope.searchCondition.pageSize = data.Condition.PageCount;

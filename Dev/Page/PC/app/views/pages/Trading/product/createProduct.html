@@ -115,9 +115,10 @@
                 <div class="col-sm-9">
                     <div width="100">
                             <input name="file" type="file" multiple="multiple" />
+                        <!--<input type="file" nv-file-select="" uploader="uploader" />-->
                      </div>
                     <div ng-repeat="item in images">
-                        <img ng-repeat="item in images" id="pimgs" alt="主图" title="主图"  height="100" width="100" src="http://img.yoopoon.com/{{item}}"/>
+                        <img id="pimgs" alt="主图" title="主图"  height="100" width="100" src="http://img.yoopoon.com/{{item}}"/>
                     </div>
                 </div>
             </div>

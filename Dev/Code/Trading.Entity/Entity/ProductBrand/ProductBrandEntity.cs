@@ -26,6 +26,7 @@ namespace Trading.Entity.Model
         /// AdTitle
         /// </summary>
         public virtual string AdTitle { get; set; }
+        public virtual int? ClassId { get; set; }
 		/// <summary>
 		/// AddTime
 		/// </summary>

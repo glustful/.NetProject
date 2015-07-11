@@ -519,7 +519,8 @@ namespace Zerg.Controllers.CRM
             var condition = new BrokerSearchCondition
             {
                 OrderBy = EnumBrokerSearchOrderBy.OrderById,
-                UserType = EnumUserType.场秘
+                UserType = EnumUserType.场秘,
+                State=1
             };
             var list = _brokerService.GetBrokersByCondition(condition).Select(a => new
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -86,7 +87,9 @@ namespace Zerg.Common
             switch (message)
             {
                 case "-1":
+                    //============================赵旭初 20150707 start===========================================
                     returnValue = "没有该用户账户";
+                    //============================赵旭初 20150707 end  ===========================================
                     break;
 
                 case "-2":

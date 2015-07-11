@@ -164,6 +164,7 @@ namespace Zerg.Controllers.CRM
                 Brokername = brokername
 
             };
+
             var list = _brokerleadclientService.GetBrokerLeadClientsByCondition(condition).Select(a => new
             {
                 a.Id,
@@ -173,7 +174,7 @@ namespace Zerg.Controllers.CRM
                 a.Projectname,
                 a.Addtime,
                 a.ClientInfo.Clientname,
-                
+
                 SecretaryName = a.SecretaryId.Brokername,
                 a.SecretaryPhone,
                 Waiter = a.WriterId.Brokername,
@@ -190,8 +191,8 @@ namespace Zerg.Controllers.CRM
                 b.Projectname,
                 Appointmenttime = b.Appointmenttime.ToString("yyy-MM-dd"),
                 Addtime = b.Addtime.ToString("yyy-MM-dd"),
-                
-                
+
+
                 SecretaryName = b.Brokername,
                 b.SecretaryPhone,
                 Waiter = b.Brokername,

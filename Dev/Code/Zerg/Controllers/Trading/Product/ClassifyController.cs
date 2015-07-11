@@ -110,7 +110,7 @@ namespace Zerg.Controllers.Trading.Product
         /// </summary>
         /// <param name="pageindex">当前翻页页数</param>
         /// <returns>查询结果</returns>
-        
+
         [Description("获取所有分类(使用Angular中Tree的数据格式)")]
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
@@ -124,6 +124,7 @@ namespace Zerg.Controllers.Trading.Product
         }
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        [System.Web.Http. AllowAnonymous]
         public HttpResponseMessage GetClassList()
         {
             ClassifySearchCondition csc = new ClassifySearchCondition()
@@ -132,7 +133,8 @@ namespace Zerg.Controllers.Trading.Product
             };
             var classLsit = _classifyService.GetClassifysByCondition(csc).Select(p => new
             {
-                p.Id,p.Name
+                p.Id,
+                p.Name
             }).ToList();
             return PageHelper.toJson(classLsit);
         }
@@ -354,6 +356,32 @@ namespace Zerg.Controllers.Trading.Product
                 return "绑定商品属性值失败";
             }
         }
+        #region 彭贵飞 商品分类参数值修改
+        /// <summary>
+        /// 更新商品分类参数值
+        /// </summary>
+        /// <param name="parameterValueId">分类参数值Id</param>
+        /// <param name="productId">商品Id</param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage UpdateProductParameterVaule(int parameterValueId, int productId)
+        {
+            var parameterValue = _parameterValueService.GetParameterValueById(parameterValueId);
+            var parameter = parameterValue.Parameter;
+            var con = new ProductParameterSearchCondition
+            {
+                ProductId = productId,
+                ParameterId = parameter.Id
+            };
+            var productParameter = _productParameterService.GetProductParametersByCondition(con).FirstOrDefault();
+            productParameter.ParameterValue = parameterValue;
+            productParameter.Upduser = _workContext.CurrentUser.Id.ToString();
+            productParameter.Updtime = DateTime.Now;
+            _productParameterService.Update(productParameter);
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功"));
+        }
+        #endregion
         /// <summary>
         /// 删除参数；
         /// </summary>

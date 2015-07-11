@@ -4,39 +4,67 @@
 <script type="text/javascript" charset="utf-8" src="../libs/ueditor/lang/zh-cn/zh-cn.js"></script>
 <div class="form-group" ng-controller="BrandEditController">
     <form name="form" id="form"  ng-submit="save()">
-    <div>
+    <div class="row">
     <label  class="col-sm-2 control-label">品牌名：</label>
     <div class="col-sm-10">
         <input name="Bname" id="Bname" type="text" style="width: 180px" ng-model="list.Bname" class="form-control" />
         <span  style="color: red;">*</span>
     </div>
+        </div>
+        <div class="row">
     <label  class="col-sm-2 control-label">品牌标题：</label>
     <div class="col-sm-10">
         <input name="SubTitle" id="Subtitle" type="text"  style="width: 500px" ng-model="list.SubTitle" class="form-control" />
         <span  style="color: red;">*</span>
     </div>
-    </div>
+        </div>
+        <div class="row">
     <label class="col-sm-2 control-label">品牌内容：</label>
     <div class="col-sm-10">
-        <textarea name="Content" maxlength="150" style="width:500px;height:80px;" id="Content"  type="text" ng-model="list.Content" class="form-control" />
-        <span style="color: red;">*</span>
+        <textarea class="ueditor" name="Content" id="Content" type="text" required ng-model="list.Content" style="height: 300px" required/>
+        <!--<span style="color: red;">*</span>-->
     </div>
-        <div class="bottom" ><label for="Content">副标题元素： </label>
-            <textarea class="ueditor"  name="AdTitle" id="AdTitle" cols="42" rows="10" ng-model="list.AdTitle" style="height: 200px; width: 80%;margin-left: 200px;" required></textarea>
+    </div>
+        <!--by   yangyue  2015/7/8    star 品牌分类-->
+        <div class="row">
+        <label  class="col-sm-2 control-label">品牌类别：</label>
+        <div class="col-sm-10">
+            <select  ng-model="list.ClassId" id="classifySelectId"
+                ng-options="list.Id as list.Name for list in ClassList"
+                required>
+            <option value="">请选择分类</option>
+        </select>
+            </div>
+            </div>
+        <!--------------------------end------------------------->
+            <div class="row">
+            <label class="col-sm-2" for="Content">副标题元素： </label>
+                <div class="col-sm-10">
+            <textarea class="ueditor"  name="AdTitle" id="AdTitle" cols="42" rows="10" ng-model="list.AdTitle" required></textarea>
             <span ng-show="form.Content.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                </div>
         </div>
 
+            <!--<div class="bottom" style="float: left" ><label for="Content">副标题元素： </label>-->
+                 <!--<textarea class="ueditor"  name="AdTitle" id="AdTitle" cols="42" rows="10" ng-model="list.AdTitle" style="height: 200px; width: 80%;margin-left: 200px;" required></textarea>-->
+                 <!--<span ng-show="form.Content.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>-->
+            <!--</div>-->
+
     <div class="loadimg">
-        <img height="100" width="100" title="图片" src="http://img.yoopoon.com/{{list.Bimg}}" />
 
-    </div>
+                    <div class="loadimg">
+                        <img height="100" width="100" title="图片" src="http://img.yoopoon.com/{{list.Bimg}}" />
+
+                    </div>
 
 
-    <div style="float: left; margin: 0px auto;">
-        <p class="m-t-md">品牌图片</p>
-        <input name="brandimg" id="brandimg" type="text"  style="width: 500px" ng-model="list.Bimg"  class="form-control" required />
-        <input type="file" nv-file-select="" uploader="uploader" />
+                    <div style=" margin-top: 10px;margin-left: 23px">
+                        <p >品牌图片</p>
+                        <input name="brandimg" id="brandimg" type="text"  style="width: 500px" ng-model="list.Bimg"  class="form-control" required />
+                        <input type="file" nv-file-select="" uploader="uploader" />
+                    </div>
 
+<div>
        <div>
 
 
@@ -80,11 +108,10 @@
             </div>
         </div>
     </div>
-
-
+</div>
 
 <div class="form-group">
-    <div class="col-sm-offset-1 col-sm-11">
+    <div class="col-sm-offset-1 col-sm-11" style="text-align: center">
         <button class="md-btn md-raised m-b btn-fw green" type="submit" id="btnok"><i class="glyphicon glyphicon-ok m-r-sm"></i>提交<div class="md-ripple-container"></div></button>
         <a ui-sref="page.Trading.product.brand"><button class="md-btn md-raised m-b btn-fw pink" ><i class="fa fa-reply  m-r-sm"></i>返回<div class="md-ripple-container "></div></button></a>
     </div>

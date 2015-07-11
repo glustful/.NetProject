@@ -4,10 +4,13 @@ using YooPoon.Core.Data;
 
 namespace CRM.Entity.Model
 {
+    /// <summary>
+    /// 提现附表
+    /// </summary>
 	public class BrokerWithdrawDetailEntity : IBaseEntity
 	{
 		/// <summary>
-		/// 提现ID
+		/// 提现明细ID
 		/// </summary>
 		public virtual int Id { get; set; }
 		/// <summary>
@@ -18,6 +21,14 @@ namespace CRM.Entity.Model
 		/// 银行卡ID
 		/// </summary>
 		public virtual BankCardEntity BankCard { get; set; }
+        /// <summary>
+        /// 经纪人提现 ID
+        /// </summary>
+        public virtual BrokerWithdrawEntity BrokerWithdraw { get; set; }
+        /// <summary>
+        /// 经纪人体现明细ID
+        /// </summary>
+        public virtual BrokeAccountEntity BrokeAccount_Id { get; set; }
 		/// <summary>
 		/// 提现时间
 		/// </summary>
@@ -44,8 +55,8 @@ namespace CRM.Entity.Model
 		public virtual DateTime Uptime { get; set; }
 
         /// <summary>
-        /// 提现状态 ｛0，处理中   1完成 ok｝
+        /// 类型（0带客，1推
         /// </summary>
-        public string State { get; set; }
+        public virtual string Type { get; set; }
 	}
 }

@@ -183,6 +183,12 @@ app.run(
                 data:{title:'楼盘详情'}
 
             })
+            .state('app.BrandDetail',{
+                url:'/BrandDetail?brandId',
+                templateUrl:'modules/BrandDetail/view/BrandDetail.html',
+                controller:'BrandDetailController',
+                resolve:load('modules/BrandDetail/static/script/brandDetail.js')
+            })
             .state('app.housesBuy',{
                 url:'/housesBuy?BrandId',
                 templateUrl:'modules/housesBuy/view/housesBuy.html',
@@ -323,7 +329,8 @@ app.run(
             })
             .state('app.chip',{
                 url:'/chip',
-                templateUrl:'modules/chip/view/chip.html'
+                templateUrl:'modules/chip/view/chip.html',
+                resolve:load(["modules/chip/controller/chipcontroller.js"])
             })
             .state('app.chipDetail',{
                 url:'/chipDetail',
@@ -384,7 +391,6 @@ app.run(
                 templateUrl:'modules/cash/view/cash.html',
                 data:{title:'提取现金'}
             })
-
 
         function load(srcs, callback) {
             return {

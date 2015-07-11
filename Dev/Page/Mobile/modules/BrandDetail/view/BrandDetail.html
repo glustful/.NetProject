@@ -1,0 +1,20 @@
+<!--买房楼盘详细-->
+<!--required:../static/style/housesBuy.css-->
+<div class="content-housesBuy cf">
+    <div class="pic-housesBuy">
+        <a href="#">
+            <img src="http://img.yoopoon.com/{{brandDetail.Parameters['图片banner']}}"  width="640" height="290"/>
+
+            <div class="summary cf"><span class="zt fl">{{brandDetail.Bname}}<br/><small>{{brandDetail.SubTitle}} </small></span><span class="lp fr">楼盘<br/>详情</span></div>
+            <div class="summaryBg"> </div>
+        </a>
+    </div>
+    <div class="brand-btn">
+        <a class="fr" href="tel:{{brandDetail.Parameters['来电咨询']}}">
+            <button class="phone">咨询热线</button></a>
+        <a href="#/app/housesBuy?BrandId={{brandDetail.Id}}" class="fr"><button class="ho">户型</button></a>
+    </div>
+    <div style="background-color: #fff">
+        <p class="co" ng-bind-html="brandDetail.Content|trustHtml"></p>
+    </div>
+</div>

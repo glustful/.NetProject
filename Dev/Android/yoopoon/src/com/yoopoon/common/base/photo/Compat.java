@@ -1,10 +1,11 @@
+
 package com.yoopoon.common.base.photo;
 
 import android.os.Build;
 import android.view.View;
 
 /**
- * Created by Administrator on 13-12-10.
+ * Created by guojunjun on 15-6-10.
  */
 public class Compat
 {
