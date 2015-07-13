@@ -41,6 +41,7 @@ angular.module("app").controller('playMoneyDetails',[
         });
         ////////////////////////////////////打款款项表单//////////////////////////////////////////////////////////
         $scope.PayInfo = {
+            Id:$stateParams.id,
             Ids:"",
             Describe:"",
             Name:"",

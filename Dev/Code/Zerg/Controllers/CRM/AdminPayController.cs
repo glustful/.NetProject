@@ -4,6 +4,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using CRM.Entity.Model;
 using CRM.Service.BrokerWithdrawDetail;
+using CRM.Service.BrokerWithdraw;
 using CRM.Service.BRECPay;
 using CRM.Service.BrokerRECClient;
 using CRM.Service.BLPay;
@@ -23,6 +24,7 @@ namespace Zerg.Controllers.CRM
     [Description("财务人员打款流程处理类")]
     public class AdminPayController : ApiController
     {
+        private IBrokerWithdrawService _brokerwithdrawService;
         private readonly IBrokerWithdrawDetailService _brokerwithdrawDetailService;
         private readonly IBRECPayService _brecPayService;
         private readonly IBrokerRECClientService _brokerRecClientService;
@@ -38,12 +40,16 @@ namespace Zerg.Controllers.CRM
         /// <param name="brecPayService">brecPayService</param>
         /// <param name="brokerRecClientService">brokerRecClientService</param>
         public AdminPayController(IBRECPayService brecPayService,
+            IBrokerWithdrawService brokerwithdrawService,
             IBrokerWithdrawDetailService brokerwithdrawDetailService,
             IBrokerRECClientService brokerRecClientService,
             IBLPayService blPayService,
-            IBrokerLeadClientService brokerLeadClientService,IWorkContext workContext, IBrokerService brokerService
+            IBrokerLeadClientService brokerLeadClientService,
+            IWorkContext workContext,
+            IBrokerService brokerService
             )
         {
+            _brokerwithdrawService = brokerwithdrawService;
             _brokerwithdrawDetailService = brokerwithdrawDetailService;
             _brecPayService = brecPayService;
             _brokerRecClientService = brokerRecClientService;
@@ -197,6 +203,16 @@ namespace Zerg.Controllers.CRM
                          
                 }
             }
+
+            if (string.IsNullOrEmpty(payModel.Id))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
+            }
+            var BrokerWithdraw = _brokerwithdrawService.GetBrokerWithdrawById(Convert.ToInt32(payModel.Id));
+            if (BrokerWithdraw.State == 1) 
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "财务已经打款"));
+            }
             if (string.IsNullOrEmpty(payModel.Ids)) 
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
@@ -245,6 +261,12 @@ namespace Zerg.Controllers.CRM
                 }
                
             }
+            BrokerWithdraw.State = 1;
+            BrokerWithdraw.AccAccountantId.Id = broker.Id;
+            BrokerWithdraw.Uptime = DateTime.Now;
+            BrokerWithdraw.Upuser = broker.Id;
+            BrokerWithdraw.WithdrawDesc = payModel.Describe;
+            _brokerwithdrawService.Update(BrokerWithdraw);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "打款成功"));
         }
         #endregion
@@ -254,6 +276,10 @@ namespace Zerg.Controllers.CRM
     /// </summary>
       public class PayModel 
       {
+          /// <summary>
+          /// 提现ID
+          /// </summary>
+          public string Id { get; set; }
           /// <summary>
           /// 提现明细Id
           /// </summary>
