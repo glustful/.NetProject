@@ -1,0 +1,21 @@
+.selectList {
+    width: 640px;
+}
+.selectList th,td{
+    text-align: center;
+    height: 40px;font-size: 16px
+}
+.selectList .Content{
+    width: 640px;
+    background-color: #ffffff;
+}
+.next{
+    width: 640px;
+    text-align: center;
+}
+.next button{
+    background-color: #ff0000;
+    width: 200px;
+    height: 40px;
+    border-radius: 5px
+}

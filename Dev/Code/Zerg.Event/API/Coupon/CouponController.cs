@@ -207,41 +207,35 @@ namespace Zerg.Event.API.Coupon
                 //{
                 //    list = _couponService.GetCouponById(p.CouponId)
                 //});
-
-                List<global::Event.Entity.Entity.Coupon.Coupon> lists = new List<global::Event.Entity.Entity.Coupon.Coupon>();
-                foreach (var p in co)
-                {
-
-                    lists.Add(_couponService.GetCouponById(p.CouponId));
-
-                }
-                List<ReturnCoupon> listReCoupon = new List<ReturnCoupon>();
-
-                foreach (var z in lists)
-                {
-                    listReCoupon.Add(new ReturnCoupon
-                    {
-                        ComponCategoryName = _couponCategoryService.GetCouponCategoryById(z.CouponCategoryId).Name,
-                        Number = z.Number,
-                        Brandname = _productBrandService.GetProductBrandById(_couponCategoryService.GetCouponCategoryById(z.CouponCategoryId).BrandId).Bname,
-                        Price = z.Price.ToString()
-                    });
-                }
-
-                if (listReCoupon.Count <= 0)
+                if (co.Count() == 0)
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户没有优惠卷！"));
                 }
+                else
+                {
+                    List<global::Event.Entity.Entity.Coupon.Coupon> lists =
+                        new List<global::Event.Entity.Entity.Coupon.Coupon>();
+                    foreach (var p in co)
+                    {
+                        lists.Add(_couponService.GetCouponById(p.CouponId));
+                    }
+                    List<ReturnCoupon> listReCoupon = new List<ReturnCoupon>();
 
-                //if(co!=null)
-                //{
-                //    foreach(var p in co)
-                //    {
-                //    var m=  _couponService.GetCouponById(p.CouponId);
+                    foreach (var z in lists)
+                    {
+                        listReCoupon.Add(new ReturnCoupon
+                        {
+                            ComponCategoryName = _couponCategoryService.GetCouponCategoryById(z.CouponCategoryId).Name,
+                            Number = z.Number,
+                            Brandname =
+                                _productBrandService.GetProductBrandById(
+                                    _couponCategoryService.GetCouponCategoryById(z.CouponCategoryId).BrandId).Bname,
+                            Price = z.Price.ToString()
+                        });
+                    }
 
-                //    }
-                //}
-                return PageHelper.toJson(new { list = listReCoupon });
+                    return PageHelper.toJson(new {list = listReCoupon});
+                }
             }
         }
         #endregion
