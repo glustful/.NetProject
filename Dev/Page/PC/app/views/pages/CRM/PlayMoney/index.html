@@ -41,7 +41,8 @@
         <td data-value="78025368997" class="footable-visible">{{item.withdrawnum}}</td>
         <td data-value="78025368997" class="footable-visible">{{item.WithdrawTime}}</td>
         <td class="footable-visible">{{item.accacount}}</td>
-        <td data-value="78025368997" class="footable-visible">{{item.state}}</td>
+        <td data-value="78025368997" class="footable-visible" ng-if="item.state==0">处理中</td>
+        <td data-value="78025368997" class="footable-visible" ng-if="item.state==1">完成</td>
         <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.PlayMoney.detailed({id:item.Id})"><span class="label bg-success" >查看</span></a></td>
     </tr>
 

@@ -63,7 +63,7 @@ namespace Zerg.Controllers.CRM
                 var strNumber = new Random().Next(100000, 1000000).ToString();
                     //生成大于等于100000，小于等于999999的随机数，也就是六位随机数                                  
                 var nowTimestr = DateTime.Now.ToLongTimeString();
-                var strs = EncrypHelper.Encrypt(strNumber + "$" + nowTimestr, "Hos2xNLrgfaYFY2MKuFf3g==");
+                var strs = EncrypHelper.Encrypt(strNumber+"#"+yzmsg.Mobile + "$" + nowTimestr, "Hos2xNLrgfaYFY2MKuFf3g==");
                     //EMS 加密短信验证码 
 
                 if (messageConfigName == "推荐经纪人") //不需要生成数字验证码
