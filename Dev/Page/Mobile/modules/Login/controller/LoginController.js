@@ -10,8 +10,8 @@ app.controller('LoginController',['$scope','$state','AuthService',function($scop
     $scope.Login = function(){
                 AuthService.doLogin($scope.user.name,$scope.user.password,function(){
                   //  console.log("$scope.user");
-              //  $state.go('app.personal');
-                $state.go("app.personal_user");
+                $state.go('app.personal');
+             //   $state.go("app.personal_user");
                 },function(data){
                     $scope.errorTips = data.Msg;
                 })
