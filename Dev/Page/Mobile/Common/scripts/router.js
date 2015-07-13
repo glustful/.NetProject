@@ -10,7 +10,8 @@ var allowState = [
     'user.PasswordFound',
     'app.invite',
     'app.housesBuy',
-    'app.brand'
+    'app.brand',
+    'app.BrandDetail'
 
 ];
 app.run(
