@@ -4,7 +4,7 @@
 	<string name="url_host">http://api.iyookee.cn</string>
     <!-- userController -->
     <string name="url_signup">/api/user/SignUp</string>
-	<string name="url_login">/api/user/Login</string>
+	<string name="url_login">/api/user/IndexLogin</string>
 	<string name="url_user_addBroker">/api/User/AddBroker</string>
 	<!-- advertismentController -->
 	<string name="url_ad_index">/API/Advertisement/Index</string>
@@ -26,6 +26,7 @@
 	<string name="url_sms_sendSMS">/api/SMS/SendSMS</string>
 	<!-- brokerinfoController -->
 	<string name="url_brokerInfo_getBrokerDetails">/api/BrokerInfo/GetBrokerDetails</string>
+	<string name="url_brokeInfo_getBrokeInfoById">/api/BrokerInfo/GetBrokerByUserId?userId=</string>
 	<!-- taskController -->
 	<string name="url_task_taskListMobile">/api/Task/TaskListMobile</string>	
 	<!-- 图片服务器地址 -->

@@ -28,7 +28,7 @@
                 android:src="@drawable/default_head_img" />
 
             <TextView
-                
+                android:id="@+id/tv_person_setting_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -67,18 +67,21 @@
                 android:textColor="@color/setting_text"
                 android:textSize="@dimen/large_textSize" />
             <RadioGroup 
+                android:id="@+id/rg_person_setting_sex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:padding="10dp"
                 android:orientation="horizontal">
                 <RadioButton 
+                    android:id="@+id/rb_person_setting_male"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="男"
                     />
                 <RadioButton 
+                    android:id="@+id/rb_person_setting_female"
                     android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -86,6 +89,24 @@
                     android:text="女"
                     />
             </RadioGroup>
+            
+            
+            <TextView 
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="电话"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                android:textColor="@color/setting_text"/>
+            
+            <TextView 
+                android:id="@+id/tv_person_setting_phone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="电18760951789"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                android:textColor="@color/setting_text"/>
 
             <com.yoopoon.home.ui.view.RedStarTextView
                

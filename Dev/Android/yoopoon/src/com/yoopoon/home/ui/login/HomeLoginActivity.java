@@ -11,7 +11,11 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONException;
+import org.json.JSONObject;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -258,9 +262,11 @@ public class HomeLoginActivity extends MainActionBarActivity {
 
 					@Override
 					public void onComplete(String serializeResult) {
-						if (serializeResult != null)
+						if (serializeResult != null) {
 							PreferenceManager.getDefaultSharedPreferences(mContext).edit()
 									.putString("user", serializeResult).commit();
+							saveInfoToSp(serializeResult);
+						}
 					}
 				}).execute();
 				mLoadingLayout.setVisibility(View.GONE);
@@ -347,5 +353,33 @@ public class HomeLoginActivity extends MainActionBarActivity {
 	public Boolean showHeadView() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	/**
+	 * 将后台传递过来的json数据以xml的格式保存至sp中
+	 * @Title: saveInfoToSp
+	 * @Description: TODO
+	 * @param serializeResult json数据
+	 */
+
+	public void saveInfoToSp(String serializeResult) {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+		Editor editor = sp.edit();
+		try {
+			JSONObject obj = new JSONObject(serializeResult);
+
+			String userName = obj.getString("userName");
+			String phone = obj.getString("phone");
+			String password = obj.getString("password");
+			String userId = String.valueOf(obj.getInt("id"));
+			editor.putString("userName", userName);
+			editor.putString("phone", phone);
+			editor.putString("password", password);
+			editor.putString("userId", userId);
+			editor.commit();
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 }
