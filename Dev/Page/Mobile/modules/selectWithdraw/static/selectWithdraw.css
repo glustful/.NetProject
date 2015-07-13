@@ -1,45 +1,21 @@
-
-.information .lists {
-    margin-bottom: 20px;
+.selectList {
+    width: 640px;
 }
-
-.information .intro{
-    background-color: #fff;
-    padding:16px 0 16px 35px;
+.selectList th,td{
+    text-align: center;
+    height: 40px;font-size: 16px
 }
-.information .intro .names{
-    line-height: 30px;
+.selectList .Content{
+    width: 640px;
+    background-color: #ffffff;
 }
-.information .intro b{
-    color: #000;
-    font-weight: normal;
-    font-size:24px;
+.next{
+    width: 640px;
+    text-align: center;
 }
-.information .intro small, .information .intro .tell{
-    color:#626161;
-    font-size: 20px;
-}
-.information .intro .tell{
-    padding:20px 30px 0 0;
-}
-.information .last{
-    background-color: #f8f8f8;
-    height: 64px;
-    line-height: 64px;
-    color: #b2b2b2;
-    font-size: 20px;
-    padding-left: 35px;
-    border-top: 1px solid #ebebeb;
-    border-bottom: 1px solid #ebebeb;
-}
-.last small{
-    font-size:20px;
-    color: #fc3b00;
-}
-
-.information .detail-customerList{
-    background-color: #f8f8f8;
-}
-.detail-customerList .last small{
-    color: #b2b2b2;
+.next button{
+    background-color: #ff0000;
+    width: 200px;
+    height: 40px;
+    border-radius: 5px
 }
