@@ -34,6 +34,44 @@ namespace Zerg.Controllers.CRM
             _brokeaccountService = brokeaccountService;
             _brokerService =brokerService;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        [Description("获取当前经纪人账户信息")]
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetBrokeAccountByUserId(string userId = null)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误！"));
+            }
+
+            var brokeaccountcon = new BrokeAccountSearchCondition
+            {
+                Brokers = _brokerService.GetBrokerById(Convert.ToInt32(userId)),
+                State = 0
+               
+            };
+            var PointDetailList = _brokeaccountService.GetBrokeAccountsByCondition(brokeaccountcon).Select(p => new
+            {
+                Id = p.Id,
+                p.Balancenum,
+                p.Type,
+                p.Addtime
+
+            }).ToList().Select(p => new
+            {
+                Id = p.Id,
+                p.Balancenum,
+                p.Type,
+                Addtime = p.Addtime.ToString("yyyy-MM-dd")
+            });
+            return PageHelper.toJson(new { List = PointDetailList, Condition = brokeaccountcon});
+        }
 
         #region 经纪人账户明细详情
 
