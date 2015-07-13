@@ -21,6 +21,7 @@ namespace Event.Entity.Mappings.Crowd
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upuser).HasColumnType("int");
 			Property(c => c.Uptime).HasColumnType("datetime");
+            Property(c => c.crowdUrl).HasColumnType("varchar").HasMaxLength(100);
 		}
 	}
 }

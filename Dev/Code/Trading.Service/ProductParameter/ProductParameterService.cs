@@ -139,7 +139,17 @@ namespace Trading.Service.ProductParameter
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
+                //=============================================彭贵飞 20150708 start=====================================
 
+                if (condition.ProductId.HasValue)
+                {
+                    query = query.Where(q => condition.ProductId == q.Product.Id);
+                }
+                if (condition.ParameterId.HasValue)
+                {
+                    query = query.Where(q => condition.ParameterId == q.Parameter.Id);
+                }
+                //=============================================end                  =====================================
 
 				if (condition.ParameterValues != null && condition.ParameterValues.Any())
                 {
@@ -236,14 +246,23 @@ namespace Trading.Service.ProductParameter
                     query = query.Where(q => q.Upduser.Contains(condition.Upduser));
                 }
 
-
+                
 
 				if (condition.Ids != null && condition.Ids.Any())
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-
-
+                //=============================================彭贵飞 20150708 start=====================================
+               
+                if (condition.ProductId.HasValue)
+                {
+                    query = query.Where(q => condition.ProductId == q.Product.Id);
+                }
+                if (condition.ParameterId.HasValue)
+                {
+                    query = query.Where(q => condition.ParameterId == q.Parameter.Id);
+                }
+                //=============================================end                  =====================================
 				if (condition.ParameterValues != null && condition.ParameterValues.Any())
                 {
                     query = query.Where(q => condition.ParameterValues.Contains(q.ParameterValue));

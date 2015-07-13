@@ -194,7 +194,7 @@ public class FramAgentFragment extends FramSuper{
 			public void onReponse(ResponseData data) {
 
 				if (data.getResultState() == ResultState.eSuccess) {
-					
+					ArrayList<JSONArray> dataSource = new ArrayList<JSONArray>();
 					JSONArray list = data.getJsonArray();
 					if (list == null || list.length() < 1)
 						return;
@@ -203,9 +203,11 @@ public class FramAgentFragment extends FramSuper{
 					tmp.put(list.optJSONObject(0));
 					tmp.put(list.optJSONObject(1));
 					tmp.put(list.optJSONObject(2));
-					mActiveController.show(tmp);
+					dataSource.add(tmp);
+					mActiveController.show(dataSource);
 					}else{
-						mActiveController.show(list);
+						dataSource.add(list);
+						mActiveController.show(dataSource);
 					}
 				}
 			}

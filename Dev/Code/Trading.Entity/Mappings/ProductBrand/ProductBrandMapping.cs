@@ -20,6 +20,7 @@ namespace Trading.Entity.Mappings.ProductBrand
             Property(c => c.SubTitle).HasColumnType("varchar").HasMaxLength(900);
             Property(c => c.AdTitle).HasColumnType("varchar").HasMaxLength(500);
 		    Property(c => c.Content).HasColumnType("varchar").HasMaxLength(900);
+            Property(c => c.ClassId).HasColumnType("int").IsOptional();
 		    HasOptional(c => c.Father);
             HasMany(c => c.ParameterEntities).WithOptional(c => c.ProductBrand);
 		}

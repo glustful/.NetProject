@@ -75,10 +75,12 @@
  .favourable-nav span{
    display: inline-block;
    padding:15px 20px 10px 20px;
+     cursor:pointer;
 }
 .favourable-nav span.all{
     color:#f13800;
     background: url("../image/chip/cyzk.png") no-repeat 0 0;
+
 }
  .favourable-nav span small{
    font-size: 0.9em;

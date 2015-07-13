@@ -1,28 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
-using System.Web;
-using System.Web.Mvc;
+using System.Text.RegularExpressions;
+using System.Web.Http;
+using System.Web.Http.Cors;
 using Trading.Entity.Model;
+using Trading.Service.BrandParameter;
+using Trading.Service.Classify;
 using Trading.Service.Product;
 using Trading.Service.ProductBrand;
 using Trading.Service.ProductDetail;
 using Trading.Service.ProductParameter;
-using Trading.Service.Classify;
-using Trading.Service.BrandParameter;
-using System.Web.Http;
 using YooPoon.Core.Site;
-using Zerg.Models.Trading.Product;
 using Zerg.Common;
-using System.Web.Http.Cors;
-using System.Text.RegularExpressions;
-using System.ComponentModel;
+using Zerg.Models.Trading.Product;
 
 namespace Zerg.Controllers.Trading.Product
 {
-    [System.Web.Http.AllowAnonymous]
+    [AllowAnonymous]
     [Description("品牌管理类")]
     public class BrandController : ApiController
     {
@@ -61,7 +59,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="productBrandModel">品牌项目和数据模型</param>
         /// <returns>添加结果</returns>
         [Description("添加商品品牌")]
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage AddProductBrand([FromBody]ProductBrandModel productBrandModel)
         {
@@ -73,7 +71,7 @@ namespace Zerg.Controllers.Trading.Product
             }
             else
             {
-                ProductBrandEntity PBE = new ProductBrandEntity()
+                ProductBrandEntity pbe = new ProductBrandEntity()
                 {
                     Addtime = DateTime.Now,
                     Adduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
@@ -83,16 +81,17 @@ namespace Zerg.Controllers.Trading.Product
                     Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture),
                     SubTitle = productBrandModel.SubTitle,
                     Content = productBrandModel.Content,
-                    AdTitle=productBrandModel.AdTitle,
-                    
+                    AdTitle = productBrandModel.AdTitle,
+                    ClassId = productBrandModel.ClassId
+
                 };
 
                 try
                 {
-                    _productBrandService.Create(PBE);
+                    _productBrandService.Create(pbe);
                     return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功！"));
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "不能添加自身！"));
                 }
@@ -103,7 +102,7 @@ namespace Zerg.Controllers.Trading.Product
         /// </summary>
         /// <param name="productBrandModel">品牌项目和数据模型</param>
         /// <returns>修改结果</returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage UpProductBrand(ProductBrandModel productBrandModel)
         {
@@ -115,15 +114,16 @@ namespace Zerg.Controllers.Trading.Product
             }
             else
             {
-                var PB=_productBrandService.GetProductBrandById(productBrandModel.Id);
-                    PB.Updtime =DateTime.Now;
-                    PB.Bname = productBrandModel.Bname;
-                    PB.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
-                    PB.SubTitle = productBrandModel.SubTitle;
-                    PB.Content = productBrandModel.Content;
-                    PB.Bimg = productBrandModel.Bimg;
-                    PB.AdTitle = productBrandModel.AdTitle;
-                if(_productBrandService.Update(PB)!=null)
+                var pb = _productBrandService.GetProductBrandById(productBrandModel.Id);
+                pb.Updtime = DateTime.Now;
+                pb.Bname = productBrandModel.Bname;
+                pb.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
+                pb.SubTitle = productBrandModel.SubTitle;
+                pb.Content = productBrandModel.Content;
+                pb.Bimg = productBrandModel.Bimg;
+                pb.AdTitle = productBrandModel.AdTitle;
+                pb.ClassId = productBrandModel.ClassId;
+                if (_productBrandService.Update(pb) != null)
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(true, "数据修改成功！"));
                 }
@@ -140,7 +140,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="brandId">品牌ID</param>
         /// <returns>删除结果</returns>
         [Description("删除商品品牌")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage DelBrandById(int brandId)
         {
@@ -156,38 +156,38 @@ namespace Zerg.Controllers.Trading.Product
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "删除品牌失败，该品牌可能有商品已被添加"));
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
             }
 
         }
+
         /// <summary>
         /// 添加品牌项目参数
         /// </summary>
-        /// <param name="productBrandModel">品牌项目参数数据模型</param>
         /// <returns>添加结果</returns>
         [Description("添加品牌项目参数")]
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage AddProductBrandParameter([FromBody]ProductBrandParameterModel productBrandParameterModel)
         {
 
-            ProductBrandEntity PBE = _productBrandService.GetProductBrandById(productBrandParameterModel.ProductBrandId);
+            ProductBrandEntity pbe = _productBrandService.GetProductBrandById(productBrandParameterModel.ProductBrandId);
 
-            var ProductPramater = PBE.ParameterEntities.Select(p => new { p.Parametername }).Select(pp => new
+            var productPramater = pbe.ParameterEntities.Select(p => new { p.Parametername }).Select(pp => new
             {
                 pp.Parametername
             }).ToList();
-            foreach (var i in ProductPramater)
+            foreach (var i in productPramater)
             {
                 if (i.Parametername == productBrandParameterModel.Parametername)
                 {
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已经存在，请重新编辑！")); ;
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据已经存在，请重新编辑！"));
                 }
             }
 
-            BrandParameterEntity BPE = new BrandParameterEntity()
+            BrandParameterEntity bpe = new BrandParameterEntity()
              {
 
                  Addtime = DateTime.Now,
@@ -196,14 +196,14 @@ namespace Zerg.Controllers.Trading.Product
                  Upduser = productBrandParameterModel.Upduser,
                  Parametername = productBrandParameterModel.Parametername,
                  Parametervaule = productBrandParameterModel.Parametervaule,
-                 ProductBrand = PBE
+                 ProductBrand = pbe
              };
             try
             {
-                _brandParameterService.Create(BPE);
+                _brandParameterService.Create(bpe);
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功！"));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败！"));
             }
@@ -215,7 +215,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="brandParameterId">商品参数ID</param>
         /// <returns>删除结果</returns>
         [Description("删除商品参数值")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage DelBrandParameter(int brandParameterId)
         {
@@ -231,7 +231,7 @@ namespace Zerg.Controllers.Trading.Product
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "无法删除，可能该项目下有商品"));
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
             }
@@ -244,14 +244,19 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="pageSize">页面数量</param>
         /// <returns>品牌列表</returns>
         [Description("获取所有品牌，返回品牌列表")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAllBrand(int page = 1, int pageSize = 10)
         {
             var sech = new ProductBrandSearchCondition
             {
+                //=========================yangyue 2015/7/7 start=====================================================
+                IsDescending = true,
+                OrderBy = EnumProductBrandSearchOrderBy.OrderByAddtime,
+                //========================  end   ====================================================================
                 Page = page,
-                PageCount = pageSize,
+                PageCount = pageSize
+
             };
             // var list = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
             //{
@@ -259,7 +264,7 @@ namespace Zerg.Controllers.Trading.Product
             //    PageCount = pageSize,
             //});
             //取出所有品牌
-            var List = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
+            var list = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
 
            {
                a.Id,
@@ -279,14 +284,14 @@ namespace Zerg.Controllers.Trading.Product
                 b.Content,
                 b.AdTitle,
                 ProductParamater = b.ProductParamater.ToDictionary(k => k.Parametername, v => v.Parametervaule),
-                Addtime = b.Addtime
+                b.Addtime
 
             });
 
             var totalCount1 = _productBrandService.GetProductBrandCount(sech);
 
 
-            return PageHelper.toJson(new { List = List, Condition = sech, totalCount = totalCount1 });
+            return PageHelper.toJson(new { List = list, Condition = sech, totalCount = totalCount1 });
 
             //var totalCount = _productBrandService.GetProductBrandCount(Brandcondition);
 
@@ -315,46 +320,69 @@ namespace Zerg.Controllers.Trading.Product
         /// </summary>
         /// <returns>品牌列表</returns>
         [Description("获取所有品牌，返回品牌列表")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetBrandList()
         {
-            ProductBrandSearchCondition Brandcondition = new ProductBrandSearchCondition
+            ProductBrandSearchCondition brandcondition = new ProductBrandSearchCondition
             {
                 IsDescending = true,
                 OrderBy = EnumProductBrandSearchOrderBy.OrderById
             };
-            var BrandList = _productBrandService.GetProductBrandsByCondition(Brandcondition).Select(a => new
+            var brandList = _productBrandService.GetProductBrandsByCondition(brandcondition).Select(a => new
             {
                 a.Id,
                 a.Bname,
             }).ToList();
-            return PageHelper.toJson(BrandList);
+            return PageHelper.toJson(brandList);
         }
-        [System.Web.Http.HttpGet]
+        #region 彭贵飞 获取品牌详细信息
+        /// <summary>
+        /// 获取品牌详细信息
+        /// </summary>
+        /// <param name="brandId"></param>
+        /// <returns></returns>
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage GetByBrandId(int BrandId)
+        public HttpResponseMessage GetBrandDetail(int brandId)
         {
-            var Brand = _productBrandService.GetProductBrandById(BrandId);
+            var brand = _productBrandService.GetProductBrandById(brandId);
+            var model = new ProductBrandModel
+            {   
+                Id = brand.Id,               
+                Bname = brand.Bname,
+                SubTitle = brand.SubTitle,                
+                Content = brand.Content,
+                Parameters = brand.ParameterEntities.ToDictionary(k => k.Parametername, v => v.Parametervaule)
+            };
+            return PageHelper.toJson(model);
+        }
+        #endregion
+        [HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage GetByBrandId(int brandId)
+        {
+            var brand = _productBrandService.GetProductBrandById(brandId);
             var model = new ProductBrandModel
             {
-                Addtime = Brand.Addtime,
-                Adduser = Brand.Adduser,
-                Bimg = Brand.Bimg,
-                Bname = Brand.Bname,
-                SubTitle = Brand.SubTitle,
-                Id=Brand.Id,
-                Content=Brand.Content,
-                AdTitle=Brand.AdTitle,
+                Addtime = brand.Addtime,
+                Adduser = brand.Adduser,
+                Bimg = brand.Bimg,
+                Bname = brand.Bname,
+                SubTitle = brand.SubTitle,
+                Id = brand.Id,
+                Content = brand.Content,
+                AdTitle = brand.AdTitle,
+               ClassId = brand.ClassId.HasValue?brand.ClassId.Value:0,
 
                 //Parameters = Brand.ParameterEntities.Select(p => new ProductBrandParameterModel
                 //{
                 //    Parametername = p.Parametername,
                 //    Parametervaule = p.Parametervaule
                 //}).ToList()
-                Parameters = Brand.ParameterEntities.ToDictionary(k => k.Parametername, v => v.Parametervaule)
+                Parameters = brand.ParameterEntities.ToDictionary(k => k.Parametername, v => v.Parametervaule)
             };
-            var products = _productService.GetProductsByProductBrand(Brand.Id);
+            var products = _productService.GetProductsByProductBrand(brand.Id);
             model.Products = products.Select(p => new ProductModel
             {
                 Productname = p.Productname,
@@ -363,13 +391,16 @@ namespace Zerg.Controllers.Trading.Product
             }).ToList();
             return PageHelper.toJson(model);
         }
+
         /// <summary>
         /// 根据条件查询品牌
         /// </summary>
         /// <param name="condition">查询条件</param>
+        /// <param name="page">页面</param>
+        /// <param name="pageCount">总页数</param>
         /// <returns>品牌列表</returns>
         [Description("传入查询参数，返回品牌列表")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage SearchBrand(string condition, int page, int pageCount)
         {
@@ -410,14 +441,14 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 传入品牌ID，返回品牌参数
         /// </summary>
-        /// <param name="ProductBrandId">品牌ID</param>
+        /// <param name="productBrandId">品牌ID</param>
         /// <returns>品牌参数</returns>
         [Description("传入品牌ID，返回品牌参数")]
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage GetBrandParameterByBrand(int ProductBrandId)
+        public HttpResponseMessage GetBrandParameterByBrand(int productBrandId)
         {
-            var brandParameter = _brandParameterService.GetBrandParametersByBrandId(ProductBrandId).Select(p => new
+            var brandParameter = _brandParameterService.GetBrandParametersByBrandId(productBrandId).Select(p => new
             {
                 p.Id,
                 p.Parametername,
@@ -434,7 +465,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <param name="page">页码</param>
         /// <param name="pageSize">页码数量</param>
         /// <returns>价格最低的品牌</returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetOneBrand(int page = 1, int pageSize = 10)
         {
@@ -444,7 +475,7 @@ namespace Zerg.Controllers.Trading.Product
                 PageCount = pageSize,
             };
             //取出所有品牌
-            var BrandList = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
+            var brandList = _productBrandService.GetProductBrandsByCondition(sech).Select(a => new
             {
                 a.Id,
                 a.Bimg,
@@ -455,7 +486,7 @@ namespace Zerg.Controllers.Trading.Product
             //通过品牌取出该品牌下的价格最低的一个商品
             var product = new ProductEntity();
             List<RecProdcut> listRecProdcut = new List<RecProdcut>();
-            foreach (var i in BrandList)
+            foreach (var i in brandList)
             {
                 product = GetProductByBrand(i.Id);
 
@@ -485,7 +516,7 @@ namespace Zerg.Controllers.Trading.Product
         /// </summary>
         /// <param name="id">品牌ID</param>
         /// <returns>最小价格品牌</returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public ProductEntity GetProductByBrand(int BrandId)
         {
@@ -536,9 +567,9 @@ namespace Zerg.Controllers.Trading.Product
         /// 商品Id
         /// </summary>
         public int ProductId { get; set; }
-       /// <summary>
-       /// 商品名称
-       /// </summary>
+        /// <summary>
+        /// 商品名称
+        /// </summary>
         public string Productname { get; set; }
         /// <summary>
         /// 户型

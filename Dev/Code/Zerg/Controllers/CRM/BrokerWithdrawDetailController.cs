@@ -3,6 +3,7 @@ using CRM.Service.BankCard;
 using CRM.Service.BrokeAccount;
 using CRM.Service.Broker;
 using CRM.Service.BrokerWithdrawDetail;
+using CRM.Service.BrokerWithdraw;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ using YooPoon.Core.Site;
 using YooPoon.WebFramework.User.Entity;
 using Zerg.Common;
 using System.ComponentModel;
+using System.Text;
 
 namespace Zerg.Controllers.CRM
 {
@@ -26,6 +28,7 @@ namespace Zerg.Controllers.CRM
     [Description("经纪人提现明细")]
     public class BrokerWithdrawDetailController : ApiController
     {
+        private IBrokerWithdrawService _brokerwithdrawService;
         private IBrokerWithdrawDetailService _brokerwithdrawdetailService;
         private IBrokeAccountService _brokeaccountService;
         private IBrokerService _brokerService;
@@ -40,15 +43,60 @@ namespace Zerg.Controllers.CRM
         /// <param name="workContext">workContext</param>
         /// <param name="brokerwithdrawdetailService">brokerwithdrawdetailService</param>
         /// <param name="brokerService">brokerService</param>
-        public BrokerWithdrawDetailController(IBrokeAccountService brokeaccountService, IBankCardService bankcardService, IWorkContext workContext, IBrokerWithdrawDetailService brokerwithdrawdetailService, IBrokerService brokerService)
+        public BrokerWithdrawDetailController(IBrokerWithdrawService brokerwithdrawService, IBrokeAccountService brokeaccountService, IBankCardService bankcardService, IWorkContext workContext, IBrokerWithdrawDetailService brokerwithdrawdetailService, IBrokerService brokerService)
         {
+            _brokerwithdrawService = brokerwithdrawService;
             _brokeaccountService = brokeaccountService;
             _brokerwithdrawdetailService = brokerwithdrawdetailService;
             _brokerService = brokerService;
             _workContext = workContext;
             _bankcardService = bankcardService;
         }
+        /// <summary>
+        /// 根据提现ID查询提现明细信息  
+        /// chen 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        //[Description("根据经纪人查询提现明细")]
+        //[HttpGet]
+        public HttpResponseMessage GetBrokerWithdrawDetailByBrokerWithdrawId(string id) 
+        {
+            if (string.IsNullOrEmpty(id)) 
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误！"));
+            }
+            var seach = new BrokerWithdrawDetailSearchCondition
+            {
+                OrderBy = EnumBrokerWithdrawDetailSearchOrderBy.OrderById,
+                BrokerWithdraw = _brokerwithdrawService.GetBrokerWithdrawById(Convert.ToInt32(id)),
+            };
+            var list = _brokerwithdrawdetailService.GetBrokerWithdrawDetailsByCondition(seach).Select(b => new 
+            {
+                b.Id,
+                b.Withdrawnum,
+                b.BrokeAccount_Id,
+                b.Withdrawtime,
+                b.Type,
+                b.BrokerWithdraw.WithdrawDesc,
+               
+            }).ToList().Select(a =>new
+            {
+                a.Id,
+                a.Withdrawnum,             
+                a.Type,
+                WithdrawDesc = a.WithdrawDesc,
+                Withdrawtime = a.Withdrawtime.ToString("yyy-MM-dd"),
+            });
+            //取出所有明细的ID
+            StringBuilder SB = new StringBuilder();
+            foreach(var p in list)
+            {
+                SB.Append(p.Id.ToString() + ",");
+            }
 
+            return PageHelper.toJson(new { List = list,Ids=SB.ToString() });
+        }
         #region 经纪人提现明细详情
 
         /// <summary>
@@ -79,22 +127,20 @@ namespace Zerg.Controllers.CRM
                 Id = p.Id,
                 bankname = p.BankCard.Bank.Codeid,
                 banknumber = p.BankCard.Num,
-                p.Withdrawnum,
+                Withdrawnum = p.Withdrawnum,
                 Withdrawtime = p.Withdrawtime
             }).ToList().Select(p => new
             {
                 Id = p.Id,
                 bankname = p.bankname,
                 banknumber = p.banknumber,
-                p.Withdrawnum,
+                //p.Withdrawnum,
                 Withdrawtime = p.Withdrawtime.ToString("yyyy-MM-dd")
             });
             var PointDetailListCount = _brokerwithdrawdetailService.GetBrokerWithdrawDetailCount(brokerwithdrawdetailcon);
             return PageHelper.toJson(new { List = PointDetailList, Condition = brokerwithdrawdetailcon, totalCount = PointDetailListCount });
 
         }
-
-
 
         /// <summary>
         /// 传入提现参数,增加提现详情,返回结果状态信息,成功提示"数据添加成功",失败提示"数据添加失败"
@@ -186,7 +232,7 @@ namespace Zerg.Controllers.CRM
                         Addtime = DateTime.Now,
                         Adduser = broker.Id,
                         Upuser = broker.Id,
-                        State="0"
+                        Type="0"
                     };
 
                     try
@@ -226,7 +272,7 @@ namespace Zerg.Controllers.CRM
                     BrokerWithdrawDetailSearchCondition browithdetailcon = new BrokerWithdrawDetailSearchCondition
                     {
                         Brokers = broker,
-                        State="1"
+                        Type="1"
                         
                     };
                     decimal AddMoneys =_brokeaccountService.GetBrokeAccountsByCondition(broconditon).Count()>0? _brokeaccountService.GetBrokeAccountsByCondition(broconditon).Sum(o => o.Balancenum):0;//新增的金额总和
