@@ -17,12 +17,7 @@ angular.module("app").controller('playMoney',[
                 if(data.List == ""){
                     $scope.errorTip="当前不存在提现信息";
                 }
-                if(data.List.state==0){
-                    data.List.state="处理中";
-                }
-                if(data.List.state==1){
-                    data.List.state="完成";
-                }
+
                 $scope.searchCondition.page=data.condition.Page;
                 $scope.searchCondition.PageCount=data.condition.PageCount;
                 $scope.totalCount=data.totalCont;
@@ -41,60 +36,38 @@ angular.module("app").controller('playMoneyDetails',[
             'withCredentials':true
         }).success(function (data) {
             $scope.BrokerWithdrawDetail = data.List;
-            if (data.List.Type == 0){
-                data.List.Type = "带客"
-            }
-            if (data.List.Type == 1){
-                data.List.Type = "推荐"
-            }});
+            $scope.PayInfo.Ids=data.Ids;
+
+        });
         ////////////////////////////////////打款款项表单//////////////////////////////////////////////////////////
         $scope.PayInfo = {
-            Id:data.List.Id,
-            Type:"",
-            Name:"",
-            Statusname:"",
+            Id:$stateParams.id,
+            Ids:"",
             Describe:"",
-            Amount:"",
-            BankCard:"",
+            Name:"",
             Accountantid:"",
             Upuser:"",
             Adduser:""
-
         };
         $scope.currentUser=AuthService.CurrentUser();
         $scope.PayInfo.Accountantid = $scope.currentUser.UserId;
         $scope.PayInfo.AddUser = $scope.currentUser.UserId;
         $scope.PayInfo.Upuser = $scope.currentUser.UserId;
-        $scope.PayInfo.Type = $scope.BrokerWithdrawDetail.Type;
         ///////////////////////////////////确认打款////////////////////////////////////////////////////////////////////
         ///根据提现明细表里面的提现类型，分别向带客打款表以及推荐打款表里面插入数据,其中 0 表示带客，1表示推荐////////
-        if ( $scope.PayInfo.Type == 1){
             $scope.SetPay=function(){
-                $http.post(SETTING.ApiUrl + '/AdminPay/SetBREPay',$scope.PayInfo,{
+                $http.post(SETTING.ApiUrl + '/AdminPay/SetPay',$scope.PayInfo,{
                     'withCredentials':true
                 }).success(function(data){
                     if(data.Status){
                         alert(data.Msg);
                     }else{
+                        console.log($scope.PayInfo);
                         alert(data.Msg);
                     }
                 });
             };
-        }
-        if ($scope.PayInfo.Type == 0){
-            $scope.SetPay=function(){
-                $http.post(SETTING.ApiUrl + '/AdminPay/SetBLPay',$scope.PayInfo,{
-                    'withCredentials':true
-                }).success(function(data){
-                    if(data.Status){
-                        alert(data.Msg);
-                    }else{
-                        alert(data.Msg);
-                    }
-                });
-            };
-        }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 ])
-/*===============================================================================================================*/
+/*==================================================================================================================*/

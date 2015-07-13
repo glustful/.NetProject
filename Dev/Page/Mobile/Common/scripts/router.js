@@ -393,6 +393,13 @@ app.run(
                 data:{title:'提取现金'}
             })
 
+            .state('app.selectWithdraw',{
+                url:'/selectWithdraw?Ids',
+                templateUrl:'modules/selectWithdraw/view/selectWithdraw.html',
+
+                resolve:load('modules/selectWithdraw/controller/controller.js')
+            })
+
         function load(srcs, callback) {
             return {
                 deps: ['$ocLazyLoad', '$q',

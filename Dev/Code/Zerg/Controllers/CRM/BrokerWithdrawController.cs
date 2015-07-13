@@ -81,7 +81,7 @@ namespace Zerg.Controllers.CRM
                 accacount = p.accacount,
                 WithdrawTime = p.WithdrawTime.ToString("yyyy-MM-dd")
             });
-            var Count = _brokerwithdrawService.GetBrokerWithdrawCount(condition);
+            var Count = _brokerwithdrawService.GetBrokerWithdrawCount(condition);  
             return PageHelper.toJson(new { List = list, Condition = condition, totalCount = Count });
         }
         #endregion
