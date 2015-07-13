@@ -45,6 +45,9 @@ import com.yoopoon.home.ui.AD.ADController;
 @SuppressLint("ShowToast")
 @EFragment()
 public class FramHouseFragment extends FramSuper implements OnClickListener {
+	// /////////////////////////////////////////////////////////////////////
+	// 如下是初始化和声明的变量
+	// /////////////////////////////////////////////////////////////////////
 	public static final String LOGTAG = "FramHouseFragment";
 	// 当前Fragment绑定的View
 	View rootView;
@@ -79,13 +82,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	private TextView type_textview;
 	private TextView price_textview;
 	private TextView reset_textview;
-	// 全局传入参数（传入到服务器的参数）
-	/*
-	 * private static String AreaNameValue = ""; private static String IsDescendingValue = "true";
-	 * private static String OrderByValue = "OrderByAddtime"; private static String PageValue = "1";
-	 * private static String PageCountValue = "10"; private static String PriceBeginValue = "";
-	 * private static String PriceEndValue = ""; private static String TypeIdValue = "";
-	 */
+	// 传入参数（传入到服务器的参数）
 	private String AreaNameValue = "";
 	private String IsDescendingValue = "true";
 	private String OrderByValue = "OrderByAddtime";
@@ -98,13 +95,33 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	private PopupWindow houseTypeWindow;
 	// 房源页顶端楼盘价格PopupWindow
 	private PopupWindow housePriceWindow;
-	// 房源也顶端楼盘类型
+	// 房源页顶端楼盘市级列表对应的popuwindow
+	private PopupWindow houseAreaPopupWindow;
+	// 房源页顶端楼盘省份列表对应的LinearLayout
+	private LinearLayout houseAreaLayout;
+	// 房源页顶端楼盘区域
+	private ArrayList<JSONObject> houseAreaJsonObjects;
+	// 房源顶端楼盘类型Json数组
 	ArrayList<JSONObject> houseTypeJsonObjects = new ArrayList<JSONObject>();
+	ArrayList<JSONObject> houseProvinceJsonObjects = new ArrayList<JSONObject>();
+	private String AreaTarget = null;
 
+	// ///////////////////////////////////////////////////////////////////////////////////////////////////
+	// 如上是初始化和声明的变量
+	// ///////////////////////////////////////////////////////////////////////////////////////////////////
+	/*
+	 * @Title: onCreateView
+	 * @Description: 创建Fragment视图
+	 * @param inflater
+	 * @param container
+	 * @param savedInstanceState
+	 * @return
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
+	 * android.view.ViewGroup, android.os.Bundle)
+	 */
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		Log.e(LOGTAG, "Fragment oncreateView");
 		/**
 		 * 如果rootView存在则不在重新创建
 		 */
@@ -114,6 +131,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				parent.removeView(rootView);
 			}
 		} else {
+			// 获取Fragment对应的视图
 			rootView = LayoutInflater.from(getActivity()).inflate(R.layout.home_fram_house_fragment, null);
 			// PullToRefreshListView
 			listView = (PullToRefreshListView) rootView.findViewById(R.id.matter_list_view);
@@ -128,7 +146,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			type_textview = (TextView) rootView.findViewById(R.id.type_textview);
 			price_textview = (TextView) rootView.findViewById(R.id.price_textview);
 			reset_textview = (TextView) rootView.findViewById(R.id.reset_textview);
-			Log.e(LOGTAG, area_name_textview.toString());
 			// 条件点击的事件绑定
 			area_name_textview.setOnClickListener(this);
 			type_textview.setOnClickListener(this);
@@ -136,6 +153,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			reset_textview.setOnClickListener(this);
 			// 初始化传入参数
 			initParameter();
+			// 初始化Fragment对应的视图，加载控件
 			initViews();
 		}
 		return rootView;
@@ -155,11 +173,13 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		refreshView.setFadingEdgeLength(0);
 		mHouseInfoAdapter = new FramHouseListViewAdapter(mContext);
 		refreshView.setAdapter(mHouseInfoAdapter);
+		// 开启一个异步线程，获取广告数据，同时加载广告数据
 		requestAdvertisements();
+		// 开启一个异步线程，获取广告数据，同事加载楼盘列表
 		requestHouseList();
 	}
 	/**
-	 * 获取ListView Items传入的参数
+	 * 对传输到后端的参数进行初始化
 	 */
 	private void initParameter() {
 		if (parameter == null) {
@@ -196,7 +216,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 * @Description: 开启一个异步的线程，获取房源中楼盘列表
 	 */
 	private void requestHouseList() {
-		Log.e(LOGTAG, parameter.toString());
+		Log.w(LOGTAG, parameter.toString());
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
@@ -263,11 +283,118 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				.addParam("channelName", "banner").notifyRequest();
 	}
 	/**
+	 * @Title: requestHouseAreaList
+	 * @Description: 传入父节点ID，获取子节点区域位置(对应房源页顶端的楼盘区域点击事件)
+	 */
+	private void requestHouseAreaList(String parentIdString, String ParentIdValueString, final String parentName) {
+		houseAreaJsonObjects = new ArrayList<JSONObject>();
+		if (parentIdString == null && ParentIdValueString == null) {
+			AreaTarget = "province";
+		}
+		new RequestAdapter() {
+			@Override
+			public void onReponse(ResponseData data) {
+				if (data.getResultState() == ResultState.eSuccess) {
+					JSONArray list = data.getMRootData().optJSONArray("AreaList");
+					if (list == null || list.length() < 1) {
+						return;
+					}
+					for (int i = 0; i < list.length(); i++) {
+						JSONObject jsonObject = list.optJSONObject(i);
+						houseAreaJsonObjects.add(jsonObject);
+					}
+					initHouseAreaPopuWindow(houseAreaJsonObjects, parentName);
+				}
+			}
+			@Override
+			public void onProgress(ProgressMessage msg) {
+			}
+		}.setUrl(getString(R.string.url_house_condition)).setRequestMethod(RequestMethod.eGet)
+				.addParam(parentIdString, ParentIdValueString).notifyRequest();
+	}
+	/**
+	 * @Title: initHouseAearPopuWindow
+	 * @Description: 初始化房源首页
+	 * @param linearLayout
+	 * @return
+	 */
+	private void initHouseAreaPopuWindow(ArrayList<JSONObject> houseAreaJsonObjects, final String parentName) {
+		// 创建LinearLayout承载PopuWindows
+		if (houseAreaLayout == null) {
+			houseAreaLayout = new LinearLayout(mContext);
+			houseAreaLayout.setOrientation(LinearLayout.VERTICAL);
+			houseAreaLayout.setBackgroundColor(Color.WHITE);
+		} else {
+			houseAreaLayout.removeAllViews();
+			TextView parentTextView = new TextView(mContext);
+			parentTextView.setGravity(Gravity.CENTER);
+			parentTextView.setTextSize(17);
+			houseAreaLayout.addView(parentTextView);
+			parentTextView.setText(parentName);
+		}
+		if (houseAreaJsonObjects == null || houseAreaJsonObjects.size() == 0) {
+			Toast.makeText(mContext, "获取数据失败，请重刷新", Toast.LENGTH_SHORT).show();
+			return;
+		} else {
+			// 向承载LinearLayout中动态添加TextView以承载楼盘区域
+			for (int i = 0; i < houseAreaJsonObjects.size(); i++) {
+				TextView textView = new TextView(mContext);
+				textView.setText(houseAreaJsonObjects.get(i).optString("AreaName"));
+				int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
+				textView.setWidth(screenWidth / 3);
+				textView.setGravity(Gravity.CENTER);
+				textView.setTextSize(17);
+				final String areaName = houseAreaJsonObjects.get(i).optString("AreaName").toString();
+				final String areaId = houseAreaJsonObjects.get(i).optString("Id").toString();
+				houseAreaLayout.addView(textView);
+				textView.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						if (AreaTarget.equals("province")) {
+							AreaTarget = "city";
+							requestHouseAreaList("parentId", areaId, areaName);
+						} else if (AreaTarget.equals("city")) {
+							AreaTarget = "district";
+							requestHouseAreaList("parentId", areaId, areaName);
+						} else if (AreaTarget.equals("district")) {
+							area_name_textview.setText(areaName);
+							AreaNameValue = areaName;
+							houseAreaPopupWindow.dismiss();
+							PageValue = "1";
+							initPrice(price_textview.getText().toString());
+							mJsonObjects.clear();
+							initParameter();
+							requestHouseList();
+							area_name_textview.setTextColor(Color.BLACK);
+							houseAreaPopupWindow = null;
+							houseAreaLayout = null;
+						}
+					}
+				});
+			}
+			// 创建Popuwindows同时初始化PopuWindows的属性
+			if (houseAreaPopupWindow == null) {
+				houseAreaPopupWindow = new PopupWindow(houseAreaLayout, LayoutParams.WRAP_CONTENT,
+						LayoutParams.WRAP_CONTENT, true);
+				houseAreaPopupWindow = new PopupWindow(houseAreaLayout, LayoutParams.WRAP_CONTENT,
+						LayoutParams.WRAP_CONTENT, true);
+				houseAreaPopupWindow.setTouchable(true);
+				houseAreaPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+				houseAreaPopupWindow.setOutsideTouchable(true);
+				houseAreaPopupWindow.setFocusable(true);
+			} else {
+				houseAreaPopupWindow.update();
+			}
+			houseAreaPopupWindow.showAsDropDown(area_name_textview, -50, 0);
+		}
+	}
+	/**
 	 * @Title: requestHouseTypeList
 	 * @Description: 开启一个线程，获取楼盘类型，如三室一厅或者五室两厅等，调用initHouseTypeList()初始化Popuwindow
 	 */
 	private void requestHouseTypeList() {
-		if (houseTypeJsonObjects.size() == 0) {
+		if (type_textview.getTag() == null) {
+			type_textview.setTag("succeed");
 			new RequestAdapter() {
 				@Override
 				public void onReponse(ResponseData data) {
@@ -290,9 +417,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				public void onProgress(ProgressMessage msg) {
 				}
 			}.setUrl(getString(R.string.url_house_condition)).setRequestMethod(RequestMethod.eGet).notifyRequest();
-		} else {
-			initHouseTypeList(houseTypeJsonObjects, area_name_textview, type_textview, price_textview);
 		}
+		initHouseTypeList(houseTypeJsonObjects, area_name_textview, type_textview, price_textview);
 	}
 	/**
 	 * 初始化首页顶端楼盘类型
@@ -306,6 +432,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		linearLayout.setBackgroundColor(Color.WHITE);
 		// 获取房源页顶端的区域类型，楼盘类型，和楼盘价格TextView
 		final TextView houseType_textview = (TextView) type_textview;
+		houseType_textview.setTextColor(Color.RED);
 		final TextView houseArea_textview = (TextView) area_name_textview;
 		final TextView housePrice_textview = (TextView) price_textview;
 		// 初始化页码
@@ -325,7 +452,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		houseTypeWindow.setOutsideTouchable(true);
 		houseTypeWindow.setFocusable(true);
 		// 判断是否接收到异步线程过来的数据
-		if (houseTypeJsonArray == null && houseTypeJsonArray.size() < 1) {
+		if (houseTypeJsonArray == null || houseTypeJsonArray.size() < 1) {
 			Toast.makeText(mContext, "获取数据失败，请重刷新", Toast.LENGTH_SHORT).show();
 			return;
 		} else {
@@ -337,25 +464,24 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				textView.setWidth(screenWidth / 3);
 				textView.setGravity(Gravity.CENTER);
 				textView.setTextSize(17);
-				final String mesString = houseTypeJsonArray.get(i).optString("TypeName").toString();
+				final String megStringString = houseTypeJsonArray.get(i).optString("TypeName").toString();
 				final String houseTypeIdString = houseTypeJsonArray.get(i).optString("TypeId").toString();
 				linearLayout.addView(textView);
 				textView.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						houseType_textview.setText(mesString);
+						houseType_textview.setText(megStringString);
 						houseTypeIdNumber = houseTypeIdString;
-						Log.e(LOGTAG, houseTypeIdNumber);
 						TypeIdValue = houseTypeIdString;
 						// 更新参数
 						mJsonObjects.clear();
 						initParameter();
 						requestHouseList();
 						houseTypeWindow.dismiss();
+						houseType_textview.setTextColor(Color.BLACK);
 					}
 				});
 			}
-			// houseTypeWindow.showAsDropDown(houseType_textview);
 			houseTypeWindow.showAsDropDown(houseType_textview, -50, 0);
 		}
 	}
@@ -448,8 +574,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			// 获取传入到服务器的参数
 			if (area_name_textview.getText().toString().equals("区域")) {
 				AreaNameValue = "";
-			} else {
-				AreaNameValue = area_name_textview.getText().toString();
 			}
 			PageValue = "1";
 			if (houseTypeIdNumber == null) {
@@ -457,8 +581,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			} else {
 				TypeIdValue = houseTypeIdNumber;
 			}
-			Log.e(LOGTAG, TypeIdValue);
 		}
+		price_textview.setTextColor(Color.RED);
 		// 初始化ArrayList中保存的数据
 		// 配成value.xml中的数组
 		housePriceArrayList.add("4000以下");
@@ -484,18 +608,20 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				public void onClick(View v) {
 					price_textview.setText(msgString);
 					initPrice(msgString);
-					Log.e(LOGTAG, AreaNameValue);
-					Log.e(LOGTAG, PriceBeginValue);
-					Log.e(LOGTAG, PriceEndValue);
 					mJsonObjects.clear();
 					initParameter();
 					requestHouseList();
 					housePriceWindow.dismiss();
+					price_textview.setTextColor(Color.BLACK);
 				}
 			});
 			housePriceWindow.showAsDropDown(price_textview, -50, 0);
 		}
 	}
+	/**
+	 * @Title: houseConditionReset
+	 * @Description: 点击房源页重置按钮触发的重置条件操作
+	 */
 	private void houseConditionReset() {
 		AreaNameValue = "";
 		PriceBeginValue = "";
@@ -519,6 +645,10 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.area_name_textview:
+				houseAreaPopupWindow = null;
+				houseAreaLayout = null;
+				area_name_textview.setTextColor(Color.RED);
+				requestHouseAreaList(null, null, null);
 				break;
 			case R.id.type_textview:
 				requestHouseTypeList();
