@@ -43,3 +43,6 @@
 .detail-customerList .last small{
     color: #b2b2b2;
 }
+.selectList table tr{
+    text-align: center;
+}
