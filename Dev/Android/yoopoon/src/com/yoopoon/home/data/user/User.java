@@ -158,18 +158,22 @@ public class User {
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
 					JSONObject obj = data.getJsonObject();
-					if (obj.isNull("Roles") || obj.optJSONArray("Roles").length() < 1)
-						setRoles(null);
-					else {
-						ArrayList<Role> roles = new ArrayList<Role>();
-						for (int i = 0; i < obj.optJSONArray("Roles").length(); i++) {
-							Role r = new Role();
-							r.roleName = obj.optJSONArray("Roles").optJSONObject(i).optString("RoleName");
-							roles.add(r);
+					if (obj != null) {
+						if (obj.isNull("Roles") || obj.optJSONArray("Roles").length() < 1)
+							setRoles(null);
+						else {
+							ArrayList<Role> roles = new ArrayList<Role>();
+							for (int i = 0; i < obj.optJSONArray("Roles").length(); i++) {
+								Role r = new Role();
+								r.roleName = obj.optJSONArray("Roles").optJSONObject(i).optString("RoleName");
+								roles.add(r);
+							}
+							setRoles(roles);
 						}
-						setRoles(roles);
+						lis.success(User.this);
+					} else {
+						lis.faild("登陆失败，请重试");
 					}
-					lis.success(User.this);
 				} else {
 					lis.faild(data.getMsg());
 				}
