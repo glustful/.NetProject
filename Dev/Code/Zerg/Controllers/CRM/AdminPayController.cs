@@ -198,10 +198,6 @@ namespace Zerg.Controllers.CRM
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
                 }
-                else
-                {
-                         
-                }
             }
 
             if (string.IsNullOrEmpty(payModel.Id))
@@ -262,7 +258,7 @@ namespace Zerg.Controllers.CRM
                
             }
             BrokerWithdraw.State = 1;
-            BrokerWithdraw.AccAccountantId.Id = broker.Id;
+            BrokerWithdraw.AccAccountantId = broker;
             BrokerWithdraw.Uptime = DateTime.Now;
             BrokerWithdraw.Upuser = broker.Id;
             BrokerWithdraw.WithdrawDesc = payModel.Describe;
