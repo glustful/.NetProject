@@ -16,5 +16,10 @@ app.controller('withdrawController',['$http','$scope','AuthService',function($ht
         });
     };
     getwithdrawResult();
+    ///
+    $scope.Ids=[];
+    $scope.toggle = function (Id) {
+        $scope.Ids.push (Id);
+    }
 
 }])

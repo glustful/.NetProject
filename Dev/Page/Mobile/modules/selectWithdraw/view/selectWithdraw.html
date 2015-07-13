@@ -1,5 +1,6 @@
 
 <div ng-controller="withdrawController">
+
 <div class="selectList">
     <table class="Content" align="center">
         <tr>
@@ -9,7 +10,7 @@
             <th>时间</th>
         </tr>
         <tr ng-repeat="row in list">
-            <td><input type="checkbox" value={{row.Id}}></td>
+            <td><input type="checkbox" ng-click="toggle(row.Id)"></td>
             <td  ng-if="row.Type==0"><span>带客</span></td>
             <td  ng-if="row.Type==1"><span>推荐</span></td>
             <td><span>{{row.Balancenum}}</span></td>
@@ -17,5 +18,6 @@
         </tr>
     </table>
 </div>
-    <div class="next"><a href="#/app/withdrawals"><button>下一步</button></a></div>
+    <div class="next"><a href="#/app/withdrawals?Ids={{Ids}}"><button>下一步</button></a></div>
+
 </div>
