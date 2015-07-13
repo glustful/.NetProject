@@ -14,7 +14,8 @@
             <tbody>
             <tr ng-repeat="row in BrokerWithdrawDetail">
                 <td align="center">{{row.Id }}</td>
-                <td align="center">{{row.Type}}</td>
+                <td align="center" ng-if="row.Type==0">带客</td>
+                <td align="center" ng-if="row.Type==1">推荐</td>
 
                 <td align="center">{{row.WithdrawDesc }}</td>
                 <td align="center">{{row.Withdrawtime }}</td>

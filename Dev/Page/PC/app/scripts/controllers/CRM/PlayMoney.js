@@ -17,12 +17,7 @@ angular.module("app").controller('playMoney',[
                 if(data.List == ""){
                     $scope.errorTip="当前不存在提现信息";
                 }
-                if(data.List.state==0){
-                    data.List.state="处理中";
-                }
-                if(data.List.state==1){
-                    data.List.state="完成";
-                }
+
                 $scope.searchCondition.page=data.condition.Page;
                 $scope.searchCondition.PageCount=data.condition.PageCount;
                 $scope.totalCount=data.totalCont;
