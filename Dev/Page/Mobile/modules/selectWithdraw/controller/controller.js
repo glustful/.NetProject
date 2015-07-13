@@ -15,6 +15,6 @@ app.controller('withdrawController',['$http','$scope','AuthService',function($ht
             $scope.list=data.List;
         });
     };
-    $scope.getlist=getwithdrawResult;
+    getwithdrawResult();
 
 }])
