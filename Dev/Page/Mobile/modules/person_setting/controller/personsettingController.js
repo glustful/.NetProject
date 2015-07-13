@@ -58,8 +58,8 @@ app.controller('personsettingController',['$scope','$http','$state','AuthService
             .success(function(data) {
             	var img = document.getElementById('imghead');
             	img.src = $scope.olduser.Headphoto;
-               // $state.go('app.personal');
-                $state.go("app.personal_user");
+                $state.go('app.personal');
+              //  $state.go("app.personal_user");
             	//location.reload([true]);
             });
     }
