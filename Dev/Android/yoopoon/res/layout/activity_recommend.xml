@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fram_matter_main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <com.yoopoon.home.ui.view.AutoAjustSizeTextView
+                    android:id="@+id/area_name_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:drawableRight="@drawable/arrow"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="区域" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <com.yoopoon.home.ui.view.AutoAjustSizeTextView
+                    android:id="@+id/type_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/arrow"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="类型" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <com.yoopoon.home.ui.view.AutoAjustSizeTextView
+                    android:id="@+id/price_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:drawableRight="@drawable/arrow"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="价格" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <com.yoopoon.home.ui.view.AutoAjustSizeTextView
+                    android:id="@+id/reset_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="重置" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            xmlns:ptr="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/matter_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
+            android:divider="#d0d0d0"
+            ptr:ptrAnimationStyle="flip" />
+        <!-- android:dividerHeight="10dp" -->
+
+    </LinearLayout>
+
+</FrameLayout>
