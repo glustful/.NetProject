@@ -32,7 +32,7 @@ namespace Event.Entity.Model
 
 
 
-
+        public int  Id { get; set; }
 
 		public string Ttitle { get; set; }
 
