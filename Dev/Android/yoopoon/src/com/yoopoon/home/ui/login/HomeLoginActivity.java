@@ -23,6 +23,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -211,6 +212,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 	}
 
 	public Handler handler = new Handler() {
+
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_HIDE_ERROR) {
@@ -221,6 +223,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 
 	private void clearError() {
 		TimerTask task = new TimerTask() {
+
 			@Override
 			public void run() {
 				Message msg = Message.obtain(handler, MSG_HIDE_ERROR, null);
@@ -245,6 +248,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		mUser.setPassword(pwd);
 		mUser.setRemember(auto);
 		mUser.login(new LoginListener() {
+
 			@Override
 			public void success(final User user) {
 				new SerializerJSON(new SerializeListener() {
@@ -288,6 +292,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 	}
 
 	View.OnClickListener onLogin = new View.OnClickListener() {
+
 		@Override
 		public void onClick(View view) {
 			String eMail = mEmailText.getText().toString();
@@ -367,15 +372,18 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		Editor editor = sp.edit();
 		try {
 			JSONObject obj = new JSONObject(serializeResult);
-
+			Log.i(TAG, obj.toString());
 			String userName = obj.getString("userName");
 			String phone = obj.getString("phone");
 			String password = obj.getString("password");
 			String userId = String.valueOf(obj.getInt("id"));
+			boolean isBroker = obj.getBoolean("broker");
 			editor.putString("userName", userName);
 			editor.putString("phone", phone);
 			editor.putString("password", password);
 			editor.putString("userId", userId);
+			editor.putBoolean("isBroker", isBroker);
+
 			editor.commit();
 
 		} catch (JSONException e) {

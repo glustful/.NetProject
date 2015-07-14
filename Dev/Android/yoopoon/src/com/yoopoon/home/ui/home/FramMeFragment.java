@@ -14,7 +14,9 @@ package com.yoopoon.home.ui.home;
 
 import org.androidannotations.annotations.EFragment;
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,9 +58,18 @@ public class FramMeFragment extends FramSuper {
 	private BrokerInfoView mBrokerInfoView;
 	private TextView mTodayTaskCount;
 	private MeFooterView mMeFooterView;
+	private boolean isBroker = false;
+	private String userId = "0";
 
 	// [end]
 
+	/*
+	 * (non Javadoc)
+	 * @Title: setUserVisibleHint
+	 * @Description: TODO
+	 * @param isVisibleToUser
+	 * @see android.support.v4.app.Fragment#setUserVisibleHint(boolean)
+	 */
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 
@@ -79,15 +90,22 @@ public class FramMeFragment extends FramSuper {
 
 	@Override
 	public void onResume() {
-		super.onResume();
 		if (isVisibleTouser && !isFirst) {
 			if (User.lastLoginUser(getActivity()) != null) {
+				setIsBrokerAndUserId();
 				requestBrokerInfo();
 				requestTodayTask();
 			} else {
 				cleanLayout();
 			}
 		}
+		super.onResume();
+	}
+
+	private void setIsBrokerAndUserId() {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		isBroker = sp.getBoolean("isBroker", false);
+		userId = sp.getString("userId", "0");
 	}
 
 	/**
@@ -139,8 +157,12 @@ public class FramMeFragment extends FramSuper {
 			public void onReponse(ResponseData data) {
 				CircleProgressDialog.build(getActivity(), R.style.dialog).hide();
 				if (data.getResultState() == ResultState.eSuccess) {
-					mBrokerInfoView.initData(data.getMRootData(), User.lastLoginUser(getActivity()).isBroker());
-					mMeFooterView.show(User.lastLoginUser(getActivity()).isBroker());
+					if (!data.getMsg().contains("失败")) {
+						mBrokerInfoView.initData(data.getMRootData(), User.lastLoginUser(getActivity()).isBroker());
+						mMeFooterView.show(isBroker);
+					} else {
+						HomeLoginActivity_.intent(getActivity()).isManual(true).start();
+					}
 				}
 
 			}
@@ -150,7 +172,7 @@ public class FramMeFragment extends FramSuper {
 				// TODO Auto-generated method stub
 
 			}
-		}.setUrl(getString(R.string.url_brokerInfo_getBrokerDetails)).setRequestMethod(RequestMethod.eGet)
+		}.setUrl(getString(R.string.url_brokeInfo_getBrokeInfoById) + userId).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
 

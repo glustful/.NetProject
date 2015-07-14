@@ -34,6 +34,7 @@ import com.yoopoon.home.ui.home.FramMainActivity_;
 @EActivity(R.layout.setting_main_view)
 public class SettingActivity extends MainActionBarActivity {
 	// [start] onClick
+
 	/**
 	 * @Title: settingPersonInfo
 	 * @Description: 个人信息设置点击事件
