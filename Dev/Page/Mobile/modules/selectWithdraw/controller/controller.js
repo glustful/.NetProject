@@ -21,5 +21,4 @@ app.controller('withdrawController',['$http','$scope','AuthService',function($ht
     $scope.toggle = function (Id) {
         $scope.Ids.push (Id);
     }
-
 }])

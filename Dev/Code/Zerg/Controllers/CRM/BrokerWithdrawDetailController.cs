@@ -83,19 +83,25 @@ namespace Zerg.Controllers.CRM
             }).ToList().Select(a =>new
             {
                 a.Id,
-                a.Withdrawnum,             
+                a.Withdrawnum,
+                a.BrokeAccount_Id,
                 a.Type,
                 WithdrawDesc = a.WithdrawDesc,
                 Withdrawtime = a.Withdrawtime.ToString("yyy-MM-dd"),
             });
-            //取出所有明细的ID
+            //取出所有提现明细的ID
             StringBuilder SB = new StringBuilder();
             foreach(var p in list)
             {
                 SB.Append(p.Id.ToString() + ",");
             }
-
-            return PageHelper.toJson(new { List = list,Ids=SB.ToString() });
+            ////////////取出账户明细ID
+            StringBuilder stb = new StringBuilder();
+            foreach (var b in list) 
+            {
+                stb.Append(b.BrokeAccount_Id.Id.ToString() + ",");
+            }
+            return PageHelper.toJson(new { List = list,Ids=SB.ToString(), BrokeAccountId = stb.ToString()});
         }
         #region 经纪人提现明细详情
 
