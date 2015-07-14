@@ -16,6 +16,7 @@ import java.io.File;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.view.View;
 import com.yoopoon.home.MainActionBarActivity;
@@ -67,8 +68,16 @@ public class SettingActivity extends MainActionBarActivity {
 		RequestTask.setmCookieStore(null);
 		User.mUser = null;
 		PreferenceManager.getDefaultSharedPreferences(this).edit().putString("user", "").commit();
+		// 发送用户logout广播
+		sendLogoutBroadcast();
 		FramMainActivity_.intent(this).start();
 		finish();
+	}
+
+	private void sendLogoutBroadcast() {
+		Intent intent = new Intent("com.yoopoon.logout_action");
+		intent.addCategory(Intent.CATEGORY_DEFAULT);
+		this.sendBroadcast(intent);
 	}
 
 	// [end]

@@ -101,6 +101,33 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
+        <activity
+            android:name="com.yoopoon.home.RecommendActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.IGuestActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.IPartnerActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        
+        <activity
+            android:name="com.yoopoon.home.BrokerRankActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        
+        <activity
+            android:name="com.yoopoon.home.PartnerDetailActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
     </application>
     <!-- 测试配置选项 -->
     <instrumentation

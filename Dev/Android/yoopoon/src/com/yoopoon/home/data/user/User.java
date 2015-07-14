@@ -21,6 +21,7 @@ import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
+import com.yoopoon.home.domain.Broker;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
@@ -227,6 +228,59 @@ public class User {
 
 	}
 
+	public void invite(final Broker broker, final InvitePartnerListener listener) {
+		new SerializerJSON(new SerializeListener() {
+
+			@Override
+			public String onSerialize() {
+				ObjectMapper om = new ObjectMapper();
+
+				try {
+					return om.writeValueAsString(broker);
+				} catch (JsonProcessingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
+			}
+
+			@Override
+			public void onComplete(String serializeResult) {
+				if (serializeResult == null || serializeResult.equals("")) {
+
+					return;
+				}
+
+				requestInvite(serializeResult, listener);
+
+			}
+		}).execute();
+
+	}
+
+	protected void requestInvite(String serializeResult, final InvitePartnerListener lis) {
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				if (data.getResultState() == ResultState.eSuccess) {
+					// 邀请成功
+					lis.success();
+				} else {
+					lis.failed(data.getMsg());
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(MyApplication.getInstance().getString(R.string.url_invite_partner)).SetJSON(serializeResult)
+				.setSaveSession(true).notifyRequest();
+
+	}
+
 	protected void requestLogin(String serializeResult, final LoginListener lis) {
 		new RequestAdapter() {
 
@@ -321,6 +375,12 @@ public class User {
 	public interface UserInfoListener {
 
 		void success(User user);
+
+		void failed(String msg);
+	}
+
+	public interface InvitePartnerListener {
+		void success();
 
 		void failed(String msg);
 	}

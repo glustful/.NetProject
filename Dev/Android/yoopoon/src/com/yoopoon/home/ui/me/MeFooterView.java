@@ -19,7 +19,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
+import com.yoopoon.home.BrokerRankActivity_;
+import com.yoopoon.home.IGuestActivity_;
+import com.yoopoon.home.IPartnerActivity_;
 import com.yoopoon.home.R;
+import com.yoopoon.home.RecommendActivity_;
 
 /**
  * @ClassName: MeFooterView
@@ -37,6 +41,7 @@ public class MeFooterView extends LinearLayout {
 
 	// [end]
 	// [start] onClick
+
 	@Click(R.id.registerToBroker)
 	void registerToBroker() {
 		PersonSettingActivity_.intent(getContext()).start();
@@ -50,6 +55,26 @@ public class MeFooterView extends LinearLayout {
 	@Click(R.id.brokerSetting)
 	void brokerSetting() {
 		setting();
+	}
+
+	@Click(R.id.tv_footer_recommend)
+	void iRecommend() {
+		RecommendActivity_.intent(getContext()).start();
+	}
+
+	@Click(R.id.tv_footer_guest)
+	void iGuest() {
+		IGuestActivity_.intent(getContext()).start();
+	}
+
+	@Click(R.id.tv_footer_partner)
+	void iPartner() {
+		IPartnerActivity_.intent(getContext()).start();
+	}
+
+	@Click(R.id.tv_footer_rank)
+	void iRank() {
+		BrokerRankActivity_.intent(getContext()).start();
 	}
 
 	// [end]

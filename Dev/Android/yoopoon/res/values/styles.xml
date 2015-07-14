@@ -2,25 +2,21 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
-    
-
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
-		 <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
-		 <item name="android:windowNoTitle">true</item>
-		 
-	</style>
-
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
     <style name="AnimationActivity" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/push_right_in</item>
@@ -28,66 +24,82 @@
         <item name="android:activityCloseEnterAnimation">@anim/back_left_in</item>
         <item name="android:activityCloseExitAnimation">@anim/back_right_out</item>
     </style>
-    	<style name="login_loading_style">
 
-		<item name="android:indeterminateDrawable">@anim/login_loading_anim</item>
-
-		<item name="android:layout_gravity">center</item>
-
-	</style>
-	<style name="ActionbarTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-
-	    <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
-
-	    <item name="android:displayOptions">useLogo|showHome</item>
-
-	    <item name="android:homeAsUpIndicator">@drawable/back_ico</item>
-
-	    <item name="android:actionBarStyle">@style/MyActionBar</item>
-
-	   
-	</style>
-  
-
-	<style name="MyActionBar" 
-
-           parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse"> 
-
-           <item name="background">@drawable/an_head_bg</item>
-
-        <item name="android:background">@drawable/an_head_bg</item> 
-
-         <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
-
-    </style> 
-
-    
-
-	 <style name="MyActionBarTitleText" 
-
-           parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"> 
-
-        <item name="android:textColor">@android:color/white</item> 
-
-        <item name="android:paddingLeft">15dp</item>
-
-        <item name="android:textSize">15sp</item>
-
-      
-
-    </style> 
-    
-	 <style name="dialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowFrame">@null</item><!--边框-->
-        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
-        <item name="android:windowIsTranslucent">false</item><!--半透明-->
-        <item name="android:windowNoTitle">true</item><!--无标题-->
-        <item name="android:windowBackground">@android:color/transparent</item><!--背景透明-->
-        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+    <style name="login_loading_style">
+        <item name="android:indeterminateDrawable">@anim/login_loading_anim</item>
+        <item name="android:layout_gravity">center</item>
     </style>
-	<style name="AnimationPreview">
-		<item name="android:windowEnterAnimation">@android:anim/fade_in</item>
-		<item name="android:windowExitAnimation">@android:anim/fade_out</item>
-	</style>
-	 
+
+    <style name="ActionbarTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+        <item name="android:displayOptions">useLogo|showHome</item>
+        <item name="android:homeAsUpIndicator">@drawable/back_ico</item>
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/an_head_bg</item>
+        <item name="android:background">@drawable/an_head_bg</item>
+        <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
+    </style>
+
+    <style name="MyActionBarTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!-- 模糊 -->
+    </style>
+
+    <style name="AnimationPreview">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <style name="TextView_Guest">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    
+
+    <style name="EditText_Normal">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/setting_edit_bg</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textColorHint">@color/hosue_total_color</item>
+    </style>
+    
+    <style name="Red_Button_MarginTop">
+        <item name="android:layout_marginTop">35dp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/little_whitle</item>
+        <item name="android:background">@drawable/cycle_selector</item>
+    </style>
+    
+     <style name="TextView_Partner_Detail">
+         <item name="android:layout_width">fill_parent</item>
+         <item name="android:layout_height">wrap_content</item>
+         <item name="android:textColor">@color/setting_text</item>
+         <item name="android:layout_marginTop">2dp</item>
+     </style>
+    
+
 </resources>

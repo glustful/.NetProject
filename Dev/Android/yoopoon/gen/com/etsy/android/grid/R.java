@@ -18,7 +18,7 @@ public final class R {
 		public static final int item_margin = 0x7f010091;
 	}
 	public static final class drawable {
-		public static final int ic_launcher = 0x7f02007d;
+		public static final int ic_launcher = 0x7f020080;
 	}
 	public static final class string {
 		public static final int app_name = 0x7f0a000d;
