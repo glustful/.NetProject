@@ -10,6 +10,7 @@ namespace Event.Service.PartImage
 		PartImageEntity Create (PartImageEntity entity);
 
 		bool Delete(PartImageEntity entity);
+       
 
 		PartImageEntity Update (PartImageEntity entity);
 
