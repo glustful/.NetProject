@@ -82,6 +82,10 @@ namespace Event.Service.Crowd
                 {
                     query = query.Where(q => q.Starttime>= condition.StarttimeBegin.Value);
                 }
+                if (condition.Id >0)
+                {
+                    query = query.Where(q => q.Id ==condition .Id );
+                }
                 if (condition.StarttimeEnd.HasValue)
                 {
                     query = query.Where(q => q.Starttime < condition.StarttimeEnd.Value);

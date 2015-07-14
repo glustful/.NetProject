@@ -4,5 +4,6 @@
 var SETTING = {
     BaseUrl:'http://localhost:50597/',
     ApiUrl:'http://localhost:50597/api',
-    ImgUrl:'http://img.yoopoon.com/'
+    ImgUrl:'http://img.yoopoon.com/',
+    eventApiUrl:'http://localhost:16857/API'
 };

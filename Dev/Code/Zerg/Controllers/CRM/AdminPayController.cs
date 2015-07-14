@@ -5,6 +5,7 @@ using System.Web.Http.Cors;
 using CRM.Entity.Model;
 using CRM.Service.BrokerWithdrawDetail;
 using CRM.Service.BrokerWithdraw;
+using CRM.Service.BrokeAccount;
 using CRM.Service.BRECPay;
 using CRM.Service.BrokerRECClient;
 using CRM.Service.BLPay;
@@ -24,6 +25,7 @@ namespace Zerg.Controllers.CRM
     [Description("财务人员打款流程处理类")]
     public class AdminPayController : ApiController
     {
+        private IBrokeAccountService _brokerAcountService;
         private IBrokerWithdrawService _brokerwithdrawService;
         private readonly IBrokerWithdrawDetailService _brokerwithdrawDetailService;
         private readonly IBRECPayService _brecPayService;
@@ -46,7 +48,8 @@ namespace Zerg.Controllers.CRM
             IBLPayService blPayService,
             IBrokerLeadClientService brokerLeadClientService,
             IWorkContext workContext,
-            IBrokerService brokerService
+            IBrokerService brokerService,
+            IBrokeAccountService brokerAcountService
             )
         {
             _brokerwithdrawService = brokerwithdrawService;
@@ -57,6 +60,7 @@ namespace Zerg.Controllers.CRM
             _brokerLeadClientService = brokerLeadClientService;
             _workContext = workContext;
             _brokerService = brokerService;
+            _brokerAcountService = brokerAcountService;
         }
 
         #region 财务打款确认流程 杨定鹏 2015年5月19日10:24:34
@@ -191,6 +195,7 @@ namespace Zerg.Controllers.CRM
         {
             var user = (UserBase) _workContext.CurrentUser;
             var broker = new BrokerEntity { };
+            var BrokeAccount = new BrokeAccountEntity { };
             if (user != null)
             {
                 broker = _brokerService.GetBrokerByUserId(user.Id); //获取当前经纪人
@@ -209,9 +214,27 @@ namespace Zerg.Controllers.CRM
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "财务已经打款"));
             }
+            ////////////////////////////////////////////////////////////////////////////////////////////////
             if (string.IsNullOrEmpty(payModel.Ids)) 
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
+            }
+            if (string.IsNullOrEmpty(payModel.BrokeAccountId))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"数据不能为空"));
+            }
+            string[] strBrokeAccountId = payModel.BrokeAccountId.Split(',');
+            foreach (var BrokeAccountId in strBrokeAccountId)
+            {
+                if (string.IsNullOrEmpty(BrokeAccountId))
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));
+                }
+                BrokeAccount = _brokerAcountService.GetBrokeAccountById(Convert.ToInt32(BrokeAccountId));
+                if (BrokeAccount.State == 1) 
+                {
+                    break;
+                }
             }
             string[] strIds = payModel.Ids.Split(',');
             foreach (var id in strIds)
@@ -231,7 +254,6 @@ namespace Zerg.Controllers.CRM
                         Accountantid = broker.Id,
                         Amount = model.Withdrawnum,
                         Adduser = broker.Id,
-                        //Adduser = Convert.ToInt32(payModel.Adduser),
                         Upuser = broker.Id,
                         Addtime = DateTime.Now,
                         Uptime = DateTime.Now,
@@ -248,7 +270,6 @@ namespace Zerg.Controllers.CRM
                         Accountantid = broker.Id,
                         Amount = model.Withdrawnum,
                         Adduser = broker.Id,
-                        //Adduser = Convert.ToInt32(payModel.Adduser),
                         Upuser = broker.Id,
                         Addtime = DateTime.Now,
                         Uptime = DateTime.Now,
@@ -263,6 +284,10 @@ namespace Zerg.Controllers.CRM
             BrokerWithdraw.Upuser = broker.Id;
             BrokerWithdraw.WithdrawDesc = payModel.Describe;
             _brokerwithdrawService.Update(BrokerWithdraw);
+            BrokeAccount.State = 1;
+            BrokeAccount.Uptime = DateTime.Now;
+            BrokeAccount.Upuser = broker.Id;
+            _brokerAcountService.Update(BrokeAccount);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "打款成功"));
         }
         #endregion
@@ -280,6 +305,10 @@ namespace Zerg.Controllers.CRM
           /// 提现明细Id
           /// </summary>
           public string Ids { get; set; }
+          /// <summary>
+          /// 提现账户明细ID
+          /// </summary>
+          public string BrokeAccountId { get; set; }
           /// <summary>
           /// 描述
           /// </summary>
