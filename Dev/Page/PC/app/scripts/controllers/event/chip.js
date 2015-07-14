@@ -106,7 +106,7 @@ angular.module("app").controller('creatChipController', [
 
         //---------------------------------------------图片上传 start------------------------------------//
         $scope.image=[];//保存图片名称
-        $scope.SImg=SETTING.ImgUrl;
+        $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
         function completeHandler(e) {
            // $scope.showImage=$scope.showImage+'<img height="100" width="100" src="'+SETTING.ImgUrl+e+'" title="图片" />';
             //$scope.showImage=$scope.showImage+"<img height='100' width='100' src='"+SETTING.ImgUrl+e+"' title='图片' />";
