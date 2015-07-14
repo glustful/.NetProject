@@ -166,6 +166,10 @@ namespace CRM.Service.BrokeAccount
                 {
                     query = query.Where(q => q.Balancenum == condition.Balancenum.Value);
                 }
+                if (condition.State.HasValue) 
+                {
+                    query = query.Where(q => q.State == condition.State.Value);
+                }
 				if (condition.Ids != null && condition.Ids.Any())
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));

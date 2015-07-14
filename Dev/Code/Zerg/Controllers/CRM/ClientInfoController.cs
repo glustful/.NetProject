@@ -228,7 +228,7 @@ namespace Zerg.Controllers.CRM
         [HttpGet]
         public HttpResponseMessage GetStatusByUserId(int page)
         {
-          
+          //============================================chenda start===========================================
             var user = (UserBase)_workContext.CurrentUser;
             var broker = _brokerService.GetBrokerByUserId(user.Id);
             
@@ -277,7 +277,6 @@ namespace Zerg.Controllers.CRM
                 }
 
                 //推荐
-
                 var  listtj= model2.Select(c => new
                 {
                         StrType = "推荐",
@@ -300,6 +299,7 @@ namespace Zerg.Controllers.CRM
             
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+            //================================================================chenda end============================================================================
         }
         ///////////////////////////////////////////////////////////////////////////
         /// <summary>

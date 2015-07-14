@@ -4,7 +4,6 @@
 app.controller('homeController',['$http','$scope',function($http,$scope){
 //获取brandlist data  滚动翻页
     $scope.searchCondition = {
-
         page: 0,
         pageSize:6
     };

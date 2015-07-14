@@ -17,12 +17,7 @@ angular.module("app").controller('playMoney',[
                 if(data.List == ""){
                     $scope.errorTip="当前不存在提现信息";
                 }
-                if(data.List.state==0){
-                    $scope.BrokerWithdraw.state="处理中";
-                }
-                if(data.List.state==1){
-                    $scope.BrokerWithdraw.state="完成";
-                }
+
                 $scope.searchCondition.page=data.condition.Page;
                 $scope.searchCondition.PageCount=data.condition.PageCount;
                 $scope.totalCount=data.totalCont;
@@ -35,19 +30,46 @@ angular.module("app").controller('playMoney',[
 /*===================================================   ==============================================================*/
 /*===================================根据经纪人ID查询提现明细=====================================================*/
 angular.module("app").controller('playMoneyDetails',[
-    '$http','$scope','$stateParams',function($http,$scope,$stateParams){
+    '$http','$scope','$stateParams','AuthService',function($http,$scope,$stateParams,AuthService){
 
         $http.get(SETTING.ApiUrl+ '/BrokerWithdrawDetail/GetBrokerWithdrawDetailByBrokerWithdrawId?id='+ $stateParams.id,{
             'withCredentials':true
         }).success(function (data) {
             $scope.BrokerWithdrawDetail = data.List;
-            if (data.List.Type == 0){
-                $scope.BrokerWithdrawDetail.Type = "带客"
-            }
-            if (data.List.Type == 1){
-                $scope.BrokerWithdrawDetail.Type = "推荐"
-            }
+            $scope.PayInfo.Ids=data.Ids;
+            $scope.PayInfo.BrokeAccountId = data.BrokeAccountId;
+            console.log( $scope.BrokerWithdrawDetail);
         });
+        ////////////////////////////////////打款款项表单//////////////////////////////////////////////////////////
+        $scope.PayInfo = {
+            Id:$stateParams.id,
+            Ids:"",
+            BrokeAccountId:"",
+            Describe:"",
+            Name:"",
+            Accountantid:"",
+            Upuser:"",
+            Adduser:""
+        };
+        $scope.currentUser=AuthService.CurrentUser();
+        $scope.PayInfo.Accountantid = $scope.currentUser.UserId;
+        $scope.PayInfo.AddUser = $scope.currentUser.UserId;
+        $scope.PayInfo.Upuser = $scope.currentUser.UserId;
+        ///////////////////////////////////确认打款////////////////////////////////////////////////////////////////////
+        ///根据提现明细表里面的提现类型，分别向带客打款表以及推荐打款表里面插入数据,其中 0 表示带客，1表示推荐////////
+            $scope.SetPay=function(){
+                $http.post(SETTING.ApiUrl + '/AdminPay/SetPay',$scope.PayInfo,{
+                    'withCredentials':true
+                }).success(function(data){
+                    if(data.Status){
+                        alert(data.Msg);
+                    }else{
+                        console.log($scope.PayInfo);
+                        alert(data.Msg);
+                    }
+                });
+            };
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 ])
-/*===============================================================================================================*/
+/*==================================================================================================================*/

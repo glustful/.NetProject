@@ -6,9 +6,7 @@
             <tr>
                 <th align="center">编码</th>
                 <th align="center">类型</th>
-                <th align="center">经纪人名称</th>
-                <th align="center">银行类型</th>
-                <th align="center">银行卡号</th>
+
                 <th align="center">提现金额</th>
                 <th align="center">提现时间</th>
             </tr>
@@ -16,44 +14,41 @@
             <tbody>
             <tr ng-repeat="row in BrokerWithdrawDetail">
                 <td align="center">{{row.Id }}</td>
-                <td align="center">{{row.Type}}</td>
-                <td align="center">{{row.BrokerName}}</td>
-                <td align="center">{{row.BankCard}}</td>
-                <td align="center">{{row.BankCard}}</td>
-                <td align="center">{{row.Withdrawnum }}</td>
+                <td align="center" ng-if="row.Type==0">带客</td>
+                <td align="center" ng-if="row.Type==1">推荐</td>
+
+                <td align="center">{{row.WithdrawDesc }}</td>
                 <td align="center">{{row.Withdrawtime }}</td>
 
             </tr>
             </tbody>
         </table>
 
-        <div class="panel panel-card ng-scope" ng-repeat="item in BrokerWithdrawDetail">
-            <form>
-                <p>
-                    <input type="text" ng-hide="true" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched"  ng-model="item.Type" required="" tabindex="0" aria-required="true" aria-invalid="true">
-                </p>
-                <p>
-                    <input type="text" ng-hide="true" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched"  ng-model="item.Type" required="" tabindex="0" aria-required="true" aria-invalid="true">
-                </p>
-                <p>
-                    款项名称：<input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="款项名" ng-model="PayInfo.Name" required="" tabindex="0" aria-required="true" aria-invalid="true">
-                </p>
-                <p>
-                    打款阶段：<input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="打款阶段" ng-model="PayInfo.Name" required="" tabindex="0" aria-required="true" aria-invalid="true">
-                </p>
-                <p>
-                    款项描述：<input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="款项描述" ng-model="item.WithdrawDesc" required="" tabindex="0" aria-required="true" aria-invalid="true">
-                </p>
-                <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" ng-click="SetPay()">确认提交<div class="md-ripple-container"></div></button>
-                <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink" ng-click="history.back()">返回<div class="md-ripple-container"></div></button>
-            </form>
 
-        </div>
 
     </div>
 
 
+    <div class="panel panel-card ng-scope" >
+        <form>
+            <p>
+                <input type="hidden"  ng-model="PayInfo.Ids">
+            </p>
+            <p>
+                <input type="hidden"  ng-model="PayInfo.BrokeAccountId">
+            </p>
+            <p>
+                款项名称：<input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="款项名" ng-model="PayInfo.Name" required="" tabindex="0" aria-required="true" aria-invalid="true">
+            </p>
+            <p>
+                款项描述：<input type="text" class="form-control form-control-1 ng-pristine ng-invalid ng-invalid-required ng-touched" placeholder="款项描述" ng-model="PayInfo.Describe" required="" tabindex="0" aria-required="true" aria-invalid="true">
+            </p>
 
+            <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" ng-click="SetPay()">确认提交<div class="md-ripple-container"></div></button>
+            <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink" ng-click="history.back()">返回<div class="md-ripple-container"></div></button>
+        </form>
+
+    </div>
 
 
 

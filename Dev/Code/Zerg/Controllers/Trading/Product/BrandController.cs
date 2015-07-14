@@ -373,7 +373,7 @@ namespace Zerg.Controllers.Trading.Product
                 Id = brand.Id,
                 Content = brand.Content,
                 AdTitle = brand.AdTitle,
-                ClassId = brand.ClassId,
+               ClassId = brand.ClassId.HasValue?brand.ClassId.Value:0,
 
                 //Parameters = Brand.ParameterEntities.Select(p => new ProductBrandParameterModel
                 //{
