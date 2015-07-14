@@ -13,6 +13,7 @@
 package com.yoopoon.home.ui.home;
 
 import org.androidannotations.annotations.EFragment;
+
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.round.progressbar.CircleProgressDialog;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.net.ProgressMessage;
@@ -62,6 +64,7 @@ public class FramMeFragment extends FramSuper {
 	private String userId = "0";
 
 	// [end]
+<<<<<<< HEAD
 
 	/*
 	 * (non Javadoc)
@@ -70,9 +73,10 @@ public class FramMeFragment extends FramSuper {
 	 * @param isVisibleToUser
 	 * @see android.support.v4.app.Fragment#setUserVisibleHint(boolean)
 	 */
+=======
+>>>>>>> 0daacd7cf4f0a5aca90ceacd32742ba7b5a3049e
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
-
 		super.setUserVisibleHint(isVisibleToUser);
 		this.isVisibleTouser = isVisibleToUser;
 		if (isVisibleToUser && (User.lastLoginUser(getActivity()) == null)) {
@@ -82,12 +86,10 @@ public class FramMeFragment extends FramSuper {
 		}
 		if (isVisibleToUser && isFirst) {
 			isFirst = false;
-
 			requestBrokerInfo();
 			requestTodayTask();
 		}
 	}
-
 	@Override
 	public void onResume() {
 		if (isVisibleTouser && !isFirst) {
@@ -107,7 +109,6 @@ public class FramMeFragment extends FramSuper {
 		isBroker = sp.getBoolean("isBroker", false);
 		userId = sp.getString("userId", "0");
 	}
-
 	/**
 	 * @Title: cleanLayout
 	 * @Description: 用户未登陆，清除相关数据
@@ -118,7 +119,6 @@ public class FramMeFragment extends FramSuper {
 		mTodayTaskView.setVisibility(View.GONE);
 		mMeFooterView.hide();
 	}
-
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -134,10 +134,8 @@ public class FramMeFragment extends FramSuper {
 			mTodayTaskView = (TodyTaskView) rootView.findViewById(R.id.todayTask);
 			mMeFooterView = (MeFooterView) rootView.findViewById(R.id.footerView);
 		}
-
 		return rootView;
 	}
-
 	/**
 	 * @Title: requestBrokerInfo
 	 * @Description: 请求当前用户相关信息
@@ -145,7 +143,6 @@ public class FramMeFragment extends FramSuper {
 	void requestBrokerInfo() {
 		CircleProgressDialog.build(getActivity(), R.style.dialog).show();
 		new RequestAdapter() {
-
 			/**
 			 * @fieldName: serialVersionUID
 			 * @fieldType: long
@@ -157,32 +154,33 @@ public class FramMeFragment extends FramSuper {
 			public void onReponse(ResponseData data) {
 				CircleProgressDialog.build(getActivity(), R.style.dialog).hide();
 				if (data.getResultState() == ResultState.eSuccess) {
+<<<<<<< HEAD
 					if (!data.getMsg().contains("失败")) {
 						mBrokerInfoView.initData(data.getMRootData(), User.lastLoginUser(getActivity()).isBroker());
 						mMeFooterView.show(isBroker);
 					} else {
 						HomeLoginActivity_.intent(getActivity()).isManual(true).start();
 					}
+=======
+					mBrokerInfoView.initData(data.getMRootData(), User.lastLoginUser(getActivity()).isBroker());
+					// 判断是否是经纪人，是否为空
+					mMeFooterView.show(User.lastLoginUser(getActivity()).isBroker());
+>>>>>>> 0daacd7cf4f0a5aca90ceacd32742ba7b5a3049e
 				}
-
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
-
 			}
 		}.setUrl(getString(R.string.url_brokeInfo_getBrokeInfoById) + userId).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
-
 	/**
 	 * @Title: requestTodayTask
 	 * @Description: 获取今日任务列表
 	 */
 	void requestTodayTask() {
 		new RequestAdapter() {
-
 			/**
 			 * @fieldName: serialVersionUID
 			 * @fieldType: long
@@ -202,13 +200,10 @@ public class FramMeFragment extends FramSuper {
 				}
 				mTodayTaskCount.setText("今日任务(无)");
 				mTodayTaskView.setVisibility(View.GONE);
-
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
-
 			}
 		}.setUrl(getString(R.string.url_task_taskListMobile)).setRequestMethod(RequestMethod.eGet)
 				.addParam("page", "1").addParam("type", "today").notifyRequest();

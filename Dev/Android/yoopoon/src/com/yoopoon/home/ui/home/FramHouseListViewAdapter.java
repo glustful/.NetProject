@@ -22,8 +22,10 @@ import com.yoopoon.home.R;
 import com.yoopoon.home.ui.product.ProductDetailActivity_;
 
 /**
- * 房源中实体对应的Adapter
- * @author king
+ * @ClassName: FramHouseListViewAdapter
+ * @Description: 房源中每个楼盘对应的详细信息Adapter
+ * @author: 徐阳会
+ * @date: 2015年7月14日 上午9:49:21
  */
 public class FramHouseListViewAdapter extends BaseAdapter {
 	Context mContext;
@@ -87,12 +89,22 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		return convertView;
 	}
 
+	/**
+	 * @ClassName: ViewHandler
+	 * @Description: 创建ViewHandler来对房源页中的ListView进行视图的绑定和初始化
+	 * @author: 徐阳会
+	 * @date: 2015年7月14日 上午9:39:02
+	 */
 	private class ViewHandler {
 		private ImageView houseImageView;
 		private TextView houseProductnameTextView;
 		private TextView housePriceTextView;
 		private TextView houseTypeAcreaqeStockRuleTextView;
 		private TextView houseAdvertisementTextView;
+		private TextView houseTakeGuestTextView;
+		private TextView houseRecommendTextView;
+		private TextView houseBribeTextView;
+		private TextView houseScoreTextView;
 
 		void init(View root) {
 			houseImageView = (ImageView) root.findViewById(R.id.house_image);
@@ -100,6 +112,10 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 			housePriceTextView = (TextView) root.findViewById(R.id.house_price);
 			houseTypeAcreaqeStockRuleTextView = (TextView) root.findViewById(R.id.tpye_area_stockRule);
 			houseAdvertisementTextView = (TextView) root.findViewById(R.id.house_advertisement);
+			houseTakeGuestTextView = (TextView) root.findViewById(R.id.house_takeguest);
+			houseRecommendTextView = (TextView) root.findViewById(R.id.house_recommend);
+			houseBribeTextView = (TextView) root.findViewById(R.id.house_bribe);
+			houseScoreTextView = (TextView) root.findViewById(R.id.house_score);
 		}
 	}
 

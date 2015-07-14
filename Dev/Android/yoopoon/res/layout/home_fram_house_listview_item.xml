@@ -47,12 +47,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5" />
 
-            <!--
-                <View
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="?android:attr/listDivider" />
-            -->
+                android:layout_height="3dp"
+                android:background="@color/deviding_line" />
 
             <TextView
                 android:id="@+id/house_price"
@@ -77,9 +75,58 @@
         </LinearLayout>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/deviding_line" />
+
+    <LinearLayout
+        android:id="@+id/house_broker_function_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/house_takeguest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="带客"
+            android:textColor="@color/red" />
+
+        <TextView
+            android:id="@+id/house_recommend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="推荐"
+            android:textColor="@color/red" />
+
+        <TextView
+            android:id="@+id/house_bribe"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="红包" />
+
+        <TextView
+            android:id="@+id/house_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="积分" />
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="15dp"
+        android:layout_height="10dp"
         android:background="#d0d0d0"
         android:orientation="horizontal" >
     </LinearLayout>

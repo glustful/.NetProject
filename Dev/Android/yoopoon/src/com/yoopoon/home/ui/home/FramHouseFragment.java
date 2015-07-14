@@ -365,7 +365,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 							mJsonObjects.clear();
 							initParameter();
 							requestHouseList();
-							area_name_textview.setTextColor(Color.BLACK);
 							houseAreaPopupWindow = null;
 							houseAreaLayout = null;
 						}
@@ -432,7 +431,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		linearLayout.setBackgroundColor(Color.WHITE);
 		// 获取房源页顶端的区域类型，楼盘类型，和楼盘价格TextView
 		final TextView houseType_textview = (TextView) type_textview;
-		houseType_textview.setTextColor(Color.RED);
 		final TextView houseArea_textview = (TextView) area_name_textview;
 		final TextView housePrice_textview = (TextView) price_textview;
 		// 初始化页码
@@ -478,7 +476,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 						initParameter();
 						requestHouseList();
 						houseTypeWindow.dismiss();
-						houseType_textview.setTextColor(Color.BLACK);
 					}
 				});
 			}
@@ -582,7 +579,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				TypeIdValue = houseTypeIdNumber;
 			}
 		}
-		price_textview.setTextColor(Color.RED);
 		// 初始化ArrayList中保存的数据
 		// 配成value.xml中的数组
 		housePriceArrayList.add("4000以下");
@@ -612,7 +608,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					initParameter();
 					requestHouseList();
 					housePriceWindow.dismiss();
-					price_textview.setTextColor(Color.BLACK);
 				}
 			});
 			housePriceWindow.showAsDropDown(price_textview, -50, 0);
@@ -620,7 +615,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	}
 	/**
 	 * @Title: houseConditionReset
-	 * @Description: 点击房源页重置按钮触发的重置条件操作
+	 * @Description: 点击房源页重置按钮触发的重置楼盘条件操作
 	 */
 	private void houseConditionReset() {
 		AreaNameValue = "";
@@ -647,7 +642,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			case R.id.area_name_textview:
 				houseAreaPopupWindow = null;
 				houseAreaLayout = null;
-				area_name_textview.setTextColor(Color.RED);
 				requestHouseAreaList(null, null, null);
 				break;
 			case R.id.type_textview:

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- server host -->
-	<string name="url_host">http://api.iyookee.cn</string>
+	<!-- <string name="url_host">http://api.iyookee.cn</string> -->
+	 <string name="url_host">http://192.168.1.199:9010</string>
     <!-- userController -->
     <string name="url_signup">/api/user/SignUp</string>
 	<string name="url_login">/api/user/IndexLogin</string>
