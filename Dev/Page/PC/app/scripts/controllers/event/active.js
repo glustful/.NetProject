@@ -43,12 +43,17 @@ angular.module("app").controller('CouponController', [
         $http.get('http://localhost:16857/api/Coupon/GetUserAllCoupon?username='+$scope.username,{
            'withCredentials':true
         }).success(function(data){
-
+            if(data){
                 $scope.Coupon=data.list;
+                $scope.alerts=[{type:'danger',msg:data.Msg}];
+            }
 
-            //console.log(co);
+        });
 
-        });}
+
+
+
+       }
 
     }]);
 

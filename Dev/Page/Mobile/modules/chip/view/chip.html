@@ -5,11 +5,11 @@
             <div class="contentIntro"id={{item.i}} >
 
                 <div class="chipIng num/{{item.i}}"ng-repeat="p in item.ImgList" id="id/{{item.i}}{{p.Id}}" style={{p.Uptime}}>
-                    <a href={{item.crowdUrl}}><img ng-src={{p.Imgurl}}  alt="众筹中" width="610" height="340"/><span class="summary">{{item.Status}}</span></a>
+                    <a href={{item.crowdUrl}}><img ng-src={{Img}}{{p.Imgurl}}  alt="众筹中" width="610" height="340"/><span class="summary">{{item.Status}}</span></a>
                 </div>
                 <div class="BriefIntroduction">
                 <div class="lg">{{item.Ttitle}}</div>
-                <p>{{item.Intro}}</p>
+                <p ng-bind-html="item.Intro"></p>
             </div>
             <div class="Discount">
                 <div class="number-days cf">
@@ -46,7 +46,9 @@
         <!--</div>-->
     <!--</div>-->
 </div>
+    <div ng-bind="tips" class="posonfont" ></div>
 </div>
+
 <script type="text/javascript"language="javascript">
 
 

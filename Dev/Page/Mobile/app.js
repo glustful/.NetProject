@@ -8,7 +8,7 @@ var SETTING = {
     BaseUrl:'http://192.168.1.199/',
     ApiUrl:'http://localhost:50597/api',
     ImgUrl:'http://img.yoopoon.com/',
-    EventUrl:'http://localhost:16857//api'
+    eventApiUrl:'http://localhost:16857/API'
 };
 //var SETTING = {
 //    BaseUrl:'http://api.iyookee.cn/',

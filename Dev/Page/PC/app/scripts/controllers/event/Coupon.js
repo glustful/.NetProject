@@ -7,7 +7,7 @@ angular.module("app").controller('CouponIndexController', ['$http','$scope','$mo
         page:1,
         pageSize:10
     }
-    var getCouponList=function(){$http.get(SETTING.EventUrl+'/Coupon/Index',
+    var getCouponList=function(){$http.get(SETTING.eventApiUrl+'/Coupon/Index',
         {params: $scope.condition,'withCredentials': true}).success(function(data){
             $scope.List=data.List;
             $scope.condition.page=data.Condition.Page;
@@ -26,7 +26,7 @@ angular.module("app").controller('CouponIndexController', ['$http','$scope','$mo
             }
         });
         modalInstance.result.then(function(){
-            $http.get(SETTING.EventUrl+'/api/Coupon/Delete',{params:{
+            $http.get(SETTING.eventApiUrl+'/api/Coupon/Delete',{params:{
                     id:id
                 },'withCredentials': true}
             ).success(function(data) {
@@ -45,16 +45,16 @@ angular.module("app").controller('CouponEditController', ['$http','$scope','$sta
         page:1,
         pageSize:10
     }
-    $http.get(SETTING.EventUrl+'/CouponCategory/Index', {params: $scope.condition}, {'withCredentials': true}).success(
+    $http.get(SETTING.eventApiUrl+'/CouponCategory/Index', {params: $scope.condition}, {'withCredentials': true}).success(
         function (data) {
             $scope.CouponCategoryList=data.List;
         }
     );
-    $http.get(SETTING.EventUrl+'/Coupon/Detailed?id='+$stateParams.id,{'withCredentials': true}).success(function(data){
+    $http.get(SETTING.eventApiUrl+'/Coupon/Detailed?id='+$stateParams.id,{'withCredentials': true}).success(function(data){
        $scope.Coupon=data;
     });
     $scope.update=function(){
-        $http.post(SETTING.EventUrl+'/Coupon/Edit?',$scope.Coupon,{'withCredentials': true}).success(function(data){
+        $http.post(SETTING.eventApiUrl+'/Coupon/Edit?',$scope.Coupon,{'withCredentials': true}).success(function(data){
             if(data.Status)
             {
                 $state.go('page.event.Coupons.manage.index');
@@ -68,7 +68,7 @@ angular.module("app").controller('CouponCreateController', ['$http','$scope','$s
         page:1,
         pageSize:10
     }
-    $http.get(SETTING.EventUrl+'/CouponCategory/Index', {params: $scope.condition}, {'withCredentials': true}).success(
+    $http.get(SETTING.eventApiUrl+'/CouponCategory/Index', {params: $scope.condition}, {'withCredentials': true}).success(
         function (data) {
             $scope.CouponCategoryList=data.List;
         }
@@ -81,7 +81,7 @@ angular.module("app").controller('CouponCreateController', ['$http','$scope','$s
         Count:''
     }
     $scope.create=function(){
-        $http.post(SETTING.EventUrl+'/Coupon/BlukCreate',$scope.Coupon,{'withCredentials': true}).success(function(data){
+        $http.post(SETTING.eventApiUrl+'/Coupon/BlukCreate',$scope.Coupon,{'withCredentials': true}).success(function(data){
             if(data.Status)
             {
                 $state.go('page.event.Coupons.manage.index');

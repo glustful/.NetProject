@@ -30,8 +30,10 @@ namespace CRM.Entity.Model
         /// 金额类型（0 带客，1 推荐）
         /// </summary>
         public virtual int Type { get; set; }
-
-
+        /// <summary>
+        /// 状态（0 可用，1 不可用）
+        /// </summary>
+        public virtual int State { get; set; }
 
 		/// <summary>
 		/// AddUser
