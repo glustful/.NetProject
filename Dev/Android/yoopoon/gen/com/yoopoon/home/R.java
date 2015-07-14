@@ -1881,6 +1881,7 @@ containing a value of this type.
         public static final int url_channel_index=0x7f0a0022;
         public static final int url_channel_titleimg=0x7f0a0023;
         /**  server host 
+ <string name="url_host">http://api.iyookee.cn</string> 
          */
         public static final int url_host=0x7f0a0018;
         /**  图片服务器地址 
