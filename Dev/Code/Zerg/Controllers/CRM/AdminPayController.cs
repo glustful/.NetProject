@@ -196,6 +196,7 @@ namespace Zerg.Controllers.CRM
             var user = (UserBase) _workContext.CurrentUser;
             var broker = new BrokerEntity { };
             var BrokeAccount = new BrokeAccountEntity { };
+            var BrokerWithdraw = new BrokerWithdrawEntity { };
             if (user != null)
             {
                 broker = _brokerService.GetBrokerByUserId(user.Id); //获取当前经纪人
@@ -209,7 +210,7 @@ namespace Zerg.Controllers.CRM
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
             }
-            var BrokerWithdraw = _brokerwithdrawService.GetBrokerWithdrawById(Convert.ToInt32(payModel.Id));
+            BrokerWithdraw = _brokerwithdrawService.GetBrokerWithdrawById(Convert.ToInt32(payModel.Id));
             if (BrokerWithdraw.State == 1) 
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "财务已经打款"));
@@ -272,7 +273,7 @@ namespace Zerg.Controllers.CRM
                         Adduser = broker.Id,
                         Upuser = broker.Id,
                         Addtime = DateTime.Now,
-                        Uptime = DateTime.Now,
+                        Uptime = DateTime.Now, 
                     };
                     _brecPayService.Create(breModel);
                 }
