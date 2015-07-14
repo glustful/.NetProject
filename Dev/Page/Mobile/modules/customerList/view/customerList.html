@@ -1,7 +1,9 @@
 <!--客户列表-->
 <!--required:../static/style/customerList.css-->
 <div class="information"ng-controller="cusListController">
+
     <ul ng-repeat="item in list" >
+
         <li class="lists">
             <div class="intro cf"><span class="fl names"><b>{{item.StrType}}</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>{{item.Clientname}}</b><br/><small style="font-size: 18px;">{{item.Housetype}}&nbsp;&nbsp;{{item.Houses}}</small></span><span class="fr tell">{{item.Phone}}</span></div>
             <div ng-click="toggle(item.Id)" class="last cf">详细进度<a href="#" class="icon fr"></a></div>
@@ -52,6 +54,9 @@
         <!--<div class="last cf">带客进度：&nbsp;<small>5、返款成功</small><a href="#" class="icon fr"></a></div>-->
         <!--</li>-->
     </ul>
+    <div>
+        <p class="Tips" style="text-align:center">{{Tips}}</p>
+    </div>
     <div ng-click="more()" style="line-height: 50px;background-color:#f0ad4e;text-align: center;font-size: 20px;">{{warm}}</div>
 </div>
 

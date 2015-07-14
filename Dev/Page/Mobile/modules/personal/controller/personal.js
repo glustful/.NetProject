@@ -46,7 +46,7 @@ app.controller('personController',['$http','$scope','AuthService','$state',funct
     	if($scope.userBroker.levelStr==null){
     	$scope.userBroker.levelStr = '铜';
         }
-    	if($scope.userBroker.photo.length<10){
+    	if($scope.userBroker.photo!=null && $scope.userBroker.photo!=undefined && $scope.userBroker.photo!="" ){
     	//没图片地址显示默认头像
         document.getElementById("img").src = "./modules/personal/static/image/personal/t.png";
     	}
