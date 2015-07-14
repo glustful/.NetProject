@@ -13,7 +13,7 @@ namespace Event.Entity.Mappings.Crowd
 			HasKey(c => c.Id);
 
 			Property(c => c.Ttitle).HasColumnType("varchar").HasMaxLength(50);
-			Property(c => c.Intro).HasColumnType("varchar").HasMaxLength(256);
+			Property(c => c.Intro).HasColumnType("varchar").HasMaxLength(2000);
 			Property(c => c.Starttime).HasColumnType("datetime");
 			Property(c => c.Endtime).HasColumnType("datetime");
 			Property(c => c.Status).HasColumnType("int");

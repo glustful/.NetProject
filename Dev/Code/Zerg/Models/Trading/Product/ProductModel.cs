@@ -49,6 +49,7 @@ namespace Zerg.Models.Trading.Product
         /// 商品状态
         /// </summary>
         public  bool Status { get; set; }
+       
         /// <summary>
         /// 商品主图
         /// </summary>

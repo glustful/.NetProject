@@ -261,8 +261,10 @@ namespace Zerg.Controllers.Trading.Product
                 Price = product.Price,
                 SubTitle = product.SubTitle,
                 Phone = product.ContactPhone,
-                Status = product.Status == true ? 0 : 1,
-                Recommend = product.Recommend == true ? 0 : 1,
+                Status = product.Status==true?0:1,
+                Recommend = product.Recommend==true?0:1,
+                //Status = product.Status,
+                //Recommend = product.Recommend,
                 Stockrule = product.Stockrule,
                 RecCommission = product.RecCommission,
                 Dealcommission = product.Dealcommission,
@@ -474,6 +476,7 @@ namespace Zerg.Controllers.Trading.Product
             dynamic json = obj;
             JObject JProduct = json.product;
             JObject JProductDetail = json.productDetail;
+
             var newProduct = JProduct.ToObject<ProductModel>();
             var newProductDetail = JProductDetail.ToObject<ProductDetailModel>();
             var oldProduct = _productService.GetProductById(newProduct.Id);
@@ -488,8 +491,8 @@ namespace Zerg.Controllers.Trading.Product
             oldProduct.Commission = newProduct.Commission;
             oldProduct.ContactPhone = newProduct.ContactPhone;
             oldProduct.Dealcommission = newProduct.Dealcommission;
-            oldProduct.Productimg = newProduct.Productimg;
-            oldProduct.Status = newProduct.Status;
+            oldProduct.Productimg = newProduct.Productimg;           
+            oldProduct.Status = newProduct.Status;           
             oldProduct.Recommend = newProduct.Recommend;
             oldProduct.Stockrule = newProduct.Stockrule;
             oldProduct.SubTitle = newProduct.SubTitle;
