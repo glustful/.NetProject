@@ -10,7 +10,8 @@ var allowState = [
     'user.PasswordFound',
     'app.invite',
     'app.housesBuy',
-    'app.brand'
+    'app.brand',
+    'app.BrandDetail'
 
 ];
 app.run(
@@ -393,7 +394,7 @@ app.run(
             })
 
             .state('app.selectWithdraw',{
-                url:'/selectWithdraw',
+                url:'/selectWithdraw?Ids',
                 templateUrl:'modules/selectWithdraw/view/selectWithdraw.html',
 
                 resolve:load('modules/selectWithdraw/controller/controller.js')

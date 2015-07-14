@@ -37,12 +37,14 @@ angular.module("app").controller('playMoneyDetails',[
         }).success(function (data) {
             $scope.BrokerWithdrawDetail = data.List;
             $scope.PayInfo.Ids=data.Ids;
-
+            $scope.PayInfo.BrokeAccountId = data.BrokeAccountId;
+            console.log( $scope.BrokerWithdrawDetail);
         });
         ////////////////////////////////////打款款项表单//////////////////////////////////////////////////////////
         $scope.PayInfo = {
             Id:$stateParams.id,
             Ids:"",
+            BrokeAccountId:"",
             Describe:"",
             Name:"",
             Accountantid:"",

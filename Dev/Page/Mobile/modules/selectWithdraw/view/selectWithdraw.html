@@ -1,20 +1,23 @@
 
-<div>
+<div ng-controller="withdrawController">
+
 <div class="selectList">
-    <table class="Content" width="640px" align="center">
+    <table class="Content" align="center">
         <tr>
             <th>选择</th>
             <th>类型</th>
             <th>金额</th>
             <th>时间</th>
         </tr>
-        <tr>
-            <td><input type="checkbox"></td>
-            <td><span>带客</span></td>
-            <td><span>带客</span></td>
-            <td><span>带客</span></td>
+        <tr ng-repeat="row in list">
+            <td><input type="checkbox" ng-click="toggle(row.Id)"></td>
+            <td  ng-if="row.Type==0"><span>带客</span></td>
+            <td  ng-if="row.Type==1"><span>推荐</span></td>
+            <td><span>{{row.Balancenum}}</span></td>
+            <td><span>{{row.Addtime}}</span></td>
         </tr>
     </table>
 </div>
-    <div class="next"><button>下一步</button></div>
+    <div class="next"><a href="#/app/withdrawals?Ids={{Ids}}"><button>下一步</button></a></div>
+
 </div>
