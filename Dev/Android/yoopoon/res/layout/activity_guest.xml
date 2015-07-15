@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:orientation="vertical"
+    android:padding="30dp">
+    
+    
+    <TextView 
+        style="@style/TextView_Guest"
+        android:text="意向户型"/>
+    
+    <EditText 
+        android:id="@+id/et_guest_style"
+        style="@style/EditText_Normal"
+        android:hint="请选择户型"/>
+    
+    <TextView 
+        style="@style/TextView_Guest"
+        android:text="预约时间"/>
+    
+    <EditText 
+        android:id="@+id/et_guest_date"
+        style="@style/EditText_Normal"
+        android:hint="请填写看房时间"/>
+    
+    <TextView 
+        style="@style/TextView_Guest"
+        android:text="客户姓名"/>
+    
+    <EditText 
+        android:id="@+id/et_guest_name"
+        style="@style/EditText_Normal"
+        android:hint="请填写客户姓名"/>
+    
+    <TextView 
+        style="@style/TextView_Guest"
+        android:text="客户电话"/>
+    
+    <EditText 
+        android:id="@+id/et_guest_phone"
+        style="@style/EditText_Normal"
+        android:hint="请填写客户电话号码"/>
+    
+    
+    <Button 
+        style="@style/Red_Button_MarginTop"
+        android:text="提交信息"/>
+
+</LinearLayout>

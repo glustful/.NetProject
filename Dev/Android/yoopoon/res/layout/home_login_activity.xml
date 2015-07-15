@@ -60,14 +60,10 @@
                     
                     android:orientation="horizontal" >
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:src="@drawable/user" 
-                        android:scaleType="fitCenter"
-                        />
+                    
 
                     <EditText
+                        android:drawableLeft="@drawable/user"
                         android:id="@+id/login_id_email"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
@@ -77,7 +73,7 @@
                         android:gravity="center_vertical"
                         android:hint="User name"
                         android:inputType="textEmailAddress"
-                        android:paddingLeft="15dp"
+                        android:drawablePadding="15dp"
                         android:textColor="@android:color/black"
                         android:textColorHint="#b9b9b9"
                         android:textSize="@dimen/login_view_textSize" />
@@ -120,13 +116,8 @@
                     android:gravity="center"
                     android:orientation="horizontal" >
 
-                    <ImageView
-                        android:scaleType="fitCenter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:src="@drawable/pword" />
-
                     <EditText
+                        android:drawableLeft="@drawable/pword"
                         android:id="@+id/login_id_pwd"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
@@ -134,7 +125,7 @@
                         android:background="@android:color/transparent"
                         android:hint="Password"
                         android:inputType="textPassword"
-                        android:paddingLeft="15dp"
+                        android:drawablePadding="15dp"
                         android:textColor="@android:color/black"
                         android:textColorHint="#b9b9b9"
                         android:textSize="@dimen/login_view_textSize" />
@@ -165,11 +156,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="3dp"
-                android:text="记住我"
-                
+				android:text="记住我"                
                 android:textColor="@android:color/black"
                 android:textSize="12sp"
+                android:paddingLeft="25dp"
                 android:visibility="visible" />
 
             <TextView

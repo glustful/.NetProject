@@ -13,15 +13,16 @@
 package com.yoopoon.home.ui.home;
 
 import org.androidannotations.annotations.EFragment;
-
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.round.progressbar.CircleProgressDialog;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.net.ProgressMessage;
@@ -45,7 +46,7 @@ import com.yoopoon.home.ui.me.TodyTaskView;
 @EFragment()
 public class FramMeFragment extends FramSuper {
 	// [start] field
-	static String tag = "FramMeFragment";
+	static String TAG = "FramMeFragment";
 	private View rootView;
 	/**
 	 * @fieldName: isFirst
@@ -58,11 +59,13 @@ public class FramMeFragment extends FramSuper {
 	private BrokerInfoView mBrokerInfoView;
 	private TextView mTodayTaskCount;
 	private MeFooterView mMeFooterView;
+	private boolean isBroker = false;
+	private String userId = "0";
 
-	// [end]
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
+		Log.i(TAG, "setUserVisibleHint");
 		this.isVisibleTouser = isVisibleToUser;
 		if (isVisibleToUser && (User.lastLoginUser(getActivity()) == null)) {
 			isFirst = false;
@@ -71,13 +74,17 @@ public class FramMeFragment extends FramSuper {
 		}
 		if (isVisibleToUser && isFirst) {
 			isFirst = false;
+			initUserData();
 			requestBrokerInfo();
 			requestTodayTask();
 		}
 	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
+		initUserData();
+		Log.i(TAG, "onResume()");
 		if (isVisibleTouser && !isFirst) {
 			if (User.lastLoginUser(getActivity()) != null) {
 				requestBrokerInfo();
@@ -87,6 +94,13 @@ public class FramMeFragment extends FramSuper {
 			}
 		}
 	}
+
+	private void initUserData() {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		isBroker = sp.getBoolean("isBroker", false);
+		userId = sp.getString("userId", "0");
+	}
+
 	/**
 	 * @Title: cleanLayout
 	 * @Description: 用户未登陆，清除相关数据
@@ -97,6 +111,7 @@ public class FramMeFragment extends FramSuper {
 		mTodayTaskView.setVisibility(View.GONE);
 		mMeFooterView.hide();
 	}
+
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -114,6 +129,7 @@ public class FramMeFragment extends FramSuper {
 		}
 		return rootView;
 	}
+
 	/**
 	 * @Title: requestBrokerInfo
 	 * @Description: 请求当前用户相关信息
@@ -132,18 +148,25 @@ public class FramMeFragment extends FramSuper {
 			public void onReponse(ResponseData data) {
 				CircleProgressDialog.build(getActivity(), R.style.dialog).hide();
 				if (data.getResultState() == ResultState.eSuccess) {
-					mBrokerInfoView.initData(data.getMRootData(), User.lastLoginUser(getActivity()).isBroker());
-					// 判断是否是经纪人，是否为空
-					mMeFooterView.show(User.lastLoginUser(getActivity()).isBroker());
+					Log.i(TAG, "userId = " + userId);
+					Log.i(TAG, data.toString());
+					if (!data.getMsg().contains("失败")) {
+						mBrokerInfoView.initData(data.getMRootData(), isBroker);
+						mMeFooterView.show(isBroker);
+					} else {
+						HomeLoginActivity_.intent(getActivity()).isManual(true).start();
+					}
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
 			}
-		}.setUrl(getString(R.string.url_brokerInfo_getBrokerDetails)).setRequestMethod(RequestMethod.eGet)
+		}.setUrl(getString(R.string.url_brokeInfo_getBrokeInfoById) + userId).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
+
 	/**
 	 * @Title: requestTodayTask
 	 * @Description: 获取今日任务列表
@@ -170,6 +193,7 @@ public class FramMeFragment extends FramSuper {
 				mTodayTaskCount.setText("今日任务(无)");
 				mTodayTaskView.setVisibility(View.GONE);
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub

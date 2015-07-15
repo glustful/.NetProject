@@ -68,7 +68,7 @@ public class BrokerInfoView extends RelativeLayout {
 		if (isBroker) {
 			bLayout.setVisibility(View.VISIBLE);
 			cLayout.setVisibility(View.GONE);
-			name.setText(Tools.optString(mRootData, "Name", "老雷斯"));
+			name.setText(Tools.optString(mRootData, "Nickname", "老雷斯"));
 			level.setText(Tools.optString(mRootData, "levelStr", "铜牌"));
 			order.setText(Tools.optString(mRootData, "orderStr", "1"));
 			partnet.setText(Tools.optInt(mRootData, "partnerCount", 0) + "");
@@ -78,7 +78,7 @@ public class BrokerInfoView extends RelativeLayout {
 		} else {
 			bLayout.setVisibility(View.GONE);
 			cLayout.setVisibility(View.VISIBLE);
-			name1.setText(Tools.optString(mRootData, "Name", "老雷斯"));
+			name1.setText(Tools.optString(mRootData, "Nickname", "老雷斯"));
 		}
 	}
 
