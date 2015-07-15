@@ -4,13 +4,13 @@
  * @Title: FramBrokerTakeGuest.java 
  * @Project: yoopoon
  * @Package: com.yoopoon.home.ui.home 
- * @Description: TODO
- * @author: king  
- * @updater: king 
+ * @Description: 经纪人带客,红包,推荐和积分等业务
+ * @author: 徐阳会  
+ * @updater: 徐阳会 
  * @date: 2015年7月14日 上午11:45:48 
  * @version: V1.0   
  */
-package com.yoopoon.home.ui.home;
+package com.yoopoon.house.ui.broker;
 
 import java.util.Calendar;
 
@@ -31,6 +31,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
@@ -54,6 +55,9 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 	String intent_properString;
 	@Extra
 	String intent_propretyTypeString;
+	@Extra
+	String intent_propretyNumber;
+	@Extra
 	@ViewById(R.id.intent_property)
 	EditText intent_propertyEditText;
 	@ViewById(R.id.intent_property_type)
@@ -186,6 +190,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 				initCalendar();
 				break;
 			case R.id.commit_broker_carry_client:
+				Toast.makeText(mContext, intent_propretyNumber, Toast.LENGTH_SHORT).show();
 				// serializationCommitinfo();
 				// commitInfo();
 				break;

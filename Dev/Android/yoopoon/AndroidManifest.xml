@@ -103,7 +103,7 @@
         </activity>
 
           <activity
-            android:name="com.yoopoon.home.ui.home.BrokerTakeGuestActivity_"
+            android:name="com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>

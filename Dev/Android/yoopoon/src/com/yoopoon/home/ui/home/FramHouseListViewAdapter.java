@@ -20,6 +20,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.ui.product.ProductDetailActivity_;
+import com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_;
 
 /**
  * @ClassName: FramHouseListViewAdapter
@@ -96,11 +97,13 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		 * ProductDetailActivity_.intent(mContext).productId(item.optString("Id")).start(); } });
 		 */
 		// ##################### 郭俊军 被修改代码 End
+		// 携带楼盘和经纪人数据跳转到带客页面
 		viewHandler.houseTakeGuestTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				BrokerTakeGuestActivity_.intent(mContext).intent_properString(item.optString("Productname"))
-						.intent_propretyTypeString(item.optString("Type")).start();
+						.intent_propretyTypeString(item.optString("Type")).intent_propretyNumber(item.optString("Id"))
+						.start();
 			}
 		});
 		return convertView;
