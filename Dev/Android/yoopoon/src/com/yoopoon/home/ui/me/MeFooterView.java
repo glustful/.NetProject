@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import com.yoopoon.home.BrokerRankActivity_;
 import com.yoopoon.home.IGuestActivity_;
 import com.yoopoon.home.IPartnerActivity_;
+import com.yoopoon.home.IRecommendActivity_;
 import com.yoopoon.home.R;
 import com.yoopoon.home.RecommendActivity_;
 
@@ -75,6 +76,11 @@ public class MeFooterView extends LinearLayout {
 	@Click(R.id.tv_footer_rank)
 	void iRank() {
 		BrokerRankActivity_.intent(getContext()).start();
+	}
+
+	@Click(R.id.tv_footer_recommend_agent)
+	void recommendAgent() {
+		IRecommendActivity_.intent(getContext()).start();
 	}
 
 	// [end]

@@ -48,17 +48,16 @@ import com.yoopoon.home.ui.login.HomeLoginActivity_;
  * @author: guojunjun
  * @date: 2015-7-14 下午12:54:34
  */
-@EActivity(R.layout.activity_partner)
-public class IPartnerActivity extends MainActionBarActivity implements OnClickListener {
-	@ViewById(R.id.bt_partner_add)
+@EActivity(R.layout.activity_irecommend)
+public class IRecommendActivity extends MainActionBarActivity implements OnClickListener {
+	@ViewById(R.id.bt_irecommend_add)
 	Button btn_add;
-	@ViewById(R.id.lv_partner)
+	@ViewById(R.id.lv_irecommend)
 	ListView lv;
 	private MyPartnerListAdapter adapter;
 	private String[] names = { "钱德勒", "莫妮卡", "格蕾丝", "威尔", "Grace", "Will", "Chandler", "Rachel", "Monica", "Ross",
 			"Mood" };
-	private int[] num = new int[26];
-	private static final String TAG = "IPartnerActivity";
+	private static final String TAG = "IRecommendActivity";
 	private static int currentLetterLine = 0;
 	private char currentShowChar = 'A';
 	private int totalLetterLines;
@@ -69,7 +68,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
-		titleButton.setText("我的合伙人");
+		titleButton.setText("推荐经济人");
 		btn_add.setOnClickListener(this);
 		lv.setOnItemClickListener(new MyItemClickListener());
 		setTotalLetterLines();
@@ -93,7 +92,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		 */
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			PartnerDetailActivity_.intent(IPartnerActivity.this).start();
+			PartnerDetailActivity_.intent(IRecommendActivity.this).start();
 		}
 
 	}
@@ -185,7 +184,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (position == 0) {
-				TextView tv = new TextView(IPartnerActivity.this);
+				TextView tv = new TextView(IRecommendActivity.this);
 				tv.setText(String.valueOf(names[0].charAt(0)));
 				tv.setPadding(10, 0, 0, 0);
 				String upperName = parser.getSelling(names[0]).toUpperCase();
@@ -196,7 +195,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 				String upperName = parser.getSelling(names[position - currentLetterLine]).toUpperCase();
 				char c = upperName.charAt(0);
 				if (c != currentShowChar) {
-					TextView tv = new TextView(IPartnerActivity.this);
+					TextView tv = new TextView(IRecommendActivity.this);
 					tv.setText(String.valueOf(c));
 					tv.setPadding(10, 0, 0, 0);
 					currentShowChar = upperName.charAt(0);
@@ -207,7 +206,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 
 			ViewHolder holder = null;
 			if (convertView == null || convertView instanceof LinearLayout)
-				convertView = View.inflate(IPartnerActivity.this, R.layout.item_partner, null);
+				convertView = View.inflate(IRecommendActivity.this, R.layout.item_partner, null);
 			holder = (ViewHolder) convertView.getTag();
 			if (holder == null) {
 				holder = new ViewHolder();
@@ -286,13 +285,13 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 
 				@Override
 				public void success() {
-					Toast.makeText(IPartnerActivity.this, "恭喜你，邀请成功啦！", Toast.LENGTH_SHORT).show();
+					Toast.makeText(IRecommendActivity.this, "恭喜你，邀请成功啦！", Toast.LENGTH_SHORT).show();
 					dialog.dismiss();
 				}
 
 				@Override
 				public void failed(String msg) {
-					Toast.makeText(IPartnerActivity.this, msg, Toast.LENGTH_SHORT).show();
+					Toast.makeText(IRecommendActivity.this, msg, Toast.LENGTH_SHORT).show();
 				}
 			});
 		}
@@ -303,7 +302,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 	EditText et_phone;
 
 	private void showAddPartnerDialog() {
-		Builder builder = new Builder(IPartnerActivity.this);
+		Builder builder = new Builder(IRecommendActivity.this);
 		View addView = View.inflate(this, R.layout.dialog_addpartner, null);
 		builder.setView(addView);
 		cancel = (Button) addView.findViewById(R.id.bt_partner_cancel);

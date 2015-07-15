@@ -21,6 +21,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
+import com.yoopoon.home.SecuritySettingActivity_;
 import com.yoopoon.home.data.net.RequestTask;
 import com.yoopoon.home.data.storage.LocalPath;
 import com.yoopoon.home.data.user.User;
@@ -51,7 +52,7 @@ public class SettingActivity extends MainActionBarActivity {
 	 */
 	@Click(R.id.security_setting)
 	void settingSecurity() {
-
+		SecuritySettingActivity_.intent(this).start();
 	}
 
 	/**

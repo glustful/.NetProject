@@ -2,13 +2,13 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
@@ -73,16 +73,26 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@android:color/darker_gray</item>
-        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginTop">15dp</item>
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="EditText_Normal">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="EditText_Normal" parent="TextView_GrayText">
+        <item name="android:padding">10dp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:background">@drawable/setting_edit_bg</item>
-        <item name="android:padding">5dp</item>
-        <item name="android:textColorHint">@color/hosue_total_color</item>
+    </style>
+    <style name="EditText_Normal_WrapContent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/setting_text</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/setting_edit_bg</item>
+    </style>
+    
+    <style name="EditText_Guest" parent="EditText_Normal">
+        <item name="android:layout_marginTop">5dp</item>
     </style>
 
     <style name="Red_Button_MarginTop">
@@ -104,6 +114,16 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/setting_text</item>
+    </style>
+
+    <style name="TextView_GrayText_WrapContent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/setting_text</item>
+    </style>
+
+    <style name="EditText_Psw" parent="EditText_Normal">
+        <item name="android:inputType">textPassword</item>
     </style>
 
 </resources>

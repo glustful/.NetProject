@@ -2,11 +2,9 @@ package com.yoopoon.home.ui.home;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.androidannotations.annotations.EFragment;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yoopoon.common.base.utils.ToastUtils;
@@ -57,6 +54,7 @@ public class FramActiveFragment extends FramSuper {
 		}
 		return rootView;
 	}
+
 	private void initParameter() {
 		if (parameter == null) {
 			parameter = new HashMap<String, String>();
@@ -66,6 +64,7 @@ public class FramActiveFragment extends FramSuper {
 		parameter.put("pageSize", "6");
 		parameter.put("type", "all");
 	}
+
 	private void autoIncreatePage() {
 		parameter.put("page", (Integer.parseInt(parameter.get("page")) + 1) + "");
 	}
@@ -82,6 +81,7 @@ public class FramActiveFragment extends FramSuper {
 	public static FramActiveFragment getInstance() {
 		return instance;
 	}
+
 	void initViews() {
 		listView.setOnRefreshListener(new HowWillIrefresh());
 		listView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
@@ -105,6 +105,7 @@ public class FramActiveFragment extends FramSuper {
 					DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
 			refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 		}
+
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 			autoIncreatePage();
@@ -127,6 +128,7 @@ public class FramActiveFragment extends FramSuper {
 					mAdController.show(imgs);
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
@@ -134,6 +136,7 @@ public class FramActiveFragment extends FramSuper {
 		}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
 				.addParam("channelName", "banner").notifyRequest();
 	}
+
 	void requestActiveList() {
 		new RequestAdapter() {
 			@Override
@@ -147,6 +150,7 @@ public class FramActiveFragment extends FramSuper {
 					mActiveController.show(dataSource);
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
@@ -154,6 +158,7 @@ public class FramActiveFragment extends FramSuper {
 		}.setUrl(getString(R.string.url_channel_active_titleimg)).setRequestMethod(RequestMethod.eGet)
 				.addParam("channelName", "活动").notifyRequest();
 	}
+
 	private void requestBrandList() {
 		new RequestAdapter() {
 			@Override
@@ -174,6 +179,7 @@ public class FramActiveFragment extends FramSuper {
 					descCount();
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
@@ -181,6 +187,7 @@ public class FramActiveFragment extends FramSuper {
 		}.setUrl(getString(R.string.url_brand_GetAllBrand)).setRequestMethod(RequestMethod.eGet).addParam(parameter)
 				.notifyRequest();
 	}
+
 	protected void descCount() {
 		int page = Integer.parseInt(parameter.get("page"));
 		page = page > 1 ? page - 1 : 1;

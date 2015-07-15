@@ -14,6 +14,10 @@ package com.yoopoon.home.ui.home;
 
 import org.androidannotations.annotations.EFragment;
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -54,51 +58,61 @@ public class FramMeFragment extends FramSuper {
 	 * @Description: 是否是第一次对用户可见，见方法setUserVisibleHint
 	 */
 	private boolean isFirst = true;
-	private boolean isVisibleTouser = false;
 	private TodyTaskView mTodayTaskView;
 	private BrokerInfoView mBrokerInfoView;
 	private TextView mTodayTaskCount;
 	private MeFooterView mMeFooterView;
 	private boolean isBroker = false;
 	private String userId = "0";
+	private boolean isVisibleToUser = false;
 
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
+		this.isVisibleToUser = isVisibleToUser;
 		Log.i(TAG, "setUserVisibleHint");
-		this.isVisibleTouser = isVisibleToUser;
-		if (isVisibleToUser && (User.lastLoginUser(getActivity()) == null)) {
-			isFirst = false;
-			HomeLoginActivity_.intent(getActivity()).isManual(true).start();
-			return;
+
+		if (isVisibleToUser) {
+			if (User.lastLoginUser(getActivity()) == null) {
+				HomeLoginActivity_.intent(getActivity()).isManual(true).start();
+				return;
+			} else {
+				initUserData();
+			}
 		}
-		if (isVisibleToUser && isFirst) {
-			isFirst = false;
-			initUserData();
-			requestBrokerInfo();
-			requestTodayTask();
-		}
+
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		initUserData();
-		Log.i(TAG, "onResume()");
-		if (isVisibleTouser && !isFirst) {
-			if (User.lastLoginUser(getActivity()) != null) {
-				requestBrokerInfo();
-				requestTodayTask();
-			} else {
-				cleanLayout();
-			}
+		if (isVisibleToUser) {
+			initUserData();
 		}
+	}
+
+	/*
+	 * (non Javadoc)
+	 * @Title: onStop
+	 * @Description: TODO
+	 * @see android.support.v4.app.Fragment#onStop()
+	 */
+	@Override
+	public void onStop() {
+		isFirst = true;
+		super.onStop();
 	}
 
 	private void initUserData() {
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		isBroker = sp.getBoolean("isBroker", false);
 		userId = sp.getString("userId", "0");
+		if ("0".equals(userId)) {
+			cleanLayout();
+		} else {
+			requestBrokerInfo();
+			requestTodayTask();
+		}
 	}
 
 	/**
@@ -106,6 +120,7 @@ public class FramMeFragment extends FramSuper {
 	 * @Description: 用户未登陆，清除相关数据
 	 */
 	private void cleanLayout() {
+		Log.i(TAG, "cleanLayout");
 		mBrokerInfoView.hide();
 		mTodayTaskCount.setText("今日 任务（无）");
 		mTodayTaskView.setVisibility(View.GONE);
@@ -127,8 +142,23 @@ public class FramMeFragment extends FramSuper {
 			mTodayTaskView = (TodyTaskView) rootView.findViewById(R.id.todayTask);
 			mMeFooterView = (MeFooterView) rootView.findViewById(R.id.footerView);
 		}
+		registerLoginReceiver();
 		return rootView;
 	}
+
+	private void registerLoginReceiver() {
+		IntentFilter filter = new IntentFilter("com.yoopoon.login_action");
+		filter.addCategory(Intent.CATEGORY_DEFAULT);
+		getActivity().registerReceiver(loginReceiver, filter);
+	}
+
+	private BroadcastReceiver loginReceiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			initUserData();
+		}
+	};
 
 	/**
 	 * @Title: requestBrokerInfo
@@ -137,6 +167,7 @@ public class FramMeFragment extends FramSuper {
 	void requestBrokerInfo() {
 		CircleProgressDialog.build(getActivity(), R.style.dialog).show();
 		new RequestAdapter() {
+
 			/**
 			 * @fieldName: serialVersionUID
 			 * @fieldType: long
@@ -148,13 +179,9 @@ public class FramMeFragment extends FramSuper {
 			public void onReponse(ResponseData data) {
 				CircleProgressDialog.build(getActivity(), R.style.dialog).hide();
 				if (data.getResultState() == ResultState.eSuccess) {
-					Log.i(TAG, "userId = " + userId);
-					Log.i(TAG, data.toString());
 					if (!data.getMsg().contains("失败")) {
 						mBrokerInfoView.initData(data.getMRootData(), isBroker);
 						mMeFooterView.show(isBroker);
-					} else {
-						HomeLoginActivity_.intent(getActivity()).isManual(true).start();
 					}
 				}
 			}
@@ -173,6 +200,7 @@ public class FramMeFragment extends FramSuper {
 	 */
 	void requestTodayTask() {
 		new RequestAdapter() {
+
 			/**
 			 * @fieldName: serialVersionUID
 			 * @fieldType: long

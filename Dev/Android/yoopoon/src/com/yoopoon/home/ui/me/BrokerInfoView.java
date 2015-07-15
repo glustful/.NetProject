@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.makeramen.RoundedImageView;
 import com.yoopoon.common.base.Tools;
+import com.yoopoon.home.IPocketActivity_;
 import com.yoopoon.home.R;
 
 @EViewGroup(R.layout.broker_info_view)
@@ -46,7 +47,7 @@ public class BrokerInfoView extends RelativeLayout {
 
 	@Click(R.id.takeMoney)
 	void takeMoney() {
-
+		IPocketActivity_.intent(getContext()).start();
 	}
 
 	public BrokerInfoView(Context context, AttributeSet attrs, int defStyle) {
