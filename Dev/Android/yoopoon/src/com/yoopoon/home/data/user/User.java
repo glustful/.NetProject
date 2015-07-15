@@ -24,6 +24,7 @@ import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
+import com.yoopoon.home.domain.Broker;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {

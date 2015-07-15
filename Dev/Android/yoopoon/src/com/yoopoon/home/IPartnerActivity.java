@@ -43,6 +43,7 @@ import android.widget.Toast;
 import com.yoopoon.common.base.utils.CharacterParser;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.data.user.User.InvitePartnerListener;
+import com.yoopoon.home.domain.Broker;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
 /**
