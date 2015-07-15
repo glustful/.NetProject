@@ -1,4 +1,4 @@
-package com.yoopoon.home.ui.home;
+package com.yoopoon.house.ui.houselist;
 
 import java.util.ArrayList;
 
@@ -20,6 +20,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.ui.product.ProductDetailActivity_;
+import com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_;
 
 /**
  * @ClassName: FramHouseListViewAdapter
@@ -57,6 +58,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 			LinearLayout listViewLinearLayout = (LinearLayout) convertView
 					.findViewById(R.id.house_listview_item_linearlayout);
 			LayoutParams layoutParams = (LayoutParams) listViewLinearLayout.getLayoutParams();
+			// 获取屏幕的宽度的
 			int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
 			layoutParams.height = screenWidth / 3;
 			listViewLinearLayout.setLayoutParams(layoutParams);
@@ -79,11 +81,38 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		viewHandler.houseTypeAcreaqeStockRuleTextView.setText(item.optString("Type") + "/" + item.optString("Acreage")
 				+ "m²" + "/" + "在售" + item.optString("StockRule") + "套");
 		viewHandler.houseAdvertisementTextView.setText(item.optString("Advertisement"));
-		// 添加点击事件
-		convertView.setOnClickListener(new OnClickListener() {
+		// 添加点击事件,点击图片跳转到楼盘详情
+		// ##################### 徐阳会 2015年07月14日 新增 Start
+		viewHandler.houseImageView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				ProductDetailActivity_.intent(mContext).productId(item.optString("Id")).start();
+			}
+		});
+		// ##################### 徐阳会 2015年07月14日 新增 End
+		// ##################### 郭俊军 被修改代码 Start
+		/*
+		 * convertView.setOnClickListener(new OnClickListener() {
+		 * @Override public void onClick(View v) {
+		 * ProductDetailActivity_.intent(mContext).productId(item.optString("Id")).start(); } });
+		 */
+		// ##################### 郭俊军 被修改代码 End
+		// 携带楼盘和经纪人数据跳转到带客页面
+		viewHandler.houseTakeGuestTextView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				BrokerTakeGuestActivity_.intent(mContext).intent_properString(item.optString("Productname"))
+						.intent_propretyTypeString(item.optString("Type")).intent_propretyNumber(item.optString("Id"))
+						.start();
+			}
+			// 携带楼盘和经纪人数据跳转到推荐页面
+		});
+		viewHandler.houseRecommendTextView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				BrokerTakeGuestActivity_.intent(mContext).intent_properString(item.optString("Productname"))
+						.intent_propretyTypeString(item.optString("Type")).intent_propretyNumber(item.optString("Id"))
+						.start();
 			}
 		});
 		return convertView;

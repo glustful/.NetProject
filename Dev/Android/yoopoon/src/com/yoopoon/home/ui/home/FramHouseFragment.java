@@ -41,13 +41,12 @@ import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.ui.AD.ADController;
+import com.yoopoon.house.ui.houselist.FramHouseListViewAdapter;
 
 @SuppressLint("ShowToast")
 @EFragment()
 public class FramHouseFragment extends FramSuper implements OnClickListener {
-	// /////////////////////////////////////////////////////////////////////
-	// 如下是初始化和声明的变量
-	// /////////////////////////////////////////////////////////////////////
+	// /////////////////////// 如下是初始化和声明的变量//////////////////////////////////////////////
 	public static final String LOGTAG = "FramHouseFragment";
 	// 当前Fragment绑定的View
 	View rootView;
@@ -106,9 +105,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	ArrayList<JSONObject> houseProvinceJsonObjects = new ArrayList<JSONObject>();
 	private String AreaTarget = null;
 
-	// ///////////////////////////////////////////////////////////////////////////////////////////////////
-	// 如上是初始化和声明的变量
-	// ///////////////////////////////////////////////////////////////////////////////////////////////////
+	// //////////////////////////////如上是初始化和声明的变量/////////////////////////////////////////////////////////////////////
 	/*
 	 * @Title: onCreateView
 	 * @Description: 创建Fragment视图

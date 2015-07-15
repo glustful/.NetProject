@@ -101,6 +101,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
+
+          <activity
+            android:name="com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+         
+
         <activity
             android:name="com.yoopoon.home.RecommendActivity_"
             android:screenOrientation="portrait"
@@ -171,4 +179,5 @@
         android:label="Tests for yoopoon"
         android:targetPackage="com.yoopoon" />
 
+</manifest>
 </manifest>
