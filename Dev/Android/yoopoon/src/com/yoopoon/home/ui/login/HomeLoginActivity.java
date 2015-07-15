@@ -14,6 +14,7 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Handler;
@@ -269,6 +270,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 						if (serializeResult != null) {
 							PreferenceManager.getDefaultSharedPreferences(mContext).edit()
 									.putString("user", serializeResult).commit();
+							Log.i(TAG, "我已经把数据写进sp里拉！");
 							saveInfoToSp(serializeResult);
 						}
 					}
@@ -372,7 +374,6 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		Editor editor = sp.edit();
 		try {
 			JSONObject obj = new JSONObject(serializeResult);
-			Log.i(TAG, obj.toString());
 			String userName = obj.getString("userName");
 			String phone = obj.getString("phone");
 			String password = obj.getString("password");
@@ -385,9 +386,15 @@ public class HomeLoginActivity extends MainActionBarActivity {
 			editor.putBoolean("isBroker", isBroker);
 
 			editor.commit();
-
+			sendLoginSuccessBroadcast();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void sendLoginSuccessBroadcast() {
+		Intent intent = new Intent("com.yoopoon.login_action");
+		intent.addCategory(Intent.CATEGORY_DEFAULT);
+		sendBroadcast(intent);
 	}
 }

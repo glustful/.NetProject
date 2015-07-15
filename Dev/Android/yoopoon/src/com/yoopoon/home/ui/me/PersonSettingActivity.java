@@ -12,9 +12,16 @@
  */
 package com.yoopoon.home.ui.me;
 
+import java.io.FileNotFoundException;
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +29,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import com.makeramen.RoundedImageView;
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.user.User;
@@ -52,6 +60,31 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	TextView tv_nickname;
 	@ViewById(R.id.tv_person_setting_phone)
 	TextView tv_phone;
+	@ViewById(R.id.iv_person_setting_avater)
+	RoundedImageView iv_avater;
+
+	@Click(R.id.iv_person_setting_avater)
+	void selectAvater() {
+		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+		intent.setType("image/*");
+		this.startActivityForResult(intent, 1);
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			Uri uri = data.getData();
+			Log.e("uri", uri.toString());
+			ContentResolver cr = this.getContentResolver();
+			try {
+				Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
+				/* 将Bitmap设定到ImageView */
+				iv_avater.setImageBitmap(bitmap);
+			} catch (FileNotFoundException e) {
+				Log.e("Exception", e.getMessage(), e);
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 
 	/**
 	 * @Title: initUI

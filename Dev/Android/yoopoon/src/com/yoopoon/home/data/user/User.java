@@ -198,6 +198,35 @@ public class User {
 
 	}
 
+	public void modifyPsw(final ModifyPswListener lis) {
+		new SerializerJSON(new SerializeListener() {
+
+			@Override
+			public String onSerialize() {
+				ObjectMapper om = new ObjectMapper();
+
+				try {
+					return om.writeValueAsString(User.this);
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+
+			@Override
+			public void onComplete(String serializeResult) {
+				if (serializeResult == null || serializeResult.equals("")) {
+
+					return;
+				}
+
+				requestModifyPsw(serializeResult, lis);
+
+			}
+		}).execute();
+
+	}
+
 	public void getUserInfo(final UserInfoListener listener) {
 		new SerializerJSON(new SerializeListener() {
 
@@ -255,6 +284,35 @@ public class User {
 
 			}
 		}).execute();
+
+	}
+
+	protected void requestModifyPsw(String serializeResult, final ModifyPswListener lis) {
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				if (data.getResultState() == ResultState.eSuccess) {
+					JSONObject obj = data.getJsonObject();
+					if (obj != null) {
+						Log.i(TAG, "修改密码::::\n" + obj.toString());
+
+						lis.success(data.getMsg());
+					} else {
+						lis.fail("修改失败，请重试");
+					}
+				} else {
+					lis.fail(data.getMsg());
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(MyApplication.getInstance().getString(R.string.url_login)).SetJSON(serializeResult)
+				.setSaveSession(true).notifyRequest();
 
 	}
 
@@ -383,5 +441,11 @@ public class User {
 		void success();
 
 		void failed(String msg);
+	}
+
+	public interface ModifyPswListener {
+		void success(String msg);
+
+		void fail(String msg);
 	}
 }

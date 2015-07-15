@@ -11,16 +11,17 @@
     
     <EditText 
         android:id="@+id/et_guest_style"
-        style="@style/EditText_Normal"
+        style="@style/EditText_Guest"
         android:hint="请选择户型"/>
     
     <TextView 
+        
         style="@style/TextView_Guest"
         android:text="预约时间"/>
     
     <EditText 
         android:id="@+id/et_guest_date"
-        style="@style/EditText_Normal"
+        style="@style/EditText_Guest"
         android:hint="请填写看房时间"/>
     
     <TextView 
@@ -29,7 +30,7 @@
     
     <EditText 
         android:id="@+id/et_guest_name"
-        style="@style/EditText_Normal"
+        style="@style/EditText_Guest"
         android:hint="请填写客户姓名"/>
     
     <TextView 
@@ -38,11 +39,12 @@
     
     <EditText 
         android:id="@+id/et_guest_phone"
-        style="@style/EditText_Normal"
+        style="@style/EditText_Guest"
         android:hint="请填写客户电话号码"/>
     
     
     <Button 
+        android:id="@+id/btn_iguest_commit"
         style="@style/Red_Button_MarginTop"
         android:text="提交信息"/>
 

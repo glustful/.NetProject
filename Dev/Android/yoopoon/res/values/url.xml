@@ -33,4 +33,5 @@
 	<!-- 图片服务器地址 -->
 	<string name="url_host_img">http://img.yoopoon.com/</string>
 	<string name="url_invite_partner">/api/PartnerList/AddPartnerList</string>
+	<string name="url_modify_psw">/api/SMS/SendSmsForbroker</string>
 </resources>

@@ -23,20 +23,20 @@ public final class R {
 	public static final class id {
 		public static final int FILL = 0x7f09001d;
 		public static final int STROKE = 0x7f09001e;
-		public static final int button1 = 0x7f09005a;
-		public static final int menu_settings = 0x7f0900db;
-		public static final int progressBar = 0x7f090084;
-		public static final int roundProgressBar = 0x7f090080;
-		public static final int roundProgressBar1 = 0x7f090056;
-		public static final int roundProgressBar2 = 0x7f090055;
-		public static final int roundProgressBar3 = 0x7f090058;
-		public static final int roundProgressBar4 = 0x7f090057;
-		public static final int roundProgressBar5 = 0x7f090059;
+		public static final int button1 = 0x7f09005c;
+		public static final int menu_settings = 0x7f0900ef;
+		public static final int progressBar = 0x7f090091;
+		public static final int roundProgressBar = 0x7f09008d;
+		public static final int roundProgressBar1 = 0x7f090058;
+		public static final int roundProgressBar2 = 0x7f090057;
+		public static final int roundProgressBar3 = 0x7f09005a;
+		public static final int roundProgressBar4 = 0x7f090059;
+		public static final int roundProgressBar5 = 0x7f09005b;
 	}
 	public static final class layout {
-		public static final int activity_cricle_progress = 0x7f03001c;
-		public static final int cricle_progress = 0x7f03002a;
-		public static final int dialog_cricle_progress = 0x7f03002c;
+		public static final int activity_cricle_progress = 0x7f03001e;
+		public static final int cricle_progress = 0x7f03002f;
+		public static final int dialog_cricle_progress = 0x7f030031;
 	}
 	public static final class menu {
 		public static final int activity_cricle_progress = 0x7f0c0000;

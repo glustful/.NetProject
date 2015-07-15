@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:gravity="center">
+    
+    <TextView 
+        android:drawablePadding="10dp"
+        android:drawableTop="@drawable/take_cash_finish"
+        android:padding="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提现申请已提交"/>
+    
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="预计到账时间：2010-06-06 12：00"
+        android:textColor="@color/setting_text"
+        android:textSize="12sp"/>
+    
+    <RelativeLayout 
+        android:layout_marginTop="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:background="#ffffff"
+        android:padding="10dp">
+        
+        <TextView 
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="储蓄卡"
+            android:textColor="@color/setting_text"/>
+        
+        <TextView 
+            android:layout_alignParentRight="true"
+            android:id="@+id/tv_tackcash_bankcard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="中国人民银行  尾号1717"
+            android:textColor="@color/setting_text"/>
+        
+        <TextView 
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/tv_tackcash_bankcard"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提现金额"
+            android:textColor="@color/setting_text"/>
+        
+        <TextView 
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/tv_tackcash_bankcard"
+            android:layout_alignParentRight="true"
+            android:id="@+id/tv_tackcash_cash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥666.66"
+            android:textColor="@color/setting_text"/>
+        
+        
+    </RelativeLayout>
+    
+    <Button
+        android:id="@+id/btn_takecash_finish"
+        style="@style/Red_Button_MarginTop"
+        android:layout_margin="20dp"
+        android:text="完成"
+        />
+    
+
+</LinearLayout>

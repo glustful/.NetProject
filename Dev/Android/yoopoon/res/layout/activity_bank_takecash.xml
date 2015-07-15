@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:drawableRight="@drawable/right_next_icon"
+        android:padding="15dp"
+        android:text="储蓄卡"/>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.0001px"
+        android:background="@color/setting_text" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        android:padding="15dp" 
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/TextView_GrayText_WrapContent"
+            android:textColor="#000000"
+            android:text="金额（元）:" />
+        <TextView
+            android:textSize="12sp"
+            style="@style/TextView_GrayText_WrapContent"
+            android:text="可提现余额￥888.88" />
+    </LinearLayout>
+    
+    
+    <Button 
+        style="@style/Red_Button_MarginTop"
+        android:text="下一步"/>
+
+</LinearLayout>

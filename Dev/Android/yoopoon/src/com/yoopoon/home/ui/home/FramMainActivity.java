@@ -7,8 +7,11 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -17,7 +20,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -25,7 +27,6 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
-import android.widget.Toast;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.SearchActionBarActivity;
@@ -143,20 +144,6 @@ public class FramMainActivity extends SearchActionBarActivity {
 
 	private long exitTime = 0;
 
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-			if ((System.currentTimeMillis() - exitTime) > 2000) {
-				Toast.makeText(getApplicationContext(), "再按一次返回桌面", Toast.LENGTH_SHORT).show();
-				exitTime = System.currentTimeMillis();
-			} else {
-				finish();
-			}
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
-	}
-
 	private void begin() {
 		pageAdapter = new HomeMainAdapter(getSupportFragmentManager(), fInfo, FramMainActivity.this);
 		mainPager.setOffscreenPageLimit(3);
@@ -189,6 +176,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 			// 用户登出后 清除所有用户数据
 			SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(FramMainActivity.this);
 			sp.edit().clear().commit();
+			Log.i(tag, "清除sp数据啦！");
 		};
 	};
 
@@ -196,6 +184,32 @@ public class FramMainActivity extends SearchActionBarActivity {
 		IntentFilter filter = new IntentFilter("com.yoopoon.logout_action");
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
 		this.registerReceiver(logoutReceiver, filter);
+	}
+
+	private AlertDialog dialog;
+
+	public void onBackPressed() {
+		Builder builder = new Builder(this);
+		builder.setMessage("确定要退出应用程序吗？");
+		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				android.os.Process.killProcess(android.os.Process.myPid()); // 获取PID
+				System.exit(0);
+
+			}
+		});
+		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+
+			}
+		});
+		dialog = builder.show();
 	}
 
 	@Override
@@ -217,7 +231,8 @@ public class FramMainActivity extends SearchActionBarActivity {
 
 	@Override
 	protected void onStop() {
-
+		if (dialog == null)
+			dialog = null;
 		super.onStop();
 	}
 

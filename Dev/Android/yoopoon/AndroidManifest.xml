@@ -128,6 +128,42 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
+        
+        <activity
+            android:name="com.yoopoon.home.IPocketActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        
+        <activity
+            android:name="com.yoopoon.home.TakeCashActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        
+        <activity
+            android:name="com.yoopoon.home.BankCashActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        
+        <activity
+            android:name="com.yoopoon.home.SecuritySettingActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        
+        <activity
+            android:name="com.yoopoon.home.AddBankActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        
+        <activity
+            android:name="com.yoopoon.home.IRecommendActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
     </application>
     <!-- 测试配置选项 -->
     <instrumentation
