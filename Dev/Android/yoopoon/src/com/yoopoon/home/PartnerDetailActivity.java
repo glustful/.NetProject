@@ -27,61 +27,31 @@ public class PartnerDetailActivity extends MainActionBarActivity {
 
 	@AfterViews
 	void initUI() {
-		// backButton.setVisibility(View.VISIBLE);
-		// titleButton.setVisibility(View.VISIBLE);
-		// backButton.setText("返回");
-		// titleButton.setText("合伙人详情页");
+		backButton.setVisibility(View.VISIBLE);
+		titleButton.setVisibility(View.VISIBLE);
+		backButton.setText("返回");
+		titleButton.setText("合伙人详情");
 	}
 
-	/*
-	 * (non Javadoc)
-	 * @Title: backButtonClick
-	 * @Description: TODO
-	 * @param v
-	 * @see com.yoopoon.home.MainActionBarActivity#backButtonClick(android.view.View)
-	 */
 	@Override
 	public void backButtonClick(View v) {
-
+		finish();
 	}
 
-	/*
-	 * (non Javadoc)
-	 * @Title: titleButtonClick
-	 * @Description: TODO
-	 * @param v
-	 * @see com.yoopoon.home.MainActionBarActivity#titleButtonClick(android.view.View)
-	 */
 	@Override
 	public void titleButtonClick(View v) {
-		// TODO Auto-generated method stub
 
 	}
 
-	/*
-	 * (non Javadoc)
-	 * @Title: rightButtonClick
-	 * @Description: TODO
-	 * @param v
-	 * @see com.yoopoon.home.MainActionBarActivity#rightButtonClick(android.view.View)
-	 */
 	@Override
 	public void rightButtonClick(View v) {
-		// TODO Auto-generated method stub
 
 	}
 
-	/*
-	 * (non Javadoc)
-	 * @Title: showHeadView
-	 * @Description: TODO
-	 * @return
-	 * @see com.yoopoon.home.MainActionBarActivity#showHeadView()
-	 */
 	@Override
 	public Boolean showHeadView() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return true;
 	}
 
 }

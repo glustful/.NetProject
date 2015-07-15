@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#ffffff" >
     
     <LinearLayout 
         android:layout_width="fill_parent"
@@ -46,6 +47,30 @@
             android:layout_height="wrap_content"
             android:src="@drawable/partner_detail_level"/>
         
+    </LinearLayout>
+    
+    <View 
+        android:layout_width="fill_parent"
+        android:layout_height="0.0000001px"
+        android:background="@color/setting_text"/>
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="center_vertical">
+        
+        <TextView 
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="贡献值：800"/>
+        
+        <Button 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="如何提高贡献值？"
+            android:background="#ffffff"
+            android:textSize="14sp"/>
     </LinearLayout>
     
 

@@ -18,15 +18,15 @@ public final class R {
 		public static final int textSize = 0x7f010072;
 	}
 	public static final class drawable {
-		public static final int ic_launcher = 0x7f020080;
+		public static final int ic_launcher = 0x7f020085;
 	}
 	public static final class id {
 		public static final int FILL = 0x7f09001d;
 		public static final int STROKE = 0x7f09001e;
 		public static final int button1 = 0x7f09005a;
-		public static final int menu_settings = 0x7f0900d8;
-		public static final int progressBar = 0x7f090081;
-		public static final int roundProgressBar = 0x7f09007d;
+		public static final int menu_settings = 0x7f0900da;
+		public static final int progressBar = 0x7f090083;
+		public static final int roundProgressBar = 0x7f09007f;
 		public static final int roundProgressBar1 = 0x7f090056;
 		public static final int roundProgressBar2 = 0x7f090055;
 		public static final int roundProgressBar3 = 0x7f090058;
@@ -35,8 +35,8 @@ public final class R {
 	}
 	public static final class layout {
 		public static final int activity_cricle_progress = 0x7f03001c;
-		public static final int cricle_progress = 0x7f030029;
-		public static final int dialog_cricle_progress = 0x7f03002b;
+		public static final int cricle_progress = 0x7f03002a;
+		public static final int dialog_cricle_progress = 0x7f03002c;
 	}
 	public static final class menu {
 		public static final int activity_cricle_progress = 0x7f0c0000;
