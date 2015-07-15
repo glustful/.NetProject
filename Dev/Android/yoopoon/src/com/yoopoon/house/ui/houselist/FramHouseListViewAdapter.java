@@ -1,4 +1,4 @@
-package com.yoopoon.home.ui.home;
+package com.yoopoon.house.ui.houselist;
 
 import java.util.ArrayList;
 
