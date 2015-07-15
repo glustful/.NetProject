@@ -134,10 +134,12 @@
 
         <activity
             android:name="com.yoopoon.house.ui.bonus.BrokerBonusActivity_"
-=======
-        
+                         android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >>
+       </activity>
         <activity
             android:name="com.yoopoon.home.IPocketActivity_"
+            
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
