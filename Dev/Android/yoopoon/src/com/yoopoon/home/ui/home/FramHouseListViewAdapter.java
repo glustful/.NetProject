@@ -105,6 +105,15 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 						.intent_propretyTypeString(item.optString("Type")).intent_propretyNumber(item.optString("Id"))
 						.start();
 			}
+			// 携带楼盘和经纪人数据跳转到推荐页面
+		});
+		viewHandler.houseRecommendTextView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				BrokerTakeGuestActivity_.intent(mContext).intent_properString(item.optString("Productname"))
+						.intent_propretyTypeString(item.optString("Type")).intent_propretyNumber(item.optString("Id"))
+						.start();
+			}
 		});
 		return convertView;
 	}

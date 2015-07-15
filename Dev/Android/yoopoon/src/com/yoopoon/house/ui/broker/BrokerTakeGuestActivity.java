@@ -18,12 +18,13 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
-import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +34,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.net.ProgressMessage;
@@ -78,6 +81,8 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 	private int month;
 	private int day;
 	private final Calendar calender = Calendar.getInstance();
+	// 系列化后得到的经纪人带客Json数据
+	String BrokerTakeGuestJson = null;
 
 	// ///////////////////////////////////如上是变量和属性的初始化///////////////////////////////////
 	/**
@@ -114,25 +119,49 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
-					JSONArray list = data.getMRootData().optJSONArray("List");
-					if (list == null || list.length() < 1) {
-						return;
-					}
-					for (int i = 0; i < list.length(); i++) {
+					JSONObject jsonObject = data.getMRootData();
+					String messageString = jsonObject.optString("Msg");
+					if (messageString.equals("提交成功")) {
+						Toast.makeText(mContext, messageString, Toast.LENGTH_SHORT).show();
+						finish();
+					} else {
+						Toast.makeText(mContext, messageString, Toast.LENGTH_SHORT).show();
 					}
 				}
 			}
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
-			// 不要忘记JSON参数设置
-		}.setUrl(getString(R.string.url_brokerlead_client)).setRequestMethod(RequestMethod.eGet).notifyRequest();
+		}.setUrl(getString(R.string.url_brokerlead_client)).setRequestMethod(RequestMethod.ePost)
+				.SetJSON(BrokerTakeGuestJson).setSaveSession(true).notifyRequest();
 	}
 	/**
 	 * @Title: serializationCommitinfo
 	 * @Description: 将传输到服务器的数据进行序列化
 	 */
 	private void serializationCommitinfo() {
+		// 从SharePreferences中获取当前用户的ID
+		SharedPreferences preferences = getSharedPreferences("com.yoopoon.home_preferences", 0);
+		String userIdString = preferences.getString("userId", "没有获取到数据");
+		// 初始化传入到服务器的参数
+		String AddUser = userIdString;
+		String Appointmenttime = reservation_timeEditText.getText().toString();
+		String Clientname = guest_nameEditText.getText().toString();
+		String HouseType = intent_property_typeEditText.getText().toString();
+		String House = intent_propertyEditText.getText().toString();
+		String Note = detailEditText.getText().toString();
+		String Phone = phone_numberEditText.getText().toString();
+		String Projectid = intent_propretyNumber;
+		BrokerTakeGuest brokerTakeGuest = new BrokerTakeGuest(AddUser, Appointmenttime, Clientname, HouseType, House,
+				Note, Phone, Projectid);
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			if (mapper.writeValueAsString(brokerTakeGuest) != null) {
+				BrokerTakeGuestJson = mapper.writeValueAsString(brokerTakeGuest);
+			}
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 	}
 	/*
 	 * (non Javadoc)
@@ -190,9 +219,8 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 				initCalendar();
 				break;
 			case R.id.commit_broker_carry_client:
-				Toast.makeText(mContext, intent_propretyNumber, Toast.LENGTH_SHORT).show();
-				// serializationCommitinfo();
-				// commitInfo();
+				serializationCommitinfo();
+				commitInfo();
 				break;
 		}
 	}
@@ -217,6 +245,201 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 		public void onDateSet(DatePicker view, int year, int month, int day) {
 			int tempMonth = month + 1;
 			reservation_timeEditText.setText(year + "/" + tempMonth + "/" + day + "");
+		}
+	}
+
+	/**
+	 * @ClassName: BrokerTakeGuest
+	 * @Description: 传送到服务器的经纪人带客数据类
+	 * @author: 徐阳会
+	 * @date: 2015年7月15日 上午10:48:29
+	 */
+	class BrokerTakeGuest {
+		private String AddUser;
+		private String Appointmenttime;
+		private String Broker;
+		private String Brokername;
+		private String ClientInfo;
+		private String Clientname;
+		private String HouseType;
+		private String Houses;
+		private String Note;
+		private String Phone;
+		private String Projectid;
+		private String Projectname;
+		private String Stats;
+
+		/**
+		 * @return the addUser
+		 */
+		public String getAddUser() {
+			return AddUser;
+		}
+		/**
+		 * @param addUser the addUser to set
+		 */
+		public void setAddUser(String addUser) {
+			AddUser = addUser;
+		}
+		/**
+		 * @return the appointmenttime
+		 */
+		public String getAppointmenttime() {
+			return Appointmenttime;
+		}
+		/**
+		 * @param appointmenttime the appointmenttime to set
+		 */
+		public void setAppointmenttime(String appointmenttime) {
+			Appointmenttime = appointmenttime;
+		}
+		/**
+		 * @return the broker
+		 */
+		public String getBroker() {
+			return Broker;
+		}
+		/**
+		 * @param broker the broker to set
+		 */
+		public void setBroker(String broker) {
+			Broker = broker;
+		}
+		/**
+		 * @return the brokername
+		 */
+		public String getBrokername() {
+			return Brokername;
+		}
+		/**
+		 * @param brokername the brokername to set
+		 */
+		public void setBrokername(String brokername) {
+			Brokername = brokername;
+		}
+		/**
+		 * @return the clientInfo
+		 */
+		public String getClientInfo() {
+			return ClientInfo;
+		}
+		/**
+		 * @param clientInfo the clientInfo to set
+		 */
+		public void setClientInfo(String clientInfo) {
+			ClientInfo = clientInfo;
+		}
+		/**
+		 * @return the clientname
+		 */
+		public String getClientname() {
+			return Clientname;
+		}
+		/**
+		 * @param clientname the clientname to set
+		 */
+		public void setClientname(String clientname) {
+			Clientname = clientname;
+		}
+		/**
+		 * @return the houseType
+		 */
+		public String getHouseType() {
+			return HouseType;
+		}
+		/**
+		 * @param houseType the houseType to set
+		 */
+		public void setHouseType(String houseType) {
+			HouseType = houseType;
+		}
+		/**
+		 * @return the houses
+		 */
+		public String getHouses() {
+			return Houses;
+		}
+		/**
+		 * @param houses the houses to set
+		 */
+		public void setHouses(String houses) {
+			Houses = houses;
+		}
+		/**
+		 * @return the note
+		 */
+		public String getNote() {
+			return Note;
+		}
+		/**
+		 * @param note the note to set
+		 */
+		public void setNote(String note) {
+			Note = note;
+		}
+		/**
+		 * @return the phone
+		 */
+		public String getPhone() {
+			return Phone;
+		}
+		/**
+		 * @param phone the phone to set
+		 */
+		public void setPhone(String phone) {
+			Phone = phone;
+		}
+		/**
+		 * @return the projectid
+		 */
+		public String getProjectid() {
+			return Projectid;
+		}
+		/**
+		 * @param projectid the projectid to set
+		 */
+		public void setProjectid(String projectid) {
+			Projectid = projectid;
+		}
+		/**
+		 * @return the projectname
+		 */
+		public String getProjectname() {
+			return Projectname;
+		}
+		/**
+		 * @param projectname the projectname to set
+		 */
+		public void setProjectname(String projectname) {
+			Projectname = projectname;
+		}
+		/**
+		 * @return the stats
+		 */
+		public String getStats() {
+			return Stats;
+		}
+		/**
+		 * @param stats the stats to set
+		 */
+		public void setStats(String stats) {
+			Stats = stats;
+		}
+		public BrokerTakeGuest(String AddUser, String Appointmenttime, String Clientname, String HouseType,
+				String House, String Note, String Phone, String Projectid) {
+			this.AddUser = AddUser;
+			this.Appointmenttime = Appointmenttime;
+			this.Broker = AddUser;
+			this.Brokername = "";
+			this.ClientInfo = AddUser;
+			this.Clientname = Clientname;
+			this.HouseType = HouseType;
+			this.Houses = House;
+			this.Note = Note;
+			this.Phone = Phone;
+			this.Projectid = Projectid;
+			this.Projectname = House;
+			this.Stats = "0";
 		}
 	}
 }
