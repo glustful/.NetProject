@@ -21,6 +21,7 @@ import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.ui.product.ProductDetailActivity_;
 import com.yoopoon.house.ui.bonus.BrokerBonusActivity_;
+import com.yoopoon.house.ui.broker.BrokerScoreActivity_;
 import com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_;
 
 /**
@@ -127,6 +128,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		viewHandler.houseScoreTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				BrokerScoreActivity_.intent(mContext).start();
 			}
 		});
 		return convertView;

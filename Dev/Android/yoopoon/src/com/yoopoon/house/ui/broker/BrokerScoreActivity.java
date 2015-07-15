@@ -12,9 +12,14 @@
  */
 package com.yoopoon.house.ui.broker;
 
+import org.androidannotations.annotations.EActivity;
+
+import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 
 import com.yoopoon.home.MainActionBarActivity;
+import com.yoopoon.home.R;
 
 /**
  * @ClassName: BrokerScore
@@ -22,7 +27,20 @@ import com.yoopoon.home.MainActionBarActivity;
  * @author: 徐阳会
  * @date: 2015年7月15日 下午4:53:14
  */
+@EActivity(R.layout.broker_score)
 public class BrokerScoreActivity extends MainActionBarActivity {
+	// //////////////////////////////////如下是变量和属性的初始化///////////////////////////////////
+	Context mContext;
+
+	// //////////////////////////////////如上是变量和属性的初始化///////////////////////////////////
+	private void initUI() {
+		mContext = this;
+		backButton.setVisibility(View.VISIBLE);
+		titleButton.setVisibility(View.VISIBLE);
+		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
+		titleButton.setText("积分");
+	}
 	/*
 	 * (non Javadoc)
 	 * @Title: backButtonClick
@@ -32,7 +50,7 @@ public class BrokerScoreActivity extends MainActionBarActivity {
 	 */
 	@Override
 	public void backButtonClick(View v) {
-		// TODO Auto-generated method stub
+		finish();
 	}
 	/*
 	 * (non Javadoc)
@@ -43,7 +61,6 @@ public class BrokerScoreActivity extends MainActionBarActivity {
 	 */
 	@Override
 	public void titleButtonClick(View v) {
-		// TODO Auto-generated method stub
 	}
 	/*
 	 * (non Javadoc)
@@ -54,7 +71,6 @@ public class BrokerScoreActivity extends MainActionBarActivity {
 	 */
 	@Override
 	public void rightButtonClick(View v) {
-		// TODO Auto-generated method stub
 	}
 	/*
 	 * (non Javadoc)
@@ -65,7 +81,6 @@ public class BrokerScoreActivity extends MainActionBarActivity {
 	 */
 	@Override
 	public Boolean showHeadView() {
-		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 }
