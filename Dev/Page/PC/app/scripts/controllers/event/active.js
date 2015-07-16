@@ -16,7 +16,7 @@ angular.module("app").controller('activeController', [
                 }
             })
             modalInstance.result.then(function () {
-                $http.post('http://120.55.151.12:8081/api/coupon/ActiveCoupon', {couponNum: $scope.ticketNum}, {'withCredentials': true}).success(function (data) {
+                $http.post(SETTING.eventApiUrl+'/coupon/ActiveCoupon', {couponNum: $scope.ticketNum}, {'withCredentials': true}).success(function (data) {
                     if (data.Status) {
                         var modalInstance = $modal.open({
                             templateUrl: 'myModalContent.html',
@@ -40,7 +40,7 @@ angular.module("app").controller('CouponController', [
     '$http','$scope','$state',function($http,$scope,$state) {
        $scope.ti=function(){
   //  alert("fsd");
-        $http.get('http://localhost:16857/api/Coupon/GetUserAllCoupon?username='+$scope.username,{
+        $http.get(SETTING.eventApiUrl+'/Coupon/GetUserAllCoupon?username='+$scope.username,{
            'withCredentials':true
         }).success(function(data){
             if(data){

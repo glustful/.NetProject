@@ -26,7 +26,7 @@ angular.module("app").controller('CouponIndexController', ['$http','$scope','$mo
             }
         });
         modalInstance.result.then(function(){
-            $http.get(SETTING.eventApiUrl+'/api/Coupon/Delete',{params:{
+            $http.get(SETTING.eventApiUrl+'/Coupon/Delete',{params:{
                     id:id
                 },'withCredentials': true}
             ).success(function(data) {
