@@ -18,7 +18,7 @@ public final class R {
 		public static final int textSize = 0x7f010072;
 	}
 	public static final class drawable {
-		public static final int ic_launcher = 0x7f020085;
+		public static final int ic_launcher = 0x7f020086;
 	}
 	public static final class id {
 		public static final int FILL = 0x7f09001d;
@@ -35,8 +35,8 @@ public final class R {
 	}
 	public static final class layout {
 		public static final int activity_cricle_progress = 0x7f03001e;
-		public static final int cricle_progress = 0x7f030030;
-		public static final int dialog_cricle_progress = 0x7f030032;
+		public static final int cricle_progress = 0x7f030032;
+		public static final int dialog_cricle_progress = 0x7f030034;
 	}
 	public static final class menu {
 		public static final int activity_cricle_progress = 0x7f0c0000;

@@ -86,29 +86,26 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-         <activity
+        <activity
             android:name="com.yoopoon.home.ui.html5.HTML5Activity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-         <activity
+        <activity
             android:name="com.yoopoon.home.ui.me.SettingActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-         <activity
+        <activity
             android:name="com.yoopoon.home.ui.me.PersonSettingActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-
-          <activity
+        <activity
             android:name="com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-         
-
         <activity
             android:name="com.yoopoon.home.RecommendActivity_"
             android:screenOrientation="portrait"
@@ -124,49 +121,51 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
         <activity
             android:name="com.yoopoon.home.BrokerRankActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
         <activity
             android:name="com.yoopoon.home.PartnerDetailActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
+        <activity
+            android:name="com.yoopoon.house.ui.bonus.BrokerBonusActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+          <activity
+            android:name="com.yoopoon.house.ui.broker.BrokerScoreActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
         <activity
             android:name="com.yoopoon.home.IPocketActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
         <activity
             android:name="com.yoopoon.home.TakeCashActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
         <activity
             android:name="com.yoopoon.home.BankCashActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
         <activity
             android:name="com.yoopoon.home.SecuritySettingActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
         <activity
             android:name="com.yoopoon.home.AddBankActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
         <activity
             android:name="com.yoopoon.home.IRecommendActivity_"
             android:screenOrientation="portrait"

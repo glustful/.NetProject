@@ -21,14 +21,17 @@
                 android:gravity="center"
                 android:orientation="horizontal" >
 
-                <com.yoopoon.home.ui.view.AutoAjustSizeTextView
+                <TextView
                     android:id="@+id/area_name_textview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clickable="true"
                     android:drawableRight="@drawable/arrow"
+                    android:ellipsize="marquee"
                     android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:gravity="center"
+                    android:marqueeRepeatLimit="marquee_forever"
                     android:singleLine="true"
                     android:text="区域" />
             </LinearLayout>
@@ -40,14 +43,18 @@
                 android:gravity="center"
                 android:orientation="horizontal" >
 
-                <com.yoopoon.home.ui.view.AutoAjustSizeTextView
+                <TextView
                     android:id="@+id/type_textview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clickable="true"
-                    android:drawablePadding="5dp"
                     android:drawableRight="@drawable/arrow"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:gravity="center"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:text="类型" />
             </LinearLayout>
@@ -59,7 +66,7 @@
                 android:gravity="center"
                 android:orientation="horizontal" >
 
-                <com.yoopoon.home.ui.view.AutoAjustSizeTextView
+                <TextView
                     android:id="@+id/price_textview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -73,11 +80,11 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="0.8"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
-                <com.yoopoon.home.ui.view.AutoAjustSizeTextView
+                <TextView
                     android:id="@+id/reset_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -96,8 +103,6 @@
             android:descendantFocusability="blocksDescendants"
             android:divider="#d0d0d0"
             ptr:ptrAnimationStyle="flip" />
-        <!-- android:dividerHeight="10dp" -->
-
     </LinearLayout>
 
 </FrameLayout>

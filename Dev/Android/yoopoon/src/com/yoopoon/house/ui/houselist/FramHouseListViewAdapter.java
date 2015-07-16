@@ -20,6 +20,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.ui.product.ProductDetailActivity_;
+import com.yoopoon.house.ui.bonus.BrokerBonusActivity_;
+import com.yoopoon.house.ui.broker.BrokerScoreActivity_;
 import com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_;
 
 /**
@@ -115,6 +117,20 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 						.start();
 			}
 		});
+		// 经纪人红包
+		viewHandler.houseBonusTextView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				BrokerBonusActivity_.intent(mContext).start();
+			}
+		});
+		// 经纪人积分
+		viewHandler.houseScoreTextView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				BrokerScoreActivity_.intent(mContext).start();
+			}
+		});
 		return convertView;
 	}
 
@@ -132,7 +148,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		private TextView houseAdvertisementTextView;
 		private TextView houseTakeGuestTextView;
 		private TextView houseRecommendTextView;
-		private TextView houseBribeTextView;
+		private TextView houseBonusTextView;
 		private TextView houseScoreTextView;
 
 		void init(View root) {
@@ -143,7 +159,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 			houseAdvertisementTextView = (TextView) root.findViewById(R.id.house_advertisement);
 			houseTakeGuestTextView = (TextView) root.findViewById(R.id.house_takeguest);
 			houseRecommendTextView = (TextView) root.findViewById(R.id.house_recommend);
-			houseBribeTextView = (TextView) root.findViewById(R.id.house_bribe);
+			houseBonusTextView = (TextView) root.findViewById(R.id.house_bribe);
 			houseScoreTextView = (TextView) root.findViewById(R.id.house_score);
 		}
 	}
