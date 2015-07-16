@@ -27,7 +27,7 @@ namespace CRM.Entity.Model
 
 
         /// <summary>
-        /// 金额类型（0 带客，1 推荐）
+        /// 金额类型（0 带客，1 推荐,2 奖励30元钱）
         /// </summary>
         public virtual int Type { get; set; }
 
@@ -49,5 +49,9 @@ namespace CRM.Entity.Model
 		/// UpTime
 		/// </summary>
 		public virtual DateTime Uptime { get; set; }
+
+      
+
+        
 	}
 }

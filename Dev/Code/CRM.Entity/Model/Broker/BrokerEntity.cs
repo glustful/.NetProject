@@ -114,6 +114,10 @@ namespace CRM.Entity.Model
 
 
 
+        public virtual string WeiXinNumber { get; set; }
+
+
+
         /// <summary>
         /// 微信号 OpenId
         /// </summary>

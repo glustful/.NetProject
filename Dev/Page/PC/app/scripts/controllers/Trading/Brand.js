@@ -180,6 +180,7 @@ app.controller('BrandController', ['$scope', '$http', '$state','$modal','FileUpl
 //        });
 //    };
 
+
     //根据项目查找项目参数值；
     $scope.selectBrandId=0;
     $scope.getBrandParameter = function (seletId) {
@@ -204,10 +205,10 @@ app.controller('BrandController', ['$scope', '$http', '$state','$modal','FileUpl
         $http.post(SETTING.ApiUrl + '/Brand/AddProductBrandParameter', Json, {
             'withCredentials': true
         }).success(function (data) {
-
+            AddParameterWindowClose();//------by  yangyue   2015/7/8---关闭当前弹出层----end----
             $http.get(SETTING.ApiUrl + '/Brand/GetBrandParameterByBrand?ProductBrandId=' + $scope.selectBrandId,{'withCredentials':true}).success(function (data) {
                 $scope.rowCollectionParameter = data;
-                AddParameterWindowClose();//------by  yangyue   2015/7/8---关闭当前弹出层----end----
+
             });
             return $scope.output = data;
         });
