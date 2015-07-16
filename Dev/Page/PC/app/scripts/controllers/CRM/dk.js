@@ -11,6 +11,8 @@ angular.module("app").controller('dkIndexController', [
             pageSize: 10,
             state:2
         };
+        $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
+//--------------------查询带客人员账户 start--------------------------
         var page= 0,howmany=0;
         $scope.getList  = function() {
             if($scope.searchCondition.phone==undefined)
@@ -80,8 +82,9 @@ angular.module("app").controller('dkIndexController', [
             $scope.searchCondition.page=1;
         }
         $scope.getList();
+//--------------------查询带客人员账户 end----------------------------
 
-        //删除经纪人
+//--------------------根据id删除带客人员账号 start--------------------
         $scope.deleteBroker=function (id) {
             $scope.selectedId = id;
             var modalInstance = $modal.open({
@@ -120,6 +123,9 @@ angular.module("app").controller('dkIndexController', [
                 });
             });
         }
+//--------------------根据id删除带客人员账号 end----------------------
+
+//--------------------根据id注销带客人员你账号 start------------------
         $scope.cancelBroker=function (id,btnname) {
             $scope.selectedId = id;
             var modalInstance = $modal.open({
@@ -157,32 +163,15 @@ angular.module("app").controller('dkIndexController', [
                 });
             });
         }
-//        $scope.cancelBroker=function(id){
-//            $http.post(SETTING.ApiUrl+'/BrokerInfo/CancelBroker',id,{
-//                'withCredentials':true
-//            }).success(function(data) {
-//                if(data.Status)
-//                {
-//                    alert(data.Msg);
-//                    if(howmany==1)
-//                    {
-//                        if(page>1){
-//                            $scope.searchCondition.page--;}
-//                        else{
-//                            $scope.searchCondition.page=1;
-//                        }
-//                    }
-//                    $scope.getList();
-//                }
-//
-//            })}
+//--------------------根据id注销带客人员你账号 end--------------------
 
     }
 ]);
 
 
 angular.module("app").controller('dkDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
-//个人信息
+    $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
+//-----------------------根据id查询带客人员信息 start-------------------
     $http.get(SETTING.ApiUrl + '/BrokerInfo/GetBrokerByAgent?id=' + $stateParams.id,{
         'withCredentials':true
     }).success(function(data){
@@ -194,6 +183,7 @@ angular.module("app").controller('dkDetailedController',['$http','$scope','$stat
         {data.List.State="注销"}
         $scope.BusmanModel =data.List;
     });
+//-----------------------根据id查询带客人员信息 end---------------------
 }]);
 
 angular.module("app").controller('UserCreateController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
@@ -206,7 +196,7 @@ angular.module("app").controller('UserCreateController',['$http','$scope','$stat
         UserType:"带客人员",
         UserName:""
     };
-
+//---------------------------新增带客人员账号 start---------------------
     $scope.Save = function(){
         console.log($scope.UserModel.UserType);
         $http.post(SETTING.ApiUrl + '/AdminRecom/AddBroker',$scope.UserModel,{
@@ -225,4 +215,6 @@ angular.module("app").controller('UserCreateController',['$http','$scope','$stat
             }
         });
     }
+//---------------------------新增带客人员账号 end---------------------
+
 }]);

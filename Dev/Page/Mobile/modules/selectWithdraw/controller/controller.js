@@ -1,7 +1,7 @@
 /**
  * Created by chen on 2015/7/13.
  */
-app.controller('withdrawController',['$http','$scope','AuthService',function($http,$scope,AuthService) {
+app.controller('withdrawController',['$http','$scope','AuthService','$state',function($http,$scope,AuthService,$state) {
     $scope.Withdraw={
       UserId:""
     };
@@ -22,4 +22,11 @@ app.controller('withdrawController',['$http','$scope','AuthService',function($ht
         $scope.Ids.push (Id);
     }
 
+    $scope.btnClick=function(Ids){
+        if (Ids != null){
+            $state.go("app.selectWithdraw",{Ids:Ids});
+        }else{
+            alert("当前不存在");
+        }
+    }
 }])

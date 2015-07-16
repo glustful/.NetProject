@@ -5,7 +5,6 @@
 app.controller('taskconfigcontroller',['$http','$scope','$modal',function($http,$scope,$modal) {
     $scope.mainCondition={
         Id:0,
-
         TaskTypeId:0,
         TaskTagId:0,
         TaskAwardId:0,
@@ -47,11 +46,11 @@ app.controller('taskconfigcontroller',['$http','$scope','$modal',function($http,
         Type:'add',
         Status: ''
     };
-$scope.warnType='';
+    $scope.warnType='';
     $scope.warnTag='';
     $scope.warnAward='';
     $scope.warnPunish='';
-    //绑定任务类型
+//---------------------查询任务类型 start----------------------------
     var getTaskType  = function() {
         $http.get(SETTING.ApiUrl+'/Task/TaskTypeList',{'withCredentials':true}).success(function(data){
             console.log(data);
@@ -60,7 +59,9 @@ $scope.warnType='';
 
     };
     getTaskType();
-    //绑定任务目标
+//---------------------查询任务类型 end------------------------------
+
+//---------------------查询任务目标 start----------------------------
     var getTaskTag  = function() {
         $http.get(SETTING.ApiUrl+'/Task/TaskTagList',{'withCredentials':true}).success(function(data){
             console.log(data);
@@ -69,7 +70,9 @@ $scope.warnType='';
 
     };
     getTaskTag();
-    //绑定任务奖励
+//---------------------查询任务目标 end------------------------------
+
+//---------------------查询任务奖励 start----------------------------
     var getTaskAward  = function() {
         $http.get(SETTING.ApiUrl+'/Task/TaskAwardList',{'withCredentials':true}).success(function(data){
             console.log(data);
@@ -78,7 +81,9 @@ $scope.warnType='';
 
     };
     getTaskAward();
-    //绑定任务惩罚
+//---------------------查询任务奖励 end--------------------------------
+
+//---------------------查询任务惩罚 start------------------------------
     var getTaskPunishment  = function() {
         $http.get(SETTING.ApiUrl+'/Task/TaskPunishmentList',{'withCredentials':true}).success(function(data){
             console.log(data);
@@ -87,9 +92,9 @@ $scope.warnType='';
 
     };
     getTaskPunishment();
+//---------------------查询任务惩罚 end------------------------------
 
-    //添加任务类型
-
+//---------------------添加任务类型 start----------------------------
     var getTypeResult  = function() {
         $http.post(SETTING.ApiUrl+'/Task/AddTaskTpye',$scope.typeCondition,{
             'withCredentials':true
@@ -117,9 +122,10 @@ $scope.warnType='';
         else{getTypeResult(); }
     }
     $scope.addType=typeTest;
-    //添加任务目标
+//---------------------添加任务类型 end------------------------------
 
-    var getTagResult  = function() {
+//---------------------添加任务目标 start----------------------------
+   var getTagResult  = function() {
         $http.post(SETTING.ApiUrl+'/Task/AddTaskTag',$scope.tagCondition,{
             'withCredentials':true
         }).success(function(data){
@@ -150,10 +156,10 @@ $scope.warnType='';
         }
         else{getTagResult(); }
     }
-
     $scope.AddTaskTag=tagTest;
-    //添加任务奖励
+//---------------------添加任务目标 end----------------------------
 
+//---------------------添加任务奖励 start--------------------------
     var getAwardResult  = function() {
         $http.post(SETTING.ApiUrl+'/Task/AddTaskAward',$scope.awardCondition,{
             'withCredentials':true
@@ -187,9 +193,10 @@ $scope.warnType='';
         else{getAwardResult(); }
     }
     $scope.AddTaskAward=awardTest;
-    //添加任务惩罚
+//---------------------添加任务奖励 end----------------------------
 
-    var getPunishResult  = function() {
+//---------------------添加任务惩罚 start--------------------------
+     var getPunishResult  = function() {
         $http.post(SETTING.ApiUrl+'/Task/AddTaskPunishment',$scope.punishmentCondition,{
             'withCredentials':true
         }).success(function(data){
@@ -221,9 +228,9 @@ $scope.warnType='';
         else{getPunishResult(); }
     }
     $scope.AddTaskPunishment=punishTest;
+//---------------------添加任务奖励 end----------------------------
 
-    //删除任务类型
-
+//---------------------删除任务类型 start--------------------------
     var DelTaskType  = function() {
         $http.get(SETTING.ApiUrl+'/Task/DelTaskType/',{params:{id:$scope.mainCondition.TaskTypeId}, 'withCredentials':true}).success(function(data){
             if(data.Status){
@@ -254,9 +261,10 @@ $scope.warnType='';
         });
            modalInstance.result.then(DelTaskType);
     }
-    //删除任务目标
+//---------------------删除任务类型 end----------------------------
 
-    var DelTaskTag  = function() {
+//---------------------删除任务目标 start--------------------------
+     var DelTaskTag  = function() {
         $http.get(SETTING.ApiUrl+'/Task/DelTaskTag/',{params:{id:$scope.mainCondition.TaskTagId}, 'withCredentials':true}).success(function(data){
             if(data.Status){
                 getTaskTag();
@@ -286,10 +294,9 @@ $scope.warnType='';
         });
         modalInstance.result.then(DelTaskTag);
     }
+//---------------------删除任务类型 end----------------------------
 
-
-    //删除任务奖励
-
+//---------------------删除任务奖励 start--------------------------
     var DelTaskAward  = function() {
         $http.get(SETTING.ApiUrl+'/Task/DelTaskAward/',{params:{id:$scope.mainCondition.TaskAwardId}, 'withCredentials':true}).success(function(data){
             if(data.Status){
@@ -320,9 +327,9 @@ $scope.warnType='';
         });
         modalInstance.result.then(DelTaskAward);
     }
+//---------------------删除任务奖励 end----------------------------
 
-    //删除任务惩罚
-
+//---------------------删除任务惩罚 start--------------------------
     var DelTaskPunish  = function() {
         $http.get(SETTING.ApiUrl+'/Task/DelTaskPunishment/',{params:{id:$scope.mainCondition.TaskPunishmentId}, 'withCredentials':true}).success(function(data){
             if(data.Status){
@@ -354,8 +361,9 @@ $scope.warnType='';
         });
         modalInstance.result.then(DelTaskPunish);
     }
+//---------------------删除任务类型 end----------------------------
 
-    //删除提示
+//---------------------删除提示 start------------------------------
     var delW=function(){
         $scope.warnAward ='';
         $scope.warnPunish ='';
@@ -363,5 +371,7 @@ $scope.warnType='';
         $scope.warnType ='';
     }
     $scope.delWarn=delW;
+//---------------------删除提示 end--------------------------------
+
 }
 ]);

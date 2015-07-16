@@ -119,6 +119,9 @@ namespace Event.Service.PartImage
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
+                if (condition.CrowdId != null) {
+                    query = query.Where(q => q.Crowd.Id == condition.CrowdId);
+                }
 				if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
@@ -152,6 +155,10 @@ namespace Event.Service.PartImage
 			var query = _partimageRepository.Table;
 			try
 			{
+                if (condition.CrowdId != null)
+                {
+                    query = query.Where(q => q.Crowd.Id == condition.CrowdId);
+                }
 				if (condition.AddtimeBegin.HasValue)
                 {
                     query = query.Where(q => q.Addtime>= condition.AddtimeBegin.Value);

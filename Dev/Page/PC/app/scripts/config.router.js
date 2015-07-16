@@ -1574,6 +1574,20 @@ angular.module('app')
                 data : { title: '众筹列表' },
                 resolve: load('scripts/controllers/event/chip.js')
             })
+            .state('page.event.chip.chipCreate', {
+                url: '/chipCreate',
+                templateUrl: 'views/pages/event/chip/chipCreate.html',
+                data : { title: '众筹列表' },
+                controller: 'creatChipController',
+                resolve: load(['scripts/controllers/event/chip.js','angularFileUpload'])
+            })
+            .state('page.event.chip.chipUp?crowId=', {
+                url: '/chipUp?crowId=',
+                templateUrl: 'views/pages/event/chip/chipUp.html',
+                data : { title: '众筹列表' },
+                controller: 'upChipController',
+                resolve: load(['scripts/controllers/event/chip.js','angularFileUpload'])
+            })
 
 
             //-----------------------end-------------------
