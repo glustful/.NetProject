@@ -18,6 +18,7 @@
         <EditText
             android:id="@+id/intent_property"
             android:layout_width="match_parent"
+            style="@style/EditText_Guest"
             android:layout_height="wrap_content" />
 
         <TextView
@@ -27,6 +28,7 @@
 
         <EditText
             android:id="@+id/intent_property_type"
+             style="@style/EditText_Guest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -38,6 +40,7 @@
         <EditText
             android:id="@+id/guest_name"
             android:layout_width="match_parent"
+             style="@style/EditText_Guest"
             android:layout_height="wrap_content"
             android:hint="请填写客户的姓名" />
 
@@ -49,6 +52,7 @@
         <EditText
             android:id="@+id/phone_number"
             android:layout_width="match_parent"
+             style="@style/EditText_Guest"
             android:layout_height="wrap_content"
             android:hint="请填写客户的联系电话" />
 
@@ -60,6 +64,7 @@
         <EditText
             android:id="@+id/reservation_time"
             android:layout_width="match_parent"
+             style="@style/EditText_Guest"
             android:layout_height="wrap_content"
             android:hint="年/月/日" />
 
@@ -71,6 +76,7 @@
         <EditText
             android:id="@+id/detail"
             android:layout_width="match_parent"
+             style="@style/EditText_Guest"
             android:layout_height="wrap_content"
             android:hint="备注" />
 
@@ -83,6 +89,7 @@
             android:id="@+id/commit_broker_carry_client"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+           
             android:background="@color/red"
             android:text="提交信息" />
     </LinearLayout>
