@@ -1,4 +1,5 @@
 /**   
+
  * Copyright ? 2015 yoopoon. All rights reserved.
  * 
  * @Title: RecommendActivity.java 
@@ -12,8 +13,6 @@
  */
 package com.yoopoon.home;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
@@ -36,7 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.yoopoon.common.base.utils.CharacterParser;
+import com.yoopoon.common.base.utils.SortNameByOrder;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.data.user.User.InvitePartnerListener;
 import com.yoopoon.home.domain.Broker;
@@ -56,23 +55,20 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 	ListView lv;
 	private MyPartnerListAdapter adapter;
 	private String[] names = { "钱德勒", "莫妮卡", "格蕾丝", "威尔", "Grace", "Will", "Chandler", "Rachel", "Monica", "Ross",
-			"Mood" };
-	private static final String TAG = "IRecommendActivity";
-	private static int currentLetterLine = 0;
-	private char currentShowChar = 'A';
-	private int totalLetterLines;
-	private CharacterParser parser = new CharacterParser();
+			"Mood", "莫德", "sue", "苏", "Moening", "莫宁", "Alice", "爱丽丝" };
+
+	private static final String TAG = "IPartnerActivity";
+	private String[] showNameList;
 
 	@AfterViews
 	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
-		titleButton.setText("推荐经济人");
+		titleButton.setText("推荐经纪人");
 		btn_add.setOnClickListener(this);
 		lv.setOnItemClickListener(new MyItemClickListener());
-		setTotalLetterLines();
-		testNames();
+		showNameList = SortNameByOrder.getShowNameList(names);
 		fillData();
 	}
 
@@ -96,23 +92,6 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 		}
 
 	}
-
-	private void testNames() {
-
-		Arrays.sort(names, comparator);
-	}
-	Comparator<String> comparator = new Comparator<String>() {
-
-		@Override
-		public int compare(String lhs, String rhs) {
-			String lHs = parser.getSelling(lhs).toUpperCase();
-			String rHs = parser.getSelling(rhs).toUpperCase();
-			if (lHs.charAt(0) > rHs.charAt(0))
-				return 1;
-			else
-				return lHs.charAt(0) < rHs.charAt(0) ? -1 : 0;
-		}
-	};
 
 	private void fillData() {
 		if (adapter == null) {
@@ -140,7 +119,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 		 */
 		@Override
 		public int getCount() {
-			return names.length + totalLetterLines;
+			return showNameList.length;
 		}
 
 		/*
@@ -183,29 +162,16 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 		 */
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if (position == 0) {
+			String showName = showNameList[position];
+			if (showName.startsWith("*****")) {
 				TextView tv = new TextView(IRecommendActivity.this);
-				tv.setText(String.valueOf(names[0].charAt(0)));
+				tv.setText(String.valueOf(showName.charAt(showName.length() - 1)));
 				tv.setPadding(10, 0, 0, 0);
-				String upperName = parser.getSelling(names[0]).toUpperCase();
-				currentShowChar = upperName.charAt(0);
-				currentLetterLine++;
 				return tv;
-			} else {
-				String upperName = parser.getSelling(names[position - currentLetterLine]).toUpperCase();
-				char c = upperName.charAt(0);
-				if (c != currentShowChar) {
-					TextView tv = new TextView(IRecommendActivity.this);
-					tv.setText(String.valueOf(c));
-					tv.setPadding(10, 0, 0, 0);
-					currentShowChar = upperName.charAt(0);
-					currentLetterLine++;
-					return tv;
-				}
 			}
 
 			ViewHolder holder = null;
-			if (convertView == null || convertView instanceof LinearLayout)
+			if (convertView == null || !(convertView instanceof LinearLayout))
 				convertView = View.inflate(IRecommendActivity.this, R.layout.item_partner, null);
 			holder = (ViewHolder) convertView.getTag();
 			if (holder == null) {
@@ -214,7 +180,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 				holder.iv_avater = (ImageView) convertView.findViewById(R.id.iv_partner_avater);
 				convertView.setTag(holder);
 			}
-			holder.tv_name.setText(names[position - currentLetterLine]);
+			holder.tv_name.setText(showName);
 
 			return convertView;
 		}
@@ -325,23 +291,6 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 		if (dialog != null)
 			dialog.dismiss();
 		super.onDestroy();
-	}
-
-	private void setTotalLetterLines() {
-		int[] nums = new int[26];
-		int count = 0;
-
-		for (String name : names) {
-			String newName = parser.getSelling(name);
-			char c = newName.toUpperCase().charAt(0);
-			int index = c - 65;
-			nums[index]++;
-		}
-		for (int num : nums) {
-			if (num > 0)
-				count++;
-		}
-		this.totalLetterLines = count;
 	}
 
 }
