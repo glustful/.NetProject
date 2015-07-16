@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -38,6 +39,8 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 	public FramHouseListViewAdapter(Context mContext) {
 		this.mContext = mContext;
 		datas = new ArrayList<JSONObject>();
+		// Map<String, Boolean> brokerStatusMap=new HashMap<String, Boolean>();
+		// brokerStatusMap.put(key, value)
 		height = MyApplication.getInstance().getDeviceInfo((Activity) mContext).heightPixels / 6;
 	}
 	@Override
@@ -55,6 +58,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHandler viewHandler;
+		SharedPreferences brokerSharedPreferences = mContext.getSharedPreferences("com.yoopoon.home_preferences", 0);
 		if (convertView == null) {
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.home_fram_house_listview_item, null);
 			LinearLayout listViewLinearLayout = (LinearLayout) convertView
@@ -69,6 +73,13 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 			convertView.setTag(viewHandler);
 		} else {
 			viewHandler = (ViewHandler) convertView.getTag();
+		}
+		// 判断当前的用户是否是Broker,如果是则显示楼盘下方的经纪人专属推荐和带客功能,如果不是则不显示带客和推荐等功能
+		boolean isBrokerStatus = brokerSharedPreferences.getBoolean("isBroker", false);
+		if (!isBrokerStatus) {
+			viewHandler.houseBrokerFunctionLinearLayout.setVisibility(View.GONE);
+		} else {
+			viewHandler.houseBrokerFunctionLinearLayout.setVisibility(View.VISIBLE);
 		}
 		final JSONObject item = datas.get(position);
 		String url = mContext.getString(R.string.url_host_img) + item.optString("Productimg");
@@ -150,6 +161,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		private TextView houseRecommendTextView;
 		private TextView houseBonusTextView;
 		private TextView houseScoreTextView;
+		private View houseBrokerFunctionLinearLayout;
 
 		void init(View root) {
 			houseImageView = (ImageView) root.findViewById(R.id.house_image);
@@ -161,12 +173,16 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 			houseRecommendTextView = (TextView) root.findViewById(R.id.house_recommend);
 			houseBonusTextView = (TextView) root.findViewById(R.id.house_bribe);
 			houseScoreTextView = (TextView) root.findViewById(R.id.house_score);
+			houseBrokerFunctionLinearLayout = root.findViewById(R.id.house_broker_function_linearlayout);
 		}
 	}
 
 	public void refresh(ArrayList<JSONObject> mJsonObjects) {
 		datas.clear();
-		datas.addAll(mJsonObjects);
+		if (mJsonObjects != null) {
+			datas.addAll(mJsonObjects);
+		}
+		// this.notifyDataSetInvalidated();
 		this.notifyDataSetChanged();
 	}
 }

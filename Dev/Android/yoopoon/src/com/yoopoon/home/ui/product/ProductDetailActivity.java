@@ -82,7 +82,15 @@ public class ProductDetailActivity extends MainActionBarActivity {
 			if (imageUri.equals(view.getTag().toString())) {
 				if (view instanceof DynamicHeightImageView) {
 					DynamicHeightImageView new_name = (DynamicHeightImageView) view;
-					double ratio = loadedImage.getHeight() / loadedImage.getWidth();
+					// ######################郭俊军 编写########################## Start
+					// double ratio = loadedImage.getHeight() / loadedImage.getWidth();
+					// ######################郭俊军 编写########################## End
+					//
+					// ######################徐阳会 2015年7月16日 编写########################## Start
+					int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
+					int sceemHeight = mContext.getResources().getDisplayMetrics().heightPixels;
+					double ratio = sceemHeight / screenWidth;
+					// ######################徐阳会 2015年7月16日 编写########################## End
 					new_name.setHeightRatio(ratio);
 					new_name.setImageBitmap(loadedImage);
 				}

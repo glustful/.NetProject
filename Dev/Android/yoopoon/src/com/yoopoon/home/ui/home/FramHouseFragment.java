@@ -11,7 +11,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -158,7 +161,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	/**
 	 * 初始化界面Fragment
 	 */
-	void initViews() {
+	public void initViews() {
 		listView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
 		refreshView = listView.getRefreshableView();
 		listView.setOnRefreshListener(new HowWillIrefresh());
@@ -174,6 +177,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		requestAdvertisements();
 		// 开启一个异步线程，获取广告数据，同事加载楼盘列表
 		requestHouseList();
+		// 接受广播
+		registhouseFramRefreshBroadcast();
 	}
 	/**
 	 * 对传输到后端的参数进行初始化
@@ -198,11 +203,13 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 */
 	@UiThread
 	public void initHouseTotalCountTextView(String houseTotaoCount) {
-		AbsListView.LayoutParams houseTotalCountParams = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, 50);
+		AbsListView.LayoutParams houseTotalCountParams = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, 150);
 		houseTotalCountTextView.setLayoutParams(houseTotalCountParams);
 		houseTotalCountTextView.setText("共" + houseTotaoCount + "个楼盘");
 		houseTotalCountTextView.setBackgroundColor(getResources().getColor(R.color.hosue_total_color));
 		houseTotalCountTextView.setGravity(Gravity.CENTER_VERTICAL);
+		int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
+		houseTotalCountTextView.setPadding(screenWidth / 10, 0, 0, 0);
 		refreshView.addHeaderView(houseTotalCountTextView);
 	}
 	@AfterInject
@@ -245,6 +252,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
 					String houseTotalCountJSon = data.getMRootData().optString("TotalCount");
+					// 初始化楼盘总数量
 					initHouseTotalCountTextView(houseTotalCountJSon);
 				}
 			}
@@ -337,8 +345,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			for (int i = 0; i < houseAreaJsonObjects.size(); i++) {
 				TextView textView = new TextView(mContext);
 				textView.setText(houseAreaJsonObjects.get(i).optString("AreaName"));
-				int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
-				textView.setWidth(screenWidth / 3);
+				// int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
+				// textView.setWidth(screenWidth / 3);
+				textView.setPadding(10, 10, 10, 10);
 				textView.setGravity(Gravity.CENTER);
 				textView.setTextSize(17);
 				final String areaName = houseAreaJsonObjects.get(i).optString("AreaName").toString();
@@ -448,7 +457,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		houseTypeWindow.setFocusable(true);
 		// 判断是否接收到异步线程过来的数据
 		if (houseTypeJsonArray == null || houseTypeJsonArray.size() < 1) {
-			Toast.makeText(mContext, "获取数据失败，请重刷新", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, "正在获取数据,请稍候", Toast.LENGTH_SHORT).show();
 			return;
 		} else {
 			// 向承载LinearLayout中动态添加TextView以承载楼盘类型
@@ -456,8 +465,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				TextView textView = new TextView(mContext);
 				textView.setText(houseTypeJsonArray.get(i).optString("TypeName"));
 				int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
-				textView.setWidth(screenWidth / 3);
+				// textView.setWidth(screenWidth / 3);
 				textView.setGravity(Gravity.CENTER);
+				textView.setPadding(10, 10, 10, 10);
 				textView.setTextSize(17);
 				final String megStringString = houseTypeJsonArray.get(i).optString("TypeName").toString();
 				final String houseTypeIdString = houseTypeJsonArray.get(i).optString("TypeId").toString();
@@ -591,9 +601,10 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			TextView textView = new TextView(mContext);
 			final String msgString = housePriceArrayList.get(i).toString();
 			textView.setText(msgString);
-			int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
-			textView.setWidth(screenWidth / 3);
+			// int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
+			// textView.setWidth(screenWidth / 3);
 			textView.setGravity(Gravity.CENTER);
+			textView.setPadding(10, 10, 10, 10);
 			textView.setTextSize(17);
 			linearLayout.addView(textView);
 			textView.setOnClickListener(new OnClickListener() {
@@ -653,5 +664,45 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			default:
 				break;
 		}
+	}
+	/*
+	 * (non Javadoc)
+	 * @Title: setUserVisibleHint
+	 * @Description: 判断如果用户是从经纪人个人信息页面过来的,则清除房源页顶端的检索条件
+	 * @param isVisibleToUser
+	 * @see android.support.v4.app.Fragment#setUserVisibleHint(boolean)
+	 */
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if (!isVisibleToUser && rootView != null) {
+			area_name_textview.setText("区域");
+			type_textview.setText("类型");
+			price_textview.setText("价格");
+		}
+	}
+
+	// 创建经纪人注销登录时候接收到的广播
+	private BroadcastReceiver houseFramRefreshReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			mHouseInfoAdapter.refresh(mJsonObjects);
+		}
+	};
+
+	/**
+	 * @Title: registhouseFramRefreshBroadcast
+	 * @Description: 注册经纪人注销登录时候接收到的广播到FramHouseFragment
+	 */
+	private void registhouseFramRefreshBroadcast() {
+		Log.i("FramHouseFragment", "registhouseFramRefreshBroadcast");
+		IntentFilter intentFilter = new IntentFilter("com.yoopoon.logout_action");
+		intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		mContext.registerReceiver(houseFramRefreshReceiver, intentFilter);
+	}
+	private void registLoginHouseFramRefreshBroadcast() {
+		IntentFilter intentFilter = new IntentFilter("com.yoopoon.login_action");
+		intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		mContext.registerReceiver(houseFramRefreshReceiver, intentFilter);
 	}
 }
