@@ -158,7 +158,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	/**
 	 * 初始化界面Fragment
 	 */
-	void initViews() {
+	public void initViews() {
 		listView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
 		refreshView = listView.getRefreshableView();
 		listView.setOnRefreshListener(new HowWillIrefresh());

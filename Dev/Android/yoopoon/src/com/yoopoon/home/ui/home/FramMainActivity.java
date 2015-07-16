@@ -1,11 +1,13 @@
 package com.yoopoon.home.ui.home;
 
 import java.util.ArrayList;
+
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -27,13 +29,13 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
+
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.SearchActionBarActivity;
 
 @EActivity(R.layout.home_main_activity)
 public class FramMainActivity extends SearchActionBarActivity {
-
 	static String tag = "FramMainActivity";
 	@ViewById(android.R.id.tabhost)
 	TabHost tabHost;
@@ -51,7 +53,6 @@ public class FramMainActivity extends SearchActionBarActivity {
 		instance = this;
 		fInfo = new ArrayList<FragmentInfo>();
 	}
-
 	@AfterViews
 	void initUI() {
 		MyApplication.getInstance().addActivity(this);
@@ -60,14 +61,10 @@ public class FramMainActivity extends SearchActionBarActivity {
 		initFragments();
 		begin();
 	}
-
 	void initFragments() {
-
 		Bundle argActive = new Bundle();
 		fInfo.add(new FragmentInfo(FramActiveFragment_.class, argActive));
-
 		Bundle argHouse = new Bundle();
-
 		fInfo.add(new FragmentInfo(FramHouseFragment_.class, argHouse));
 		if (isOpenAgent) {
 			Bundle argAgent = new Bundle();
@@ -76,10 +73,8 @@ public class FramMainActivity extends SearchActionBarActivity {
 		Bundle argMe = new Bundle();
 		fInfo.add(new FragmentInfo(FramMeFragment_.class, argMe));
 	}
-
 	@SuppressLint("NewApi")
 	void initMenu() {
-
 		tabHost.setup();
 		tabHost.getTabWidget().setDividerDrawable(null);
 		tabHost.addTab(getTabSpec("active", R.drawable.active_tab_selector, "活动"));
@@ -91,57 +86,42 @@ public class FramMainActivity extends SearchActionBarActivity {
 		for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
 			final int j = i;
 			tabHost.getTabWidget().getChildAt(i).setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					mSearchFunction.clearSearch();
 					mainPager.setCurrentItem(j);
-
 				}
 			});
 		}
 	}
-
 	private TabSpec getTabSpec(String content, int resId, String title) {
 		MainTabView tab = MainTabView_.build(this);
-
 		tab.setIndicator(resId);
 		tab.setTitle(title);
-
 		TabSpec tabSpec = tabHost.newTabSpec(content).setIndicator(tab)
 				.setContent(new MainTabFactory(FramMainActivity.this));
 		return tabSpec;
 	}
 
 	OnPageChangeListener pageListener = new OnPageChangeListener() {
-
 		@Override
 		public void onPageSelected(int position) {
-
 			tabHost.setCurrentTab(position);
-
 		}
-
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
-
 		}
-
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 		}
 	};
-
 	OnTabChangeListener mainTabChange = new OnTabChangeListener() {
-
 		@Override
 		public void onTabChanged(String tabId) {
 			int position = tabHost.getCurrentTab();
 			mainPager.setCurrentItem(position);
-
 		}
 	};
-
 	private long exitTime = 0;
 
 	private void begin() {
@@ -150,9 +130,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 		mainPager.setAdapter(pageAdapter);
 		mainPager.setOnPageChangeListener(pageListener);
 		mainPager.setCurrentItem(0);
-
 	}
-
 	/*
 	 * (non Javadoc)
 	 * @Title: onCreate
@@ -165,14 +143,13 @@ public class FramMainActivity extends SearchActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		registerLogoutBroadcast();
+		registerBrokerTakeGuestBroadcast();
 	}
 
 	private BroadcastReceiver logoutReceiver = new BroadcastReceiver() {
-
 		public void onReceive(Context context, android.content.Intent intent) {
 			Log.i(tag, "收到用户等出广播啦！");
 			mainPager.setCurrentItem(0);
-
 			// 用户登出后 清除所有用户数据
 			SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(FramMainActivity.this);
 			sp.edit().clear().commit();
@@ -186,59 +163,63 @@ public class FramMainActivity extends SearchActionBarActivity {
 		this.registerReceiver(logoutReceiver, filter);
 	}
 
+	private BroadcastReceiver brokerTakeGuestReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			Log.w(tag, "经纪人带客");
+			mainPager.setCurrentItem(1);
+		}
+	};
+
+	private void registerBrokerTakeGuestBroadcast() {
+		IntentFilter intentFilter = new IntentFilter("com.yoopoon.broker_takeguest");
+		intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		this.registerReceiver(brokerTakeGuestReceiver, intentFilter);
+	}
+
 	private AlertDialog dialog;
 
 	public void onBackPressed() {
 		Builder builder = new Builder(this);
 		builder.setMessage("确定要退出应用程序吗？");
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
 				android.os.Process.killProcess(android.os.Process.myPid()); // 获取PID
 				System.exit(0);
-
 			}
 		});
 		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
-
 			}
 		});
 		dialog = builder.show();
 	}
-
 	@Override
 	protected void onRestart() {
 		super.onRestart();
 	}
-
 	@Override
 	protected void onDestroy() {
 		this.unregisterReceiver(logoutReceiver);
+		this.unregisterReceiver(brokerTakeGuestReceiver);
 		super.onDestroy();
 	}
-
 	@Override
 	protected void onResume() {
-
 		super.onResume();
 	}
-
 	@Override
 	protected void onStop() {
 		if (dialog == null)
 			dialog = null;
 		super.onStop();
 	}
-
 	@Override
 	protected void onStart() {
-
 		super.onStart();
 	}
 
@@ -248,7 +229,6 @@ public class FramMainActivity extends SearchActionBarActivity {
 		public MainTabFactory(Context context) {
 			mContext = context;
 		}
-
 		@Override
 		public View createTabContent(String tag) {
 			View v = new View(mContext);
@@ -261,32 +241,25 @@ public class FramMainActivity extends SearchActionBarActivity {
 	@Override
 	public void finish() {
 		MyApplication.getInstance().removeActivity(this);
-
 		super.finish();
 	}
-
 	@Override
 	protected int getHeight() {
 		// TODO Auto-generated method stub
 		return mainPager.getHeight();
 	}
-
 	@Override
 	protected View getParentView() {
 		// TODO Auto-generated method stub
 		return mainPager;
 	}
-
 	@Override
 	protected void showResult(JSONArray optJSONArray) {
 		searchLayout.setVisibility(View.VISIBLE);
-
 	}
-
 	@Override
 	protected void cleanSearch() {
 		searchLayout.setVisibility(View.GONE);
 		System.out.println("cleansearch");
 	}
-
 }
