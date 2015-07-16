@@ -54,6 +54,11 @@
                 android:id="@+id/name"
                 style="@style/EditText_Normal"
                 android:hint="姓名" />
+            
+            <TextView 
+                style="@style/TextView_Warning"
+                android:text="请填写姓名"
+                android:id="@+id/tv_person_setting_name_warning"/>
 
             <com.yoopoon.home.ui.view.RedStarTextView
                 android:layout_width="match_parent"
@@ -109,6 +114,10 @@
                 android:layout_marginTop="5dp"
                 style="@style/EditText_Normal"
                 android:hint="保护账号安全"/>
+            <TextView 
+                style="@style/TextView_Warning"
+                android:text="请正确的身份证号码"
+                android:id="@+id/tv_person_setting_sfz_warning"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -123,6 +132,10 @@
                 android:layout_marginTop="5dp"
                 style="@style/EditText_Normal"
                 android:hint="用户邮箱"/>
+            <TextView 
+                style="@style/TextView_Warning"
+                android:text="请输入邮箱"
+                android:id="@+id/tv_person_setting_email_warning"/>
 
             <Button
                 android:id="@+id/save"

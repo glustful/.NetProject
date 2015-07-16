@@ -37,5 +37,8 @@
 	<string name="url_host_img">http://img.yoopoon.com/</string>
 	<string name="url_invite_partner">/api/PartnerList/AddPartnerList</string>
 	<string name="url_modify_psw">/api/SMS/SendSmsForbroker</string>
+	<string name="url_update_brokerinfo">/api/BrokerInfo/UpdateBroker</string>
+	<string name="url_change_psw">/api/User/ChangePassword</string>
+	<string name="url_findpsw">/api/User/ForgetPassword</string>
 </resources>
  

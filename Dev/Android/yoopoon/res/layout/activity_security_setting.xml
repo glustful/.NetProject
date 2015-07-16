@@ -10,6 +10,7 @@
         android:text="旧密码" />
 
     <EditText
+        android:id="@+id/et_security_old_psw"
         style="@style/EditText_Psw"
         android:layout_marginTop="5dp"
         android:hint="请输入旧密码" />
@@ -20,9 +21,26 @@
         android:text="新密码" />
 
     <EditText
+        android:id="@+id/et_security_new_psw"
         style="@style/EditText_Psw"
         android:layout_marginTop="5dp"
         android:hint="请输入新密码" />
+    
+    <TextView
+        style="@style/TextView_GrayText_WrapContent"
+        android:layout_marginTop="15dp"
+        android:text="确认新密码" />
+
+    <EditText
+        android:id="@+id/et_security_confirm"
+        style="@style/EditText_Psw"
+        android:layout_marginTop="5dp"
+        android:hint="再次输入新密码" />
+    
+    <TextView 
+        android:id="@+id/tv_security_warning"
+        style="@style/TextView_Warning"
+        android:text="两次输入的密码不一致"/>
 
     <RelativeLayout
             android:layout_marginTop="20dp"
@@ -36,6 +54,12 @@
             android:background="@drawable/cycle_selector"
             android:textColor="@color/little_whitle"
             android:text="获取验证码"/>
+        
+        <TextView 
+            android:layout_alignBottom="@id/btn_security_setting_getcode"
+            android:layout_toRightOf="@id/btn_security_setting_getcode"
+            style="@style/TextView_Warning"
+            android:id="@+id/tv_security_time"/>
 
         <EditText
             android:layout_alignBottom="@id/btn_security_setting_getcode"
@@ -48,6 +72,7 @@
         
     </RelativeLayout>
 
+    
     <Button
         android:id="@+id/btn_security_setting_save"
         style="@style/Red_Button_MarginTop"

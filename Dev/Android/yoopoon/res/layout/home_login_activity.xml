@@ -142,7 +142,7 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -153,9 +153,9 @@
 
             <CheckBox
                 android:id="@+id/login_id_auto"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_gravity="left"
 				android:text="记住我"                
                 android:textColor="@android:color/black"
                 android:textSize="12sp"
@@ -163,10 +163,14 @@
                 android:visibility="visible" />
 
             <TextView
+                android:id="@+id/tv_login_forget"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="忘记密码?" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"

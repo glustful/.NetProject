@@ -21,7 +21,7 @@ import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
-import com.yoopoon.home.domain.Broker;
+import com.yoopoon.home.domain.PartnerList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
@@ -35,6 +35,7 @@ public class User {
 	public String sex;
 	public String idCard;
 	public String realName;
+	private String email;
 
 	public boolean remember;
 
@@ -50,6 +51,14 @@ public class User {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getUserName() {
@@ -134,8 +143,9 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", remember=" + remember
-				+ ", phone=" + phone + ", status=" + status + ", roles=" + roles + "]";
+		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", nickName=" + nickName
+				+ ", sex=" + sex + ", idCard=" + idCard + ", realName=" + realName + ", email=" + email + ", remember="
+				+ remember + ", phone=" + phone + ", status=" + status + ", roles=" + roles + "]";
 	}
 
 	@SuppressLint("DefaultLocale")
@@ -257,15 +267,25 @@ public class User {
 
 	}
 
-	public void invite(final Broker broker, final InvitePartnerListener listener) {
+	// Broker: ""
+	// BrokerId: 0
+	// Id: 0
+	// PartnerId: 0
+	// Phone: "18313033523"
+	// userId: 0
+
+	public void invite(final PartnerList list, final InvitePartnerListener listener) {
 		new SerializerJSON(new SerializeListener() {
 
 			@Override
 			public String onSerialize() {
 				ObjectMapper om = new ObjectMapper();
 
+				// String json =
+				// "{\"Id\": 0, \"Broker\": \"\", \"PartnerId\": 0, \"userId\": 0, \"BrokerId\": 0, \"Phone\": \"15925149120\"}";
+				// return json;
 				try {
-					return om.writeValueAsString(broker);
+					return om.writeValueAsString(list);
 				} catch (JsonProcessingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -321,12 +341,15 @@ public class User {
 
 			@Override
 			public void onReponse(ResponseData data) {
-				if (data.getResultState() == ResultState.eSuccess) {
-					// 邀请成功
-					lis.success();
-				} else {
-					lis.failed(data.getMsg());
-				}
+				if (data != null)
+					if (data.getResultState() == ResultState.eSuccess) {
+
+						lis.success(data.getMsg());
+					} else {
+						lis.failed(data.getMsg());
+					}
+				else
+					lis.failed("请求失败，请检查网络");
 			}
 
 			@Override
@@ -349,6 +372,8 @@ public class User {
 					if (obj != null) {
 						Log.i(TAG, obj.toString());
 						User.this.setId(Tools.optInt(obj, "Id", 0));
+						User.this.setPhone(User.this.getUserName());
+						User.this.setUserName(Tools.optString(obj, "UserName", null));
 						if (obj.isNull("Roles") || obj.optJSONArray("Roles").length() < 1)
 							setRoles(null);
 						else {
@@ -388,10 +413,14 @@ public class User {
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
 					JSONObject obj = data.getJsonObject2();
+
 					User.this.setNickName(Tools.optString(obj, "Nickname", null));
 					User.this.setIdCard(Tools.optString(obj, "Sfz", null));
 					User.this.setSex(Tools.optString(obj, "Sexy", null));
 					User.this.setRealName(Tools.optString(obj, "Realname", null));
+					User.this.setEmail(Tools.optString(obj, "Email", null));
+					User.this.setPhone(Tools.optString(obj, "Phone", null));
+
 					Log.i(TAG, data.toString());
 					if (obj != null) {
 						if (obj.isNull("Roles") || obj.optJSONArray("Roles").length() < 1)
@@ -438,7 +467,7 @@ public class User {
 	}
 
 	public interface InvitePartnerListener {
-		void success();
+		void success(String msg);
 
 		void failed(String msg);
 	}

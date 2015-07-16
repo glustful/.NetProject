@@ -25,15 +25,21 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.makeramen.RoundedImageView;
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.data.user.User.UserInfoListener;
+import com.yoopoon.home.domain.Broker2;
+import com.yoopoon.home.domain.Broker2.RequesListener;
+import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
 /**
  * @ClassName: PersonSettingActivity
@@ -62,12 +68,61 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	TextView tv_phone;
 	@ViewById(R.id.iv_person_setting_avater)
 	RoundedImageView iv_avater;
+	private Animation animation_shake;
 
 	@Click(R.id.iv_person_setting_avater)
 	void selectAvater() {
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		intent.setType("image/*");
 		this.startActivityForResult(intent, 1);
+	}
+
+	@Click(R.id.save)
+	void modifyBrokerInfo() {
+		User user = User.lastLoginUser(this);
+		if (user == null) {
+			HomeLoginActivity_.intent(this).isManual(true).start();
+			return;
+		}
+
+		String name = et_name.getText().toString();
+		String sfz = et_card.getText().toString();
+		String email = et_email.getText().toString();
+		String nickname = tv_nickname.getText().toString();
+		String phone = tv_phone.getText().toString();
+
+		if (TextUtils.isEmpty(name)) {
+			et_name.startAnimation(animation_shake);
+			return;
+		}
+
+		if (TextUtils.isEmpty(email)) {
+			et_email.startAnimation(animation_shake);
+			return;
+		}
+
+		if (TextUtils.isEmpty(sfz)) {
+			et_card.startAnimation(animation_shake);
+			return;
+		}
+
+		String sexy = rb_female.isChecked() ? "女士" : "先生";
+		int id = user.getId();
+		Broker2 broker = new Broker2(id, id, name, user.getRealName(), nickname, sexy, sfz, email, phone, "");
+		broker.modifyInfo(new RequesListener() {
+
+			@Override
+			public void succeed(String msg) {
+				Toast.makeText(PersonSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
+				finish();
+			}
+
+			@Override
+			public void fail(String msg) {
+				Toast.makeText(PersonSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
+			}
+		});
+
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -97,14 +152,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
 		titleButton.setText("个人设置");
+		animation_shake = AnimationUtils.loadAnimation(this, R.anim.shake);
 		requestUserInfo();
-	}
-
-	private void setEnable() {
-		rb_female.setEnabled(false);
-		rb_male.setEnabled(false);
-		et_name.setEnabled(false);
-		et_card.setEnabled(false);
 	}
 
 	private void requestUserInfo() {
@@ -122,11 +171,13 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				String userName = user.getRealName();
 				String idCard = user.getIdCard();
 				String sex = user.getSex();
-				String phone = user.getUserName();
+				String phone = user.getPhone();
+				String email = user.getEmail();
 				tv_nickname.setText(TextUtils.isEmpty(nickName) ? "" : nickName);
 				et_name.setText(TextUtils.isEmpty(userName) ? "" : userName);
 				et_card.setText(TextUtils.isEmpty(idCard) ? "" : idCard);
 				tv_phone.setText(TextUtils.isEmpty(phone) ? "" : phone);
+				et_email.setText(TextUtils.isEmpty(email) ? "" : email);
 				if (sex != null) {
 					rb_female.setChecked(sex.equals("先生") ? false : true);
 					rb_male.setChecked(sex.equals("女士") ? false : true);

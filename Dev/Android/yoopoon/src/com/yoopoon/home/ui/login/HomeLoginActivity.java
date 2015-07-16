@@ -39,6 +39,7 @@ import android.widget.TextView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.common.base.utils.Utils;
+import com.yoopoon.home.FindPswActivity_;
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.json.SerializerJSON;
@@ -162,6 +163,11 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		this.finish();
 	}
 
+	@Click(R.id.tv_login_forget)
+	void findPsw() {
+		FindPswActivity_.intent(this).start();
+	}
+
 	@Override
 	protected void onRestart() {
 		super.onRestart();
@@ -270,7 +276,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 						if (serializeResult != null) {
 							PreferenceManager.getDefaultSharedPreferences(mContext).edit()
 									.putString("user", serializeResult).commit();
-							Log.i(TAG, "我已经把数据写进sp里拉！");
+							Log.i(TAG, serializeResult);
 							saveInfoToSp(serializeResult);
 						}
 					}

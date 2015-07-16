@@ -17,7 +17,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -38,6 +37,7 @@ import com.yoopoon.common.base.utils.SortNameByOrder;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.data.user.User.InvitePartnerListener;
 import com.yoopoon.home.domain.Broker;
+import com.yoopoon.home.domain.PartnerList;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
 /**
@@ -52,6 +52,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 	Button btn_add;
 	@ViewById(R.id.lv_partner)
 	ListView lv;
+	TextView tv_warning;
 	private MyPartnerListAdapter adapter;
 	private String[] names = { "钱德勒", "莫妮卡", "格蕾丝", "威尔", "Grace", "Will", "Chandler", "Rachel", "Monica", "Ross",
 			"Mood", "莫德", "sue", "苏", "Moening", "莫宁", "Alice", "爱丽丝" };
@@ -242,21 +243,30 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 	private void invitePartner(String phone) {
 		User user = User.lastLoginUser(this);
 		if (user == null) {
-			HomeLoginActivity_.intent(this).start();
+			HomeLoginActivity_.intent(this).isManual(true).start();
 			return;
 		} else {
-			String userId = PreferenceManager.getDefaultSharedPreferences(this).getString("userId", null);
-			user.invite(new Broker("", 0, phone, Integer.parseInt(userId), 0, 0), new InvitePartnerListener() {
+			int userId = user.getId();
+			String userName = user.getUserName();
+			user.invite(new PartnerList(user.getId(), new Broker(userId, user.getPhone(), userId, userId, 0), 0,
+					userName, phone), new InvitePartnerListener() {
 
 				@Override
-				public void success() {
-					Toast.makeText(IPartnerActivity.this, "恭喜你，邀请成功啦！", Toast.LENGTH_SHORT).show();
-					dialog.dismiss();
+				public void success(String msg) {
+					if (msg.contains("成功")) {
+						tv_warning.setVisibility(View.GONE);
+						Toast.makeText(IPartnerActivity.this, msg, Toast.LENGTH_SHORT).show();
+						dialog.dismiss();
+					} else {
+						tv_warning.setText(msg);
+						tv_warning.setVisibility(View.VISIBLE);
+					}
 				}
 
 				@Override
 				public void failed(String msg) {
 					Toast.makeText(IPartnerActivity.this, msg, Toast.LENGTH_SHORT).show();
+
 				}
 			});
 		}
@@ -273,6 +283,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		cancel = (Button) addView.findViewById(R.id.bt_partner_cancel);
 		invite = (Button) addView.findViewById(R.id.bt_partner_invite);
 		et_phone = (EditText) addView.findViewById(R.id.et_partner_phone);
+		tv_warning = (TextView) addView.findViewById(R.id.tv_addpartner_warning);
 		dialog = builder.show();
 
 		cancel.setOnClickListener(this);

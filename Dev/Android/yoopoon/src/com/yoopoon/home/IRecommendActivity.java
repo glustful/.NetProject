@@ -35,10 +35,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.yoopoon.common.base.utils.SmsUtils;
+import com.yoopoon.common.base.utils.SmsUtils.RequestSMSListener;
 import com.yoopoon.common.base.utils.SortNameByOrder;
 import com.yoopoon.home.data.user.User;
-import com.yoopoon.home.data.user.User.InvitePartnerListener;
-import com.yoopoon.home.domain.Broker;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
 /**
@@ -218,7 +218,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case R.id.bt_partner_add:
+			case R.id.bt_irecommend_add:
 				showAddPartnerDialog();
 				break;
 			case R.id.bt_partner_cancel:
@@ -247,19 +247,23 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 			return;
 		} else {
 			String userId = PreferenceManager.getDefaultSharedPreferences(this).getString("userId", null);
-			user.invite(new Broker("", 0, phone, Integer.parseInt(userId), 0, 0), new InvitePartnerListener() {
+			String smsType = String.valueOf(SmsUtils.RECOMMED_BROKER_IDENTIFY_CODE);
+			String json = "{\"Mobile\":\"" + phone + "\",\"SmsType\":\"" + smsType + "\"}";
+			SmsUtils.requestIdentifyCode(this, json, new RequestSMSListener() {
 
 				@Override
-				public void success() {
-					Toast.makeText(IRecommendActivity.this, "恭喜你，邀请成功啦！", Toast.LENGTH_SHORT).show();
-					dialog.dismiss();
+				public void succeed(String code) {
+					Toast.makeText(IRecommendActivity.this, code, Toast.LENGTH_SHORT).show();
+
 				}
 
 				@Override
-				public void failed(String msg) {
+				public void fail(String msg) {
 					Toast.makeText(IRecommendActivity.this, msg, Toast.LENGTH_SHORT).show();
+
 				}
 			});
+
 		}
 	}
 	Button cancel;
