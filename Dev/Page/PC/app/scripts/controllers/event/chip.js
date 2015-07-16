@@ -65,15 +65,13 @@ angular.module("app").controller('chipController', [
 //----------------------------------------新增众筹----------------------------------------------//
 angular.module("app").controller('creatChipController', [
     '$http', '$scope', '$state','FileUploader', function ($http, $scope, $state,FileUploader) {
-
-        //--------添加项目 start---------//
         $scope.crowdModel={
             Ttitle:"",
             ImgList1:new Array(),
             SubTitle:"",
             Content:"",
             ClassId:"",
-            crowdUrl:""
+            crowdUrl:"http://"
 
         };
 
@@ -104,7 +102,7 @@ angular.module("app").controller('creatChipController', [
         };
 
 
-        //---------------------------------------------图片上传 start------------------------------------//
+//---------------------------------------------图片上传 start------------------------------------//
         $scope.image=[];//保存图片名称
         $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
         function completeHandler(e) {
@@ -128,7 +126,7 @@ angular.module("app").controller('creatChipController', [
 
         };
 
-        //-------------------------------------------图片上传 end------------------------------------------//
+//-------------------------------------------图片上传 end------------------------------------------//
 
 
 
