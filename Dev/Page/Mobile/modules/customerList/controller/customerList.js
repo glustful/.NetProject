@@ -18,7 +18,16 @@ app.controller('cusListController',['$http','$scope','AuthService',function($htt
         if (!loading &&  $scope.searchCondition.page < pages) {                         //如果页面没有正在读取
             loading = true;                     //告知正在读取
         $http.get(SETTING.ApiUrl+'/ClientInfo/GetStatusByUserId/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
-           $scope.list=data.list;
+
+                if(data.list==""){
+
+                    $scope.Tips="当前不存在带客信息！"
+                }else{
+
+                    $scope.list=data.list;
+
+                }
+
         }
         );}
     };

@@ -11,6 +11,7 @@ angular.module("app").controller('adminIndexController', [
             pageSize: 10,
             state:2
         };
+        $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
         var page= 0,howmany=0;
         $scope.getList  = function() {
 
@@ -158,11 +159,13 @@ angular.module("app").controller('adminIndexController', [
 ]);
 
 angular.module("app").controller('AdmManDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
-
-    //个人信息
-    $http.get(SETTING.ApiUrl + '/BrokerInfo/GetBrokerByAgent?id=' + $stateParams.id,{
+    $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
+//------------------------查询管理员信息列表 start--------------------------
+    $http.get(SETTING.ApiUrl + '/BrokerInfo/GetBrokerByAgent?id='
+        + $stateParams.id,{
         'withCredentials':true
-    }).success(function(data){
+    }).success(
+        function(data){
         if(data.List.State==1)
         {data.List.State="正常"}
         else if(data.List.State==0)
@@ -171,22 +174,22 @@ angular.module("app").controller('AdmManDetailedController',['$http','$scope','$
         {data.List.State="注销"}
         $scope.BrokerModel =data.List;
     });
-
+//------------------------查询管理员信息列表 end--------------------------
 }]);
 
 angular.module("app").controller('AdmManCreateController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
 
     $scope.UserModel={
-
         Password:"",
         Brokername:"",
         Phone:"",
         UserType:"管理员",
         UserName:""
     };
-
+//------------------------添加管理员账号 start--------------------------
     $scope.Save = function(){
-        $http.post(SETTING.ApiUrl + '/AdminRecom/AddBroker',$scope.UserModel,{
+        $http.post(SETTING.ApiUrl + '/AdminRecom/AddBroker',
+            $scope.UserModel,{
             'withCredentials':true
         }).success(function(data){
             if(data.Status){
@@ -198,5 +201,7 @@ angular.module("app").controller('AdmManCreateController',['$http','$scope','$st
                 alert(data.Msg);
             }
         });
+//------------------------添加管理员账号 end--------------------------
+
     }
 }]);
