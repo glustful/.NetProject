@@ -12,11 +12,15 @@
  */
 package com.yoopoon.home;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.graphics.Color;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -233,11 +237,43 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 					Toast.makeText(this, "亲，你还没输入电话呢！", Toast.LENGTH_SHORT).show();
 					return;
 				} else {
+					inviting();
+					startMills = System.currentTimeMillis();
 					invitePartner(phone);
 				}
 				break;
 		}
 
+	}
+
+	private Timer timer;
+	private TimerTask task;
+	private int count = 1;
+	private String[] points = { "", ".", "..", "..." };
+	private long startMills;
+	private Handler handler = new Handler();
+
+	private void inviting() {
+		timer = new Timer();
+		task = new TimerTask() {
+
+			@Override
+			public void run() {
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						if (count == 5)
+							count = 1;
+						tv_warning.setVisibility(View.VISIBLE);
+						tv_warning.setTextColor(Color.GRAY);
+						tv_warning.setText("正在请求，请稍候" + points[count - 1]);
+						count++;
+					}
+				});
+			}
+		};
+		timer.schedule(task, 0, 600);
 	}
 
 	private void invitePartner(String phone) {
@@ -252,25 +288,62 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 					userName, phone), new InvitePartnerListener() {
 
 				@Override
-				public void success(String msg) {
-					if (msg.contains("成功")) {
-						tv_warning.setVisibility(View.GONE);
-						Toast.makeText(IPartnerActivity.this, msg, Toast.LENGTH_SHORT).show();
-						dialog.dismiss();
+				public void success(final String msg) {
+					long duration = System.currentTimeMillis() - startMills;
+					if (duration < 2000) {
+						handler.postDelayed(new Runnable() {
+
+							@Override
+							public void run() {
+								responseSucceed(msg);
+							}
+						}, 2000 - duration);
 					} else {
-						tv_warning.setText(msg);
-						tv_warning.setVisibility(View.VISIBLE);
+						responseSucceed(msg);
 					}
 				}
 
 				@Override
-				public void failed(String msg) {
-					Toast.makeText(IPartnerActivity.this, msg, Toast.LENGTH_SHORT).show();
+				public void failed(final String msg) {
+					long duration = System.currentTimeMillis() - startMills;
+					if (duration < 2000) {
+						handler.postDelayed(new Runnable() {
 
+							@Override
+							public void run() {
+								responseFail(msg);
+							}
+						}, 2000 - duration);
+					} else {
+						responseFail(msg);
+					}
 				}
+
 			});
 		}
 	}
+
+	private void responseFail(String msg) {
+		timer.cancel();
+		task.cancel();
+		Toast.makeText(IPartnerActivity.this, msg, Toast.LENGTH_SHORT).show();
+	}
+
+	private void responseSucceed(String msg) {
+		timer.cancel();
+		task.cancel();
+
+		if (msg.contains("成功")) {
+			tv_warning.setVisibility(View.GONE);
+			Toast.makeText(IPartnerActivity.this, msg, Toast.LENGTH_SHORT).show();
+			dialog.dismiss();
+		} else {
+			tv_warning.setTextColor(Color.RED);
+			tv_warning.setText(msg);
+			tv_warning.setVisibility(View.VISIBLE);
+		}
+	}
+
 	Button cancel;
 	Button invite;
 	Dialog dialog;
@@ -298,8 +371,18 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 	 */
 	@Override
 	protected void onDestroy() {
-		if (dialog != null)
+		if (dialog != null) {
 			dialog.dismiss();
+			dialog = null;
+		}
+		if (timer != null) {
+			timer.cancel();
+			timer = null;
+		}
+		if (task != null) {
+			task.cancel();
+			task = null;
+		}
 		super.onDestroy();
 	}
 

@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:textColor="@color/setting_text"
-            android:hint="验证码" />
+            android:hint="请输入验证码" />
         
     </RelativeLayout>
 

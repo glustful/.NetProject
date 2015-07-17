@@ -12,5 +12,6 @@
     <color name="hosue_total_color">#d0d0d0</color>
     <color name="setting_text">#848484</color>
     <color name="deviding_line">#E0E0E0</color>
+    <color name="bank_card_blue">#880000ff</color>
 
 </resources>

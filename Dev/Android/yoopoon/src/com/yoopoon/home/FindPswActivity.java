@@ -18,7 +18,6 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-import android.graphics.Color;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -41,6 +40,7 @@ import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.domain.YzmWithPsw;
+import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
 /**
  * @ClassName: FindPswActivity
@@ -94,6 +94,7 @@ public class FindPswActivity extends MainActionBarActivity {
 			public void fail(String msg) {
 				Toast.makeText(FindPswActivity.this, msg, Toast.LENGTH_SHORT).show();
 			}
+
 		});
 		setGetCodeEnable(false);
 
@@ -190,7 +191,7 @@ public class FindPswActivity extends MainActionBarActivity {
 					if (data.getResultState() == ResultState.eSuccess) {
 						if (data.getMsg().contains("成功")) {
 							Toast.makeText(FindPswActivity.this, "修改成功，请登陆", Toast.LENGTH_SHORT).show();
-							finish();
+							HomeLoginActivity_.intent(FindPswActivity.this).isManual(true).start();
 						} else {
 							Toast.makeText(FindPswActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 							clear();
@@ -207,7 +208,7 @@ public class FindPswActivity extends MainActionBarActivity {
 				// TODO Auto-generated method stub
 
 			}
-		}.setUrl(getString(R.string.url_findpsw)).SetJSON(json).setSaveSession(true).notifyRequest();
+		}.setUrl(getString(R.string.url_findpsw)).SetJSON(json).notifyRequest();
 	}
 
 	private void clear() {
@@ -227,7 +228,7 @@ public class FindPswActivity extends MainActionBarActivity {
 			timer.cancel();
 			task.cancel();
 		} else {
-			btn_getcode.setBackgroundColor(Color.GRAY);
+			btn_getcode.setBackgroundResource(R.drawable.btn_not_enable);
 			timer = new Timer();
 			task = new TimerTask() {
 

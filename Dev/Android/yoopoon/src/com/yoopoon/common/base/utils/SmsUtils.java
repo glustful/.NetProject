@@ -38,7 +38,38 @@ public class SmsUtils {
 	public static final int RECOMMED_BROKER_IDENTIFY_CODE = 6;
 	private static final String TAG = "SmsUtils";
 
-	public static void requestIdentifyCode(Context context, String json, final RequestSMSListener lis) {
+	public static void requestIdentifyCode(Context context, final String json, final RequestSMSListener lis) {
+
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				if (data.getResultState() == ResultState.eSuccess) {
+
+					if (data.getMRootData().optString("Message", "").equals("1")) {
+						lis.succeed(data.getMRootData().optString("Desstr"));
+						return;
+					}
+				}
+				lis.fail(data.getMsg());
+
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+
+			}
+		}.setUrl(context.getString(R.string.url_sms_sendSMS)).SetJSON(json).notifyRequest();
+	}
+
+	public interface RequestSMSListener {
+
+		void fail(String msg);
+
+		void succeed(String code);
+	}
+
+	public static void getCodeForBroker(Context context, String json, final RequestSMSListener lis) {
 		new RequestAdapter() {
 
 			@Override
@@ -59,14 +90,7 @@ public class SmsUtils {
 				// TODO Auto-generated method stub
 
 			}
-		}.setUrl(context.getString(R.string.url_sms_sendSMS)).SetJSON(json).notifyRequest();
-	}
-
-	public interface RequestSMSListener {
-
-		void fail(String msg);
-
-		void succeed(String code);
+		}.setUrl(context.getString(R.string.url_getcode_forbroker)).SetJSON(json).notifyRequest();
 	}
 
 }

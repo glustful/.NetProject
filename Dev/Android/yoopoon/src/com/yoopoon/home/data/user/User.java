@@ -299,7 +299,6 @@ public class User {
 
 					return;
 				}
-
 				requestInvite(serializeResult, listener);
 
 			}
@@ -331,8 +330,7 @@ public class User {
 				// TODO Auto-generated method stub
 
 			}
-		}.setUrl(MyApplication.getInstance().getString(R.string.url_login)).SetJSON(serializeResult)
-				.setSaveSession(true).notifyRequest();
+		}.setUrl(MyApplication.getInstance().getString(R.string.url_login)).SetJSON(serializeResult).notifyRequest();
 
 	}
 
@@ -354,15 +352,15 @@ public class User {
 
 			@Override
 			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
 
 			}
 		}.setUrl(MyApplication.getInstance().getString(R.string.url_invite_partner)).SetJSON(serializeResult)
-				.setSaveSession(true).notifyRequest();
+				.notifyRequest();
 
 	}
 
 	protected void requestLogin(String serializeResult, final LoginListener lis) {
+
 		new RequestAdapter() {
 
 			@Override

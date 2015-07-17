@@ -208,7 +208,7 @@ public class Broker2 {
 
 			}
 		}.setUrl(MyApplication.getInstance().getString(R.string.url_update_brokerinfo)).SetJSON(serializeResult)
-				.setSaveSession(true).notifyRequest();
+				.notifyRequest();
 
 	}
 

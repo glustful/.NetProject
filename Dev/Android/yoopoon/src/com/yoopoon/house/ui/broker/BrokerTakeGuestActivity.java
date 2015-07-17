@@ -13,13 +13,11 @@
 package com.yoopoon.house.ui.broker;
 
 import java.util.Calendar;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -33,7 +31,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.home.MainActionBarActivity;
@@ -106,6 +103,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 		commit_broker_carry_client.setOnClickListener(this);
 		reservation_timeEditText.setOnClickListener(this);
 	}
+
 	/**
 	 * @Title: initCalendar
 	 * @Description: 初始化日期对话框
@@ -114,6 +112,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 		DialogFragment newFragment = new DatePickerFragment();
 		newFragment.show(getFragmentManager(), "datePicker");
 	}
+
 	private void commitInfo() {
 		new RequestAdapter() {
 			@Override
@@ -129,12 +128,14 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 					}
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_brokerlead_client)).setRequestMethod(RequestMethod.ePost)
-				.SetJSON(BrokerTakeGuestJson).setSaveSession(true).notifyRequest();
+				.SetJSON(BrokerTakeGuestJson).notifyRequest();
 	}
+
 	/**
 	 * @Title: serializationCommitinfo
 	 * @Description: 将传输到服务器的数据进行序列化
@@ -163,6 +164,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 			e.printStackTrace();
 		}
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: backButtonClick
@@ -174,6 +176,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	/*
 	 * (non Javadoc)f
 	 * @Title: titleButtonClick
@@ -184,6 +187,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 	@Override
 	public void titleButtonClick(View v) {
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: rightButtonClick
@@ -194,6 +198,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 	@Override
 	public void rightButtonClick(View v) {
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: showHeadView
@@ -205,6 +210,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 	public Boolean showHeadView() {
 		return true;
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: onClick
@@ -242,6 +248,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 			// Create a new instance of DatePickerDialog and return it
 			return new DatePickerDialog(getActivity(), this, year, month, day);
 		}
+
 		public void onDateSet(DatePicker view, int year, int month, int day) {
 			int tempMonth = month + 1;
 			reservation_timeEditText.setText(year + "/" + tempMonth + "/" + day + "");
@@ -275,156 +282,182 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 		public String getAddUser() {
 			return AddUser;
 		}
+
 		/**
 		 * @param addUser the addUser to set
 		 */
 		public void setAddUser(String addUser) {
 			AddUser = addUser;
 		}
+
 		/**
 		 * @return the appointmenttime
 		 */
 		public String getAppointmenttime() {
 			return Appointmenttime;
 		}
+
 		/**
 		 * @param appointmenttime the appointmenttime to set
 		 */
 		public void setAppointmenttime(String appointmenttime) {
 			Appointmenttime = appointmenttime;
 		}
+
 		/**
 		 * @return the broker
 		 */
 		public String getBroker() {
 			return Broker;
 		}
+
 		/**
 		 * @param broker the broker to set
 		 */
 		public void setBroker(String broker) {
 			Broker = broker;
 		}
+
 		/**
 		 * @return the brokername
 		 */
 		public String getBrokername() {
 			return Brokername;
 		}
+
 		/**
 		 * @param brokername the brokername to set
 		 */
 		public void setBrokername(String brokername) {
 			Brokername = brokername;
 		}
+
 		/**
 		 * @return the clientInfo
 		 */
 		public String getClientInfo() {
 			return ClientInfo;
 		}
+
 		/**
 		 * @param clientInfo the clientInfo to set
 		 */
 		public void setClientInfo(String clientInfo) {
 			ClientInfo = clientInfo;
 		}
+
 		/**
 		 * @return the clientname
 		 */
 		public String getClientname() {
 			return Clientname;
 		}
+
 		/**
 		 * @param clientname the clientname to set
 		 */
 		public void setClientname(String clientname) {
 			Clientname = clientname;
 		}
+
 		/**
 		 * @return the houseType
 		 */
 		public String getHouseType() {
 			return HouseType;
 		}
+
 		/**
 		 * @param houseType the houseType to set
 		 */
 		public void setHouseType(String houseType) {
 			HouseType = houseType;
 		}
+
 		/**
 		 * @return the houses
 		 */
 		public String getHouses() {
 			return Houses;
 		}
+
 		/**
 		 * @param houses the houses to set
 		 */
 		public void setHouses(String houses) {
 			Houses = houses;
 		}
+
 		/**
 		 * @return the note
 		 */
 		public String getNote() {
 			return Note;
 		}
+
 		/**
 		 * @param note the note to set
 		 */
 		public void setNote(String note) {
 			Note = note;
 		}
+
 		/**
 		 * @return the phone
 		 */
 		public String getPhone() {
 			return Phone;
 		}
+
 		/**
 		 * @param phone the phone to set
 		 */
 		public void setPhone(String phone) {
 			Phone = phone;
 		}
+
 		/**
 		 * @return the projectid
 		 */
 		public String getProjectid() {
 			return Projectid;
 		}
+
 		/**
 		 * @param projectid the projectid to set
 		 */
 		public void setProjectid(String projectid) {
 			Projectid = projectid;
 		}
+
 		/**
 		 * @return the projectname
 		 */
 		public String getProjectname() {
 			return Projectname;
 		}
+
 		/**
 		 * @param projectname the projectname to set
 		 */
 		public void setProjectname(String projectname) {
 			Projectname = projectname;
 		}
+
 		/**
 		 * @return the stats
 		 */
 		public String getStats() {
 			return Stats;
 		}
+
 		/**
 		 * @param stats the stats to set
 		 */
 		public void setStats(String stats) {
 			Stats = stats;
 		}
+
 		public BrokerTakeGuest(String AddUser, String Appointmenttime, String Clientname, String HouseType,
 				String House, String Note, String Phone, String Projectid) {
 			this.AddUser = AddUser;
