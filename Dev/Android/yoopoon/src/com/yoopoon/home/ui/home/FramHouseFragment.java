@@ -44,6 +44,7 @@ import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.ui.AD.ADController;
+import com.yoopoon.house.ui.houselist.FramHouseAreaAdapter;
 import com.yoopoon.house.ui.houselist.FramHouseListViewAdapter;
 
 @SuppressLint("ShowToast")
@@ -105,8 +106,15 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	private ArrayList<JSONObject> houseAreaJsonObjects;
 	// 房源顶端楼盘类型Json数组
 	ArrayList<JSONObject> houseTypeJsonObjects = new ArrayList<JSONObject>();
-	ArrayList<JSONObject> houseProvinceJsonObjects = new ArrayList<JSONObject>();
+	// 房源页顶端楼盘对应区域
+	ArrayList<JSONObject> houseProvinceJsonObjects;
+	ArrayList<JSONObject> houseCityJsonObjects;
+	ArrayList<JSONObject> houseDistrictJsonObjects;
 	private String AreaTarget = null;
+	// 房源页顶端楼盘区域参数初始化
+	private ListView houseProvinceListView, houseCityListView, houseDistrictListView;
+	private FramHouseAreaAdapter provinceAdapter, cityAdapter, districtAdapter;
+	private String provindeID, cityID, districtID;
 
 	// //////////////////////////////如上是初始化和声明的变量/////////////////////////////////////////////////////////////////////
 	/*
@@ -648,9 +656,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.area_name_textview:
-				houseAreaPopupWindow = null;
-				houseAreaLayout = null;
-				requestHouseAreaList(null, null, null);
+				// houseAreaPopupWindow = null;
+				// houseAreaLayout = null;
+				// requestHouseAreaList(null, null, null);
 				break;
 			case R.id.type_textview:
 				requestHouseTypeList();
@@ -704,5 +712,19 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		IntentFilter intentFilter = new IntentFilter("com.yoopoon.login_action");
 		intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		mContext.registerReceiver(houseFramRefreshReceiver, intentFilter);
+	}
+	/**
+	 * @Title: initHouseAreaView
+	 * @Description: 初始化房源页顶端对应的楼盘区域类型
+	 */
+	private void initHouseAreaView() {
+		houseProvinceListView = (ListView) rootView.findViewById(R.id.house_province_listView);
+		houseCityListView = (ListView) rootView.findViewById(R.id.house_city_listView);
+		houseDistrictListView = (ListView) rootView.findViewById(R.id.house_district_listView);
+	}
+	public void initHouseAreaDatas() {
+		// houseProvinceJsonObjects = new ArrayList<JSONObject>();
+		// houseCityJsonObjects = new ArrayList<JSONObject>();
+		// houseDistrictJsonObjects = new ArrayList<JSONObject>();
 	}
 }
