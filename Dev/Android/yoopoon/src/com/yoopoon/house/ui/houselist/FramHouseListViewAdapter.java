@@ -39,8 +39,6 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 	public FramHouseListViewAdapter(Context mContext) {
 		this.mContext = mContext;
 		datas = new ArrayList<JSONObject>();
-		// Map<String, Boolean> brokerStatusMap=new HashMap<String, Boolean>();
-		// brokerStatusMap.put(key, value)
 		height = MyApplication.getInstance().getDeviceInfo((Activity) mContext).heightPixels / 6;
 	}
 	@Override
@@ -69,7 +67,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 			layoutParams.height = screenWidth / 3;
 			listViewLinearLayout.setLayoutParams(layoutParams);
 			viewHandler = new ViewHandler();
-			viewHandler.init(convertView);
+			viewHandler.initViewHandler(convertView);
 			convertView.setTag(viewHandler);
 		} else {
 			viewHandler = (ViewHandler) convertView.getTag();
@@ -128,14 +126,14 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 						.start();
 			}
 		});
-		// 经纪人红包
+		// 经纪人红包点击事件
 		viewHandler.houseBonusTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				BrokerBonusActivity_.intent(mContext).start();
 			}
 		});
-		// 经纪人积分
+		// 经纪人积分点击事件
 		viewHandler.houseScoreTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -163,7 +161,12 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		private TextView houseScoreTextView;
 		private View houseBrokerFunctionLinearLayout;
 
-		void init(View root) {
+		/**
+		 * @Title: initViewHandler
+		 * @Description: 初始化ViewHandler
+		 * @param root
+		 */
+		void initViewHandler(View root) {
 			houseImageView = (ImageView) root.findViewById(R.id.house_image);
 			houseProductnameTextView = (TextView) root.findViewById(R.id.house_productname);
 			housePriceTextView = (TextView) root.findViewById(R.id.house_price);
@@ -177,6 +180,11 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		}
 	}
 
+	/**
+	 * @Title: refresh
+	 * @Description: 获取数据刷新房源页对应的楼盘ListView
+	 * @param mJsonObjects
+	 */
 	public void refresh(ArrayList<JSONObject> mJsonObjects) {
 		datas.clear();
 		if (mJsonObjects != null) {
