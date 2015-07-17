@@ -31,6 +31,7 @@ namespace CRM.Entity.Mappings.Broker
 			Property(c => c.Address).HasColumnType("varchar").HasMaxLength(256).IsOptional();
 			Property(c => c.Regtime).HasColumnType("datetime");
 			Property(c => c.State).HasColumnType("int");
+            Property(c => c.WeiXinNumber).HasColumnType("varchar").HasMaxLength(50);//by  yangyue  2015/7/16
 
             Property(c => c.PartnersId).HasColumnType("int");
             Property(c => c.PartnersName).HasColumnType("varchar").HasMaxLength(50);
