@@ -15,14 +15,12 @@ package com.yoopoon.home.ui.me;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import com.yoopoon.home.BrokerRankActivity_;
 import com.yoopoon.home.IPartnerActivity_;
 import com.yoopoon.home.IRecommendActivity_;
@@ -48,14 +46,17 @@ public class MeFooterView extends LinearLayout {
 	void registerToBroker() {
 		PersonSettingActivity_.intent(getContext()).start();
 	}
+
 	@Click(R.id.setting)
 	void setting() {
 		SettingActivity_.intent(getContext()).start();
 	}
+
 	@Click(R.id.brokerSetting)
 	void brokerSetting() {
 		setting();
 	}
+
 	@Click(R.id.tv_footer_recommend)
 	void iRecommend() {
 		// ################彭佳媛 编写 ################### Start
@@ -71,6 +72,7 @@ public class MeFooterView extends LinearLayout {
 		currentActivity.sendBroadcast(intent);
 		// ###############徐阳会 修改 2015年7月16日 ##################### End
 	}
+
 	// ################ 彭佳媛 编写 #################
 	/*
 	 * @Click(R.id.tv_footer_guest) void iGuest() { IGuestActivity_.intent(getContext()).start(); }
@@ -85,30 +87,37 @@ public class MeFooterView extends LinearLayout {
 		Activity currentActivity = (Activity) getContext();
 		currentActivity.sendBroadcast(intent);
 	}
+
 	// ################ 徐阳会 修改 2015年7月16日 End #################
 	@Click(R.id.tv_footer_partner)
 	void iPartner() {
 		IPartnerActivity_.intent(getContext()).start();
 	}
+
 	@Click(R.id.tv_footer_rank)
 	void iRank() {
 		BrokerRankActivity_.intent(getContext()).start();
 	}
+
 	@Click(R.id.tv_footer_recommend_agent)
 	void recommendAgent() {
 		IRecommendActivity_.intent(getContext()).start();
 	}
+
 	// [end]
 	// [start] constructor
 	public MeFooterView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
+
 	public MeFooterView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
+
 	public MeFooterView(Context context) {
 		super(context);
 	}
+
 	// [end]
 	// [start] public method
 	public void show(boolean isBroker) {
@@ -120,6 +129,7 @@ public class MeFooterView extends LinearLayout {
 			customLayout.setVisibility(View.VISIBLE);
 		}
 	}
+
 	// [end]
 	/**
 	 * @Title: hide
