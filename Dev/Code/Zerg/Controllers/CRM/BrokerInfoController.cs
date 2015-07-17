@@ -23,6 +23,8 @@ using CRM.Service.RecommendAgent;
 using CRM.Service.ClientInfo;
 using CRM.Service.MessageDetail;
 using System.ComponentModel;
+using System.Data;
+using CRM.Service.BrokeAccount;
 
 namespace Zerg.Controllers.CRM
 {
@@ -42,6 +44,7 @@ namespace Zerg.Controllers.CRM
         private readonly IRoleService _roleService;
         private readonly IMessageDetailService _MessageService;
         private readonly IUserService _userService;
+        private readonly IBrokeAccountService _brokerAccountService;
         /// <summary>
         /// 经纪人管理初始化
         /// </summary>
@@ -60,7 +63,8 @@ namespace Zerg.Controllers.CRM
             IRecommendAgentService recommendagentService,
             IRoleService roleService,
             IMessageDetailService MessageService,
-            IUserService userService
+            IUserService userService,
+            IBrokeAccountService brokerAccountService
             )
         {
             _clientInfoService = clientInfoService;
@@ -71,6 +75,7 @@ namespace Zerg.Controllers.CRM
             _roleService = roleService;
             _MessageService = MessageService;
             _userService = userService;
+            _brokerAccountService = brokerAccountService;
         }
 
 
@@ -131,7 +136,7 @@ namespace Zerg.Controllers.CRM
                 Regtime1 = brokerlist.Regtime.ToShortDateString(),
                 Usertype1 = brokerlist.Usertype.ToString(),
                 State = brokerlist.State,
-                PartnersName = brokerlist.PartnersName,
+                PartnersName = brokerlist.WeiXinNumber,
                 Address = brokerlist.Address
 
             };
@@ -166,7 +171,8 @@ namespace Zerg.Controllers.CRM
                 Sfz = model.Sfz,
                 Email = model.Email,
                 Phone = model.Phone,
-                Headphoto = model.Headphoto
+                Headphoto = model.Headphoto,
+                WeiXinNumber=model.WeiXinNumber
             };
 
             return PageHelper.toJson(brokerInfo);
@@ -296,6 +302,7 @@ namespace Zerg.Controllers.CRM
                 brokerModel.Email = broker.Email;
                 brokerModel.Realname = broker.Realname;
                 brokerModel.Sexy = broker.Sexy;
+                brokerModel.WeiXinNumber = broker.WeiXinNumber;//by  yangyue  2015/7/16
 
                 #region 转职经纪人 杨定鹏 2015年6月11日17:29:58
                 //填写身份证，邮箱，和真实姓名后就能转职经纪人
@@ -303,9 +310,7 @@ namespace Zerg.Controllers.CRM
                     !string.IsNullOrEmpty(broker.Realname))
                 {
                     //权限变更
-
                     var brokerRole = _roleService.GetRoleByName("broker");
-
                     //User权限缺少时自动添加
                     if (brokerRole == null)
                     {
@@ -327,8 +332,42 @@ namespace Zerg.Controllers.CRM
                         //更新broker表记录
                         brokerModel.Usertype = EnumUserType.经纪人;
                         _brokerService.Update(brokerModel);
-                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
+                        //return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
                     }
+
+                    //-----------------by yangyue  2015/7/16------------------------//
+                    //奖励该用户30元
+                    var con=new BrokeAccountSearchCondition
+                    {
+                        Brokers = brokerModel,
+                        Type = 2
+                    };
+                    var a = _brokerAccountService.GetBrokeAccountsByCondition(con).FirstOrDefault();
+                    if (a == null)
+                    {
+                        BrokeAccountEntity model = new BrokeAccountEntity();
+                        model.Addtime = DateTime.Now;
+                        model.Adduser = 1;
+                        model.Broker = brokerModel;
+                        model.Type = '2';
+                        model.MoneyDesc = "完整经济人资料奖励30元";
+                        model.Balancenum = (decimal) 30;
+                        _brokerAccountService.Create(model);
+
+
+                        if (_brokerAccountService.Create(model) != null)
+                        {
+                            return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                        }
+                        else
+                        {
+                            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                        }
+
+                    }
+
+
+
                 }
 
                 #endregion

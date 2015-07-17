@@ -70,6 +70,10 @@ namespace Zerg.Models.CRM
         /// </summary>
         public virtual string Phone { get; set; }
         /// <summary>
+        /// 微信账号
+        /// </summary>
+        public virtual string WeiXinNumber { get; set; }//by  yangyue  2015/7/16
+        /// <summary>
         /// QQ
         /// </summary>
         public virtual int Qq { get; set; }
@@ -186,6 +190,8 @@ namespace Zerg.Models.CRM
         /// </summary>
         public virtual EnumUserType UserType { get; set; }
         public virtual string  Usertype1 { get; set; }
+        
+
         /// <summary>
         /// 用户状态 （删除0 注销-1 正常1）
         /// </summary>    
