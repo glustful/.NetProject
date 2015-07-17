@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:padding="20dp">
+    
+    <TextView 
+        style="@style/TextView_GrayText"
+        android:text="请输入手机号码"/>
+    <EditText 
+        android:id="@+id/et_findpsw_phone"
+        android:layout_marginTop="5dp"
+        style="@style/EditText_Normal"
+        android:hint="请输入绑定的手机号码"
+        />
+    <TextView 
+        style="@style/TextView_Warning"
+        android:id="@+id/tv_findpsw_phone"/>
+    
+    <TextView 
+        android:layout_marginTop="10dp"
+        style="@style/TextView_GrayText"
+        android:text="新密码"/>
+    <EditText 
+        android:id="@+id/et_findpsw_new"
+        android:layout_marginTop="5dp"
+        style="@style/EditText_Psw"
+        android:hint="请输入新密码"
+        />
+    <TextView 
+        style="@style/TextView_Warning"
+        android:id="@+id/tv_findpsw_new"/>
+    
+    <TextView 
+        android:layout_marginTop="10dp"
+        style="@style/TextView_GrayText"
+        android:text="确认新密码"/>
+    <EditText 
+        android:id="@+id/et_findpsw_confirm"
+        android:layout_marginTop="5dp"
+        style="@style/EditText_Psw"
+        android:hint="请再次输入新密码"
+        />
+    <TextView 
+        style="@style/TextView_Warning"
+        android:id="@+id/tv_findpsw_confirm"/>
+    
+    <RelativeLayout
+            android:layout_marginTop="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        <Button 
+            android:id="@+id/btn_findpsw_getcode"
+            android:layout_toRightOf="@+id/et_findpsw_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cycle_selector"
+            android:textColor="@color/little_whitle"
+            android:text="获取验证码"/>
+        
+        <TextView 
+            android:layout_alignBottom="@id/btn_findpsw_getcode"
+            android:layout_toRightOf="@id/btn_findpsw_getcode"
+            style="@style/TextView_Warning"
+            android:id="@+id/tv_security_time"/>
+
+        <EditText
+            android:layout_alignBottom="@id/btn_findpsw_getcode"
+            android:id="@+id/et_findpsw_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/setting_text"
+            android:hint="验证码" />
+        
+    </RelativeLayout>
+    
+    <Button 
+        android:id="@+id/btn_findpsw_ok"
+        style="@style/Red_Button_MarginTop"
+        android:text="确认"/>
+    
+
+</LinearLayout>

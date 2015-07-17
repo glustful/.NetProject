@@ -31,13 +31,15 @@
         android:text="佣金 200"/>
     
     <View 
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/iv_broker_rank_trend"
         android:layout_width="0.0001px"
         android:layout_height="30dp"
         android:background="@color/setting_text"/>
     
     
     <ImageView 
-        android:id="@+id/iv_"
+        android:id="@+id/iv_broker_rank_trend"
         android:layout_alignParentRight="true"
         android:layout_width="30dp"
         android:layout_height="30dp"

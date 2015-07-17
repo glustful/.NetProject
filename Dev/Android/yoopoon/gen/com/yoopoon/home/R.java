@@ -1659,8 +1659,8 @@ containing a value of this type.
         public static final int imgGrid=0x7f0900ee;
         public static final int intent_property=0x7f09009b;
         public static final int intent_property_type=0x7f09009c;
-        public static final int iv_=0x7f0900da;
         public static final int iv_bankcard=0x7f0900d6;
+        public static final int iv_broker_rank_trend=0x7f0900da;
         public static final int iv_iguest_dialog=0x7f0900a8;
         public static final int iv_ipocket_cashicon=0x7f09006c;
         public static final int iv_partner_avater=0x7f0900db;

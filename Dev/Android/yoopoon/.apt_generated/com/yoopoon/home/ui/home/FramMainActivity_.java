@@ -82,8 +82,8 @@ public final class FramMainActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        searchLayout = ((LinearLayout) hasViews.findViewById(com.yoopoon.home.R.id.search_layout));
         tabHost = ((TabHost) hasViews.findViewById(android.R.id.tabhost));
+        searchLayout = ((LinearLayout) hasViews.findViewById(com.yoopoon.home.R.id.search_layout));
         mainPager = ((ViewPager) hasViews.findViewById(com.yoopoon.home.R.id.home_main_pager));
         initUI();
     }
