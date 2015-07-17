@@ -30,6 +30,19 @@
         android:textColor="@color/red"
         android:text="佣金 200"/>
     
+    <View 
+        android:layout_width="0.0001px"
+        android:layout_height="30dp"
+        android:background="@color/setting_text"/>
+    
+    
+    <ImageView 
+        android:id="@+id/iv_"
+        android:layout_alignParentRight="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/up_arrow"/>
+    
     
 
 </RelativeLayout>
