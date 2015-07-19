@@ -2,13 +2,13 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
@@ -133,16 +133,41 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/red</item>
     </style>
-    
+
     <style name="TextView_Wrap_Content">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-    
+
     <style name="TextView_WhiteTextColor" parent="TextView_Wrap_Content">
         <item name="android:textColor">#ffffff</item>
     </style>
+
+    <style name="View_Margin">
+        <item name="android:layout_marginLeft">60dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">0.0001px</item>
+        <item name="android:background">@drawable/line</item>
+    </style>
+
+    <style name="TextView_Detail_Progress">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">40dp</item>
+        <item name="android:drawablePadding">15dp</item>
+    </style>
+
+    <style name="TextView_Detail_Progress_Done" parent="TextView_Detail_Progress">
+        <item name="android:drawableLeft">@drawable/red_point_icon</item>
+        <item name="android:textColor">@color/red</item>
+    </style>
     
-    
+    <style name="TextView_Detail_Progress_Undone" parent="TextView_Detail_Progress">
+        <item name="android:drawableLeft">@drawable/black_point</item>
+        <item name="android:textColor">@color/setting_text</item>
+    </style>
 
 </resources>

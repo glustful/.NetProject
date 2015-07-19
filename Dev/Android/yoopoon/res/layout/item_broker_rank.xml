@@ -36,16 +36,16 @@
         android:layout_toLeftOf="@+id/iv_broker_rank_trend"
         android:layout_width="0.0001px"
         android:layout_height="30dp"
-        android:background="@color/setting_text"/>
+        android:background="@drawable/vertical_line"/>
     
     
     <ImageView 
         android:layout_centerVertical="true"
         android:id="@+id/iv_broker_rank_trend"
         android:layout_alignParentRight="true"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/up_arrow"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/trend_up"/>
     
     
 
