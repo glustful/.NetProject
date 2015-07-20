@@ -60,7 +60,7 @@ app.controller('personsettingController',['$scope','$http','$state','AuthService
             	var img = document.getElementById('imghead');
             	img.src = $scope.olduser.Headphoto;
                 $state.go("app.personal");
-            	//location.reload([true]);
+            	location.reload([true]);
             });
     }
 }])
