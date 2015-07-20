@@ -187,6 +187,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		if (cookieFile.exists()) {
 			cookieFile.delete();
 		}
+
 		RequestTask.setmCookieStore(null);
 		String eMail = mUser.getPhone();
 		String pwd = mUser.getPassword();
@@ -198,10 +199,12 @@ public class HomeLoginActivity extends MainActionBarActivity {
 			requestLogin(eMail, pwd, auto);
 		} else {
 			mPwdText.setText("");
+
 			if (!isManual) {
 				FramMainActivity_.intent(mContext).start();
 				finish();
 			}
+
 		}
 		mAutoCheck.setChecked(auto);
 	}

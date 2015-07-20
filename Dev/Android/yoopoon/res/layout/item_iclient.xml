@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:padding="15dp" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tv_iclient_title"
+            style="@style/TextView_Wrap_Content"
+            android:text="带客 徐阳会"
+            android:textSize="@dimen/large_textSize" />
+
+        <TextView
+            android:id="@+id/tv_iclient_phone"
+            style="@style/TextView_Wrap_Content"
+            android:layout_alignParentRight="true"
+            android:text="13508713650" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_iclient_housestyle"
+        style="@style/TextView_GrayText_WrapContent"
+        android:layout_marginTop="5dp"
+        android:text="2室2厅1厨2卫  书房 人民路壹号" />
+
+    <TextView
+        android:id="@+id/tv_iclient_showprogress"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="#f0f0f0"
+        android:clickable="true"
+        android:drawableRight="@drawable/down_arrow"
+        android:focusable="true"
+        android:padding="10dp"
+        android:text="详细进度"
+        android:textColor="@color/setting_text" />
+<!-- 
+    <TextView
+        android:id="@+id/tv_hideprogress"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="#f0f0f0"
+        android:clickable="true"
+        android:drawableRight="@drawable/up_arrow"
+        android:focusable="true"
+        android:padding="10dp"
+        android:text="详细进度"
+        android:textColor="@color/setting_text"
+        android:visibility="gone" /> -->
+
+    <include
+        android:id="@+id/rl_iclient_progress"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        layout="@layout/progress"
+        android:visibility="gone" />
+
+</LinearLayout>

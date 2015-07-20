@@ -92,7 +92,9 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		 */
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			PartnerDetailActivity_.intent(IPartnerActivity.this).start();
+			String name = showNameList[position];
+			if (!name.startsWith("*****"))
+				PartnerDetailActivity_.intent(IPartnerActivity.this).start();
 		}
 
 	}

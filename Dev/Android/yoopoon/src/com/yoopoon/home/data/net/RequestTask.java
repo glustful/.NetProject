@@ -22,11 +22,9 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
@@ -62,13 +60,11 @@ import org.apache.http.util.EncodingUtils;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-
 import com.yoopoon.home.data.net.RequestAdapter.RequestContentType;
 import com.yoopoon.home.data.storage.LocalPath;
 
@@ -90,13 +86,16 @@ public class RequestTask implements Runnable {
 		mHttpContext = new BasicHttpContext();
 		mId = UUID.randomUUID().toString();
 	}
+
 	public String getId() {
 		return mId;
 	}
+
 	public void cancel() {
 		this.mStopRunning = true;
 		mHttpClient.getConnectionManager().shutdown();
 	}
+
 	@Override
 	public void run() {
 		if (mRequestData == null || mStopRunning) {
@@ -160,6 +159,7 @@ public class RequestTask implements Runnable {
 			upLoadRequestPostMethod(urlString);
 		}
 	}
+
 	private void RequestGetMethod(String urlString) {
 		IdentityHashMap<String, String> params = mRequestData.getParams();
 		if ((null != params) && (params.size() > 0)) {
@@ -232,6 +232,7 @@ public class RequestTask implements Runnable {
 			sendResponseMessage(msg);
 		}
 	}
+
 	private void RequestPostMethod(String urlString) throws UnsupportedEncodingException {
 		IdentityHashMap<String, String> params = mRequestData.getParams();
 		HttpPost httpPost = new HttpPost(urlString);
@@ -309,12 +310,13 @@ public class RequestTask implements Runnable {
 			sendResponseMessage(msg);
 		}
 	}
+
 	private void upLoadRequestPostMethod(String urlString) {
 		HttpEntity entityWhole;
 		MultipartEntity mpEntity = new MultipartEntity();
 		HttpPost httpPost = new HttpPost(urlString);
 		httpPost.setHeader("x-requested-with", "XMLHttpRequest");
-		// httpPost.setHeader("Content-Type","multipart/form-data");
+		httpPost.setHeader("Content-Type", "multipart/form-data");
 		try {
 			if (mRequestData.getmAttPath() != null && !"".equals(mRequestData.getmAttPath().trim())
 					&& mRequestData.getmBitmap() == null) {
@@ -389,6 +391,7 @@ public class RequestTask implements Runnable {
 			sendResponseMessage(msg);
 		}
 	}
+
 	private void downloadFile(InputStream is, int responseCode) {
 		int fileSize = 0;
 		try {
@@ -454,6 +457,7 @@ public class RequestTask implements Runnable {
 		msg.setData(null);
 		sendResponseMessage(msg);
 	}
+
 	private void sendProgressMessage(ProgressMessage msg) {
 		Message hadnelMsg = mRevedHander.obtainMessage();
 		Bundle bund = new Bundle();
@@ -462,6 +466,7 @@ public class RequestTask implements Runnable {
 		hadnelMsg.setData(bund);
 		hadnelMsg.sendToTarget();
 	}
+
 	private void sendResponseMessage(ResponseMessage msg) {
 		Message hadnelMsg = mRevedHander.obtainMessage();
 		Bundle bund = new Bundle();
@@ -470,6 +475,7 @@ public class RequestTask implements Runnable {
 		hadnelMsg.setData(bund);
 		hadnelMsg.sendToTarget();
 	}
+
 	private DefaultHttpClient getHttpClient(RequestAdapter data) {
 		try {
 			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -504,10 +510,12 @@ public class RequestTask implements Runnable {
 				public java.security.cert.X509Certificate[] getAcceptedIssuers() {
 					return null;
 				}
+
 				@Override
 				public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType)
 						throws java.security.cert.CertificateException {
 				}
+
 				@Override
 				public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType)
 						throws java.security.cert.CertificateException {
@@ -515,11 +523,13 @@ public class RequestTask implements Runnable {
 			};
 			sslContext.init(null, new TrustManager[] { tm }, null);
 		}
+
 		@Override
 		public Socket createSocket(Socket socket, String host, int port, boolean autoClose) throws IOException,
 				UnknownHostException {
 			return sslContext.getSocketFactory().createSocket(socket, host, port, autoClose);
 		}
+
 		@Override
 		public Socket createSocket() throws IOException {
 			return sslContext.getSocketFactory().createSocket();
@@ -556,6 +566,7 @@ public class RequestTask implements Runnable {
 		}
 		mCookieStore = cookie;
 	}
+
 	public static void setmCookieStore(CookieStore mCookieStore) {
 		RequestTask.mCookieStore = mCookieStore;
 	}

@@ -1,13 +1,11 @@
 package com.yoopoon.home.ui.home;
 
 import java.util.ArrayList;
-
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -17,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
@@ -29,7 +28,6 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
-
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.SearchActionBarActivity;
@@ -53,6 +51,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 		instance = this;
 		fInfo = new ArrayList<FragmentInfo>();
 	}
+
 	@AfterViews
 	void initUI() {
 		MyApplication.getInstance().addActivity(this);
@@ -61,6 +60,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 		initFragments();
 		begin();
 	}
+
 	void initFragments() {
 		Bundle argActive = new Bundle();
 		fInfo.add(new FragmentInfo(FramActiveFragment_.class, argActive));
@@ -73,6 +73,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 		Bundle argMe = new Bundle();
 		fInfo.add(new FragmentInfo(FramMeFragment_.class, argMe));
 	}
+
 	@SuppressLint("NewApi")
 	void initMenu() {
 		tabHost.setup();
@@ -95,6 +96,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 			});
 		}
 	}
+
 	private TabSpec getTabSpec(String content, int resId, String title) {
 		MainTabView tab = MainTabView_.build(this);
 		tab.setIndicator(resId);
@@ -109,9 +111,11 @@ public class FramMainActivity extends SearchActionBarActivity {
 		public void onPageSelected(int position) {
 			tabHost.setCurrentTab(position);
 		}
+
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 		}
+
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 		}
@@ -132,6 +136,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 		mainPager.setOnPageChangeListener(pageListener);
 		mainPager.setCurrentItem(0);
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: onCreate
@@ -184,9 +189,17 @@ public class FramMainActivity extends SearchActionBarActivity {
 		Builder builder = new Builder(this);
 		builder.setMessage("确定要退出应用程序吗？");
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
+
+				// 若用户没有选择记住用户，清楚sp
+				SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(FramMainActivity.this);
+				Editor editor = sp.edit();
+				editor.clear();
+				editor.commit();
+
 				android.os.Process.killProcess(android.os.Process.myPid()); // 获取PID
 				System.exit(0);
 			}
@@ -199,26 +212,31 @@ public class FramMainActivity extends SearchActionBarActivity {
 		});
 		dialog = builder.show();
 	}
+
 	@Override
 	protected void onRestart() {
 		super.onRestart();
 	}
+
 	@Override
 	protected void onDestroy() {
 		this.unregisterReceiver(logoutReceiver);
 		this.unregisterReceiver(brokerTakeGuestReceiver);
 		super.onDestroy();
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 	}
+
 	@Override
 	protected void onStop() {
 		if (dialog == null)
 			dialog = null;
 		super.onStop();
 	}
+
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -230,6 +248,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 		public MainTabFactory(Context context) {
 			mContext = context;
 		}
+
 		@Override
 		public View createTabContent(String tag) {
 			View v = new View(mContext);
@@ -244,20 +263,24 @@ public class FramMainActivity extends SearchActionBarActivity {
 		MyApplication.getInstance().removeActivity(this);
 		super.finish();
 	}
+
 	@Override
 	protected int getHeight() {
 		// TODO Auto-generated method stub
 		return mainPager.getHeight();
 	}
+
 	@Override
 	protected View getParentView() {
 		// TODO Auto-generated method stub
 		return mainPager;
 	}
+
 	@Override
 	protected void showResult(JSONArray optJSONArray) {
 		searchLayout.setVisibility(View.VISIBLE);
 	}
+
 	@Override
 	protected void cleanSearch() {
 		searchLayout.setVisibility(View.GONE);

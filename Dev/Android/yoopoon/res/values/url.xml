@@ -2,8 +2,8 @@
 <resources>
 
     <!-- server host -->
-    <!-- <string name="url_host">http://api.iyookee.cn</string> -->
-    <string name="url_host">http://192.168.1.199:9010</string>
+     <!-- <string name="url_host">http://api.iyookee.cn</string>  -->
+     <string name="url_host">http://192.168.1.199:9010</string> 
     <!-- userController -->
     <string name="url_signup">/api/user/SignUp</string>
 
@@ -43,5 +43,6 @@
 	<string name="url_add_bank">/api/BankCard/AddBankCard</string>
 	<string name="url_get_all_banks">/api/BankCard/SearchAllBankByUser</string>
 	<string name="url_get_my_clients">/api/ClientInfo/GetStatusByUserId</string>
+	<string name="url_upload">/api/Resource/Upload</string>
 </resources>
  

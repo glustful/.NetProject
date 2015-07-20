@@ -36,6 +36,7 @@ public class User {
 	public String idCard;
 	public String realName;
 	private String email;
+	private String headUrl;
 
 	public boolean remember;
 
@@ -141,11 +142,20 @@ public class User {
 		this.realName = realName;
 	}
 
+	public String getHeadUrl() {
+		return headUrl;
+	}
+
+	public void setHeadUrl(String headUrl) {
+		this.headUrl = headUrl;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", nickName=" + nickName
-				+ ", sex=" + sex + ", idCard=" + idCard + ", realName=" + realName + ", email=" + email + ", remember="
-				+ remember + ", phone=" + phone + ", status=" + status + ", roles=" + roles + "]";
+				+ ", sex=" + sex + ", idCard=" + idCard + ", realName=" + realName + ", email=" + email + ", headUrl="
+				+ headUrl + ", remember=" + remember + ", phone=" + phone + ", status=" + status + ", roles=" + roles
+				+ "]";
 	}
 
 	@SuppressLint("DefaultLocale")
@@ -412,6 +422,7 @@ public class User {
 				if (data.getResultState() == ResultState.eSuccess) {
 					JSONObject obj = data.getJsonObject2();
 
+					User.this.setHeadUrl(Tools.optString(obj, "Headphoto", null));
 					User.this.setNickName(Tools.optString(obj, "Nickname", null));
 					User.this.setIdCard(Tools.optString(obj, "Sfz", null));
 					User.this.setSex(Tools.optString(obj, "Sexy", null));

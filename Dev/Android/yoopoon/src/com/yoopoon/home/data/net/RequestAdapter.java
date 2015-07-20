@@ -290,19 +290,23 @@ public abstract class RequestAdapter implements Serializable {
 	public abstract void onProgress(ProgressMessage msg);
 
 	protected enum CallMethod {
+
 		eUnity, eDispersion,
 	}
 
 	public enum RequestMethod {
-		ePost, eGet,
+
+		ePost, eGet, eFileUp
 
 	}
 
 	public enum RequestType {
+
 		eGeneral, eFileDown, eFileUp, eFileStream,
 	}
 
 	public enum RequestMode {
+
 		eSync, eAntsynC;
 	}
 

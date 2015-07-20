@@ -73,9 +73,9 @@ public class FramMeFragment extends FramSuper {
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
 		this.isVisibleToUser = isVisibleToUser;
-
 		if (isVisibleToUser) {
-			if (User.lastLoginUser(getActivity()) == null) {
+			User user = User.lastLoginUser(getActivity());
+			if (user == null) {
 				HomeLoginActivity_.intent(getActivity()).isManual(true).start();
 				return;
 			} else {

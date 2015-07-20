@@ -2060,7 +2060,7 @@ containing a value of this type.
         public static final int url_get_my_clients=0x7f0a0035;
         public static final int url_getcode_forbroker=0x7f0a002f;
         /**  server host 
- <string name="url_host">http://api.iyookee.cn</string> 
+ <string name="url_host">http://api.iyookee.cn</string>  
          */
         public static final int url_host=0x7f0a0018;
         /**  图片服务器地址 
@@ -2085,6 +2085,7 @@ containing a value of this type.
          */
         public static final int url_task_taskListMobile=0x7f0a002c;
         public static final int url_update_brokerinfo=0x7f0a0030;
+        public static final int url_upload=0x7f0a0036;
         public static final int url_user_addBroker=0x7f0a001b;
     }
     public static final class style {

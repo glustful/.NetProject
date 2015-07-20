@@ -5,20 +5,26 @@ import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.makeramen.RoundedImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.common.base.Tools;
 import com.yoopoon.home.IClientActivity_;
 import com.yoopoon.home.IPartnerActivity_;
 import com.yoopoon.home.IPocketActivity_;
 import com.yoopoon.home.IRecommendActivity_;
 import com.yoopoon.home.R;
+import com.yoopoon.home.data.user.User;
+import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
 @EViewGroup(R.layout.broker_info_view)
 public class BrokerInfoView extends RelativeLayout {
+
+	private static final String TAG = "BrokerInfoView";
 
 	@ViewById
 	RoundedImageView headImg;
@@ -45,6 +51,10 @@ public class BrokerInfoView extends RelativeLayout {
 
 	@Click(R.id.headImg)
 	void headImg() {
+		if (User.lastLoginUser(getContext()) == null) {
+			HomeLoginActivity_.intent(getContext()).isManual(true).start();
+			return;
+		}
 		PersonSettingActivity_.intent(getContext()).start();
 	}
 
@@ -103,6 +113,12 @@ public class BrokerInfoView extends RelativeLayout {
 			// custom.setText(Tools.optInt(mRootData, "customerCount", 0) + "");
 			custom.setText(String.valueOf(clientCount));
 			money.setText(Tools.optString(mRootData, "allMoneys", "0.00"));
+			String photo = Tools.optString(mRootData, "photo", null);
+			if (!TextUtils.isEmpty(photo)) {
+				// 若photo不为空，加载头像
+				String url = "http://img.yoopoon.com/" + photo;
+				ImageLoader.getInstance().displayImage(url, headImg);
+			}
 		} else {
 			bLayout.setVisibility(View.GONE);
 			cLayout.setVisibility(View.VISIBLE);

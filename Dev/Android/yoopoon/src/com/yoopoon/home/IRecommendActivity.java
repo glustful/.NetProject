@@ -92,7 +92,9 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 		 */
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			PartnerDetailActivity_.intent(IRecommendActivity.this).start();
+			String name = showNameList[position];
+			if (!name.startsWith("*****"))
+				PartnerDetailActivity_.intent(IRecommendActivity.this).start();
 		}
 
 	}
