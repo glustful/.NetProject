@@ -1391,6 +1391,10 @@ angular.module('app')
                 url:'/order',
                 template:'<div ui-view></div>'
             })
+            .state('page.Trading.CommissionRatio',{
+                url:'/CommissionRatio',
+                template:'<div ui-view></div>'
+            })
             .state('page.Trading.bill',{
                 url:'/bill',
                 template:'<div ui-view></div>'
@@ -1486,6 +1490,13 @@ angular.module('app')
                 data : { title: '洽谈后订单' },
                 controller:'NegotiateOrderController',
                 resolve: load(['scripts/controllers/Trading/Order.js','scripts/controllers/vectormap.js'])
+            })
+            .state('page.Trading.CommissionRatio.index', {
+                url: '/index',
+                templateUrl: 'views/pages/Trading/CommissionRatio/index.html',
+                data : { title: '佣金比例' },
+                //controller:'CommissionController',
+                resolve: load('scripts/controllers/Trading/Commission.js')
             })
 
           /*优惠券*/

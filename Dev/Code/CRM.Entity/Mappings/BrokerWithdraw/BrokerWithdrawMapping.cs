@@ -23,6 +23,7 @@ namespace CRM.Entity.Mappings.BrokerWithdraw
             Property(c => c.Uptime).HasColumnType("datetime");
             Property(c => c.State).HasColumnType("int");
             Property(c => c.WithdrawDesc).HasColumnType("varchar").HasMaxLength(30);
+            Property(c => c.BankSn).HasColumnType("varchar").HasMaxLength(30);
         }
     }
 }

@@ -63,6 +63,8 @@
     <Compile Include="Entity\Classify\ClassifyEntity.cs" />
     <Compile Include="Entity\Classify\ClassifySearchConditon.cs" />
     <Compile Include="Entity\Classify\EnumClassify.cs" />
+    <Compile Include="Entity\CommissionRatio\CommissionRatioEntity.cs" />
+    <Compile Include="Entity\CommissionRatio\CommissionRatioSearchCondition.cs" />
     <Compile Include="Entity\LandAgentBill\EnumLandAgentBill.cs" />
     <Compile Include="Entity\LandAgentBill\LandAgentBillEntity.cs" />
     <Compile Include="Entity\LandAgentBill\LandAgentBillSearchConditon.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Mappings\BrandParameter\BrandParameterMapping.cs" />
     <Compile Include="Mappings\CFBBill\CFBBillMapping.cs" />
     <Compile Include="Mappings\Classify\ClassifyMapping.cs" />
+    <Compile Include="Mappings\CommissionRatio\CommissionRatioMapping.cs" />
     <Compile Include="Mappings\LandAgentBill\LandAgentBillMapping.cs" />
     <Compile Include="Mappings\OrderDetail\OrderDetailMapping.cs" />
     <Compile Include="Mappings\Order\OrderMapping.cs" />

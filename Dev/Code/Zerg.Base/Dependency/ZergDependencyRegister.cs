@@ -54,9 +54,9 @@ namespace Zerg.Base.Dependency
                 .InstancePerRequest();
 
             builder.RegisterGeneric(typeof(EventRepository<>))
-    .WithParameter(eventPrameter)
-    .As(typeof(IEventRepository<>))
-    .InstancePerRequest();
+                .WithParameter(eventPrameter)
+                .As(typeof(IEventRepository<>))
+                .InstancePerRequest();
             #endregion
             //            builder.RegisterAssemblyTypes(typeFinder.GetAssemblies().ToArray())
             //                .Where(t =>!String.IsNullOrEmpty(t.Namespace)&& t.Namespace.StartsWith("CMS") && t.Name.Contains("Service"))
