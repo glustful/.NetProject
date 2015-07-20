@@ -30,7 +30,7 @@ namespace Zerg.Common.Data
         }
     }
 
-    public class EventConfiguration : DbMigrationsConfiguration<TradingDbContext>
+    public class EventConfiguration : DbMigrationsConfiguration<EventDbContext>
     {
         public EventConfiguration()
         {
