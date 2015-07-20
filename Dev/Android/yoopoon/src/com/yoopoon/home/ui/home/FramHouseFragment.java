@@ -46,6 +46,8 @@ import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.ui.AD.ADController;
 import com.yoopoon.house.ui.houselist.FramHouseAreaAdapter;
 import com.yoopoon.house.ui.houselist.FramHouseListViewAdapter;
+import com.yoopoon.house.ui.houselist.RequestHouseAreaCondition;
+import com.yoopoon.house.ui.houselist.RequestHouseAreaCondition.Callback;
 
 @SuppressLint("ShowToast")
 @EFragment()
@@ -117,16 +119,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	private String provindeID, cityID, districtID;
 
 	// //////////////////////////////如上是初始化和声明的变量/////////////////////////////////////////////////////////////////////
-	/*
-	 * @Title: onCreateView
-	 * @Description: 创建Fragment视图
-	 * @param inflater
-	 * @param container
-	 * @param savedInstanceState
-	 * @return
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
-	 * android.view.ViewGroup, android.os.Bundle)
-	 */
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -170,6 +162,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 * 初始化界面Fragment
 	 */
 	public void initViews() {
+		// 初始化房源页顶端楼盘区域的显示控件和楼盘区域数据
+		initHouseAreaView();
+		// initHouseAreaDatas();
 		listView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
 		refreshView = listView.getRefreshableView();
 		listView.setOnRefreshListener(new HowWillIrefresh());
@@ -220,9 +215,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		houseTotalCountTextView.setPadding(screenWidth / 10, 0, 0, 0);
 		refreshView.addHeaderView(houseTotalCountTextView);
 	}
-	@AfterInject
-	void afterInject() {
-	}
 	/**
 	 * @Title: requestHouseList
 	 * @Description: 开启一个异步的线程，获取房源中楼盘列表
@@ -270,10 +262,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		}.setUrl(getString(R.string.url_product_search)).setRequestMethod(RequestMethod.eGet).addParam(parameter)
 				.notifyRequest();
 	}
-	/**
-	 * @Title: requestAdvertisements
-	 * @Description: 获取房源首页顶端的广告列表
-	 */
 	private void requestAdvertisements() {
 		new RequestAdapter() {
 			@Override
@@ -723,8 +711,60 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		houseDistrictListView = (ListView) rootView.findViewById(R.id.house_district_listView);
 	}
 	public void initHouseAreaDatas() {
-		// houseProvinceJsonObjects = new ArrayList<JSONObject>();
-		// houseCityJsonObjects = new ArrayList<JSONObject>();
-		// houseDistrictJsonObjects = new ArrayList<JSONObject>();
+		// 初始化存储楼盘区域信息的ArrayList
+		houseProvinceJsonObjects = new ArrayList<JSONObject>();
+		houseCityJsonObjects = new ArrayList<JSONObject>();
+		houseDistrictJsonObjects = new ArrayList<JSONObject>();
+		// 获取省份
+		RequestHouseAreaCondition.requestHouseArea(new Callback() {
+			@Override
+			public void callback(JSONArray jsonArray) {
+				if (jsonArray.length() < 1 || jsonArray == null) {
+					return;
+				}
+				for (int i = 0; i < jsonArray.length(); i++) {
+					JSONObject jsonObject = jsonArray.optJSONObject(i);
+					houseProvinceJsonObjects.add(jsonObject);
+				}
+				provinceAdapter = new FramHouseAreaAdapter(mContext, houseProvinceJsonObjects, 0);
+				houseProvinceListView.setAdapter(provinceAdapter);
+			}
+		});
+		// 获取和区
+		if (houseProvinceJsonObjects != null && houseProvinceJsonObjects.size() > 0) {
+			RequestHouseAreaCondition.requestHouseArea(houseProvinceJsonObjects.get(0).optString("id"), new Callback() {
+				@Override
+				public void callback(JSONArray jsonArray) {
+					if (jsonArray.length() < 1 || jsonArray == null) {
+						return;
+					}
+					for (int i = 0; i < jsonArray.length(); i++) {
+						JSONObject jsonObject = jsonArray.optJSONObject(i);
+						houseCityJsonObjects.add(jsonObject);
+					}
+					cityAdapter = new FramHouseAreaAdapter(mContext, houseCityJsonObjects, 0);
+					houseCityListView.setAdapter(cityAdapter);
+				}
+			});
+		}
+		if (houseCityJsonObjects != null && houseCityJsonObjects.size() > 1) {
+			RequestHouseAreaCondition.requestHouseArea(houseCityJsonObjects.get(0).optString("id"), new Callback() {
+				@Override
+				public void callback(JSONArray jsonArray) {
+					if (jsonArray.length() < 1 || jsonArray == null) {
+						return;
+					}
+					for (int i = 0; i < jsonArray.length(); i++) {
+						JSONObject jsonObject = jsonArray.optJSONObject(i);
+						houseDistrictJsonObjects.add(jsonObject);
+					}
+					districtAdapter = new FramHouseAreaAdapter(mContext, houseDistrictJsonObjects, 0);
+					houseDistrictListView.setAdapter(districtAdapter);
+				}
+			});
+		}
+	}
+	@AfterInject
+	void afterInject() {
 	}
 }

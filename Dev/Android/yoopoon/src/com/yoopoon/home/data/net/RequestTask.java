@@ -174,7 +174,7 @@ public class RequestTask implements Runnable {
 			}
 			urlString = urlString.substring(0, urlString.length() - 1);// 去掉最后的&字符
 		}
-		Log.w("RequestTask", urlString.toString());
+		Log.i("RequestTask", urlString.toString());
 		HttpResponse httpResponse = null;
 		try {
 			HttpGet get = new HttpGet(urlString);
