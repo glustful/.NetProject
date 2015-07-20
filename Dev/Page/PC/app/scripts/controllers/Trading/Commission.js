@@ -8,7 +8,7 @@ angular.module("app").controller("CommissionController",[
             RecCfbScale:'',
             RecAgentScale:'',
             TakeCfbScale:'',
-            TakeAngetScale:'',
+            TakeAgentScale:'',
             TakePartnerScale:'',
             RecPartnerScale:''
         }
