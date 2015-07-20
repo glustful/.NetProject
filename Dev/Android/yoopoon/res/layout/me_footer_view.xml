@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone" >
+        android:visibility="visible" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,42 +19,24 @@
 
             <TextView
                 android:id="@+id/tv_footer_guest"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/white"
-                android:drawablePadding="5dp"
+                style="@style/TextView_Footer"
                 android:drawableTop="@drawable/me_info_custom_icon"
-                android:gravity="center"
-                android:padding="10dp"
                 android:text="我要带客"
                 android:textColor="@color/red" />
 
             <TextView
+                style="@style/TextView_Footer"
                 android:id="@+id/tv_footer_recommend"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_marginLeft="1dp"
-                android:layout_weight="1"
-                android:background="@android:color/white"
-                android:drawablePadding="5dp"
                 android:drawableTop="@drawable/me_info_introduce_icon"
-                android:gravity="center"
-                android:padding="10dp"
                 android:text="我要推荐"
                 android:textColor="@color/red" />
 
             <TextView
                 android:id="@+id/tv_footer_partner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                style="@style/TextView_Footer"
                 android:layout_marginLeft="1dp"
-                android:layout_weight="1"
-                android:background="@android:color/white"
-                android:drawablePadding="5dp"
                 android:drawableTop="@drawable/me_info_partnet_icon"
-                android:gravity="center"
-                android:padding="10dp"
                 android:text="我的合伙人" />
         </LinearLayout>
 
@@ -66,40 +48,22 @@
 
             <TextView
                 android:id="@+id/tv_footer_recommend_agent"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/white"
-                android:drawablePadding="5dp"
+                style="@style/TextView_Footer"
                 android:drawableTop="@drawable/me_info_introduce_agent_icon"
-                android:gravity="center"
-                android:padding="10dp"
                 android:text="推荐经纪人" />
 
             <TextView
                 android:id="@+id/tv_footer_rank"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                style="@style/TextView_Footer"
                 android:layout_marginLeft="1dp"
-                android:layout_weight="1"
-                android:background="@android:color/white"
-                android:drawablePadding="5dp"
                 android:drawableTop="@drawable/me_info_agent_order_icon"
-                android:gravity="center"
-                android:padding="10dp"
                 android:text="经纪人排行" />
 
             <TextView
                 android:id="@+id/brokerSetting"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                style="@style/TextView_Footer"
                 android:layout_marginLeft="1dp"
-                android:layout_weight="1"
-                android:background="@android:color/white"
-                android:drawablePadding="5dp"
                 android:drawableTop="@drawable/setting_icon"
-                android:gravity="center"
-                android:padding="10dp"
                 android:text="设置" />
         </LinearLayout>
     </LinearLayout>

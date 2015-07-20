@@ -170,7 +170,7 @@ public class FramMeFragment extends FramSuper {
 						}
 
 					} else {
-						Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
+						HomeLoginActivity_.intent(getActivity()).isManual(true).start();
 					}
 				} else {
 					Toast.makeText(getActivity(), "获取客户信息失败！", Toast.LENGTH_SHORT).show();
