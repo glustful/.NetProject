@@ -164,7 +164,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	public void initViews() {
 		// 初始化房源页顶端楼盘区域的显示控件和楼盘区域数据
 		initHouseAreaView();
-		// initHouseAreaDatas();
+		initHouseAreaDatas();
 		listView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
 		refreshView = listView.getRefreshableView();
 		listView.setOnRefreshListener(new HowWillIrefresh());
@@ -727,7 +727,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					houseProvinceJsonObjects.add(jsonObject);
 				}
 				provinceAdapter = new FramHouseAreaAdapter(mContext, houseProvinceJsonObjects, 0);
-				houseProvinceListView.setAdapter(provinceAdapter);
+				// houseProvinceListView.setAdapter(provinceAdapter);
 			}
 		});
 		// 获取和区
