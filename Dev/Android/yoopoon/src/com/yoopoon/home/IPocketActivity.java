@@ -22,11 +22,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
@@ -61,11 +64,6 @@ public class IPocketActivity extends MainActionBarActivity {
 		TakeCashActivity_.intent(this).start();
 	}
 
-	@Click(R.id.btn_ipocket_addbank)
-	void addBank() {
-		AddBankActivity_.intent(this).start();
-	}
-
 	@ViewById(R.id.tv_ipocket_cash)
 	TextView tv_cash;
 
@@ -83,6 +81,7 @@ public class IPocketActivity extends MainActionBarActivity {
 		// fillData();
 		lv.setOnItemClickListener(new MyBankItemClickListener());
 		new Thread() {
+
 			public void run() {
 				request();
 			};
@@ -170,7 +169,7 @@ public class IPocketActivity extends MainActionBarActivity {
 		 */
 		@Override
 		public int getCount() {
-			return bankDatas.size();
+			return bankDatas.size() + 1;
 		}
 
 		/*
@@ -211,8 +210,20 @@ public class IPocketActivity extends MainActionBarActivity {
 		 */
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
+			if (position == bankDatas.size()) {
+				Button btn = new Button(IPocketActivity.this);
+				btn.setBackgroundResource(R.drawable.addbankcard_selector);
+				btn.setText("+添加银行卡");
+				btn.setOnClickListener(new OnClickListener() {
 
-			if (convertView == null)
+					@Override
+					public void onClick(View v) {
+						AddBankActivity_.intent(IPocketActivity.this).start();
+					}
+				});
+				return btn;
+			}
+			if (convertView == null || !(convertView instanceof RelativeLayout))
 				convertView = View.inflate(IPocketActivity.this, R.layout.item_bankcard, null);
 			Bank bank = bankDatas.get(position);
 			TextView tv_bankname = (TextView) convertView.findViewById(R.id.tv_bankcard_bank);

@@ -117,10 +117,13 @@
         <item name="android:textColor">@color/setting_text</item>
     </style>
 
-    <style name="TextView_GrayText_WrapContent">
+    <style name="TextView_GrayText_WrapContent" parent="TextView_WrapContent">
+        <item name="android:textColor">@color/setting_text</item>
+    </style>
+    
+    <style name="TextView_WrapContent">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/setting_text</item>
     </style>
 
     <style name="EditText_Psw" parent="EditText_Normal">

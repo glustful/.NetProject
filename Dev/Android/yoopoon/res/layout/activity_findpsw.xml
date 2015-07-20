@@ -6,7 +6,7 @@
     android:padding="20dp">
     
     <TextView 
-        style="@style/TextView_GrayText"
+        style="@style/TextView_WrapContent"
         android:text="请输入手机号码"/>
     <EditText 
         android:id="@+id/et_findpsw_phone"
@@ -20,7 +20,7 @@
     
     <TextView 
         android:layout_marginTop="10dp"
-        style="@style/TextView_GrayText"
+        style="@style/TextView_WrapContent"
         android:text="新密码"/>
     <EditText 
         android:id="@+id/et_findpsw_new"
@@ -34,7 +34,7 @@
     
     <TextView 
         android:layout_marginTop="10dp"
-        style="@style/TextView_GrayText"
+        style="@style/TextView_WrapContent"
         android:text="确认新密码"/>
     <EditText 
         android:id="@+id/et_findpsw_confirm"

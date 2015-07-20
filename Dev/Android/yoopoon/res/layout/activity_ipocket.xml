@@ -62,14 +62,6 @@
             android:dividerHeight="10dp" />
         
         
-        <Button 
-            android:id="@+id/btn_ipocket_addbank"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="添加银行卡"
-            android:textColor="@color/setting_text"
-            android:background="@drawable/add_bank_bg"
-            android:drawableTop="@drawable/add_btn"/>
     </LinearLayout>
     
     
