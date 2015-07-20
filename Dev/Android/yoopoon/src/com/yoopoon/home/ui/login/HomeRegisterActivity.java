@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yoopoon.common.base.utils.RegxUtils;
 import com.yoopoon.common.base.utils.Utils;
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
@@ -77,11 +78,13 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		@Override
 		public void onTick(long millisUntilFinished) {
 			sendSMS.setEnabled(false);
-			sendSMS.setText("还剩" + millisUntilFinished / 1000 + "秒");
+			sendSMS.setBackgroundResource(R.drawable.btn_not_enable);
+			sendSMS.setText("重新获取验证码(" + millisUntilFinished / 1000 + ")");
 		}
 
 		@Override
 		public void onFinish() {
+			sendSMS.setBackgroundResource(R.drawable.cycle_selector);
 			sendSMS.setEnabled(true);
 			sendSMS.setText("发送验证码");
 
@@ -190,7 +193,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 	@Click(R.id.sendSMS)
 	void sendSMS() {
 		String phone = mPhoneText.getText().toString();
-		if (phone == null || phone.length() != 11) {
+		if (!RegxUtils.isPhone(phone)) {
 			showError("非法的手机号码");
 			return;
 		}
@@ -227,7 +230,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 			return;
 		}
 		String phone = mPhoneText.getText().toString();
-		if (phone == null || phone.length() != 11) {
+		if (!RegxUtils.isPhone(phone)) {
 			showError("非法的手机号码");
 			return;
 		}
@@ -312,8 +315,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 
 	@Override
 	public void backButtonClick(View v) {
-		// TODO Auto-generated method stub
-
+		finish();
 	}
 
 	@Override

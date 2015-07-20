@@ -113,7 +113,6 @@ public class FramMeFragment extends FramSuper {
 			cleanLayout();
 		} else {
 			requestClientCount();
-			requestBrokerInfo();
 			requestTodayTask();
 		}
 	}
@@ -155,40 +154,39 @@ public class FramMeFragment extends FramSuper {
 	}
 
 	private void requestClientCount() {
-		new Thread() {
-			public void run() {
-				new RequestAdapter() {
 
-					@Override
-					public void onReponse(ResponseData data) {
-						if (data != null) {
-							if (data.getResultState() == ResultState.eSuccess) {
-								JSONObject dataObj = data.getMRootData();
-								try {
-									clientCount = dataObj.getInt("totalCount");
-								} catch (JSONException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
+		new RequestAdapter() {
 
-							} else {
-								Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
-							}
-						} else {
-							Toast.makeText(getActivity(), "获取客户信息失败！", Toast.LENGTH_SHORT).show();
+			@Override
+			public void onReponse(ResponseData data) {
+				if (data != null) {
+					if (data.getResultState() == ResultState.eSuccess) {
+						JSONObject dataObj = data.getMRootData();
+						try {
+							clientCount = dataObj.getInt("totalCount");
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 
+					} else {
+						Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 					}
+				} else {
+					Toast.makeText(getActivity(), "获取客户信息失败！", Toast.LENGTH_SHORT).show();
+				}
+				requestBrokerInfo();
 
-					@Override
-					public void onProgress(ProgressMessage msg) {
-						// TODO Auto-generated method stub
+			}
 
-					}
-				}.setUrl(getString(R.string.url_get_my_clients) + "/?page=1&pageSize=10")
-						.setRequestMethod(RequestMethod.eGet).notifyRequest();
-			};
-		}.start();
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_get_my_clients) + "/?page=1&pageSize=10").setRequestMethod(RequestMethod.eGet)
+				.notifyRequest();
+
 	}
 
 	private BroadcastReceiver loginReceiver = new BroadcastReceiver() {
