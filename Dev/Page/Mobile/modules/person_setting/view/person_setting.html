@@ -34,10 +34,11 @@
                        <input type="text" class="password old" placeholder="保护账号安全" name="information_sfz" ng-model="olduser.Sfz" ng-pattern="/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/" required/><br/>
                        <div class="information_error" ng-show="information_form.information_sfz.$invalid&&information_form.information_sfz.$dirty">请正确输入身份证号码</div>
                        <p> 邮箱</p>
-                       <div class="information_error" ng-show="information_form.information_mail.$invalid&&information_form.information_mail.$dirty">请正确输入邮箱</div>
                        <input type="email" class="password old" placeholder="用户邮箱" name="information_mail" ng-model="olduser.Email" ng-pattern="/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/"/><br/>
+                       <div class="information_error" ng-show="information_form.information_mail.$invalid&&information_form.information_mail.$dirty">请正确输入邮箱</div>
                        <p> 微信号</p>
-                       <input type="text" class="password old" placeholder="微信账号" name="WeiXinNumber" ng-model="olduser.WeiXinNumber" /><br/>
+                       <input type="text" class="password old" placeholder="微信账号" name="WeiXinNumber" ng-model="olduser.WeiXinNumber" required/><br/>
+                       <div class="information_error" ng-show="information_form.WeiXinNumber.$invalid&&information_form.WeiXinNumber.$dirty">请正确输入微信号</div>
                        <button class="save_button" type="submit" ng-disabled="information_form.$invalid">保存</button>
                    </form>
                </div>

@@ -302,15 +302,15 @@ namespace Zerg.Controllers.CRM
                 brokerModel.Email = broker.Email;
                 brokerModel.Realname = broker.Realname;
                 brokerModel.Sexy = broker.Sexy;
-                brokerModel.WeiXinNumber = broker.WeiXinNumber;//by  yangyue  2015/7/16
+                 brokerModel.WeiXinNumber = broker.WeiXinNumber;//by  yangyue  2015/7/16
 
                 #region 转职经纪人 杨定鹏 2015年6月11日17:29:58
                 //填写身份证，邮箱，和真实姓名后就能转职经纪人
                 if (!string.IsNullOrEmpty(broker.Email) && !string.IsNullOrEmpty(broker.Sfz) &&
                     !string.IsNullOrEmpty(broker.Realname))
-                {
+                   {
                     //权限变更
-                    var brokerRole = _roleService.GetRoleByName("broker");
+                            var brokerRole = _roleService.GetRoleByName("broker");
                     //User权限缺少时自动添加
                     if (brokerRole == null)
                     {
@@ -337,34 +337,34 @@ namespace Zerg.Controllers.CRM
 
                     //-----------------by yangyue  2015/7/16------------------------//
                     //奖励该用户30元
-                    var con=new BrokeAccountSearchCondition
-                    {
-                        Brokers = brokerModel,
-                        Type = 2
-                    };
-                    var a = _brokerAccountService.GetBrokeAccountsByCondition(con).FirstOrDefault();
-                    if (a == null)
-                    {
-                        BrokeAccountEntity model = new BrokeAccountEntity();
-                        model.Addtime = DateTime.Now;
-                        model.Adduser = 1;
-                        model.Broker = brokerModel;
-                        model.Type = '2';
-                        model.MoneyDesc = "完整经济人资料奖励30元";
-                        model.Balancenum = (decimal) 30;
-                        _brokerAccountService.Create(model);
+                    //var con=new BrokeAccountSearchCondition
+                    //{
+                    //    Brokers = brokerModel,
+                    //    Type = 2
+                    //};
+                    //var a = _brokerAccountService.GetBrokeAccountsByCondition(con).FirstOrDefault();
+                    //if (a == null)
+                    //{
+                    //    BrokeAccountEntity model = new BrokeAccountEntity();
+                    //    model.Addtime = DateTime.Now;
+                    //    model.Adduser = 1;
+                    //    model.Broker = brokerModel;
+                    //    model.Type = '2';
+                    //    model.MoneyDesc = "完整经济人资料奖励30元";
+                    //    model.Balancenum = (decimal) 30;
+                    //    _brokerAccountService.Create(model);
 
 
-                        if (_brokerAccountService.Create(model) != null)
-                        {
-                            return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
-                        }
-                        else
-                        {
-                            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
-                        }
+                    //    if (_brokerAccountService.Create(model) != null)
+                    //    {
+                    //        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                    //    }
+                    //    else
+                    //    {
+                    //        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                    //    }
 
-                    }
+                    //}
 
 
 
