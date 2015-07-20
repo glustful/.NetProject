@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,12 +37,14 @@ import com.yoopoon.home.R;
  */
 public class FramHouseAreaAdapter extends BaseAdapter {
 	// ########################## 如下是对变量和属性的初始化###################
+	private static final String LOGTAG = "FramHouseAreaAdapter";
 	Context mContext;
 	ArrayList<JSONObject> datas;
 	private LayoutInflater mLayoutInflater;
 	private int selectedPosition = -1;
 
 	public FramHouseAreaAdapter(Context context, ArrayList<JSONObject> arrayList, int selected) {
+		super();
 		mContext = context;
 		datas = arrayList;
 		mLayoutInflater = LayoutInflater.from(this.mContext);
@@ -60,10 +63,14 @@ public class FramHouseAreaAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
+	public void setSelectedPosition(int position) {
+		selectedPosition = position;
+	}
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHandler viewHandler = null;
 		if (convertView == null) {
+			Log.i(LOGTAG, "111111");
 			viewHandler = new ViewHandler();
 			convertView = mLayoutInflater.inflate(R.layout.item_house_area, null);
 			convertView.setTag(viewHandler);
