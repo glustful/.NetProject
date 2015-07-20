@@ -23,6 +23,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -260,6 +261,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 			String json = "{\"Mobile\":\"" + phone + "\",\"SmsType\":\"" + smsType + "\"}";
 			startMills = System.currentTimeMillis();
 			requesting();
+			Log.i(TAG, json);
 			SmsUtils.requestIdentifyCode(this, json, listener);
 
 		}
@@ -294,6 +296,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 		@Override
 		public void succeed(final String code) {
 			long duration = System.currentTimeMillis() - startMills;
+			Log.i(TAG, "lis.succeed:" + code);
 			if (duration < 2000) {
 				handler.postDelayed(new Runnable() {
 
@@ -315,6 +318,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 
 		@Override
 		public void fail(final String msg) {
+			Log.i(TAG, "lis.succeed:" + msg);
 			long duration = System.currentTimeMillis() - startMills;
 			if (duration < 2000) {
 				handler.postDelayed(new Runnable() {

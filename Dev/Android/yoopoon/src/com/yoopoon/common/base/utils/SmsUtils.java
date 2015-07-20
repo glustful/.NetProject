@@ -44,12 +44,16 @@ public class SmsUtils {
 
 			@Override
 			public void onReponse(ResponseData data) {
-				if (data.getResultState() == ResultState.eSuccess) {
 
+				if (data.getResultState() == ResultState.eSuccess) {
 					if (data.getMRootData().optString("Message", "").equals("1")) {
 						lis.succeed(data.getMRootData().optString("Desstr"));
 						return;
 					}
+				}
+				if (data.getMsg().contains("Value 1 of type java.lang.Integer")) {
+					lis.succeed("邀请已发送");
+					return;
 				}
 				lis.fail(data.getMsg());
 
