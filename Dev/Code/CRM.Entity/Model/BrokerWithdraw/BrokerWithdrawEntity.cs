@@ -60,5 +60,9 @@ namespace CRM.Entity.Model
         /// 财务描述
         /// </summary>
         public virtual string WithdrawDesc { get; set; }
+        /// <summary>
+        /// 银行流水号
+        /// </summary>
+        public virtual string BankSn { get; set; }
     }
 }

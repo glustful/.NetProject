@@ -88,6 +88,7 @@ namespace Zerg.Controllers.Trading.Trading
         /// <param name="beneficiarynumber">打款账号</param>
         /// <param name="remark">备注</param>
         /// <param name="user">当前用户</param>
+        /// <param name="model"></param>
         /// <returns>账单创建结果状态信息</returns>
         [Description("创建三个账单（zerg、经纪人、地产商")]
         [HttpPost]
@@ -431,7 +432,7 @@ namespace Zerg.Controllers.Trading.Trading
                         if (model.Shipstatus == 3)
                         {
                             amount.CFBamount = ode.Dealcommission * commissionRatio.TakeCfbScale;
-                            amount.Agentamount = (ode.Dealcommission * commissionRatio.TakeAgentScale- ode.Dealcommission*commissionRatio.RecAgentScale*
+                            amount.Agentamount = (ode.Dealcommission * commissionRatio.TakeAgentScale - ode.Dealcommission*commissionRatio.RecAgentScale*
                                                    commissionRatio.RecPartnerScale) + ode.Commission;
                             amount.Partneramount = ode.Dealcommission*commissionRatio.TakeAgentScale*
                                                    commissionRatio.TakePartnerScale;
