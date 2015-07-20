@@ -13,6 +13,8 @@
 package com.yoopoon.home.ui.home;
 
 import org.androidannotations.annotations.EFragment;
+import org.json.JSONException;
+import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -22,11 +24,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.round.progressbar.CircleProgressDialog;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.net.ProgressMessage;
@@ -65,12 +67,12 @@ public class FramMeFragment extends FramSuper {
 	private boolean isBroker = false;
 	private String userId = "0";
 	private boolean isVisibleToUser = false;
+	private int clientCount = 0;
 
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
 		this.isVisibleToUser = isVisibleToUser;
-		Log.i(TAG, "setUserVisibleHint");
 
 		if (isVisibleToUser) {
 			if (User.lastLoginUser(getActivity()) == null) {
@@ -110,6 +112,7 @@ public class FramMeFragment extends FramSuper {
 		if ("0".equals(userId)) {
 			cleanLayout();
 		} else {
+			requestClientCount();
 			requestBrokerInfo();
 			requestTodayTask();
 		}
@@ -120,7 +123,6 @@ public class FramMeFragment extends FramSuper {
 	 * @Description: 用户未登陆，清除相关数据
 	 */
 	private void cleanLayout() {
-		Log.i(TAG, "cleanLayout");
 		mBrokerInfoView.hide();
 		mTodayTaskCount.setText("今日 任务（无）");
 		mTodayTaskView.setVisibility(View.GONE);
@@ -152,6 +154,43 @@ public class FramMeFragment extends FramSuper {
 		getActivity().registerReceiver(loginReceiver, filter);
 	}
 
+	private void requestClientCount() {
+		new Thread() {
+			public void run() {
+				new RequestAdapter() {
+
+					@Override
+					public void onReponse(ResponseData data) {
+						if (data != null) {
+							if (data.getResultState() == ResultState.eSuccess) {
+								JSONObject dataObj = data.getMRootData();
+								try {
+									clientCount = dataObj.getInt("totalCount");
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+
+							} else {
+								Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
+							}
+						} else {
+							Toast.makeText(getActivity(), "获取客户信息失败！", Toast.LENGTH_SHORT).show();
+						}
+
+					}
+
+					@Override
+					public void onProgress(ProgressMessage msg) {
+						// TODO Auto-generated method stub
+
+					}
+				}.setUrl(getString(R.string.url_get_my_clients) + "/?page=1&pageSize=10")
+						.setRequestMethod(RequestMethod.eGet).notifyRequest();
+			};
+		}.start();
+	}
+
 	private BroadcastReceiver loginReceiver = new BroadcastReceiver() {
 
 		@Override
@@ -180,7 +219,7 @@ public class FramMeFragment extends FramSuper {
 				CircleProgressDialog.build(getActivity(), R.style.dialog).hide();
 				if (data.getResultState() == ResultState.eSuccess) {
 					if (!data.getMsg().contains("失败")) {
-						mBrokerInfoView.initData(data.getMRootData(), isBroker);
+						mBrokerInfoView.initData(data.getMRootData(), isBroker, clientCount);
 						mMeFooterView.show(isBroker);
 					}
 				}
@@ -190,7 +229,7 @@ public class FramMeFragment extends FramSuper {
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
 			}
-		}.setUrl(getString(R.string.url_brokeInfo_getBrokeInfoById) + userId).setRequestMethod(RequestMethod.eGet)
+		}.setUrl(getString(R.string.url_brokerInfo_getBrokerDetails)).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
 

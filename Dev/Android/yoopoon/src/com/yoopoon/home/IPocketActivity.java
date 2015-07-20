@@ -12,17 +12,30 @@
  */
 package com.yoopoon.home;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import com.yoopoon.home.data.net.ProgressMessage;
+import com.yoopoon.home.data.net.RequestAdapter;
+import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
+import com.yoopoon.home.data.net.ResponseData;
+import com.yoopoon.home.data.net.ResponseData.ResultState;
+import com.yoopoon.home.data.user.User;
+import com.yoopoon.home.domain.Bank;
+import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
 /**
  * @ClassName: IPocketActivity
@@ -38,6 +51,10 @@ public class IPocketActivity extends MainActionBarActivity {
 	private String[] banks = { "招商", "建设", "建设", "招商" };
 
 	private MyBankListAdapter adapter;
+	private User user;
+	private static final String TAG = "IPocketActivity";
+	private List<Bank> bankDatas = new ArrayList<Bank>();
+	private int amountMoney = 0;
 
 	@Click(R.id.btn_ipocket_takecash)
 	void takeCash() {
@@ -49,23 +66,76 @@ public class IPocketActivity extends MainActionBarActivity {
 		AddBankActivity_.intent(this).start();
 	}
 
+	@ViewById(R.id.tv_ipocket_cash)
+	TextView tv_cash;
+
 	@AfterViews
 	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
 		titleButton.setText("我的钱包");
-		fillData();
+
+		user = User.lastLoginUser(this);
+		if (user == null)
+			HomeLoginActivity_.intent(this).isManual(true).start();
+
+		// fillData();
 		lv.setOnItemClickListener(new MyBankItemClickListener());
+		new Thread() {
+			public void run() {
+				request();
+			};
+		}.start();
 	}
 
 	private void fillData() {
+		tv_cash.setText(String.valueOf(amountMoney));
 		if (adapter == null) {
 			adapter = new MyBankListAdapter();
 			lv.setAdapter(adapter);
 		} else {
 			adapter.notifyDataSetChanged();
 		}
+	}
+
+	protected void request() {
+
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				if (data != null)
+					if (data.getResultState() == ResultState.eSuccess) {
+						JSONObject obj = data.getJsonObject2();
+						try {
+							JSONArray list = obj.getJSONArray("List");
+							for (int i = 0; i < list.length(); i++) {
+								JSONObject bankObj = list.getJSONObject(i);
+								Bank bank = new Bank();
+								bank.setBankName(bankObj.getString("bankName"));
+								bank.setNum(bankObj.getString("Num"));
+								bankDatas.add(bank);
+							}
+							amountMoney = obj.getInt("AmountMoney");
+							fillData();
+
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
+
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+
+			}
+		}.setUrl(MyApplication.getInstance().getString(R.string.url_get_all_banks))
+				.setRequestMethod(RequestMethod.eGet).notifyRequest();
+
 	}
 
 	private class MyBankItemClickListener implements OnItemClickListener {
@@ -100,7 +170,7 @@ public class IPocketActivity extends MainActionBarActivity {
 		 */
 		@Override
 		public int getCount() {
-			return banks.length;
+			return bankDatas.size();
 		}
 
 		/*
@@ -141,16 +211,16 @@ public class IPocketActivity extends MainActionBarActivity {
 		 */
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// if (position == banks.length) {
-			// Button btn = new Button(IPocketActivity.this);
-			// btn.setText("添加银行卡");
-			// return btn;
-			// }
+
 			if (convertView == null)
 				convertView = View.inflate(IPocketActivity.this, R.layout.item_bankcard, null);
-			ImageView iv = (ImageView) convertView.findViewById(R.id.iv_bankcard);
-			String bank = banks[position];
-			iv.setImageResource(bank.contains("招商") ? R.drawable.bankcard2 : R.drawable.bankcard1);
+			Bank bank = bankDatas.get(position);
+			TextView tv_bankname = (TextView) convertView.findViewById(R.id.tv_bankcard_bank);
+			TextView tv_num = (TextView) convertView.findViewById(R.id.tv_bankcard_card);
+
+			tv_bankname.setText(bank.getBankName());
+			tv_num.setText("**** **** ****" + bank.getNum());
+
 			return convertView;
 		}
 

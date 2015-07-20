@@ -2,48 +2,63 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp" >
+    android:orientation="vertical" >
 
     <TextView
+        android:id="@+id/tv_add_title"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="电话"
-        android:textColor="@android:color/darker_gray" />
-
-    <EditText
-        android:id="@+id/et_partner_phone"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@android:drawable/editbox_background" />
-    <TextView 
-        style="@style/TextView_Warning"
-        android:id="@+id/tv_addpartner_warning"
-        />
+        android:layout_height="50dp"
+        android:background="@color/red"
+        android:gravity="center"
+        android:text="添加合伙人"
+        android:textSize="20sp"
+        android:textColor="#ffffff" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp" >
+        android:orientation="vertical"
+        android:padding="20dp" >
 
-        <Button
-            style="@style/Red_Button_MarginTop"
-            android:id="@+id/bt_partner_cancel"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="取消"
-            android:layout_margin="5dp" />
-        
-        <Button
-            style="@style/Red_Button_MarginTop"
-            android:layout_margin="5dp"
-            android:id="@+id/bt_partner_invite"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="邀请" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="电话"
+            android:textColor="@android:color/darker_gray" />
+
+        <EditText
+            android:id="@+id/et_partner_phone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@android:drawable/editbox_background" />
+
+        <TextView
+            android:id="@+id/tv_addpartner_warning"
+            style="@style/TextView_Warning" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp" >
+
+            <Button
+                android:id="@+id/bt_partner_cancel"
+                style="@style/Red_Button_MarginTop"
+                android:layout_width="0dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:text="取消" />
+
+            <Button
+                android:id="@+id/bt_partner_invite"
+                style="@style/Red_Button_MarginTop"
+                android:layout_width="0dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:text="邀请" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

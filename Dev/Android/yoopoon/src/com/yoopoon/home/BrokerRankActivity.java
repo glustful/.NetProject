@@ -106,15 +106,19 @@ public class BrokerRankActivity extends MainActionBarActivity {
 			TextView tv_desc = (TextView) convertView.findViewById(R.id.tv_rank_desc);
 			TextView tv_money = (TextView) convertView.findViewById(R.id.tv_rank_money);
 			ImageView iv_medal = (ImageView) convertView.findViewById(R.id.iv_rank_medal);
+			ImageView iv_trend = (ImageView) convertView.findViewById(R.id.iv_broker_rank_trend);
 
 			if (position == 0) {
 				tv_desc.setText("金牌经纪人");
 				tv_money.setText("获得佣金：2w");
 				iv_medal.setImageResource(R.drawable.gold);
+				iv_trend.setImageResource(R.drawable.trend_up);
 			} else {
 				tv_desc.setText(position == 1 ? "银牌经纪人" : "銅牌經紀人");
 				tv_money.setText("获得佣金：1.8k");
 				iv_medal.setImageResource(position == 1 ? R.drawable.silver : R.drawable.cooper);
+				iv_medal.setImageResource(position == 1 ? R.drawable.silver : R.drawable.cooper);
+				iv_trend.setImageResource(position == 1 ? R.drawable.trend_up : R.drawable.trend_down);
 			}
 			return convertView;
 		}

@@ -67,6 +67,7 @@
             android:orientation="horizontal" >
 
             <TextView
+                android:id="@+id/tv_brokerinfo_partner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="合伙人："
@@ -82,6 +83,7 @@
                 android:textSize="@dimen/middle_textSize" />
 
             <TextView
+                android:id="@+id/tv_brokerinfo_recommend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" / 推荐："
@@ -97,6 +99,9 @@
                 android:textSize="@dimen/middle_textSize" />
 
             <TextView
+                android:id="@+id/tv_brokerinfo_client"
+                android:clickable="true"
+                android:focusable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" / 客户："

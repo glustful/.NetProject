@@ -188,7 +188,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 			cookieFile.delete();
 		}
 		RequestTask.setmCookieStore(null);
-		String eMail = mUser.getUserName();
+		String eMail = mUser.getPhone();
 		String pwd = mUser.getPassword();
 		auto = mUser.isRemember();
 		auto = (auto == null) ? false : auto;

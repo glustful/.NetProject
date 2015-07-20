@@ -4,7 +4,7 @@
  * @Title: SettingActivity.java 
  * @Project: yoopoon
  * @Package: com.yoopoon.home.ui.me 
- * @Description: TODO
+ * @Description: TODO  
  * @author: guojunjun  
  * @updater: guojunjun 
  * @date: 2015-7-7 下午3:19:15 

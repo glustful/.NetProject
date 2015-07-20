@@ -5,23 +5,17 @@
     android:orientation="vertical"
     android:padding="20dp" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="请填写自己的银行储蓄卡"
-        android:textColor="@color/red" />
-
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" 
-        android:gravity="center_vertical">
-        
-        <TextView 
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical" >
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="10dp"
-            android:text="卡类型"/>
+            android:text="卡类型" />
 
         <RadioGroup
             android:layout_width="fill_parent"
@@ -29,28 +23,37 @@
             android:orientation="horizontal" >
 
             <RadioButton
+                android:id="@+id/rb_addbank_saving"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:checked="true"
                 android:text="储蓄卡" />
 
             <RadioButton
+                android:id="@+id/rb_addbank_credit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="信用卡" />
         </RadioGroup>
     </LinearLayout>
-    
+
     <TextView
-        android:layout_marginTop="15dp"
         style="@style/TextView_GrayText_WrapContent"
+        android:layout_marginTop="15dp"
         android:text="卡号" />
 
     <EditText
+        android:id="@+id/et_addbank_num"
         style="@style/EditText_Normal"
         android:layout_marginTop="5dp"
         android:hint="请填写银行卡号" />
+
+    <TextView
+        android:id="@+id/tv_addbank_warning1"
+        style="@style/TextView_Warning"
+        android:text="请填写银行卡号" />
 
     <TextView
         style="@style/TextView_GrayText_WrapContent"
@@ -58,45 +61,66 @@
         android:text="开户银行" />
 
     <EditText
+        android:id="@+id/et_addbank_bank"
         style="@style/EditText_Normal"
-        android:layout_marginTop="5dp" />
-    
+        android:layout_marginTop="5dp"
+        android:editable="false" />
+
+    <TextView
+        android:id="@+id/tv_addbank_warning2"
+        style="@style/TextView_Warning"
+        android:text="请选择开户银行" />
+
     <TextView
         style="@style/TextView_GrayText_WrapContent"
         android:layout_marginTop="15dp"
         android:text="开户银行地址" />
 
     <EditText
+        android:id="@+id/et_addbank_address"
         style="@style/EditText_Normal"
         android:layout_marginTop="5dp"
         android:hint="请填写详细开户银行地址" />
-    
+
+    <TextView
+        android:id="@+id/tv_addbank_warning3"
+        style="@style/TextView_Warning"
+        android:text="请填写详细地址" />
+
     <RelativeLayout
-            android:layout_marginTop="20dp"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-        <Button 
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" >
+
+        <Button
             android:id="@+id/btn_add_bank_getcode"
-            android:layout_toRightOf="@+id/et_security_setting_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/et_addbank_code"
             android:background="@drawable/cycle_selector"
-            android:textColor="@color/little_whitle"
-            android:text="获取验证码"/>
+            android:text="获取验证码"
+            android:textColor="@color/little_whitle" />
 
         <EditText
-            android:layout_alignBottom="@id/btn_add_bank_getcode"
-            android:id="@+id/et_security_setting_code"
+            android:id="@+id/et_addbank_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:layout_alignBottom="@id/btn_add_bank_getcode"
+            android:hint="请输入验证码"
             android:textColor="@color/setting_text"
-            android:hint="验证码" />
-        
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_addbank_warning4"
+            style="@style/TextView_Warning"
+            android:layout_alignBottom="@id/btn_add_bank_getcode"
+            android:layout_toRightOf="@id/btn_add_bank_getcode"
+            android:text="请填写验证码" />
     </RelativeLayout>
-    
-    <Button 
+
+    <Button
+        android:id="@+id/btn_addbank_ok"
         style="@style/Red_Button_MarginTop"
-        android:text="确定"/>
+        android:text="确定" />
 
 </LinearLayout>

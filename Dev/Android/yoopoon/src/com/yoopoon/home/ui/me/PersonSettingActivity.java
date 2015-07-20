@@ -37,8 +37,8 @@ import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.data.user.User.UserInfoListener;
-import com.yoopoon.home.domain.Broker2;
 import com.yoopoon.home.domain.Broker2.RequesListener;
+import com.yoopoon.home.domain.BrokerEntity;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
 /**
@@ -108,13 +108,13 @@ public class PersonSettingActivity extends MainActionBarActivity {
 
 		String sexy = rb_female.isChecked() ? "女士" : "先生";
 		int id = user.getId();
-		Broker2 broker = new Broker2(id, id, name, user.getRealName(), nickname, sexy, sfz, email, phone, "");
+		BrokerEntity broker = new BrokerEntity(id, nickname, nickname, phone, sfz, email, name, sexy);
 		broker.modifyInfo(new RequesListener() {
 
 			@Override
 			public void succeed(String msg) {
 				Toast.makeText(PersonSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
-				finish();
+				SettingActivity_.intent(PersonSettingActivity.this).start();
 			}
 
 			@Override

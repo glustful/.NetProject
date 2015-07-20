@@ -13,13 +13,17 @@
  */
 package com.yoopoon.home;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
-import android.preference.PreferenceManager;
+import android.graphics.Color;
+import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -57,7 +61,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 	private String[] names = { "钱德勒", "莫妮卡", "格蕾丝", "威尔", "Grace", "Will", "Chandler", "Rachel", "Monica", "Ross",
 			"Mood", "莫德", "sue", "苏", "Moening", "莫宁", "Alice", "爱丽丝" };
 
-	private static final String TAG = "IPartnerActivity";
+	private static final String TAG = "IRecommendActivity";
 	private String[] showNameList;
 
 	@AfterViews
@@ -233,43 +237,118 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 					Toast.makeText(this, "亲，你还没输入电话呢！", Toast.LENGTH_SHORT).show();
 					return;
 				} else {
-					invitePartner(phone);
+					recommendBroker(phone);
 				}
 				break;
 		}
 
 	}
 
-	private void invitePartner(String phone) {
+	private int count = 1;
+	private long startMills;
+	Handler handler = new Handler();
+	Timer timer;
+	String[] points = { "", ".", "..", "..." };
+	TimerTask task;
+
+	private void recommendBroker(String phone) {
 		User user = User.lastLoginUser(this);
 		if (user == null) {
 			HomeLoginActivity_.intent(this).start();
 			return;
 		} else {
-			String userId = PreferenceManager.getDefaultSharedPreferences(this).getString("userId", null);
 			String smsType = String.valueOf(SmsUtils.RECOMMED_BROKER_IDENTIFY_CODE);
 			String json = "{\"Mobile\":\"" + phone + "\",\"SmsType\":\"" + smsType + "\"}";
-			SmsUtils.requestIdentifyCode(this, json, new RequestSMSListener() {
-
-				@Override
-				public void succeed(String code) {
-					Toast.makeText(IRecommendActivity.this, code, Toast.LENGTH_SHORT).show();
-
-				}
-
-				@Override
-				public void fail(String msg) {
-					Toast.makeText(IRecommendActivity.this, msg, Toast.LENGTH_SHORT).show();
-
-				}
-			});
+			startMills = System.currentTimeMillis();
+			requesting();
+			Log.i(TAG, json);
+			SmsUtils.requestIdentifyCode(this, json, listener);
 
 		}
+
 	}
+
+	private void requesting() {
+		timer = new Timer();
+		task = new TimerTask() {
+
+			@Override
+			public void run() {
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						if (count == 5)
+							count = 1;
+						tv_warning.setVisibility(View.VISIBLE);
+						tv_warning.setTextColor(Color.GRAY);
+						tv_warning.setText("正在请求，请稍候" + points[count - 1]);
+						count++;
+					}
+				});
+			}
+		};
+		timer.schedule(task, 0, 600);
+	}
+
+	RequestSMSListener listener = new RequestSMSListener() {
+
+		@Override
+		public void succeed(final String code) {
+			long duration = System.currentTimeMillis() - startMills;
+			Log.i(TAG, "lis.succeed:" + code);
+			if (duration < 2000) {
+				handler.postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						timer.cancel();
+						task.cancel();
+						tv_warning.setVisibility(View.GONE);
+						Toast.makeText(IRecommendActivity.this, code, Toast.LENGTH_SHORT).show();
+					}
+				}, 2000 - duration);
+			} else {
+				timer.cancel();
+				task.cancel();
+				tv_warning.setVisibility(View.GONE);
+				Toast.makeText(IRecommendActivity.this, code, Toast.LENGTH_SHORT).show();
+			}
+		}
+
+		@Override
+		public void fail(final String msg) {
+			Log.i(TAG, "lis.succeed:" + msg);
+			long duration = System.currentTimeMillis() - startMills;
+			if (duration < 2000) {
+				handler.postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						timer.cancel();
+						task.cancel();
+						tv_warning.setTextColor(Color.RED);
+						tv_warning.setText(msg);
+						tv_warning.setVisibility(View.VISIBLE);
+					}
+				}, 2000 - duration);
+			} else {
+				timer.cancel();
+				task.cancel();
+				tv_warning.setTextColor(Color.RED);
+				tv_warning.setText(msg);
+				tv_warning.setVisibility(View.VISIBLE);
+			}
+		}
+
+	};
+
 	Button cancel;
 	Button invite;
 	Dialog dialog;
 	EditText et_phone;
+	TextView tv_warning;
+	TextView tv_title;
 
 	private void showAddPartnerDialog() {
 		Builder builder = new Builder(IRecommendActivity.this);
@@ -278,6 +357,11 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 		cancel = (Button) addView.findViewById(R.id.bt_partner_cancel);
 		invite = (Button) addView.findViewById(R.id.bt_partner_invite);
 		et_phone = (EditText) addView.findViewById(R.id.et_partner_phone);
+		tv_warning = (TextView) addView.findViewById(R.id.tv_addpartner_warning);
+		tv_title = (TextView) addView.findViewById(R.id.tv_add_title);
+
+		tv_title.setText("添加经纪人");
+
 		dialog = builder.show();
 
 		cancel.setOnClickListener(this);

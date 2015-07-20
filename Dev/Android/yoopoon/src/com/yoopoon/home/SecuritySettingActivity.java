@@ -18,7 +18,6 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-import android.graphics.Color;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -81,10 +80,9 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 			HomeLoginActivity_.intent(this).isManual(true).start();
 			return;
 		}
-		String phone = user.getPhone();
 		String smsType = String.valueOf(SmsUtils.CHANGEPSW_IDENTIFY_CODE);
-		String json = "{\"Mobile\":\"" + phone + "\",\"SmsType\":\"1\"}";
-		SmsUtils.requestIdentifyCode(this, json, new RequestSMSListener() {
+		String json = "{\"SmsType\":\"" + smsType + "\"}";
+		SmsUtils.getCodeForBroker(this, json, new RequestSMSListener() {
 
 			@Override
 			public void succeed(String code) {
@@ -93,9 +91,11 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 
 			@Override
 			public void fail(String msg) {
+				clear();
 				Toast.makeText(SecuritySettingActivity.this, msg, Toast.LENGTH_SHORT).show();
 
 			}
+
 		});
 		setGetCodeEnable(false);
 		handler.postDelayed(new Runnable() {
@@ -114,7 +114,7 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		btn_getcode.setBackgroundResource(R.drawable.cycle_selector);
 
 		if (!enable) {
-			btn_getcode.setBackgroundColor(Color.GRAY);
+			btn_getcode.setBackgroundResource(R.drawable.btn_not_enable);
 			timer = new Timer();
 			task = new TimerTask() {
 
@@ -124,7 +124,7 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 
 						@Override
 						public void run() {
-							tv_time.setText(timercount-- + "s");
+							btn_getcode.setText("重新获取验证码(" + timercount-- + ")");
 
 						}
 					});
@@ -249,9 +249,18 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 			public void onReponse(ResponseData data) {
 				if (data != null) {
 					if (data.getResultState() == ResultState.eSuccess) {
-						Toast.makeText(SecuritySettingActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+						if (data.getMsg().contains("成功")) {
+							Toast.makeText(SecuritySettingActivity.this, data.getMsg() + ",请重新登陆", Toast.LENGTH_SHORT)
+									.show();
+							HomeLoginActivity_.intent(SecuritySettingActivity.this).isManual(true).start();
+							return;
+						} else if (data.getMsg().contains("失败")) {
+							clear();
+							Toast.makeText(SecuritySettingActivity.this, data.getMsg() + ",请重试", Toast.LENGTH_SHORT)
+									.show();
+							return;
+						}
 
-						return;
 					}
 					clear();
 					Toast.makeText(SecuritySettingActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
