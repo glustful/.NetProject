@@ -64,7 +64,7 @@ namespace Event.Entity.Model
 
 		public DateTime? UptimeEnd { get; set; }
 
-
+        public int? CrowdId { get; set; }
 
 
 		public EnumPartImageSearchOrderBy? OrderBy { get; set; }

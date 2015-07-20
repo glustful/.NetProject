@@ -368,36 +368,42 @@ namespace Zerg.Controllers.Trading.Product
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage UpdateProductParameterVaule(int parameterValueId, int productId)
         {
-            var parameterValue = _parameterValueService.GetParameterValueById(parameterValueId);
-            var parameter = parameterValue.Parameter;
-            var con = new ProductParameterSearchCondition
+            try
             {
-                ProductId = productId,
-                ParameterId = parameter.Id
-            };
-            var productParameter = _productParameterService.GetProductParametersByCondition(con).FirstOrDefault();
-            if (productParameter != null)
-            {
-                productParameter.ParameterValue = parameterValue;
-                productParameter.Upduser = _workContext.CurrentUser.Id.ToString();
-                productParameter.Updtime = DateTime.Now;
-                _productParameterService.Update(productParameter);
+                var parameterValue = _parameterValueService.GetParameterValueById(parameterValueId);
+                var parameter = parameterValue.Parameter;
+                var con = new ProductParameterSearchCondition
+                {
+                    ProductId = productId,
+                    ParameterId = parameter.Id
+                };
+                var productParameter = _productParameterService.GetProductParametersByCondition(con).FirstOrDefault();
+                if (productParameter != null)
+                {
+                    productParameter.ParameterValue = parameterValue;
+                    productParameter.Upduser = _workContext.CurrentUser.Id.ToString();
+                    productParameter.Updtime = DateTime.Now;
+                    _productParameterService.Update(productParameter);
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功"));
+                }
+                var newProductParameter = new ProductParameterEntity()
+                {
+                    Addtime = DateTime.Now,
+                    Adduser = _workContext.CurrentUser.Id.ToString(),
+                    Parameter = parameter,
+                    ParameterValue = parameterValue,
+                    Product = _productService.GetProductById(productId),
+                    Updtime = DateTime.Now,
+                    Upduser = _workContext.CurrentUser.Id.ToString(),
+                    Sort = 0
+                };
+                _productParameterService.Create(newProductParameter);
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功"));
             }
-            var newProductParameter = new ProductParameterEntity()
+            catch (Exception e)
             {
-                Addtime = DateTime.Now,
-                Adduser = _workContext.CurrentUser.Id.ToString(),
-                Parameter = parameter,
-                ParameterValue = parameterValue,
-                Product = _productService.GetProductById(productId),
-                Updtime = DateTime.Now,
-                Upduser = _workContext.CurrentUser.Id.ToString(),
-                Sort = 0
-            };
-            _productParameterService.Create(newProductParameter);
-            return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功"));
-            //return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败"));
+            }
         }
         #endregion
         /// <summary>

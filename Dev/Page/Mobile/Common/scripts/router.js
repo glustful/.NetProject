@@ -10,7 +10,8 @@ var allowState = [
     'user.PasswordFound',
     'app.invite',
     'app.housesBuy',
-    'app.brand'
+    'app.brand',
+    'app.BrandDetail'
 
 ];
 app.run(
@@ -390,6 +391,13 @@ app.run(
                 url:'/cash',
                 templateUrl:'modules/cash/view/cash.html',
                 data:{title:'提取现金'}
+            })
+
+            .state('app.selectWithdraw',{
+                url:'/selectWithdraw?Ids',
+                templateUrl:'modules/selectWithdraw/view/selectWithdraw.html',
+
+                resolve:load('modules/selectWithdraw/controller/controller.js')
             })
 
         function load(srcs, callback) {

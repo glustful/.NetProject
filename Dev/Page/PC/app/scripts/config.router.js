@@ -1391,6 +1391,10 @@ angular.module('app')
                 url:'/order',
                 template:'<div ui-view></div>'
             })
+            .state('page.Trading.CommissionRatio',{
+                url:'/CommissionRatio',
+                template:'<div ui-view></div>'
+            })
             .state('page.Trading.bill',{
                 url:'/bill',
                 template:'<div ui-view></div>'
@@ -1487,6 +1491,13 @@ angular.module('app')
                 controller:'NegotiateOrderController',
                 resolve: load(['scripts/controllers/Trading/Order.js','scripts/controllers/vectormap.js'])
             })
+            .state('page.Trading.CommissionRatio.index', {
+                url: '/index',
+                templateUrl: 'views/pages/Trading/CommissionRatio/index.html',
+                data : { title: '佣金比例' },
+                //controller:'CommissionController',
+                resolve: load('scripts/controllers/Trading/Commission.js')
+            })
 
           /*优惠券*/
 
@@ -1573,6 +1584,20 @@ angular.module('app')
                 templateUrl: 'views/pages/event/chip/chip.html',
                 data : { title: '众筹列表' },
                 resolve: load('scripts/controllers/event/chip.js')
+            })
+            .state('page.event.chip.chipCreate', {
+                url: '/chipCreate',
+                templateUrl: 'views/pages/event/chip/chipCreate.html',
+                data : { title: '众筹列表' },
+                controller: 'creatChipController',
+                resolve: load(['scripts/controllers/event/chip.js','angularFileUpload'])
+            })
+            .state('page.event.chip.chipUp?crowId=', {
+                url: '/chipUp?crowId=',
+                templateUrl: 'views/pages/event/chip/chipUp.html',
+                data : { title: '众筹列表' },
+                controller: 'upChipController',
+                resolve: load(['scripts/controllers/event/chip.js','angularFileUpload'])
             })
 
 

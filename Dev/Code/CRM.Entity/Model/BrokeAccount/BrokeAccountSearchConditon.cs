@@ -13,7 +13,10 @@ namespace CRM.Entity.Model
 		/// 每页大小
 		/// </summary>
 		public int? PageCount { get; set; }
-
+        /// <summary>
+        /// 状态 0 为可用 1 为不可用
+        /// </summary>
+        public int? State { get; set; }
 		/// <summary>
 		/// 是否降序
 		/// </summary>
@@ -39,6 +42,8 @@ namespace CRM.Entity.Model
 		public DateTime? UptimeEnd { get; set; }
 
 		public EnumBrokeAccountSearchOrderBy? OrderBy { get; set; }
+	    public int? BrokerId { get; set; }
+        public int? Type { get; set; }
 	}
 
 	public enum EnumBrokeAccountSearchOrderBy

@@ -4,12 +4,11 @@
 app.controller('taskIndexController',['$http','$scope','$modal',function($http,$scope,$modal) {
     $scope.searchCondition = {
         Taskname: '',
-
         Id:0,
         page: 1,
         pageSize: 10
     };
-    //查询任务
+//------------------------查询任务 start--------------------------
     var getTaskList  = function() {
         $http.get(SETTING.ApiUrl+'/Task/TaskList/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
             if(data.totalCount>0){
@@ -28,7 +27,9 @@ app.controller('taskIndexController',['$http','$scope','$modal',function($http,$
     };
     $scope.getList = getTaskList;
     getTaskList();
-    //删除任务
+//------------------------查询任务 end----------------------------
+
+//---------------------根据任务id删除任务 start-------------------
     $scope.delTask= function (id) {
         $scope.selectedId = id;
         var modalInstance = $modal.open({
@@ -75,16 +76,8 @@ app.controller('taskIndexController',['$http','$scope','$modal',function($http,$
                 });
         });
     }
-//   var DelTaskbyId = function(id11) {
-//        $http.get(SETTING.ApiUrl+'/Task/DelTask/',{params:{id:id11}, 'withCredentials':true}).success(function(data){
-//            if(data.Status){
-//                getTaskList();
-//
-//                // ngDialog.open({ template: 'views/pages/CRM/TaskList/index.html' });
-//            }
-//        });
-//    };
-//    $scope.delTask = DelTask;
+//---------------------根据任务id删除任务 end---------------------
+
    }
 ]);
 app.controller('taskListcontroller',['$http','$scope','$stateParams','$modal',function($http,$scope,$stateParams,$modal) {
@@ -94,7 +87,7 @@ app.controller('taskListcontroller',['$http','$scope','$stateParams','$modal',fu
         page: 1,
         pageSize: 10
     };
-//加载时绑定，绑定任务列表,根据接受者查询该任务任务列表
+//-------------------------根据用户id查询任务列表 start----------------
     var getTaskList1  = function() {
         $http.get(SETTING.ApiUrl+'/Task/taskListByuser',{params:$scope.searchCondition1, 'withCredentials':true}).success(function(data){
             if(data.totalCount>0){
@@ -113,53 +106,10 @@ app.controller('taskListcontroller',['$http','$scope','$stateParams','$modal',fu
     };
 $scope.getList1=getTaskList1 ;
     getTaskList1();
-    /*
-    //根据接受者查询该任务任务列表
-    var getTaskListSer  = function() {
-        $http.get(SETTING.ApiUrl+'/Task/taskListByuser',{params:$scope.searchCondition1}).success(function(data){
+//-------------------------根据用户id查询任务列表 end------------------
 
-            console.log(data);
-            $scope.taskModel = data.list;
-            $scope.searchCondition1.page=data.condition.Page;
-            $scope.searchCondition1.pageSize=data.condition.PageCount;
-            $scope.searchCondition1.totalCount=data.totalCount;
-
-        });
-    };
-    $scope.gettaskl
-    ist=getTaskListSer;*/
 }
 ]);
 
-//app.controller('taskDetailcontroller',['$http','$scope','$stateParams',function($http,$scope,$stateParams) {
-//
-//    var getTaskDetail  = function() {
-//        $http.get(SETTING.ApiUrl+'/Task/TaskDetail?id='+$stateParams.id).success(function(data){
-//
-//            console.log(data);
-//            $scope.taskModel1 = data;
-//        });
-//    };
-//    $scope.gettaskdetail=getTaskDetail();
-//    getTaskDetail();
-//    // 结束时间
-//    $scope.open = function ($event) {
-//        $event.preventDefault();
-//        $event.stopPropagation();
-//
-//        $scope.opened = true;
-//    };
-//
-//    $scope.dateOptions = {
-//        formatYear: 'yy',
-//        startingDay: 1,
-//        class: 'datepicker'
-//    };
-//
-//    $scope.initDate = new Date();
-//    $scope.formats = ['yyyy/MM/dd', 'shortDate'];
-//    $scope.format = $scope.formats[0];
-//}
-//]);
 
 

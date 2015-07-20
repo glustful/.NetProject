@@ -98,23 +98,25 @@ angular.module("app").controller('EditProductController', [
          $scope.update=function(){
             var newproduct = {
             Id:$scope.product.Id,
-                ClassifyId:$scope.product.ClassId,
-                brandId:$scope.product.BrandId,
+            ClassifyId:$scope.product.ClassId,
+            ProductBrandId:$scope.product.BrandId,
             Price:$scope.product.Price,
             Productname:$scope.product.Productname,
             RecCommission:$scope.product.RecCommission,
             Commission:$scope.product.Commission,
             ContactPhone:$scope.product.Phone,
             Dealcommission:$scope.product.Dealcommission,
-            Status:$scope.product.Status,
-            Recommend:$scope.product.Recommend,
+            Status:$scope.product.Status==0?true:false,
+            Recommend:$scope.product.Recommend== 0 ? true : false,
             Stockrule:$scope.product.Stockrule,
             SubTitle:$scope.product.SubTitle,
-                Productimg:$scope.product.Productimg
+            Productimg:$scope.product.Productimg,
+            Productdetail:$scope.product.ProductDetailed,
+            Sericeinstruction:$scope.product.Sericeinstruction
             };
             var newproductDetail = {
-                 Productdetail:$scope.product.ProductDetailed,
-                 Sericeinstruction:$scope.product.Sericeinstruction
+                Productdetail:$scope.product.ProductDetailed,
+                Sericeinstruction:$scope.product.Sericeinstruction
             };
             var classifyJson = JSON.stringify({ product: newproduct, productDetail: newproductDetail });
              $http.post(SETTING.ApiUrl + '/Product/EditProduct',classifyJson,{

@@ -204,6 +204,7 @@ app  .run(
             templateUrl:'modules/myPurse/view/myPurse.html',
             resolve:load('modules/myPurse/render/controller.js')
         })
+
         .state('app.personal',{
             url:'/personal',
             templateUrl:'modules/personal/view/personal.html',

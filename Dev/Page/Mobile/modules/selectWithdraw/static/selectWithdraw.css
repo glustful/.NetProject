@@ -1,0 +1,24 @@
+
+.selectList th,td{
+    text-align: center;
+    height: 40px;
+    font-size: 16px
+}
+.selectList .Content{
+    width: 640px;
+    background-color: #ffffff;
+}
+.next{
+    text-align: center;
+    background-color: #fff;
+    padding-top: 100px;
+
+}
+.next button {
+    background-color: #f13a07;
+    width: 520px;
+    height: 50px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 1.5em;
+}

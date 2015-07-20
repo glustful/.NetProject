@@ -14,7 +14,8 @@ app.controller('personsettingController',['$scope','$http','$state','AuthService
         Sfz:'',
         Email:'',
         Phone:'',
-        Headphoto:''
+        Headphoto:'',
+        WeiXinNumber:''
 
     };
     $scope.currentuser= AuthService.CurrentUser();
