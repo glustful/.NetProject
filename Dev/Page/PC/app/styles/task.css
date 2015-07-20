@@ -187,8 +187,8 @@ border-left-style: none;
     display:block;
 }
 .alertTs{
-    position:fixed;top:150px;
+    position:fixed;top:300px;
     width:300px;line-height: 100px;
     text-align:center;left:300px;
-    z-index:100;
+    z-index:10000;
 }

@@ -16,7 +16,7 @@ angular.module("app").controller('activeController', [
                 }
             })
             modalInstance.result.then(function () {
-                $http.post(SETTING.eventApiUrl+'/coupon/ActiveCoupon', {couponNum: $scope.ticketNum}, {'withCredentials': true}).success(function (data) {
+                $http.post(SETTING.eventApiUrl+'/coupon/ActiveCoupon?',$scope.ticketNum, {'withCredentials': true}).success(function (data) {
                     if (data.Status) {
                         var modalInstance = $modal.open({
                             templateUrl: 'myModalContent.html',

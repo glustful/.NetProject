@@ -191,6 +191,7 @@
     <Compile Include="Controllers\CMS\TagController.cs" />
     <Compile Include="Controllers\CMS\ContentController.cs" />
     <Compile Include="Controllers\Trading\Area\AreaController.cs" />
+    <Compile Include="Controllers\Trading\CommissionRatio\CommissionRatioController.cs" />
     <Compile Include="Controllers\Trading\Condition\ConditionController.cs" />
     <Compile Include="Controllers\UC\RoleController.cs" />
     <Compile Include="Controllers\UC\UserController.cs" />
@@ -244,7 +245,9 @@
     <Compile Include="Models\CMS\TagDetailModel.cs" />
     <Compile Include="Models\CMS\TagModel.cs" />
     <Compile Include="Models\Trading\Area\AreaModel.cs" />
+    <Compile Include="Models\Trading\CommissionRatio\CommissionRatio.cs" />
     <Compile Include="Models\Trading\Product\ProductDetail.cs" />
+    <Compile Include="Models\Trading\Trading\AmountModel.cs" />
     <Compile Include="Models\Trading\Trading\BillModel.cs" />
     <Compile Include="Models\UC\ActionModel.cs" />
     <Compile Include="Models\UC\ChangePasswordModel.cs" />
@@ -351,7 +354,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50766</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

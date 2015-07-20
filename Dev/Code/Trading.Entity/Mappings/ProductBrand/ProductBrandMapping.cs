@@ -1,10 +1,10 @@
-using YooPoon.Core.Data;
 using System.Data.Entity.ModelConfiguration;
 using Trading.Entity.Model;
+using Zerg.Common.Data;
 
 namespace Trading.Entity.Mappings.ProductBrand
 {
-	public class ProductBrandMapping : EntityTypeConfiguration<ProductBrandEntity>, Zerg.Common.Data.IZergMapping
+	public class ProductBrandMapping : EntityTypeConfiguration<ProductBrandEntity>, IZergMapping
 	{
 		public ProductBrandMapping()
 		{
