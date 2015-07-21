@@ -12,9 +12,9 @@ namespace CRM.Service.EventOrder
         private readonly Zerg.Common.Data.ICRMRepository<EventOrderEntity> _eventorderRepository;
         private readonly ILog _log;
 
-        public EventOrderService(Zerg.Common.Data.ICRMRepository<EventOrderEntity> brokeaccountRepository, ILog log)
+        public EventOrderService(Zerg.Common.Data.ICRMRepository<EventOrderEntity> eventorderRepository, ILog log)
         {
-            _eventorderRepository = brokeaccountRepository;
+            _eventorderRepository = eventorderRepository;
             _log = log;
         }
 

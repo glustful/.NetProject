@@ -139,9 +139,12 @@ namespace Zerg.Models.CRM
         /// 所属的合伙人姓名（同经纪人名）
         /// </summary>
         public virtual string PartnersName { get; set; }
+        
+        /// <summary>
+        /// 1未使用邀请码  0 使用邀请码
+        /// </summary>
 
-
-
+        public virtual int IsInvite { get; set; }
 
         /// <summary>
         /// AddUser
