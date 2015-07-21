@@ -1,30 +1,24 @@
-﻿using System.ComponentModel;
-using System.Globalization;
-using System.Linq.Expressions;
-using CRM.Entity.Model;
-using CRM.Service.Broker;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using YooPoon.Core.Data;
+using CRM.Entity.Model;
+using CRM.Service.BrokeAccount;
+using CRM.Service.Broker;
+using CRM.Service.ClientInfo;
+using CRM.Service.EventOrder;
+using CRM.Service.MessageDetail;
+using CRM.Service.PartnerList;
+using CRM.Service.RecommendAgent;
+using YooPoon.Core.Site;
 using YooPoon.WebFramework.Authentication.Entity;
-using YooPoon.WebFramework.User;
+using YooPoon.WebFramework.User.Entity;
 using YooPoon.WebFramework.User.Services;
 using Zerg.Common;
 using Zerg.Models.CRM;
-using YooPoon.WebFramework.User.Entity;
-using YooPoon.Core.Site;
-using CRM.Service.PartnerList;
-using CRM.Service.RecommendAgent;
-using CRM.Service.ClientInfo;
-using CRM.Service.MessageDetail;
-using System.ComponentModel;
-using System.Data;
-using CRM.Service.BrokeAccount;
 
 namespace Zerg.Controllers.CRM
 {
@@ -45,6 +39,7 @@ namespace Zerg.Controllers.CRM
         private readonly IMessageDetailService _MessageService;
         private readonly IUserService _userService;
         private readonly IBrokeAccountService _brokerAccountService;
+        private readonly IEventOrderService _eventOrderService;
         /// <summary>
         /// 经纪人管理初始化
         /// </summary>
@@ -64,7 +59,8 @@ namespace Zerg.Controllers.CRM
             IRoleService roleService,
             IMessageDetailService MessageService,
             IUserService userService,
-            IBrokeAccountService brokerAccountService
+            IBrokeAccountService brokerAccountService,
+            IEventOrderService eventOrderService
             )
         {
             _clientInfoService = clientInfoService;
@@ -76,6 +72,7 @@ namespace Zerg.Controllers.CRM
             _MessageService = MessageService;
             _userService = userService;
             _brokerAccountService = brokerAccountService;
+            _eventOrderService = eventOrderService;
         }
 
 
@@ -88,7 +85,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="id">经纪人Id</param>
         /// <returns>经纪人列表</returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [Description("检索返回经纪人列表")]
         public HttpResponseMessage GetBroker(string id)
         {
@@ -148,7 +145,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="userId">经纪人Id</param>
         /// <returns>经纪人信息</returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [Description("获取经纪人信息")]
         public HttpResponseMessage GetBrokerByUserId(string userId)
         {
@@ -189,7 +186,7 @@ namespace Zerg.Controllers.CRM
         /// <param name="page">页码</param>
         /// <param name="pageSize">页面数量</param>
         /// <returns></returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [Description("传入会员参数,获取会员列表")]
         public HttpResponseMessage SearchBrokers(EnumUserType userType, string phone=null, string name = null, int page = 1, int pageSize = 10, int state = 2)
         {
@@ -252,7 +249,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="broker">经纪人参数</param>
         /// <returns>新增经纪人结果状态信息</returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         [Description("新增经纪人")]
         public HttpResponseMessage AddBroker([FromBody] BrokerEntity broker)
         {
@@ -288,7 +285,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="broker">经纪人信息</param>
         /// <returns></returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         [Description("修改经纪人信息")]
         public HttpResponseMessage UpdateBroker([FromBody] BrokerEntity broker)
         {
@@ -302,15 +299,15 @@ namespace Zerg.Controllers.CRM
                 brokerModel.Email = broker.Email;
                 brokerModel.Realname = broker.Realname;
                 brokerModel.Sexy = broker.Sexy;
-                brokerModel.WeiXinNumber = broker.WeiXinNumber;//by  yangyue  2015/7/16
+                 brokerModel.WeiXinNumber = broker.WeiXinNumber;//by  yangyue  2015/7/16
 
                 #region 转职经纪人 杨定鹏 2015年6月11日17:29:58
                 //填写身份证，邮箱，和真实姓名后就能转职经纪人
                 if (!string.IsNullOrEmpty(broker.Email) && !string.IsNullOrEmpty(broker.Sfz) &&
                     !string.IsNullOrEmpty(broker.Realname))
-                {
+                   {
                     //权限变更
-                    var brokerRole = _roleService.GetRoleByName("broker");
+                            var brokerRole = _roleService.GetRoleByName("broker");
                     //User权限缺少时自动添加
                     if (brokerRole == null)
                     {
@@ -335,40 +332,72 @@ namespace Zerg.Controllers.CRM
                         //return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
                     }
 
-                    //-----------------by yangyue  2015/7/16------------------------//
-                    //奖励该用户30元
-                    var con=new BrokeAccountSearchCondition
-                    {
-                        Brokers = brokerModel,
-                        Type = 2
-                    };
-                    var a = _brokerAccountService.GetBrokeAccountsByCondition(con).FirstOrDefault();
-                    if (a == null)
-                    {
-                        BrokeAccountEntity model = new BrokeAccountEntity();
-                        model.Addtime = DateTime.Now;
-                        model.Adduser = 1;
-                        model.Broker = brokerModel;
-                        model.Type = '2';
-                        model.MoneyDesc = "完整经济人资料奖励30元";
-                        model.Balancenum = (decimal) 30;
-                        _brokerAccountService.Create(model);
+                   // //-----------------by yangyue  2015/7/16------------------------//
+                   // //奖励该用户30元
+
+                   // TransactionOptions transactionOption = new TransactionOptions();
+
+                   // //设置事务隔离级别
+                   // transactionOption.IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted;
+
+                   // // 设置事务超时时间为60秒
+                   // transactionOption.Timeout = new TimeSpan(0, 0, 60);
+
+                   //    using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required,
+                   //            transactionOption))
+                   //    {
+                   //        try { 
+                   //                var con = new BrokeAccountSearchCondition
+                   //                {
+                   //                    Brokers = brokerModel,
+                   //                    Type = 2
+                   //                };
+                   //                var a = _brokerAccountService.GetBrokeAccountsByCondition(con).FirstOrDefault();
+                   //                    if (a == null)
+                   //                    {
+                   //                        BrokeAccountEntity model = new BrokeAccountEntity();
+                   //                        model.Addtime = DateTime.Now;
+                   //                        model.Adduser = 1;
+                   //                        model.Broker = brokerModel;
+                   //                        model.Uptime = DateTime.Now;
+                   //                        model.Type = '2';
+                   //                        model.MoneyDesc = "完整经济人资料奖励30元";
+                   //                        model.Balancenum = 30;
+                   //                        _brokerAccountService.Create(model);
+
+                   //                        EventOrderEntity emodel = new EventOrderEntity();
+                   //                        emodel.AcDetail = "完整经济人资料奖励30元";
+                   //                        emodel.Addtime = DateTime.Now;
+                   //                        emodel.MoneyCount = 30;
+                   //                        _eventOrderService.Create(emodel);
 
 
-                        if (_brokerAccountService.Create(model) != null)
-                        {
-                            return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
-                        }
-                        else
-                        {
-                            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
-                        }
 
-                    }
+                   //                        if (_brokerAccountService.Create(model) != null)
+                   //                        {
+                   //                            return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                   //                        }
+                   //                        else
+                   //                        {
+                   //                            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                   //                        }
+                              
+                   //                    }
+
+                   //              }
+                   //        catch (Exception ex)
+                   //        {
+                   //            throw new Exception("发送信息异常,原因:" + ex.Message);
+                   //        }
+                   //        finally
+                   //        {
+                   //            //释放资源
+                   //            scope.Dispose();
+                   //        }       
+                   //    }
 
 
-
-                }
+                   }
 
                 #endregion
 
@@ -397,7 +426,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="id">经纪人ID</param>
         /// <returns>经纪人删除结果状态信息</returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         [Description("删除经纪人")]
         public HttpResponseMessage DeleteBroker([FromBody] string id)
         {
@@ -424,7 +453,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="id">经纪人ID</param>
         /// <returns>经纪人数据删除结果状态信息</returns>
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public HttpResponseMessage CancelBroker( string id,string btnname="")
         {
             if (!string.IsNullOrEmpty(id) && PageHelper.ValidateNumber(id))
@@ -459,7 +488,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <returns>经纪人列表</returns>
 
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [Description("检索经纪人列表,返回经纪人列表前10条")]
         public HttpResponseMessage OrderByBrokerList()
         {
@@ -485,7 +514,7 @@ namespace Zerg.Controllers.CRM
         /// <returns>经纪人列表</returns>
         [Description("获取前3的经纪人列表")]
 
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public HttpResponseMessage OrderByBrokerTopThree()
         {
 
@@ -508,7 +537,7 @@ namespace Zerg.Controllers.CRM
         /// 获取经纪人详细信息（合伙人个数  推荐人个数  客户个数  等级 排名 总佣金）
         /// </summary>
         /// <returns>经纪人详细信息</returns>
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [Description("获取经纪人详细信息")]
         public HttpResponseMessage GetBrokerDetails()
         {

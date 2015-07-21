@@ -76,7 +76,7 @@ public class UploadHandler : Handler
 //            }
 //            File.WriteAllBytes(localPath, uploadFileBytes);
             var key = OssHelper.PutObject(fileStream, savePath);
-            Result.Url = "http://img.yoopoon.com/"+ key;
+            Result.Url = key;
             Result.State = UploadState.Success;
         }
         catch (Exception e)

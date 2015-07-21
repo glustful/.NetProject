@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Trading.Entity.Model;
 
 namespace Zerg.Models.Trading.Trading
 {
@@ -15,7 +16,10 @@ namespace Zerg.Models.Trading.Trading
         /// <summary>
         /// 订单类型
         /// </summary>
-        public  int Ordertype { get; set; }
+        //=========================================================================彭贵飞 state=============================================================//
+        //public  int Ordertype { get; set; }
+        public EnumOrderType Ordertype { get; set; }
+        //=========================================================================end======================================================================//
         /// <summary>
         /// 流程状态
         /// </summary>
