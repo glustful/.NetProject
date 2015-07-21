@@ -60,7 +60,7 @@
     <include
         android:id="@+id/rl_iclient_progress"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="150dp"
         layout="@layout/progress"
         android:visibility="gone" />
 

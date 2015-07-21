@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:background="@color/appBackground"
     android:orientation="vertical"
-    tools:context="${relativePackage}.${activityClass}" 
-    android:padding="20dp">
+    android:padding="20dp"
+    tools:context="${relativePackage}.${activityClass}" >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,34 +39,28 @@
                 android:textSize="@dimen/large_textSize" />
 
             <com.yoopoon.home.ui.view.RedStarTextView
-                
+                android:id="@+id/rstv_person_setting_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                
-                android:text="*姓名"
-                android:textColor="@color/setting_text"
-                android:textSize="@dimen/large_textSize"
-                android:id="@+id/rstv_person_setting_name" />
+                android:text="*姓名" />
 
             <EditText
-                android:layout_marginTop="5dp"
                 android:id="@+id/name"
                 style="@style/EditText_Normal"
+                android:layout_marginTop="5dp"
                 android:hint="姓名" />
-            
-            <TextView 
+
+            <TextView
+                android:id="@+id/tv_person_setting_name_warning"
                 style="@style/TextView_Warning"
-                android:text="请填写姓名"
-                android:id="@+id/tv_person_setting_name_warning"/>
+                android:text="请填写姓名" />
 
             <com.yoopoon.home.ui.view.RedStarTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="*性别"
-                android:textColor="@color/setting_text"
-                android:textSize="@dimen/large_textSize" />
+                android:text="*性别" />
 
             <RadioGroup
                 android:id="@+id/rg_person_setting_sex"
@@ -80,62 +74,71 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:textSize="14sp"
-                    android:text="男" />
+                    android:text="男"
+                    android:textColor="@color/setting_text" />
 
                 <RadioButton
                     android:id="@+id/rb_person_setting_female"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:textSize="14sp"
-                    android:text="女" />
+                    android:text="女"
+                    android:textColor="@color/setting_text" />
             </RadioGroup>
 
-
-            <TextView
-                android:id="@+id/tv_person_setting_phone"
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="电话：18760951789"
-                android:textColor="@color/setting_text" />
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="电话：" />
+
+                <TextView
+                    android:id="@+id/tv_person_setting_phone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/setting_text"
+                    android:text="18760951789" />
+            </LinearLayout>
 
             <com.yoopoon.home.ui.view.RedStarTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="*身份证"
-                android:textColor="@color/setting_text"
-                android:textSize="@dimen/large_textSize" />
+                android:text="*身份证" />
 
             <EditText
                 android:id="@+id/card"
-                android:layout_marginTop="5dp"
                 style="@style/EditText_Normal"
-                android:hint="保护账号安全"/>
-            <TextView 
+                android:layout_marginTop="5dp"
+                android:hint="保护账号安全" />
+
+            <TextView
+                android:id="@+id/tv_person_setting_sfz_warning"
                 style="@style/TextView_Warning"
-                android:text="请正确的身份证号码"
-                android:id="@+id/tv_person_setting_sfz_warning"/>
+                android:text="请正确的身份证号码" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="邮箱"
-                android:textColor="@color/setting_text"
-                android:textSize="@dimen/large_textSize" />
+                android:text="邮箱" />
 
             <EditText
                 android:id="@+id/email"
-                android:layout_marginTop="5dp"
                 style="@style/EditText_Normal"
-                android:hint="用户邮箱"/>
-            <TextView 
+                android:layout_marginTop="5dp"
+                android:hint="用户邮箱" />
+
+            <TextView
+                android:id="@+id/tv_person_setting_email_warning"
                 style="@style/TextView_Warning"
-                android:text="请输入邮箱"
-                android:id="@+id/tv_person_setting_email_warning"/>
+                android:text="请输入邮箱" />
 
             <Button
                 android:id="@+id/save"

@@ -1209,16 +1209,17 @@ containing a value of this type.
         public static final int abc_split_action_bar_is_narrow=0x7f050002;
     }
     public static final class color {
-        public static final int abc_search_url_text_holo=0x7f06000f;
+        public static final int abc_search_url_text_holo=0x7f060010;
         public static final int abc_search_url_text_normal=0x7f060000;
         public static final int abc_search_url_text_pressed=0x7f060002;
         public static final int abc_search_url_text_selected=0x7f060001;
         public static final int appBackground=0x7f060006;
-        public static final int bank_card_blue=0x7f06000e;
-        public static final int deviding_line=0x7f06000d;
+        public static final int bank_card_blue=0x7f06000f;
+        public static final int deviding_line=0x7f06000e;
         public static final int drak_red=0x7f060008;
         public static final int green=0x7f060007;
         public static final int hosue_total_color=0x7f06000b;
+        public static final int light_gray=0x7f06000d;
         public static final int little_whitle=0x7f060009;
         public static final int red=0x7f060003;
         public static final int second_red=0x7f060004;
@@ -1550,9 +1551,10 @@ containing a value of this type.
         public static final int text_tab_selector=0x7f0200be;
         public static final int trend_down=0x7f0200bf;
         public static final int trend_up=0x7f0200c0;
-        public static final int user=0x7f0200c1;
-        public static final int vertical_line=0x7f0200c2;
-        public static final int white_point=0x7f0200c3;
+        public static final int tv_white_bg=0x7f0200c1;
+        public static final int user=0x7f0200c2;
+        public static final int vertical_line=0x7f0200c3;
+        public static final int white_point=0x7f0200c4;
     }
     public static final class id {
         public static final int FILL=0x7f09001d;
@@ -2150,11 +2152,13 @@ containing a value of this type.
 
 
 
+
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
 
 
 
@@ -2248,6 +2252,7 @@ containing a value of this type.
         public static final int TextView_Detail_Progress=0x7f0b00a2;
         public static final int TextView_Detail_Progress_Done=0x7f0b00a3;
         public static final int TextView_Detail_Progress_Undone=0x7f0b00a4;
+        public static final int TextView_Footer=0x7f0b00a5;
         public static final int TextView_GrayText=0x7f0b009a;
         public static final int TextView_GrayText_WrapContent=0x7f0b009b;
         public static final int TextView_Guest=0x7f0b0094;

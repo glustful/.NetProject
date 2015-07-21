@@ -14,8 +14,7 @@
         android:drawableRight="@drawable/right_next_icon"
         android:padding="10dp"
         android:text="个人资料"
-        android:textColor="@color/setting_text"
-        android:textSize="@dimen/large_textSize" />
+        android:textColor="@color/setting_text" />
 
     <TextView
         android:id="@+id/security_setting"
@@ -26,8 +25,7 @@
         android:drawableRight="@drawable/right_next_icon"
         android:padding="10dp"
         android:text="安全设置"
-        android:textColor="@color/setting_text"
-        android:textSize="@dimen/large_textSize" />
+        android:textColor="@color/setting_text" />
 
     <Button
         android:id="@+id/logout"
