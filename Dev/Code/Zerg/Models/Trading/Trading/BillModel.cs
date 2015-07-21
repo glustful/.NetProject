@@ -11,5 +11,8 @@ namespace Zerg.Models.Trading.Trading
         public decimal Actualamount { get; set; }
         public string beneficiarynumber { get; set; }
         public string remark { get; set; }
+        //======================================pengguifei state============================================//
+        public string MoneyDesc { get; set; }
+        //=====================================end=========================================================//
     }
 }
