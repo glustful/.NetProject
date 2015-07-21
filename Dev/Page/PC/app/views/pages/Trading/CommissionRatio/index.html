@@ -2,16 +2,16 @@
     <div class="panel panel-default">
         <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
         <div class="panel-body revise">
-            <div class="bottom" ><label>带客平台所占比例： </label> <input type="text" ng-model="Model.TakeCfbScale" name="TakeCfbScale" required>
+            <div class="bottom" ><label>&nbsp;&nbsp;&nbsp;&nbsp;带客平台所占比例： </label> <input type="text" ng-model="Model.TakeCfbScale" name="TakeCfbScale" required>
                 <span ng-show="form.TakeCfbScale.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
             </div>
-            <div class="bottom" ><label>带客经纪人所占比例： </label> <input type="text" ng-model="Model.TakeAngetScale" name="TakeAngetScale" required>
-                <span ng-show="form.TakeAngetScale.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+            <div class="bottom" ><label>带客经纪人所占比例： </label> <input type="text" ng-model="Model.TakeAgentScale" name="TakeAgentScale" required>
+                <span ng-show="form.TakeAgentScale.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
             </div>
             <div class="bottom" ><label>带客合伙人所占比例： </label> <input type="text" ng-model="Model.TakePartnerScale" name="RecCfbScale" required>
                 <span ng-show="form.RecCfbScale.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
             </div>
-            <div class="bottom" ><label>推荐平台所占比例： </label> <input type="text" ng-model="Model.RecCfbScale" name="RecCfbScale" required>
+            <div class="bottom" ><label>&nbsp;&nbsp;&nbsp;&nbsp;推荐平台所占比例： </label> <input type="text" ng-model="Model.RecCfbScale" name="RecCfbScale" required>
                 <span ng-show="form.RecCfbScale.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
             </div>
             <div class="bottom" ><label>推荐经纪人所占比例： </label> <input type="text" ng-model="Model.RecAgentScale" name="RecAgentScale" required>
