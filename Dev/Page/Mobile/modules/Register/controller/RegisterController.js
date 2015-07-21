@@ -6,6 +6,7 @@ app.controller('registerController',['$scope','$state','$http','$stateParams','A
    console.log($stateParams.yqm);
 
     $scope.register={
+        Username:'',
         Password:'',
         SecondPassword:'',
         Phone:'',
@@ -15,7 +16,7 @@ app.controller('registerController',['$scope','$state','$http','$stateParams','A
     }
     //提交注册信息
     $scope.registerSubmit = function(){
-
+         $scope.register.Username=$scope.register.Phone;
         $http.post(SETTING.ApiUrl+'/User/AddBroker',$scope.register,{'withCredentials':true}).success(function(data){
             console.log(data);
             if(data.Status==false){
@@ -127,7 +128,8 @@ function check()
     {
         tips.innerHTML="两次密码输入不一致，请重新输入！";
     }else{
-        tips.innerHTML="";
+        tips.innerHTML=undefined;
+        tips.innerHTML=undefined;
     }
     if(pass1.value==""||pass2.value=="")
     {
