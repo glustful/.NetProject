@@ -400,7 +400,8 @@ namespace Zerg.Controllers.CRM
                   
                     break;
                 case EnumBRECCType.审核不通过:
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "审核不通过"));
+                    _brokerRecClientService.Delete(model);
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "操作成功"));
                 case EnumBRECCType.等待上访:
                     //查询商品详情
                     var product = _productService.GetProductById(model.Projectid);
