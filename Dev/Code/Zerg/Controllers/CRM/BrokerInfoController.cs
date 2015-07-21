@@ -9,7 +9,9 @@ using CRM.Entity.Model;
 using CRM.Service.BrokeAccount;
 using CRM.Service.Broker;
 using CRM.Service.ClientInfo;
+using CRM.Service.Event;
 using CRM.Service.EventOrder;
+using CRM.Service.InvitedCode;
 using CRM.Service.MessageDetail;
 using CRM.Service.PartnerList;
 using CRM.Service.RecommendAgent;
@@ -40,6 +42,8 @@ namespace Zerg.Controllers.CRM
         private readonly IUserService _userService;
         private readonly IBrokeAccountService _brokerAccountService;
         private readonly IEventOrderService _eventOrderService;
+        private readonly IInviteCodeService _inviteCodeService;
+        
         /// <summary>
         /// 经纪人管理初始化
         /// </summary>
@@ -60,7 +64,8 @@ namespace Zerg.Controllers.CRM
             IMessageDetailService MessageService,
             IUserService userService,
             IBrokeAccountService brokerAccountService,
-            IEventOrderService eventOrderService
+            IEventOrderService eventOrderService,
+            IInviteCodeService inviteCodeService
             )
         {
             _clientInfoService = clientInfoService;
@@ -73,6 +78,7 @@ namespace Zerg.Controllers.CRM
             _userService = userService;
             _brokerAccountService = brokerAccountService;
             _eventOrderService = eventOrderService;
+            _inviteCodeService = inviteCodeService;
         }
 
 
@@ -145,19 +151,33 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="userId">经纪人Id</param>
         /// <returns>经纪人信息</returns>
+
+        //by yangyue  2015/7/21 改动邀请码验证------//
         [HttpGet]
         [Description("获取经纪人信息")]
         public HttpResponseMessage GetBrokerByUserId(string userId)
         {
+            int IsInvite = 0;
             if (string.IsNullOrEmpty(userId) || !PageHelper.ValidateNumber(userId))
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
             }
 
             var model = _brokerService.GetBrokerByUserId(Convert.ToInt32(userId));
-
+            var brokerid =
+                _inviteCodeService.GetInviteCodeById(_brokerService.GetBrokerByUserId(Convert.ToInt32(userId)).Id);                   
+            if (brokerid == null)
+            {
+                IsInvite = 1;
+            }
+            else if(_brokerService.GetBrokerByUserId(Convert.ToInt32(userId)).Id
+                ==brokerid.Broker.Id)
+            {
+                IsInvite = 0;
+            }
             if (model == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在！"));
-
+            
+            
             var brokerInfo = new BrokerModel
             {
                 Id = model.Id,
@@ -169,13 +189,14 @@ namespace Zerg.Controllers.CRM
                 Email = model.Email,
                 Phone = model.Phone,
                 Headphoto = model.Headphoto,
-                WeiXinNumber=model.WeiXinNumber
+                WeiXinNumber=model.WeiXinNumber,
+                IsInvite = IsInvite
             };
 
             return PageHelper.toJson(brokerInfo);
         }
 
-
+        
 
         /// <summary>
         /// 传入会员参数,检索会员信息,返回会员列表
@@ -678,6 +699,11 @@ namespace Zerg.Controllers.CRM
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));
         }
+
+
+
+
+        
     }
 
 
