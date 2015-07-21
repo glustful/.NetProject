@@ -23,8 +23,8 @@ angular.module("app").controller('DkRecordController', [
             }).success(function(data){
                 $scope.Brokerlist = data.list1;
                 if(data.list1==""){
-                    console.log("hello");
-                    $scope.errorTip == "当前不存在预约记录"
+
+                    $scope.errorTip ="当前不存在预约记录"
                 }
                 console.log( $scope.Brokerlist);
                 $scope.searchCondition.page=data.condition1.Page;
