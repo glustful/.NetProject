@@ -205,11 +205,7 @@ namespace Zerg.Models.CRM
         public bool ValidateModel(out string msg)
         {
             msg = "";
-            if (string.IsNullOrEmpty(UserName))
-            {
-                msg = "用户名不能为空";
-                return false;
-            }
+            if (string.IsNullOrEmpty(UserName)) return false;        
             if (string.IsNullOrEmpty(Password)) return false;
             if (string.IsNullOrEmpty(SecondPassword)) return false;
             if (string.IsNullOrEmpty(Phone)) return false;

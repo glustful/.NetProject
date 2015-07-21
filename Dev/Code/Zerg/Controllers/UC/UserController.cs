@@ -477,8 +477,8 @@ namespace Zerg.Controllers.UC
 
             var model = new BrokerEntity();
             model.UserId = _userService.InsertUser(newUser).Id;
-            model.Brokername = brokerModel.UserName;
-            model.Nickname = brokerModel.UserName;
+            model.Brokername = brokerModel.Phone;
+            model.Nickname = brokerModel.Phone;
             model.Phone = brokerModel.Phone;
             model.Totalpoints = 0;
             model.Amount = 0;
