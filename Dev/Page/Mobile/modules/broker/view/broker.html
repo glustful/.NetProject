@@ -19,9 +19,12 @@
             <div class="bj">
             <div class="nav-broker">
                 <a href="#/app/nominate" access="broker"><span class="dk"> 我要带客</span></a>
-                <a href="#/app/nominate" access="broker"><span class="tj"> 我要推荐</span></a>
-                <a href="#/app/task"><span class="rw">我的任务</span></a>
-                <a href="#/app/redPaper-1"> <span class="hb">抢红包</span></a>
+                <a href="#/app/myPurse" access="broker"><span class="tj"> 我的钱包</span></a>
+                <a href="#"><span class="rw">新手教程</span></a>
+                <a href="#"> <span class="hb">常见问题</span></a>
+                <!--<a href="#/app/nominate" access="broker"><span class="tj"> 我要推荐</span></a>-->
+                <!--<a href="#/app/task"><span class="rw">我的任务</span></a>-->
+                <!--<a href="#/app/redPaper-1"> <span class="hb">抢红包</span></a>-->
             </div>
             <div class="activity-broker">
                 <div class="sub-nav">创富活动<span class="yuan-icon fr">
@@ -29,44 +32,47 @@
                 </span>
                 </div>
 
-                <ul  class="cf">
+                <!--<ul  class="cf">-->
 
 
-                    <li class="{{$index==0?'one':$index==1?'two':$index==2?'three':$index==3?'four':$index==4?'five':$index==5?'six':''}}"  ng-repeat="item in Actcontent">
-                        <!--<a href="#/app/chip">-->
-                        <!--<img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="开发商疯了"  width="205px" />-->
+                    <!--<li class="{{$index==0?'one':$index==1?'two':$index==2?'three':$index==3?'four':$index==4?'five':$index==5?'six':''}}"  ng-repeat="item in Actcontent">-->
+                        <!--&lt;!&ndash;<a href="#/app/chip">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="http://img.yoopoon.com/{{item.TitleImg}}" alt="开发商疯了"  width="205px" />&ndash;&gt;-->
+                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                        <!--<a href="#">-->
+                            <!--<p class="active_title">{{item.Title}}</p>-->
+                            <!--<p class="well">{{item.AdSubTitle}}</p>-->
+                            <!--<img src="http://img.yoopoon.com/{{item.TitleImg}}" width="95" height="95">-->
                         <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+                <ul class="cf">
+                    <li class="one">
                         <a href="#">
-                            <p class="active_title">{{item.Title}}</p>
-                            <p class="well">{{item.AdSubTitle}}</p>
-                            <img src="http://img.yoopoon.com/{{item.TitleImg}}" width="95" height="95">
-                        </a>
-                    </li>
-                </ul>
-                <!--<ul class="cf">-->
-                    <!--<li class="one">-->
-                        <!--<a href="#/app/redPaper-1">-->
+                            <p class="red-broker wait">霸王餐</p>
                             <!--<p class="red-broker wait">百万红包等你抢</p>-->
                             <!--<p class="well">创富宝送出100W福利</p>-->
-                            <!--<img src="modules/broker/static/image/broker/p1.png" alt="百万红包等你抢"/>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--<li class="two">-->
-                        <!--<a href="#">-->
+                            <img src="modules/broker/static/image/broker/bawangcan.png" alt="霸王餐"/>
+                        </a>
+                    </li>
+                    <li class="two">
+                        <a href="#">
+                            <p class="wait">最热电影</p>
                             <!--<p class="wait">开发商疯了吧</p>-->
                             <!--<p class="well">最高折扣70W,白送</p>-->
-                            <!--<img src="modules/broker/static/image/broker/p2.png" alt="开发商疯了吧"/>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--<li class="three">-->
-                        <!--<a href="#">-->
+                            <img src="modules/broker/static/image/broker/movie.png" alt="最热电影"/>
+                        </a>
+                    </li>
+                    <li class="three">
+                        <a href="#">
+                            <p class="wait">推拿按摩</p>
                             <!--<p class="wait">名校就在小区里</p>-->
                             <!--<p class="well">最高享受6万元优惠</p>-->
-                            <!--<img src="modules/broker/static/image/broker/p3.png" alt="名校就在小区里" />-->
-                        <!--</a>-->
-                    <!--</li>-->
+                            <img src="modules/broker/static/image/broker/anmo.png" alt="推拿按摩" />
+                        </a>
+                    </li>
 
-                <!--</ul>-->
+                </ul>
             </div>
             <div class="hero">
                 <div class="hd">创富英雄榜</div>

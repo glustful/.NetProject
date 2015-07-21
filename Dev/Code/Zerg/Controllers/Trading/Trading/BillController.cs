@@ -88,7 +88,7 @@ namespace Zerg.Controllers.Trading.Trading
         [Description("创建三个账单（zerg、经纪人、地产商")]
         [HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        //===================================================================pengguifei state========================================================================//
+        //===================================================================pengguifei start========================================================================//
         public HttpResponseMessage CreateBill(BillModel model)
         {
             OrderEntity oe = _orderService.GetOrderById(model.orderId);
@@ -225,8 +225,8 @@ namespace Zerg.Controllers.Trading.Trading
             //        Uptime = DateTime.Now
             //    };
             //}
-
-            if (partner != null)
+            //成交并且有合伙人时创建合伙人账单和账户明细
+            if (oe.Shipstatus == 3 &&partner != null)
             {
                 //合伙人账单
                 PBE = new AgentBillEntity
@@ -280,6 +280,8 @@ namespace Zerg.Controllers.Trading.Trading
                         };
                         break;
                 }
+                _agentBillService.Create(PBE);
+                _brokeAccountService.Create(PAE);
                 //if (oe.Ordertype == EnumOrderType.带客订单)
                 //{
                 //    PAE = new BrokeAccountEntity
@@ -318,11 +320,11 @@ namespace Zerg.Controllers.Trading.Trading
             _agentBillService.Create(ABE);
             _brokeAccountService.Create(BAE);
             //成交并且有合伙人时创建合伙人账单和账户明细
-            if (oe.Shipstatus == 3 && partner != null)
-            {
-                _agentBillService.Create(PBE);
-                _brokeAccountService.Create(PAE);
-            }
+            //if (oe.Shipstatus == 3 && partner != null)
+            //{
+            //    _agentBillService.Create(PBE);
+            //    _brokeAccountService.Create(PAE);
+            //}
             return PageHelper.toJson(PageHelper.ReturnValue(true, "账单生成成功"));
         }
         /// <summary>
@@ -358,6 +360,7 @@ namespace Zerg.Controllers.Trading.Trading
                 Page = 1,
                 PageSize = 1
             };
+            //获取佣金分成比例
             var commissionRatio =
                 _commissionRatioService.GetCommissionRatioCondition(con)
                     .Select(p => new Models.Trading.CommissionRatio.CommissionRatio

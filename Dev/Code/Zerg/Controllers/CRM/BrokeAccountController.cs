@@ -52,7 +52,7 @@ namespace Zerg.Controllers.CRM
 
             var brokeaccountcon = new BrokeAccountSearchCondition
             {
-                Brokers = _brokerService.GetBrokerById(Convert.ToInt32(userId)),
+                Brokers = _brokerService.GetBrokerByUserId(Convert.ToInt32(userId)),
                 State = 0
                
             };
