@@ -22,9 +22,11 @@ angular.module("app").controller('DkRecordController', [
                 'withCredentials':true
             }).success(function(data){
                 $scope.Brokerlist = data.list1;
-                if(data.list1 == ""){
-                    $scope.errorTip == "当前不存在预约记录"
+                if(data.list1==""){
+
+                    $scope.errorTip ="当前不存在预约记录"
                 }
+                console.log( $scope.Brokerlist);
                 $scope.searchCondition.page=data.condition1.Page;
                 $scope.searchCondition.pageSize=data.condition1.PageCount;
                 $scope.searchCondition.totalCount=data.totalCont1;
@@ -72,7 +74,7 @@ angular.module("app").controller('DKRDetailedController',['$http','$scope','$sta
 
         if ($scope.ARDetialModel.SecretaryId == 0 || $scope.ARDetialModel.SecretaryId=="" ||  $scope.ARDetialModel.SecretaryId==undefined)
         {
-            alert("主场秘书不能为空");
+            alert("驻场秘书不能为空");
             return;
         }
         $http.post(SETTING.ApiUrl +'/BrokerLeadClient/UpdateLeadClient',$scope.ARDetialModel,{ 'withCredentials':true}).success(function(data){
@@ -80,7 +82,9 @@ angular.module("app").controller('DKRDetailedController',['$http','$scope','$sta
                 alert(data.Msg);
                 $state.go('page.CRM.DkRecord.index');
             }else{
+
                 alert(data.Msg);
+                $state.go('page.CRM.DkRecord.index');
             }
         });
     };
