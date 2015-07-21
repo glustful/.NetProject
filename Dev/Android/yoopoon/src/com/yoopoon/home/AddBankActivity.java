@@ -105,17 +105,17 @@ public class AddBankActivity extends MainActionBarActivity {
 
 	}
 
-	@Click(R.id.et_addbank_bank)
+	@Click(R.id.tv_addbank_bank)
 	void selectBank() {
 		Builder builder = new Builder(this);
 		builder.setTitle("开户银行");
-		builder.setSingleChoiceItems(banks, 0, new DialogInterface.OnClickListener() {
+		builder.setSingleChoiceItems(banks, checkedBank, new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				checkedBank = which;
 				dialog.dismiss();
-				et_bank.setText(banks[which]);
+				tv_bank.setText(banks[which]);
 			}
 		});
 		builder.show();
@@ -220,8 +220,8 @@ public class AddBankActivity extends MainActionBarActivity {
 	Button btn_getcode;
 	@ViewById(R.id.et_addbank_address)
 	EditText et_address;
-	@ViewById(R.id.et_addbank_bank)
-	EditText et_bank;
+	@ViewById(R.id.tv_addbank_bank)
+	TextView tv_bank;
 	@ViewById(R.id.et_addbank_num)
 	EditText et_card;
 	@ViewById(R.id.et_addbank_code)
@@ -255,10 +255,9 @@ public class AddBankActivity extends MainActionBarActivity {
 	}
 
 	private void initDatas() {
-		et_bank.setText(banks[checkedBank]);
+		tv_bank.setText(banks[checkedBank]);
 
 		info_ets.add(et_card);
-		info_ets.add(et_bank);
 		info_ets.add(et_address);
 		info_ets.add(et_code);
 

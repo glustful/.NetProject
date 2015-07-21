@@ -28,6 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="true"
+                android:textColor="@color/setting_text"
                 android:text="储蓄卡" />
 
             <RadioButton
@@ -35,12 +36,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/setting_text"
                 android:text="信用卡" />
         </RadioGroup>
     </LinearLayout>
 
     <TextView
-        style="@style/TextView_GrayText_WrapContent"
+        style="@style/TextView_Wrap_Content"
         android:layout_marginTop="15dp"
         android:text="卡号" />
 
@@ -56,15 +58,16 @@
         android:text="请填写银行卡号" />
 
     <TextView
-        style="@style/TextView_GrayText_WrapContent"
+        style="@style/TextView_WrapContent"
         android:layout_marginTop="15dp"
         android:text="开户银行" />
 
-    <EditText
-        android:id="@+id/et_addbank_bank"
+    <TextView
+        android:id="@+id/tv_addbank_bank"
         style="@style/EditText_Normal"
-        android:layout_marginTop="5dp"
-        android:editable="false" />
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginTop="5dp"/>
 
     <TextView
         android:id="@+id/tv_addbank_warning2"
@@ -72,7 +75,7 @@
         android:text="请选择开户银行" />
 
     <TextView
-        style="@style/TextView_GrayText_WrapContent"
+        style="@style/TextView_WrapContent"
         android:layout_marginTop="15dp"
         android:text="开户银行地址" />
 

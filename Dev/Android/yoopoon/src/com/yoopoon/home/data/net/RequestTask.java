@@ -42,9 +42,7 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.BufferedHttpEntity;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
@@ -157,6 +155,7 @@ public class RequestTask implements Runnable {
 			}
 		} else {
 			upLoadRequestPostMethod(urlString);
+			// uploadImage(urlString);
 		}
 	}
 
@@ -237,8 +236,13 @@ public class RequestTask implements Runnable {
 		IdentityHashMap<String, String> params = mRequestData.getParams();
 		HttpPost httpPost = new HttpPost(urlString);
 		httpPost.setHeader("x-requested-with", "XMLHttpRequest");
+		// httpPost.setHeader("Access-Control-Allow-Credentials", "true");
+		httpPost.setHeader("Accept", "application/json, text/plain, */*");
+		httpPost.setHeader("Connection", "keep-alive");
 		if (mRequestData.getContentType() == RequestContentType.eJSON) {
-			httpPost.setHeader("Content-Type", "application/json");
+			httpPost.setHeader("Content-Type", "application/json;charset=UTF-8");
+		} else if (mRequestData.getContentType() == RequestContentType.eImage) {
+			httpPost.setHeader("Content-Type", "image/jpeg");
 		}
 		List<NameValuePair> reqPar = new ArrayList<NameValuePair>();
 		if (null != params) {
@@ -251,10 +255,13 @@ public class RequestTask implements Runnable {
 		try {
 			if (mRequestData.getContentType() == RequestContentType.eGeneral) {
 				httpPost.setEntity(new UrlEncodedFormEntity(reqPar, "UTF-8"));
+			} else if (mRequestData.getContentType() == RequestContentType.eJSON) {
+				httpPost.setEntity(new StringEntity(mRequestData.getJSON(), "UTF-8"));
 			} else {
 				httpPost.setEntity(new StringEntity(mRequestData.getJSON(), "UTF-8"));
 			}
 			HttpResponse httpResponse = mHttpClient.execute(httpPost);
+
 			int responseCode = httpResponse.getStatusLine().getStatusCode();
 			if ((responseCode > 199) && (responseCode < 400)) {
 				if (!mStopRunning && mRequestData.getSaveSession()) {
@@ -313,29 +320,36 @@ public class RequestTask implements Runnable {
 
 	private void upLoadRequestPostMethod(String urlString) {
 		HttpEntity entityWhole;
-		MultipartEntity mpEntity = new MultipartEntity();
+		org.apache.http.entity.mime.MultipartEntity mpEntity = null;
+
+		mpEntity = new org.apache.http.entity.mime.MultipartEntity();
+
 		HttpPost httpPost = new HttpPost(urlString);
 		httpPost.setHeader("x-requested-with", "XMLHttpRequest");
 		httpPost.setHeader("Content-Type", "multipart/form-data");
+		httpPost.setHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+		httpPost.setHeader("Connection", "keep-alive");
+		httpPost.setHeader("User-Agent",
+				"Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36");
+		httpPost.setHeader("Access-Control-Allow-Credentials", "true");
+
 		try {
 			if (mRequestData.getmAttPath() != null && !"".equals(mRequestData.getmAttPath().trim())
 					&& mRequestData.getmBitmap() == null) {
-				IdentityHashMap<String, String> params = mRequestData.getParams();
-				if (null != params) {
-					for (Map.Entry<String, String> entry : params.entrySet()) {
-						String key = entry.getKey();
-						String value = entry.getValue();
-						try {
-							StringBody par = new StringBody(value);
-							mpEntity.addPart(key, par);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				}
-				FileBody file = new FileBody(new File(mRequestData.getmAttPath()));
+				/*
+				 * IdentityHashMap<String, String> params = mRequestData.getParams(); if (null !=
+				 * params) { for (Map.Entry<String, String> entry : params.entrySet()) { String key
+				 * = entry.getKey(); String value = entry.getValue(); try { StringBody par = new
+				 * StringBody(value); mpEntity.addPart(key, par); } catch (Exception e) {
+				 * e.printStackTrace(); } } }
+				 */
+				FileBody file = new FileBody(new File(mRequestData.getmAttPath()), "image/jpeg", "utf8");
+
+				// FormBodyPart body = new FormBodyPart("fileToUpload", file);
 				mpEntity.addPart("file", file);
+
 				httpPost.setEntity(mpEntity);
+
 			} else if (mRequestData.getmAttPath() == null && mRequestData.getmBitmap() != null) {
 				Bitmap bitmap = mRequestData.getmBitmap();
 				ByteArrayOutputStream bao = new ByteArrayOutputStream();

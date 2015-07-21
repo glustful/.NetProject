@@ -1625,7 +1625,6 @@ containing a value of this type.
         public static final int email=0x7f09012d;
         public static final int end=0x7f09001a;
         public static final int et_addbank_address=0x7f09005a;
-        public static final int et_addbank_bank=0x7f090058;
         public static final int et_addbank_code=0x7f09005d;
         public static final int et_addbank_num=0x7f090056;
         public static final int et_findpsw_code=0x7f09006e;
@@ -1802,6 +1801,7 @@ containing a value of this type.
         public static final int top_action_bar=0x7f09002e;
         public static final int tpye_area_stockRule=0x7f0900bf;
         public static final int tv_add_title=0x7f0900b1;
+        public static final int tv_addbank_bank=0x7f090058;
         public static final int tv_addbank_warning1=0x7f090057;
         public static final int tv_addbank_warning2=0x7f090059;
         public static final int tv_addbank_warning3=0x7f09005b;
