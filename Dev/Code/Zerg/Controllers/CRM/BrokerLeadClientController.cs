@@ -450,7 +450,8 @@ namespace Zerg.Controllers.CRM
                 case EnumBLeadType.预约中:
                     break;
                 case EnumBLeadType.预约不通过:
-                    return PageHelper.toJson(PageHelper.ReturnValue(false, "预约不通过"));
+                    _brokerleadclientService.Delete(entity);
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "操作成功"));
                 case EnumBLeadType.等待上访:
                         entity.SecretaryId = _brokerService.GetBrokerByUserId(model.SecretaryId);
                         //查询商品详情

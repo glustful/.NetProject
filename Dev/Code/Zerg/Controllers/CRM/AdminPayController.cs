@@ -358,6 +358,7 @@ namespace Zerg.Controllers.CRM
             BrokerWithdraw.Uptime = DateTime.Now;
             BrokerWithdraw.Upuser = broker.Id;
             BrokerWithdraw.WithdrawDesc = payModel.Describe;
+            BrokerWithdraw.BankSn = payModel.BankSn;
             _brokerwithdrawService.Update(BrokerWithdraw);
             BrokeAccount.State = 1;
             BrokeAccount.Uptime = DateTime.Now;
@@ -380,6 +381,10 @@ namespace Zerg.Controllers.CRM
           /// 提现明细Id
           /// </summary>
           public string Ids { get; set; }
+          /// <summary>
+          /// 银行流水号
+          /// </summary>
+          public string BankSn { get; set; }
           /// <summary>
           /// 提现账户明细ID
           /// </summary>
