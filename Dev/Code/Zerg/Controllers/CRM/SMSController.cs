@@ -45,7 +45,7 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 通过用户输入手机号发送短信，返回短信发送结果状态信息。
+        /// 通过用户输入手机号发送短信，返回短信发送结果状态信息。（手机号，短信类型）
         /// </summary>
         /// <returns>短信发送结果状态信息</returns>
         [Description("用户输入手机号发送短信")]
@@ -119,7 +119,7 @@ namespace Zerg.Controllers.CRM
         }
 
         /// <summary>
-        /// 发送短信
+        /// 发送短信（短信类型）
         /// </summary>
         /// <param name="smstype">短信类型(修改密码=1,找回密码=2,添加银行卡=3,佣金提现=4,)</param>
         /// <returns>发送短信结果状态信息</returns>
@@ -177,6 +177,75 @@ namespace Zerg.Controllers.CRM
             return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
         }
 
+
+        /// <summary>
+        /// 发送短信（短信类型 和经纪人Id）
+        /// </summary>
+        /// <param name="smstype">短信类型(修改密码=1,找回密码=2,添加银行卡=3,佣金提现=4,)</param>
+        /// <returns>发送短信结果状态信息</returns>
+        public HttpResponseMessage SendSmsForbrokerid([FromBody] YzMsg yzmsg)
+        {
+            if(string.IsNullOrEmpty( yzmsg.userId) || string.IsNullOrEmpty(yzmsg.SmsType) )
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "参数错误，发送失败"));
+            }
+
+            var broker = _brokerService.GetBrokerById(Convert.ToInt32(yzmsg.userId));
+
+            //var user = (UserBase)_workContext.CurrentUser;
+            //if (user != null)
+            //{
+            //    var broker = _brokerService.GetBrokerByUserId(user.Id); //获取当前经纪人
+                if (broker == null)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+                }
+                var messageConfigName = Enum.GetName(typeof(MessageConfigTypeEnum), Convert.ToInt32(yzmsg.SmsType));
+                //获取短信模版名称
+                var messageTemplate = _messageConfigService.GetMessageConfigByName(messageConfigName).Template;
+                //获取到的短信模版
+                string messages;
+                if (messageConfigName == "推荐经纪人") //不需要生成数字验证码
+                {
+                    messages = string.Format(messageTemplate, ""); //更改模版
+                    //添加到短信表中去 
+                    AddMessageDetails(new MessageDetailEntity
+                    {
+                        Content = messages,
+                        Mobile = broker.Phone,
+                        Sender = broker.Phone,
+                        Title = messageConfigName,
+                        Addtime = DateTime.Now
+                    });
+
+                    return PageHelper.toJson(SMSHelper.Sending(broker.Phone, messages));
+                }
+                var strNumber = new Random().Next(100000, 1000000).ToString();
+                //生成大于等于100000，小于等于999999的随机数，也就是六位随机数                                  
+                var nowTimestr = DateTime.Now.ToLongTimeString();
+                var strs = EncrypHelper.Encrypt(strNumber + "$" + nowTimestr, "Hos2xNLrgfaYFY2MKuFf3g==");
+                //EMS 加密短信验证码                  
+                messages = string.Format(messageTemplate, strNumber); //更改模版
+
+                //添加到短信表中去 
+                AddMessageDetails(new MessageDetailEntity
+                {
+                    Content = messages,
+                    Mobile = broker.Phone,
+                    Sender = broker.Phone,
+                    Title = messageConfigName,
+                    Addtime = DateTime.Now
+                });
+
+
+                //返回到前台的加密内容  和短信发送返回值
+                return PageHelper.toJson(new { Desstr = strs, Message = SMSHelper.Sending(broker.Phone, messages) });
+            
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+        }
+
+
+
         /// <summary>
         /// 添加到短信表中
         /// </summary>
@@ -194,8 +263,19 @@ namespace Zerg.Controllers.CRM
     [Description("验证消息类")]
     public class YzMsg
     {
+        /// <summary>
+        /// 手机号
+        /// </summary>
         public string Mobile { get; set; }
 
+        /// <summary>
+        /// 消息类型
+        /// </summary>
         public string SmsType { get; set; }
+
+        /// <summary>
+        /// 经纪人Id
+        /// </summary>
+        public string userId { get; set; }
     }
 }

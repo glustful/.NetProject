@@ -288,5 +288,22 @@ namespace Zerg.Controllers.Trading.Trading.Order
             return PageHelper.toJson(_orderService.GetOrdersByCondition(OSC).ToList());
         }
         #endregion
+        #region 彭贵飞  获取一个订单详情
+        [System.Web.Mvc.HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage GetByOrderId(int orderId)
+        {
+            var order = _orderService.GetOrderById(orderId);
+            var orderDetail=new OrderModel()
+            {
+                Ordercode = order.Ordercode,
+                Shipstatus = order.Shipstatus,
+                Ordertype = order.Ordertype,
+                Agentname =order.Agentname
+            };
+            return PageHelper.toJson(orderDetail);
+        }
+        #endregion
+
     }
 }
