@@ -85,6 +85,9 @@
     <Compile Include="Mappings\ClientInfo\ClientInfoMapping.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Mappings\EventOrder\EventorderMapping.cs" />
+    <Compile Include="Mappings\Event\EventMapping.cs" />
+    <Compile Include="Mappings\InviteCode\InviteCodeMapping.cs" />
     <Compile Include="Mappings\LevelConfig\LevelConfigMapping.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -224,6 +227,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\ClientInfo\EnumClientInfo.cs" />
+    <Compile Include="Model\Event\EnumEvent.cs" />
+    <Compile Include="Model\Event\EventEntity.cs" />
+    <Compile Include="Model\Event\EventSearchCondition.cs" />
+    <Compile Include="Model\EvetOrder\EnumEventOrder.cs" />
+    <Compile Include="Model\EvetOrder\EventOrderEntity.cs" />
+    <Compile Include="Model\EvetOrder\EventOrderSearchConditon.cs" />
+    <Compile Include="Model\InviteCode\EnumInviteCode.cs" />
+    <Compile Include="Model\InviteCode\InviteCodeEntity.cs" />
+    <Compile Include="Model\InviteCode\InviteCodeSearchCondition.cs" />
     <Compile Include="Model\LevelConfig\EnumLevelConfig.cs" />
     <Compile Include="Model\LevelConfig\LevelConfigEntity.cs">
       <SubType>Code</SubType>

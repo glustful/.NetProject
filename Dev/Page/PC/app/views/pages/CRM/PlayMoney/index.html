@@ -1,5 +1,5 @@
 
-<table class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" data-page-size="5">
+<table class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" data-page-size="5"  >
     <thead>
     <tr>
         <th data-toggle="true" class="footable-visible footable-first-column footable-sortable">
@@ -9,15 +9,6 @@
             经纪人名
             <span class="footable-sort-indicator"></span></th>
 
-        <th data-hide="phone,tablet" class="footable-visible footable-sortable">
-            银行名称
-            <span class="footable-sort-indicator"></span></th>
-        <th data-hide="phone,tablet" class="footable-visible footable-sortable">
-            银行卡号
-            <span class="footable-sort-indicator"></span></th>
-        <th data-hide="phone,tablet" data-name="Date Of Birth" class="footable-visible footable-sortable">
-            提现金额
-            <span class="footable-sort-indicator"></span></th>
         <th data-hide="phone,tablet" class="footable-visible footable-sortable">
             提现时间
             <span class="footable-sort-indicator"></span></th>
@@ -36,14 +27,13 @@
     <tr class="footable-even" style="display: table-row;" ng-repeat="item in BrokerWithdraw">
         <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>{{item.Id}}</td>
         <td class="footable-visible">{{item.brokername}}</td>
-        <td class="footable-visible">{{item.bankname}}</td>
-        <td class="footable-visible">{{item.banknumber}}</td>
-        <td data-value="78025368997" class="footable-visible">{{item.withdrawnum}}</td>
+
         <td data-value="78025368997" class="footable-visible">{{item.WithdrawTime}}</td>
         <td class="footable-visible">{{item.accacount}}</td>
         <td data-value="78025368997" class="footable-visible" ng-if="item.state==0">处理中</td>
         <td data-value="78025368997" class="footable-visible" ng-if="item.state==1">完成</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.PlayMoney.detailed({id:item.Id})"><span class="label bg-success" >查看</span></a></td>
+        <!--<td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.PlayMoney.detailed({id:item.Id})"><span class="label bg-success" >查看</span></a></td>-->
+        <td data-value="1" class="footable-visible footable-last-column"><button onclick="WindowShow()" ng-click="GetBrokerWithdrawById(item.Id)" type="button"><span class="label bg-success">打款</span></button></td>
     </tr>
 
     </tbody>
@@ -58,3 +48,72 @@
     </tr>
     </tfoot>
 </table>
+
+
+
+
+<!--弹出层开始  -->
+<div id="modal-form-parameter" class="modal in" tabindex="-1" aria-hidden="false" style="display:none; ">
+    <div class="modal-dialog" style="padding-top:100px ;width: 630px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" onclick="ParameterWindowClose()" class="close" data-dismiss="modal">×</button>
+                <h4 id="msg">请编辑打款信息</h4>
+            </div>
+
+            <div class="modal-body overflow-visible" style="overflow-y: scroll; height: 300px;">
+
+                <p>
+                    经纪人名:<span>{{ List.BrokerName}}</span>
+                </p>
+                <p>
+                    银行类型:<span>{{List.BankType }}</span>
+                </p>
+                <p>
+                    银行卡号:<span>{{List.BankNum }}</span>
+                </p>
+                <p>
+                    金额:<span>{{List.Withdrawnum }}</span>
+                </p>
+                <form>
+
+                    <p>
+                        <input type="hidden"  ng-model="PayInfo.Id">
+                    </p>
+
+                    <p>
+                        款项名称：<input type="text" placeholder="款项名" ng-model="PayInfo.Name" required="" tabindex="0" aria-required="true" aria-invalid="true">
+                    </p>
+
+                    <p>
+                        款项描述：<input type="text"  placeholder="款项描述" ng-model="PayInfo.Describe" required="" tabindex="0" aria-required="true" aria-invalid="true">
+                    </p>
+                    <p>
+                        银行流水号：<input type="text"  placeholder="银行流水号" ng-model="PayInfo.BankSn" required="" tabindex="0" aria-required="true" aria-invalid="true">
+                    </p>
+                    <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" ng-click="SetPay()">打款<div class="md-ripple-container"></div></button>
+                    <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink" onclick="ParameterWindowClose">取消<div class="md-ripple-container"></div></button>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<!--弹出层结束  -->
+
+<script>
+    function WindowClose() {
+        $("#modal-form").hide();
+    }
+    function WindowShow() {
+        $("#modal-form-parameter").show();
+
+    }
+    function AddParameterWindowClose() {
+        $("#modal-form-addParameter").hide();
+    }
+    function ParameterWindowClose() {
+        $(" #modal-form-parameter").hide();
+    }
+</script>

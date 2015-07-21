@@ -77,6 +77,7 @@ namespace Zerg.Controllers.CRM
                 bankname = p.bankname,
                 banknumber = p.banknumber,
                 withdrawnum = p.withdrawnum,
+                brokername = p.brokername,
                 state = p.state,
                 accacount = p.accacount,
                 WithdrawTime = p.WithdrawTime.ToString("yyyy-MM-dd")
@@ -85,9 +86,36 @@ namespace Zerg.Controllers.CRM
             return PageHelper.toJson(new { List = list, Condition = condition, totalCount = Count });
         }
         #endregion
-
-
-
-
+        [Description("根据ID查询")]
+        [HttpGet]
+        public HttpResponseMessage GetBrokerWithdrawById(int id) 
+        {
+            if (id == 0) 
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));
+            }
+            var model = _brokerwithdrawService.GetBrokerWithdrawById(id);
+            var NewModel = new ReturnModel 
+            {
+                ID = model.Id.ToString(),
+                Withdrawnum = model.WithdrawTotalNum,
+                BankType = model.BankCard.Type,
+                BankNum = model.BankCard.Num,
+                BrokerName = model.Broker.Brokername,
+            };
+            return PageHelper.toJson(NewModel);
+        }
+        
+    }
+    /// <summary>
+    /// 返回实体
+    /// </summary>
+    public class ReturnModel 
+    {
+        public virtual string ID { get; set; }
+        public virtual string BankType { get; set; }
+        public virtual string BankNum { get; set; }
+        public virtual decimal Withdrawnum { get; set; }
+        public virtual string BrokerName { get; set; }
     }
 }
