@@ -56,6 +56,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	public static final String LOGTAG = "FramHouseFragment";
 	// 当前Fragment绑定的View
 	View rootView;
+	View popuwindowView;
 	// 存储Get方法传入参数
 	HashMap<String, String> parameter;
 	// 获取的Json对象
@@ -133,6 +134,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		} else {
 			// 获取Fragment对应的视图
 			rootView = LayoutInflater.from(getActivity()).inflate(R.layout.home_fram_house_fragment, null);
+			popuwindowView = LayoutInflater.from(getActivity()).inflate(R.layout.popuwindow_house_area, null);
 			// PullToRefreshListView
 			listView = (PullToRefreshListView) rootView.findViewById(R.id.matter_list_view);
 			mContext = getActivity();
@@ -706,9 +708,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 * @Description: 初始化房源页顶端对应的楼盘区域类型
 	 */
 	private void initHouseAreaView() {
-		houseProvinceListView = (ListView) rootView.findViewById(R.id.house_province_listView);
-		houseCityListView = (ListView) rootView.findViewById(R.id.house_city_listView);
-		houseDistrictListView = (ListView) rootView.findViewById(R.id.house_district_listView);
+		houseProvinceListView = (ListView) popuwindowView.findViewById(R.id.house_province_listView);
+		houseCityListView = (ListView) popuwindowView.findViewById(R.id.house_city_listView);
+		houseDistrictListView = (ListView) popuwindowView.findViewById(R.id.house_district_listView);
 	}
 	public void initHouseAreaDatas() {
 		// 初始化存储楼盘区域信息的ArrayList
@@ -727,7 +729,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					houseProvinceJsonObjects.add(jsonObject);
 				}
 				provinceAdapter = new FramHouseAreaAdapter(mContext, houseProvinceJsonObjects, 0);
-				// houseProvinceListView.setAdapter(provinceAdapter);
+				houseProvinceListView.setAdapter(provinceAdapter);
+				Log.i(LOGTAG, houseProvinceJsonObjects.toString() + "1111111111111111111111");
 			}
 		});
 		// 获取和区
@@ -744,6 +747,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					}
 					cityAdapter = new FramHouseAreaAdapter(mContext, houseCityJsonObjects, 0);
 					houseCityListView.setAdapter(cityAdapter);
+					Log.i(LOGTAG, houseCityJsonObjects.toString() + "322222222222222222222");
 				}
 			});
 		}
@@ -760,6 +764,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					}
 					districtAdapter = new FramHouseAreaAdapter(mContext, houseDistrictJsonObjects, 0);
 					houseDistrictListView.setAdapter(districtAdapter);
+					Log.i(LOGTAG, houseDistrictJsonObjects.toString() + "33333333333333333");
 				}
 			});
 		}
