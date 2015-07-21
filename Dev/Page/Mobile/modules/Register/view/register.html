@@ -1,13 +1,30 @@
 <div class="register_content">
     <form class="form_register" name="form_register" ng-controller="registerController" ng-submit="registerSubmit()" novalidate>
-        <p class="register_tip"><span style="color: red">*</span>
-            用户名
+        <p class="register_tip"><span >*</span>
+            手机号码
         </p>
         <p class="register_input">
-            <span><img src="modules/Register/static/image/register/user.png" class="registerImg"></span>
-            <input type="text"  class="register_blank" placeholder="请填写用户名" name="register_Nameblank" id="username"  ng-model="register.UserName" ng-pattern="/^[\u4e00-\u9fa5a-zA-Z0-9_]+$/" ng-minlength="3" ng-maxlength="20" required/>
+            <span><img src="modules/Register/static/image/register/phone.png" class="registerImg"></span>
+            <input type="tel" class="register_blank" placeholder="请输入手机号码" name="register_phone" id="phoneNumber"  ng-model="register.Phone" ng-pattern="/^1[3|4|5|7|8][0-9]\d{8}$/" required/>
+        <p class="error_out" ng-show="form_register.register_phone.$invalid&&form_register.register_phone.$dirty" >{{ErrorTip}}</p>
+        <input type="hidden" ng-model="register.Hidm">
         </p>
-        <div class="error_out" ng-show="form_register.register_Nameblank.$invalid&&form_register.register_Nameblank.$dirty"> 请输入有效用户名</div>
+        <p class="register_tip"><span>*</span>
+            验证码
+        </p>
+        <p class="PinBlank">
+            <input type="text"  class="PinInput" placeholder="请输入验证码"  ng-model="register.MobileYzm"  name="Pin_input" ng-pattern="/^\d{6}$/" required/>
+            <button type="button" id="btnsms" name="btnsms"  ng-click="GetSMS()">发送验证码</button>
+        </p>
+        <div class="error_out" ng-show="form_register.Pin_input.$invalid&&form_register.Pin_input.$dirty">请正确输入验证码</div>
+        <!--<p class="register_tip"><span style="color: red">*</span>-->
+            <!--用户名-->
+        <!--</p>-->
+        <!--<p class="register_input">-->
+            <!--<span><img src="modules/Register/static/image/register/user.png" class="registerImg"></span>-->
+            <!--<input type="text"  class="register_blank" placeholder="请填写用户名" name="register_Nameblank" id="username"  ng-model="register.UserName" ng-pattern="/^[\u4e00-\u9fa5a-zA-Z0-9_]+$/" ng-minlength="3" ng-maxlength="20" required/>-->
+        <!--</p>-->
+        <!--<div class="error_out" ng-show="form_register.register_Nameblank.$invalid&&form_register.register_Nameblank.$dirty"> 请输入有效用户名</div>-->
         <p class="register_tip"><span>*</span>
             密码
         </p>
@@ -23,26 +40,17 @@
             <span><img src="modules/Register/static/image/register/pass.png" class="registerImg"></span>
             <input type="password" class="register_blank" id="second_password" placeholder="请输入确认密码" name="register_blank" id="ConfirmPassword"  ng-model="register.SecondPassword"  onchange="check()" required/>
         </p>
-        <div id="errorTip" class="error_out"></div>
-        <p class="register_tip"><span >*</span>
-            手机号码
+        <!--<p class="register_tip">-->
+            <!--邀请码（非必填）-->
+        <!--</p>-->
+        <!--<p class="register_input">-->
+            <!--<span><img src="modules/Register/static/image/register/user.png" class="registerImg"></span>-->
+            <!--<input type="text"  class="PinInput" placeholder="请输入邀请码"  ng-model=""  name=""/>-->
+        <!--</p>-->
+
+        <p class="error_out">
+            {{errorTips}}
         </p>
-        <p class="register_input">
-            <span><img src="modules/Register/static/image/register/phone.png" class="registerImg"></span>
-            <input type="tel" class="register_blank" placeholder="请输入手机号码" name="register_phone" id="phoneNumber"  ng-model="register.Phone" ng-pattern="/^1[3|4|5|7|8][0-9]\d{8}$/" required/>
-            <div class="error_out" ng-show="form_register.register_phone.$invalid&&form_register.register_phone.$dirty" >请正确输入手机号码</div>
-            <input type="hidden" ng-model="register.Hidm">
-        </p>
-        <p class="register_error" ng-model="register_error"></p>
-        <p class="register_tip"><span>*</span>
-            验证码
-        </p>
-        <p class="PinBlank">
-            <input type="text"  class="PinInput" placeholder="请输入验证码"  ng-model="register.MobileYzm"  name="Pin_input" ng-pattern="/^\d{6}$/" required/>
-            <button  id="btnsms" name="btnsms"  ng-click="GetSMS()">发送验证码</button>
-        </p>
-        <div class="error_out" ng-show="form_register.Pin_input.$invalid&&form_register.Pin_input.$dirty">请正确输入验证码</div>
-        <p class="error_out"> {{errorTips}}</p>
         <button class="register_button"  type="submit" ng-disabled="form_register.$invalid">注 册</button>
         <p class="LoginExit">
             已有账号？点此<span><a href="#/user/login">登录</a> </span>
