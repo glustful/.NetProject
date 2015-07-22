@@ -14,12 +14,19 @@ app.controller('myPurseController',['$http','$scope','AuthService','$state',func
 }]);
 
 
-app.controller('withdrawalsController',['$http','$scope','$state',function($http,$scope,$state){
+app.controller('withdrawalsController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
+    alert($stateParams.Ids);
+    if($stateParams.Ids==undefined || $stateParams.Ids=="")
+    {
+        $state.go("app.selectWithdraw");
+    }
+
     $scope.TxDecimal={
         Bank:'',
-        Money:'',
+        Money:'0',
         MobileYzm:'',
-        Hidm:''
+        Hidm:'',
+        Ids:$stateParams.Ids
     }
     $http.get(SETTING.ApiUrl+'/BankCard/SearchAllBankByUserToSelect',{'withCredentials': true}).success(function(response) {
         $scope.BankList = response.List;
@@ -33,16 +40,16 @@ app.controller('withdrawalsController',['$http','$scope','$state',function($http
             alert("请选择银行");
             return false;
         }
-        if( $scope.TxDecimal.Money==undefined || $scope.TxDecimal.Money=="")
-        {
-            alert("请输入提现金额");
-            return false;
-        }
-        var num = /^\d*$/;  //全数字
-        if (!num.exec( $scope.TxDecimal.Money)) {
-            alert("提现金额必须为数字");
-            return false;
-        }
+//        if( $scope.TxDecimal.Money==undefined || $scope.TxDecimal.Money=="")
+//        {
+//            alert("请输入提现金额");
+//            return false;
+//        }
+//        var num = /^\d*$/;  //全数字
+//        if (!num.exec( $scope.TxDecimal.Money)) {
+//            alert("提现金额必须为数字");
+//            return false;
+//        }
 
         if( $scope.TxDecimal.MobileYzm==undefined || $scope.TxDecimal.MobileYzm=="")
         {
@@ -51,7 +58,7 @@ app.controller('withdrawalsController',['$http','$scope','$state',function($http
         }
 
         $http.post(SETTING.ApiUrl+'/BrokerWithdrawDetail/AddBrokerWithdrawDetail', $scope.TxDecimal, {'withCredentials': true}).success(function(datas) {
-            if(datas.status=="1")
+            if(datas.Status)
             {
                 $state.go("app.withdrawalsDetail");
             }else

@@ -139,9 +139,12 @@ namespace Zerg.Models.CRM
         /// 所属的合伙人姓名（同经纪人名）
         /// </summary>
         public virtual string PartnersName { get; set; }
+        
+        /// <summary>
+        /// 1未使用邀请码  0 使用邀请码
+        /// </summary>
 
-
-
+        public virtual int IsInvite { get; set; }
 
         /// <summary>
         /// AddUser
@@ -205,11 +208,7 @@ namespace Zerg.Models.CRM
         public bool ValidateModel(out string msg)
         {
             msg = "";
-            if (string.IsNullOrEmpty(UserName))
-            {
-                msg = "用户名不能为空";
-                return false;
-            }
+            if (string.IsNullOrEmpty(UserName)) return false;        
             if (string.IsNullOrEmpty(Password)) return false;
             if (string.IsNullOrEmpty(SecondPassword)) return false;
             if (string.IsNullOrEmpty(Phone)) return false;

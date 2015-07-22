@@ -13,32 +13,72 @@
                     <p class="pm">{{userBroker.Name}} <span access="broker">{{userBroker.levelStr}}</span><small access="broker">总排名：{{userBroker.orderStr}}</small></p>
                     <p class="number" access="broker"><a href="#/app/partner_list">合伙人：</a>&nbsp;{{userBroker.partnerCount}}&nbsp;/&nbsp;<a href="#/app/recommendedBroker">推荐:</a>&nbsp;{{userBroker.refereeCount}}&nbsp;/&nbsp;
                     	<a href="#/app/customerList">客户：</a>{{number}}</p>
-                    <p class="sum" access="broker">总佣金：&nbsp;{{userBroker.allMoneys}}</p>
+                    <p class="sum" access="broker">钱包：&nbsp;{{userBroker.allMoneys}}</p>
 
-                    <p><a href="#/app/myPurse" access="broker"><button>提取佣金</button></a></p>
+                    <p><a href="#/app/myPurse" access="broker"><button>提现</button></a></p>
                 </div>
             </div>
-            <div class="task-personal" >
-                <div class="todayTask">今日任务({{ttcount}})</div>
-                <ul  ng-repeat="item in posts">
-                    <li class="cf">
-                        <p class="fl">{{item.Taskname}}<br/><span>{{item.awardname}}：{{item.awardvalue}}</span></p>
-                        <button ng-click="addTaskList(item.Id)" class="fr">去完成</button>
-                    </li>
-                    <!--<li class="cf">-->
-                       <!--<p class="fl">2/带客上访一次<br/><span>获得佣金：100.00元&nbsp;/&nbsp;积分：300分</span></p>-->
-                        <!--<button class="fr">去完成</button>-->
-                    <!--</li>-->
-                </ul>
+    <div class="today-property">
+        <div class="today-reco">今日楼盘推荐</div>
+        <ul>
+            <li class="brand ztrc">
+            <a href="#/app/BrandDetail?brandId=138">
+            <img src="modules/personal/static/image/personal/ztrc.png" alt="俊发·七彩俊园"  width="620" height="160"/>
+            <div class="summary"><span>[昆明]&nbsp;中天融城&nbsp;&nbsp;</span><span>户型：238m²</span><span>总价：110万</span></div>
+            <div class="summaryBg"></div>
+            <div class="depreciate Get-commission"><p>可获得30%提拥</p><p>相当于21万提拥</p></div>
+            <div class="depreciateBg"></div>
+            </a>
+            <h3>购房立减5000元，交10000元抵20000元，购房还可领红包，返积分</h3>
+            <div class="nav">
+            <span class="orange"><a href="#/app/BrandDetail?brandId=138">我要带客</a></span>
+            <span class="orange Incoming-call"><a href="tel:4006060176"> 来电咨询</a></span>
             </div>
+            </li>
+            <li class="brand">
+                <a href="#/app/BrandDetail?brandId=139">
+                    <img src="modules/personal/static/image/personal/lxzx.png" alt="俊发·七彩俊园"  width="620" height="160"/>
+                    <div class="summary"><span>[昆明]&nbsp;理想中心&nbsp;&nbsp;</span><span>户型：238m²</span><span>总价：110万</span></div>
+                    <div class="summaryBg"></div>
+                    <div class="depreciate Get-commission"><p>可获得30%提拥</p><p>相当于21万提拥</p></div>
+                    <div class="depreciateBg"></div>
+                </a>
+                <h3>交认筹金10W元抵15W元，购房还可领红包，返积分</h3>
+                <div class="nav">
+                    <span class="orange"><a href="#/app/BrandDetail?brandId=139">我要带客</a></span>
+                    <span class="orange Incoming-call"><a href="tel:4006060176"> 来电咨询</a></span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!--今日任务-->
+            <!--<div class="task-personal" >-->
+                <!--<div class="todayTask">今日任务({{ttcount}})</div>-->
+                <!--<ul  ng-repeat="item in posts">-->
+                    <!--<li class="cf">-->
+                        <!--<p class="fl">{{item.Taskname}}<br/><span>{{item.awardname}}：{{item.awardvalue}}</span></p>-->
+                        <!--<button ng-click="addTaskList(item.Id)" class="fr">去完成</button>-->
+                    <!--</li>-->
+                    <!--<!--<li class="cf">-->
+                       <!--<!--<p class="fl">2/带客上访一次<br/><span>获得佣金：100.00元&nbsp;/&nbsp;积分：300分</span></p>-->
+                        <!--<!--<button class="fr">去完成</button>-->
+                    <!--<!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
             <div class="activity-personal">
                 <ul class="cf">
-                    <li class="one" access="broker"> <a href="#/app/nominate"><img src="modules/personal/static/image/personal/p1.jpg" alt="" width="49" height="58" /><br/>我要带客</a></li>
-                    <li class="two"access="broker"> <a href="#/app/nominate"><img src="modules/personal/static/image/personal/p2.jpg" alt="" width="49" height="58" /><br/>我要推荐</a></li>
-                    <li class="three"access="broker"> <a href="#/app/partner_list"><img src="modules/personal/static/image/personal/p3.jpg" alt="" width="49" height="58" /><br/>我的合伙人</a></li>
-                    <li class="four"access="broker"> <a href="#/app/recommendedBroker"><img src="modules/personal/static/image/personal/p4.jpg" alt="" width="49" height="58" /><br/>推荐经纪人</a></li>
-                    <li class="five"access="broker"> <a href="#/app/hero"><img src="modules/personal/static/image/personal/p5.jpg" alt="" width="49" height="58" /><br/>经纪人排行</a></li>
-                    <li class="six"> <a href="#/app/setting"><img src="modules/personal/static/image/personal/p6.jpg" alt="" width="49" height="58" /><br/>设置</a></li>
+                    <!--<li class="one" access="broker"> <a href="#/app/nominate"><img src="modules/personal/static/image/personal/p1.jpg" alt="" width="49" height="58" /><br/>我要带客</a></li>-->
+                    <!--<li class="two"access="broker"> <a href="#/app/nominate"><img src="modules/personal/static/image/personal/p2.jpg" alt="" width="49" height="58" /><br/>我要推荐</a></li>-->
+                    <!--<li class="three"access="broker"> <a href="#/app/partner_list"><img src="modules/personal/static/image/personal/p3.jpg" alt="" width="49" height="58" /><br/>我的合伙人</a></li>-->
+                    <!--<li class="four"access="broker"> <a href="#/app/recommendedBroker"><img src="modules/personal/static/image/personal/p4.jpg" alt="" width="49" height="58" /><br/>推荐经纪人</a></li>-->
+                    <!--<li class="five"access="broker"> <a href="#/app/hero"><img src="modules/personal/static/image/personal/p5.jpg" alt="" width="49" height="58" /><br/>经纪人排行</a></li>-->
+                    <!--<li class="six"> <a href="#/app/setting"><img src="modules/personal/static/image/personal/p6.jpg" alt="" width="49" height="58" /><br/>设置</a></li>-->
+                    <li class="one" access="broker"> <a href="#/app/nominate"><img src="modules/personal/static/image/personal/p1-1.jpg" alt="" width="49" height="58" /><br/>我要推荐</a></li>
+                    <li class="two addStyle" access="broker"> <a href="#/app/partner_list"><img src="modules/personal/static/image/personal/p2-2.jpg" alt="" width="49" height="58" /><br/>发展合伙人</a></li>
+                    <li class="three" access="broker"> <a href="#/app/recommendedBroker"><img src="modules/personal/static/image/personal/p3-3.jpg" alt="" width="49" height="58" /><br/>推荐经济人</a></li>
+                    <li class="four" access="broker"> <a href="#/app/customerList"><img src="modules/personal/static/image/personal/p4-4.png" alt="" width="49" height="58" /><br/>客户管理</a></li>
+                    <li class="five" access="broker"> <a href="#"><img src="modules/personal/static/image/personal/p5-5.png" alt="" width="49" height="58" /><br/>房贷计算器</a></li>
+                    <li class="six"> <a href="#/app/setting"><img src="modules/personal/static/image/personal/p6-6.jpg" alt="" width="49" height="58" /><br/>设置</a></li>
                 </ul>
             </div>
     <div class="masked" style="display: none">
