@@ -142,12 +142,60 @@
 </div>
 <div class="form-group">
     <label class="col-sm-3 control-label no-padding-right"> 商品图片 </label>
-
-    <div class="col-sm-9">
-        <div>
-            <img height="200" width="200" title="图片" src="http://img.yoopoon.com/{{product.Productimg}}" />
+    <div style="float: left">
+        <div id="small">
+            <img id="smallimg" height="200" width="200" src="http://img.yoopoon.com/{{product.Productimg}}">
         </div>
+	     <span style="overflow:hidden;position:relative;left: 10px;color: #848484;">
+                <a id="smalltext" style="color: #848484;text-decoration: none;">小户型</a>
+	            <input style="opacity:0;filter:alpha(opacity=0);
+	            position:absolute;top:-200px;width: 200px;
+	            height:200px;left: -10px;padding-bottom: 120px;"
+                       name="fileToUpload" type="file" onchange="updatesmallImage(this)"/>
+	     </span>
     </div>
+    <div style="float: left;margin-left: 20px">
+        <div id="big">
+            <img height="200" width="200" src="http://img.yoopoon.com/{{product.ProductDetailImg}}" id="bigimg">
+        </div>
+	     <span style="overflow:hidden;position:relative;left: 10px;color: #848484;">
+                <a id="bigtext" style="color: #848484;text-decoration: none;">大户型</a>
+	            <input
+                        style="opacity:0;filter:alpha(opacity=0);
+                        position:absolute;top:-200px;width: 200px;
+                        height:200px;left: -10px;padding-bottom: 120px;"
+                        name="fileToUpload" type="file" onchange="updatebigImg(this)"/>
+	     </span>
+    </div>
+    <div style="float: left;margin-left: 20px">
+        <div id="Seascape">
+            <img id="Seascapeimg"height="200" width="200" src="http://img.yoopoon.com/{{product.Productimg1}}">
+        </div>
+	     <span style="overflow:hidden;position:relative;left: 10px;color: #848484;">
+                <a id="Uptext" style="color: #848484;text-decoration: none;">海景图</a>
+	            <input style="opacity:0;filter:alpha(opacity=0);
+	            position:absolute;top:-200px;width: 200px;
+	            height:200px;left: -10px;padding-bottom: 120px;"
+                       name="fileToUpload" type="file" onchange="seascapeimg(this)"/>
+	     </span>
+    </div>
+    <!--<div class="col-sm-9">-->
+
+        <!--<div style="float: left">-->
+            <!--<div><span>小户型</span></div>-->
+            <!--<img height="200" width="200" title="图片" src="http://img.yoopoon.com/{{product.Productimg}}" />-->
+        <!--</div>-->
+
+        <!--<div style="float: left;margin-left: 10px">-->
+            <!--<div><span>大户型</span></div>-->
+            <!--<img height="200" width="200" title="图片" src="http://img.yoopoon.com/{{product.ProductDetailImg}}" />-->
+        <!--</div>-->
+
+        <!--<div style="float: left;margin-left: 10px">-->
+            <!--<div><span>海景图</span></div>-->
+            <!--<img height="200" width="200" title="图片" src="http://img.yoopoon.com/{{product.Productimg1}}" />-->
+        <!--</div>-->
+    <!--</div>-->
 </div>
     <!--<div class="loadimg" style=" float: left">-->
         <!--<img height="100" width="100" title="图片" src="http://img.yoopoon.com/{{product.Productimg}}" />-->
@@ -170,53 +218,53 @@
 
     <!--</div>-->
 
-    <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right"> 上传图片 </label>
-        <!--<input name="Productimg" id="Productimg" type="text"  style="width: 500px" ng-model="product.Productimg"  class="form-control" required />-->
-        <!--<input type="file" nv-file-select="" uploader="uploader" />-->
-        <div class="col-sm-9"><input type="file" nv-file-select="" uploader="uploader" />
-        </div>
-        <div class="col-sm-9 pull-right">
-            <div>
-                <!--<div class="m-b"><b class="badge bg-info pos-rlt m-r-xs"><i class="arrow right b-info pull-in"></i>{{ uploader.queue.length }}</b> file(s)</div>-->
-                <table class="table bg-white b-a">
-                    <thead>
-                    <tr>
-                        <th >名字</th>
-                        <th ng-show="uploader.isHTML5">大小</th>
-                        <th ng-show="uploader.isHTML5">进程</th>
-                        <th>状态</th>
-                        <th>功能</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="item in uploader.queue">
-                        <td><strong>{{ item.file.name }}</strong></td>
-                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-                        <td ng-show="uploader.isHTML5">
-                            <div class="progress progress-sm no-margin m-t-xs">
-                                <div class="progress-bar bg-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <span ng-show="item.isSuccess" class="text-success"><i class="glyphicon glyphicon-ok"></i></span>
-                            <span ng-show="item.isCancel" class="text-warning"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                            <span ng-show="item.isError" class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>
-                        </td>
-                        <td nowrap>
-                            <button type="button" class="btn btn-default btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                上传
-                            </button>
-                            <button type="button" class="btn btn-default btn-xs" ng-click="item.remove()">
-                                移除
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+    <!--<div class="form-group">-->
+        <!--<label class="col-sm-3 control-label no-padding-right"> 上传图片 </label>-->
+        <!--&lt;!&ndash;<input name="Productimg" id="Productimg" type="text"  style="width: 500px" ng-model="product.Productimg"  class="form-control" required />&ndash;&gt;-->
+        <!--&lt;!&ndash;<input type="file" nv-file-select="" uploader="uploader" />&ndash;&gt;-->
+        <!--<div class="col-sm-9"><input type="file" nv-file-select="" uploader="uploader" />-->
+        <!--</div>-->
+        <!--<div class="col-sm-9 pull-right">-->
+            <!--<div>-->
+                <!--&lt;!&ndash;<div class="m-b"><b class="badge bg-info pos-rlt m-r-xs"><i class="arrow right b-info pull-in"></i>{{ uploader.queue.length }}</b> file(s)</div>&ndash;&gt;-->
+                <!--<table class="table bg-white b-a">-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                        <!--<th >名字</th>-->
+                        <!--<th ng-show="uploader.isHTML5">大小</th>-->
+                        <!--<th ng-show="uploader.isHTML5">进程</th>-->
+                        <!--<th>状态</th>-->
+                        <!--<th>功能</th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                    <!--<tr ng-repeat="item in uploader.queue">-->
+                        <!--<td><strong>{{ item.file.name }}</strong></td>-->
+                        <!--<td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>-->
+                        <!--<td ng-show="uploader.isHTML5">-->
+                            <!--<div class="progress progress-sm no-margin m-t-xs">-->
+                                <!--<div class="progress-bar bg-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>-->
+                            <!--</div>-->
+                        <!--</td>-->
+                        <!--<td class="text-center">-->
+                            <!--<span ng-show="item.isSuccess" class="text-success"><i class="glyphicon glyphicon-ok"></i></span>-->
+                            <!--<span ng-show="item.isCancel" class="text-warning"><i class="glyphicon glyphicon-ban-circle"></i></span>-->
+                            <!--<span ng-show="item.isError" class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>-->
+                        <!--</td>-->
+                        <!--<td nowrap>-->
+                            <!--<button type="button" class="btn btn-default btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">-->
+                                <!--上传-->
+                            <!--</button>-->
+                            <!--<button type="button" class="btn btn-default btn-xs" ng-click="item.remove()">-->
+                                <!--移除-->
+                            <!--</button>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
 
 
 <div class="form-group">
