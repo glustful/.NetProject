@@ -12,39 +12,43 @@
     
     android:padding="10dp">
     <TextView
+        android:id="@+id/tv_agent_iguest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:drawablePadding="5dp"
-        android:drawableTop="@drawable/me_custom_icon"
+        android:drawableTop="@drawable/broker_guest"
         android:gravity="center"
         android:text="我要带客" />
 
     <TextView
+        android:id="@+id/tv_agent_ipocket"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:drawablePadding="5dp"
-        android:drawableTop="@drawable/me_introduce_icon"
+        android:drawableTop="@drawable/broker_pocket"
         android:gravity="center"
-        android:text="我要推荐" />
+        android:text="我的钱包" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:drawablePadding="5dp"
-        android:drawableTop="@drawable/me_task_icon"
+        android:drawableTop="@drawable/fresh_teach"
         android:gravity="center"
-        android:text="我的任务" />
+        android:text="新手教程" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:drawablePadding="5dp"
-        android:drawableTop="@drawable/me_hotpackage_icon"
+        android:drawableTop="@drawable/problem"
         android:gravity="center"
-        android:text="抢红包" />
+        android:text="常见问题" />
 </LinearLayout>
 </LinearLayout>
