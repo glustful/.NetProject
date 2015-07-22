@@ -161,6 +161,7 @@ public class FramActiveFragment extends FramSuper {
 
 	private void requestBrandList() {
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				listView.onRefreshComplete();

@@ -12,6 +12,8 @@
  */
 package com.yoopoon.home.ui.home;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.androidannotations.annotations.EFragment;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,10 +28,12 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.round.progressbar.CircleProgressDialog;
+import com.yoopoon.common.base.Tools;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
@@ -50,7 +54,7 @@ import com.yoopoon.home.ui.me.TodyTaskView;
  */
 @SuppressLint("InflateParams")
 @EFragment()
-public class FramMeFragment extends FramSuper {
+public class FramMeFragment extends FramSuper implements OnClickListener {
 	// [start] field
 	static String TAG = "FramMeFragment";
 	private View rootView;
@@ -68,6 +72,8 @@ public class FramMeFragment extends FramSuper {
 	private String userId = "0";
 	private boolean isVisibleToUser = false;
 	private int clientCount = 0;
+	private TextView tv_today_rec;
+	private List<View> recs = new ArrayList<View>();
 
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -111,10 +117,36 @@ public class FramMeFragment extends FramSuper {
 		userId = sp.getString("userId", "0");
 		if ("0".equals(userId)) {
 			cleanLayout();
+
 		} else {
 			requestClientCount();
-			requestTodayTask();
+			if (!isBroker) {
+				for (int i = 0; i < recs.size(); i++)
+					recs.get(i).setVisibility(View.GONE);
+				tv_today_rec.setVisibility(View.GONE);
+				mTodayTaskCount.setVisibility(View.VISIBLE);
+				requestTodayTask();
+			} else {
+				mTodayTaskView.setVisibility(View.GONE);
+				mTodayTaskCount.setVisibility(View.GONE);
+				tv_today_rec.setVisibility(View.VISIBLE);
+				for (int i = 0; i < recs.size(); i++)
+					recs.get(i).setVisibility(View.VISIBLE);
+				fillData();
+			}
 		}
+	}
+
+	private void fillData() {
+		View rl_bg = recs.get(1).findViewById(R.id.rl_build_bg);
+		rl_bg.setBackgroundResource(R.drawable.lxzx);
+		for (int i = 0; i < recs.size(); i++) {
+			View rec = recs.get(i);
+			rec.findViewById(R.id.rl_build_bg).setOnClickListener(this);
+			rec.findViewById(R.id.tv_rec_guest).setOnClickListener(this);
+			rec.findViewById(R.id.tv_rec_call).setOnClickListener(this);
+		}
+
 	}
 
 	/**
@@ -142,6 +174,9 @@ public class FramMeFragment extends FramSuper {
 			mBrokerInfoView = (BrokerInfoView) rootView.findViewById(R.id.brokerInfo);
 			mTodayTaskView = (TodyTaskView) rootView.findViewById(R.id.todayTask);
 			mMeFooterView = (MeFooterView) rootView.findViewById(R.id.footerView);
+			tv_today_rec = (TextView) rootView.findViewById(R.id.tv_today_recs);
+			recs.add(rootView.findViewById(R.id.v_me_rec2));
+			recs.add(rootView.findViewById(R.id.v_me_rec1));
 		}
 		registerLoginReceiver();
 		return rootView;
@@ -266,4 +301,28 @@ public class FramMeFragment extends FramSuper {
 		}.setUrl(getString(R.string.url_task_taskListMobile)).setRequestMethod(RequestMethod.eGet)
 				.addParam("page", "1").addParam("type", "today").notifyRequest();
 	}
+
+	/*
+	 * (non Javadoc)
+	 * @Title: onClick
+	 * @Description: TODO
+	 * @param v
+	 * @see android.view.View.OnClickListener#onClick(android.view.View)
+	 */
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.rl_build_bg:
+			case R.id.tv_rec_guest:
+				// BrandDetailActivity_.intent(this).mJson("{}").start();
+				break;
+			case R.id.tv_rec_call:
+				Tools.callPhone(getActivity(), "111111111");
+				break;
+			default:
+				break;
+		}
+
+	}
+
 }
