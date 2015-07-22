@@ -164,3 +164,32 @@
     top:10%;
     left: 20%;
 }
+
+/*今日楼房推荐*/
+.today-property{
+    padding:10px 10px 0 10px;
+}
+.today-property .today-reco{
+    background-color: #fff;
+    height: 50px;
+    line-height: 50px;
+    color:#36ac38;
+    font-size: 1.3em;
+    padding-left: 30px;
+}
+.today-property  .Incoming-call{
+    border-right: none;
+}
+.today-property .Get-commission{
+    text-align:center;
+    margin-top: 25px;
+}
+.today-property .Get-commission p{
+    font-size: 1.3em;
+}
+.today-property .ztrc{
+    margin-bottom: 20px;
+}
+.activity-personal .addStyle a{
+    color: #4b6770;
+}

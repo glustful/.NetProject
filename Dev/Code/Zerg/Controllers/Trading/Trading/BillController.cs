@@ -80,7 +80,6 @@ namespace Zerg.Controllers.Trading.Trading
 
         }
         #region 账单创建管理；
-
         /// <summary>
         /// 创建三个账单（zerg、经纪人、地产商）及账户明细；
         /// </summary>
@@ -89,6 +88,7 @@ namespace Zerg.Controllers.Trading.Trading
         [Description("创建三个账单（zerg、经纪人、地产商")]
         [HttpPost]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        //===================================================================pengguifei start========================================================================//
         public HttpResponseMessage CreateBill(BillModel model)
         {
             OrderEntity oe = _orderService.GetOrderById(model.orderId);
@@ -100,7 +100,7 @@ namespace Zerg.Controllers.Trading.Trading
             }         
             var partner = GetPartner(broker.UserId);
             //创富宝平台账单
-            CFBBillEntity CBE = new CFBBillEntity()
+            var CBE = new CFBBillEntity
             {
                 Actualamount = model.Actualamount,
                 Amount = newAmount.CFBamount,
@@ -122,7 +122,7 @@ namespace Zerg.Controllers.Trading.Trading
                 Upduser = _workContext.CurrentUser.Id.ToString()
             };
             //地产商账单
-            LandAgentBillEntity LABE = new LandAgentBillEntity()
+            var LABE = new LandAgentBillEntity
             {
                 Actualamount = null,
                 Amount = newAmount.LandAgentamount,
@@ -144,7 +144,7 @@ namespace Zerg.Controllers.Trading.Trading
                 Upduser = _workContext.CurrentUser.Id.ToString()
             };
             //经济人账单                           
-            AgentBillEntity ABE = new AgentBillEntity()
+            var ABE = new AgentBillEntity
             {
                 Actualamount = null,
                 Amount = newAmount.Agentamount,
@@ -166,41 +166,70 @@ namespace Zerg.Controllers.Trading.Trading
                 Upduser = _workContext.CurrentUser.Id.ToString()
             };
             AgentBillEntity PBE = null;          
-            BrokeAccountEntity BAE, PAE = null;
+            BrokeAccountEntity BAE = null, PAE = null;
             //经济人账户明细
-            if (oe.Ordertype == EnumOrderType.带客订单)
+            switch (oe.Ordertype)
             {
-                BAE = new BrokeAccountEntity()
-                {
-                    Balancenum = newAmount.Agentamount,
-                    Broker = broker,
-                    Type = 0,
-                    MoneyDesc = model.MoneyDesc,
-                    Adduser = _workContext.CurrentUser.Id,
-                    Addtime = DateTime.Now,
-                    Upuser = _workContext.CurrentUser.Id,
-                    Uptime = DateTime.Now
-                };
+                case EnumOrderType.带客订单:
+                    BAE = new BrokeAccountEntity
+                    {
+                        Balancenum = newAmount.Agentamount,
+                        Broker = broker,
+                        Type = 0,
+                        MoneyDesc = model.MoneyDesc,
+                        Adduser = _workContext.CurrentUser.Id,
+                        Addtime = DateTime.Now,
+                        Upuser = _workContext.CurrentUser.Id,
+                        Uptime = DateTime.Now
+                    };
+                    break;
+                case EnumOrderType.推荐订单:
+                    BAE = new BrokeAccountEntity
+                    {
+                        Balancenum = newAmount.Agentamount,
+                        Broker = broker,
+                        Type = 1,
+                        MoneyDesc = model.MoneyDesc,
+                        Adduser = _workContext.CurrentUser.Id,
+                        Addtime = DateTime.Now,
+                        Upuser = _workContext.CurrentUser.Id,
+                        Uptime = DateTime.Now
+                    };
+                    break;
             }
-            else
-            {
-                BAE = new BrokeAccountEntity()
-                {
-                    Balancenum = newAmount.Agentamount,
-                    Broker = broker,
-                    Type = 1,
-                    MoneyDesc = model.MoneyDesc,
-                    Adduser = _workContext.CurrentUser.Id,
-                    Addtime = DateTime.Now,
-                    Upuser = _workContext.CurrentUser.Id,
-                    Uptime = DateTime.Now
-                };
-            }
-
-            if (partner != null)
+            //if (oe.Ordertype == EnumOrderType.带客订单)
+            //{
+            //    BAE = new BrokeAccountEntity
+            //    {
+            //        Balancenum = newAmount.Agentamount,
+            //        Broker = broker,
+            //        Type = 0,
+            //        MoneyDesc = model.MoneyDesc,
+            //        Adduser = _workContext.CurrentUser.Id,
+            //        Addtime = DateTime.Now,
+            //        Upuser = _workContext.CurrentUser.Id,
+            //        Uptime = DateTime.Now
+            //    };
+            //}
+            //else
+            //{
+            //    BAE = new BrokeAccountEntity
+            //    {
+            //        Balancenum = newAmount.Agentamount,
+            //        Broker = broker,
+            //        Type = 1,
+            //        MoneyDesc = model.MoneyDesc,
+            //        Adduser = _workContext.CurrentUser.Id,
+            //        Addtime = DateTime.Now,
+            //        Upuser = _workContext.CurrentUser.Id,
+            //        Uptime = DateTime.Now
+            //    };
+            //}
+            //成交并且有合伙人时创建合伙人账单和账户明细
+            if (oe.Shipstatus == 3 &&partner != null)
             {
                 //合伙人账单
-                PBE = new AgentBillEntity()
+                PBE = new AgentBillEntity
                 {
                     Actualamount = null,
                     Amount = newAmount.Partneramount,
@@ -222,34 +251,65 @@ namespace Zerg.Controllers.Trading.Trading
                     Upduser = _workContext.CurrentUser.Id.ToString()
                 };
                 //合伙人账户明细
-                if (oe.Ordertype == EnumOrderType.带客订单)
+                switch (oe.Ordertype)
                 {
-                    PAE = new BrokeAccountEntity()
-                    {
-                        Balancenum = newAmount.Partneramount,
-                        Broker = _brokerService.GetBrokerById(partner.PartnersId),
-                        Type = 0,
-                        MoneyDesc = model.MoneyDesc,
-                        Adduser = _workContext.CurrentUser.Id,
-                        Addtime = DateTime.Now,
-                        Upuser = _workContext.CurrentUser.Id,
-                        Uptime = DateTime.Now
-                    };
+                        case EnumOrderType.带客订单:
+                        PAE = new BrokeAccountEntity
+                        {
+                            Balancenum = newAmount.Partneramount,
+                            Broker = _brokerService.GetBrokerById(partner.PartnersId),
+                            Type = 0,
+                            MoneyDesc = model.MoneyDesc,
+                            Adduser = _workContext.CurrentUser.Id,
+                            Addtime = DateTime.Now,
+                            Upuser = _workContext.CurrentUser.Id,
+                            Uptime = DateTime.Now
+                        };
+                        break;
+                        case EnumOrderType.推荐订单:
+                        PAE = new BrokeAccountEntity
+                        {
+                            Balancenum = newAmount.Partneramount,
+                            Broker = _brokerService.GetBrokerById(partner.PartnersId),
+                            Type = 1,
+                            MoneyDesc = model.MoneyDesc,
+                            Adduser = _workContext.CurrentUser.Id,
+                            Addtime = DateTime.Now,
+                            Upuser = _workContext.CurrentUser.Id,
+                            Uptime = DateTime.Now
+                        };
+                        break;
                 }
-                else
-                {                  
-                    PAE = new BrokeAccountEntity()
-                    {
-                        Balancenum = newAmount.Partneramount,
-                        Broker = _brokerService.GetBrokerById(partner.PartnersId),
-                        Type = 1,
-                        MoneyDesc = model.MoneyDesc,
-                        Adduser = _workContext.CurrentUser.Id,
-                        Addtime = DateTime.Now,
-                        Upuser = _workContext.CurrentUser.Id,
-                        Uptime = DateTime.Now
-                    };
-                }
+                _agentBillService.Create(PBE);
+                _brokeAccountService.Create(PAE);
+                //if (oe.Ordertype == EnumOrderType.带客订单)
+                //{
+                //    PAE = new BrokeAccountEntity
+                //    {
+                //        Balancenum = newAmount.Partneramount,
+                //        Broker = _brokerService.GetBrokerById(partner.PartnersId),
+                //        Type = 0,
+                //        MoneyDesc = model.MoneyDesc,
+                //        Adduser = _workContext.CurrentUser.Id,
+                //        Addtime = DateTime.Now,
+                //        Upuser = _workContext.CurrentUser.Id,
+                //        Uptime = DateTime.Now
+                //    };
+                //}
+                //else
+                //{                  
+                //    PAE = new BrokeAccountEntity
+                //    {
+                //        Balancenum = newAmount.Partneramount,
+                //        Broker = _brokerService.GetBrokerById(partner.PartnersId),
+                //        Type = 1,
+                //        MoneyDesc = model.MoneyDesc,
+                //        Adduser = _workContext.CurrentUser.Id,
+                //        Addtime = DateTime.Now,
+                //        Upuser = _workContext.CurrentUser.Id,
+                //        Uptime = DateTime.Now
+                //    };
+                //}
             }
             //broker.Amount = broker.Amount + BAE.Balancenum;
             //broker.Uptime=DateTime.Now;
@@ -259,11 +319,12 @@ namespace Zerg.Controllers.Trading.Trading
             _landAgentBillService.Create(LABE);
             _agentBillService.Create(ABE);
             _brokeAccountService.Create(BAE);
-            if (oe.Shipstatus == 3 && partner != null)
-            {
-                _agentBillService.Create(PBE);
-                _brokeAccountService.Create(PAE);
-            }
+            //成交并且有合伙人时创建合伙人账单和账户明细
+            //if (oe.Shipstatus == 3 && partner != null)
+            //{
+            //    _agentBillService.Create(PBE);
+            //    _brokeAccountService.Create(PAE);
+            //}
             return PageHelper.toJson(PageHelper.ReturnValue(true, "账单生成成功"));
         }
         /// <summary>
@@ -290,7 +351,7 @@ namespace Zerg.Controllers.Trading.Trading
         /// <summary>
         /// 计算佣金
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">订单对象</param>
         /// <returns></returns>
         public AmountModel GetCommission(OrderEntity model)
         {
@@ -299,6 +360,7 @@ namespace Zerg.Controllers.Trading.Trading
                 Page = 1,
                 PageSize = 1
             };
+            //获取佣金分成比例
             var commissionRatio =
                 _commissionRatioService.GetCommissionRatioCondition(con)
                     .Select(p => new Models.Trading.CommissionRatio.CommissionRatio
@@ -311,15 +373,15 @@ namespace Zerg.Controllers.Trading.Trading
                         RecPartnerScale = p.RecPartnerScale,
                         TakePartnerScale = p.TakePartnerScale
                     }).FirstOrDefault();
-            if (commissionRatio != null)
+            if (commissionRatio == null) return null;
+            var ode = model.OrderDetail;
+            var amount = new AmountModel();
+            var broker = _brokerService.GetBrokerById(model.AgentId);              
+            if (GetPartner(broker.UserId) == null)
             {
-                OrderDetailEntity ode = model.OrderDetail;
-                var amount = new AmountModel();
-                var broker = _brokerService.GetBrokerById(model.AgentId);              
-                if (GetPartner(broker.UserId) == null)
+                switch (model.Ordertype)
                 {
-                    if (model.Ordertype == EnumOrderType.推荐订单)
-                    {
+                    case EnumOrderType.推荐订单:
                         //如果是推荐订单；                   
                         if (model.Shipstatus == 3)
                         {
@@ -330,9 +392,8 @@ namespace Zerg.Controllers.Trading.Trading
                         {
                             amount.Agentamount = ode.RecCommission;
                         }
-                    }
-                    else if (model.Ordertype == EnumOrderType.带客订单) //如果是带客订单；
-                    {
+                        break;
+                    case EnumOrderType.带客订单:
                         if (model.Shipstatus == 3)
                         {
                             amount.CFBamount = ode.Dealcommission * commissionRatio.TakeCfbScale;
@@ -342,18 +403,20 @@ namespace Zerg.Controllers.Trading.Trading
                         {
                             amount.Agentamount = ode.Commission;
                         }
-                    }
+                        break;
                 }
-                else
+            }
+            else
+            {
+                switch (model.Ordertype)
                 {
-                    if (model.Ordertype == EnumOrderType.推荐订单)
-                    {
+                    case EnumOrderType.推荐订单:
                         //如果是推荐订单；                   
                         if (model.Shipstatus == 3)
                         {
                             amount.CFBamount = ode.Dealcommission * commissionRatio.RecCfbScale;
                             amount.Agentamount = (ode.Dealcommission * commissionRatio.RecAgentScale - ode.Dealcommission * commissionRatio.RecAgentScale *
-                                                   commissionRatio.RecPartnerScale) + ode.RecCommission;
+                                                  commissionRatio.RecPartnerScale) + ode.RecCommission;
                             amount.Partneramount = ode.Dealcommission * commissionRatio.RecAgentScale *
                                                    commissionRatio.RecPartnerScale;
                         }
@@ -361,14 +424,13 @@ namespace Zerg.Controllers.Trading.Trading
                         {
                             amount.Agentamount = ode.RecCommission;
                         }
-                    }
-                    else if (model.Ordertype == EnumOrderType.带客订单) //如果是带客订单；
-                    {
+                        break;
+                    case EnumOrderType.带客订单:
                         if (model.Shipstatus == 3)
                         {
                             amount.CFBamount = ode.Dealcommission * commissionRatio.TakeCfbScale;
                             amount.Agentamount = (ode.Dealcommission * commissionRatio.TakeAgentScale - ode.Dealcommission * commissionRatio.TakeAgentScale *
-                                                   commissionRatio.TakePartnerScale) + ode.Commission;
+                                                  commissionRatio.TakePartnerScale) + ode.Commission;
                             amount.Partneramount = ode.Dealcommission * commissionRatio.TakeAgentScale *
                                                    commissionRatio.TakePartnerScale;
                         }
@@ -376,12 +438,12 @@ namespace Zerg.Controllers.Trading.Trading
                         {
                             amount.Agentamount = ode.Commission;
                         }
-                    }
+                        break;
                 }
-                return amount;
             }
-            return null;
+            return amount;
         }
+        //========================================================================================end=====================================================================//
         /*public HttpResponseMessage CreateBillsByOrder(BillModel model)
          { 
            
@@ -554,7 +616,7 @@ namespace Zerg.Controllers.Trading.Trading
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAdminBill(int page, int pageSize)
         {
-            CFBBillSearchCondition CFBSC = new CFBBillSearchCondition()
+            CFBBillSearchCondition CFBSC = new CFBBillSearchCondition
             {
                 Page = page,
                 PageCount = pageSize,
@@ -582,7 +644,7 @@ namespace Zerg.Controllers.Trading.Trading
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAgentBill()
         {
-            AgentBillSearchCondition CFBSC = new AgentBillSearchCondition()
+            AgentBillSearchCondition CFBSC = new AgentBillSearchCondition
             {
                 OrderBy = EnumAgentBillSearchOrderBy.OrderById
             };
@@ -597,7 +659,7 @@ namespace Zerg.Controllers.Trading.Trading
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetLandAgentBill()
         {
-            LandAgentBillSearchCondition LABSC = new LandAgentBillSearchCondition()
+            LandAgentBillSearchCondition LABSC = new LandAgentBillSearchCondition
             {
                 OrderBy = EnumLandAgentBillSearchOrderBy.OrderById
             };
@@ -612,7 +674,7 @@ namespace Zerg.Controllers.Trading.Trading
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetAgentBillById(int agentId)
         {
-            AgentBillSearchCondition ABSC = new AgentBillSearchCondition()
+            AgentBillSearchCondition ABSC = new AgentBillSearchCondition
             {
                 AgentId = agentId,
                 OrderBy = EnumAgentBillSearchOrderBy.OrderById
@@ -628,7 +690,7 @@ namespace Zerg.Controllers.Trading.Trading
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage GetLandAgentBillById(int LandagentId)
         {
-            LandAgentBillSearchCondition LABSC = new LandAgentBillSearchCondition()
+            LandAgentBillSearchCondition LABSC = new LandAgentBillSearchCondition
             {
                 LandagentId = LandagentId,
                 OrderBy = EnumLandAgentBillSearchOrderBy.OrderById
