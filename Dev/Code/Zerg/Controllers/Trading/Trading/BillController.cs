@@ -360,6 +360,7 @@ namespace Zerg.Controllers.Trading.Trading
                 Page = 1,
                 PageSize = 1
             };
+            //获取佣金分成比例
             var commissionRatio =
                 _commissionRatioService.GetCommissionRatioCondition(con)
                     .Select(p => new Models.Trading.CommissionRatio.CommissionRatio
