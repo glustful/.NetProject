@@ -359,11 +359,12 @@ namespace Zerg.Controllers.CRM
                             if (number != null)
                             { 
                                 InviteCodeEntity invite=new InviteCodeEntity();
-                                if (invite.Number== number)
+                                if (invite.Number== number )
                                 {
                                     BrokeAccountEntity model = new BrokeAccountEntity();
                                     invite.Broker.Id = brokerModel.Id;
                                     invite.State = 1;
+                                    invite.NumUser = brokerModel.Id;
                                     model.Addtime = DateTime.Now;
                                     model.Adduser = 1;
                                     model.Broker = brokerModel;
@@ -372,6 +373,7 @@ namespace Zerg.Controllers.CRM
                                     model.MoneyDesc = "完整经济人资料奖励30元";
                                     model.Balancenum = 30;
                                     _brokerAccountService.Create(model);
+                                    _inviteCodeService.Update(invite);
 
                                     EventOrderEntity emodel = new EventOrderEntity();
                                     emodel.AcDetail = "完整经济人资料奖励30元";

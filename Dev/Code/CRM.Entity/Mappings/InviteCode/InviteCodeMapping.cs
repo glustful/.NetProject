@@ -14,8 +14,8 @@ namespace CRM.Entity.Mappings.BrokeAccount
 
 
             Property(c => c.CreatTime).HasColumnType("datetime");
-            Property(c => c.UseTime).HasColumnType("datetime");
-            Property(c => c.NumUser).HasColumnType("int");
+            Property(c => c.UseTime).HasColumnType("datetime").IsOptional();
+            Property(c => c.NumUser).HasColumnType("int").IsOptional();
             Property(c => c.Number).HasColumnType("varchar").HasMaxLength(256);
             Property(c => c.State).HasColumnType("bit");
 
