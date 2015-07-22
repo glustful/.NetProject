@@ -82,11 +82,12 @@ namespace Zerg.Event.API.Coupon
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage couponOwn(int id)
         {
             if (_workContext.CurrentUser == null)
             {
-                return PageHelper.toJson("error");
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "请先登录"));
             }
             var couponCategory = _couponCategoryService.GetCouponCategoryById(id);
             var condition = new CouponSearchCondition

@@ -42,6 +42,8 @@ namespace CRM.Entity.Model
 		public DateTime? UptimeEnd { get; set; }
 
 		public EnumBrokeAccountSearchOrderBy? OrderBy { get; set; }
+	    public int? BrokerId { get; set; }
+        public int? Type { get; set; }
 	}
 
 	public enum EnumBrokeAccountSearchOrderBy

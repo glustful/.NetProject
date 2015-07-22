@@ -27,11 +27,11 @@ namespace CRM.Entity.Model
 
 
         /// <summary>
-        /// 金额类型（0 带客，1 推荐）
+        /// 金额类型（0 带客，1 推荐,2 奖励30元钱）
         /// </summary>
         public virtual int Type { get; set; }
         /// <summary>
-        /// 状态（0 可用，1 不可用）
+        /// 状态（0 可用，1 不可用,2 注册）
         /// </summary>
         public virtual int State { get; set; }
 
@@ -51,5 +51,9 @@ namespace CRM.Entity.Model
 		/// UpTime
 		/// </summary>
 		public virtual DateTime Uptime { get; set; }
+
+      
+
+        
 	}
 }

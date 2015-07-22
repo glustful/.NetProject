@@ -60,6 +60,8 @@
     <Compile Include="CFBBill\ICFBBillService.cs" />
     <Compile Include="Classify\ClassifyService.cs" />
     <Compile Include="Classify\IClassifyService.cs" />
+    <Compile Include="CommissionRatio\CommissionRatioService.cs" />
+    <Compile Include="CommissionRatio\ICommissionRatioService.cs" />
     <Compile Include="LandAgentBill\ILandAgentBillService.cs" />
     <Compile Include="LandAgentBill\LandAgentBillService.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
