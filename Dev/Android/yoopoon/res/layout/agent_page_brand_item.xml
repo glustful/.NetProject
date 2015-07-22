@@ -4,165 +4,169 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:gravity="center"
     android:background="@android:color/white"
+    android:gravity="center"
     android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-	<ImageView
+
+        <ImageView
             android:id="@+id/adImg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:visibility="gone"
             android:src="@drawable/default_head_img"
-            />
+            android:visibility="gone" />
+
         <ImageView
-            android:layout_below="@id/adImg"
             android:id="@+id/img"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/adImg"
             android:scaleType="fitXY"
-            android:src="@drawable/default_head_img"
-            />
+            android:src="@drawable/default_head_img" />
+        
+        <TextView 
+            android:textColor="@color/little_whitle"
+            android:id="@+id/tv_agent_brand_commition"
+            android:layout_above="@+id/ll_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="#ff0000"/>
 
         <LinearLayout
+            android:id="@+id/ll_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/img"
-            android:orientation="horizontal" 
-            android:background="#55ffffff"
-            android:padding="5dp">
+            android:background="#55000000"
+            android:orientation="horizontal"
+            android:padding="5dp" >
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                 />
+                android:textColor="@android:color/white" />
 
             <TextView
-                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_agent_brand_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:text="总价：110万" />
+                android:layout_marginLeft="10dp"
+                android:text="总价：110万"
+                android:textColor="@android:color/white" />
         </LinearLayout>
 
         <LinearLayout
-            android:padding="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="0dp"
             android:layout_alignBottom="@id/img"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@id/img"
-            android:background="@color/red"
-            android:orientation="vertical" >
+            android:background="#88ff0000"
+            android:orientation="vertical"
+            android:padding="10dp" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                
                 android:layout_weight="1"
-                android:text="每平米直降" />
+                android:textColor="@color/little_whitle" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:gravity="center"
                 android:layout_height="wrap_content"
-                
-                android:text="5000元" 
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:gravity="center" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-               
                 android:layout_weight="1"
-                android:text="1万还可抵3万" />
+                android:textColor="@color/little_whitle" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                
                 android:layout_weight="1"
-                android:text="3万抵15万" />
+                android:textColor="@color/little_whitle" />
         </LinearLayout>
     </RelativeLayout>
 
-   
-
     <LinearLayout
-        android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical" >
+        android:layout_marginTop="1dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
 
         <com.yoopoon.home.ui.view.AutoAjustSizeTextView
-            
+            android:id="@+id/tv_agent_brand_iguest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="带客佣金"
-            android:textColor="@color/red"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:text="我要带客"
+            android:textColor="@color/red" />
 
         <View
-            
             android:layout_width="1dp"
             android:layout_height="fill_parent"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:background="@android:color/darker_gray" />
 
         <com.yoopoon.home.ui.view.AutoAjustSizeTextView
-           
+            android:id="@+id/tv_agent_brand_irecommend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-             android:text="推荐佣金"
-            android:textColor="@color/red"
-            android:padding="10dp" />
-         <View
-             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            android:text="我要推荐"
+            android:textColor="@color/red" />
+
+        <View
             android:layout_width="1dp"
             android:layout_height="fill_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:background="@android:color/darker_gray" />
 
         <com.yoopoon.home.ui.view.AutoAjustSizeTextView
-            
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:padding="10dp"
             android:text="拆红包"
-            android:textColor="#4ba4e9"
-            android:padding="10dp" />
-         <View
-             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:textColor="#4ba4e9" />
+
+        <View
             android:layout_width="1dp"
             android:layout_height="fill_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:background="@android:color/darker_gray" />
 
         <com.yoopoon.home.ui.view.AutoAjustSizeTextView
-           
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="拿积分"
-            android:textColor="#4ba4e9"
             android:gravity="center"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:text="拿积分"
+            android:textColor="#4ba4e9" />
     </LinearLayout>
-	<View 
-	    android:layout_width="match_parent"
-	    android:layout_height="2dp"
-	    android:background="@color/appBackground"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/appBackground" />
+
 </LinearLayout>

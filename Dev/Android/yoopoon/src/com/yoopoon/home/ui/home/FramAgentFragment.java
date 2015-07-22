@@ -2,20 +2,19 @@ package com.yoopoon.home.ui.home;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.androidannotations.annotations.EFragment;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yoopoon.home.R;
@@ -35,7 +34,7 @@ import com.yoopoon.home.ui.agent.RichesView;
 import com.yoopoon.home.ui.agent.RichesView_;
 
 @EFragment()
-public class FramAgentFragment extends FramSuper {
+public class FramAgentFragment extends FramSuper implements OnClickListener {
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		// TODO Auto-generated method stub
@@ -78,6 +77,7 @@ public class FramAgentFragment extends FramSuper {
 		}
 		return rootView;
 	}
+
 	private void initParameter() {
 		if (parameter == null) {
 			parameter = new HashMap<String, String>();
@@ -88,7 +88,7 @@ public class FramAgentFragment extends FramSuper {
 		parameter.put("type", "all");
 	}
 
-	static String TAG = "FramActivityFragment";
+	static String TAG = "FramAgentFragment";
 	ListView refreshView;
 	Context mContext;
 	public static FramAgentFragment instance;
@@ -104,6 +104,7 @@ public class FramAgentFragment extends FramSuper {
 	public static FramAgentFragment getInstance() {
 		return instance;
 	}
+
 	void initViews() {
 		listView.setOnRefreshListener(new HowWillIrefresh());
 		listView.setMode(PullToRefreshBase.Mode.DISABLED);
@@ -120,6 +121,12 @@ public class FramAgentFragment extends FramSuper {
 		refreshView.setFadingEdgeLength(0);
 		mAgentBrandAdapter = new AgentBrandAdapter(mContext);
 		refreshView.setAdapter(mAgentBrandAdapter);
+
+		initMCommonFunctions();
+	}
+
+	private void initMCommonFunctions() {
+
 	}
 
 	class HowWillIrefresh implements PullToRefreshBase.OnRefreshListener2<ListView> {
@@ -129,6 +136,7 @@ public class FramAgentFragment extends FramSuper {
 					DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
 			refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 		}
+
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 		}
@@ -136,6 +144,7 @@ public class FramAgentFragment extends FramSuper {
 
 	void requestList() {
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
@@ -149,6 +158,7 @@ public class FramAgentFragment extends FramSuper {
 					mAdController.show(imgs);
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
@@ -156,8 +166,10 @@ public class FramAgentFragment extends FramSuper {
 		}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
 				.addParam("channelName", "banner").notifyRequest();
 	}
+
 	void requestActiveList() {
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
@@ -171,25 +183,29 @@ public class FramAgentFragment extends FramSuper {
 						tmp.put(list.optJSONObject(1));
 						tmp.put(list.optJSONObject(2));
 						dataSource.add(tmp);
-						mActiveController.show(dataSource);
+						mActiveController.show2(dataSource);
 					} else {
 						dataSource.add(list);
-						mActiveController.show(dataSource);
+						mActiveController.show2(dataSource);
 					}
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
 			}
 		}.setUrl(getString(R.string.url_channel_active_titleimg)).setRequestMethod(RequestMethod.eGet)
 				.addParam("channelName", "活动").notifyRequest();
+
 	}
+
 	private void requestBrandList() {
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
+					Log.i(TAG, data.toString());
 					JSONArray list = data.getMRootData().optJSONArray("List");
 					if (list == null || list.length() < 1)
 						return;
@@ -199,11 +215,25 @@ public class FramAgentFragment extends FramSuper {
 					mAgentBrandAdapter.refresh(mJsonObjects);
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
 			}
-		}.setUrl(getString(R.string.url_brand_GetAllBrand)).setRequestMethod(RequestMethod.eGet).addParam(parameter)
+		}.setUrl(getString(R.string.url_brand_getOneBrand)).setRequestMethod(RequestMethod.eGet).addParam(parameter)
 				.notifyRequest();
+	}
+
+	/*
+	 * (non Javadoc)
+	 * @Title: onClick
+	 * @Description: TODO
+	 * @param v
+	 * @see android.view.View.OnClickListener#onClick(android.view.View)
+	 */
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+
 	}
 }

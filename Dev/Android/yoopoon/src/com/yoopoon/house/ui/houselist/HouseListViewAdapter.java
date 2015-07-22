@@ -13,9 +13,7 @@
 package com.yoopoon.house.ui.houselist;
 
 import java.util.ArrayList;
-
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -28,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
@@ -48,24 +45,31 @@ public class HouseListViewAdapter extends BaseAdapter {
 	Context mContext;
 	ArrayList<JSONObject> datas;
 	int height = 0;
+
 	
 	public HouseListViewAdapter(Context mContext) {
+
+
 		this.mContext = mContext;
 		datas = new ArrayList<JSONObject>();
 		height = MyApplication.getInstance().getDeviceInfo((Activity) mContext).heightPixels / 6;
 	}
+
 	@Override
 	public int getCount() {
 		return datas.size();
 	}
+
 	@Override
 	public Object getItem(int position) {
 		return datas.get(position);
 	}
+
 	@Override
 	public long getItemId(int position) {
 		return position;
 	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHandler viewHandler;
@@ -123,6 +127,7 @@ public class HouseListViewAdapter extends BaseAdapter {
 		// ##################### 郭俊军 被修改代码 End
 		// 携带楼盘和经纪人数据跳转到带客页面
 		viewHandler.houseTakeGuestTextView.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				BrokerTakeGuestActivity_.intent(mContext).intent_properString(item.optString("Productname"))
@@ -132,6 +137,7 @@ public class HouseListViewAdapter extends BaseAdapter {
 			// 携带楼盘和经纪人数据跳转到推荐页面
 		});
 		viewHandler.houseRecommendTextView.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				BrokerRecommendActivity_.intent(mContext).intent_properString(item.optString("Productname"))
@@ -155,7 +161,7 @@ public class HouseListViewAdapter extends BaseAdapter {
 		});
 		return convertView;
 	}
-	
+
 	/**
 	 * @ClassName: ViewHandler
 	 * @Description: 创建ViewHandler来对房源页中的ListView进行视图的绑定和初始化
@@ -173,7 +179,7 @@ public class HouseListViewAdapter extends BaseAdapter {
 		private TextView houseBonusTextView;
 		private TextView houseScoreTextView;
 		private View houseBrokerFunctionLinearLayout;
-		
+
 		/**
 		 * @Title: initViewHandler
 		 * @Description: 初始化ViewHandler
@@ -192,7 +198,7 @@ public class HouseListViewAdapter extends BaseAdapter {
 			houseBrokerFunctionLinearLayout = root.findViewById(R.id.house_broker_function_linearlayout);
 		}
 	}
-	
+
 	/**
 	 * @Title: refresh
 	 * @Description: 获取数据刷新房源页对应的楼盘ListView
