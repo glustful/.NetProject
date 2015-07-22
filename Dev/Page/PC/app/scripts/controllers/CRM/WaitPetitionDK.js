@@ -7,7 +7,7 @@
 angular.module("app").controller('WaitVistController', [
     '$http','$scope','AuthService',function($http,$scope) {
         $scope.searchCondition = {
-            status:"1",
+            status:"等待上访",
             brokername:"",
             page: 1,
             pageSize: 10
@@ -24,7 +24,7 @@ angular.module("app").controller('WaitVistController', [
                     $scope.errorTip = "当前没有待上仿记录"
                 }
                 $scope.searchCondition.page=data.condition1.Page;
-                $scope.searchCondition.PageCount=data.condition1.PageCount;
+                $scope.searchCondition.pageSize=data.condition1.PageCount;
                 $scope.searchCondition.totalCount=data.totalCont1;
             });
         };

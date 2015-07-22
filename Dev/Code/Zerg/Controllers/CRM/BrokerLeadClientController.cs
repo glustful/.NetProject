@@ -161,7 +161,7 @@ namespace Zerg.Controllers.CRM
                 Page = page,
                 PageCount = pageSize,
                 Status = status,
-                Brokername = brokername
+                ClientName = brokername
 
             };
 
