@@ -122,7 +122,7 @@ public class ActiveController extends GridViewController {
 				holder = (Holder) convertView.getTag();
 			}
 
-			holder.img.setLayoutParams(new LinearLayout.LayoutParams(80, 80));
+			holder.img.setLayoutParams(new LinearLayout.LayoutParams(120, 120));
 			holder.img.setImageResource(imgs[position]);
 
 			holder.title.setText(titles[position]);

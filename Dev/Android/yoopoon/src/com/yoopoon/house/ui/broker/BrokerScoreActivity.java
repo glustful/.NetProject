@@ -12,12 +12,11 @@
  */
 package com.yoopoon.house.ui.broker;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
-
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
 
@@ -33,7 +32,8 @@ public class BrokerScoreActivity extends MainActionBarActivity {
 	Context mContext;
 
 	// //////////////////////////////////如上是变量和属性的初始化///////////////////////////////////
-	private void initUI() {
+	@AfterViews
+	void initUI() {
 		mContext = this;
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
@@ -41,6 +41,7 @@ public class BrokerScoreActivity extends MainActionBarActivity {
 		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("积分");
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: backButtonClick
@@ -52,6 +53,7 @@ public class BrokerScoreActivity extends MainActionBarActivity {
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: titleButtonClick
@@ -62,6 +64,7 @@ public class BrokerScoreActivity extends MainActionBarActivity {
 	@Override
 	public void titleButtonClick(View v) {
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: rightButtonClick
@@ -72,6 +75,7 @@ public class BrokerScoreActivity extends MainActionBarActivity {
 	@Override
 	public void rightButtonClick(View v) {
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: showHeadView

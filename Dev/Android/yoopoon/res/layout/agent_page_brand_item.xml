@@ -139,12 +139,15 @@
             android:background="@android:color/darker_gray" />
 
         <com.yoopoon.home.ui.view.AutoAjustSizeTextView
+            android:clickable="true"
+            android:focusable="true"
+            android:id="@+id/tv_agent_brand_bonus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="10dp"
-            android:text="拆红包"
+            android:text="抢红包"
             android:textColor="#4ba4e9" />
 
         <View
@@ -155,6 +158,9 @@
             android:background="@android:color/darker_gray" />
 
         <com.yoopoon.home.ui.view.AutoAjustSizeTextView
+            android:clickable="true"
+            android:focusable="true"
+            android:id="@+id/tv_agent_brand_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
