@@ -62,7 +62,8 @@
 
             <div class="panel-body revise">
                 <div class="bottom" ><label for="SecretaryId">选择驻场秘书： </label>
-                    <select name="" id="SecretaryId" ng-options="list.Id as list.Brokername for list in SecretaryList" ng-model="ARDetialModel.SecretaryId">
+                    <select name="" id="SecretaryId" >
+                        <option  ng-repeat="item2 in SecretaryList" value="{{item2.Id}}">{{item2.Brokername}}</option>
                     </select>
                 </div>
             </div>

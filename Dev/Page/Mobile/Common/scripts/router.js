@@ -366,7 +366,7 @@ app.run(
                 templateUrl:'modules/CouponsOwn/view/CouponsOwn.html'
             })
             .state('app.withdrawals',{
-                url:'/withdrawals',
+                url:'/withdrawals?Ids',
                 templateUrl:'modules/withdrawals/view/withdrawals.html',
                 resolve:load('modules/myPurse/render/controller.js'),
                 data:{title:'提现'}
