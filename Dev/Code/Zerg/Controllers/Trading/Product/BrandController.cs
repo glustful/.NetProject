@@ -246,13 +246,19 @@ namespace Zerg.Controllers.Trading.Product
         [Description("获取所有品牌，返回品牌列表")]
         [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage GetAllBrand(int page = 1, int pageSize = 10)
+        public HttpResponseMessage GetAllBrand(int page = 1, int pageSize = 10,string className=null)
         {
+            var con=new ClassifySearchCondition()
+            {
+                Name = className
+            };
+            var classname=_classifyService.GetClassifysByCondition(con).FirstOrDefault();
             var sech = new ProductBrandSearchCondition
             {
                 //=========================yangyue 2015/7/7 start=====================================================
                 IsDescending = true,
                 OrderBy = EnumProductBrandSearchOrderBy.OrderByAddtime,
+                Classify=classname,
                 //========================  end   ====================================================================
                 Page = page,
                 PageCount = pageSize
