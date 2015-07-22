@@ -138,17 +138,19 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			mAdController = new ADController(mContext);
 			houseListJsonObjects = new ArrayList<JSONObject>();
 			// #####################################楼盘区域省市区UI设置######################################
+			LayoutParams layoutParams = new LayoutParams(mContext.getResources().getDisplayMetrics().widthPixels / 4,
+					LayoutParams.WRAP_CONTENT);
 			houseProvinceLinearlayout = new LinearLayout(mContext);
 			houseCityLinearLayout = new LinearLayout(mContext);
 			houseDistrictlinearLayout = new LinearLayout(mContext);
 			houseAreaLinearLayout = new LinearLayout(mContext);
 			houseAreaLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
-			houseAreaLinearLayout.addView(houseProvinceLinearlayout);
-			houseAreaLinearLayout.addView(houseCityLinearLayout);
-			houseAreaLinearLayout.addView(houseDistrictlinearLayout);
+			houseAreaLinearLayout.addView(houseProvinceLinearlayout, layoutParams);
+			houseAreaLinearLayout.addView(houseCityLinearLayout, layoutParams);
+			houseAreaLinearLayout.addView(houseDistrictlinearLayout, layoutParams);
 			//初始化显示楼盘区域的Popuwindows
 			houseAreaConditionPopuWindow = new PopupWindow(houseAreaLinearLayout, mContext.getResources()
-					.getDisplayMetrics().widthPixels, LayoutParams.WRAP_CONTENT, true);
+					.getDisplayMetrics().widthPixels * 3 / 4, LayoutParams.WRAP_CONTENT, true);
 			// #####################################楼盘区域省市区UI设置######################################
 			// 房源首页顶端楼盘检索TextView（条件）
 			area_name_textview = (TextView) rootView.findViewById(R.id.area_name_textview);
