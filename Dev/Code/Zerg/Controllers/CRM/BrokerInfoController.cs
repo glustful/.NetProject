@@ -164,16 +164,17 @@ namespace Zerg.Controllers.CRM
             }
 
             var model = _brokerService.GetBrokerByUserId(Convert.ToInt32(userId));
+            
             var brokerid =
-                _inviteCodeService.GetInviteCodeById(_brokerService.GetBrokerByUserId(Convert.ToInt32(userId)).Id);                   
+                _inviteCodeService.GetInviteCodeById(_brokerService.GetBrokerByUserId(Convert.ToInt32(userId)).Id);                   //判断有无使用过邀请码
             if (brokerid == null)
             {
-                IsInvite = 1;
+                IsInvite = 1;                                                                                                         //没有使用传1
             }
             else if(_brokerService.GetBrokerByUserId(Convert.ToInt32(userId)).Id
                 ==brokerid.Broker.Id)
             {
-                IsInvite = 0;
+                IsInvite = 0;                                                                                                         //使用过传0
             }
             if (model == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在！"));
             
@@ -308,7 +309,7 @@ namespace Zerg.Controllers.CRM
         /// <returns></returns>
         [HttpPost]
         [Description("修改经纪人信息")]
-        public HttpResponseMessage UpdateBroker([FromBody] BrokerEntity broker)
+        public HttpResponseMessage UpdateBroker([FromBody] BrokerEntity broker,string number)
         {
             if (broker != null && !string.IsNullOrEmpty(broker.Id.ToString()) && PageHelper.ValidateNumber(broker.Id.ToString()))
             {
@@ -320,7 +321,7 @@ namespace Zerg.Controllers.CRM
                 brokerModel.Email = broker.Email;
                 brokerModel.Realname = broker.Realname;
                 brokerModel.Sexy = broker.Sexy;
-                 brokerModel.WeiXinNumber = broker.WeiXinNumber;//by  yangyue  2015/7/16
+                brokerModel.WeiXinNumber = broker.WeiXinNumber;//by  yangyue  2015/7/16
 
                 #region 转职经纪人 杨定鹏 2015年6月11日17:29:58
                 //填写身份证，邮箱，和真实姓名后就能转职经纪人
@@ -353,73 +354,46 @@ namespace Zerg.Controllers.CRM
                         //return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
                     }
 
-                   // //-----------------by yangyue  2015/7/16------------------------//
-                   // //奖励该用户30元
+                    // //---------------------------------------------by yangyue  2015/7/16-------------------------------------------------//
+                          
+                            if (number != null)
+                            { 
+                                InviteCodeEntity invite=new InviteCodeEntity();
+                                if (invite.Number== number)
+                                {
+                                    BrokeAccountEntity model = new BrokeAccountEntity();
+                                    invite.Broker.Id = brokerModel.Id;
+                                    invite.State = 1;
+                                    model.Addtime = DateTime.Now;
+                                    model.Adduser = 1;
+                                    model.Broker = brokerModel;
+                                    model.Uptime = DateTime.Now;
+                                    model.Type = '2';
+                                    model.MoneyDesc = "完整经济人资料奖励30元";
+                                    model.Balancenum = 30;
+                                    _brokerAccountService.Create(model);
 
-                   // TransactionOptions transactionOption = new TransactionOptions();
+                                    EventOrderEntity emodel = new EventOrderEntity();
+                                    emodel.AcDetail = "完整经济人资料奖励30元";
+                                    emodel.Addtime = DateTime.Now;
+                                    emodel.MoneyCount = 30;
+                                    _eventOrderService.Create(emodel);
 
-                   // //设置事务隔离级别
-                   // transactionOption.IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted;
+                                
 
-                   // // 设置事务超时时间为60秒
-                   // transactionOption.Timeout = new TimeSpan(0, 0, 60);
+                                        if (_brokerAccountService.Create(model) != null)
+                                        {
+                                            return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
+                                        }
+                                        else
+                                        {
+                                            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
+                                        }
+                                }
 
-                   //    using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required,
-                   //            transactionOption))
-                   //    {
-                   //        try { 
-                   //                var con = new BrokeAccountSearchCondition
-                   //                {
-                   //                    Brokers = brokerModel,
-                   //                    Type = 2
-                   //                };
-                   //                var a = _brokerAccountService.GetBrokeAccountsByCondition(con).FirstOrDefault();
-                   //                    if (a == null)
-                   //                    {
-                   //                        BrokeAccountEntity model = new BrokeAccountEntity();
-                   //                        model.Addtime = DateTime.Now;
-                   //                        model.Adduser = 1;
-                   //                        model.Broker = brokerModel;
-                   //                        model.Uptime = DateTime.Now;
-                   //                        model.Type = '2';
-                   //                        model.MoneyDesc = "完整经济人资料奖励30元";
-                   //                        model.Balancenum = 30;
-                   //                        _brokerAccountService.Create(model);
+                            }
 
-                   //                        EventOrderEntity emodel = new EventOrderEntity();
-                   //                        emodel.AcDetail = "完整经济人资料奖励30元";
-                   //                        emodel.Addtime = DateTime.Now;
-                   //                        emodel.MoneyCount = 30;
-                   //                        _eventOrderService.Create(emodel);
-
-
-
-                   //                        if (_brokerAccountService.Create(model) != null)
-                   //                        {
-                   //                            return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功！"));
-                   //                        }
-                   //                        else
-                   //                        {
-                   //                            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败！"));
-                   //                        }
-                              
-                   //                    }
-
-                   //              }
-                   //        catch (Exception ex)
-                   //        {
-                   //            throw new Exception("发送信息异常,原因:" + ex.Message);
-                   //        }
-                   //        finally
-                   //        {
-                   //            //释放资源
-                   //            scope.Dispose();
-                   //        }       
-                   //    }
-
-
-                   }
-
+                        }
                 #endregion
 
 
@@ -440,8 +414,7 @@ namespace Zerg.Controllers.CRM
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
 
         }
-
-
+        
         /// <summary>
         /// 传入经纪人ID,删除经纪人,返回删除结果状态信息,成功提示＂数据删除成功＂，失败提示＂数据删除失败＂
         /// </summary>
