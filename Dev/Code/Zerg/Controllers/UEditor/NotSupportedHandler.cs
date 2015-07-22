@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 
-/// <summary>
-/// NotSupportedHandler 的摘要说明
-/// </summary>
-public class NotSupportedHandler : Handler
+namespace Zerg.Controllers.UEditor
 {
-    public NotSupportedHandler(HttpContext context)
-        : base(context)
+    /// <summary>
+    /// NotSupportedHandler 的摘要说明
+    /// </summary>
+    public class NotSupportedHandler : Handler
     {
-    }
-
-    public override void Process()
-    {
-        WriteJson(new
+        public NotSupportedHandler(HttpContext context)
+            : base(context)
         {
-            state = "action 参数为空或者 action 不被支持。"
-        });
+        }
+
+        public override void Process()
+        {
+            WriteJson(new
+            {
+                state = "action 参数为空或者 action 不被支持。"
+            });
+        }
     }
 }

@@ -84,6 +84,10 @@
     <Compile Include="ClientInfo\IClientInfoService.cs" />
     <Compile Include="EventOrder\EventOrderService.cs" />
     <Compile Include="EventOrder\IEventOrderService.cs" />
+    <Compile Include="Event\EventService.cs" />
+    <Compile Include="Event\IEventService.cs" />
+    <Compile Include="InvitedCode\IInviteCodeService.cs" />
+    <Compile Include="InvitedCode\InviteCodeServicecs.cs" />
     <Compile Include="LevelConfig\ILevelConfigService.cs" />
     <Compile Include="LevelConfig\LevelConfigService.cs" />
     <Compile Include="Level\ILevelService.cs" />

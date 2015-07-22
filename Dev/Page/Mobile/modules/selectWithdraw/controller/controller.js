@@ -24,9 +24,9 @@ app.controller('withdrawController',['$http','$scope','AuthService','$state',fun
 
     $scope.btnClick=function(Ids){
         if (Ids != null){
-            $state.go("app.selectWithdraw",{Ids:Ids});
+            $state.go("app.withdrawals",{Ids:Ids});
         }else{
-            alert("当前不存在");
+            alert("璇烽�夋嫨鎻愮幇閲戦");
         }
     }
 }])

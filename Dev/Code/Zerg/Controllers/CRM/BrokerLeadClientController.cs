@@ -152,7 +152,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetLeadClientInfoByBrokerName(EnumBLeadType status, string brokername, int page, int pageSize)
+        public HttpResponseMessage GetLeadClientInfoByBrokerName(EnumBLeadType status, string brokername, int page=1, int pageSize=10)
         {
 
             var condition = new BrokerLeadClientSearchCondition
@@ -161,7 +161,7 @@ namespace Zerg.Controllers.CRM
                 Page = page,
                 PageCount = pageSize,
                 Status = status,
-                Brokername = brokername
+                ClientName = brokername
 
             };
 
