@@ -43,9 +43,10 @@ namespace Trading.Entity.Model
 
 
 		public ProductEntity[] Products { get; set; }
-
-
-
+        //=============================================彭贵飞 20150708 start=====================================
+        public int? ProductId { get; set; }
+        public int? ParameterId { get; set; }
+        //=============================================end                  =====================================
 		public int[] Sorts { get; set; }
 
 

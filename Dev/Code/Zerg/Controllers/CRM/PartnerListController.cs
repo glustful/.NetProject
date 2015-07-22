@@ -63,7 +63,7 @@ namespace Zerg.Controllers.CRM
             {
                 p.Id,
                 p.UserId,
-                PartnersName = p.PartnersName == null ? "无" : p.PartnersName,
+                PartnersName = p.WeiXinNumber == null ? "无" : p.WeiXinNumber,
                 p.PartnersId,
                 BrokerName = p.Brokername,
                 Phone = p.Phone,
@@ -96,7 +96,7 @@ namespace Zerg.Controllers.CRM
                 {
                     p.Id,
                     p.UserId,
-                    p.PartnersName,
+                    PartnersName = p.WeiXinNumber,
                     p.PartnersId,
                     BrokerName = p.Brokername,
                     Nickname = p.Nickname,
@@ -390,7 +390,7 @@ namespace Zerg.Controllers.CRM
                             {
                                 //2更新 当前要添加的这个经纪人的PartnersId字段为当前用户
                                 broker.PartnersId = model.Broker.Id;
-                                broker.PartnersName = model.Broker.Brokername;
+                                broker.WeiXinNumber = model.Broker.Brokername;
                                 if (_brokerService.Update(broker) != null)
                                 {
 

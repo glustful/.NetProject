@@ -17,7 +17,7 @@ namespace Trading.Entity.Mappings.LandAgentBill
 			Property(c => c.LandagentId).HasColumnType("int");
 			Property(c => c.Landagentname).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Amount).HasColumnType("decimal");
-			Property(c => c.Actualamount).HasColumnType("decimal");
+			Property(c => c.Actualamount).HasColumnType("decimal").IsOptional();
 			Property(c => c.Cardnumber).HasColumnType("varchar").HasMaxLength(30);
 			Property(c => c.Isinvoice).HasColumnType("bit");
 			Property(c => c.Remark).HasColumnType("varchar").HasMaxLength(500);

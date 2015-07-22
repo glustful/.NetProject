@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Event.Entity.Entity.OtherCoupon;
 using YooPoon.Core.Logging;
 using Zerg.Common.Data;
@@ -46,6 +43,10 @@ namespace Event.Service.OtherCoupon
             {
                 query = query.Where(c => condition.Name == c.Name);
             }
+            if (condition.ClassId.HasValue)
+            {
+                query = query.Where(c => condition.ClassId == c.ClassId);
+            }
             if (condition.OrderBy.HasValue)
             {
                 switch (condition.OrderBy.Value)
@@ -78,6 +79,10 @@ namespace Event.Service.OtherCoupon
             if (!string.IsNullOrEmpty(condition.Name))
             {
                 query = query.Where(c => condition.Name == c.Name);
+            }
+            if (condition.ClassId.HasValue)
+            {
+                query = query.Where(c => condition.ClassId == c.ClassId);
             }
             return query.Count();
         }

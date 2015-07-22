@@ -81,6 +81,14 @@ namespace CRM.Service.BrokeAccount
                 {
                     query = query.Where(q => q.Addtime>= condition.AddtimeBegin.Value);
                 }
+			    if (condition.Type.HasValue)
+			    {
+			        query = query.Where(q => q.Type == condition.Type);
+			    }
+                //if (condition.Brokers!=null)
+                //{
+                //    query = query.Where(q => q.Broker == condition.Brokers);
+                //}
                 if (condition.AddtimeEnd.HasValue)
                 {
                     query = query.Where(q => q.Addtime < condition.AddtimeEnd.Value);
@@ -154,6 +162,14 @@ namespace CRM.Service.BrokeAccount
                 {
                     query = query.Where(q => q.Addtime < condition.AddtimeEnd.Value);
                 }
+                if (condition.Type.HasValue)
+                {
+                    query = query.Where(q => q.Type == condition.Type);
+                }
+                //if (condition.Brokers != null)
+                //{
+                //    query = query.Where(q => q.Broker == condition.Brokers);
+                //}
 				if (condition.UptimeBegin.HasValue)
                 {
                     query = query.Where(q => q.Uptime>= condition.UptimeBegin.Value);
@@ -165,6 +181,10 @@ namespace CRM.Service.BrokeAccount
 				if (condition.Balancenum.HasValue)
                 {
                     query = query.Where(q => q.Balancenum == condition.Balancenum.Value);
+                }
+                if (condition.State.HasValue) 
+                {
+                    query = query.Where(q => q.State == condition.State.Value);
                 }
 				if (condition.Ids != null && condition.Ids.Any())
                 {

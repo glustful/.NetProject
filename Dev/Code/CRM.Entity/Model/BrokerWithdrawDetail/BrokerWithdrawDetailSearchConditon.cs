@@ -22,11 +22,12 @@ namespace CRM.Entity.Model
 		public int[] Ids { get; set; }
 
         /// <summary>
-        /// 提现状态 ｛0，处理中   1完成 ok｝
+        /// 类型（0带客，1推荐）
         /// </summary>
-        public string State { get; set; }
+        public string Type { get; set; }
 
 		public BrokerEntity Brokers { get; set; }
+        public BrokerWithdrawEntity BrokerWithdraw { get; set; }
 
 		public BankCardEntity[] BankCards { get; set; }
 

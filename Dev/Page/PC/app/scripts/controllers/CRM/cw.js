@@ -11,6 +11,8 @@ angular.module("app").controller('cwIndexController', [
             pageSize: 10,
             state:2
         };
+        $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
+//-------------------------查询财务账号列表 start----------------------------
         var page= 0,howmany=0;
         $scope.getList  = function() {
 
@@ -22,8 +24,6 @@ angular.module("app").controller('cwIndexController', [
             }).success(function(data){
                 // alert(data.list!=null);
                 if(data.List.length>0) {
-                    console.log(data);
-
                     page= $scope.searchCondition.page = data.Condition.Page;
                     howmany=data.List.length;//保存当页数据数量
                     $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -75,8 +75,9 @@ angular.module("app").controller('cwIndexController', [
             $scope.searchCondition.page=1;
         }
         $scope.getList();
+//-------------------------查询财务账号列表 end--------------------------
 
-        //删除经纪人
+//-------------------------删除财务账号 start----------------------------
         $scope.deleteBroker=function (id) {
             $scope.selectedId = id;
             var modalInstance = $modal.open({
@@ -117,26 +118,9 @@ angular.module("app").controller('cwIndexController', [
                 });
             });
         }
-//            function(id){
-//        $http.post(SETTING.ApiUrl+'/BrokerInfo/DeleteBroker',id,{
-//            'withCredentials':true
-//        }).success(function(data) {
-//           if(data.Status)
-//           {
-//               alert(data.Msg);
-//               if(howmany==1)
-//               {
-//                   if(page>1){
-//                   $scope.searchCondition.page--;}
-//                   else{
-//                       $scope.searchCondition.page=1;
-//                   }
-//               }
-//               $scope.getList();
-//           }
-//
-//        })}
-        //注销经纪人
+//-------------------------删除财务账号 end------------------------------
+
+//-------------------------注销财务账号 start----------------------------
         $scope.cancelBroker=function (id,btnname) {
             $scope.selectedId = id;
             var modalInstance = $modal.open({
@@ -174,32 +158,14 @@ angular.module("app").controller('cwIndexController', [
                 });
             });
         }
-//        $scope.cancelBroker=function(id){
-//            $http.post(SETTING.ApiUrl+'/BrokerInfo/CancelBroker',id,{
-//                'withCredentials':true
-//            }).success(function(data) {
-//                if(data.Status)
-//                {
-//                    alert(data.Msg);
-//                    if(howmany==1)
-//                    {
-//                        if(page>1){
-//                            $scope.searchCondition.page--;}
-//                        else{
-//                            $scope.searchCondition.page=1;
-//                        }
-//                    }
-//                    $scope.getList();
-//                }
-//
-//            })}
-
+//-------------------------注销财务账号 end--------------------  --------
     }
 ]);
 
 
 angular.module("app").controller('cwDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
-//个人信息
+    $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
+//---------------------------查询财务账户 start-------------------------
     $http.get(SETTING.ApiUrl + '/BrokerInfo/GetBrokerByAgent?id=' + $stateParams.id,{
         'withCredentials':true
     }).success(function(data){
@@ -211,9 +177,11 @@ angular.module("app").controller('cwDetailedController',['$http','$scope','$stat
         {data.List.State="注销"}
         $scope.BusmanModel =data.List;
     });
+//---------------------------查询财务账户 end-------------------------
+
 }]);
 
-angular.module("app").controller('UserCreateController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
+angular.module("app").controller('cwCreateController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
 
     $scope.UserModel={
 
@@ -224,21 +192,22 @@ angular.module("app").controller('UserCreateController',['$http','$scope','$stat
         UserName:""
     };
 
+//-----------------------------新增财务账号 start--------------------------
     $scope.Save = function(){
         $http.post(SETTING.ApiUrl + '/AdminRecom/AddBroker',$scope.UserModel,{
             'withCredentials':true
         }).success(function(data){
             if(data.Status){
                alert(data.Msg);
-                $scope.UserModel.Password="",
-                    $scope.UserModel.Brokername="",
-                    $scope.UserModel.Phone="",
-                    $scope.UserModel.UserName=""
-
-
+                $scope.UserModel.Password="";
+                    $scope.UserModel.Brokername="";
+                    $scope.UserModel.Phone="";
+                    $scope.UserModel.UserName="";
             }else{
                 alert(data.Msg);
             }
         });
+//-----------------------------新增财务账号 end--------------------------
+
     }
 }]);

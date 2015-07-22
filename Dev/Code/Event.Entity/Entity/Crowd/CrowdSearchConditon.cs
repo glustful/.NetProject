@@ -32,7 +32,7 @@ namespace Event.Entity.Model
 
 
 
-
+        public int  Id { get; set; }
 
 		public string Ttitle { get; set; }
 
@@ -54,7 +54,7 @@ namespace Event.Entity.Model
 
 
 
-		public int[] Statuss { get; set; }
+		public int Statuss { get; set; }
 
 
 

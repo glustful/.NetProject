@@ -21,6 +21,12 @@
             <!--<option value="">使用</option>-->
             <!--</select>-->
             <!--</div>-->
+            <div class="bottom" ><label>分&nbsp;&nbsp;&nbsp;&nbsp;类： </label>
+                <!--<select name="ChannelId" id="ChannelId" ng-model="ContentModel.ChannelId">-->
+                <!--<option ng-repeat="list in ChannelList" value="{{list.Id}}" ng-selected="list.Id==ContentModel.ChannelId">{{list.Name}}</option>-->
+                <!--</select>-->
+                <select name="ClassId" id="ClassId" ng-model="CouponCategoryModel.ClassId" ng-options="list.Id as list.Name for list in ClassList"></select>
+            </div>
             <div class="bottom" ><label>品&nbsp;&nbsp;&nbsp;&nbsp;牌： </label>
                 <!--<select name="ChannelId" id="ChannelId" ng-model="ContentModel.ChannelId">-->
                 <!--<option ng-repeat="list in ChannelList" value="{{list.Id}}" ng-selected="list.Id==ContentModel.ChannelId">{{list.Name}}</option>-->

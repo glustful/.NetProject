@@ -59,9 +59,12 @@ angular.module("app").controller('createBillController', [
                 beneficiarynumber:'',
                 Actualamount:'',
                 remark:''
-            }
+            };
+        $http.get(SETTING.ApiUrl+'/Order/GetByOrderId?orderId='+$scope.orderId,{'withCredentials':true}).success(function(data){
+            $scope.OrderDetail=data;
+        })
         $scope.Create = function(){
-            $http.post(SETTING.ApiUrl + '/Bill/CreateBillsByOrder',$scope.BillModel,{
+            $http.post(SETTING.ApiUrl + '/Bill/CreateBill',$scope.BillModel,{
                 'withCredentials':true
             }).success(function(data){
                    if(data.Status)

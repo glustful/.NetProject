@@ -1,4 +1,4 @@
-
+<div ng-controller="cwDetailedController">
     <ul class="nav nav-tabs">
         <li class="active">
             <a href="" data-toggle="tab" data-target="#tab1" aria-expanded="true">个人信息</a>
@@ -12,7 +12,7 @@
 
         <div class="md-list-item">
             <div class="md-list-item-left">
-                <img src="{{BusmanModel.Headphoto}}" class="w-full circle">
+                <img src="{{SImg+BusmanModel.Headphoto}}" class="w-full circle">
             </div>
             <div class="md-list-item-content details"  >
                 <div><small>{{BusmanModel.Nickname}}</small><small> {{BusmanModel.Brokername}}</small></div>
@@ -44,3 +44,4 @@
         </table>
         <div>{{BusmanModel.Address}}</div>
     </div>
+</div>

@@ -4,10 +4,6 @@
     <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo"  ng-click="getList()">搜索<div class="md-ripple-container"></div></button>
 </div>
 
-<select ng-model="vm.selectVal" ng-options="o.id as o.title for o in vm.optionsData" ng-change="selectChange()">
-    <option value="">选择审核状态</option>
-</select>
-
 <table class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" data-page-size="5">
     <thead>
     <tr>
@@ -88,7 +84,7 @@
     </tbody>
     <tfoot class="hide-if-no-paging">
     <tr>
-        <td colspan="6" class="text-center">{{errorTip}}</td>
+        <td colspan="6" class="text-center" style="font-size:20px;color: #ff0000">{{errorTip}}</td>
     </tr>
     <tr>
         <td colspan="5" class="text-center footable-visible">

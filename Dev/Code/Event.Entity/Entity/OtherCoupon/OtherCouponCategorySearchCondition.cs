@@ -15,6 +15,7 @@ namespace Event.Entity.Entity.OtherCoupon
         public int? BrandId { get; set; }
         public bool IsDescending { get; set; }
         public string Name { get; set; }
+        public int? ClassId { get; set; }
         public EnumOtherCouponCategorySearchOrderBy? OrderBy { get; set; }
     }
     public enum EnumOtherCouponCategorySearchOrderBy

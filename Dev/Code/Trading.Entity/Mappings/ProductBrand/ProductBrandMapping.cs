@@ -1,10 +1,10 @@
-using YooPoon.Core.Data;
 using System.Data.Entity.ModelConfiguration;
 using Trading.Entity.Model;
+using Zerg.Common.Data;
 
 namespace Trading.Entity.Mappings.ProductBrand
 {
-	public class ProductBrandMapping : EntityTypeConfiguration<ProductBrandEntity>, Zerg.Common.Data.IZergMapping
+	public class ProductBrandMapping : EntityTypeConfiguration<ProductBrandEntity>, IZergMapping
 	{
 		public ProductBrandMapping()
 		{
@@ -19,8 +19,8 @@ namespace Trading.Entity.Mappings.ProductBrand
 			Property(c => c.Updtime).HasColumnType("datetime");
             Property(c => c.SubTitle).HasColumnType("varchar").HasMaxLength(900);
             Property(c => c.AdTitle).HasColumnType("varchar").HasMaxLength(500);
-		    Property(c => c.Content).HasColumnType("varchar").HasMaxLength(900);
-            Property(c => c.Classify_Id).HasColumnType("int").IsOptional();
+		    Property(c => c.Content).HasColumnType("varchar").IsMaxLength();
+            Property(c => c.ClassId).HasColumnType("int").IsOptional();
 		    HasOptional(c => c.Father);
             HasMany(c => c.ParameterEntities).WithOptional(c => c.ProductBrand);
 		}

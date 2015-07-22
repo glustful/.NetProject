@@ -1,4 +1,4 @@
-
+<div ng-controller="AdmManDetailedController">
 <ul class="nav nav-tabs">
     <li class="active">
         <a href="" data-toggle="tab" data-target="#tab1" aria-expanded="true">个人信息</a>
@@ -11,7 +11,7 @@
     <div role="tabpanel" class=" animated fadeIn" id="tab1">
         <div class="md-list-item">
             <div class="md-list-item-left">
-                <img src="{{BrokerModel.Headphoto}}" class="w-full circle">
+                <img src="{{SImg+BrokerModel.Headphoto}}" class="w-full circle">
             </div>
             <div class="md-list-item-content details"  >
                 <div><small>{{BrokerModel.Nickname}}</small><small> {{BrokerModel.Brokername}}</small></div>
@@ -42,5 +42,6 @@
 
         </table>
         <div>{{BrokerModel.Address}}</div>
+</div>
 </div>
 </div>

@@ -11,8 +11,9 @@ angular.module("app").controller('agentmanagerIndexController', [
             pageSize: 10,
             state:2//经纪人状态，1正常，0删除，-1注销
         };
+        $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
+//------------------------获取经纪人列表 start--------------------
         var page= 0,howmany=0;
-
         $scope.getList  = function() {
             if($scope.searchCondition.phone==undefined)
             {$scope.searchCondition.phone="";}
@@ -21,7 +22,6 @@ angular.module("app").controller('agentmanagerIndexController', [
                 'withCredentials':true
             }).success(function(data){
                 if(data.List.length>0) {
-                    console.log(data);
                    page= $scope.searchCondition.page = data.Condition.Page;
                     howmany=data.List.length;//保存当页数据数量
                     $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -66,13 +66,14 @@ angular.module("app").controller('agentmanagerIndexController', [
                 }
             });
         };
+//-------------------------获取经纪人列表 end---------------------
         //初始化page
         $scope.initPage=function(){
             $scope.searchCondition.page=1;
         }
         $scope.getList();
 
-        //删除经纪人
+//-------------------------删除经纪人 start----------------------
         $scope.deleteBroker=function (id) {
             $scope.selectedId = id;
             var modalInstance = $modal.open({
@@ -113,7 +114,9 @@ angular.module("app").controller('agentmanagerIndexController', [
                     });
             });
         }
+//-------------------------删除经纪人 end------------------------
 
+//-----------------------注销经纪人 start------------------------
         $scope.cancelBroker=function (id,btnname) {
             $scope.selectedId = id;
             var modalInstance = $modal.open({
@@ -148,13 +151,15 @@ angular.module("app").controller('agentmanagerIndexController', [
                 });
             });
         }
+//-----------------------注销经纪人 end--------------------------
     }
 ]);
 
 
-angular.module("app").controller('configureDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
+angular.module("app").controller('agentmanagerDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
+    $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
 
-     //个人信息
+//----------------根据经纪人id获取经纪人信息 start-----------------
     $http.get(SETTING.ApiUrl + '/BrokerInfo/GetBrokerByAgent?id=' + $stateParams.userid,{
         'withCredentials':true
     }).success(function(data){
@@ -166,8 +171,8 @@ angular.module("app").controller('configureDetailedController',['$http','$scope'
         {data.List.State="注销"}
         $scope.BrokerModel =data.List;
     });
-
-    //出入账
+//----------------根据经纪人id获取经纪人信息 end-----------------------
+//----------------查询该经纪人出入账信息 start-------------------------
     $scope.searchCRZCondition = {
         userId: $stateParams.userid,
         page: 1,
@@ -193,8 +198,8 @@ if(data.totalCount>0){
         });
     };
     $scope.getCRZList();
-
-    //提现明细
+//----------------查询该经纪人出入账信息 end-------------------------
+//----------------根据经纪人id查询提现明细 start---------------------
     $scope.searchTXCondition = {
         userId: $stateParams.userid,
         page: 1,
@@ -221,8 +226,8 @@ else{
         });
     };
     $scope.getTXList();
-
-    //银行卡明细
+//----------------根据经纪人id查询提现明细 end---------------------
+//----------------根据经纪人id查询银行卡明细 start-----------------
     $scope.searchBankCondition = {
         userId: $stateParams.userid,
         page: 1,
@@ -250,8 +255,10 @@ else{
         });
     };
     $scope.getBankList();
+//----------------根据经纪人id查询提现明细 end---------------------
 
-    //积分明细
+
+//----------------根据经纪人id查询积分明细 start---------------------
     $scope.searchJFCondition = {
         userId: $stateParams.userid,
         page: 1,
@@ -277,5 +284,5 @@ else{
         });
     };
     $scope.getJFList();
-
+//----------------根据经纪人id查询提现明细 end---------------------
 }]);

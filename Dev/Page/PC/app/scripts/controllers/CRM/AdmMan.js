@@ -11,6 +11,7 @@ angular.module("app").controller('adminIndexController', [
             pageSize: 10,
             state:2
         };
+        $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
         var page= 0,howmany=0;
         $scope.getList  = function() {
 
@@ -21,8 +22,6 @@ angular.module("app").controller('adminIndexController', [
                 'withCredentials':true
             }).success(function(data){
                 if(data.List.length>0) {
-                    console.log(data);
-
                     page= $scope.searchCondition.page = data.Condition.Page;
                     howmany=data.List.length;//保存当页数据数量
                     $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -118,26 +117,7 @@ angular.module("app").controller('adminIndexController', [
                 });
             });
         }
-//            function(id){
-//        $http.post(SETTING.ApiUrl+'/BrokerInfo/DeleteBroker',id,{
-//            'withCredentials':true
-//        }).success(function(data) {
-//           if(data.Status)
-//           {
-//               alert(data.Msg);
-//               if(howmany==1)
-//               {
-//                   if(page>1){
-//                   $scope.searchCondition.page--;}
-//                   else{
-//                       $scope.searchCondition.page=1;
-//                   }
-//               }
-//               $scope.getList();
-//           }
-//
-//        })}
-        //注销经纪人
+
         $scope.cancelBroker=function (id,btnname) {
             $scope.selectedId = id;
             var modalInstance = $modal.open({
@@ -175,35 +155,17 @@ angular.module("app").controller('adminIndexController', [
                 });
             });
         }
-//        $scope.cancelBroker=function(id){
-//            $http.post(SETTING.ApiUrl+'/BrokerInfo/CancelBroker',id,{
-//                'withCredentials':true
-//            }).success(function(data) {
-//                if(data.Status)
-//                {
-//                    alert(data.Msg);
-//                    if(howmany==1)
-//                    {
-//                        if(page>1){
-//                            $scope.searchCondition.page--;}
-//                        else{
-//                            $scope.searchCondition.page=1;
-//                        }
-//                    }
-//                    $scope.getList();
-//                }
-//
-//            })}
-
     }
 ]);
 
-angular.module("app").controller('configureDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
-
-    //个人信息
-    $http.get(SETTING.ApiUrl + '/BrokerInfo/GetBrokerByAgent?id=' + $stateParams.id,{
+angular.module("app").controller('AdmManDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
+    $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
+//------------------------查询管理员信息列表 start--------------------------
+    $http.get(SETTING.ApiUrl + '/BrokerInfo/GetBrokerByAgent?id='
+        + $stateParams.id,{
         'withCredentials':true
-    }).success(function(data){
+    }).success(
+        function(data){
         if(data.List.State==1)
         {data.List.State="正常"}
         else if(data.List.State==0)
@@ -212,22 +174,22 @@ angular.module("app").controller('configureDetailedController',['$http','$scope'
         {data.List.State="注销"}
         $scope.BrokerModel =data.List;
     });
-
+//------------------------查询管理员信息列表 end--------------------------
 }]);
 
-angular.module("app").controller('UserCreateController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
+angular.module("app").controller('AdmManCreateController',['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
 
     $scope.UserModel={
-
         Password:"",
         Brokername:"",
         Phone:"",
         UserType:"管理员",
         UserName:""
     };
-
+//------------------------添加管理员账号 start--------------------------
     $scope.Save = function(){
-        $http.post(SETTING.ApiUrl + '/AdminRecom/AddBroker',$scope.UserModel,{
+        $http.post(SETTING.ApiUrl + '/AdminRecom/AddBroker',
+            $scope.UserModel,{
             'withCredentials':true
         }).success(function(data){
             if(data.Status){
@@ -239,5 +201,7 @@ angular.module("app").controller('UserCreateController',['$http','$scope','$stat
                 alert(data.Msg);
             }
         });
+//------------------------添加管理员账号 end--------------------------
+
     }
 }]);
