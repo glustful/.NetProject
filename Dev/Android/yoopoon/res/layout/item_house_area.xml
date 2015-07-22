@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+<!-- 暂时没有启用 2015年7月22日注释 当前使用java代码写在项目中 -->
     <LinearLayout
         android:id="@+id/house_area_linearLayout"
         android:layout_width="fill_parent"

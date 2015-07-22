@@ -4,7 +4,7 @@
  * @Title: FramHouseAreaAdapter.java 
  * @Project: yoopoon
  * @Package: com.yoopoon.house.ui.houselist 
- * @Description: 房源页顶端对应的楼盘区域Adapter
+ * @Description: 房源页顶端对应的楼盘区域Adapter（暂时没有启用）
  * @author: 徐阳会  
  * @updater: 徐阳会 
  * @date: 2015年7月17日 上午11:50:16 
@@ -18,7 +18,6 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +41,7 @@ public class FramHouseAreaAdapter extends BaseAdapter {
 	ArrayList<JSONObject> datas;
 	private LayoutInflater mLayoutInflater;
 	private int selectedPosition = -1;
-
+	
 	public FramHouseAreaAdapter(Context context, ArrayList<JSONObject> arrayList, int selected) {
 		super();
 		mContext = context;
@@ -70,7 +69,6 @@ public class FramHouseAreaAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHandler viewHandler = null;
 		if (convertView == null) {
-			Log.i(LOGTAG, "111111");
 			viewHandler = new ViewHandler();
 			convertView = mLayoutInflater.inflate(R.layout.item_house_area, null);
 			convertView.setTag(viewHandler);
@@ -92,12 +90,23 @@ public class FramHouseAreaAdapter extends BaseAdapter {
 		}
 		return convertView;
 	}
-
+	
+	/** 
+	 * @ClassName: ViewHandler 
+	 * @Description: 楼盘区域对应的ViewHandler
+	 * @author: 徐阳会
+	 * @date: 2015年7月22日 上午9:13:28  
+	 */
 	class ViewHandler {
 		private TextView areaNameTextView;
 		private ImageView arrowImageView;
 		private LinearLayout mLinearLayout;
-
+		
+		/** 
+		 * @Title: initViewHandler 
+		 * @Description: 初始化ViewHandler
+		 * @param rootView 当前Activity对应的视图
+		 */
 		public void initViewHandler(View rootView) {
 			areaNameTextView = (TextView) rootView.findViewById(R.id.area_name_textview);
 			arrowImageView = (ImageView) rootView.findViewById(R.id.area_arrow_imageView);

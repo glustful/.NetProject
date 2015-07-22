@@ -4,9 +4,9 @@
  * @Title: RequestProvinceArea.java 
  * @Project: yoopoon
  * @Package: com.yoopoon.house.ui.houselist 
- * @Description: TODO
- * @author: king  
- * @updater: king 
+ * @Description: 链接网络，获取楼盘区域数据
+ * @author: 徐阳会  
+ * @updater: 徐阳会 
  * @date: 2015年7月17日 下午5:18:08 
  * @version: V1.0   
  */
@@ -25,14 +25,20 @@ import com.yoopoon.home.data.net.ResponseData.ResultState;
 
 /**
  * @ClassName: RequestProvinceArea
- * @Description:
+ * @Description:链接网络，获取楼盘区域信息类（异步线程）
  * @author: 徐阳会
  * @date: 2015年7月17日 下午5:18:08
  */
 public class RequestHouseAreaCondition {
+	public static final String LOGTAG = "RequestHouseAreaCondition:请求网络获取楼盘区域";
 	private ArrayList<JSONObject> provinceJsonObjects = new ArrayList<JSONObject>();
-
-	public static void requestHouseArea(final Callback callback) {
+	
+	/** 
+	 * @Title: requestHouseProvinceArea 
+	 * @Description: 获取楼盘省份数据
+	 * @param callback
+	 */
+	public static void requestHouseProvinceArea(final Callback callback) {
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
@@ -46,7 +52,13 @@ public class RequestHouseAreaCondition {
 			}
 		}.setUrl("/api/Condition/GetCondition").setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
-	public static void requestHouseArea(String parentIdValue, final Callback callback) {
+	/** 
+	 * @Title: requestHouseCityArea 
+	 * @Description: 获取楼盘市所属城市数据
+	 * @param parentIdValue 传入的省份ID
+	 * @param callback 回调结果
+	 */
+	public static void requestHouseCityArea(String parentIdValue, final Callback callback) {
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
@@ -61,7 +73,28 @@ public class RequestHouseAreaCondition {
 		}.setUrl("/api/Condition/GetCondition").setRequestMethod(RequestMethod.eGet)
 				.addParam("parentId", parentIdValue).notifyRequest();
 	}
-
+	/** 
+	 * @Title: requestHouseDistrictArea 
+	 * @Description: 获取楼盘所属县区数据
+	 * @param parentIdValue 传入城市ID
+	 * @param callback 回调参数
+	 */
+	public static void requestHouseDistrictArea(String parentIdValue, final Callback callback) {
+		new RequestAdapter() {
+			@Override
+			public void onReponse(ResponseData data) {
+				if (data.getResultState() == ResultState.eSuccess) {
+					JSONArray list = data.getMRootData().optJSONArray("AreaList");
+					callback.callback(list);
+				}
+			}
+			@Override
+			public void onProgress(ProgressMessage msg) {
+			}
+		}.setUrl("/api/Condition/GetCondition").setRequestMethod(RequestMethod.eGet)
+				.addParam("parentId", parentIdValue).notifyRequest();
+	}
+	
 	public interface Callback {
 		void callback(JSONArray jsonArray);
 	}

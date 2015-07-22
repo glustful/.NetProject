@@ -1,3 +1,15 @@
+/**   
+ * Copyright ? 2015 yoopoon. All rights reserved.
+ * 
+ * @Title: FramHouseListViewAdapter.java 
+ * @Project: yoopoon
+ * @Package: com.yoopoon.house.ui.houselist 
+ * @Description: 楼盘ListView对应的Adapter
+ * @author: 徐阳会  
+ * @updater: 徐阳会 
+ * @date: 2015年7月14日 下午5:18:08 
+ * @version: V1.0   
+ */
 package com.yoopoon.house.ui.houselist;
 
 import java.util.ArrayList;
@@ -35,7 +47,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 	Context mContext;
 	ArrayList<JSONObject> datas;
 	int height = 0;
-
+	
 	public FramHouseListViewAdapter(Context mContext) {
 		this.mContext = mContext;
 		datas = new ArrayList<JSONObject>();
@@ -142,7 +154,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		});
 		return convertView;
 	}
-
+	
 	/**
 	 * @ClassName: ViewHandler
 	 * @Description: 创建ViewHandler来对房源页中的ListView进行视图的绑定和初始化
@@ -160,7 +172,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		private TextView houseBonusTextView;
 		private TextView houseScoreTextView;
 		private View houseBrokerFunctionLinearLayout;
-
+		
 		/**
 		 * @Title: initViewHandler
 		 * @Description: 初始化ViewHandler
@@ -179,7 +191,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 			houseBrokerFunctionLinearLayout = root.findViewById(R.id.house_broker_function_linearlayout);
 		}
 	}
-
+	
 	/**
 	 * @Title: refresh
 	 * @Description: 获取数据刷新房源页对应的楼盘ListView

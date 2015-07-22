@@ -1,11 +1,13 @@
 package com.yoopoon.home.ui.home;
 
 import java.util.ArrayList;
+
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -28,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
+
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.SearchActionBarActivity;
@@ -41,17 +44,16 @@ public class FramMainActivity extends SearchActionBarActivity {
 	ViewPager mainPager;
 	@ViewById(R.id.search_layout)
 	LinearLayout searchLayout;
-	boolean isOpenAgent = false;
+	boolean isOpenAgent = true;
 	public static FramMainActivity instance;
 	HomeMainAdapter pageAdapter;
 	ArrayList<FragmentInfo> fInfo;
-
+	
 	@AfterInject
 	void initData() {
 		instance = this;
 		fInfo = new ArrayList<FragmentInfo>();
 	}
-
 	@AfterViews
 	void initUI() {
 		MyApplication.getInstance().addActivity(this);
@@ -60,7 +62,6 @@ public class FramMainActivity extends SearchActionBarActivity {
 		initFragments();
 		begin();
 	}
-
 	void initFragments() {
 		Bundle argActive = new Bundle();
 		fInfo.add(new FragmentInfo(FramActiveFragment_.class, argActive));
@@ -73,7 +74,6 @@ public class FramMainActivity extends SearchActionBarActivity {
 		Bundle argMe = new Bundle();
 		fInfo.add(new FragmentInfo(FramMeFragment_.class, argMe));
 	}
-
 	@SuppressLint("NewApi")
 	void initMenu() {
 		tabHost.setup();
@@ -96,7 +96,6 @@ public class FramMainActivity extends SearchActionBarActivity {
 			});
 		}
 	}
-
 	private TabSpec getTabSpec(String content, int resId, String title) {
 		MainTabView tab = MainTabView_.build(this);
 		tab.setIndicator(resId);
@@ -105,17 +104,15 @@ public class FramMainActivity extends SearchActionBarActivity {
 				.setContent(new MainTabFactory(FramMainActivity.this));
 		return tabSpec;
 	}
-
+	
 	OnPageChangeListener pageListener = new OnPageChangeListener() {
 		@Override
 		public void onPageSelected(int position) {
 			tabHost.setCurrentTab(position);
 		}
-
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 		}
-
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 		}
@@ -128,7 +125,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 		}
 	};
 	private long exitTime = 0;
-
+	
 	private void begin() {
 		pageAdapter = new HomeMainAdapter(getSupportFragmentManager(), fInfo, FramMainActivity.this);
 		mainPager.setOffscreenPageLimit(3);
@@ -136,7 +133,6 @@ public class FramMainActivity extends SearchActionBarActivity {
 		mainPager.setOnPageChangeListener(pageListener);
 		mainPager.setCurrentItem(0);
 	}
-
 	/*
 	 * (non Javadoc)
 	 * @Title: onCreate
@@ -151,7 +147,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 		registerLogoutBroadcast();
 		registerBrokerTakeGuestBroadcast();
 	}
-
+	
 	private BroadcastReceiver logoutReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, android.content.Intent intent) {
 			Log.i(tag, "收到用户等出广播啦！");
@@ -162,13 +158,13 @@ public class FramMainActivity extends SearchActionBarActivity {
 			Log.i(tag, "清除sp数据啦！");
 		};
 	};
-
+	
 	private void registerLogoutBroadcast() {
 		IntentFilter filter = new IntentFilter("com.yoopoon.logout_action");
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
 		this.registerReceiver(logoutReceiver, filter);
 	}
-
+	
 	private BroadcastReceiver brokerTakeGuestReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -176,30 +172,27 @@ public class FramMainActivity extends SearchActionBarActivity {
 			mainPager.setCurrentItem(1);
 		}
 	};
-
+	
 	private void registerBrokerTakeGuestBroadcast() {
 		IntentFilter intentFilter = new IntentFilter("com.yoopoon.broker_takeguest");
 		intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		this.registerReceiver(brokerTakeGuestReceiver, intentFilter);
 	}
-
+	
 	private AlertDialog dialog;
-
+	
 	public void onBackPressed() {
 		Builder builder = new Builder(this);
 		builder.setMessage("确定要退出应用程序吗？");
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
-
 				// 若用户没有选择记住用户，清楚sp
 				SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(FramMainActivity.this);
 				Editor editor = sp.edit();
 				editor.clear();
 				editor.commit();
-
 				android.os.Process.killProcess(android.os.Process.myPid()); // 获取PID
 				System.exit(0);
 			}
@@ -212,43 +205,37 @@ public class FramMainActivity extends SearchActionBarActivity {
 		});
 		dialog = builder.show();
 	}
-
 	@Override
 	protected void onRestart() {
 		super.onRestart();
 	}
-
 	@Override
 	protected void onDestroy() {
 		this.unregisterReceiver(logoutReceiver);
 		this.unregisterReceiver(brokerTakeGuestReceiver);
 		super.onDestroy();
 	}
-
 	@Override
 	protected void onResume() {
 		super.onResume();
 	}
-
 	@Override
 	protected void onStop() {
 		if (dialog == null)
 			dialog = null;
 		super.onStop();
 	}
-
 	@Override
 	protected void onStart() {
 		super.onStart();
 	}
-
+	
 	class MainTabFactory implements TabHost.TabContentFactory {
 		private final Context mContext;
-
+		
 		public MainTabFactory(Context context) {
 			mContext = context;
 		}
-
 		@Override
 		public View createTabContent(String tag) {
 			View v = new View(mContext);
@@ -257,30 +244,26 @@ public class FramMainActivity extends SearchActionBarActivity {
 			return v;
 		}
 	}
-
+	
 	@Override
 	public void finish() {
 		MyApplication.getInstance().removeActivity(this);
 		super.finish();
 	}
-
 	@Override
 	protected int getHeight() {
 		// TODO Auto-generated method stub
 		return mainPager.getHeight();
 	}
-
 	@Override
 	protected View getParentView() {
 		// TODO Auto-generated method stub
 		return mainPager;
 	}
-
 	@Override
 	protected void showResult(JSONArray optJSONArray) {
 		searchLayout.setVisibility(View.VISIBLE);
 	}
-
 	@Override
 	protected void cleanSearch() {
 		searchLayout.setVisibility(View.GONE);
