@@ -164,7 +164,7 @@ namespace Zerg.Controllers.CRM
             //model.Qq = Convert.ToInt32(brokerrecclient.Qq);
             model.Phone = brokerrecclient.Phone;       //客户电话
             model.Brokername = broker.Brokername;
-            //model.Brokerlevel = broker.Level.Name;
+            model.Brokerlevel = broker.Level.Name;
             model.Broker = broker;
             model.Adduser = brokerrecclient.Adduser;
             model.Addtime = DateTime.Now;
@@ -175,7 +175,7 @@ namespace Zerg.Controllers.CRM
             model.Status = EnumBRECCType.审核中;
             model.DelFlag = EnumDelFlag.默认;
             model.RecOrder = (int)EnumOrderType.推荐订单;
-
+            
             _brokerRecClientService.Create(model);
 
             return PageHelper.toJson(PageHelper.ReturnValue(true, "提交成功"));

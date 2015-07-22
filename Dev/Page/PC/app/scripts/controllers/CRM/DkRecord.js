@@ -71,11 +71,11 @@ angular.module("app").controller('DKRDetailedController',['$http','$scope','$sta
     $scope.updateDKRecord = function(type){
         $scope.ARDetialModel.Status = type;
 
-        if ($scope.SecretaryList.Brokername == 0 || $scope.SecretaryList.Brokername=="" ||  $scope.SecretaryList.Brokername==undefined)
-        {
-            alert("驻场秘书不能为空");
-            return;
-        }
+        //if ($scope.SecretaryId == 0 || $scope.SecretaryId=="" ||  $scope.SecretaryId==undefined)
+        //{
+        //    alert("驻场秘书不能为空");
+        //    return;
+        //}
         $http.post(SETTING.ApiUrl +'/BrokerLeadClient/UpdateLeadClient',$scope.ARDetialModel,{ 'withCredentials':true}).success(function(data){
             if(data.Status){
                 alert(data.Msg);

@@ -252,6 +252,9 @@ namespace Trading.Service.Order
 						case EnumOrderSearchOrderBy.OrderById:
 							query = condition.IsDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
 							break;
+                        case EnumOrderSearchOrderBy.OrderByAddTime:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
+                            break;
 
                     }
 					

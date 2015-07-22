@@ -161,7 +161,7 @@ namespace Zerg.Controllers.CRM
                 Page = page,
                 PageCount = pageSize,
                 Status = status,
-                Brokername = brokername
+                ClientName = brokername
 
             };
 
@@ -306,7 +306,7 @@ namespace Zerg.Controllers.CRM
             model.Broker = _brokerService.GetBrokerById(brokerleadclient.Adduser);
             model.ClientInfo = cmodel2;
             model.ClientName = brokerleadclient.Clientname;
-            model.Appointmenttime = DateTime.Now;
+            model.Appointmenttime = Convert.ToDateTime(brokerleadclient.Appointmenttime);
             //model.Qq = Convert.ToInt32(brokerrecclient.Qq);
             model.Phone = brokerleadclient.Phone;       //客户电话
             model.Brokername = broker.Brokername;
@@ -322,7 +322,7 @@ namespace Zerg.Controllers.CRM
             model.Status = EnumBLeadType.预约中;
             model.DelFlag = EnumDelFlag.默认;
             model.ComOrder = (int)EnumOrderType.带客订单;
-            
+            model.Details = brokerleadclient.Note;
 
             _brokerleadclientService.Create(model);
 

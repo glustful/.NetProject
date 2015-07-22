@@ -102,30 +102,30 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="adminPayModel">财务管理员参数</param>
         /// <returns>财务管理员打款结果状态信息</returns>
-        [HttpPost]
-        [Description("财务管理员打款")]
-        public HttpResponseMessage SetBLPay([FromBody]BrokerLeadClientPay leadClientPay)
-        {
-            if (string.IsNullOrEmpty(leadClientPay.Name) || leadClientPay.BankCard == 0 && leadClientPay.Amount == 0)
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
+        //[HttpPost]
+        //[Description("财务管理员打款")]
+        //public HttpResponseMessage SetBLPay([FromBody]BrokerLeadClientPay leadClientPay)
+        //{
+        //    if (string.IsNullOrEmpty(leadClientPay.Name) || leadClientPay.BankCard == 0 && leadClientPay.Amount == 0)
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
 
-            var model = new BLPayEntity
-            {
-                BrokerLeadClient = _brokerLeadClientService.GetBrokerLeadClientById(leadClientPay.Id),
-                Name = leadClientPay.Name,
-                Statusname = leadClientPay.Statusname,
-                Describe = leadClientPay.Describe,
-                Amount = leadClientPay.Amount,
-                BankCard = leadClientPay.BankCard,
-                Accountantid = leadClientPay.Accountantid,
-                Adduser = leadClientPay.Adduser,
-                Addtime = DateTime.Now,
-                Upuser = leadClientPay.Upuser,
-                Uptime = DateTime.Now
-            };
-            _blPayService.Create(model);
-            return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));
-        }
+        //    var model = new BLPayEntity
+        //    {
+        //        BrokerLeadClient = _brokerLeadClientService.GetBrokerLeadClientById(leadClientPay.Id),
+        //        Name = leadClientPay.Name,
+        //        Statusname = leadClientPay.Statusname,
+        //        Describe = leadClientPay.Describe,
+        //        Amount = leadClientPay.Amount,
+        //        BankCard = leadClientPay.BankCard,
+        //        Accountantid = leadClientPay.Accountantid,
+        //        Adduser = leadClientPay.Adduser,
+        //        Addtime = DateTime.Now,
+        //        Upuser = leadClientPay.Upuser,
+        //        Uptime = DateTime.Now
+        //    };
+        //    _blPayService.Create(model);
+        //    return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));
+        //}
 
         /// <summary>
         /// 传入财务管理员参数,修改打款流程,返回修改结果
@@ -204,13 +204,13 @@ namespace Zerg.Controllers.CRM
             //{
             //    BrokerWithdraw = payModel.Id
             //};
-            if (user != null)
+            if (user == null)
             {
-                broker = _brokerService.GetBrokerByUserId(user.Id); //获取当前经纪人
-                if (broker == null)
-                {
+                //broker = _brokerService.GetBrokerByUserId(user.Id); //获取当前经纪人
+                //if (broker == null)
+                //{
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
-                }
+                //}
             }
 
             if (string.IsNullOrEmpty(payModel.Id))
@@ -229,10 +229,10 @@ namespace Zerg.Controllers.CRM
             //{
             //    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
             //}
-            if (string.IsNullOrEmpty(payModel.BrokeAccountId))
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false,"数据不能为空"));
-            }
+            //if (string.IsNullOrEmpty(payModel.BrokeAccountId))
+            //{
+            //    return PageHelper.toJson(PageHelper.ReturnValue(false,"数据不能为空"));
+            //}
             //构建查询实体
             var seach = new BrokerWithdrawDetailSearchCondition
             {
@@ -271,11 +271,11 @@ namespace Zerg.Controllers.CRM
                     {
                         Name = payModel.Name,
                         Describe = payModel.Describe,
-                        BankCard = Convert.ToInt32(p.Num),
-                        Accountantid = broker.Id,
+                        BankCard = p.Num,
+                        Accountantid = user.Id,
                         Amount = p.Withdrawnum,
-                        Adduser = broker.Id,
-                        Upuser = broker.Id,
+                        Adduser = user.Id,
+                        Upuser = user.Id,
                         Addtime = DateTime.Now,
                         Uptime = DateTime.Now,
                     };
@@ -288,10 +288,10 @@ namespace Zerg.Controllers.CRM
                         Name = payModel.Name,
                         Describe = payModel.Describe,
                         BankCard = Convert.ToInt32(p.Num),
-                        Accountantid = broker.Id,
+                        Accountantid = user.Id,
                         Amount = p.Withdrawnum,
-                        Adduser = broker.Id,
-                        Upuser = broker.Id,
+                        Adduser = user.Id,
+                        Upuser = user.Id,
                         Addtime = DateTime.Now,
                         Uptime = DateTime.Now,
                     };
@@ -354,7 +354,7 @@ namespace Zerg.Controllers.CRM
                
             //}
             BrokerWithdraw.State = 1;
-            BrokerWithdraw.AccAccountantId = broker;
+            BrokerWithdraw.AccAccountantId.UserId = user.Id;
             BrokerWithdraw.Uptime = DateTime.Now;
             BrokerWithdraw.Upuser = broker.Id;
             BrokerWithdraw.WithdrawDesc = payModel.Describe;
@@ -362,7 +362,7 @@ namespace Zerg.Controllers.CRM
             _brokerwithdrawService.Update(BrokerWithdraw);
             BrokeAccount.State = 1;
             BrokeAccount.Uptime = DateTime.Now;
-            BrokeAccount.Upuser = broker.Id;
+            BrokeAccount.Upuser = user.Id;
             _brokerAcountService.Update(BrokeAccount);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "打款成功"));
         }

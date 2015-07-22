@@ -96,7 +96,7 @@ namespace Zerg.Controllers.CRM
                 Page = page,
                 PageCount = pageSize,
                 Status = status,
-                Brokername = brokername
+                Clientname = brokername
 
             };
             var list = _brokerRecClientService.GetBrokerRECClientsByCondition(condition).Select(a => new

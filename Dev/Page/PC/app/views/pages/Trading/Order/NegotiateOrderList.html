@@ -8,12 +8,13 @@
                 <th align="center">类型</th>
                 <th align="center">流程</th>
                 <th align="center">经纪人名称</th>
-                <th align="center">经纪人电话</th>
+                <th align="center">客户电话</th>
                 <th align="center">地产商名称</th>
                 <th align="center">价格</th>
                 <th align="center">推荐佣金</th>
                 <th align="center">带客佣金</th>
                 <th align="center">成交佣金</th>
+                <th align="center">创建时间</th>
                 <th align="center">操作</th>
             </tr>
             </thead>
@@ -39,6 +40,7 @@
                 <td>{{item.RecCommission}}</td>
                 <td>{{item.Commission }}</td>
                 <td>{{item.Dealcommission }}</td>
+                <td>{{item.Adddate|dateFilter}}</td>
                 <td> <a ui-sref="page.Trading.bill.createBill({orderId:item.Id})" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-edit"></i>生成账单
                 </a></td>
             </tr>
