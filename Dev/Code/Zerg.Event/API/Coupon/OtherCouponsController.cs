@@ -60,7 +60,8 @@ namespace Zerg.Event.API.Coupon
                 p.Name,
                 p.ReMark,
                 p.Price,
-                p.Count
+                p.Count,
+                p.Intro
             }).ToList().Select(pp => new CouponCategoryModel
             {
                 Id = pp.Id,
@@ -69,12 +70,24 @@ namespace Zerg.Event.API.Coupon
                 Count = pp.Count,
                 ReMark = pp.ReMark,
                 BrandId = pp.BrandId,
+                Intro = pp.Intro,
                 BrandImg = _productBrandService.GetProductBrandById(pp.BrandId).Bimg,
                 SubTitle = _productBrandService.GetProductBrandById(pp.BrandId).SubTitle,
                 ProductParamater = _productBrandService.GetProductBrandById(pp.BrandId).ParameterEntities.ToDictionary(k => k.Parametername, v => v.Parametervaule)
             });
 
             return PageHelper.toJson(list);
+        }
+
+        /// <summary>
+        /// 显示品牌
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetCouponDetil(int id)
+        {
+            return PageHelper.toJson(_couponCategoryService.GetCouponCategoryById(id));
         }
 
         /// <summary>

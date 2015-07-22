@@ -74,7 +74,9 @@ namespace Zerg.Event.API.Coupon
                 BrandId = model.BrandId,
                 Count = model.Count,
                 ReMark = model.ReMark,
-                ClassId = model.ClassId
+                ClassId = model.ClassId,
+                Intro = model.Intro,
+                Content = model.Content
             };
             if (_couponCategoryService.CreateCouponCategory(couponCategory))
             {
