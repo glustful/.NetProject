@@ -46,13 +46,13 @@ import com.yoopoon.home.data.net.ResponseData.ResultState;
 
 /**
  * @ClassName: BrokerTakeGuestActivity
- * @Description: 经纪人带客类
+ * @Description: 经纪人推荐类
  * @author: 徐阳会
  * @date: 2015年7月14日 下午2:09:45
  */
-@EActivity(R.layout.activity_broker_take_guest)
-public class BrokerTakeGuestActivity extends MainActionBarActivity implements OnClickListener {
-	private static final String TAG = "BrokerTakeGuestActivity:经纪人带客类";
+@EActivity(R.layout.activity_broker_recommend)
+public class BrokerRecommendActivity extends MainActionBarActivity implements OnClickListener {
+	private static final String TAG = "BrokerRecommendActivity:经纪人推荐类";
 	// ///////////////////////////////////如下是变量和属性的初始化///////////////////////////////////
 	@Extra
 	String intent_properString;
@@ -73,8 +73,8 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 	Button reservation_timeButton;
 	@ViewById(R.id.detail)
 	EditText detailEditText;
-	@ViewById(R.id.commit_broker_carry_client)
-	Button commit_broker_carry_client;
+	@ViewById(R.id.commit_broker_recommend)
+	Button commit_broker_recommend;
 	Context mContext;
 	// 时间相干的变量
 	private int year;
@@ -103,7 +103,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 		intent_property_typeEditText.setText(intent_propretyTypeString);
 		intent_property_typeEditText.setFocusable(false);
 		// 添加"提交信息"按钮的事件绑定
-		commit_broker_carry_client.setOnClickListener(this);
+		commit_broker_recommend.setOnClickListener(this);
 		reservation_timeButton.setOnClickListener(this);
 	}
 	/**

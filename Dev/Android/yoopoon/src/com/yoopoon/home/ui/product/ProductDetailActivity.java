@@ -41,6 +41,13 @@ import com.yoopoon.home.ui.view.MyGridView;
 public class ProductDetailActivity extends MainActionBarActivity {
 	@Extra
 	String productId;
+	//如下单个按钮是控制楼盘详情中的我要带客，我要推荐和咨询热线
+	@ViewById(R.id.product_detail_take_guest)
+	TextView brokerTakeGuestTextView;
+	@ViewById(R.id.product_detail_recommend)
+	TextView brokerRecommendTextView;
+	@ViewById(R.id.product_detail_consultation)
+	TextView brokerConsutationTextView;
 	@ViewById(R.id.title)
 	TextView title;
 	@ViewById(R.id.price)
@@ -56,7 +63,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	Context mContext;
 	String header = "<!doctype html><html><head><meta name = \"viewport\" content = \"width = device-width\"/></head><body>";
 	String tail = "</body></html>";
-
+	
 	@AfterViews
 	void initUI() {
 		mContext = this;
@@ -67,7 +74,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		titleButton.setText("户型详情");
 		requestProduct();
 	}
-
+	
 	ImageLoadingListener listen = new ImageLoadingListener() {
 		@Override
 		public void onLoadingStarted(String imageUri, View view) {
@@ -101,7 +108,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 			// TODO Auto-generated method stub
 		}
 	};
-
+	
 	void requestProduct() {
 		CircleProgressDialog.build(mContext, R.style.dialog).show();
 		new RequestAdapter() {
@@ -162,10 +169,10 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		// TODO Auto-generated method stub
 		return true;
 	}
-
+	
 	class ImgAdapter extends BaseAdapter {
 		ArrayList<String> urls;
-
+		
 		public ImgAdapter(ArrayList<String> tmp) {
 			this.urls = new ArrayList<String>();
 			this.urls.addAll(tmp);

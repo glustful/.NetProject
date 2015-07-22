@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none" >
+         <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="意向楼盘" />
+
+        <EditText
+            android:layout_marginTop="0dp"
+            android:id="@+id/intent_property"
+            style="@style/EditText_Guest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+             android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="意向户型" />
+
+        <EditText
+             android:layout_marginTop="0dp"
+            android:id="@+id/intent_property_type"
+            style="@style/EditText_Guest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+             android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="客户姓名" />
+
+        <EditText
+             android:layout_marginTop="0dp"
+            android:id="@+id/guest_name"
+            style="@style/EditText_Guest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请填写客户的姓名" />
+
+        <TextView
+             android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="联系电话" />
+
+        <EditText
+             android:layout_marginTop="0dp"
+            android:id="@+id/phone_number"
+            style="@style/EditText_Guest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请填写客户的联系电话" />
+
+        <TextView
+             android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="预约时间" />
+
+        <Button
+             android:layout_marginTop="0dp"
+            android:id="@+id/reservation_time"
+            style="@style/EditText_Guest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:hint="年/月/日" />
+
+        <TextView
+             android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="详情" />
+
+        <EditText
+             android:layout_marginTop="0dp"
+            android:id="@+id/detail"
+            style="@style/EditText_Guest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="备注" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="25dp" >
+        </View>
+
+        <Button
+            android:id="@+id/commit_broker_recommend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:textColor="#FFFFFF"
+            android:text="提交信息" />
+    </LinearLayout>
+        
+    </ScrollView>
+
+   
+</LinearLayout>

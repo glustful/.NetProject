@@ -45,7 +45,7 @@ import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.ui.AD.ADController;
-import com.yoopoon.house.ui.houselist.FramHouseListViewAdapter;
+import com.yoopoon.house.ui.houselist.HouseListViewAdapter;
 import com.yoopoon.house.ui.houselist.RequestHouseAreaCondition;
 import com.yoopoon.house.ui.houselist.RequestHouseAreaCondition.Callback;
 
@@ -75,7 +75,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	// 承载楼盘的ListView
 	ListView houseListView;
 	// 楼盘ListView绑定的Adapter
-	FramHouseListViewAdapter framHouseListViewAdapter;
+	HouseListViewAdapter framHouseListViewAdapter;
 	// 首页广告
 	ADController mAdController;
 	// 首页楼盘数量显示
@@ -443,7 +443,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		requestHouseTotalCount();
 		houseListView.setFastScrollEnabled(false);
 		houseListView.setFadingEdgeLength(0);
-		framHouseListViewAdapter = new FramHouseListViewAdapter(mContext);
+		framHouseListViewAdapter = new HouseListViewAdapter(mContext);
 		houseListView.setAdapter(framHouseListViewAdapter);
 		// 开启一个异步线程，获取广告数据，同时加载广告数据
 		requestAdvertisements();

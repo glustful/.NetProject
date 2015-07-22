@@ -34,6 +34,7 @@ import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.ui.product.ProductDetailActivity_;
 import com.yoopoon.house.ui.bonus.BrokerBonusActivity_;
+import com.yoopoon.house.ui.broker.BrokerRecommendActivity_;
 import com.yoopoon.house.ui.broker.BrokerScoreActivity_;
 import com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_;
 
@@ -43,12 +44,12 @@ import com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_;
  * @author: 徐阳会
  * @date: 2015年7月14日 上午9:49:21
  */
-public class FramHouseListViewAdapter extends BaseAdapter {
+public class HouseListViewAdapter extends BaseAdapter {
 	Context mContext;
 	ArrayList<JSONObject> datas;
 	int height = 0;
 	
-	public FramHouseListViewAdapter(Context mContext) {
+	public HouseListViewAdapter(Context mContext) {
 		this.mContext = mContext;
 		datas = new ArrayList<JSONObject>();
 		height = MyApplication.getInstance().getDeviceInfo((Activity) mContext).heightPixels / 6;
@@ -133,7 +134,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		viewHandler.houseRecommendTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				BrokerTakeGuestActivity_.intent(mContext).intent_properString(item.optString("Productname"))
+				BrokerRecommendActivity_.intent(mContext).intent_properString(item.optString("Productname"))
 						.intent_propretyTypeString(item.optString("Type")).intent_propretyNumber(item.optString("Id"))
 						.start();
 			}
