@@ -227,6 +227,11 @@ namespace CRM.Service.BrokerLeadClient
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
+                if (condition.Status.HasValue)
+                {
+                    query = query.Where(c => c.Status == condition.Status);
+                }
+
 				return query.Count();
 			}
 			catch(Exception e)
