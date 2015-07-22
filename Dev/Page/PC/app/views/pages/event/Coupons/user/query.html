@@ -1,6 +1,5 @@
 
 <div ng-controller="CouponController">
-    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 <div style="height: 100px;">
     <div class="box-inner padding ng-scope" >
         <div class="ng-scope">
@@ -14,6 +13,7 @@
     </div>
 </div>
 <div style="margin-top:100px; ">
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 <table class="table m-b-none footable-loaded footable default" ui-jp="footable" data-filter="#filter" data-page-size="5" >
     <thead class="divheard" >
     <tr>

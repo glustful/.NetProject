@@ -369,7 +369,7 @@ namespace Zerg.Controllers.UC
             #region 验证码判断 解密
             var strDes = EncrypHelper.Decrypt(brokerModel.Hidm, "Hos2xNLrgfaYFY2MKuFf3g==");//解密
             string[] str = strDes.Split('$');
-            string source = str[0];//获取验证码
+            string source = str[0];//获取验证码和手机号
             DateTime date = Convert.ToDateTime(str[1]);//获取发送验证码的时间
             DateTime dateNow = Convert.ToDateTime(DateTime.Now.ToLongTimeString());//获取当前时间
             TimeSpan ts = dateNow.Subtract(date);
@@ -380,7 +380,14 @@ namespace Zerg.Controllers.UC
             }
             else
             {
-                if (brokerModel.MobileYzm != source)//判断验证码是否一致
+                // source.Split('#')[0] 验证码
+                // source.Split('#')[1] 手机号
+                if (brokerModel.Phone != source.Split('#')[1])//判断手机号是否一致
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码错误，请重新发送！"));
+                }
+
+                if (brokerModel.MobileYzm != source.Split('#')[0])//判断验证码是否一致
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码错误，请重新发送！"));
                 }
@@ -470,8 +477,8 @@ namespace Zerg.Controllers.UC
 
             var model = new BrokerEntity();
             model.UserId = _userService.InsertUser(newUser).Id;
-            model.Brokername = brokerModel.UserName;
-            model.Nickname = brokerModel.UserName;
+            model.Brokername = brokerModel.Phone;
+            model.Nickname = brokerModel.Phone;
             model.Phone = brokerModel.Phone;
             model.Totalpoints = 0;
             model.Amount = 0;
@@ -634,7 +641,14 @@ namespace Zerg.Controllers.UC
             }
             else
             {
-                if (model.Yzm != source)//判断验证码是否一致
+                // source.Split('#')[0] 验证码
+                // source.Split('#')[1] 手机号
+                if (model.Phone != source.Split('#')[1])//判断手机号是否一致
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码错误，请重新发送！"));
+                }
+
+                if (model.Yzm != source.Split('#')[0])//判断验证码是否一致
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码错误，请重新发送！"));
                 }

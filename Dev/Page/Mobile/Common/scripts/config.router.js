@@ -47,6 +47,17 @@ app  .run(
                     }
 
                 }
+                if(next.access=="app.personal"){
+                    var accessRoles=['broker'];
+                    if(!AuthService.IsAuthorized(accessRoles)) {
+                        event.preventDefault();
+                        $state.go("app.personal_user");
+                        return;
+                    }
+                    else{
+                        $state.go("app.personal");
+                    }
+                }
             });
         }
     ]
@@ -193,6 +204,7 @@ app  .run(
             templateUrl:'modules/myPurse/view/myPurse.html',
             resolve:load('modules/myPurse/render/controller.js')
         })
+
         .state('app.personal',{
             url:'/personal',
             templateUrl:'modules/personal/view/personal.html',
@@ -328,6 +340,10 @@ app  .run(
         .state('app.cash',{
             url:'/cash',
             templateUrl:'modules/cash/view/cash.html'
+        })
+        .state('app.allthechip',{
+            url:'/allthechip',
+            templateUrl:'modules/allthechip/view/allthechip.html'
         })
 
 

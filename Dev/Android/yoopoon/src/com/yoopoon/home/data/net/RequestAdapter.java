@@ -311,7 +311,7 @@ public abstract class RequestAdapter implements Serializable {
 	}
 
 	public enum RequestContentType {
-		eGeneral, eJSON;
+		eGeneral, eJSON, eException, eImage
 	}
 
 }

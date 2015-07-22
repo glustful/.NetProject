@@ -74,6 +74,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Cors">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
@@ -148,6 +149,7 @@
     </Compile>
     <Compile Include="Controllers\CRM\BrokerLeadClientController.cs" />
     <Compile Include="Controllers\CRM\BrokerRECClientController.cs" />
+    <Compile Include="Controllers\CRM\BrokerWithdrawController.cs" />
     <Compile Include="Controllers\CRM\ClientInfoController.cs" />
     <Compile Include="Controllers\CRM\BankCardController.cs">
       <SubType>Code</SubType>
@@ -190,6 +192,7 @@
     <Compile Include="Controllers\CMS\TagController.cs" />
     <Compile Include="Controllers\CMS\ContentController.cs" />
     <Compile Include="Controllers\Trading\Area\AreaController.cs" />
+    <Compile Include="Controllers\Trading\CommissionRatio\CommissionRatioController.cs" />
     <Compile Include="Controllers\Trading\Condition\ConditionController.cs" />
     <Compile Include="Controllers\UC\RoleController.cs" />
     <Compile Include="Controllers\UC\UserController.cs" />
@@ -243,7 +246,9 @@
     <Compile Include="Models\CMS\TagDetailModel.cs" />
     <Compile Include="Models\CMS\TagModel.cs" />
     <Compile Include="Models\Trading\Area\AreaModel.cs" />
+    <Compile Include="Models\Trading\CommissionRatio\CommissionRatio.cs" />
     <Compile Include="Models\Trading\Product\ProductDetail.cs" />
+    <Compile Include="Models\Trading\Trading\AmountModel.cs" />
     <Compile Include="Models\Trading\Trading\BillModel.cs" />
     <Compile Include="Models\UC\ActionModel.cs" />
     <Compile Include="Models\UC\ChangePasswordModel.cs" />
@@ -276,7 +281,11 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Chip\" />
+    <Folder Include="Views\CRMBroker\" />
+    <Folder Include="Views\Home\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CMS.Entity\CMS.Entity.csproj">
       <Project>{df25f940-2fea-43f5-bd41-cbe319688651}</Project>
@@ -346,7 +355,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50766</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

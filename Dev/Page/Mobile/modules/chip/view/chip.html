@@ -1,10 +1,15 @@
-<div class="chip-nav"><span class="all">全部</span><span>众筹中</span><span class="selecting">选房中</span></div>
-<div class="chip-content">
-     <div class="chipIng"><a href="#/app/chipDetail"><img src="modules/chip/static/image/chip/p.png" alt="众筹中" width="610" height="340"/><span class="summary">众筹中</span></a></div>
-        <div class="contentIntro">
-            <div class="BriefIntroduction">
-                <div class="lg">蓝光&nbsp;·&nbsp;颐明园</div>
-                <p>270-643m²,一环曲靖一中学位房，均价7000元/m²起；<br/>商业巨擘-西南家乐福旗舰店、欢乐影城、洲际品牌店全线入驻。</p>
+<div ng-controller="chipcontroller">
+<div class="chip-nav">
+    <span class="{{allCla}}"ng-click="crowClickByState(-1)">全部</span><span ng-click="crowClickByState(1)"class="{{crowdCla}}">众筹中</span><span class="selecting {{houCla}}"ng-click="crowClickByState(0)">选房中</span></div>
+<div class="chip-content"ng-repeat="item in crowdlist">
+            <div class="contentIntro"id={{item.i}} >
+
+                <div class="chipIng num/{{item.i}}"ng-repeat="p in item.ImgList" id="id/{{item.i}}{{p.Id}}" style={{p.Uptime}}>
+                    <a href={{item.crowdUrl}}><img ng-src={{Img}}{{p.Imgurl}}  alt="众筹中" width="610" height="340"/><span class="summary">{{item.Status}}</span></a>
+                </div>
+                <div class="BriefIntroduction">
+                <div class="lg">{{item.Ttitle}}</div>
+                <p ng-bind-html="item.Intro"></p>
             </div>
             <div class="Discount">
                 <div class="number-days cf">
@@ -18,25 +23,105 @@
                     <span class="half">5折优惠<br/><small>众筹人数500人</small></span>
                 </div>
             </div>
-            <div class="partIn"><a href="#/app/chipPartake" ><button>参与众筹</button></a></div>
+                <!--href="#/app/chipPartake"-->
+            <div class="partIn"><a href={{item.crowdUrl}} ><button>参与众筹</button></a></div>
       </div>
-    <div class="contentIntro selectHouses">
-        <div class="chipIng"><a href="#"><img src="modules/chip/static/image/chip/p.png" alt="众筹中" width="610" height="340"/><span class="summary">选房中</span></a></div>
-        <div class="BriefIntroduction">
-            <div class="lg">蓝光&nbsp;·&nbsp;颐明园</div>
-            <p>270-643m²,一环曲靖一中学位房，均价7000元/m²起；<br/>商业巨擘-西南家乐福旗舰店、欢乐影城、洲际品牌店全线入驻。</p>
-        </div>
-        <div class="Discount">
-        <div class="number-days cf">
-            <span class="fl">已有467人参与众筹</span>
-            <span class="fr">已结束</span>
-        </div>
-        <div class="favourable-nav">
-            <span class="all">9折优惠<br/><small>众筹人数100人</small></span>
-            <span class="all">8折优惠<br/><small>众筹人数200人</small></span>
-            <span class="all">7折优惠<br/><small>众筹人数300人</small></span>
-            <span class="half">5折优惠<br/><small>众筹人数500人</small></span>
-        </div>
-        </div>
-    </div>
+    <!--<div class="contentIntro selectHouses">-->
+        <!--<div class="chipIng"><a href="#"><img src="modules/chip/static/image/chip/p.png" alt="众筹中" width="610" height="340"/><span class="summary">选房中</span></a></div>-->
+        <!--<div class="BriefIntroduction">-->
+            <!--<div class="lg">蓝光&nbsp;·&nbsp;颐明园</div>-->
+            <!--<p>270-643m²,一环曲靖一中学位房，均价7000元/m²起；<br/>商业巨擘-西南家乐福旗舰店、欢乐影城、洲际品牌店全线入驻。</p>-->
+        <!--</div>-->
+        <!--<div class="Discount">-->
+        <!--<div class="number-days cf">-->
+            <!--<span class="fl">已有467人参与众筹</span>-->
+            <!--<span class="fr">已结束</span>-->
+        <!--</div>-->
+        <!--<div class="favourable-nav">-->
+            <!--<span class="all">9折优惠<br/><small>众筹人数100人</small></span>-->
+            <!--<span class="all">8折优惠<br/><small>众筹人数200人</small></span>-->
+            <!--<span class="all">7折优惠<br/><small>众筹人数300人</small></span>-->
+            <!--<span class="half">5折优惠<br/><small>众筹人数500人</small></span>-->
+        <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
 </div>
+    <div ng-bind="tips" class="posonfont" ></div>
+</div>
+
+<script type="text/javascript"language="javascript">
+
+
+    alert("SD");
+    var h = 1;//图片栏目序列
+    var p = 1;//每一栏图片序列
+    var timer=null; //定时器
+    //初始化，每一栏目显示第一张图片
+    var init = function () {
+        var len1 = document.getElementsByClassName("cunlumnNum").length;//获取栏目个数
+        for (var numr = 0; numr < len1 ; numr++) {
+            try{
+                document.getElementById("id/" + h + '1').style.display = "block";//循环显示每一栏的第一个图片
+                document.getElementById("idIma/" + h + '1').style.backgroundColor = "#7c89e2";//循环显示每一栏的图片对应的按钮颜色
+                h++;}
+            catch(exception){h++;}
+        }
+        h = 1; p = 1;
+    }
+    init();
+
+
+    // 循环切换每一栏图片
+    function refrech() {
+        var len = document.getElementsByClassName("cunlumnNum").length;//获取栏目个数
+        for (var num = 0; num < len ; num++) {
+            //循环获取每一栏内的图片类名，然后隐藏该图片，显示下一图片
+            for (var pnum = 1; pnum < document.getElementsByClassName("num/" + h).length+1; pnum++) {
+                // alert(document.getElementsByClassName("num/" + h).length);
+                if (document.getElementById("id/" + h + pnum).style.display == "block") {
+                    document.getElementById("id/" + h + pnum).style.display = "none";
+                    document.getElementById("idIma/" + h + pnum).style.backgroundColor = "#FDF0E8";
+                    pnum++;//下一个图片
+
+                    if (document.getElementById("id/"+h+pnum) ==null)//循环到最后一个图片，回到第一个
+                    {
+                        document.getElementById("id/" + h + "1").style.display = "block";
+                        document.getElementById("idIma/" + h + '1').style.backgroundColor = "#7c89e2";
+                        break;
+                    }
+                    else {
+                        document.getElementById("id/" + h + pnum).style.display = "block";
+                        document.getElementById("idIma/" + h + pnum).style.backgroundColor = "#7c89e2";
+                        break;
+                    }
+
+                    pnum--;//
+                }
+            }
+
+            h++; //下一栏图片
+        }
+        h = 1;//循环玩一次所有栏目，则栏目回到第一个
+    };
+
+    timer= setInterval(refrech, 3000);//每隔3秒执行图片轮播
+
+    /*单击图片按钮显示对应的图片*/
+    function imageShow(idi ,idj){
+        var len=document.getElementsByClassName("num/" + h).length;//获取该栏的图片个数
+        //循环隐藏正在显示的图片跟更改按钮颜色
+        for(var i=1;i<=len;i++){
+            if(document.getElementById("id/"+idi+i).style.display=="block")
+            {
+                document.getElementById("id/"+idi+i).style.display="none";//隐藏
+                document.getElementById("idIma/"+idi+i).style.backgroundColor= "#FDF0E8";//隐藏
+                document.getElementById("id/"+idi+idj).style.display="block";//显示点击按钮对应的图片
+                document.getElementById("idIma/"+idi+idj).style.backgroundColor="#7c89e2";//更改按钮颜色
+                clearInterval(timer);//清除定时器
+                timer= setInterval(refrech, 3000);//从新添加定时器
+                break;
+            }
+
+        }
+    }
+</script>

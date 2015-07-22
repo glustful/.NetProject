@@ -1,19 +1,27 @@
 package com.yoopoon.home.data.user;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yoopoon.common.base.BrokerEntity;
 import com.yoopoon.common.base.Tools;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
+import com.yoopoon.home.data.json.ParserJSON;
+import com.yoopoon.home.data.json.ParserJSON.ParseListener;
 import com.yoopoon.home.data.json.SerializerJSON;
 import com.yoopoon.home.data.json.SerializerJSON.SerializeListener;
 import com.yoopoon.home.data.net.ProgressMessage;
@@ -277,6 +285,35 @@ public class User {
 
 	}
 
+	public void parseToBroker(final String json) {
+		new ParserJSON(new ParseListener() {
+
+			@Override
+			public Object onParse() {
+				ObjectMapper om = new ObjectMapper();
+				om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+				BrokerEntity entity = null;
+				try {
+					entity = om.readValue(json, BrokerEntity.class);
+				} catch (JsonParseException e) {
+					Log.i(TAG, "JsonParseException:" + e.getStackTrace());
+				} catch (JsonMappingException e) {
+					Log.i(TAG, "JsonMappingException:" + e.getMessage());
+				} catch (IOException e) {
+					Log.i(TAG, "IOException:" + e.getStackTrace());
+				}
+				return entity;
+			}
+
+			@Override
+			public void onComplete(Object parseResult) {
+				if (parseResult != null)
+					Log.i(TAG, parseResult.toString());
+
+			}
+		}).execute();
+	}
+
 	// Broker: ""
 	// BrokerId: 0
 	// Id: 0
@@ -324,7 +361,6 @@ public class User {
 				if (data.getResultState() == ResultState.eSuccess) {
 					JSONObject obj = data.getJsonObject();
 					if (obj != null) {
-						Log.i(TAG, "修改密码::::\n" + obj.toString());
 
 						lis.success(data.getMsg());
 					} else {
@@ -378,7 +414,6 @@ public class User {
 				if (data.getResultState() == ResultState.eSuccess) {
 					JSONObject obj = data.getJsonObject();
 					if (obj != null) {
-						Log.i(TAG, obj.toString());
 						User.this.setId(Tools.optInt(obj, "Id", 0));
 						User.this.setPhone(User.this.getUserName());
 						User.this.setUserName(Tools.optString(obj, "UserName", null));
@@ -420,7 +455,7 @@ public class User {
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
-					JSONObject obj = data.getJsonObject2();
+					final JSONObject obj = data.getJsonObject2();
 
 					User.this.setHeadUrl(Tools.optString(obj, "Headphoto", null));
 					User.this.setNickName(Tools.optString(obj, "Nickname", null));
@@ -430,7 +465,12 @@ public class User {
 					User.this.setEmail(Tools.optString(obj, "Email", null));
 					User.this.setPhone(Tools.optString(obj, "Phone", null));
 
-					Log.i(TAG, data.toString());
+					// 将拿到的broker信息存储到sp里面
+					SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
+					Editor editor = sp.edit();
+					editor.putString("broker", obj.toString());
+					editor.commit();
+
 					if (obj != null) {
 						if (obj.isNull("Roles") || obj.optJSONArray("Roles").length() < 1)
 							setRoles(null);

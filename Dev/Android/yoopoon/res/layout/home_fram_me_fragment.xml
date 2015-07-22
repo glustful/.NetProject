@@ -33,20 +33,45 @@
                 android:textColor="@color/green"
                 android:textSize="@dimen/large_textSize"
                 android:textStyle="bold" />
+
             <com.yoopoon.home.ui.me.TodyTaskView_
-                
                 android:id="@+id/todayTask"
-                
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
-                
+                android:visibility="gone" />
+            
+            <TextView 
+                android:layout_marginTop="10dp"
+                android:id="@+id/tv_today_recs"
+                android:background="#ffffff"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:textSize="@dimen/large_textSize"
+                android:textColor="#5500ff00"
+                android:text="今日楼盘推荐"/>
+            
 
-           	<com.yoopoon.home.ui.me.MeFooterView_
-           	    android:layout_width="match_parent"
-           	    android:layout_height="wrap_content"
-           	    android:id="@+id/footerView">
-           	    </com.yoopoon.home.ui.me.MeFooterView_>
+            <include
+                android:id="@+id/v_me_rec1"
+                layout="@layout/item_rec_build"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp" />
+            
+            <include
+                android:id="@+id/v_me_rec2"
+                layout="@layout/item_rec_build"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"/>
+
+            <com.yoopoon.home.ui.me.MeFooterView_
+                android:id="@+id/footerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </com.yoopoon.home.ui.me.MeFooterView_>
         </LinearLayout>
     </ScrollView>
 

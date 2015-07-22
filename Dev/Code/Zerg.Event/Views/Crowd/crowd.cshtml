@@ -33,24 +33,21 @@
                             
                         </a>
                     </div>
-                    @*<div style="width: 15px; height: 15px; position: absolute; left:15px; top:456px; border: 1px solid red;"></div>
-                     <div style="width: 15px; height: 15px; position: absolute; left:131px; top:456px; border: 1px solid red;"></div>
-                     <div style="width: 15px; height: 15px; position: absolute; left:47px; top:456px; border: 1px solid red;"></div>*@
-          
-            
+                   
 
                 }
                 @*//循环生成图片按钮7c89e2*@
                @{ var btnnum = 1;}
-            @foreach (var a in p.ImgList)
-{
-    <div onclick="imageShow(@i,@btnnum)" id="idIma/@i@btnnum" style="cursor:pointer;width: 15px; height: 15px; position: relative; margin-left:@btnleft;margin-top:@btntop;  border: 0px solid red;padding:0;background-color:#FDF0E8;color:white;text-align:center;">@btnnum</div>
-    btnnum++;//下一序号
-    btnleft = btnleft + 26;
-    btntop =  -15;
-}
+
                 
                 <div class="contentIntro">
+                    @foreach (var a in p.ImgList)
+                    {
+                        <div  onclick="imageShow(@i,@btnnum)" id="idIma/@i@btnnum" style="cursor:pointer;width: 15px; height: 15px; position: relative; margin-left:@btnleft;margin-top:@btntop;  border: 0px solid red;padding:0;background-color:#FDF0E8;color:white;text-align:center;">@btnnum</div>
+                        btnnum++;//下一序号
+                        btnleft = btnleft + 26;
+                        btntop = -15;
+                    }
                     <div class="BriefIntroduction">
                         <div class="lg">@p.Ttitle</div>
                         <p>@p.Intro</p>
@@ -82,31 +79,37 @@
    var widScale =0.5555;
    var  crowdNum= p.crowdNum ;//已经参加该项目众筹的人数
    var crowdMaxNum = p.crowdMaxNum ;//该项目最大优惠的众筹人数  
-   widScale =crowdNum *560/crowdMaxNum;//根据众筹人数的比例乘以固定长度560获得进度条的长度
+   if (crowdMaxNum == 0)
+   { crowdMaxNum = 1; }
+   widScale =crowdNum *556/crowdMaxNum;//根据众筹人数的比例乘以固定长度560获得进度条的长度
    var disNum = p.Dislist.Count;//该项目众筹优惠数量
-   var widDes = (560 - 2 * (disNum - 1)) / disNum;//优惠描述
-   var widSpace = 2;
+   if(disNum ==0)
+   { disNum = 1; }
+   var widDes = (556 - 4 * (disNum - 1)) / disNum;//优惠描述宽度
+   var widSpace = widDes *disNum +4*(disNum -1);
    var colo="all";
+   var ini = 0;
+   if (widScale >widSpace)//如果众筹人数超出，则长度复制最大值
+   {
+       widScale = widSpace;
+   }
   // Write(widDes);                  
    }
                         <div class="favourable-nav">
-                            <div style="width:560px;height :20px;background-color:#DEDEDE;"></div>
+                            <div style="width:@widSpace;height :20px;background-color:#DEDEDE;"></div>
                             <div style="width:@widScale;height :20px;background-color:#53CFB8;margin-top:-20px;"></div>
                             @foreach (var dis in p.Dislist)
                             {
                                 if (crowdNum >= dis.Number)
                                 {
-                                    colo = "all";
+                                    colo = "all";//达到优惠人数时的样式
                                 }
                                 else
                                 {
-                                    colo = "half";
+                                    colo = "half";//没达到时的样式
                                 }
-                            <span class="@colo"style="width:@widDes;margin-bottom:4px;">@dis.Discount 折优惠<br /><small>众筹人数 @dis.Number 人</small></span>
-                               <span style="width:@widSpace;"></span>
-                            @*<span class="all">8折优惠<br /><small>众筹人数200人</small></span>
-                            <span class="all">7折优惠<br /><small>众筹人数300人</small></span>
-                            <span class="half">5折优惠<br /><small>众筹人数500人</small></span>*@
+                            <span class="@colo"style="width:@widDes;margin-left:@ini">@dis.Discount 折优惠<br /><small>众筹人数 @dis.Number 人</small></span>
+                                ini = -4;
                             }
                         </div>
 
@@ -114,33 +117,9 @@
                     <div class="partIn"><a href="#/app/chipPartake"><button>参与众筹</button></a></div>
                 </div>
             </div>
-            @*<span class="fl">@p.Ttitle</span>
-                foreach (var a in p.ImgList)
-                {
-
-                    <img src="@a.Imgurl" />
-                }*@
+        
 }
 
-        @*<div class="contentIntro selectHouses">
-                <div class="chipIng"><a href="#"><img src="/Controllers/Crowd/Static/image/chip/p.png" alt="众筹中" width="610" height="340" /><span class="summary">选房中</span></a></div>
-                <div class="BriefIntroduction">
-                    <div class="lg">蓝光&nbsp;·&nbsp;颐明园</div>
-                    <p>270-643m²,一环曲靖一中学位房，均价7000元/m²起；<br />商业巨擘-西南家乐福旗舰店、欢乐影城、洲际品牌店全线入驻。</p>
-                </div>
-                <div class="Discount">
-                    <div class="number-days cf">
-                        <span class="fl">已有467人参与众筹</span>
-                        <span class="fr">已结束</span>
-                    </div>
-                    <div class="favourable-nav">
-                        <span class="all">9折优惠<br /><small>众筹人数100人</small></span>
-                        <span class="all">8折优惠<br /><small>众筹人数200人</small></span>
-                        <span class="all">7折优惠<br /><small>众筹人数300人</small></span>
-                        <span class="half">5折优惠<br /><small>众筹人数500人</small></span>
-                    </div>
-                </div>
-            </div>*@
     </div>
 
 </div>
@@ -151,10 +130,12 @@
     //初始化，每一栏目显示第一张图片
     var init = function () {
         var len1 = document.getElementsByClassName("cunlumnNum").length;//获取栏目个数
-        for (var numr = 0; numr < len1 ; numr++) {      
+        for (var numr = 0; numr < len1 ; numr++) {    
+            try{
             document.getElementById("id/" + h + '1').style.display = "block";//循环显示每一栏的第一个图片
             document.getElementById("idIma/" + h + '1').style.backgroundColor = "#7c89e2";//循环显示每一栏的图片对应的按钮颜色
-                h++;
+            h++;}
+            catch(exception){h++;}
             }
             h = 1; p = 1;
         }
@@ -217,8 +198,8 @@
 </script>
 
 
-@*//jq图片循环轮播*@
-@*<script type="text/javascript">
+@*//jq图片循环轮播
+<script type="text/javascript">
         var h = 1;//图片栏目序列
         var p = 1;//每一栏图片序列
 

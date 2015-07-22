@@ -8,7 +8,7 @@ angular.module("app").controller('CouponCategoryController', ['$http','$scope','
         pageSize:10
     }
     var getCouponCategoryList=function(){
-        $http.get('http://localhost:16857//api/CouponCategory/Index', {params: $scope.condition}, {'withCredentials': true}).success(
+        $http.get(SETTING.eventApiUrl+'/CouponCategory/Index', {params: $scope.condition}, {'withCredentials': true}).success(
             function (data) {
                 $scope.List=data.List;
                 $scope.condition.page=data.Condition.Page;
@@ -28,7 +28,7 @@ angular.module("app").controller('CouponCategoryController', ['$http','$scope','
             }
         });
         modalInstance.result.then(function(){
-            $http.get('http://localhost:16857//api/CouponCategory/Delete',{params:{
+            $http.get(SETTING.eventApiUrl+'/CouponCategory/Delete',{params:{
                     id:id
                 },'withCredentials': true}
             ).success(function(data) {
@@ -48,7 +48,7 @@ angular.module("app").controller('CouponCategoryEditController', ['$http','$scop
         pageSize:10
     }
 
-    $http.get('http://localhost:16857//api/CouponCategory/Detailed?id='+$stateParams.id,{'withCredentials': true}).success(
+    $http.get(SETTING.eventApiUrl+'/CouponCategory/Detailed?id='+$stateParams.id,{'withCredentials': true}).success(
         function(data){
             $scope.CouponCategory=data;
         }
@@ -64,7 +64,7 @@ angular.module("app").controller('CouponCategoryEditController', ['$http','$scop
         }
     )
     $scope.update=function(){
-        $http.post('http://localhost:16857//api/CouponCategory/Edit',$scope.CouponCategory,{'withCredentials': true}).success(
+        $http.post(SETTING.eventApiUrl+'/CouponCategory/Edit',$scope.CouponCategory,{'withCredentials': true}).success(
             function(data){
                 if(data.Status)
                 {
@@ -83,6 +83,7 @@ angular.module("app").controller('CouponCategoryCreateController', ['$http','$sc
         Name:'',
         Price:'',
         BrandId:'',
+        ClassId:'',
         Count:'',
         ReMark:''
     }
@@ -97,7 +98,7 @@ angular.module("app").controller('CouponCategoryCreateController', ['$http','$sc
         }
     )
     $scope.create=function(){
-        $http.post('http://localhost:16857//api/CouponCategory/Create',$scope.CouponCategoryModel,{'withCredentials': true}).success(
+        $http.post(SETTING.eventApiUrl+'/CouponCategory/Create',$scope.CouponCategoryModel,{'withCredentials': true}).success(
             function(data){
                 if(data.Status)
                 {

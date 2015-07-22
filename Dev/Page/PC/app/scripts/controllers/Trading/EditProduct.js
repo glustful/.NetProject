@@ -41,7 +41,8 @@ angular.module("app").controller('EditProductController', [
             });
         };
 
-        $scope.hasValue = function(arry,value){
+        $scope.hasValue = function(arry,value)
+        {
             var has = false;
             for(var i = 0;i<arry.length;i++){
                 if(arry[i].Value ==value)
@@ -92,50 +93,70 @@ angular.module("app").controller('EditProductController', [
 
 
         });
-
-
-
-
-
-
-
-
-
-
+        $scope.selectParameterValue = [];
         //编辑商品信息
          $scope.update=function(){
             var newproduct = {
             Id:$scope.product.Id,
-                ClassifyId:$scope.product.ClassId,
-                brandId:$scope.product.BrandId,
+            ClassifyId:$scope.product.ClassId,
+            ProductBrandId:$scope.product.BrandId,
             Price:$scope.product.Price,
             Productname:$scope.product.Productname,
             RecCommission:$scope.product.RecCommission,
             Commission:$scope.product.Commission,
             ContactPhone:$scope.product.Phone,
             Dealcommission:$scope.product.Dealcommission,
-            Status:$scope.product.Status,
-            Recommend:$scope.product.Recommend,
+            Status:$scope.product.Status==0?true:false,
+            Recommend:$scope.product.Recommend== 0 ? true : false,
             Stockrule:$scope.product.Stockrule,
             SubTitle:$scope.product.SubTitle,
-                Productimg:$scope.product.Productimg
+            Productimg:$scope.product.Productimg,
+            Productdetail:$scope.product.ProductDetailed,
+            Sericeinstruction:$scope.product.Sericeinstruction
             };
             var newproductDetail = {
-                 Productdetail:$scope.product.ProductDetailed,
-                 Sericeinstruction:$scope.product.Sericeinstruction
+                Productdetail:$scope.product.ProductDetailed,
+                Sericeinstruction:$scope.product.Sericeinstruction
             };
             var classifyJson = JSON.stringify({ product: newproduct, productDetail: newproductDetail });
-            $http.post(SETTING.ApiUrl + '/Product/EditProduct',classifyJson,{
-                'withCredentials':true
-            }).success(function(data){
-                if(data.Status){
-                    $state.go("page.Trading.product.product");
+             $http.post(SETTING.ApiUrl + '/Product/EditProduct',classifyJson,{
+                 'withCredentials':true
+             }).success(function(data){
+                 if(data.Status){
+                     valueClick();
+                     for (var i = 0; i < $scope.selectParameterValue.length; i++) {
+                         $http.get(SETTING.ApiUrl + '/Classify/UpdateProductParameterVaule?parameterValueId=' + $scope.selectParameterValue[i] + "&productId=" + $scope.product.Id, {'withCredentials': true}).success(function (data) {
+
+                         }).success(function(){
+                             if(data.Status)
+                             {
+                                 $state.go("page.Trading.product.product");
+                             }
+                         });
+                     }
+                 }
+                 else{
+                     $scope.alerts=[{type:'danger',msg:data.Msg}];
+                 }
+             });
+         };
+        function valueClick() {
+            $scope.selectParameterValue = [];
+            for (var i = 0; i < $scope.parameterValueList.length; i++) {
+                $scope.selectParameterValue.push(getRadioBoxValue($scope.parameterValueList[i].Name));
+            }
+            //alert($scope.selectParameterValue);
+        }
+
+        function getRadioBoxValue(radioName) {
+            var obj = document.getElementsByName(radioName);  //这个是以标签的name来取控件
+            for (var i = 0; i < obj.length; i++) {
+                if (obj[i].checked) {
+                    return   obj[i].value;
                 }
-                else{
-                    $scope.alerts=[{type:'danger',msg:data.Msg}];
-                }
-            });
-        };
+            }
+            return "undefined";
+        }
 
     }]);
 

@@ -24,6 +24,17 @@ namespace CRM.Entity.Model
 		/// 新增金额
 		/// </summary>
 		public virtual decimal Balancenum { get; set; }
+
+
+        /// <summary>
+        /// 金额类型（0 带客，1 推荐,2 奖励30元钱）
+        /// </summary>
+        public virtual int Type { get; set; }
+        /// <summary>
+        /// 状态（0 可用，1 不可用,2 注册）
+        /// </summary>
+        public virtual int State { get; set; }
+
 		/// <summary>
 		/// AddUser
 		/// </summary>
@@ -40,5 +51,9 @@ namespace CRM.Entity.Model
 		/// UpTime
 		/// </summary>
 		public virtual DateTime Uptime { get; set; }
+
+      
+
+        
 	}
 }

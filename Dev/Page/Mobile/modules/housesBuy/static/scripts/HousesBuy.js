@@ -18,12 +18,8 @@ app.controller('HousesBuyController',['$http','$scope','$stateParams',function($
 
 }]);
 
-//app.filter('asdasd', function ($sce) {
-//
-//    return function (input) {
-//
-//        return $sce.trustAsHtml(input);
-//
-//    }
-//
-//});
+app.filter('trustHtml', function ($sce) {
+    return function (input) {
+        return $sce.trustAsHtml(input);
+    }
+})

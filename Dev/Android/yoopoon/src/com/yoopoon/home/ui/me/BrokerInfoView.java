@@ -131,8 +131,8 @@ public class BrokerInfoView extends RelativeLayout {
 	 * @Description: 隐藏相应布局
 	 */
 	public void hide() {
-		// TODO Auto-generated method stub
-
+		headImg.setImageResource(R.drawable.default_head_img);
+		bLayout.setVisibility(View.GONE);
 	}
 
 }

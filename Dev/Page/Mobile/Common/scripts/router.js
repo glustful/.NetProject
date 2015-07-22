@@ -10,7 +10,8 @@ var allowState = [
     'user.PasswordFound',
     'app.invite',
     'app.housesBuy',
-    'app.brand'
+    'app.brand',
+    'app.BrandDetail'
 
 ];
 app.run(
@@ -183,6 +184,12 @@ app.run(
                 data:{title:'楼盘详情'}
 
             })
+            .state('app.BrandDetail',{
+                url:'/BrandDetail?brandId',
+                templateUrl:'modules/BrandDetail/view/BrandDetail.html',
+                controller:'BrandDetailController',
+                resolve:load('modules/BrandDetail/static/script/brandDetail.js')
+            })
             .state('app.housesBuy',{
                 url:'/housesBuy?BrandId',
                 templateUrl:'modules/housesBuy/view/housesBuy.html',
@@ -323,7 +330,8 @@ app.run(
             })
             .state('app.chip',{
                 url:'/chip',
-                templateUrl:'modules/chip/view/chip.html'
+                templateUrl:'modules/chip/view/chip.html',
+                resolve:load(["modules/chip/controller/chipcontroller.js"])
             })
             .state('app.chipDetail',{
                 url:'/chipDetail',
@@ -358,7 +366,7 @@ app.run(
                 templateUrl:'modules/CouponsOwn/view/CouponsOwn.html'
             })
             .state('app.withdrawals',{
-                url:'/withdrawals',
+                url:'/withdrawals?Ids',
                 templateUrl:'modules/withdrawals/view/withdrawals.html',
                 resolve:load('modules/myPurse/render/controller.js'),
                 data:{title:'提现'}
@@ -385,6 +393,12 @@ app.run(
                 data:{title:'提取现金'}
             })
 
+            .state('app.selectWithdraw',{
+                url:'/selectWithdraw?Ids',
+                templateUrl:'modules/selectWithdraw/view/selectWithdraw.html',
+
+                resolve:load('modules/selectWithdraw/controller/controller.js')
+            })
 
         function load(srcs, callback) {
             return {

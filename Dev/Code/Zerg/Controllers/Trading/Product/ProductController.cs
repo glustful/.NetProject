@@ -189,7 +189,8 @@ namespace Zerg.Controllers.Trading.Product
             {
                 Page = page,
                 PageCount = pageSize,
-                OrderBy = EnumProductSearchOrderBy.OrderById
+                IsDescending = true,
+                OrderBy = EnumProductSearchOrderBy.OrderByAddtime
             };
             var productList = _productService.GetProductsByCondition(PSC).Select(a => new ProductDetail
             {
@@ -260,8 +261,10 @@ namespace Zerg.Controllers.Trading.Product
                 Price = product.Price,
                 SubTitle = product.SubTitle,
                 Phone = product.ContactPhone,
-                Status = product.Status == true ? 0 : 1,
-                Recommend = product.Recommend == true ? 0 : 1,
+                Status = product.Status==true?0:1,
+                Recommend = product.Recommend==true?0:1,
+                //Status = product.Status,
+                //Recommend = product.Recommend,
                 Stockrule = product.Stockrule,
                 RecCommission = product.RecCommission,
                 Dealcommission = product.Dealcommission,
@@ -360,8 +363,15 @@ namespace Zerg.Controllers.Trading.Product
                 ProductDetailed = a.ProductDetail.Productdetail,
                 StockRule = a.Stockrule,
                 Acreage = a.ProductParameter.FirstOrDefault(pp => pp.Parameter.Name == "面积").ParameterValue.Parametervalue.ToString(),
-                Type = a.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString()
-            }).ToList();
+                Type = a.ProductParameter.FirstOrDefault(p => p.Parameter.Name == "户型").ParameterValue.Parametervalue.ToString(),
+                //ParameterValue = a.ProductParameter.Select(c => new ProductParameterModel
+                //{
+                //    ParameterId = c.Parameter.Id,
+                //    ParameterString = c.Parameter.Name,
+                //    ValueId = c.ParameterValue.Id,
+                //    Value = c.ParameterValue.Parametervalue
+                //}).ToArray()
+            }).ToList();          
             // return PageHelper.toJson(productList);
             var totalCount = _productService.GetProductCount(condtion);
             return PageHelper.toJson(new { List = productList, TotalCount = totalCount });
@@ -466,6 +476,7 @@ namespace Zerg.Controllers.Trading.Product
             dynamic json = obj;
             JObject JProduct = json.product;
             JObject JProductDetail = json.productDetail;
+
             var newProduct = JProduct.ToObject<ProductModel>();
             var newProductDetail = JProductDetail.ToObject<ProductDetailModel>();
             var oldProduct = _productService.GetProductById(newProduct.Id);
@@ -480,8 +491,8 @@ namespace Zerg.Controllers.Trading.Product
             oldProduct.Commission = newProduct.Commission;
             oldProduct.ContactPhone = newProduct.ContactPhone;
             oldProduct.Dealcommission = newProduct.Dealcommission;
-            oldProduct.Productimg = newProduct.Productimg;
-            oldProduct.Status = newProduct.Status;
+            oldProduct.Productimg = newProduct.Productimg;           
+            oldProduct.Status = newProduct.Status;           
             oldProduct.Recommend = newProduct.Recommend;
             oldProduct.Stockrule = newProduct.Stockrule;
             oldProduct.SubTitle = newProduct.SubTitle;

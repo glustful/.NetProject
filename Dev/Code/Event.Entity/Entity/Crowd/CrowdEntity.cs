@@ -46,5 +46,9 @@ namespace Event.Entity.Model
 		/// UpTime
 		/// </summary>
 		public virtual DateTime Uptime { get; set; }
+        /// <summary>
+        /// 众筹链接地址
+        /// </summary>
+        public virtual string crowdUrl { get; set; }
 	}
 }

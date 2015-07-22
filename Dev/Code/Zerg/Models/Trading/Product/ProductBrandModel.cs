@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Zerg.Models.Trading.Product
 {
@@ -38,6 +36,9 @@ namespace Zerg.Models.Trading.Product
         /// UpdUser
         /// </summary>
         public  string Upduser { get; set; }
+
+
+        public int ClassId { get; set; }
 
         /// <summary>
         /// Id

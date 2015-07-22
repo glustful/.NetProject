@@ -3,6 +3,9 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CRM.Entity.Model;
+using CRM.Service.BrokerWithdrawDetail;
+using CRM.Service.BrokerWithdraw;
+using CRM.Service.BrokeAccount;
 using CRM.Service.BRECPay;
 using CRM.Service.BrokerRECClient;
 using CRM.Service.BLPay;
@@ -10,6 +13,11 @@ using CRM.Service.BrokerLeadClient;
 using Zerg.Common;
 using Zerg.Models.CRM;
 using System.ComponentModel;
+using YooPoon.WebFramework.User.Entity;
+using CRM.Service.Broker;
+using YooPoon.Core.Site;
+using System.Collections.Generic;
+using System.Linq;
 
 //财务人员打款流程处理
 namespace Zerg.Controllers.CRM
@@ -19,10 +27,16 @@ namespace Zerg.Controllers.CRM
     [Description("财务人员打款流程处理类")]
     public class AdminPayController : ApiController
     {
+        private IBrokeAccountService _brokerAcountService;
+        private IBrokerWithdrawService _brokerwithdrawService;
+        private readonly IBrokerWithdrawDetailService _brokerwithdrawDetailService;
         private readonly IBRECPayService _brecPayService;
         private readonly IBrokerRECClientService _brokerRecClientService;
         private readonly IBLPayService _blPayService;
         private readonly IBrokerLeadClientService _brokerLeadClientService;
+        private readonly IBrokerService _brokerService;    
+        private readonly IWorkContext _workContext;
+
         
         /// <summary>
         /// 财务人员打款管理初始化
@@ -30,15 +44,25 @@ namespace Zerg.Controllers.CRM
         /// <param name="brecPayService">brecPayService</param>
         /// <param name="brokerRecClientService">brokerRecClientService</param>
         public AdminPayController(IBRECPayService brecPayService,
+            IBrokerWithdrawService brokerwithdrawService,
+            IBrokerWithdrawDetailService brokerwithdrawDetailService,
             IBrokerRECClientService brokerRecClientService,
             IBLPayService blPayService,
-            IBrokerLeadClientService brokerLeadClientService
+            IBrokerLeadClientService brokerLeadClientService,
+            IWorkContext workContext,
+            IBrokerService brokerService,
+            IBrokeAccountService brokerAcountService
             )
         {
+            _brokerwithdrawService = brokerwithdrawService;
+            _brokerwithdrawDetailService = brokerwithdrawDetailService;
             _brecPayService = brecPayService;
             _brokerRecClientService = brokerRecClientService;
             _blPayService = blPayService;
             _brokerLeadClientService = brokerLeadClientService;
+            _workContext = workContext;
+            _brokerService = brokerService;
+            _brokerAcountService = brokerAcountService;
         }
 
         #region 财务打款确认流程 杨定鹏 2015年5月19日10:24:34
@@ -56,7 +80,7 @@ namespace Zerg.Controllers.CRM
 
             var model = new BRECPayEntity
             {
-                BrokerRECClient = _brokerRecClientService.GetBrokerRECClientById(adminPayModel.Id),
+                //BrokerRECClient = _brokerRecClientService.GetBrokerRECClientById(adminPayModel.Id),
                 Name = adminPayModel.Name,
                 Statusname = adminPayModel.Statusname,
                 Describe = adminPayModel.Describe,
@@ -161,5 +185,223 @@ namespace Zerg.Controllers.CRM
         }
 
         #endregion
+        #region chenda  财务确认打款
+        /// <summary>
+          /// chenda  财务打款
+          /// </summary>
+          /// <param name="payModel"></param>
+          /// <returns></returns>
+        [HttpPost]
+        [Description("财务管理员打款")]
+        public HttpResponseMessage SetPay([FromBody]PayModel payModel)
+        {
+            var user = (UserBase) _workContext.CurrentUser;
+            var broker = new BrokerEntity { };
+            var BrokeAccount = new BrokeAccountEntity { };
+            var BrokerWithdraw = new BrokerWithdrawEntity { };
+            var BrokerWithDrawDetail = new BrokerWithdrawDetailEntity { };
+            //var condition = new BrokerWithdrawDetailSearchCondition
+            //{
+            //    BrokerWithdraw = payModel.Id
+            //};
+            if (user != null)
+            {
+                broker = _brokerService.GetBrokerByUserId(user.Id); //获取当前经纪人
+                if (broker == null)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+                }
+            }
+
+            if (string.IsNullOrEmpty(payModel.Id))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
+            }
+            //根据经纪人提现ID查询经纪人体现信息
+            BrokerWithdraw = _brokerwithdrawService.GetBrokerWithdrawById(Convert.ToInt32(payModel.Id));
+            // 判断提现状态，如果状态为一，则表示已经提现           
+            if (BrokerWithdraw.State == 1) 
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "财务已经打款"));
+            }
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+            //if (string.IsNullOrEmpty(payModel.Ids)) 
+            //{
+            //    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
+            //}
+            if (string.IsNullOrEmpty(payModel.BrokeAccountId))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"数据不能为空"));
+            }
+            //构建查询实体
+            var seach = new BrokerWithdrawDetailSearchCondition
+            {
+                //OrderBy = EnumBrokerWithdrawDetailSearchOrderBy.OrderById,
+                BrokerWithdraw = _brokerwithdrawService.GetBrokerWithdrawById(Convert.ToInt32(payModel.Id)),
+            };
+            var list = _brokerwithdrawDetailService.GetBrokerWithdrawDetailsByCondition(seach).Select(b => new
+            {
+                b.Id,
+                b.Withdrawnum,
+                b.BrokeAccount_Id,
+                b.Withdrawtime,
+                b.Type,
+                b.BrokerWithdraw.WithdrawDesc,
+                b.BrokerWithdraw.BankCard.Num,
+
+            }).ToList().Select(a => new
+            {
+                a.Id,
+                a.Withdrawnum,
+                a.BrokeAccount_Id,
+                a.Type,
+                a.Num,
+                WithdrawDesc = a.WithdrawDesc,
+                Withdrawtime = a.Withdrawtime.ToString("yyy-MM-dd"),
+            });
+            foreach (var p in list) 
+            {
+                if (p == null) 
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));
+                }
+                if (Convert.ToInt32(p.Type) == 0) 
+                {
+                    var blModel = new BLPayEntity
+                    {
+                        Name = payModel.Name,
+                        Describe = payModel.Describe,
+                        BankCard = Convert.ToInt32(p.Num),
+                        Accountantid = broker.Id,
+                        Amount = p.Withdrawnum,
+                        Adduser = broker.Id,
+                        Upuser = broker.Id,
+                        Addtime = DateTime.Now,
+                        Uptime = DateTime.Now,
+                    };
+                    _blPayService.Create(blModel);
+                }
+                if (Convert.ToInt32(p.Type) == 1)
+                {
+                    var breModel = new BRECPayEntity
+                    {
+                        Name = payModel.Name,
+                        Describe = payModel.Describe,
+                        BankCard = Convert.ToInt32(p.Num),
+                        Accountantid = broker.Id,
+                        Amount = p.Withdrawnum,
+                        Adduser = broker.Id,
+                        Upuser = broker.Id,
+                        Addtime = DateTime.Now,
+                        Uptime = DateTime.Now,
+                    };
+                    _brecPayService.Create(breModel);
+                }
+            }
+            //string[] strBrokeAccountId = payModel.BrokeAccountId.Split(',');
+            //foreach (var BrokeAccountId in strBrokeAccountId)
+            //{
+            //    if (string.IsNullOrEmpty(BrokeAccountId))
+            //    {
+            //        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));
+            //    }
+            //    BrokeAccount = _brokerAcountService.GetBrokeAccountById(Convert.ToInt32(BrokeAccountId));
+            //    if (BrokeAccount.State == 1) 
+            //    {
+            //        break;
+            //    }
+            //}
+            //string[] strIds = payModel.Ids.Split(',');
+            //foreach (var id in strIds)
+            //{
+            //    if(string.IsNullOrEmpty(id))
+            //    {
+            //        break;
+            //    }
+            //    var model = _brokerwithdrawDetailService.GetBrokerWithdrawDetailById(Convert.ToInt32(id));
+            //    if (Convert.ToInt32(model.Type) == 0) 
+            //    {
+            //        var blModel = new BLPayEntity
+            //        {
+            //            Name = payModel.Name,
+            //            Describe = payModel.Describe,
+            //            BankCard = Convert.ToInt32(model.BankCard.Num),
+            //            Accountantid = broker.Id,
+            //            Amount = model.Withdrawnum,
+            //            Adduser = broker.Id,
+            //            Upuser = broker.Id,
+            //            Addtime = DateTime.Now,
+            //            Uptime = DateTime.Now,
+            //        };
+            //        _blPayService.Create(blModel);
+            //    }
+            //    if (Convert.ToInt32(model.Type) == 1) 
+            //    {
+            //        var breModel = new BRECPayEntity
+            //        {
+            //            Name = payModel.Name,
+            //            Describe = payModel.Describe,
+            //            BankCard = Convert.ToInt32(model.BankCard.Num),
+            //            Accountantid = broker.Id,
+            //            Amount = model.Withdrawnum,
+            //            Adduser = broker.Id,
+            //            Upuser = broker.Id,
+            //            Addtime = DateTime.Now,
+            //            Uptime = DateTime.Now, 
+            //        };
+            //        _brecPayService.Create(breModel);
+            //    }
+               
+            //}
+            BrokerWithdraw.State = 1;
+            BrokerWithdraw.AccAccountantId = broker;
+            BrokerWithdraw.Uptime = DateTime.Now;
+            BrokerWithdraw.Upuser = broker.Id;
+            BrokerWithdraw.WithdrawDesc = payModel.Describe;
+            BrokerWithdraw.BankSn = payModel.BankSn;
+            _brokerwithdrawService.Update(BrokerWithdraw);
+            BrokeAccount.State = 1;
+            BrokeAccount.Uptime = DateTime.Now;
+            BrokeAccount.Upuser = broker.Id;
+            _brokerAcountService.Update(BrokeAccount);
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "打款成功"));
+        }
+        #endregion
     }
+    /// <summary>
+    /// 打款实体
+    /// </summary>
+      public class PayModel 
+      {
+          /// <summary>
+          /// 提现ID
+          /// </summary>
+          public string Id { get; set; }
+          /// <summary>
+          /// 提现明细Id
+          /// </summary>
+          public string Ids { get; set; }
+          /// <summary>
+          /// 银行流水号
+          /// </summary>
+          public string BankSn { get; set; }
+          /// <summary>
+          /// 提现账户明细ID
+          /// </summary>
+          public string BrokeAccountId { get; set; }
+          /// <summary>
+          /// 描述
+          /// </summary>
+          public string Describe { get; set; }
+          /// <summary>
+          /// 款项名称
+          /// </summary>
+          public string Name { get; set; }
+          /// <summary>
+          /// 财务ID
+          /// </summary>
+          public string  Accountantid{get;set;}
+          public string   Upuser{get;set;}
+          public string Adduser { get; set; }
+      }
 }

@@ -39,6 +39,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.yoopoon.common.base.utils.RegxUtils;
 import com.yoopoon.common.base.utils.SmsUtils;
 import com.yoopoon.common.base.utils.SmsUtils.RequestSMSListener;
 import com.yoopoon.common.base.utils.SortNameByOrder;
@@ -239,6 +240,11 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 					Toast.makeText(this, "亲，你还没输入电话呢！", Toast.LENGTH_SHORT).show();
 					return;
 				} else {
+					if (!RegxUtils.isPhone(phone)) {
+						tv_warning.setVisibility(View.VISIBLE);
+						tv_warning.setText("请输入正确的手机号码！");
+						return;
+					}
 					recommendBroker(phone);
 				}
 				break;
@@ -263,7 +269,6 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 			String json = "{\"Mobile\":\"" + phone + "\",\"SmsType\":\"" + smsType + "\"}";
 			startMills = System.currentTimeMillis();
 			requesting();
-			Log.i(TAG, json);
 			SmsUtils.requestIdentifyCode(this, json, listener);
 
 		}

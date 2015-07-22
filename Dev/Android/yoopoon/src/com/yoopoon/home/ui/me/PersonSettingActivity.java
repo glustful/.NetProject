@@ -15,32 +15,17 @@ package com.yoopoon.home.ui.me;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -51,14 +36,26 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yoopoon.common.base.BrokerEntity;
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
+import com.yoopoon.home.data.json.ParserJSON;
+import com.yoopoon.home.data.json.ParserJSON.ParseListener;
+import com.yoopoon.home.data.net.ProgressMessage;
+import com.yoopoon.home.data.net.RequestAdapter;
+import com.yoopoon.home.data.net.RequestAdapter.RequestContentType;
+import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
+import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.data.user.User.UserInfoListener;
 import com.yoopoon.home.domain.Broker2.RequesListener;
-import com.yoopoon.home.domain.BrokerEntity;
+import com.yoopoon.home.ui.home.FramMainActivity_;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
 /**
@@ -89,6 +86,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	@ViewById(R.id.iv_person_setting_avater)
 	RoundedImageView iv_avater;
 	private Animation animation_shake;
+	private BrokerEntity entity;
 
 	@Click(R.id.iv_person_setting_avater)
 	void selectAvater() {
@@ -127,22 +125,63 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		}
 
 		String sexy = rb_female.isChecked() ? "女士" : "先生";
-		int id = user.getId();
-		BrokerEntity broker = new BrokerEntity(id, nickname, nickname, phone, sfz, email, name, sexy);
-		broker.modifyInfo(new RequesListener() {
+
+		entity.setRealname(name);
+		entity.setBrokername(name);
+		entity.setNickname(nickname);
+		entity.setSfz(sfz);
+		entity.setPhone(phone);
+		entity.setEmail(email);
+		entity.setSexy(sexy);
+		entity.setHeadphoto(user.getHeadUrl());
+
+		entity.modifyInfo(new RequesListener() {
 
 			@Override
 			public void succeed(String msg) {
 				Toast.makeText(PersonSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
-				SettingActivity_.intent(PersonSettingActivity.this).start();
+				FramMainActivity_.intent(PersonSettingActivity.this).start();
 			}
 
 			@Override
 			public void fail(String msg) {
 				Toast.makeText(PersonSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
+
 			}
 		});
 
+	}
+
+	private void parseToBroker(final String json) {
+		new ParserJSON(new ParseListener() {
+
+			@Override
+			public Object onParse() {
+				ObjectMapper om = new ObjectMapper();
+				om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+				BrokerEntity entity = null;
+				try {
+					entity = om.readValue(json, BrokerEntity.class);
+				} catch (JsonParseException e) {
+					Log.i(TAG, "JsonParseException:" + e.getStackTrace());
+				} catch (JsonMappingException e) {
+					Log.i(TAG, "JsonMappingException:" + e.getMessage());
+				} catch (IOException e) {
+					Log.i(TAG, "IOException:" + e.getStackTrace());
+				}
+				return entity;
+			}
+
+			@Override
+			public void onComplete(Object parseResult) {
+
+				if (parseResult != null) {
+					entity = (BrokerEntity) parseResult;
+					Log.i(TAG, entity.toString());
+				}
+
+			}
+		}).execute();
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -151,12 +190,13 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			if (uri != null) {
 				ContentResolver cr = this.getContentResolver();
 				try {
-					File file = new File(uri.toString());
-					String filename = file.getName();
+					String[] uriPath = uri.toString().split(":");
+					String filePath = uriPath[1];
+					File file = new File(filePath);
 					Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
 					/* 将Bitmap设定到ImageView */
 					iv_avater.setImageBitmap(bitmap);
-					uploadImage(filename);
+					uploadImage(file);
 				} catch (FileNotFoundException e) {
 					Log.e("Exception", e.getMessage(), e);
 				}
@@ -165,72 +205,20 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	private void uploadImage(final String filename) {
-		new AsyncTask<String, Integer, String>() {
+	private void uploadImage(final File file) {
+		new RequestAdapter() {
 
 			@Override
-			protected String doInBackground(String... params) {
-				String uriAPI = params[0];// Post方式没有参数在这里
-				String result = "";
-				HttpPost httpRequst = new HttpPost(uriAPI);// 创建HttpPost对象
-
-				// Content-Disposition: form-data; name="fileToUpload"; filename="head_img1.jpg"
-				// Content-Type: image/jpeg
-
-				List<NameValuePair> postParams = new ArrayList<NameValuePair>();
-				HttpParams httpParameters = new BasicHttpParams();
-				HttpConnectionParams.setConnectionTimeout(httpParameters, 10 * 1000);// 设置请求超时10秒
-				HttpConnectionParams.setSoTimeout(httpParameters, 10 * 1000); // 设置等待数据超时10秒
-				HttpConnectionParams.setSocketBufferSize(httpParameters, 8192);
-
-				httpRequst.setHeader("Content-Type", "image/jpeg");
-
-				String disposition = "form-data; name=\"fileToUpload\"; filename=\"" + filename + "\"";
-				httpRequst.setHeader("Content-Disposition", disposition);
-
-				Header[] positionHeaders = httpRequst.getHeaders("Content-Disposition");
-				for (Header header : positionHeaders) {
-					Log.i(TAG, header.toString());
-				}
-
-				Header[] contentHeaders = httpRequst.getHeaders("Content-Type");
-				for (Header header : contentHeaders) {
-					Log.i(TAG, header.toString());
-				}
-
-				try {
-
-					httpRequst.setEntity(new UrlEncodedFormEntity(postParams, HTTP.UTF_8));
-					HttpResponse httpResponse = new DefaultHttpClient(httpParameters).execute(httpRequst);
-					if (httpResponse.getStatusLine().getStatusCode() == 200) {
-						HttpEntity httpEntity = httpResponse.getEntity();
-						result = EntityUtils.toString(httpEntity);// 取出应答字符串
-					} else {
-						HttpEntity httpEntity = httpResponse.getEntity();
-						Log.i(TAG, "请求码 ：" + httpResponse.getStatusLine().getStatusCode());
-						result = EntityUtils.toString(httpEntity);
-					}
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-					result = e.getMessage().toString();
-				} catch (ClientProtocolException e) {
-					e.printStackTrace();
-					result = e.getMessage().toString();
-				} catch (IOException e) {
-					e.printStackTrace();
-					result = e.getMessage().toString();
-				}
-
-				return result;
+			public void onReponse(ResponseData data) {
+				Log.i(TAG, data.toString());
 			}
 
 			@Override
-			protected void onPostExecute(String result) {
-				Toast.makeText(PersonSettingActivity.this, result, Toast.LENGTH_LONG).show();
-				super.onPostExecute(result);
-			}
+			public void onProgress(ProgressMessage msg) {
 
-		}.execute(getString(R.string.url_host) + getString(R.string.url_upload));
+			}
+		}.setRequestMethod(RequestMethod.eFileUp).setUrl(getString(R.string.url_upload)).setFileName(file.getName())
+				.setRequestContentType(RequestContentType.eGeneral).setAttPath(file.getAbsolutePath()).notifyRequest();
 	}
 
 	/**
@@ -278,6 +266,10 @@ public class PersonSettingActivity extends MainActionBarActivity {
 					String url = "http://img.yoopoon.com/" + photo;
 					ImageLoader.getInstance().displayImage(url, iv_avater);
 				}
+				SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(PersonSettingActivity.this);
+				String broker = sp.getString("broker", null);
+				if (!TextUtils.isEmpty(broker))
+					parseToBroker(broker);
 			}
 
 			@Override

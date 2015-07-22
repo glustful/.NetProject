@@ -133,7 +133,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="总佣金："
+                android:text="钱包："
                 android:textColor="@color/red" />
 
             <TextView
@@ -142,15 +142,18 @@
                 android:layout_height="wrap_content"
                 android:text="6280.00"
                 android:textColor="@color/red" />
+            
         </LinearLayout>
 
-        <Button
+        <TextView
+            android:clickable="true"
+            android:focusable="true"        
             android:id="@+id/takeMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:background="@drawable/cycle_selector"
-            android:text="提取佣金"
+            android:background="@drawable/takecash_selector"
+            android:text="提现"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

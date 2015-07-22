@@ -11,11 +11,6 @@
         android:background="@drawable/vertical_line"/>
     
     <TextView 
-        android:visibility="gone"
-        style="@style/TextView_Detail_Progress_Undone"
-        android:id="@+id/tv_progress_1_undone"
-        android:text="信息提交，等待审核"/>
-    <TextView 
         style="@style/TextView_Detail_Progress_Done"
         android:id="@+id/tv_progress_1"
         android:text="信息提交，等待审核"/>
@@ -31,12 +26,6 @@
         style="@style/TextView_Detail_Progress_Undone"
         android:text="审核成功，等待上访"/>
     
-    <TextView 
-        android:layout_below="@id/line1"
-		android:id="@+id/tv_progress_2_done"
-        android:visibility="gone"
-        style="@style/TextView_Detail_Progress_Done"
-        android:text="审核成功，等待上访"/>
     
     <View 
         android:id="@+id/line2"
@@ -49,12 +38,6 @@
         style="@style/TextView_Detail_Progress_Undone"
         android:text="上访成功，洽谈中"/>
     
-    <TextView 
-        android:layout_below="@id/line2"
-        android:id="@+id/tv_progress_3_done"
-        style="@style/TextView_Detail_Progress_Done"
-        android:visibility="gone"
-        android:text="上访成功，洽谈中"/>
     
     <View 
         android:id="@+id/line3"
@@ -67,12 +50,6 @@
         style="@style/TextView_Detail_Progress_Undone"
         android:text="交易成功"/>
     
-    <TextView 
-        android:layout_below="@id/line3"
-        android:id="@+id/tv_progress_4_done"
-        style="@style/TextView_Detail_Progress_Done"
-        android:visibility="gone"
-        android:text="交易成功"/>
     
 
 </RelativeLayout>

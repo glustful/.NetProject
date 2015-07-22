@@ -165,11 +165,6 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -202,6 +197,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="API\Crowd\CrowdApiController.cs" />
+    <Compile Include="API\OtherCoupon\OtherCouponCategoryController.cs" />
+    <Compile Include="API\OtherCoupon\OtherCouponController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -215,6 +212,7 @@
     <Compile Include="Models\Coupons\CategoryModel.cs" />
     <Compile Include="Models\Coupons\CouponCategoryModel.cs" />
     <Compile Include="Models\Coupons\CouponModel.cs" />
+    <Compile Include="Models\Coupons\OtherCouponModel.cs" />
     <Compile Include="Models\CrowdModel.cs" />
     <Compile Include="Models\DiscountModel.cs" />
     <Compile Include="Models\FollowerModel.cs" />

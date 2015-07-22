@@ -21,7 +21,7 @@ import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
-import com.yoopoon.home.BrokerRankActivity_;
+import com.yoopoon.home.IClientActivity_;
 import com.yoopoon.home.IPartnerActivity_;
 import com.yoopoon.home.IRecommendActivity_;
 import com.yoopoon.home.R;
@@ -42,6 +42,7 @@ public class MeFooterView extends LinearLayout {
 
 	// [end]
 	// [start] onClick
+
 	@Click(R.id.registerToBroker)
 	void registerToBroker() {
 		PersonSettingActivity_.intent(getContext()).start();
@@ -79,24 +80,20 @@ public class MeFooterView extends LinearLayout {
 	 */
 	// ################ 彭佳媛 编写 #################
 	// ################ 徐阳会 修改 2015年7月16日 Start #################
-	@Click(R.id.tv_footer_guest)
-	void iGuest() {
-		// 创建Broadast,发送广播, 让mainPage将页面切换到经纪人带客页面(FramHouseFragment)
-		Intent intent = new Intent("com.yoopoon.broker_takeguest");
-		intent.addCategory(Intent.CATEGORY_DEFAULT);
-		Activity currentActivity = (Activity) getContext();
-		currentActivity.sendBroadcast(intent);
-	}
 
 	// ################ 徐阳会 修改 2015年7月16日 End #################
-	@Click(R.id.tv_footer_partner)
+	@Click(R.id.tv_footer_calc)
 	void iPartner() {
+	}
+
+	@Click(R.id.tv_footer_partner)
+	void addPartner() {
 		IPartnerActivity_.intent(getContext()).start();
 	}
 
-	@Click(R.id.tv_footer_rank)
+	@Click(R.id.tv_footer_iclient)
 	void iRank() {
-		BrokerRankActivity_.intent(getContext()).start();
+		IClientActivity_.intent(getContext()).start();
 	}
 
 	@Click(R.id.tv_footer_recommend_agent)

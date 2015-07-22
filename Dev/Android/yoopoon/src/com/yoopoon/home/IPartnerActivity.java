@@ -37,6 +37,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.yoopoon.common.base.utils.RegxUtils;
 import com.yoopoon.common.base.utils.SortNameByOrder;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.data.user.User.InvitePartnerListener;
@@ -239,6 +240,11 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 					Toast.makeText(this, "亲，你还没输入电话呢！", Toast.LENGTH_SHORT).show();
 					return;
 				} else {
+					if (!RegxUtils.isPhone(phone)) {
+						tv_warning.setText("请输入正确的手机号码！");
+						tv_warning.setVisibility(View.VISIBLE);
+						return;
+					}
 					inviting();
 					startMills = System.currentTimeMillis();
 					invitePartner(phone);
