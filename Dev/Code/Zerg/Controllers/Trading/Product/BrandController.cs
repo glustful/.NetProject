@@ -240,6 +240,7 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 获取所有品牌，返回品牌列表
         /// </summary>
+        /// <param name="className">分类 （不传值查询所有）</param>
         /// <param name="page">页码</param>
         /// <param name="pageSize">页面数量</param>
         /// <returns>品牌列表</returns>
@@ -253,6 +254,14 @@ namespace Zerg.Controllers.Trading.Product
                 Name = className
             };
             var classname=_classifyService.GetClassifysByCondition(con).FirstOrDefault();
+
+            //参数className 不传值则默认查询所有品牌
+            if (string.IsNullOrEmpty(className))
+            {
+                classname = null;
+            }
+
+
             var sech = new ProductBrandSearchCondition
             {
                 //=========================yangyue 2015/7/7 start=====================================================
