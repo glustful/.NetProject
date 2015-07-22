@@ -9,8 +9,7 @@ angular.module("app").controller('DkRecordController', [
             status:"预约中",
             Brokername:"",
             page: 1,
-            pageSize: 10,
-            totalCount:0
+            pageSize: 10
         };
         $scope.searchCondition1 = {
             userId:''
@@ -67,12 +66,12 @@ angular.module("app").controller('DKRDetailedController',['$http','$scope','$sta
     $http.get(SETTING.ApiUrl + '/AdminRecom/SecretaryList',{
         'withCredentials':true
     }).success(function (data) {
-        $scope.SecretaryList = data;
+        $scope.SecretaryList = data
     });
     $scope.updateDKRecord = function(type){
         $scope.ARDetialModel.Status = type;
 
-        if ($scope.ARDetialModel.SecretaryId == 0 || $scope.ARDetialModel.SecretaryId=="" ||  $scope.ARDetialModel.SecretaryId==undefined)
+        if ($scope.SecretaryList.Brokername == 0 || $scope.SecretaryList.Brokername=="" ||  $scope.SecretaryList.Brokername==undefined)
         {
             alert("驻场秘书不能为空");
             return;
@@ -82,7 +81,6 @@ angular.module("app").controller('DKRDetailedController',['$http','$scope','$sta
                 alert(data.Msg);
                 $state.go('page.CRM.DkRecord.index');
             }else{
-
                 alert(data.Msg);
                 $state.go('page.CRM.DkRecord.index');
             }

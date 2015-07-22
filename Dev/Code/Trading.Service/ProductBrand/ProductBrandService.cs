@@ -92,7 +92,10 @@ namespace Trading.Service.ProductBrand
                 {
                     query = query.Where(q => q.Addtime < condition.AddtimeEnd.Value);
                 }
-
+                if (condition.Classify!=null)
+                {
+                    query = query.Where(q => q.ClassId == condition.Classify.Id);
+                }
 
                 if (condition.UpdtimeBegin.HasValue)
                 {
@@ -190,7 +193,10 @@ namespace Trading.Service.ProductBrand
                 {
                     query = query.Where(q => q.Addtime < condition.AddtimeEnd.Value);
                 }
-
+                if (condition.Classify != null)
+                {
+                    query = query.Where(q => q.ClassId == condition.Classify.Id);
+                }
 
                 if (condition.UpdtimeBegin.HasValue)
                 {
