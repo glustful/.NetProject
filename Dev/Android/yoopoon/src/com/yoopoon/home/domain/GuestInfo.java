@@ -39,6 +39,7 @@ public class GuestInfo {
 	private String strType;
 	private RelativeLayout rl_progress;
 	private boolean isProgressShown = false;
+	public int num;
 
 	@Override
 	public String toString() {

@@ -257,35 +257,35 @@ public class FindPswActivity extends MainActionBarActivity {
 		backButton.setText("返回");
 		titleButton.setText("找回密码");
 		shake_animation = AnimationUtils.loadAnimation(this, R.anim.shake);
-		et_confirm.addTextChangedListener(new TextWatcher() {
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				String psw_new = et_new.getText().toString();
-				if (!TextUtils.isEmpty(psw_new)) {
-					String psw_confirm = et_confirm.getText().toString();
-					if (psw_confirm.equals(psw_new)) {
-						tv_warning_confirm.setVisibility(View.GONE);
-					} else {
-						tv_warning_confirm.setVisibility(View.VISIBLE);
-						tv_warning_confirm.setText("两次输入的密码不一致");
-					}
-				}
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		et_confirm.addTextChangedListener(watcher);
+		et_new.addTextChangedListener(watcher);
 	}
+
+	private TextWatcher watcher = new TextWatcher() {
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+			String psw_new = et_new.getText().toString();
+			String psw_confirm = et_confirm.getText().toString();
+			if (psw_new.equals(psw_confirm)) {
+				tv_warning_confirm.setVisibility(View.GONE);
+			} else {
+				tv_warning_confirm.setText("两次输入的密码不一致");
+				tv_warning_confirm.setVisibility(View.VISIBLE);
+			}
+
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+
+		}
+	};
 
 	@Override
 	public void backButtonClick(View v) {

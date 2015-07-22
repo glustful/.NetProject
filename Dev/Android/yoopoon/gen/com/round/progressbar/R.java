@@ -24,9 +24,9 @@ public final class R {
 		public static final int FILL = 0x7f09001d;
 		public static final int STROKE = 0x7f09001e;
 		public static final int button1 = 0x7f090066;
-		public static final int menu_settings = 0x7f090131;
-		public static final int progressBar = 0x7f0900b6;
-		public static final int roundProgressBar = 0x7f0900b0;
+		public static final int menu_settings = 0x7f09012e;
+		public static final int progressBar = 0x7f0900b7;
+		public static final int roundProgressBar = 0x7f0900b1;
 		public static final int roundProgressBar1 = 0x7f090062;
 		public static final int roundProgressBar2 = 0x7f090061;
 		public static final int roundProgressBar3 = 0x7f090064;

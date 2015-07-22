@@ -17,12 +17,7 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/tv_footer_guest"
-                style="@style/TextView_Footer"
-                android:drawableTop="@drawable/me_info_custom_icon"
-                android:text="我要带客"
-                android:textColor="@color/red" />
+            
 
             <TextView
                 style="@style/TextView_Footer"
@@ -37,7 +32,13 @@
                 style="@style/TextView_Footer"
                 android:layout_marginLeft="1dp"
                 android:drawableTop="@drawable/me_info_partnet_icon"
-                android:text="我的合伙人" />
+                android:text="发展合伙人" />
+            <TextView
+                android:layout_marginLeft="1dp"
+                android:id="@+id/tv_footer_recommend_agent"
+                style="@style/TextView_Footer"
+                android:drawableTop="@drawable/me_info_introduce_agent_icon"
+                android:text="推荐经纪人" />
         </LinearLayout>
 
         <LinearLayout
@@ -45,19 +46,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:orientation="horizontal" >
-
             <TextView
-                android:id="@+id/tv_footer_recommend_agent"
+                android:id="@+id/tv_footer_iclient"
                 style="@style/TextView_Footer"
                 android:drawableTop="@drawable/me_info_introduce_agent_icon"
-                android:text="推荐经纪人" />
+                android:text="客户管理" />
+
+            
 
             <TextView
-                android:id="@+id/tv_footer_rank"
+                android:id="@+id/tv_footer_calc"
                 style="@style/TextView_Footer"
                 android:layout_marginLeft="1dp"
                 android:drawableTop="@drawable/me_info_agent_order_icon"
-                android:text="经纪人排行" />
+                android:text="房贷计算器" />
 
             <TextView
                 android:id="@+id/brokerSetting"

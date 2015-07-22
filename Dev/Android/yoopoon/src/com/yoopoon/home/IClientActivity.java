@@ -14,6 +14,7 @@ package com.yoopoon.home;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
@@ -24,8 +25,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.yoopoon.home.anim.ExpandAnimation;
@@ -46,9 +47,12 @@ import com.yoopoon.home.domain.GuestInfo;
 public class IClientActivity extends MainActionBarActivity {
 	@ViewById(R.id.lv_iclient)
 	ListView lv;
+	@ViewById(R.id.ll_loading)
+	LinearLayout ll_loading;
 	private MyClientListAdapter adapter;
 	private List<GuestInfo> guestInfos = new ArrayList<GuestInfo>();
 	private static final String TAG = "IClientActivity";
+	private LinearLayout last_shown_progress;
 
 	@AfterViews
 	void initUI() {
@@ -60,61 +64,62 @@ public class IClientActivity extends MainActionBarActivity {
 	}
 
 	private void requestData() {
-		new Thread() {
+		ll_loading.setVisibility(View.VISIBLE);
+
+		new RequestAdapter() {
 
 			@Override
-			public void run() {
-				new RequestAdapter() {
+			public void onReponse(ResponseData data) {
+				if (data != null)
+					if (data.getResultState() == ResultState.eSuccess) {
+						JSONObject dataObj = data.getJsonObject2();
+						if (dataObj != null) {
+							try {
+								int totalCount = dataObj.getInt("totalCount");
+								JSONArray listArray = dataObj.getJSONArray("list");
+								Random r = new Random();
+								for (int i = 0; i < listArray.length(); i++) {
+									JSONObject guestObj = listArray.getJSONObject(i);
+									// "StrType":"带客",
+									// "Status":"预约中",
+									// "Clientname":"徐阳会",
+									// "Id":"43",
+									// "Phone":"13508713650",
+									// "Houses":"人民路壹号",
+									// "Housetype":"2室2厅1厨2卫 书房"
+									String strType = guestObj.getString("StrType");
+									String status = guestObj.getString("Status");
+									String clientName = guestObj.getString("Clientname");
+									String id = guestObj.getString("Id");
+									String phone = guestObj.getString("Phone");
+									String houses = guestObj.getString("Houses");
+									String houseType = guestObj.getString("Housetype");
+									GuestInfo info = new GuestInfo(clientName, houseType, houses, status, phone, id,
+											strType);
 
-					@Override
-					public void onReponse(ResponseData data) {
-						if (data != null)
-							if (data.getResultState() == ResultState.eSuccess) {
-								JSONObject dataObj = data.getJsonObject2();
-								if (dataObj != null) {
-									try {
-										int totalCount = dataObj.getInt("totalCount");
-										JSONArray listArray = dataObj.getJSONArray("list");
-										for (int i = 0; i < listArray.length(); i++) {
-											JSONObject guestObj = listArray.getJSONObject(i);
-											// "StrType":"带客",
-											// "Status":"预约中",
-											// "Clientname":"徐阳会",
-											// "Id":"43",
-											// "Phone":"13508713650",
-											// "Houses":"人民路壹号",
-											// "Housetype":"2室2厅1厨2卫 书房"
-											String strType = guestObj.getString("StrType");
-											String status = guestObj.getString("Status");
-											String clientName = guestObj.getString("Clientname");
-											String id = guestObj.getString("Id");
-											String phone = guestObj.getString("Phone");
-											String houses = guestObj.getString("Houses");
-											String houseType = guestObj.getString("Housetype");
-											GuestInfo info = new GuestInfo(clientName, houseType, houses, status,
-													phone, id, strType);
-											guestInfos.add(info);
-										}
-									} catch (JSONException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-									fillData();
-								} else {
-									Toast.makeText(IClientActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+									info.num = r.nextInt(4) + 1;
+									guestInfos.add(info);
 								}
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
+							fillData();
+							ll_loading.setVisibility(View.GONE);
+						} else {
+							Toast.makeText(IClientActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+						}
 					}
-
-					@Override
-					public void onProgress(ProgressMessage msg) {
-						// TODO Auto-generated method stub
-
-					}
-				}.setUrl(getString(R.string.url_get_my_clients) + "/?page=1&pageSize=10")
-						.setRequestMethod(RequestMethod.eGet).notifyRequest();
 			}
-		}.start();
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_get_my_clients) + "/?page=1&pageSize=10").setRequestMethod(RequestMethod.eGet)
+				.notifyRequest();
+
 	}
 
 	private void fillData() {
@@ -170,16 +175,38 @@ public class IClientActivity extends MainActionBarActivity {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			GuestInfo info = guestInfos.get(position);
+		public View getView(final int position, View convertView, ViewGroup parent) {
+			final GuestInfo info = guestInfos.get(position);
 			convertView = View.inflate(IClientActivity.this, R.layout.item_iclient, null);
 
 			TextView tv_title = (TextView) convertView.findViewById(R.id.tv_iclient_title);
 			TextView tv_style = (TextView) convertView.findViewById(R.id.tv_iclient_housestyle);
 			TextView tv_phone = (TextView) convertView.findViewById(R.id.tv_iclient_phone);
 			TextView tv_showprogress = (TextView) convertView.findViewById(R.id.tv_iclient_showprogress);
-			final RelativeLayout rl_progress = (RelativeLayout) convertView.findViewById(R.id.rl_iclient_progress);
+			final LinearLayout progress = (LinearLayout) convertView.findViewById(R.id.ll_iclient_progress);
 			final String status = info.getStatus();
+
+			progress.setVisibility(View.GONE);
+			progress.setTag(position);
+
+			View detail_progress = null;
+			switch (info.num) {
+				case 1:
+					detail_progress = View.inflate(IClientActivity.this, R.layout.progress, null);
+					break;
+				case 2:
+					detail_progress = View.inflate(IClientActivity.this, R.layout.progress2, null);
+					break;
+				case 3:
+					detail_progress = View.inflate(IClientActivity.this, R.layout.progress3, null);
+					break;
+				case 4:
+					detail_progress = View.inflate(IClientActivity.this, R.layout.progress4, null);
+					break;
+			}
+			progress.addView(detail_progress);
+			if (info.isProgressShown())
+				progress.setVisibility(View.VISIBLE);
 
 			tv_title.setText(info.getStrType() + "  " + info.getClientName());
 			tv_style.setText(info.getHouseType() + "   " + info.getHouses());
@@ -189,53 +216,24 @@ public class IClientActivity extends MainActionBarActivity {
 
 				@Override
 				public void onClick(View v) {
-					ExpandAnimation ea = new ExpandAnimation(rl_progress, 300);
-					// setProgress(rl_progress, status);
-					rl_progress.startAnimation(ea);
+					if (last_shown_progress != null && last_shown_progress.getTag() != progress.getTag()) {
+						ExpandAnimation ea_hide = new ExpandAnimation(last_shown_progress, 300);
+						last_shown_progress.startAnimation(ea_hide);
+						int last_position = (Integer) last_shown_progress.getTag();
+						guestInfos.get(last_position).setProgressShown(false);
+					}
+
+					ExpandAnimation ea = new ExpandAnimation(progress, 300);
+
+					progress.startAnimation(ea);
+					info.setProgressShown(ea.toggle());
+					last_shown_progress = ea.toggle() ? progress : null;
+
 				}
 			});
 
 			return convertView;
 		}
-	}
-
-	private void setProgress(RelativeLayout rl_progress, String status) {
-		// 1、等待审核
-		// 2、等待上访
-		// 3、洽谈中
-		// 4、交易成功
-
-		TextView tv_progress1_done = (TextView) rl_progress.findViewById(R.id.tv_progress_1);
-		TextView tv_progress1_undone = (TextView) rl_progress.findViewById(R.id.tv_progress_1_undone);
-
-		if (status.contains("等待审核"))
-			return;
-		else {
-			tv_progress1_done.setVisibility(View.GONE);
-			tv_progress1_undone.setVisibility(View.VISIBLE);
-			if (status.contains("等待上访")) {
-				TextView tv_progress2_undone = (TextView) rl_progress.findViewById(R.id.tv_progress_2);
-				TextView tv_progress2_done = (TextView) rl_progress.findViewById(R.id.tv_progress_2_done);
-				tv_progress2_done.setVisibility(View.VISIBLE);
-				tv_progress2_undone.setVisibility(View.GONE);
-				return;
-			}
-			if (status.contains("洽谈中")) {
-				TextView tv_progress3_undone = (TextView) rl_progress.findViewById(R.id.tv_progress_3);
-				TextView tv_progress3_done = (TextView) rl_progress.findViewById(R.id.tv_progress_3_done);
-				tv_progress3_done.setVisibility(View.VISIBLE);
-				tv_progress3_undone.setVisibility(View.GONE);
-				return;
-			}
-			if (status.contains("交易成功")) {
-				TextView tv_progress4_undone = (TextView) rl_progress.findViewById(R.id.tv_progress_4);
-				TextView tv_progress4_done = (TextView) rl_progress.findViewById(R.id.tv_progress_4_done);
-				tv_progress4_done.setVisibility(View.VISIBLE);
-				tv_progress4_undone.setVisibility(View.GONE);
-				return;
-			}
-		}
-
 	}
 
 	@Override
