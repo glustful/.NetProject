@@ -67,7 +67,7 @@
         //,charset:"utf-8"
 
         //若实例化编辑器的页面手动修改的domain，此处需要设置为true
-        //,customDomain:false
+        ,customDomain:true
 
         //常用配置项目
         //,isShow : true    //默认显示编辑器
