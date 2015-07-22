@@ -22,7 +22,7 @@ angular.module("app").controller('PetitionListController', [
                     $scope.errorTip="当前没有上访客户"
                 }
                 $scope.searchCondition.page=data.condition1.Page;
-                $scope.searchCondition.PageCount=data.condition1.PageCount;
+                $scope.searchCondition.pageSize=data.condition1.PageCount;
                 $scope.searchCondition.totalCount=data.totalCont1;
             });
         };

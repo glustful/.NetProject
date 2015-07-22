@@ -6,7 +6,7 @@
 angular.module("app").controller('DKTalkingList', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
-            status:"2",
+            status:"洽谈中",
             Brokername:"",
             page: 1,
             pageSize: 10
