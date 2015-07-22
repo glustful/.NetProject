@@ -6,7 +6,7 @@ var app = angular.module('zergApp', [ 'ui.router','ngCookies','oc.lazyLoad','ngS
 
 var SETTING = {
     BaseUrl:'http://192.168.1.199/',
-    ApiUrl:'http://localhost:50766/api',
+    ApiUrl:'http://localhost:50597/api',
     ImgUrl:'http://img.yoopoon.com/',
     eventApiUrl:'http://localhost:16857/API'
 };
