@@ -18,7 +18,12 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
+
 import com.yoopoon.house.ui.broker.BrokerRecommendActivity_;
+
+import com.yoopoon.house.ui.bonus.BrokerBonusActivity_;
+import com.yoopoon.house.ui.broker.BrokerScoreActivity_;
+
 import com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_;
 
 public class AgentBrandAdapter extends BaseAdapter {
@@ -93,17 +98,40 @@ public class AgentBrandAdapter extends BaseAdapter {
 						.intent_propretyNumber(item.optString("ProductId")).start();
 			}
 		});
+
+
+		mHolder.tv_bonus.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				BrokerBonusActivity_.intent(mContext).start();
+			}
+		});
+
+		mHolder.tv_score.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				BrokerScoreActivity_.intent(mContext).start();
+			}
+		});
+
 		return convertView;
 	}
 	
 	class Holder {
+
 		ImageView img;
 		TextView title;
 		TextView tv_price;
 		TextView tv_commition;
 		TextView tv_iguest;
 		TextView tv_irecommend;
-		
+
+		TextView tv_bonus;
+		TextView tv_score;
+
+
 		void init(View root) {
 			img = (ImageView) root.findViewById(R.id.img);
 			title = (TextView) root.findViewById(R.id.title);
@@ -111,6 +139,8 @@ public class AgentBrandAdapter extends BaseAdapter {
 			tv_commition = (TextView) root.findViewById(R.id.tv_agent_brand_commition);
 			tv_iguest = (TextView) root.findViewById(R.id.tv_agent_brand_iguest);
 			tv_irecommend = (TextView) root.findViewById(R.id.tv_agent_brand_irecommend);
+			tv_bonus = (TextView) root.findViewById(R.id.tv_agent_brand_bonus);
+			tv_score = (TextView) root.findViewById(R.id.tv_agent_brand_score);
 		}
 	}
 	

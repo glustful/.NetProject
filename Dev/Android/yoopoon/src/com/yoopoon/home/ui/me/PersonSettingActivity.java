@@ -19,6 +19,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONException;
+import org.json.JSONObject;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,15 +45,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.common.base.BrokerEntity;
+import com.yoopoon.common.base.Tools;
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.json.ParserJSON;
 import com.yoopoon.home.data.json.ParserJSON.ParseListener;
-import com.yoopoon.home.data.net.ProgressMessage;
-import com.yoopoon.home.data.net.RequestAdapter;
-import com.yoopoon.home.data.net.RequestAdapter.RequestContentType;
-import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
-import com.yoopoon.home.data.net.ResponseData;
+import com.yoopoon.home.data.net.UploadHeadImg;
+import com.yoopoon.home.data.net.UploadHeadImg.OnCompleteListener;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.data.user.User.UserInfoListener;
 import com.yoopoon.home.domain.Broker2.RequesListener;
@@ -85,6 +85,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	TextView tv_phone;
 	@ViewById(R.id.iv_person_setting_avater)
 	RoundedImageView iv_avater;
+	@ViewById(R.id.tv_person_setting_uploading)
+	TextView tv_uploading;
 	private Animation animation_shake;
 	private BrokerEntity entity;
 
@@ -206,19 +208,60 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	}
 
 	private void uploadImage(final File file) {
-		new RequestAdapter() {
+		final String path = getString(R.string.url_host) + getString(R.string.url_upload);
+		new Thread() {
+			public void run() {
+				new UploadHeadImg().post(path, file, null, new OnCompleteListener() {
 
-			@Override
-			public void onReponse(ResponseData data) {
-				Log.i(TAG, data.toString());
-			}
+					@Override
+					public void onSuccess(final String json) {
+						runOnUiThread(new Runnable() {
 
-			@Override
-			public void onProgress(ProgressMessage msg) {
+							@Override
+							public void run() {
+								// {"Status":true,"Msg":"20150722/20150722_175858_383_288.jpg","Object":null}
+								try {
+									JSONObject obj = new JSONObject(json);
+									boolean status = Tools.optBoolean(obj, "Status", false);
 
-			}
-		}.setRequestMethod(RequestMethod.eFileUp).setUrl(getString(R.string.url_upload)).setFileName(file.getName())
-				.setRequestContentType(RequestContentType.eGeneral).setAttPath(file.getAbsolutePath()).notifyRequest();
+									User user = User.lastLoginUser(PersonSettingActivity.this);
+									String headUrl = Tools.optString(obj, "Msg", user.getHeadUrl());
+									user.setHeadUrl(headUrl);
+
+									if (!status) {
+										tv_uploading.setText("上传失败");
+										tv_uploading.setVisibility(View.VISIBLE);
+									} else {
+										tv_uploading.setText("上传成功");
+										tv_uploading.setVisibility(View.VISIBLE);
+									}
+
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+
+							}
+						});
+
+					}
+
+					@Override
+					public void onFailed() {
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								tv_uploading.setText("上传失败");
+								tv_uploading.setVisibility(View.VISIBLE);
+
+							}
+						});
+
+					}
+				});
+			};
+		}.start();
 	}
 
 	/**

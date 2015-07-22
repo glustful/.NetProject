@@ -28,6 +28,12 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_head_img"
                 makeramen:corner_radius="100000dp" />
+            <TextView 
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/tv_person_setting_uploading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_person_setting_nickname"

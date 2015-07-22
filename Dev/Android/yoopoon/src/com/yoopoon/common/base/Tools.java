@@ -6,14 +6,11 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
-
 import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
-
 
 public class Tools {
 	public static boolean hasSdCard() {
@@ -47,7 +44,7 @@ public class Tools {
 				MessageDigest md = MessageDigest.getInstance("MD5");
 				byte[] hash = md.digest(value.getBytes("UTF8"));
 				BigInteger i = new BigInteger(1, hash);
-				return String.format("%1$032x", i); 
+				return String.format("%1$032x", i);
 			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			} catch (UnsupportedEncodingException e) {
@@ -57,42 +54,48 @@ public class Tools {
 		return null;
 	}
 
-    public static void deleteAllFilesOfDir(File path) {
-        if (!path.exists())
-            return;
-        if (path.isFile()) {
-            path.delete();
-            return;
-        }
-        File[] files = path.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            deleteAllFilesOfDir(files[i]);
-        }
-        path.delete();
-    }
-    
-    public static void callPhone(Context mContext,String number) {
-		Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+number));  
-        mContext.startActivity(intent);  
-		
+	public static void deleteAllFilesOfDir(File path) {
+		if (!path.exists())
+			return;
+		if (path.isFile()) {
+			path.delete();
+			return;
+		}
+		File[] files = path.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			deleteAllFilesOfDir(files[i]);
+		}
+		path.delete();
 	}
 
-    
-    public static String optString(JSONObject obj,String key,String defaultValue){
-    	if(obj.isNull(key))
-    		return defaultValue;
-    	return obj.optString(key, defaultValue);
-    }
-    
-    public static int optInt(JSONObject obj,String key,int defaultValue){
-    	if(obj.isNull(key))
-    		return defaultValue;
-    	return obj.optInt(key, defaultValue);
-    }
-    
-    public static double optDouble(JSONObject obj,String key,double defaultValue){
-    	if(obj.isNull(key))
-    		return defaultValue;
-    	return obj.optDouble(key, defaultValue);
-    }
+	public static void callPhone(Context mContext, String number) {
+		Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number));
+		mContext.startActivity(intent);
+
+	}
+
+	public static boolean optBoolean(JSONObject obj, String key, boolean defaultValue) {
+		if (obj.isNull(key))
+			return defaultValue;
+
+		return obj.optBoolean(key, defaultValue);
+	}
+
+	public static String optString(JSONObject obj, String key, String defaultValue) {
+		if (obj.isNull(key))
+			return defaultValue;
+		return obj.optString(key, defaultValue);
+	}
+
+	public static int optInt(JSONObject obj, String key, int defaultValue) {
+		if (obj.isNull(key))
+			return defaultValue;
+		return obj.optInt(key, defaultValue);
+	}
+
+	public static double optDouble(JSONObject obj, String key, double defaultValue) {
+		if (obj.isNull(key))
+			return defaultValue;
+		return obj.optDouble(key, defaultValue);
+	}
 }

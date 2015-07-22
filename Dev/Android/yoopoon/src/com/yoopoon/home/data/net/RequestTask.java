@@ -154,9 +154,18 @@ public class RequestTask implements Runnable {
 				e.printStackTrace();
 			}
 		} else {
-			upLoadRequestPostMethod(urlString);
-			// uploadImage(urlString);
+			// upLoadRequestPostMethod(urlString);
+			uploadImage(urlString);
 		}
+	}
+
+	/**
+	 * @Title: uploadImage
+	 * @Description: TODO
+	 * @param urlString
+	 */
+	private void uploadImage(String urlString) {
+
 	}
 
 	private void RequestGetMethod(String urlString) {

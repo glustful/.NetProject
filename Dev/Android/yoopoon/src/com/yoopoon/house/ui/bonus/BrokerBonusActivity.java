@@ -14,11 +14,9 @@ package com.yoopoon.house.ui.bonus;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
-
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
 
@@ -42,8 +40,9 @@ public class BrokerBonusActivity extends MainActionBarActivity {
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
 		backButton.setTextColor(Color.WHITE);
-		titleButton.setText("带客");
+		titleButton.setText("抢红包");
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: backButtonClick
@@ -55,6 +54,7 @@ public class BrokerBonusActivity extends MainActionBarActivity {
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: titleButtonClick
@@ -65,6 +65,7 @@ public class BrokerBonusActivity extends MainActionBarActivity {
 	@Override
 	public void titleButtonClick(View v) {
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: rightButtonClick
@@ -75,6 +76,7 @@ public class BrokerBonusActivity extends MainActionBarActivity {
 	@Override
 	public void rightButtonClick(View v) {
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: showHeadView
