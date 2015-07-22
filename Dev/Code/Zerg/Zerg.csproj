@@ -203,6 +203,7 @@
     <Compile Include="Controllers\UEditor\ListFileHandler.cs" />
     <Compile Include="Controllers\UEditor\NotSupportedHandler.cs" />
     <Compile Include="Controllers\UEditor\PathFormater.cs" />
+    <Compile Include="Controllers\UEditor\UeditorController.cs" />
     <Compile Include="Controllers\UEditor\UploadHandler.cs" />
     <Compile Include="Controllers\Trading\Product\BrandController.cs" />
     <Compile Include="Controllers\Trading\Product\ClassifyController.cs" />
