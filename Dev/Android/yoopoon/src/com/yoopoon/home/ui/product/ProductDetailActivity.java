@@ -7,12 +7,15 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
@@ -36,6 +39,8 @@ import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.ui.view.Html5View;
 import com.yoopoon.home.ui.view.MyGridView;
+import com.yoopoon.house.ui.broker.BrokerRecommendActivity_;
+import com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_;
 
 @EActivity(R.layout.product_detail_view)
 public class ProductDetailActivity extends MainActionBarActivity {
@@ -47,7 +52,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	@ViewById(R.id.product_detail_recommend)
 	TextView brokerRecommendTextView;
 	@ViewById(R.id.product_detail_consultation)
-	TextView brokerConsutationTextView;
+	TextView brokerConsultationTextView;
 	@ViewById(R.id.title)
 	TextView title;
 	@ViewById(R.id.price)
@@ -78,11 +83,9 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	ImageLoadingListener listen = new ImageLoadingListener() {
 		@Override
 		public void onLoadingStarted(String imageUri, View view) {
-			// TODO Auto-generated method stub
 		}
 		@Override
 		public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-			// TODO Auto-generated method stub
 		}
 		@Override
 		public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
@@ -105,7 +108,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		}
 		@Override
 		public void onLoadingCancelled(String imageUri, View view) {
-			// TODO Auto-generated method stub
 		}
 	};
 	
@@ -129,12 +131,13 @@ public class ProductDetailActivity extends MainActionBarActivity {
 				.addParam("productId", productId).notifyRequest();
 	}
 	@UiThread
-	protected void callBack(JSONObject mRootData) {
+	protected void callBack(final JSONObject mRootData) {
 		if (mRootData == null)
 			return;
 		title.setText(Tools.optString(mRootData, "Productname", ""));
 		price.setText("均价" + Tools.optDouble(mRootData, "Price", 0) + "元/" + getString(R.string.meter) + "起");
 		area.setText(Tools.optString(mRootData, "SubTitle", ""));
+		brokerConsultationTextView.setText("咨询热线" + Tools.optString(mRootData, "Phone", ""));
 		String url = getString(R.string.url_host_img) + Tools.optString(mRootData, "Productimg", "");
 		img.setTag(url);
 		// img.setHeightRatio(1.5);
@@ -151,6 +154,60 @@ public class ProductDetailActivity extends MainActionBarActivity {
 			i++;
 		}
 		imgGrid.setAdapter(new ImgAdapter(tmp));
+		// ##########################徐阳会 2015年7月22日 添加 Start
+		brokerTakeGuestTextView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String houseTypeString = null;
+				try {
+					JSONArray houseJsonArray = mRootData.getJSONArray("ParameterValue");
+					for (int i = 0; i < houseJsonArray.length(); i++) {
+						JSONObject jsonObject = houseJsonArray.getJSONObject(i);
+						String parameterType = jsonObject.getString("ParameterString");
+						if (parameterType.equals("户型")) {
+							houseTypeString = jsonObject.getString("Value");
+						}
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				BrokerTakeGuestActivity_.intent(mContext)
+						.intent_properString(Tools.optString(mRootData, "Productname", ""))
+						.intent_propretyTypeString(houseTypeString)
+						.intent_propretyNumber(Tools.optString(mRootData, "Id", "")).start();
+			}
+		});
+		brokerRecommendTextView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String houseTypeString = null;
+				try {
+					JSONArray houseJsonArray = mRootData.getJSONArray("ParameterValue");
+					for (int i = 0; i < houseJsonArray.length(); i++) {
+						JSONObject jsonObject = houseJsonArray.getJSONObject(i);
+						String parameterType = jsonObject.getString("ParameterString");
+						if (parameterType.equals("户型")) {
+							houseTypeString = jsonObject.getString("Value");
+						}
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				BrokerRecommendActivity_.intent(mContext)
+						.intent_properString(Tools.optString(mRootData, "Productname", ""))
+						.intent_propretyTypeString(houseTypeString)
+						.intent_propretyNumber(Tools.optString(mRootData, "Id", "")).start();
+			}
+		});
+		brokerConsultationTextView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Tools.callPhone(mContext, Tools.optString(mRootData, "Phone", ""));
+			}
+		});
+		// ##########################徐阳会 2015年7月22日 添加 End
 	}
 	@Override
 	public void backButtonClick(View v) {
@@ -209,4 +266,10 @@ public class ProductDetailActivity extends MainActionBarActivity {
 			return image;
 		}
 	}
+	/* (non Javadoc) 
+	 * @Title: onClick
+	 * @Description: TODO
+	 * @param v 
+	 * @see android.view.View.OnClickListener#onClick(android.view.View) 
+	 */
 }

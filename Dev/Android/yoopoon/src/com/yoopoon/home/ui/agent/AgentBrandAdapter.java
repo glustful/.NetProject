@@ -1,7 +1,9 @@
 package com.yoopoon.home.ui.agent;
 
 import java.util.ArrayList;
+
 import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,40 +14,38 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
+import com.yoopoon.house.ui.broker.BrokerRecommendActivity_;
 import com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_;
 
 public class AgentBrandAdapter extends BaseAdapter {
 	Context mContext;
 	ArrayList<JSONObject> datas;
 	int height = 0;
-
+	
 	public AgentBrandAdapter(Context context) {
 		this.mContext = context;
 		datas = new ArrayList<JSONObject>();
 		height = MyApplication.getInstance().getDeviceInfo((Activity) mContext).heightPixels / 6;
 	}
-
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return datas.size();
 	}
-
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
 		return datas.get(position);
 	}
-
 	@Override
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub
 		return position;
 	}
-
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Holder mHolder;
@@ -66,7 +66,6 @@ public class AgentBrandAdapter extends BaseAdapter {
 		// "Price":"5000.00",
 		// "Commition":"1500.00",
 		// "SubTitle":"一万抵三万"
-
 		final JSONObject item = datas.get(position);
 		String url = mContext.getString(R.string.url_host_img) + item.optString("Bimg");
 		mHolder.img.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, height));
@@ -78,32 +77,25 @@ public class AgentBrandAdapter extends BaseAdapter {
 		String commition = item.optString("Commition");
 		mHolder.tv_price.setText("价格：" + price);
 		mHolder.tv_commition.setText("最高佣金" + commition + "元/套");
-
 		mHolder.tv_iguest.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				BrokerTakeGuestActivity_.intent(mContext).intent_properString(item.optString("Productname"))
 						.intent_propretyTypeString(item.optString("HouseType"))
 						.intent_propretyNumber(item.optString("ProductId")).start();
-
 			}
 		});
-
 		mHolder.tv_irecommend.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				BrokerTakeGuestActivity_.intent(mContext).intent_properString(item.optString("Productname"))
+				BrokerRecommendActivity_.intent(mContext).intent_properString(item.optString("Productname"))
 						.intent_propretyTypeString(item.optString("HouseType"))
 						.intent_propretyNumber(item.optString("ProductId")).start();
-
 			}
 		});
-
 		return convertView;
 	}
-
+	
 	class Holder {
 		ImageView img;
 		TextView title;
@@ -111,7 +103,7 @@ public class AgentBrandAdapter extends BaseAdapter {
 		TextView tv_commition;
 		TextView tv_iguest;
 		TextView tv_irecommend;
-
+		
 		void init(View root) {
 			img = (ImageView) root.findViewById(R.id.img);
 			title = (TextView) root.findViewById(R.id.title);
@@ -120,13 +112,11 @@ public class AgentBrandAdapter extends BaseAdapter {
 			tv_iguest = (TextView) root.findViewById(R.id.tv_agent_brand_iguest);
 			tv_irecommend = (TextView) root.findViewById(R.id.tv_agent_brand_irecommend);
 		}
-
 	}
-
+	
 	public void refresh(ArrayList<JSONObject> mJsonObjects) {
 		datas.clear();
 		datas.addAll(mJsonObjects);
 		this.notifyDataSetChanged();
 	}
-
 }

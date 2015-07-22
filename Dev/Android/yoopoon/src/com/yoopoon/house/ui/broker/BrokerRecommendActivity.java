@@ -96,7 +96,7 @@ public class BrokerRecommendActivity extends MainActionBarActivity implements On
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
 		backButton.setTextColor(Color.WHITE);
-		titleButton.setText("带客");
+		titleButton.setText("推荐");
 		// 获取从Adapter中获得的数据,对页面中的楼盘名称和楼盘类型进行初始化,同时设置楼盘的名称和楼盘的类型是不可编辑的.
 		intent_propertyEditText.setText(intent_properString);
 		intent_propertyEditText.setFocusable(false);
