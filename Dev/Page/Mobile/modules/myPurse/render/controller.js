@@ -15,7 +15,7 @@ app.controller('myPurseController',['$http','$scope','AuthService','$state',func
 
 
 app.controller('withdrawalsController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
-    alert($stateParams.Ids);
+  //  alert($stateParams.Ids);
     if($stateParams.Ids==undefined || $stateParams.Ids=="")
     {
         $state.go("app.selectWithdraw");
