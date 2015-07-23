@@ -11,7 +11,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -194,7 +193,6 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
-					Log.i(TAG, data.toString());
 					JSONArray list = data.getMRootData().optJSONArray("List");
 					if (list == null || list.length() < 1)
 						return;

@@ -45,6 +45,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,7 +92,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	// 承载楼盘的ListView
 	ListView houseListView;
 	// 楼盘ListView绑定的Adapter
-	HouseListViewAdapter framHouseListViewAdapter;
+	HouseListViewAdapter houseListViewAdapter;
 	// 首页广告
 	ADController mAdController;
 	// 首页楼盘数量显示
@@ -154,7 +155,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			//房源库listView对应的layout
 			houseListViewlayout = LayoutInflater.from(mContext).inflate(R.layout.home_fram_house_listview_item, null);
 			// 首页楼盘数量
-			houseTotalCountTextView = new TextView(mContext);
 			mAdController = new ADController(mContext);
 			houseListJsonObjects = new ArrayList<JSONObject>();
 			// #####################################楼盘区域省市区UI设置######################################
@@ -229,11 +229,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			area_name_textview.setText("区域");
 			type_textview.setText("类型");
 			price_textview.setText("价格");
-		} else if (rootView != null) {
-			Log.i(LOGTAG, houseListViewlayout.toString());
-			brokerTakeTextView = (TextView) houseListViewlayout.findViewById(R.id.house_takeguest);
-			brokerrecommendTextView = (TextView) houseListViewlayout.findViewById(R.id.house_recommend);
-			brokerTakeTextView.setBackgroundColor(Color.RED);
+			setBrokerBackground = false;
+			houseListViewAdapter.refresh(houseListJsonObjects, false);
 		}
 	}
 	
@@ -244,7 +241,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	private BroadcastReceiver houseFramRefreshReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			framHouseListViewAdapter.refresh(houseListJsonObjects);
+			houseListViewAdapter.refresh(houseListJsonObjects, false);
 		}
 	};
 	
@@ -261,8 +258,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	private BroadcastReceiver houseBrokerRefreshReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			setBrokerBackground = intent.getBooleanExtra("comeFromBroker", true);
-			Log.i(LOGTAG, setBrokerBackground + "");
+			setBrokerBackground = intent.getBooleanExtra("comeFromBroker", false);
+			houseListViewAdapter.refresh(houseListJsonObjects, setBrokerBackground);
+			Log.i(LOGTAG, setBrokerBackground + "   标记从经纪人过来的状态");
 		}
 	};
 	
@@ -445,14 +443,18 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				pullToRefreshListView.onRefreshComplete();
 				if (data.getResultState() == ResultState.eSuccess) {
 					JSONArray list = data.getMRootData().optJSONArray("List");
+					String houseCount = data.getMRootData().optString("TotalCount");
 					if (list == null || list.length() < 1) {
-						framHouseListViewAdapter.refresh(houseListJsonObjects);
+						houseListViewAdapter.refresh(houseListJsonObjects, false);
+						//如果没有返回值，则设置楼盘数量为0
+						initHouseTotalCountTextView("0");
 						return;
 					}
 					for (int i = 0; i < list.length(); i++) {
 						houseListJsonObjects.add(list.optJSONObject(i));
 					}
-					framHouseListViewAdapter.refresh(houseListJsonObjects);
+					houseListViewAdapter.refresh(houseListJsonObjects, false);
+					initHouseTotalCountTextView(houseCount);
 				}
 			}
 			@Override
@@ -485,8 +487,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		requestHouseTotalCount();
 		houseListView.setFastScrollEnabled(false);
 		houseListView.setFadingEdgeLength(0);
-		framHouseListViewAdapter = new HouseListViewAdapter(mContext);
-		houseListView.setAdapter(framHouseListViewAdapter);
+		houseListViewAdapter = new HouseListViewAdapter(mContext, setBrokerBackground);
+		houseListView.setAdapter(houseListViewAdapter);
 		// 开启一个异步线程，获取广告数据，同时加载广告数据
 		requestAdvertisements();
 		// 开启一个异步线程，获取广告数据，同事加载楼盘列表
@@ -513,6 +515,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			final TextView textView = new TextView(mContext);
 			textView.setGravity(Gravity.CENTER);
 			textView.setText(jsonArray.get(i).optString("AreaName"));
+			textView.setTextSize(18);
+			textView.setPadding(10, 10, 10, 10);
 			houseProvinceLinearlayout.addView(textView);
 			final String parentIdValue = jsonArray.get(i).optString("Id");
 			textView.setOnClickListener(new OnClickListener() {
@@ -538,6 +542,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			final TextView textView = new TextView(mContext);
 			textView.setGravity(Gravity.CENTER);
 			textView.setText(arrayList.get(i).optString("AreaName"));
+			textView.setTextSize(18);
+			textView.setPadding(10, 10, 10, 10);
 			houseCityLinearLayout.addView(textView);
 			final String parentIdValue = arrayList.get(i).optString("Id");
 			textView.setOnClickListener(new OnClickListener() {
@@ -565,6 +571,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			final String parentName = arrayList.get(i).optString("AreaName");
 			textView.setGravity(Gravity.CENTER);
 			textView.setText(parentName);
+			textView.setTextSize(18);
+			textView.setPadding(10, 10, 10, 10);
 			houseDistrictlinearLayout.addView(textView);
 			textView.setOnClickListener(new OnClickListener() {
 				@Override
@@ -594,6 +602,10 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		LinearLayout linearLayout = new LinearLayout(mContext);
 		linearLayout.setOrientation(LinearLayout.VERTICAL);
 		linearLayout.setBackgroundColor(Color.WHITE);
+		ScrollView scrollView = new ScrollView(mContext);
+		scrollView.setFillViewport(true);
+		//scrollView.setScrollbarFadingEnabled(false);
+		scrollView.addView(linearLayout, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		// 获取房源页顶端的区域类型，楼盘类型，和楼盘价格TextView
 		final TextView houseType_textview = (TextView) type_textview;
 		final TextView houseArea_textview = (TextView) area_name_textview;
@@ -609,7 +621,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		// 获取价格TextView中的数据，初始化价格参数
 		initPrice(housePrice_textview.getText().toString());
 		// 创建Popuwindow同时初始化PopuWindows的属性
-		houseTypeWindow = new PopupWindow(linearLayout, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
+		houseTypeWindow = new PopupWindow(scrollView, mContext.getResources().getDisplayMetrics().widthPixels / 2,
+				LayoutParams.WRAP_CONTENT, true);
 		houseTypeWindow.setTouchable(true);
 		houseTypeWindow.setBackgroundDrawable(new BitmapDrawable());
 		houseTypeWindow.setOutsideTouchable(true);
@@ -623,13 +636,13 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			for (int i = 0; i < houseTypeJsonArray.size(); i++) {
 				TextView textView = new TextView(mContext);
 				textView.setText(houseTypeJsonArray.get(i).optString("TypeName"));
-				int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
 				// textView.setWidth(screenWidth / 3);
 				textView.setGravity(Gravity.CENTER);
 				textView.setPadding(10, 10, 10, 10);
-				textView.setTextSize(17);
+				textView.setTextSize(18);
 				final String megStringString = houseTypeJsonArray.get(i).optString("TypeName").toString();
 				final String houseTypeIdString = houseTypeJsonArray.get(i).optString("TypeId").toString();
+				//设置TextView中字体的行间距
 				linearLayout.addView(textView);
 				textView.setOnClickListener(new OnClickListener() {
 					@Override
@@ -701,7 +714,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		LinearLayout linearLayout = new LinearLayout(mContext);
 		linearLayout.setOrientation(LinearLayout.VERTICAL);
 		linearLayout.setBackgroundColor(Color.WHITE);
-		housePriceWindow = new PopupWindow(linearLayout, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
+		housePriceWindow = new PopupWindow(linearLayout, mContext.getResources().getDisplayMetrics().widthPixels / 3,
+				LayoutParams.WRAP_CONTENT, true);
 		housePriceWindow.setTouchable(true);
 		housePriceWindow.setBackgroundDrawable(new BitmapDrawable());
 		housePriceWindow.setOutsideTouchable(true);
@@ -736,7 +750,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			textView.setText(msgString);
 			textView.setGravity(Gravity.CENTER);
 			textView.setPadding(10, 10, 10, 10);
-			textView.setTextSize(17);
+			textView.setTextSize(18);
 			linearLayout.addView(textView);
 			textView.setOnClickListener(new OnClickListener() {
 				@Override
@@ -758,6 +772,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 */
 	@UiThread
 	public void initHouseTotalCountTextView(String houseTotaoCount) {
+		houseListView.removeHeaderView(houseTotalCountTextView);
+		houseTotalCountTextView = new TextView(mContext);
 		AbsListView.LayoutParams houseTotalCountParams = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, 150);
 		houseTotalCountTextView.setLayoutParams(houseTotalCountParams);
 		houseTotalCountTextView.setText("共" + houseTotaoCount + "个楼盘");

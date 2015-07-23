@@ -16,9 +16,12 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,15 +47,18 @@ import com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_;
  * @author: 徐阳会
  * @date: 2015年7月14日 上午9:49:21
  */
+@SuppressLint("NewApi")
 public class HouseListViewAdapter extends BaseAdapter {
 	Context mContext;
 	ArrayList<JSONObject> datas;
 	int height = 0;
+	boolean setBrokerBackground = false;
 	
-	public HouseListViewAdapter(Context mContext) {
+	public HouseListViewAdapter(Context mContext, boolean setBrokerBackground) {
 		this.mContext = mContext;
 		datas = new ArrayList<JSONObject>();
 		height = MyApplication.getInstance().getDeviceInfo((Activity) mContext).heightPixels / 6;
+		this.setBrokerBackground = setBrokerBackground;
 	}
 	@Override
 	public int getCount() {
@@ -66,6 +72,7 @@ public class HouseListViewAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
+	@SuppressLint("NewApi")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHandler viewHandler;
@@ -124,6 +131,18 @@ public class HouseListViewAdapter extends BaseAdapter {
 		 */
 		// ##################### 郭俊军 被修改代码 End
 		// 携带楼盘和经纪人数据跳转到带客页面
+		Log.i("HouseListViewAdapter", setBrokerBackground + "");
+		if (setBrokerBackground == true) {
+			viewHandler.houseTakeGuestTextView.setTextColor(Color.WHITE);
+			viewHandler.houseRecommendTextView.setTextColor(Color.WHITE);
+			viewHandler.houseTakeGuestTextView.setBackground(mContext.getResources().getDrawable(R.drawable.rectangle));
+			viewHandler.houseRecommendTextView.setBackground(mContext.getResources().getDrawable(R.drawable.rectangle));
+		} else {
+			viewHandler.houseTakeGuestTextView.setTextColor(Color.BLACK);
+			viewHandler.houseRecommendTextView.setTextColor(Color.BLACK);
+			viewHandler.houseTakeGuestTextView.setBackgroundColor(Color.WHITE);
+			viewHandler.houseRecommendTextView.setBackgroundColor(Color.WHITE);
+		}
 		viewHandler.houseTakeGuestTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -200,11 +219,12 @@ public class HouseListViewAdapter extends BaseAdapter {
 	 * @Description: 获取数据刷新房源页对应的楼盘ListView
 	 * @param mJsonObjects
 	 */
-	public void refresh(ArrayList<JSONObject> mJsonObjects) {
+	public void refresh(ArrayList<JSONObject> mJsonObjects, boolean setBrokerBackground) {
 		datas.clear();
 		if (mJsonObjects != null) {
 			datas.addAll(mJsonObjects);
 		}
+		this.setBrokerBackground = setBrokerBackground;
 		// this.notifyDataSetInvalidated();
 		this.notifyDataSetChanged();
 	}
