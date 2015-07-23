@@ -1,3 +1,15 @@
+/**   
+ * Copyright ? 2015 yoopoon. All rights reserved.
+ * 
+ * @Title: FramHouseFragment.java 
+ * @Project: yoopoon
+ * @Package: com.yoopoon.house.ui.houselist 
+ * @Description: 房源库对应的Fragment
+ * @author: 徐阳会  
+ * @updater: 徐阳会 
+ * @date: 2015年7月17日 上午11:50:16 
+ * @version: V1.0   
+ */
 package com.yoopoon.home.ui.home;
 
 import java.util.ArrayList;
@@ -58,6 +70,10 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	public static final String LOGTAG = "FramHouseFragment";
 	// 当前Fragment绑定的View
 	View rootView;
+	//房源库ListView对应的Layout
+	View houseListViewlayout;
+	//房源库ListView对应的Layout中的经纪人推荐和经纪人带客TextView
+	TextView brokerTakeTextView, brokerrecommendTextView;
 	// 存储方法传送到服务器的参数
 	HashMap<String, String> parameter;
 	// 存储联网获取的楼盘列表Json对象数据
@@ -111,7 +127,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	private LinearLayout houseProvinceLinearlayout, houseCityLinearLayout, houseDistrictlinearLayout,
 			houseAreaLinearLayout;
 	//楼盘区域位置对应的PopuWindow
-	private PopupWindow houseAreaConditionPopuWindow;
+	private PopupWindow houseAreaConditionPopupWindow;
+	//设置是否是从经纪人页面或者个人信息页面跳转到房源库
+	private boolean setBrokerBackground = false;
 	
 	// ##############################################################################################
 	//                          所有变量和属性声明如上
@@ -133,6 +151,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			// 获取Fragment对应的视图
 			rootView = LayoutInflater.from(getActivity()).inflate(R.layout.home_fram_house_fragment, null);
 			pullToRefreshListView = (PullToRefreshListView) rootView.findViewById(R.id.matter_list_view);
+			//房源库listView对应的layout
+			houseListViewlayout = LayoutInflater.from(mContext).inflate(R.layout.home_fram_house_listview_item, null);
 			// 首页楼盘数量
 			houseTotalCountTextView = new TextView(mContext);
 			mAdController = new ADController(mContext);
@@ -149,7 +169,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			houseAreaLinearLayout.addView(houseCityLinearLayout, layoutParams);
 			houseAreaLinearLayout.addView(houseDistrictlinearLayout, layoutParams);
 			//初始化显示楼盘区域的Popuwindows
-			houseAreaConditionPopuWindow = new PopupWindow(houseAreaLinearLayout, mContext.getResources()
+			houseAreaConditionPopupWindow = new PopupWindow(houseAreaLinearLayout, mContext.getResources()
 					.getDisplayMetrics().widthPixels * 3 / 4, LayoutParams.WRAP_CONTENT, true);
 			// #####################################楼盘区域省市区UI设置######################################
 			// 房源首页顶端楼盘检索TextView（条件）
@@ -209,6 +229,11 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			area_name_textview.setText("区域");
 			type_textview.setText("类型");
 			price_textview.setText("价格");
+		} else if (rootView != null) {
+			Log.i(LOGTAG, houseListViewlayout.toString());
+			brokerTakeTextView = (TextView) houseListViewlayout.findViewById(R.id.house_takeguest);
+			brokerrecommendTextView = (TextView) houseListViewlayout.findViewById(R.id.house_recommend);
+			brokerTakeTextView.setBackgroundColor(Color.RED);
 		}
 	}
 	
@@ -228,10 +253,27 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 * @Description: 注册经纪人注销登录时候接收到的广播到FramHouseFragment
 	 */
 	private void registhouseFramRefreshBroadcast() {
-		Log.i("FramHouseFragment", "registhouseFramRefreshBroadcast");
 		IntentFilter intentFilter = new IntentFilter("com.yoopoon.logout_action");
 		intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		mContext.registerReceiver(houseFramRefreshReceiver, intentFilter);
+	}
+	
+	private BroadcastReceiver houseBrokerRefreshReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			setBrokerBackground = intent.getBooleanExtra("comeFromBroker", true);
+			Log.i(LOGTAG, setBrokerBackground + "");
+		}
+	};
+	
+	/** 
+	 * @Title: registBrokerHouseBroadcast 
+	 * @Description: 注册从经纪人页面或者个人信息页面过来后经纪人推荐和经纪人带客背景效果
+	 */
+	private void registBrokerHouseBroadcast() {
+		IntentFilter filter = new IntentFilter("com.yoopoon.broker_takeguest");
+		filter.addCategory(Intent.CATEGORY_DEFAULT);
+		mContext.registerReceiver(houseBrokerRefreshReceiver, filter);
 	}
 	// ##############################################################################################
 	//                          所有与广播有关的逻辑代码如上                                     
@@ -396,7 +438,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 * @Description: 开启异步线程，获取所有的楼盘，以ListView的形式展示出来
 	 */
 	private void requestHouseList() {
-		Log.w(LOGTAG, parameter.toString());
+		Log.i(LOGTAG, parameter.toString());
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
@@ -451,6 +493,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		requestHouseList();
 		// 接受广播
 		registhouseFramRefreshBroadcast();
+		registBrokerHouseBroadcast();
 	}
 	/** 
 	 * @Title: initHouseProvince 
@@ -460,10 +503,10 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	private void initHouseProvince(final ArrayList<JSONObject> jsonArray) {
 		houseProvinceLinearlayout.setOrientation(LinearLayout.VERTICAL);
 		houseProvinceLinearlayout.setBackgroundColor(Color.WHITE);
-		houseAreaConditionPopuWindow.setTouchable(true);
-		houseAreaConditionPopuWindow.setBackgroundDrawable(new BitmapDrawable());
-		houseAreaConditionPopuWindow.setOutsideTouchable(true);
-		houseAreaConditionPopuWindow.setFocusable(true);
+		houseAreaConditionPopupWindow.setTouchable(true);
+		houseAreaConditionPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+		houseAreaConditionPopupWindow.setOutsideTouchable(true);
+		houseAreaConditionPopupWindow.setFocusable(true);
 		//houseAreaConditionPopuWindow = HousePopuwindow.getHousePopupwindowInstance();
 		houseProvinceLinearlayout.removeAllViews();
 		for (int i = 0; i < jsonArray.size(); i++) {
@@ -480,7 +523,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				}
 			});
 		}
-		houseAreaConditionPopuWindow.showAsDropDown(area_name_textview);
+		houseAreaConditionPopupWindow.showAsDropDown(area_name_textview);
 	}
 	/** 
 	 * @Title: initHouseCity 
@@ -505,7 +548,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				}
 			});
 		}
-		houseAreaConditionPopuWindow.update();
+		houseAreaConditionPopupWindow.update();
 	}
 	/** 
 	 * @Title: initHouseDistrict 
@@ -527,11 +570,15 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				@Override
 				public void onClick(View v) {
 					area_name_textview.setText(parentName);
-					houseAreaConditionPopuWindow.dismiss();
+					AreaNameValue = parentName;
+					houseListJsonObjects.clear();
+					initParameter();
+					requestHouseList();
+					houseAreaConditionPopupWindow.dismiss();
 				}
 			});
 		}
-		houseAreaConditionPopuWindow.update();
+		houseAreaConditionPopupWindow.update();
 	}
 	/** 
 	 * @Title: initHouseType 

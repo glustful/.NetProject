@@ -2,9 +2,11 @@ package com.yoopoon.home.ui.home;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.androidannotations.annotations.EFragment;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yoopoon.home.R;
@@ -37,7 +40,6 @@ import com.yoopoon.home.ui.agent.RichesView_;
 public class FramAgentFragment extends FramSuper implements OnClickListener {
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
-		// TODO Auto-generated method stub
 		super.setUserVisibleHint(isVisibleToUser);
 		if (isVisibleToUser && isFirst) {
 			isFirst = false;
@@ -46,12 +48,12 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 			requestBrandList();
 		}
 	}
-
+	
 	View rootView;
 	HashMap<String, String> parameter;
 	ArrayList<JSONObject> mJsonObjects;
 	boolean isFirst = true;
-
+	
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,7 +79,6 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 		}
 		return rootView;
 	}
-
 	private void initParameter() {
 		if (parameter == null) {
 			parameter = new HashMap<String, String>();
@@ -87,7 +88,7 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 		parameter.put("pageSize", "6");
 		parameter.put("type", "all");
 	}
-
+	
 	static String TAG = "FramAgentFragment";
 	ListView refreshView;
 	Context mContext;
@@ -100,11 +101,10 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 	HeroController mHeroController;
 	RichesView mRichesView;
 	HeroView mHeroView;
-
+	
 	public static FramAgentFragment getInstance() {
 		return instance;
 	}
-
 	void initViews() {
 		listView.setOnRefreshListener(new HowWillIrefresh());
 		listView.setMode(PullToRefreshBase.Mode.DISABLED);
@@ -121,14 +121,11 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 		refreshView.setFadingEdgeLength(0);
 		mAgentBrandAdapter = new AgentBrandAdapter(mContext);
 		refreshView.setAdapter(mAgentBrandAdapter);
-
 		initMCommonFunctions();
 	}
-
 	private void initMCommonFunctions() {
-
 	}
-
+	
 	class HowWillIrefresh implements PullToRefreshBase.OnRefreshListener2<ListView> {
 		@Override
 		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -136,15 +133,13 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 					DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
 			refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 		}
-
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 		}
 	}
-
+	
 	void requestList() {
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
@@ -158,7 +153,6 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 					mAdController.show(imgs);
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
@@ -166,10 +160,8 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 		}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
 				.addParam("channelName", "banner").notifyRequest();
 	}
-
 	void requestActiveList() {
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
@@ -190,16 +182,13 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 					}
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
 			}
 		}.setUrl(getString(R.string.url_channel_active_titleimg)).setRequestMethod(RequestMethod.eGet)
 				.addParam("channelName", "活动").notifyRequest();
-
 	}
-
 	private void requestBrandList() {
 		new RequestAdapter() {
 			@Override
@@ -215,7 +204,6 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 					mAgentBrandAdapter.refresh(mJsonObjects);
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
@@ -223,7 +211,6 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 		}.setUrl(getString(R.string.url_brand_getOneBrand)).setRequestMethod(RequestMethod.eGet).addParam(parameter)
 				.notifyRequest();
 	}
-
 	/*
 	 * (non Javadoc)
 	 * @Title: onClick
@@ -234,6 +221,5 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-
 	}
 }
