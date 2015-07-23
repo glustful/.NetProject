@@ -94,6 +94,7 @@ namespace CRM.Service.EventOrder
                 {
                     query = query.Where(q => q.MoneyCount == condition.MoneyCount.Value);
                 }
+                
                 return query;
             }
             catch (Exception e)

@@ -84,12 +84,16 @@ namespace CRM.Service.InvitedCode
                 return null;
             }
         }
-
+      
         public IQueryable<InviteCodeEntity> GetInviteCodeByCondition(InviteCodeSearchCondition condition)
         {
             var query = _invitecodeRepository.Table;
             try
             {
+                if (condition.NumUser!=null)
+                {
+                    query = query.Where(q => q.NumUser >= condition.NumUser);
+                }
                 if (condition.UseTime.HasValue)
                 {
                     query = query.Where(q => q.UseTime >= condition.UseTime.Value);
@@ -106,7 +110,11 @@ namespace CRM.Service.InvitedCode
                 {
                     query = query.Where(q => q.Number.Contains(condition.Number));
                 }
-               
+                if (condition.BrokerId != null)
+                {
+                    query = query.Where(q => q.Broker.Id==condition.BrokerId);
+                }
+
                 return query;
             }
             catch (Exception e)
@@ -147,6 +155,19 @@ namespace CRM.Service.InvitedCode
                 return -1;
             }
 
+        }
+
+        public InviteCodeEntity GetInviteCodebyBrokerId(int broker)
+        {
+            try
+            {
+                return _invitecodeRepository.Table.FirstOrDefault(p =>broker == p.Broker.Id );
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
         }
     }
 }

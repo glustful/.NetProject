@@ -170,15 +170,18 @@ namespace Zerg.Controllers.CRM
             var model = _brokerService.GetBrokerByUserId(Convert.ToInt32(userId));
             
             var brokerid =
-                _inviteCodeService.GetInviteCodeById(_brokerService.GetBrokerByUserId(Convert.ToInt32(userId)).Id);                   //判断有无使用过邀请码
-            if (brokerid == null)
+                _inviteCodeService.GetInviteCodebyBrokerId(_brokerService.GetBrokerByUserId(Convert.ToInt32(userId)).Id).NumUser;                   //判断有无使用过邀请码
+
+            
+
+
+            if (brokerid != null)
             {
-                IsInvite = 1;                                                                                                         //没有使用传1
+                IsInvite =0;                                                                                                         //使用过传0
             }
-            else if(_brokerService.GetBrokerByUserId(Convert.ToInt32(userId)).Id
-                ==brokerid.Broker.Id)
+            else 
             {
-                IsInvite = 0;                                                                                                         //使用过传0
+                IsInvite = 1;                                                                                                         //没有使用过传1
             }
             if (model == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在！"));
             
@@ -374,13 +377,13 @@ namespace Zerg.Controllers.CRM
                               
                            };
 
-                           _brokerService.GetBrokerCount(bsearchModel);
+                         
                            //1判断白银是否《=3000 给30元钱 
                            if (_brokerService.GetBrokerCount(bsearchModel) <= 3000)
                            {
                                var invite = new InviteCodeSearchCondition
                                    {
-                                      Brokers = brokerModel,
+                                      
                                       Number = broker.code,
                                        State = 0
                                    };
@@ -388,7 +391,7 @@ namespace Zerg.Controllers.CRM
                                //判断邀请码是否存在 邀请码是否使用
                                   if (con != null)
                                {
-                                   brokerModel.Level = level;
+                                  
                                    EventOrderEntity emodel = new EventOrderEntity();
                                    emodel.AcDetail = "完整经济人资料奖励30元";
                                    emodel.Addtime = DateTime.Now;
@@ -396,13 +399,35 @@ namespace Zerg.Controllers.CRM
                                    emodel.Broker = brokerModel;
                                    _eventOrderService.Create(emodel);
                                       //添加活动订单信息
-                                   InviteCodeEntity invitecodemodel=new InviteCodeEntity();
-                                   invitecodemodel.NumUser = brokerModel.Id;
-                                   invitecodemodel.UseTime = DateTime.Now;
-                                   _inviteCodeService.Update(invitecodemodel);
+                                 
+                                   con.NumUser = brokerModel.Id;
+                                   con.UseTime = DateTime.Now;
+                                   con.State = 1;
+                                   _inviteCodeService.Update(con);
+                                   brokerModel.Level = level;                    //更新等级
+                                   _brokerService.Update(brokerModel);
                                       //修改邀请码表信息
 
-                                    // 设置白银 给30元钱  并且生成3个邀请码发送到手机端口
+                                    // 设置白银 给30元钱  并且生成3个邀请码发送到手机端口 并插入库中
+
+                                   string randmNums = string.Empty;
+                                   for (int i = 0; i<3; i++)
+                                   {
+                                       string rans = GenerateRandomNumber(6);
+                                       randmNums += rans+",";
+                                      
+                                       InviteCodeEntity inviteCode=new InviteCodeEntity();
+                                       inviteCode.CreatTime = DateTime.Now;
+                                       inviteCode.Number = rans;
+                                       inviteCode.UseTime = DateTime.Now;
+                                       inviteCode.State = 0;
+                                       inviteCode.Broker = brokerModel;
+                                       _inviteCodeService.Create(inviteCode);
+                                       //
+
+                                   }
+
+                                   SMSHelper.Sending(brokerModel.Phone, "，恭喜你完善个人信息，获得三个邀请码为：" + randmNums + "【优客惠】"+"赶快拿给你的小伙伴们去，有邀请码跟没有邀请码的经济人是有区别的哦。有邀请码的小伙伴首次完善信息奖励30元哦");
 
                                       
                                    if (_eventOrderService.GetEventOrderById(brokerModel.Id)!=null)
@@ -422,7 +447,11 @@ namespace Zerg.Controllers.CRM
                                        _brokerAccountService.Create(brokeraccountmodel);
                                    }
                                         //添加brokeraccount表记录
-                                  
+                                   else
+                                   {
+                                       return PageHelper.toJson(PageHelper.ReturnValue(true, "没有订单生成！"));
+                                   }
+                                  //订单表没有生成数据
                                }
                                else //不存在 或已被使用
                                {
@@ -441,7 +470,11 @@ namespace Zerg.Controllers.CRM
                                    _brokerService.GetBrokerCount(qbsearchModel);
                                    //转换到 青铜逻辑
                                    // 1判断青铜是否《=1000 
-                                   if (_brokerService.GetBrokerCount(qbsearchModel) <= 1000)
+                                        var invitecode = new InviteCodeSearchCondition
+                                            {
+                                                BrokerId = brokerModel.Id
+                                            };
+                                    if (_brokerService.GetBrokerCount(qbsearchModel) <= 1000 && _inviteCodeService.GetInviteCodeByCount(invitecode)==0)
                                    {
                                        EventOrderEntity emodel = new EventOrderEntity();
                                        emodel.AcDetail = "完整经济人资料无邀请码奖励20元";
@@ -471,6 +504,7 @@ namespace Zerg.Controllers.CRM
                        }
                        else//没有邀请码 给20元钱 等级设为青铜
                        {
+                           
                            var levelConn = new LevelSearchCondition
                            {
                                Name = "青铜"
@@ -483,7 +517,7 @@ namespace Zerg.Controllers.CRM
 
                            };
 
-                           _brokerService.GetBrokerCount(qbsearchModel);
+                            _brokerService.GetBrokerCount(qbsearchModel);
                            //转换到 青铜逻辑
                            // 1判断青铜是否《=1000 
                            if (_brokerService.GetBrokerCount(qbsearchModel) <= 1000)
@@ -500,10 +534,33 @@ namespace Zerg.Controllers.CRM
                                //给20元钱 等级设为青铜
                            }
                            else
-                           {
+                           {   
+                               
                                brokerModel.Level = qlevel;
                                _brokerService.Update(brokerModel);
                                //等级设为青铜
+                               if (_eventOrderService.GetEventOrderById(brokerModel.Id) != null)
+                               //判断订单表有无生成数据
+                               {
+
+                                   BrokeAccountEntity brokeraccountmodel = new BrokeAccountEntity();
+                                   brokeraccountmodel.MoneyDesc = "完整经济人资料奖励20元";
+                                   brokeraccountmodel.Balancenum = 20;
+                                   brokeraccountmodel.Adduser = brokerModel.Id;
+                                   brokeraccountmodel.Addtime = DateTime.Now;
+                                   brokeraccountmodel.Upuser = brokerModel.Id;
+                                   brokeraccountmodel.Uptime = DateTime.Now;
+                                   brokeraccountmodel.Broker = brokerModel;
+                                   brokeraccountmodel.Type = 2;
+                                   brokeraccountmodel.State = 0;
+                                   _brokerAccountService.Create(brokeraccountmodel);
+                               }
+
+                               else
+                               {
+                                   return PageHelper.toJson(PageHelper.ReturnValue(true, "没有订单生成！"));
+                               }
+                              
                            }
                        }
 
@@ -555,10 +612,11 @@ namespace Zerg.Controllers.CRM
                            //    _brokerAccountService.Create(model);
 
                            //}
-      //----------------------------------------------------------------------end-----------------------------------------------------------------//
+
+      
                         }
                 #endregion
-
+//----------------------------------------------------------------------end-----------------------------------------------------------------//
 
                 try
                 {
@@ -577,7 +635,31 @@ namespace Zerg.Controllers.CRM
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
 
         }
-        
+
+
+
+        private static char[] constant =   
+      {   
+        '0','1','2','3','4','5','6','7','8','9',  
+        'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',   
+        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'   
+      };
+        public static string GenerateRandomNumber(int Length)
+        {
+            System.Text.StringBuilder newRandom = new System.Text.StringBuilder(62);
+            Random rd = new Random();
+            int[] array = new int[3];
+           
+            for (int i = 0; i < Length; i++)
+                {
+                     newRandom.Append(constant[rd.Next(62)]);
+                }
+                    
+          return  newRandom.ToString();
+
+            
+        }
+
         /// <summary>
         /// 传入经纪人ID,删除经纪人,返回删除结果状态信息,成功提示＂数据删除成功＂，失败提示＂数据删除失败＂
         /// </summary>
@@ -734,7 +816,7 @@ namespace Zerg.Controllers.CRM
                     };
                     customerCount = _clientInfoService.GetClientInfoCount(condition);
 
-                    levelStr = broker.Agentlevel;
+                    levelStr = broker.Level.Name;
 
                     allMoneys = broker.Amount.ToString();
 
