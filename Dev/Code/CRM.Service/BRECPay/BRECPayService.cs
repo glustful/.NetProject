@@ -133,9 +133,9 @@ namespace CRM.Service.BRECPay
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
-                if (condition.BankCard.HasValue)
+                if (!string.IsNullOrEmpty(condition.BankCard))
                 {
-                    query = query.Where(c => c.BankCard == condition.BankCard);
+                    query = query.Where(c => c.BankCard.Contains(condition.BankCard));
                 }
 				if(condition.OrderBy.HasValue)
 				{

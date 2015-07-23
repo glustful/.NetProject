@@ -71,32 +71,32 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="adminPayModel">财务管理员参数</param>
         /// <returns>财务管理员打款结果状态信息</returns>
-        [HttpPost]
-        [Description("财务管理员打款")]
-        public HttpResponseMessage SetBREPay([FromBody]AdminPayModel adminPayModel)
-        {
-            if (string.IsNullOrEmpty(adminPayModel.Name) || adminPayModel.BankCard == 0 && adminPayModel.Amount == 0)
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
+        //[HttpPost]
+        //[Description("财务管理员打款")]
+        //public HttpResponseMessage SetBREPay([FromBody]AdminPayModel adminPayModel)
+        //{
+        //    if (string.IsNullOrEmpty(adminPayModel.Name) || adminPayModel.BankCard == 0 && adminPayModel.Amount == 0)
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不能为空"));
 
-            var model = new BRECPayEntity
-            {
-                //BrokerRECClient = _brokerRecClientService.GetBrokerRECClientById(adminPayModel.Id),
-                Name = adminPayModel.Name,
-                Statusname = adminPayModel.Statusname,
-                Describe = adminPayModel.Describe,
-                Amount = adminPayModel.Amount,
-                BankCard = adminPayModel.BankCard,
+        //    var model = new BRECPayEntity
+        //    {
+        //        //BrokerRECClient = _brokerRecClientService.GetBrokerRECClientById(adminPayModel.Id),
+        //        Name = adminPayModel.Name,
+        //        Statusname = adminPayModel.Statusname,
+        //        Describe = adminPayModel.Describe,
+        //        Amount = adminPayModel.Amount,
+        //        BankCard = adminPayModel.BankCard,
 
-                Accountantid = adminPayModel.Accountantid,
-                Adduser = adminPayModel.Adduser,
-                Addtime = DateTime.Now,
-                Upuser = adminPayModel.Upuser,
-                Uptime = DateTime.Now
-            };
-            _brecPayService.Create(model);
+        //        Accountantid = adminPayModel.Accountantid,
+        //        Adduser = adminPayModel.Adduser,
+        //        Addtime = DateTime.Now,
+        //        Upuser = adminPayModel.Upuser,
+        //        Uptime = DateTime.Now
+        //    };
+        //    _brecPayService.Create(model);
 
-            return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));
-        }
+        //    return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功"));
+        //}
         /// <summary>
         /// 传入财务管理员参数,财务管理员打款,返回打款结果状态信息,成功返回"添加成功"
         /// </summary>
@@ -287,7 +287,7 @@ namespace Zerg.Controllers.CRM
                     {
                         Name = payModel.Name,
                         Describe = payModel.Describe,
-                        BankCard = Convert.ToInt32(p.Num),
+                        BankCard = p.Num,
                         Accountantid = user.Id,
                         Amount = p.Withdrawnum,
                         Adduser = user.Id,
