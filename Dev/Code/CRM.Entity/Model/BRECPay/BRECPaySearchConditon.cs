@@ -83,7 +83,7 @@ namespace CRM.Entity.Model
 
 		public EnumBRECPaySearchOrderBy? OrderBy { get; set; }
 
-	    public int? BankCard { get; set; }
+	    public string BankCard { get; set; }
 
 	}
 

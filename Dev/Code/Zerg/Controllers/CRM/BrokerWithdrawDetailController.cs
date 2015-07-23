@@ -416,6 +416,6 @@ namespace Zerg.Controllers.CRM
         /// <summary>
         /// 账户明细id列表
         /// </summary>
-        public string[] Ids { get; set; }
+        public string Ids { get; set; }
     }
 }

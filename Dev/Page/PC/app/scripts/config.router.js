@@ -1611,6 +1611,16 @@ angular.module('app')
                 templateUrl: 'views/pages/CRM/activity/activityList.html',
                 data: { title: '活动列表' }
             })
+            .state('page.CRM.activity.Edit', {
+                url: '/Edit',
+                templateUrl: 'views/pages/CRM/activity/Edit.html',
+                data: { title: '活动编辑' }
+            })
+            .state('page.CRM.activity.Addactivity', {
+                url: '/Addactivity',
+                templateUrl: 'views/pages/CRM/activity/Addactivity.html',
+                data: { title: '新建活动' }
+            })
 
 
 
