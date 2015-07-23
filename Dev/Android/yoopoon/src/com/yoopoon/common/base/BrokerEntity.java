@@ -23,7 +23,6 @@ import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.RequestAdapter.RequestContentType;
 import com.yoopoon.home.data.net.ResponseData;
-import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.domain.Broker2.RequesListener;
 
 /**
@@ -488,13 +487,13 @@ public class BrokerEntity {
 			@Override
 			public void onReponse(ResponseData data) {
 				Log.i(TAG, data.toString());
-				if (data.getResultState() == ResultState.eSuccess) {
-					if (data.getMsg().contains("成功")) {
-						lis.succeed(data.getMsg());
-					} else {
-						lis.fail(data.getMsg());
-					}
+
+				if (data.getMsg().contains("成功")) {
+					lis.succeed(data.getMsg());
+				} else {
+					lis.fail(data.getMsg());
 				}
+
 			}
 
 			@Override

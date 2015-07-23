@@ -200,12 +200,12 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 						try {
 							clientCount = dataObj.getInt("totalCount");
 						} catch (JSONException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 
 					} else {
 						HomeLoginActivity_.intent(getActivity()).isManual(true).start();
+
 					}
 				} else {
 					Toast.makeText(getActivity(), "获取客户信息失败！", Toast.LENGTH_SHORT).show();

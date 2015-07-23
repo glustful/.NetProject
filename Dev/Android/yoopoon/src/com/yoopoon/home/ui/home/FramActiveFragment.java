@@ -5,7 +5,11 @@ import java.util.HashMap;
 import org.androidannotations.annotations.EFragment;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
@@ -13,8 +17,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yoopoon.common.base.utils.NetworkUtils;
 import com.yoopoon.common.base.utils.ToastUtils;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.net.ProgressMessage;
@@ -32,6 +38,7 @@ public class FramActiveFragment extends FramSuper {
 	HashMap<String, String> parameter;
 	ArrayList<JSONObject> mJsonObjects;
 	String str = "<p style=\"margin-right:0;margin-left:0;text-indent:53px;text-autospace:ideograph-numeric;text-align:justify;text-justify:inter-ideograph;line-height:150%\"><span style=\";font-family:微软雅黑;font-weight:bold;font-size:27px\">景观资源配套——</span><span style=\";font-family:微软雅黑;font-size:27px\">五甲塘生态公园、西亮塘湿地公园、世纪金源中心公园三大城市中心生态（湿地）公园，草海长堤、海埂公园、民族村等城市人文地标环伺周边</span></p><p style=\"margin-right:0;margin-left:0;text-indent:53px;text-autospace:ideograph-numeric;text-align:justify;text-justify:inter-ideograph;line-height:150%\"><span style=\";font-family:微软雅黑;font-weight:bold;font-size:27px\">体育休闲配套——</span><span style=\";font-family:微软雅黑;font-size:27px\">红塔体育中心、海埂训练基地、滇池高尔夫、强林高尔夫练习场、张松涛体育中心、滇池春天温泉会馆、袁晓岑博物馆等休闲体育资源让您随时强身健体；</span></p><p style=\"margin-right:0;margin-left:0;text-indent:53px;text-autospace:ideograph-numeric;text-align:justify;text-justify:inter-ideograph;line-height:150%\"><span style=\";font-family:微软雅黑;font-weight:bold;font-size:27px\">医疗资源配套——</span><span style=\";font-family:微软雅黑;font-size:27px\">项目周边的昆明同仁医院、儿童医院、在建中的省中医院，昆明广福路医院，昆明圣安妇产医院等大中型医院都将为您及家人的健康保驾护航</span></p><p style=\"margin-right:0;margin-left:0;text-indent:53px;text-autospace:ideograph-numeric;text-align:justify;text-justify:inter-ideograph;line-height:150%\"><span style=\";font-family:微软雅黑;font-weight:bold;font-size:27px\">生活配套——</span><span style=\";font-family:微软雅黑;font-size:27px\">项目周边聚集的众多成熟生活社区及大型专业卖场，为您提供了各种便利。步行10分钟内就可到达沃尔玛、广福路商业美食街，还有家乐福、邦盛酒店市场、大商汇建材市场等大型百货市场；</span></p><p style=\"margin-right:0;margin-left:0;text-indent:53px;text-autospace:ideograph-numeric;text-align:justify;text-justify:inter-ideograph;line-height:150%\"><span style=\";font-family:微软雅黑;font-weight:bold;font-size:27px\">金融配套——</span><span style=\";font-family:微软雅黑;font-size:27px\">项目半径一公里范围内有工商银行、富滇银行、农业银行、农村信用合用社、招商银行、建设银行、中国银行、浦发银行、国家开发银行、交通银行、邮政储蓄银行；</span></p><p style=\"margin-right:0;margin-left:0;text-indent:53px;text-autospace:ideograph-numeric;text-align:justify;text-justify:inter-ideograph;line-height:150%\"><span style=\";font-family:微软雅黑;font-weight:bold;font-size:27px\">交通配套</span><span style=\";font-family:微软雅黑;font-size:27px\">——前兴路公交枢纽站与项目比邻，本项目周边内拥有多条直达城市东西南本的公交线路</span></p><p><br/></p>";
+	TextView tv_network;
 
 	@Override
 	@Nullable
@@ -44,16 +51,36 @@ public class FramActiveFragment extends FramSuper {
 		} else {
 			rootView = LayoutInflater.from(getActivity()).inflate(R.layout.home_fram_active_fragment, null);
 			listView = (PullToRefreshListView) rootView.findViewById(R.id.matter_list_view);
+			tv_network = (TextView) rootView.findViewById(R.id.tv_active_network);
 			instance = this;
 			mJsonObjects = new ArrayList<JSONObject>();
 			initParameter();
 			mContext = getActivity();
 			mAdController = new ADController(mContext);
 			mActiveController = new ActiveController(mContext);
+
 			initViews();
+			registerReceiver();
 		}
 		return rootView;
 	}
+
+	private void registerReceiver() {
+		IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+		getActivity().registerReceiver(receiver, filter);
+	}
+
+	private BroadcastReceiver receiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (NetworkUtils.isNetworkConnected(context)) {
+				requestList();
+				requestActiveList();
+				requestBrandList();
+			}
+		}
+	};
 
 	private void initParameter() {
 		if (parameter == null) {
@@ -156,7 +183,7 @@ public class FramActiveFragment extends FramSuper {
 				// TODO Auto-generated method stub
 			}
 		}.setUrl(getString(R.string.url_channel_active_titleimg)).setRequestMethod(RequestMethod.eGet)
-				.addParam("channelName", "活动").notifyRequest();
+				.addParam("ChannelName", "活动").notifyRequest();
 	}
 
 	private void requestBrandList() {
@@ -168,7 +195,7 @@ public class FramActiveFragment extends FramSuper {
 				if (data.getResultState() == ResultState.eSuccess) {
 					JSONArray list = data.getMRootData().optJSONArray("List");
 					if (list == null || list.length() < 1) {
-						ToastUtils.showToast(mContext, "数据已经加载完成", 3000);
+						ToastUtils.showToast(mContext, "亲，已经没有更多的品牌啦！", 3000);
 						descCount();
 						return;
 					}

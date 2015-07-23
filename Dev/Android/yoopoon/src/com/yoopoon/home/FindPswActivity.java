@@ -27,18 +27,21 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yoopoon.common.base.utils.RegxUtils;
 import com.yoopoon.common.base.utils.SmsUtils;
 import com.yoopoon.common.base.utils.SmsUtils.RequestSMSListener;
+import com.yoopoon.common.base.utils.Utils;
 import com.yoopoon.home.data.json.SerializerJSON;
 import com.yoopoon.home.data.json.SerializerJSON.SerializeListener;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.ResponseData;
-import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.domain.YzmWithPsw;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
@@ -66,18 +69,34 @@ public class FindPswActivity extends MainActionBarActivity {
 	EditText et_code;
 	@ViewById(R.id.tv_findpsw_new)
 	TextView tv_warning_new;
+	@ViewById(R.id.tv_findpsw_err)
+	TextView tv_err;
+	@ViewById(R.id.ib_findpsw_clean_confirm)
+	ImageButton ib_clean_confirm;
+	@ViewById(R.id.ib_findpsw_clean_new)
+	ImageButton ib_clean_new;
+	@ViewById(R.id.ib_findpsw_clean_phone)
+	ImageButton ib_clean_phone;
+	@ViewById(R.id.rl_findpsw_progress)
+	RelativeLayout rl_progress;
 
 	private Animation shake_animation;
 	private int countTimer = 60;
 	private Handler handler = new Handler();
 	private String hidm;
 	private static final String TAG = "FindPswActivity";
+	private Animation anim_open_err;
+	private Animation anim_hide_err;
 
 	@Click(R.id.btn_findpsw_getcode)
 	void getCode() {
 		String phone = et_phone.getText().toString();
 		if (TextUtils.isEmpty(phone)) {
 			et_phone.startAnimation(shake_animation);
+			return;
+		}
+		if (!RegxUtils.isPhone(phone)) {
+			showErr("请输入正确的手机号码");
 			return;
 		}
 		String smsType = String.valueOf(SmsUtils.FINDPSW_IDENTIFY_CODE);
@@ -92,7 +111,7 @@ public class FindPswActivity extends MainActionBarActivity {
 
 			@Override
 			public void fail(String msg) {
-				Toast.makeText(FindPswActivity.this, msg, Toast.LENGTH_SHORT).show();
+				showErr(msg);
 			}
 
 		});
@@ -107,6 +126,21 @@ public class FindPswActivity extends MainActionBarActivity {
 			}
 		}, 60000);
 
+	}
+
+	@Click(R.id.ib_findpsw_clean_confirm)
+	void cleanConfirm() {
+		et_confirm.setText("");
+	}
+
+	@Click(R.id.ib_findpsw_clean_phone)
+	void cleanPhone() {
+		et_phone.setText("");
+	}
+
+	@Click(R.id.ib_findpsw_clean_new)
+	void cleanNew() {
+		et_new.setText("");
 	}
 
 	// Hidm: "7bnjqic71CswqRgJnPD1M%2b%2fuDvR8DUPr5RbaUsaHe4Q%3d"
@@ -135,6 +169,10 @@ public class FindPswActivity extends MainActionBarActivity {
 			return;
 		}
 
+		if (!RegxUtils.isPhone(phone)) {
+			showErr("请输入正确的手机号码");
+		}
+
 		if (TextUtils.isEmpty(psw_new)) {
 			tv_warning_new.setText("请输入新密码");
 			tv_warning_new.setVisibility(View.VISIBLE);
@@ -147,6 +185,10 @@ public class FindPswActivity extends MainActionBarActivity {
 			return;
 		}
 
+		if (!psw_confirm.equals(psw_new)) {
+			return;
+		}
+
 		YzmWithPsw yzmWithPsw = new YzmWithPsw(hidm, phone, code, psw_new, psw_confirm);
 
 		findPswTask(yzmWithPsw);
@@ -154,6 +196,7 @@ public class FindPswActivity extends MainActionBarActivity {
 	}
 
 	void findPswTask(final YzmWithPsw yzmWithPsw) {
+		rl_progress.setVisibility(View.VISIBLE);
 		new SerializerJSON(new SerializeListener() {
 
 			@Override
@@ -187,20 +230,16 @@ public class FindPswActivity extends MainActionBarActivity {
 
 			@Override
 			public void onReponse(ResponseData data) {
-				if (data != null)
-					if (data.getResultState() == ResultState.eSuccess) {
-						if (data.getMsg().contains("成功")) {
-							Toast.makeText(FindPswActivity.this, "修改成功，请登陆", Toast.LENGTH_SHORT).show();
-							HomeLoginActivity_.intent(FindPswActivity.this).isManual(true).start();
-						} else {
-							Toast.makeText(FindPswActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
-							clear();
-						}
-					}
-				if (data == null) {
-					Toast.makeText(FindPswActivity.this, "请检查网络", Toast.LENGTH_SHORT).show();
-					clear();
+				rl_progress.setVisibility(View.GONE);
+
+				if (data.getMsg().contains("成功")) {
+					Toast.makeText(FindPswActivity.this, "修改成功，请登陆", Toast.LENGTH_SHORT).show();
+					HomeLoginActivity_.intent(FindPswActivity.this).isManual(true).start();
+					return;
+				} else {
+					showErr(data.getMsg());
 				}
+
 			}
 
 			@Override
@@ -209,6 +248,20 @@ public class FindPswActivity extends MainActionBarActivity {
 
 			}
 		}.setUrl(getString(R.string.url_findpsw)).SetJSON(json).notifyRequest();
+	}
+
+	private void showErr(String msg) {
+		tv_err.setText(msg);
+		tv_err.setVisibility(View.VISIBLE);
+		tv_err.startAnimation(anim_open_err);
+		handler.postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				tv_err.startAnimation(anim_hide_err);
+				tv_err.setVisibility(View.GONE);
+			}
+		}, 3000);
 	}
 
 	private void clear() {
@@ -257,8 +310,14 @@ public class FindPswActivity extends MainActionBarActivity {
 		backButton.setText("返回");
 		titleButton.setText("找回密码");
 		shake_animation = AnimationUtils.loadAnimation(this, R.anim.shake);
+
 		et_confirm.addTextChangedListener(watcher);
 		et_new.addTextChangedListener(watcher);
+		et_phone.addTextChangedListener(watcher);
+
+		anim_open_err = AnimationUtils.loadAnimation(this, R.anim.push_down_in);
+		anim_hide_err = AnimationUtils.loadAnimation(this, R.anim.push_top_out);
+
 	}
 
 	private TextWatcher watcher = new TextWatcher() {
@@ -267,6 +326,10 @@ public class FindPswActivity extends MainActionBarActivity {
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
 			String psw_new = et_new.getText().toString();
 			String psw_confirm = et_confirm.getText().toString();
+			String phone = et_phone.getText().toString();
+			ib_clean_confirm.setVisibility(TextUtils.isEmpty(psw_confirm) ? View.GONE : View.VISIBLE);
+			ib_clean_new.setVisibility(TextUtils.isEmpty(psw_new) ? View.GONE : View.VISIBLE);
+			ib_clean_phone.setVisibility(TextUtils.isEmpty(phone) ? View.GONE : View.VISIBLE);
 			if (psw_new.equals(psw_confirm)) {
 				tv_warning_confirm.setVisibility(View.GONE);
 			} else {
@@ -306,6 +369,11 @@ public class FindPswActivity extends MainActionBarActivity {
 	public Boolean showHeadView() {
 
 		return true;
+	}
+
+	@Override
+	protected void activityYMove() {
+		Utils.hiddenSoftBorad(this);
 	}
 
 }

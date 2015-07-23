@@ -27,18 +27,20 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.common.base.utils.SmsUtils;
 import com.yoopoon.common.base.utils.SmsUtils.RequestSMSListener;
+import com.yoopoon.common.base.utils.Utils;
 import com.yoopoon.home.data.json.SerializerJSON;
 import com.yoopoon.home.data.json.SerializerJSON.SerializeListener;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.ResponseData;
-import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.domain.YzmWithPsw2;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
@@ -65,6 +67,17 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 	Button btn_getcode;
 	@ViewById(R.id.tv_security_time)
 	TextView tv_time;
+	@ViewById(R.id.ib_security_clean_confirm)
+	ImageButton ib_clean_confirm;
+	@ViewById(R.id.ib_security_clean_new)
+	ImageButton ib_clean_new;
+	@ViewById(R.id.ib_security_clean_old)
+	ImageButton ib_clean_old;
+	@ViewById(R.id.tv_security_err)
+	TextView tv_err;
+	@ViewById(R.id.rl_security_progress)
+	RelativeLayout rl_progress;
+
 	private Animation shake_animation;
 	private String hidm;
 	private Handler handler = new Handler();
@@ -72,6 +85,8 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 	private Timer timer = new Timer();
 	private int timercount = 60;
 	private TimerTask task;
+	private Animation anim_open_err;
+	private Animation anim_hide_err;
 
 	@Click(R.id.btn_security_setting_getcode)
 	void getCode() {
@@ -92,7 +107,7 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 			@Override
 			public void fail(String msg) {
 				clear();
-				Toast.makeText(SecuritySettingActivity.this, msg, Toast.LENGTH_SHORT).show();
+				showErr(msg);
 
 			}
 
@@ -108,6 +123,21 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		}, 60000);
 		timer.schedule(task, 0, 1000);
 
+	}
+
+	@Click(R.id.ib_security_clean_confirm)
+	void cleanConfirm() {
+		et_confirm.setText("");
+	}
+
+	@Click(R.id.ib_security_clean_new)
+	void cleanNew() {
+		et_new.setText("");
+	}
+
+	@Click(R.id.ib_security_clean_old)
+	void cleanOld() {
+		et_old.setText("");
 	}
 
 	private void setGetCodeEnable(boolean enable) {
@@ -167,12 +197,17 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 			return;
 		}
 
+		if (!newPsw.equals(confirmPsw)) {
+			return;
+		}
+
 		tv_warning.setVisibility(newPsw.equals(confirmPsw) ? View.GONE : View.VISIBLE);
 		YzmWithPsw2 yzmWithPsw = new YzmWithPsw2(hidm, code, oldPsw, newPsw, confirmPsw);
 		changePswTask(yzmWithPsw);
 	}
 
 	void changePswTask(final YzmWithPsw2 yzmWithPsw) {
+		rl_progress.setVisibility(View.VISIBLE);
 		new SerializerJSON(new SerializeListener() {
 
 			@Override
@@ -212,17 +247,28 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
 		titleButton.setText("安全设置");
+
 		shake_animation = AnimationUtils.loadAnimation(this, R.anim.shake);
+		anim_open_err = AnimationUtils.loadAnimation(this, R.anim.push_down_in);
+		anim_hide_err = AnimationUtils.loadAnimation(this, R.anim.push_top_out);
+
 		et_confirm.addTextChangedListener(watcher);
 		et_new.addTextChangedListener(watcher);
+		et_old.addTextChangedListener(watcher);
 	}
 
 	private TextWatcher watcher = new TextWatcher() {
 
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
+			String old_psw = et_old.getText().toString();
 			String psw_new = et_new.getText().toString();
 			String psw_confirm = et_confirm.getText().toString();
+
+			ib_clean_confirm.setVisibility(TextUtils.isEmpty(psw_confirm) ? View.GONE : View.VISIBLE);
+			ib_clean_new.setVisibility(TextUtils.isEmpty(psw_new) ? View.GONE : View.VISIBLE);
+			ib_clean_old.setVisibility(TextUtils.isEmpty(old_psw) ? View.GONE : View.VISIBLE);
+
 			if (psw_new.equals(psw_confirm)) {
 				tv_warning.setVisibility(View.GONE);
 			} else {
@@ -248,27 +294,17 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 
 			@Override
 			public void onReponse(ResponseData data) {
-				if (data != null) {
-					if (data.getResultState() == ResultState.eSuccess) {
-						if (data.getMsg().contains("成功")) {
-							Toast.makeText(SecuritySettingActivity.this, data.getMsg() + ",请重新登陆", Toast.LENGTH_SHORT)
-									.show();
-							HomeLoginActivity_.intent(SecuritySettingActivity.this).isManual(true).start();
-							return;
-						} else if (data.getMsg().contains("失败")) {
-							clear();
-							Toast.makeText(SecuritySettingActivity.this, data.getMsg() + ",请重试", Toast.LENGTH_SHORT)
-									.show();
-							return;
-						}
+				rl_progress.setVisibility(View.GONE);
 
-					}
-					clear();
-					Toast.makeText(SecuritySettingActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+				if (data.getMsg().contains("成功")) {
+					Toast.makeText(SecuritySettingActivity.this, data.getMsg() + ",请重新登陆", Toast.LENGTH_SHORT).show();
+					HomeLoginActivity_.intent(SecuritySettingActivity.this).isManual(true).start();
 					return;
+				} else {
+					clear();
+					showErr(data.getMsg());
 				}
-				clear();
-				Toast.makeText(SecuritySettingActivity.this, "请求失败，请检查网络", Toast.LENGTH_SHORT).show();
+
 			}
 
 			@Override
@@ -284,6 +320,20 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		et_confirm.setText("");
 		et_old.setText("");
 		et_new.setText("");
+	}
+
+	private void showErr(String msg) {
+		tv_err.setText(msg);
+		tv_err.setVisibility(View.VISIBLE);
+		tv_err.startAnimation(anim_open_err);
+		handler.postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				tv_err.startAnimation(anim_hide_err);
+				tv_err.setVisibility(View.GONE);
+			}
+		}, 3000);
 	}
 
 	@Override
@@ -305,6 +355,11 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 	public Boolean showHeadView() {
 
 		return true;
+	}
+
+	@Override
+	protected void activityYMove() {
+		Utils.hiddenSoftBorad(this);
 	}
 
 }

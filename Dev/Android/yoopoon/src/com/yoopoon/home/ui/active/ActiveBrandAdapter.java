@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.common.base.Tools;
+import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 
@@ -64,16 +65,25 @@ public class ActiveBrandAdapter extends BaseAdapter {
 		mHolder.img.setTag(url);
 		ImageLoader.getInstance().displayImage(url, mHolder.img, MyApplication.getOptions(),
 				MyApplication.getLoadingListener());
-		mHolder.title.setText("" + item.optString("Bname") + "");
-		JSONObject parameter = item.optJSONObject("ProductParamater");
-		mHolder.city.setText("[" + parameter.optString("所属城市") + "]");
-		mHolder.area.setText(parameter.optString("占地面积"));
-		mHolder.rightAdTitle.setText(Html.fromHtml(item.optString("AdTitle")));
-		mHolder.adTitle.setText(item.optString("SubTitle"));
+		String title = item.optString("Bname");
+		mHolder.title.setText(StringUtils.isEmpty(title) ? "" : title);
 
-		mHolder.callPhone.setText("来电咨询：" + parameter.optString("来电咨询"));
+		JSONObject parameter = item.optJSONObject("ProductParamater");
+		String city = parameter.optString("所属城市");
+		mHolder.city.setText("[" + (StringUtils.isEmpty(city) ? "" : city) + "]");
+		String area = parameter.optString("占地面积");
+		mHolder.area.setText(StringUtils.isEmpty(area) ? "" : area);
+		String adTitle = Html.fromHtml(item.optString("AdTitle")).toString();
+		mHolder.rightAdTitle.setText(StringUtils.isEmpty(adTitle) ? "" : adTitle);
+		String subTitle = item.optString("SubTitle");
+		mHolder.adTitle.setText(StringUtils.isEmpty(subTitle) ? "" : subTitle);
+
+		String phone = parameter.optString("来电咨询");
+		mHolder.callPhone.setText("来电咨询：" + (StringUtils.isEmpty(phone) ? "" : phone));
 		mHolder.callPhone.setTag(Tools.optString(parameter, "来电咨询", "10086"));
-		mHolder.preferential.setText("最高享用优惠：" + parameter.optString("最高优惠") + "元/套");
+
+		String preferential = parameter.optString("最高优惠");
+		mHolder.preferential.setText("最高享用优惠：" + (StringUtils.isEmpty(preferential) ? "" : preferential) + "元/套");
 		mHolder.callPhone.setOnClickListener(new OnClickListener() {
 
 			@Override

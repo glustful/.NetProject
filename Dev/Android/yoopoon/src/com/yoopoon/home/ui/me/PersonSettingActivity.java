@@ -15,6 +15,8 @@ package com.yoopoon.home.ui.me;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -36,6 +38,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -46,6 +49,7 @@ import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.common.base.BrokerEntity;
 import com.yoopoon.common.base.Tools;
+import com.yoopoon.common.base.utils.Utils;
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.json.ParserJSON;
@@ -55,7 +59,6 @@ import com.yoopoon.home.data.net.UploadHeadImg.OnCompleteListener;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.data.user.User.UserInfoListener;
 import com.yoopoon.home.domain.Broker2.RequesListener;
-import com.yoopoon.home.ui.home.FramMainActivity_;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
 /**
@@ -87,8 +90,14 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	RoundedImageView iv_avater;
 	@ViewById(R.id.tv_person_setting_uploading)
 	TextView tv_uploading;
+	@ViewById(R.id.rl_person_setting_progress)
+	RelativeLayout rl_progress;
 	private Animation animation_shake;
 	private BrokerEntity entity;
+	private String[] points = { "", ".", "..", "..." };
+	private int count = 0;
+	private Timer timer;
+	private TimerTask task;
 
 	@Click(R.id.iv_person_setting_avater)
 	void selectAvater() {
@@ -126,6 +135,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			return;
 		}
 
+		rl_progress.setVisibility(View.VISIBLE);
 		String sexy = rb_female.isChecked() ? "女士" : "先生";
 
 		entity.setRealname(name);
@@ -141,12 +151,14 @@ public class PersonSettingActivity extends MainActionBarActivity {
 
 			@Override
 			public void succeed(String msg) {
+				rl_progress.setVisibility(View.GONE);
 				Toast.makeText(PersonSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
-				FramMainActivity_.intent(PersonSettingActivity.this).start();
+				finish();
 			}
 
 			@Override
 			public void fail(String msg) {
+				rl_progress.setVisibility(View.GONE);
 				Toast.makeText(PersonSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
 
 			}
@@ -209,7 +221,28 @@ public class PersonSettingActivity extends MainActionBarActivity {
 
 	private void uploadImage(final File file) {
 		final String path = getString(R.string.url_host) + getString(R.string.url_upload);
+
+		timer = new Timer();
+		task = new TimerTask() {
+
+			@Override
+			public void run() {
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						if (count == 4)
+							count = 0;
+						tv_uploading.setText("上传中" + points[count++]);
+						tv_uploading.setVisibility(View.VISIBLE);
+
+					}
+				});
+			}
+		};
+		timer.scheduleAtFixedRate(task, 0, 300);
 		new Thread() {
+
 			public void run() {
 				new UploadHeadImg().post(path, file, null, new OnCompleteListener() {
 
@@ -229,16 +262,21 @@ public class PersonSettingActivity extends MainActionBarActivity {
 									user.setHeadUrl(headUrl);
 
 									if (!status) {
-										tv_uploading.setText("上传失败");
+										tv_uploading.setText("上传失败>_<");
 										tv_uploading.setVisibility(View.VISIBLE);
 									} else {
-										tv_uploading.setText("上传成功");
+										tv_uploading.setText("上传成功^_^");
 										tv_uploading.setVisibility(View.VISIBLE);
 									}
 
 								} catch (JSONException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
+								} finally {
+									if (timer != null && task != null) {
+										timer.cancel();
+										task.cancel();
+									}
 								}
 
 							}
@@ -341,6 +379,22 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	public Boolean showHeadView() {
 
 		return true;
+	}
+
+	@Override
+	protected void onDestroy() {
+		if (timer != null && task != null) {
+			timer.cancel();
+			task.cancel();
+			timer = null;
+			task = null;
+		}
+		super.onDestroy();
+	}
+
+	@Override
+	protected void activityYMove() {
+		Utils.hiddenSoftBorad(this);
 	}
 
 }

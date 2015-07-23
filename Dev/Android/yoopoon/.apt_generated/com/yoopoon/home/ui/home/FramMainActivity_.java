@@ -12,9 +12,11 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
+import android.widget.TextView;
 import com.yoopoon.home.R.layout;
 import org.androidannotations.api.SdkVersionHelper;
 import org.androidannotations.api.view.HasViews;
@@ -82,9 +84,25 @@ public final class FramMainActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        searchLayout = ((LinearLayout) hasViews.findViewById(com.yoopoon.home.R.id.search_layout));
         tabHost = ((TabHost) hasViews.findViewById(android.R.id.tabhost));
+        tv_network = ((TextView) hasViews.findViewById(com.yoopoon.home.R.id.tv_main_network));
         mainPager = ((ViewPager) hasViews.findViewById(com.yoopoon.home.R.id.home_main_pager));
+        searchLayout = ((LinearLayout) hasViews.findViewById(com.yoopoon.home.R.id.search_layout));
+        {
+            View view = hasViews.findViewById(com.yoopoon.home.R.id.tv_main_network);
+            if (view!= null) {
+                view.setOnClickListener(new OnClickListener() {
+
+
+                    @Override
+                    public void onClick(View view) {
+                        FramMainActivity_.this.setNetwork();
+                    }
+
+                }
+                );
+            }
+        }
         initUI();
     }
 
