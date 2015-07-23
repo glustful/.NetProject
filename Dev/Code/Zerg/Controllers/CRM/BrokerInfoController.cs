@@ -358,29 +358,105 @@ namespace Zerg.Controllers.CRM
                         //return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功！"));
                     }
 
-                    //---------------------------------------------by yangyue  2015/7/16-------------------------------------------------//
+                    //---------------------------------------------by yangyue  2015/7/16----start---------------------------------------------//
                        //邀请码逻辑
                        if (!string.IsNullOrEmpty(broker.code))
                        {
-                           //1判断白银是否《=3000 给30元钱 
-                           if (1 <= 3000)
+                           var levelCon = new LevelSearchCondition
+                             {
+                                  Name = "白银"
+                             };
+                           var level = _levelService.GetLevelsByCondition(levelCon).FirstOrDefault();
+                           
+                             BrokerSearchCondition bsearchModel = new BrokerSearchCondition
                            {
+                               Levels = level
+                              
+                           };
+
+                           _brokerService.GetBrokerCount(bsearchModel);
+                           //1判断白银是否《=3000 给30元钱 
+                           if (_brokerService.GetBrokerCount(bsearchModel) <= 3000)
+                           {
+                               var invite = new InviteCodeSearchCondition
+                                   {
+                                      Brokers = brokerModel,
+                                      Number = broker.code,
+                                       State = 0
+                                   };
+                                  var con = _inviteCodeService.GetInviteCodeByCondition(invite).FirstOrDefault();
                                //判断邀请码是否存在 邀请码是否使用
-                               if (true)
+                                  if (con != null)
                                {
-                                   // 设置白银 给30元钱  并且生成3个邀请码发送到手机端口
+                                   brokerModel.Level = level;
+                                   EventOrderEntity emodel = new EventOrderEntity();
+                                   emodel.AcDetail = "完整经济人资料奖励30元";
+                                   emodel.Addtime = DateTime.Now;
+                                   emodel.MoneyCount = 30;
+                                   emodel.Broker = brokerModel;
+                                   _eventOrderService.Create(emodel);
+                                      //添加活动订单信息
+                                   InviteCodeEntity invitecodemodel=new InviteCodeEntity();
+                                   invitecodemodel.NumUser = brokerModel.Id;
+                                   invitecodemodel.UseTime = DateTime.Now;
+                                   _inviteCodeService.Update(invitecodemodel);
+                                      //修改邀请码表信息
+
+                                    // 设置白银 给30元钱  并且生成3个邀请码发送到手机端口
+
+                                      
+                                   if (_eventOrderService.GetEventOrderById(brokerModel.Id)!=null)
+                                        //判断订单表有无生成数据
+                                   {
+                                      
+                                       BrokeAccountEntity brokeraccountmodel=new BrokeAccountEntity();
+                                       brokeraccountmodel.MoneyDesc = "完整经济人资料奖励30元";
+                                       brokeraccountmodel.Balancenum = 30;
+                                       brokeraccountmodel.Adduser = brokerModel.Id;
+                                       brokeraccountmodel.Addtime = DateTime.Now;
+                                       brokeraccountmodel.Upuser = brokerModel.Id;
+                                       brokeraccountmodel.Uptime = DateTime.Now;
+                                       brokeraccountmodel.Broker = brokerModel;
+                                       brokeraccountmodel.Type = 2;
+                                       brokeraccountmodel.State = 0;
+                                       _brokerAccountService.Create(brokeraccountmodel);
+                                   }
+                                        //添加brokeraccount表记录
+                                  
                                }
                                else //不存在 或已被使用
                                {
-                                  
+                                   var levelConn = new LevelSearchCondition
+                                   {
+                                       Name = "青铜"
+                                   };
+                                   var qlevel = _levelService.GetLevelsByCondition(levelConn).FirstOrDefault();
+
+                                   BrokerSearchCondition qbsearchModel = new BrokerSearchCondition
+                                   {
+                                       Levels = qlevel
+
+                                   };
+
+                                   _brokerService.GetBrokerCount(qbsearchModel);
                                    //转换到 青铜逻辑
                                    // 1判断青铜是否《=1000 
-                                   if (0 <= 1000)
+                                   if (_brokerService.GetBrokerCount(qbsearchModel) <= 1000)
                                    {
+                                       EventOrderEntity emodel = new EventOrderEntity();
+                                       emodel.AcDetail = "完整经济人资料无邀请码奖励20元";
+                                       emodel.Addtime = DateTime.Now;
+                                       emodel.MoneyCount = 20;
+                                       emodel.Broker = brokerModel;
+                                       _eventOrderService.Create(emodel);
+                                       brokerModel.Level = qlevel;
+                                       _brokerService.Update(brokerModel);
                                        //给20元钱 等级设为青铜
                                    }
                                    else
                                    {
+                                       brokerModel.Level = qlevel;
+                                       _brokerService.Update(brokerModel);
                                        //等级设为青铜
                                    }
 
@@ -388,11 +464,51 @@ namespace Zerg.Controllers.CRM
                            }
                            else
                            {
+                               brokerModel.Level = level;
+                               _brokerService.Update(brokerModel);
                                // //等级设为白银
+                           } 
+                       }
+                       else//没有邀请码 给20元钱 等级设为青铜
+                       {
+                           var levelConn = new LevelSearchCondition
+                           {
+                               Name = "青铜"
+                           };
+                           var qlevel = _levelService.GetLevelsByCondition(levelConn).FirstOrDefault();
+
+                           BrokerSearchCondition qbsearchModel = new BrokerSearchCondition
+                           {
+                               Levels = qlevel
+
+                           };
+
+                           _brokerService.GetBrokerCount(qbsearchModel);
+                           //转换到 青铜逻辑
+                           // 1判断青铜是否《=1000 
+                           if (_brokerService.GetBrokerCount(qbsearchModel) <= 1000)
+                           {
+                               
+                               EventOrderEntity emodel = new EventOrderEntity();
+                               emodel.AcDetail = "完整经济人资料无邀请码奖励20元";
+                               emodel.Addtime = DateTime.Now;
+                               emodel.MoneyCount = 20;
+                               emodel.Broker = brokerModel;
+                               brokerModel.Level = qlevel;
+                               _brokerService.Update(brokerModel);
+                               _eventOrderService.Create(emodel);
+                               //给20元钱 等级设为青铜
                            }
+                           else
+                           {
+                               brokerModel.Level = qlevel;
+                               _brokerService.Update(brokerModel);
+                               //等级设为青铜
+                           }
+                       }
 
 
-                           ////1首先判断邀请码是否存在 2邀请码是否使用
+                           //1首先判断邀请码是否存在 2邀请码是否使用
                            //var invite = new InviteCodeSearchCondition
                            //{
                            //    //Brokers = brokerModel
@@ -439,22 +555,7 @@ namespace Zerg.Controllers.CRM
                            //    _brokerAccountService.Create(model);
 
                            //}
-                       }
-                       else//没有邀请码 给20元钱 等级设为青铜
-                       {
-                           // 1判断青铜是否《=1000 
-                           if (0 <= 1000)
-                           {
-                               //给20元钱 等级设为青铜
-                           }
-                           else
-                           {
-                               //等级设为青铜
-                           }
-                       }
-
-
-
+      //----------------------------------------------------------------------end-----------------------------------------------------------------//
                         }
                 #endregion
 
