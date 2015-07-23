@@ -280,6 +280,7 @@ namespace Zerg.Controllers.CRM
                         Uptime = DateTime.Now,
                     };
                     _blPayService.Create(blModel);
+
                 }
                 if (Convert.ToInt32(p.Type) == 1)
                 {
@@ -297,6 +298,11 @@ namespace Zerg.Controllers.CRM
                     };
                     _brecPayService.Create(breModel);
                 }
+                BrokeAccount = _brokerAcountService.GetBrokeAccountById(p.BrokeAccount_Id.Id);
+                BrokeAccount.State = 1;
+                BrokeAccount.Uptime = DateTime.Now;
+                BrokeAccount.Upuser = user.Id;
+                _brokerAcountService.Update(BrokeAccount);
             }
             //string[] strBrokeAccountId = payModel.BrokeAccountId.Split(',');
             //foreach (var BrokeAccountId in strBrokeAccountId)
@@ -354,16 +360,13 @@ namespace Zerg.Controllers.CRM
                
             //}
             BrokerWithdraw.State = 1;
-            BrokerWithdraw.AccAccountantId.UserId = user.Id;
+            //BrokerWithdraw.AccAccountantId.UserId = user.Id;
             BrokerWithdraw.Uptime = DateTime.Now;
-            BrokerWithdraw.Upuser = broker.Id;
+            BrokerWithdraw.Upuser = user.Id;
             BrokerWithdraw.WithdrawDesc = payModel.Describe;
             BrokerWithdraw.BankSn = payModel.BankSn;
             _brokerwithdrawService.Update(BrokerWithdraw);
-            BrokeAccount.State = 1;
-            BrokeAccount.Uptime = DateTime.Now;
-            BrokeAccount.Upuser = user.Id;
-            _brokerAcountService.Update(BrokeAccount);
+           
             return PageHelper.toJson(PageHelper.ReturnValue(true, "打款成功"));
         }
         #endregion

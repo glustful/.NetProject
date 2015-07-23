@@ -157,9 +157,9 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => condition .PartnersId ==q.Id);
                 }
-                if (condition.Levels != null && condition.Levels.Any())
+                if (condition.Levels != null )
                 {
-                    query = query.Where(q => condition.Levels.Contains(q.Level));
+                    query = query.Where(q =>q.Level== condition.Levels);
                 }
                 if (condition.UserIds != null && condition.UserIds.Any())
                 {
@@ -312,9 +312,9 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-                if (condition.Levels != null && condition.Levels.Any())
+                if (condition.Levels != null)
                 {
-                    query = query.Where(q => condition.Levels.Contains(q.Level));
+                    query = query.Where(q =>q.Level== condition.Levels);
                 }
                 if (condition.UserIds != null && condition.UserIds.Any())
                 {
