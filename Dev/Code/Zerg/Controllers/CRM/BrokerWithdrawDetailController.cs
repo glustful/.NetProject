@@ -160,7 +160,7 @@ namespace Zerg.Controllers.CRM
         {
             int bankId = 0;//银行Id
             decimal withdrawMoney = 0;//提现金额
-            if (string.IsNullOrEmpty(MoneyEntity.Bank) || MoneyEntity.Ids.Count() <= 0 || string.IsNullOrEmpty(MoneyEntity.Hidm) || string.IsNullOrEmpty(MoneyEntity.MobileYzm) || string.IsNullOrEmpty(MoneyEntity.Money))
+            if (string.IsNullOrEmpty(MoneyEntity.Bank) || string.IsNullOrEmpty( MoneyEntity.Ids) || string.IsNullOrEmpty(MoneyEntity.Hidm) || string.IsNullOrEmpty(MoneyEntity.MobileYzm) || string.IsNullOrEmpty(MoneyEntity.Money))
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误"));
             }
@@ -214,7 +214,7 @@ namespace Zerg.Controllers.CRM
                 if (broker != null)
                 {
                     //根据对应的经纪人账户明细Ids 添加到提现主表 附表中去 
-                    if (MoneyEntity.Ids.Count() > 0)
+                    if (!string.IsNullOrEmpty(MoneyEntity.Ids))
                     {
                         var bankCard = _bankcardService.GetBankCardById(Convert.ToInt32(MoneyEntity.Bank));
                         if(bankCard.Broker.Id!=broker.Id)
@@ -240,7 +240,7 @@ namespace Zerg.Controllers.CRM
 
                         try
                         {
-                            foreach (var p in MoneyEntity.Ids)
+                            foreach (var p in MoneyEntity.Ids.Split(','))
                             {
                                 var broaccount = _brokeaccountService.GetBrokeAccountById(Convert.ToInt32(p));//获取该笔账户
                                 if (broaccount.Broker.Id != broker.Id)//判断该笔账户金额是否是当前这个经纪人
@@ -274,9 +274,16 @@ namespace Zerg.Controllers.CRM
 
                             foreach(var browithdetail in listBrokerWithDetail)//添加到提现附表
                             {
+
+
                                 browithdetail.BrokerWithdraw = brokerWithdraw;
 
                                 _brokerwithdrawdetailService.Create(browithdetail);
+
+                                //更改账户表中 状态
+                                var brokeraccount = browithdetail.BrokeAccount_Id;
+                                brokeraccount.State = -1;
+                                _brokeaccountService.Update(brokeraccount);
                             }
 
                             return PageHelper.toJson(PageHelper.ReturnValue(true, "提现申请成功！"));

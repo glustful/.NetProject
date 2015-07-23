@@ -31,7 +31,7 @@ namespace CRM.Entity.Model
         /// </summary>
         public virtual int Type { get; set; }
         /// <summary>
-        /// 状态（0 可用，1 不可用,2 注册）
+        /// 状态（0 可用，1 已使用,-1提现中）
         /// </summary>
         public virtual int State { get; set; }
 
