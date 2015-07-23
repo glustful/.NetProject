@@ -27,7 +27,7 @@ namespace CRM.Entity.Model
 
 
         /// <summary>
-        /// 金额类型（0 带客，1 推荐,2 奖励30元钱）
+        /// 金额类型（0 带客，1 推荐,2 奖励完整信息钱）
         /// </summary>
         public virtual int Type { get; set; }
         /// <summary>
