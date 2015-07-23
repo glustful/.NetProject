@@ -113,6 +113,11 @@
             android:theme="@style/ActionbarTheme" >
         </activity>
         <activity
+            android:name="com.yoopoon.house.ui.broker.BrokerRecommendActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
             android:name="com.yoopoon.home.IGuestActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >

@@ -13,10 +13,15 @@
 package com.yoopoon.house.ui.houselist;
 
 import java.util.ArrayList;
+
 import org.json.JSONObject;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,11 +31,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.ui.product.ProductDetailActivity_;
 import com.yoopoon.house.ui.bonus.BrokerBonusActivity_;
+import com.yoopoon.house.ui.broker.BrokerRecommendActivity_;
 import com.yoopoon.house.ui.broker.BrokerScoreActivity_;
 import com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_;
 
@@ -40,32 +47,32 @@ import com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_;
  * @author: 徐阳会
  * @date: 2015年7月14日 上午9:49:21
  */
-public class FramHouseListViewAdapter extends BaseAdapter {
+@SuppressLint("NewApi")
+public class HouseListViewAdapter extends BaseAdapter {
 	Context mContext;
 	ArrayList<JSONObject> datas;
 	int height = 0;
-
-	public FramHouseListViewAdapter(Context mContext) {
+	boolean setBrokerBackground = false;
+	
+	public HouseListViewAdapter(Context mContext, boolean setBrokerBackground) {
 		this.mContext = mContext;
 		datas = new ArrayList<JSONObject>();
 		height = MyApplication.getInstance().getDeviceInfo((Activity) mContext).heightPixels / 6;
+		this.setBrokerBackground = setBrokerBackground;
 	}
-
 	@Override
 	public int getCount() {
 		return datas.size();
 	}
-
 	@Override
 	public Object getItem(int position) {
 		return datas.get(position);
 	}
-
 	@Override
 	public long getItemId(int position) {
 		return position;
 	}
-
+	@SuppressLint("NewApi")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHandler viewHandler;
@@ -104,7 +111,9 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		viewHandler.housePriceTextView.setText(item.optString("Price") + "元/m²");
 		viewHandler.houseTypeAcreaqeStockRuleTextView.setText(item.optString("Type") + "/" + item.optString("Acreage")
 				+ "m²" + "/" + "在售" + item.optString("StockRule") + "套");
-		viewHandler.houseAdvertisementTextView.setText(item.optString("Advertisement"));
+		if (!item.optString("Advertisement").equals("null")) {
+			viewHandler.houseAdvertisementTextView.setText(item.optString("Advertisement"));
+		}
 		// 添加点击事件,点击图片跳转到楼盘详情
 		// ##################### 徐阳会 2015年07月14日 新增 Start
 		viewHandler.houseImageView.setOnClickListener(new OnClickListener() {
@@ -122,8 +131,19 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		 */
 		// ##################### 郭俊军 被修改代码 End
 		// 携带楼盘和经纪人数据跳转到带客页面
+		Log.i("HouseListViewAdapter", setBrokerBackground + "");
+		if (setBrokerBackground == true) {
+			viewHandler.houseTakeGuestTextView.setTextColor(Color.WHITE);
+			viewHandler.houseRecommendTextView.setTextColor(Color.WHITE);
+			viewHandler.houseTakeGuestTextView.setBackground(mContext.getResources().getDrawable(R.drawable.rectangle));
+			viewHandler.houseRecommendTextView.setBackground(mContext.getResources().getDrawable(R.drawable.rectangle));
+		} else {
+			viewHandler.houseTakeGuestTextView.setTextColor(Color.BLACK);
+			viewHandler.houseRecommendTextView.setTextColor(Color.BLACK);
+			viewHandler.houseTakeGuestTextView.setBackgroundColor(Color.WHITE);
+			viewHandler.houseRecommendTextView.setBackgroundColor(Color.WHITE);
+		}
 		viewHandler.houseTakeGuestTextView.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				BrokerTakeGuestActivity_.intent(mContext).intent_properString(item.optString("Productname"))
@@ -133,10 +153,9 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 			// 携带楼盘和经纪人数据跳转到推荐页面
 		});
 		viewHandler.houseRecommendTextView.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				BrokerTakeGuestActivity_.intent(mContext).intent_properString(item.optString("Productname"))
+				BrokerRecommendActivity_.intent(mContext).intent_properString(item.optString("Productname"))
 						.intent_propretyTypeString(item.optString("Type")).intent_propretyNumber(item.optString("Id"))
 						.start();
 			}
@@ -157,7 +176,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		});
 		return convertView;
 	}
-
+	
 	/**
 	 * @ClassName: ViewHandler
 	 * @Description: 创建ViewHandler来对房源页中的ListView进行视图的绑定和初始化
@@ -175,7 +194,7 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 		private TextView houseBonusTextView;
 		private TextView houseScoreTextView;
 		private View houseBrokerFunctionLinearLayout;
-
+		
 		/**
 		 * @Title: initViewHandler
 		 * @Description: 初始化ViewHandler
@@ -194,17 +213,18 @@ public class FramHouseListViewAdapter extends BaseAdapter {
 			houseBrokerFunctionLinearLayout = root.findViewById(R.id.house_broker_function_linearlayout);
 		}
 	}
-
+	
 	/**
 	 * @Title: refresh
 	 * @Description: 获取数据刷新房源页对应的楼盘ListView
 	 * @param mJsonObjects
 	 */
-	public void refresh(ArrayList<JSONObject> mJsonObjects) {
+	public void refresh(ArrayList<JSONObject> mJsonObjects, boolean setBrokerBackground) {
 		datas.clear();
 		if (mJsonObjects != null) {
 			datas.addAll(mJsonObjects);
 		}
+		this.setBrokerBackground = setBrokerBackground;
 		// this.notifyDataSetInvalidated();
 		this.notifyDataSetChanged();
 	}

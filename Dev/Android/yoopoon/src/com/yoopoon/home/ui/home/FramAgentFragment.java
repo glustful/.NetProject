@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -130,12 +129,10 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 		refreshView.setFadingEdgeLength(0);
 		mAgentBrandAdapter = new AgentBrandAdapter(mContext);
 		refreshView.setAdapter(mAgentBrandAdapter);
-
 		initMCommonFunctions();
 	}
 
 	private void initMCommonFunctions() {
-
 	}
 
 	class HowWillIrefresh implements PullToRefreshBase.OnRefreshListener2<ListView> {
@@ -153,7 +150,6 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 
 	void requestList() {
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
@@ -178,7 +174,6 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 
 	void requestActiveList() {
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
@@ -206,7 +201,6 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 			}
 		}.setUrl(getString(R.string.url_channel_active_titleimg)).setRequestMethod(RequestMethod.eGet)
 				.addParam("channelName", "活动").notifyRequest();
-
 	}
 
 	private void requestBrandList() {
@@ -214,7 +208,6 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
-					Log.i(TAG, data.toString());
 					JSONArray list = data.getMRootData().optJSONArray("List");
 					if (list == null || list.length() < 1)
 						return;
@@ -266,6 +259,5 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-
 	}
 }

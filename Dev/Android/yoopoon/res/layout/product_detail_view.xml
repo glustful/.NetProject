@@ -51,8 +51,7 @@
                     android:id="@+id/img"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitXY" 
-                    />
+                    android:scaleType="fitXY" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -61,21 +60,60 @@
                     android:padding="10dp"
                     android:text="图文详情"
                     android:textSize="@dimen/large_textSize" />
-                <com.yoopoon.home.ui.view.MyGridView 
+
+                <com.yoopoon.home.ui.view.MyGridView
                     android:id="@+id/imgGrid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:numColumns="1">
-                    
+                    android:numColumns="1" >
                 </com.yoopoon.home.ui.view.MyGridView>
-                <com.yoopoon.home.ui.view.Html5View 
+
+                <com.yoopoon.home.ui.view.Html5View
                     android:id="@+id/contentWeb"
-                    android:scrollbars="none"
-                    yoopoon:auto_height="true"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    yoopoon:auto_height="true" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#88000000"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/product_detail_take_guest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="我要带客"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/product_detail_recommend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="我要推荐"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/product_detail_consultation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:drawableLeft="@drawable/consultation"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+    </LinearLayout>
 
 </RelativeLayout>

@@ -34,7 +34,7 @@ import com.yoopoon.home.R;
  * @author: 徐阳会
  * @date: 2015年7月17日 上午11:50:16
  */
-public class FramHouseAreaAdapter extends BaseAdapter {
+public class HouseAreaAdapter extends BaseAdapter {
 	// ########################## 如下是对变量和属性的初始化###################
 	private static final String LOGTAG = "FramHouseAreaAdapter";
 	Context mContext;
@@ -42,7 +42,7 @@ public class FramHouseAreaAdapter extends BaseAdapter {
 	private LayoutInflater mLayoutInflater;
 	private int selectedPosition = -1;
 	
-	public FramHouseAreaAdapter(Context context, ArrayList<JSONObject> arrayList, int selected) {
+	public HouseAreaAdapter(Context context, ArrayList<JSONObject> arrayList, int selected) {
 		super();
 		mContext = context;
 		datas = arrayList;

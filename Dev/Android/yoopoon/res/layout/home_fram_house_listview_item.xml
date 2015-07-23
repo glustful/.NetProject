@@ -90,12 +90,17 @@
             android:id="@+id/house_takeguest"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="10dp"
-            android:textSize="15sp"
             android:text="带客"
-            android:textColor="@color/red" />
+            android:textColor="@color/red"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/house_recommend"
@@ -105,9 +110,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="10dp"
-            android:textSize="15sp"
             android:text="推荐"
-            android:textColor="@color/red" />
+            android:textColor="@color/red"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/house_bribe"
@@ -115,21 +120,21 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:padding="10dp"
-            android:textSize="15sp"
             android:gravity="center"
-            android:text="红包" />
+            android:padding="10dp"
+            android:text="红包"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/house_score"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="10dp"
-            android:textSize="15sp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="积分" />
+            android:padding="10dp"
+            android:text="积分"
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
