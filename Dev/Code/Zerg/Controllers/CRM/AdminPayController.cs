@@ -354,7 +354,7 @@ namespace Zerg.Controllers.CRM
                
             //}
             BrokerWithdraw.State = 1;
-            BrokerWithdraw.AccAccountantId.UserId = user.Id;
+            //BrokerWithdraw.AccAccountantId.UserId = user.Id;
             BrokerWithdraw.Uptime = DateTime.Now;
             BrokerWithdraw.Upuser = broker.Id;
             BrokerWithdraw.WithdrawDesc = payModel.Describe;

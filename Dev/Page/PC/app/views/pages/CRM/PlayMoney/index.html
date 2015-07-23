@@ -63,36 +63,79 @@
 
             <div class="modal-body overflow-visible" style="overflow-y: scroll; height: 300px;">
 
-                <p>
-                    经纪人名:<span>{{ List.BrokerName}}</span>
-                </p>
-                <p>
-                    银行类型:<span>{{List.BankType }}</span>
-                </p>
-                <p>
-                    银行卡号:<span>{{List.BankNum }}</span>
-                </p>
-                <p>
-                    金额:<span>{{List.Withdrawnum }}</span>
-                </p>
-                <form>
+                <!--<p>-->
+                    <!--经纪人名:<span>{{ List.BrokerName}}</span>-->
+                <!--</p>-->
+                <!--<p>-->
+                    <!--银行类型:<span>{{List.BankType }}</span>-->
+                <!--</p>-->
+                <!--<p>-->
+                    <!--银行卡号:<span>{{List.BankNum }}</span>-->
+                <!--</p>-->
+                <!--<p>-->
+                    <!--金额:<span>{{List.Withdrawnum }}</span>-->
+                <!--</p>-->
+                <!--<form>-->
 
-                    <p>
-                        <input type="hidden"  ng-model="PayInfo.Id">
-                    </p>
+                    <!--<p>-->
+                        <!--<input type="hidden"  ng-model="PayInfo.Id">-->
+                    <!--</p>-->
+                    <!--<p>-->
+                        <!--银行流水号：<input type="text"  placeholder="银行流水号" ng-model="PayInfo.BankSn" required="" tabindex="0" aria-required="true" aria-invalid="true">-->
+                    <!--</p>-->
+                    <!--<p>-->
+                        <!--款项名称：<input type="text" placeholder="款项名" ng-model="PayInfo.Name" required="" tabindex="0" aria-required="true" aria-invalid="true">-->
+                    <!--</p>-->
 
-                    <p>
-                        款项名称：<input type="text" placeholder="款项名" ng-model="PayInfo.Name" required="" tabindex="0" aria-required="true" aria-invalid="true">
-                    </p>
+                    <!--<p>-->
+                        <!--款项描述：<input type="text"  placeholder="款项描述" ng-model="PayInfo.Describe" required="" tabindex="0" aria-required="true" aria-invalid="true">-->
+                    <!--</p>-->
 
-                    <p>
-                        款项描述：<input type="text"  placeholder="款项描述" ng-model="PayInfo.Describe" required="" tabindex="0" aria-required="true" aria-invalid="true">
-                    </p>
-                    <p>
-                        银行流水号：<input type="text"  placeholder="银行流水号" ng-model="PayInfo.BankSn" required="" tabindex="0" aria-required="true" aria-invalid="true">
-                    </p>
-                    <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" ng-click="SetPay()">打款<div class="md-ripple-container"></div></button>
-                    <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink" onclick="ParameterWindowClose">取消<div class="md-ripple-container"></div></button>
+                    <!--<button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" ng-click="SetPay()">打款<div class="md-ripple-container"></div></button>-->
+                    <!--<button md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink" onclick="ParameterWindowClose">取消<div class="md-ripple-container"></div></button>-->
+                <!--</form>-->
+                <div class="row">
+                    <div class="col-md-3" style="text-align: right;">经纪人名：</div>
+                    <div class="col-md-9">{{ List.BrokerName}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3" style="text-align: right;">银行类型：</div>
+                    <div class="col-md-9">{{ List.BankType}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3" style="text-align: right;">银行卡号：</div>
+                    <div class="col-md-9">{{ List.BankNum}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3" style="text-align: right;">金额：</div>
+                    <div class="col-md-9">{{List.Withdrawnum }}</div>
+                </div>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">银行流水号：</label>
+                        <div class="col-md-9">
+                            <input type="text"  placeholder="银行流水号" ng-model="PayInfo.BankSn" required="" tabindex="0" aria-required="true" aria-invalid="true" class="form-control" style="width: 100%;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-md-3 control-label">打款名称：</label>
+                        <div class="col-md-9">
+                            <input type="text" placeholder="款项名" ng-model="PayInfo.Name" required="" tabindex="0" aria-required="true" aria-invalid="true" class="form-control" style="width: 100%;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-md-3 control-label">款项描述：</label>
+                        <div class="col-md-9">
+                            <input type="text" placeholder="款项描述"  ng-model="PayInfo.Describe" required="" tabindex="0" aria-required="true" aria-invalid="true" class="form-control" style="width: 100%;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit"  md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" ng-click="SetPay()">打款</button>
+                            <button   md-ink-ripple="" class="md-btn md-raised m-b btn-fw pink" ng-click="ParameterWindowClose">取消</button>
+                        </div>
+                    </div>
                 </form>
             </div>
 
