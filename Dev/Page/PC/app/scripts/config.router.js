@@ -1599,9 +1599,36 @@ angular.module('app')
                 controller: 'upChipController',
                 resolve: load(['scripts/controllers/event/chip.js','angularFileUpload'])
             })
+          //活动
 
 
-            //-----------------------end-------------------
+            .state('page.CRM.activity', {
+                url: '/activity',
+                template: '<div ui-view></div>'
+            })
+            .state('page.CRM.activity.activityList', {
+                url: '/activityList',
+                templateUrl: 'views/pages/CRM/activity/activityList.html',
+                data: { title: '活动列表' }
+            })
+
+
+
+
+
+
+
+
+
+
+            //.state('page.activity.add',{
+            //    url:'/Addactivity',
+            //    templateUrl:'views/pages/CRM/activity/Addactivity.html',
+            //    data:{title:'添加活动'}
+            //})
+
+
+          //-----------------------end-------------------
 
           function load(srcs, callback) {
             return {
