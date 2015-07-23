@@ -179,7 +179,11 @@ namespace Zerg.Models.CRM
         /// 邀请码
         /// </summary>
         public virtual string inviteCode { get; set; }
-      
+        /// <summary>
+        /// 邀请码验证
+        /// </summary>
+        public virtual string code { get; set; }
+
 
 
 

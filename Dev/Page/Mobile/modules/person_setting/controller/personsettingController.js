@@ -15,7 +15,9 @@ app.controller('personsettingController',['$scope','$http','$state','AuthService
         Email:'',
         Phone:'',
         Headphoto:'',
-        WeiXinNumber:''
+        WeiXinNumber:'',
+        InvitedCode:''
+
 
     };
     $scope.currentuser= AuthService.CurrentUser();
@@ -67,10 +69,13 @@ app.controller('personsettingController',['$scope','$http','$state','AuthService
 
         $http.post(SETTING.ApiUrl+'/BrokerInfo/UpdateBroker', $scope.olduser)
             .success(function(data) {
-            	var img = document.getElementById('imghead');
-            	img.src = $scope.olduser.Headphoto;
-                $state.go("app.personal");
-            	location.reload([true]);
+                if(data.Status) {
+                    var img = document.getElementById('imghead');
+                    img.src = $scope.olduser.Headphoto;
+                    $state.go("app.personal");
+                    location.reload([true]);
+
+                }
             });
     }
 }])
