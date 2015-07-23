@@ -1,23 +1,21 @@
 package com.yoopoon.home.ui.home;
 
 import java.util.ArrayList;
-
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
-
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
@@ -30,7 +28,8 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
-
+import android.widget.TextView;
+import android.widget.Toast;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.SearchActionBarActivity;
@@ -44,24 +43,36 @@ public class FramMainActivity extends SearchActionBarActivity {
 	ViewPager mainPager;
 	@ViewById(R.id.search_layout)
 	LinearLayout searchLayout;
+	@ViewById(R.id.tv_main_network)
+	TextView tv_network;
+
+	@Click(R.id.tv_main_network)
+	void setNetwork() {
+		Intent intent = new Intent("android.settings.SETTINGS");
+		startActivity(intent);
+	}
+
 	boolean isOpenAgent = true;
 	public static FramMainActivity instance;
 	HomeMainAdapter pageAdapter;
 	ArrayList<FragmentInfo> fInfo;
-	
+
 	@AfterInject
 	void initData() {
 		instance = this;
 		fInfo = new ArrayList<FragmentInfo>();
 	}
+
 	@AfterViews
 	void initUI() {
+		checkNetworkState();
 		MyApplication.getInstance().addActivity(this);
 		searchLayout.addView(rootView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		initMenu();
 		initFragments();
 		begin();
 	}
+
 	void initFragments() {
 		Bundle argActive = new Bundle();
 		fInfo.add(new FragmentInfo(FramActiveFragment_.class, argActive));
@@ -74,6 +85,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 		Bundle argMe = new Bundle();
 		fInfo.add(new FragmentInfo(FramMeFragment_.class, argMe));
 	}
+
 	@SuppressLint("NewApi")
 	void initMenu() {
 		tabHost.setup();
@@ -87,6 +99,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 		for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
 			final int j = i;
 			tabHost.getTabWidget().getChildAt(i).setOnClickListener(new OnClickListener() {
+
 				@Override
 				public void onClick(View v) {
 					// Fragment切换的时候可以在这里进行控制
@@ -96,6 +109,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 			});
 		}
 	}
+
 	private TabSpec getTabSpec(String content, int resId, String title) {
 		MainTabView tab = MainTabView_.build(this);
 		tab.setIndicator(resId);
@@ -104,15 +118,17 @@ public class FramMainActivity extends SearchActionBarActivity {
 				.setContent(new MainTabFactory(FramMainActivity.this));
 		return tabSpec;
 	}
-	
+
 	OnPageChangeListener pageListener = new OnPageChangeListener() {
 		@Override
 		public void onPageSelected(int position) {
 			tabHost.setCurrentTab(position);
 		}
+
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 		}
+
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 		}
@@ -125,7 +141,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 		}
 	};
 	private long exitTime = 0;
-	
+
 	private void begin() {
 		pageAdapter = new HomeMainAdapter(getSupportFragmentManager(), fInfo, FramMainActivity.this);
 		mainPager.setOffscreenPageLimit(3);
@@ -133,6 +149,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 		mainPager.setOnPageChangeListener(pageListener);
 		mainPager.setCurrentItem(0);
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: onCreate
@@ -144,27 +161,64 @@ public class FramMainActivity extends SearchActionBarActivity {
 	@SuppressLint("InflateParams")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		registerLogoutBroadcast();
-		registerBrokerTakeGuestBroadcast();
+		registerReceivers();
 	}
-	
-	private BroadcastReceiver logoutReceiver = new BroadcastReceiver() {
-		public void onReceive(Context context, android.content.Intent intent) {
-			Log.i(tag, "收到用户等出广播啦！");
-			mainPager.setCurrentItem(0);
-			// 用户登出后 清除所有用户数据
-			SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(FramMainActivity.this);
-			sp.edit().clear().commit();
-			Log.i(tag, "清除sp数据啦！");
-		};
+
+	private void registerReceivers() {
+		// 网络状态广播监听
+		IntentFilter networkFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+		this.registerReceiver(receiver, networkFilter);
+
+		// 跳转至房源界面监听
+		IntentFilter houseFilter = new IntentFilter("com.yoopoon.broker_takeguest");
+		houseFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		this.registerReceiver(brokerTakeGuestReceiver, houseFilter);
+
+		// logout监听
+		IntentFilter logoutFilter = new IntentFilter("com.yoopoon.logout_action");
+		logoutFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		this.registerReceiver(receiver, logoutFilter);
+
+		// 跳转至经济人界面监听
+		IntentFilter agentFilter = new IntentFilter("com.yoopoon.OPEN_AGENT_ACITON");
+		agentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		this.registerReceiver(receiver, agentFilter);
+
+		// 跳转至个人中心界面监听
+		IntentFilter meFilter = new IntentFilter("com.yoopoon.OPEN_ME_ACTION");
+		meFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		this.registerReceiver(receiver, meFilter);
+
+		// 跳转至活动界面监听
+		IntentFilter activeFilter = new IntentFilter("com.yoopoon.OPEN_ACTIVE_ACTION");
+		activeFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		this.registerReceiver(receiver, activeFilter);
+	}
+
+	private BroadcastReceiver receiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if ("com.yoopoon.logout_action".equals(action)) {
+				mainPager.setCurrentItem(0);
+				// 用户登出后 清除所有用户数据
+				SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(FramMainActivity.this);
+				sp.edit().clear().commit();
+			} else if (ConnectivityManager.CONNECTIVITY_ACTION.equals(action)) {
+				checkNetworkState();
+			} else if ("com.yoopoon.OPEN_AGENT_ACITON".equals(action)) {
+				mainPager.setCurrentItem(2);
+			} else if ("com.yoopoon.OPEN_ME_ACTION".equals(action)) {
+				mainPager.setCurrentItem(3);
+			} else if ("com.yoopoon.OPEN_ACTIVE_ACTION".equals(action)) {
+
+				mainPager.setCurrentItem(0);
+			}
+
+		}
 	};
-	
-	private void registerLogoutBroadcast() {
-		IntentFilter filter = new IntentFilter("com.yoopoon.logout_action");
-		filter.addCategory(Intent.CATEGORY_DEFAULT);
-		this.registerReceiver(logoutReceiver, filter);
-	}
-	
+
 	private BroadcastReceiver brokerTakeGuestReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -172,70 +226,72 @@ public class FramMainActivity extends SearchActionBarActivity {
 			mainPager.setCurrentItem(1);
 		}
 	};
-	
-	private void registerBrokerTakeGuestBroadcast() {
-		IntentFilter intentFilter = new IntentFilter("com.yoopoon.broker_takeguest");
-		intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
-		this.registerReceiver(brokerTakeGuestReceiver, intentFilter);
+
+	private void checkNetworkState() {
+		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+		if (info != null && info.isAvailable() && info.isConnected()) {
+			tv_network.setVisibility(View.GONE);
+
+		} else {
+			tv_network.setVisibility(View.VISIBLE);
+		}
 	}
-	
-	private AlertDialog dialog;
-	
+
 	public void onBackPressed() {
-		Builder builder = new Builder(this);
-		builder.setMessage("确定要退出应用程序吗？");
-		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-				// 若用户没有选择记住用户，清楚sp
-				SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(FramMainActivity.this);
+		if ((System.currentTimeMillis() - exitTime) > 2000) {
+			Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+			exitTime = System.currentTimeMillis();
+		} else {
+			// 若用户没有选择记住用户，清空sp
+			SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+			boolean remember = sp.getBoolean("remember", false);
+			if (!remember) {
 				Editor editor = sp.edit();
 				editor.clear();
 				editor.commit();
-				android.os.Process.killProcess(android.os.Process.myPid()); // 获取PID
-				System.exit(0);
 			}
-		});
-		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-		dialog = builder.show();
+
+			finish();
+			System.exit(0);
+		}
 	}
+
 	@Override
 	protected void onRestart() {
 		super.onRestart();
 	}
+
 	@Override
 	protected void onDestroy() {
-		this.unregisterReceiver(logoutReceiver);
+		this.unregisterReceiver(receiver);
 		this.unregisterReceiver(brokerTakeGuestReceiver);
 		super.onDestroy();
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
+
 	}
+
 	@Override
 	protected void onStop() {
-		if (dialog == null)
-			dialog = null;
 		super.onStop();
 	}
+
 	@Override
 	protected void onStart() {
 		super.onStart();
 	}
-	
+
 	class MainTabFactory implements TabHost.TabContentFactory {
 		private final Context mContext;
-		
+
 		public MainTabFactory(Context context) {
 			mContext = context;
 		}
+
 		@Override
 		public View createTabContent(String tag) {
 			View v = new View(mContext);
@@ -244,26 +300,30 @@ public class FramMainActivity extends SearchActionBarActivity {
 			return v;
 		}
 	}
-	
+
 	@Override
 	public void finish() {
 		MyApplication.getInstance().removeActivity(this);
 		super.finish();
 	}
+
 	@Override
 	protected int getHeight() {
 		// TODO Auto-generated method stub
 		return mainPager.getHeight();
 	}
+
 	@Override
 	protected View getParentView() {
 		// TODO Auto-generated method stub
 		return mainPager;
 	}
+
 	@Override
 	protected void showResult(JSONArray optJSONArray) {
 		searchLayout.setVisibility(View.VISIBLE);
 	}
+
 	@Override
 	protected void cleanSearch() {
 		searchLayout.setVisibility(View.GONE);

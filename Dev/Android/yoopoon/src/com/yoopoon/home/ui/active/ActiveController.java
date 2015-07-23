@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class ActiveController extends GridViewController {
 			// int[] {
 			// R.drawable.bawangcan, R.drawable.movie, R.drawable.anmo }));
 			mGridView.setOnItemClickListener(new OnItemClickListener() {
+
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					onGridItemClick(parent, view, position, id);
@@ -183,6 +185,7 @@ public class ActiveController extends GridViewController {
 	}
 
 	class Holder {
+
 		TextView title;
 		TextView adTitle;
 		ImageView img;
@@ -196,6 +199,13 @@ public class ActiveController extends GridViewController {
 
 	@Override
 	public void onGridItemClick(AdapterView<?> parent, View view, int position, long id) {
+		if (position == 0) {
+			Intent intent = new Intent("com.yoopoon.OPEN_AGENT_ACITON");
+			intent.addCategory(Intent.CATEGORY_DEFAULT);
+			mContext.sendBroadcast(intent);
+			return;
+		}
+
 		HTML5Activity_.intent(mContext).url("http://newcrowd.iyookee.cn:8080/CrowdList/crowdlist").title("全民众筹")
 				.start();
 	}

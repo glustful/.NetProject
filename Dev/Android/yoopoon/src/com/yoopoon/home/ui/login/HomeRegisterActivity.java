@@ -9,6 +9,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONObject;
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -40,10 +42,11 @@ import com.yoopoon.home.data.user.User;
 
 @EActivity(R.layout.home_register_activity)
 public class HomeRegisterActivity extends MainActionBarActivity {
+
+	private static final String TAG = "HomeRegisterActivity";
+
 	@ViewById(R.id.register_id_err)
 	TextView mErrorText;
-	@ViewById(R.id.register_id_email)
-	EditText mEmailText;
 	@ViewById(R.id.register_id_confire_pwd)
 	EditText mPwdConfireText;
 	@ViewById(R.id.register_id_phone)
@@ -116,16 +119,12 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 
 	}
 
-	@TextChange(R.id.register_id_email)
-	void mailTextChange(CharSequence text, TextView textView, int before, int start, int count) {
-		if (TextUtils.isEmpty(text)) {
-			delMailButton.setVisibility(View.GONE);
-
-		} else {
-			delMailButton.setVisibility(View.VISIBLE);
-
-		}
-	}
+	/*
+	 * @TextChange(R.id.register_id_email) void mailTextChange(CharSequence text, TextView textView,
+	 * int before, int start, int count) { if (TextUtils.isEmpty(text)) {
+	 * delMailButton.setVisibility(View.GONE); } else { delMailButton.setVisibility(View.VISIBLE); }
+	 * }
+	 */
 
 	@TextChange(R.id.register_id_pwd)
 	void passwordTextChange(CharSequence text, TextView textView, int before, int start, int count) {
@@ -160,11 +159,10 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		}
 	}
 
-	@Click(R.id.delMailBtn)
-	void delMailClick(View v) {
-		mEmailText.setText("");
-		mEmailText.requestFocus();
-	}
+	/*
+	 * @Click(R.id.delMailBtn) void delMailClick(View v) { mEmailText.setText("");
+	 * mEmailText.requestFocus(); }
+	 */
 
 	@Click(R.id.delPwdBtn)
 	void delPwdClick(View v) {
@@ -204,17 +202,13 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 	@Click(R.id.register_id_register)
 	void register() {
 
-		String eMail = mEmailText.getText().toString();
+		/* String eMail = mEmailText.getText().toString(); */
 		String pwd = mPwdText.getText().toString();
 
-		if (eMail == null || eMail.length() == 0) {
-			showError("请输入用户名");
-			return;
-		}
-		if (eMail.length() < 6) {
-			showError("用户名至少6个字符");
-			return;
-		}
+		/*
+		 * if (eMail == null || eMail.length() == 0) { showError("请输入用户名"); return; } if
+		 * (eMail.length() < 6) { showError("用户名至少6个字符"); return; }
+		 */
 
 		if (pwd == null || pwd.length() == 0) {
 			showError("请输入密码");
@@ -241,35 +235,44 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		}
 		Utils.hiddenSoftBorad(mContext);
 		String json = "{";
-		json += "\"UserName\":\"" + eMail + "\",";
+		json += "\"UserName\":\"" + phone + "\",";
 		json += "\"Password\":\"" + pwd + "\",";
 		json += "\"SecondPassword\":\"" + confire + "\",";
 		json += "\"Phone\":\"" + phone + "\",";
 		json += "\"MobileYzm\":\"" + no + "\",";
 		json += "\"Hidm\":\"" + mobileYzm + "\",";
-		requestRegeter(eMail, pwd, json);
+		requestRegeter(phone, pwd, json);
 	}
 
 	@UiThread
-	void requestRegeter(final String eMail, final String pwd, String json) {
+	void requestRegeter(final String phone, final String pwd, String json) {
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
+				Log.i(TAG, data.toString());
 				if (data.getResultState() == ResultState.eSuccess) {
+					JSONObject obj = data.getJsonObject2();
 					ObjectMapper om = new ObjectMapper();
-					try {
-						User mUser = new User();
-						mUser.setUserName(eMail);
-						mUser.setPassword(pwd);
-						mUser.setRemember(true);
-						String result = om.writeValueAsString(mUser);
-						PreferenceManager.getDefaultSharedPreferences(mContext).edit().putString("user", result)
-								.commit();
-						HomeLoginActivity_.intent(mContext).start();
-					} catch (JsonProcessingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					boolean status = obj.optBoolean("Status", false);
+					if (status) {
+						try {
+							User mUser = new User();
+							mUser.setUserName(phone);
+							mUser.setPassword(pwd);
+							mUser.setRemember(true);
+							String result = om.writeValueAsString(mUser);
+							PreferenceManager.getDefaultSharedPreferences(mContext).edit().putString("user", result)
+									.commit();
+							HomeLoginActivity_.intent(mContext).start();
+						} catch (JsonProcessingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else {
+						String msg = data.getMsg();
+
+						showError(TextUtils.isEmpty(msg) ? "验证码错误，请重新发送" : msg);
 					}
 					return;
 				}

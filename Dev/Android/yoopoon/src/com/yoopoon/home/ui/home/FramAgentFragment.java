@@ -6,6 +6,7 @@ import org.androidannotations.annotations.EFragment;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
@@ -23,6 +24,7 @@ import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
+import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.ui.AD.ADController;
 import com.yoopoon.home.ui.active.ActiveController;
 import com.yoopoon.home.ui.agent.AgentBrandAdapter;
@@ -37,14 +39,21 @@ import com.yoopoon.home.ui.agent.RichesView_;
 public class FramAgentFragment extends FramSuper implements OnClickListener {
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
-		// TODO Auto-generated method stub
 		super.setUserVisibleHint(isVisibleToUser);
-		if (isVisibleToUser && isFirst) {
-			isFirst = false;
-			requestList();
-			requestActiveList();
-			requestBrandList();
+
+		if (isVisibleToUser) {
+			User user = User.lastLoginUser(getActivity());
+			if (user == null || !user.isBroker()) {
+				Intent intent = new Intent("com.yoopoon.OPEN_ME_ACTION");
+				intent.addCategory(Intent.CATEGORY_DEFAULT);
+				getActivity().sendBroadcast(intent);
+			} else {
+				requestList();
+				requestActiveList();
+				requestBrandList();
+			}
 		}
+
 	}
 
 	View rootView;
@@ -222,6 +231,29 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 			}
 		}.setUrl(getString(R.string.url_brand_getOneBrand)).setRequestMethod(RequestMethod.eGet).addParam(parameter)
 				.notifyRequest();
+	}
+
+	/*
+	 * (non Javadoc)
+	 * @Title: onResume
+	 * @Description: TODO
+	 * @see android.support.v4.app.Fragment#onResume()
+	 */
+	@Override
+	public void onResume() {
+
+		super.onResume();
+	}
+
+	/*
+	 * (non Javadoc)
+	 * @Title: onStart
+	 * @Description: TODO
+	 * @see android.support.v4.app.Fragment#onStart()
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
 	}
 
 	/*
