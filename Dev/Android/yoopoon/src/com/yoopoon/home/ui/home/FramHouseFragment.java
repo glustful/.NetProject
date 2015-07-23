@@ -230,7 +230,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			type_textview.setText("类型");
 			price_textview.setText("价格");
 			setBrokerBackground = false;
-			houseListViewAdapter.refresh(houseListJsonObjects, false);
+			houseListViewAdapter.setSetBrokerBackground(true);
+			houseListViewAdapter.refresh(houseListJsonObjects);
 		}
 	}
 	
@@ -241,7 +242,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	private BroadcastReceiver houseFramRefreshReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			houseListViewAdapter.refresh(houseListJsonObjects, false);
+			houseListViewAdapter.refresh(houseListJsonObjects);
 		}
 	};
 	
@@ -259,7 +260,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			setBrokerBackground = intent.getBooleanExtra("comeFromBroker", false);
-			houseListViewAdapter.refresh(houseListJsonObjects, setBrokerBackground);
+			houseListViewAdapter.refresh(houseListJsonObjects);
 			Log.i(LOGTAG, setBrokerBackground + "   标记从经纪人过来的状态");
 		}
 	};
@@ -445,7 +446,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					JSONArray list = data.getMRootData().optJSONArray("List");
 					String houseCount = data.getMRootData().optString("TotalCount");
 					if (list == null || list.length() < 1) {
-						houseListViewAdapter.refresh(houseListJsonObjects, false);
+						houseListViewAdapter.refresh(houseListJsonObjects);
 						//如果没有返回值，则设置楼盘数量为0
 						initHouseTotalCountTextView("0");
 						return;
@@ -453,7 +454,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					for (int i = 0; i < list.length(); i++) {
 						houseListJsonObjects.add(list.optJSONObject(i));
 					}
-					houseListViewAdapter.refresh(houseListJsonObjects, false);
+					houseListViewAdapter.refresh(houseListJsonObjects);
 					initHouseTotalCountTextView(houseCount);
 				}
 			}
@@ -487,7 +488,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		requestHouseTotalCount();
 		houseListView.setFastScrollEnabled(false);
 		houseListView.setFadingEdgeLength(0);
-		houseListViewAdapter = new HouseListViewAdapter(mContext, setBrokerBackground);
+		houseListViewAdapter = new HouseListViewAdapter(mContext);
 		houseListView.setAdapter(houseListViewAdapter);
 		// 开启一个异步线程，获取广告数据，同时加载广告数据
 		requestAdvertisements();
@@ -853,5 +854,10 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	//###############################################################################################
 	@AfterInject
 	void afterInject() {
+	}
+	@Override
+	public void setTitle() {
+		houseListViewAdapter.setSetBrokerBackground(false);
+		houseListViewAdapter.notifyDataSetInvalidated();
 	}
 }
