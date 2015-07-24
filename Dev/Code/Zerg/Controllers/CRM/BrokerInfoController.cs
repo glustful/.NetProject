@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
+using System.Transactions;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CRM.Entity.Model;
@@ -16,6 +17,8 @@ using CRM.Service.Level;
 using CRM.Service.MessageDetail;
 using CRM.Service.PartnerList;
 using CRM.Service.RecommendAgent;
+using Trading.Entity.Model;
+using Trading.Service.AgentBill;
 using YooPoon.Core.Site;
 using YooPoon.WebFramework.Authentication.Entity;
 using YooPoon.WebFramework.User.Entity;
@@ -45,6 +48,7 @@ namespace Zerg.Controllers.CRM
         private readonly IEventOrderService _eventOrderService;
         private readonly IInviteCodeService _inviteCodeService;
         private readonly ILevelService _levelService;
+        private readonly IAgentBillService _agentBillService;
 
         /// <summary>
         /// 经纪人管理初始化
@@ -68,7 +72,8 @@ namespace Zerg.Controllers.CRM
             IBrokeAccountService brokerAccountService,
             IEventOrderService eventOrderService,
             IInviteCodeService inviteCodeService,
-            ILevelService levelService
+            ILevelService levelService,
+            IAgentBillService agentBillService
             )
         {
             _clientInfoService = clientInfoService;
@@ -83,6 +88,7 @@ namespace Zerg.Controllers.CRM
             _eventOrderService = eventOrderService;
             _inviteCodeService = inviteCodeService;
             _levelService = levelService;
+            _agentBillService = agentBillService;
         }
 
 
@@ -397,124 +403,187 @@ namespace Zerg.Controllers.CRM
                                 State = 0
                             };
                             var con = _inviteCodeService.GetInviteCodeByCondition(invite).FirstOrDefault();//查询邀请码是否存在并且未使用
+                            var eventcon = new EventOrderSearchCondition //判断该经济人有无参与活动 等于0是没参与 等于1是参与过
 
-                            if (con != null) //存在 未使用
                             {
-                                #region 添加到活动订单 经纪人账户表 修改经纪人等级 生成3个邀请码 并发送到手机
-                                //添加活动订单信息
-                                EventOrderEntity emodel = new EventOrderEntity();
-                                emodel.AcDetail = "完整经济人资料奖励30元";
-                                emodel.Addtime = DateTime.Now;
-                                emodel.MoneyCount = 30;
-                                emodel.Broker = brokerModel;
-                                _eventOrderService.Create(emodel);
+                                Brokers = _brokerService.GetBrokerById(brokerModel.Id)
+                            };
+                            var num = _eventOrderService.GetEventOrderCount(eventcon);//查询活动订单表有无该经纪人
 
-                                //添加到经纪人账户表
-                                BrokeAccountEntity brokeraccountmodel = new BrokeAccountEntity();
-                                brokeraccountmodel.MoneyDesc = "完整经济人资料奖励30元";
-                                brokeraccountmodel.Balancenum = 30;
-                                brokeraccountmodel.Adduser = brokerModel.Id;
-                                brokeraccountmodel.Addtime = DateTime.Now;
-                                brokeraccountmodel.Upuser = brokerModel.Id;
-                                brokeraccountmodel.Uptime = DateTime.Now;
-                                brokeraccountmodel.Broker = brokerModel;
-                                brokeraccountmodel.Type = 2;
-                                brokeraccountmodel.State = 0;
-                                _brokerAccountService.Create(brokeraccountmodel);
-
-
-                                //修改邀请码表信息
-                                con.NumUser = brokerModel.Id;
-                                con.UseTime = DateTime.Now;
-                                con.State = 1;
-                                _inviteCodeService.Update(con);
-
-                                //更新等级
-                                brokerModel.Level = level;                   
-                                _brokerService.Update(brokerModel);
-                                
-
-                                //并且生成3个邀请码发送到手机端口 并插入库中
-                                string randmNums = string.Empty;
-                                for (int i = 0; i < 3; i++)
+                            if (con != null && num==0) //存在 未使用  并且该经纪人未参与过活动
+                            {
+                                using (TransactionScope tsCope = new TransactionScope(TransactionScopeOption.RequiresNew))
                                 {
-                                    string rans = GenerateRandomNumber(6);
-                                    randmNums += rans + ",";
+                                    #region 添加到活动订单 经纪人账户表 AgentBill表 修改经纪人等级 生成3个邀请码  并发送到手机
 
-                                    InviteCodeEntity inviteCode = new InviteCodeEntity();
-                                    inviteCode.CreatTime = DateTime.Now;
-                                    inviteCode.Number = rans;
-                                    inviteCode.UseTime = DateTime.Now;
-                                    inviteCode.State = 0;
-                                    inviteCode.Broker = brokerModel;
-                                    _inviteCodeService.Create(inviteCode);                                  
+                                    //添加活动订单信息
+                                    EventOrderEntity emodel = new EventOrderEntity();
+                                    emodel.AcDetail = "完整经济人资料奖励30元";
+                                    emodel.Addtime = DateTime.Now;
+                                    emodel.MoneyCount = 30;
+                                    emodel.Broker = brokerModel;
+                                    _eventOrderService.Create(emodel);
+
+                                    //添加到经纪人账户表brokeraccount
+                                    BrokeAccountEntity brokeraccountmodel = new BrokeAccountEntity();
+                                    brokeraccountmodel.MoneyDesc = "完整经济人资料奖励30元";
+                                    brokeraccountmodel.Balancenum = 30;
+                                    brokeraccountmodel.Adduser = brokerModel.Id;
+                                    brokeraccountmodel.Addtime = DateTime.Now;
+                                    brokeraccountmodel.Upuser = brokerModel.Id;
+                                    brokeraccountmodel.Uptime = DateTime.Now;
+                                    brokeraccountmodel.Broker = brokerModel;
+                                    brokeraccountmodel.Type = 2;
+                                    brokeraccountmodel.State = 0;
+                                    _brokerAccountService.Create(brokeraccountmodel);
+
+
+
+                                    //添加记录到AgentBill表
+
+                                    AgentBillEntity abmmodel=new AgentBillEntity();
+                                    abmmodel.AgentId = brokerModel.Id;
+                                    abmmodel.Agentname = brokerModel.Brokername;
+                                    abmmodel.LandagentId = 1;
+                                    abmmodel.Amount = 30;
+                                    abmmodel.Isinvoice = false;
+                                    abmmodel.Checkoutdate = DateTime.Now;
+                                    abmmodel.Addtime = DateTime.Now;
+                                    abmmodel.Updtime = DateTime.Now;
+                                    abmmodel.EventOrderId = emodel.Id;
+                                    _agentBillService.Create(abmmodel);
+                                    
+                                    
+
+                                    //修改邀请码表信息
+                                    con.NumUser = brokerModel.Id;
+                                    con.UseTime = DateTime.Now;
+                                    con.State = 1;
+                                    _inviteCodeService.Update(con);
+
+                                    //更新等级
+                                    brokerModel.Level = level;
+
+
+                                    brokerModel.Amount += 30;
+                                    _brokerService.Update(brokerModel);
+
+                               
+                                    //并且生成3个邀请码发送到手机端口 并插入库中
+                                    string randmNums = string.Empty;
+                                    for (int i = 0; i < 3; i++)
+                                    {
+                                        string rans = GenerateRandomNumber(6);
+                                        randmNums += rans + ",";
+
+                                        InviteCodeEntity inviteCode = new InviteCodeEntity();
+                                        inviteCode.CreatTime = DateTime.Now;
+                                        inviteCode.Number = rans;
+                                        inviteCode.UseTime = DateTime.Now;
+                                        inviteCode.State = 0;
+                                        inviteCode.Broker = brokerModel;
+                                        _inviteCodeService.Create(inviteCode);                                  
+                                    }
+                                    SMSHelper.Sending(brokerModel.Phone, "恭喜您完善个人信息，奖励您三个邀请码：" + randmNums + "赶快邀请小伙伴们，惊喜等你哟！" + "【优客惠】");
+                                    #endregion 
+
+                                    tsCope.Complete();
                                 }
-                                SMSHelper.Sending(brokerModel.Phone, "恭喜您完善个人信息，奖励您三个邀请码：" + randmNums + "赶快邀请小伙伴们，惊喜等你哟！" + "【优客惠】");
-                                #endregion
+                                
                             }
                             else //不存在 或已被使用
                             {
                                 #region 邀请码不存在 或已被使用 就转为青铜逻辑
 
-                                #region 青铜逻辑
-                                var levelConn = new LevelSearchCondition
-                                {
-                                    Name = "青铜"
-                                };
-                                var qlevel = _levelService.GetLevelsByCondition(levelConn).FirstOrDefault();
+                                
+                                    #region 青铜逻辑
 
-                                BrokerSearchCondition qbsearchModel = new BrokerSearchCondition
-                                {
-                                    Levels = qlevel
-
-                                };
-                              
-                                // 1判断青铜是否《=1000                             
-                                if (_brokerService.GetBrokerCount(qbsearchModel) <= 1000)
-                                {
-                                    var qinvite = new InviteCodeSearchCondition
+                                    var levelConn = new LevelSearchCondition
                                     {
-
-                                        Number = broker.code,
-                                        State = 0
+                                        Name = "青铜"
                                     };
-                                    var qcon = _inviteCodeService.GetInviteCodeByCondition(qinvite).FirstOrDefault();//查询邀请码是否存在并且未使用
-                                    if (qcon != null)
+                                    var qlevel = _levelService.GetLevelsByCondition(levelConn).FirstOrDefault();
+
+                                    BrokerSearchCondition qbsearchModel = new BrokerSearchCondition
                                     {
-                                        EventOrderEntity emodel = new EventOrderEntity();
-                                        emodel.AcDetail = "完整经济人资料无邀请码奖励20元";
-                                        emodel.Addtime = DateTime.Now;
-                                        emodel.MoneyCount = 20;
-                                        emodel.Broker = brokerModel;
-                                        _eventOrderService.Create(emodel);
+                                        Levels = qlevel
 
-                                        //添加到经纪人账户表
-                                        BrokeAccountEntity brokeraccountmodel = new BrokeAccountEntity();
-                                        brokeraccountmodel.MoneyDesc = "完整经济人资料奖励20元";
-                                        brokeraccountmodel.Balancenum = 20;
-                                        brokeraccountmodel.Adduser = brokerModel.Id;
-                                        brokeraccountmodel.Addtime = DateTime.Now;
-                                        brokeraccountmodel.Upuser = brokerModel.Id;
-                                        brokeraccountmodel.Uptime = DateTime.Now;
-                                        brokeraccountmodel.Broker = brokerModel;
-                                        brokeraccountmodel.Type = 2;
-                                        brokeraccountmodel.State = 0;
-                                        _brokerAccountService.Create(brokeraccountmodel);
+                                    };
+
+                                    // 1判断青铜是否《=1000                             
+                                    if (_brokerService.GetBrokerCount(qbsearchModel) <= 1000)
+                                    {
+                                        var qinvite = new InviteCodeSearchCondition
+                                        {
+
+                                            Number = broker.code,
+                                            State = 0
+                                        };
+                                        var qcon = _inviteCodeService.GetInviteCodeByCondition(qinvite).FirstOrDefault();
+                                            //查询邀请码是否存在并且未使用
+                                        var eventcon1 = new EventOrderSearchCondition //判断该经济人有无参与活动 等于0是没参与 等于1是参与过
+
+                                        {
+                                            Brokers = _brokerService.GetBrokerById(brokerModel.Id)
+                                        };
+                                        var num1 = _eventOrderService.GetEventOrderCount(eventcon1); //查询活动订单表有无该经纪人
+                                        if (qcon != null && num1 == 0)
+                                        {
+                                            using (TransactionScope tsCope = new TransactionScope(TransactionScopeOption.RequiresNew))
+                                            {
+                                                EventOrderEntity emodel = new EventOrderEntity();
+                                                emodel.AcDetail = "完整经济人资料无邀请码奖励20元";
+                                                emodel.Addtime = DateTime.Now;
+                                                emodel.MoneyCount = 20;
+                                                emodel.Broker = brokerModel;
+                                                _eventOrderService.Create(emodel);
+
+                                                //添加到经纪人账户表
+                                                BrokeAccountEntity brokeraccountmodel = new BrokeAccountEntity();
+                                                brokeraccountmodel.MoneyDesc = "完整经济人资料奖励20元";
+                                                brokeraccountmodel.Balancenum = 20;
+                                                brokeraccountmodel.Adduser = brokerModel.Id;
+                                                brokeraccountmodel.Addtime = DateTime.Now;
+                                                brokeraccountmodel.Upuser = brokerModel.Id;
+                                                brokeraccountmodel.Uptime = DateTime.Now;
+                                                brokeraccountmodel.Broker = brokerModel;
+                                                brokeraccountmodel.Type = 2;
+                                                brokeraccountmodel.State = 0;
+                                                _brokerAccountService.Create(brokeraccountmodel);
 
 
+                                                //添加记录到AgentBill表
+
+                                                AgentBillEntity abmmodel = new AgentBillEntity();
+                                                abmmodel.AgentId = brokerModel.Id;
+                                                abmmodel.Agentname = brokerModel.Brokername;
+                                                abmmodel.LandagentId = 1;
+                                                abmmodel.Amount = 30;
+                                                abmmodel.Isinvoice = false;
+                                                abmmodel.Checkoutdate = DateTime.Now;
+                                                abmmodel.Addtime = DateTime.Now;
+                                                abmmodel.Updtime = DateTime.Now;
+                                                abmmodel.EventOrderId = emodel.Id;
+                                                _agentBillService.Create(abmmodel);
+
+                                                brokerModel.Level = qlevel;
+                                                brokerModel.Amount += 20;
+                                                _brokerService.Update(brokerModel);
+                                                //给20元钱 等级设为青铜 
+                                                tsCope.Complete();
+                                            }
+                                    }
+                                    else
+                                    {
+                                        //等级设为青铜
                                         brokerModel.Level = qlevel;
                                         _brokerService.Update(brokerModel);
-                                        //给20元钱 等级设为青铜
+
                                     }
-                                }
-                                else
-                                {
-                                    //等级设为青铜
-                                    brokerModel.Level = qlevel;
-                                    _brokerService.Update(brokerModel);
+
+                                    #endregion
                                    
                                 }
-                                #endregion
 
                                 #endregion
                             }
@@ -528,7 +597,7 @@ namespace Zerg.Controllers.CRM
 
                         #endregion
                     }
-                    else//邀请码没有填写 给20元钱 等级设为青铜
+                    else//邀请码没有填写  没有参与过活动 给20元钱 等级设为青铜
                     {
                         #region 没有填写邀请码 给20元钱 等级设为青铜
                         var levelConn = new LevelSearchCondition
@@ -542,36 +611,60 @@ namespace Zerg.Controllers.CRM
                             Levels = qlevel
 
                         };
+                        var eventcon = new EventOrderSearchCondition //判断该经济人有无参与活动 等于0是没参与 等于1是参与过
 
-                        if (_brokerService.GetBrokerCount(qbsearchModel) <= 1000) //判断青铜是否《=1000 
+                        {
+                           Brokers = _brokerService.GetBrokerById(brokerModel.Id)
+                        };
+                       var num =  _eventOrderService.GetEventOrderCount(eventcon);
+                        //Brokers
+                        if (_brokerService.GetBrokerCount(qbsearchModel) <= 1000 && num==0) //判断青铜是否《=1000  
                         {
                             //青铜等级人数《=1000 给20元钱 等级设为青铜
+                            using (TransactionScope tsCope = new TransactionScope(TransactionScopeOption.RequiresNew))
+                            {
+                                //添加到活动订单表
+                                EventOrderEntity emodel = new EventOrderEntity();
+                                emodel.AcDetail = "完整经济人资料无邀请码奖励20元";
+                                emodel.Addtime = DateTime.Now;
+                                emodel.MoneyCount = 20;
+                                emodel.Broker = brokerModel;
+                                _eventOrderService.Create(emodel);
 
-                            //添加到活动订单表
-                            EventOrderEntity emodel = new EventOrderEntity();
-                            emodel.AcDetail = "完整经济人资料无邀请码奖励20元";
-                            emodel.Addtime = DateTime.Now;
-                            emodel.MoneyCount = 20;
-                            emodel.Broker = brokerModel;
-                            _eventOrderService.Create(emodel);
-
-                            //添加到经纪人账户表
-                            BrokeAccountEntity brokeraccountmodel = new BrokeAccountEntity();
-                            brokeraccountmodel.MoneyDesc = "完整经济人资料奖励20元";
-                            brokeraccountmodel.Balancenum = 20;
-                            brokeraccountmodel.Adduser = brokerModel.Id;
-                            brokeraccountmodel.Addtime = DateTime.Now;
-                            brokeraccountmodel.Upuser = brokerModel.Id;
-                            brokeraccountmodel.Uptime = DateTime.Now;
-                            brokeraccountmodel.Broker = brokerModel;
-                            brokeraccountmodel.Type = 2;
-                            brokeraccountmodel.State = 0;
-                            _brokerAccountService.Create(brokeraccountmodel);
+                                //添加到经纪人账户表
+                                BrokeAccountEntity brokeraccountmodel = new BrokeAccountEntity();
+                                brokeraccountmodel.MoneyDesc = "完整经济人资料奖励20元";
+                                brokeraccountmodel.Balancenum = 20;
+                                brokeraccountmodel.Adduser = brokerModel.Id;
+                                brokeraccountmodel.Addtime = DateTime.Now;
+                                brokeraccountmodel.Upuser = brokerModel.Id;
+                                brokeraccountmodel.Uptime = DateTime.Now;
+                                brokeraccountmodel.Broker = brokerModel;
+                                brokeraccountmodel.Type = 2;
+                                brokeraccountmodel.State = 0;
+                                _brokerAccountService.Create(brokeraccountmodel);
 
 
-                            brokerModel.Level = qlevel;
-                            _brokerService.Update(brokerModel);
+                                //添加记录到AgentBill表
 
+                                AgentBillEntity abmmodel = new AgentBillEntity();
+                                abmmodel.AgentId = brokerModel.Id;
+                                abmmodel.Agentname = brokerModel.Brokername;
+                                abmmodel.LandagentId = 1;
+                                abmmodel.Amount = 30;
+                                abmmodel.Isinvoice = false;
+                                abmmodel.Checkoutdate = DateTime.Now;
+                                abmmodel.Addtime = DateTime.Now;
+                                abmmodel.Updtime = DateTime.Now;
+                                abmmodel.EventOrderId = emodel.Id;
+                                _agentBillService.Create(abmmodel);
+
+
+                                brokerModel.Level = qlevel;
+                                brokerModel.Amount += 20;
+                                _brokerService.Update(brokerModel);
+                                tsCope.Complete();
+                            }
 
                         }
                         else
@@ -604,7 +697,7 @@ namespace Zerg.Controllers.CRM
         }
 
 
-        #region  生成邀请码  by yangyue
+        #region  生成邀请码  by yangyue    2015/7/20
 
         private static char[] constant =   
       {   
