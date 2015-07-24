@@ -146,6 +146,10 @@ namespace CRM.Service.InvitedCode
                 {
                     query = query.Where(q => q.Number.Contains(condition.Number));
                 }
+                if ((condition.NumUser) != null)
+                {
+                    query = query.Where(q => q.NumUser == condition.NumUser);
+                }
 
                 return query.Count();
             }
