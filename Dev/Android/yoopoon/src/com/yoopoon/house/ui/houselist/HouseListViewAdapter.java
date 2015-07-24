@@ -51,7 +51,21 @@ public class HouseListViewAdapter extends BaseAdapter {
 	int height = 0;
 	boolean setBrokerBackground = false;
 
-	public HouseListViewAdapter(Context mContext, boolean setBrokerBackground) {
+	/**
+	 * @return the setBrokerBackground
+	 */
+	public boolean isSetBrokerBackground() {
+		return setBrokerBackground;
+	}
+
+	/**
+	 * @param setBrokerBackground the setBrokerBackground to set
+	 */
+	public void setSetBrokerBackground(boolean setBrokerBackground) {
+		this.setBrokerBackground = setBrokerBackground;
+	}
+
+	public HouseListViewAdapter(Context mContext) {
 		this.mContext = mContext;
 		datas = new ArrayList<JSONObject>();
 		height = MyApplication.getInstance().getDeviceInfo((Activity) mContext).heightPixels / 6;
@@ -223,7 +237,7 @@ public class HouseListViewAdapter extends BaseAdapter {
 	 * @Description: 获取数据刷新房源页对应的楼盘ListView
 	 * @param mJsonObjects
 	 */
-	public void refresh(ArrayList<JSONObject> mJsonObjects, boolean setBrokerBackground) {
+	public void refresh(ArrayList<JSONObject> mJsonObjects) {
 		datas.clear();
 		if (mJsonObjects != null) {
 			datas.addAll(mJsonObjects);

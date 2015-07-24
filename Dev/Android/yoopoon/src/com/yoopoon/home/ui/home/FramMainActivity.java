@@ -104,6 +104,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 				public void onClick(View v) {
 					// Fragment切换的时候可以在这里进行控制
 					mSearchFunction.clearSearch();
+
 					mainPager.setCurrentItem(j);
 				}
 			});
@@ -120,9 +121,12 @@ public class FramMainActivity extends SearchActionBarActivity {
 	}
 
 	OnPageChangeListener pageListener = new OnPageChangeListener() {
+
 		@Override
 		public void onPageSelected(int position) {
 			tabHost.setCurrentTab(position);
+			FramSuper framSuper = (FramSuper) pageAdapter.getItem(position);
+			framSuper.setTitle();
 		}
 
 		@Override

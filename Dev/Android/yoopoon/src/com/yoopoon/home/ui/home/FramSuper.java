@@ -3,13 +3,14 @@ package com.yoopoon.home.ui.home;
 import android.support.v4.app.Fragment;
 
 public abstract class FramSuper extends Fragment {
-	// public abstract String getTitle();
+	public void setTitle() {
+	}
 	/*
 	 * public void test() { }
 	 *//**
-	 * @Title: Request
-	 * @Description: TODO
-	 */
+		* @Title: Request
+		* @Description: TODO
+		*/
 	/*
 	 * public static void Request(String url, final CallBack callback) { new RequestAdapter() {
 	 * @Override public void onReponse(ResponseData data) { // TODO Auto-generated method stub
