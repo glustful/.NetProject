@@ -761,6 +761,11 @@ namespace Zerg.Controllers.CRM
                 }
                 else
                 {
+                    //更新到经纪人表中 可用金额
+                    broker.Amount = Convert.ToDecimal(GetBrokerAmount());
+                    _brokerService.Update(broker);
+
+
                     var partnerCount = 0;//合伙人个数
                     var refereeCount = 0;//推荐人个数
                     var customerCount = 0;//客户个数
@@ -798,6 +803,48 @@ namespace Zerg.Controllers.CRM
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
         }
+
+
+        /// <summary>
+        /// 计算经纪人的剩余账户金额 （账户金额表 和提现表相减）
+        /// </summary>
+        /// <returns>经纪人剩余账户</returns>
+        /// 
+        [Description("查询经纪人账户余额")]
+        public string GetBrokerAmount()
+        {
+            var user = (UserBase)_workContext.CurrentUser;
+            if (user != null)
+            {
+                var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
+                if (broker != null)
+                {
+                    BrokeAccountSearchCondition broconditon = new BrokeAccountSearchCondition
+                    {
+                        Brokers = broker,
+                        State = 0
+                    };
+                    //BrokerWithdrawDetailSearchCondition browithdetailcon = new BrokerWithdrawDetailSearchCondition
+                    //{
+                    //    Brokers = broker,
+                    //    Type = "1"
+
+                    //};
+                    //decimal AddMoneys = _brokeaccountService.GetBrokeAccountsByCondition(broconditon).Count() > 0 ? _brokeaccountService.GetBrokeAccountsByCondition(broconditon).Sum(o => o.Balancenum) : 0;//新增的金额总和
+                    //decimal TxMoneys = _brokerwithdrawdetailService.GetBrokerWithdrawDetailsByCondition(browithdetailcon).Count() > 0 ? _brokerwithdrawdetailService.GetBrokerWithdrawDetailsByCondition(browithdetailcon).Sum(o => o.Withdrawnum) : 0;//提现的总金额
+                    //return (AddMoneys - TxMoneys).ToString();
+
+                    return _brokerAccountService.GetBrokeAccountsByCondition(broconditon).Count() > 0 ? _brokerAccountService.GetBrokeAccountsByCondition(broconditon).Sum(o => o.Balancenum).ToString() : "0";//金额总和
+                }
+            }
+            return "";
+
+        }
+
+
+
+
+        
         /// <summary>
         /// 传入经纪人ID,检索经纪人,返回经纪人排名顺序
         /// </summary>
