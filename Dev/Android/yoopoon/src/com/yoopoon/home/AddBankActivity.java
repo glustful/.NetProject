@@ -205,6 +205,11 @@ public class AddBankActivity extends MainActionBarActivity {
 		}.setUrl(getString(R.string.url_add_bank)).SetJSON(json).notifyRequest();
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
 	private String hidm;
 	private Timer timer;
 	private TimerTask task;

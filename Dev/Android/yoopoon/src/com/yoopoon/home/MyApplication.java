@@ -104,9 +104,9 @@ public class MyApplication extends Application {
 
 	public static DisplayImageOptions getOptions() {
 		if (mOptions == null) {
-			mOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading)
-					.showImageForEmptyUri(R.drawable.no_uri_image).showImageOnFail(R.drawable.failure)
-					.cacheInMemory(true).cacheOnDisk(true).build();
+			mOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.logo_gray)
+					.showImageForEmptyUri(R.drawable.logo_gray).showImageOnFail(R.drawable.failure).cacheInMemory(true)
+					.cacheOnDisk(true).build();
 		}
 		return mOptions;
 	}

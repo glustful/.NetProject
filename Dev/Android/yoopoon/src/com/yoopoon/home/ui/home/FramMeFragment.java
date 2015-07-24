@@ -12,8 +12,6 @@
  */
 package com.yoopoon.home.ui.home;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.androidannotations.annotations.EFragment;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +28,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.round.progressbar.CircleProgressDialog;
@@ -41,6 +42,7 @@ import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.data.user.User;
+import com.yoopoon.home.ui.active.BrandDetail2Activity_;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 import com.yoopoon.home.ui.me.BrokerInfoView;
 import com.yoopoon.home.ui.me.MeFooterView;
@@ -73,7 +75,8 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 	private boolean isVisibleToUser = false;
 	private int clientCount = 0;
 	private TextView tv_today_rec;
-	private List<View> recs = new ArrayList<View>();
+	private ListView lv_recs;
+	private MyRecsBuildAdapter adapter;
 
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -121,8 +124,7 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 		} else {
 			requestClientCount();
 			if (!isBroker) {
-				for (int i = 0; i < recs.size(); i++)
-					recs.get(i).setVisibility(View.GONE);
+				lv_recs.setVisibility(View.GONE);
 				tv_today_rec.setVisibility(View.GONE);
 				mTodayTaskCount.setVisibility(View.VISIBLE);
 				requestTodayTask();
@@ -130,23 +132,52 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 				mTodayTaskView.setVisibility(View.GONE);
 				mTodayTaskCount.setVisibility(View.GONE);
 				tv_today_rec.setVisibility(View.VISIBLE);
-				for (int i = 0; i < recs.size(); i++)
-					recs.get(i).setVisibility(View.VISIBLE);
 				fillData();
 			}
 		}
 	}
 
 	private void fillData() {
-		View rl_bg = recs.get(1).findViewById(R.id.rl_build_bg);
-		rl_bg.setBackgroundResource(R.drawable.lxzx);
-		for (int i = 0; i < recs.size(); i++) {
-			View rec = recs.get(i);
-			rec.findViewById(R.id.rl_build_bg).setOnClickListener(this);
-			rec.findViewById(R.id.tv_rec_guest).setOnClickListener(this);
-			rec.findViewById(R.id.tv_rec_call).setOnClickListener(this);
+		if (adapter == null) {
+			adapter = new MyRecsBuildAdapter();
+			lv_recs.setAdapter(adapter);
+		} else {
+			adapter.notifyDataSetChanged();
+		}
+	}
+
+	private class MyRecsBuildAdapter extends BaseAdapter {
+
+		@Override
+		public int getCount() {
+			return 2;
 		}
 
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			if (convertView == null)
+				convertView = View.inflate(getActivity(), R.layout.item_rec_build, null);
+			RelativeLayout rl_bg = (RelativeLayout) convertView.findViewById(R.id.rl_build_bg);
+			TextView tv_guest = (TextView) convertView.findViewById(R.id.tv_rec_guest);
+			TextView tv_consult = (TextView) convertView.findViewById(R.id.tv_rec_call);
+			rl_bg.setOnClickListener(FramMeFragment.this);
+			tv_guest.setOnClickListener(FramMeFragment.this);
+			tv_consult.setOnClickListener(FramMeFragment.this);
+
+			return convertView;
+		}
 	}
 
 	/**
@@ -175,8 +206,8 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 			mTodayTaskView = (TodyTaskView) rootView.findViewById(R.id.todayTask);
 			mMeFooterView = (MeFooterView) rootView.findViewById(R.id.footerView);
 			tv_today_rec = (TextView) rootView.findViewById(R.id.tv_today_recs);
-			recs.add(rootView.findViewById(R.id.v_me_rec2));
-			recs.add(rootView.findViewById(R.id.v_me_rec1));
+			lv_recs = (ListView) rootView.findViewById(R.id.lv_rec_build);
+
 		}
 		registerLoginReceiver();
 		return rootView;
@@ -314,7 +345,7 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 		switch (v.getId()) {
 			case R.id.rl_build_bg:
 			case R.id.tv_rec_guest:
-				// BrandDetailActivity_.intent(this).mJson("{}").start();
+				BrandDetail2Activity_.intent(this).mJson("{}").start();
 				break;
 			case R.id.tv_rec_call:
 				Tools.callPhone(getActivity(), "111111111");

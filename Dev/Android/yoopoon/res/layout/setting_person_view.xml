@@ -30,7 +30,7 @@
                     android:layout_gravity="center_horizontal"
                     android:padding="10dip"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/default_head_img"
+                    android:src="@drawable/logo_gray"
                     makeramen:corner_radius="100000dp" />
 
                 <TextView

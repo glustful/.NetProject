@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,13 +41,14 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
 
-		if (isVisibleToUser) {
+		if (isVisibleToUser && isFirst) {
 			User user = User.lastLoginUser(getActivity());
 			if (user == null || !user.isBroker()) {
 				Intent intent = new Intent("com.yoopoon.OPEN_ME_ACTION");
 				intent.addCategory(Intent.CATEGORY_DEFAULT);
 				getActivity().sendBroadcast(intent);
 			} else {
+				isFirst = false;
 				requestList();
 				requestActiveList();
 				requestBrandList();
@@ -149,7 +151,9 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 	}
 
 	void requestList() {
+
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
@@ -174,6 +178,7 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 
 	void requestActiveList() {
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
@@ -204,26 +209,30 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 	}
 
 	private void requestBrandList() {
-		new RequestAdapter() {
-			@Override
-			public void onReponse(ResponseData data) {
-				if (data.getResultState() == ResultState.eSuccess) {
-					JSONArray list = data.getMRootData().optJSONArray("List");
-					if (list == null || list.length() < 1)
-						return;
-					for (int i = 0; i < list.length(); i++) {
-						mJsonObjects.add(list.optJSONObject(i));
-					}
-					mAgentBrandAdapter.refresh(mJsonObjects);
-				}
-			}
+		if (mJsonObjects.size() == 0)
+			new RequestAdapter() {
 
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
-			}
-		}.setUrl(getString(R.string.url_brand_getOneBrand)).setRequestMethod(RequestMethod.eGet).addParam(parameter)
-				.notifyRequest();
+				@Override
+				public void onReponse(ResponseData data) {
+					Log.i(TAG, data.toString());
+					if (data.getResultState() == ResultState.eSuccess) {
+						JSONArray list = data.getMRootData().optJSONArray("List");
+						if (list == null || list.length() < 1)
+							return;
+						mJsonObjects.clear();
+						for (int i = 0; i < list.length(); i++) {
+							mJsonObjects.add(list.optJSONObject(i));
+						}
+						mAgentBrandAdapter.refresh(mJsonObjects);
+					}
+				}
+
+				@Override
+				public void onProgress(ProgressMessage msg) {
+					// TODO Auto-generated method stub
+				}
+			}.setUrl(getString(R.string.url_brand_getOneBrand)).setRequestMethod(RequestMethod.eGet)
+					.addParam(parameter).notifyRequest();
 	}
 
 	/*

@@ -83,7 +83,9 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="#88000000"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical" >
 
         <TextView
             android:id="@+id/product_detail_take_guest"
@@ -104,6 +106,11 @@
             android:text="我要推荐"
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
+        <View
+            android:layout_width="1dp"
+            android:layout_margin="5dp"
+            android:layout_height="30dp"
+            android:background="@drawable/vertical_line"/>
 
         <TextView
             android:id="@+id/product_detail_consultation"

@@ -204,8 +204,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (NetworkUtils.isNetworkConnected(context)) {
-				requestAdvertisements();
-				requestHouseList();
+				// requestAdvertisements();
+				// requestHouseList();
 			}
 		}
 	};

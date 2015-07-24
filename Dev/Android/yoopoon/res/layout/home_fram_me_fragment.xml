@@ -49,23 +49,18 @@
                 android:layout_width="match_parent"
                 android:padding="10dp"
                 android:textSize="@dimen/large_textSize"
-                android:textColor="#5500ff00"
+                android:textColor="#5500fff0"
                 android:text="今日楼盘推荐"/>
             
 
-            <include
-                android:id="@+id/v_me_rec1"
-                layout="@layout/item_rec_build"
+            <com.yoopoon.home.ui.view.MyListView
+                android:divider="@null"
+                android:dividerHeight="10dp"
+                android:id="@+id/lv_rec_build"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp" />
             
-            <include
-                android:id="@+id/v_me_rec2"
-                layout="@layout/item_rec_build"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"/>
 
             <com.yoopoon.home.ui.me.MeFooterView_
                 android:id="@+id/footerView"

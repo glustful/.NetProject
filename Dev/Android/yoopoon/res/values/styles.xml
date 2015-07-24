@@ -80,7 +80,7 @@
     <style name="EditText_Normal" parent="TextView_GrayText">
         <item name="android:padding">10dp</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:background">@drawable/setting_edit_bg</item>
+        <item name="android:background">#ffffff</item>
     </style>
 
     <style name="EditText_Transparent_Bg" parent="TextView_GrayText">
@@ -112,6 +112,14 @@
     <style name="Red_Button_MarginTop">
         <item name="android:layout_marginTop">35dp</item>
         <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/little_whitle</item>
+        <item name="android:background">@drawable/cycle_selector</item>
+    </style>
+    
+    <style name="Red_Button_MarginTop_WrapContent">
+        <item name="android:layout_marginTop">35dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/little_whitle</item>
         <item name="android:background">@drawable/cycle_selector</item>
@@ -209,6 +217,13 @@
         <item name="android:padding">5dp</item>
         <item name="android:background">#88000000</item>
         <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="Layout_Black_Shadow">
+        <item name="android:padding">5dp</item>
+        <item name="android:background">#88000000</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textStyle">bold</item>
     </style>

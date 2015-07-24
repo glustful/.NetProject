@@ -62,7 +62,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="150dp"
+            android:layout_width="100dp"
             android:layout_height="0dp"
             android:layout_alignBottom="@id/img"
             android:layout_alignParentRight="true"

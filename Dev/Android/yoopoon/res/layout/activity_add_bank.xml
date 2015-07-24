@@ -6,8 +6,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical"
         android:padding="20dp" >
+
+        <requestFocus />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -54,7 +58,8 @@
             android:id="@+id/et_addbank_num"
             style="@style/EditText_Normal"
             android:layout_marginTop="5dp"
-            android:hint="请填写银行卡号" />
+            android:hint="请填写银行卡号"
+            android:inputType="number" />
 
         <TextView
             android:id="@+id/tv_addbank_warning1"
@@ -87,7 +92,8 @@
             android:id="@+id/et_addbank_address"
             style="@style/EditText_Normal"
             android:layout_marginTop="5dp"
-            android:hint="请填写详细开户银行地址" />
+            android:hint="请填写详细开户银行地址"
+            android:lines="3" />
 
         <TextView
             android:id="@+id/tv_addbank_warning3"
@@ -114,6 +120,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/btn_add_bank_getcode"
                 android:hint="请输入验证码"
+                android:inputType="number"
+                android:singleLine="true"
                 android:textColor="@color/setting_text"
                 android:textSize="14sp" />
 

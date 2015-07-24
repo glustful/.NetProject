@@ -210,7 +210,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 			} else if ("com.yoopoon.OPEN_AGENT_ACITON".equals(action)) {
 				mainPager.setCurrentItem(2);
 			} else if ("com.yoopoon.OPEN_ME_ACTION".equals(action)) {
-				mainPager.setCurrentItem(3);
+				// mainPager.setCurrentItem(3);
 			} else if ("com.yoopoon.OPEN_ACTIVE_ACTION".equals(action)) {
 
 				mainPager.setCurrentItem(0);

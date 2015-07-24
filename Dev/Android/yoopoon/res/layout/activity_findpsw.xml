@@ -5,7 +5,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent" 
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <requestFocus />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,6 +35,8 @@
                 <EditText
                     android:id="@+id/et_findpsw_phone"
                     style="@style/EditText_Transparent_Bg"
+                    android:inputType="number"
+                    android:singleLine="true"
                     android:hint="请输入绑定的手机号码" />
 
                 <ImageButton
@@ -54,7 +59,8 @@
                     android:id="@+id/et_findpsw_new"
                     style="@style/EditText_Transparent_Bg"
                     android:hint="请输入新密码"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword" 
+                    android:singleLine="true"/>
 
                 <ImageButton
                     android:id="@+id/ib_findpsw_clean_new"
@@ -76,7 +82,8 @@
                     android:id="@+id/et_findpsw_confirm"
                     style="@style/EditText_Transparent_Bg"
                     android:hint="请确认新密码"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword" 
+                    android:singleLine="true"/>
 
                 <ImageButton
                     android:id="@+id/ib_findpsw_clean_confirm"
@@ -109,6 +116,8 @@
 
                 <EditText
                     android:id="@+id/et_findpsw_code"
+                    android:inputType="number"
+                    android:singleLine="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/btn_findpsw_getcode"
