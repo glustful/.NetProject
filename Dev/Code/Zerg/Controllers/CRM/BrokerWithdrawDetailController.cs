@@ -242,6 +242,10 @@ namespace Zerg.Controllers.CRM
                         {
                             foreach (var p in MoneyEntity.Ids.Split(','))
                             {
+                                if(string.IsNullOrEmpty(p))
+                                {
+                                    continue;
+                                }
                                 var broaccount = _brokeaccountService.GetBrokeAccountById(Convert.ToInt32(p));//获取该笔账户
                                 if (broaccount.Broker.Id != broker.Id)//判断该笔账户金额是否是当前这个经纪人
                                 {
@@ -285,6 +289,9 @@ namespace Zerg.Controllers.CRM
                                 brokeraccount.State = -1;
                                 _brokeaccountService.Update(brokeraccount);
                             }
+                            //更新到经纪人表中 可用金额
+                            broker.Amount = Convert.ToDecimal(GetBrokerAmount());
+                            _brokerService.Update(broker);
 
                             return PageHelper.toJson(PageHelper.ReturnValue(true, "提现申请成功！"));
                         }
@@ -367,17 +374,20 @@ namespace Zerg.Controllers.CRM
                 {
                     BrokeAccountSearchCondition broconditon = new BrokeAccountSearchCondition
                     {
-                        Brokers = broker
-                    };
-                    BrokerWithdrawDetailSearchCondition browithdetailcon = new BrokerWithdrawDetailSearchCondition
-                    {
                         Brokers = broker,
-                        Type = "1"
-
+                        State=0
                     };
-                    decimal AddMoneys = _brokeaccountService.GetBrokeAccountsByCondition(broconditon).Count() > 0 ? _brokeaccountService.GetBrokeAccountsByCondition(broconditon).Sum(o => o.Balancenum) : 0;//新增的金额总和
-                    decimal TxMoneys = _brokerwithdrawdetailService.GetBrokerWithdrawDetailsByCondition(browithdetailcon).Count() > 0 ? _brokerwithdrawdetailService.GetBrokerWithdrawDetailsByCondition(browithdetailcon).Sum(o => o.Withdrawnum) : 0;//提现的总金额
-                    return (AddMoneys - TxMoneys).ToString();
+                    //BrokerWithdrawDetailSearchCondition browithdetailcon = new BrokerWithdrawDetailSearchCondition
+                    //{
+                    //    Brokers = broker,
+                    //    Type = "1"
+
+                    //};
+                    //decimal AddMoneys = _brokeaccountService.GetBrokeAccountsByCondition(broconditon).Count() > 0 ? _brokeaccountService.GetBrokeAccountsByCondition(broconditon).Sum(o => o.Balancenum) : 0;//新增的金额总和
+                    //decimal TxMoneys = _brokerwithdrawdetailService.GetBrokerWithdrawDetailsByCondition(browithdetailcon).Count() > 0 ? _brokerwithdrawdetailService.GetBrokerWithdrawDetailsByCondition(browithdetailcon).Sum(o => o.Withdrawnum) : 0;//提现的总金额
+                    //return (AddMoneys - TxMoneys).ToString();
+
+                    return _brokeaccountService.GetBrokeAccountsByCondition(broconditon).Count() > 0 ? _brokeaccountService.GetBrokeAccountsByCondition(broconditon).Sum(o => o.Balancenum).ToString() : "0";//金额总和
                 }
             }
             return "";
