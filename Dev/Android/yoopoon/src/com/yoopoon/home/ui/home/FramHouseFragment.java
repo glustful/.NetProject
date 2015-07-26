@@ -30,6 +30,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.appcompat.R.string;
 import android.text.format.DateUtils;
@@ -50,6 +51,7 @@ import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yoopoon.common.base.utils.NetworkUtils;
+import com.yoopoon.common.base.utils.SPUtils;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
@@ -252,7 +254,14 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			type_textview.setText("类型");
 			price_textview.setText("价格");
 			setBrokerBackground = false;
-			houseListViewAdapter.setSetBrokerBackground(true);
+
+		}
+		if (isVisibleToUser) {
+			boolean setBackground = PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean(
+					"isAgentFromReceiver", false);
+			houseListViewAdapter.setSetBrokerBackground(setBackground);
+			SPUtils.setIsAgentFromReceiver(getActivity(), false);
+
 			houseListViewAdapter.refresh(houseListJsonObjects);
 		}
 	}

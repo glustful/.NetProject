@@ -150,13 +150,13 @@ public class HouseListViewAdapter extends BaseAdapter {
 		if (setBrokerBackground == true) {
 			viewHandler.houseTakeGuestTextView.setTextColor(Color.WHITE);
 			viewHandler.houseRecommendTextView.setTextColor(Color.WHITE);
-			viewHandler.houseTakeGuestTextView.setBackground(mContext.getResources().getDrawable(R.drawable.rectangle));
-			viewHandler.houseRecommendTextView.setBackground(mContext.getResources().getDrawable(R.drawable.rectangle));
+			viewHandler.houseTakeGuestTextView.setBackgroundResource(R.drawable.rectangle);
+			viewHandler.houseRecommendTextView.setBackgroundResource(R.drawable.rectangle);
 		} else {
-			viewHandler.houseTakeGuestTextView.setTextColor(Color.BLACK);
-			viewHandler.houseRecommendTextView.setTextColor(Color.BLACK);
-			viewHandler.houseTakeGuestTextView.setBackgroundColor(Color.WHITE);
-			viewHandler.houseRecommendTextView.setBackgroundColor(Color.WHITE);
+			viewHandler.houseTakeGuestTextView.setTextColor(Color.RED);
+			viewHandler.houseRecommendTextView.setTextColor(Color.RED);
+			viewHandler.houseTakeGuestTextView.setBackgroundColor(Color.TRANSPARENT);
+			viewHandler.houseRecommendTextView.setBackgroundColor(Color.TRANSPARENT);
 		}
 		viewHandler.houseTakeGuestTextView.setOnClickListener(new OnClickListener() {
 

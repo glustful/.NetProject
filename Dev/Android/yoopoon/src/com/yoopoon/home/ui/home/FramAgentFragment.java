@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yoopoon.home.R;
@@ -41,13 +43,24 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
 
-		if (isVisibleToUser && isFirst) {
-			User user = User.lastLoginUser(getActivity());
+		if (isVisibleToUser) {
+			Log.i(TAG, "AgentFragment : visiable = " + isVisibleToUser);
+			final User user = User.lastLoginUser(getActivity());
 			if (user == null || !user.isBroker()) {
-				Intent intent = new Intent("com.yoopoon.OPEN_ME_ACTION");
-				intent.addCategory(Intent.CATEGORY_DEFAULT);
-				getActivity().sendBroadcast(intent);
-			} else {
+				isFirst = true;
+				final String text = (user == null) ? "亲，你还没登录呢" : "亲，你还不是经纪人哦";
+				handler.postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						Intent intent = new Intent("com.yoopoon.OPEN_ME_ACTION");
+						intent.addCategory(Intent.CATEGORY_DEFAULT);
+						getActivity().sendBroadcast(intent);
+						Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+					}
+				}, 100);
+				// FramMainActivity_.intent(getActivity()).start();
+			} else if (isFirst) {
 				isFirst = false;
 				requestList();
 				requestActiveList();
@@ -61,6 +74,7 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 	HashMap<String, String> parameter;
 	ArrayList<JSONObject> mJsonObjects;
 	boolean isFirst = true;
+	Handler handler = new Handler();
 
 	@Override
 	@Nullable

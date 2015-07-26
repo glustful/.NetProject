@@ -113,16 +113,21 @@ public class BrokerInfoView extends RelativeLayout {
 			// custom.setText(Tools.optInt(mRootData, "customerCount", 0) + "");
 			custom.setText(String.valueOf(clientCount));
 			money.setText(Tools.optString(mRootData, "allMoneys", "0.00"));
-			String photo = Tools.optString(mRootData, "photo", null);
-			if (!TextUtils.isEmpty(photo)) {
-				// 若photo不为空，加载头像
-				String url = "http://img.yoopoon.com/" + photo;
-				ImageLoader.getInstance().displayImage(url, headImg);
-			}
+
 		} else {
 			bLayout.setVisibility(View.GONE);
 			cLayout.setVisibility(View.VISIBLE);
-			name1.setText(Tools.optString(mRootData, "Name", "老雷斯"));
+			name1.setText(Tools.optString(mRootData, "Name", "优客惠"));
+
+		}
+
+		String photo = Tools.optString(mRootData, "photo", null);
+		if (!TextUtils.isEmpty(photo)) {
+			// 若photo不为空，加载头像
+			String url = "http://img.yoopoon.com/" + photo;
+			ImageLoader.getInstance().displayImage(url, headImg);
+		} else {
+			headImg.setImageResource(R.drawable.logo_gray);
 		}
 	}
 
@@ -131,7 +136,7 @@ public class BrokerInfoView extends RelativeLayout {
 	 * @Description: 隐藏相应布局
 	 */
 	public void hide() {
-		headImg.setImageResource(R.drawable.default_head_img);
+		headImg.setImageResource(R.drawable.logo_gray);
 		bLayout.setVisibility(View.GONE);
 	}
 

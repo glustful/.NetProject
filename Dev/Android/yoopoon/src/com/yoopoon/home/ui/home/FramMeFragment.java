@@ -129,6 +129,7 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 				mTodayTaskCount.setVisibility(View.VISIBLE);
 				requestTodayTask();
 			} else {
+				lv_recs.setVisibility(View.VISIBLE);
 				mTodayTaskView.setVisibility(View.GONE);
 				mTodayTaskCount.setVisibility(View.GONE);
 				tv_today_rec.setVisibility(View.VISIBLE);
@@ -282,7 +283,7 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 			public void onReponse(ResponseData data) {
 				CircleProgressDialog.build(getActivity(), R.style.dialog).hide();
 				if (data.getResultState() == ResultState.eSuccess) {
-					if (!data.getMsg().contains("失败")) {
+					if (data.getMRootData() != null) {
 						mBrokerInfoView.initData(data.getMRootData(), isBroker, clientCount);
 						mMeFooterView.show(isBroker);
 					}
