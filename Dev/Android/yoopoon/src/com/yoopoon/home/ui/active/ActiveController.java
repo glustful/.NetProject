@@ -83,7 +83,8 @@ public class ActiveController extends GridViewController {
 			mViews.add(mGridView);
 
 		}
-		initCircle();
+
+		// initCircle();
 		mPagerAdapter.refresh(mViews);
 
 	}

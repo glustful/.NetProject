@@ -46,5 +46,6 @@
     <string name="url_get_all_banks">/api/BankCard/SearchAllBankByUser</string>
     <string name="url_get_my_clients">/api/ClientInfo/GetStatusByUserId</string>
     <string name="url_upload">/api/Resource/Upload</string>
+    <string name="url_fortune_hero">/api/BrokerInfo/OrderByBrokerTopThree</string>
 
 </resources>

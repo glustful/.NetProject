@@ -150,7 +150,8 @@ public class ADController {
 			// 创建一个ImageView, 并设置宽高. 将该对象放入到数组中
 			imageView = new ImageView(mContext);
 
-			MarginLayoutParams lp = new MarginLayoutParams(20, 20);
+			MarginLayoutParams lp = new MarginLayoutParams(MarginLayoutParams.WRAP_CONTENT,
+					MarginLayoutParams.WRAP_CONTENT);
 			lp.rightMargin = 50;
 			// imageView.setLayoutParams(lp);
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import org.androidannotations.annotations.EFragment;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import android.content.Context;
 import android.content.Intent;
@@ -44,7 +45,6 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 		super.setUserVisibleHint(isVisibleToUser);
 
 		if (isVisibleToUser) {
-			Log.i(TAG, "AgentFragment : visiable = " + isVisibleToUser);
 			final User user = User.lastLoginUser(getActivity());
 			if (user == null || !user.isBroker()) {
 				isFirst = true;
@@ -65,6 +65,7 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 				requestList();
 				requestActiveList();
 				requestBrandList();
+				requestHeroList();
 			}
 		}
 
@@ -245,8 +246,34 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 				public void onProgress(ProgressMessage msg) {
 					// TODO Auto-generated method stub
 				}
-			}.setUrl(getString(R.string.url_brand_getOneBrand)).setRequestMethod(RequestMethod.eGet)
-					.addParam(parameter).notifyRequest();
+			}.setUrl(getString(R.string.url_brand_getOneBrand)).setRequestMethod(RequestMethod.eGet).notifyRequest();
+	}
+
+	private void requestHeroList() {
+		if (mJsonObjects.size() == 0)
+			new RequestAdapter() {
+
+				@Override
+				public void onReponse(ResponseData data) {
+					if (data.getResultState() == ResultState.eSuccess) {
+						try {
+							JSONArray array = data.getMRootData().getJSONArray("List");
+							ArrayList<JSONArray> arrays = new ArrayList<JSONArray>();
+							arrays.add(array);
+							mHeroController.show(arrays);
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+
+				@Override
+				public void onProgress(ProgressMessage msg) {
+					// TODO Auto-generated method stub
+				}
+			}.setUrl(getString(R.string.url_fortune_hero)).setRequestMethod(RequestMethod.eGet).addParam(parameter)
+					.notifyRequest();
 	}
 
 	/*
