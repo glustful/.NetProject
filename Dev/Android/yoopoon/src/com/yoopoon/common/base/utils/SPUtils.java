@@ -31,4 +31,11 @@ public class SPUtils {
 		return sp.getBoolean("isBroker", false);
 	}
 
+	public static void clearAllInfo(Context context) {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+		Editor editor = sp.edit();
+		editor.clear();
+		editor.commit();
+	}
+
 }

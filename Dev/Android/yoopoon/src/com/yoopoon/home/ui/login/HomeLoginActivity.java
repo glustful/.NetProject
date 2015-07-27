@@ -38,6 +38,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yoopoon.common.base.utils.SPUtils;
 import com.yoopoon.common.base.utils.Utils;
 import com.yoopoon.home.FindPswActivity_;
 import com.yoopoon.home.MainActionBarActivity;
@@ -198,8 +199,8 @@ public class HomeLoginActivity extends MainActionBarActivity {
 			mPwdText.setText(pwd);
 			requestLogin(eMail, pwd, auto);
 		} else {
+			SPUtils.clearAllInfo(this);
 			mPwdText.setText("");
-
 			if (!isManual) {
 				FramMainActivity_.intent(mContext).start();
 				finish();
@@ -397,12 +398,14 @@ public class HomeLoginActivity extends MainActionBarActivity {
 			String phone = obj.getString("phone");
 			String password = obj.getString("password");
 			String userId = String.valueOf(obj.getInt("id"));
+			boolean remember = User.lastLoginUser(this).remember;
 			boolean isBroker = obj.getBoolean("broker");
 			editor.putString("userName", userName);
 			editor.putString("phone", phone);
 			editor.putString("password", password);
 			editor.putString("userId", userId);
 			editor.putBoolean("isBroker", isBroker);
+			editor.putBoolean("remember", remember);
 
 			editor.commit();
 			sendLoginSuccessBroadcast();

@@ -12,7 +12,11 @@
  */
 package com.yoopoon.home.ui.home;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import org.androidannotations.annotations.EFragment;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.annotation.SuppressLint;
@@ -24,17 +28,23 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.round.progressbar.CircleProgressDialog;
 import com.yoopoon.common.base.Tools;
+import com.yoopoon.common.base.utils.StringUtils;
+import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
@@ -42,6 +52,7 @@ import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.data.user.User;
+import com.yoopoon.home.ui.active.ActiveBrandAdapter;
 import com.yoopoon.home.ui.active.BrandDetail2Activity_;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 import com.yoopoon.home.ui.me.BrokerInfoView;
@@ -77,6 +88,7 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 	private TextView tv_today_rec;
 	private ListView lv_recs;
 	private MyRecsBuildAdapter adapter;
+	private ActiveBrandAdapter brandAdapter;
 
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -139,45 +151,120 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 	}
 
 	private void fillData() {
-		if (adapter == null) {
-			adapter = new MyRecsBuildAdapter();
-			lv_recs.setAdapter(adapter);
-		} else {
-			adapter.notifyDataSetChanged();
-		}
+		initParams();
+		requestBrandList();
 	}
+
+	private List<JSONObject> datas = new ArrayList<JSONObject>();
 
 	private class MyRecsBuildAdapter extends BaseAdapter {
 
 		@Override
 		public int getCount() {
+			// TODO Auto-generated method stub
 			return 2;
 		}
 
 		@Override
 		public Object getItem(int position) {
 			// TODO Auto-generated method stub
-			return null;
+			return datas.get(position);
 		}
 
 		@Override
 		public long getItemId(int position) {
 			// TODO Auto-generated method stub
-			return 0;
+			return position;
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null)
-				convertView = View.inflate(getActivity(), R.layout.item_rec_build, null);
-			RelativeLayout rl_bg = (RelativeLayout) convertView.findViewById(R.id.rl_build_bg);
-			TextView tv_guest = (TextView) convertView.findViewById(R.id.tv_rec_guest);
-			TextView tv_consult = (TextView) convertView.findViewById(R.id.tv_rec_call);
-			rl_bg.setOnClickListener(FramMeFragment.this);
-			tv_guest.setOnClickListener(FramMeFragment.this);
-			tv_consult.setOnClickListener(FramMeFragment.this);
+			Holder mHolder;
+			if (convertView == null) {
+				convertView = LayoutInflater.from(getActivity()).inflate(R.layout.item_rec_build, null);
+				mHolder = new Holder();
+				mHolder.init(convertView);
+				convertView.setTag(mHolder);
+			} else {
+				mHolder = (Holder) convertView.getTag();
+			}
+			final JSONObject item = datas.get(position);
+			Log.i(TAG, item.toString());
+			String url = getActivity().getString(R.string.url_host_img) + item.optString("Bimg");
+			mHolder.iv.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 150));
+			mHolder.iv.setTag(url);
+			ImageLoader.getInstance().displayImage(url, mHolder.iv, MyApplication.getOptions(),
+					MyApplication.getLoadingListener());
 
+			String title = StringUtils.isEmpty(item.optString("Bname")) ? "" : item.optString("Bname");
+
+			JSONObject parameter = item.optJSONObject("ProductParamater");
+			String city = "[" + (StringUtils.isEmpty(parameter.optString("所属城市")) ? "" : parameter.optString("所属城市"))
+					+ "]";
+			String area = StringUtils.isEmpty(parameter.optString("占地面积")) ? "" : parameter.optString("占地面积");
+
+			mHolder.tv_detail2.setText(title + city + area);
+
+			// String price = parameter.optString("总价");
+			// mHolder.price.setText(StringUtils.isEmpty(area) ? "总价：110万" : price);
+
+			String adTitle = Html.fromHtml(item.optString("AdTitle")).toString();
+			String defaultAdTitle = Html.fromHtml(
+					"<span>每平米直降</span><br><b>5000元</b><br><span>1万还可抵3万</span><br><span>3万可抵15万</span><br>")
+					.toString();
+			mHolder.tv_right.setText(StringUtils.isEmpty(adTitle) ? defaultAdTitle : adTitle);
+
+			String phone = parameter.optString("来电咨询");
+
+			mHolder.tv_call.setTag(Tools.optString(parameter, "来电咨询", "10086"));
+
+			String preferential = parameter.optString("最高优惠");
+			mHolder.tv_call.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Tools.callPhone(getActivity(), v.getTag().toString());
+
+				}
+			});
+
+			mHolder.tv_guest.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					BrandDetail2Activity_.intent(getActivity()).mJson(item.toString()).start();
+
+				}
+			});
+
+			mHolder.iv.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					BrandDetail2Activity_.intent(getActivity()).mJson(item.toString()).start();
+					// BrandDetailActivity_.intent(mContext).mJson(item.toString()).start();
+
+				}
+			});
 			return convertView;
+		}
+	}
+
+	class Holder {
+		ImageView iv;
+		TextView tv_detail1;
+		TextView tv_detail2;
+		TextView tv_right;
+		TextView tv_call;
+		TextView tv_guest;
+
+		void init(View root) {
+			iv = (ImageView) root.findViewById(R.id.iv_rec);
+			tv_detail1 = (TextView) root.findViewById(R.id.tv_recs_detail);
+			tv_detail2 = (TextView) root.findViewById(R.id.tv_recs_detail1);
+			tv_right = (TextView) root.findViewById(R.id.tv_build_right);
+			tv_call = (TextView) root.findViewById(R.id.tv_rec_call);
+			tv_guest = (TextView) root.findViewById(R.id.tv_rec_guest);
 		}
 	}
 
@@ -256,6 +343,41 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 
 	}
 
+	private HashMap<String, String> params = new HashMap<String, String>();
+
+	private void initParams() {
+		params.put("page", "1");
+		params.put("pageSize", "1");
+		params.put("type", "all");
+	}
+
+	private void requestBrandList() {
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+
+				if (data.getResultState() == ResultState.eSuccess) {
+					JSONArray list = data.getMRootData().optJSONArray("List");
+					Log.i(TAG, list.toString());
+					try {
+						for (int i = 0; i < 2; i++) {
+							datas.add(list.getJSONObject(i));
+						}
+						lv_recs.setAdapter(new MyRecsBuildAdapter());
+					} catch (JSONException jsonException) {
+						jsonException.printStackTrace();
+					}
+
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+			}
+		}.setUrl(getString(R.string.url_brand_GetAllBrand)).setRequestMethod(RequestMethod.eGet).notifyRequest();
+	}
 	private BroadcastReceiver loginReceiver = new BroadcastReceiver() {
 
 		@Override

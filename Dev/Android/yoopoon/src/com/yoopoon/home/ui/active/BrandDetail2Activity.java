@@ -35,7 +35,8 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 	@Click(R.id.tv_style)
 	void style() {
 		Log.i(TAG, mJson);
-		BrandDetailActivity_.intent(this).mJson(mJson).start();
+		if (!TextUtils.isEmpty(mJson))
+			BrandDetailActivity_.intent(this).mJson(mJson).start();
 	}
 
 	@AfterViews

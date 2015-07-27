@@ -12,8 +12,13 @@
         android:id="@+id/rl_build_bg"
         android:layout_width="match_parent"
         android:layout_height="161px"
-        android:background="@drawable/ztrc"
         android:orientation="vertical" >
+        
+        <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/iv_rec"
+        android:background="@drawable/ztrc"/>
 
         <TextView
             android:id="@+id/tv_build_right"
@@ -33,6 +38,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:singleLine="true"
+            android:id="@+id/tv_recs_detail1"
             android:text="[昆明]中天融城  户型：238㎡  总价：110万" />
     </RelativeLayout>
     <com.yoopoon.home.ui.view.ScrollTextView
@@ -45,6 +51,7 @@
         android:ellipsize="marquee"
         android:focusableInTouchMode="true"
         android:focusable="true"
+        android:id="@+id/tv_recs_detail"
         android:text="购房立减5000元，交10000元抵20000元，购房还可领红包，返积分"/>
     
     <LinearLayout 
