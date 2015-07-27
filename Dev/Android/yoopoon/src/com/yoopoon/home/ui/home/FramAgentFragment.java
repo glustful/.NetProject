@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yoopoon.common.base.utils.SPUtils;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
@@ -46,7 +47,7 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 
 		if (isVisibleToUser) {
 			final User user = User.lastLoginUser(getActivity());
-			if (user == null || !user.isBroker()) {
+			if (user == null || (!user.isBroker() && !SPUtils.isBroker(getActivity()))) {
 				isFirst = true;
 				final String text = (user == null) ? "亲，你还没登录呢" : "亲，你还不是经纪人哦";
 				handler.postDelayed(new Runnable() {

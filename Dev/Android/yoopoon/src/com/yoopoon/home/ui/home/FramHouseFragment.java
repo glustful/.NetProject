@@ -69,7 +69,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	// ##############################################################################################
 	// 所有变量和属性声明如下
 	// ###############################################################################################
-	public static final String LOGTAG = "FramHouseFragment";
+	public static final String TAG = "FramHouseFragment";
 	// 当前Fragment绑定的View
 	View rootView;
 	// 房源库ListView对应的Layout
@@ -292,7 +292,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		public void onReceive(Context context, Intent intent) {
 			setBrokerBackground = intent.getBooleanExtra("comeFromBroker", false);
 			houseListViewAdapter.refresh(houseListJsonObjects);
-			Log.i(LOGTAG, setBrokerBackground + "   标记从经纪人过来的状态");
 		}
 	};
 
@@ -350,7 +349,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			@Override
 			public void callback(JSONArray jsonArray) {
 				if (jsonArray != null) {
-					Log.i(LOGTAG, jsonArray.toString());
 					houseCityJsonObjects.clear();
 					for (int i = 0; i < jsonArray.length(); i++) {
 						try {
@@ -398,6 +396,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		if (type_textview.getTag() == null) {
 			type_textview.setTag("succeed");
 			new RequestAdapter() {
+
 				@Override
 				public void onReponse(ResponseData data) {
 					if (data.getResultState() == ResultState.eSuccess) {
@@ -455,12 +454,15 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 * @Title: requestHouseTotalCount
 	 * @Description: 开启异步线程，获取当前显示的楼盘数量
 	 */
+	private int totalCount = 0;
+
 	private void requestHouseTotalCount() {
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
 					String houseTotalCountJSon = data.getMRootData().optString("TotalCount");
+					totalCount = Integer.parseInt(houseTotalCountJSon);
 					// 初始化楼盘总数量
 					initHouseTotalCountTextView(houseTotalCountJSon);
 				}
@@ -478,26 +480,28 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 * @Description: 开启异步线程，获取所有的楼盘，以ListView的形式展示出来
 	 */
 	private void requestHouseList() {
-		Log.i(LOGTAG, parameter.toString());
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				pullToRefreshListView.onRefreshComplete();
 				if (data.getResultState() == ResultState.eSuccess) {
 					JSONArray list = data.getMRootData().optJSONArray("List");
 					String houseCount = data.getMRootData().optString("TotalCount");
+					Log.i(TAG, "totalCount = " + houseCount);
 					if (list == null || list.length() < 1) {
 
 						houseListViewAdapter.refresh(houseListJsonObjects);
 						// 如果没有返回值，则设置楼盘数量为0
 
-						initHouseTotalCountTextView("0");
+						initHouseTotalCountTextView(houseListJsonObjects.size() + "");
 						return;
 					}
 					for (int i = 0; i < list.length(); i++) {
 						houseListJsonObjects.add(list.optJSONObject(i));
 					}
 					houseListViewAdapter.refresh(houseListJsonObjects);
+
 					initHouseTotalCountTextView(houseCount);
 				}
 			}
@@ -599,7 +603,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			textView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Log.i(LOGTAG, parentIdValue + "");
 					requestHouseDistrict(parentIdValue);
 				}
 			});
@@ -856,6 +859,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		parameter.put("PriceBegin", PriceBeginValue);
 		parameter.put("PriceEnd", PriceEndValue);
 		parameter.put("TypeId", TypeIdValue);
+
 	}
 
 	/**
@@ -865,11 +869,13 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 * @date: 2015年7月8日 下午3:44:26
 	 */
 	private class HowWillIrefresh implements PullToRefreshBase.OnRefreshListener2<ListView> {
+
 		@Override
 		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 			String label = DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(),
 					DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
 			refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+
 			requestHouseList();
 		}
 
@@ -881,6 +887,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			PageValue = tempCount + "";
 			initParameter();
 			requestHouseList();
+			initHouseTotalCountTextView(String.valueOf(totalCount));
 		}
 	}
 

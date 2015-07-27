@@ -89,6 +89,7 @@
             android:text="开户银行地址" />
 
         <EditText
+            android:gravity="left"
             android:id="@+id/et_addbank_address"
             style="@style/EditText_Normal"
             android:layout_marginTop="5dp"

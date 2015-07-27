@@ -217,7 +217,7 @@ public class AddBankActivity extends MainActionBarActivity {
 	private Handler handler = new Handler();
 	private Animation shake_animation;
 	private static final String TAG = "AddBankActivity";
-	private String[] banks = { "中国银行", "中国工商银行", "中国农业银行", "中国建设银行" };
+	private String[] banks = { "中国银行", "中国工商银行", "中国农业银行", "中国建设银行", "交通银行", "中国邮政储蓄银行", "民生银行", "农村信用社", "光大银行" };
 	private int checkedBank = 0;
 	private List<EditText> info_ets = new ArrayList<EditText>();
 	private List<TextView> warning_tvs = new ArrayList<TextView>();

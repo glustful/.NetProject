@@ -26,4 +26,9 @@ public class SPUtils {
 		editor.commit();
 	}
 
+	public static boolean isBroker(Context context) {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+		return sp.getBoolean("isBroker", false);
+	}
+
 }
