@@ -21,7 +21,12 @@ namespace Zerg.Controllers.Trading.CommissionRatio
         {
             _commissionRatioService = commissionRatioService;
         }
+        /// <summary>
+        /// 获取佣金比例
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage Index()
         {
             var con=new CommissionRatioSearchCondition
@@ -45,7 +50,13 @@ namespace Zerg.Controllers.Trading.CommissionRatio
             }
             return PageHelper.toJson(commissionRatio);
         }
+        /// <summary>
+        /// 修改佣金比例
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage CreateOrUpdate(Models.Trading.CommissionRatio.CommissionRatio model)
         {
             if (model.Id>0)
