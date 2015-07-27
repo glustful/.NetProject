@@ -5,6 +5,11 @@ app.controller('HousesPicController',['$http','$scope','$stateParams', function 
      $http.get(SETTING.ApiUrl+'/Product/GetProductById?productId='+$stateParams.productId,{'withCredentials':true}).success(
          function(data){
              $scope.ProductDetail=data;
+             $scope.select=false;
+             if($scope.ProductDetail.Productimg1==null)
+             {
+                 $scope.select=true;
+             }
              for(var i= 0;i<=data.ParameterValue.length;i++)
              {
                  if(data.ParameterValue[i].ParameterString=="户型")
@@ -12,7 +17,6 @@ app.controller('HousesPicController',['$http','$scope','$stateParams', function 
                      $scope.type= data.ParameterValue[i].Value;
                  }
              }
-             $scope.ProductImg=SETTING.ImgUrl+data.Productimg;
          }
      )
     }]);

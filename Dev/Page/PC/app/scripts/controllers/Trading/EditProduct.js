@@ -172,7 +172,13 @@ angular.module("app").controller('EditProductController', [
             return "undefined";
         }
     }]);
-/////////////////////////////图片修改////////////////////////////
+/**
+ * 房源库图片修改 start
+ */
+/**
+ * 上传小户型图
+ * @param file
+ */
 function updatesmallImage(file)
 {
     var div = document.getElementById('small');
@@ -219,6 +225,10 @@ function updatesmallImage(file)
         reader.readAsDataURL(files);
     }
 }
+/**
+ * 上传大户型图
+ * @param file
+ */
 function updatebigImg(file)
 {
     var div = document.getElementById('big');
@@ -265,6 +275,10 @@ function updatebigImg(file)
         reader.readAsDataURL(files);
     }
 }
+/**
+ * 上传海景图
+ * @param file
+ */
 function seascapeimg(file)
 {
     var div = document.getElementById('Seascape');
@@ -312,4 +326,3 @@ function seascapeimg(file)
     }
 }
 
-///////////////////////////图片修改//////////////////////////////////
