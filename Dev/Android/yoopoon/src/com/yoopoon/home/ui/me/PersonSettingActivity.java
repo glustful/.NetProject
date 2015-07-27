@@ -103,9 +103,12 @@ public class PersonSettingActivity extends MainActionBarActivity {
 
 	@Click(R.id.iv_person_setting_avater)
 	void selectAvater() {
+
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		intent.setType("image/*");
+
 		this.startActivityForResult(intent, 1);
+
 	}
 
 	@Click(R.id.save)
@@ -193,7 +196,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 
 				if (parseResult != null) {
 					entity = (BrokerEntity) parseResult;
-					Log.i(TAG, entity.toString());
 				}
 
 			}
@@ -202,12 +204,18 @@ public class PersonSettingActivity extends MainActionBarActivity {
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
+
 			Uri uri = data.getData();
 			if (uri != null) {
 				ContentResolver cr = this.getContentResolver();
 				try {
-					Log.i(TAG, uri.toString());
-					File file = getFile(uri);
+					File file = null;
+					if (uri.toString().startsWith("content"))
+						file = getFileByUri(uri);
+					else {
+						String path = uri.toString().substring(7);
+						file = new File(path);
+					}
 					Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
 					/* 将Bitmap设定到ImageView */
 					iv_avater.setImageBitmap(bitmap);
@@ -221,16 +229,41 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	}
 
 	private File getFile(Uri uri) {
-		String[] proj = { MediaStore.Images.Media.DATA };
+		try {
+			String[] proj = { MediaStore.Images.Media.DATA };
 
-		Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
+			Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
 
-		int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+			int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 
-		actualimagecursor.moveToFirst();
+			actualimagecursor.moveToFirst();
 
-		String img_path = actualimagecursor.getString(actual_image_column_index);
-		return new File(img_path);
+			String img_path = actualimagecursor.getString(actual_image_column_index);
+			Log.i(TAG, img_path);
+			return new File(img_path);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private File getFileByUri(Uri uri) {
+		try {
+			String[] proj = { MediaStore.Images.Media.DATA };
+			Cursor cursor = managedQuery(uri, proj, null, null, null);
+			if (cursor != null) {
+				int actual_image_column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+				cursor.moveToFirst();
+
+				String img_path = cursor.getString(actual_image_column_index);
+				File file = new File(img_path);
+				Uri fileUri = Uri.fromFile(file);
+				return file;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	private void uploadImage(final File file) {
@@ -263,6 +296,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 					@Override
 					public void onSuccess(final String json) {
 						Log.i(TAG, json);
+
 						runOnUiThread(new Runnable() {
 
 							@Override
@@ -304,7 +338,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 
 							@Override
 							public void run() {
-								tv_uploading.setText("上传失败");
+								tv_uploading.setText("上传失败>_<");
 								tv_uploading.setVisibility(View.VISIBLE);
 
 							}

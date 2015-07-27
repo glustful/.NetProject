@@ -139,19 +139,23 @@ public class FramActiveFragment extends FramSuper {
 	}
 	
 	void requestList() {
-		new RequestAdapter() {
-			@Override
-			public void onReponse(ResponseData data) {
-				if (data.getResultState() == ResultState.eSuccess) {
-					ArrayList<String> imgs = new ArrayList<String>();
-					JSONArray list = data.getJsonArray();
-					if (list == null || list.length() < 1)
-						return;
-					for (int i = 0; i < list.length(); i++) {
-						imgs.add(list.optJSONObject(i).optString("TitleImg"));
+		if (mAdController.isEmpty())
+			new RequestAdapter() {
+
+				@Override
+				public void onReponse(ResponseData data) {
+					if (data.getResultState() == ResultState.eSuccess) {
+						ArrayList<String> imgs = new ArrayList<String>();
+						JSONArray list = data.getJsonArray();
+						if (list == null || list.length() < 1)
+							return;
+						for (int i = 0; i < list.length(); i++) {
+							imgs.add(list.optJSONObject(i).optString("TitleImg"));
+						}
+						mAdController.show(imgs);
 					}
-					mAdController.show(imgs);
 				}
+
 			}
 			@Override
 			public void onProgress(ProgressMessage msg) {
@@ -159,19 +163,25 @@ public class FramActiveFragment extends FramSuper {
 			}
 		}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
 				.addParam("channelName", "banner").notifyRequest();
+
+
 	}
 	void requestActiveList() {
-		new RequestAdapter() {
-			@Override
-			public void onReponse(ResponseData data) {
-				if (data.getResultState() == ResultState.eSuccess) {
-					ArrayList<JSONArray> dataSource = new ArrayList<JSONArray>();
-					JSONArray list = data.getJsonArray();
-					if (list == null || list.length() < 1)
-						return;
-					dataSource.add(list);
-					mActiveController.show(dataSource);
+		if (mActiveController.isEmpty())
+			new RequestAdapter() {
+
+				@Override
+				public void onReponse(ResponseData data) {
+					if (data.getResultState() == ResultState.eSuccess) {
+						ArrayList<JSONArray> dataSource = new ArrayList<JSONArray>();
+						JSONArray list = data.getJsonArray();
+						if (list == null || list.length() < 1)
+							return;
+						dataSource.add(list);
+						mActiveController.show(dataSource);
+					}
 				}
+
 			}
 			@Override
 			public void onProgress(ProgressMessage msg) {
@@ -179,6 +189,7 @@ public class FramActiveFragment extends FramSuper {
 			}
 		}.setUrl(getString(R.string.url_channel_active_titleimg)).setRequestMethod(RequestMethod.eGet)
 				.addParam("ChannelName", "活动").notifyRequest();
+
 	}
 	private void requestBrandList() {
 		new RequestAdapter() {

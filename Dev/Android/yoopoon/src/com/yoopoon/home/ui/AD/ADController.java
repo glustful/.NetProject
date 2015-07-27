@@ -43,6 +43,7 @@ public class ADController {
 	private AtomicInteger atomicInteger = new AtomicInteger(0);
 	private boolean isContinue = true;
 	private List<String> urls;
+	private int adCount;
 
 	public View getRootView() {
 		if (rootView == null) {
@@ -57,6 +58,7 @@ public class ADController {
 	}
 
 	public void show(List<String> urls) {
+		this.adCount = urls.size();
 		this.urls = urls;
 		if (rootView == null)
 			return;
@@ -77,6 +79,10 @@ public class ADController {
 				}
 			}
 		}).start();
+	}
+
+	public boolean isEmpty() {
+		return !(adCount > 0);
 	}
 
 	private void initViewPager() {
@@ -205,6 +211,7 @@ public class ADController {
 	}
 
 	private final class AdPageAdapter extends PagerAdapter {
+
 		private List<View> views = null;
 
 		/**

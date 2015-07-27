@@ -28,9 +28,12 @@ public class ActiveController extends GridViewController {
 		super(context);
 	}
 
+	private int activeCount = 0;
+
 	// GridAdapter adapter;
 	@Override
 	public void show(ArrayList<JSONArray> urls) {
+
 		for (int i = 0; i < urls.size(); i++) {
 			MyGridView mGridView = new MyGridView(mContext);
 			mGridView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT,
@@ -89,6 +92,10 @@ public class ActiveController extends GridViewController {
 
 	}
 
+	public boolean isEmpty() {
+		return !(activeCount > 0);
+	}
+
 	class GridAdapter2 extends BaseAdapter {
 
 		String[] titles;
@@ -101,7 +108,8 @@ public class ActiveController extends GridViewController {
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
+
+			activeCount = titles.length;
 			return titles.length;
 		}
 
@@ -152,6 +160,7 @@ public class ActiveController extends GridViewController {
 
 		@Override
 		public int getCount() {
+			activeCount = datas.length();
 			return datas.length();
 		}
 
