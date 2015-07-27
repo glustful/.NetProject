@@ -7,15 +7,20 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.graphics.Color;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.home.MainActionBarActivity;
+import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 
 @EActivity(R.layout.activity_style)
@@ -31,14 +36,13 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 	TextView tv_subtitle;
 	@ViewById(R.id.iv_style)
 	ImageView iv_style;
-
+	
 	@Click(R.id.tv_style)
 	void style() {
 		Log.i(TAG, mJson);
 		if (!TextUtils.isEmpty(mJson))
 			BrandDetailActivity_.intent(this).mJson(mJson).start();
 	}
-
 	@AfterViews
 	void initView() {
 		backButton.setVisibility(View.VISIBLE);
@@ -47,7 +51,6 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 		titleButton.setText("楼盘详情");
 		initDatas();
 	}
-
 	private void initDatas() {
 		if (!StringUtils.isEmpty(mJson))
 			try {
@@ -72,29 +75,29 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 				String photo = parametersJsonObject.optString("图片banner");
 				if (!photo.equals("")) {
 					String url = "http://img.yoopoon.com/" + photo;
-					ImageLoader.getInstance().displayImage(url, iv_style);
+					iv_style.setTag(url);
+					iv_style.setScaleType(ScaleType.FIT_XY);
+					iv_style.setBackgroundColor(Color.RED);
+					ImageLoader.getInstance().displayImage(url, iv_style, MyApplication.getOptions(),
+							MyApplication.getLoadingListener());
 				}
 				// ######################## 徐阳会 2015年7月27日 修改 ######################### End
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 	}
-
 	@Override
 	public void backButtonClick(View v) {
 		this.finish();
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
-
 	@Override
 	public Boolean showHeadView() {
 		// TODO Auto-generated method stub
