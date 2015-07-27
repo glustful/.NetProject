@@ -560,7 +560,7 @@ namespace Zerg.Controllers.CRM
                                                 abmmodel.AgentId = brokerModel.Id;
                                                 abmmodel.Agentname = brokerModel.Brokername;
                                                 abmmodel.LandagentId = 1;
-                                                abmmodel.Amount = 30;
+                                                abmmodel.Amount =20;
                                                 abmmodel.Isinvoice = false;
                                                 abmmodel.Checkoutdate = DateTime.Now;
                                                 abmmodel.Addtime = DateTime.Now;
@@ -707,7 +707,7 @@ namespace Zerg.Controllers.CRM
         'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',   
         'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'   
       };
-        public static string GenerateRandomNumber(int Length)
+        public  string GenerateRandomNumber(int Length)
         {
             System.Text.StringBuilder newRandom = new System.Text.StringBuilder(62);
             Random rd = new Random();
@@ -717,6 +717,17 @@ namespace Zerg.Controllers.CRM
             {
                 newRandom.Append(constant[rd.Next(62)]);
             }
+            //判断邀请码是否在数据库中存在
+            var invite = new InviteCodeSearchCondition
+            {
+                Number =newRandom.ToString(),            
+            };
+            var con = _inviteCodeService.GetInviteCodeByCondition(invite).Count();//查询邀请码是否存在并且未使用
+            if(con>0)
+            {
+                GenerateRandomNumber(Length);
+            }
+
 
             return newRandom.ToString();
 
