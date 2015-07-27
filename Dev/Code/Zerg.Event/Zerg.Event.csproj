@@ -161,7 +161,7 @@
     <Content Include="packages.config" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Properties\PublishProfiles\publish.pubxml" />
+    <None Include="Properties\PublishProfiles\test1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -196,6 +196,7 @@
     <Compile Include="API\Coupon\CouponController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="API\Coupon\OtherCouponsController.cs" />
     <Compile Include="API\Crowd\CrowdApiController.cs" />
     <Compile Include="API\OtherCoupon\OtherCouponCategoryController.cs" />
     <Compile Include="API\OtherCoupon\OtherCouponController.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Controllers\Coupons\CouponsController.cs" />
     <Compile Include="Controllers\Crowd\CrowdController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OtherCoupon\OCBackController.cs" />
     <Compile Include="Controllers\OtherCoupon\OtherCouponController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -225,6 +227,14 @@
     <Folder Include="Views\Coupon\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CRM.Entity\CRM.Entity.csproj">
+      <Project>{26E023FE-C94F-440A-8192-D33E22CA09BD}</Project>
+      <Name>CRM.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CRM.Service\CRM.Service.csproj">
+      <Project>{36DC7784-4BA6-467D-A20F-B7DFCCF815FC}</Project>
+      <Name>CRM.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Event.Entity\Event.Entity.csproj">
       <Project>{3b216e08-d0ec-4aa2-98d3-1eaaca97fe07}</Project>
       <Name>Event.Entity</Name>

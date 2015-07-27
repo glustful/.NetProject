@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Cors;
 using CRM.Service.Broker;
 using Event.Entity.Entity.Coupon;
 using Event.Service.Coupon;
@@ -11,9 +13,11 @@ using YooPoon.Core.Site;
 using Zerg.Common;
 using Zerg.Event.Models.Coupons;
 
-namespace Zerg.Event.Controllers.Coupons
+namespace Zerg.Event.API.Coupon
 {
-    public class CouponsController : Controller
+    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
+    public class OtherCouponsController : ApiController
     {
         private readonly ICouponCategoryService _couponCategoryService;
         private readonly IProductBrandService _productBrandService;
@@ -22,7 +26,7 @@ namespace Zerg.Event.Controllers.Coupons
         private readonly ICouponService _couponService;
         private readonly IBrokerService _brokerService;
 
-        public CouponsController(
+        public OtherCouponsController(
             ICouponCategoryService couponCategoryService, 
             ICouponService couponService, 
             IProductBrandService productBrandService, 
@@ -38,25 +42,26 @@ namespace Zerg.Event.Controllers.Coupons
             _workContext = workContext;
             _brokerService = brokerService;
         }
-        #region 彭贵飞 获取手机端显示的优惠券种类和对应品牌信息
+
         /// <summary>
-        /// 获取优惠券种类
+        /// 获取列表
         /// </summary>
-        /// <returns>list列表</returns>
-        public ActionResult Coupons()
+        /// <returns></returns>
+        public HttpResponseMessage GetList()
         {
-            var Con = new CouponCategorySearchCondition
+            var con = new CouponCategorySearchCondition
             {
                 OrderBy = EnumCouponCategorySearchOrderBy.OrderById
             };
-            var list = _couponCategoryService.GetCouponCategoriesByCondition(Con).Select(p => new
+            var list = _couponCategoryService.GetCouponCategoriesByCondition(con).Select(p => new
             {
                 p.Id,
                 p.BrandId,
                 p.Name,
                 p.ReMark,
                 p.Price,
-                p.Count
+                p.Count,
+                p.Intro
             }).ToList().Select(pp => new CouponCategoryModel
             {
                 Id = pp.Id,
@@ -65,27 +70,37 @@ namespace Zerg.Event.Controllers.Coupons
                 Count = pp.Count,
                 ReMark = pp.ReMark,
                 BrandId = pp.BrandId,
+                Intro = pp.Intro,
                 BrandImg = _productBrandService.GetProductBrandById(pp.BrandId).Bimg,
                 SubTitle = _productBrandService.GetProductBrandById(pp.BrandId).SubTitle,
                 ProductParamater = _productBrandService.GetProductBrandById(pp.BrandId).ParameterEntities.ToDictionary(k => k.Parametername, v => v.Parametervaule)
             });
-            return View(list);
+
+            return PageHelper.toJson(list);
         }
-        #endregion
-        #region 彭贵飞 抢优惠券
+
         /// <summary>
-        /// 抢优惠券
+        /// 显示品牌
         /// </summary>
-        /// <param name="id">优惠券种类Id</param>
+        /// <param name="id"></param>
         /// <returns></returns>
-
-        public ActionResult couponOwn(int id)
+        [HttpGet]
+        public HttpResponseMessage GetCouponDetil(int id)
         {
-            
+            return PageHelper.toJson(_couponCategoryService.GetCouponCategoryById(id));
+        }
 
+        /// <summary>
+        /// 获取优惠券
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage couponOwn(int id)
+        {
             if (_workContext.CurrentUser == null)
             {
-                return Redirect("http://www.iyookee.cn/#/user/login");
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "请先登录"));
             }
             var couponCategory = _couponCategoryService.GetCouponCategoryById(id);
             var condition = new CouponSearchCondition
@@ -106,13 +121,12 @@ namespace Zerg.Event.Controllers.Coupons
                 Number = coupon.Number,
                 BrandName = brand.Bname
             };
-            var phone = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Phone;
+            var model = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id);
 
             //短信发送
-            SMSHelper.Sending(phone, "优惠券为：" + brand.Bname + "，券号为：" + coupon.Number + " 【优客惠】");
-            
-            return View(CouponOwn);
+            SMSHelper.Sending(model.Phone, "优惠券为：" + brand.Bname + "，券号为：" + coupon.Number + " 【优客惠】");
+
+            return PageHelper.toJson(CouponOwn);
         }
-        #endregion
     }
 }

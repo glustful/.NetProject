@@ -138,31 +138,38 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CMS\AdvertisementController.cs" />
+    <Compile Include="Controllers\CMS\ChannelController.cs" />
+    <Compile Include="Controllers\CMS\ContentController.cs" />
+    <Compile Include="Controllers\CMS\ResourceController.cs" />
+    <Compile Include="Controllers\CMS\SettingController.cs" />
+    <Compile Include="Controllers\CMS\TagController.cs" />
     <Compile Include="Controllers\CRM\AdminInfoController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\CRM\AdminPayController.cs" />
-    <Compile Include="Controllers\CRM\BankController.cs" />
-    <Compile Include="Controllers\CRM\BrokeAccountController.cs" />
     <Compile Include="Controllers\CRM\AdminRecomController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\BankCardController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CRM\BankController.cs" />
+    <Compile Include="Controllers\CRM\ClientScheduleController.cs" />
+    <Compile Include="Controllers\CRM\EventController.cs" />
+    <Compile Include="Controllers\CRM\BrokeAccountController.cs" />
+    <Compile Include="Controllers\CRM\MessageDetailController.cs" />
+    <Compile Include="Controllers\CRM\BrokerInfoController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\CRM\BrokerLeadClientController.cs" />
     <Compile Include="Controllers\CRM\BrokerRECClientController.cs" />
     <Compile Include="Controllers\CRM\BrokerWithdrawController.cs" />
-    <Compile Include="Controllers\CRM\ClientInfoController.cs" />
-    <Compile Include="Controllers\CRM\BankCardController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\CRM\ClientScheduleController.cs" />
-    <Compile Include="Controllers\CRM\EventController.cs" />
-    <Compile Include="Controllers\CRM\MessageDetailController.cs" />
-    <Compile Include="Controllers\CRM\BrokerInfoController.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Controllers\CRM\BrokerWithdrawDetailController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\CRM\ChipController.cs" />
+    <Compile Include="Controllers\CRM\ClientInfoController.cs" />
     <Compile Include="Controllers\CRM\LevelConfigController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -186,15 +193,13 @@
     </Compile>
     <Compile Include="Controllers\CRM\SMSController.cs" />
     <Compile Include="Controllers\CRM\TaskController.cs" />
-    <Compile Include="Controllers\CMS\AdvertisementController.cs" />
-    <Compile Include="Controllers\CMS\ChannelController.cs" />
-    <Compile Include="Controllers\CMS\ResourceController.cs" />
-    <Compile Include="Controllers\CMS\SettingController.cs" />
-    <Compile Include="Controllers\CMS\TagController.cs" />
-    <Compile Include="Controllers\CMS\ContentController.cs" />
     <Compile Include="Controllers\Trading\Area\AreaController.cs" />
-    <Compile Include="Controllers\Trading\CommissionRatio\CommissionRatioController.cs" />
     <Compile Include="Controllers\Trading\Condition\ConditionController.cs" />
+    <Compile Include="Controllers\Trading\Product\BrandController.cs" />
+    <Compile Include="Controllers\Trading\Product\ClassifyController.cs" />
+    <Compile Include="Controllers\Trading\Product\ProductController.cs" />
+    <Compile Include="Controllers\Trading\Trading\BillController.cs" />
+    <Compile Include="Controllers\Trading\Trading\OrderController.cs" />
     <Compile Include="Controllers\UC\RoleController.cs" />
     <Compile Include="Controllers\UC\UserController.cs" />
     <Compile Include="Controllers\UEditor\Config.cs" />
@@ -206,10 +211,6 @@
     <Compile Include="Controllers\UEditor\PathFormater.cs" />
     <Compile Include="Controllers\UEditor\UeditorController.cs" />
     <Compile Include="Controllers\UEditor\UploadHandler.cs" />
-    <Compile Include="Controllers\Trading\Product\BrandController.cs" />
-    <Compile Include="Controllers\Trading\Product\ClassifyController.cs" />
-    <Compile Include="Controllers\Trading\Product\ProductController.cs" />
-    <Compile Include="Controllers\Trading\Trading\BillController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -224,6 +225,7 @@
     </Compile>
     <Compile Include="Models\CRM\ClientInfoModel.cs" />
     <Compile Include="Models\CRM\CreateMessageConfigModel.cs" />
+    <Compile Include="Models\CRM\EventModelcs.cs" />
     <Compile Include="Models\CRM\MerchantInfoModel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -249,24 +251,25 @@
     <Compile Include="Models\CMS\TagModel.cs" />
     <Compile Include="Models\Trading\Area\AreaModel.cs" />
     <Compile Include="Models\Trading\CommissionRatio\CommissionRatio.cs" />
-    <Compile Include="Models\Trading\Product\ProductDetail.cs" />
-    <Compile Include="Models\Trading\Trading\AmountModel.cs" />
-    <Compile Include="Models\Trading\Trading\BillModel.cs" />
-    <Compile Include="Models\UC\ActionModel.cs" />
-    <Compile Include="Models\UC\ChangePasswordModel.cs" />
-    <Compile Include="Models\UC\RoleModel.cs" />
-    <Compile Include="Models\UC\UserModel.cs" />
     <Compile Include="Models\Trading\Product\ClassifyModel.cs" />
     <Compile Include="Models\Trading\Product\ParameterModel.cs" />
     <Compile Include="Models\Trading\Product\ParameterValueModel.cs" />
     <Compile Include="Models\Trading\Product\ProductBrandModel.cs" />
     <Compile Include="Models\Trading\Product\ProductBrandParameterModel.cs" />
+    <Compile Include="Models\Trading\Product\ProductDetail.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\Trading\Product\ProductDetailModel.cs" />
     <Compile Include="Models\Trading\Product\ProductModel.cs" />
     <Compile Include="Models\Trading\Product\ProductParameterModel.cs" />
-    <Compile Include="Controllers\Trading\Trading\OrderController.cs" />
+    <Compile Include="Models\Trading\Trading\AmountModel.cs" />
+    <Compile Include="Models\Trading\Trading\BillModel.cs" />
     <Compile Include="Models\Trading\Trading\OrderDetailModel.cs" />
     <Compile Include="Models\Trading\Trading\OrderModel.cs" />
+    <Compile Include="Models\UC\ActionModel.cs" />
+    <Compile Include="Models\UC\ChangePasswordModel.cs" />
+    <Compile Include="Models\UC\RoleModel.cs" />
+    <Compile Include="Models\UC\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
