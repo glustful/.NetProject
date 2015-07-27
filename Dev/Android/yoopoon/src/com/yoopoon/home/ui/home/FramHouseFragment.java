@@ -128,7 +128,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	ArrayList<JSONObject> houseDistrictJsonObjects = new ArrayList<JSONObject>();
 	private LinearLayout houseProvinceLinearlayout, houseCityLinearLayout, houseDistrictlinearLayout,
 			houseAreaLinearLayout;
-
 	// 楼盘区域位置对应的PopuWindow
 	private PopupWindow houseAreaConditionPopupWindow;
 	// 设置是否是从经纪人页面或者个人信息页面跳转到房源库
@@ -153,7 +152,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			mContext = getActivity();
 			// 获取Fragment对应的视图
 			rootView = LayoutInflater.from(getActivity()).inflate(R.layout.home_fram_house_fragment, null);
-
 			pullToRefreshListView = (PullToRefreshListView) rootView.findViewById(R.id.matter_list_view);
 			// 房源库listView对应的layout
 			houseListViewlayout = LayoutInflater.from(mContext).inflate(R.layout.home_fram_house_listview_item, null);
@@ -171,11 +169,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			houseAreaLinearLayout.addView(houseProvinceLinearlayout, layoutParams);
 			houseAreaLinearLayout.addView(houseCityLinearLayout, layoutParams);
 			houseAreaLinearLayout.addView(houseDistrictlinearLayout, layoutParams);
-
 			// 初始化显示楼盘区域的Popuwindows
 			houseAreaConditionPopupWindow = new PopupWindow(houseAreaLinearLayout, mContext.getResources()
-
-			.getDisplayMetrics().widthPixels * 3 / 4, LayoutParams.WRAP_CONTENT, true);
+					.getDisplayMetrics().widthPixels * 3 / 4, LayoutParams.WRAP_CONTENT, true);
 			// #####################################楼盘区域省市区UI设置######################################
 			// 房源首页顶端楼盘检索TextView（条件）
 			area_name_textview = (TextView) rootView.findViewById(R.id.area_name_textview);
@@ -191,7 +187,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			initParameter();
 			// 初始化Fragment对应的视图，加载控件
 			initFramHouseFragmentView();
-
 			registerReceiver();
 		}
 		return rootView;
@@ -201,8 +196,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
 		getActivity().registerReceiver(receiver, filter);
 	}
-	private BroadcastReceiver receiver = new BroadcastReceiver() {
 
+	private BroadcastReceiver receiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (NetworkUtils.isNetworkConnected(context)) {
@@ -253,15 +248,14 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			area_name_textview.setText("区域");
 			type_textview.setText("类型");
 			price_textview.setText("价格");
+			houseConditionReset();
 			setBrokerBackground = false;
-
 		}
 		if (isVisibleToUser) {
 			boolean setBackground = PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean(
 					"isAgentFromReceiver", false);
 			houseListViewAdapter.setSetBrokerBackground(setBackground);
 			SPUtils.setIsAgentFromReceiver(getActivity(), false);
-
 			houseListViewAdapter.refresh(houseListJsonObjects);
 		}
 	}
@@ -449,7 +443,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
 				.addParam("channelName", "banner").notifyRequest();
 	}
-
 	/**
 	 * @Title: requestHouseTotalCount
 	 * @Description: 开启异步线程，获取当前显示的楼盘数量
@@ -490,11 +483,12 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					String houseCount = data.getMRootData().optString("TotalCount");
 					Log.i(TAG, "totalCount = " + houseCount);
 					if (list == null || list.length() < 1) {
-
 						houseListViewAdapter.refresh(houseListJsonObjects);
 						// 如果没有返回值，则设置楼盘数量为0
 
 						initHouseTotalCountTextView(houseListJsonObjects.size() + "");
+						// initHouseTotalCountTextView("0");
+
 						return;
 					}
 					for (int i = 0; i < list.length(); i++) {
@@ -556,13 +550,11 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	private void initHouseProvince(final ArrayList<JSONObject> jsonArray) {
 		houseProvinceLinearlayout.setOrientation(LinearLayout.VERTICAL);
 		houseProvinceLinearlayout.setBackgroundColor(Color.WHITE);
-
 		houseAreaConditionPopupWindow.setTouchable(true);
 		houseAreaConditionPopupWindow.setBackgroundDrawable(new BitmapDrawable());
 		houseAreaConditionPopupWindow.setOutsideTouchable(true);
 		houseAreaConditionPopupWindow.setFocusable(true);
 		// houseAreaConditionPopuWindow = HousePopuwindow.getHousePopupwindowInstance();
-
 		houseProvinceLinearlayout.removeAllViews();
 		for (int i = 0; i < jsonArray.size(); i++) {
 			final TextView textView = new TextView(mContext);
@@ -919,12 +911,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	@AfterInject
 	void afterInject() {
 	}
-
-	@Override
-	public void setTitle() {
-		if (houseListViewAdapter != null) {
-			houseListViewAdapter.setSetBrokerBackground(false);
-			houseListViewAdapter.notifyDataSetInvalidated();
-		}
-	}
+	/*
+	 * @Override public void setTitle() { if (houseListViewAdapter != null) {
+	 * houseListViewAdapter.setSetBrokerBackground(false);
+	 * houseListViewAdapter.notifyDataSetInvalidated(); } }
+	 */
 }

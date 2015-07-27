@@ -15,6 +15,7 @@ package com.yoopoon.house.ui.broker;
 import java.util.Calendar;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
@@ -27,11 +28,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -75,12 +79,14 @@ public class BrokerRecommendActivity extends MainActionBarActivity implements On
 	EditText detailEditText;
 	@ViewById(R.id.commit_broker_recommend)
 	Button commit_broker_recommend;
+	@ViewById(R.id.delete_guest_name)
+	ImageButton deleteGuestNameButton;
+	@ViewById(R.id.delete_guest_phone_number)
+	ImageButton deleteGuestPhoneImageButton;
+	@ViewById(R.id.delete_detail)
+	ImageButton deleteGuestDetail;
 	Context mContext;
 	// 时间相干的变量
-	private int year;
-	private int month;
-	private int day;
-	private final Calendar calender = Calendar.getInstance();
 	// 系列化后得到的经纪人带客Json数据
 	String BrokerTakeGuestJson = null;
 	
@@ -105,7 +111,63 @@ public class BrokerRecommendActivity extends MainActionBarActivity implements On
 		// 添加"提交信息"按钮的事件绑定
 		commit_broker_recommend.setOnClickListener(this);
 		reservation_timeButton.setOnClickListener(this);
+		guest_nameEditText.addTextChangedListener(deleteGuestNameWatcher);
+		phone_numberEditText.addTextChangedListener(deleteGuestPhoneWatcher);
+		detailEditText.addTextChangedListener(deleteDetailWatcher);
 	}
+	
+	//创建监听删除客户姓名的右侧删除小图标监听
+	private TextWatcher deleteGuestNameWatcher = new TextWatcher() {
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+			deleteGuestNameButton.setVisibility(View.VISIBLE);
+		}
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		}
+		@Override
+		public void afterTextChanged(Editable s) {
+			String guestNameString = guest_nameEditText.getText().toString();
+			if (guestNameString.equals("")) {
+				deleteGuestNameButton.setVisibility(View.GONE);
+			}
+		}
+	};
+	//创建监听删除客户联系电话的右侧删除小图标监听
+	private TextWatcher deleteGuestPhoneWatcher = new TextWatcher() {
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+			deleteGuestPhoneImageButton.setVisibility(View.VISIBLE);
+		}
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		}
+		@Override
+		public void afterTextChanged(Editable s) {
+			String guestPhoneNumberString = phone_numberEditText.getText().toString();
+			if (guestPhoneNumberString.equals("")) {
+				deleteGuestPhoneImageButton.setVisibility(View.GONE);
+			}
+		}
+	};
+	//创建监听删除备注的右侧删除小图标监听
+	private TextWatcher deleteDetailWatcher = new TextWatcher() {
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+			deleteGuestDetail.setVisibility(View.VISIBLE);
+		}
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		}
+		@Override
+		public void afterTextChanged(Editable s) {
+			String guestDetailString = detailEditText.getText().toString();
+			if (guestDetailString.equals("")) {
+				deleteGuestDetail.setVisibility(View.GONE);
+			}
+		}
+	};
+	
 	/**
 	 * @Title: initCalendar
 	 * @Description: 初始化日期对话框
@@ -162,6 +224,33 @@ public class BrokerRecommendActivity extends MainActionBarActivity implements On
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
+	}
+	/** 
+	 * @Title: deleteGuestClick 
+	 * @Description: 添加编辑顾客姓名右侧的删除小图标点击事件
+	 * @param view
+	 */
+	@Click(R.id.delete_guest_name)
+	void deleteGuestClick(View view) {
+		guest_nameEditText.setText("");
+	}
+	/** 
+	 * @Title: deleteGuestPhoneClick 
+	 * @Description: 添加编辑顾客手机号码右侧的删除小图标点击事件
+	 * @param view
+	 */
+	@Click(R.id.delete_guest_phone_number)
+	void deleteGuestPhoneClick(View view) {
+		phone_numberEditText.setText("");
+	}
+	/** 
+	 * @Title: deleteGuestDetailClick 
+	 * @Description: 添加编辑备注右侧的删除小图标点击事件
+	 * @param view
+	 */
+	@Click(R.id.delete_detail)
+	void deleteGuestDetailClick(View view) {
+		detailEditText.setText("");
 	}
 	@Override
 	public void backButtonClick(View v) {
