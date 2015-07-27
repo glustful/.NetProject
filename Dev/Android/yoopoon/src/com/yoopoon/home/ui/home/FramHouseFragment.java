@@ -34,7 +34,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.appcompat.R.string;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -626,8 +625,11 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					area_name_textview.setText(parentName);
 					AreaNameValue = parentName;
 					houseListJsonObjects.clear();
+
+					PageValue = "1";
 					initParameter();
 					requestHouseList();
+
 					houseAreaConditionPopupWindow.dismiss();
 				}
 			});
@@ -699,8 +701,11 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 						TypeIdValue = houseTypeIdString;
 						// 更新参数
 						houseListJsonObjects.clear();
+
+						PageValue = "1";
 						initParameter();
 						requestHouseList();
+
 						houseTypeWindow.dismiss();
 					}
 				});
@@ -807,8 +812,11 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					price_textview.setText(msgString);
 					initPrice(msgString);
 					houseListJsonObjects.clear();
+
+					PageValue = "1";
 					initParameter();
 					requestHouseList();
+
 					housePriceWindow.dismiss();
 				}
 			});
@@ -834,8 +842,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		houseListView.addHeaderView(houseTotalCountTextView);
 	}
 
-	private String areaName = "";
-
 	/**
 	 * @Title: initParameter
 	 * @Description: 对每次开启异步线程联网的数据进行参数初始化
@@ -844,10 +850,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		if (parameter == null) {
 			parameter = new HashMap<String, String>();
 		}
-		if (!areaName.equals(AreaNameValue)) {
-			areaName = AreaNameValue;
-			PageValue = "1";
-		}
+
 		parameter.clear();
 		parameter.put("AreaName", AreaNameValue);
 		parameter.put("IsDescending", IsDescendingValue);
@@ -857,8 +860,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		parameter.put("PriceBegin", PriceBeginValue);
 		parameter.put("PriceEnd", PriceEndValue);
 		parameter.put("TypeId", TypeIdValue);
-
-		Log.i(TAG, parameter.toString());
 
 	}
 
