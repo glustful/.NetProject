@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:makeramen="http://schemas.android.com/apk/res/com.yoopoon.home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="10dp" 
+    android:background="#ffffff">
+
+    <TextView
+        android:id="@+id/tv_item_style_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="公园成11" />
+
+    <TextView
+        android:id="@+id/tv_item_style_commition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:text="一万抵三万"
+        android:textColor="#880000ff" />
+
+    <TextView
+        android:id="@+id/tv_item_style_price"
+        style="@style/TextView_WrapContent"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:text="均价5000元/㎡起"
+        android:textColor="@color/red" />
+
+    <ImageView
+        android:id="@+id/iv_item_style"
+        android:layout_margin="10dp"
+        android:scaleType="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo_gray"/>
+    
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/line"/>
+    
+    <TextView 
+        android:id="@+id/tv_agent_consult"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="center"
+        android:drawableLeft="@drawable/phone_icon2"
+        android:text="咨询热线"/>
+
+</LinearLayout>

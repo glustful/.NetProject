@@ -23,17 +23,19 @@
             android:layout_alignParentRight="true"
             android:text="可获得30%提拥   相当于21万提拥" />
 
-        <TextView
+        <com.yoopoon.home.ui.view.ScrollTextView
             style="@style/TextView_Black_Shadow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_toLeftOf="@id/tv_build_right"
             android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:singleLine="true"
             android:text="[昆明]中天融城  户型：238㎡  总价：110万" />
     </RelativeLayout>
-    <TextView 
+    <com.yoopoon.home.ui.view.ScrollTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -41,6 +43,8 @@
         android:textColor="#88000000"
         android:singleLine="true"
         android:ellipsize="marquee"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
         android:text="购房立减5000元，交10000元抵20000元，购房还可领红包，返积分"/>
     
     <LinearLayout 

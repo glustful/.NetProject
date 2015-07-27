@@ -26,6 +26,7 @@
     <string name="url_brand_GetAllBrand">/api/Brand/GetAllBrand</string>
     <string name="url_brand_searchBrand">/api/Brand/SearchBrand</string>
     <string name="url_brand_getOneBrand">/api/Brand/GetOneBrand</string>
+    <string name="url_brand_getBrand">/api/Brand/GetByBrandId</string>
     <!-- SMSController -->
     <string name="url_sms_sendSMS">/api/SMS/SendSMS</string>
     <!-- brokerinfoController -->

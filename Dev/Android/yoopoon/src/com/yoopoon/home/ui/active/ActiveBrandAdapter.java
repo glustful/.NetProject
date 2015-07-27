@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,6 +21,7 @@ import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 
 public class ActiveBrandAdapter extends BaseAdapter {
+	private static final String TAG = "ActiveBrandAdapter";
 	Context mContext;
 	ArrayList<JSONObject> datas;
 	int height = 0;
@@ -96,7 +98,9 @@ public class ActiveBrandAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				BrandDetailActivity_.intent(mContext).mJson(item.toString()).start();
+				Log.i(TAG, item.toString());
+				BrandDetail2Activity_.intent(mContext).mJson(item.toString()).start();
+				// BrandDetailActivity_.intent(mContext).mJson(item.toString()).start();
 
 			}
 		});

@@ -32,6 +32,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.appcompat.R.string;
 import android.text.format.DateUtils;
@@ -53,6 +54,7 @@ import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yoopoon.common.base.utils.NetworkUtils;
+import com.yoopoon.common.base.utils.SPUtils;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
@@ -201,8 +203,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (NetworkUtils.isNetworkConnected(context)) {
-				requestAdvertisements();
-				requestHouseList();
+				// requestAdvertisements();
+				// requestHouseList();
 			}
 		}
 	};
@@ -248,7 +250,12 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			type_textview.setText("类型");
 			price_textview.setText("价格");
 			setBrokerBackground = false;
-			houseListViewAdapter.setSetBrokerBackground(true);
+		}
+		if (isVisibleToUser) {
+			boolean setBackground = PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean(
+					"isAgentFromReceiver", false);
+			houseListViewAdapter.setSetBrokerBackground(setBackground);
+			SPUtils.setIsAgentFromReceiver(getActivity(), false);
 			houseListViewAdapter.refresh(houseListJsonObjects);
 		}
 	}
@@ -465,8 +472,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					String houseCount = data.getMRootData().optString("TotalCount");
 					if (list == null || list.length() < 1) {
 						houseListViewAdapter.refresh(houseListJsonObjects);
-						//如果没有返回值，则设置楼盘数量为0
-						//houseListViewAdapter.refresh(houseListJsonObjects, false);
 						// 如果没有返回值，则设置楼盘数量为0
 						initHouseTotalCountTextView("0");
 						return;
@@ -875,9 +880,11 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	@AfterInject
 	void afterInject() {
 	}
-	/*@Override
-	public void setTitle() {
-		houseListViewAdapter.setSetBrokerBackground(false);
-		houseListViewAdapter.notifyDataSetInvalidated();
-	}*/
+	/*	@Override
+		public void setTitle() {
+			if (houseListViewAdapter != null) {
+				houseListViewAdapter.setSetBrokerBackground(false);
+				houseListViewAdapter.notifyDataSetInvalidated();
+			}
+		}*/
 }

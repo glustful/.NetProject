@@ -60,6 +60,7 @@ public class ActiveController extends GridViewController {
 
 	public void show2(ArrayList<JSONArray> urls) {
 		for (int i = 0; i < urls.size(); i++) {
+
 			MyGridView mGridView = new MyGridView(mContext);
 			mGridView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT,
 					GridView.LayoutParams.WRAP_CONTENT));
@@ -78,7 +79,9 @@ public class ActiveController extends GridViewController {
 					onGridItemClick(parent, view, position, id);
 				}
 			});
+			mViews.clear();
 			mViews.add(mGridView);
+
 		}
 		initCircle();
 		mPagerAdapter.refresh(mViews);
@@ -86,6 +89,7 @@ public class ActiveController extends GridViewController {
 	}
 
 	class GridAdapter2 extends BaseAdapter {
+
 		String[] titles;
 		int[] imgs;
 

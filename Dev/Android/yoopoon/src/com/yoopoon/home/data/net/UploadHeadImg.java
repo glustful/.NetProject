@@ -26,7 +26,7 @@ public class UploadHeadImg {
 
 	static String TAG = "UploadHeadImg";
 
-	public String post(String path, File file, OnProgressListener listen, OnCompleteListener complete) {
+	public void post(String path, File file, OnProgressListener listen, OnCompleteListener complete) {
 		BufferedReader reader = null;
 		OutputStream outStream = null;
 		HttpURLConnection conn = null;
@@ -110,14 +110,14 @@ public class UploadHeadImg {
 
 			String line = reader.readLine();
 
-			if (line != null && complete != null)
+			if (line != null)
 				complete.onSuccess(line);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			if (complete != null) {
-				complete.onFailed();
-			}
+
+			complete.onFailed();
+
 		} finally {
 
 			try {
@@ -130,12 +130,12 @@ public class UploadHeadImg {
 			} catch (IOException e) {
 
 				e.printStackTrace();
+				complete.onFailed();
 
 			}
 
 		}
 
-		return null;
 	}
 
 	private static String setCookie() throws IOException {
@@ -207,10 +207,12 @@ public class UploadHeadImg {
 	}
 
 	public interface OnProgressListener {
+
 		void onProgress(int progress);
 	}
 
 	public interface OnCompleteListener {
+
 		void onSuccess(String json);
 
 		void onFailed();

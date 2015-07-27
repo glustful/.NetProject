@@ -12,7 +12,7 @@
         android:layout_gravity="center_horizontal"
         android:padding="10dip"
         android:scaleType="centerCrop"
-        android:src="@drawable/default_head_img"
+        android:src="@drawable/logo_gray"
         makeramen:corner_radius="100000dp" />
 
     <LinearLayout
@@ -142,17 +142,17 @@
                 android:layout_height="wrap_content"
                 android:text="6280.00"
                 android:textColor="@color/red" />
-            
         </LinearLayout>
 
         <TextView
-            android:clickable="true"
-            android:focusable="true"        
             android:id="@+id/takeMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@drawable/takecash_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:textSize="@dimen/large_textSize"
             android:text="提现"
             android:textColor="@android:color/white" />
     </LinearLayout>

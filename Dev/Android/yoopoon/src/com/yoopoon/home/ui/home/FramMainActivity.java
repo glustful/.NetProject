@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -32,6 +31,8 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.yoopoon.common.base.utils.SPUtils;
 
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
@@ -103,8 +104,10 @@ public class FramMainActivity extends SearchActionBarActivity {
 				public void onClick(View v) {
 					// Fragment切换的时候可以在这里进行控制
 					mSearchFunction.clearSearch();
+
 					FramSuper framSuper = (FramSuper) pageAdapter.getItem(j);
 					//framSuper.setTitle();
+
 					mainPager.setCurrentItem(j);
 				}
 			});
@@ -120,9 +123,12 @@ public class FramMainActivity extends SearchActionBarActivity {
 	}
 	
 	OnPageChangeListener pageListener = new OnPageChangeListener() {
+
 		@Override
 		public void onPageSelected(int position) {
 			tabHost.setCurrentTab(position);
+			// FramSuper framSuper = (FramSuper) pageAdapter.getItem(position);
+			// framSuper.setTitle();
 		}
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
@@ -207,9 +213,10 @@ public class FramMainActivity extends SearchActionBarActivity {
 		}
 	};
 	private BroadcastReceiver brokerTakeGuestReceiver = new BroadcastReceiver() {
+
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			Log.w(tag, "经纪人带客");
+			SPUtils.setIsAgentFromReceiver(context, true);
 			mainPager.setCurrentItem(1);
 		}
 	};
@@ -285,12 +292,10 @@ public class FramMainActivity extends SearchActionBarActivity {
 	}
 	@Override
 	protected int getHeight() {
-		// TODO Auto-generated method stub
 		return mainPager.getHeight();
 	}
 	@Override
 	protected View getParentView() {
-		// TODO Auto-generated method stub
 		return mainPager;
 	}
 	@Override

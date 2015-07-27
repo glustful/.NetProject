@@ -8,13 +8,16 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yoopoon.home.R;
@@ -41,12 +44,24 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 		super.setUserVisibleHint(isVisibleToUser);
 
 		if (isVisibleToUser) {
-			User user = User.lastLoginUser(getActivity());
+			Log.i(TAG, "AgentFragment : visiable = " + isVisibleToUser);
+			final User user = User.lastLoginUser(getActivity());
 			if (user == null || !user.isBroker()) {
-				Intent intent = new Intent("com.yoopoon.OPEN_ME_ACTION");
-				intent.addCategory(Intent.CATEGORY_DEFAULT);
-				getActivity().sendBroadcast(intent);
-			} else {
+				isFirst = true;
+				final String text = (user == null) ? "亲，你还没登录呢" : "亲，你还不是经纪人哦";
+				handler.postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						Intent intent = new Intent("com.yoopoon.OPEN_ME_ACTION");
+						intent.addCategory(Intent.CATEGORY_DEFAULT);
+						getActivity().sendBroadcast(intent);
+						Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+					}
+				}, 100);
+				// FramMainActivity_.intent(getActivity()).start();
+			} else if (isFirst) {
+				isFirst = false;
 				requestList();
 				requestActiveList();
 				requestBrandList();
@@ -59,6 +74,7 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 	HashMap<String, String> parameter;
 	ArrayList<JSONObject> mJsonObjects;
 	boolean isFirst = true;
+	Handler handler = new Handler();
 
 	@Override
 	@Nullable
@@ -149,7 +165,9 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 	}
 
 	void requestList() {
+
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
@@ -174,6 +192,7 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 
 	void requestActiveList() {
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
@@ -204,26 +223,30 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 	}
 
 	private void requestBrandList() {
-		new RequestAdapter() {
-			@Override
-			public void onReponse(ResponseData data) {
-				if (data.getResultState() == ResultState.eSuccess) {
-					JSONArray list = data.getMRootData().optJSONArray("List");
-					if (list == null || list.length() < 1)
-						return;
-					for (int i = 0; i < list.length(); i++) {
-						mJsonObjects.add(list.optJSONObject(i));
-					}
-					mAgentBrandAdapter.refresh(mJsonObjects);
-				}
-			}
+		if (mJsonObjects.size() == 0)
+			new RequestAdapter() {
 
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
-			}
-		}.setUrl(getString(R.string.url_brand_getOneBrand)).setRequestMethod(RequestMethod.eGet).addParam(parameter)
-				.notifyRequest();
+				@Override
+				public void onReponse(ResponseData data) {
+					Log.i(TAG, data.toString());
+					if (data.getResultState() == ResultState.eSuccess) {
+						JSONArray list = data.getMRootData().optJSONArray("List");
+						if (list == null || list.length() < 1)
+							return;
+						mJsonObjects.clear();
+						for (int i = 0; i < list.length(); i++) {
+							mJsonObjects.add(list.optJSONObject(i));
+						}
+						mAgentBrandAdapter.refresh(mJsonObjects);
+					}
+				}
+
+				@Override
+				public void onProgress(ProgressMessage msg) {
+					// TODO Auto-generated method stub
+				}
+			}.setUrl(getString(R.string.url_brand_getOneBrand)).setRequestMethod(RequestMethod.eGet)
+					.addParam(parameter).notifyRequest();
 	}
 
 	/*

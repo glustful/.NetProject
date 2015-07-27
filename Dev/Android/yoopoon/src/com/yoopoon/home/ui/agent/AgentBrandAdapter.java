@@ -1,9 +1,7 @@
 package com.yoopoon.home.ui.agent;
 
 import java.util.ArrayList;
-
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,43 +12,43 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
-
-import com.yoopoon.house.ui.broker.BrokerRecommendActivity_;
-
 import com.yoopoon.house.ui.bonus.BrokerBonusActivity_;
+import com.yoopoon.house.ui.broker.BrokerRecommendActivity_;
 import com.yoopoon.house.ui.broker.BrokerScoreActivity_;
-
 import com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_;
 
 public class AgentBrandAdapter extends BaseAdapter {
 	Context mContext;
 	ArrayList<JSONObject> datas;
 	int height = 0;
-	
+
 	public AgentBrandAdapter(Context context) {
 		this.mContext = context;
 		datas = new ArrayList<JSONObject>();
 		height = MyApplication.getInstance().getDeviceInfo((Activity) mContext).heightPixels / 6;
 	}
+
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return datas.size();
 	}
+
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
 		return datas.get(position);
 	}
+
 	@Override
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub
 		return position;
 	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Holder mHolder;
@@ -99,7 +97,6 @@ public class AgentBrandAdapter extends BaseAdapter {
 			}
 		});
 
-
 		mHolder.tv_bonus.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -116,9 +113,23 @@ public class AgentBrandAdapter extends BaseAdapter {
 			}
 		});
 
+		mHolder.img.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String brandId = item.optString("BrandId", "");
+				int productId = item.optInt("ProductId", 0);
+				String productName = item.optString("Productname", "");
+				String houseType = item.optString("HouseType", "");
+				AgentBrandDetailActivity_.intent(mContext).brandId(brandId).productId(productId)
+						.productName(productName).houseType(houseType).start();
+
+			}
+		});
+
 		return convertView;
 	}
-	
+
 	class Holder {
 
 		ImageView img;
@@ -131,7 +142,6 @@ public class AgentBrandAdapter extends BaseAdapter {
 		TextView tv_bonus;
 		TextView tv_score;
 
-
 		void init(View root) {
 			img = (ImageView) root.findViewById(R.id.img);
 			title = (TextView) root.findViewById(R.id.title);
@@ -143,7 +153,7 @@ public class AgentBrandAdapter extends BaseAdapter {
 			tv_score = (TextView) root.findViewById(R.id.tv_agent_brand_score);
 		}
 	}
-	
+
 	public void refresh(ArrayList<JSONObject> mJsonObjects) {
 		datas.clear();
 		datas.addAll(mJsonObjects);

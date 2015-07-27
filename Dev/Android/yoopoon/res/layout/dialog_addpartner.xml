@@ -11,8 +11,8 @@
         android:background="@color/red"
         android:gravity="center"
         android:text="添加合伙人"
-        android:textSize="20sp"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -32,7 +32,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:background="@android:drawable/editbox_background" />
+            android:background="@android:drawable/editbox_background"
+            android:inputType="phone"
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/tv_addpartner_warning"

@@ -75,9 +75,9 @@ public class FramActiveFragment extends FramSuper {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (NetworkUtils.isNetworkConnected(context)) {
-				requestList();
-				requestActiveList();
-				requestBrandList();
+				// requestList();
+				// requestActiveList();
+				// requestBrandList();
 			}
 		}
 	};

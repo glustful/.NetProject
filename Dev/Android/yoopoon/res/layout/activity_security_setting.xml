@@ -27,6 +27,7 @@
                     android:id="@+id/et_security_old_psw"
                     style="@style/EditText_Transparent_Bg"
                     android:hint="请输入旧密码"
+                    android:singleLine="true"
                     android:inputType="textPassword" />
 
                 <ImageButton
@@ -45,6 +46,7 @@
                     android:id="@+id/et_security_new_psw"
                     style="@style/EditText_Transparent_Bg"
                     android:hint="请输入新密码"
+                    android:singleLine="true"
                     android:inputType="textPassword" />
 
                 <ImageButton
@@ -63,7 +65,8 @@
                     android:id="@+id/et_security_confirm"
                     style="@style/EditText_Transparent_Bg"
                     android:hint="请输入新密码"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:singleLine="true" />
 
                 <ImageButton
                     android:id="@+id/ib_security_clean_confirm"
@@ -96,6 +99,8 @@
                     android:layout_toRightOf="@id/btn_security_setting_getcode" />
 
                 <EditText
+                    android:inputType="number"
+                    android:singleLine="true"
                     android:id="@+id/et_security_setting_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

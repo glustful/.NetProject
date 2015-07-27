@@ -26,10 +26,12 @@ import org.json.JSONObject;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -204,9 +206,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			if (uri != null) {
 				ContentResolver cr = this.getContentResolver();
 				try {
-					String[] uriPath = uri.toString().split(":");
-					String filePath = uriPath[1];
-					File file = new File(filePath);
+					Log.i(TAG, uri.toString());
+					File file = getFile(uri);
 					Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
 					/* 将Bitmap设定到ImageView */
 					iv_avater.setImageBitmap(bitmap);
@@ -217,6 +218,19 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	private File getFile(Uri uri) {
+		String[] proj = { MediaStore.Images.Media.DATA };
+
+		Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
+
+		int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+		actualimagecursor.moveToFirst();
+
+		String img_path = actualimagecursor.getString(actual_image_column_index);
+		return new File(img_path);
 	}
 
 	private void uploadImage(final File file) {
@@ -248,6 +262,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 
 					@Override
 					public void onSuccess(final String json) {
+						Log.i(TAG, json);
 						runOnUiThread(new Runnable() {
 
 							@Override
@@ -270,7 +285,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 									}
 
 								} catch (JSONException e) {
-									// TODO Auto-generated catch block
 									e.printStackTrace();
 								} finally {
 									if (timer != null && task != null) {
