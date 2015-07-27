@@ -95,6 +95,12 @@
         <item name="android:textSize">14sp</item>
         <item name="android:background">@drawable/setting_edit_bg</item>
     </style>
+    
+    <style name="LinearLayout_With_Clear2" parent="TextView_GrayText">
+        <item name="android:padding">0dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">#ffffff</item>
+    </style>
 
     <style name="EditText_Normal_WrapContent">
         <item name="android:layout_width">wrap_content</item>

@@ -481,7 +481,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				if (data.getResultState() == ResultState.eSuccess) {
 					JSONArray list = data.getMRootData().optJSONArray("List");
 					String houseCount = data.getMRootData().optString("TotalCount");
-					Log.i(TAG, "totalCount = " + houseCount);
 					if (list == null || list.length() < 1) {
 						houseListViewAdapter.refresh(houseListJsonObjects);
 						// 如果没有返回值，则设置楼盘数量为0
@@ -565,6 +564,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			houseProvinceLinearlayout.addView(textView);
 			final String parentIdValue = jsonArray.get(i).optString("Id");
 			textView.setOnClickListener(new OnClickListener() {
+
 				@Override
 				public void onClick(View v) {
 					requestHouseCity(parentIdValue);
@@ -834,6 +834,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		houseListView.addHeaderView(houseTotalCountTextView);
 	}
 
+	private String areaName = "";
+
 	/**
 	 * @Title: initParameter
 	 * @Description: 对每次开启异步线程联网的数据进行参数初始化
@@ -841,6 +843,10 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	private void initParameter() {
 		if (parameter == null) {
 			parameter = new HashMap<String, String>();
+		}
+		if (!areaName.equals(AreaNameValue)) {
+			areaName = AreaNameValue;
+			PageValue = "1";
 		}
 		parameter.clear();
 		parameter.put("AreaName", AreaNameValue);
@@ -851,6 +857,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		parameter.put("PriceBegin", PriceBeginValue);
 		parameter.put("PriceEnd", PriceEndValue);
 		parameter.put("TypeId", TypeIdValue);
+
+		Log.i(TAG, parameter.toString());
 
 	}
 

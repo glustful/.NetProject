@@ -352,12 +352,17 @@ public class HomeLoginActivity extends MainActionBarActivity {
 
 	@Override
 	public void backButtonClick(View v) {
+		onBackPressed();
+	}
+
+	@Override
+	public void onBackPressed() {
 		// 点击返回时，一定是 用户没有登陆成功
-		Log.i(TAG, "点击返回啦");
 		Intent intent = new Intent("com.yoopoon.OPEN_ACTIVE_ACTION");
 		intent.addCategory(Intent.CATEGORY_DEFAULT);
 		this.sendBroadcast(intent);
 		FramMainActivity_.intent(this).start();
+		super.onBackPressed();
 	}
 
 	@Override
