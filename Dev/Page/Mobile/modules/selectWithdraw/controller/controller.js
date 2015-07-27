@@ -17,13 +17,16 @@ app.controller('withdrawController',['$http','$scope','AuthService','$state',fun
     };
     getwithdrawResult();
     ///
-    $scope.Ids=[];
+   // $scope.Ids=[];
+    $scope.Ids="";
+
     $scope.toggle = function (Id) {
-        $scope.Ids.push (Id);
+     //   $scope.Ids.push (Id);
+        $scope.Ids+=Id+",";
     }
 
     $scope.btnClick=function(Ids){
-        if (Ids != null){
+        if (Ids != null && Ids!=undefined){
             $state.go("app.withdrawals",{Ids:Ids});
         }else{
             alert("请选择提现金额");

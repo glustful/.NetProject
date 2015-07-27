@@ -31,8 +31,8 @@ app.controller('personsettingController',['$scope','$http','$state','AuthService
             }
             else if(response.IsInvite==0)
                 {
-                var invited=document.getElementById('InvitedCode')
-                invited.style.display='none';
+                    var invited=document.getElementById('InvitedCode')
+                    invited.style.display='none';
             }
 
             //添加判断,如果用户没有头像,隐藏IMG标签
