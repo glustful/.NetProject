@@ -21,7 +21,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -144,7 +143,6 @@ public class HouseListViewAdapter extends BaseAdapter {
 		});
 		// ##################### 郭俊军 被修改代码 End
 		// 携带楼盘和经纪人数据跳转到带客页面
-		Log.i("HouseListViewAdapter", setBrokerBackground + "");
 		if (setBrokerBackground == true) {
 			viewHandler.houseTakeGuestTextView.setTextColor(Color.WHITE);
 			viewHandler.houseRecommendTextView.setTextColor(Color.WHITE);
