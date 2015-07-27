@@ -182,7 +182,6 @@
     <Compile Include="Controllers\CRM\MessageConfigController.cs">
       <SubType>Code</SubType>
     </Compile>
-
     <Compile Include="Controllers\CRM\PartnerListController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -226,6 +225,7 @@
     </Compile>
     <Compile Include="Models\CRM\ClientInfoModel.cs" />
     <Compile Include="Models\CRM\CreateMessageConfigModel.cs" />
+    <Compile Include="Models\CRM\EventModelcs.cs" />
     <Compile Include="Models\CRM\MerchantInfoModel.cs">
       <SubType>Code</SubType>
     </Compile>

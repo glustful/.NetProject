@@ -574,28 +574,28 @@ namespace Zerg.Controllers.CRM
                                                 //给20元钱 等级设为青铜 
                                             //    tsCope.Complete();
                                             //}
-                                    }
-                                    else
-                                    {
-                                        //等级设为青铜
-                                        brokerModel.Level = qlevel;
-                                        _brokerService.Update(brokerModel);
-
-                                    }
+                                        }
+                                            else
+                                            {
+                                                //等级设为青铜
+                                                brokerModel.Level = qlevel;
+                                                _brokerService.Update(brokerModel);
+                                                return PageHelper.toJson(PageHelper.ReturnValue(true, "邀请码输入错误！"));
+                                            }
 
                                     #endregion
                                    
-                                }
+                                    }
 
-                                #endregion
+                                    #endregion
+                                }
                             }
-                        }
-                        else
-                        {
-                            //白银人数超过3000 等级设为白银
-                            brokerModel.Level = level;
-                            _brokerService.Update(brokerModel);
-                        }
+                            else
+                            {
+                                //白银人数超过3000 等级设为白银
+                                brokerModel.Level = level;
+                                _brokerService.Update(brokerModel);
+                            }
 
                         #endregion
                     }
@@ -653,7 +653,7 @@ namespace Zerg.Controllers.CRM
                                 abmmodel.AgentId = brokerModel.Id;
                                 abmmodel.Agentname = brokerModel.Brokername;
                                 abmmodel.LandagentId = 1;
-                                abmmodel.Amount = 30;
+                                abmmodel.Amount = 20;
                                 abmmodel.Isinvoice = false;
                                 abmmodel.Checkoutdate = DateTime.Now;
                                 abmmodel.Addtime = DateTime.Now;
