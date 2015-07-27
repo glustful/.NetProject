@@ -548,7 +548,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			houseProvinceLinearlayout.addView(textView);
 			final String parentIdValue = jsonArray.get(i).optString("Id");
 			textView.setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					houseDistrictlinearLayout.removeAllViews();
@@ -608,11 +607,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					area_name_textview.setText(parentName);
 					AreaNameValue = parentName;
 					houseListJsonObjects.clear();
-
 					PageValue = "1";
 					initParameter();
 					requestHouseList();
-
 					houseAreaConditionPopupWindow.dismiss();
 				}
 			});
@@ -669,7 +666,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				textView.setText(houseTypeJsonArray.get(i).optString("TypeName"));
 				// textView.setWidth(screenWidth / 3);
 				textView.setGravity(Gravity.CENTER);
-				textView.setPadding(10, 10, 10, 10);
+				textView.setPadding(10, 5, 10, 5);
 				textView.setTextSize(18);
 				final String megStringString = houseTypeJsonArray.get(i).optString("TypeName").toString();
 				final String houseTypeIdString = houseTypeJsonArray.get(i).optString("TypeId").toString();
@@ -683,11 +680,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 						TypeIdValue = houseTypeIdString;
 						// 更新参数
 						houseListJsonObjects.clear();
-
 						PageValue = "1";
 						initParameter();
 						requestHouseList();
-
 						houseTypeWindow.dismiss();
 					}
 				});
@@ -792,11 +787,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					price_textview.setText(msgString);
 					initPrice(msgString);
 					houseListJsonObjects.clear();
-
 					PageValue = "1";
 					initParameter();
 					requestHouseList();
-
 					housePriceWindow.dismiss();
 				}
 			});
@@ -828,7 +821,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		if (parameter == null) {
 			parameter = new HashMap<String, String>();
 		}
-
 		parameter.clear();
 		parameter.put("AreaName", AreaNameValue);
 		parameter.put("IsDescending", IsDescendingValue);

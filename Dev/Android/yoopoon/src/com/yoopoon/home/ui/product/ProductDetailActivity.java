@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.etsy.android.grid.util.DynamicHeightImageView;
@@ -53,6 +55,9 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	TextView brokerRecommendTextView;
 	@ViewById(R.id.product_detail_consultation)
 	TextView brokerConsultationTextView;
+	//控制楼盘底部的经纪人带客和经纪人推荐，联系电话功能
+	@ViewById(R.id.broker_product_detail_buttom)
+	LinearLayout brokerProductDetailButtomLinearLayout;
 	@ViewById(R.id.title)
 	TextView title;
 	@ViewById(R.id.price)
@@ -77,6 +82,12 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		backButton.setText("返回");
 		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("户型详情");
+		//brokerProductDetailButtomLinearLayout
+		SharedPreferences brokerSharedPreferences = mContext.getSharedPreferences("com.yoopoon.home_preferences", 0);
+		boolean isBrokerStatus = brokerSharedPreferences.getBoolean("isBroker", false);
+		if (!isBrokerStatus) {
+			brokerProductDetailButtomLinearLayout.setVisibility(View.GONE);
+		}
 		requestProduct();
 	}
 	
@@ -197,7 +208,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 						}
 					}
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				BrokerRecommendActivity_.intent(mContext)
