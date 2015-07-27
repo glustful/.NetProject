@@ -47,30 +47,18 @@
                 android:layout_marginTop="10dp"
                 android:text="*客户姓名" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:background="@drawable/setting_edit_bg"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
+            <LinearLayout style="@style/LinearLayout_With_Clear" >
 
                 <EditText
                     android:id="@+id/guest_name"
-                    style="@style/EditText_Guest"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:layout_weight="1"
-                    android:hint="请填写客户的姓名" />
+                    style="@style/EditText_Transparent_Bg"
+                    android:hint="请填写客户姓名"
+                    android:singleLine="true" />
 
                 <ImageButton
                     android:id="@+id/delete_guest_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/clean_text_selector"
-                    android:visibility="gone" />
+                    style="@style/ImageButton_Clean_Text"
+                      />
             </LinearLayout>
 
             <TextView
@@ -79,29 +67,19 @@
                 android:layout_marginTop="10dp"
                 android:text="联系电话" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:background="@drawable/setting_edit_bg"
-                android:gravity="center"
-                android:orientation="horizontal" >
+            <LinearLayout style="@style/LinearLayout_With_Clear" >
 
                 <EditText
                     android:id="@+id/phone_number"
-                    style="@style/EditText_Guest"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="请填写客户的联系电话" />
+                    style="@style/EditText_Transparent_Bg"
+                    android:hint="请填写客户手机号码"
+                    android:inputType="number"
+                    android:singleLine="true" />
 
                 <ImageButton
                     android:id="@+id/delete_guest_phone_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/clean_text_selector"
-                    android:visibility="gone" />
+                    style="@style/ImageButton_Clean_Text"
+                      />
             </LinearLayout>
 
             <TextView
@@ -124,33 +102,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="详情" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:background="@drawable/setting_edit_bg"
-                android:gravity="center"
-                android:orientation="horizontal" >
+            
+            <LinearLayout style="@style/LinearLayout_With_Clear2" >
 
                 <EditText
                     android:id="@+id/detail"
-                    style="@style/EditText_Guest"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:layout_weight="1"
-                    android:gravity="left"
+                    style="@style/EditText_Transparent_Bg"
                     android:hint="备注"
-                    />
+                    android:lines="3"
+                    android:gravity="left" />
 
                 <ImageButton
                     android:id="@+id/delete_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/clean_text_selector"
-                    android:visibility="gone" />
+                    style="@style/ImageButton_Clean_Text"
+                      />
             </LinearLayout>
 
             <View
