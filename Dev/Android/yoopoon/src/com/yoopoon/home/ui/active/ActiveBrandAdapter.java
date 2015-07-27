@@ -62,6 +62,7 @@ public class ActiveBrandAdapter extends BaseAdapter {
 			mHolder = (Holder) convertView.getTag();
 		}
 		final JSONObject item = datas.get(position);
+		Log.i(TAG, item.toString());
 		String url = mContext.getString(R.string.url_host_img) + item.optString("Bimg");
 		mHolder.img.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, height));
 		mHolder.img.setTag(url);
@@ -73,12 +74,18 @@ public class ActiveBrandAdapter extends BaseAdapter {
 		JSONObject parameter = item.optJSONObject("ProductParamater");
 		String city = parameter.optString("所属城市");
 		mHolder.city.setText("[" + (StringUtils.isEmpty(city) ? "" : city) + "]");
-		String area = parameter.optString("占地面积");
+		String area = "占地：" + parameter.optString("占地面积");
 		mHolder.area.setText(StringUtils.isEmpty(area) ? "" : area);
+
+		// String price = parameter.optString("总价");
+		// mHolder.price.setText(StringUtils.isEmpty(area) ? "总价：110万" : price);
+
 		String adTitle = Html.fromHtml(item.optString("AdTitle")).toString();
-		mHolder.rightAdTitle.setText(StringUtils.isEmpty(adTitle) ? "" : adTitle);
+		String defaultAdTitle = Html.fromHtml(
+				"<span>每平米直降</span><br><b>5000元</b><br><span>1万还可抵3万</span><br><span>3万可抵15万</span><br>").toString();
+		mHolder.rightAdTitle.setText(StringUtils.isEmpty(adTitle) ? defaultAdTitle : adTitle);
 		String subTitle = item.optString("SubTitle");
-		mHolder.adTitle.setText(StringUtils.isEmpty(subTitle) ? "" : subTitle);
+		mHolder.adTitle.setText(StringUtils.isEmpty(subTitle) ? defaultAdTitle : subTitle);
 
 		String phone = parameter.optString("来电咨询");
 		mHolder.callPhone.setText("来电咨询：" + (StringUtils.isEmpty(phone) ? "" : phone));
@@ -98,7 +105,6 @@ public class ActiveBrandAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				Log.i(TAG, item.toString());
 				BrandDetail2Activity_.intent(mContext).mJson(item.toString()).start();
 				// BrandDetailActivity_.intent(mContext).mJson(item.toString()).start();
 
@@ -116,6 +122,7 @@ public class ActiveBrandAdapter extends BaseAdapter {
 		TextView rightAdTitle;
 		TextView city;
 		TextView area;
+		TextView price;
 
 		void init(View root) {
 			img = (ImageView) root.findViewById(R.id.img);
@@ -127,6 +134,7 @@ public class ActiveBrandAdapter extends BaseAdapter {
 			rightAdTitle = (TextView) root.findViewById(R.id.rightAdTitle);
 
 			area = (TextView) root.findViewById(R.id.area);
+			price = (TextView) root.findViewById(R.id.price);
 		}
 	}
 

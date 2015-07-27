@@ -22,6 +22,7 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -184,15 +185,23 @@ public class AgentBrandDetailActivity extends MainActionBarActivity {
 
 			@Override
 			public void onReponse(ResponseData data) {
+				Log.i(TAG, data.toString());
 				if (data.getMRootData() != null) {
-					JSONObject obj = data.getMRootData();
-					tv_title.setText(obj.optString("Bname", ""));
-					tv_subtitle.setText(obj.optString("SubTitle", ""));
+					try {
+						JSONObject obj = data.getMRootData();
+						tv_title.setText(obj.optString("Bname", ""));
+						tv_subtitle.setText(obj.optString("SubTitle", ""));
 
-					String photo = obj.optString("Bimg", "");
-					if (!StringUtils.isEmpty(photo)) {
-						String url = "http://img.yoopoon.com/" + photo;
-						ImageLoader.getInstance().displayImage(url, iv_building);
+						JSONObject params = obj.getJSONObject("Parameters");
+
+						String photo = params.optString("图片banner", "");
+						if (!StringUtils.isEmpty(photo)) {
+							String url = "http://img.yoopoon.com/" + photo;
+							ImageLoader.getInstance().displayImage(url, iv_building);
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 			}
