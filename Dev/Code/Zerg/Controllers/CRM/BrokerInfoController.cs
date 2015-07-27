@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
-using System.Transactions;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CRM.Entity.Model;
@@ -412,8 +411,8 @@ namespace Zerg.Controllers.CRM
 
                             if (con != null && num==0) //存在 未使用  并且该经纪人未参与过活动
                             {
-                                using (TransactionScope tsCope = new TransactionScope(TransactionScopeOption.RequiresNew))
-                                {
+                                //using (TransactionScope tsCope = new TransactionScope(TransactionScopeOption.RequiresNew))
+                                //{
                                     #region 添加到活动订单 经纪人账户表 AgentBill表 修改经纪人等级 生成3个邀请码  并发送到手机
 
                                     //添加活动订单信息
@@ -452,8 +451,12 @@ namespace Zerg.Controllers.CRM
                                     abmmodel.Updtime = DateTime.Now;
                                     abmmodel.EventOrderId = emodel.Id;
                                     _agentBillService.Create(abmmodel);
+
+                                //    tsCope.Complete();
+                                //}
                                     
-                                    
+                                //      using (TransactionScope tsCope = new TransactionScope(TransactionScopeOption.RequiresNew))
+                                //{
 
                                     //修改邀请码表信息
                                     con.NumUser = brokerModel.Id;
@@ -467,7 +470,8 @@ namespace Zerg.Controllers.CRM
 
                                     brokerModel.Amount += 30;
                                     _brokerService.Update(brokerModel);
-
+                                //    tsCope.Complete();
+                                //}
                                
                                     //并且生成3个邀请码发送到手机端口 并插入库中
                                     string randmNums = string.Empty;
@@ -487,8 +491,6 @@ namespace Zerg.Controllers.CRM
                                     SMSHelper.Sending(brokerModel.Phone, "恭喜您完善个人信息，奖励您三个邀请码：" + randmNums + "赶快邀请小伙伴们，惊喜等你哟！" + "【优客惠】");
                                     #endregion 
 
-                                    tsCope.Complete();
-                                }
                                 
                             }
                             else //不存在 或已被使用
@@ -529,8 +531,8 @@ namespace Zerg.Controllers.CRM
                                         var num1 = _eventOrderService.GetEventOrderCount(eventcon1); //查询活动订单表有无该经纪人
                                         if (qcon != null && num1 == 0)
                                         {
-                                            using (TransactionScope tsCope = new TransactionScope(TransactionScopeOption.RequiresNew))
-                                            {
+                                            //using (TransactionScope tsCope = new TransactionScope(TransactionScopeOption.RequiresNew))
+                                            //{
                                                 EventOrderEntity emodel = new EventOrderEntity();
                                                 emodel.AcDetail = "完整经济人资料无邀请码奖励20元";
                                                 emodel.Addtime = DateTime.Now;
@@ -570,8 +572,8 @@ namespace Zerg.Controllers.CRM
                                                 brokerModel.Amount += 20;
                                                 _brokerService.Update(brokerModel);
                                                 //给20元钱 等级设为青铜 
-                                                tsCope.Complete();
-                                            }
+                                            //    tsCope.Complete();
+                                            //}
                                     }
                                     else
                                     {
@@ -621,8 +623,8 @@ namespace Zerg.Controllers.CRM
                         if (_brokerService.GetBrokerCount(qbsearchModel) <= 1000 && num==0) //判断青铜是否《=1000  
                         {
                             //青铜等级人数《=1000 给20元钱 等级设为青铜
-                            using (TransactionScope tsCope = new TransactionScope(TransactionScopeOption.RequiresNew))
-                            {
+                            //using (TransactionScope tsCope = new TransactionScope(TransactionScopeOption.RequiresNew))
+                            //{
                                 //添加到活动订单表
                                 EventOrderEntity emodel = new EventOrderEntity();
                                 emodel.AcDetail = "完整经济人资料无邀请码奖励20元";
@@ -663,8 +665,8 @@ namespace Zerg.Controllers.CRM
                                 brokerModel.Level = qlevel;
                                 brokerModel.Amount += 20;
                                 _brokerService.Update(brokerModel);
-                                tsCope.Complete();
-                            }
+                            //    tsCope.Complete();
+                            //}
 
                         }
                         else
