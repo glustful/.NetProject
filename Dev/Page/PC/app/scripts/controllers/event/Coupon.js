@@ -78,7 +78,8 @@ angular.module("app").controller('CouponCreateController', ['$http','$scope','$s
         Number:'',
         Status:'',
         CouponCategoryId:'',
-        Count:''
+        Count:'',
+        Content:''
     }
     $scope.create=function(){
         $http.post(SETTING.eventApiUrl+'/Coupon/BlukCreate',$scope.Coupon,{'withCredentials': true}).success(function(data){

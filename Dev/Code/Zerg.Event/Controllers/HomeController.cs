@@ -28,20 +28,16 @@ namespace Zerg.Event.Controllers
             _crowdService = crowdService;
         }
 
-        // GET: Home
+        /// <summary>
+        /// 微信服务器交互入口，用于微信服务器和本程序交互
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
-            var model = new CrowdEntity();
-            model.Ttitle = "asd";
-            model.Intro = "asd";
-            model.Starttime = DateTime.Now;
-            model.Endtime = DateTime.Now;
-            model.Status = 1;
-            model.Adduser = 1;
-            model.Addtime = DateTime.Now;
-            model.Upuser = 1;
-            model.Addtime = DateTime.Now;
-            _crowdService.Create(model);
+            #region 微信首次接入认证 杨定鹏 2015年7月7日15:53:10
+            
+            #endregion
+
             return View();
         }
     }

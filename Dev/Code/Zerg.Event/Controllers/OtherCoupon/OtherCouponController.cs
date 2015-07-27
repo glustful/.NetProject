@@ -17,7 +17,13 @@ namespace Zerg.Event.Controllers.OtherCoupon
         private readonly IOtherCouponService _otherCouponService;
         private readonly IOtherCouponOwnerService _otherCouponOwnerService;
 
-        public OtherCouponController(IOtherCouponCategoryService otherCouponCategoryService, IOtherCouponService otherCouponService, IProductBrandService productBrandService, IOtherCouponOwnerService otherCouponOwnerService, IWorkContext workContext)
+        public OtherCouponController(
+            IOtherCouponCategoryService otherCouponCategoryService,
+            IOtherCouponService otherCouponService, 
+            IProductBrandService productBrandService, 
+            IOtherCouponOwnerService otherCouponOwnerService, 
+            IWorkContext workContext
+            )
         {
             _otherCouponCategoryService = otherCouponCategoryService;
             _otherCouponService = otherCouponService;
@@ -25,6 +31,11 @@ namespace Zerg.Event.Controllers.OtherCoupon
             _otherCouponOwnerService = otherCouponOwnerService;
             _workContext = workContext;
         }
+
+        /// <summary>
+        /// 优惠劵显示列表
+        /// </summary>
+        /// <returns></returns>
         public ActionResult OtherCoupons()
         {
             var conConditon = new OtherCouponCategorySearchCondition
@@ -55,6 +66,11 @@ namespace Zerg.Event.Controllers.OtherCoupon
             return View(list);
         }
 
+        /// <summary>
+        /// 获取优惠券
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult OtherCouponOwn(int id)
         {
             if (_workContext.CurrentUser == null)
@@ -85,7 +101,7 @@ namespace Zerg.Event.Controllers.OtherCoupon
                 };
                 return View(couponOwn);
             }
-            return RedirectToAction("coupons", "Coupons");
+            return RedirectToAction("OtherCoupons", "OtherCoupons");
         }
     }
 }
