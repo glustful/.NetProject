@@ -7,13 +7,12 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.home.MainActionBarActivity;
@@ -32,13 +31,14 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 	TextView tv_subtitle;
 	@ViewById(R.id.iv_style)
 	ImageView iv_style;
-	
+
 	@Click(R.id.tv_style)
 	void style() {
 		Log.i(TAG, mJson);
 		if (!TextUtils.isEmpty(mJson))
 			BrandDetailActivity_.intent(this).mJson(mJson).start();
 	}
+
 	@AfterViews
 	void initView() {
 		backButton.setVisibility(View.VISIBLE);
@@ -47,6 +47,7 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 		titleButton.setText("楼盘详情");
 		initDatas();
 	}
+
 	private void initDatas() {
 		if (!StringUtils.isEmpty(mJson))
 			try {
@@ -59,39 +60,41 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 				tv_detail.setText(Html.fromHtml(content));
 				JSONObject parametersJsonObject = obj.optJSONObject("ProductParamater");
 				// ######################## 彭佳媛 编写 ######################### Start
-				/* String photo = obj.optString("Bimg", "");
-				    if (TextUtils.isEmpty(photo)) {
-						Log.i(TAG, "11111111");
-						String url = "http://img.yoopoon.com/" + photo;
-						Log.i(TAG, url);
-						ImageLoader.getInstance().displayImage(url, iv_style);
-					}	*/
+				/*
+				 * String photo = obj.optString("Bimg", ""); if (TextUtils.isEmpty(photo)) {
+				 * Log.i(TAG, "11111111"); String url = "http://img.yoopoon.com/" + photo;
+				 * Log.i(TAG, url); ImageLoader.getInstance().displayImage(url, iv_style); }
+				 */
 				// ######################## 彭佳媛 编写 ######################### End
 				//
 				//
-				// ######################## 徐阳会 2015年7月27日 修改  ######################### Start
+				// ######################## 徐阳会 2015年7月27日 修改 ######################### Start
 				String photo = parametersJsonObject.optString("图片banner");
 				if (!photo.equals("")) {
 					String url = "http://img.yoopoon.com/" + photo;
 					ImageLoader.getInstance().displayImage(url, iv_style);
 				}
-				// ######################## 徐阳会 2015年7月27日 修改  ######################### End
+				// ######################## 徐阳会 2015年7月27日 修改 ######################### End
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 	}
+
 	@Override
 	public void backButtonClick(View v) {
 		this.finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		// TODO Auto-generated method stub
