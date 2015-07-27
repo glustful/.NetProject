@@ -104,10 +104,10 @@ function FormatDate(JSONDateString) {
         + month
         + "-"
         + currentDate
-//        + "-"
-//        + date.getHours()
-//        + ":"
-//        + date.getMinutes()
+        + "-"
+        + date.getHours()
+        + ":"
+        + date.getMinutes()
 //        + ":"
 //        + date.getSeconds()
         ;
