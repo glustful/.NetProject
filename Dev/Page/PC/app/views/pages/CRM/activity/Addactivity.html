@@ -1,0 +1,17 @@
+<form name="form" id="form" ng-controller="" ng-submit="">
+    <div class="panel panel-default">
+        <div class="panel-body revise">
+            <div class="bottom" ><label for="name">活动名称： </label> <input id="name" type="text" name="Name" ng-model="UserModel.UserName" required>
+            </div>
+            <div class="bottom" ><label for="name">开始时间： </label> <input  type="text"   required>
+            </div>
+            <div class="bottom" ><label for="name">截至时间： </label> <input  type="text"   required>
+            </div>
+
+            <div>
+                <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" style="margin-right:20px;" type="submit">保存<div class="md-ripple-container"></div></button>
+                <a href="#"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">取消<div class="md-ripple-container"></div></button></a>
+            </div>
+        </div>
+    </div>
+</form>

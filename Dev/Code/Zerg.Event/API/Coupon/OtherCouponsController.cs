@@ -121,10 +121,10 @@ namespace Zerg.Event.API.Coupon
                 Number = coupon.Number,
                 BrandName = brand.Bname
             };
-            var phone = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Phone;
+            var model = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id);
 
             //短信发送
-            SMSHelper.Sending(phone, "优惠券为：" + brand.Bname + "，券号为：" + coupon.Number + " 【优客惠】");
+            SMSHelper.Sending(model.Phone, "优惠券为：" + brand.Bname + "，券号为：" + coupon.Number + " 【优客惠】");
 
             return PageHelper.toJson(CouponOwn);
         }

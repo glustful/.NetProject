@@ -72,7 +72,18 @@ namespace CRM.Service.InvitedCode
                 return null;
             }
         }
-        
+        public InviteCodeEntity GetInviteCodeByBrokerId(BrokerEntity broker)
+        {
+            try
+            {
+                return _invitecodeRepository.GetById(broker); ;
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
 
         public IQueryable<InviteCodeEntity> GetInviteCodeByCondition(InviteCodeSearchCondition condition)
         {
@@ -82,6 +93,10 @@ namespace CRM.Service.InvitedCode
                 if (condition.UseTime.HasValue)
                 {
                     query = query.Where(q => q.UseTime >= condition.UseTime.Value);
+                }
+                if (condition.Brokers != null)
+                {
+                    query = query.Where(q => q.Broker.Id== condition.Brokers.Id);
                 }
                 if (condition.CreatTime.HasValue)
                 {
@@ -102,10 +117,36 @@ namespace CRM.Service.InvitedCode
 
         }
 
+        public int GetInviteCodeByCount(InviteCodeSearchCondition condition)
+        {
+            var query = _invitecodeRepository.Table;
+            try
+            {
+                if (condition.UseTime.HasValue)
+                {
+                    query = query.Where(q => q.UseTime >= condition.UseTime.Value);
+                }
+                if (condition.Brokers != null)
+                {
+                    query = query.Where(q => q.Broker == condition.Brokers);
+                }
+                if (condition.CreatTime.HasValue)
+                {
+                    query = query.Where(q => q.CreatTime < condition.CreatTime.Value);
+                }
+                if (!string.IsNullOrEmpty(condition.Number))
+                {
+                    query = query.Where(q => q.Number.Contains(condition.Number));
+                }
 
+                return query.Count();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return -1;
+            }
 
-      
-
-
+        }
     }
 }
