@@ -16,7 +16,7 @@ namespace CRM.Service.InvitedCode
 
         IQueryable<InviteCodeEntity> GetInviteCodeByCondition(InviteCodeSearchCondition condition);
         int GetInviteCodeByCount(InviteCodeSearchCondition condition);
-
+        InviteCodeEntity GetInviteCodebyBrokerId(int broker);
        
     }
 }

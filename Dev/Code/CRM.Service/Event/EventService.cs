@@ -90,7 +90,24 @@ namespace CRM.Service.Event
                 {
                     query = query.Where(q => q.EventContent.Contains(condition.EventContent));
                 }
-               
+                if (condition.OrderBy.HasValue)
+                {
+                    switch (condition.OrderBy.Value)
+                    {
+                        case EnumEventSearchOrderBy.OrderById:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
+                            break;
+                    }
+
+                }
+                else
+                {
+                    query = query.OrderBy(q => q.Id);
+                }
+                if (condition.Page.HasValue && condition.PageCount.HasValue)
+                {
+                    query = query.Skip((condition.Page.Value - 1) * condition.PageCount.Value).Take(condition.PageCount.Value);
+                }
                 return query;
             }
             catch (Exception e)
@@ -101,7 +118,32 @@ namespace CRM.Service.Event
 
         }
 
+        //public int GetEventCount(BrokerSearchCondition condition)
+        //{
+        //    var query = _eventRepository.Table;
 
+        //    try
+        //    {
+        //        if (condition.Starttime.HasValue)
+        //        {
+        //            query = query.Where(q => q.Starttime >= condition.Starttime.Value);
+        //        }
+        //        if (condition.Endtime.HasValue)
+        //        {
+        //            query = query.Where(q => q.Endtime < condition.Endtime.Value);
+        //        }
+        //        if (!string.IsNullOrEmpty(condition.EventContent))
+        //        {
+        //            query = query.Where(q => q.EventContent.Contains(condition.EventContent));
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _log.Error(e, "数据库操作出错");
+
+        //    }
+
+        //}
 
 
     }

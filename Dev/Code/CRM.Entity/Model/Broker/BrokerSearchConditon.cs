@@ -22,7 +22,7 @@ namespace CRM.Entity.Model
 		public int[] Ids { get; set; }
 
         public int PartnersId { get; set; }
-		public LevelEntity[] Levels { get; set; }
+		public LevelEntity Levels { get; set; }
 
 		public int[] UserIds { get; set; }
 
