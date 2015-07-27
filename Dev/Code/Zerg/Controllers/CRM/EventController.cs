@@ -6,42 +6,21 @@ using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CRM.Entity.Model;
-using CRM.Service.BrokeAccount;
 using CRM.Service.Event;
-using CRM.Service.EventOrder;
-using CRM.Service.InvitedCode;
-using CRM.Service.Level;
 using Zerg.Common;
 
 namespace Zerg.Controllers.CRM
 {
       [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
-
-    /// <summary>
-    /// 活动表  杨跃  2015-07-23
-    /// </summary>
-    public class EventController : ApiController
+      public class EventController : ApiController
       {
           private readonly IEventService _eventService;
-          private readonly IBrokeAccountService _brokerAccountService;
-          private readonly IEventOrderService _eventOrderService;
-          private readonly IInviteCodeService _inviteCodeService;
-          private readonly ILevelService _levelService;
 
 
-
-          public EventController(IBrokeAccountService brokerAccountService,
-              IEventOrderService eventOrderService,
-              IInviteCodeService inviteCodeService,
-              ILevelService levelService,
-              IEventService eventService
+          public EventController(IEventService eventService
               )
           {
-                _brokerAccountService = brokerAccountService;
-                 _eventOrderService = eventOrderService;
-                _inviteCodeService = inviteCodeService;
-                _levelService = levelService;
               _eventService = eventService;
           }
         [Description("获取所有活动，返回活动列表")]
@@ -50,7 +29,7 @@ namespace Zerg.Controllers.CRM
           public HttpResponseMessage GetEventList()
         {
             EventSearchCondition eventcoCondition = new EventSearchCondition();
-            var EventList = _eventService.GetEventByCondition(eventcoCondition).Select(a => new
+            var eventList = _eventService.GetEventByCondition(eventcoCondition).Select(a => new
             {
                 a.Id,
                 a.EventContent,
@@ -58,17 +37,17 @@ namespace Zerg.Controllers.CRM
                 a.Endtime,
                 a.State
             }).ToList();
-            return PageHelper.toJson(EventList);
+            return PageHelper.toJson(eventList);
             
         }
 
           [Description("添加活动")]
           [HttpGet]
           [EnableCors("*", "*", "*", SupportsCredentials = true)]
-          public HttpResponseMessage AddEvent([FromBody] EventEntity EventModel)
+          public HttpResponseMessage AddEvent([FromBody] EventEntity eventModel)
           {
               Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
-              var m = reg.IsMatch(EventModel.EventContent);
+              var m = reg.IsMatch(eventModel.EventContent);
               if (!m)
               {
                   return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
@@ -77,11 +56,11 @@ namespace Zerg.Controllers.CRM
               {
                   EventEntity ee = new EventEntity()
                   {
-                      EventContent = EventModel.EventContent,
+                      EventContent = eventModel.EventContent,
                       Starttime = DateTime.Now,
                       Endtime = DateTime.Now,
-                      ActionControllers = null,
-                      State = EventModel.State
+                      ActionControllers = eventModel.ActionControllers,
+                      State = eventModel.State
 
                   };
                   try
@@ -96,6 +75,61 @@ namespace Zerg.Controllers.CRM
                   }
 
               }
+          }
+          [Description("修改活动")]
+          [HttpGet]
+          [EnableCors("*", "*", "*", SupportsCredentials = true)]
+          public HttpResponseMessage UpEvent( EventEntity eventModel)
+          {
+              Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
+              var m = reg.IsMatch(eventModel.EventContent);
+              if (!m)
+              {
+                  return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
+              }
+              else
+              {
+                  var e = _eventService.GetEventById(eventModel.Id);
+                  e.EventContent = eventModel.EventContent;
+                  e.Starttime = DateTime.Now;
+                  e.Endtime = DateTime.Now;
+                  e.ActionControllers = eventModel.ActionControllers;
+                  e.State = eventModel.State; 
+                  if (_eventService.Update(e) != null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "数据修改成功！"));
+                    }
+                  else
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败！"));
+                    }
+
+              }
+          }
+
+
+          [Description("删除活动")]
+          [HttpGet]
+          [EnableCors("*", "*", "*", SupportsCredentials = true)]
+          public HttpResponseMessage DelEventById(int eventId)
+          {
+              try
+              {
+                  if (_eventService.Delete(_eventService.GetEventById(eventId)))
+                  {
+
+                      return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功！"));
+                  }
+                  else
+                  {
+                      return PageHelper.toJson(PageHelper.ReturnValue(false, "删除品牌失败，该品牌可能有商品已被添加"));
+                  }
+              }
+              catch (Exception)
+              {
+                  return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
+              }
+
           }
       }
  }
