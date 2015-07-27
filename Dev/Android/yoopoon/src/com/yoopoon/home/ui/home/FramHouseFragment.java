@@ -249,6 +249,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			area_name_textview.setText("区域");
 			type_textview.setText("类型");
 			price_textview.setText("价格");
+			houseConditionReset();
 			setBrokerBackground = false;
 		}
 		if (isVisibleToUser) {

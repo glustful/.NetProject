@@ -1,6 +1,7 @@
 package com.yoopoon.home.ui.product;
 
 import java.util.ArrayList;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
@@ -9,6 +10,7 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -19,6 +21,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
+
 import com.etsy.android.grid.util.DynamicHeightImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -65,7 +68,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	Context mContext;
 	String header = "<!doctype html><html><head><meta name = \"viewport\" content = \"width = device-width\"/></head><body>";
 	String tail = "</body></html>";
-
+	
 	@AfterViews
 	void initUI() {
 		mContext = this;
@@ -76,16 +79,14 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		titleButton.setText("户型详情");
 		requestProduct();
 	}
-
+	
 	ImageLoadingListener listen = new ImageLoadingListener() {
 		@Override
 		public void onLoadingStarted(String imageUri, View view) {
 		}
-
 		@Override
 		public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
 		}
-
 		@Override
 		public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
 			if (imageUri.equals(view.getTag().toString())) {
@@ -105,12 +106,11 @@ public class ProductDetailActivity extends MainActionBarActivity {
 				}
 			}
 		}
-
 		@Override
 		public void onLoadingCancelled(String imageUri, View view) {
 		}
 	};
-
+	
 	void requestProduct() {
 		CircleProgressDialog.build(mContext, R.style.dialog).show();
 		new RequestAdapter() {
@@ -123,7 +123,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 					ToastUtils.showToast(mContext, data.getMsg(), 3000);
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
@@ -131,7 +130,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		}.setUrl(getString(R.string.url_product_GetProductById)).setRequestMethod(RequestMethod.eGet)
 				.addParam("productId", productId).notifyRequest();
 	}
-
 	@UiThread
 	protected void callBack(final JSONObject mRootData) {
 		if (mRootData == null)
@@ -140,7 +138,12 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		price.setText("均价" + Tools.optDouble(mRootData, "Price", 0) + "元/" + getString(R.string.meter) + "起");
 		area.setText(Tools.optString(mRootData, "SubTitle", ""));
 		brokerConsultationTextView.setText("咨询热线" + Tools.optString(mRootData, "Phone", ""));
-		String url = getString(R.string.url_host_img) + Tools.optString(mRootData, "Productimg", "");
+		// ############################### 郭俊军编写 #############################################
+		//String url = getString(R.string.url_host_img) + Tools.optString(mRootData, "Productimg", "");
+		// ############################### 郭俊军编写 #############################################
+		// ############################### 徐阳会修改 2015年7月27日  ############################### Start
+		String url = getString(R.string.url_host_img) + Tools.optString(mRootData, "ProductDetailImg", "");
+		// ############################### 徐阳会修改 2015年7月27日  ############################### End
 		img.setTag(url);
 		// img.setHeightRatio(1.5);
 		ImageLoader.getInstance().displayImage(url, img, MyApplication.getOptions(), listen);
@@ -211,54 +214,46 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		});
 		// ##########################徐阳会 2015年7月22日 添加 End
 	}
-
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
-
 	@Override
 	public Boolean showHeadView() {
 		// TODO Auto-generated method stub
 		return true;
 	}
-
+	
 	class ImgAdapter extends BaseAdapter {
 		ArrayList<String> urls;
-
+		
 		public ImgAdapter(ArrayList<String> tmp) {
 			this.urls = new ArrayList<String>();
 			this.urls.addAll(tmp);
 		}
-
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
 			return urls.size();
 		}
-
 		@Override
 		public Object getItem(int position) {
 			// TODO Auto-generated method stub
 			return urls.get(position);
 		}
-
 		@Override
 		public long getItemId(int position) {
 			// TODO Auto-generated method stub
 			return position;
 		}
-
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			com.etsy.android.grid.util.DynamicHeightImageView image;
