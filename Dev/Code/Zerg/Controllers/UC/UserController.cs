@@ -363,12 +363,16 @@ namespace Zerg.Controllers.UC
             var validMsg = "";
             if (!brokerModel.ValidateModel(out validMsg))
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, validMsg));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误，请重新输入"));
             }
 
             #region 验证码判断 解密
             var strDes = EncrypHelper.Decrypt(brokerModel.Hidm, "Hos2xNLrgfaYFY2MKuFf3g==");//解密
             string[] str = strDes.Split('$');
+            if (str.Count() < 2)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码错误，请重新发送！"));
+            }
             string source = str[0];//获取验证码和手机号
             DateTime date = Convert.ToDateTime(str[1]);//获取发送验证码的时间
             DateTime dateNow = Convert.ToDateTime(DateTime.Now.ToLongTimeString());//获取当前时间
@@ -630,6 +634,12 @@ namespace Zerg.Controllers.UC
             #region 首先判断发送到手机的验证码是否正确
             var strDes = EncrypHelper.Decrypt(model.Hidm, "Hos2xNLrgfaYFY2MKuFf3g==");//解密
             string[] str = strDes.Split('$');
+
+            if(str.Count()<2)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "验证码错误，请重新发送！"));
+            }
+
             string source = str[0];//获取验证码
             DateTime date = Convert.ToDateTime(str[1]);//获取发送验证码的时间
             DateTime dateNow = Convert.ToDateTime(DateTime.Now.ToLongTimeString());//获取当前时间

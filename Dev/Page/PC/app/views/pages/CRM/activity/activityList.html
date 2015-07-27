@@ -1,7 +1,7 @@
 <div class="p-md" ng-app="App" ng-controller="">
     <div>
-        <button ui-sref="" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加活动
-        </button>
+        <a href="#page/CRM/activity/Addactivity"><button  class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加活动
+        </button></a>
         <div class="line b-b m-v-md"></div>
 
     </div>
@@ -24,7 +24,7 @@
                 <td>{{row.Starttime | dateFilter }}</td>
                 <td>{{row.Endtime}}</td>
                 <td>
-                    <a ui-sref="" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 编辑
+                    <a ui-sref="page.CRM.activity.Edit" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 编辑
                     </a>
                     <button ng-click='del(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
                     </button>
