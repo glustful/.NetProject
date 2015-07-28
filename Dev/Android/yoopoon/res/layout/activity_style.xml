@@ -97,12 +97,11 @@
         android:layout_height="2dp"
         android:background="@drawable/line"/>
     
-    <TextView 
-        android:id="@+id/tv_style_detail2"
+    <WebView 
+        android:id="@+id/wv_style_detail2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        android:text="啊哈哈哈哈哈哈哈 "/>
+        android:padding="10dp"/>
 
 </LinearLayout>
 </ScrollView>

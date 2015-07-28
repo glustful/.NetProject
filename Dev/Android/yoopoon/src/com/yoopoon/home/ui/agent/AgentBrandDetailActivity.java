@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -196,7 +197,9 @@ public class AgentBrandDetailActivity extends MainActionBarActivity {
 
 						String photo = params.optString("图片banner", "");
 						if (!StringUtils.isEmpty(photo)) {
+
 							String url = "http://img.yoopoon.com/" + photo;
+							iv_building.setScaleType(ScaleType.FIT_XY);
 							ImageLoader.getInstance().displayImage(url, iv_building);
 						}
 					} catch (JSONException e) {

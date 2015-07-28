@@ -7,10 +7,10 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -25,8 +25,8 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 	String mJson;
 	@ViewById(R.id.tv_style_name)
 	TextView tv_name;
-	@ViewById(R.id.tv_style_detail2)
-	TextView tv_detail;
+	@ViewById(R.id.wv_style_detail2)
+	WebView wv_detail;
 	@ViewById(R.id.tv_style_subtitle)
 	TextView tv_subtitle;
 	@ViewById(R.id.iv_style)
@@ -34,7 +34,6 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 
 	@Click(R.id.tv_style)
 	void style() {
-		Log.i(TAG, mJson);
 		if (!TextUtils.isEmpty(mJson))
 			BrandDetailActivity_.intent(this).mJson(mJson).start();
 	}
@@ -55,9 +54,11 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 				String title = obj.optString("Bname", "");
 				String subTitle = obj.optString("SubTitle", "");
 				String content = obj.optString("Content", "");
+				Log.i(TAG, content);
 				tv_name.setText(title);
 				tv_subtitle.setText(subTitle);
-				tv_detail.setText(Html.fromHtml(content));
+
+				wv_detail.loadDataWithBaseURL(null, content, "text/html", "utf-8", null);
 				JSONObject parametersJsonObject = obj.optJSONObject("ProductParamater");
 				// ######################## 彭佳媛 编写 ######################### Start
 				/*

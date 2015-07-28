@@ -100,14 +100,15 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	private int count = 0;
 	private Timer timer;
 	private TimerTask task;
+	private boolean uploadable = true;
 
 	@Click(R.id.iv_person_setting_avater)
 	void selectAvater() {
-
-		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-		intent.setType("image/*");
-
-		this.startActivityForResult(intent, 1);
+		if (uploadable) {
+			Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+			intent.setType("image/*");
+			this.startActivityForResult(intent, 1);
+		}
 
 	}
 
@@ -182,11 +183,11 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				try {
 					entity = om.readValue(json, BrokerEntity.class);
 				} catch (JsonParseException e) {
-					Log.i(TAG, "JsonParseException:" + e.getStackTrace());
+					e.printStackTrace();
 				} catch (JsonMappingException e) {
-					Log.i(TAG, "JsonMappingException:" + e.getMessage());
+					e.printStackTrace();
 				} catch (IOException e) {
-					Log.i(TAG, "IOException:" + e.getStackTrace());
+					e.printStackTrace();
 				}
 				return entity;
 			}
@@ -219,7 +220,11 @@ public class PersonSettingActivity extends MainActionBarActivity {
 					Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
 					/* 将Bitmap设定到ImageView */
 					iv_avater.setImageBitmap(bitmap);
-					uploadImage(file);
+					if (file.length() > 150000) {
+						tv_uploading.setText("图片太大啦，换一张小一点的吧");
+						tv_uploading.setVisibility(View.VISIBLE);
+					} else
+						uploadImage(file);
 				} catch (FileNotFoundException e) {
 					Log.e("Exception", e.getMessage(), e);
 				}
@@ -239,7 +244,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			actualimagecursor.moveToFirst();
 
 			String img_path = actualimagecursor.getString(actual_image_column_index);
-			Log.i(TAG, img_path);
+			// Log.i(TAG, img_path);
 			return new File(img_path);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -267,6 +272,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	}
 
 	private void uploadImage(final File file) {
+		uploadable = false;
 		final String path = getString(R.string.url_host) + getString(R.string.url_upload);
 
 		timer = new Timer();
@@ -295,8 +301,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 
 					@Override
 					public void onSuccess(final String json) {
-						Log.i(TAG, json);
-
+						// Log.i(TAG, json);
+						uploadable = true;
 						runOnUiThread(new Runnable() {
 
 							@Override
@@ -334,6 +340,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 
 					@Override
 					public void onFailed() {
+						uploadable = true;
 						runOnUiThread(new Runnable() {
 
 							@Override
@@ -403,7 +410,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 
 			@Override
 			public void failed(String msg) {
-				Log.i(TAG, msg);
+				// Log.i(TAG, msg);
 			}
 		});
 	}

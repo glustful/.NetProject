@@ -161,19 +161,16 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
 			return 2;
 		}
 
 		@Override
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
 			return datas.get(position);
 		}
 
 		@Override
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
 			return position;
 		}
 
@@ -203,7 +200,7 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 					+ "]";
 			String area = StringUtils.isEmpty(parameter.optString("占地面积")) ? "" : parameter.optString("占地面积");
 
-			mHolder.tv_detail2.setText(title + city + area);
+			mHolder.tv_detail2.setText(city + title + area);
 
 			// String price = parameter.optString("总价");
 			// mHolder.price.setText(StringUtils.isEmpty(area) ? "总价：110万" : price);
@@ -346,8 +343,10 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 	private HashMap<String, String> params = new HashMap<String, String>();
 
 	private void initParams() {
+		params.clear();
+		params.put("className", "房地产");
 		params.put("page", "1");
-		params.put("pageSize", "1");
+		params.put("pageSize", "6");
 		params.put("type", "all");
 	}
 
@@ -356,7 +355,7 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 
 			@Override
 			public void onReponse(ResponseData data) {
-
+				Log.i(TAG, data.toString());
 				if (data.getResultState() == ResultState.eSuccess) {
 					JSONArray list = data.getMRootData().optJSONArray("List");
 					Log.i(TAG, list.toString());
@@ -374,7 +373,6 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 
 			@Override
 			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
 			}
 		}.setUrl(getString(R.string.url_brand_GetAllBrand)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
