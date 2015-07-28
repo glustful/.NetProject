@@ -10,6 +10,8 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Color;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +19,6 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.home.MainActionBarActivity;
@@ -31,21 +32,25 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 	String mJson;
 	@ViewById(R.id.tv_style_name)
 	TextView tv_name;
+
 	@ViewById(R.id.tv_style_detail2)
 	TextView tv_detail;
-	@ViewById(R.id.webview_style_detail2)
-	WebView webview_detail2;
+
+
+	@ViewById(R.id.wv_style_detail2)
+	WebView wv_detail;
+
 	@ViewById(R.id.tv_style_subtitle)
 	TextView tv_subtitle;
 	@ViewById(R.id.iv_style)
 	ImageView iv_style;
-	
+
 	@Click(R.id.tv_style)
 	void style() {
-		Log.i(TAG, mJson);
 		if (!TextUtils.isEmpty(mJson))
 			BrandDetailActivity_.intent(this).mJson(mJson).start();
 	}
+
 	@AfterViews
 	void initView() {
 		backButton.setVisibility(View.VISIBLE);
@@ -54,16 +59,26 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 		titleButton.setText("楼盘详情");
 		initDatas();
 	}
+
 	private void initDatas() {
 		if (!StringUtils.isEmpty(mJson))
 			try {
 				JSONObject obj = new JSONObject(mJson);
 				String title = obj.optString("Bname", "");
 				String subTitle = obj.optString("SubTitle", "");
+
 				final String content = obj.optString("Content", "");
 				tv_name.setText(title);
 				tv_subtitle.setText(subTitle);
 				// ######################## 徐阳会 2015年7月28日 修改 ######################### Start
+
+				String content = obj.optString("Content", "");
+				Log.i(TAG, content);
+				tv_name.setText(title);
+				tv_subtitle.setText(subTitle);
+
+				wv_detail.loadDataWithBaseURL(null, content, "text/html", "utf-8", null);
+>>>>>>> 19a13a1c4f781b7f6ff24abb743648d1c684a47f
 				JSONObject parametersJsonObject = obj.optJSONObject("ProductParamater");
 				// ######################## 彭佳媛 编写 ######################### Start
 				/*
@@ -88,18 +103,22 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 				e.printStackTrace();
 			}
 	}
+
 	@Override
 	public void backButtonClick(View v) {
 		this.finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		// TODO Auto-generated method stub
