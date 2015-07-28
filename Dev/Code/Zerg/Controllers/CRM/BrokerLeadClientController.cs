@@ -225,7 +225,7 @@ namespace Zerg.Controllers.CRM
                 NickName = model.Broker.Nickname,
                 BrokerPhone = model.Broker.Phone,
                 Sex = model.Broker.Sexy,
-                RegTime = model.Broker.Regtime.ToString("yyy-mm-dd"),
+                RegTime = model.Broker.Regtime.ToString("yyy-MM-dd"),
                 Clientname = model.ClientName,
                 HouseType = model.ProjectId == 0 ? "" : _productService.GetProductById(model.ProjectId).Productname,
                 //HouseType = _productService.GetProductById(model.ProjectId).Productname,
