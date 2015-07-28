@@ -39,6 +39,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +56,6 @@ import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.data.user.User;
-import com.yoopoon.home.ui.active.ActiveBrandAdapter;
 import com.yoopoon.home.ui.active.BrandDetail2Activity_;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 import com.yoopoon.home.ui.me.BrokerInfoView;
@@ -90,9 +90,14 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 	private int clientCount = 0;
 	private TextView tv_today_rec;
 	private ListView lv_recs;
+
 	private MyRecsBuildAdapter adapter;
 	private ActiveBrandAdapter brandAdapter;
 	
+
+	private ProgressBar pb_lv;
+
+
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
@@ -185,10 +190,14 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 			mHolder.iv.setTag(url);
 			ImageLoader.getInstance().displayImage(url, mHolder.iv, MyApplication.getOptions(),
 					MyApplication.getLoadingListener());
-			String title = StringUtils.isEmpty(item.optString("Bname")) ? "" : item.optString("Bname");
+
+
+			String title = StringUtils.isEmpty(item.optString("Bname")) ? "" : item.optString("Bname") + "    ";
+
+
 			JSONObject parameter = item.optJSONObject("ProductParamater");
 			String city = "[" + (StringUtils.isEmpty(parameter.optString("所属城市")) ? "" : parameter.optString("所属城市"))
-					+ "]";
+					+ "]   ";
 			String area = StringUtils.isEmpty(parameter.optString("占地面积")) ? "" : parameter.optString("占地面积");
 			mHolder.tv_detail2.setText(city + title + area);
 			// String price = parameter.optString("总价");
@@ -268,6 +277,10 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 			mMeFooterView = (MeFooterView) rootView.findViewById(R.id.footerView);
 			tv_today_rec = (TextView) rootView.findViewById(R.id.tv_today_recs);
 			lv_recs = (ListView) rootView.findViewById(R.id.lv_rec_build);
+
+			pb_lv = (ProgressBar) rootView.findViewById(R.id.pb_me_lv_progress);
+
+
 		}
 		registerLoginReceiver();
 		return rootView;
@@ -315,6 +328,7 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 		params.put("type", "all");
 	}
 	private void requestBrandList() {
+		pb_lv.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
@@ -329,6 +343,8 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 						lv_recs.setAdapter(new MyRecsBuildAdapter());
 					} catch (JSONException jsonException) {
 						jsonException.printStackTrace();
+					} finally {
+						pb_lv.setVisibility(View.GONE);
 					}
 				}
 			}

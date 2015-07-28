@@ -2,88 +2,99 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
     android:background="#ffffff"
-    android:paddingTop="10dp"
+    android:orientation="vertical"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingRight="10dp"
+    android:paddingTop="10dp" >
 
     <RelativeLayout
         android:id="@+id/rl_build_bg"
         android:layout_width="match_parent"
-        android:layout_height="161px"
+        android:layout_height="150dp"
         android:orientation="vertical" >
-        
-        <ImageView 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+
+        <ImageView
             android:id="@+id/iv_rec"
-        android:background="@drawable/ztrc"/>
-
-        <TextView
-            android:id="@+id/tv_build_right"
-            style="@style/TextView_Red_Shadow"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:text="可获得30%提拥   相当于21万提拥" />
-
-        <com.yoopoon.home.ui.view.ScrollTextView
-            style="@style/TextView_Black_Shadow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@id/tv_build_right"
-            android:ellipsize="marquee"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:singleLine="true"
-            android:id="@+id/tv_recs_detail1"
-            android:text="[昆明]中天融城  户型：238㎡  总价：110万" />
+            android:layout_height="match_parent"
+            android:background="@drawable/ztrc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <com.yoopoon.home.ui.view.ScrollTextView
+                android:layout_gravity="bottom"
+                android:id="@+id/tv_recs_detail1"
+                style="@style/TextView_Black_Shadow"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:singleLine="true"
+                android:text="[昆明]中天融城  户型：238㎡  总价：110万" />
+
+            <TextView
+                android:id="@+id/tv_build_right"
+                style="@style/TextView_Red_Shadow"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="可获得30%提拥   相当于21万提拥" />
+        </LinearLayout>
     </RelativeLayout>
+
     <com.yoopoon.home.ui.view.ScrollTextView
+        android:id="@+id/tv_recs_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:background="#f0f0f0"
-        android:textColor="#88000000"
-        android:singleLine="true"
         android:ellipsize="marquee"
-        android:focusableInTouchMode="true"
         android:focusable="true"
-        android:id="@+id/tv_recs_detail"
-        android:text="购房立减5000元，交10000元抵20000元，购房还可领红包，返积分"/>
-    
-    <LinearLayout 
+        android:focusableInTouchMode="true"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:text="购房立减5000元，交10000元抵20000元，购房还可领红包，返积分"
+        android:textColor="#88000000" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
         android:orientation="horizontal"
-        android:padding="15dp">
-        <TextView 
-            android:clickable="true"
-            android:focusable="true"
+        android:padding="15dp" >
+
+        <TextView
             android:id="@+id/tv_rec_guest"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="我要带客"
-            android:textColor="@color/red"
-            android:gravity="center"/>
-        <View 
-            android:layout_width="1dp"
-            android:layout_height="15dp"
-            android:background="@drawable/vertical_line"/>
-        <TextView 
+            android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
+            android:gravity="center"
+            android:text="我要带客"
+            android:textColor="@color/red" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:background="@drawable/vertical_line" />
+
+        <TextView
             android:id="@+id/tv_rec_call"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
             android:text="来电咨询"
-            android:textColor="@color/red"
-            android:gravity="center"/>
+            android:textColor="@color/red" />
     </LinearLayout>
 
 </LinearLayout>

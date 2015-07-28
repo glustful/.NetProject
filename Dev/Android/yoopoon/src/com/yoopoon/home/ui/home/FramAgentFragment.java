@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -225,40 +224,40 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 	}
 
 	private void requestBrandList() {
-		if (mJsonObjects.size() == 0)
-			new RequestAdapter() {
+		new RequestAdapter() {
 
-				@Override
-				public void onReponse(ResponseData data) {
-					Log.i(TAG, data.toString());
-					if (data.getResultState() == ResultState.eSuccess) {
-						JSONArray list = data.getMRootData().optJSONArray("List");
-						if (list == null || list.length() < 1)
-							return;
-						mJsonObjects.clear();
-						for (int i = 0; i < list.length(); i++) {
-							mJsonObjects.add(list.optJSONObject(i));
-						}
-						mAgentBrandAdapter.refresh(mJsonObjects);
+			@Override
+			public void onReponse(ResponseData data) {
+				if (data.getResultState() == ResultState.eSuccess) {
+					JSONArray list = data.getMRootData().optJSONArray("List");
+					if (list == null || list.length() < 1)
+						return;
+					mJsonObjects.clear();
+					for (int i = 0; i < list.length(); i++) {
+						mJsonObjects.add(list.optJSONObject(i));
 					}
+					mAgentBrandAdapter.refresh(mJsonObjects);
 				}
+			}
 
-				@Override
-				public void onProgress(ProgressMessage msg) {
-					// TODO Auto-generated method stub
-				}
-			}.setUrl(getString(R.string.url_brand_getOneBrand)).setRequestMethod(RequestMethod.eGet).notifyRequest();
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+			}
+		}.setUrl(getString(R.string.url_brand_getOneBrand)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
 
 	private void requestHeroList() {
-		if (mJsonObjects.size() == 0)
-			new RequestAdapter() {
 
-				@Override
-				public void onReponse(ResponseData data) {
-					if (data.getResultState() == ResultState.eSuccess) {
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				if (data.getResultState() == ResultState.eSuccess) {
+					if (data.getMRootData() != null) {
+						JSONObject obj = data.getMRootData();
 						try {
-							JSONArray array = data.getMRootData().getJSONArray("List");
+							JSONArray array = obj.getJSONArray("List");
 							ArrayList<JSONArray> arrays = new ArrayList<JSONArray>();
 							arrays.add(array);
 							mHeroController.show(arrays);
@@ -266,15 +265,18 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+
 					}
 				}
 
-				@Override
-				public void onProgress(ProgressMessage msg) {
-					// TODO Auto-generated method stub
-				}
-			}.setUrl(getString(R.string.url_fortune_hero)).setRequestMethod(RequestMethod.eGet).addParam(parameter)
-					.notifyRequest();
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_fortune_hero)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
 
 	/*

@@ -3,8 +3,13 @@
 
     <!-- server host -->
 
+<<<<<<< HEAD
     <string name="url_host">http://api.iyookee.cn</string>
     <!--  <string name="url_host">http://192.168.1.199:9010</string>   -->
+=======
+    <string name="url_host">http://api.iyookee.cn</string> 
+     <!-- <string name="url_host">http://192.168.1.199:9010</string>-->
+>>>>>>> 60b6fc1940589be91c15454dfae1aea2807df838
 
 
     <!-- userController -->
