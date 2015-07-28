@@ -7,15 +7,18 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.home.MainActionBarActivity;
+import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 
 @EActivity(R.layout.activity_style)
@@ -73,7 +76,11 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 				String photo = parametersJsonObject.optString("图片banner");
 				if (!photo.equals("")) {
 					String url = "http://img.yoopoon.com/" + photo;
-					ImageLoader.getInstance().displayImage(url, iv_style);
+					iv_style.setTag(url);
+					iv_style.setScaleType(ScaleType.FIT_XY);
+					iv_style.setBackgroundColor(Color.RED);
+					ImageLoader.getInstance().displayImage(url, iv_style, MyApplication.getOptions(),
+							MyApplication.getLoadingListener());
 				}
 				// ######################## 徐阳会 2015年7月27日 修改 ######################### End
 			} catch (JSONException e) {
