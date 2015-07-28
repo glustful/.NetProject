@@ -1,4 +1,4 @@
-package com.yoopoon.home.ui.html5; 
+package com.yoopoon.home.ui.html5;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -25,38 +25,31 @@ public class HTML5Activity extends MainActionBarActivity {
 	String title;
 	@ViewById(R.id.webview)
 	Html5View mHtml5View;
+	
 	@AfterViews
-	void initUI(){
+	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
 		titleButton.setText(title);
 		mHtml5View.loadUrl(url);
-		
+		//mHtml5View.getSettings().setDefaultTextEncodingName("utf-8");
 	}
 	@Override
 	public void backButtonClick(View v) {
 		finish();
-		
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
 		// TODO Auto-generated method stub
-		
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
 		// TODO Auto-generated method stub
-		
 	}
-
 	@Override
 	public Boolean showHeadView() {
 		// TODO Auto-generated method stub
 		return true;
 	}
-
 }
- 
