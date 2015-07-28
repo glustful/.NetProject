@@ -256,7 +256,10 @@ namespace Zerg.Controllers.Trading.Product
             {
                 Id = product.Id,
                 Productname = product.Productname,
-                Productimg = product.ProductDetail.Productimg,
+                //=============================================pengguifei 20150722 start====================================================//
+                Productimg = product.Productimg,
+                ProductDetailImg = product.ProductDetail.Productimg,
+                //===========================================end======================================================================//
                 BrandImg = product.ProductBrand.Bimg,
                 Price = product.Price,
                 SubTitle = product.SubTitle,
@@ -502,7 +505,7 @@ namespace Zerg.Controllers.Trading.Product
             //商品详细
             oldProductDetail.Productname = newProduct.Productname;
             oldProductDetail.Productdetail = newProductDetail.Productdetail;
-            oldProductDetail.Productimg = newProduct.Productimg;
+            oldProductDetail.Productimg = newProductDetail.Productimg;
             oldProductDetail.Sericeinstruction = newProductDetail.Sericeinstruction;
             oldProductDetail.Productimg1 = newProductDetail.Productimg1;
             oldProductDetail.Productimg2 = newProductDetail.Productimg2;

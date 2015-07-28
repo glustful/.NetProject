@@ -148,6 +148,10 @@ namespace CRM.Service.BrokerLeadClient
 						case EnumBrokerLeadClientSearchOrderBy.OrderById:
 							query = condition.isDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
 							break;
+                        case EnumBrokerLeadClientSearchOrderBy.OrderByTime:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Uptime) : query.OrderBy(q => q.Uptime);
+
+                            break;
                     }
 					
 				}
@@ -227,6 +231,11 @@ namespace CRM.Service.BrokerLeadClient
                 {
                     query = query.Where(q => condition.Upusers.Contains(q.Upuser));
                 }
+                if (condition.Status.HasValue)
+                {
+                    query = query.Where(c => c.Status == condition.Status);
+                }
+
 				return query.Count();
 			}
 			catch(Exception e)

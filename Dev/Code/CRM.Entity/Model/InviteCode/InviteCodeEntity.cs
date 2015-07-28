@@ -30,11 +30,11 @@ namespace CRM.Entity.Model
         /// <summary>
         /// 使用者Id
         /// </summary>
-        public virtual int NumUser { get; set; }
+        public virtual int? NumUser { get; set; }
         /// <summary>
         /// 使用状态 1是被使用  0是未使用
         /// </summary>
-        public virtual bool State { get; set; }
+        public virtual int? State { get; set; }
 
 
     }

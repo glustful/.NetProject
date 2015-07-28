@@ -1,0 +1,46 @@
+<div class="p-md" ng-app="App" ng-controller="">
+    <div>
+        <a href="#page/CRM/activity/Addactivity"><button  class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加活动
+        </button></a>
+        <div class="line b-b m-v-md"></div>
+
+    </div>
+    <div class="panel panel-default" align="center">
+        <div class="panel-heading">活动列表</div>
+        <table st-table="rowCollectionPage" class="table table-striped" align="center">
+            <thead>
+            <tr>
+                <th align="center">活动ID</th>
+                <th align="center">活动名称</th>
+                <th align="center">开始时间</th>
+                <th align="center">截至时间</th>
+                <th align="center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in list">
+                <td>{{row.activityId}}</td>
+                <td>{{row.Activitytname }}</td>
+                <td>{{row.Starttime | dateFilter }}</td>
+                <td>{{row.Endtime}}</td>
+                <td>
+                    <a ui-sref="page.CRM.activity.Edit" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 编辑
+                    </a>
+                    <button ng-click='del(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot class="hide-if-no-paging">
+            <tr>
+                <td colspan="10" class="text-center">
+                    <pagination boundary-links="true" total-items="totalCount" items-per-page="" ng-model="" ng-change="" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <script type="text/ng-template" id="myModalContent.html">
+        <div ng-include="'views/partials/modal.html'"></div>
+    </script>
+</div>

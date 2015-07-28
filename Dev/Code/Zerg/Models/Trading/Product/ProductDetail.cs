@@ -20,6 +20,9 @@ namespace Zerg.Models.Trading.Product
         public string Phone { get; set; }
         public int StockRule { get; set; }
         public string Content { get; set; }
+        //================================================pengguifei 20150722 start====================================================//
+        public string ProductDetailImg { get; set; }
+        //==========================================================end=========================================================//
         public string Productimg1 { get; set; }
         public string Productimg2 { get; set; }
         public string Productimg3 { get; set; }

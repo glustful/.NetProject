@@ -30,7 +30,7 @@ namespace CRM.Entity.Model
         public DateTime? AddtimeEnd { get; set; }
 
         public decimal ?MoneyCount { get; set; }
-
+        public EventEntity Event { get; set; }
 
         public string AcDetail { get; set; }
 

@@ -59,5 +59,6 @@ namespace CRM.Entity.Model
 	public enum EnumBrokerLeadClientSearchOrderBy
 	{
 		OrderById,
+        OrderByTime,
 	}
 }

@@ -14,7 +14,11 @@ namespace Trading.Entity.Model
 		/// 订单ID
 		/// </summary>
 		public virtual OrderEntity Order { get; set; }
-		/// <summary>
+        /// <summary>
+        /// 活动订单表
+        /// </summary>
+	    public virtual int? EventOrderId { get; set; }
+	    /// <summary>
 		/// 经纪人ID
 		/// </summary>
 		public virtual int AgentId { get; set; }

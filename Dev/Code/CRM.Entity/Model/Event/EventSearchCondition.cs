@@ -20,7 +20,7 @@ namespace CRM.Entity.Model
         /// <summary>
         /// id
         /// </summary>
-        public bool isDescending { get; set; }
+        public bool IsDescending { get; set; }
         public int Id { get; set; }
 
         public BrokerEntity Brokers { get; set; }

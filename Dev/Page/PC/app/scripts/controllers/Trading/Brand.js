@@ -7,7 +7,9 @@ angular.module("app").controller('BrandListController', [
         $scope.img=SETTING.ImgUrl;
         $scope.searchCondition = {
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            className:''
+           // className:'房地产'
         };
 
         //--------------------------------------------获取项目列表----------------------------------------------//

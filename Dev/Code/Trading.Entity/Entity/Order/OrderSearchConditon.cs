@@ -107,7 +107,7 @@ namespace Trading.Entity.Model
 	{
 
         OrderById,
-
+        OrderByAddTime
 	}
 
 }

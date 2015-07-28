@@ -94,6 +94,7 @@ namespace CRM.Service.EventOrder
                 {
                     query = query.Where(q => q.MoneyCount == condition.MoneyCount.Value);
                 }
+                
                 return query;
             }
             catch (Exception e)
@@ -108,7 +109,36 @@ namespace CRM.Service.EventOrder
 
         public int GetEventOrderCount(EventOrderSearchCondition condition)
         {
-            throw new NotImplementedException();
+            var query = _eventorderRepository.Table;
+            try
+            {
+                if (condition.AddtimeBegin.HasValue)
+                {
+                    query = query.Where(q => q.Addtime >= condition.AddtimeBegin.Value);
+                }
+                if (condition.AddtimeEnd.HasValue)
+                {
+                    query = query.Where(q => q.Addtime < condition.AddtimeEnd.Value);
+                }
+                if (!string.IsNullOrEmpty(condition.AcDetail))
+                {
+                    query = query.Where(q => q.AcDetail.Contains(condition.AcDetail));
+                }
+                if (condition.MoneyCount.HasValue)
+                {
+                    query = query.Where(q => q.MoneyCount == condition.MoneyCount.Value);
+                }
+                if (condition.Brokers.Id > 0)
+                {
+                    query = query.Where(q => q.Broker.Id == condition.Brokers.Id);
+                }
+                return query.Count();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return -1;
+            }
         }
 
      
