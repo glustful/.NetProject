@@ -9,6 +9,7 @@ using CRM.Service.Broker;
 using Event.Entity.Entity.Coupon;
 using Event.Service.Coupon;
 using Trading.Service.ProductBrand;
+using YooPoon.Core.Autofac;
 using YooPoon.Core.Site;
 using Zerg.Common;
 using Zerg.Event.Models.Coupons;
@@ -100,9 +101,31 @@ namespace Zerg.Event.API.Coupon
         {
             if (_workContext.CurrentUser == null)
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "请先登录"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "请先登录优客惠"));
             }
+
             var couponCategory = _couponCategoryService.GetCouponCategoryById(id);
+
+            //检测是否已经抢过
+            var sech = new CouponOwnerSearchCondition
+            {
+                userId = _workContext.CurrentUser.Id
+            };
+            var list = _couponOwnerService.GetCouponOwnByCondition(sech).Select(p => p.CouponId).ToArray();
+            if (list.Any())
+            {
+                var sech2 = new CouponSearchCondition
+                {
+                    CouponCategoryId = id,
+                    IdArray = list
+                };
+                var count = _couponService.GetCouponCount(sech2);
+                if (count != 0)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "您已经抢过这家的优惠券了"));
+                }
+            }
+
             var condition = new CouponSearchCondition
             {
                 CouponCategoryId = id,

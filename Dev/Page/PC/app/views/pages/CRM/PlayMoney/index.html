@@ -33,7 +33,8 @@
         <td data-value="78025368997" class="footable-visible" ng-if="item.state==0">处理中</td>
         <td data-value="78025368997" class="footable-visible" ng-if="item.state==1">完成</td>
         <!--<td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.PlayMoney.detailed({id:item.Id})"><span class="label bg-success" >查看</span></a></td>-->
-        <td data-value="1" class="footable-visible footable-last-column"><button onclick="WindowShow()" ng-click="GetBrokerWithdrawById(item.Id)" type="button"><span class="label bg-success">打款</span></button></td>
+        <td data-value="1" ng-if="item.state==0" class="footable-visible footable-last-column"><button onclick="WindowShow()" ng-click="GetBrokerWithdrawById(item.Id)" type="button"><span class="label bg-success">打款</span></button></td>
+        <td data-value="1" ng-if="item.state==1"  class="footable-visible footable-last-column"><button onclick="javascript:void(0)" ng-click="javascript:void(0)" type="button"><span class="label bg-success">财务已打款</span></button></td>
     </tr>
 
     </tbody>

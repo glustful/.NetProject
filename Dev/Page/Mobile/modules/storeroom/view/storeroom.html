@@ -9,40 +9,89 @@
                 <!--&lt;!&ndash;<a class="more-storeroom" href="#">更多<span class="icon-storeroom"></span></a>&ndash;&gt;-->
             <!--</div>-->
     <div class="nav-storeroom cf" style="position: absolute;z-index:4;">
-        <div id="area"><a class="area-storeroom" href="#" ng-click="toggleProvince()">{{selectArea}}<span class="icon-storeroom"></span></a>
+        <div id="area"><a class="area-storeroom sub-nav" href="#" ng-click="open1()">{{selectArea}}<span class="icon-storeroom"></span></a>
+
         </div>
-        <div id="type"><a class="type-storeroom" href="#" ng-click="toggleType()">{{selectType}}<span class="icon-storeroom"></span></a>
+        <div id="type"><a class="type-storeroom sub-nav" href="#" ng-click="open2()">{{selectType}}<span class="icon-storeroom"></span></a>
         </div>
-        <div id="price"><a class="price-storer" href="#" ng-click="togglePrice()">{{selectPrice}}<span class="icon-storeroom"></span></a></div>
-        <div><a class="more-storeroom" href="#" ng-click="Reset()">重置</a></div>
-        <div id="condition" class="cf" ng-hide="condition">
-            <div id="province" ng-hide="province">
+        <div id="price"><a class="price-storer sub-nav" href="#" ng-click="open3()">{{selectPrice}}<span class="icon-storeroom"></span></a></div>
+        <div class="fl"><a class="more-storeroom sub-nav" href="#" ng-click="Reset()">重置</a></div>
+        <div class="query" ng-show="condition1">
+            <div class="inner-area">
+                <span>区域</span>
+                <a href="javascript:void(0);" ng-click="close1()" class="fr">返回</a>
+            </div>
+            <div id="province">
                 <ul>
                     <li class="li" ng-class='{selected: $index==selectedRow}' ng-repeat="area in Area" ng-click="getCityList(area.Id,$index)">{{area.AreaName}}</li>
                 </ul>
             </div>
             <div id="city" ng-hide="city" ng-class="{select:selectCity}">
-                <ul><li class="li" ng-class='{selected: $index==selectedRow1}' ng-repeat="areaCity in AreaCity" ng-click="getCountyList(areaCity.Id,$index)">{{areaCity.AreaName}}</li></ul>
+                <ul>
+                    <li class="li" ng-class='{selected: $index==selectedRow1}' ng-repeat="areaCity in AreaCity" ng-click="getCountyList(areaCity.Id,$index)">{{areaCity.AreaName}}</li>
+                </ul>
             </div>
             <div id="county" ng-hide="county" ng-class="{select:selectCounty}">
-                <ul><li class="li" ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li></ul>
-            </div>
-            <div class="type" ng-hide="type" >
-                <ul><li class="typeOption" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId,type.TypeName)">{{type.TypeName}}</li></ul>
-            </div>
-            <div id="priceCondition" ng-hide="price">
                 <ul>
-                    <li class="priceOption" ng-click="getPriceCondition(0,4000)"><span>4000以下</span></li>
-                    <li class="priceOption" ng-click="getPriceCondition(4000,5000)"><span>4000</span>-<span>5000</span></li>
-                    <li class="priceOption" ng-click="getPriceCondition(5000,6000)"><span>5000</span>-<span>6000</span></li>
-                    <li class="priceOption" ng-click="getPriceCondition(6000,7000)"><span>6000</span>-<span>7000</span></li>
-                    <li class="priceOption" ng-click="getPriceCondition(7000,8000)"><span>7000</span>-<span>8000</span></li>
-                    <li class="priceOption" ng-click="getPriceCondition(8000,9000)"><span>8000</span>-<span>9000</span></li>
-                    <li class="priceOption" ng-click="getPriceCondition(9000,10000)"><span>9000</span>-<span>10000</span></li>
-                    <li class="priceOption" ng-click="getPriceCondition(10000,50000)"><span>10000以上</span></li>
+                    <li class="li" ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li>
                 </ul>
             </div>
         </div>
+        <div class="query" ng-show="condition2">
+            <div class="inner-area">
+                <span>类型</span>
+                <a href="javascript:void(0);" ng-click="close2()" class="fr">返回</a>
+            </div>
+            <div class="type"  >
+            <ul><li class="typeOption" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId,type.TypeName)">{{type.TypeName}}</li></ul>
+            </div>
+        </div>
+        <div class="query" ng-show="condition3">
+            <div class="inner-area">
+                <span>价钱</span>
+                <a href="javascript:void(0);" ng-click="close3()" class="fr">返回</a>
+            </div>
+            <div id="priceCondition">
+            <ul>
+            <li class="priceOption" ng-click="getPriceCondition(0,4000)"><span>4000以下</span></li>
+            <li class="priceOption" ng-click="getPriceCondition(4000,5000)"><span>4000</span>-<span>5000</span></li>
+            <li class="priceOption" ng-click="getPriceCondition(5000,6000)"><span>5000</span>-<span>6000</span></li>
+            <li class="priceOption" ng-click="getPriceCondition(6000,7000)"><span>6000</span>-<span>7000</span></li>
+            <li class="priceOption" ng-click="getPriceCondition(7000,8000)"><span>7000</span>-<span>8000</span></li>
+            <li class="priceOption" ng-click="getPriceCondition(8000,9000)"><span>8000</span>-<span>9000</span></li>
+            <li class="priceOption" ng-click="getPriceCondition(9000,10000)"><span>9000</span>-<span>10000</span></li>
+            <li class="priceOption" ng-click="getPriceCondition(10000,50000)"><span>10000以上</span></li>
+            </ul>
+            </div>
+        </div>
+        <!--<div id="condition" class="cf" ng-hide="condition">-->
+            <!--<div id="province" ng-hide="province">-->
+                <!--<ul>-->
+                    <!--<li class="li" ng-class='{selected: $index==selectedRow}' ng-repeat="area in Area" ng-click="getCityList(area.Id,$index)">{{area.AreaName}}</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+            <!--<div id="city" ng-hide="city" ng-class="{select:selectCity}">-->
+                <!--<ul><li class="li" ng-class='{selected: $index==selectedRow1}' ng-repeat="areaCity in AreaCity" ng-click="getCountyList(areaCity.Id,$index)">{{areaCity.AreaName}}</li></ul>-->
+            <!--</div>-->
+            <!--<div id="county" ng-hide="county" ng-class="{select:selectCounty}">-->
+                <!--<ul><li class="li" ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li></ul>-->
+            <!--</div>-->
+            <!--<div class="type" ng-hide="type" >-->
+                <!--<ul><li class="typeOption" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId,type.TypeName)">{{type.TypeName}}</li></ul>-->
+            <!--</div>-->
+            <!--<div id="priceCondition" ng-hide="price">-->
+                <!--<ul>-->
+                    <!--<li class="priceOption" ng-click="getPriceCondition(0,4000)"><span>4000以下</span></li>-->
+                    <!--<li class="priceOption" ng-click="getPriceCondition(4000,5000)"><span>4000</span>-<span>5000</span></li>-->
+                    <!--<li class="priceOption" ng-click="getPriceCondition(5000,6000)"><span>5000</span>-<span>6000</span></li>-->
+                    <!--<li class="priceOption" ng-click="getPriceCondition(6000,7000)"><span>6000</span>-<span>7000</span></li>-->
+                    <!--<li class="priceOption" ng-click="getPriceCondition(7000,8000)"><span>7000</span>-<span>8000</span></li>-->
+                    <!--<li class="priceOption" ng-click="getPriceCondition(8000,9000)"><span>8000</span>-<span>9000</span></li>-->
+                    <!--<li class="priceOption" ng-click="getPriceCondition(9000,10000)"><span>9000</span>-<span>10000</span></li>-->
+                    <!--<li class="priceOption" ng-click="getPriceCondition(10000,50000)"><span>10000以上</span></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
     <div id="carousel-bg" style="padding-top:70px;">
     <carousel interval="2000">

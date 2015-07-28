@@ -26,7 +26,7 @@ body{
 .fl{
     float: left;
 }
-a{
+a,a:hover{
     text-decoration: none;
 }
 
@@ -82,19 +82,21 @@ a{
     width: 50px;
 }
 .search input{
-    width: 315px;
+    width: 300px;
     color: #f1aa94;
     font-size: 24px;
     background: none;
     border: none;
 
 }
-.search button{
+.search a{
     width: 80px;
     border: none;
     font-size: 24px;
     color: #ffffff;
     background: none;
+    text-align: center;
+    display: inline-block;
 }
 .content{
     position: relative;

@@ -194,6 +194,7 @@
     <Compile Include="Controllers\CRM\SMSController.cs" />
     <Compile Include="Controllers\CRM\TaskController.cs" />
     <Compile Include="Controllers\Trading\Area\AreaController.cs" />
+    <Compile Include="Controllers\Trading\CommissionRatio\CommissionRatioController.cs" />
     <Compile Include="Controllers\Trading\Condition\ConditionController.cs" />
     <Compile Include="Controllers\Trading\Product\BrandController.cs" />
     <Compile Include="Controllers\Trading\Product\ClassifyController.cs" />
