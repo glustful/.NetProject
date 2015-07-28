@@ -179,12 +179,15 @@ public class User {
 	}
 
 	public static User lastLoginUser(Context context) {
-		if (mUser != null)
-			return mUser;
 		SharedPreferences spf = PreferenceManager.getDefaultSharedPreferences(context);
 		String user = spf.getString("user", null);
+
 		if (user == null || user.equals(""))
 			return null;
+
+		if (mUser != null)
+			return mUser;
+
 		ObjectMapper om = new ObjectMapper();
 		try {
 			mUser = om.readValue(user, User.class);

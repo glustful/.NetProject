@@ -35,6 +35,7 @@ import com.yoopoon.home.R;
 @EViewGroup(R.layout.me_footer_view)
 public class MeFooterView extends LinearLayout {
 	// [start] viewById
+
 	@ViewById(R.id.brokerLayout)
 	View brokerLayout;
 	@ViewById(R.id.customLayout)
@@ -103,6 +104,7 @@ public class MeFooterView extends LinearLayout {
 
 	// [end]
 	// [start] constructor
+
 	public MeFooterView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
@@ -117,6 +119,7 @@ public class MeFooterView extends LinearLayout {
 
 	// [end]
 	// [start] public method
+
 	public void show(boolean isBroker) {
 		if (isBroker) {
 			brokerLayout.setVisibility(View.VISIBLE);

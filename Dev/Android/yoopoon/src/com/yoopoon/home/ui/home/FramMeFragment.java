@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.androidannotations.annotations.EFragment;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.annotation.SuppressLint;
@@ -36,16 +35,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.round.progressbar.CircleProgressDialog;
 import com.yoopoon.common.base.Tools;
 import com.yoopoon.common.base.utils.StringUtils;
-import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
@@ -57,7 +53,6 @@ import com.yoopoon.home.ui.active.BrandDetail2Activity_;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 import com.yoopoon.home.ui.me.BrokerInfoView;
 import com.yoopoon.home.ui.me.MeFooterView;
-import com.yoopoon.home.ui.me.TodyTaskView;
 
 /**
  * @ClassName: FramMeFragment
@@ -77,25 +72,30 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 	 * @Description: 是否是第一次对用户可见，见方法setUserVisibleHint
 	 */
 	private boolean isFirst = true;
-	private TodyTaskView mTodayTaskView;
+	// private TodyTaskView mTodayTaskView;
 	private BrokerInfoView mBrokerInfoView;
-	private TextView mTodayTaskCount;
+	// private TextView mTodayTaskCount;
 	private MeFooterView mMeFooterView;
 	private boolean isBroker = false;
 	private String userId = "0";
 	private boolean isVisibleToUser = false;
 	private int clientCount = 0;
-	private TextView tv_today_rec;
-	private ListView lv_recs;
-	private ProgressBar pb_lv;
+	private TextView tv_rec;
+	private TextView tv_task;
+
+	// private TextView tv_today_rec;
+	// private ListView lv_recs;
+	// private ProgressBar pb_lv;
 
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
 		this.isVisibleToUser = isVisibleToUser;
+		Log.i(TAG, "setUserVisibleHint:::isVisibleToUser = " + isVisibleToUser);
 		if (isVisibleToUser) {
 			User user = User.lastLoginUser(getActivity());
 			if (user == null) {
+				Log.i(TAG, "user == null");
 				HomeLoginActivity_.intent(getActivity()).isManual(true).start();
 				return;
 			} else {
@@ -134,24 +134,24 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 
 		} else {
 			requestClientCount();
-			if (!isBroker) {
-				lv_recs.setVisibility(View.GONE);
-				tv_today_rec.setVisibility(View.GONE);
-				mTodayTaskCount.setVisibility(View.VISIBLE);
-				requestTodayTask();
-			} else {
-				lv_recs.setVisibility(View.VISIBLE);
-				mTodayTaskView.setVisibility(View.GONE);
-				mTodayTaskCount.setVisibility(View.GONE);
-				tv_today_rec.setVisibility(View.VISIBLE);
-				fillData();
-			}
+			// if (!isBroker) {
+			// lv_recs.setVisibility(View.GONE);
+			// tv_today_rec.setVisibility(View.GONE);
+			// mTodayTaskCount.setVisibility(View.VISIBLE);
+			// requestTodayTask();
+			// } else {
+			// lv_recs.setVisibility(View.VISIBLE);
+			// mTodayTaskView.setVisibility(View.GONE);
+			// mTodayTaskCount.setVisibility(View.GONE);
+			// tv_today_rec.setVisibility(View.VISIBLE);
+			// fillData();
+			// }
 		}
 	}
 
 	private void fillData() {
 		initParams();
-		requestBrandList();
+		// requestBrandList();
 	}
 
 	private List<JSONObject> datas = new ArrayList<JSONObject>();
@@ -185,12 +185,11 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 				mHolder = (Holder) convertView.getTag();
 			}
 			final JSONObject item = datas.get(position);
-			Log.i(TAG, item.toString());
 			String url = getActivity().getString(R.string.url_host_img) + item.optString("Bimg");
-			mHolder.iv.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 150));
+
 			mHolder.iv.setTag(url);
-			ImageLoader.getInstance().displayImage(url, mHolder.iv, MyApplication.getOptions(),
-					MyApplication.getLoadingListener());
+			mHolder.iv.setScaleType(ScaleType.FIT_XY);
+			ImageLoader.getInstance().displayImage(url, mHolder.iv);
 
 			String title = StringUtils.isEmpty(item.optString("Bname")) ? "" : item.optString("Bname") + "    ";
 
@@ -270,8 +269,8 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 	 */
 	private void cleanLayout() {
 		mBrokerInfoView.hide();
-		mTodayTaskCount.setText("今日 任务（无）");
-		mTodayTaskView.setVisibility(View.GONE);
+		// mTodayTaskCount.setText("今日 任务（无）");
+		// mTodayTaskView.setVisibility(View.GONE);
 		mMeFooterView.hide();
 	}
 
@@ -285,13 +284,18 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 			}
 		} else {
 			rootView = LayoutInflater.from(getActivity()).inflate(R.layout.home_fram_me_fragment, null);
-			mTodayTaskCount = (TextView) rootView.findViewById(R.id.todayTaskCount);
+			// mTodayTaskCount = (TextView) rootView.findViewById(R.id.todayTaskCount);
 			mBrokerInfoView = (BrokerInfoView) rootView.findViewById(R.id.brokerInfo);
-			mTodayTaskView = (TodyTaskView) rootView.findViewById(R.id.todayTask);
+			// mTodayTaskView = (TodyTaskView) rootView.findViewById(R.id.todayTask);
 			mMeFooterView = (MeFooterView) rootView.findViewById(R.id.footerView);
-			tv_today_rec = (TextView) rootView.findViewById(R.id.tv_today_recs);
-			lv_recs = (ListView) rootView.findViewById(R.id.lv_rec_build);
-			pb_lv = (ProgressBar) rootView.findViewById(R.id.pb_me_lv_progress);
+			// tv_today_rec = (TextView) rootView.findViewById(R.id.tv_today_recs);
+			// lv_recs = (ListView) rootView.findViewById(R.id.lv_rec_build);
+			// pb_lv = (ProgressBar) rootView.findViewById(R.id.pb_me_lv_progress);
+
+			tv_rec = (TextView) rootView.findViewById(R.id.tv_me_building);
+			tv_task = (TextView) rootView.findViewById(R.id.tv_me_task);
+			tv_rec.setOnClickListener(this);
+			tv_task.setOnClickListener(this);
 
 		}
 		registerLoginReceiver();
@@ -350,35 +354,34 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 		params.put("type", "all");
 	}
 
-	private void requestBrandList() {
-		pb_lv.setVisibility(View.VISIBLE);
-		new RequestAdapter() {
-
-			@Override
-			public void onReponse(ResponseData data) {
-				Log.i(TAG, data.toString());
-				if (data.getResultState() == ResultState.eSuccess) {
-					JSONArray list = data.getMRootData().optJSONArray("List");
-					Log.i(TAG, list.toString());
-					try {
-						for (int i = 0; i < 2; i++) {
-							datas.add(list.getJSONObject(i));
-						}
-						lv_recs.setAdapter(new MyRecsBuildAdapter());
-					} catch (JSONException jsonException) {
-						jsonException.printStackTrace();
-					} finally {
-						pb_lv.setVisibility(View.GONE);
-					}
-
-				}
-			}
-
-			@Override
-			public void onProgress(ProgressMessage msg) {
-			}
-		}.setUrl(getString(R.string.url_brand_GetAllBrand)).setRequestMethod(RequestMethod.eGet).notifyRequest();
-	}
+	// private void requestBrandList() {
+	// // pb_lv.setVisibility(View.VISIBLE);
+	// new RequestAdapter() {
+	//
+	//
+	// @Override
+	// public void onReponse(ResponseData data) {
+	// if (data.getResultState() == ResultState.eSuccess) {
+	// JSONArray list = data.getMRootData().optJSONArray("List");
+	// try {
+	// for (int i = 0; i < 2; i++) {
+	// datas.add(list.getJSONObject(i));
+	// }
+	// lv_recs.setAdapter(new MyRecsBuildAdapter());
+	// } catch (JSONException jsonException) {
+	// jsonException.printStackTrace();
+	// } finally {
+	// pb_lv.setVisibility(View.GONE);
+	// }
+	//
+	// }
+	// }
+	//
+	// @Override
+	// public void onProgress(ProgressMessage msg) {
+	// }
+	// }.setUrl(getString(R.string.url_brand_GetAllBrand)).setRequestMethod(RequestMethod.eGet).notifyRequest();
+	// }
 	private BroadcastReceiver loginReceiver = new BroadcastReceiver() {
 
 		@Override
@@ -410,6 +413,8 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 						mBrokerInfoView.initData(data.getMRootData(), isBroker, clientCount);
 						mMeFooterView.show(isBroker);
 					}
+				} else {
+					HomeLoginActivity_.intent(getActivity()).isManual(true).start();
 				}
 			}
 
@@ -425,37 +430,38 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 	 * @Title: requestTodayTask
 	 * @Description: 获取今日任务列表
 	 */
-	void requestTodayTask() {
-		new RequestAdapter() {
-
-			/**
-			 * @fieldName: serialVersionUID
-			 * @fieldType: long
-			 * @Description: TODO
-			 */
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onReponse(ResponseData data) {
-				if (data.getResultState() == ResultState.eSuccess) {
-					if (data.getMRootData().optJSONArray("list") != null) {
-						mTodayTaskCount.setText("今日任务(" + data.getMRootData().optJSONArray("list").length() + ")");
-						mTodayTaskView.addChildren(data.getMRootData().optJSONArray("list"));
-						mTodayTaskView.setVisibility(View.VISIBLE);
-						return;
-					}
-				}
-				mTodayTaskCount.setText("今日任务(无)");
-				mTodayTaskView.setVisibility(View.GONE);
-			}
-
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
-			}
-		}.setUrl(getString(R.string.url_task_taskListMobile)).setRequestMethod(RequestMethod.eGet)
-				.addParam("page", "1").addParam("type", "today").notifyRequest();
-	}
+	// void requestTodayTask() {
+	// new RequestAdapter() {
+	//
+	//
+	// /**
+	// * @fieldName: serialVersionUID
+	// * @fieldType: long
+	// * @Description: TODO
+	// */
+	// private static final long serialVersionUID = 1L;
+	//
+	// @Override
+	// public void onReponse(ResponseData data) {
+	// if (data.getResultState() == ResultState.eSuccess) {
+	// if (data.getMRootData().optJSONArray("list") != null) {
+	// mTodayTaskCount.setText("今日任务(" + data.getMRootData().optJSONArray("list").length() + ")");
+	// mTodayTaskView.addChildren(data.getMRootData().optJSONArray("list"));
+	// mTodayTaskView.setVisibility(View.VISIBLE);
+	// return;
+	// }
+	// }
+	// mTodayTaskCount.setText("今日任务(无)");
+	// mTodayTaskView.setVisibility(View.GONE);
+	// }
+	//
+	// @Override
+	// public void onProgress(ProgressMessage msg) {
+	// // TODO Auto-generated method stub
+	// }
+	// }.setUrl(getString(R.string.url_task_taskListMobile)).setRequestMethod(RequestMethod.eGet)
+	// .addParam("page", "1").addParam("type", "today").notifyRequest();
+	// }
 
 	/*
 	 * (non Javadoc)
@@ -473,6 +479,10 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 				break;
 			case R.id.tv_rec_call:
 				Tools.callPhone(getActivity(), "111111111");
+				break;
+			case R.id.tv_me_building:
+				break;
+			case R.id.tv_me_task:
 				break;
 			default:
 				break;

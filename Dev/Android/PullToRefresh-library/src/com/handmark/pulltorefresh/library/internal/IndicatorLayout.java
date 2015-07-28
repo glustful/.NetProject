@@ -29,7 +29,6 @@ import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.R;
 
@@ -51,7 +50,9 @@ public class IndicatorLayout extends FrameLayout implements AnimationListener {
 		mArrowImageView.setImageDrawable(arrowD);
 
 		final int padding = getResources().getDimensionPixelSize(R.dimen.indicator_internal_padding);
+
 		mArrowImageView.setPadding(padding, padding, padding, padding);
+		// addView(mArrowImageView, new LayoutParams(-2, -2, Gravity.CENTER));
 		addView(mArrowImageView);
 
 		int inAnimResId, outAnimResId;
