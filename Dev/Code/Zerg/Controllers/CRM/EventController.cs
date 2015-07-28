@@ -8,6 +8,7 @@ using System.Web.Http.Cors;
 using CRM.Entity.Model;
 using CRM.Service.Event;
 using Zerg.Common;
+using Zerg.Models.CRM;
 
 namespace Zerg.Controllers.CRM
 {
@@ -123,6 +124,28 @@ namespace Zerg.Controllers.CRM
                   return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
               }
 
+          }
+
+          [Description("根据Id获取活动")]
+          [HttpGet]
+          [EnableCors("*", "*", "*", SupportsCredentials = true)]
+          public HttpResponseMessage GetEventDetail(int eventId)
+          {
+              var eve = _eventService.GetEventById(eventId);
+              if (eve == null)
+              {
+                  return PageHelper.toJson(PageHelper.ReturnValue(false, "活动不存在"));
+              }
+              var model = new EventModel
+              {
+                 Id = eve.Id,
+                 EventContent = eve.EventContent,
+                 StartTime =eve.Starttime,
+                 EndTime = eve.Endtime,
+                 ActionControllers =eve.ActionControllers,
+                 State =eve.State
+              };
+              return PageHelper.toJson(model);
           }
       }
  }
