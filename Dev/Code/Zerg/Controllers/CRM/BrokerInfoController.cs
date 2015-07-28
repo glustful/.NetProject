@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CRM.Entity.Model;
@@ -371,7 +372,7 @@ namespace Zerg.Controllers.CRM
 
 
                 #region 邀请码逻辑 by yangyue  2015/7/16
-
+                
                 var even = new EventSearchCondition //判断该活动是否开启
                 {
                     EventContent ="完善经纪人资料活动",
@@ -379,7 +380,7 @@ namespace Zerg.Controllers.CRM
                 };
                 if (_eventService.GetEventCount(even) > 0)
                 {
-                    #region
+                    #region  邀请码活动 by yangyue  2015/7/16
 
                     InviteCodeSearchCondition icodeseCon = new InviteCodeSearchCondition
                     {
