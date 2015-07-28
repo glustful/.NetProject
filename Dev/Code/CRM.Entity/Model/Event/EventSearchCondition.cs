@@ -16,7 +16,7 @@ namespace CRM.Entity.Model
         /// <summary>
         /// 状态 0 为可用 1 为不可用
         /// </summary>
-        public int? State { get; set; }
+        public bool State { get; set; }
         /// <summary>
         /// id
         /// </summary>

@@ -42,7 +42,7 @@ namespace Zerg.Controllers.CRM
         }
 
           [Description("添加活动")]
-          [HttpGet]
+          [HttpPost]
           [EnableCors("*", "*", "*", SupportsCredentials = true)]
           public HttpResponseMessage AddEvent([FromBody] EventEntity eventModel)
           {
@@ -77,7 +77,7 @@ namespace Zerg.Controllers.CRM
               }
           }
           [Description("修改活动")]
-          [HttpGet]
+          [HttpPost]
           [EnableCors("*", "*", "*", SupportsCredentials = true)]
           public HttpResponseMessage UpEvent( EventEntity eventModel)
           {
@@ -115,15 +115,8 @@ namespace Zerg.Controllers.CRM
           {
               try
               {
-                  if (_eventService.Delete(_eventService.GetEventById(eventId)))
-                  {
-
-                      return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功！"));
-                  }
-                  else
-                  {
-                      return PageHelper.toJson(PageHelper.ReturnValue(false, "删除品牌失败，该品牌可能有商品已被添加"));
-                  }
+                  _eventService.Delete(_eventService.GetEventById(eventId));
+                  return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功！"));
               }
               catch (Exception)
               {

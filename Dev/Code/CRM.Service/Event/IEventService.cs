@@ -15,5 +15,7 @@ namespace CRM.Service.Event
         EventEntity GetEventById(int id);
 
         IQueryable<EventEntity> GetEventByCondition(EventSearchCondition condition);
+        int GetEventCount(EventSearchCondition condition);
+       
     }
 }
