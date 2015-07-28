@@ -39,28 +39,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
-            
-            <TextView 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:id="@+id/tv_today_recs"
                 android:background="#ffffff"
                 android:gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:padding="10dp"
-                android:textSize="@dimen/large_textSize"
-                android:textColor="#5500fff0"
-                android:text="今日楼盘推荐"/>
-            
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/tv_today_recs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="今日楼盘推荐"
+                    android:textColor="#5500fff0"
+                    android:textSize="@dimen/large_textSize" />
+                <ProgressBar 
+                    android:id="@+id/pb_me_lv_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+            </LinearLayout>
 
             <com.yoopoon.home.ui.view.MyListView
-                android:divider="@null"
-                android:dividerHeight="10dp"
                 android:id="@+id/lv_rec_build"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp" />
-            
+                android:layout_marginBottom="15dp"
+                android:divider="@null"
+                android:dividerHeight="10dp" />
 
             <com.yoopoon.home.ui.me.MeFooterView_
                 android:id="@+id/footerView"

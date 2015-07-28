@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
@@ -50,8 +51,6 @@ import com.yoopoon.home.ui.login.HomeLoginActivity_;
 public class IPocketActivity extends MainActionBarActivity {
 	@ViewById(R.id.lv_ipocket_bankcard)
 	ListView lv;
-
-	private String[] banks = { "招商", "建设", "建设", "招商" };
 
 	private MyBankListAdapter adapter;
 	private User user;
@@ -80,12 +79,7 @@ public class IPocketActivity extends MainActionBarActivity {
 
 		// fillData();
 		lv.setOnItemClickListener(new MyBankItemClickListener());
-		new Thread() {
 
-			public void run() {
-				request();
-			};
-		}.start();
 	}
 
 	private void fillData() {
@@ -98,33 +92,38 @@ public class IPocketActivity extends MainActionBarActivity {
 		}
 	}
 
+	protected void onResume() {
+		request();
+		super.onResume();
+	}
+
 	protected void request() {
 
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
-				if (data != null)
-					if (data.getResultState() == ResultState.eSuccess) {
-						JSONObject obj = data.getJsonObject2();
-						try {
-							JSONArray list = obj.getJSONArray("List");
-							for (int i = 0; i < list.length(); i++) {
-								JSONObject bankObj = list.getJSONObject(i);
-								Bank bank = new Bank();
-								bank.setBankName(bankObj.getString("bankName"));
-								bank.setNum(bankObj.getString("Num"));
-								bankDatas.add(bank);
-							}
-							amountMoney = obj.getInt("AmountMoney");
-							fillData();
-
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+				if (data.getResultState() == ResultState.eSuccess) {
+					JSONObject obj = data.getJsonObject2();
+					try {
+						JSONArray list = obj.getJSONArray("List");
+						bankDatas.clear();
+						for (int i = 0; i < list.length(); i++) {
+							JSONObject bankObj = list.getJSONObject(i);
+							Bank bank = new Bank();
+							bank.setBankName(bankObj.getString("bankName"));
+							bank.setNum(bankObj.getString("Num"));
+							bankDatas.add(bank);
 						}
+						amountMoney = obj.getInt("AmountMoney");
+						fillData();
 
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
+
+				}
 
 			}
 
@@ -229,7 +228,7 @@ public class IPocketActivity extends MainActionBarActivity {
 			TextView tv_bankname = (TextView) convertView.findViewById(R.id.tv_bankcard_bank);
 			TextView tv_num = (TextView) convertView.findViewById(R.id.tv_bankcard_card);
 
-			tv_bankname.setText(bank.getBankName());
+			tv_bankname.setText(StringUtils.isEmpty(bank.getBankName()) ? "" : bank.getBankName());
 			tv_num.setText("**** **** ****" + bank.getNum());
 
 			return convertView;

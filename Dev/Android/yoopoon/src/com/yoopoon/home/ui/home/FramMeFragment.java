@@ -37,6 +37,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -89,6 +90,7 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 	private ListView lv_recs;
 	private MyRecsBuildAdapter adapter;
 	private ActiveBrandAdapter brandAdapter;
+	private ProgressBar pb_lv;
 
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -292,6 +294,7 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 			mMeFooterView = (MeFooterView) rootView.findViewById(R.id.footerView);
 			tv_today_rec = (TextView) rootView.findViewById(R.id.tv_today_recs);
 			lv_recs = (ListView) rootView.findViewById(R.id.lv_rec_build);
+			pb_lv = (ProgressBar) rootView.findViewById(R.id.pb_me_lv_progress);
 
 		}
 		registerLoginReceiver();
@@ -351,6 +354,7 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 	}
 
 	private void requestBrandList() {
+		pb_lv.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
@@ -366,6 +370,8 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 						lv_recs.setAdapter(new MyRecsBuildAdapter());
 					} catch (JSONException jsonException) {
 						jsonException.printStackTrace();
+					} finally {
+						pb_lv.setVisibility(View.GONE);
 					}
 
 				}

@@ -21,6 +21,7 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -77,6 +78,7 @@ public class IClientActivity extends MainActionBarActivity {
 							try {
 								int totalCount = dataObj.getInt("totalCount");
 								JSONArray listArray = dataObj.getJSONArray("list");
+								Log.i(TAG, listArray.toString());
 								Random r = new Random();
 								for (int i = 0; i < listArray.length(); i++) {
 									JSONObject guestObj = listArray.getJSONObject(i);
@@ -96,8 +98,10 @@ public class IClientActivity extends MainActionBarActivity {
 									String houseType = guestObj.getString("Housetype");
 									GuestInfo info = new GuestInfo(clientName, houseType, houses, status, phone, id,
 											strType);
-
-									info.num = r.nextInt(4) + 1;
+									if ("预约中".equals(status))
+										info.num = 1;
+									else
+										info.num = r.nextInt(4) + 1;
 									guestInfos.add(info);
 								}
 							} catch (JSONException e) {
