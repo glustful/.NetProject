@@ -177,17 +177,23 @@ namespace Zerg.Controllers.CRM
             }
 
             var model = _brokerService.GetBrokerByUserId(Convert.ToInt32(userId));
+            var evemodel =
+                _eventOrderService.GetEventOrderByBrokerid(_brokerService.GetBrokerByUserId(Convert.ToInt32(userId)).Id);
             if (model == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在！"));
 
-            #region 判断经纪人是否使用过邀请码
+            #region 判断经纪人是否使用过邀请码 或者参与过活动
             InviteCodeSearchCondition icodeseCon = new InviteCodeSearchCondition
             {
                 NumUser = model.Id
             };
-
-            if (_inviteCodeService.GetInviteCodeByCount(icodeseCon) > 0)
+            EventOrderSearchCondition eveCon = new EventOrderSearchCondition
             {
-                IsInvite = 0; //判断有无使用过邀请码
+                Brokers = evemodel.Broker
+                
+            };
+            if (_inviteCodeService.GetInviteCodeByCount(icodeseCon) > 0 || _eventOrderService.GetEventOrderCount(eveCon) > 0)
+            {
+                IsInvite = 0; //判断有无使用过邀请码 或者参与过活动
             }
 
             #endregion
