@@ -11,7 +11,7 @@
     <RelativeLayout
         android:id="@+id/rl_build_bg"
         android:layout_width="match_parent"
-        android:layout_height="161px"
+        android:layout_height="150dp"
         android:orientation="vertical" >
 
         <ImageView
@@ -45,7 +45,6 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
                 android:text="可获得30%提拥   相当于21万提拥" />
         </LinearLayout>
     </RelativeLayout>

@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.round.progressbar.CircleProgressDialog;
 import com.yoopoon.common.base.Tools;
+import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.common.base.utils.ToastUtils;
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.MyApplication;
@@ -43,6 +45,7 @@ import com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_;
 
 @EActivity(R.layout.product_detail_view)
 public class ProductDetailActivity extends MainActionBarActivity {
+	private static final String TAG = "ProductDetailActivity";
 	@Extra
 	String productId;
 	// 如下单个按钮是控制楼盘详情中的我要带客，我要推荐和咨询热线
@@ -125,6 +128,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	void requestProduct() {
 		CircleProgressDialog.build(mContext, R.style.dialog).show();
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				CircleProgressDialog.build(mContext, R.style.dialog).dismiss();
@@ -147,6 +151,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	protected void callBack(final JSONObject mRootData) {
 		if (mRootData == null)
 			return;
+		Log.i(TAG, mRootData.toString());
 		title.setText(Tools.optString(mRootData, "Productname", ""));
 		price.setText("均价" + Tools.optDouble(mRootData, "Price", 0) + "元/" + getString(R.string.meter) + "起");
 		area.setText(Tools.optString(mRootData, "SubTitle", ""));
@@ -156,11 +161,15 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		// "");
 		// ############################### 郭俊军编写 #############################################
 		// ############################### 徐阳会修改 2015年7月27日 ############################### Start
-		String url = getString(R.string.url_host_img) + Tools.optString(mRootData, "ProductDetailImg", "");
-		// ############################### 徐阳会修改 2015年7月27日 ############################### End
-		img.setTag(url);
-		// img.setHeightRatio(1.5);
-		ImageLoader.getInstance().displayImage(url, img, MyApplication.getOptions(), listen);
+		String photo = StringUtils.isEmpty(Tools.optString(mRootData, "ProductDetailImg", "")) ? Tools.optString(
+				mRootData, "Productimg", "") : Tools.optString(mRootData, "ProductDetailImg", "");
+		if (!StringUtils.isEmpty(photo)) {
+			String url = getString(R.string.url_host_img) + photo;
+			// ############################### 徐阳会修改 2015年7月27日 ############################### End
+			img.setTag(url);
+			// img.setHeightRatio(1.5);
+			ImageLoader.getInstance().displayImage(url, img, MyApplication.getOptions(), listen);
+		}
 		webView.loadData(header + Tools.optString(mRootData, "ProductDetailed", "") + tail, "text/html;charset=utf-8",
 				null);
 		ArrayList<String> tmp = new ArrayList<String>();

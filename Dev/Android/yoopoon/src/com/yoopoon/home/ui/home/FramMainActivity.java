@@ -13,7 +13,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -33,7 +32,6 @@ import com.yoopoon.common.base.utils.SPUtils;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.SearchActionBarActivity;
-import com.yoopoon.home.data.user.User;
 
 @EActivity(R.layout.home_main_activity)
 public class FramMainActivity extends SearchActionBarActivity {
@@ -241,16 +239,8 @@ public class FramMainActivity extends SearchActionBarActivity {
 			Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
 			exitTime = System.currentTimeMillis();
 		} else {
-			// 若用户没有选择记住用户，清空sp
 
-			if (!User.lastLoginUser(this).remember) {
-				SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-				Editor editor = sp.edit();
-				editor.clear();
-				editor.commit();
-			}
-			finish();
-			System.exit(0);
+			android.os.Process.killProcess(android.os.Process.myPid());
 		}
 	}
 

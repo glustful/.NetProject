@@ -53,7 +53,6 @@ import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.data.user.User;
-import com.yoopoon.home.ui.active.ActiveBrandAdapter;
 import com.yoopoon.home.ui.active.BrandDetail2Activity_;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 import com.yoopoon.home.ui.me.BrokerInfoView;
@@ -88,8 +87,6 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 	private int clientCount = 0;
 	private TextView tv_today_rec;
 	private ListView lv_recs;
-	private MyRecsBuildAdapter adapter;
-	private ActiveBrandAdapter brandAdapter;
 	private ProgressBar pb_lv;
 
 	@Override
@@ -195,11 +192,11 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 			ImageLoader.getInstance().displayImage(url, mHolder.iv, MyApplication.getOptions(),
 					MyApplication.getLoadingListener());
 
-			String title = StringUtils.isEmpty(item.optString("Bname")) ? "" : item.optString("Bname");
+			String title = StringUtils.isEmpty(item.optString("Bname")) ? "" : item.optString("Bname") + "    ";
 
 			JSONObject parameter = item.optJSONObject("ProductParamater");
 			String city = "[" + (StringUtils.isEmpty(parameter.optString("所属城市")) ? "" : parameter.optString("所属城市"))
-					+ "]";
+					+ "]   ";
 			String area = StringUtils.isEmpty(parameter.optString("占地面积")) ? "" : parameter.optString("占地面积");
 
 			mHolder.tv_detail2.setText(city + title + area);
