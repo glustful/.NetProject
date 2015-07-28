@@ -150,6 +150,7 @@ namespace CRM.Service.BrokerLeadClient
 							break;
                         case EnumBrokerLeadClientSearchOrderBy.OrderByTime:
                             query = condition.isDescending ? query.OrderByDescending(q => q.Uptime) : query.OrderBy(q => q.Uptime);
+
                             break;
                     }
 					

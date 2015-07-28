@@ -268,7 +268,7 @@ namespace Zerg.Controllers.CRM
                 Brokername = model.Brokername,
                 Brokerlevel = model.Brokerlevel,
                 Sex = model.Broker.Sexy,
-                RegTime = model.Broker.Regtime.ToString(CultureInfo.InvariantCulture),
+                RegTime = model.Broker.Regtime.ToString("yyy-MM-dd"),
 
                 Clientname = model.Clientname,
                 HouseType = model.ClientInfo.Housetype,
