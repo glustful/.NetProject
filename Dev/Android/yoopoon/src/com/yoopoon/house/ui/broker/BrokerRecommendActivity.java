@@ -30,6 +30,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -183,6 +184,7 @@ public class BrokerRecommendActivity extends MainActionBarActivity implements On
 				if (data.getResultState() == ResultState.eSuccess) {
 					JSONObject jsonObject = data.getMRootData();
 					String messageString = jsonObject.optString("Msg");
+					Log.i(TAG, messageString);
 					if (messageString.equals("提交成功")) {
 						Toast.makeText(mContext, messageString, Toast.LENGTH_SHORT).show();
 						finish();
@@ -272,7 +274,8 @@ public class BrokerRecommendActivity extends MainActionBarActivity implements On
 			case R.id.reservation_time:
 				initCalendar();
 				break;
-			case R.id.commit_broker_carry_client:
+			case R.id.commit_broker_recommend:
+				Log.i(TAG, "111111111111");
 				serializationCommitinfo();
 				commitInfo();
 				break;
