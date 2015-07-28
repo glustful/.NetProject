@@ -71,6 +71,9 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
     $scope.selectArea='区域';
     $scope.selectType='类型';
     $scope.selectPrice='价格';
+    $scope.condition1=false;
+    $scope.condition2=false;
+    $scope.condition3=false;
     //条件重置
     $scope.Reset=function(){
         $scope.searchCondition.AreaName='';
@@ -179,57 +182,78 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         $scope.selectCounty=true;
     };
 //展开地区
-    $scope.toggleProvince=function(){
-        $scope.province=!$scope.province;
-        $scope.city=!$scope.city;
-        $scope.county=!$scope.county;
-        if($scope.price==false)
-        {
-            $scope.price=!$scope.price;
-        }
-        if($scope.type==false)
-        {
-            $scope.type=!$scope.type;
-        }
+//    $scope.toggleProvince=function(){
+//        $scope.province=!$scope.province;
+//        $scope.city=!$scope.city;
+//        $scope.county=!$scope.county;
+//        if($scope.price==false)
+//        {
+//            $scope.price=!$scope.price;
+//        }
+//        if($scope.type==false)
+//        {
+//            $scope.type=!$scope.type;
+//        }
+//    }
+      $scope.open1=function(){
+          $scope.condition1=!$scope.condition1;
+      }
+//隐藏展开地区的内容
+    $scope.close1=function(){
+        $scope.condition1=false;
     }
     //展开户型
-    $scope.toggleType = function() {
-        $scope.type = !$scope.type;
-        if($scope.price==false)
-        {
-            $scope.price=!$scope.price;
-        }
-        if($scope.province==false)
-        {
-            $scope.province=!$scope.province;
-        }
-        if($scope.city==false)
-        {
-            $scope.city=!$scope.city;
-        }
-        if($scope.county==false)
-        {
-            $scope.county=!$scope.county;
-        }
-    };
+//    $scope.toggleType = function() {
+//        $scope.type = !$scope.type;
+//        if($scope.price==false)
+//        {
+//            $scope.price=!$scope.price;
+//        }
+//        if($scope.province==false)
+//        {
+//            $scope.province=!$scope.province;
+//        }
+//        if($scope.city==false)
+//        {
+//            $scope.city=!$scope.city;
+//        }
+//        if($scope.county==false)
+//        {
+//            $scope.county=!$scope.county;
+//        }
+//    };
+    $scope.open2=function(){
+        $scope.condition2=!$scope.condition2;
+    }
+    //隐藏展开户型的容
+    $scope.close2=function(){
+        $scope.condition2=false;
+    }
     //展开价格
-    $scope.togglePrice=function(){
-        $scope.price=!$scope.price;
-        if($scope.type==false)
-        {
-            $scope.type=!$scope.type;
-        }
-        if($scope.province==false)
-        {
-            $scope.province=!$scope.province;
-        }
-        if($scope.city==false)
-        {
-            $scope.city=!$scope.city;
-        }
-        if($scope.county==false)
-        {
-            $scope.county=!$scope.county;
-        }
-    };
+//    $scope.togglePrice=function(){
+//        $scope.price=!$scope.price;
+//        if($scope.type==false)
+//        {
+//            $scope.type=!$scope.type;
+//        }
+//        if($scope.province==false)
+//        {
+//            $scope.province=!$scope.province;
+//        }
+//        if($scope.city==false)
+//        {
+//            $scope.city=!$scope.city;
+//        }
+//        if($scope.county==false)
+//        {
+//            $scope.county=!$scope.county;
+//        }
+//    };
+    $scope.open3=function(){
+        $scope.condition3=!$scope.condition3;
+    }
+    //隐藏展开价格的内容
+    $scope.close3=function(){
+        $scope.condition3=false;
+    }
 }])

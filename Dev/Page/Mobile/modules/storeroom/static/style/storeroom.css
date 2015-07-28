@@ -5,10 +5,11 @@
     height: 70px;
     line-height: 70px;
     background: #fff;
+    position: relative;
 }
-.nav-storeroom a{
+.nav-storeroom .sub-nav{
     display: inline-block;
-    width: 159px;
+    width: 160px;
     height:35px;
     line-height: 35px;
     text-align: center;
@@ -95,10 +96,11 @@
  #area,#type,#price{
      float: left
  }
- #condition{
-     background-color: #ffffff;width: 640px;
+ /*#condition{*/
+     /*background-color: #fff;*/
+     /*width: 640px;*/
      /*border-radius: 10px;*/
- }
+ /*}*/
 #province{
     float:left;
     margin-left: 40px;
@@ -117,7 +119,6 @@
 .type{
     margin-left: 165px;
     text-align: center;
-    width: 150px;
     /*border: 1px solid #ebebeb*/
     border-top: 1px solid #ebebeb;
     border-left: 1px solid #ebebeb;
@@ -183,3 +184,32 @@
     left: 30%;
 }
 
+
+/*修改样式*/
+.query{
+    width: 640px;
+    position: absolute;
+    top:0;
+    left:0;
+    z-index: 100;
+    background-color: #fff;
+    height: 450px;
+}
+.query .inner-area{
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #ebebeb;
+    font-size: 1.2em;
+}
+.query .inner-area span{
+    display: inline-block;
+    width: 200px;
+    text-align: center;
+}
+.query .inner-area a{
+    border: none;
+    display: inline-block;
+    width: 50px;
+    text-align: center;
+    color: #686868;
+}
