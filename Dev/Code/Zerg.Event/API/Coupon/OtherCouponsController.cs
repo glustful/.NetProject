@@ -113,10 +113,11 @@ namespace Zerg.Event.API.Coupon
             };
             var sech2 = new CouponSearchCondition
             {
-                CouponCategoryId = _workContext.CurrentUser.Id,
+                CouponCategoryId = id,
                 IdArray = _couponOwnerService.GetCouponOwnByCondition(sech).Select(p=>p.CouponId).ToArray()
             };
-            if (_couponService.GetCouponCount(sech2) != 0)
+            var count = _couponService.GetCouponCount(sech2);
+            if (count != 0)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "您已经抢过这家的优惠券了"));
             }
