@@ -1614,9 +1614,10 @@ angular.module('app')
                 //controller:"activityController"
             })
             .state('page.CRM.activity.Edit', {
-                url: '/Edit',
+                url: '/Edit?id',
                 templateUrl: 'views/pages/CRM/activity/Edit.html',
-                data: { title: '活动编辑' }
+                data: { title: '活动编辑' },
+                resolve: load(['scripts/controllers/CRM/editActivity.js'])
             })
             .state('page.CRM.activity.Addactivity', {
                 url: '/Addactivity',
