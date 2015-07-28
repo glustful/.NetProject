@@ -226,6 +226,7 @@
     </Compile>
     <Compile Include="Models\CRM\ClientInfoModel.cs" />
     <Compile Include="Models\CRM\CreateMessageConfigModel.cs" />
+    <Compile Include="Models\CRM\EventModel.cs" />
     <Compile Include="Models\CRM\MerchantInfoModel.cs">
       <SubType>Code</SubType>
     </Compile>
