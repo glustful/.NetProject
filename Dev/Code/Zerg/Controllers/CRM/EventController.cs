@@ -110,7 +110,7 @@ namespace Zerg.Controllers.CRM
 
 
           [Description("删除活动")]
-          [HttpGet]
+          [HttpPost]
           [EnableCors("*", "*", "*", SupportsCredentials = true)]
           public HttpResponseMessage DelEventById(int eventId)
           {
