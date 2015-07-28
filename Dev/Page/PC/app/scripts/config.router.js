@@ -1609,7 +1609,9 @@ angular.module('app')
             .state('page.CRM.activity.activityList', {
                 url: '/activityList',
                 templateUrl: 'views/pages/CRM/activity/activityList.html',
-                data: { title: '活动列表' }
+                data: { title: '活动列表' },
+                resolve: load(['scripts/controllers/CRM/activity.js'])
+                //controller:"activityController"
             })
             .state('page.CRM.activity.Edit', {
                 url: '/Edit',
@@ -1619,7 +1621,8 @@ angular.module('app')
             .state('page.CRM.activity.Addactivity', {
                 url: '/Addactivity',
                 templateUrl: 'views/pages/CRM/activity/Addactivity.html',
-                data: { title: '新建活动' }
+                data: { title: '新建活动' },
+                resolve: load(['scripts/controllers/CRM/Addactivity.js'])
             })
 
 
