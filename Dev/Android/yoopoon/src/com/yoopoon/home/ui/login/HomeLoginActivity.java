@@ -200,6 +200,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 			requestLogin(eMail, pwd, auto);
 		} else {
 			SPUtils.clearAllInfo(this);
+			Log.i(TAG, "clearAllInfos");
 			mPwdText.setText("");
 			if (!isManual) {
 				FramMainActivity_.intent(mContext).start();
@@ -280,7 +281,6 @@ public class HomeLoginActivity extends MainActionBarActivity {
 						if (serializeResult != null) {
 							PreferenceManager.getDefaultSharedPreferences(mContext).edit()
 									.putString("user", serializeResult).commit();
-							Log.i(TAG, serializeResult);
 							saveInfoToSp(serializeResult);
 						}
 					}

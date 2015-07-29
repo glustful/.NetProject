@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#ffffff"
+    android:padding="10dp">
+    
+    <TextView 
+        android:id="@+id/tv_task_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/setting_text"
+        android:text="11111"/>
+    
+    <TextView 
+        android:layout_below="@id/tv_task_name"
+        android:id="@+id/tv_task_award"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:text="222222222"/>
+    
+    <Button
+        
+        android:layout_alignParentRight="true"
+        android:id="@+id/bt_task"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:background="@drawable/me_finish"
+        android:scaleType="fitCenter"
+        android:text="去完成"
+        android:textColor="@color/drak_red" />
+    
+
+</RelativeLayout>

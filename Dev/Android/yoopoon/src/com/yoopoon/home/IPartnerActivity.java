@@ -20,6 +20,7 @@ import org.androidannotations.annotations.ViewById;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
@@ -248,10 +249,30 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 					inviting();
 					startMills = System.currentTimeMillis();
 					invitePartner(phone);
+					setRecommendEnable(false);
+					CountDownTimer timer = new CountDownTimer(60000, 1000) {
+
+						@Override
+						public void onTick(long millisUntilFinished) {
+							bt_invite.setText("邀请(" + millisUntilFinished / 1000 + ")");
+						}
+
+						@Override
+						public void onFinish() {
+							setRecommendEnable(true);
+
+						}
+					};
+					timer.start();
 				}
 				break;
 		}
 
+	}
+
+	private void setRecommendEnable(boolean enable) {
+		bt_invite.setEnabled(enable);
+		bt_invite.setBackgroundResource(enable ? R.drawable.cycle_selector : R.drawable.btn_not_enable);
 	}
 
 	private Timer timer;
@@ -353,7 +374,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 	}
 
 	Button cancel;
-	Button invite;
+	Button bt_invite;
 	Dialog dialog;
 	EditText et_phone;
 
@@ -362,13 +383,13 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		View addView = View.inflate(this, R.layout.dialog_addpartner, null);
 		builder.setView(addView);
 		cancel = (Button) addView.findViewById(R.id.bt_partner_cancel);
-		invite = (Button) addView.findViewById(R.id.bt_partner_invite);
+		bt_invite = (Button) addView.findViewById(R.id.bt_partner_invite);
 		et_phone = (EditText) addView.findViewById(R.id.et_partner_phone);
 		tv_warning = (TextView) addView.findViewById(R.id.tv_addpartner_warning);
 		dialog = builder.show();
 
 		cancel.setOnClickListener(this);
-		invite.setOnClickListener(this);
+		bt_invite.setOnClickListener(this);
 	}
 
 	/*

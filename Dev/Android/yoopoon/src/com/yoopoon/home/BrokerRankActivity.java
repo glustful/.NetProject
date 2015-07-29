@@ -112,13 +112,14 @@ public class BrokerRankActivity extends MainActionBarActivity {
 				tv_desc.setText("金牌经纪人");
 				tv_money.setText("获得佣金：2w");
 				iv_medal.setImageResource(R.drawable.gold);
-				iv_trend.setImageResource(R.drawable.trend_up);
+				// iv_trend.setImageResource(R.drawable.trend_up);
 			} else {
 				tv_desc.setText(position == 1 ? "银牌经纪人" : "銅牌經紀人");
 				tv_money.setText("获得佣金：1.8k");
 				iv_medal.setImageResource(position == 1 ? R.drawable.silver : R.drawable.cooper);
 				iv_medal.setImageResource(position == 1 ? R.drawable.silver : R.drawable.cooper);
-				iv_trend.setImageResource(position == 1 ? R.drawable.trend_up : R.drawable.trend_down);
+				// iv_trend.setImageResource(position == 1 ? R.drawable.trend_up :
+				// R.drawable.trend_down);
 			}
 			return convertView;
 		}

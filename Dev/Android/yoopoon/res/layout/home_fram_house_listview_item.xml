@@ -3,7 +3,8 @@
     android:id="@+id/house_listview_item"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="#ffffff">
 
     <LinearLayout
         android:id="@+id/house_listview_item_linearlayout"
@@ -45,12 +46,14 @@
 
             <TextView
                 android:id="@+id/house_productname"
-                android:gravity="center_vertical"
+                android:gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5" />
 
             <View
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/deviding_line" />
@@ -80,14 +83,15 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="3dp"
+        android:layout_height="1px"
         android:background="@color/deviding_line" />
 
     <LinearLayout
         android:id="@+id/house_broker_function_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal" 
+        android:background="#ffffff">
 
         <TextView
             android:id="@+id/house_takeguest"

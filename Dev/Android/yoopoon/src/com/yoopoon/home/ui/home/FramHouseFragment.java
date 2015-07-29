@@ -73,6 +73,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	// 所有变量和属性声明如下
 	// ###############################################################################################
 	public static final String TAG = "FramHouseFragment";
+	private LinearLayout ll_progress;
 	// 当前Fragment绑定的View
 	View rootView;
 	// 房源库ListView对应的Layout
@@ -155,6 +156,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			mContext = getActivity();
 			// 获取Fragment对应的视图
 			rootView = LayoutInflater.from(getActivity()).inflate(R.layout.home_fram_house_fragment, null);
+			ll_progress = (LinearLayout) rootView.findViewById(R.id.ll_progress);
 			pullToRefreshListView = (PullToRefreshListView) rootView.findViewById(R.id.matter_list_view);
 			// 房源库listView对应的layout
 			houseListViewlayout = LayoutInflater.from(mContext).inflate(R.layout.home_fram_house_listview_item, null);
@@ -399,6 +401,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		if (house_type_button.getTag() == null) {
 			house_type_button.setTag("succeed");
 			new RequestAdapter() {
+
 				@Override
 				public void onReponse(ResponseData data) {
 					if (data.getResultState() == ResultState.eSuccess) {
@@ -477,7 +480,9 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 * @Description: 开启异步线程，获取所有的楼盘，以ListView的形式展示出来
 	 */
 	private void requestHouseList() {
+		ll_progress.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				pullToRefreshListView.onRefreshComplete();
@@ -489,6 +494,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 						// 如果没有返回值，则设置楼盘数量为0
 						initHouseTotalCountTextView(houseListJsonObjects.size() + "");
 						// initHouseTotalCountTextView("0");
+						ll_progress.setVisibility(View.GONE);
 						return;
 					}
 					for (int i = 0; i < list.length(); i++) {
@@ -496,6 +502,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					}
 					houseListViewAdapter.refresh(houseListJsonObjects);
 					initHouseTotalCountTextView(houseCount);
+					ll_progress.setVisibility(View.GONE);
 				}
 			}
 			@Override
@@ -845,13 +852,14 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	public void initHouseTotalCountTextView(String houseTotaoCount) {
 		houseListView.removeHeaderView(houseTotalCountTextView);
 		houseTotalCountTextView = new TextView(mContext);
-		AbsListView.LayoutParams houseTotalCountParams = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, 150);
+		AbsListView.LayoutParams houseTotalCountParams = new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.MATCH_PARENT);
+
 		houseTotalCountTextView.setLayoutParams(houseTotalCountParams);
 		houseTotalCountTextView.setText("共" + houseTotaoCount + "个楼盘");
 		houseTotalCountTextView.setBackgroundColor(getResources().getColor(R.color.hosue_total_color));
 		houseTotalCountTextView.setGravity(Gravity.CENTER_VERTICAL);
-		int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
-		houseTotalCountTextView.setPadding(screenWidth / 10, 0, 0, 0);
+		houseTotalCountTextView.setPadding(10, 10, 10, 10);
 		houseListView.addHeaderView(houseTotalCountTextView);
 	}
 	/**

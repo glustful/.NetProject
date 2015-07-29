@@ -2,13 +2,13 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
@@ -95,7 +95,7 @@
         <item name="android:textSize">14sp</item>
         <item name="android:background">@drawable/setting_edit_bg</item>
     </style>
-    
+
     <style name="LinearLayout_With_Clear2" parent="TextView_GrayText">
         <item name="android:padding">0dp</item>
         <item name="android:textSize">14sp</item>
@@ -122,7 +122,7 @@
         <item name="android:textColor">@color/little_whitle</item>
         <item name="android:background">@drawable/cycle_selector</item>
     </style>
-    
+
     <style name="Red_Button_MarginTop_WrapContent">
         <item name="android:layout_marginTop">35dp</item>
         <item name="android:layout_width">wrap_content</item>
@@ -226,7 +226,7 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textStyle">bold</item>
     </style>
-    
+
     <style name="Layout_Black_Shadow">
         <item name="android:padding">5dp</item>
         <item name="android:background">#88000000</item>
@@ -254,6 +254,17 @@
         <item name="android:textSize">15dp</item>
         <item name="android:visibility">gone</item>
         <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="TextView_Item_Foot">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">#ffffff</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">5dp</item>
     </style>
 
 </resources>

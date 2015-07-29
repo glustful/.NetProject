@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/appBackground" >
 
     <LinearLayout
         android:id="@+id/brokerLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="visible" >
 
@@ -20,6 +20,7 @@
             
 
             <TextView
+                android:background="#ffffff"
                 style="@style/TextView_Footer"
                 android:id="@+id/tv_footer_recommend"
                 android:layout_marginLeft="1dp"
@@ -28,12 +29,14 @@
                 android:textColor="@color/red" />
 
             <TextView
+                android:background="#ffffff"
                 android:id="@+id/tv_footer_partner"
                 style="@style/TextView_Footer"
                 android:layout_marginLeft="1dp"
                 android:drawableTop="@drawable/partner"
                 android:text="发展合伙人" />
             <TextView
+                android:background="#ffffff"
                 android:layout_marginLeft="1dp"
                 android:id="@+id/tv_footer_recommend_agent"
                 style="@style/TextView_Footer"
@@ -47,6 +50,7 @@
             android:layout_marginTop="1dp"
             android:orientation="horizontal" >
             <TextView
+                android:background="#ffffff"
                 android:id="@+id/tv_footer_iclient"
                 style="@style/TextView_Footer"
                 android:drawableTop="@drawable/management"
@@ -55,6 +59,7 @@
             
 
             <TextView
+                android:background="#ffffff"
                 android:id="@+id/tv_footer_calc"
                 style="@style/TextView_Footer"
                 android:layout_marginLeft="1dp"
@@ -62,6 +67,7 @@
                 android:text="房贷计算器" />
 
             <TextView
+                android:background="#ffffff"
                 android:id="@+id/brokerSetting"
                 style="@style/TextView_Footer"
                 android:layout_marginLeft="1dp"

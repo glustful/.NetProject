@@ -197,6 +197,20 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
+  
+        <activity
+            android:name="com.yoopoon.home.RecBuildActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        
+        <activity
+            android:name="com.yoopoon.home.MeTaskActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        
+ 
     </application>
     <!-- 测试配置选项 -->
     <instrumentation

@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import com.etsy.android.grid.StaggeredGridView;
 import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.home.MainActionBarActivity;
@@ -28,6 +29,8 @@ public class BrandDetailActivity extends MainActionBarActivity {
 
 	@ViewById(R.id.grid_view)
 	StaggeredGridView mListView;
+	@ViewById(R.id.ll_progress)
+	LinearLayout ll_progress;
 
 	JSONObject jsonObject;
 	@Bean
@@ -59,6 +62,7 @@ public class BrandDetailActivity extends MainActionBarActivity {
 	private void requestProductByBrandId() {
 		if (jsonObject == null)
 			return;
+		ll_progress.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
@@ -78,6 +82,7 @@ public class BrandDetailActivity extends MainActionBarActivity {
 						if (array != null) {
 							mAdapter.setData(array);
 						}
+						ll_progress.setVisibility(View.GONE);
 
 					}
 

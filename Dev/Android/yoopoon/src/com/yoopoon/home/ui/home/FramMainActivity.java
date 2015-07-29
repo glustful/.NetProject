@@ -229,12 +229,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 			Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
 			exitTime = System.currentTimeMillis();
 		} else {
-
-
-
-
 			android.os.Process.killProcess(android.os.Process.myPid());
-
 		}
 	}
 	@Override
