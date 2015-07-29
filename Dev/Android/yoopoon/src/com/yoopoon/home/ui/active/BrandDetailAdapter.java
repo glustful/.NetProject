@@ -98,7 +98,6 @@ public class BrandDetailAdapter extends BaseAdapter {
 		viewHolder.title.setText(Tools.optString(item, "Productname", ""));
 		viewHolder.title.setTextSize(15);
 		viewHolder.content.setText(Tools.optString(item, "SubTitle", ""));
-		//viewHolder.content.setTextColor(@color/);
 		viewHolder.price.setText("均价" + Tools.optDouble(item, "Price", 0) + "元/m²起");
 		viewHolder.callPhone.setTag(Tools.optString(item, "Phone", ""));
 		viewHolder.callPhone.setOnClickListener(new OnClickListener() {

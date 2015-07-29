@@ -16,7 +16,7 @@
        android:textSize="@dimen/large_textSize"/>
     <TextView 
        android:id="@+id/content"
-       android:textColor="@android:color/darker_gray"
+       android:textColor="@color/brand_detail_adapter"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        
