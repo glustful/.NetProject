@@ -1,4 +1,4 @@
-<div class="p-md" ng-app="App" ng-controller="">
+<div class="p-md" ng-app="App" ng-controller="activityController">
     <div>
         <a href="#page/CRM/activity/Addactivity"><button  class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加活动
         </button></a>
@@ -14,30 +14,32 @@
                 <th align="center">活动名称</th>
                 <th align="center">开始时间</th>
                 <th align="center">截至时间</th>
+                <th align="center">状态</th>
                 <th align="center">操作</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="row in list">
-                <td>{{row.activityId}}</td>
-                <td>{{row.Activitytname }}</td>
-                <td>{{row.Starttime | dateFilter }}</td>
-                <td>{{row.Endtime}}</td>
+                <td>{{row.Id}}</td>
+                <td>{{row.EventContent }}</td>
+                <td>{{row.Starttime|dateFilter}}</td>
+                <td>{{row.Endtime|dateFilter}}</td>
+                <td>{{row.State}}</td>
                 <td>
-                    <a ui-sref="page.CRM.activity.Edit" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 编辑
+                    <a ui-sref="page.CRM.activity.Edit({id: row.Id})" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 编辑
                     </a>
-                    <button ng-click='del(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
+                    <button ng-click='open(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
                     </button>
                 </td>
             </tr>
             </tbody>
-            <tfoot class="hide-if-no-paging">
-            <tr>
-                <td colspan="10" class="text-center">
-                    <pagination boundary-links="true" total-items="totalCount" items-per-page="" ng-model="" ng-change="" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
-                </td>
-            </tr>
-            </tfoot>
+            <!--<tfoot class="hide-if-no-paging">-->
+            <!--<tr>-->
+                <!--<td colspan="10" class="text-center">-->
+                    <!--<pagination boundary-links="true" total-items="totalCount" items-per-page="" ng-model="" ng-change="" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--</tfoot>-->
         </table>
     </div>
     <script type="text/ng-template" id="myModalContent.html">

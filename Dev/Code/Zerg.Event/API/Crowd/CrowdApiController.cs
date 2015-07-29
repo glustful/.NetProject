@@ -292,41 +292,6 @@ namespace Zerg.Event.API.Crowd
             return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
         }
         #endregion
-        /// <summary>
-        /// 修改项目信息
-        /// </summary>
-        /// <param name="crowdinfo"></param>
-        /// <returns></returns>
-        //[HttpPost]
-        //public HttpResponseMessage UpCrowdInfo(CrowdModel crowdinfo)
-        //{
-        //    if (crowdinfo != null)
-        //    {
-        //        var entity = new CrowdEntity
-        //        {
-        //            Uptime = DateTime.Now,
-        //            Upuser = crowdinfo.Upuser,
-        //            Ttitle = crowdinfo.Ttitle,
-        //            Intro = crowdinfo.Intro,
-        //            Starttime = crowdinfo.Starttime,
-        //            Endtime = crowdinfo.Endtime,
-        //            Status = crowdinfo.Status,
-
-        //        };
-        //        try
-        //        {
-        //            if (_crowdService.Update(entity) != null)
-        //            {
-        //                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据修改成功！"));
-        //            }
-        //        }
-        //        catch
-        //        {
-        //            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据修改失败！"));
-        //        }
-        //    }
-        //    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据修改错误！"));
-        //}
         #region 删除众筹 黄秀宇 2015.07.14
         /// <summary>
         /// 删除众筹

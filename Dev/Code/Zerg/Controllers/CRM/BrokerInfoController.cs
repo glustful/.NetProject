@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CRM.Entity.Model;
@@ -176,17 +177,22 @@ namespace Zerg.Controllers.CRM
             }
 
             var model = _brokerService.GetBrokerByUserId(Convert.ToInt32(userId));
+           
             if (model == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在！"));
 
-            #region 判断经纪人是否使用过邀请码
+            #region 判断经纪人是否使用过邀请码 或者参与过活动
             InviteCodeSearchCondition icodeseCon = new InviteCodeSearchCondition
             {
                 NumUser = model.Id
             };
-
-            if (_inviteCodeService.GetInviteCodeByCount(icodeseCon) > 0)
+            EventOrderSearchCondition eveCon = new EventOrderSearchCondition
             {
-                IsInvite = 0; //判断有无使用过邀请码
+                Brokers = model
+                
+            };
+            if (_inviteCodeService.GetInviteCodeByCount(icodeseCon) > 0 || _eventOrderService.GetEventOrderCount(eveCon) > 0)
+            {
+                IsInvite = 0; //判断有无使用过邀请码 或者参与过活动
             }
 
             #endregion
@@ -228,7 +234,7 @@ namespace Zerg.Controllers.CRM
             var brokerSearchCondition = new BrokerSearchCondition
             {
                 Brokername = name,
-                Phone = phone,
+                Phone1 = phone,
                 OrderBy = EnumBrokerSearchOrderBy.OrderById,
                 Page = Convert.ToInt32(page),
                 PageCount = 10,
@@ -371,7 +377,7 @@ namespace Zerg.Controllers.CRM
 
 
                 #region 邀请码逻辑 by yangyue  2015/7/16
-
+                
                 var even = new EventSearchCondition //判断该活动是否开启
                 {
                     EventContent ="完善经纪人资料活动",
@@ -379,7 +385,7 @@ namespace Zerg.Controllers.CRM
                 };
                 if (_eventService.GetEventCount(even) > 0)
                 {
-                    #region
+                    #region  邀请码活动 by yangyue  2015/7/16
 
                     InviteCodeSearchCondition icodeseCon = new InviteCodeSearchCondition
                     {
