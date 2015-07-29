@@ -45,9 +45,6 @@ public class ActiveController extends GridViewController {
 			mGridView.setHorizontalScrollBarEnabled(false);
 			mGridView.setVerticalScrollBarEnabled(false);
 			mGridView.setAdapter(new GridAdapter(mContext, urls.get(i)));
-			// mGridView.setAdapter(new GridAdapter2(new String[] { "霸王餐", "最热电影", "推拿按摩" }, new
-			// int[] {
-			// R.drawable.bawangcan, R.drawable.movie, R.drawable.anmo }));
 			mGridView.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
@@ -137,7 +134,7 @@ public class ActiveController extends GridViewController {
 				holder = (Holder) convertView.getTag();
 			}
 
-			holder.img.setLayoutParams(new LinearLayout.LayoutParams(120, 120));
+			holder.img.setLayoutParams(new LinearLayout.LayoutParams(100, 100));
 			holder.img.setImageResource(imgs[position]);
 
 			holder.title.setText(titles[position]);
@@ -155,7 +152,7 @@ public class ActiveController extends GridViewController {
 		public GridAdapter(Context context, JSONArray datas) {
 			this.mContext = context;
 			this.datas = datas;
-			width = ((int) MyApplication.getInstance().getDeviceInfo((Activity) mContext).widthPixels) / 4;
+			width = ((int) MyApplication.getInstance().getDeviceInfo((Activity) mContext).widthPixels) / 5;
 		}
 
 		@Override

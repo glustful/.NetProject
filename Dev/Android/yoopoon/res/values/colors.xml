@@ -14,5 +14,6 @@
     <color name="light_gray">#f0f0f0</color>
     <color name="deviding_line">#E0E0E0</color>
     <color name="bank_card_blue">#880000ff</color>
+    <color name="white">#ffffff</color>
 
 </resources>

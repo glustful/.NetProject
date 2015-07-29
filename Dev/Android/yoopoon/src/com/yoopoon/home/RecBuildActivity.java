@@ -22,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import android.text.Html;
 import android.text.format.DateUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -201,6 +202,7 @@ public class RecBuildActivity extends MainActionBarActivity {
 			String city = "[" + parameter.optString("所属城市", "") + "]   ";
 			String area = parameter.optString("占地面积", "");
 			mHolder.tv_detail2.setText(city + title + area);
+			mHolder.tv_detail2.setGravity(Gravity.LEFT);
 			String adTitle = Html.fromHtml(item.optString("AdTitle")).toString();
 			mHolder.tv_right.setText(StringUtils.isEmpty(adTitle) ? "" : adTitle);
 			mHolder.tv_call.setTag(Tools.optString(parameter, "来电咨询", ""));
@@ -244,6 +246,7 @@ public class RecBuildActivity extends MainActionBarActivity {
 	}
 
 	class Holder {
+
 		ImageView iv;
 		TextView tv_detail1;
 		TextView tv_detail2;
