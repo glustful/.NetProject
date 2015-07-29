@@ -21,7 +21,9 @@ angular.module("app").controller('agentmanagerIndexController', [
                 params:$scope.searchCondition,
                 'withCredentials':true
             }).success(function(data){
+                console.log(data);
                 if(data.List.length>0) {
+                    console.log(data);
                    page= $scope.searchCondition.page = data.Condition.Page;
                     howmany=data.List.length;//保存当页数据数量
                     $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -172,6 +174,7 @@ angular.module("app").controller('agentmanagerDetailedController',['$http','$sco
         $scope.BrokerModel =data.List;
     });
 //----------------根据经纪人id获取经纪人信息 end-----------------------
+
 //----------------查询该经纪人出入账信息 start-------------------------
     $scope.searchCRZCondition = {
         userId: $stateParams.userid,
@@ -199,6 +202,7 @@ if(data.totalCount>0){
     };
     $scope.getCRZList();
 //----------------查询该经纪人出入账信息 end-------------------------
+
 //----------------根据经纪人id查询提现明细 start---------------------
     $scope.searchTXCondition = {
         userId: $stateParams.userid,

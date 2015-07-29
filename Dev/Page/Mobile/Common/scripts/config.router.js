@@ -47,17 +47,6 @@ app  .run(
                     }
 
                 }
-                if(next.access=="app.personal"){
-                    var accessRoles=['broker'];
-                    if(!AuthService.IsAuthorized(accessRoles)) {
-                        event.preventDefault();
-                        $state.go("app.personal_user");
-                        return;
-                    }
-                    else{
-                        $state.go("app.personal");
-                    }
-                }
             });
         }
     ]
