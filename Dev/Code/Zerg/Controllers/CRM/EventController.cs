@@ -92,8 +92,8 @@ namespace Zerg.Controllers.CRM
               {
                   var e = _eventService.GetEventById(eventModel.Id);
                   e.EventContent = eventModel.EventContent;
-                  e.Starttime = DateTime.Now;
-                  e.Endtime = DateTime.Now;
+                  e.Starttime = eventModel.Starttime;
+                  e.Endtime = eventModel.Endtime;
                   e.ActionControllers = eventModel.ActionControllers;
                   e.State = eventModel.State; 
                   if (_eventService.Update(e) != null)
