@@ -236,7 +236,7 @@ namespace Zerg.Controllers.CRM
             var brokerSearchCondition = new BrokerSearchCondition
             {
                 Brokername = name,
-                Phone = phone,
+                Phone1 = phone,
                 OrderBy = EnumBrokerSearchOrderBy.OrderById,
                 Page = Convert.ToInt32(page),
                 PageCount = 10,

@@ -14,6 +14,7 @@ using YooPoon.Core.Site;
 using YooPoon.WebFramework.User.Entity;
 using Zerg.Common;
 using System.ComponentModel;
+using CRM.Service.BrokerWithdraw;
 namespace Zerg.Controllers.CRM
 {
 
@@ -29,6 +30,7 @@ namespace Zerg.Controllers.CRM
         private readonly IBrokerService _brokerService;//经纪人
         private readonly IWorkContext _workContext;
         private readonly IBankService _bankService;
+        private readonly IBrokerWithdrawService _brokerwithdrawService;
         /// <summary>
         /// 银行卡管理初始化
         /// </summary>
@@ -36,12 +38,13 @@ namespace Zerg.Controllers.CRM
         /// <param name="workContext">workContext</param>
         /// <param name="bankcardService">bankcardService</param>
         /// <param name="brokerService">brokerService</param>
-        public BankCardController(IBankService bankService, IWorkContext workContext, IBankCardService bankcardService, IBrokerService brokerService)
+        public BankCardController(IBankService bankService, IWorkContext workContext, IBankCardService bankcardService, IBrokerService brokerService, IBrokerWithdrawService brokerwithdrawService)
         {
             _bankcardService = bankcardService;
             _brokerService = brokerService;
             _workContext = workContext;
             _bankService = bankService;
+            _brokerwithdrawService=brokerwithdrawService;
         }
 
         #region 银行卡管理
@@ -225,6 +228,72 @@ namespace Zerg.Controllers.CRM
 
         }
 
+
+        /// <summary>
+        /// 删除一个银行卡
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage DeleteBankCard([FromBody] string id)
+        {
+            if (!string.IsNullOrEmpty(id) && id!="0")
+           {
+             int Id;
+             if (!Int32.TryParse(id, out Id))
+             {
+                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据异常"));
+             }
+             var user = (UserBase)_workContext.CurrentUser;
+             if (user != null)
+             {
+                 var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
+                 if (broker == null)
+                 {
+
+                     return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+                 }
+                 else
+                 {
+                      
+                     
+                     int [] ids={Id};                 
+                     var bankcardSearchCon = new BankCardSearchCondition
+                     {
+                         Brokers = broker,
+                         Ids=ids
+                     };
+                    if( _bankcardService.GetBankCardCount(bankcardSearchCon)>0)//判断是否是自己的卡
+                    {
+                        var Bank=_bankcardService.GetBankCardById(Id);
+                        if (Bank==null)
+                        {
+                          return PageHelper.toJson(PageHelper.ReturnValue(false, "数据异常"));
+                        }
+                        BankCardEntity[] banks={Bank};
+                      BrokerWithdrawSearchCondition bwithSearchCon=new BrokerWithdrawSearchCondition{
+                           Brokers=broker,
+                           BankCards=banks
+                      };
+                      if (_brokerwithdrawService.GetBrokerWithdrawCount(bwithSearchCon) > 0)//判断用户提现表是否使用此卡
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "有该银行相关提现数据不能删除"));
+                    }
+                      _bankcardService.Delete(Bank);
+                      return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功"));
+
+                    }
+                    else
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据异常"));
+                    }
+                                     
+                 }
+             }
+           
+           }
+           return PageHelper.toJson(PageHelper.ReturnValue(false, "数据异常"));
+        }
         #endregion
     }
 
