@@ -1,12 +1,14 @@
 package com.yoopoon.home.ui.home;
 
 import java.util.ArrayList;
+
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
+
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -28,6 +30,7 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.yoopoon.common.base.utils.SPUtils;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
@@ -44,24 +47,23 @@ public class FramMainActivity extends SearchActionBarActivity {
 	LinearLayout searchLayout;
 	@ViewById(R.id.tv_main_network)
 	TextView tv_network;
-
+	
 	@Click(R.id.tv_main_network)
 	void setNetwork() {
 		Intent intent = new Intent("android.settings.SETTINGS");
 		startActivity(intent);
 	}
-
+	
 	boolean isOpenAgent = true;
 	public static FramMainActivity instance;
 	HomeMainAdapter pageAdapter;
 	ArrayList<FragmentInfo> fInfo;
-
+	
 	@AfterInject
 	void initData() {
 		instance = this;
 		fInfo = new ArrayList<FragmentInfo>();
 	}
-
 	@AfterViews
 	void initUI() {
 		checkNetworkState();
@@ -71,7 +73,6 @@ public class FramMainActivity extends SearchActionBarActivity {
 		initFragments();
 		begin();
 	}
-
 	void initFragments() {
 		Bundle argActive = new Bundle();
 		fInfo.add(new FragmentInfo(FramActiveFragment_.class, argActive));
@@ -84,7 +85,6 @@ public class FramMainActivity extends SearchActionBarActivity {
 		Bundle argMe = new Bundle();
 		fInfo.add(new FragmentInfo(FramMeFragment_.class, argMe));
 	}
-
 	@SuppressLint("NewApi")
 	void initMenu() {
 		tabHost.setup();
@@ -102,16 +102,13 @@ public class FramMainActivity extends SearchActionBarActivity {
 				public void onClick(View v) {
 					// Fragment切换的时候可以在这里进行控制
 					mSearchFunction.clearSearch();
-
 					FramSuper framSuper = (FramSuper) pageAdapter.getItem(j);
 					// framSuper.setTitle();
-
 					mainPager.setCurrentItem(j);
 				}
 			});
 		}
 	}
-
 	private TabSpec getTabSpec(String content, int resId, String title) {
 		MainTabView tab = MainTabView_.build(this);
 		tab.setIndicator(resId);
@@ -120,20 +117,17 @@ public class FramMainActivity extends SearchActionBarActivity {
 				.setContent(new MainTabFactory(FramMainActivity.this));
 		return tabSpec;
 	}
-
+	
 	OnPageChangeListener pageListener = new OnPageChangeListener() {
-
 		@Override
 		public void onPageSelected(int position) {
 			tabHost.setCurrentTab(position);
 			// FramSuper framSuper = (FramSuper) pageAdapter.getItem(position);
 			// framSuper.setTitle();
 		}
-
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 		}
-
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 		}
@@ -146,7 +140,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 		}
 	};
 	private long exitTime = 0;
-
+	
 	private void begin() {
 		pageAdapter = new HomeMainAdapter(getSupportFragmentManager(), fInfo, FramMainActivity.this);
 		mainPager.setOffscreenPageLimit(3);
@@ -154,7 +148,6 @@ public class FramMainActivity extends SearchActionBarActivity {
 		mainPager.setOnPageChangeListener(pageListener);
 		mainPager.setCurrentItem(0);
 	}
-
 	/*
 	 * (non Javadoc)
 	 * @Title: onCreate
@@ -168,7 +161,6 @@ public class FramMainActivity extends SearchActionBarActivity {
 		super.onCreate(savedInstanceState);
 		registerReceivers();
 	}
-
 	private void registerReceivers() {
 		// 网络状态广播监听
 		IntentFilter networkFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -194,7 +186,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 		activeFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		this.registerReceiver(receiver, activeFilter);
 	}
-
+	
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -216,14 +208,13 @@ public class FramMainActivity extends SearchActionBarActivity {
 		}
 	};
 	private BroadcastReceiver brokerTakeGuestReceiver = new BroadcastReceiver() {
-
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			SPUtils.setIsAgentFromReceiver(context, true);
 			mainPager.setCurrentItem(1);
 		}
 	};
-
+	
 	private void checkNetworkState() {
 		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo info = connectivityManager.getActiveNetworkInfo();
@@ -233,7 +224,6 @@ public class FramMainActivity extends SearchActionBarActivity {
 			tv_network.setVisibility(View.VISIBLE);
 		}
 	}
-
 	public void onBackPressed() {
 		if ((System.currentTimeMillis() - exitTime) > 2000) {
 			Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
@@ -242,41 +232,35 @@ public class FramMainActivity extends SearchActionBarActivity {
 			android.os.Process.killProcess(android.os.Process.myPid());
 		}
 	}
-
 	@Override
 	protected void onRestart() {
 		super.onRestart();
 	}
-
 	@Override
 	protected void onDestroy() {
 		this.unregisterReceiver(receiver);
 		this.unregisterReceiver(brokerTakeGuestReceiver);
 		super.onDestroy();
 	}
-
 	@Override
 	protected void onResume() {
 		super.onResume();
 	}
-
 	@Override
 	protected void onStop() {
 		super.onStop();
 	}
-
 	@Override
 	protected void onStart() {
 		super.onStart();
 	}
-
+	
 	class MainTabFactory implements TabHost.TabContentFactory {
 		private final Context mContext;
-
+		
 		public MainTabFactory(Context context) {
 			mContext = context;
 		}
-
 		@Override
 		public View createTabContent(String tag) {
 			View v = new View(mContext);
@@ -285,28 +269,24 @@ public class FramMainActivity extends SearchActionBarActivity {
 			return v;
 		}
 	}
-
+	
 	@Override
 	public void finish() {
 		MyApplication.getInstance().removeActivity(this);
 		super.finish();
 	}
-
 	@Override
 	protected int getHeight() {
 		return mainPager.getHeight();
 	}
-
 	@Override
 	protected View getParentView() {
 		return mainPager;
 	}
-
 	@Override
 	protected void showResult(JSONArray optJSONArray) {
 		searchLayout.setVisibility(View.VISIBLE);
 	}
-
 	@Override
 	protected void cleanSearch() {
 		searchLayout.setVisibility(View.GONE);

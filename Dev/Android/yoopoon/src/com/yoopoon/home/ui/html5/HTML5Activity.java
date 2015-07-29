@@ -30,6 +30,9 @@ public class HTML5Activity extends MainActionBarActivity {
 		titleButton.setText(title);
 		mHtml5View.loadUrl(url);
 
+		//mHtml5View.getSettings().setDefaultTextEncodingName("utf-8");
+
+
 	}
 
 	@Override
@@ -37,23 +40,21 @@ public class HTML5Activity extends MainActionBarActivity {
 		finish();
 
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
 		// TODO Auto-generated method stub
 
-	}
 
+	}
 	@Override
 	public void rightButtonClick(View v) {
 		// TODO Auto-generated method stub
 
-	}
 
+	}
 	@Override
 	public Boolean showHeadView() {
 		// TODO Auto-generated method stub
 		return true;
 	}
-
 }

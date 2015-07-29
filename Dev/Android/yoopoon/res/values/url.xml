@@ -2,9 +2,8 @@
 <resources>
 
     <!-- server host -->
-
-    <string name="url_host">http://api.iyookee.cn</string> 
-     <!-- <string name="url_host">http://192.168.1.199:9010</string>-->
+    <string name="url_host">http://api.iyookee.cn</string>
+    <!-- <string name="url_host">http://192.168.1.199:9010</string> -->
 
 
     <!-- userController -->

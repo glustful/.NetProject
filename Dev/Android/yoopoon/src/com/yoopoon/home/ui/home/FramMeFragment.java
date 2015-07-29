@@ -15,6 +15,7 @@ package com.yoopoon.home.ui.home;
 import org.androidannotations.annotations.EFragment;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,8 +30,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
+
 import com.round.progressbar.CircleProgressDialog;
 import com.yoopoon.home.MeTaskActivity_;
 import com.yoopoon.home.R;
@@ -68,9 +69,7 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 	private String userId = "0";
 	private boolean isVisibleToUser = false;
 	private int clientCount = 0;
-	private TextView tv_rec;
-	private TextView tv_task;
-
+	
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
@@ -85,9 +84,7 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 				initUserData();
 			}
 		}
-
 	}
-
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -95,7 +92,6 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 			initUserData();
 		}
 	}
-
 	/*
 	 * (non Javadoc)
 	 * @Title: onStop
@@ -106,19 +102,16 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 	public void onStop() {
 		super.onStop();
 	}
-
 	private void initUserData() {
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		isBroker = sp.getBoolean("isBroker", false);
 		userId = sp.getString("userId", "0");
 		if ("0".equals(userId)) {
 			cleanLayout();
-
 		} else {
 			requestClientCount();
 		}
 	}
-
 	/**
 	 * @Title: cleanLayout
 	 * @Description: 用户未登陆，清除相关数据
@@ -127,7 +120,6 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 		mBrokerInfoView.hide();
 		mMeFooterView.hide();
 	}
-
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -140,27 +132,17 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 			rootView = LayoutInflater.from(getActivity()).inflate(R.layout.home_fram_me_fragment, null);
 			mBrokerInfoView = (BrokerInfoView) rootView.findViewById(R.id.brokerInfo);
 			mMeFooterView = (MeFooterView) rootView.findViewById(R.id.footerView);
-
-			tv_rec = (TextView) rootView.findViewById(R.id.tv_me_building);
-			tv_task = (TextView) rootView.findViewById(R.id.tv_me_task);
-			tv_rec.setOnClickListener(this);
-			tv_task.setOnClickListener(this);
-
 		}
 		registerLoginReceiver();
 		return rootView;
 	}
-
 	private void registerLoginReceiver() {
 		IntentFilter filter = new IntentFilter("com.yoopoon.login_action");
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
 		getActivity().registerReceiver(loginReceiver, filter);
 	}
-
 	private void requestClientCount() {
-
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data != null) {
@@ -171,36 +153,29 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
-
 					} else {
 						HomeLoginActivity_.intent(getActivity()).isManual(true).start();
-
 					}
 				} else {
 					Toast.makeText(getActivity(), "获取客户信息失败！", Toast.LENGTH_SHORT).show();
 				}
 				requestBrokerInfo();
-
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
-
 			}
 		}.setUrl(getString(R.string.url_get_my_clients) + "/?page=1&pageSize=10").setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
-
 	}
-
+	
 	private BroadcastReceiver loginReceiver = new BroadcastReceiver() {
-
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			initUserData();
 		}
 	};
-
+	
 	/**
 	 * @Title: requestBrokerInfo
 	 * @Description: 请求当前用户相关信息
@@ -208,14 +183,13 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 	void requestBrokerInfo() {
 		CircleProgressDialog.build(getActivity(), R.style.dialog).show();
 		new RequestAdapter() {
-
 			/**
 			 * @fieldName: serialVersionUID
 			 * @fieldType: long
 			 * @Description:
 			 */
 			private static final long serialVersionUID = 1L;
-
+			
 			@Override
 			public void onReponse(ResponseData data) {
 				CircleProgressDialog.build(getActivity(), R.style.dialog).hide();
@@ -228,7 +202,6 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 					HomeLoginActivity_.intent(getActivity()).isManual(true).start();
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
@@ -236,7 +209,6 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 		}.setUrl(getString(R.string.url_brokerInfo_getBrokerDetails)).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
-
 	/*
 	 * (non Javadoc)
 	 * @Title: onClick
@@ -256,7 +228,5 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 			default:
 				break;
 		}
-
 	}
-
 }

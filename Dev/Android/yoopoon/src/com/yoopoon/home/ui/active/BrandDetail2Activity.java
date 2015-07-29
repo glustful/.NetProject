@@ -7,6 +7,7 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.home.MainActionBarActivity;
@@ -34,33 +36,34 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 	TextView tv_subtitle;
 	@ViewById(R.id.iv_style)
 	ImageView iv_style;
-
+	
 	@Click(R.id.tv_style)
 	void style() {
 		if (!TextUtils.isEmpty(mJson))
 			BrandDetailActivity_.intent(this).mJson(mJson).start();
 	}
-
 	@AfterViews
 	void initView() {
 		backButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
 		titleButton.setVisibility(View.VISIBLE);
 		titleButton.setText("楼盘详情");
 		initDatas();
 	}
-
 	private void initDatas() {
 		if (!StringUtils.isEmpty(mJson))
 			try {
 				JSONObject obj = new JSONObject(mJson);
 				String title = obj.optString("Bname", "");
 				String subTitle = obj.optString("SubTitle", "");
-				String content = obj.optString("Content", "");
+				final String content = obj.optString("Content", "");
+				tv_name.setText(title);
+				tv_subtitle.setText(subTitle);
+				// ######################## 徐阳会 2015年7月28日 修改 ######################### Start
 				Log.i(TAG, content);
 				tv_name.setText(title);
 				tv_subtitle.setText(subTitle);
-
 				wv_detail.loadDataWithBaseURL(null, content, "text/html", "utf-8", null);
 				JSONObject parametersJsonObject = obj.optJSONObject("ProductParamater");
 				// ######################## 彭佳媛 编写 ######################### Start
@@ -78,7 +81,6 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 					String url = "http://img.yoopoon.com/" + photo;
 					iv_style.setTag(url);
 					iv_style.setScaleType(ScaleType.FIT_XY);
-					iv_style.setBackgroundColor(Color.RED);
 					ImageLoader.getInstance().displayImage(url, iv_style, MyApplication.getOptions(),
 							MyApplication.getLoadingListener());
 				}
@@ -87,22 +89,18 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 				e.printStackTrace();
 			}
 	}
-
 	@Override
 	public void backButtonClick(View v) {
 		this.finish();
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
-
 	@Override
 	public Boolean showHeadView() {
 		// TODO Auto-generated method stub
