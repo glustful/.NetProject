@@ -60,7 +60,7 @@ public class IPocketActivity extends MainActionBarActivity {
 
 	@Click(R.id.btn_ipocket_takecash)
 	void takeCash() {
-		TakeCashActivity_.intent(this).start();
+		TakeCash2Activity_.intent(this).start();
 	}
 
 	@ViewById(R.id.tv_ipocket_cash)
