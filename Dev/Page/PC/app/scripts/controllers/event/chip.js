@@ -176,12 +176,11 @@ angular.module("app").controller('upChipController', [
 
         $scope.Save = function(){
             document.getElementById("btnok").setAttribute("disabled", true);
-           for(var i=0;i<$scope.image.length;i++){
-
-           }
+//           for(var i=0;i<$scope.image.length;i++){
+//
+//           }
             $scope.crowdModel.ImgList1=$scope.image;
             $scope.crowdModel.Id=$stateParams.crowId;
-            console.log( $scope.crowdModel);
             $http.post(SETTING.eventApiUrl + '/CrowdApi/AddCrowdInfo',$scope.crowdModel,{
                 'withCredentials':true
             }).success(function(data){
@@ -211,7 +210,6 @@ angular.module("app").controller('upChipController', [
         //保存上传的图片
         function completeHandler(e) {
             $scope.image.push(e);
-            console.log($scope.image);
         }
 
         function errorHandler(e) {
