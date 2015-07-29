@@ -27,11 +27,11 @@ namespace CRM.Entity.Model
 
 
         /// <summary>
-        /// 金额类型（0 带客，1 推荐,2 奖励30元钱）
+        /// 金额类型（0 带客，1 推荐,2 奖励完整信息钱）
         /// </summary>
         public virtual int Type { get; set; }
         /// <summary>
-        /// 状态（0 可用，1 不可用,2 注册）
+        /// 状态（0 可用，1 已使用,-1提现中）
         /// </summary>
         public virtual int State { get; set; }
 

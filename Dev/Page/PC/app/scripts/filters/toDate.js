@@ -7,7 +7,6 @@ angular.module('app').filter('toDate',function(){
         //获取毫秒数
         var oldtime= jsonDate.replace(/[^0-9]/ig,"");
 
-       return oldtime;
         //转成日期
         var newtime = new Date();
         newtime.setTime (oldtime);

@@ -27,6 +27,8 @@ namespace Event.Entity.Entity.Coupon
 
 
         public int? Ids { get; set; }
+
+        public int[] IdArray { get; set; }
         public string Number { get; set; }
         public int? Status { get; set; }
 

@@ -133,6 +133,10 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => q.Phone==condition.Phone);
                 }
+                if (!string.IsNullOrEmpty(condition.Phone1))
+                {
+                    query = query.Where(q => q.Phone .Contains (condition.Phone1));
+                }
                 if (!string.IsNullOrEmpty(condition.Email))
                 {
                     query = query.Where(q => q.Email.Contains(condition.Email));
@@ -157,9 +161,9 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => condition .PartnersId ==q.Id);
                 }
-                if (condition.Levels != null && condition.Levels.Any())
+                if (condition.Levels != null )
                 {
-                    query = query.Where(q => condition.Levels.Contains(q.Level));
+                    query = query.Where(q =>q.Level== condition.Levels);
                 }
                 if (condition.UserIds != null && condition.UserIds.Any())
                 {
@@ -292,6 +296,10 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => q.Phone==condition.Phone);
                 }
+                if (!string.IsNullOrEmpty(condition.Phone1))
+                {
+                    query = query.Where(q => q.Phone.Contains(condition.Phone1));
+                }
                 if (!string.IsNullOrEmpty(condition.Headphoto))
                 {
                     query = query.Where(q => q.Headphoto.Contains(condition.Headphoto));
@@ -312,9 +320,9 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-                if (condition.Levels != null && condition.Levels.Any())
+                if (condition.Levels != null)
                 {
-                    query = query.Where(q => condition.Levels.Contains(q.Level));
+                    query = query.Where(q =>q.Level== condition.Levels);
                 }
                 if (condition.UserIds != null && condition.UserIds.Any())
                 {

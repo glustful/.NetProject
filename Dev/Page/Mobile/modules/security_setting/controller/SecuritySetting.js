@@ -24,7 +24,7 @@ app.controller('SecuritySettingController',function($scope,$http,$state){
 
 
         })
-    }
+    };
     //获取验证码
     //$scope.SmsType='1';
     $scope.pwSms=function(){
@@ -39,7 +39,7 @@ app.controller('SecuritySettingController',function($scope,$http,$state){
             }
         })
     }
-})
+});
 
 //两次密码验证是否一致
 function check()

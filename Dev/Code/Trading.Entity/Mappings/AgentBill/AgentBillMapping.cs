@@ -29,6 +29,7 @@ namespace Trading.Entity.Mappings.AgentBill
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upduser).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Updtime).HasColumnType("datetime");
+            Property(c => c.EventOrderId).HasColumnType("int").IsOptional();
 		}
 	}
 }

@@ -16,11 +16,11 @@ namespace CRM.Entity.Model
         /// <summary>
         /// 状态 0 为可用 1 为不可用
         /// </summary>
-        public int? State { get; set; }
+        public bool State { get; set; }
         /// <summary>
         /// id
         /// </summary>
-        public bool isDescending { get; set; }
+        public bool IsDescending { get; set; }
         public int Id { get; set; }
 
         public BrokerEntity Brokers { get; set; }
