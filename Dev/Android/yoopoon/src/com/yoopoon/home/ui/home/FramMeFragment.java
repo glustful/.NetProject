@@ -56,6 +56,7 @@ import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.data.user.User;
+import com.yoopoon.home.ui.active.ActiveBrandAdapter;
 import com.yoopoon.home.ui.active.BrandDetail2Activity_;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 import com.yoopoon.home.ui.me.BrokerInfoView;
@@ -90,14 +91,10 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 	private int clientCount = 0;
 	private TextView tv_today_rec;
 	private ListView lv_recs;
-
 	private MyRecsBuildAdapter adapter;
 	private ActiveBrandAdapter brandAdapter;
-	
-
 	private ProgressBar pb_lv;
-
-
+	
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
@@ -190,11 +187,7 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 			mHolder.iv.setTag(url);
 			ImageLoader.getInstance().displayImage(url, mHolder.iv, MyApplication.getOptions(),
 					MyApplication.getLoadingListener());
-
-
 			String title = StringUtils.isEmpty(item.optString("Bname")) ? "" : item.optString("Bname") + "    ";
-
-
 			JSONObject parameter = item.optJSONObject("ProductParamater");
 			String city = "[" + (StringUtils.isEmpty(parameter.optString("所属城市")) ? "" : parameter.optString("所属城市"))
 					+ "]   ";
@@ -277,10 +270,7 @@ public class FramMeFragment extends FramSuper implements OnClickListener {
 			mMeFooterView = (MeFooterView) rootView.findViewById(R.id.footerView);
 			tv_today_rec = (TextView) rootView.findViewById(R.id.tv_today_recs);
 			lv_recs = (ListView) rootView.findViewById(R.id.lv_rec_build);
-
 			pb_lv = (ProgressBar) rootView.findViewById(R.id.pb_me_lv_progress);
-
-
 		}
 		registerLoginReceiver();
 		return rootView;

@@ -11,7 +11,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="45dp"
             android:orientation="horizontal" >
 
             <LinearLayout
@@ -21,19 +21,14 @@
                 android:gravity="center"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:id="@+id/area_name_textview"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/area_name_button"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:clickable="true"
+                    android:background="#00000000"
                     android:drawableRight="@drawable/arrow"
-                    android:ellipsize="marquee"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:gravity="center"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:singleLine="true"
-                    android:text="区域" />
+                    android:text="区域"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -43,38 +38,33 @@
                 android:gravity="center"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:id="@+id/type_textview"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/type_button"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:clickable="true"
+                    android:background="#00000000"
+                    android:drawablePadding="3dp"
                     android:drawableRight="@drawable/arrow"
-                    android:ellipsize="marquee"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:gravity="center"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:text="类型" />
+                    android:text="类型"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:id="@+id/price_textview"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/price_button"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:clickable="true"
+                    android:background="#00000000"
+                    android:drawablePadding="3dp"
                     android:drawableRight="@drawable/arrow"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:text="价格" />
+                    android:text="价格"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -84,14 +74,14 @@
                 android:gravity="center"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:id="@+id/reset_textview"
+                <Button
+                    android:id="@+id/reset_button"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:clickable="true"
+                    android:background="#00000000"
                     android:gravity="center"
-                    android:singleLine="true"
-                    android:text="重置" />
+                    android:text="重置"
+                    android:textSize="15sp" />
             </LinearLayout>
         </LinearLayout>
 

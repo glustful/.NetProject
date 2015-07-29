@@ -36,16 +36,12 @@
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name="com.yoopoon.home.MyApplication_"
         android:allowBackup="true"
-<<<<<<< HEAD
         android:icon="@drawable/logo_gray"
-=======
-        android:icon="@drawable/logo"
->>>>>>> 60b6fc1940589be91c15454dfae1aea2807df838
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
@@ -146,7 +142,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-          <activity
+        <activity
             android:name="com.yoopoon.house.ui.broker.BrokerScoreActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
@@ -191,19 +187,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
         <activity
             android:name="com.yoopoon.home.ui.active.BrandDetail2Activity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
         <activity
             android:name="com.yoopoon.home.ui.agent.AgentBrandDetailActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
     </application>
     <!-- 测试配置选项 -->
     <instrumentation

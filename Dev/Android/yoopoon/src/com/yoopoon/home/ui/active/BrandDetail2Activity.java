@@ -8,6 +8,7 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -45,6 +46,7 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 	void initView() {
 		backButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
 		titleButton.setVisibility(View.VISIBLE);
 		titleButton.setText("楼盘详情");
 		initDatas();
