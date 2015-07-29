@@ -1,0 +1,26 @@
+.presentProcess{
+    background-color: #fff;
+}
+.present{
+    text-align: center;
+    padding: 50px 0;
+}
+.present button{
+    width: 400px;
+    height: 50px;
+    background-color: #ff3000;
+    color: #fff;
+    font-size: 1.6em;
+    border-radius: 10px;
+}
+.presentProcess ul li{
+    height: 70px;
+    line-height: 70px;
+    border-bottom: 1px solid #ebebeb;
+    padding-left: 50px;
+}
+.presentProcess ul li span{
+    color: #666;
+    font-size: 1.4em;
+    margin-right: 60px;
+}
