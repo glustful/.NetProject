@@ -112,11 +112,11 @@ namespace Zerg.Controllers.CRM
           [Description("删除活动")]
           [HttpPost]
           [EnableCors("*", "*", "*", SupportsCredentials = true)]
-          public HttpResponseMessage DelEventById(int eventId)
+          public HttpResponseMessage DelEventById(string id)
           {
               try
               {
-                  _eventService.Delete(_eventService.GetEventById(eventId));
+                  _eventService.Delete(_eventService.GetEventById(Convert.ToInt32(id)));
                   return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功！"));
               }
               catch (Exception)
@@ -129,9 +129,9 @@ namespace Zerg.Controllers.CRM
           [Description("根据Id获取活动")]
           [HttpGet]
           [EnableCors("*", "*", "*", SupportsCredentials = true)]
-          public HttpResponseMessage GetEventDetail(int eventId)
+          public HttpResponseMessage GetEventDetail(string id)
           {
-              var eve = _eventService.GetEventById(eventId);
+              var eve = _eventService.GetEventById(Convert.ToInt32(id));
               if (eve == null)
               {
                   return PageHelper.toJson(PageHelper.ReturnValue(false, "活动不存在"));

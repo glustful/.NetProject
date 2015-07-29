@@ -28,9 +28,10 @@ app.controller('activityController',['$scope','$http','$modal',function($scope,$
             }
         });
         modalInstance.result.then(function () {
-            $http.post(SETTING.ApiUrl+'/Event/DelEventById', {eventId:$scope.selectId},{'withCredentials':true}).success(function(data){
+            $http.post(SETTING.ApiUrl+'/Event/DelEventById/'+$scope.selectId,{'withCredentials':true}).success(function(data){
                 if(data.Status){
-                    $scope.getlist();//成功刷新列表
+                    console.log("121212");
+
                 }
                 else{
                     $scope.tip=data.Msg;
@@ -67,12 +68,12 @@ function FormatDate(JSONDateString) {
         + month
         + "-"
         + currentDate
-        + "-"
-        + date.getHours()
-        + ":"
-        + date.getMinutes()
-        + ":"
-        + date.getSeconds()
+        //+ "-"
+        //+ date.getHours()
+        //+ ":"
+        //+ date.getMinutes()
+        //+ ":"
+        //+ date.getSeconds()
         ;
 
 }
