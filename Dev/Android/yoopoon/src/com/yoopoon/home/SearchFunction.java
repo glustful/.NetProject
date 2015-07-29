@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.common.base.utils.Utils;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
@@ -125,7 +126,7 @@ public class SearchFunction {
 
 		@Override
 		public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-			searchText = charSequence.toString();
+			searchText = StringUtils.trim(charSequence.toString());
 			if (!searchText.trim().equalsIgnoreCase("")) {
 
 				delText.setVisibility(View.VISIBLE);

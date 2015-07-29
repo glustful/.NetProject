@@ -53,6 +53,7 @@
                     android:id="@+id/guest_name"
                     style="@style/EditText_Transparent_Bg"
                     android:hint="请填写客户姓名"
+                    android:maxLength="8"
                     android:singleLine="true" />
 
                 <ImageButton

@@ -70,7 +70,8 @@
                 android:imeOptions="actionSearch"
                 android:overScrollMode="always"
                 android:singleLine="true"
-                android:textSize="@dimen/search_text_size" />
+                android:textSize="@dimen/search_text_size"
+                android:maxLength="10" />
 
             <Button
                 android:id="@+id/matter_search_del_view"
