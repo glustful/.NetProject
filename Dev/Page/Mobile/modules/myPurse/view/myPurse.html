@@ -8,7 +8,7 @@
 <div class="bank" >
     <ul >
         <li ng-repeat="item in List">
-            <span class="pull-right"><img src="modules/myPurse/static/image/myPurse/remove.png" alt="" width="20" height="20"/></span>
+            <span class="pull-right"  ng-click="DeleteBand(item.Id)"><img src="modules/myPurse/static/image/myPurse/remove.png" alt="" width="20" height="20"/></span>
             <div class="bankName">{{item.bankName}}</div>
             <div class="card">储蓄卡</div>
             <div class="cardNum">****&nbsp;****&nbsp;****&nbsp;{{item.Num}}</div>
