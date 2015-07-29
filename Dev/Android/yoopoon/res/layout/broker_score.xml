@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="创富宝积分"
+            android:text="优客惠积分"
             android:textStyle="bold"/>
         
         

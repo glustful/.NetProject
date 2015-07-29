@@ -13,4 +13,8 @@ public class StringUtils {
 		return false;
 	}
 
+	public static String trim(String text) {
+		return text.replaceAll(" ", "");
+	}
+
 }

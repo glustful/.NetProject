@@ -11,6 +11,7 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
 import android.content.Context;
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
@@ -39,6 +40,7 @@ import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.data.user.User;
+import com.yoopoon.home.ui.home.FramMainActivity_;
 
 @EActivity(R.layout.home_register_activity)
 public class HomeRegisterActivity extends MainActionBarActivity {
@@ -318,7 +320,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 
 	@Override
 	public void backButtonClick(View v) {
-		finish();
+		onBackPressed();
 	}
 
 	@Override
@@ -381,6 +383,21 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		}
 		timer = new Timer();
 		timer.schedule(task, 3000);
+	}
+
+	/*
+	 * (non Javadoc)
+	 * @Title: onBackPressed
+	 * @Description: TODO
+	 * @see android.support.v7.app.ActionBarActivity#onBackPressed()
+	 */
+	@Override
+	public void onBackPressed() {
+		Intent intent = new Intent("com.yoopoon.OPEN_ACTIVE_ACTION");
+		intent.addCategory(Intent.CATEGORY_DEFAULT);
+		this.sendBroadcast(intent);
+		FramMainActivity_.intent(this).start();
+		super.onBackPressed();
 	}
 
 }

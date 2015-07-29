@@ -52,7 +52,7 @@
                 <EditText
                     android:id="@+id/guest_name"
                     style="@style/EditText_Transparent_Bg"
-                    android:hint="请填写客户的联姓名"
+                    android:hint="请填写客户的姓名"
                     android:singleLine="true" />
 
                 <ImageButton
@@ -83,7 +83,7 @@
 
             
 
-            <TextView
+            <!-- <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:gravity="center_vertical"
-                android:hint="年/月/日" />
+                android:hint="年/月/日" /> -->
 
             <TextView
                 android:layout_width="match_parent"

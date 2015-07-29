@@ -112,10 +112,12 @@ public abstract class SearchActionBarActivity extends ActionBarActivity {
 			public void search(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
 					JSONArray list = data.getMRootData().optJSONArray("List");
-					if (list != null || list.length() > 0)
+					if (list != null || list.length() > 0) {
+						mJsonObjects.clear();
 						for (int i = 0; i < list.length(); i++) {
 							mJsonObjects.add(list.optJSONObject(i));
 						}
+					}
 					Log.i(TAG, data.toString());
 					mActiveBrandAdapter.refresh(mJsonObjects);
 					showResult(data.getMRootData().optJSONArray("List"));

@@ -158,6 +158,7 @@ public class HouseListViewAdapter extends BaseAdapter {
 			viewHandler.houseRecommendTextView.setBackgroundColor(Color.TRANSPARENT);
 		}
 		viewHandler.houseTakeGuestTextView.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				BrokerTakeGuestActivity_.intent(mContext).intent_properString(item.optString("Productname"))
@@ -167,6 +168,7 @@ public class HouseListViewAdapter extends BaseAdapter {
 			// 携带楼盘和经纪人数据跳转到推荐页面
 		});
 		viewHandler.houseRecommendTextView.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				BrokerRecommendActivity_.intent(mContext).intent_properString(item.optString("Productname"))

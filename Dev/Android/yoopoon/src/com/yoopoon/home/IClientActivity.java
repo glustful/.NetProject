@@ -13,6 +13,7 @@
 package com.yoopoon.home;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import org.androidannotations.annotations.AfterViews;
@@ -25,6 +26,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -54,6 +57,9 @@ public class IClientActivity extends MainActionBarActivity {
 	private List<GuestInfo> guestInfos = new ArrayList<GuestInfo>();
 	private static final String TAG = "IClientActivity";
 	private LinearLayout last_shown_progress;
+	private int totalCount;
+	private int page = 1;
+	private final int pageSize = 10;
 
 	@AfterViews
 	void initUI() {
@@ -61,7 +67,40 @@ public class IClientActivity extends MainActionBarActivity {
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
 		titleButton.setText("我的客户");
+		initParams();
+		lv.setOnScrollListener(new MyScrollListener());
 		requestData();
+	}
+
+	private class MyScrollListener implements OnScrollListener {
+
+		@Override
+		public void onScrollStateChanged(AbsListView view, int scrollState) {
+			if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
+				if (lv.getLastVisiblePosition() == (guestInfos.size() - 1)) {
+					if (guestInfos.size() < totalCount) {
+						initParams();
+						requestData();
+					} else {
+						Toast.makeText(IClientActivity.this, "这已经是所有客户啦", Toast.LENGTH_SHORT).show();
+					}
+				}
+			}
+		}
+
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+		}
+	}
+
+	private HashMap<String, String> params = new HashMap<String, String>();
+
+	private void initParams() {
+		params.clear();
+		params.put("page", String.valueOf(page++));
+		params.put("pageSize", "10");
+		Log.i(TAG, params.toString());
 	}
 
 	private void requestData() {
@@ -76,9 +115,8 @@ public class IClientActivity extends MainActionBarActivity {
 						JSONObject dataObj = data.getJsonObject2();
 						if (dataObj != null) {
 							try {
-								int totalCount = dataObj.getInt("totalCount");
+								totalCount = dataObj.getInt("totalCount");
 								JSONArray listArray = dataObj.getJSONArray("list");
-								Log.i(TAG, listArray.toString());
 								Random r = new Random();
 								for (int i = 0; i < listArray.length(); i++) {
 									JSONObject guestObj = listArray.getJSONObject(i);
@@ -121,7 +159,8 @@ public class IClientActivity extends MainActionBarActivity {
 				// TODO Auto-generated method stub
 
 			}
-		}.setUrl(getString(R.string.url_get_my_clients) + "/?page=1&pageSize=10").setRequestMethod(RequestMethod.eGet)
+			// + "/?page=1&pageSize=10"
+		}.setUrl(getString(R.string.url_get_my_clients)).addParam(params).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 
 	}
