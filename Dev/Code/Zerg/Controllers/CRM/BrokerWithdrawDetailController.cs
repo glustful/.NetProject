@@ -140,7 +140,7 @@ namespace Zerg.Controllers.CRM
                 Id = p.Id,
                 bankname = p.bankname,
                 banknumber = p.banknumber,
-                //p.Withdrawnum,
+                Withdrawnum=p.Withdrawnum,
                 Withdrawtime = p.Withdrawtime.ToString("yyyy-MM-dd")
             });
             var PointDetailListCount = _brokerwithdrawdetailService.GetBrokerWithdrawDetailCount(brokerwithdrawdetailcon);

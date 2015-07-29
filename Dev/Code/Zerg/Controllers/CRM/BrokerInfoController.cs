@@ -177,8 +177,7 @@ namespace Zerg.Controllers.CRM
             }
 
             var model = _brokerService.GetBrokerByUserId(Convert.ToInt32(userId));
-            var evemodel =
-                _eventOrderService.GetEventOrderByBrokerid(_brokerService.GetBrokerByUserId(Convert.ToInt32(userId)).Id);
+           
             if (model == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "该用户不存在！"));
 
             #region 判断经纪人是否使用过邀请码 或者参与过活动
@@ -188,7 +187,7 @@ namespace Zerg.Controllers.CRM
             };
             EventOrderSearchCondition eveCon = new EventOrderSearchCondition
             {
-                Brokers = evemodel.Broker
+                Brokers = model
                 
             };
             if (_inviteCodeService.GetInviteCodeByCount(icodeseCon) > 0 || _eventOrderService.GetEventOrderCount(eveCon) > 0)
@@ -235,7 +234,7 @@ namespace Zerg.Controllers.CRM
             var brokerSearchCondition = new BrokerSearchCondition
             {
                 Brokername = name,
-                Phone = phone,
+                Phone1 = phone,
                 OrderBy = EnumBrokerSearchOrderBy.OrderById,
                 Page = Convert.ToInt32(page),
                 PageCount = 10,

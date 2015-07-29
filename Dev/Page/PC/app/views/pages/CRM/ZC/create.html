@@ -5,18 +5,21 @@
             <label for="UserName" class="col-sm-2 control-label">用户名：</label>
             <div class="col-sm-10">
                 <input name="UserName"maxlength="30" id="UserName" type="text" class="form-control" required ng-model="UserModel.UserName" required/>
+                <span ng-show="formzc.UserName.$error.required" class="tipshowcl" aria-hidden="false">*必填项</span>
             </div>
         </div>
         <div class="form-group">
             <label for="Password" class="col-sm-2 control-label">密码：</label>
             <div class="col-sm-10">
-                <input name="Password"maxlength="30" id="Password" type="text" class="form-control" required ng-model="UserModel.Password" required/>
+                <input name="Password"maxlength="30" id="Password" type="password" class="form-control" required ng-model="UserModel.Password" required/>
+                <span ng-show="formzc.Password.$error.required" class="tipshowcl" aria-hidden="false">*必填项</span>
             </div>
         </div>
         <div class="form-group">
             <label for="Phone" class="col-sm-2 control-label">手机号码：</label>
             <div class="col-sm-10">
                 <input name="Phone"ng-pattern="/^1[3|4|5|7|8][0-9]\d{8}$/" id="Phone" type="text" class="form-control" required ng-model="UserModel.Phone" required/>
+                <span ng-show="formzc.Phone.$error.required" class="tipshowcl" aria-hidden="false">*必填项</span>
                 <div style="font-size: 15px;color: #FC3B4F" ng-show="formzc.Phone.$invalid&&formzc.Phone.$dirty">请正确输入手机号码</div>
             </div>
         </div>
