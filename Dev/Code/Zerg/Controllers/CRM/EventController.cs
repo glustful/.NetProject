@@ -58,8 +58,8 @@ namespace Zerg.Controllers.CRM
                   EventEntity ee = new EventEntity()
                   {
                       EventContent = eventModel.EventContent,
-                      Starttime = DateTime.Now,
-                      Endtime = DateTime.Now,
+                      Starttime = eventModel.Starttime,
+                      Endtime = eventModel.Endtime,
                       ActionControllers = eventModel.ActionControllers,
                       State = eventModel.State
 
