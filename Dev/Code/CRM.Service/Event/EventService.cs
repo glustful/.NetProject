@@ -108,6 +108,10 @@ namespace CRM.Service.Event
                 {
                     query = query.Skip((condition.Page.Value - 1) * condition.PageCount.Value).Take(condition.PageCount.Value);
                 }
+                if (condition.State)
+                {
+                    query = query.Where(q => q.State == condition.State);
+                }
                 return query;
             }
             catch (Exception e)
