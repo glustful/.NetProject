@@ -1,5 +1,5 @@
 /**
- * Created by gaofengming on 2015/6/16.
+ Ê±¼ä¹ıÂËÆ÷
  */
 app.filter('dateFilter',function(){
     return function(date){

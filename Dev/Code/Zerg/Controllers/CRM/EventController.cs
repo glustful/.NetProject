@@ -8,6 +8,7 @@ using System.Web.Http.Cors;
 using CRM.Entity.Model;
 using CRM.Service.Event;
 using Zerg.Common;
+using Zerg.Models.CRM;
 
 namespace Zerg.Controllers.CRM
 {
@@ -42,7 +43,7 @@ namespace Zerg.Controllers.CRM
         }
 
           [Description("添加活动")]
-          [HttpGet]
+          [HttpPost]
           [EnableCors("*", "*", "*", SupportsCredentials = true)]
           public HttpResponseMessage AddEvent([FromBody] EventEntity eventModel)
           {
@@ -57,8 +58,8 @@ namespace Zerg.Controllers.CRM
                   EventEntity ee = new EventEntity()
                   {
                       EventContent = eventModel.EventContent,
-                      Starttime = DateTime.Now,
-                      Endtime = DateTime.Now,
+                      Starttime = eventModel.Starttime,
+                      Endtime = eventModel.Endtime,
                       ActionControllers = eventModel.ActionControllers,
                       State = eventModel.State
 
@@ -77,7 +78,7 @@ namespace Zerg.Controllers.CRM
               }
           }
           [Description("修改活动")]
-          [HttpGet]
+          [HttpPost]
           [EnableCors("*", "*", "*", SupportsCredentials = true)]
           public HttpResponseMessage UpEvent( EventEntity eventModel)
           {
@@ -91,8 +92,8 @@ namespace Zerg.Controllers.CRM
               {
                   var e = _eventService.GetEventById(eventModel.Id);
                   e.EventContent = eventModel.EventContent;
-                  e.Starttime = DateTime.Now;
-                  e.Endtime = DateTime.Now;
+                  e.Starttime = eventModel.Starttime;
+                  e.Endtime = eventModel.Endtime;
                   e.ActionControllers = eventModel.ActionControllers;
                   e.State = eventModel.State; 
                   if (_eventService.Update(e) != null)
@@ -109,27 +110,42 @@ namespace Zerg.Controllers.CRM
 
 
           [Description("删除活动")]
-          [HttpGet]
+          [HttpPost]
           [EnableCors("*", "*", "*", SupportsCredentials = true)]
-          public HttpResponseMessage DelEventById(int eventId)
+          public HttpResponseMessage DelEventById(string id)
           {
               try
               {
-                  if (_eventService.Delete(_eventService.GetEventById(eventId)))
-                  {
-
-                      return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功！"));
-                  }
-                  else
-                  {
-                      return PageHelper.toJson(PageHelper.ReturnValue(false, "删除品牌失败，该品牌可能有商品已被添加"));
-                  }
+                  _eventService.Delete(_eventService.GetEventById(Convert.ToInt32(id)));
+                  return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功！"));
               }
               catch (Exception)
               {
                   return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败！"));
               }
 
+          }
+
+          [Description("根据Id获取活动")]
+          [HttpGet]
+          [EnableCors("*", "*", "*", SupportsCredentials = true)]
+          public HttpResponseMessage GetEventDetail(string id)
+          {
+              var eve = _eventService.GetEventById(Convert.ToInt32(id));
+              if (eve == null)
+              {
+                  return PageHelper.toJson(PageHelper.ReturnValue(false, "活动不存在"));
+              }
+              var model = new EventModel
+              {
+                 Id = eve.Id,
+                 EventContent = eve.EventContent,
+                 StartTime =eve.Starttime,
+                 EndTime = eve.Endtime,
+                 ActionControllers =eve.ActionControllers,
+                 State =eve.State
+              };
+              return PageHelper.toJson(model);
           }
       }
  }
