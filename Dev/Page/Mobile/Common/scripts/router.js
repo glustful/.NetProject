@@ -401,7 +401,8 @@ app.run(
             })
             .state('app.presentProcess',{
                 url:'/presentProcess',
-                templateUrl:'modules/presentProcess/view/presentProcess.html'
+                templateUrl:'modules/presentProcess/view/presentProcess.html',
+                resolve:load('modules/presentProcess/controller/presentprocess.js')
             })
 
         function load(srcs, callback) {
