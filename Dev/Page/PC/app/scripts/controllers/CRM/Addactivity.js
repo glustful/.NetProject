@@ -9,6 +9,7 @@ app.controller('addController',['$scope','$http','$state',function($scope,$http,
         State:'false'
     }
     $scope.add=function(){
+
         $http.post(SETTING.ApiUrl+'/Event/AddEvent',$scope.list,{ 'withCredentials':true}).success(function(data){
             if(data.Status){
                 console.log(data);
@@ -21,3 +22,6 @@ app.controller('addController',['$scope','$http','$state',function($scope,$http,
         })
     }
 }])
+
+
+
