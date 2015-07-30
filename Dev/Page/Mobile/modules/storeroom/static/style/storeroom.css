@@ -51,7 +51,7 @@
      margin-right: 15px;
  }
  .yhy{
-    padding: 0px 0 20px 0;
+    padding: 0 0 20px 0;
     color: #333333;
     border-bottom:1px solid #ebebeb;
     font-size: 1.2em;
@@ -178,7 +178,7 @@
 .masked .nominateFinish{
     top:10%;
     left: 10%;
-" "}
+}
 .masked .nominateBack{
     bottom: 15%;
     left: 30%;
