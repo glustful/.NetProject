@@ -1,17 +1,17 @@
 /**
  * Created by Administrator on 2015/7/28.
  */
-//ÏÂÃæµÄ¿ªÆôÍ¼Æ¬ºÏ²¢¹¦ÄÜ
+//ä¸‹é¢çš„å¼€å¯å›¾ç‰‡åˆå¹¶åŠŸèƒ½
 // fis.config.set('roadmap.path', [{
 //     reg: '**.css',
 //     useSprite: true
 // }]);
-// ÉèÖÃÍ¼Æ¬ºÏ²¢µÄ×îĞ¡¼ä¸ô
+// è®¾ç½®å›¾ç‰‡åˆå¹¶çš„æœ€å°é—´éš”
 //fis.config.set('settings.spriter.csssprites.margin', 20);
 
-// ÏÂÃæµÄ¿ªÆôsimple²å¼ş£¬×¢ÒâĞèÒªÏÈ½øĞĞ²å¼ş°²×° npm install -g fis-postpackager-simple
+// ä¸‹é¢çš„å¼€å¯simpleæ’ä»¶ï¼Œæ³¨æ„éœ€è¦å…ˆè¿›è¡Œæ’ä»¶å®‰è£… npm install -g fis-postpackager-simple
 fis.config.set('modules.postpackager', 'simple');
-//ÅÅ³ı
+//æ’é™¤
 fis.config.set('project.exclude',[
     'libs/vendor/jquery/src/**'
 ]);
@@ -19,21 +19,21 @@ fis.config.set('project.exclude',[
 //    roadmap : {
 //        path : [
 //            {
-//                //ËùÓĞµÄjsÎÄ¼ş
+//                //æ‰€æœ‰çš„jsæ–‡ä»¶
 //                reg : 'modules/**.js',
-//                //·¢²¼µ½/static/js/xxxÄ¿Â¼ÏÂ
+//                //å‘å¸ƒåˆ°/static/js/xxxç›®å½•ä¸‹
 //                release : '/static/js$&'
 //            },
 //            //{
-//            //    //ËùÓĞµÄcssÎÄ¼ş
+//            //    //æ‰€æœ‰çš„cssæ–‡ä»¶
 //            //    reg : '**.css',
-//            //    //·¢²¼µ½/static/css/xxxÄ¿Â¼ÏÂ
+//            //    //å‘å¸ƒåˆ°/static/css/xxxç›®å½•ä¸‹
 //            //    release : '/static/css$&'
 //            //}
 //        ]
 //    }
 //});
-// È¡ÏûÏÂÃæµÄ×¢ÊÍÉèÖÃ´ò°ü¹æÔò
+// å–æ¶ˆä¸‹é¢çš„æ³¨é‡Šè®¾ç½®æ‰“åŒ…è§„åˆ™
 fis.config.set('pack', {
     'pkg/App.js': [
         'app.js',
@@ -55,7 +55,7 @@ fis.config.set('pack', {
     //   // 'modules/BrandDetail/static/script/brandDetail.js',
     //    'modules/**.js'
     //],
-    // ÏÂÃæÉèÖÃCSS´ò°ü¹æÔò
+    // ä¸‹é¢è®¾ç½®CSSæ‰“åŒ…è§„åˆ™
     '/pkg/style.css': [
         'libs/bootstrap/css/bootstrap.css',
         'Common/static/style/common.css',
@@ -102,5 +102,5 @@ fis.config.set('pack', {
         'modules/selectWithdraw/static/selectWithdraw.css'
     ]
 });
-// ÏÂÃæµÄ¿ªÆôsimple¶ÔÁãÉ¢×ÊÔ´µÄ×Ô¶¯ºÏ²¢
+// ä¸‹é¢çš„å¼€å¯simpleå¯¹é›¶æ•£èµ„æºçš„è‡ªåŠ¨åˆå¹¶
 //fis.config.set('settings.postpackager.simple.autoCombine', true);
