@@ -21,11 +21,14 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -78,7 +81,30 @@ public class IPocketActivity extends MainActionBarActivity {
 			HomeLoginActivity_.intent(this).isManual(true).start();
 
 		// fillData();
-		lv.setOnItemClickListener(new MyBankItemClickListener());
+		// lv.setOnItemClickListener(new MyBankItemClickListener());
+		lv.setOnItemLongClickListener(new MyLongClickListener());
+	}
+
+	private class MyLongClickListener implements OnItemLongClickListener {
+
+		@Override
+		public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+			Builder builder = new Builder(IPocketActivity.this);
+			View dialogView = View.inflate(IPocketActivity.this, R.layout.dialog_delete, null);
+
+			builder.setView(dialogView);
+			final AlertDialog dialog = builder.show();
+			Button btn_delete = (Button) dialogView.findViewById(R.id.btn_dialog_delete);
+			btn_delete.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					dialog.dismiss();
+				}
+			});
+
+			return false;
+		}
 
 	}
 
@@ -138,18 +164,6 @@ public class IPocketActivity extends MainActionBarActivity {
 
 	private class MyBankItemClickListener implements OnItemClickListener {
 
-		/*
-		 * (non Javadoc)
-		 * @Title: onItemClick
-		 * @Description: TODO
-		 * @param parent
-		 * @param view
-		 * @param position
-		 * @param id
-		 * @see
-		 * android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget.AdapterView,
-		 * android.view.View, int, long)
-		 */
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			BankCashActivity_.intent(IPocketActivity.this).start();
@@ -159,54 +173,21 @@ public class IPocketActivity extends MainActionBarActivity {
 
 	private class MyBankListAdapter extends BaseAdapter {
 
-		/*
-		 * (non Javadoc)
-		 * @Title: getCount
-		 * @Description: TODO
-		 * @return
-		 * @see android.widget.Adapter#getCount()
-		 */
 		@Override
 		public int getCount() {
 			return bankDatas.size() + 1;
 		}
 
-		/*
-		 * (non Javadoc)
-		 * @Title: getItem
-		 * @Description: TODO
-		 * @param position
-		 * @return
-		 * @see android.widget.Adapter#getItem(int)
-		 */
 		@Override
 		public Object getItem(int position) {
 			return null;
 		}
 
-		/*
-		 * (non Javadoc)
-		 * @Title: getItemId
-		 * @Description: TODO
-		 * @param position
-		 * @return
-		 * @see android.widget.Adapter#getItemId(int)
-		 */
 		@Override
 		public long getItemId(int position) {
 			return 0;
 		}
 
-		/*
-		 * (non Javadoc)
-		 * @Title: getView
-		 * @Description: TODO
-		 * @param position
-		 * @param convertView
-		 * @param parent
-		 * @return
-		 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
-		 */
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (position == bankDatas.size()) {

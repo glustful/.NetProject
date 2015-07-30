@@ -15,6 +15,7 @@ package com.yoopoon.home;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +26,7 @@ import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -57,6 +59,9 @@ import com.yoopoon.home.domain.AddMoneyEntity;
  */
 @EActivity(R.layout.takecash_step2)
 public class TakeCashStep2Activity extends MainActionBarActivity {
+	@Extra
+	String idsText;
+
 	@ViewById(R.id.spinner_step2)
 	Spinner spinner;
 	@ViewById(R.id.btn_step2_getcode)
@@ -219,7 +224,7 @@ public class TakeCashStep2Activity extends MainActionBarActivity {
 					for (int i = 0; i < ids.length; i++) {
 						id += ids[i] + ",";
 					}
-					return om.writeValueAsString(new AddMoneyEntity(bank, money, code, hidm, "123,"));
+					return om.writeValueAsString(new AddMoneyEntity(bank, money, code, hidm, idsText));
 				} catch (JsonProcessingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -241,6 +246,7 @@ public class TakeCashStep2Activity extends MainActionBarActivity {
 	}
 
 	void requestTakeCash(String json) {
+		Log.i(TAG, json);
 		new RequestAdapter() {
 
 			@Override

@@ -54,9 +54,5 @@
        android:layout_weight="1"
        android:dividerHeight="10dp" />
    
-   <Button 
-       android:id="@+id/bt_takecash_next"
-       style="@style/Red_Button_MarginTop"
-       android:text="下一步"/>
 
 </LinearLayout>

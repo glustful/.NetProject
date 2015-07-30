@@ -15,18 +15,22 @@ package com.yoopoon.home;
 import java.util.ArrayList;
 import java.util.List;
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,11 +52,6 @@ import com.yoopoon.home.ui.login.HomeLoginActivity_;
 public class TakeCash2Activity extends MainActionBarActivity {
 	@ViewById(R.id.lv_takecash)
 	ListView lv;
-
-	@Click(R.id.bt_takecash_next)
-	void next() {
-		TakeCashStep2Activity_.intent(this).start();
-	}
 
 	private String userId;
 	private MyAdapter adapter;
@@ -82,7 +81,7 @@ public class TakeCash2Activity extends MainActionBarActivity {
 
 		@Override
 		public int getCount() {
-			return datas.size();
+			return datas.size() + 1;
 		}
 
 		@Override
@@ -97,8 +96,33 @@ public class TakeCash2Activity extends MainActionBarActivity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
+			if (position == datas.size()) {
+				Button btn = new Button(TakeCash2Activity.this);
+				btn.setText("下一步");
+				btn.setBackgroundResource(R.drawable.cycle_selector);
+				btn.setTextColor(Color.WHITE);
+				btn.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						String idsText = "";
+						for (int i = 0; i < datas.size(); i++) {
+							if (datas.get(i).isStatus()) {
+								idsText += datas.get(i).getId() + ",";
+							}
+						}
+						if (!TextUtils.isEmpty(idsText)) {
+							TakeCashStep2Activity_.intent(TakeCash2Activity.this).idsText(idsText).start();
+						} else {
+							Toast.makeText(TakeCash2Activity.this, "亲，你还没选择呢！", Toast.LENGTH_SHORT).show();
+						}
+					}
+				});
+				return btn;
+
+			}
 			ViewHolder holder;
-			if (convertView == null)
+			if (convertView == null || !(convertView instanceof LinearLayout))
 				convertView = View.inflate(TakeCash2Activity.this, R.layout.item_takecash, null);
 
 			holder = (ViewHolder) convertView.getTag();
@@ -127,7 +151,6 @@ public class TakeCash2Activity extends MainActionBarActivity {
 
 			return convertView;
 		}
-
 	}
 
 	static class ViewHolder {
@@ -148,7 +171,19 @@ public class TakeCash2Activity extends MainActionBarActivity {
 						for (int i = 0; i < list.length(); i++) {
 							JSONObject obj = list.getJSONObject(i);
 							// "Balancenum":101,"Addtime":"2015-07-27","Type":0,"Id":123
-							String type = (obj.optInt("Type") == 0) ? "带客" : "其他";
+							int typeNum = obj.optInt("Type", 0);
+							String type = "带客";
+							switch (typeNum) {
+								case 0:
+									type = "带客";
+									break;
+								case 1:
+									type = "推荐";
+									break;
+								case 2:
+									type = "奖励30元";
+									break;
+							}
 							String addTime = obj.optString("Addtime", "");
 							double balanceNum = obj.optDouble("Balancenum", 0);
 							int id = obj.optInt("Id", 0);

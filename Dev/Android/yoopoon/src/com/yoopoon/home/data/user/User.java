@@ -414,30 +414,27 @@ public class User {
 
 			@Override
 			public void onReponse(ResponseData data) {
-				if (data.getResultState() == ResultState.eSuccess) {
+				Log.i(TAG, data.toString());
+				if (data.getJsonObject() != null) {
 					JSONObject obj = data.getJsonObject();
-					if (obj != null) {
-						User.this.setId(Tools.optInt(obj, "Id", 0));
-						User.this.setPhone(User.this.getUserName());
-						User.this.setUserName(Tools.optString(obj, "UserName", null));
-						if (obj.isNull("Roles") || obj.optJSONArray("Roles").length() < 1)
-							setRoles(null);
-						else {
-							ArrayList<Role> roles = new ArrayList<Role>();
-							for (int i = 0; i < obj.optJSONArray("Roles").length(); i++) {
-								Role r = new Role();
-								r.roleName = obj.optJSONArray("Roles").optJSONObject(i).optString("RoleName");
-								roles.add(r);
-							}
-							setRoles(roles);
+					User.this.setId(Tools.optInt(obj, "Id", 0));
+					User.this.setPhone(User.this.getUserName());
+					User.this.setUserName(Tools.optString(obj, "UserName", null));
+					if (obj.isNull("Roles") || obj.optJSONArray("Roles").length() < 1)
+						setRoles(null);
+					else {
+						ArrayList<Role> roles = new ArrayList<Role>();
+						for (int i = 0; i < obj.optJSONArray("Roles").length(); i++) {
+							Role r = new Role();
+							r.roleName = obj.optJSONArray("Roles").optJSONObject(i).optString("RoleName");
+							roles.add(r);
 						}
-						lis.success(User.this);
-					} else {
-						lis.faild("登陆失败，请重试");
+						setRoles(roles);
 					}
-				} else {
-					lis.faild(data.getMsg());
+					lis.success(User.this);
+					return;
 				}
+				lis.faild(data.getMsg());
 			}
 
 			@Override
