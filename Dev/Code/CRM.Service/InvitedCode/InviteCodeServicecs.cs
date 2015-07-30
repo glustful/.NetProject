@@ -114,6 +114,10 @@ namespace CRM.Service.InvitedCode
                 {
                     query = query.Where(q => q.Broker.Id==condition.BrokerId);
                 }
+                if (condition.State != null)
+                {
+                    query = query.Where(q => q.State == condition.State);
+                }
 
                 return query;
             }
@@ -149,6 +153,10 @@ namespace CRM.Service.InvitedCode
                 if ((condition.NumUser) != null)
                 {
                     query = query.Where(q => q.NumUser == condition.NumUser);
+                }
+                if (condition.State != null)
+                {
+                    query = query.Where(q => q.State == condition.State);
                 }
 
                 return query.Count();

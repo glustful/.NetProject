@@ -21,7 +21,7 @@ app.controller('AddBrokerController',['$scope','$http',function($scope,$http){
 
             })
         }
-    }
+    }]
 
 ])
 
