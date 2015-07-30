@@ -22,9 +22,10 @@
             <tr ng-repeat="row in list">
                 <td>{{row.Id}}</td>
                 <td>{{row.EventContent }}</td>
-                <td>{{row.Starttime|dateFilter}}</td>
-                <td>{{row.Endtime|dateFilter}}</td>
-                <td>{{row.State}}</td>
+                <td>{{row.Starttime}}</td>
+                <td>{{row.Endtime}}</td>
+                <td ng-if="row.State==true">上线</td>
+                <td ng-if="row.State==false">下线</td>
                 <td>
                     <a ui-sref="page.CRM.activity.Edit({id: row.Id})" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 编辑
                     </a>
