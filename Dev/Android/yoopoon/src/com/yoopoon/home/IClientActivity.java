@@ -100,7 +100,6 @@ public class IClientActivity extends MainActionBarActivity {
 		params.clear();
 		params.put("page", String.valueOf(page++));
 		params.put("pageSize", "10");
-		Log.i(TAG, params.toString());
 	}
 
 	private void requestData() {
@@ -120,6 +119,7 @@ public class IClientActivity extends MainActionBarActivity {
 								Random r = new Random();
 								for (int i = 0; i < listArray.length(); i++) {
 									JSONObject guestObj = listArray.getJSONObject(i);
+									Log.i(TAG, guestObj.toString());
 									// "StrType":"带客",
 									// "Status":"预约中",
 									// "Clientname":"徐阳会",
@@ -137,9 +137,14 @@ public class IClientActivity extends MainActionBarActivity {
 									GuestInfo info = new GuestInfo(clientName, houseType, houses, status, phone, id,
 											strType);
 									if ("预约中".equals(status))
+										info.num = 2;
+									else if (status.contains("审核")) {
 										info.num = 1;
-									else
-										info.num = r.nextInt(4) + 1;
+									} else if (status.contains("成功")) {
+										info.num = 4;
+									} else {
+										info.num = 3;
+									}
 									guestInfos.add(info);
 								}
 							} catch (JSONException e) {

@@ -82,6 +82,8 @@
         <item name="android:textSize">14sp</item>
         <item name="android:background">#ffffff</item>
     </style>
+    
+    
 
     <style name="EditText_Transparent_Bg" parent="TextView_GrayText">
         <item name="android:padding">10dp</item>

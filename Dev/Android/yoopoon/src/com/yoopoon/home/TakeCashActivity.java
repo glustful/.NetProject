@@ -13,9 +13,10 @@
 package com.yoopoon.home;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import android.view.View;
+import com.yoopoon.home.data.net.ResponseData;
 
 /**
  * @ClassName: TakeCashActivity
@@ -25,11 +26,13 @@ import android.view.View;
  */
 @EActivity(R.layout.activity_takecash)
 public class TakeCashActivity extends MainActionBarActivity {
+	@Extra
+	ResponseData mData;
 
-	@Click(R.id.btn_takecash_finish)
-	void takenCash() {
-		finish();
-	}
+	// @Click(R.id.btn_takecash_finish)
+	// void takenCash() {
+	// finish();
+	// }
 
 	/**
 	 * @Title: main

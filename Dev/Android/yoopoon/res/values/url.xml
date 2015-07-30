@@ -2,8 +2,8 @@
 <resources>
 
     <!-- server host -->
-    <!-- <string name="url_host">http://api.iyookee.cn</string> -->
-     <string name="url_host">http://192.168.1.199:9010</string> 
+     <!-- <string name="url_host">http://api.iyookee.cn</string> -->
+    <string name="url_host">http://192.168.1.199:9010</string>  
 
 
     <!-- userController -->
@@ -49,5 +49,7 @@
     <string name="url_upload">/api/Resource/Upload</string>
     <string name="url_fortune_hero">/api/BrokerInfo/OrderByBrokerTopThree</string>
     <string name="url_takecash_showall">/api/BrokeAccount/GetBrokeAccountByUserId</string>
+    <string name="url_bank_getall">/api/BankCard/SearchAllBankByUserToSelect</string>
+    <string name="url_broker_withdraw_detail">/api/BrokerWithdrawDetail/AddBrokerWithdrawDetail</string>
 
 </resources>
