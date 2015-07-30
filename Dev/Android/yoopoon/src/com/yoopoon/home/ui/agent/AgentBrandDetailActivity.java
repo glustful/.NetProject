@@ -126,10 +126,12 @@ public class AgentBrandDetailActivity extends MainActionBarActivity {
 						productList.add(product);
 					}
 					fillData();
-					ll_progress.setVisibility(View.GONE);
+
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} finally {
+					ll_progress.setVisibility(View.GONE);
 				}
 				// paraseToProducts(data.getMRootData());
 			}
@@ -197,7 +199,6 @@ public class AgentBrandDetailActivity extends MainActionBarActivity {
 
 						String photo = params.optString("图片banner", "");
 						if (!StringUtils.isEmpty(photo)) {
-
 							String url = "http://img.yoopoon.com/" + photo;
 							iv_building.setScaleType(ScaleType.FIT_XY);
 							ImageLoader.getInstance().displayImage(url, iv_building);

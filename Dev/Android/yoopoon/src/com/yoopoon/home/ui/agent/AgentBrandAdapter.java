@@ -28,7 +28,7 @@ public class AgentBrandAdapter extends BaseAdapter {
 	public AgentBrandAdapter(Context context) {
 		this.mContext = context;
 		datas = new ArrayList<JSONObject>();
-		height = MyApplication.getInstance().getDeviceInfo((Activity) mContext).heightPixels / 6;
+		height = MyApplication.getInstance().getDeviceInfo((Activity) mContext).heightPixels / 5;
 	}
 
 	@Override
@@ -73,8 +73,7 @@ public class AgentBrandAdapter extends BaseAdapter {
 		String url = mContext.getString(R.string.url_host_img) + item.optString("Bimg");
 		mHolder.img.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, height));
 		mHolder.img.setTag(url);
-		ImageLoader.getInstance().displayImage(url, mHolder.img, MyApplication.getOptions(),
-				MyApplication.getLoadingListener());
+		ImageLoader.getInstance().displayImage(url, mHolder.img);
 		mHolder.title.setText("[" + item.optString("BrandName") + "]");
 		String price = item.optString("Price");
 		String commition = item.optString("Commition");

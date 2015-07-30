@@ -60,6 +60,7 @@ public class IPocketActivity extends MainActionBarActivity {
 	private static final String TAG = "IPocketActivity";
 	private List<Bank> bankDatas = new ArrayList<Bank>();
 	private int amountMoney = 0;
+	private AlertDialog deleteDialog;
 
 	@Click(R.id.btn_ipocket_takecash)
 	void takeCash() {
@@ -80,8 +81,6 @@ public class IPocketActivity extends MainActionBarActivity {
 		if (user == null)
 			HomeLoginActivity_.intent(this).isManual(true).start();
 
-		// fillData();
-		// lv.setOnItemClickListener(new MyBankItemClickListener());
 		lv.setOnItemLongClickListener(new MyLongClickListener());
 	}
 
@@ -93,13 +92,13 @@ public class IPocketActivity extends MainActionBarActivity {
 			View dialogView = View.inflate(IPocketActivity.this, R.layout.dialog_delete, null);
 
 			builder.setView(dialogView);
-			final AlertDialog dialog = builder.show();
+			deleteDialog = builder.show();
 			Button btn_delete = (Button) dialogView.findViewById(R.id.btn_dialog_delete);
 			btn_delete.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					dialog.dismiss();
+					deleteDialog.dismiss();
 				}
 			});
 
@@ -238,4 +237,12 @@ public class IPocketActivity extends MainActionBarActivity {
 		return true;
 	}
 
+	@Override
+	protected void onStop() {
+		if (deleteDialog != null) {
+			deleteDialog.dismiss();
+			deleteDialog = null;
+		}
+		super.onStop();
+	}
 }

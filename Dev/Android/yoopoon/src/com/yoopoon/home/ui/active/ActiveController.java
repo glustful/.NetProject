@@ -74,6 +74,7 @@ public class ActiveController extends GridViewController {
 			mGridView.setAdapter(new GridAdapter2(new String[] { "霸王餐", "最热电影", "推拿按摩" }, new int[] {
 					R.drawable.bawangcan, R.drawable.movie, R.drawable.anmo }));
 			mGridView.setOnItemClickListener(new OnItemClickListener() {
+
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					onGridItemClick(parent, view, position, id);
@@ -97,10 +98,12 @@ public class ActiveController extends GridViewController {
 
 		String[] titles;
 		int[] imgs;
+		int width;
 
 		public GridAdapter2(String[] titles, int[] imgs) {
 			this.titles = titles;
 			this.imgs = imgs;
+			width = ((int) MyApplication.getInstance().getDeviceInfo((Activity) mContext).widthPixels) / 6;
 		}
 
 		@Override
@@ -133,8 +136,8 @@ public class ActiveController extends GridViewController {
 			} else {
 				holder = (Holder) convertView.getTag();
 			}
-
-			holder.img.setLayoutParams(new LinearLayout.LayoutParams(100, 100));
+			holder.img.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+			holder.img.setImageBitmap(null);
 			holder.img.setImageResource(imgs[position]);
 
 			holder.title.setText(titles[position]);

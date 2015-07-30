@@ -143,7 +143,7 @@ public class MeTaskActivity extends MainActionBarActivity {
 					if (data.getMRootData().optJSONArray("list") != null) {
 						JSONArray array = data.getMRootData().optJSONArray("list");
 						for (int i = 0; i < array.length(); i++) {
-							tv_count.setText("今日任务(" + i + ")");
+							tv_count.setText("今日任务(" + (i + 1) + ")");
 							try {
 								datas.add(array.getJSONObject(i));
 							} catch (JSONException e) {

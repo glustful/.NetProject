@@ -7,17 +7,18 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yoopoon.common.base.Tools;
 import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.MyApplication;
@@ -36,12 +37,25 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 	TextView tv_subtitle;
 	@ViewById(R.id.iv_style)
 	ImageView iv_style;
-	
+	@ViewById(R.id.tv_style_consult)
+	Button btn_consult;
+
 	@Click(R.id.tv_style)
 	void style() {
 		if (!TextUtils.isEmpty(mJson))
 			BrandDetailActivity_.intent(this).mJson(mJson).start();
 	}
+
+	@Click(R.id.tv_style_consult)
+	void consult() {
+		String phone = (String) btn_consult.getTag();
+		if (TextUtils.isEmpty(phone)) {
+			Toast.makeText(this, "该楼盘暂时还没有咨询热线哦", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		Tools.callPhone(this, phone);
+	}
+
 	@AfterViews
 	void initView() {
 		backButton.setVisibility(View.VISIBLE);
@@ -51,7 +65,9 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 		titleButton.setText("楼盘详情");
 		initDatas();
 	}
+
 	private void initDatas() {
+		Log.i(TAG, mJson);
 		if (!StringUtils.isEmpty(mJson))
 			try {
 				JSONObject obj = new JSONObject(mJson);
@@ -61,7 +77,6 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 				tv_name.setText(title);
 				tv_subtitle.setText(subTitle);
 				// ######################## 徐阳会 2015年7月28日 修改 ######################### Start
-				Log.i(TAG, content);
 				tv_name.setText(title);
 				tv_subtitle.setText(subTitle);
 				wv_detail.loadDataWithBaseURL(null, content, "text/html", "utf-8", null);
@@ -77,6 +92,7 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 				//
 				// ######################## 徐阳会 2015年7月27日 修改 ######################### Start
 				String photo = parametersJsonObject.optString("图片banner");
+				btn_consult.setTag(parametersJsonObject.optString("来电咨询", ""));
 				if (!photo.equals("")) {
 					String url = "http://img.yoopoon.com/" + photo;
 					iv_style.setTag(url);
@@ -89,18 +105,22 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 				e.printStackTrace();
 			}
 	}
+
 	@Override
 	public void backButtonClick(View v) {
 		this.finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		// TODO Auto-generated method stub

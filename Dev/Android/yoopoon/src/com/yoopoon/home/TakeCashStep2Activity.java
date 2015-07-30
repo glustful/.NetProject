@@ -319,4 +319,13 @@ public class TakeCashStep2Activity extends MainActionBarActivity {
 		return true;
 	}
 
+	@Override
+	protected void onStop() {
+		if (dialog != null) {
+			dialog.dismiss();
+			dialog = null;
+		}
+		super.onStop();
+	}
+
 }

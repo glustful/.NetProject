@@ -8,12 +8,10 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import com.etsy.android.grid.StaggeredGridView;
 import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.home.MainActionBarActivity;
@@ -38,7 +36,7 @@ public class BrandDetailActivity extends MainActionBarActivity {
 	BrandDetailAdapter mAdapter;
 	BrandDetailHeaderView mBrandDetailHeaderView;
 	int divider = 5;
-	
+
 	@AfterViews
 	void initView() {
 		backButton.setVisibility(View.VISIBLE);
@@ -58,11 +56,13 @@ public class BrandDetailActivity extends MainActionBarActivity {
 		initRecyclerView();
 		requestProductByBrandId();
 	}
+
 	private void requestProductByBrandId() {
 		if (jsonObject == null)
 			return;
 		ll_progress.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
@@ -81,6 +81,7 @@ public class BrandDetailActivity extends MainActionBarActivity {
 					}
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
@@ -88,22 +89,27 @@ public class BrandDetailActivity extends MainActionBarActivity {
 		}.setUrl(getString(R.string.url_product_GetProductsByBrand)).setRequestMethod(RequestMethod.eGet)
 				.addParam("BrandId", jsonObject.optString("Id")).notifyRequest();
 	}
+
 	private void initRecyclerView() {
 		mListView.addHeaderView(mBrandDetailHeaderView);
 		mListView.setAdapter(mAdapter);
 	}
+
 	@Override
 	public void backButtonClick(View v) {
 		this.finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		// TODO Auto-generated method stub
