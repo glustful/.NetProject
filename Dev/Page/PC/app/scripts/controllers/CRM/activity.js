@@ -31,7 +31,7 @@ app.controller('activityController',['$scope','$http','$modal',function($scope,$
             $http.post(SETTING.ApiUrl+'/Event/DelEventById/'+$scope.selectId,{'withCredentials':true}).success(function(data){
                 if(data.Status){
                     console.log("121212");
-
+                    location.reload([true]);
                 }
                 else{
                     $scope.tip=data.Msg;
@@ -61,7 +61,7 @@ function FormatDate(JSONDateString) {
 
     var date = new Date(parseInt(jsondate, 10));
     var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-    var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+    var currentDate = date.getDate() < 10 ? "0" +( date.getDate()) : date.getDate();
 
     return date.getFullYear()
         + "-"

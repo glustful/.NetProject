@@ -1,7 +1,7 @@
 /**
  * Created by gaofengming on 2015/5/28.
  */
-app.controller('SecuritySettingController',function($scope,$http,$state){
+app.controller('SecuritySettingController',['$scope','$http','$state',function($scope,$http,$state){
     $scope.password ={
         OldPassword:'',
         Password:'',
@@ -39,7 +39,7 @@ app.controller('SecuritySettingController',function($scope,$http,$state){
             }
         })
     }
-});
+}]);
 
 //两次密码验证是否一致
 function check()

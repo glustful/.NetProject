@@ -1,7 +1,7 @@
 /**
  * Created by 黄秀宇 on 2015/7/9.
  */
-app.controller("chipcontroller",function ($scope,$http,$timeout,$sce) {
+app.controller("chipcontroller",['$scope','$http','$timeout','$sce',function ($scope,$http,$timeout,$sce) {
 
     $scope.corwdlist={
         Ttitle:'',
@@ -158,4 +158,4 @@ refrech();
 //        .success(function (response) {
 //
 //        });
-});
+}]);
