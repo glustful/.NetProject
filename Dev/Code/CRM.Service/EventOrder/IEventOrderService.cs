@@ -17,5 +17,6 @@ namespace CRM.Service.EventOrder
         IQueryable<EventOrderEntity> GetEventOrderByCondition(EventOrderSearchCondition condition);
 
         int GetEventOrderCount(EventOrderSearchCondition condition);
+        EventOrderEntity GetEventOrderByBrokerid(int brokerid);
     }
 }

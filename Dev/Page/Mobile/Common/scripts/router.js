@@ -399,6 +399,10 @@ app.run(
 
                 resolve:load(__uri('/modules/selectWithdraw/controller/controller.js'))
             })
+            .state('app.presentProcess',{
+                url:'/presentProcess',
+                templateUrl:'modules/presentProcess/view/presentProcess.html'
+            })
 
         function load(srcs, callback) {
             return {

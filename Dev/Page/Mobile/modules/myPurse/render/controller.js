@@ -10,7 +10,24 @@ app.controller('myPurseController',['$http','$scope','AuthService','$state',func
         $scope.AmountMoney=response.AmountMoney;
     });
 
+    $scope.DeleteBand=function(id)
+    {
+        if (confirm("确认要删除该银行卡吗？")) {
 
+            if (id != "" && id != "0" && id != undefined) {
+                $http.post(SETTING.ApiUrl + '/BankCard/DeleteBankCard',  id, {'withCredentials': true}).success(function (datas) {
+                    if (datas.Status) {
+                        $http.get(SETTING.ApiUrl + '/BankCard/SearchAllBankByUser', {'withCredentials': true}).success(function (response) {
+                            $scope.List = response.List;
+                            $scope.AmountMoney = response.AmountMoney;
+                        });
+                    } else {
+                        alert(datas.Msg);
+                    }
+                });
+            }
+        }
+    } ;
 }]);
 
 

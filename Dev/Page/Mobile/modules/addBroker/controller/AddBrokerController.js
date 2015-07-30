@@ -23,7 +23,7 @@ app.controller('AddBrokerController',['$scope','$http',function($scope,$http){
         }
     }]
 
-)
+])
 
 //计时器
 var countdown=60;

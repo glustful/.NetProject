@@ -73,6 +73,19 @@ namespace CRM.Service.EventOrder
             }
         }
 
+        public EventOrderEntity GetEventOrderByBrokerid(int brokerid)
+        {
+            try
+            {
+                return _eventorderRepository.GetById(brokerid); ;
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
+
         public IQueryable<EventOrderEntity> GetEventOrderByCondition(EventOrderSearchCondition condition)
         {
             var query = _eventorderRepository.Table;

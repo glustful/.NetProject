@@ -1,17 +1,18 @@
-<form name="form" id="form" ng-controller="" ng-submit="">
+<form name="form" id="form" ng-controller="addController" ng-submit="add()">
     <div class="panel panel-default">
         <div class="panel-body revise">
-            <div class="bottom" ><label for="name">活动名称： </label> <input id="name" type="text" name="Name" ng-model="UserModel.UserName" required>
+            <div class="bottom" ><label >活动名称： </label> <input id="" type="text" name="Name" ng-model="list.EventContent" required>
             </div>
-            <div class="bottom" ><label for="name">开始时间： </label> <input  type="text"   required>
+            <div class="bottom" ><label >开始时间： </label> <input  type="date"  ng-model="list.Starttime" required>
             </div>
-            <div class="bottom" ><label for="name">截至时间： </label> <input  type="text"   required>
+            <div class="bottom" ><label >截至时间： </label> <input  type="date" ng-model="list.Endtime"  required>
             </div>
 
             <div>
                 <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" style="margin-right:20px;" type="submit">保存<div class="md-ripple-container"></div></button>
-                <a href="#"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">取消<div class="md-ripple-container"></div></button></a>
+                <a href="#/page/CRM/activity/activityList"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">取消<div class="md-ripple-container"></div></button></a>
             </div>
+            <div><p>{{tip}}</p></div>
         </div>
     </div>
 </form>

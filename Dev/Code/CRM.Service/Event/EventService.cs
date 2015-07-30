@@ -108,6 +108,10 @@ namespace CRM.Service.Event
                 {
                     query = query.Skip((condition.Page.Value - 1) * condition.PageCount.Value).Take(condition.PageCount.Value);
                 }
+                if (condition.State)
+                {
+                    query = query.Where(q => q.State == condition.State);
+                }
                 return query;
             }
             catch (Exception e)
@@ -118,32 +122,37 @@ namespace CRM.Service.Event
 
         }
 
-        //public int GetEventCount(BrokerSearchCondition condition)
-        //{
-        //    var query = _eventRepository.Table;
+        public int GetEventCount(EventSearchCondition condition)
+        {
+            var query = _eventRepository.Table;
 
-        //    try
-        //    {
-        //        if (condition.Starttime.HasValue)
-        //        {
-        //            query = query.Where(q => q.Starttime >= condition.Starttime.Value);
-        //        }
-        //        if (condition.Endtime.HasValue)
-        //        {
-        //            query = query.Where(q => q.Endtime < condition.Endtime.Value);
-        //        }
-        //        if (!string.IsNullOrEmpty(condition.EventContent))
-        //        {
-        //            query = query.Where(q => q.EventContent.Contains(condition.EventContent));
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        _log.Error(e, "数据库操作出错");
+            try
+            {
+                if (condition.Starttime.HasValue)
+                {
+                    query = query.Where(q => q.Starttime >= condition.Starttime.Value);
+                }
+                if (condition.Endtime.HasValue)
+                {
+                    query = query.Where(q => q.Endtime < condition.Endtime.Value);
+                }
+                if (!string.IsNullOrEmpty(condition.EventContent))
+                {
+                    query = query.Where(q => q.EventContent.Contains(condition.EventContent));
+                }
+                if (condition.State)
+                {
+                    query = query.Where(q => q.State == condition.State);
+                }
+                return query.Count();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return -1;
+            }
 
-        //    }
-
-        //}
+        }
 
 
     }
