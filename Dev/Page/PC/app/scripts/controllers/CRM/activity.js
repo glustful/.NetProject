@@ -12,6 +12,10 @@ app.controller('activityController',['$scope','$http','$modal',function($scope,$
     $scope.getlist=function(){
         $http.get(SETTING.ApiUrl+'/Event/GetEventList',{params:$scope.list,'withCredentials':true}).success(function(data){
             console.log(data);
+
+            //document.getElementById("Starttime").value=FormatDate( data[0].Starttime);
+            //document.getElementById("Endtime").value=FormatDate(data.Endtime);
+
             $scope.list = data;
         })
     }
