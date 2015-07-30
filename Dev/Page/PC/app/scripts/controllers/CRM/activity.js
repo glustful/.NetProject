@@ -12,6 +12,10 @@ app.controller('activityController',['$scope','$http','$modal',function($scope,$
     $scope.getlist=function(){
         $http.get(SETTING.ApiUrl+'/Event/GetEventList',{params:$scope.list,'withCredentials':true}).success(function(data){
             console.log(data);
+
+            //document.getElementById("Starttime").value=FormatDate( data[0].Starttime);
+            //document.getElementById("Endtime").value=FormatDate(data.Endtime);
+
             $scope.list = data;
         })
     }
@@ -41,39 +45,3 @@ app.controller('activityController',['$scope','$http','$modal',function($scope,$
     }
 
 }])
-
-
-
-
-app.filter('dateFilter',function(){
-    return function(date){
-        return FormatDate(date);
-    }
-})
-function FormatDate(JSONDateString) {
-    jsondate = JSONDateString.replace("/Date(", "").replace(")/", "");
-    if (jsondate.indexOf("+") > 0) {
-        jsondate = jsondate.substring(0, jsondate.indexOf("+"));
-    }
-    else if (jsondate.indexOf("-") > 0) {
-        jsondate = jsondate.substring(0, jsondate.indexOf("-"));
-    }
-
-    var date = new Date(parseInt(jsondate, 10));
-    var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-    var currentDate = date.getDate() < 10 ? "0" +( date.getDate()) : date.getDate();
-
-    return date.getFullYear()
-        + "-"
-        + month
-        + "-"
-        + currentDate
-        //+ "-"
-        //+ date.getHours()
-        //+ ":"
-        //+ date.getMinutes()
-        //+ ":"
-        //+ date.getSeconds()
-        ;
-
-}

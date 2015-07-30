@@ -21,7 +21,7 @@
             <td >{{item.Describe}}</td>
             <td >{{item.Value}}</td>
             <td >
-                <a ui-sref="page.CRM.configure.setedit({id: item.Id})"> <span class="label bg-success" title="Active">编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                <a  ui-sref="page.CRM.configure.setedit({id: item.Id})"> <span class="label bg-success" title="Active">编辑</span></a>
                 <a href="#"> <span class="label yellow" title="Active" ng-click="open(item.Id)">删除</span></a>
             </td>
            <td>{{item.Addtime | dateFilter}}</td>

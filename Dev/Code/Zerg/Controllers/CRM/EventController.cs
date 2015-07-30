@@ -52,14 +52,15 @@ namespace Zerg.Controllers.CRM
               if (!m)
               {
                   return PageHelper.toJson(PageHelper.ReturnValue(false, "存在非法字符！"));
+                  
               }
               else
               {
                   EventEntity ee = new EventEntity()
                   {
                       EventContent = eventModel.EventContent,
-                      Starttime = eventModel.Starttime.AddDays(1),
-                      Endtime = eventModel.Endtime.AddDays(1),
+                      Starttime = eventModel.Starttime,
+                      Endtime = eventModel.Endtime,
                       ActionControllers = eventModel.ActionControllers,
                       State = eventModel.State
 
