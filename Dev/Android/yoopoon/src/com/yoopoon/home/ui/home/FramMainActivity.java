@@ -89,7 +89,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 	void initMenu() {
 		tabHost.setup();
 		tabHost.getTabWidget().setDividerDrawable(null);
-		tabHost.addTab(getTabSpec("active", R.drawable.active_tab_selector, "活动"));
+		tabHost.addTab(getTabSpec("active", R.drawable.active_tab_selector, "首页"));
 		tabHost.addTab(getTabSpec("house", R.drawable.house_tab_selector, "房源库"));
 		if (isOpenAgent)
 			tabHost.addTab(getTabSpec("agent", R.drawable.agent_tab_selector, "经纪人专区"));

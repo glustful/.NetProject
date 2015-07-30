@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="详情" />
-             <LinearLayout style="@style/LinearLayout_With_Clear2" >
+             <LinearLayout style="@style/LinearLayout_With_Clear" >
 
                 <EditText
                     android:id="@+id/detail"
