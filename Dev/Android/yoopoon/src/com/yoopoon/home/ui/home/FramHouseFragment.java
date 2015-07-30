@@ -793,11 +793,17 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			AreaNameValue = "";
 		}
 		PageValue = "1";
-		if (houseTypeIdNumber.equals("")) {
+		//判断楼盘类型处是否由用户选择的条件
+		if (house_type_button.getText().equals("类型")) {
 			TypeIdValue = "";
 		} else {
 			TypeIdValue = houseTypeIdNumber;
 		}
+		/*if (TypeIdValue.equals("类型")) {
+			TypeIdValue = "";
+		} else {
+			TypeIdValue = houseTypeIdNumber;
+		}*/
 		// 初始化ArrayList中保存的数据
 		// 配成value.xml中的数组
 		housePriceArrayList.add("4000以下");
