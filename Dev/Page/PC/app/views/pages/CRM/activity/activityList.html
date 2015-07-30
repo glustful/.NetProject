@@ -22,8 +22,8 @@
             <tr ng-repeat="row in list">
                 <td>{{row.Id}}</td>
                 <td>{{row.EventContent }}</td>
-                <td>{{row.Starttime}}</td>
-                <td>{{row.Endtime}}</td>
+                <td>{{row.Starttime | dateFilter}}</td>
+                <td>{{row.Endtime | dateFilter}}</td>
                 <td ng-if="row.State==true">上线</td>
                 <td ng-if="row.State==false">下线</td>
                 <td>

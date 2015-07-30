@@ -1,11 +1,11 @@
 /**
- Ê±¼ä¹ýÂËÆ÷
+ æ—¶é—´è¿‡æ»¤å™¨
  */
 app.filter('dateFilter',function(){
     return function(date){
         if(!date)
             return "";
-        jsondate = date.replace("/Date(", "").replace(")/", "");
+        var jsondate = date.replace("/Date(", "").replace(")/", "");
         if (jsondate.indexOf("+") > 0) {
             jsondate = jsondate.substring(0, jsondate.indexOf("+"));
         }
