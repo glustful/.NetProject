@@ -158,7 +158,6 @@
     font-weight: bold;
 }
 .partake{
-    position: relative;
     background-color: rgba(0,0,0,0.6);
     width: 640px;
     height: 120px;
@@ -272,5 +271,10 @@
     color: #46a1e8;
 }
 .posonfont{
-    background-color:#dbdee2;line-height: 35px;text-align:center;font-size: 20px;color:darkslateblue;font-weight: 500;
+    background-color:#dbdee2;
+    line-height: 35px;
+    text-align:center;
+    font-size: 20px;
+    color:darkslateblue;
+    font-weight: 500;
 }
