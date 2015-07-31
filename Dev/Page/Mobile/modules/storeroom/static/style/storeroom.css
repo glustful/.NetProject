@@ -5,11 +5,10 @@
     height: 70px;
     line-height: 70px;
     background: #fff;
-    position: relative;
 }
-.nav-storeroom .sub-nav{
+.nav-storeroom a{
     display: inline-block;
-    width: 160px;
+    width: 159px;
     height:35px;
     line-height: 35px;
     text-align: center;
@@ -28,56 +27,53 @@
     margin-left: 10px;
     background: url("../image/storeroom/arrow.png") no-repeat 0 0;
 }
- .zg{
+.zg{
     height:58px;
     line-height: 75px;
     color: #878787;
     font-size: 16px;
     padding-left: 50px;
-
+    border-bottom: 1px solid #e2e2e2;
 }
 .message-storeroom{
     margin:0 0 20px 0;
 }
- .main-storeroom{
-     background-color: #f8f8f8;
+.main-storeroom{
+    background: #fff;
     padding:20px 0 15px 15px;
     border-bottom: 1px solid #e2e2e2;
 }
- .detail-storeroom{
+.detail-storeroom{
     width: 350px;
 }
- .main-storeroom .img{
-     margin-right: 15px;
- }
- .yhy{
-    padding: 0 0 20px 0;
+.yhy{
+    padding: 5px 0 20px 0;
     color: #333333;
     border-bottom:1px solid #ebebeb;
     font-size: 1.2em;
 }
 .yuan{
-  padding-top:5px;
-  color: #ff3000;
-  font-size: 20px;
+    padding-top:20px;
+    color: #ff3000;
+    font-size: 20px;
 }
-.main-storeroom .bj{
-    padding:0 10px 0 0;
+.bj{
+    padding-top: 10px;
     color: #8b8b8b;
 }
 .yh{
-    padding-top:8px;
-    color: #f5ab00;
+    padding-top: 18px;
+    color: #ffa800;
     font-size: 16px;
 }
- .sub-nav-storeroom{
+.sub-nav-storeroom{
     background: #fff;
     height: 66px;
     line-height: 66px;
     border-top:1px solid #ebebeb;
     border-bottom: 1px solid #ebebeb;
 }
- .sub-nav-storeroom a{
+.sub-nav-storeroom a{
     display: inline-block;
     font-size: 20px;
     color:#707070;
@@ -87,52 +83,42 @@
     line-height: 30px;
     border-right:1px solid #ebebeb;
 }
- .sub-nav-storeroom .red-storeroom{
+.sub-nav-storeroom .red-storeroom{
     color: #ff3000;
 }
- .sub-nav-storeroom .int-storeroom{
+.sub-nav-storeroom .int-storeroom{
     border-right: none;
 }
- #area,#type,#price{
-     float: left
- }
- /*#condition{*/
-     /*background-color: #fff;*/
-     /*width: 640px;*/
-     /*border-radius: 10px;*/
- /*}*/
+#area,#type,#price{
+    float: left
+}
+#condition{
+    background-color: #ffffff;width: 640px;
+    /*border-radius: 10px;*/
+}
 #province{
-    float:left;
-    margin-left: 40px;
-    width: 150px;
+    float:left;margin-left: 40px;width: 150px;
     background-color: #ffffff;
     border: 1px solid #ebebeb
 }
 #city,#county{
-    float:left;
-    width: 150px;
+    float:left;width: 150px;
     background-color: #ffffff;
-}
-.select{
-    border: 1px solid #ebebeb;
+    border: 1px solid #ebebeb
 }
 .type{
     margin-left: 165px;
     text-align: center;
-    /*border: 1px solid #ebebeb*/
-    border-top: 1px solid #ebebeb;
-    border-left: 1px solid #ebebeb;
-    border-right:1px solid #ebebeb
+    width: 150px;
+    border: 1px solid #ebebeb
 }
 #priceCondition{
     margin-left: 325px;
     text-align: center;
     width: 150px;
-    border-top: 1px solid #ebebeb;
-    border-left: 1px solid #ebebeb;
-    border-right:1px solid #ebebeb
+    border: 1px solid #ebebeb
 }
-#condition .li{
+.li{
     height: 35px;width:70px;line-height: 35px;
     float: left;
     font-size: 18px;
@@ -142,7 +128,7 @@
 }
 .typeOption,.priceOption{
     height: 35px;line-height: 35px;font-size: 18px;
-    border-bottom:1px solid #ebebeb;
+    border-bottom:2px solid #ebebeb;
 }
 .selected {
     background-color: #dbdbdb;
@@ -184,32 +170,3 @@
     left: 30%;
 }
 
-
-/*修改样式*/
-.query{
-    width: 640px;
-    position: absolute;
-    top:0;
-    left:0;
-    z-index: 100;
-    background-color: #fff;
-    height: 450px;
-}
-.query .inner-area{
-    height: 40px;
-    line-height: 40px;
-    border-bottom: 1px solid #ebebeb;
-    font-size: 1.2em;
-}
-.query .inner-area span{
-    display: inline-block;
-    width: 200px;
-    text-align: center;
-}
-.query .inner-area a{
-    border: none;
-    display: inline-block;
-    width: 50px;
-    text-align: center;
-    color: #686868;
-}
