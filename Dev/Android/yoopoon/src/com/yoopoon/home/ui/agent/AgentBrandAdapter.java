@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yoopoon.common.base.utils.DensityUtil;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.house.ui.bonus.BrokerBonusActivity_;
@@ -71,7 +72,8 @@ public class AgentBrandAdapter extends BaseAdapter {
 		// "SubTitle":"一万抵三万"
 		final JSONObject item = datas.get(position);
 		String url = mContext.getString(R.string.url_host_img) + item.optString("Bimg");
-		mHolder.img.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, height));
+		mHolder.img.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+				DensityUtil.dip2px(mContext, 150)));
 		mHolder.img.setTag(url);
 		ImageLoader.getInstance().displayImage(url, mHolder.img);
 		mHolder.title.setText("[" + item.optString("BrandName") + "]");

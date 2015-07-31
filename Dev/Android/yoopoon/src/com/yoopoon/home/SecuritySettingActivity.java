@@ -18,6 +18,10 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -43,6 +47,7 @@ import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.domain.YzmWithPsw2;
+import com.yoopoon.home.service.SmsService;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
 /**
@@ -87,6 +92,7 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 	private TimerTask task;
 	private Animation anim_open_err;
 	private Animation anim_hide_err;
+	private Intent service;
 
 	@Click(R.id.btn_security_setting_getcode)
 	void getCode() {
@@ -97,6 +103,7 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		}
 		String smsType = String.valueOf(SmsUtils.CHANGEPSW_IDENTIFY_CODE);
 		String json = "{\"SmsType\":\"" + smsType + "\"}";
+		startSmsService();
 		SmsUtils.getCodeForBroker(this, json, new RequestSMSListener() {
 
 			@Override
@@ -297,7 +304,7 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 				rl_progress.setVisibility(View.GONE);
 
 				if (data.getMsg().contains("成功")) {
-					Toast.makeText(SecuritySettingActivity.this, data.getMsg() + ",请重新登陆", Toast.LENGTH_SHORT).show();
+					Toast.makeText(SecuritySettingActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 					HomeLoginActivity_.intent(SecuritySettingActivity.this).isManual(true).start();
 					return;
 				} else {
@@ -361,5 +368,31 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 	protected void activityYMove() {
 		Utils.hiddenSoftBorad(this);
 	}
+
+	private void startSmsService() {
+		service = new Intent(this, SmsService.class);
+		startService(service);
+
+		IntentFilter filter = new IntentFilter(Utils.GET_CODE_ACTION);
+		filter.addCategory(Intent.CATEGORY_DEFAULT);
+		this.registerReceiver(receiver, filter);
+	}
+
+	private BroadcastReceiver receiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (Utils.GET_CODE_ACTION.equals(action)) {
+				String code = intent.getExtras().getString("Code");
+				et_code.setText(code);
+				if (service != null) {
+					stopService(service);
+					service = null;
+				}
+			}
+			unregisterReceiver(receiver);
+		}
+	};
 
 }

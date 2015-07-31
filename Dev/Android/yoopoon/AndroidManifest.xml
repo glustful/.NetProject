@@ -37,6 +37,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS"/>
 
     <application
         android:name="com.yoopoon.home.MyApplication_"
@@ -197,32 +198,28 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-  
         <activity
             android:name="com.yoopoon.home.RecBuildActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
         <activity
             android:name="com.yoopoon.home.MeTaskActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
         <activity
             android:name="com.yoopoon.home.TakeCash2Activity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
         <activity
             android:name="com.yoopoon.home.TakeCashStep2Activity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
- 
+
+        <service android:name="com.yoopoon.home.service.SmsService" />
     </application>
     <!-- 测试配置选项 -->
     <instrumentation

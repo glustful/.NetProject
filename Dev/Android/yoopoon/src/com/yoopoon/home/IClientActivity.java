@@ -22,6 +22,7 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -60,6 +61,7 @@ public class IClientActivity extends MainActionBarActivity {
 	private int totalCount;
 	private int page = 1;
 	private final int pageSize = 10;
+	private Handler handler = new Handler();
 
 	@AfterViews
 	void initUI() {
@@ -104,69 +106,76 @@ public class IClientActivity extends MainActionBarActivity {
 
 	private void requestData() {
 		ll_loading.setVisibility(View.VISIBLE);
-
-		new RequestAdapter() {
+		handler.postDelayed(new Runnable() {
 
 			@Override
-			public void onReponse(ResponseData data) {
-				if (data != null)
-					if (data.getResultState() == ResultState.eSuccess) {
-						JSONObject dataObj = data.getJsonObject2();
-						if (dataObj != null) {
-							try {
-								totalCount = dataObj.getInt("totalCount");
-								JSONArray listArray = dataObj.getJSONArray("list");
-								Random r = new Random();
-								for (int i = 0; i < listArray.length(); i++) {
-									JSONObject guestObj = listArray.getJSONObject(i);
-									Log.i(TAG, guestObj.toString());
-									// "StrType":"带客",
-									// "Status":"预约中",
-									// "Clientname":"徐阳会",
-									// "Id":"43",
-									// "Phone":"13508713650",
-									// "Houses":"人民路壹号",
-									// "Housetype":"2室2厅1厨2卫 书房"
-									String strType = guestObj.getString("StrType");
-									String status = guestObj.getString("Status");
-									String clientName = guestObj.getString("Clientname");
-									String id = guestObj.getString("Id");
-									String phone = guestObj.getString("Phone");
-									String houses = guestObj.getString("Houses");
-									String houseType = guestObj.getString("Housetype");
-									GuestInfo info = new GuestInfo(clientName, houseType, houses, status, phone, id,
-											strType);
-									if ("预约中".equals(status))
-										info.num = 2;
-									else if (status.contains("审核")) {
-										info.num = 1;
-									} else if (status.contains("成功")) {
-										info.num = 4;
-									} else {
-										info.num = 3;
+			public void run() {
+				new RequestAdapter() {
+
+					@Override
+					public void onReponse(ResponseData data) {
+
+						if (data.getResultState() == ResultState.eSuccess) {
+							JSONObject dataObj = data.getJsonObject2();
+							if (dataObj != null) {
+								try {
+									totalCount = dataObj.getInt("totalCount");
+									JSONArray listArray = dataObj.getJSONArray("list");
+									Random r = new Random();
+									for (int i = 0; i < listArray.length(); i++) {
+										JSONObject guestObj = listArray.getJSONObject(i);
+										Log.i(TAG, guestObj.toString());
+										// "StrType":"带客",
+										// "Status":"预约中",
+										// "Clientname":"徐阳会",
+										// "Id":"43",
+										// "Phone":"13508713650",
+										// "Houses":"人民路壹号",
+										// "Housetype":"2室2厅1厨2卫 书房"
+										String strType = guestObj.getString("StrType");
+										String status = guestObj.getString("Status");
+										String clientName = guestObj.getString("Clientname");
+										String id = guestObj.getString("Id");
+										String phone = guestObj.getString("Phone");
+										String houses = guestObj.getString("Houses");
+										String houseType = guestObj.getString("Housetype");
+										GuestInfo info = new GuestInfo(clientName, houseType, houses, status, phone,
+												id, strType);
+										if ("预约中".equals(status))
+											info.num = 2;
+										else if (status.contains("审核")) {
+											info.num = 1;
+										} else if (status.contains("成功")) {
+											info.num = 4;
+										} else {
+											info.num = 3;
+										}
+										guestInfos.add(info);
 									}
-									guestInfos.add(info);
+								} catch (JSONException e) {
+									e.printStackTrace();
+								} finally {
+									ll_loading.setVisibility(View.GONE);
 								}
-							} catch (JSONException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								fillData();
+							} else {
+								ll_loading.setVisibility(View.GONE);
+								Toast.makeText(IClientActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 							}
-							fillData();
-							ll_loading.setVisibility(View.GONE);
-						} else {
-							Toast.makeText(IClientActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 						}
 					}
-			}
 
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
+					@Override
+					public void onProgress(ProgressMessage msg) {
+						// TODO Auto-generated method stub
+
+					}
+					// + "/?page=1&pageSize=10"
+				}.setUrl(getString(R.string.url_get_my_clients)).addParam(params).setRequestMethod(RequestMethod.eGet)
+						.notifyRequest();
 
 			}
-			// + "/?page=1&pageSize=10"
-		}.setUrl(getString(R.string.url_get_my_clients)).addParam(params).setRequestMethod(RequestMethod.eGet)
-				.notifyRequest();
+		}, 2000);
 
 	}
 

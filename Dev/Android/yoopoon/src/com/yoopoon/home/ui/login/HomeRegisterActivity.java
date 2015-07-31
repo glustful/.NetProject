@@ -10,8 +10,10 @@ import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
@@ -40,6 +42,7 @@ import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.data.user.User;
+import com.yoopoon.home.service.SmsService;
 import com.yoopoon.home.ui.home.FramMainActivity_;
 
 @EActivity(R.layout.home_register_activity)
@@ -96,6 +99,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		}
 	};
 	protected String mobileYzm = "";
+	private Intent service;
 
 	@AfterInject
 	void initData() {
@@ -293,6 +297,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 	}
 
 	void requestIdentify(String json) {
+		startSmsService();
 		new RequestAdapter() {
 
 			@Override
@@ -399,5 +404,31 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		FramMainActivity_.intent(this).start();
 		super.onBackPressed();
 	}
+
+	private void startSmsService() {
+		service = new Intent(this, SmsService.class);
+		startService(service);
+
+		IntentFilter filter = new IntentFilter(Utils.GET_CODE_ACTION);
+		filter.addCategory(Intent.CATEGORY_DEFAULT);
+		this.registerReceiver(receiver, filter);
+	}
+
+	private BroadcastReceiver receiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (Utils.GET_CODE_ACTION.equals(action)) {
+				String code = intent.getExtras().getString("Code");
+				mNoText.setText(code);
+				if (service != null) {
+					stopService(service);
+					service = null;
+				}
+			}
+			unregisterReceiver(receiver);
+		}
+	};
 
 }

@@ -34,6 +34,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
@@ -64,6 +65,10 @@ public class IPocketActivity extends MainActionBarActivity {
 
 	@Click(R.id.btn_ipocket_takecash)
 	void takeCash() {
+		if (amountMoney <= 0) {
+			Toast.makeText(this, "亲，你已经没有余额啦！", Toast.LENGTH_LONG).show();
+			return;
+		}
 		TakeCash2Activity_.intent(this).start();
 	}
 

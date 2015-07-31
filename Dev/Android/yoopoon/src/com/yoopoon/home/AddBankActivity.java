@@ -21,7 +21,11 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import android.app.AlertDialog.Builder;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -39,6 +43,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.common.base.utils.SmsUtils;
 import com.yoopoon.common.base.utils.SmsUtils.RequestSMSListener;
+import com.yoopoon.common.base.utils.Utils;
 import com.yoopoon.home.data.json.SerializerJSON;
 import com.yoopoon.home.data.json.SerializerJSON.SerializeListener;
 import com.yoopoon.home.data.net.ProgressMessage;
@@ -46,6 +51,7 @@ import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.domain.Bank;
+import com.yoopoon.home.service.SmsService;
 
 /**
  * @ClassName: AddBankActivity
@@ -59,6 +65,7 @@ public class AddBankActivity extends MainActionBarActivity {
 	void getCode() {
 		String smsType = String.valueOf(SmsUtils.ADD_BANKCARD_IDENTIFY_CODE);
 		String json = "{\"SmsType\":\"" + smsType + "\"}";
+		startSmsService();
 		SmsUtils.getCodeForBroker(this, json, new RequestSMSListener() {
 
 			@Override
@@ -221,6 +228,7 @@ public class AddBankActivity extends MainActionBarActivity {
 	private int checkedBank = 0;
 	private List<EditText> info_ets = new ArrayList<EditText>();
 	private List<TextView> warning_tvs = new ArrayList<TextView>();
+	private Intent service;
 	@ViewById(R.id.btn_add_bank_getcode)
 	Button btn_getcode;
 	@ViewById(R.id.et_addbank_address)
@@ -320,5 +328,31 @@ public class AddBankActivity extends MainActionBarActivity {
 
 		return true;
 	}
+
+	private void startSmsService() {
+		service = new Intent(this, SmsService.class);
+		startService(service);
+
+		IntentFilter filter = new IntentFilter(Utils.GET_CODE_ACTION);
+		filter.addCategory(Intent.CATEGORY_DEFAULT);
+		this.registerReceiver(receiver, filter);
+	}
+
+	private BroadcastReceiver receiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (Utils.GET_CODE_ACTION.equals(action)) {
+				String code = intent.getExtras().getString("Code");
+				et_code.setText(code);
+				if (service != null) {
+					stopService(service);
+					service = null;
+				}
+			}
+			unregisterReceiver(receiver);
+		}
+	};
 
 }

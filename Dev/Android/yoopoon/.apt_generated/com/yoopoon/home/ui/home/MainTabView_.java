@@ -91,9 +91,9 @@ public final class MainTabView_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        badgeView = ((BadgeView) hasViews.findViewById(id.badgeView));
         imageView = ((ImageView) hasViews.findViewById(id.imageView));
         title = ((TextView) hasViews.findViewById(id.title));
+        badgeView = ((BadgeView) hasViews.findViewById(id.badgeView));
     }
 
 }

@@ -101,7 +101,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 
 	@AfterViews
 	void crateData() {
-		this.titleButton.setText("用户登陆");
+		this.titleButton.setText("用户登录");
 		this.titleButton.setVisibility(View.VISIBLE);
 		this.rightButton.setVisibility(View.INVISIBLE);
 		this.backButton.setVisibility(View.VISIBLE);
@@ -149,7 +149,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 	@Click(R.id.delMailBtn)
 	void delMailClick(View v) {
 		mEmailText.setText("");
-		mPwdText.setText("");
+		// mPwdText.setText("");
 	}
 
 	@Click(R.id.delPwdBtn)

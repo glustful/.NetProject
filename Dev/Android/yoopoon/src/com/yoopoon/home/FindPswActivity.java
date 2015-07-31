@@ -18,6 +18,10 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -43,6 +47,7 @@ import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.domain.YzmWithPsw;
+import com.yoopoon.home.service.SmsService;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
 /**
@@ -87,6 +92,7 @@ public class FindPswActivity extends MainActionBarActivity {
 	private static final String TAG = "FindPswActivity";
 	private Animation anim_open_err;
 	private Animation anim_hide_err;
+	private Intent service;
 
 	@Click(R.id.btn_findpsw_getcode)
 	void getCode() {
@@ -101,7 +107,7 @@ public class FindPswActivity extends MainActionBarActivity {
 		}
 		String smsType = String.valueOf(SmsUtils.FINDPSW_IDENTIFY_CODE);
 		String json = "{\"Mobile\":\"" + phone + "\",\"SmsType\":\"" + smsType + "\"}";
-
+		startSmsService();
 		SmsUtils.requestIdentifyCode(this, json, new RequestSMSListener() {
 
 			@Override
@@ -375,5 +381,31 @@ public class FindPswActivity extends MainActionBarActivity {
 	protected void activityYMove() {
 		Utils.hiddenSoftBorad(this);
 	}
+
+	private void startSmsService() {
+		service = new Intent(this, SmsService.class);
+		startService(service);
+
+		IntentFilter filter = new IntentFilter(Utils.GET_CODE_ACTION);
+		filter.addCategory(Intent.CATEGORY_DEFAULT);
+		this.registerReceiver(receiver, filter);
+	}
+
+	private BroadcastReceiver receiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (Utils.GET_CODE_ACTION.equals(action)) {
+				String code = intent.getExtras().getString("Code");
+				et_code.setText(code);
+				if (service != null) {
+					stopService(service);
+					service = null;
+				}
+			}
+			unregisterReceiver(receiver);
+		}
+	};
 
 }
