@@ -110,6 +110,8 @@
     margin-left: 165px;
     text-align: center;
     width: 150px;
+    /*max-height: 150px;*/
+    /*overflow-y:auto;*/
     border: 1px solid #ebebeb
 }
 #priceCondition{

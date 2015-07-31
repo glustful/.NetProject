@@ -85,14 +85,14 @@ app.controller('homeController',['$http','$scope',function($http,$scope){
     });
 
 }]);
-app.filter('adtitle', function ($sce) {
+app.filter('adtitle', ['$sce',function ($sce) {
 
     return function (input) {
 
         return $sce.trustAsHtml(input);
 
     }
-});
+}]);
 
 
 
