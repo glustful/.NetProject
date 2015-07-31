@@ -295,7 +295,7 @@ namespace Zerg.Controllers.CRM
                 }
 
                 int totalCount = _brokerLeadClientService.GetBrokerLeadClientCount(condition) + _brokerRecClientService.GetBrokerRECClientCount(conditon2);
-                return PageHelper.toJson(new { list = listModel, totalCount = totalCount });       
+                return PageHelper.toJson(new { List = listModel, totalCount = totalCount });       
             
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
