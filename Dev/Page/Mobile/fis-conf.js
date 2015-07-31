@@ -79,7 +79,7 @@
  * npm install -g fis3-postpackager-loader
  **/
 fis.set('project.files', ['Common/**', 'app.js', 'index.html', 'modules/**']);
-fis.media("publish")
+fis.media("p")
     .match('::package', {
         postpackager: fis.plugin('loader')
     }).match('*.{js,css,png}', {
