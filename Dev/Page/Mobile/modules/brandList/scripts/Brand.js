@@ -6,7 +6,7 @@ app.controller('BrandController',['$http','$scope','$stateParams','$timeout',fun
             condition:$stateParams.condition==undefined?'':$stateParams.condition,
             //condition:$stateParams.condition,
             page:0,
-            PageCount:2
+            PageCount:10
         };
     $scope.tipp="正在加载......";
     var loading = false

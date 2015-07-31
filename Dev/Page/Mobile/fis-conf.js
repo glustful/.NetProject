@@ -1,14 +1,14 @@
 /**
  * Created by Administrator on 2015/7/28.
  */
-// ÏÂÃæµÄ¿ªÆôsimple²å¼ş£¬×¢ÒâĞèÒªÏÈ½øĞĞ²å¼ş°²×° npm install -g fis-postpackager-simple
+// ä¸‹é¢çš„å¼€å¯simpleæ’ä»¶ï¼Œæ³¨æ„éœ€è¦å…ˆè¿›è¡Œæ’ä»¶å®‰è£… npm install -g fis-postpackager-simple
 //fis.config.set('modules.postpackager', 'simple');
-////ÅÅ³ı
+////æ’é™¤
 //fis.config.set('project.exclude', [
 //    'libs/vendor/jquery/src/**'
 //]);
 //
-//// È¡ÏûÏÂÃæµÄ×¢ÊÍÉèÖÃ´ò°ü¹æÔò
+//// å–æ¶ˆä¸‹é¢çš„æ³¨é‡Šè®¾ç½®æ‰“åŒ…è§„åˆ™
 //fis.config.set('pack', {
 //    'pkg/App.js': [
 //        'app.js',
@@ -25,7 +25,7 @@
 //        'libs/vendor/jquery/dist/jquery.js',
 //        'libs/vendor/angular-bootstrap/ui-bootstrap-tpls.js'
 //    ],
-//    // ÏÂÃæÉèÖÃCSS´ò°ü¹æÔò
+//    // ä¸‹é¢è®¾ç½®CSSæ‰“åŒ…è§„åˆ™
 //    '/pkg/style.css': [
 //        'libs/bootstrap/css/bootstrap.css',
 //        'Common/static/style/common.css',
@@ -74,8 +74,8 @@
 //});
 
 /**
- * ÒÔÏÂÊÇfis3µÄÅäÖÃ
- * Ê¹ÓÃÇ°ÇëÈ·±£°²×°ÁËfis3£¬¼°postpackager-loader
+ * ä»¥ä¸‹æ˜¯fis3çš„é…ç½®
+ * ä½¿ç”¨å‰è¯·ç¡®ä¿å®‰è£…äº†fis3ï¼ŒåŠpostpackager-loader
  * npm install -g fis3-postpackager-loader
  **/
 fis.set('project.files', ['Common/**', 'app.js', 'index.html', 'modules/**']);
@@ -87,15 +87,15 @@ fis.media("publish")
     }).match('::image', {
         useHash: true
     }).match('**.js', {
-        // fis-optimizer-uglify-js ²å¼ş½øĞĞÑ¹Ëõ£¬ÒÑÄÚÖÃ
+        // fis-optimizer-uglify-js æ’ä»¶è¿›è¡Œå‹ç¼©ï¼Œå·²å†…ç½®
         optimizer: fis.plugin('uglify-js')
     })
     .match('**.css', {
         optimizer: fis.plugin('clean-css')
     })
-    /**
-     * application²¿·Ö
-     */
+/**
+ * applicationéƒ¨åˆ†
+ */
     .match('app.js',{
         packTo: 'application.js'
     })
@@ -108,9 +108,9 @@ fis.media("publish")
     .match('Common/scripts/directives/access.js',{
         packTo: 'application.js'
     })
-    /**
-     * vendor²¿·Ö
-     **/
+/**
+ * vendoréƒ¨åˆ†
+ **/
     .match('libs/vendor/angular/angular.js', {
         packTo: 'vendor.js'
     })
@@ -132,9 +132,9 @@ fis.media("publish")
     .match('libs/vendor/angular-bootstrap/ui-bootstrap-tpls.js', {
         packTo: 'vendor.js'
     })
-    /**
-     * CSS²¿·Ö
-     **/
+/**
+ * CSSéƒ¨åˆ†
+ **/
     .match('libs/bootstrap/css/bootstrap.css', {
         packTo: 'style.css'
     })

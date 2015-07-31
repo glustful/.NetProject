@@ -19,10 +19,11 @@ app.controller('HousesPicController',['$http','$scope','$stateParams', function 
              }
          }
      )
+
     }]);
 
-app.filter('trustHtml', function ($sce) {
+app.filter('trustHtml', ['$sce',function ($sce) {
     return function (input) {
         return $sce.trustAsHtml(input);
     }
-})
+}])

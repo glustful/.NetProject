@@ -236,6 +236,10 @@ angular.module("app").controller('CreatProductController', [
             console.info('onSuccessItem', fileItem, response, status, headers);
             completeHandler(response.Msg);
         };
+        $scope.deleteImg=function(item){
+            item.remove();
+            $scope.images.pop();
+        }
     }
 ]);
 
