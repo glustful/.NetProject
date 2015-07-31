@@ -1,17 +1,17 @@
 /**
  * Created by Administrator on 2015/7/28.
  */
-//下面的开启图片合并功能
+//?????????????????
 // fis.config.set('roadmap.path', [{
 //     reg: '**.css',
 //     useSprite: true
 // }]);
-// 设置图片合并的最小间隔
+// ?????????????小???
 //fis.config.set('settings.spriter.csssprites.margin', 20);
 
-// 下面的开启simple插件，注意需要先进行插件安装 npm install -g fis-postpackager-simple
+// ????????simple???????????????胁????? npm install -g fis-postpackager-simple
 fis.config.set('modules.postpackager', 'simple');
-//排除
+//???
 fis.config.set('project.exclude',[
     'libs/vendor/jquery/src/**'
 ]);
@@ -19,21 +19,21 @@ fis.config.set('project.exclude',[
 //    roadmap : {
 //        path : [
 //            {
-//                //所有的js文件
+//                //???械?js???
 //                reg : 'modules/**.js',
-//                //发布到/static/js/xxx目录下
+//                //??????/static/js/xxx????
 //                release : '/static/js$&'
 //            },
 //            //{
-//            //    //所有的css文件
+//            //    //???械?css???
 //            //    reg : '**.css',
-//            //    //发布到/static/css/xxx目录下
+//            //    //??????/static/css/xxx????
 //            //    release : '/static/css$&'
 //            //}
 //        ]
 //    }
 //});
-// 取消下面的注释设置打包规则
+// ????????????????????
 fis.config.set('pack', {
     'pkg/App.js': [
         'app.js',
@@ -55,7 +55,7 @@ fis.config.set('pack', {
     //   // 'modules/BrandDetail/static/script/brandDetail.js',
     //    'modules/**.js'
     //],
-    // 下面设置CSS打包规则
+    // ????????CSS??????
     '/pkg/style.css': [
         'libs/bootstrap/css/bootstrap.css',
         'Common/static/style/common.css',
@@ -102,5 +102,5 @@ fis.config.set('pack', {
         'modules/selectWithdraw/static/selectWithdraw.css'
     ]
 });
-// 下面的开启simple对零散资源的自动合并
+// ????????simple????????????????
 //fis.config.set('settings.postpackager.simple.autoCombine', true);
