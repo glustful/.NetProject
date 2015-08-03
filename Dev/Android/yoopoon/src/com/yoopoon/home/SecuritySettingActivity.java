@@ -22,6 +22,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.text.Editable;
@@ -84,7 +85,6 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 	TextView tv_err;
 	@ViewById(R.id.rl_security_progress)
 	RelativeLayout rl_progress;
-
 	private Animation shake_animation;
 	private String hidm;
 	private Handler handler = new Handler();
@@ -108,7 +108,6 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		String json = "{\"SmsType\":\"" + smsType + "\"}";
 		startSmsService();
 		SmsUtils.getCodeForBroker(this, json, new RequestSMSListener() {
-
 			@Override
 			public void succeed(String code) {
 				hidm = code;
@@ -118,13 +117,10 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 			public void fail(String msg) {
 				clear();
 				showErr(msg);
-
 			}
-
 		});
 		setGetCodeEnable(false);
 		handler.postDelayed(new Runnable() {
-
 			@Override
 			public void run() {
 				setGetCodeEnable(true);
@@ -132,7 +128,6 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 			}
 		}, 60000);
 		timer.schedule(task, 0, 1000);
-
 	}
 
 	@Click(R.id.ib_security_clean_confirm)
@@ -152,20 +147,16 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 
 	private void setGetCodeEnable(boolean enable) {
 		btn_getcode.setBackgroundResource(R.drawable.cycle_selector);
-
 		if (!enable) {
 			btn_getcode.setBackgroundResource(R.drawable.btn_not_enable);
 			timer = new Timer();
 			task = new TimerTask() {
-
 				@Override
 				public void run() {
 					runOnUiThread(new Runnable() {
-
 						@Override
 						public void run() {
 							btn_getcode.setText("重新获取验证码(" + timercount-- + ")");
-
 						}
 					});
 				}
@@ -186,31 +177,25 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		String oldPsw = et_old.getText().toString();
 		String confirmPsw = et_confirm.getText().toString();
 		String code = et_code.getText().toString();
-
 		if (TextUtils.isEmpty(oldPsw)) {
 			textWarning(et_old);
 			return;
 		}
-
 		if (TextUtils.isEmpty(newPsw)) {
 			textWarning(et_new);
 			return;
 		}
-
 		if (TextUtils.isEmpty(confirmPsw)) {
 			textWarning(et_confirm);
 			return;
 		}
-
 		if (TextUtils.isEmpty(code)) {
 			textWarning(et_code);
 			return;
 		}
-
 		if (!newPsw.equals(confirmPsw)) {
 			return;
 		}
-
 		tv_warning.setVisibility(newPsw.equals(confirmPsw) ? View.GONE : View.VISIBLE);
 		YzmWithPsw2 yzmWithPsw = new YzmWithPsw2(hidm, code, oldPsw, newPsw, confirmPsw);
 		changePswTask(yzmWithPsw);
@@ -219,11 +204,9 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 	void changePswTask(final YzmWithPsw2 yzmWithPsw) {
 		rl_progress.setVisibility(View.VISIBLE);
 		new SerializerJSON(new SerializeListener() {
-
 			@Override
 			public String onSerialize() {
 				ObjectMapper om = new ObjectMapper();
-
 				try {
 					return om.writeValueAsString(yzmWithPsw);
 				} catch (JsonProcessingException e) {
@@ -236,12 +219,9 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 			@Override
 			public void onComplete(String serializeResult) {
 				if (serializeResult == null || serializeResult.equals("")) {
-
 					return;
 				}
-
 				requestChangePsw(serializeResult);
-
 			}
 		}).execute();
 	}
@@ -256,8 +236,8 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("安全设置");
-
 		shake_animation = AnimationUtils.loadAnimation(this, R.anim.shake);
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		anim_open_err = AnimationUtils.loadAnimation(this, R.anim.push_down_in);
@@ -288,17 +268,14 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 	}
 
 	private TextWatcher watcher = new TextWatcher() {
-
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
 			String old_psw = et_old.getText().toString();
 			String psw_new = et_new.getText().toString();
 			String psw_confirm = et_confirm.getText().toString();
-
 			ib_clean_confirm.setVisibility(TextUtils.isEmpty(psw_confirm) ? View.GONE : View.VISIBLE);
 			ib_clean_new.setVisibility(TextUtils.isEmpty(psw_new) ? View.GONE : View.VISIBLE);
 			ib_clean_old.setVisibility(TextUtils.isEmpty(old_psw) ? View.GONE : View.VISIBLE);
-
 			if (psw_new.equals(psw_confirm)) {
 				tv_warning.setVisibility(View.GONE);
 			} else {
@@ -309,23 +286,19 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void afterTextChanged(Editable s) {
 			// TODO Auto-generated method stub
-
 		}
 	};
 
 	private void requestChangePsw(String json) {
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				rl_progress.setVisibility(View.GONE);
-
 				if (data.getMsg().contains("成功")) {
 					Toast.makeText(SecuritySettingActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 					HomeLoginActivity_.intent(SecuritySettingActivity.this).isManual(true).start();
@@ -334,13 +307,11 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 					clear();
 					showErr(data.getMsg());
 				}
-
 			}
 
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
-
 			}
 		}.setUrl(getString(R.string.url_change_psw)).SetJSON(json).notifyRequest();
 	}
@@ -357,7 +328,6 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		tv_err.setVisibility(View.VISIBLE);
 		tv_err.startAnimation(anim_open_err);
 		handler.postDelayed(new Runnable() {
-
 			@Override
 			public void run() {
 				tv_err.startAnimation(anim_hide_err);
@@ -378,17 +348,14 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 
 	@Override
 	public void titleButtonClick(View v) {
-
 	}
 
 	@Override
 	public void rightButtonClick(View v) {
-
 	}
 
 	@Override
 	public Boolean showHeadView() {
-
 		return true;
 	}
 
@@ -400,14 +367,12 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 	private void startSmsService() {
 		service = new Intent(this, SmsService.class);
 		startService(service);
-
 		IntentFilter filter = new IntentFilter(Utils.GET_CODE_ACTION);
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
 		this.registerReceiver(receiver, filter);
 	}
 
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
-
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
@@ -422,5 +387,4 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 			unregisterReceiver(receiver);
 		}
 	};
-
 }

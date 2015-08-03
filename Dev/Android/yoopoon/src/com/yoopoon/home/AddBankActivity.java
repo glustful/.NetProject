@@ -16,16 +16,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
 import android.app.AlertDialog.Builder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.text.Editable;
@@ -40,6 +43,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.common.base.utils.SmsUtils;
@@ -68,22 +72,18 @@ public class AddBankActivity extends MainActionBarActivity {
 		String json = "{\"SmsType\":\"" + smsType + "\"}";
 		startSmsService();
 		SmsUtils.getCodeForBroker(this, json, new RequestSMSListener() {
-
 			@Override
 			public void succeed(String code) {
 				hidm = code;
 				Log.i(TAG, "hidm = " + hidm);
 			}
-
 			@Override
 			public void fail(String msg) {
 				Toast.makeText(AddBankActivity.this, msg, Toast.LENGTH_SHORT).show();
-
 			}
 		});
 		setGetCodeEnable(false);
 		handler.postDelayed(new Runnable() {
-
 			@Override
 			public void run() {
 				setGetCodeEnable(true);
@@ -91,7 +91,6 @@ public class AddBankActivity extends MainActionBarActivity {
 			}
 		}, 60000);
 	}
-
 	@Click(R.id.btn_addbank_ok)
 	void addBank() {
 		for (int i = 0; i < info_ets.size(); i++) {
@@ -104,22 +103,17 @@ public class AddBankActivity extends MainActionBarActivity {
 				return;
 			}
 		}
-
 		String address = et_address.getText().toString();
 		String code = et_code.getText().toString();
 		String num = et_card.getText().toString().trim();
 		String type = rb_credit.isChecked() ? "信用卡" : "储蓄卡";
-
 		addBankTask(new Bank(address, checkedBank + 1, hidm, code, num, type));
-
 	}
-
 	@Click(R.id.tv_addbank_bank)
 	void selectBank() {
 		Builder builder = new Builder(this);
 		builder.setTitle("开户银行");
 		builder.setSingleChoiceItems(banks, checkedBank, new DialogInterface.OnClickListener() {
-
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				checkedBank = which;
@@ -129,7 +123,6 @@ public class AddBankActivity extends MainActionBarActivity {
 		});
 		builder.show();
 	}
-
 	private void setGetCodeEnable(boolean enable) {
 		if (enable) {
 			btn_getcode.setBackgroundResource(R.drawable.cycle_selector);
@@ -140,11 +133,9 @@ public class AddBankActivity extends MainActionBarActivity {
 			btn_getcode.setBackgroundResource(R.drawable.btn_not_enable);
 			timer = new Timer();
 			task = new TimerTask() {
-
 				@Override
 				public void run() {
 					runOnUiThread(new Runnable() {
-
 						@Override
 						public void run() {
 							String text = "重新获取验证码(" + countTimer-- + "s)";
@@ -158,14 +149,11 @@ public class AddBankActivity extends MainActionBarActivity {
 		btn_getcode.setClickable(enable);
 		btn_getcode.setFocusable(enable);
 	}
-
 	void addBankTask(final Bank bank) {
 		new SerializerJSON(new SerializeListener() {
-
 			@Override
 			public String onSerialize() {
 				ObjectMapper om = new ObjectMapper();
-
 				try {
 					return om.writeValueAsString(bank);
 				} catch (JsonProcessingException e) {
@@ -173,23 +161,17 @@ public class AddBankActivity extends MainActionBarActivity {
 				}
 				return null;
 			}
-
 			@Override
 			public void onComplete(String serializeResult) {
 				if (serializeResult == null || serializeResult.equals("")) {
-
 					return;
 				}
-
 				requestAddBank(serializeResult);
-
 			}
 		}).execute();
 	}
-
 	void requestAddBank(String json) {
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data != null)
@@ -205,20 +187,17 @@ public class AddBankActivity extends MainActionBarActivity {
 					Toast.makeText(AddBankActivity.this, "请检查网络", Toast.LENGTH_SHORT).show();
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
-
 			}
 		}.setUrl(getString(R.string.url_add_bank)).SetJSON(json).notifyRequest();
 	}
-
 	@Override
 	protected void onResume() {
 		super.onResume();
 	}
-
+	
 	private String hidm;
 	private Timer timer;
 	private TimerTask task;
@@ -254,7 +233,7 @@ public class AddBankActivity extends MainActionBarActivity {
 	TextView tv_warning_address;
 	@ViewById(R.id.tv_addbank_warning4)
 	TextView tv_warning_code;
-
+	
 	/**
 	 * @Title: main
 	 * @Description: TODO
@@ -265,85 +244,66 @@ public class AddBankActivity extends MainActionBarActivity {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("添加银行卡");
 		shake_animation = AnimationUtils.loadAnimation(this, R.anim.shake);
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		initDatas();
 	}
-
 	private void initDatas() {
 		tv_bank.setText(banks[checkedBank]);
-
 		info_ets.add(et_card);
 		info_ets.add(et_address);
 		info_ets.add(et_code);
-
 		warning_tvs.add(tv_warning_card);
 		// warning_tvs.add(tv_warning_bank);
 		warning_tvs.add(tv_warning_address);
 		warning_tvs.add(tv_warning_code);
-
 		for (EditText et : info_ets)
 			et.addTextChangedListener(watcher);
 	}
-
+	
 	private TextWatcher watcher = new TextWatcher() {
-
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
-
 			for (int i = 0; i < info_ets.size(); i++) {
 				EditText et = info_ets.get(i);
 				String text = et.getText().toString();
 				if (!TextUtils.isEmpty(text))
 					warning_tvs.get(i).setVisibility(View.GONE);
 			}
-
 		}
-
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
 		}
-
 		@Override
 		public void afterTextChanged(Editable s) {
-
 		}
 	};
-
+	
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
-
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
-
 	}
-
 	@Override
 	public Boolean showHeadView() {
-
 		return true;
 	}
-
 	private void startSmsService() {
 		service = new Intent(this, SmsService.class);
 		startService(service);
-
 		IntentFilter filter = new IntentFilter(Utils.GET_CODE_ACTION);
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
 		this.registerReceiver(receiver, filter);
 	}
-
+	
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
-
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
@@ -358,5 +318,4 @@ public class AddBankActivity extends MainActionBarActivity {
 			unregisterReceiver(receiver);
 		}
 	};
-
 }

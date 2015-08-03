@@ -17,6 +17,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.view.View;
 import com.yoopoon.home.MainActionBarActivity;
@@ -36,7 +37,6 @@ import com.yoopoon.home.ui.home.FramMainActivity_;
 @EActivity(R.layout.setting_main_view)
 public class SettingActivity extends MainActionBarActivity {
 	// [start] onClick
-
 	/**
 	 * @Title: settingPersonInfo
 	 * @Description: 个人信息设置点击事件
@@ -82,7 +82,6 @@ public class SettingActivity extends MainActionBarActivity {
 	}
 
 	// [end]
-
 	/**
 	 * @Title: initUI
 	 * @Description: 初始化界面
@@ -92,6 +91,7 @@ public class SettingActivity extends MainActionBarActivity {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("设置");
 	}
 
@@ -102,18 +102,14 @@ public class SettingActivity extends MainActionBarActivity {
 
 	@Override
 	public void titleButtonClick(View v) {
-
 	}
 
 	@Override
 	public void rightButtonClick(View v) {
-
 	}
 
 	@Override
 	public Boolean showHeadView() {
-
 		return true;
 	}
-
 }

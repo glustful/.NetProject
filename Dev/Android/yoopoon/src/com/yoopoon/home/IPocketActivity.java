@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.graphics.Color;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -55,7 +56,6 @@ import com.yoopoon.home.ui.login.HomeLoginActivity_;
 public class IPocketActivity extends MainActionBarActivity {
 	@ViewById(R.id.lv_ipocket_bankcard)
 	ListView lv;
-
 	private MyBankListAdapter adapter;
 	private User user;
 	private static final String TAG = "IPocketActivity";
@@ -80,36 +80,30 @@ public class IPocketActivity extends MainActionBarActivity {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("我的钱包");
-
 		user = User.lastLoginUser(this);
 		if (user == null)
 			HomeLoginActivity_.intent(this).isManual(true).start();
-
 		lv.setOnItemLongClickListener(new MyLongClickListener());
 	}
 
 	private class MyLongClickListener implements OnItemLongClickListener {
-
 		@Override
 		public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 			Builder builder = new Builder(IPocketActivity.this);
 			View dialogView = View.inflate(IPocketActivity.this, R.layout.dialog_delete, null);
-
 			builder.setView(dialogView);
 			deleteDialog = builder.show();
 			Button btn_delete = (Button) dialogView.findViewById(R.id.btn_dialog_delete);
 			btn_delete.setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					deleteDialog.dismiss();
 				}
 			});
-
 			return false;
 		}
-
 	}
 
 	private void fillData() {
@@ -128,9 +122,7 @@ public class IPocketActivity extends MainActionBarActivity {
 	}
 
 	protected void request() {
-
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
@@ -147,36 +139,28 @@ public class IPocketActivity extends MainActionBarActivity {
 						}
 						amountMoney = obj.getInt("AmountMoney");
 						fillData();
-
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
 				}
-
 			}
 
 			@Override
 			public void onProgress(ProgressMessage msg) {
-
 			}
 		}.setUrl(MyApplication.getInstance().getString(R.string.url_get_all_banks))
 				.setRequestMethod(RequestMethod.eGet).notifyRequest();
-
 	}
 
 	private class MyBankItemClickListener implements OnItemClickListener {
-
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			BankCashActivity_.intent(IPocketActivity.this).start();
 		}
-
 	}
 
 	private class MyBankListAdapter extends BaseAdapter {
-
 		@Override
 		public int getCount() {
 			return bankDatas.size() + 1;
@@ -199,7 +183,6 @@ public class IPocketActivity extends MainActionBarActivity {
 				btn.setBackgroundResource(R.drawable.addbankcard_selector);
 				btn.setText("+添加银行卡");
 				btn.setOnClickListener(new OnClickListener() {
-
 					@Override
 					public void onClick(View v) {
 						AddBankActivity_.intent(IPocketActivity.this).start();
@@ -212,13 +195,10 @@ public class IPocketActivity extends MainActionBarActivity {
 			Bank bank = bankDatas.get(position);
 			TextView tv_bankname = (TextView) convertView.findViewById(R.id.tv_bankcard_bank);
 			TextView tv_num = (TextView) convertView.findViewById(R.id.tv_bankcard_card);
-
 			tv_bankname.setText(StringUtils.isEmpty(bank.getBankName()) ? "" : bank.getBankName());
 			tv_num.setText("**** **** ****" + bank.getNum());
-
 			return convertView;
 		}
-
 	}
 
 	@Override
@@ -228,17 +208,14 @@ public class IPocketActivity extends MainActionBarActivity {
 
 	@Override
 	public void titleButtonClick(View v) {
-
 	}
 
 	@Override
 	public void rightButtonClick(View v) {
-
 	}
 
 	@Override
 	public Boolean showHeadView() {
-
 		return true;
 	}
 

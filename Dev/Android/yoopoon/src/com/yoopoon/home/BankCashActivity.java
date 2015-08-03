@@ -14,6 +14,8 @@ package com.yoopoon.home;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+
+import android.graphics.Color;
 import android.view.View;
 
 /**
@@ -24,7 +26,6 @@ import android.view.View;
  */
 @EActivity(R.layout.activity_bank_takecash)
 public class BankCashActivity extends MainActionBarActivity {
-
 	/**
 	 * @Title: main
 	 * @Description: TODO
@@ -35,28 +36,21 @@ public class BankCashActivity extends MainActionBarActivity {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("银行卡现金详情");
 	}
-
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
-
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
-
 	}
-
 	@Override
 	public Boolean showHeadView() {
-
 		return true;
 	}
-
 }

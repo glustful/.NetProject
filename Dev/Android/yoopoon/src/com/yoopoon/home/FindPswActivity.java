@@ -22,6 +22,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.text.Editable;
@@ -88,7 +89,6 @@ public class FindPswActivity extends MainActionBarActivity {
 	RelativeLayout rl_progress;
 	@ViewById(R.id.tv_warning_code)
 	TextView tv_warning_code;
-
 	private Animation shake_animation;
 	private int countTimer = 60;
 	private Handler handler = new Handler();
@@ -116,7 +116,6 @@ public class FindPswActivity extends MainActionBarActivity {
 		String json = "{\"Mobile\":\"" + phone + "\",\"SmsType\":\"" + smsType + "\"}";
 		startSmsService();
 		SmsUtils.requestIdentifyCode(this, json, new RequestSMSListener() {
-
 			@Override
 			public void succeed(String code) {
 				hidm = code;
@@ -126,19 +125,15 @@ public class FindPswActivity extends MainActionBarActivity {
 			public void fail(String msg) {
 				showErr(msg);
 			}
-
 		});
 		setGetCodeEnable(false);
-
 		handler.postDelayed(new Runnable() {
-
 			@Override
 			public void run() {
 				setGetCodeEnable(true);
 				countTimer = 60;
 			}
 		}, 60000);
-
 	}
 
 	@Click(R.id.ib_findpsw_clean_confirm)
@@ -161,35 +156,29 @@ public class FindPswActivity extends MainActionBarActivity {
 	// Yzm: "105982"
 	// first_password: "123456"
 	// second_password: "123456"
-
 	@Click(R.id.btn_findpsw_ok)
 	void findPsw() {
 		String code = et_code.getText().toString().trim();
 		String psw_new = et_new.getText().toString();
 		String psw_confirm = et_confirm.getText().toString();
 		String phone = et_phone.getText().toString().trim();
-
 		tv_warning_new.setVisibility(View.GONE);
 		tv_warning_new.setVisibility(View.GONE);
-
 		if (TextUtils.isEmpty(code)) {
 			et_code.startAnimation(shake_animation);
 			tv_warning_code.setVisibility(View.VISIBLE);
 			vibrator.vibrate(500);
 			return;
 		}
-
 		if (TextUtils.isEmpty(phone)) {
 			textWarning(et_phone);
 			tv_warning_phone.setVisibility(View.VISIBLE);
 			return;
 		}
-
 		if (!RegxUtils.isPhone(phone)) {
 			showErr("请输入正确的手机号码");
 			return;
 		}
-
 		if (TextUtils.isEmpty(psw_new)) {
 			textWarning(et_new);
 			tv_warning_new.setText("请输入新密码");
@@ -211,25 +200,19 @@ public class FindPswActivity extends MainActionBarActivity {
 			tv_warning_new.setVisibility(View.VISIBLE);
 			return;
 		}
-
 		if (!psw_confirm.equals(psw_new)) {
 			return;
 		}
-
 		YzmWithPsw yzmWithPsw = new YzmWithPsw(hidm, phone, code, psw_new, psw_confirm);
-
 		findPswTask(yzmWithPsw);
-
 	}
 
 	void findPswTask(final YzmWithPsw yzmWithPsw) {
 		rl_progress.setVisibility(View.VISIBLE);
 		new SerializerJSON(new SerializeListener() {
-
 			@Override
 			public String onSerialize() {
 				ObjectMapper om = new ObjectMapper();
-
 				try {
 					return om.writeValueAsString(yzmWithPsw);
 				} catch (JsonProcessingException e) {
@@ -242,23 +225,18 @@ public class FindPswActivity extends MainActionBarActivity {
 			@Override
 			public void onComplete(String serializeResult) {
 				if (serializeResult == null || serializeResult.equals("")) {
-
 					return;
 				}
-
 				requestFindPsw(serializeResult);
-
 			}
 		}).execute();
 	}
 
 	void requestFindPsw(String json) {
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				rl_progress.setVisibility(View.GONE);
-
 				if (data.getMsg().contains("成功")) {
 					Toast.makeText(FindPswActivity.this, "修改成功，请登陆", Toast.LENGTH_SHORT).show();
 					HomeLoginActivity_.intent(FindPswActivity.this).isManual(true).start();
@@ -267,13 +245,11 @@ public class FindPswActivity extends MainActionBarActivity {
 					showErr(data.getMsg());
 					clear();
 				}
-
 			}
 
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
-
 			}
 		}.setUrl(getString(R.string.url_findpsw)).SetJSON(json).notifyRequest();
 	}
@@ -283,7 +259,6 @@ public class FindPswActivity extends MainActionBarActivity {
 		tv_err.setVisibility(View.VISIBLE);
 		tv_err.startAnimation(anim_open_err);
 		handler.postDelayed(new Runnable() {
-
 			@Override
 			public void run() {
 				tv_err.startAnimation(anim_hide_err);
@@ -311,11 +286,9 @@ public class FindPswActivity extends MainActionBarActivity {
 			btn_getcode.setBackgroundResource(R.drawable.btn_not_enable);
 			timer = new Timer();
 			task = new TimerTask() {
-
 				@Override
 				public void run() {
 					runOnUiThread(new Runnable() {
-
 						@Override
 						public void run() {
 							String text = "重新获取验证码(" + countTimer-- + "s)";
@@ -335,8 +308,10 @@ public class FindPswActivity extends MainActionBarActivity {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("找回密码");
 		shake_animation = AnimationUtils.loadAnimation(this, R.anim.shake);
+
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 		et_confirm.addTextChangedListener(watcher);
@@ -344,6 +319,9 @@ public class FindPswActivity extends MainActionBarActivity {
 		et_phone.addTextChangedListener(watcher);
 		et_code.addTextChangedListener(watcher);
 
+		et_confirm.addTextChangedListener(watcher);
+		et_new.addTextChangedListener(watcher);
+		et_phone.addTextChangedListener(watcher);
 		anim_open_err = AnimationUtils.loadAnimation(this, R.anim.push_down_in);
 
 		anim_hide_err = AnimationUtils.loadAnimation(this, R.anim.push_top_out);
@@ -375,7 +353,6 @@ public class FindPswActivity extends MainActionBarActivity {
 	}
 
 	private TextWatcher watcher = new TextWatcher() {
-
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
 			String psw_new = et_new.getText().toString();
@@ -396,17 +373,14 @@ public class FindPswActivity extends MainActionBarActivity {
 				tv_warning_confirm.setText("两次输入的密码不一致");
 				tv_warning_confirm.setVisibility(View.VISIBLE);
 			}
-
 		}
 
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
 		}
 
 		@Override
 		public void afterTextChanged(Editable s) {
-
 		}
 	};
 
@@ -417,17 +391,14 @@ public class FindPswActivity extends MainActionBarActivity {
 
 	@Override
 	public void titleButtonClick(View v) {
-
 	}
 
 	@Override
 	public void rightButtonClick(View v) {
-
 	}
 
 	@Override
 	public Boolean showHeadView() {
-
 		return true;
 	}
 
@@ -439,14 +410,12 @@ public class FindPswActivity extends MainActionBarActivity {
 	private void startSmsService() {
 		service = new Intent(this, SmsService.class);
 		startService(service);
-
 		IntentFilter filter = new IntentFilter(Utils.GET_CODE_ACTION);
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
 		this.registerReceiver(receiver, filter);
 	}
 
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
-
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
@@ -461,5 +430,4 @@ public class FindPswActivity extends MainActionBarActivity {
 			unregisterReceiver(receiver);
 		}
 	};
-
 }

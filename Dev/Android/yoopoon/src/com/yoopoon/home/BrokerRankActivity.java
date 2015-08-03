@@ -15,6 +15,8 @@ package com.yoopoon.home;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,22 +35,21 @@ import android.widget.TextView;
 public class BrokerRankActivity extends MainActionBarActivity {
 	@ViewById(R.id.lv_broker)
 	ListView lv;
-
+	
 	@AfterViews
 	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("经纪人排名");
 		initListView();
 	}
-
 	private void initListView() {
 		lv.setAdapter(new MyBrokerRankAdapter());
 	}
-
+	
 	private class MyBrokerRankAdapter extends BaseAdapter {
-
 		/*
 		 * (non Javadoc)
 		 * @Title: getCount
@@ -60,7 +61,6 @@ public class BrokerRankActivity extends MainActionBarActivity {
 		public int getCount() {
 			return 3;
 		}
-
 		/*
 		 * (non Javadoc)
 		 * @Title: getItem
@@ -74,7 +74,6 @@ public class BrokerRankActivity extends MainActionBarActivity {
 			// TODO Auto-generated method stub
 			return null;
 		}
-
 		/*
 		 * (non Javadoc)
 		 * @Title: getItemId
@@ -88,7 +87,6 @@ public class BrokerRankActivity extends MainActionBarActivity {
 			// TODO Auto-generated method stub
 			return 0;
 		}
-
 		/*
 		 * (non Javadoc)
 		 * @Title: getView
@@ -107,7 +105,6 @@ public class BrokerRankActivity extends MainActionBarActivity {
 			TextView tv_money = (TextView) convertView.findViewById(R.id.tv_rank_money);
 			ImageView iv_medal = (ImageView) convertView.findViewById(R.id.iv_rank_medal);
 			ImageView iv_trend = (ImageView) convertView.findViewById(R.id.iv_broker_rank_trend);
-
 			if (position == 0) {
 				tv_desc.setText("金牌经纪人");
 				tv_money.setText("获得佣金：2w");
@@ -123,27 +120,20 @@ public class BrokerRankActivity extends MainActionBarActivity {
 			}
 			return convertView;
 		}
-
 	}
-
+	
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
-
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
-
 	}
-
 	@Override
 	public Boolean showHeadView() {
-
 		return true;
 	}
 }

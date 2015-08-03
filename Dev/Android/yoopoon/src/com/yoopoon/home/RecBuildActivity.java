@@ -20,6 +20,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import android.graphics.Color;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.view.Gravity;
@@ -59,7 +60,6 @@ public class RecBuildActivity extends MainActionBarActivity {
 	PullToRefreshListView lv;
 	@ViewById(R.id.ll_progress)
 	LinearLayout ll_progress;
-
 	// private static final String TAG = "RecBuildActivity";
 	private List<JSONObject> datas = new ArrayList<JSONObject>();
 	private MyRecsBuildAdapter adapter;
@@ -71,6 +71,7 @@ public class RecBuildActivity extends MainActionBarActivity {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("推荐楼盘");
 		init();
 		requestBrandList();
@@ -118,7 +119,6 @@ public class RecBuildActivity extends MainActionBarActivity {
 	void requestBrandList() {
 		ll_progress.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				lv.onRefreshComplete();
@@ -164,7 +164,6 @@ public class RecBuildActivity extends MainActionBarActivity {
 	}
 
 	private class MyRecsBuildAdapter extends BaseAdapter {
-
 		@Override
 		public int getCount() {
 			return datas.size();
@@ -208,9 +207,7 @@ public class RecBuildActivity extends MainActionBarActivity {
 			mHolder.tv_call.setTag(Tools.optString(parameter, "来电咨询", ""));
 			String preferential = parameter.optString("最高优惠");
 			mHolder.tv_detail1.setText(item.optString("SubTitle", ""));
-
 			mHolder.tv_call.setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					String phone = (String) v.getTag();
@@ -219,26 +216,19 @@ public class RecBuildActivity extends MainActionBarActivity {
 					} else {
 						Toast.makeText(RecBuildActivity.this, "抱歉，暂时没有该楼盘电话", Toast.LENGTH_SHORT).show();
 					}
-
 				}
 			});
-
 			mHolder.tv_guest.setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					BrandDetail2Activity_.intent(RecBuildActivity.this).mJson(item.toString()).start();
-
 				}
 			});
-
 			mHolder.iv.setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					BrandDetail2Activity_.intent(RecBuildActivity.this).mJson(item.toString()).start();
 					// BrandDetailActivity_.intent(mContext).mJson(item.toString()).start();
-
 				}
 			});
 			return convertView;
@@ -246,7 +236,6 @@ public class RecBuildActivity extends MainActionBarActivity {
 	}
 
 	class Holder {
-
 		ImageView iv;
 		TextView tv_detail1;
 		TextView tv_detail2;
@@ -271,18 +260,14 @@ public class RecBuildActivity extends MainActionBarActivity {
 
 	@Override
 	public void titleButtonClick(View v) {
-
 	}
 
 	@Override
 	public void rightButtonClick(View v) {
-
 	}
 
 	@Override
 	public Boolean showHeadView() {
-
 		return true;
 	}
-
 }

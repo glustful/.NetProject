@@ -66,7 +66,6 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 	private MyPartnerListAdapter adapter;
 	private String[] names = { "钱德勒", "莫妮卡", "格蕾丝", "威尔", "Grace", "Will", "Chandler", "Rachel", "Monica", "Ross",
 			"Mood", "莫德", "sue", "苏", "Moening", "莫宁", "Alice", "爱丽丝" };
-
 	private static final String TAG = "IRecommendActivity";
 	private String[] showNameList;
 
@@ -75,6 +74,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("推荐经纪人");
 		btn_add.setOnClickListener(this);
 		lv.setOnItemClickListener(new MyItemClickListener());
@@ -83,7 +83,6 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 	}
 
 	private class MyItemClickListener implements OnItemClickListener {
-
 		/*
 		 * (non Javadoc)
 		 * @Title: onItemClick
@@ -102,7 +101,6 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 			if (!name.startsWith("*****"))
 				PartnerDetailActivity_.intent(IRecommendActivity.this).start();
 		}
-
 	}
 
 	private void fillData() {
@@ -115,13 +113,11 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 	}
 
 	private static class ViewHolder {
-
 		TextView tv_name;
 		ImageView iv_avater;
 	}
 
 	private class MyPartnerListAdapter extends BaseAdapter {
-
 		/*
 		 * (non Javadoc)
 		 * @Title: getCount
@@ -181,7 +177,6 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 				tv.setPadding(10, 0, 0, 0);
 				return tv;
 			}
-
 			ViewHolder holder = null;
 			if (convertView == null || !(convertView instanceof LinearLayout))
 				convertView = View.inflate(IRecommendActivity.this, R.layout.item_partner, null);
@@ -193,10 +188,8 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 				convertView.setTag(holder);
 			}
 			holder.tv_name.setText(showName);
-
 			return convertView;
 		}
-
 	}
 
 	@Override
@@ -206,17 +199,14 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 
 	@Override
 	public void titleButtonClick(View v) {
-
 	}
 
 	@Override
 	public void rightButtonClick(View v) {
-
 	}
 
 	@Override
 	public Boolean showHeadView() {
-
 		return true;
 	}
 
@@ -255,7 +245,6 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 					recommendBroker(phone);
 					setRecommendEnable(false);
 					CountDownTimer timer = new CountDownTimer(60000, 1000) {
-
 						@Override
 						public void onTick(long millisUntilFinished) {
 							bt_invite.setText("邀请(" + millisUntilFinished / 1000 + ")");
@@ -264,14 +253,12 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 						@Override
 						public void onFinish() {
 							setRecommendEnable(true);
-
 						}
 					};
 					timer.start();
 				}
 				break;
 		}
-
 	}
 
 	private void setRecommendEnable(boolean enable) {
@@ -297,19 +284,15 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 			startMills = System.currentTimeMillis();
 			requesting();
 			SmsUtils.requestIdentifyCode(this, json, listener);
-
 		}
-
 	}
 
 	private void requesting() {
 		timer = new Timer();
 		task = new TimerTask() {
-
 			@Override
 			public void run() {
 				runOnUiThread(new Runnable() {
-
 					@Override
 					public void run() {
 						if (count == 5)
@@ -326,14 +309,12 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 	}
 
 	RequestSMSListener listener = new RequestSMSListener() {
-
 		@Override
 		public void succeed(final String code) {
 			long duration = System.currentTimeMillis() - startMills;
 			Log.i(TAG, "lis.succeed:" + code);
 			if (duration < 2000) {
 				handler.postDelayed(new Runnable() {
-
 					@Override
 					public void run() {
 						timer.cancel();
@@ -356,7 +337,6 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 			long duration = System.currentTimeMillis() - startMills;
 			if (duration < 2000) {
 				handler.postDelayed(new Runnable() {
-
 					@Override
 					public void run() {
 						timer.cancel();
@@ -374,9 +354,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 				tv_warning.setVisibility(View.VISIBLE);
 			}
 		}
-
 	};
-
 	Button bt_cancel;
 	Button bt_invite;
 	Dialog dialog;
@@ -393,11 +371,8 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 		et_phone = (EditText) addView.findViewById(R.id.et_partner_phone);
 		tv_warning = (TextView) addView.findViewById(R.id.tv_addpartner_warning);
 		tv_title = (TextView) addView.findViewById(R.id.tv_add_title);
-
 		tv_title.setText("添加经纪人");
-
 		dialog = builder.show();
-
 		bt_cancel.setOnClickListener(this);
 		bt_invite.setOnClickListener(this);
 	}
@@ -414,5 +389,4 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 			dialog.dismiss();
 		super.onDestroy();
 	}
-
 }

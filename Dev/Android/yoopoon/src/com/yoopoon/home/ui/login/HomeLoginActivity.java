@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -106,6 +107,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		this.rightButton.setVisibility(View.INVISIBLE);
 		this.backButton.setVisibility(View.VISIBLE);
 		this.backButton.setText("返回");
+		this.backButton.setTextColor(Color.WHITE);
 		SpannableString span = new SpannableString(this.registerButton.getText());
 		ForegroundColorSpan fgcs = new ForegroundColorSpan(getResources().getColor(R.color.second_red));
 		span.setSpan(fgcs, span.length() - 2, span.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -188,7 +190,6 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		if (cookieFile.exists()) {
 			cookieFile.delete();
 		}
-
 		RequestTask.setmCookieStore(null);
 		String eMail = mUser.getPhone();
 		String pwd = mUser.getPassword();
@@ -206,7 +207,6 @@ public class HomeLoginActivity extends MainActionBarActivity {
 				FramMainActivity_.intent(mContext).start();
 				finish();
 			}
-
 		}
 		mAutoCheck.setChecked(auto);
 	}
@@ -224,7 +224,6 @@ public class HomeLoginActivity extends MainActionBarActivity {
 	}
 
 	public Handler handler = new Handler() {
-
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_HIDE_ERROR) {
@@ -235,7 +234,6 @@ public class HomeLoginActivity extends MainActionBarActivity {
 
 	private void clearError() {
 		TimerTask task = new TimerTask() {
-
 			@Override
 			public void run() {
 				Message msg = Message.obtain(handler, MSG_HIDE_ERROR, null);
@@ -260,7 +258,6 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		mUser.setPassword(pwd);
 		mUser.setRemember(auto);
 		mUser.login(new LoginListener() {
-
 			@Override
 			public void success(final User user) {
 				new SerializerJSON(new SerializeListener() {
@@ -304,7 +301,6 @@ public class HomeLoginActivity extends MainActionBarActivity {
 	}
 
 	View.OnClickListener onLogin = new View.OnClickListener() {
-
 		@Override
 		public void onClick(View view) {
 			String eMail = mEmailText.getText().toString();
@@ -388,7 +384,6 @@ public class HomeLoginActivity extends MainActionBarActivity {
 	 * @Description: TODO
 	 * @param serializeResult json数据
 	 */
-
 	public void saveInfoToSp(String serializeResult) {
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 		Editor editor = sp.edit();
@@ -406,7 +401,6 @@ public class HomeLoginActivity extends MainActionBarActivity {
 			editor.putString("userId", userId);
 			editor.putBoolean("isBroker", isBroker);
 			editor.putBoolean("remember", remember);
-
 			editor.commit();
 			sendLoginSuccessBroadcast();
 		} catch (JSONException e) {
@@ -419,5 +413,4 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		intent.addCategory(Intent.CATEGORY_DEFAULT);
 		sendBroadcast(intent);
 	}
-
 }

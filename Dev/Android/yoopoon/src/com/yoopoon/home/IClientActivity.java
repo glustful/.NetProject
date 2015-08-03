@@ -16,12 +16,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.graphics.Color;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +37,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.yoopoon.home.anim.ExpandAnimation;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
@@ -62,20 +66,20 @@ public class IClientActivity extends MainActionBarActivity {
 	private int page = 1;
 	private final int pageSize = 10;
 	private Handler handler = new Handler();
-
+	
 	@AfterViews
 	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("我的客户");
 		initParams();
 		lv.setOnScrollListener(new MyScrollListener());
 		requestData();
 	}
-
+	
 	private class MyScrollListener implements OnScrollListener {
-
 		@Override
 		public void onScrollStateChanged(AbsListView view, int scrollState) {
 			if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
@@ -89,32 +93,26 @@ public class IClientActivity extends MainActionBarActivity {
 				}
 			}
 		}
-
 		@Override
 		public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
 		}
 	}
-
+	
 	private HashMap<String, String> params = new HashMap<String, String>();
-
+	
 	private void initParams() {
 		params.clear();
 		params.put("page", String.valueOf(page++));
 		params.put("pageSize", "10");
 	}
-
 	private void requestData() {
 		ll_loading.setVisibility(View.VISIBLE);
 		handler.postDelayed(new Runnable() {
-
 			@Override
 			public void run() {
 				new RequestAdapter() {
-
 					@Override
 					public void onReponse(ResponseData data) {
-
 						if (data.getResultState() == ResultState.eSuccess) {
 							JSONObject dataObj = data.getJsonObject2();
 							if (dataObj != null) {
@@ -164,21 +162,16 @@ public class IClientActivity extends MainActionBarActivity {
 							}
 						}
 					}
-
 					@Override
 					public void onProgress(ProgressMessage msg) {
 						// TODO Auto-generated method stub
-
 					}
 					// + "/?page=1&pageSize=10"
 				}.setUrl(getString(R.string.url_get_my_clients)).addParam(params).setRequestMethod(RequestMethod.eGet)
 						.notifyRequest();
-
 			}
 		}, 2000);
-
 	}
-
 	private void fillData() {
 		if (adapter == null) {
 			adapter = new MyClientListAdapter();
@@ -187,9 +180,8 @@ public class IClientActivity extends MainActionBarActivity {
 			adapter.notifyDataSetChanged();
 		}
 	}
-
+	
 	private class MyClientListAdapter extends BaseAdapter {
-
 		/*
 		 * (non Javadoc)
 		 * @Title: getCount
@@ -202,7 +194,6 @@ public class IClientActivity extends MainActionBarActivity {
 			// TODO Auto-generated method stub
 			return guestInfos.size();
 		}
-
 		/*
 		 * (non Javadoc)
 		 * @Title: getItem
@@ -216,7 +207,6 @@ public class IClientActivity extends MainActionBarActivity {
 			// TODO Auto-generated method stub
 			return null;
 		}
-
 		/*
 		 * (non Javadoc)
 		 * @Title: getItemId
@@ -230,22 +220,18 @@ public class IClientActivity extends MainActionBarActivity {
 			// TODO Auto-generated method stub
 			return 0;
 		}
-
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			final GuestInfo info = guestInfos.get(position);
 			convertView = View.inflate(IClientActivity.this, R.layout.item_iclient, null);
-
 			TextView tv_title = (TextView) convertView.findViewById(R.id.tv_iclient_title);
 			TextView tv_style = (TextView) convertView.findViewById(R.id.tv_iclient_housestyle);
 			TextView tv_phone = (TextView) convertView.findViewById(R.id.tv_iclient_phone);
 			TextView tv_showprogress = (TextView) convertView.findViewById(R.id.tv_iclient_showprogress);
 			final LinearLayout progress = (LinearLayout) convertView.findViewById(R.id.ll_iclient_progress);
 			final String status = info.getStatus();
-
 			progress.setVisibility(View.GONE);
 			progress.setTag(position);
-
 			View detail_progress = null;
 			switch (info.num) {
 				case 1:
@@ -264,13 +250,10 @@ public class IClientActivity extends MainActionBarActivity {
 			progress.addView(detail_progress);
 			if (info.isProgressShown())
 				progress.setVisibility(View.VISIBLE);
-
 			tv_title.setText(info.getStrType() + "  " + info.getClientName());
 			tv_style.setText(info.getHouseType() + "   " + info.getHouses());
 			tv_phone.setText(info.getPhone());
-
 			tv_showprogress.setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					if (last_shown_progress != null && last_shown_progress.getTag() != progress.getTag()) {
@@ -279,39 +262,28 @@ public class IClientActivity extends MainActionBarActivity {
 						int last_position = (Integer) last_shown_progress.getTag();
 						guestInfos.get(last_position).setProgressShown(false);
 					}
-
 					ExpandAnimation ea = new ExpandAnimation(progress, 300);
-
 					progress.startAnimation(ea);
 					info.setProgressShown(ea.toggle());
 					last_shown_progress = ea.toggle() ? progress : null;
-
 				}
 			});
-
 			return convertView;
 		}
 	}
-
+	
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
-
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
-
 	}
-
 	@Override
 	public Boolean showHeadView() {
-
 		return true;
 	}
-
 }
