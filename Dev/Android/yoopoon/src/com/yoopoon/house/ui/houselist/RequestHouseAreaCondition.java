@@ -36,15 +36,15 @@ public class RequestHouseAreaCondition {
 	/** 
 	 * @Title: requestHouseProvinceArea 
 	 * @Description: 获取楼盘省份数据
-	 * @param callback
+	 * @param mCallback
 	 */
-	public static void requestHouseProvinceArea(final Callback callback) {
+	public static void requestHouseProvinceArea(final Callback mCallback) {
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
 					JSONArray list = data.getMRootData().optJSONArray("AreaList");
-					callback.callback(list);
+					mCallback.callback(list);
 				}
 			}
 			@Override
