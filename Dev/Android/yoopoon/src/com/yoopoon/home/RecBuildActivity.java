@@ -15,13 +15,11 @@ package com.yoopoon.home;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import android.graphics.Color;
 import android.text.Html;
 import android.text.format.DateUtils;
@@ -37,7 +35,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -68,7 +65,7 @@ public class RecBuildActivity extends MainActionBarActivity {
 	private MyRecsBuildAdapter adapter;
 	private ListView refreshView;
 	private HashMap<String, String> parameter;
-	
+
 	@AfterViews
 	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
@@ -79,6 +76,7 @@ public class RecBuildActivity extends MainActionBarActivity {
 		init();
 		requestBrandList();
 	}
+
 	private void init() {
 		lv.setOnRefreshListener(new HowWillIrefresh());
 		lv.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
@@ -87,7 +85,7 @@ public class RecBuildActivity extends MainActionBarActivity {
 		refreshView.setFadingEdgeLength(0);
 		initParameter();
 	}
-	
+
 	class HowWillIrefresh implements PullToRefreshBase.OnRefreshListener2<ListView> {
 		@Override
 		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -95,13 +93,14 @@ public class RecBuildActivity extends MainActionBarActivity {
 					DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
 			refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 		}
+
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 			autoIncreatePage();
 			requestBrandList();
 		}
 	}
-	
+
 	private void initParameter() {
 		if (parameter == null) {
 			parameter = new HashMap<String, String>();
@@ -112,9 +111,11 @@ public class RecBuildActivity extends MainActionBarActivity {
 		parameter.put("pageSize", "6");
 		parameter.put("type", "all");
 	}
+
 	private void autoIncreatePage() {
 		parameter.put("page", (Integer.parseInt(parameter.get("page")) + 1) + "");
 	}
+
 	void requestBrandList() {
 		ll_progress.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
@@ -138,6 +139,7 @@ public class RecBuildActivity extends MainActionBarActivity {
 				}
 				ll_progress.setVisibility(View.GONE);
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
@@ -145,11 +147,13 @@ public class RecBuildActivity extends MainActionBarActivity {
 		}.setUrl(getString(R.string.url_brand_GetAllBrand)).setRequestMethod(RequestMethod.eGet).addParam(parameter)
 				.notifyRequest();
 	}
+
 	void descCount() {
 		int page = Integer.parseInt(parameter.get("page"));
 		page = page > 1 ? page - 1 : 1;
 		parameter.put("page", page + "");
 	}
+
 	private void fillData() {
 		if (adapter == null) {
 			adapter = new MyRecsBuildAdapter();
@@ -158,20 +162,23 @@ public class RecBuildActivity extends MainActionBarActivity {
 			adapter.notifyDataSetChanged();
 		}
 	}
-	
+
 	private class MyRecsBuildAdapter extends BaseAdapter {
 		@Override
 		public int getCount() {
 			return datas.size();
 		}
+
 		@Override
 		public Object getItem(int position) {
 			return datas.get(position);
 		}
+
 		@Override
 		public long getItemId(int position) {
 			return position;
 		}
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Holder mHolder;
@@ -227,7 +234,7 @@ public class RecBuildActivity extends MainActionBarActivity {
 			return convertView;
 		}
 	}
-	
+
 	class Holder {
 		ImageView iv;
 		TextView tv_detail1;
@@ -235,7 +242,7 @@ public class RecBuildActivity extends MainActionBarActivity {
 		TextView tv_right;
 		TextView tv_call;
 		TextView tv_guest;
-		
+
 		void init(View root) {
 			iv = (ImageView) root.findViewById(R.id.iv_rec);
 			tv_detail1 = (TextView) root.findViewById(R.id.tv_recs_detail);
@@ -245,17 +252,20 @@ public class RecBuildActivity extends MainActionBarActivity {
 			tv_guest = (TextView) root.findViewById(R.id.tv_rec_guest);
 		}
 	}
-	
+
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		return true;

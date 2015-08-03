@@ -13,16 +13,13 @@
 package com.yoopoon.home.ui.me;
 
 import java.io.File;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.view.View;
-
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
 import com.yoopoon.home.SecuritySettingActivity_;
@@ -48,6 +45,7 @@ public class SettingActivity extends MainActionBarActivity {
 	void settingPersonInfo() {
 		PersonSettingActivity_.intent(this).start();
 	}
+
 	/**
 	 * @Title: settingSecurity
 	 * @Description: 安全设置点击事件
@@ -56,6 +54,7 @@ public class SettingActivity extends MainActionBarActivity {
 	void settingSecurity() {
 		SecuritySettingActivity_.intent(this).start();
 	}
+
 	/**
 	 * @Title: logout
 	 * @Description: 登出
@@ -75,11 +74,13 @@ public class SettingActivity extends MainActionBarActivity {
 		FramMainActivity_.intent(this).start();
 		finish();
 	}
+
 	private void sendLogoutBroadcast() {
 		Intent intent = new Intent("com.yoopoon.logout_action");
 		intent.addCategory(Intent.CATEGORY_DEFAULT);
 		this.sendBroadcast(intent);
 	}
+
 	// [end]
 	/**
 	 * @Title: initUI
@@ -93,16 +94,20 @@ public class SettingActivity extends MainActionBarActivity {
 		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("设置");
 	}
+
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		return true;

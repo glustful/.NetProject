@@ -14,23 +14,23 @@ package com.yoopoon.home;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +38,6 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.common.base.utils.SmsUtils;
@@ -96,7 +95,8 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 	private Animation anim_open_err;
 	private Animation anim_hide_err;
 	private Intent service;
-	
+	private Vibrator vibrator;
+
 	@Click(R.id.btn_security_setting_getcode)
 	void getCode() {
 		User user = User.lastLoginUser(this);
@@ -112,6 +112,7 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 			public void succeed(String code) {
 				hidm = code;
 			}
+
 			@Override
 			public void fail(String msg) {
 				clear();
@@ -128,18 +129,22 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		}, 60000);
 		timer.schedule(task, 0, 1000);
 	}
+
 	@Click(R.id.ib_security_clean_confirm)
 	void cleanConfirm() {
 		et_confirm.setText("");
 	}
+
 	@Click(R.id.ib_security_clean_new)
 	void cleanNew() {
 		et_new.setText("");
 	}
+
 	@Click(R.id.ib_security_clean_old)
 	void cleanOld() {
 		et_old.setText("");
 	}
+
 	private void setGetCodeEnable(boolean enable) {
 		btn_getcode.setBackgroundResource(R.drawable.cycle_selector);
 		if (!enable) {
@@ -165,6 +170,7 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		btn_getcode.setClickable(enable);
 		tv_time.setVisibility(enable ? View.GONE : View.VISIBLE);
 	}
+
 	@Click(R.id.btn_security_setting_save)
 	void changepsw() {
 		String newPsw = et_new.getText().toString();
@@ -172,19 +178,19 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		String confirmPsw = et_confirm.getText().toString();
 		String code = et_code.getText().toString();
 		if (TextUtils.isEmpty(oldPsw)) {
-			et_old.startAnimation(shake_animation);
+			textWarning(et_old);
 			return;
 		}
 		if (TextUtils.isEmpty(newPsw)) {
-			et_new.startAnimation(shake_animation);
+			textWarning(et_new);
 			return;
 		}
 		if (TextUtils.isEmpty(confirmPsw)) {
-			et_confirm.startAnimation(shake_animation);
+			textWarning(et_confirm);
 			return;
 		}
 		if (TextUtils.isEmpty(code)) {
-			et_code.startAnimation(shake_animation);
+			textWarning(et_code);
 			return;
 		}
 		if (!newPsw.equals(confirmPsw)) {
@@ -194,6 +200,7 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		YzmWithPsw2 yzmWithPsw = new YzmWithPsw2(hidm, code, oldPsw, newPsw, confirmPsw);
 		changePswTask(yzmWithPsw);
 	}
+
 	void changePswTask(final YzmWithPsw2 yzmWithPsw) {
 		rl_progress.setVisibility(View.VISIBLE);
 		new SerializerJSON(new SerializeListener() {
@@ -208,6 +215,7 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 				}
 				return null;
 			}
+
 			@Override
 			public void onComplete(String serializeResult) {
 				if (serializeResult == null || serializeResult.equals("")) {
@@ -217,6 +225,7 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 			}
 		}).execute();
 	}
+
 	/**
 	 * @Title: main
 	 * @Description: TODO
@@ -230,13 +239,34 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("安全设置");
 		shake_animation = AnimationUtils.loadAnimation(this, R.anim.shake);
+		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		anim_open_err = AnimationUtils.loadAnimation(this, R.anim.push_down_in);
 		anim_hide_err = AnimationUtils.loadAnimation(this, R.anim.push_top_out);
+		anim_hide_err.setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				tv_err.setVisibility(View.GONE);
+			}
+		});
+
 		et_confirm.addTextChangedListener(watcher);
 		et_new.addTextChangedListener(watcher);
 		et_old.addTextChangedListener(watcher);
 	}
-	
+
 	private TextWatcher watcher = new TextWatcher() {
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -252,16 +282,18 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 				tv_warning.setVisibility(View.VISIBLE);
 			}
 		}
+
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 			// TODO Auto-generated method stub
 		}
+
 		@Override
 		public void afterTextChanged(Editable s) {
 			// TODO Auto-generated method stub
 		}
 	};
-	
+
 	private void requestChangePsw(String json) {
 		new RequestAdapter() {
 			@Override
@@ -276,18 +308,21 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 					showErr(data.getMsg());
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
 			}
 		}.setUrl(getString(R.string.url_change_psw)).SetJSON(json).notifyRequest();
 	}
+
 	private void clear() {
 		et_code.setText("");
 		et_confirm.setText("");
 		et_old.setText("");
 		et_new.setText("");
 	}
+
 	private void showErr(String msg) {
 		tv_err.setText(msg);
 		tv_err.setVisibility(View.VISIBLE);
@@ -296,28 +331,39 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 			@Override
 			public void run() {
 				tv_err.startAnimation(anim_hide_err);
-				tv_err.setVisibility(View.GONE);
+				// tv_err.setVisibility(View.GONE);
 			}
 		}, 3000);
 	}
+
+	private void textWarning(View v) {
+		v.startAnimation(shake_animation);
+		vibrator.vibrate(500);
+	}
+
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		return true;
 	}
+
 	@Override
 	protected void activityYMove() {
 		Utils.hiddenSoftBorad(this);
 	}
+
 	private void startSmsService() {
 		service = new Intent(this, SmsService.class);
 		startService(service);
@@ -325,7 +371,7 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
 		this.registerReceiver(receiver, filter);
 	}
-	
+
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {

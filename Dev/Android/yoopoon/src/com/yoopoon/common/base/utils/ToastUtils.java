@@ -5,10 +5,7 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.widget.Toast;
 
-
 public class ToastUtils {
-
-	
 
 	private static Runnable r = new Runnable() {
 		@Override
@@ -21,17 +18,34 @@ public class ToastUtils {
 	private static Handler mhandler = new Handler();
 
 	public static void showToast(Context mContext, String text, int duration) {
-		if(duration<3000){
+		if (duration < 3000) {
 			duration = 3000;
 		}
 		mhandler.removeCallbacks(r);
 		if (mToast != null)
 			mToast.setText(text);
-		else{
+		else {
 			mToast = Toast.makeText(mContext, text, 3);
 			mToast.setGravity(Gravity.CENTER, 0, 0);
 		}
-		
+
+		mhandler.postDelayed(r, duration);
+
+		mToast.show();
+	}
+
+	public static void showToast(Context mContext, String text, int duration, int gravity) {
+		if (duration < 3000) {
+			duration = 3000;
+		}
+		mhandler.removeCallbacks(r);
+		if (mToast != null)
+			mToast.setText(text);
+		else {
+			mToast = Toast.makeText(mContext, text, 3);
+			mToast.setGravity(gravity, 0, 0);
+		}
+
 		mhandler.postDelayed(r, duration);
 
 		mToast.show();
@@ -39,5 +53,4 @@ public class ToastUtils {
 
 	static Toast mToast;
 
-	
 }

@@ -14,7 +14,6 @@ package com.yoopoon.home;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -22,7 +21,6 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.graphics.Color;
@@ -38,7 +36,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
@@ -65,7 +62,7 @@ public class IPocketActivity extends MainActionBarActivity {
 	private List<Bank> bankDatas = new ArrayList<Bank>();
 	private int amountMoney = 0;
 	private AlertDialog deleteDialog;
-	
+
 	@Click(R.id.btn_ipocket_takecash)
 	void takeCash() {
 		if (amountMoney <= 0) {
@@ -74,10 +71,10 @@ public class IPocketActivity extends MainActionBarActivity {
 		}
 		TakeCash2Activity_.intent(this).start();
 	}
-	
+
 	@ViewById(R.id.tv_ipocket_cash)
 	TextView tv_cash;
-	
+
 	@AfterViews
 	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
@@ -90,7 +87,7 @@ public class IPocketActivity extends MainActionBarActivity {
 			HomeLoginActivity_.intent(this).isManual(true).start();
 		lv.setOnItemLongClickListener(new MyLongClickListener());
 	}
-	
+
 	private class MyLongClickListener implements OnItemLongClickListener {
 		@Override
 		public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -108,7 +105,7 @@ public class IPocketActivity extends MainActionBarActivity {
 			return false;
 		}
 	}
-	
+
 	private void fillData() {
 		tv_cash.setText(String.valueOf(amountMoney));
 		if (adapter == null) {
@@ -118,10 +115,12 @@ public class IPocketActivity extends MainActionBarActivity {
 			adapter.notifyDataSetChanged();
 		}
 	}
+
 	protected void onResume() {
 		request();
 		super.onResume();
 	}
+
 	protected void request() {
 		new RequestAdapter() {
 			@Override
@@ -146,33 +145,37 @@ public class IPocketActivity extends MainActionBarActivity {
 					}
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(MyApplication.getInstance().getString(R.string.url_get_all_banks))
 				.setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
-	
+
 	private class MyBankItemClickListener implements OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			BankCashActivity_.intent(IPocketActivity.this).start();
 		}
 	}
-	
+
 	private class MyBankListAdapter extends BaseAdapter {
 		@Override
 		public int getCount() {
 			return bankDatas.size() + 1;
 		}
+
 		@Override
 		public Object getItem(int position) {
 			return null;
 		}
+
 		@Override
 		public long getItemId(int position) {
 			return 0;
 		}
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (position == bankDatas.size()) {
@@ -197,21 +200,25 @@ public class IPocketActivity extends MainActionBarActivity {
 			return convertView;
 		}
 	}
-	
+
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		return true;
 	}
+
 	@Override
 	protected void onStop() {
 		if (deleteDialog != null) {

@@ -17,14 +17,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -46,7 +44,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -105,7 +102,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	private Timer timer;
 	private TimerTask task;
 	private boolean uploadable = true;
-	
+
 	@Click(R.id.iv_person_setting_avater)
 	void selectAvater() {
 		if (uploadable) {
@@ -114,6 +111,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			this.startActivityForResult(intent, 1);
 		}
 	}
+
 	@Click(R.id.save)
 	void modifyBrokerInfo() {
 		User user = User.lastLoginUser(this);
@@ -155,6 +153,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				Toast.makeText(PersonSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
 				finish();
 			}
+
 			@Override
 			public void fail(String msg) {
 				rl_progress.setVisibility(View.GONE);
@@ -162,6 +161,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			}
 		});
 	}
+
 	private void parseToBroker(final String json) {
 		new ParserJSON(new ParseListener() {
 			@Override
@@ -180,6 +180,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				}
 				return entity;
 			}
+
 			@Override
 			public void onComplete(Object parseResult) {
 				if (parseResult != null) {
@@ -188,6 +189,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			}
 		}).execute();
 	}
+
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			Uri uri = data.getData();
@@ -216,6 +218,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+
 	private File getFile(Uri uri) {
 		try {
 			String[] proj = { MediaStore.Images.Media.DATA };
@@ -230,6 +233,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		}
 		return null;
 	}
+
 	private File getFileByUri(Uri uri) {
 		try {
 			String[] proj = { MediaStore.Images.Media.DATA };
@@ -247,6 +251,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		}
 		return null;
 	}
+
 	private void uploadImage(final File file) {
 		uploadable = false;
 		final String path = getString(R.string.url_host) + getString(R.string.url_upload);
@@ -301,6 +306,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 							}
 						});
 					}
+
 					@Override
 					public void onFailed() {
 						uploadable = true;
@@ -316,6 +322,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			};
 		}.start();
 	}
+
 	/**
 	 * @Title: initUI
 	 * @Description: 初始化界面
@@ -331,6 +338,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		animation_shake = AnimationUtils.loadAnimation(this, R.anim.shake);
 		requestUserInfo();
 	}
+
 	private void requestUserInfo() {
 		User user = User.lastLoginUser(this);
 		if (user == null) {
@@ -364,26 +372,32 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				if (!TextUtils.isEmpty(broker))
 					parseToBroker(broker);
 			}
+
 			@Override
 			public void failed(String msg) {
 				// Log.i(TAG, msg);
 			}
 		});
 	}
+
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		return true;
 	}
+
 	@Override
 	protected void onDestroy() {
 		if (timer != null && task != null) {
@@ -394,6 +408,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		}
 		super.onDestroy();
 	}
+
 	@Override
 	protected void activityYMove() {
 		Utils.hiddenSoftBorad(this);

@@ -46,7 +46,8 @@
 
             <TextView
                 android:id="@+id/tv_findpsw_phone"
-                style="@style/TextView_Warning" />
+                style="@style/TextView_Warning" 
+                android:text="请输入手机号码"/>
 
             <TextView
                 style="@style/TextView_WrapContent"
@@ -69,7 +70,8 @@
 
             <TextView
                 android:id="@+id/tv_findpsw_new"
-                style="@style/TextView_Warning" />
+                style="@style/TextView_Warning"
+                android:text="请输入新密码" />
 
             <TextView
                 style="@style/TextView_WrapContent"
@@ -92,7 +94,8 @@
 
             <TextView
                 android:id="@+id/tv_findpsw_confirm"
-                style="@style/TextView_Warning" />
+                style="@style/TextView_Warning" 
+                android:text="请确认新密码"/>
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -109,10 +112,11 @@
                     android:textColor="@color/little_whitle" />
 
                 <TextView
-                    android:id="@+id/tv_security_time"
+                    android:id="@+id/tv_warning_code"
                     style="@style/TextView_Warning"
                     android:layout_alignBottom="@id/btn_findpsw_getcode"
-                    android:layout_toRightOf="@id/btn_findpsw_getcode" />
+                    android:layout_toRightOf="@id/btn_findpsw_getcode"
+                    android:text="请输入验证码" />
 
                 <EditText
                     android:id="@+id/et_findpsw_code"

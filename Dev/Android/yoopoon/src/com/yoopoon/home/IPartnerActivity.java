@@ -14,17 +14,18 @@ package com.yoopoon.home;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -40,9 +41,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.yoopoon.common.base.utils.RegxUtils;
 import com.yoopoon.common.base.utils.SortNameByOrder;
+import com.yoopoon.common.base.utils.ToastUtils;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.data.user.User.InvitePartnerListener;
 import com.yoopoon.home.domain.Broker;
@@ -67,7 +68,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 			"Mood", "莫德", "sue", "苏", "Moening", "莫宁", "Alice", "爱丽丝" };
 	private static final String TAG = "IPartnerActivity";
 	private String[] showNameList;
-	
+
 	@AfterViews
 	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
@@ -80,7 +81,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		showNameList = SortNameByOrder.getShowNameList(names);
 		fillData();
 	}
-	
+
 	private class MyItemClickListener implements OnItemClickListener {
 		/*
 		 * (non Javadoc)
@@ -101,7 +102,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 				PartnerDetailActivity_.intent(IPartnerActivity.this).start();
 		}
 	}
-	
+
 	private void fillData() {
 		if (adapter == null) {
 			adapter = new MyPartnerListAdapter();
@@ -110,12 +111,12 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 			adapter.notifyDataSetChanged();
 		}
 	}
-	
+
 	private static class ViewHolder {
 		TextView tv_name;
 		ImageView iv_avater;
 	}
-	
+
 	private class MyPartnerListAdapter extends BaseAdapter {
 		/*
 		 * (non Javadoc)
@@ -128,6 +129,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		public int getCount() {
 			return showNameList.length;
 		}
+
 		/*
 		 * (non Javadoc)
 		 * @Title: getItem
@@ -141,6 +143,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 			// TODO Auto-generated method stub
 			return position;
 		}
+
 		/*
 		 * (non Javadoc)
 		 * @Title: getItemId
@@ -154,6 +157,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 			// TODO Auto-generated method stub
 			return 0;
 		}
+
 		/*
 		 * (non Javadoc)
 		 * @Title: getView
@@ -187,21 +191,25 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 			return convertView;
 		}
 	}
-	
+
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		return true;
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: onClick
@@ -223,8 +231,10 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 				if (TextUtils.isEmpty(phone)) {
 					// shake
 					Animation ta = AnimationUtils.loadAnimation(this, R.anim.shake);
+					Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 					et_phone.startAnimation(ta);
-					Toast.makeText(this, "亲，你还没输入电话呢！", Toast.LENGTH_SHORT).show();
+					vibrator.vibrate(500);
+					ToastUtils.showToast(IPartnerActivity.this, "亲，你还没输入电话号码呢", 1000, Gravity.BOTTOM);
 					return;
 				} else {
 					if (!RegxUtils.isPhone(phone)) {
@@ -241,6 +251,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 						public void onTick(long millisUntilFinished) {
 							bt_invite.setText("邀请(" + millisUntilFinished / 1000 + ")");
 						}
+
 						@Override
 						public void onFinish() {
 							setRecommendEnable(true);
@@ -251,18 +262,19 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 				break;
 		}
 	}
+
 	private void setRecommendEnable(boolean enable) {
 		bt_invite.setEnabled(enable);
 		bt_invite.setBackgroundResource(enable ? R.drawable.cycle_selector : R.drawable.btn_not_enable);
 	}
-	
+
 	private Timer timer;
 	private TimerTask task;
 	private int count = 1;
 	private String[] points = { "", ".", "..", "..." };
 	private long startMills;
 	private Handler handler = new Handler();
-	
+
 	private void inviting() {
 		timer = new Timer();
 		task = new TimerTask() {
@@ -283,6 +295,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		};
 		timer.schedule(task, 0, 600);
 	}
+
 	private void invitePartner(String phone) {
 		User user = User.lastLoginUser(this);
 		if (user == null) {
@@ -307,6 +320,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 						responseSucceed(msg);
 					}
 				}
+
 				@Override
 				public void failed(final String msg) {
 					long duration = System.currentTimeMillis() - startMills;
@@ -324,11 +338,13 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 			});
 		}
 	}
+
 	private void responseFail(String msg) {
 		timer.cancel();
 		task.cancel();
 		Toast.makeText(IPartnerActivity.this, msg, Toast.LENGTH_SHORT).show();
 	}
+
 	private void responseSucceed(String msg) {
 		timer.cancel();
 		task.cancel();
@@ -342,12 +358,12 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 			tv_warning.setVisibility(View.VISIBLE);
 		}
 	}
-	
+
 	Button cancel;
 	Button bt_invite;
 	Dialog dialog;
 	EditText et_phone;
-	
+
 	private void showAddPartnerDialog() {
 		Builder builder = new Builder(IPartnerActivity.this);
 		View addView = View.inflate(this, R.layout.dialog_addpartner, null);
@@ -360,6 +376,7 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		cancel.setOnClickListener(this);
 		bt_invite.setOnClickListener(this);
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: onDestroy

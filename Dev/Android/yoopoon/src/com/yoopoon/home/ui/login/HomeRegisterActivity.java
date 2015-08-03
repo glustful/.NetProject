@@ -2,7 +2,6 @@ package com.yoopoon.home.ui.login;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -11,7 +10,6 @@ import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -34,7 +32,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.common.base.utils.RegxUtils;
@@ -90,6 +87,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 			sendSMS.setBackgroundResource(R.drawable.btn_not_enable);
 			sendSMS.setText("重新获取验证码(" + millisUntilFinished / 1000 + ")");
 		}
+
 		@Override
 		public void onFinish() {
 			sendSMS.setBackgroundResource(R.drawable.cycle_selector);
@@ -99,11 +97,12 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 	};
 	protected String mobileYzm = "";
 	private Intent service;
-	
+
 	@AfterInject
 	void initData() {
 		this.mContext = this;
 	}
+
 	@AfterViews
 	void initUI() {
 		this.titleButton.setText("用户注册");
@@ -121,6 +120,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		mErrorText.setVisibility(View.GONE);
 		mLoadingLayout.setVisibility(View.GONE);
 	}
+
 	/*
 	 * @TextChange(R.id.register_id_email) void mailTextChange(CharSequence text, TextView textView,
 	 * int before, int start, int count) { if (TextUtils.isEmpty(text)) {
@@ -135,6 +135,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 			delPassWordButton.setVisibility(View.VISIBLE);
 		}
 	}
+
 	@TextChange(R.id.register_id_confire_pwd)
 	void passwordConfireTextChange(CharSequence text, TextView textView, int before, int start, int count) {
 		if (TextUtils.isEmpty(text)) {
@@ -143,6 +144,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 			delConfirePassWordButton.setVisibility(View.VISIBLE);
 		}
 	}
+
 	@TextChange(R.id.register_id_phone)
 	void phoneTextChange(CharSequence text, TextView textView, int before, int start, int count) {
 		if (TextUtils.isEmpty(text)) {
@@ -151,6 +153,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 			delPhoneButton.setVisibility(View.VISIBLE);
 		}
 	}
+
 	/*
 	 * @Click(R.id.delMailBtn) void delMailClick(View v) { mEmailText.setText("");
 	 * mEmailText.requestFocus(); }
@@ -160,21 +163,25 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		mPwdText.setText("");
 		mPwdText.requestFocus();
 	}
+
 	@Click(R.id.delConfirePwdBtn)
 	void delConfirePwdClick(View v) {
 		mPwdConfireText.setText("");
 		mPwdConfireText.requestFocus();
 	}
+
 	@Click(R.id.delPhoneBtn)
 	void delPhoneClick(View v) {
 		mPhoneText.setText("");
 		mPhoneText.requestFocus();
 	}
+
 	@Click(R.id.loginRegister)
 	void registerClick(View v) {
 		HomeLoginActivity_.intent(mContext).isManual(true).start();
 		this.finish();
 	}
+
 	@Click(R.id.sendSMS)
 	void sendSMS() {
 		String phone = mPhoneText.getText().toString();
@@ -185,6 +192,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		countDownTimer.start();
 		requestIdentify("{\"Mobile\":\"" + phone + "\",\"SmsType\":\"0\"}");
 	}
+
 	@Click(R.id.register_id_register)
 	void register() {
 		/* String eMail = mEmailText.getText().toString(); */
@@ -226,6 +234,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		json += "\"Hidm\":\"" + mobileYzm + "\",";
 		requestRegeter(phone, pwd, json);
 	}
+
 	@UiThread
 	void requestRegeter(final String phone, final String pwd, String json) {
 		new RequestAdapter() {
@@ -258,12 +267,14 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 				}
 				showError(data.getMsg());
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
 			}
 		}.setUrl(getString(R.string.url_user_addBroker)).SetJSON(json).notifyRequest();
 	}
+
 	void requestIdentify(String json) {
 		startSmsService();
 		new RequestAdapter() {
@@ -280,43 +291,51 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 				sendSMS.setText("发送验证码");
 				showError(data.getMsg());
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
 			}
 		}.setUrl(getString(R.string.url_sms_sendSMS)).SetJSON(json).notifyRequest();
 	}
+
 	@Override
 	public void backButtonClick(View v) {
 		onBackPressed();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
 	protected void activityYMove() {
 		Utils.hiddenSoftBorad(this);
 	}
+
 	private void showError(String msg) {
 		mErrorText.setText(msg);
 		mErrorText.setVisibility(View.VISIBLE);
 		mErrorText.startAnimation(animErrOpen);
 		clearError();
 	}
+
 	private void hideError() {
 		mErrorText.setVisibility(View.GONE);
 		mErrorText.startAnimation(animErrClose);
 	}
-	
+
 	public Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -325,7 +344,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 			}
 		}
 	};
-	
+
 	private void clearError() {
 		TimerTask task = new TimerTask() {
 			@Override
@@ -344,6 +363,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		timer = new Timer();
 		timer.schedule(task, 3000);
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: onBackPressed
@@ -358,6 +378,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		FramMainActivity_.intent(this).start();
 		super.onBackPressed();
 	}
+
 	private void startSmsService() {
 		service = new Intent(this, SmsService.class);
 		startService(service);
@@ -365,7 +386,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
 		this.registerReceiver(receiver, filter);
 	}
-	
+
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {

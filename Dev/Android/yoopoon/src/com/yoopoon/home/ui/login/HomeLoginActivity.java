@@ -3,7 +3,6 @@ package com.yoopoon.home.ui.login;
 import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -14,7 +13,6 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,7 +37,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.common.base.utils.SPUtils;
@@ -96,12 +93,13 @@ public class HomeLoginActivity extends MainActionBarActivity {
 	private Boolean auto = false;
 	private Context mContext;
 	private User mUser;
-	
+
 	// [end]
 	@AfterInject
 	void afterInject() {
 		this.mContext = this;
 	}
+
 	@AfterViews
 	void crateData() {
 		this.titleButton.setText("用户登录");
@@ -131,6 +129,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		initUI();
 		initData();
 	}
+
 	@TextChange(R.id.login_id_email)
 	void mailTextChange(CharSequence text, TextView textView, int before, int start, int count) {
 		if (TextUtils.isEmpty(text)) {
@@ -139,6 +138,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 			delMailButton.setVisibility(View.VISIBLE);
 		}
 	}
+
 	@TextChange(R.id.login_id_pwd)
 	void passwordTextChange(CharSequence text, TextView textView, int before, int start, int count) {
 		if (TextUtils.isEmpty(text)) {
@@ -147,29 +147,35 @@ public class HomeLoginActivity extends MainActionBarActivity {
 			delPassWordButton.setVisibility(View.VISIBLE);
 		}
 	}
+
 	@Click(R.id.delMailBtn)
 	void delMailClick(View v) {
 		mEmailText.setText("");
 		// mPwdText.setText("");
 	}
+
 	@Click(R.id.delPwdBtn)
 	void delPwdClick(View v) {
 		mPwdText.setText("");
 		mPwdText.requestFocus();
 	}
+
 	@Click(R.id.loginRegister)
 	void registerClick(View v) {
 		HomeRegisterActivity_.intent(mContext).start();
 		this.finish();
 	}
+
 	@Click(R.id.tv_login_forget)
 	void findPsw() {
 		FindPswActivity_.intent(this).start();
 	}
+
 	@Override
 	protected void onRestart() {
 		super.onRestart();
 	}
+
 	private void initUI() {
 		animErrOpen = AnimationUtils.loadAnimation(this, R.anim.push_down_in);
 		animErrClose = AnimationUtils.loadAnimation(this, R.anim.push_top_out);
@@ -177,6 +183,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		mLoadingLayout.setVisibility(View.GONE);
 		mLoginBtn.setOnClickListener(onLogin);
 	}
+
 	private void initData() {
 		// 删除以前记录的cookie信息
 		File cookieFile = new File(LocalPath.intance().cacheBasePath + "co");
@@ -203,17 +210,19 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		}
 		mAutoCheck.setChecked(auto);
 	}
+
 	private void showError(String msg) {
 		mErrorText.setText(msg);
 		mErrorText.setVisibility(View.VISIBLE);
 		mErrorText.startAnimation(animErrOpen);
 		clearError();
 	}
+
 	private void hideError() {
 		mErrorText.setVisibility(View.GONE);
 		mErrorText.startAnimation(animErrClose);
 	}
-	
+
 	public Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -222,7 +231,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 			}
 		}
 	};
-	
+
 	private void clearError() {
 		TimerTask task = new TimerTask() {
 			@Override
@@ -241,6 +250,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		timer = new Timer();
 		timer.schedule(task, 3000);
 	}
+
 	@UiThread
 	void requestLogin(final String eMail, final String pwd, Boolean auto) {
 		mLoadingLayout.setVisibility(View.VISIBLE);
@@ -262,6 +272,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 						}
 						return null;
 					}
+
 					@Override
 					public void onComplete(String serializeResult) {
 						if (serializeResult != null) {
@@ -275,6 +286,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 				com.yoopoon.home.ui.home.FramMainActivity_.intent(mContext).start();
 				finish();
 			}
+
 			@Override
 			public void faild(String msg) {
 				mLoadingLayout.setVisibility(View.GONE);
@@ -287,7 +299,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 			}
 		});
 	}
-	
+
 	View.OnClickListener onLogin = new View.OnClickListener() {
 		@Override
 		public void onClick(View view) {
@@ -306,7 +318,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 			requestLogin(eMail, pwd, auto);
 		}
 	};
-	
+
 	@Override
 	public boolean onTouchEvent(android.view.MotionEvent event) {
 		InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -317,6 +329,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		}
 		return true;
 	}
+
 	@UiThread
 	void errorToLogin() {
 		showError("登录失败,请重新登录。");
@@ -325,6 +338,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		// Toast.makeText(HomeLoginActivity.this, "登录失败,请重新登录。", Toast.LENGTH_SHORT).show();
 		mLoadingLayout.setVisibility(View.GONE);
 	}
+
 	private void setNullCookie() {
 		File cookieFile = new File(LocalPath.intance().cacheBasePath + "co");
 		if (cookieFile.exists()) {
@@ -332,10 +346,12 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		}
 		RequestTask.setmCookieStore(null);
 	}
+
 	@Override
 	public void backButtonClick(View v) {
 		onBackPressed();
 	}
+
 	@Override
 	public void onBackPressed() {
 		// 点击返回时，一定是 用户没有登陆成功
@@ -345,19 +361,23 @@ public class HomeLoginActivity extends MainActionBarActivity {
 		FramMainActivity_.intent(this).start();
 		super.onBackPressed();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
 	/**
 	 * 将后台传递过来的json数据以xml的格式保存至sp中
 	 * @Title: saveInfoToSp
@@ -387,6 +407,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 			e.printStackTrace();
 		}
 	}
+
 	private void sendLoginSuccessBroadcast() {
 		Intent intent = new Intent("com.yoopoon.login_action");
 		intent.addCategory(Intent.CATEGORY_DEFAULT);

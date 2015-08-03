@@ -15,18 +15,19 @@ package com.yoopoon.home;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -42,11 +43,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.yoopoon.common.base.utils.RegxUtils;
 import com.yoopoon.common.base.utils.SmsUtils;
 import com.yoopoon.common.base.utils.SmsUtils.RequestSMSListener;
 import com.yoopoon.common.base.utils.SortNameByOrder;
+import com.yoopoon.common.base.utils.ToastUtils;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
@@ -67,7 +68,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 			"Mood", "莫德", "sue", "苏", "Moening", "莫宁", "Alice", "爱丽丝" };
 	private static final String TAG = "IRecommendActivity";
 	private String[] showNameList;
-	
+
 	@AfterViews
 	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
@@ -80,7 +81,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 		showNameList = SortNameByOrder.getShowNameList(names);
 		fillData();
 	}
-	
+
 	private class MyItemClickListener implements OnItemClickListener {
 		/*
 		 * (non Javadoc)
@@ -101,7 +102,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 				PartnerDetailActivity_.intent(IRecommendActivity.this).start();
 		}
 	}
-	
+
 	private void fillData() {
 		if (adapter == null) {
 			adapter = new MyPartnerListAdapter();
@@ -110,12 +111,12 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 			adapter.notifyDataSetChanged();
 		}
 	}
-	
+
 	private static class ViewHolder {
 		TextView tv_name;
 		ImageView iv_avater;
 	}
-	
+
 	private class MyPartnerListAdapter extends BaseAdapter {
 		/*
 		 * (non Javadoc)
@@ -128,6 +129,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 		public int getCount() {
 			return showNameList.length;
 		}
+
 		/*
 		 * (non Javadoc)
 		 * @Title: getItem
@@ -141,6 +143,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 			// TODO Auto-generated method stub
 			return position;
 		}
+
 		/*
 		 * (non Javadoc)
 		 * @Title: getItemId
@@ -154,6 +157,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 			// TODO Auto-generated method stub
 			return 0;
 		}
+
 		/*
 		 * (non Javadoc)
 		 * @Title: getView
@@ -187,21 +191,25 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 			return convertView;
 		}
 	}
-	
+
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		return true;
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: onClick
@@ -223,8 +231,10 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 				if (TextUtils.isEmpty(phone)) {
 					// shake
 					Animation ta = AnimationUtils.loadAnimation(this, R.anim.shake);
+					Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 					et_phone.startAnimation(ta);
-					Toast.makeText(this, "亲，你还没输入电话呢！", Toast.LENGTH_SHORT).show();
+					vibrator.vibrate(500);
+					ToastUtils.showToast(IRecommendActivity.this, "亲，你还没输入电话号码呢", 1000, Gravity.BOTTOM);
 					return;
 				} else {
 					if (!RegxUtils.isPhone(phone)) {
@@ -239,6 +249,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 						public void onTick(long millisUntilFinished) {
 							bt_invite.setText("邀请(" + millisUntilFinished / 1000 + ")");
 						}
+
 						@Override
 						public void onFinish() {
 							setRecommendEnable(true);
@@ -249,18 +260,19 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 				break;
 		}
 	}
+
 	private void setRecommendEnable(boolean enable) {
 		bt_invite.setEnabled(enable);
 		bt_invite.setBackgroundResource(enable ? R.drawable.cycle_selector : R.drawable.btn_not_enable);
 	}
-	
+
 	private int count = 1;
 	private long startMills;
 	Handler handler = new Handler();
 	Timer timer;
 	String[] points = { "", ".", "..", "..." };
 	TimerTask task;
-	
+
 	private void recommendBroker(String phone) {
 		User user = User.lastLoginUser(this);
 		if (user == null) {
@@ -274,6 +286,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 			SmsUtils.requestIdentifyCode(this, json, listener);
 		}
 	}
+
 	private void requesting() {
 		timer = new Timer();
 		task = new TimerTask() {
@@ -294,7 +307,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 		};
 		timer.schedule(task, 0, 600);
 	}
-	
+
 	RequestSMSListener listener = new RequestSMSListener() {
 		@Override
 		public void succeed(final String code) {
@@ -317,6 +330,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 				Toast.makeText(IRecommendActivity.this, code, Toast.LENGTH_SHORT).show();
 			}
 		}
+
 		@Override
 		public void fail(final String msg) {
 			Log.i(TAG, "lis.succeed:" + msg);
@@ -347,7 +361,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 	EditText et_phone;
 	TextView tv_warning;
 	TextView tv_title;
-	
+
 	private void showAddPartnerDialog() {
 		Builder builder = new Builder(IRecommendActivity.this);
 		View addView = View.inflate(this, R.layout.dialog_addpartner, null);
@@ -362,6 +376,7 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 		bt_cancel.setOnClickListener(this);
 		bt_invite.setOnClickListener(this);
 	}
+
 	/*
 	 * (non Javadoc)
 	 * @Title: onDestroy

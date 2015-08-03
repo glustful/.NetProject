@@ -30,7 +30,6 @@ public class ActiveController extends GridViewController {
 
 	private int activeCount = 0;
 
-	// GridAdapter adapter;
 	@Override
 	public void show(ArrayList<JSONArray> urls) {
 

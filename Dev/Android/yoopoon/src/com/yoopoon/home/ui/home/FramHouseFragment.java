@@ -207,8 +207,11 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (NetworkUtils.isNetworkConnected(context)) {
-				// requestAdvertisements();
+				requestAdvertisements();
 				// requestHouseList();
+				houseConditionReset();
+			} else {
+				ll_progress.setVisibility(View.GONE);
 			}
 		}
 	};
@@ -430,31 +433,37 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		}
 		initHouseType(houseTypeJsonObjects, area_name_button, house_type_button, price_button);
 	}
+	
 	/**
 	 * @Title: requestAdvertisements
 	 * @Description: 开启异步线程，获取房源页顶端广告信息
 	 */
+	private ArrayList<String> imgs;
+	
 	private void requestAdvertisements() {
-		new RequestAdapter() {
-			@Override
-			public void onReponse(ResponseData data) {
-				if (data.getResultState() == ResultState.eSuccess) {
-					ArrayList<String> imgs = new ArrayList<String>();
-					JSONArray list = data.getJsonArray();
-					if (list == null || list.length() < 1)
-						return;
-					for (int i = 0; i < list.length(); i++) {
-						imgs.add(list.optJSONObject(i).optString("TitleImg"));
+		if (imgs == null)
+			new RequestAdapter() {
+				@Override
+				public void onReponse(ResponseData data) {
+					if (data.getResultState() == ResultState.eSuccess) {
+						if (imgs == null) {
+							imgs = new ArrayList<String>();
+							JSONArray list = data.getJsonArray();
+							if (list == null || list.length() < 1)
+								return;
+							for (int i = 0; i < list.length(); i++) {
+								imgs.add(list.optJSONObject(i).optString("TitleImg"));
+							}
+							// 添加广告
+							mAdController.show(imgs);
+						}
 					}
-					// 添加广告
-					mAdController.show(imgs);
 				}
-			}
-			@Override
-			public void onProgress(ProgressMessage msg) {
-			}
-		}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
-				.addParam("channelName", "banner").notifyRequest();
+				@Override
+				public void onProgress(ProgressMessage msg) {
+				}
+			}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
+					.addParam("channelName", "banner").notifyRequest();
 	}
 	
 	/**
@@ -800,17 +809,16 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			AreaNameValue = "";
 		}
 		PageValue = "1";
-		//判断楼盘类型处是否由用户选择的条件
+		// 判断楼盘类型处是否由用户选择的条件
 		if (house_type_button.getText().equals("类型")) {
 			TypeIdValue = "";
 		} else {
 			TypeIdValue = houseTypeIdNumber;
 		}
-		/*if (TypeIdValue.equals("类型")) {
-			TypeIdValue = "";
-		} else {
-			TypeIdValue = houseTypeIdNumber;
-		}*/
+		/*
+		 * if (TypeIdValue.equals("类型")) { TypeIdValue = ""; } else { TypeIdValue =
+		 * houseTypeIdNumber; }
+		 */
 		// 初始化ArrayList中保存的数据
 		// 配成value.xml中的数组
 		housePriceArrayList.add("4000以下");

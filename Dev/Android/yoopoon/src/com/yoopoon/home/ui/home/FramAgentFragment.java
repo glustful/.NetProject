@@ -6,8 +6,11 @@ import org.androidannotations.annotations.EFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -20,6 +23,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yoopoon.common.base.utils.NetworkUtils;
 import com.yoopoon.common.base.utils.SPUtils;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.net.ProgressMessage;
@@ -99,9 +103,27 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 			mRichesView = RichesView_.build(mContext);
 			mHeroView = HeroView_.build(mContext);
 			initViews();
+			registerReceiver();
 		}
 		return rootView;
 	}
+
+	private void registerReceiver() {
+		IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+		getActivity().registerReceiver(receiver, filter);
+	}
+
+	private BroadcastReceiver receiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (NetworkUtils.isNetworkConnected(context)) {
+				requestList();
+				requestActiveList();
+				requestBrandList();
+				requestHeroList();
+			}
+		}
+	};
 
 	private void initParameter() {
 		if (parameter == null) {
@@ -165,65 +187,76 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 		}
 	}
 
+	private ArrayList<String> imgs;
+
 	void requestList() {
+		if (imgs == null)
+			new RequestAdapter() {
 
-		new RequestAdapter() {
-
-			@Override
-			public void onReponse(ResponseData data) {
-				if (data.getResultState() == ResultState.eSuccess) {
-					ArrayList<String> imgs = new ArrayList<String>();
-					JSONArray list = data.getJsonArray();
-					if (list == null || list.length() < 1)
-						return;
-					for (int i = 0; i < list.length(); i++) {
-						imgs.add(list.optJSONObject(i).optString("TitleImg"));
+				@Override
+				public void onReponse(ResponseData data) {
+					if (data.getResultState() == ResultState.eSuccess) {
+						if (imgs == null) {
+							imgs = new ArrayList<String>();
+							JSONArray list = data.getJsonArray();
+							if (list == null || list.length() < 1)
+								return;
+							for (int i = 0; i < list.length(); i++) {
+								imgs.add(list.optJSONObject(i).optString("TitleImg"));
+							}
+							mAdController.show(imgs);
+						}
 					}
-					mAdController.show(imgs);
 				}
-			}
 
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
-			}
-		}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
-				.addParam("channelName", "banner").notifyRequest();
+				@Override
+				public void onProgress(ProgressMessage msg) {
+					// TODO Auto-generated method stub
+				}
+			}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
+					.addParam("channelName", "banner").notifyRequest();
 	}
 
-	void requestActiveList() {
-		new RequestAdapter() {
+	private ArrayList<JSONArray> activeDataSource;
 
-			@Override
-			public void onReponse(ResponseData data) {
-				if (data.getResultState() == ResultState.eSuccess) {
-					ArrayList<JSONArray> dataSource = new ArrayList<JSONArray>();
-					JSONArray list = data.getJsonArray();
-					if (list == null || list.length() < 1)
-						return;
-					if (list.length() > 3) {
-						JSONArray tmp = new JSONArray();
-						tmp.put(list.optJSONObject(0));
-						tmp.put(list.optJSONObject(1));
-						tmp.put(list.optJSONObject(2));
-						dataSource.add(tmp);
-						mActiveController.show2(dataSource);
-					} else {
-						dataSource.add(list);
-						mActiveController.show2(dataSource);
+	void requestActiveList() {
+		if (activeDataSource == null)
+			new RequestAdapter() {
+
+				@Override
+				public void onReponse(ResponseData data) {
+					if (data.getResultState() == ResultState.eSuccess) {
+						if (activeDataSource == null) {
+							activeDataSource = new ArrayList<JSONArray>();
+							JSONArray list = data.getJsonArray();
+							if (list == null || list.length() < 1)
+								return;
+							if (list.length() > 3) {
+								JSONArray tmp = new JSONArray();
+								tmp.put(list.optJSONObject(0));
+								tmp.put(list.optJSONObject(1));
+								tmp.put(list.optJSONObject(2));
+								activeDataSource.add(tmp);
+								mActiveController.show2(activeDataSource);
+							} else {
+								activeDataSource.add(list);
+								mActiveController.show2(activeDataSource);
+							}
+						}
 					}
 				}
-			}
 
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
-			}
-		}.setUrl(getString(R.string.url_channel_active_titleimg)).setRequestMethod(RequestMethod.eGet)
-				.addParam("channelName", "活动").notifyRequest();
+				@Override
+				public void onProgress(ProgressMessage msg) {
+					// TODO Auto-generated method stub
+				}
+			}.setUrl(getString(R.string.url_channel_active_titleimg)).setRequestMethod(RequestMethod.eGet)
+					.addParam("channelName", "活动").notifyRequest();
 	}
 
 	private void requestBrandList() {
+		if (mJsonObjects.size() == 0)
+			initParameter();
 		new RequestAdapter() {
 
 			@Override
@@ -247,36 +280,40 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 		}.setUrl(getString(R.string.url_brand_getOneBrand)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
 
+	private ArrayList<JSONArray> heroArrays;
+
 	private void requestHeroList() {
+		if (heroArrays == null)
+			new RequestAdapter() {
 
-		new RequestAdapter() {
+				@Override
+				public void onReponse(ResponseData data) {
+					if (data.getResultState() == ResultState.eSuccess) {
+						if (data.getMRootData() != null) {
+							if (heroArrays == null) {
+								JSONObject obj = data.getMRootData();
+								try {
+									JSONArray array = obj.getJSONArray("List");
+									heroArrays = new ArrayList<JSONArray>();
+									heroArrays.add(array);
+									mHeroController.show(heroArrays);
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
 
-			@Override
-			public void onReponse(ResponseData data) {
-				if (data.getResultState() == ResultState.eSuccess) {
-					if (data.getMRootData() != null) {
-						JSONObject obj = data.getMRootData();
-						try {
-							JSONArray array = obj.getJSONArray("List");
-							ArrayList<JSONArray> arrays = new ArrayList<JSONArray>();
-							arrays.add(array);
-							mHeroController.show(arrays);
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
 						}
-
 					}
+
 				}
 
-			}
+				@Override
+				public void onProgress(ProgressMessage msg) {
+					// TODO Auto-generated method stub
 
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
-
-			}
-		}.setUrl(getString(R.string.url_fortune_hero)).setRequestMethod(RequestMethod.eGet).notifyRequest();
+				}
+			}.setUrl(getString(R.string.url_fortune_hero)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
 
 	/*
