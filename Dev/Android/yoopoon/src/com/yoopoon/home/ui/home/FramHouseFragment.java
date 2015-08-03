@@ -234,6 +234,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			case R.id.area_name_button:
 				houseCityLinearLayout.removeAllViews();
 				houseDistrictlinearLayout.removeAllViews();
+				houseProvinceLinearlayout.removeAllViews();
 				requestHouseProvince();
 				break;
 			case R.id.type_button:
@@ -312,6 +313,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
 		mContext.registerReceiver(houseBrokerRefreshReceiver, filter);
 	}
+	
 	// ##############################################################################################
 	// 所有与广播有关的逻辑代码如上
 	// ###############################################################################################
@@ -325,25 +327,30 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 * @Title: requestHouseProvince
 	 * @Description: 开启异步线程获取楼盘省份信息
 	 */
+	private static boolean houseProvinceStatus = true;
+	
 	private synchronized void requestHouseProvince() {
 		if (houseProvinceJsonObjects.size() > 0) {
 			initHouseProvince(houseProvinceJsonObjects);
 			return;
 		}
-		RequestHouseAreaCondition.requestHouseProvinceArea(new Callback() {
-			@Override
-			public void callback(JSONArray jsonArray) {
-				for (int i = 0; i < jsonArray.length(); i++) {
-					try {
-						JSONObject jsonObject = jsonArray.getJSONObject(i);
-						houseProvinceJsonObjects.add(jsonObject);
-					} catch (JSONException e) {
-						e.printStackTrace();
+		if (houseProvinceStatus) {
+			houseProvinceStatus = false;
+			RequestHouseAreaCondition.requestHouseProvinceArea(new Callback() {
+				@Override
+				public void callback(JSONArray jsonArray) {
+					for (int i = 0; i < jsonArray.length(); i++) {
+						try {
+							JSONObject jsonObject = jsonArray.getJSONObject(i);
+							houseProvinceJsonObjects.add(jsonObject);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
 					}
+					initHouseProvince(houseProvinceJsonObjects);
 				}
-				initHouseProvince(houseProvinceJsonObjects);
-			}
-		});
+			});
+		}
 	}
 	/**
 	 * @Title: requestHouseCity
