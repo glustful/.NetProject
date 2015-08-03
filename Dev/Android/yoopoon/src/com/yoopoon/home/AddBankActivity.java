@@ -27,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -99,6 +100,7 @@ public class AddBankActivity extends MainActionBarActivity {
 			if (TextUtils.isEmpty(text)) {
 				warning_tvs.get(i).setVisibility(View.VISIBLE);
 				et.startAnimation(shake_animation);
+				vibrator.vibrate(500);
 				return;
 			}
 		}
@@ -223,6 +225,7 @@ public class AddBankActivity extends MainActionBarActivity {
 	private int countTimer = 60;
 	private Handler handler = new Handler();
 	private Animation shake_animation;
+	private Vibrator vibrator;
 	private static final String TAG = "AddBankActivity";
 	private String[] banks = { "中国银行", "中国工商银行", "中国农业银行", "中国建设银行", "交通银行", "中国邮政储蓄银行", "民生银行", "农村信用社", "光大银行" };
 	private int checkedBank = 0;
@@ -264,6 +267,7 @@ public class AddBankActivity extends MainActionBarActivity {
 		backButton.setText("返回");
 		titleButton.setText("添加银行卡");
 		shake_animation = AnimationUtils.loadAnimation(this, R.anim.shake);
+		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		initDatas();
 	}
 
@@ -275,7 +279,7 @@ public class AddBankActivity extends MainActionBarActivity {
 		info_ets.add(et_code);
 
 		warning_tvs.add(tv_warning_card);
-		warning_tvs.add(tv_warning_bank);
+		// warning_tvs.add(tv_warning_bank);
 		warning_tvs.add(tv_warning_address);
 		warning_tvs.add(tv_warning_code);
 

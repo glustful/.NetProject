@@ -19,10 +19,13 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -40,6 +43,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.yoopoon.common.base.utils.RegxUtils;
 import com.yoopoon.common.base.utils.SortNameByOrder;
+import com.yoopoon.common.base.utils.ToastUtils;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.data.user.User.InvitePartnerListener;
 import com.yoopoon.home.domain.Broker;
@@ -237,8 +241,10 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 				if (TextUtils.isEmpty(phone)) {
 					// shake
 					Animation ta = AnimationUtils.loadAnimation(this, R.anim.shake);
+					Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 					et_phone.startAnimation(ta);
-					Toast.makeText(this, "亲，你还没输入电话呢！", Toast.LENGTH_SHORT).show();
+					vibrator.vibrate(500);
+					ToastUtils.showToast(IPartnerActivity.this, "亲，你还没输入电话号码呢", 1000, Gravity.BOTTOM);
 					return;
 				} else {
 					if (!RegxUtils.isPhone(phone)) {

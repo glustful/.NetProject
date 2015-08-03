@@ -23,11 +23,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
@@ -84,6 +86,8 @@ public class FindPswActivity extends MainActionBarActivity {
 	ImageButton ib_clean_phone;
 	@ViewById(R.id.rl_findpsw_progress)
 	RelativeLayout rl_progress;
+	@ViewById(R.id.tv_warning_code)
+	TextView tv_warning_code;
 
 	private Animation shake_animation;
 	private int countTimer = 60;
@@ -93,12 +97,15 @@ public class FindPswActivity extends MainActionBarActivity {
 	private Animation anim_open_err;
 	private Animation anim_hide_err;
 	private Intent service;
+	private Vibrator vibrator;
 
 	@Click(R.id.btn_findpsw_getcode)
 	void getCode() {
 		String phone = et_phone.getText().toString();
 		if (TextUtils.isEmpty(phone)) {
 			et_phone.startAnimation(shake_animation);
+			tv_warning_phone.setVisibility(View.VISIBLE);
+			vibrator.vibrate(500);
 			return;
 		}
 		if (!RegxUtils.isPhone(phone)) {
@@ -167,25 +174,39 @@ public class FindPswActivity extends MainActionBarActivity {
 
 		if (TextUtils.isEmpty(code)) {
 			et_code.startAnimation(shake_animation);
+			tv_warning_code.setVisibility(View.VISIBLE);
+			vibrator.vibrate(500);
 			return;
 		}
 
 		if (TextUtils.isEmpty(phone)) {
-			et_phone.startAnimation(shake_animation);
+			textWarning(et_phone);
+			tv_warning_phone.setVisibility(View.VISIBLE);
 			return;
 		}
 
 		if (!RegxUtils.isPhone(phone)) {
 			showErr("请输入正确的手机号码");
+			return;
 		}
 
 		if (TextUtils.isEmpty(psw_new)) {
+			textWarning(et_new);
 			tv_warning_new.setText("请输入新密码");
 			tv_warning_new.setVisibility(View.VISIBLE);
 			return;
 		}
 
+		int length = psw_new.length();
+		if (length > 20 || length < 6) {
+			textWarning(et_new);
+			tv_warning_new.setText("密码长度必须为6-20位");
+			tv_warning_new.setVisibility(View.VISIBLE);
+			return;
+		}
+
 		if (TextUtils.isEmpty(psw_confirm)) {
+			textWarning(et_confirm);
 			tv_warning_confirm.setText("请确认新密码");
 			tv_warning_new.setVisibility(View.VISIBLE);
 			return;
@@ -244,6 +265,7 @@ public class FindPswActivity extends MainActionBarActivity {
 					return;
 				} else {
 					showErr(data.getMsg());
+					clear();
 				}
 
 			}
@@ -265,7 +287,6 @@ public class FindPswActivity extends MainActionBarActivity {
 			@Override
 			public void run() {
 				tv_err.startAnimation(anim_hide_err);
-				tv_err.setVisibility(View.GONE);
 			}
 		}, 3000);
 	}
@@ -316,14 +337,41 @@ public class FindPswActivity extends MainActionBarActivity {
 		backButton.setText("返回");
 		titleButton.setText("找回密码");
 		shake_animation = AnimationUtils.loadAnimation(this, R.anim.shake);
+		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 		et_confirm.addTextChangedListener(watcher);
 		et_new.addTextChangedListener(watcher);
 		et_phone.addTextChangedListener(watcher);
+		et_code.addTextChangedListener(watcher);
 
 		anim_open_err = AnimationUtils.loadAnimation(this, R.anim.push_down_in);
-		anim_hide_err = AnimationUtils.loadAnimation(this, R.anim.push_top_out);
 
+		anim_hide_err = AnimationUtils.loadAnimation(this, R.anim.push_top_out);
+		anim_hide_err.setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				tv_err.setVisibility(View.GONE);
+			}
+		});
+
+	}
+
+	private void textWarning(View v) {
+		v.startAnimation(shake_animation);
+		vibrator.vibrate(500);
 	}
 
 	private TextWatcher watcher = new TextWatcher() {
@@ -333,9 +381,15 @@ public class FindPswActivity extends MainActionBarActivity {
 			String psw_new = et_new.getText().toString();
 			String psw_confirm = et_confirm.getText().toString();
 			String phone = et_phone.getText().toString();
+			String code = et_code.getText().toString();
 			ib_clean_confirm.setVisibility(TextUtils.isEmpty(psw_confirm) ? View.GONE : View.VISIBLE);
 			ib_clean_new.setVisibility(TextUtils.isEmpty(psw_new) ? View.GONE : View.VISIBLE);
 			ib_clean_phone.setVisibility(TextUtils.isEmpty(phone) ? View.GONE : View.VISIBLE);
+			tv_warning_phone.setVisibility(TextUtils.isEmpty(phone) ? View.VISIBLE : View.GONE);
+			tv_warning_code.setVisibility(TextUtils.isEmpty(code) ? View.VISIBLE : View.GONE);
+
+			tv_warning_new.setVisibility(TextUtils.isEmpty(psw_new) ? View.VISIBLE : View.GONE);
+			tv_warning_confirm.setVisibility(TextUtils.isEmpty(psw_confirm) ? View.VISIBLE : View.GONE);
 			if (psw_new.equals(psw_confirm)) {
 				tv_warning_confirm.setVisibility(View.GONE);
 			} else {

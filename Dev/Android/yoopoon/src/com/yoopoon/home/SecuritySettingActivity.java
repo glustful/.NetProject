@@ -23,11 +23,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
@@ -93,6 +95,7 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 	private Animation anim_open_err;
 	private Animation anim_hide_err;
 	private Intent service;
+	private Vibrator vibrator;
 
 	@Click(R.id.btn_security_setting_getcode)
 	void getCode() {
@@ -185,22 +188,22 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		String code = et_code.getText().toString();
 
 		if (TextUtils.isEmpty(oldPsw)) {
-			et_old.startAnimation(shake_animation);
+			textWarning(et_old);
 			return;
 		}
 
 		if (TextUtils.isEmpty(newPsw)) {
-			et_new.startAnimation(shake_animation);
+			textWarning(et_new);
 			return;
 		}
 
 		if (TextUtils.isEmpty(confirmPsw)) {
-			et_confirm.startAnimation(shake_animation);
+			textWarning(et_confirm);
 			return;
 		}
 
 		if (TextUtils.isEmpty(code)) {
-			et_code.startAnimation(shake_animation);
+			textWarning(et_code);
 			return;
 		}
 
@@ -256,8 +259,28 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		titleButton.setText("安全设置");
 
 		shake_animation = AnimationUtils.loadAnimation(this, R.anim.shake);
+		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		anim_open_err = AnimationUtils.loadAnimation(this, R.anim.push_down_in);
 		anim_hide_err = AnimationUtils.loadAnimation(this, R.anim.push_top_out);
+		anim_hide_err.setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				tv_err.setVisibility(View.GONE);
+			}
+		});
 
 		et_confirm.addTextChangedListener(watcher);
 		et_new.addTextChangedListener(watcher);
@@ -338,9 +361,14 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 			@Override
 			public void run() {
 				tv_err.startAnimation(anim_hide_err);
-				tv_err.setVisibility(View.GONE);
+				// tv_err.setVisibility(View.GONE);
 			}
 		}, 3000);
+	}
+
+	private void textWarning(View v) {
+		v.startAnimation(shake_animation);
+		vibrator.vibrate(500);
 	}
 
 	@Override

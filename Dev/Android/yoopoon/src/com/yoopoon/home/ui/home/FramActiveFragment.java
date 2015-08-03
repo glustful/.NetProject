@@ -13,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,12 +74,14 @@ public class FramActiveFragment extends FramSuper {
 	}
 
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
+
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (NetworkUtils.isNetworkConnected(context)) {
-				// requestList();
-				// requestActiveList();
-				// requestBrandList();
+				requestList();
+				requestActiveList();
+			} else {
+				ll_progress.setVisibility(View.GONE);
 			}
 		}
 	};
@@ -142,66 +145,82 @@ public class FramActiveFragment extends FramSuper {
 		}
 	}
 
+	private ArrayList<String> imgs;
+
 	void requestList() {
+		if (imgs == null)
 
-		new RequestAdapter() {
+			new RequestAdapter() {
 
-			@Override
-			public void onReponse(ResponseData data) {
-				if (data.getResultState() == ResultState.eSuccess) {
-					ArrayList<String> imgs = new ArrayList<String>();
-					JSONArray list = data.getJsonArray();
-					if (list == null || list.length() < 1)
-						return;
-					for (int i = 0; i < list.length(); i++) {
-						imgs.add(list.optJSONObject(i).optString("TitleImg"));
+				@Override
+				public void onReponse(ResponseData data) {
+					// Log.i(TAG, "requestList : onResponse");
+					if (data.getResultState() == ResultState.eSuccess) {
+						if (imgs == null) {
+							imgs = new ArrayList<String>();
+							JSONArray list = data.getJsonArray();
+							if (list == null || list.length() < 1)
+								return;
+							for (int i = 0; i < list.length(); i++) {
+								imgs.add(list.optJSONObject(i).optString("TitleImg"));
+							}
+							mAdController.show(imgs);
+						}
 					}
-					mAdController.show(imgs);
 				}
-			}
 
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
-			}
-		}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
-				.addParam("channelName", "banner").notifyRequest();
+				@Override
+				public void onProgress(ProgressMessage msg) {
+					// TODO Auto-generated method stub
+				}
+			}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
+					.addParam("channelName", "banner").notifyRequest();
 
 	}
 
+	private ArrayList<JSONArray> activeArray;
+
 	void requestActiveList() {
+		if (activeArray == null) {
 
-		new RequestAdapter() {
+			new RequestAdapter() {
 
-			@Override
-			public void onReponse(ResponseData data) {
-				if (data.getResultState() == ResultState.eSuccess) {
-					ArrayList<JSONArray> dataSource = new ArrayList<JSONArray>();
-					JSONArray list = data.getJsonArray();
-					if (list == null || list.length() < 1)
-						return;
-					dataSource.add(list);
-					mActiveController.show(dataSource);
+				@Override
+				public void onReponse(ResponseData data) {
+					// Log.i(TAG, "requestActiceList : onResponse");
+					if (data.getResultState() == ResultState.eSuccess) {
+						if (activeArray == null) {
+							activeArray = new ArrayList<JSONArray>();
+							JSONArray list = data.getJsonArray();
+							if (list == null || list.length() < 1)
+								return;
+							activeArray.add(list);
+							mActiveController.show(activeArray);
+						}
+					}
 				}
-			}
 
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
-			}
-		}.setUrl(getString(R.string.url_channel_active_titleimg)).setRequestMethod(RequestMethod.eGet)
-				.addParam("ChannelName", "活动").notifyRequest();
+				@Override
+				public void onProgress(ProgressMessage msg) {
+					// TODO Auto-generated method stub
+				}
+			}.setUrl(getString(R.string.url_channel_active_titleimg)).setRequestMethod(RequestMethod.eGet)
+					.addParam("ChannelName", "活动").notifyRequest();
+		}
 
 	}
 
 	private void requestBrandList() {
 		ll_progress.setVisibility(View.VISIBLE);
+		if (mJsonObjects.size() == 0)
+			initParameter();
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
 				listView.onRefreshComplete();
 				if (data.getResultState() == ResultState.eSuccess) {
+					Log.i(TAG, "requestBrandList : onResponse");
 					JSONArray list = data.getMRootData().optJSONArray("List");
 					if (list == null || list.length() < 1) {
 						ToastUtils.showToast(mContext, "亲，已经没有更多的品牌啦！", 3000);
