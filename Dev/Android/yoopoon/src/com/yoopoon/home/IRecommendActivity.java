@@ -46,7 +46,6 @@ import android.widget.Toast;
 import com.yoopoon.common.base.utils.RegxUtils;
 import com.yoopoon.common.base.utils.SmsUtils;
 import com.yoopoon.common.base.utils.SmsUtils.RequestSMSListener;
-import com.yoopoon.common.base.utils.SortNameByOrder;
 import com.yoopoon.common.base.utils.ToastUtils;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
@@ -64,8 +63,9 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 	@ViewById(R.id.lv_irecommend)
 	ListView lv;
 	private MyPartnerListAdapter adapter;
-	private String[] names = { "钱德勒", "莫妮卡", "格蕾丝", "威尔", "Grace", "Will", "Chandler", "Rachel", "Monica", "Ross",
-			"Mood", "莫德", "sue", "苏", "Moening", "莫宁", "Alice", "爱丽丝" };
+	// private String[] names = { "钱德勒", "莫妮卡", "格蕾丝", "威尔", "Grace", "Will", "Chandler", "Rachel",
+	// "Monica", "Ross",
+	// "Mood", "莫德", "sue", "苏", "Moening", "莫宁", "Alice", "爱丽丝" };
 	private static final String TAG = "IRecommendActivity";
 	private String[] showNameList;
 
@@ -78,8 +78,8 @@ public class IRecommendActivity extends MainActionBarActivity implements OnClick
 		titleButton.setText("推荐经纪人");
 		btn_add.setOnClickListener(this);
 		lv.setOnItemClickListener(new MyItemClickListener());
-		showNameList = SortNameByOrder.getShowNameList(names);
-		fillData();
+		// showNameList = SortNameByOrder.getShowNameList(names);
+		// fillData();
 	}
 
 	private class MyItemClickListener implements OnItemClickListener {

@@ -56,6 +56,10 @@
                     android:id="@+id/ib_security_clean_new"
                     style="@style/ImageButton_Clean_Text" />
             </LinearLayout>
+            <TextView
+                android:id="@+id/tv_security_new"
+                style="@style/TextView_Warning"
+                android:visibility="gone" />
 
             <TextView
                 style="@style/TextView_WrapContent"

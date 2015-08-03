@@ -83,6 +83,8 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 	ImageButton ib_clean_old;
 	@ViewById(R.id.tv_security_err)
 	TextView tv_err;
+	@ViewById(R.id.tv_security_new)
+	TextView tv_warning_new;
 	@ViewById(R.id.rl_security_progress)
 	RelativeLayout rl_progress;
 	private Animation shake_animation;
@@ -185,6 +187,15 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 			textWarning(et_new);
 			return;
 		}
+
+		int length = newPsw.length();
+		if (length < 6 || length > 20) {
+			textWarning(et_new);
+			tv_warning_new.setText("密码长度必须为6-20位");
+			tv_warning_new.setVisibility(View.VISIBLE);
+			return;
+		}
+
 		if (TextUtils.isEmpty(confirmPsw)) {
 			textWarning(et_confirm);
 			return;
@@ -276,6 +287,7 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 			ib_clean_confirm.setVisibility(TextUtils.isEmpty(psw_confirm) ? View.GONE : View.VISIBLE);
 			ib_clean_new.setVisibility(TextUtils.isEmpty(psw_new) ? View.GONE : View.VISIBLE);
 			ib_clean_old.setVisibility(TextUtils.isEmpty(old_psw) ? View.GONE : View.VISIBLE);
+			tv_warning_new.setVisibility(TextUtils.isEmpty(psw_new) ? View.VISIBLE : View.GONE);
 			if (psw_new.equals(psw_confirm)) {
 				tv_warning.setVisibility(View.GONE);
 			} else {
