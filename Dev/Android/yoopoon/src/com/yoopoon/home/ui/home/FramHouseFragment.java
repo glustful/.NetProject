@@ -15,12 +15,14 @@ package com.yoopoon.home.ui.home;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.UiThread;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -48,6 +50,7 @@ import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yoopoon.common.base.utils.NetworkUtils;
@@ -84,11 +87,11 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	// 负责ListView上下滑动加载楼盘的PullToRefreshListView
 	PullToRefreshListView pullToRefreshListView;
 	public static FramHouseFragment framHouseFragmentInstance;
-
+	
 	public static FramHouseFragment getInstance() {
 		return framHouseFragmentInstance;
 	}
-
+	
 	// 当前上下文
 	Context mContext;
 	// 承载楼盘的ListView
@@ -133,7 +136,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	private PopupWindow houseAreaConditionPopupWindow;
 	// 设置是否是从经纪人页面或者个人信息页面跳转到房源库
 	private boolean setBrokerBackground = false;
-
+	
 	// ##############################################################################################
 	// 所有变量和属性声明如上
 	// ###############################################################################################
@@ -195,12 +198,11 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		}
 		return rootView;
 	}
-
 	private void registerReceiver() {
 		IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
 		getActivity().registerReceiver(receiver, filter);
 	}
-
+	
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -213,7 +215,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			}
 		}
 	};
-
+	
 	/**
 	 * 设置当Popupwindow弹出时候的背景透明度
 	 * @param bgAlpha
@@ -235,6 +237,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			case R.id.area_name_button:
 				houseCityLinearLayout.removeAllViews();
 				houseDistrictlinearLayout.removeAllViews();
+				houseProvinceLinearlayout.removeAllViews();
 				requestHouseProvince();
 				break;
 			case R.id.type_button:
@@ -250,7 +253,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 				break;
 		}
 	}
-
 	/*
 	 * @Title: setUserVisibleHint
 	 * @Description: 判断如果用户是从经纪人个人信息页面过来的,则清除房源页顶端的检索条件
@@ -275,7 +277,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			houseListViewAdapter.refresh(houseListJsonObjects);
 		}
 	}
-
+	
 	// ##############################################################################################
 	// 所有与广播有关的逻辑代码如下
 	// ###############################################################################################
@@ -286,7 +288,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			houseListViewAdapter.refresh(houseListJsonObjects);
 		}
 	};
-
+	
 	/**
 	 * @Title: registhouseFramRefreshBroadcast
 	 * @Description: 注册经纪人注销登录时候接收到的广播到FramHouseFragment
@@ -296,7 +298,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		mContext.registerReceiver(houseFramRefreshReceiver, intentFilter);
 	}
-
+	
 	private BroadcastReceiver houseBrokerRefreshReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -304,7 +306,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			houseListViewAdapter.refresh(houseListJsonObjects);
 		}
 	};
-
+	
 	/**
 	 * @Title: registBrokerHouseBroadcast
 	 * @Description: 注册从经纪人页面或者个人信息页面过来后经纪人推荐和经纪人带客背景效果
@@ -314,7 +316,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
 		mContext.registerReceiver(houseBrokerRefreshReceiver, filter);
 	}
-
+	
 	// ##############################################################################################
 	// 所有与广播有关的逻辑代码如上
 	// ###############################################################################################
@@ -328,27 +330,31 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 	 * @Title: requestHouseProvince
 	 * @Description: 开启异步线程获取楼盘省份信息
 	 */
+	private static boolean houseProvinceStatus = true;
+	
 	private synchronized void requestHouseProvince() {
 		if (houseProvinceJsonObjects.size() > 0) {
 			initHouseProvince(houseProvinceJsonObjects);
 			return;
 		}
-		RequestHouseAreaCondition.requestHouseProvinceArea(new Callback() {
-			@Override
-			public void callback(JSONArray jsonArray) {
-				for (int i = 0; i < jsonArray.length(); i++) {
-					try {
-						JSONObject jsonObject = jsonArray.getJSONObject(i);
-						houseProvinceJsonObjects.add(jsonObject);
-					} catch (JSONException e) {
-						e.printStackTrace();
+		if (houseProvinceStatus) {
+			houseProvinceStatus = false;
+			RequestHouseAreaCondition.requestHouseProvinceArea(new Callback() {
+				@Override
+				public void callback(JSONArray jsonArray) {
+					for (int i = 0; i < jsonArray.length(); i++) {
+						try {
+							JSONObject jsonObject = jsonArray.getJSONObject(i);
+							houseProvinceJsonObjects.add(jsonObject);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
 					}
+					initHouseProvince(houseProvinceJsonObjects);
 				}
-				initHouseProvince(houseProvinceJsonObjects);
-			}
-		});
+			});
+		}
 	}
-
 	/**
 	 * @Title: requestHouseCity
 	 * @Description: 开启异步线程，获取楼盘城市区域信息
@@ -373,7 +379,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			}
 		});
 	}
-
 	/**
 	 * @Title: requestHouseDistrict
 	 * @Description: 开启异步线程，获取楼盘县区位置信息
@@ -396,7 +401,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			}
 		});
 	}
-
 	/* 与获取楼盘区域位置有关的联网控制代码如上 */
 	/**
 	 * @Title: requestHouseTypeList
@@ -422,7 +426,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 						initHouseType(houseTypeJsonObjects, area_name_button, house_type_button, price_button);
 					}
 				}
-
 				@Override
 				public void onProgress(ProgressMessage msg) {
 				}
@@ -430,17 +433,16 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		}
 		initHouseType(houseTypeJsonObjects, area_name_button, house_type_button, price_button);
 	}
+	
 	/**
 	 * @Title: requestAdvertisements
 	 * @Description: 开启异步线程，获取房源页顶端广告信息
 	 */
-
 	private ArrayList<String> imgs;
-
+	
 	private void requestAdvertisements() {
 		if (imgs == null)
 			new RequestAdapter() {
-
 				@Override
 				public void onReponse(ResponseData data) {
 					if (data.getResultState() == ResultState.eSuccess) {
@@ -457,20 +459,19 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 						}
 					}
 				}
-
 				@Override
 				public void onProgress(ProgressMessage msg) {
 				}
 			}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
 					.addParam("channelName", "banner").notifyRequest();
 	}
-
+	
 	/**
 	 * @Title: requestHouseTotalCount
 	 * @Description: 开启异步线程，获取当前显示的楼盘数量
 	 */
 	private int totalCount = 0;
-
+	
 	private void requestHouseTotalCount() {
 		new RequestAdapter() {
 			@Override
@@ -482,14 +483,12 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					initHouseTotalCountTextView(houseTotalCountJSon);
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_product_search)).setRequestMethod(RequestMethod.eGet).addParam(parameter)
 				.notifyRequest();
 	}
-
 	/**
 	 * @Title: requestHouseList
 	 * @Description: 开启异步线程，获取所有的楼盘，以ListView的形式展示出来
@@ -519,14 +518,12 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 					ll_progress.setVisibility(View.GONE);
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_product_search)).setRequestMethod(RequestMethod.eGet).addParam(parameter)
 				.notifyRequest();
 	}
-
 	// ##############################################################################################
 	// 所有开启异步线程联网获取数据的逻辑代码如上
 	// ###############################################################################################
@@ -561,7 +558,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		registhouseFramRefreshBroadcast();
 		registBrokerHouseBroadcast();
 	}
-
 	/**
 	 * @Title: initHouseProvince
 	 * @Description: 初始化和设置楼盘对应的省份UI
@@ -600,7 +596,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		}
 		houseAreaConditionPopupWindow.showAsDropDown(area_name_button);
 	}
-
 	/**
 	 * @Title: initHouseCity
 	 * @Description: 初始化和设置楼盘对应的城市UI
@@ -630,7 +625,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		}
 		houseAreaConditionPopupWindow.update();
 	}
-
 	/**
 	 * @Title: initHouseDistrict
 	 * @Description: 初始化和设置楼盘对应的区县UI
@@ -668,7 +662,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		}
 		houseAreaConditionPopupWindow.update();
 	}
-
 	/**
 	 * @Title: initHouseType
 	 * @Description: 初始化楼盘类型ListView 对应的UI
@@ -748,7 +741,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			houseTypeWindow.showAsDropDown(houseType_textview, -50, 0);
 		}
 	}
-
 	/**
 	 * @Title: initPrice
 	 * @Description: 传入price_textview中的文本值，对传入的数据进行判断，根据判断的值对参数中的priceBegin和priceEnd进行赋值。
@@ -793,7 +785,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			return;
 		}
 	}
-
 	/**
 	 * @Title: initHousePriceList
 	 * @Description: 根据选择的价格，设置需要传入到服务器的PriceBegin和PriceEnd
@@ -869,7 +860,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			housePriceWindow.showAsDropDown(price_button, -70, 0);
 		}
 	}
-
 	/**
 	 * 传入从异步线程中获得的房源页面中楼盘数量，设置总的楼盘数量UI
 	 * @param houseTotaoCount 楼盘数量
@@ -887,7 +877,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		houseTotalCountTextView.setPadding(10, 10, 10, 10);
 		houseListView.addHeaderView(houseTotalCountTextView);
 	}
-
 	/**
 	 * @Title: initParameter
 	 * @Description: 对每次开启异步线程联网的数据进行参数初始化
@@ -906,7 +895,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		parameter.put("PriceEnd", PriceEndValue);
 		parameter.put("TypeId", TypeIdValue);
 	}
-
+	
 	/**
 	 * @ClassName: HowWillIrefresh
 	 * @Description: 设置以什么样式来呈现房源首页的楼盘
@@ -921,7 +910,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 			requestHouseList();
 		}
-
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 			Toast.makeText(mContext, "Testing", Toast.LENGTH_SHORT);
@@ -933,7 +921,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 			initHouseTotalCountTextView(String.valueOf(totalCount));
 		}
 	}
-
+	
 	/**
 	 * @Title: houseConditionReset
 	 * @Description: 点击房源页重置按钮触发的重置楼盘条件操作
@@ -955,7 +943,6 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		initParameter();
 		requestHouseList();
 	}
-
 	// ##############################################################################################
 	// 所有从异步线程中获取数据后初始化和设置UI和的逻辑代码如上：初始化楼盘省市区，初始化楼盘类型，
 	// 初始化楼盘价格（不需要联网），初始化楼盘ListView列表，初始化楼盘数量

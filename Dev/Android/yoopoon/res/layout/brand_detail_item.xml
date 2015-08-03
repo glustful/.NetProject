@@ -2,50 +2,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="${relativePackage}.${activityClass}"
-    android:background="@android:color/white" 
+    android:background="@android:color/white"
     android:gravity="center"
-    android:padding="5dp">
+    android:orientation="vertical"
+    android:padding="5dp"
+    tools:context="${relativePackage}.${activityClass}" >
 
-   <com.yoopoon.home.ui.view.AutoAjustSizeTextView 
+    <!--
+        <com.yoopoon.home.ui.view.AutoAjustSizeTextView 
        android:id="@+id/title"
        android:textColor="@android:color/black"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:textSize="@dimen/large_textSize"/>
-    <TextView 
-       android:id="@+id/content"
-       android:textColor="@color/brand_detail_adapter"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       
-       android:textSize="@dimen/middle_textSize"/>
-     <com.yoopoon.home.ui.view.AutoAjustSizeTextView 
-       android:id="@+id/price"
-       android:textColor="@color/second_red"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:textSize="@dimen/large_textSize"
-       />
-		<com.etsy.android.grid.util.DynamicHeightImageView 
-		    android:id="@+id/img"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:scaleType="fitXY"/>
-		<View 
-		    android:layout_width="match_parent"
-		    android:layout_height="1dp"
-		    android:background="@color/appBackground"/>
-		<TextView 
-		    android:id="@+id/callPhone"
-		    android:layout_marginTop="5dp"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:drawableLeft="@drawable/phone_icon"
-		    android:drawablePadding="5dp"
-		    android:text="咨询热线"
-		    
-		    android:textColor="@color/second_red"
-		    android:layout_gravity="center_horizontal"/>
+    -->
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        
+        android:textSize="@dimen/large_textSize" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/brand_detail_adapter"
+        android:textSize="@dimen/middle_textSize" />
+
+    <com.yoopoon.home.ui.view.AutoAjustSizeTextView
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/second_red"
+        android:textSize="@dimen/large_textSize" />
+
+    <com.etsy.android.grid.util.DynamicHeightImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/appBackground" />
+
+    <TextView
+        android:id="@+id/callPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:drawableLeft="@drawable/phone_icon"
+        android:drawablePadding="5dp"
+        android:text="咨询热线"
+        android:textColor="@color/second_red" />
+
 </LinearLayout>
