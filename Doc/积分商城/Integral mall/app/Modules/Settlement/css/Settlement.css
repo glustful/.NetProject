@@ -1,0 +1,85 @@
+h2{
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    background-color: #fff;
+    color: #666666;
+    font-weight: bolder;
+    margin: 0;
+}
+.content{
+    background-color: #ececec;
+    padding-top: 10px;
+}
+.content h4{
+    height: 56px;
+    line-height: 56px;
+    margin:0;
+    border-bottom: 1px solid #ebebeb;
+    padding-left:15%;
+    background: url("../img/bus.png") no-repeat 1% center #fff;
+    color: #666666;
+    font-weight: bolder;
+}
+.content ul{
+    background-color: #fff;
+    margin-bottom: 15px;
+}
+.content ul li{
+    height: 90px;
+    border-bottom: 1px solid #ebebeb;
+    font-size: 1.2em;
+    color: #848484;
+    padding:1%;
+}
+.content ul .add{
+    color: #00a0e9;
+    padding-left: 1%;
+    line-height: 90px;
+}
+ .name{
+    color: #ff3100;
+}
+.tell{
+    color: #333;
+}
+.fruits{
+    background-color: #fff;
+    padding:1%;
+    margin-bottom: 600px;
+}
+.fruits p{
+    color: #666666;
+    font-size: 1.3em;
+    font-weight: bolder;
+}
+.fruits .Mango {
+    margin-bottom: 50px;
+}
+.fruits .int{
+    color: #ff4100;
+    font-size: 1.3em;
+    margin-top: 5%;
+    font-weight: bolder;
+}
+.bill{
+    height: 100px;
+    line-height: 100px;
+    background-color:#ff4100;
+    margin: 0;
+    color: #fff2ee;
+    padding-left: 30px;
+}
+.bill button{
+    width: 130px;
+    height: 55px;
+    line-height: 55px;
+    background-color: #fff;
+    color:#ff3100;
+    border-radius: 5px;
+    margin: 25px 30px 0 0;
+    font-size: 1.5em;
+}
+.bill .int{
+    font-size: 1.5em;
+}

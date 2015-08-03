@@ -1,0 +1,35 @@
+.address{
+    border-bottom: 10px solid #ebebeb;
+}
+.detailAddress li{
+    padding:20px;
+    border-bottom: 1px solid #ebebeb;
+}
+.detailAddress li span{
+    color: #414141;
+    font-size: 1.4em;
+}
+.detailAddress li span small{
+    color:#a0a0a0;
+    font-size: 0.8em;
+}
+.dy{
+    font-size: 3.0em;
+    margin-top: -30px;
+    color: #414141;
+}
+form{
+    font-size: 1.5em;
+}
+form .confirm{
+    width: 100%;
+    height: 80px;
+    background-color: #ff3000;
+    color: #ffcfbf;
+    font-size: 1.6em;
+    margin-top: 100px;
+}
+
+.detailAddress .removeBorder{
+    border-bottom:none;
+}

@@ -1,0 +1,43 @@
+.success{
+    border-bottom: 1px solid #ebebeb;
+}
+.payment,.info,.consumption{
+    padding:1%;
+    border-bottom: 1px solid #ebebeb;
+}
+.payment .ok,.payment .food{
+    margin-right: 30px;
+}
+.payment p{
+    color: #858585;
+    font-size: 1.3em;
+}
+.payment .attract{
+    color: #333333;
+    font-size: 1.6em;
+}
+.payment .rice{
+    margin-bottom: 50px;
+}
+.info {
+    font-size: 1.3em;
+    color: #4e4e4e;
+}
+.info .name,.info .tell{
+    font-weight: bold;
+    font-size: 1.4em;
+}
+.consumption{
+    color:#ff4200;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+.back{
+    padding: 20px;
+    font-size: 1.4em;
+}
+.back .ykh{
+    display: inline-block;
+    margin-left:2%;
+    color: #ff3000;
+}
