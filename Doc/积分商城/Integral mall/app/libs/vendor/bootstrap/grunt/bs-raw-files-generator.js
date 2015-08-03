@@ -31,11 +31,11 @@ module.exports = function generateRawFilesJs(grunt, banner) {
   if (!banner) {
     banner = '';
   }
-  var dirs = ['js', 'less', 'fonts'];
+  var dirs = ['script', 'less', 'fonts'];
   var files = banner + dirs.map(getFiles).reduce(function (combined, file) {
     return combined + file;
   }, '');
-  var rawFilesJs = 'docs/assets/js/raw-files.min.js';
+  var rawFilesJs = 'docs/assets/script/raw-files.min.script';
   try {
     fs.writeFileSync(rawFilesJs, files);
   }

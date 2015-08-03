@@ -1,7 +1,7 @@
 {
   "name": "angular-ui-router",
   "version": "0.2.15",
-  "main": "./release/angular-ui-router.js",
+  "main": "./release/angular-ui-router.script",
   "dependencies": {
     "angular": ">= 1.0.8"
   },
@@ -17,8 +17,8 @@
     "test",
     "tests",
     "ngdoc_assets",
-    "Gruntfile.js",
-    "files.js"
+    "Gruntfile.script",
+    "files.script"
   ],
   "homepage": "https://github.com/angular-ui/ui-router",
   "_release": "0.2.15",

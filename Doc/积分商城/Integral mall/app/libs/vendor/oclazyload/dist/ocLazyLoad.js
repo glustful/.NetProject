@@ -755,7 +755,7 @@
                 anchor = $window.document.getElementsByTagName("head")[0] || $window.document.getElementsByTagName("body")[0];
 
             /**
-             * Load a js/css file
+             * Load a script/css file
              * @param type
              * @param path
              * @param params
@@ -793,7 +793,7 @@
                         el.rel = "stylesheet";
                         el.href = params.cache === false ? cacheBuster(path) : path;
                         break;
-                    case "js":
+                    case "script":
                         el = $window.document.createElement("script");
                         el.src = params.cache === false ? cacheBuster(path) : path;
                         break;
@@ -920,7 +920,7 @@
                                 file_type = m[1];
                             } else if (!$delegate.jsLoader.hasOwnProperty("ocLazyLoadLoader") && $delegate.jsLoader.hasOwnProperty("load")) {
                                 // requirejs
-                                file_type = "js";
+                                file_type = "script";
                             } else {
                                 $delegate._$log.error("File type could not be determined. " + path);
                                 return;
@@ -931,7 +931,7 @@
                             cssFiles.push(path);
                         } else if ((file_type === "html" || file_type === "htm") && templatesFiles.indexOf(path) === -1) {
                             templatesFiles.push(path);
-                        } else if (file_type === "js" || jsFiles.indexOf(path) === -1) {
+                        } else if (file_type === "script" || jsFiles.indexOf(path) === -1) {
                             jsFiles.push(path);
                         } else {
                             $delegate._$log.error("File type is not valid. " + path);
@@ -1051,7 +1051,7 @@
                         };
                     }
                 } else if (angular.isObject(module)) {
-                    // case {type: 'js', path: lazyLoadUrl + 'testModule.fakejs'}
+                    // case {type: 'script', path: lazyLoadUrl + 'testModule.fakejs'}
                     if (angular.isDefined(module.path) && angular.isDefined(module.type)) {
                         config = {
                             files: [module]
@@ -1144,7 +1144,7 @@
             /**
              * jsLoader function
              * @type Function
-             * @param paths array list of js files to load
+             * @param paths array list of script files to load
              * @param callback to call when everything is loaded. We use a callback and not a promise
              * @param params object config parameters
              * because the user can overwrite jsLoader and it will probably not use promises :(
@@ -1152,7 +1152,7 @@
             $delegate.jsLoader = function (paths, callback, params) {
                 var promises = [];
                 angular.forEach(paths, function (path) {
-                    promises.push($delegate.buildElement("js", path, params));
+                    promises.push($delegate.buildElement("script", path, params));
                 });
                 $q.all(promises).then(function () {
                     callback();
@@ -1277,4 +1277,4 @@ if (!Array.prototype.indexOf) {
                 return -1;
         };
 }
-//# sourceMappingURL=ocLazyLoad.js.map
+//# sourceMappingURL=ocLazyLoad.script.map

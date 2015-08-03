@@ -57,31 +57,31 @@ module.exports = function (grunt) {
 
     jshint: {
       options: {
-        jshintrc: 'js/.jshintrc'
+        jshintrc: 'script/.jshintrc'
       },
       grunt: {
         options: {
           jshintrc: 'grunt/.jshintrc'
         },
-        src: ['Gruntfile.js', 'grunt/*.js']
+        src: ['Gruntfile.script', 'grunt/*.script']
       },
       core: {
-        src: 'js/*.js'
+        src: 'script/*.script'
       },
       test: {
         options: {
-          jshintrc: 'js/tests/unit/.jshintrc'
+          jshintrc: 'script/tests/unit/.jshintrc'
         },
-        src: 'js/tests/unit/*.js'
+        src: 'script/tests/unit/*.script'
       },
       assets: {
-        src: ['docs/assets/js/src/*.js', 'docs/assets/js/*.js', '!docs/assets/js/*.min.js']
+        src: ['docs/assets/script/src/*.script', 'docs/assets/script/*.script', '!docs/assets/script/*.min.script']
       }
     },
 
     jscs: {
       options: {
-        config: 'js/.jscsrc'
+        config: 'script/.jscsrc'
       },
       grunt: {
         src: '<%= jshint.grunt.src %>'
@@ -107,20 +107,20 @@ module.exports = function (grunt) {
       },
       bootstrap: {
         src: [
-          'js/transition.js',
-          'js/alert.js',
-          'js/button.js',
-          'js/carousel.js',
-          'js/collapse.js',
-          'js/dropdown.js',
-          'js/modal.js',
-          'js/tooltip.js',
-          'js/popover.js',
-          'js/scrollspy.js',
-          'js/tab.js',
-          'js/affix.js'
+          'script/transition.script',
+          'script/alert.script',
+          'script/button.script',
+          'script/carousel.script',
+          'script/collapse.script',
+          'script/dropdown.script',
+          'script/modal.script',
+          'script/tooltip.script',
+          'script/popover.script',
+          'script/scrollspy.script',
+          'script/tab.script',
+          'script/affix.script'
         ],
-        dest: 'dist/js/<%= pkg.name %>.js'
+        dest: 'dist/script/<%= pkg.name %>.script'
       }
     },
 
@@ -130,23 +130,23 @@ module.exports = function (grunt) {
       },
       core: {
         src: '<%= concat.bootstrap.dest %>',
-        dest: 'dist/js/<%= pkg.name %>.min.js'
+        dest: 'dist/script/<%= pkg.name %>.min.script'
       },
       customize: {
         src: configBridge.paths.customizerJs,
-        dest: 'docs/assets/js/customize.min.js'
+        dest: 'docs/assets/script/customize.min.script'
       },
       docsJs: {
         src: configBridge.paths.docsJs,
-        dest: 'docs/assets/js/docs.min.js'
+        dest: 'docs/assets/script/docs.min.script'
       }
     },
 
     qunit: {
       options: {
-        inject: 'js/tests/unit/phantom.js'
+        inject: 'script/tests/unit/phantom.script'
       },
-      files: 'js/tests/index.html'
+      files: 'script/tests/index.html'
     },
 
     less: {
@@ -376,7 +376,7 @@ module.exports = function (grunt) {
           throttled: 10,
           maxRetries: 3,
           maxPollRetries: 4,
-          urls: ['http://127.0.0.1:3000/js/tests/index.html?hidepassed'],
+          urls: ['http://127.0.0.1:3000/script/tests/index.html?hidepassed'],
           browsers: grunt.file.readYAML('grunt/sauce_browsers.yml')
         }
       }
@@ -430,7 +430,7 @@ module.exports = function (grunt) {
   if (runSubset('core') &&
       // Skip core tests if this is a Savage build
       process.env.TRAVIS_REPO_SLUG !== 'twbs-savage/bootstrap') {
-    testSubtasks = testSubtasks.concat(['dist-css', 'dist-js', 'csslint:dist', 'test-js', 'docs']);
+    testSubtasks = testSubtasks.concat(['dist-css', 'dist-script', 'csslint:dist', 'test-script', 'docs']);
   }
   // Skip HTML validation if running a different subset of the test suite
   if (runSubset('validate-html') &&
@@ -441,24 +441,24 @@ module.exports = function (grunt) {
   // Only run Sauce Labs tests if there's a Sauce access key
   if (typeof process.env.SAUCE_ACCESS_KEY !== 'undefined' &&
       // Skip Sauce if running a different subset of the test suite
-      runSubset('sauce-js-unit') &&
+      runSubset('sauce-script-unit') &&
       // Skip Sauce on Travis when [skip sauce] is in the commit message
       isUndefOrNonZero(process.env.TWBS_DO_SAUCE)) {
     testSubtasks.push('connect');
     testSubtasks.push('saucelabs-qunit');
   }
   grunt.registerTask('test', testSubtasks);
-  grunt.registerTask('test-js', ['jshint:core', 'jshint:test', 'jshint:grunt', 'jscs:core', 'jscs:test', 'jscs:grunt', 'qunit']);
+  grunt.registerTask('test-script', ['jshint:core', 'jshint:test', 'jshint:grunt', 'jscs:core', 'jscs:test', 'jscs:grunt', 'qunit']);
 
   // JS distribution task.
-  grunt.registerTask('dist-js', ['concat', 'uglify:core', 'commonjs']);
+  grunt.registerTask('dist-script', ['concat', 'uglify:core', 'commonjs']);
 
   // CSS distribution task.
   grunt.registerTask('less-compile', ['less:compileCore', 'less:compileTheme']);
   grunt.registerTask('dist-css', ['less-compile', 'autoprefixer:core', 'autoprefixer:theme', 'usebanner', 'csscomb:dist', 'cssmin:minifyCore', 'cssmin:minifyTheme']);
 
   // Full distribution task.
-  grunt.registerTask('dist', ['clean:dist', 'dist-css', 'copy:fonts', 'dist-js']);
+  grunt.registerTask('dist', ['clean:dist', 'dist-css', 'copy:fonts', 'dist-script']);
 
   // Default task.
   grunt.registerTask('default', ['clean:dist', 'copy:fonts', 'test']);
@@ -480,16 +480,16 @@ module.exports = function (grunt) {
 
   grunt.registerTask('commonjs', 'Generate CommonJS entrypoint module in dist dir.', function () {
     var srcFiles = grunt.config.get('concat.bootstrap.src');
-    var destFilepath = 'dist/js/npm.js';
+    var destFilepath = 'dist/script/npm.script';
     generateCommonJSModule(grunt, srcFiles, destFilepath);
   });
 
   // Docs task.
   grunt.registerTask('docs-css', ['autoprefixer:docs', 'autoprefixer:examples', 'csscomb:docs', 'csscomb:examples', 'cssmin:docs']);
   grunt.registerTask('lint-docs-css', ['csslint:docs', 'csslint:examples']);
-  grunt.registerTask('docs-js', ['uglify:docsJs', 'uglify:customize']);
-  grunt.registerTask('lint-docs-js', ['jshint:assets', 'jscs:assets']);
-  grunt.registerTask('docs', ['docs-css', 'lint-docs-css', 'docs-js', 'lint-docs-js', 'clean:docs', 'copy:docs', 'build-glyphicons-data', 'build-customizer']);
+  grunt.registerTask('docs-script', ['uglify:docsJs', 'uglify:customize']);
+  grunt.registerTask('lint-docs-script', ['jshint:assets', 'jscs:assets']);
+  grunt.registerTask('docs', ['docs-css', 'lint-docs-css', 'docs-script', 'lint-docs-script', 'clean:docs', 'copy:docs', 'build-glyphicons-data', 'build-customizer']);
 
   grunt.registerTask('prep-release', ['jekyll:github', 'compress']);
 

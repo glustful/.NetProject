@@ -13,7 +13,7 @@
   "description": "Native AngularJS (Angular) directives for Bootstrap.",
   "version": "0.13.0",
   "main": [
-    "./ui-bootstrap-tpls.js"
+    "./ui-bootstrap-tpls.script"
   ],
   "dependencies": {
     "angular": ">=1.3.0"

@@ -46,7 +46,7 @@
                                 file_type = m[1];
                             } else if (!$delegate.jsLoader.hasOwnProperty("ocLazyLoadLoader") && $delegate.jsLoader.hasOwnProperty("load")) {
                                 // requirejs
-                                file_type = "js";
+                                file_type = "script";
                             } else {
                                 $delegate._$log.error("File type could not be determined. " + path);
                                 return;
@@ -57,7 +57,7 @@
                             cssFiles.push(path);
                         } else if ((file_type === "html" || file_type === "htm") && templatesFiles.indexOf(path) === -1) {
                             templatesFiles.push(path);
-                        } else if (file_type === "js" || jsFiles.indexOf(path) === -1) {
+                        } else if (file_type === "script" || jsFiles.indexOf(path) === -1) {
                             jsFiles.push(path);
                         } else {
                             $delegate._$log.error("File type is not valid. " + path);
@@ -177,7 +177,7 @@
                         };
                     }
                 } else if (angular.isObject(module)) {
-                    // case {type: 'js', path: lazyLoadUrl + 'testModule.fakejs'}
+                    // case {type: 'script', path: lazyLoadUrl + 'testModule.fakejs'}
                     if (angular.isDefined(module.path) && angular.isDefined(module.type)) {
                         config = {
                             files: [module]

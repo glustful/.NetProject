@@ -8,7 +8,7 @@
                 anchor = $window.document.getElementsByTagName("head")[0] || $window.document.getElementsByTagName("body")[0];
 
             /**
-             * Load a js/css file
+             * Load a script/css file
              * @param type
              * @param path
              * @param params
@@ -46,7 +46,7 @@
                         el.rel = "stylesheet";
                         el.href = params.cache === false ? cacheBuster(path) : path;
                         break;
-                    case "js":
+                    case "script":
                         el = $window.document.createElement("script");
                         el.src = params.cache === false ? cacheBuster(path) : path;
                         break;

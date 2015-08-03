@@ -2,7 +2,7 @@
   "name": "oclazyload",
   "version": "1.0.1",
   "description": "Load modules on demand (lazy load) with angularJS",
-  "main": "dist/ocLazyLoad.js",
+  "main": "dist/ocLazyLoad.script",
   "homepage": "https://github.com/ocombe/ocLazyLoad",
   "authors": [
     "Olivier Combe <olivier.combe@gmail.com>"
@@ -22,12 +22,12 @@
     "node_modules",
     "bower_components",
     "src",
-    "gulpfile.js",
+    "gulpfile.script",
     "package.json",
-    "changelog.js",
-    "validate-commit-msg.js",
+    "changelog.script",
+    "validate-commit-msg.script",
     "tests",
-    "karma.conf.js",
+    "karma.conf.script",
     "examples"
   ],
   "devDependencies": {

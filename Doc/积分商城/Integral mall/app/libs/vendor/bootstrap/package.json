@@ -18,7 +18,7 @@
   },
   "style": "dist/css/bootstrap.css",
   "less": "less/bootstrap.less",
-  "main": "./dist/js/npm",
+  "main": "./dist/script/npm",
   "repository": {
     "type": "git",
     "url": "https://github.com/twbs/bootstrap.git"
@@ -67,15 +67,15 @@
   "files": [
     "dist",
     "fonts",
-    "grunt/*.js",
+    "grunt/*.script",
     "grunt/*.json",
-    "js/*.js",
+    "script/*.script",
     "less/**/*.less",
-    "Gruntfile.js",
+    "Gruntfile.script",
     "LICENSE"
   ],
   "jspm": {
-    "main": "js/bootstrap",
+    "main": "script/bootstrap",
     "directories": {
       "example": "examples",
       "lib": "dist"

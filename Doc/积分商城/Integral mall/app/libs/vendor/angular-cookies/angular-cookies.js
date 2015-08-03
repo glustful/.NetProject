@@ -38,7 +38,7 @@ angular.module('ngCookies', ['ng']).
    *
    * @example
    *
-   * ```js
+   * ```script
    * angular.module('cookiesExample', ['ngCookies'])
    *   .controller('ExampleController', ['$cookies', function($cookies) {
    *     // Retrieving a cookie
@@ -143,7 +143,7 @@ angular.module('ngCookies', ['ng']).
    *
    * @example
    *
-   * ```js
+   * ```script
    * angular.module('cookieStoreExample', ['ngCookies'])
    *   .controller('ExampleController', ['$cookieStore', function($cookieStore) {
    *     // Put cookie

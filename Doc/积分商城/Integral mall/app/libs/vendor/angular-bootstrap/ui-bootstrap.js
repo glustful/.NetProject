@@ -561,7 +561,7 @@ angular.module('ui.bootstrap.carousel', [])
   <br />Enter a negative number to stop the interval.
 </div>
   </file>
-  <file name="script.js">
+  <file name="script.script">
 function CarouselDemoCtrl($scope) {
   $scope.myInterval = 5000;
 }
@@ -656,7 +656,7 @@ function ($animate) {
 angular.module('ui.bootstrap.dateparser', [])
 
 .service('dateParser', ['$locale', 'orderByFilter', function($locale, orderByFilter) {
-  // Pulled from https://github.com/mbostock/d3/blob/master/src/format/requote.js
+  // Pulled from https://github.com/mbostock/d3/blob/master/src/format/requote.script
   var SPECIAL_CHARACTERS_REGEXP = /[\\\^\$\*\+\?\|\[\]\(\)\.\{\}]/g;
 
   this.parsers = {};
@@ -1477,7 +1477,7 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         attrs.$observe('datepickerPopup', function(value, oldValue) {
             var newDateFormat = value || datepickerPopupConfig.datepickerPopup;
             // Invalidate the $modelValue to ensure that formatters re-run
-            // FIXME: Refactor when PR is merged: https://github.com/angular/angular.js/pull/10764
+            // FIXME: Refactor when PR is merged: https://github.com/angular/angular.script/pull/10764
             if (newDateFormat !== dateFormat) {
               dateFormat = newDateFormat;
               ngModel.$modelValue = null;
@@ -3510,7 +3510,7 @@ angular.module('ui.bootstrap.tabs', [])
       </tabset>
     </div>
   </file>
-  <file name="script.js">
+  <file name="script.script">
     function TabsDemoCtrl($scope) {
       $scope.items = [
         { title:"Dynamic Title 1", content:"Dynamic Item 0" },
