@@ -17,18 +17,21 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
@@ -43,6 +46,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -101,7 +105,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	private Timer timer;
 	private TimerTask task;
 	private boolean uploadable = true;
-
+	
 	@Click(R.id.iv_person_setting_avater)
 	void selectAvater() {
 		if (uploadable) {
@@ -109,9 +113,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			intent.setType("image/*");
 			this.startActivityForResult(intent, 1);
 		}
-
 	}
-
 	@Click(R.id.save)
 	void modifyBrokerInfo() {
 		User user = User.lastLoginUser(this);
@@ -119,31 +121,25 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			HomeLoginActivity_.intent(this).isManual(true).start();
 			return;
 		}
-
 		String name = et_name.getText().toString();
 		String sfz = et_card.getText().toString();
 		String email = et_email.getText().toString();
 		String nickname = tv_nickname.getText().toString();
 		String phone = tv_phone.getText().toString();
-
 		if (TextUtils.isEmpty(name)) {
 			et_name.startAnimation(animation_shake);
 			return;
 		}
-
 		if (TextUtils.isEmpty(email)) {
 			et_email.startAnimation(animation_shake);
 			return;
 		}
-
 		if (TextUtils.isEmpty(sfz)) {
 			et_card.startAnimation(animation_shake);
 			return;
 		}
-
 		rl_progress.setVisibility(View.VISIBLE);
 		String sexy = rb_female.isChecked() ? "女士" : "先生";
-
 		entity.setRealname(name);
 		entity.setBrokername(name);
 		entity.setNickname(nickname);
@@ -152,29 +148,22 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		entity.setEmail(email);
 		entity.setSexy(sexy);
 		entity.setHeadphoto(user.getHeadUrl());
-
 		entity.modifyInfo(new RequesListener() {
-
 			@Override
 			public void succeed(String msg) {
 				rl_progress.setVisibility(View.GONE);
 				Toast.makeText(PersonSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
 				finish();
 			}
-
 			@Override
 			public void fail(String msg) {
 				rl_progress.setVisibility(View.GONE);
 				Toast.makeText(PersonSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
-
 			}
 		});
-
 	}
-
 	private void parseToBroker(final String json) {
 		new ParserJSON(new ParseListener() {
-
 			@Override
 			public Object onParse() {
 				ObjectMapper om = new ObjectMapper();
@@ -191,21 +180,16 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				}
 				return entity;
 			}
-
 			@Override
 			public void onComplete(Object parseResult) {
-
 				if (parseResult != null) {
 					entity = (BrokerEntity) parseResult;
 				}
-
 			}
 		}).execute();
 	}
-
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
-
 			Uri uri = data.getData();
 			if (uri != null) {
 				ContentResolver cr = this.getContentResolver();
@@ -232,17 +216,12 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
 	private File getFile(Uri uri) {
 		try {
 			String[] proj = { MediaStore.Images.Media.DATA };
-
 			Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
-
 			int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
 			actualimagecursor.moveToFirst();
-
 			String img_path = actualimagecursor.getString(actual_image_column_index);
 			// Log.i(TAG, img_path);
 			return new File(img_path);
@@ -251,7 +230,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		}
 		return null;
 	}
-
 	private File getFileByUri(Uri uri) {
 		try {
 			String[] proj = { MediaStore.Images.Media.DATA };
@@ -259,7 +237,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			if (cursor != null) {
 				int actual_image_column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 				cursor.moveToFirst();
-
 				String img_path = cursor.getString(actual_image_column_index);
 				File file = new File(img_path);
 				Uri fileUri = Uri.fromFile(file);
@@ -270,52 +247,42 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		}
 		return null;
 	}
-
 	private void uploadImage(final File file) {
 		uploadable = false;
 		final String path = getString(R.string.url_host) + getString(R.string.url_upload);
-
 		timer = new Timer();
 		task = new TimerTask() {
-
 			@Override
 			public void run() {
 				runOnUiThread(new Runnable() {
-
 					@Override
 					public void run() {
 						if (count == 4)
 							count = 0;
 						tv_uploading.setText("上传中" + points[count++]);
 						tv_uploading.setVisibility(View.VISIBLE);
-
 					}
 				});
 			}
 		};
 		timer.scheduleAtFixedRate(task, 0, 300);
 		new Thread() {
-
 			public void run() {
 				new UploadHeadImg().post(path, file, null, new OnCompleteListener() {
-
 					@Override
 					public void onSuccess(final String json) {
 						// Log.i(TAG, json);
 						uploadable = true;
 						runOnUiThread(new Runnable() {
-
 							@Override
 							public void run() {
 								// {"Status":true,"Msg":"20150722/20150722_175858_383_288.jpg","Object":null}
 								try {
 									JSONObject obj = new JSONObject(json);
 									boolean status = Tools.optBoolean(obj, "Status", false);
-
 									User user = User.lastLoginUser(PersonSettingActivity.this);
 									String headUrl = Tools.optString(obj, "Msg", user.getHeadUrl());
 									user.setHeadUrl(headUrl);
-
 									if (!status) {
 										tv_uploading.setText("上传失败>_<");
 										tv_uploading.setVisibility(View.VISIBLE);
@@ -323,7 +290,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 										tv_uploading.setText("上传成功^_^");
 										tv_uploading.setVisibility(View.VISIBLE);
 									}
-
 								} catch (JSONException e) {
 									e.printStackTrace();
 								} finally {
@@ -332,31 +298,24 @@ public class PersonSettingActivity extends MainActionBarActivity {
 										task.cancel();
 									}
 								}
-
 							}
 						});
-
 					}
-
 					@Override
 					public void onFailed() {
 						uploadable = true;
 						runOnUiThread(new Runnable() {
-
 							@Override
 							public void run() {
 								tv_uploading.setText("上传失败>_<");
 								tv_uploading.setVisibility(View.VISIBLE);
-
 							}
 						});
-
 					}
 				});
 			};
 		}.start();
 	}
-
 	/**
 	 * @Title: initUI
 	 * @Description: 初始化界面
@@ -367,19 +326,17 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("个人设置");
 		animation_shake = AnimationUtils.loadAnimation(this, R.anim.shake);
 		requestUserInfo();
 	}
-
 	private void requestUserInfo() {
 		User user = User.lastLoginUser(this);
 		if (user == null) {
 			user = new User();
 		}
-
 		user.getUserInfo(new UserInfoListener() {
-
 			@Override
 			public void success(User user) {
 				String nickName = user.getNickName();
@@ -407,35 +364,26 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				if (!TextUtils.isEmpty(broker))
 					parseToBroker(broker);
 			}
-
 			@Override
 			public void failed(String msg) {
 				// Log.i(TAG, msg);
 			}
 		});
 	}
-
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
-
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
-
 	}
-
 	@Override
 	public Boolean showHeadView() {
-
 		return true;
 	}
-
 	@Override
 	protected void onDestroy() {
 		if (timer != null && task != null) {
@@ -446,10 +394,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		}
 		super.onDestroy();
 	}
-
 	@Override
 	protected void activityYMove() {
 		Utils.hiddenSoftBorad(this);
 	}
-
 }

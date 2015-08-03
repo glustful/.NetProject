@@ -14,18 +14,22 @@ package com.yoopoon.home;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
@@ -46,20 +50,19 @@ public class MeTaskActivity extends MainActionBarActivity {
 	ListView lv_task;
 	@ViewById(R.id.ll_progress)
 	LinearLayout ll_progress;
-
 	// private static final String TAG = "MeTaskActivity";
 	private List<JSONObject> datas = new ArrayList<JSONObject>();
 	private MyTaskAdapter adapter;
-
+	
 	@AfterViews
 	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("我的任务");
 		requestTodayTask();
 	}
-
 	private void fillData() {
 		lv_task.setVisibility(View.VISIBLE);
 		if (adapter == null) {
@@ -69,26 +72,22 @@ public class MeTaskActivity extends MainActionBarActivity {
 			adapter.notifyDataSetChanged();
 		}
 	}
-
+	
 	private class MyTaskAdapter extends BaseAdapter {
-
 		@Override
 		public int getCount() {
 			return datas.size();
 		}
-
 		@Override
 		public Object getItem(int position) {
 			// TODO Auto-generated method stub
 			return null;
 		}
-
 		@Override
 		public long getItemId(int position) {
 			// TODO Auto-generated method stub
 			return 0;
 		}
-
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null)
@@ -103,30 +102,22 @@ public class MeTaskActivity extends MainActionBarActivity {
 			tv_award.setText(award);
 			return convertView;
 		}
-
 	}
-
+	
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
-
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
-
 	}
-
 	@Override
 	public Boolean showHeadView() {
-
 		return true;
 	}
-
 	/**
 	 * @Title: requestTodayTask
 	 * @Description: 获取今日任务列表
@@ -134,11 +125,9 @@ public class MeTaskActivity extends MainActionBarActivity {
 	void requestTodayTask() {
 		ll_progress.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				ll_progress.setVisibility(View.GONE);
-
 				if (data.getResultState() == ResultState.eSuccess) {
 					if (data.getMRootData().optJSONArray("list") != null) {
 						JSONArray array = data.getMRootData().optJSONArray("list");
@@ -158,7 +147,6 @@ public class MeTaskActivity extends MainActionBarActivity {
 				lv_task.setVisibility(View.GONE);
 				tv_count.setText("今日任务(无)");
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub

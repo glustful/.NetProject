@@ -2,6 +2,7 @@ package com.yoopoon.home.ui.login;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -10,10 +11,12 @@ import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
@@ -31,6 +34,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.common.base.utils.RegxUtils;
@@ -47,9 +51,7 @@ import com.yoopoon.home.ui.home.FramMainActivity_;
 
 @EActivity(R.layout.home_register_activity)
 public class HomeRegisterActivity extends MainActionBarActivity {
-
 	private static final String TAG = "HomeRegisterActivity";
-
 	@ViewById(R.id.register_id_err)
 	TextView mErrorText;
 	@ViewById(R.id.register_id_confire_pwd)
@@ -82,30 +84,26 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 	private Timer timer = null;
 	private final int MSG_HIDE_ERROR = 1;
 	CountDownTimer countDownTimer = new CountDownTimer(60000, 1000) {
-
 		@Override
 		public void onTick(long millisUntilFinished) {
 			sendSMS.setEnabled(false);
 			sendSMS.setBackgroundResource(R.drawable.btn_not_enable);
 			sendSMS.setText("重新获取验证码(" + millisUntilFinished / 1000 + ")");
 		}
-
 		@Override
 		public void onFinish() {
 			sendSMS.setBackgroundResource(R.drawable.cycle_selector);
 			sendSMS.setEnabled(true);
 			sendSMS.setText("发送验证码");
-
 		}
 	};
 	protected String mobileYzm = "";
 	private Intent service;
-
+	
 	@AfterInject
 	void initData() {
 		this.mContext = this;
 	}
-
 	@AfterViews
 	void initUI() {
 		this.titleButton.setText("用户注册");
@@ -113,8 +111,8 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		this.rightButton.setVisibility(View.INVISIBLE);
 		this.backButton.setVisibility(View.VISIBLE);
 		this.backButton.setText("返回");
+		this.backButton.setTextColor(Color.WHITE);
 		SpannableString span = new SpannableString(this.registerButton.getText());
-
 		ForegroundColorSpan fgcs = new ForegroundColorSpan(getResources().getColor(R.color.second_red));
 		span.setSpan(fgcs, span.length() - 2, span.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		this.registerButton.setText(span);
@@ -122,78 +120,61 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		animErrClose = AnimationUtils.loadAnimation(this, R.anim.push_top_out);
 		mErrorText.setVisibility(View.GONE);
 		mLoadingLayout.setVisibility(View.GONE);
-
 	}
-
 	/*
 	 * @TextChange(R.id.register_id_email) void mailTextChange(CharSequence text, TextView textView,
 	 * int before, int start, int count) { if (TextUtils.isEmpty(text)) {
 	 * delMailButton.setVisibility(View.GONE); } else { delMailButton.setVisibility(View.VISIBLE); }
 	 * }
 	 */
-
 	@TextChange(R.id.register_id_pwd)
 	void passwordTextChange(CharSequence text, TextView textView, int before, int start, int count) {
 		if (TextUtils.isEmpty(text)) {
 			delPassWordButton.setVisibility(View.GONE);
-
 		} else {
 			delPassWordButton.setVisibility(View.VISIBLE);
-
 		}
 	}
-
 	@TextChange(R.id.register_id_confire_pwd)
 	void passwordConfireTextChange(CharSequence text, TextView textView, int before, int start, int count) {
 		if (TextUtils.isEmpty(text)) {
 			delConfirePassWordButton.setVisibility(View.GONE);
-
 		} else {
 			delConfirePassWordButton.setVisibility(View.VISIBLE);
-
 		}
 	}
-
 	@TextChange(R.id.register_id_phone)
 	void phoneTextChange(CharSequence text, TextView textView, int before, int start, int count) {
 		if (TextUtils.isEmpty(text)) {
 			delPhoneButton.setVisibility(View.GONE);
-
 		} else {
 			delPhoneButton.setVisibility(View.VISIBLE);
-
 		}
 	}
-
 	/*
 	 * @Click(R.id.delMailBtn) void delMailClick(View v) { mEmailText.setText("");
 	 * mEmailText.requestFocus(); }
 	 */
-
 	@Click(R.id.delPwdBtn)
 	void delPwdClick(View v) {
 		mPwdText.setText("");
 		mPwdText.requestFocus();
 	}
-
 	@Click(R.id.delConfirePwdBtn)
 	void delConfirePwdClick(View v) {
 		mPwdConfireText.setText("");
 		mPwdConfireText.requestFocus();
 	}
-
 	@Click(R.id.delPhoneBtn)
 	void delPhoneClick(View v) {
 		mPhoneText.setText("");
 		mPhoneText.requestFocus();
 	}
-
 	@Click(R.id.loginRegister)
 	void registerClick(View v) {
 		HomeLoginActivity_.intent(mContext).isManual(true).start();
 		this.finish();
 	}
-
 	@Click(R.id.sendSMS)
 	void sendSMS() {
 		String phone = mPhoneText.getText().toString();
@@ -204,18 +185,14 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		countDownTimer.start();
 		requestIdentify("{\"Mobile\":\"" + phone + "\",\"SmsType\":\"0\"}");
 	}
-
 	@Click(R.id.register_id_register)
 	void register() {
-
 		/* String eMail = mEmailText.getText().toString(); */
 		String pwd = mPwdText.getText().toString();
-
 		/*
 		 * if (eMail == null || eMail.length() == 0) { showError("请输入用户名"); return; } if
 		 * (eMail.length() < 6) { showError("用户名至少6个字符"); return; }
 		 */
-
 		if (pwd == null || pwd.length() == 0) {
 			showError("请输入密码");
 			return;
@@ -249,11 +226,9 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		json += "\"Hidm\":\"" + mobileYzm + "\",";
 		requestRegeter(phone, pwd, json);
 	}
-
 	@UiThread
 	void requestRegeter(final String phone, final String pwd, String json) {
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				Log.i(TAG, data.toString());
@@ -277,29 +252,21 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 						}
 					} else {
 						String msg = data.getMsg();
-
 						showError(TextUtils.isEmpty(msg) ? "验证码错误，请重新发送" : msg);
 					}
 					return;
 				}
-
 				showError(data.getMsg());
-
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
-
 			}
 		}.setUrl(getString(R.string.url_user_addBroker)).SetJSON(json).notifyRequest();
-
 	}
-
 	void requestIdentify(String json) {
 		startSmsService();
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				if (data.getResultState() == ResultState.eSuccess) {
@@ -312,56 +279,44 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 				sendSMS.setEnabled(true);
 				sendSMS.setText("发送验证码");
 				showError(data.getMsg());
-
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
-
 			}
 		}.setUrl(getString(R.string.url_sms_sendSMS)).SetJSON(json).notifyRequest();
 	}
-
 	@Override
 	public void backButtonClick(View v) {
 		onBackPressed();
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
 		// TODO Auto-generated method stub
-
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
 		// TODO Auto-generated method stub
-
 	}
-
 	@Override
 	public Boolean showHeadView() {
 		// TODO Auto-generated method stub
 		return true;
 	}
-
 	protected void activityYMove() {
 		Utils.hiddenSoftBorad(this);
 	}
-
 	private void showError(String msg) {
 		mErrorText.setText(msg);
 		mErrorText.setVisibility(View.VISIBLE);
 		mErrorText.startAnimation(animErrOpen);
 		clearError();
 	}
-
 	private void hideError() {
 		mErrorText.setVisibility(View.GONE);
 		mErrorText.startAnimation(animErrClose);
 	}
-
+	
 	public Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -370,7 +325,7 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 			}
 		}
 	};
-
+	
 	private void clearError() {
 		TimerTask task = new TimerTask() {
 			@Override
@@ -389,7 +344,6 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		timer = new Timer();
 		timer.schedule(task, 3000);
 	}
-
 	/*
 	 * (non Javadoc)
 	 * @Title: onBackPressed
@@ -404,18 +358,15 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 		FramMainActivity_.intent(this).start();
 		super.onBackPressed();
 	}
-
 	private void startSmsService() {
 		service = new Intent(this, SmsService.class);
 		startService(service);
-
 		IntentFilter filter = new IntentFilter(Utils.GET_CODE_ACTION);
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
 		this.registerReceiver(receiver, filter);
 	}
-
+	
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
-
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
@@ -430,5 +381,4 @@ public class HomeRegisterActivity extends MainActionBarActivity {
 			unregisterReceiver(receiver);
 		}
 	};
-
 }

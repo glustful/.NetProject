@@ -14,9 +14,11 @@ package com.yoopoon.home;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.graphics.Color;
@@ -38,6 +40,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.yoopoon.common.base.utils.RegxUtils;
 import com.yoopoon.common.base.utils.SortNameByOrder;
 import com.yoopoon.home.data.user.User;
@@ -62,24 +65,23 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 	private MyPartnerListAdapter adapter;
 	private String[] names = { "钱德勒", "莫妮卡", "格蕾丝", "威尔", "Grace", "Will", "Chandler", "Rachel", "Monica", "Ross",
 			"Mood", "莫德", "sue", "苏", "Moening", "莫宁", "Alice", "爱丽丝" };
-
 	private static final String TAG = "IPartnerActivity";
 	private String[] showNameList;
-
+	
 	@AfterViews
 	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
+		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("我的合伙人");
 		btn_add.setOnClickListener(this);
 		lv.setOnItemClickListener(new MyItemClickListener());
 		showNameList = SortNameByOrder.getShowNameList(names);
 		fillData();
 	}
-
+	
 	private class MyItemClickListener implements OnItemClickListener {
-
 		/*
 		 * (non Javadoc)
 		 * @Title: onItemClick
@@ -98,9 +100,8 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 			if (!name.startsWith("*****"))
 				PartnerDetailActivity_.intent(IPartnerActivity.this).start();
 		}
-
 	}
-
+	
 	private void fillData() {
 		if (adapter == null) {
 			adapter = new MyPartnerListAdapter();
@@ -109,15 +110,13 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 			adapter.notifyDataSetChanged();
 		}
 	}
-
+	
 	private static class ViewHolder {
-
 		TextView tv_name;
 		ImageView iv_avater;
 	}
-
+	
 	private class MyPartnerListAdapter extends BaseAdapter {
-
 		/*
 		 * (non Javadoc)
 		 * @Title: getCount
@@ -129,7 +128,6 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		public int getCount() {
 			return showNameList.length;
 		}
-
 		/*
 		 * (non Javadoc)
 		 * @Title: getItem
@@ -143,7 +141,6 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 			// TODO Auto-generated method stub
 			return position;
 		}
-
 		/*
 		 * (non Javadoc)
 		 * @Title: getItemId
@@ -157,7 +154,6 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 			// TODO Auto-generated method stub
 			return 0;
 		}
-
 		/*
 		 * (non Javadoc)
 		 * @Title: getView
@@ -177,7 +173,6 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 				tv.setPadding(10, 0, 0, 0);
 				return tv;
 			}
-
 			ViewHolder holder = null;
 			if (convertView == null || !(convertView instanceof LinearLayout))
 				convertView = View.inflate(IPartnerActivity.this, R.layout.item_partner, null);
@@ -189,33 +184,24 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 				convertView.setTag(holder);
 			}
 			holder.tv_name.setText(showName);
-
 			return convertView;
 		}
-
 	}
-
+	
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
-
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
-
 	}
-
 	@Override
 	public Boolean showHeadView() {
-
 		return true;
 	}
-
 	/*
 	 * (non Javadoc)
 	 * @Title: onClick
@@ -251,45 +237,38 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 					invitePartner(phone);
 					setRecommendEnable(false);
 					CountDownTimer timer = new CountDownTimer(60000, 1000) {
-
 						@Override
 						public void onTick(long millisUntilFinished) {
 							bt_invite.setText("邀请(" + millisUntilFinished / 1000 + ")");
 						}
-
 						@Override
 						public void onFinish() {
 							setRecommendEnable(true);
-
 						}
 					};
 					timer.start();
 				}
 				break;
 		}
-
 	}
-
 	private void setRecommendEnable(boolean enable) {
 		bt_invite.setEnabled(enable);
 		bt_invite.setBackgroundResource(enable ? R.drawable.cycle_selector : R.drawable.btn_not_enable);
 	}
-
+	
 	private Timer timer;
 	private TimerTask task;
 	private int count = 1;
 	private String[] points = { "", ".", "..", "..." };
 	private long startMills;
 	private Handler handler = new Handler();
-
+	
 	private void inviting() {
 		timer = new Timer();
 		task = new TimerTask() {
-
 			@Override
 			public void run() {
 				runOnUiThread(new Runnable() {
-
 					@Override
 					public void run() {
 						if (count == 5)
@@ -304,7 +283,6 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		};
 		timer.schedule(task, 0, 600);
 	}
-
 	private void invitePartner(String phone) {
 		User user = User.lastLoginUser(this);
 		if (user == null) {
@@ -315,13 +293,11 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 			String userName = user.getUserName();
 			user.invite(new PartnerList(user.getId(), new Broker(userId, user.getPhone(), userId, userId, 0), 0,
 					userName, phone), new InvitePartnerListener() {
-
 				@Override
 				public void success(final String msg) {
 					long duration = System.currentTimeMillis() - startMills;
 					if (duration < 2000) {
 						handler.postDelayed(new Runnable() {
-
 							@Override
 							public void run() {
 								responseSucceed(msg);
@@ -331,13 +307,11 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 						responseSucceed(msg);
 					}
 				}
-
 				@Override
 				public void failed(final String msg) {
 					long duration = System.currentTimeMillis() - startMills;
 					if (duration < 2000) {
 						handler.postDelayed(new Runnable() {
-
 							@Override
 							public void run() {
 								responseFail(msg);
@@ -347,21 +321,17 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 						responseFail(msg);
 					}
 				}
-
 			});
 		}
 	}
-
 	private void responseFail(String msg) {
 		timer.cancel();
 		task.cancel();
 		Toast.makeText(IPartnerActivity.this, msg, Toast.LENGTH_SHORT).show();
 	}
-
 	private void responseSucceed(String msg) {
 		timer.cancel();
 		task.cancel();
-
 		if (msg.contains("成功")) {
 			tv_warning.setVisibility(View.GONE);
 			Toast.makeText(IPartnerActivity.this, msg, Toast.LENGTH_SHORT).show();
@@ -372,12 +342,12 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 			tv_warning.setVisibility(View.VISIBLE);
 		}
 	}
-
+	
 	Button cancel;
 	Button bt_invite;
 	Dialog dialog;
 	EditText et_phone;
-
+	
 	private void showAddPartnerDialog() {
 		Builder builder = new Builder(IPartnerActivity.this);
 		View addView = View.inflate(this, R.layout.dialog_addpartner, null);
@@ -387,11 +357,9 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		et_phone = (EditText) addView.findViewById(R.id.et_partner_phone);
 		tv_warning = (TextView) addView.findViewById(R.id.tv_addpartner_warning);
 		dialog = builder.show();
-
 		cancel.setOnClickListener(this);
 		bt_invite.setOnClickListener(this);
 	}
-
 	/*
 	 * (non Javadoc)
 	 * @Title: onDestroy
@@ -414,5 +382,4 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		}
 		super.onDestroy();
 	}
-
 }
