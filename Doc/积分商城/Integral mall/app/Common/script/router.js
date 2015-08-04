@@ -7,7 +7,8 @@ app.config(['$stateProvider','$urlRouterProvider','MAIN_CONFIG',function($stateP
         })
         .state('intDetail',{
             url:'/intDetail',
-            templateUrl:'Modules/intDetail/intDetail.html'
+            templateUrl:'Modules/intDetail/intDetail.html',
+            data:{title:'积分详情'}
         })
         .state('Settlement',{
             url:'/Settlement',
@@ -20,7 +21,7 @@ app.config(['$stateProvider','$urlRouterProvider','MAIN_CONFIG',function($stateP
         .state('newAddress',{
             url:'/newAddress',
             templateUrl:'Modules/newAddress/newAddress.html',
-            resolve:load('Modules/newAddress/controller/newAddress.script')
+            resolve:load('Modules/newAddress/controller/newAddress.js')
 
         })
 
