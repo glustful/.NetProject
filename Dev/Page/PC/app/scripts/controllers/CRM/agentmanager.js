@@ -19,6 +19,7 @@ angular.module("app").controller('agentmanagerIndexController', [
         var page= 0,howmany=0;
         $scope.getList  = function(orderByAll) {
             $scope.searchCondition.orderByAll=orderByAll ;
+            if($scope.searchCondition.orderByAll!=undefined){
             if($scope.searchCondition.isDes==true)//如果为降序，
             {
                 $scope.UpOrDownImgClass="fa-caret-up";//改变成升序图标
@@ -28,6 +29,7 @@ angular.module("app").controller('agentmanagerIndexController', [
             {
                 $scope.UpOrDownImgClass="fa-caret-down";
                 $scope.searchCondition.isDes=true;
+            }
             }
             if($scope.searchCondition.phone==undefined)
             {$scope.searchCondition.phone="";}
