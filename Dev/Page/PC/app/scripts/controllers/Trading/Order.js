@@ -7,17 +7,19 @@ angular.module("app").controller('orderController', [
 
         $scope.searchCondition={
             page:1,
-            pageSize:10
+            pageSize:10,
+            type:'推荐订单',
         }
-        $scope.getList=function(){
-            $http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=推荐订单',{params:$scope.searchCondition,'withCredentials':true}).success(function (data) {
+        var getOrderList=function(){
+            $http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders',{params:$scope.searchCondition,'withCredentials':true}).success(function (data) {
                 $scope.rowCollectionBasic = data.List;
                 $scope.searchCondition.page = data.Condition.Page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
                 $scope.totalCount = data.totalCount;
             });
         }
-        $scope.getList ();
+        $scope.getList=getOrderList;
+        getOrderList()
 
 
         var vm = $scope.vm = {};
@@ -38,20 +40,27 @@ angular.module("app").controller('orderController', [
 
         //点击选择订单状态；
         $scope.selectChange = function () {
+
             //添加了ng-change事件来试试id值的输出
             if (vm.selectVal == 0) {
-                $http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=推荐订单',{'withCredentials':true}).success(function (data) {
-                    $scope.rowCollectionBasic = data.List;
-                });
+                $scope.searchCondition.type="推荐订单",
+                    getOrderList()
+                //$http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=推荐订单',{'withCredentials':true}).success(function (data) {
+                //    $scope.rowCollectionBasic = data.List;
+                //});
             }else if(vm.selectVal == 1) {
-                $http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=带客订单',{'withCredentials':true}).success(function (data) {
-                    $scope.rowCollectionBasic = data.List;
-                });
+                //$http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=带客订单',{'withCredentials':true}).success(function (data) {
+                //    $scope.rowCollectionBasic = data.List;
+                //});
+                $scope.searchCondition.type="带客订单",
+                    getOrderList()
             }
             else {
-                $http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=成交订单',{'withCredentials':true}).success(function (data) {
-                    $scope.rowCollectionBasic = data.List;
-                });
+                //$http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=成交订单',{'withCredentials':true}).success(function (data) {
+                //    $scope.rowCollectionBasic = data.List;
+                //});
+                $scope.searchCondition.type="成交订单",
+                    getOrderList()
             }
         };
 
