@@ -198,12 +198,14 @@ namespace Zerg.Controllers.Trading.Trading.Order
         [Description("查询所有推荐订单")]
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage GetAllRecommonOrders(EnumOrderType type)
+        public HttpResponseMessage GetAllRecommonOrders(EnumOrderType type, int page = 1, int pageSize = 10)
         {
             OrderSearchCondition OSC = new OrderSearchCondition()
             {
                 Ordertype = type,                
-                OrderBy = EnumOrderSearchOrderBy.OrderById
+                OrderBy = EnumOrderSearchOrderBy.OrderById,
+                Page = page,
+                PageCount = pageSize
             };          
             var list = _orderService.GetOrdersByCondition(OSC).Select(p => new 
             {
@@ -219,7 +221,8 @@ namespace Zerg.Controllers.Trading.Trading.Order
                 p.OrderDetail.Commission,
                 p.OrderDetail.Dealcommission
             }).ToList();
-            return PageHelper.toJson(list);
+            var totalCount1 = _orderService.GetOrderCount(OSC);
+            return PageHelper.toJson(new {list, Condition = OSC, totalCount = totalCount1});
         }
         #region 彭贵飞 获取洽谈后的订单
        /// <summary>

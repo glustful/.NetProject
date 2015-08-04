@@ -157,7 +157,7 @@ namespace Zerg.Controllers.CRM
 
             var condition = new BrokerLeadClientSearchCondition
             {
-                OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderById,
+                OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderByTime,
                 Page = page,
                 PageCount = pageSize,
                 Status = status,
