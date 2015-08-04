@@ -21,7 +21,7 @@
         android:layout_marginTop="5dp"
         android:paddingLeft="10dp"
         android:text="一万抵三万"
-        android:textColor="#880000ff" />
+        android:textColor="@color/brand_detail_adapter" />
 
     <TextView
         android:id="@+id/tv_item_style_price"
@@ -34,10 +34,10 @@
     <ImageView
         android:id="@+id/iv_item_style"
         android:layout_margin="10dp"
-        android:scaleType="center"
         android:layout_gravity="center_horizontal"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="centerInside"
         android:src="@drawable/logo_gray"/>
     
     <View 

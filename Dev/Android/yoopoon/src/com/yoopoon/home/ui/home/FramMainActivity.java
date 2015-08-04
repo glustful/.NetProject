@@ -152,6 +152,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 	private final int DOWN_ERROR = 4;
 
 	Handler handler = new Handler() {
+
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
@@ -165,7 +166,7 @@ public class FramMainActivity extends SearchActionBarActivity {
 					break;
 				case GET_UNDATAINFO_ERROR:
 					// 服务器超时
-					Toast.makeText(getApplicationContext(), "获取版本更新信息失败", 1).show();
+					Toast.makeText(getApplicationContext(), "暂无更新信息", 1).show();
 					break;
 				case DOWN_ERROR:
 					// 下载apk失败
