@@ -6,7 +6,8 @@ app.controller('BrandController',['$http','$scope','$stateParams','$timeout',fun
             condition:$stateParams.condition==undefined?'':$stateParams.condition,
             //condition:$stateParams.condition,
             page:0,
-            PageCount:10
+            PageCount:10,
+            className:'房地产'
         };
     $scope.tipp="正在加载......";
     var loading = false
@@ -53,4 +54,12 @@ app.controller('BrandController',['$http','$scope','$stateParams','$timeout',fun
         $timeout(pushContentMore, 2500);//定时器，每隔一秒循环调用自身函数
     }
     pushContentMore();//触发里面的定时器
+}]);
+app.filter('adtitle', ['$sce',function ($sce) {
+
+    return function (input) {
+
+        return $sce.trustAsHtml(input);
+
+    }
 }]);
