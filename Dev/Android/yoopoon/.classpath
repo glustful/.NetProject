@@ -14,5 +14,6 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="lib" path="C:/Users/guojunjun/Downloads/mail.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
