@@ -11,6 +11,5 @@ app.controller('newAddressController',function($scope ){
     $scope.selectProvince=function(){
         $scope.province=!$scope.province;
         $scope.down=!$scope.down;
-//        $scope.selectedProvinces=selectedProvince;
     }
 })
