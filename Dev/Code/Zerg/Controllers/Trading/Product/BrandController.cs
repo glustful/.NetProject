@@ -421,15 +421,21 @@ namespace Zerg.Controllers.Trading.Product
         [Description("传入查询参数，返回品牌列表")]
         [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage SearchBrand(string condition, int page, int pageCount)
+        public HttpResponseMessage SearchBrand(string condition, int page, int pageCount,string className)
         {
+            var con = new ClassifySearchCondition()
+            {
+                Name = className
+            };
+            var  classify= _classifyService.GetClassifysByCondition(con).FirstOrDefault();
             ProductBrandSearchCondition bcon = new ProductBrandSearchCondition
             {
                 Bname = condition,
                 Page = page,
                 PageCount = pageCount,
                 OrderBy = EnumProductBrandSearchOrderBy.OrderByAddtime,
-                IsDescending = true
+                IsDescending = true,
+                Classify =classify 
             };
             var brandList = _productBrandService.GetProductBrandsByCondition(bcon).Select(a => new
             {
@@ -438,6 +444,7 @@ namespace Zerg.Controllers.Trading.Product
                 a.Bname,
                 a.SubTitle,
                 a.Content,
+                a.AdTitle,
                 ProductPramater = a.ParameterEntities.Select(p => new { p.Parametername, p.Parametervaule })
             }).ToList();
             var count = _productBrandService.GetProductBrandCount(bcon);
@@ -450,6 +457,7 @@ namespace Zerg.Controllers.Trading.Product
                     c.Bname,
                     c.SubTitle,
                     c.Content,
+                    c.AdTitle,
                     ProductParamater = c.ProductPramater.ToDictionary(k => k.Parametername, v => v.Parametervaule)
                 }),
                 Count = count

@@ -157,7 +157,7 @@ namespace Zerg.Controllers.CRM
 
             var condition = new BrokerLeadClientSearchCondition
             {
-                OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderById,
+                OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderByTime,
                 Page = page,
                 PageCount = pageSize,
                 Status = status,
@@ -539,6 +539,7 @@ namespace Zerg.Controllers.CRM
                     comOrder.Status = (int)EnumOrderStatus.审核失败;
                     comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
                     comOrder.Upddate = DateTime.Now;
+                    model.DelFlag = (int)EnumDelFlag.删除;
                     _orderService.Update(comOrder);
                     break;
             }

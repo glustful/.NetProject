@@ -185,14 +185,16 @@ namespace Zerg.Controllers.CRM
             {
                 NumUser = model.Id
             };
+            var a = _inviteCodeService.GetInviteCodeByCount(icodeseCon);
             EventOrderSearchCondition eveCon = new EventOrderSearchCondition
             {
                 Brokers = model
                 
             };
-            if (_inviteCodeService.GetInviteCodeByCount(icodeseCon) > 0 || _eventOrderService.GetEventOrderCount(eveCon) > 0)
+            var b = _eventOrderService.GetEventOrderCount(eveCon);
+            if (a > 0 || b > 0 )
             {
-                IsInvite = 0; //判断有无使用过邀请码 或者参与过活动
+                IsInvite = 0; //判断有无使用过邀请码 或者参与过活动 或该活动下架
             }
 
             #endregion
@@ -611,10 +613,13 @@ namespace Zerg.Controllers.CRM
                                         }
                                         else
                                         {
-                                            //等级设为青铜
-                                            brokerModel.Level = qlevel;
-                                            _brokerService.Update(brokerModel);
-                                            return PageHelper.toJson(PageHelper.ReturnValue(true, "邀请码输入错误！"));
+                                            if (_brokerService.Update(brokerModel) != null)
+                                            {
+                                                //等级设为青铜
+                                                brokerModel.Level = qlevel;
+                                                _brokerService.Update(brokerModel);
+                                                return PageHelper.toJson(PageHelper.ReturnValue(true, "邀请码输入错误！"));
+                                            }
                                         }
 
                                     #endregion
@@ -626,9 +631,12 @@ namespace Zerg.Controllers.CRM
                             }
                             else
                             {
-                                //白银人数超过3000 等级设为白银
-                                brokerModel.Level = level;
-                                _brokerService.Update(brokerModel);
+                                if (_brokerService.Update(brokerModel) != null)
+                                {
+                                    //白银人数超过3000 等级设为白银
+                                    brokerModel.Level = level;
+                                    _brokerService.Update(brokerModel);
+                                }
                             }
 
                             #endregion
@@ -712,9 +720,12 @@ namespace Zerg.Controllers.CRM
                             }
                             else
                             {
-                                //青铜人数已经超过1000人 则等级直接设为青铜
-                                brokerModel.Level = qlevel;
-                                _brokerService.Update(brokerModel);
+                                if (_brokerService.Update(brokerModel) != null)
+                                {
+                                    //青铜人数已经超过1000人 则等级直接设为青铜
+                                    brokerModel.Level = qlevel;
+                                    _brokerService.Update(brokerModel);
+                                }
                             }
                             #endregion
                         }

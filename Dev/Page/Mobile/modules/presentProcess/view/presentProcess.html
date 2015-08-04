@@ -1,13 +1,10 @@
-<div class="presentProcess">
+<div class="presentProcess" ng-controller="presentProcessController">
     <div class="present">
-        <a href="#/app/selectWithdraw"><button>提&nbsp;&nbsp;&nbsp;现</button></a>
+        <a href="#/app/selectWithdraw"><button>立即提现</button></a>
     </div>
-    <ul>
-        <li>
-            <span>金额：￥500.00</span><span>2015.7.29 10:30:53</span><span class="notPresent">未提现</span>
-        </li>
-        <li>
-            <span>金额：￥500.00</span><span>2015.7.29 10:30:53</span><span>未提现</span>
+    <ul >
+        <li ng-repeat="item in List">
+            <span>金额：￥{{item.withdrawnum}}</span><span>{{item.bankname}}</span><span>{{item.WithdrawTime }}</span><span class="notPresent">{{item.state}}</span>
         </li>
     </ul>
 </div>

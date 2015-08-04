@@ -75,7 +75,7 @@
     color: #fff;
     font-size: 2em;
     padding-left: 50px;
-    background: url("../image/housesPicBuy/ask.png") no-repeat 0 0px;
+    background: url("../image/housesPicBuy/ask.png") no-repeat 0 0;
 }
 .content-housesPicBuy .intro .summaryBg{
     background-color: #000;
