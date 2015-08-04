@@ -244,7 +244,7 @@ namespace Zerg.Controllers.CRM
                 var conditon2 = new BrokerRECClientSearchCondition
                 {
                     OrderBy =EnumBrokerRECClientSearchOrderBy.OrderByTime,
-                     Page = page,
+                    Page = page,
                     PageCount = 10,
                     Brokers = broker
                 };
