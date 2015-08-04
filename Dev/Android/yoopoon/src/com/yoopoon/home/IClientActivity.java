@@ -16,17 +16,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.graphics.Color;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -37,7 +34,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.yoopoon.home.anim.ExpandAnimation;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
@@ -66,7 +62,7 @@ public class IClientActivity extends MainActionBarActivity {
 	private int page = 1;
 	private final int pageSize = 10;
 	private Handler handler = new Handler();
-	
+
 	@AfterViews
 	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
@@ -78,7 +74,7 @@ public class IClientActivity extends MainActionBarActivity {
 		lv.setOnScrollListener(new MyScrollListener());
 		requestData();
 	}
-	
+
 	private class MyScrollListener implements OnScrollListener {
 		@Override
 		public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -93,24 +89,28 @@ public class IClientActivity extends MainActionBarActivity {
 				}
 			}
 		}
+
 		@Override
 		public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		}
 	}
-	
+
 	private HashMap<String, String> params = new HashMap<String, String>();
-	
+
 	private void initParams() {
 		params.clear();
 		params.put("page", String.valueOf(page++));
 		params.put("pageSize", "10");
 	}
+
 	private void requestData() {
 		ll_loading.setVisibility(View.VISIBLE);
 		handler.postDelayed(new Runnable() {
+
 			@Override
 			public void run() {
 				new RequestAdapter() {
+
 					@Override
 					public void onReponse(ResponseData data) {
 						if (data.getResultState() == ResultState.eSuccess) {
@@ -118,11 +118,10 @@ public class IClientActivity extends MainActionBarActivity {
 							if (dataObj != null) {
 								try {
 									totalCount = dataObj.getInt("totalCount");
-									JSONArray listArray = dataObj.getJSONArray("list");
+									JSONArray listArray = dataObj.getJSONArray("List");
 									Random r = new Random();
 									for (int i = 0; i < listArray.length(); i++) {
 										JSONObject guestObj = listArray.getJSONObject(i);
-										Log.i(TAG, guestObj.toString());
 										// "StrType":"带客",
 										// "Status":"预约中",
 										// "Clientname":"徐阳会",
@@ -162,6 +161,7 @@ public class IClientActivity extends MainActionBarActivity {
 							}
 						}
 					}
+
 					@Override
 					public void onProgress(ProgressMessage msg) {
 						// TODO Auto-generated method stub
@@ -172,6 +172,7 @@ public class IClientActivity extends MainActionBarActivity {
 			}
 		}, 2000);
 	}
+
 	private void fillData() {
 		if (adapter == null) {
 			adapter = new MyClientListAdapter();
@@ -180,7 +181,7 @@ public class IClientActivity extends MainActionBarActivity {
 			adapter.notifyDataSetChanged();
 		}
 	}
-	
+
 	private class MyClientListAdapter extends BaseAdapter {
 		/*
 		 * (non Javadoc)
@@ -194,6 +195,7 @@ public class IClientActivity extends MainActionBarActivity {
 			// TODO Auto-generated method stub
 			return guestInfos.size();
 		}
+
 		/*
 		 * (non Javadoc)
 		 * @Title: getItem
@@ -207,6 +209,7 @@ public class IClientActivity extends MainActionBarActivity {
 			// TODO Auto-generated method stub
 			return null;
 		}
+
 		/*
 		 * (non Javadoc)
 		 * @Title: getItemId
@@ -220,6 +223,7 @@ public class IClientActivity extends MainActionBarActivity {
 			// TODO Auto-generated method stub
 			return 0;
 		}
+
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			final GuestInfo info = guestInfos.get(position);
@@ -271,17 +275,20 @@ public class IClientActivity extends MainActionBarActivity {
 			return convertView;
 		}
 	}
-	
+
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		return true;

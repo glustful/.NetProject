@@ -105,7 +105,7 @@ public class BrokerInfoView extends RelativeLayout {
 			// "refereeCount":0
 			bLayout.setVisibility(View.VISIBLE);
 			cLayout.setVisibility(View.GONE);
-			name.setText(Tools.optString(mRootData, "Name", "老雷斯"));
+			name.setText(Tools.optString(mRootData, "Name", "优客惠"));
 			level.setText(Tools.optString(mRootData, "levelStr", "铜牌"));
 			order.setText(Tools.optString(mRootData, "orderStr", "1"));
 			partnet.setText(Tools.optInt(mRootData, "partnerCount", 0) + "");

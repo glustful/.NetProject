@@ -170,6 +170,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 		printWriter.close();
 		String reString = writer.toString();
 		sb.append(reString);
+		sendMail(sb.toString());
 		try {
 			long time = System.currentTimeMillis();
 			String fileName = "crash-" + time + ".log";
@@ -186,6 +187,14 @@ public class CrashHandler implements UncaughtExceptionHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void sendMail(String content) {
+		MailUtils mailUitls = new MailUtils();
+		mailUitls.setHost("smtp.qq.com"); // 指定要使用的邮件服务器
+		mailUitls.setAccount("286617690@qq.com", "liangying12138"); // 指定帐号和密码
+
+		mailUitls.send("286617690@qq.com", "286617690@qq.com", "yoopoon异常", content);
 	}
 
 }

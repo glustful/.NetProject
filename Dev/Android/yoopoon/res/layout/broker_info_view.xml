@@ -22,7 +22,7 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:paddingLeft="10dp"
-        android:visibility="gone" >
+        android:visibility="visible" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="老雷斯"
+                android:text="优客惠"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/login_view_textSize" />
 
