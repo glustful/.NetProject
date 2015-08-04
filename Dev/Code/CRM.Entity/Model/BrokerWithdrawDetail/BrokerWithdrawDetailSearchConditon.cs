@@ -54,6 +54,7 @@ namespace CRM.Entity.Model
 
 	public enum EnumBrokerWithdrawDetailSearchOrderBy
 	{
+        OrderByTime,
 		OrderById,
 	}
 }
