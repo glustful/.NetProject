@@ -222,7 +222,7 @@ namespace Zerg.Controllers.Trading.Trading.Order
                 p.OrderDetail.Dealcommission
             }).ToList();
             var totalCount1 = _orderService.GetOrderCount(OSC);
-            return PageHelper.toJson(new {list, Condition = OSC, totalCount = totalCount1});
+            return PageHelper.toJson(new { List = list, Condition = OSC, totalCount = totalCount1 });
         }
         #region 彭贵飞 获取洽谈后的订单
        /// <summary>
