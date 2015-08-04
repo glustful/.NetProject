@@ -128,6 +128,9 @@ namespace CRM.Service.ClientInfo
 						case EnumClientInfoSearchOrderBy.OrderById:
 							query = condition.isDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
 							break;
+                        case EnumClientInfoSearchOrderBy.OrderByTime:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Uptime) : query.OrderBy(q => q.Uptime);
+                            break;
                     }
 					
 				}

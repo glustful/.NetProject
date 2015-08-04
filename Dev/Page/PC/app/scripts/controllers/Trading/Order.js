@@ -4,10 +4,16 @@
 angular.module("app").controller('orderController', [
     '$http', '$scope', function ($http, $scope) {
         //默认初始化推荐订单；
+
         $http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=推荐订单',{'withCredentials':true}).success(function (data) {
             $scope.rowCollectionBasic = data;
         });
-
+        //$scope.searchCondition = {
+        //    page: 1,
+        //    pageSize: 10
+        //};
+        //$scope.searchCondition.page = rowCollectionBasic.Condition.page;
+        //$scope.searchCondition.pageSize = rowCollectionBasic.Condition.PageCount;
         var vm = $scope.vm = {};
         vm.optionsData = [
             {

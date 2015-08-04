@@ -19,7 +19,7 @@ angular.module("app").controller('BrandListController', [
                 'withCredentials':true
             }).success(function(data){
                 $scope.list = data.List;
-                $scope.searchCondition.page = data.Condition.Page;
+                $scope.searchCondition.page = data.Condition.page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
                 $scope.totalCount = data.totalCount;
             });
