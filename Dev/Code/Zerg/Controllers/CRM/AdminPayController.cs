@@ -236,7 +236,7 @@ namespace Zerg.Controllers.CRM
             //构建查询实体
             var seach = new BrokerWithdrawDetailSearchCondition
             {
-                //OrderBy = EnumBrokerWithdrawDetailSearchOrderBy.OrderById,
+                OrderBy = EnumBrokerWithdrawDetailSearchOrderBy.OrderByTime,
                 BrokerWithdraw = _brokerwithdrawService.GetBrokerWithdrawById(Convert.ToInt32(payModel.Id)),
             };
             var list = _brokerwithdrawDetailService.GetBrokerWithdrawDetailsByCondition(seach).Select(b => new
