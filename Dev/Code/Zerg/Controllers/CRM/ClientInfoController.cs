@@ -236,12 +236,14 @@ namespace Zerg.Controllers.CRM
             {
                 var condition = new BrokerLeadClientSearchCondition
                 {
+                    OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderByTime,
                     Page = page,
                     PageCount = 10,
                     Brokers = broker
                 };
                 var conditon2 = new BrokerRECClientSearchCondition
                 {
+                    OrderBy =EnumBrokerRECClientSearchOrderBy.OrderByTime,
                      Page = page,
                     PageCount = 10,
                     Brokers = broker
@@ -295,7 +297,7 @@ namespace Zerg.Controllers.CRM
                 }
 
                 int totalCount = _brokerLeadClientService.GetBrokerLeadClientCount(condition) + _brokerRecClientService.GetBrokerRECClientCount(conditon2);
-                return PageHelper.toJson(new { list = listModel, totalCount = totalCount });       
+                return PageHelper.toJson(new { List = listModel, totalCount = totalCount });       
             
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));

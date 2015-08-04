@@ -1,0 +1,82 @@
+.seafood{
+    width: 100%;
+    position: relative;
+}
+.seafood .summary{
+    position: absolute;
+    bottom:0;
+    background-color:#ed3105;
+    width: 100%;
+    opacity:0.9;
+    color: #fec3b4;
+    padding-left:5%;
+}
+.seafood .summary .int{
+    font-size: 1.5em;
+    color: #fff;
+}
+.seafood .summary .btn button{
+    width: 100%;
+    height: 30%;
+    background-color: #fff;
+    color:#ff3100;
+    border-radius: 5px;
+    margin-top: 45%;
+    font-size: 1.6em;
+}
+nav{
+    width: 100%;
+    border-bottom: 1px solid #efefef;
+    padding-left: 35px;
+    height: 60px;
+    line-height: 60px;
+}
+nav a{
+    display: inline-block;
+    width: 30%;
+    font-size: 1.4em;
+    color: #8c8c8c;
+}
+nav .current{
+    color:#e12e04;
+}
+.intro{
+    padding: 0 35px;
+}
+.intro h3{
+    color: #666666;
+    font-weight: bolder;
+}
+.intro .text{
+    color: #838383;
+    font-size: 1.2em;
+    line-height: 30px;
+}
+.numbers {
+    margin-top: 50px;
+    padding:30px 35px;
+    border-top:1px solid #efefef;
+}
+.numbers p{
+    font-size: 1.3em;
+    color:#666666;
+}
+.all{
+    border-top:1px solid #efefef;
+    padding:30px 35px;
+}
+.all h3{
+    color: #666666;
+    margin-bottom: 40px;
+    font-weight: bolder;
+}
+.all ul li p{
+    color: #707070;
+    font-size: 1.3em;
+}
+.all ul li p img{
+    border-radius: 50%;
+}
+.all ul li .time{
+    color: #cfcfcf;
+}
