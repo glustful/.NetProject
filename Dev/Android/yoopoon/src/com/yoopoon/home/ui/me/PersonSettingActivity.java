@@ -39,6 +39,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -95,6 +96,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	TextView tv_uploading;
 	@ViewById(R.id.rl_person_setting_progress)
 	RelativeLayout rl_progress;
+	@ViewById(R.id.ll_progress)
+	LinearLayout ll_progress;
 	private Animation animation_shake;
 	private BrokerEntity entity;
 	private String[] points = { "", ".", "..", "..." };
@@ -340,11 +343,14 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	}
 
 	private void requestUserInfo() {
+		ll_progress.setVisibility(View.VISIBLE);
 		User user = User.lastLoginUser(this);
 		if (user == null) {
 			user = new User();
 		}
+
 		user.getUserInfo(new UserInfoListener() {
+
 			@Override
 			public void success(User user) {
 				String nickName = user.getNickName();
@@ -371,11 +377,14 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				String broker = sp.getString("broker", null);
 				if (!TextUtils.isEmpty(broker))
 					parseToBroker(broker);
+				ll_progress.setVisibility(View.GONE);
 			}
 
 			@Override
 			public void failed(String msg) {
 				// Log.i(TAG, msg);
+				Toast.makeText(PersonSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
+				ll_progress.setVisibility(View.GONE);
 			}
 		});
 	}
