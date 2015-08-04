@@ -50,6 +50,7 @@ namespace CRM.Entity.Model
 
 	public enum EnumClientInfoSearchOrderBy
 	{
-		OrderById,
+        OrderByTime,
+        OrderById,
 	}
 }
