@@ -4,9 +4,21 @@
 angular.module("app").controller('orderController', [
     '$http', '$scope', function ($http, $scope) {
         //默认初始化推荐订单；
-        $http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=推荐订单',{'withCredentials':true}).success(function (data) {
-            $scope.rowCollectionBasic = data.List;
-        });
+
+        $scope.searchCondition={
+            page:1,
+            pageSize:10
+        }
+        $scope.getList=function(){
+            $http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=推荐订单',{params:$scope.searchCondition,'withCredentials':true}).success(function (data) {
+                $scope.rowCollectionBasic = data.List;
+                $scope.searchCondition.page = data.Condition.Page;
+                $scope.searchCondition.pageSize = data.Condition.PageCount;
+                $scope.totalCount = data.totalCount;
+            });
+        }
+        $scope.getList ();
+
 
         var vm = $scope.vm = {};
         vm.optionsData = [
