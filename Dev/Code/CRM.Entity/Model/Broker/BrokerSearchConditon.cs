@@ -85,5 +85,7 @@ namespace CRM.Entity.Model
 	public enum EnumBrokerSearchOrderBy
 	{
 		OrderById,
+        OrderByBrokername,
+        OrderByUserType
 	}
 }
