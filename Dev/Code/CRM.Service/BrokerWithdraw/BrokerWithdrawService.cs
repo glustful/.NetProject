@@ -141,6 +141,19 @@ namespace CRM.Service.BrokerWithdraw
                         case EnumBrokerWithdrawSearchOrderBy.State:
                             query = condition.isAescending ? query.OrderBy(q => q.State) : query.OrderByDescending(q => q.State);
                             break;
+                        case EnumBrokerWithdrawSearchOrderBy.OrderByBrokername:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Broker.Brokername) : query.OrderBy(q => q.Broker.Brokername);
+                            break;
+                        case EnumBrokerWithdrawSearchOrderBy.OrderByWithdrawTime:
+                            query = condition.isAescending ? query.OrderBy(q => q.WithdrawTime) : query.OrderByDescending(q => q.WithdrawTime);
+                            break;
+                        case EnumBrokerWithdrawSearchOrderBy.OrderByaccacount:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.AccAccountantId.Brokername) : query.OrderBy(q => q.AccAccountantId.Brokername);
+                            break;
+                        case EnumBrokerWithdrawSearchOrderBy.OrderByState:
+                            query = condition.isAescending ? query.OrderBy(q => q.State) : query.OrderByDescending(q => q.State);
+                            break;
+                          
                     }
 
                 }

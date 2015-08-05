@@ -47,17 +47,21 @@ namespace Zerg.Controllers.CRM
         /// <param name="name">名称</param>
         /// <param name="page">页码</param>
         /// <param name="pageSize">页面数量</param>
+        /// <param name="orderByAll">排序参数{经纪人名（OrderByBrokername），他的上家（OrderByPartnersName）}</param>
+        /// <param name="isDes">是否降序</param>
         /// <returns>合伙人列表</returns>
         [Description("检索返回经纪人及他所属的合伙人列表")]
         [HttpGet]
-        public HttpResponseMessage SearchPartnerList(EnumPartnerType status, string name = null, int page = 1, int pageSize = 10)
+        public HttpResponseMessage SearchPartnerList(EnumPartnerType status, EnumBrokerSearchOrderBy orderByAll = EnumBrokerSearchOrderBy.OrderById, bool isDes = true, string name = null, int page = 1, int pageSize = 10)
         {
             var brokerSearchCondition = new BrokerSearchCondition
             {
                 Brokername = name,
                 Status = status,
                 Page = Convert.ToInt32(page),
-                PageCount = pageSize
+                PageCount = pageSize,
+                OrderBy =orderByAll ,
+                isDescending =isDes 
             };
             var partnerList = _brokerService.GetBrokersByCondition(brokerSearchCondition).Select(p => new
             {
