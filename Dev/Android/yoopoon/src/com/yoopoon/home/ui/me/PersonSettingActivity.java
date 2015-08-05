@@ -17,12 +17,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,6 +47,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -86,8 +89,23 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	RadioButton rb_male;
 	@ViewById(R.id.rb_person_setting_female)
 	RadioButton rb_female;
-	@ViewById(R.id.tv_person_setting_nickname)
-	TextView tv_nickname;
+	// #########################徐阳会 2015年8月5日修改#####################################  START
+	//功能：修改了setting_person_view.xml中解析到的用户昵称EditText，让用户能修改自己的昵称
+	//#########################徐阳会 2015年8月5日修改######################################  START
+	@ViewById(R.id.ed_person_setting_nickname)
+	EditText ed_nickname;
+	@ViewById(R.id.personal_weixin)
+	EditText personalWeiXinEditText;
+	@ViewById(R.id.personal_invitation)
+	EditText personalInvitationEditText;
+	// #########################徐阳会 2015年8月5日修改#####################################  END
+	//功能：修改了setting_person_view.xml中解析到的用户昵称EditText，让用户能修改自己的昵称
+	//#########################徐阳会 2015年8月5日修改######################################  END
+	//
+	// ########################## 彭佳媛编写 ################################################### START
+	//@ViewById(R.id.tv_person_setting_nickname)
+	//TextView tv_nickname;
+	// ########################## 彭佳媛编写#################################################### END
 	@ViewById(R.id.tv_person_setting_phone)
 	TextView tv_phone;
 	@ViewById(R.id.iv_person_setting_avater)
@@ -105,7 +123,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	private Timer timer;
 	private TimerTask task;
 	private boolean uploadable = true;
-
+	
 	@Click(R.id.iv_person_setting_avater)
 	void selectAvater() {
 		if (uploadable) {
@@ -114,7 +132,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			this.startActivityForResult(intent, 1);
 		}
 	}
-
 	@Click(R.id.save)
 	void modifyBrokerInfo() {
 		User user = User.lastLoginUser(this);
@@ -125,8 +142,11 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		String name = et_name.getText().toString();
 		String sfz = et_card.getText().toString();
 		String email = et_email.getText().toString();
-		String nickname = tv_nickname.getText().toString();
+		String nickname = ed_nickname.getText().toString();
 		String phone = tv_phone.getText().toString();
+		//个人微信和邀请码,不是必填项
+		String weiXinString = personalWeiXinEditText.getText().toString();
+		String invitationString = personalInvitationEditText.getText().toString();
 		if (TextUtils.isEmpty(name)) {
 			et_name.startAnimation(animation_shake);
 			return;
@@ -148,6 +168,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		entity.setPhone(phone);
 		entity.setEmail(email);
 		entity.setSexy(sexy);
+		entity.setWeiXinNumber(weiXinString);
+		entity.setInviteCode(invitationString);
 		entity.setHeadphoto(user.getHeadUrl());
 		entity.modifyInfo(new RequesListener() {
 			@Override
@@ -156,7 +178,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				Toast.makeText(PersonSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
 				finish();
 			}
-
 			@Override
 			public void fail(String msg) {
 				rl_progress.setVisibility(View.GONE);
@@ -164,7 +185,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			}
 		});
 	}
-
 	private void parseToBroker(final String json) {
 		new ParserJSON(new ParseListener() {
 			@Override
@@ -183,7 +203,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				}
 				return entity;
 			}
-
 			@Override
 			public void onComplete(Object parseResult) {
 				if (parseResult != null) {
@@ -192,7 +211,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			}
 		}).execute();
 	}
-
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			Uri uri = data.getData();
@@ -221,7 +239,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
 	private File getFile(Uri uri) {
 		try {
 			String[] proj = { MediaStore.Images.Media.DATA };
@@ -236,7 +253,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		}
 		return null;
 	}
-
 	private File getFileByUri(Uri uri) {
 		try {
 			String[] proj = { MediaStore.Images.Media.DATA };
@@ -254,7 +270,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		}
 		return null;
 	}
-
 	private void uploadImage(final File file) {
 		uploadable = false;
 		final String path = getString(R.string.url_host) + getString(R.string.url_upload);
@@ -309,7 +324,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 							}
 						});
 					}
-
 					@Override
 					public void onFailed() {
 						uploadable = true;
@@ -325,7 +339,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			};
 		}.start();
 	}
-
 	/**
 	 * @Title: initUI
 	 * @Description: 初始化界面
@@ -341,16 +354,13 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		animation_shake = AnimationUtils.loadAnimation(this, R.anim.shake);
 		requestUserInfo();
 	}
-
 	private void requestUserInfo() {
 		ll_progress.setVisibility(View.VISIBLE);
 		User user = User.lastLoginUser(this);
 		if (user == null) {
 			user = new User();
 		}
-
 		user.getUserInfo(new UserInfoListener() {
-
 			@Override
 			public void success(User user) {
 				String nickName = user.getNickName();
@@ -360,11 +370,18 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				String phone = user.getPhone();
 				String email = user.getEmail();
 				String photo = user.getHeadUrl();
-				tv_nickname.setText(TextUtils.isEmpty(nickName) ? "" : nickName);
+				// 徐阳会 2015年8月5日添加 功能：添加用户微信和邀请码显示
+				String weiXinString = user.getWeiXin();
+				String invitationNumberString = user.getInvitationCode();
+				ed_nickname.setText(TextUtils.isEmpty(nickName) ? "" : nickName);
 				et_name.setText(TextUtils.isEmpty(userName) ? "" : userName);
 				et_card.setText(TextUtils.isEmpty(idCard) ? "" : idCard);
 				tv_phone.setText(TextUtils.isEmpty(phone) ? "" : phone);
 				et_email.setText(TextUtils.isEmpty(email) ? "" : email);
+				//设置微信号码和邀请码
+				personalWeiXinEditText.setText(TextUtils.isEmpty(weiXinString) ? "" : weiXinString);
+				personalInvitationEditText.setText(TextUtils.isEmpty(invitationNumberString) ? ""
+						: invitationNumberString);
 				if (sex != null) {
 					rb_female.setChecked(sex.equals("先生") ? false : true);
 					rb_male.setChecked(sex.equals("女士") ? false : true);
@@ -379,7 +396,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 					parseToBroker(broker);
 				ll_progress.setVisibility(View.GONE);
 			}
-
 			@Override
 			public void failed(String msg) {
 				// Log.i(TAG, msg);
@@ -388,25 +404,20 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			}
 		});
 	}
-
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
 	}
-
 	@Override
 	public Boolean showHeadView() {
 		return true;
 	}
-
 	@Override
 	protected void onDestroy() {
 		if (timer != null && task != null) {
@@ -417,7 +428,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		}
 		super.onDestroy();
 	}
-
 	@Override
 	protected void activityYMove() {
 		Utils.hiddenSoftBorad(this);
