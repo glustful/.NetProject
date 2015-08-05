@@ -8,10 +8,26 @@ angular.module("app").controller('ProductController', [
             //tag: '2213412341235',
             page: 1,
             pageSize: 10,
-            totalPage:1
+            totalPage:1,
+            orderByAll:"OrderByAddtime",//排序
+            isDes:true//升序or降序
         };
+        $scope.UpOrDownImgClass="fa-caret-down";
         $scope.rowCollectionProduct=[];
-        var getProductList=function(){$http.get(SETTING.ApiUrl + '/Product/GetAllProduct',{params:$scope.product,'withCredentials':true}).success(function (data) {
+        var getProductList=function(orderByAll){
+            if(orderByAll!=undefined) {
+                $scope.product.orderByAll=orderByAll ;
+                if ($scope.product.isDes == true)//如果为降序，
+                {
+                    $scope.UpOrDownImgClass = "fa-caret-up";//改变成升序图标
+                    $scope.product.isDes = false;//则变成升序
+                }
+                else if ($scope.product.isDes == false) {
+                    $scope.UpOrDownImgClass = "fa-caret-down";
+                    $scope.product.isDes = true;
+                }
+            }
+            $http.get(SETTING.ApiUrl + '/Product/GetAllProduct',{params:$scope.product,'withCredentials':true}).success(function (data) {
             $scope.list = data.List;
             $scope.product.page=data.Condition.Page;
             $scope.product.pageSize=data.Condition.PageCount;

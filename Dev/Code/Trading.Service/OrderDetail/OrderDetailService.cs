@@ -180,17 +180,18 @@ namespace Trading.Service.OrderDetail
                     {
 
 						case EnumOrderDetailSearchOrderBy.OrderById:
-							query = condition.IsDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
+							query = condition.IsDescending ?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
 							break;
                         case EnumOrderDetailSearchOrderBy.OrderByCommission:
                             query = condition.IsDescending ? query.OrderByDescending(q => q.Commission) : query.OrderBy(q => q.Commission);
                             break;
-                        case EnumOrderDetailSearchOrderBy.OrderByDealcommission:
-                            query = condition.IsDescending ? query.OrderByDescending(q => q.Dealcommission) : query.OrderBy(q => q.Dealcommission);
-                            break;
                         case EnumOrderDetailSearchOrderBy.OrderByPrice:
                             query = condition.IsDescending ? query.OrderByDescending(q => q.Price) : query.OrderBy(q => q.Price);
                             break;
+                        case EnumOrderDetailSearchOrderBy.OrderByDealcommission:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Dealcommission) : query.OrderBy(q => q.Dealcommission);
+                            break;
+                     
                     }
 					
 				}
