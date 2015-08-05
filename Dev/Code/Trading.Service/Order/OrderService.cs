@@ -256,6 +256,7 @@ namespace Trading.Service.Order
                             query = condition.IsDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
                             break;
 
+
                     }
 					
 				}
