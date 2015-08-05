@@ -9,10 +9,23 @@ angular.module("app").controller('FailListController', [
             status:"洽谈失败",
             Brokername:"",
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:'',
+            isDes:true
         };
 
-        var getTagList = function() {
+        var getTagList = function(orderByAll) {
+            $scope.searchCondition.orderByAll=orderByAll;
+            if($scope.searchCondition.isDes!=undefined){
+                if($scope.searchCondition.isDes==true){
+                    $scope.searchCondition.isDes=false;
+                    $scope.UpOrDownImgClass='fa-caret-up'
+                }
+                else if($scope.searchCondition.isDes==false){
+                    $scope.searchCondition.isDes=true;
+                    $scope.UpOrDownImgClass='fa-caret-down'
+                }
+            }
             $http.get(SETTING.ApiUrl+'/AdminRecom/BrokerList',{
                 params:$scope.searchCondition,
                 'withCredentials':true
@@ -76,10 +89,23 @@ angular.module("app").controller('DKFailListController', [
             status:"洽谈失败",
             Brokername:"",
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:'',
+            isDes:true
         };
 
-        var getTagList = function() {
+        var getTagList = function(orderByAll) {
+            $scope.searchCondition.orderByAll=orderByAll;
+            if($scope.searchCondition.isDes!=undefined){
+                if($scope.searchCondition.isDes==true){
+                    $scope.searchCondition.isDes=false;
+                    $scope.UpOrDownImgClass='fa-caret-up'
+                }
+                else if($scope.searchCondition.isDes==false){
+                    $scope.searchCondition.isDes=true;
+                    $scope.UpOrDownImgClass='fa-caret-down'
+                }
+            }
             $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
                 params:$scope.searchCondition,
                 'withCredentials':true

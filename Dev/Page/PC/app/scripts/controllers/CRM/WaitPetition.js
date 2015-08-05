@@ -9,10 +9,24 @@ angular.module("app").controller('PetitionListController', [
             status:"等待上访",
             Brokername:"",
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:'OrderById',
+            isDes:true
         };
 
-        var getTagList = function() {
+        var getTagList = function(orderByAll) {
+            $scope.UpOrDownImgClass='fa-caret-down';
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll;
+                if($scope.searchCondition.isDes==true){
+                    $scope.searchCondition.isDes=false;
+                    $scope.UpOrDownImgClass='fa-caret-up'
+                }
+                else if($scope.searchCondition.isDes==false){
+                    $scope.searchCondition.isDes=true;
+                    $scope.UpOrDownImgClass='fa-caret-down'
+                }
+            }
             $http.get(SETTING.ApiUrl+'/AdminRecom/BrokerList',{
                 params:$scope.searchCondition,
                 'withCredentials':true

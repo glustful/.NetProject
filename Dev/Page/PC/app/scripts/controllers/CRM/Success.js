@@ -9,12 +9,25 @@ angular.module("app").controller('SuccessListController', [
             status:"洽谈成功",
             brokername:"",
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:'OrderByUptime',
+            isDes:true
         };
         //$scope.currentUser = AuthService.CurrentUser();
         //$scope.searchCondition.brokername = $scope.currentUser.UserName;
-
-        var getTagList = function() {
+        $scope.UpOrDownImgClass='fa-caret-down';
+        var getTagList = function(orderByAll) {
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll;
+                if($scope.searchCondition.isDes==true){
+                    $scope.searchCondition.isDes=false;
+                    $scope.UpOrDownImgClass='fa-caret-up'
+                }
+                else if($scope.searchCondition.isDes==false){
+                    $scope.searchCondition.isDes=true;
+                    $scope.UpOrDownImgClass='fa-caret-down'
+                }
+            }
             $http.get(SETTING.ApiUrl+'/AdminRecom/BrokerList',{
                 params:$scope.searchCondition,
                 'withCredentials':true
@@ -41,12 +54,26 @@ angular.module("app").controller('DKSuccessController',[
             status:"洽谈成功",
             brokername:"",
             page:1,
-            pageSize:10
+            pageSize:10,
+            orderByAll:'OrderByUptime',
+            isDes:true
         };
         //$scope.currentUser = AuthService.CurrentUser();
         //$scope.searchDKCondition.brokername = $scope.currentUser.UserName;
-
-        var getTagList = function(){
+        $scope.UpOrDownImgClass='fa-caret-down';
+        var getTagList = function(orderByAll){
+            //alert(orderByAll);
+            if(orderByAll!=undefined){
+                $scope.searchDKCondition.orderByAll=orderByAll;
+                if($scope.searchDKCondition.isDes==true){
+                    $scope.searchDKCondition.isDes=false;
+                    $scope.UpOrDownImgClass='fa-caret-up'
+                }
+                else if($scope.searchDKCondition.isDes==false){
+                    $scope.searchDKCondition.isDes=true;
+                    $scope.UpOrDownImgClass='fa-caret-down'
+                }
+            }
             $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
                params:$scope.searchDKCondition
             }).success(function(data){

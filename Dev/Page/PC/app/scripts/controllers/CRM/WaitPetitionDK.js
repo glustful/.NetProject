@@ -10,11 +10,25 @@ angular.module("app").controller('WaitVistController', [
             status:"等待上访",
             brokername:"",
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:'OrderById',
+            isDes:true
         };
-
+        $scope.UpOrDownImgClass='fa-caret-down';
         /////////////////////获取带客待上访记录/////////////////////
-        var getDKpetition = function(){
+        var getDKpetition = function(orderByAll){
+            if(orderByAll!=undefined){
+
+                $scope.searchCondition.orderByAll=orderByAll;
+                if($scope.searchCondition.isDes==true){
+                    $scope.searchCondition.isDes=false;
+                    $scope.UpOrDownImgClass='fa-caret-up'
+                }
+                else if($scope.searchCondition.isDes==false){
+                    $scope.searchCondition.isDes=true;
+                    $scope.UpOrDownImgClass='fa-caret-down'
+                }
+            }
             $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
                 params:$scope.searchCondition,
                 'withCredentials':true
