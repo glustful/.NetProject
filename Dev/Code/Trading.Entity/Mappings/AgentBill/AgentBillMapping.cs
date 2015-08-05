@@ -1,10 +1,10 @@
-using YooPoon.Core.Data;
 using System.Data.Entity.ModelConfiguration;
 using Trading.Entity.Model;
+using Zerg.Common.Data;
 
 namespace Trading.Entity.Mappings.AgentBill
 {
-	public class AgentBillMapping : EntityTypeConfiguration<AgentBillEntity>, Zerg.Common.Data.IZergMapping
+	public class AgentBillMapping : EntityTypeConfiguration<AgentBillEntity>, IZergMapping
 	{
 		public AgentBillMapping()
 		{
@@ -29,6 +29,7 @@ namespace Trading.Entity.Mappings.AgentBill
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upduser).HasColumnType("varchar").HasMaxLength(50);
 			Property(c => c.Updtime).HasColumnType("datetime");
+            Property(c => c.EventOrderId).HasColumnType("int").IsOptional();
 		}
 	}
 }

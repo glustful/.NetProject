@@ -256,10 +256,18 @@ namespace Trading.Service.Product
                         case EnumProductSearchOrderBy.OrderByAddtime:
                             query = condition.IsDescending ? query.OrderByDescending(q => q.Addtime) : query.OrderBy(q => q.Addtime);
                             break;
-                        case EnumProductSearchOrderBy.Price:
+                        case EnumProductSearchOrderBy.OrderByPrice:
                             query = condition.IsDescending ? query.OrderBy(q => q.Price) : query.OrderBy(q => q.Price);
                             break;
-
+                        case EnumProductSearchOrderBy.OrderByDealcommission:
+                            query = condition.IsDescending ? query.OrderBy(q => q.Dealcommission) : query.OrderBy(q => q.Dealcommission);
+                            break;
+                        case EnumProductSearchOrderBy.OrderByRecCommission:
+                            query = condition.IsDescending ? query.OrderBy(q => q.RecCommission) : query.OrderBy(q => q.RecCommission);
+                            break;
+                        case EnumProductSearchOrderBy.OrderByCommission:
+                            query = condition.IsDescending ? query.OrderBy(q => q.Commission) : query.OrderBy(q => q.Commission);
+                            break;
                     }
 
                 }

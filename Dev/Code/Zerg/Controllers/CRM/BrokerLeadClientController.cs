@@ -157,11 +157,11 @@ namespace Zerg.Controllers.CRM
 
             var condition = new BrokerLeadClientSearchCondition
             {
-                OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderById,
+                OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderByTime,
                 Page = page,
                 PageCount = pageSize,
                 Status = status,
-                Brokername = brokername
+                ClientName = brokername
 
             };
 
@@ -225,7 +225,7 @@ namespace Zerg.Controllers.CRM
                 NickName = model.Broker.Nickname,
                 BrokerPhone = model.Broker.Phone,
                 Sex = model.Broker.Sexy,
-                RegTime = model.Broker.Regtime.ToString("yyy-mm-dd"),
+                RegTime = model.Broker.Regtime.ToString("yyy-MM-dd"),
                 Clientname = model.ClientName,
                 HouseType = model.ProjectId == 0 ? "" : _productService.GetProductById(model.ProjectId).Productname,
                 //HouseType = _productService.GetProductById(model.ProjectId).Productname,
@@ -306,7 +306,7 @@ namespace Zerg.Controllers.CRM
             model.Broker = _brokerService.GetBrokerById(brokerleadclient.Adduser);
             model.ClientInfo = cmodel2;
             model.ClientName = brokerleadclient.Clientname;
-            model.Appointmenttime = DateTime.Now;
+            model.Appointmenttime = Convert.ToDateTime(brokerleadclient.Appointmenttime);
             //model.Qq = Convert.ToInt32(brokerrecclient.Qq);
             model.Phone = brokerleadclient.Phone;       //客户电话
             model.Brokername = broker.Brokername;
@@ -322,7 +322,7 @@ namespace Zerg.Controllers.CRM
             model.Status = EnumBLeadType.预约中;
             model.DelFlag = EnumDelFlag.默认;
             model.ComOrder = (int)EnumOrderType.带客订单;
-            
+            model.Details = brokerleadclient.Note;
 
             _brokerleadclientService.Create(model);
 
@@ -539,6 +539,7 @@ namespace Zerg.Controllers.CRM
                     comOrder.Status = (int)EnumOrderStatus.审核失败;
                     comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
                     comOrder.Upddate = DateTime.Now;
+                    model.DelFlag = (int)EnumDelFlag.删除;
                     _orderService.Update(comOrder);
                     break;
             }

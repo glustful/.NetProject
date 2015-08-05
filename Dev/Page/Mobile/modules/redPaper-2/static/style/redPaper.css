@@ -1,56 +1,4 @@
-*{
-    padding:0;
-    margin:0;
-    list-style: none;
-    border: none;
-}
-body{
-    font-family: 'microsoft yahei';
-    font-size: 16px;
 
-}
-a {
-    text-decoration: none;
-}
-.clear{
-    clear:both;
-    height: 0;
-    overflow: hidden;
-}
-.cf:after{
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: "";
-    clear: both;
-    height: 0;
-}
-
-.fl{
-    float: left;
-}
-.window{
-    width: 640px;
-    height: 1008px;
-    margin: 0 auto;
-}
-.bg{
-    background: #fff;
-}
-.header{
-    height: 67px;
-    line-height: 67px;
-    background:#fc3b00;
-
-}
-.header a{
-    color: #fff;
-    font-size: 18px;
-    display: inline-block;
-    margin-left:19px;
-    padding-left:19px;
-    background: url("../image/redPaper/icon1_03.png") no-repeat 0 center;
-}
 h1{
     font-weight: normal;
     color:#fff;
@@ -86,30 +34,6 @@ h3{
 .qiang{
     padding:100px 0;
 }
-.foot {
-    background: #f13800;
-}
-.foot span{
-    display: inline-block;
-    text-align: center;
-    width:150px;
-    padding:60px 0 17px 0;
-    color: #fff;
-    font-size: 18px;
-}
-.act{
-    background: url("../image/redPaper/活动1.png") no-repeat center 20px;
-}
-.house{
-    background: url("../image/redPaper/房源库1.png") no-repeat center 20px;
-}
-.agent{
-    background: url("../image/redPaper/经纪人专区1.png") no-repeat center 20px;
-}
-.personal{
-    background: url("../image/redPaper/个人中心1.png") no-repeat center 20px;
-}
-
 h3{
     color: #525252;
     font-size: 3.5em;

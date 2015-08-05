@@ -100,3 +100,6 @@
     background: url("../image/housePic/sx.png") no-repeat 350px 33px #000;
     z-index: 8;
 }
+.hideImg {
+    display: none;
+}

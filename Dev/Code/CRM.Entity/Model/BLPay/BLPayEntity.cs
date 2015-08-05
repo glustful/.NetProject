@@ -53,6 +53,6 @@ namespace CRM.Entity.Model
         /// <summary>
         /// 银行卡
         /// </summary>
-        public virtual int BankCard { get; set; }
+        public virtual string BankCard { get; set; }
 	}
 }

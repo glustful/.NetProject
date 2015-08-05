@@ -30,7 +30,7 @@ namespace CRM.Entity.Model
 
 		public string Houses { get; set; }
 
-		public int Addusers { get; set; }
+		public int? Addusers { get; set; }
      
 
 		public DateTime? AddtimeBegin { get; set; }
@@ -50,6 +50,7 @@ namespace CRM.Entity.Model
 
 	public enum EnumClientInfoSearchOrderBy
 	{
-		OrderById,
+        OrderByTime,
+        OrderById,
 	}
 }

@@ -124,6 +124,7 @@ namespace CRM.Entity.Model
 		OrderById,
 
 		OrderByAmount,
+        OrderByTime,
 
 	}
 

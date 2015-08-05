@@ -60,6 +60,7 @@ namespace Zerg.Event.API.Coupon
         /// <param name="number">优惠券验证码</param>
         /// <returns>list列表</returns>
         [HttpGet]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage Index(int page, int pageSize, string number)
         {
             var condition = new CouponSearchCondition

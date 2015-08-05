@@ -15,7 +15,8 @@
     <thead>
     <tr>
         <th>基本情况</th>
-        <th>注册时间</th>
+        <th ng-click="getList('OrderByUserRegtime')">注册时间
+            <i class="fa {{UpOrDownImgClass}}"></i></th>
         <th>操作</th>
 
     </tr>
@@ -27,7 +28,7 @@
                 <img src="{{SImg+item.Headphoto}}" class="w-full circle">
             </div>
             <div class="information">
-                <p><span>昵称：<small class="small">{{item.Nickname}}</small></span><span>姓名：<small>{{item.Realname}}</small></span><span>手机:<small>{{item.Phone}}</small></span></p>
+                <p><span>昵称：<small class="small">{{item.Nickname}}</small></span><span>姓名：<small>{{item.Brokername}}</small></span><span>手机:<small>{{item.Phone}}</small></span></p>
                 <p><span>身份证：<small>{{item.Sfz}}</small></span><span>余额：<small>{{item.Amount}}</small></span><span>等级：<small>{{item.Agentlevel}}</small></span> </p>
             </div>
         </td>

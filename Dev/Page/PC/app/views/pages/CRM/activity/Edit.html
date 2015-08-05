@@ -1,0 +1,27 @@
+<form name="form" id="form" ng-controller="EditController" ng-submit="Save()">
+    <div class="panel panel-default">
+        <div class="panel-body revise">
+            <div class="bottom" ><label for="name">活动名称： </label> <input id="name" type="text" name="Name" ng-model="activity.EventContent" required>
+            </div>
+            <div class="bottom" >
+                <label for="name">开始时间： </label><input  type="date"  id="domstarttime"  required>
+            </div>
+            <div class="bottom" >
+                <label for="name">截至时间： </label><input  type="date" id="domendtime"   required>
+             </div>
+            <div class="bottom" >
+                <label for="names" >状态： </label>
+                <select name="" id="names" ng-model="activity.State">
+                    <option value="false">下线</option>
+                    <option value="true">上线</option>
+                </select>
+            </div>
+
+
+            <div>
+                <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" style="margin-right:20px;" type="submit">保存<div class="md-ripple-container"></div></button>
+                <a href="#/page/CRM/activity/activityList"><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">取消<div class="md-ripple-container"></div></button></a>
+            </div>
+        </div>
+    </div>
+</form>

@@ -3,6 +3,9 @@
     background: #fff;
     padding:25px 0 25px 30px;
 }
+.main-personal .detail{
+    width: 65%;
+}
 .img {
     margin-right: 30px;
 }
@@ -27,6 +30,7 @@
     padding:5px 0 15px 0;
     border-bottom:1px solid #ebebeb;
     font-size: 20px;
+    width: 78%;
 }
 .number a{
     color: #666666;

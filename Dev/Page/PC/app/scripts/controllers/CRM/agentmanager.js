@@ -9,19 +9,37 @@ angular.module("app").controller('agentmanagerIndexController', [
             userType:"经纪人",
             page: 1,
             pageSize: 10,
-            state:2//经纪人状态，1正常，0删除，-1注销
+            state:2,//经纪人状态，1正常，0删除，-1注销
+            orderByAll:"OrderByUserRegtime",//排序
+            isDes:true//升序or降序
         };
+        $scope.UpOrDownImgClass="fa-caret-down";//升降序图标
         $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
 //------------------------获取经纪人列表 start--------------------
         var page= 0,howmany=0;
-        $scope.getList  = function() {
+        $scope.getList  = function(orderByAll) {
+            $scope.searchCondition.orderByAll=orderByAll ;
+            if($scope.searchCondition.orderByAll!=undefined){
+            if($scope.searchCondition.isDes==true)//如果为降序，
+            {
+                $scope.UpOrDownImgClass="fa-caret-up";//改变成升序图标
+                $scope.searchCondition.isDes=false;//则变成升序
+            }
+            else if($scope.searchCondition.isDes==false)
+            {
+                $scope.UpOrDownImgClass="fa-caret-down";
+                $scope.searchCondition.isDes=true;
+            }
+            }
             if($scope.searchCondition.phone==undefined)
             {$scope.searchCondition.phone="";}
             $http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{
                 params:$scope.searchCondition,
                 'withCredentials':true
             }).success(function(data){
+                console.log(data);
                 if(data.List.length>0) {
+                    console.log(data);
                    page= $scope.searchCondition.page = data.Condition.Page;
                     howmany=data.List.length;//保存当页数据数量
                     $scope.searchCondition.pageSize = data.Condition.PageCount;
@@ -172,6 +190,7 @@ angular.module("app").controller('agentmanagerDetailedController',['$http','$sco
         $scope.BrokerModel =data.List;
     });
 //----------------根据经纪人id获取经纪人信息 end-----------------------
+
 //----------------查询该经纪人出入账信息 start-------------------------
     $scope.searchCRZCondition = {
         userId: $stateParams.userid,
@@ -199,6 +218,7 @@ if(data.totalCount>0){
     };
     $scope.getCRZList();
 //----------------查询该经纪人出入账信息 end-------------------------
+
 //----------------根据经纪人id查询提现明细 start---------------------
     $scope.searchTXCondition = {
         userId: $stateParams.userid,

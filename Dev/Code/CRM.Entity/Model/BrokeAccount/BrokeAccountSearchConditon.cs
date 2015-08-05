@@ -14,7 +14,7 @@ namespace CRM.Entity.Model
 		/// </summary>
 		public int? PageCount { get; set; }
         /// <summary>
-        /// 状态 0 为可用 1 为不可用
+        /// 状态 0 可用，1 已使用,-1提现中
         /// </summary>
         public int? State { get; set; }
 		/// <summary>
@@ -43,6 +43,10 @@ namespace CRM.Entity.Model
 
 		public EnumBrokeAccountSearchOrderBy? OrderBy { get; set; }
 	    public int? BrokerId { get; set; }
+
+        /// <summary>
+        /// 金额类型（0 带客，1 推荐,2 奖励完整信息钱）
+        /// </summary>
         public int? Type { get; set; }
 	}
 

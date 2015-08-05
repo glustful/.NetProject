@@ -15,7 +15,9 @@ app.controller('personsettingController',['$scope','$http','$state','AuthService
         Email:'',
         Phone:'',
         Headphoto:'',
-        WeiXinNumber:''
+        WeiXinNumber:'',
+        InvitedCode:''
+
 
     };
     $scope.currentuser= AuthService.CurrentUser();
@@ -29,8 +31,8 @@ app.controller('personsettingController',['$scope','$http','$state','AuthService
             }
             else if(response.IsInvite==0)
                 {
-                var invited=document.getElementById('InvitedCode')
-                invited.style.display='none';
+                    var invited=document.getElementById('InvitedCode')
+                    invited.style.display='none';
             }
 
             //添加判断,如果用户没有头像,隐藏IMG标签
@@ -67,10 +69,12 @@ app.controller('personsettingController',['$scope','$http','$state','AuthService
 
         $http.post(SETTING.ApiUrl+'/BrokerInfo/UpdateBroker', $scope.olduser)
             .success(function(data) {
-            	var img = document.getElementById('imghead');
-            	img.src = $scope.olduser.Headphoto;
+                if(data.Status) {
+                    var img = document.getElementById('imghead');
+                    img.src = $scope.olduser.Headphoto;
+                    location.reload([true]);
+                }
                 $state.go("app.personal");
-            	location.reload([true]);
             });
     }
 }])

@@ -89,6 +89,10 @@ namespace CRM.Service.BrokeAccount
                 //{
                 //    query = query.Where(q => q.Broker == condition.Brokers);
                 //}
+                if (condition.State.HasValue)
+                {
+                    query = query.Where(q => q.State == condition.State.Value);
+                }
                 if (condition.AddtimeEnd.HasValue)
                 {
                     query = query.Where(q => q.Addtime < condition.AddtimeEnd.Value);

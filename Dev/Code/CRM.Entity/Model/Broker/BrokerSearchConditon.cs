@@ -22,7 +22,7 @@ namespace CRM.Entity.Model
 		public int[] Ids { get; set; }
 
         public int PartnersId { get; set; }
-		public LevelEntity[] Levels { get; set; }
+		public LevelEntity Levels { get; set; }
 
 		public int[] UserIds { get; set; }
 
@@ -37,7 +37,7 @@ namespace CRM.Entity.Model
 		public string Sexy { get; set; }
 
 		public string Phone { get; set; }
-
+        public string Phone1 { get; set; }
 		public int[] Qqs { get; set; }
 
 		public int[] Zips { get; set; }
@@ -85,5 +85,8 @@ namespace CRM.Entity.Model
 	public enum EnumBrokerSearchOrderBy
 	{
 		OrderById,
+        OrderByBrokername,
+        OrderByUserType,
+        OrderByUserRegtime
 	}
 }

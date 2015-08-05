@@ -166,8 +166,11 @@ namespace CRM.Service.BrokerRECClient
 					switch (condition.OrderBy.Value)
                     {
 						case EnumBrokerRECClientSearchOrderBy.OrderById:
-							query = condition.IsDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
+							query = condition.IsDescending?query.OrderBy(q=>q.Id):query.OrderByDescending(q=>q.Id);
 							break;
+                        case EnumBrokerRECClientSearchOrderBy.OrderByTime:
+                            query = condition.IsDescending ? query.OrderBy(q => q.Uptime) : query.OrderByDescending(q => q.Uptime);
+                            break;
                     }
 					
 				}
