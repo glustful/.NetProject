@@ -42,10 +42,12 @@ namespace Zerg.Controllers.CRM
         /// <param name="name">名称</param>
         /// <param name="page">页码</param>
         /// <param name="pageSize">页面数量</param>
+        /// <param name="orderByAll">排序参数{经纪人名（OrderByBBrokername），他的经纪人（OrderByBrokername），详情（OrderByPresenteebId）}</param>
+        /// <param name="isDes">是否降序</param>
         /// <returns>推荐经纪人表中的所有数据</returns>
         [Description("查询推荐经纪人表中的所有数据")]
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetRecommendAgentList(string name = null, int page = 1, int pageSize = 10)
+        public HttpResponseMessage GetRecommendAgentList(EnumRecommendAgentSearchOrderBy orderByAll = EnumRecommendAgentSearchOrderBy.OrderById, bool isDes = true, string name = null, int page = 1, int pageSize = 10)
         {
             var recomagmentsearchcon = new RecommendAgentSearchCondition
             {
@@ -53,7 +55,8 @@ namespace Zerg.Controllers.CRM
                 Brokername = name,
                 Page = Convert.ToInt32(page),
                 PageCount = pageSize,
-
+                OrderBy =orderByAll ,
+                isDescending =isDes 
             };
             var recommendAgentList = _recommendagentService.GetRecommendAgentsByCondition(recomagmentsearchcon).Select(p => new
             {

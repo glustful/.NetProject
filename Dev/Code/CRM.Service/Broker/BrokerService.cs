@@ -210,6 +210,9 @@ namespace CRM.Service.Broker
                         case EnumBrokerSearchOrderBy.OrderByUserRegtime :
                             query = condition.isDescending ? query.OrderByDescending(q => q.Regtime ) : query.OrderBy(q => q.Regtime);
                             break;
+                        case EnumBrokerSearchOrderBy.OrderByPartnersName :
+                            query = condition.isDescending ? query.OrderByDescending(q => q.PartnersName) : query.OrderBy(q => q.PartnersName);
+                            break; 
                     }
 
                 }

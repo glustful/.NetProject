@@ -82,7 +82,7 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="taskSearchModel">任务列表参数</param>
         /// <returns>任务列表</returns>
-        [HttpGet]
+        
         //public HttpResponseMessage TaskList(TaskSearchCondition searchCondition)
         //{
         //    if (searchCondition == null)
@@ -98,9 +98,18 @@ namespace Zerg.Controllers.CRM
         //    };
         //    return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToList());
         //}
-
-
-        public HttpResponseMessage TaskList(string Taskname, int page, int pageSize)
+        /// <summary>
+        /// 返回任务列表
+        /// </summary>
+        /// <param name="Taskname">任务名称</param>
+        /// <param name="page">第几页</param>
+        /// <param name="pageSize">页面大小</param>
+        /// <param name="orderByAll">排序参数｛任务名称（OrderByTaskname），任务类型（OrderByName），结束时间（OrderByEndtime），创建人（OrderByAdduser）｝</param>
+        /// <param name="isDes">是否降序</param>
+        /// <returns>任务列表</returns>
+        [Description("返回PC端任务列表")]
+        [HttpGet]
+        public HttpResponseMessage TaskList(string Taskname, int page, int pageSize, EnumTaskSearchOrderBy orderByAll = EnumTaskSearchOrderBy .OrderById, bool isDes = true)
         {
             //验证是否有非法字符
             Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
@@ -115,10 +124,11 @@ namespace Zerg.Controllers.CRM
             }
             var taskcondition = new TaskSearchCondition
             {
-                OrderBy = EnumTaskSearchOrderBy.OrderById,
+                OrderBy =orderByAll,
                 Taskname = Taskname,
                 Page = page,
-                PageCount = pageSize
+                PageCount = pageSize,
+                IsDescending =isDes 
 
             };
             try

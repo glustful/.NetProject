@@ -35,15 +35,19 @@ namespace Zerg.Controllers.CRM
         /// <param name="Page">页码</param>
         /// <param name="PageCount">每页大小</param>
         /// <param name="isDescending">是否降序</param>
+        /// <param name="orderByAll">排序参数｛ＩＤ（OrderById），配置名称（OrderByName），配置模板（OrderByTemplate）｝</param>
+        /// <param name="isDes">是否降序</param>
         /// <returns>短信配置信息</returns>
         [HttpGet]
-        public HttpResponseMessage SearchMessageConfig(int page = 1, int pageSize = 10)
+        public HttpResponseMessage SearchMessageConfig(EnumMessageConfigSearchOrderBy orderByAll = EnumMessageConfigSearchOrderBy .OrderById, bool isDes = true, int page = 1, int pageSize = 10)
         {
 
             var mDetailCondition = new MessageConfigSearchCondition()
             {
                 Page = Convert.ToInt32(page),
-                PageCount = pageSize
+                PageCount = pageSize,
+                OrderBy =orderByAll ,
+                isDescending =isDes 
 
             };
             var list = _MessageConfigService.GetMessageConfigsByCondition(mDetailCondition).Select(c => new { c.Id, c.Name, c.Template }).ToList();

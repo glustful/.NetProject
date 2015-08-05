@@ -148,6 +148,15 @@ namespace CRM.Service.RecommendAgent
 						case EnumRecommendAgentSearchOrderBy.OrderById:
 							query = condition.isDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
 							break;
+                        case EnumRecommendAgentSearchOrderBy.OrderByBBrokername:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Brokername) : query.OrderBy(q => q.Brokername);
+                            break;
+                        case EnumRecommendAgentSearchOrderBy.OrderByBrokername:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Broker.Brokername) : query.OrderBy(q => q.Broker.Brokername);
+                            break;
+                        case EnumRecommendAgentSearchOrderBy.OrderByPresenteebId:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.PresenteebId) : query.OrderBy(q => q.PresenteebId);
+                            break;
                     }
 					
 				}

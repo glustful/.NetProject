@@ -87,6 +87,7 @@ namespace CRM.Entity.Model
 		OrderById,
         OrderByBrokername,
         OrderByUserType,
-        OrderByUserRegtime
+        OrderByUserRegtime,
+        OrderByPartnersName
 	}
 }

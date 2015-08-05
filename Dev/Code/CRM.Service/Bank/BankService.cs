@@ -93,6 +93,12 @@ namespace CRM.Service.Bank
                         case EnumBankSearchOrderBy.OrderById:
                             query = condition.isDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
                             break;
+                        case EnumBankSearchOrderBy.OrderByCodeid:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
+                            break;
+                        case EnumBankSearchOrderBy.OrderByAddtime:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
+                            break;
                     }
                 }
                 else
