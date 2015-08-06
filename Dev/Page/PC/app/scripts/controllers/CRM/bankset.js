@@ -5,9 +5,25 @@
 angular.module("app").controller('bankController', ['$http', '$scope', '$state', function ($http, $scope, $state) {
     $scope.searchCondition = {
         page: 1,
-        pageSize: 10
+        pageSize: 10,
+        orderByAll:"OrderById",//排序
+        isDes:true//升序or降序,
     };
-    $scope.getList = function () {
+    $scope.UpOrDownImgClass="fa-caret-down";//升降序图标
+    $scope.getList = function (orderByAll) {
+        if(orderByAll!=undefined){
+            $scope.searchCondition.orderByAll=orderByAll ;
+            if($scope.searchCondition.isDes==true)//如果为降序，
+            {
+                $scope.UpOrDownImgClass="fa-caret-up";//改变成升序图标
+                $scope.searchCondition.isDes=false;//则变成升序
+            }
+            else if($scope.searchCondition.isDes==false)
+            {
+                $scope.UpOrDownImgClass="fa-caret-down";
+                $scope.searchCondition.isDes=true;
+            }
+        }
         $http.get(SETTING.ApiUrl + '/Bank/SearchBanks', {
             params: $scope.searchCondition ,
             'withCredentials':true

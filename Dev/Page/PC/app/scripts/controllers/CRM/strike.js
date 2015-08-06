@@ -9,10 +9,38 @@ angular.module("app").controller('SCInfoListController', [
             status:"洽谈成功",
             clientName:"",
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:"OrderById",//排序
+            isDes:true//升序or降序,默认为降序
         };
 
-        var getTagList = function() {
+        var iniImg=function(){
+            $scope.OrderById="footable-sort-indicator";
+            $scope.OrderByClientname="footable-sort-indicator";
+            $scope.OrderByPhone="footable-sort-indicator";
+            $scope.OrderByBrokername="footable-sort-indicator";
+            $scope.OrderByUptime="footable-sort-indicator";
+        }
+        iniImg();
+        $scope.OrderById="fa-caret-down";//升降序图标
+        var getTagList = function (orderByAll) {
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll ;
+                if($scope.searchCondition.isDes==true)//如果为降序，
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                    iniImg();
+                    eval($scope.d);//把$scope.d当做语句来执行
+                    $scope.searchCondition.isDes=false;//则变成升序
+                }
+                else if($scope.searchCondition.isDes==false)
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
+                    $scope.searchCondition.isDes=true;
+                }
+            }
             $http.get(SETTING.ApiUrl+'/ClientInfo/GetClientInfoList',{
                 params:$scope.searchCondition,
                 'withCredentials':true

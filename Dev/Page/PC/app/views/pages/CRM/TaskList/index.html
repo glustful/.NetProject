@@ -16,10 +16,10 @@
     <!--表头-->
     <div class="bord taskclear divheard">
         <ul class="taskheader">
-            <li>任务名称</li>
-            <li>任务类型</li>
-            <li>结束时间</li>
-            <li>创建人</li>
+            <li ng-click="getList('OrderByTaskname')">任务名称<span class="fa {{UpOrDownImgClass}}"></span></li>
+            <li ng-click="getList('OrderByName')">任务类型<span class="fa {{UpOrDownImgClass}}"></span></li>
+            <li ng-click="getList('OrderByEndtime')">结束时间<span class="fa {{UpOrDownImgClass}}"></span></li>
+            <li ng-click="getList('OrderByAdduser')">创建人<span class="fa {{UpOrDownImgClass}}"></span></li>
             <li >操作</li>
 
         </ul>
