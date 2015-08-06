@@ -3,22 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    
-            <TextView
-                style="@style/TextView_Item_Foot"
-                android:id="@+id/tv_me_task"
-                android:drawableLeft="@drawable/task"
-                android:drawableRight="@drawable/right_next_icon"
-                android:text="我的任务"/>
-            
-            <TextView
-                style="@style/TextView_Item_Foot"
-                android:id="@+id/tv_me_building"
-                android:layout_marginTop="5dp"
-                android:drawableLeft="@drawable/rec_building"
-                android:drawableRight="@drawable/right_next_icon"
-                android:text="推荐楼盘" />
-    
+
+    <TextView
+        android:id="@+id/tv_me_task"
+        style="@style/TextView_Item_Foot"
+        android:drawableLeft="@drawable/task"
+        android:drawableRight="@drawable/right_next_icon"
+        android:text="我的任务" />
+
+    <TextView
+        android:id="@+id/tv_me_building"
+        style="@style/TextView_Item_Foot"
+        android:layout_marginTop="5dp"
+        android:drawableLeft="@drawable/rec_building"
+        android:drawableRight="@drawable/right_next_icon"
+        android:text="推荐楼盘" />
 
 </LinearLayout>

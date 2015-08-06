@@ -117,7 +117,9 @@ public class BrokerInfoView extends RelativeLayout {
 		} else {
 			bLayout.setVisibility(View.GONE);
 			cLayout.setVisibility(View.VISIBLE);
-			name1.setText(Tools.optString(mRootData, "Name", "优客惠"));
+			User user = User.lastLoginUser(getContext());
+
+			name1.setText(Tools.optString(mRootData, "Name", user.phone));
 
 		}
 
