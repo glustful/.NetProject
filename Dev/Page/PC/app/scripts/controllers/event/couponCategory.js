@@ -51,6 +51,7 @@ angular.module("app").controller('CouponCategoryEditController', ['$http','$scop
     $http.get(SETTING.eventApiUrl+'/CouponCategory/Detailed?id='+$stateParams.id,{'withCredentials': true}).success(
         function(data){
             $scope.CouponCategory=data;
+            console.log(data);
         }
     )
     $http.get(SETTING.ApiUrl+'/Brand/GetAllBrand/',{params:$scope.BrandCondition,'withCredentials': true}).success(
@@ -85,7 +86,9 @@ angular.module("app").controller('CouponCategoryCreateController', ['$http','$sc
         BrandId:'',
         ClassId:'',
         Count:'',
-        ReMark:''
+        ReMark:'',
+        Intro:'',
+        Content:''
     }
     $http.get(SETTING.ApiUrl+'/Brand/GetAllBrand/',{params:$scope.BrandCondition,'withCredentials': true}).success(
         function(data){

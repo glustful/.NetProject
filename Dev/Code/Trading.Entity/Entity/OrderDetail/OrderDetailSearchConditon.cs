@@ -92,6 +92,9 @@ namespace Trading.Entity.Model
 	{
 
 		OrderById,
+        OrderByPrice,
+        OrderByCommission,
+        OrderByDealcommission
 
 	}
 

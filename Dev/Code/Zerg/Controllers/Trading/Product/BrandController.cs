@@ -240,19 +240,34 @@ namespace Zerg.Controllers.Trading.Product
         /// <summary>
         /// 获取所有品牌，返回品牌列表
         /// </summary>
+        /// <param name="className">分类 （不传值查询所有）</param>
         /// <param name="page">页码</param>
         /// <param name="pageSize">页面数量</param>
         /// <returns>品牌列表</returns>
         [Description("获取所有品牌，返回品牌列表")]
         [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage GetAllBrand(int page = 1, int pageSize = 10)
+        public HttpResponseMessage GetAllBrand(int page = 1, int pageSize = 10, string className = null, EnumProductBrandSearchOrderBy orderByAll = EnumProductBrandSearchOrderBy.OrderByAddtime)
         {
+            var con=new ClassifySearchCondition()
+            {
+                Name = className
+            };
+            var classname=_classifyService.GetClassifysByCondition(con).FirstOrDefault();
+
+            //参数className 不传值则默认查询所有品牌
+            if (string.IsNullOrEmpty(className))
+            {
+                classname = null;
+            }
+
+
             var sech = new ProductBrandSearchCondition
             {
                 //=========================yangyue 2015/7/7 start=====================================================
                 IsDescending = true,
-                OrderBy = EnumProductBrandSearchOrderBy.OrderByAddtime,
+                OrderBy = orderByAll,
+                Classify=classname,
                 //========================  end   ====================================================================
                 Page = page,
                 PageCount = pageSize
@@ -406,15 +421,21 @@ namespace Zerg.Controllers.Trading.Product
         [Description("传入查询参数，返回品牌列表")]
         [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage SearchBrand(string condition, int page, int pageCount)
+        public HttpResponseMessage SearchBrand(string condition, int page, int pageCount,string className)
         {
+            var con = new ClassifySearchCondition()
+            {
+                Name = className
+            };
+            var  classify= _classifyService.GetClassifysByCondition(con).FirstOrDefault();
             ProductBrandSearchCondition bcon = new ProductBrandSearchCondition
             {
                 Bname = condition,
                 Page = page,
                 PageCount = pageCount,
                 OrderBy = EnumProductBrandSearchOrderBy.OrderByAddtime,
-                IsDescending = true
+                IsDescending = true,
+                Classify =classify 
             };
             var brandList = _productBrandService.GetProductBrandsByCondition(bcon).Select(a => new
             {
@@ -423,6 +444,7 @@ namespace Zerg.Controllers.Trading.Product
                 a.Bname,
                 a.SubTitle,
                 a.Content,
+                a.AdTitle,
                 ProductPramater = a.ParameterEntities.Select(p => new { p.Parametername, p.Parametervaule })
             }).ToList();
             var count = _productBrandService.GetProductBrandCount(bcon);
@@ -435,6 +457,7 @@ namespace Zerg.Controllers.Trading.Product
                     c.Bname,
                     c.SubTitle,
                     c.Content,
+                    c.AdTitle,
                     ProductParamater = c.ProductPramater.ToDictionary(k => k.Parametername, v => v.Parametervaule)
                 }),
                 Count = count
@@ -526,7 +549,7 @@ namespace Zerg.Controllers.Trading.Product
         {
             var sech = new ProductSearchCondition
             {
-                OrderBy = EnumProductSearchOrderBy.Price,
+                OrderBy = EnumProductSearchOrderBy.OrderByPrice,
                 ProductBrand = BrandId
             };
             var model = _productService.GetProductsByCondition(sech).FirstOrDefault();

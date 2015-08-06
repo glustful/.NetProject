@@ -13,6 +13,7 @@
             <td><input type="checkbox" ng-click="toggle(row.Id)"></td>
             <td  ng-if="row.Type==0"><span>带客</span></td>
             <td  ng-if="row.Type==1"><span>推荐</span></td>
+            <td  ng-if="row.Type==2"><span>注册佣金</span></td>
             <td><span>{{row.Balancenum}}</span></td>
             <td><span>{{row.Addtime}}</span></td>
         </tr>

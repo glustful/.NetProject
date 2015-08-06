@@ -81,7 +81,7 @@ namespace Zerg.Controllers.CRM
         /// 传入经纪人推荐类型,经纪人名称,页面设置等,查询经济人列表,返回经纪人列表 
         /// </summary>
         /// <param name="status">状态</param>
-        /// <param name="brokername">经纪人名称</param>
+        /// <param name="brokername">经纪人名称或者客户名称</param>
         /// <param name="page">页码</param>
         /// <param name="pageSize">页面数量</param>
         /// <returns>经纪人列表</returns>
@@ -92,11 +92,11 @@ namespace Zerg.Controllers.CRM
 
             var condition = new BrokerRECClientSearchCondition
             {
-                OrderBy = EnumBrokerRECClientSearchOrderBy.OrderById,
+                OrderBy = EnumBrokerRECClientSearchOrderBy.OrderByTime,
                 Page = page,
                 PageCount = pageSize,
                 Status = status,
-                Brokername = brokername
+                Clientname = brokername,
 
             };
             var list = _brokerRecClientService.GetBrokerRECClientsByCondition(condition).Select(a => new
@@ -268,7 +268,7 @@ namespace Zerg.Controllers.CRM
                 Brokername = model.Brokername,
                 Brokerlevel = model.Brokerlevel,
                 Sex = model.Broker.Sexy,
-                RegTime = model.Broker.Regtime.ToString(CultureInfo.InvariantCulture),
+                RegTime = model.Broker.Regtime.ToString("yyy-MM-dd"),
 
                 Clientname = model.Clientname,
                 HouseType = model.ClientInfo.Housetype,

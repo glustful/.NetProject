@@ -138,6 +138,10 @@ namespace CRM.Service.BrokerWithdrawDetail
 						case EnumBrokerWithdrawDetailSearchOrderBy.OrderById:
 							query = condition.isDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
 							break;
+
+                        case EnumBrokerWithdrawDetailSearchOrderBy.OrderByTime:
+                            query = condition.isDescending ? query.OrderBy(q => q.Uptime) : query.OrderByDescending(q => q.Uptime);
+                            break;
                     }
 					
 				}

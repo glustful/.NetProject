@@ -192,3 +192,14 @@ border-left-style: none;
     text-align:center;left:300px;
     z-index:10000;
 }
+.alertTsdiv{
+    position:fixed;top:300px;
+    width:300px;line-height: 100px;
+    text-align:center;left:300px;
+    z-index:10000;
+    background-color:white;
+    height:200px;
+    width:300px;
+}
+.tipshowcl{
+    font-size:20px;color: #ff0000;}

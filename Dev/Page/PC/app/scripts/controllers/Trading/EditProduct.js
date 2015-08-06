@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015/6/18.
  */
-
+var seascapeimgurl='';var bigimgurl='';var smallimgurl='';
 angular.module("app").controller('EditProductController', [
     '$http', '$scope','$state','$stateParams','FileUploader', function ($http, $scope,$state,$stateParams,FileUploader) {
         //选择商品分类；
@@ -96,6 +96,18 @@ angular.module("app").controller('EditProductController', [
         $scope.selectParameterValue = [];
         //编辑商品信息
          $scope.update=function(){
+             if(seascapeimgurl.length>0)
+             {
+                 $scope.product.Productimg1=seascapeimgurl;
+             }
+             if(bigimgurl.length>0)
+             {
+                 $scope.product.ProductDetailImg=bigimgurl;
+             }
+             if(smallimgurl.length>0)
+             {
+                 $scope.product.Productimg=smallimgurl;
+             }
             var newproduct = {
             Id:$scope.product.Id,
             ClassifyId:$scope.product.ClassId,
@@ -111,12 +123,14 @@ angular.module("app").controller('EditProductController', [
             Stockrule:$scope.product.Stockrule,
             SubTitle:$scope.product.SubTitle,
             Productimg:$scope.product.Productimg,
-            Productdetail:$scope.product.ProductDetailed,
+            //Productdetail:$scope.product.ProductDetailed,
             Sericeinstruction:$scope.product.Sericeinstruction
             };
             var newproductDetail = {
                 Productdetail:$scope.product.ProductDetailed,
-                Sericeinstruction:$scope.product.Sericeinstruction
+                Sericeinstruction:$scope.product.Sericeinstruction,
+                Productimg1:$scope.product.Productimg1,
+                ProductImg:$scope.product.ProductDetailImg
             };
             var classifyJson = JSON.stringify({ product: newproduct, productDetail: newproductDetail });
              $http.post(SETTING.ApiUrl + '/Product/EditProduct',classifyJson,{
@@ -157,6 +171,158 @@ angular.module("app").controller('EditProductController', [
             }
             return "undefined";
         }
-
     }]);
+/**
+ * 房源库图片修改 start
+ */
+/**
+ * 上传小户型图
+ * @param file
+ */
+function updatesmallImage(file)
+{
+    var div = document.getElementById('small');
+    files = file.files[0];
+    if (file.files && files)
+    {
+        div.innerHTML ='<img style="height: 200px;width: 200px" id=smallimg>';
+        var img = document.getElementById('smallimg');
+        var reader = new FileReader();
+        reader.onload = function(evt){
+            //base64编码
+            img.src = evt.target.result;
+            //扩展名
+            var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
+            // gif在ie浏览器不显示
+            if(ext!='png'&&ext!='jpg'&&ext!='jpeg'&&ext!='gif'){
+                alert("只支持JPG,PNG,JPEG格式的图片");
+                return;
+            }
+            //发送请求
+            var xmlhttp=new XMLHttpRequest();
+            xmlhttp.onreadystatechange = callback;
+            var fd = new FormData();
+            xmlhttp.open("POST",SETTING.ApiUrl+'/Resource/Upload');
+            fd.append("fileToUpload",files);
+            xmlhttp.withCredentials = true;
+            xmlhttp.send(fd);
+            var headtext = document.getElementById("smalltext");
+            headtext.innerHTML = '正在上传..';
+            headtext.style.color ='#40AD32'
+            //回调函数
+            function callback () {
+                //将response提取出来分割出文件名
+                smallimgurl=  xmlhttp.response;
+                var g1=smallimgurl.split(':"');
+                var g2= smallimgurl.split(',')[1].split(':"')[1];
+                //将分割好的文件名赋予给img全局变量
+                smallimgurl=g2.substring(0,g2.length-1);
+                //图片上传成功字样样式
+                headtext.innerHTML = '上传成功!';
+                headtext.style.color ='red';
+            }
+        }
+        reader.readAsDataURL(files);
+    }
+}
+/**
+ * 上传大户型图
+ * @param file
+ */
+function updatebigImg(file)
+{
+    var div = document.getElementById('big');
+    files = file.files[0];
+    if (file.files && files)
+    {
+        div.innerHTML ='<img style="height: 200px;width: 200px" id=bigimg>';
+        var img = document.getElementById('bigimg');
+        var reader = new FileReader();
+        reader.onload = function(evt){
+            //base64编码
+            img.src = evt.target.result;
+            //扩展名
+            var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
+            // gif在ie浏览器不显示
+            if(ext!='png'&&ext!='jpg'&&ext!='jpeg'&&ext!='gif'){
+                alert("只支持JPG,PNG,JPEG格式的图片");
+                return;
+            }
+            //发送请求
+            var xmlhttp=new XMLHttpRequest();
+            xmlhttp.onreadystatechange = callback;
+            var fd = new FormData();
+            xmlhttp.open("POST",SETTING.ApiUrl+'/Resource/Upload');
+            fd.append("fileToUpload",files);
+            xmlhttp.withCredentials = true;
+            xmlhttp.send(fd);
+            var headtext = document.getElementById("bigtext");
+            headtext.innerHTML = '正在上传..';
+            headtext.style.color ='#40AD32'
+            //回调函数
+            function callback () {
+                //将response提取出来分割出文件名
+                bigimgurl=  xmlhttp.response;
+                var g1=bigimgurl.split(':"');
+                var g2= bigimgurl.split(',')[1].split(':"')[1];
+                //将分割好的文件名赋予给img全局变量
+                bigimgurl=g2.substring(0,g2.length-1);
+                //图片上传成功字样样式
+                headtext.innerHTML = '上传成功!';
+                headtext.style.color ='red';
+            }
+        }
+        reader.readAsDataURL(files);
+    }
+}
+/**
+ * 上传海景图
+ * @param file
+ */
+function seascapeimg(file)
+{
+    var div = document.getElementById('Seascape');
+    files = file.files[0];
+    if (file.files && files)
+    {
+        div.innerHTML ='<img style="height: 200px;width: 200px" id=Seascapeimg>';
+        var img = document.getElementById('Seascapeimg');
+        var reader = new FileReader();
+        reader.onload = function(evt){
+            //base64编码
+            img.src = evt.target.result;
+            //扩展名
+            var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
+            // gif在ie浏览器不显示
+            if(ext!='png'&&ext!='jpg'&&ext!='jpeg'&&ext!='gif'){
+                alert("只支持JPG,PNG,JPEG格式的图片");
+                return;
+            }
+            //发送请求
+            var xmlhttp=new XMLHttpRequest();
+            xmlhttp.onreadystatechange = callback;
+            var fd = new FormData();
+            xmlhttp.open("POST",SETTING.ApiUrl+'/Resource/Upload');
+            fd.append("fileToUpload",files);
+            xmlhttp.withCredentials = true;
+            xmlhttp.send(fd);
+            var headtext = document.getElementById("Uptext");
+            headtext.innerHTML = '正在上传..';
+            headtext.style.color ='#40AD32'
+            //回调函数
+            function callback () {
+                //将response提取出来分割出文件名
+                seascapeimgurl =  xmlhttp.response;
+                var g1=seascapeimgurl.split(':"');
+                var g2= seascapeimgurl.split(',')[1].split(':"')[1];
+                //将分割好的文件名赋予给img全局变量
+                seascapeimgurl=g2.substring(0,g2.length-1);
+                //图片上传成功字样样式
+                headtext.innerHTML = '上传成功!';
+                headtext.style.color ='red';
+            }
+        }
+        reader.readAsDataURL(files);
+    }
+}
 

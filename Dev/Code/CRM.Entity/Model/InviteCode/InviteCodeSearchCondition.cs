@@ -22,8 +22,10 @@ namespace CRM.Entity.Model
         /// </summary>
         public bool isDescending { get; set; }
         public int Id { get; set; }
-        public int NumUser { get; set; }
+        public int ?NumUser { get; set; }
         public BrokerEntity Brokers { get; set; }
+
+        public int? BrokerId { get; set; }
 
         public DateTime? CreatTime { get; set; }
 

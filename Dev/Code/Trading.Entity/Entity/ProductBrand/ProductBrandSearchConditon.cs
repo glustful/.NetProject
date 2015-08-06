@@ -52,10 +52,10 @@ namespace Trading.Entity.Model
 
 		public DateTime? UpdtimeEnd { get; set; }
 
+	    public ClassifyEntity  Classify{ get; set; }
 
 
-
-		public EnumProductBrandSearchOrderBy? OrderBy { get; set; }
+	    public EnumProductBrandSearchOrderBy? OrderBy { get; set; }
 
 	}
 
@@ -64,7 +64,9 @@ namespace Trading.Entity.Model
 	{
 
 		OrderById,
-        OrderByAddtime
+        OrderByAddtime,
+        
+        
 
 	}
 

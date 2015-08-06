@@ -1,7 +1,7 @@
 /**
  * Created by gaofengming on 2015/6/2.
  */
-app.controller('UserController',function($scope,$location){
+app.controller('UserController',['$scope',function($scope){
 
     //var browserurl = window.location.href;
     //console.log(browserurl);
@@ -14,4 +14,4 @@ app.controller('UserController',function($scope,$location){
     //    document.getElementById("loginPage").innerHTML = "找回密码"
     //}
     $scope.title ="a";
-})
+}])

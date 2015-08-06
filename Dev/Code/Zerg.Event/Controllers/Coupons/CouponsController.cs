@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CRM.Service.Broker;
 using Event.Entity.Entity.Coupon;
 using Event.Service.Coupon;
 using Trading.Service.ProductBrand;
 using YooPoon.Core.Site;
+using Zerg.Common;
 using Zerg.Event.Models.Coupons;
 
 namespace Zerg.Event.Controllers.Coupons
@@ -18,14 +20,23 @@ namespace Zerg.Event.Controllers.Coupons
         private readonly ICouponOwnerService _couponOwnerService;
         private readonly IWorkContext _workContext;
         private readonly ICouponService _couponService;
+        private readonly IBrokerService _brokerService;
 
-        public CouponsController(ICouponCategoryService couponCategoryService, ICouponService couponService, IProductBrandService productBrandService, ICouponOwnerService couponOwnerService, IWorkContext workContext)
+        public CouponsController(
+            ICouponCategoryService couponCategoryService, 
+            ICouponService couponService, 
+            IProductBrandService productBrandService, 
+            ICouponOwnerService couponOwnerService, 
+            IWorkContext workContext,
+            IBrokerService brokerService
+            )
         {
             _couponCategoryService = couponCategoryService;
             _couponService = couponService;
             _productBrandService = productBrandService;
             _couponOwnerService = couponOwnerService;
             _workContext = workContext;
+            _brokerService = brokerService;
         }
         #region 彭贵飞 获取手机端显示的优惠券种类和对应品牌信息
         /// <summary>
@@ -70,6 +81,8 @@ namespace Zerg.Event.Controllers.Coupons
 
         public ActionResult couponOwn(int id)
         {
+            
+
             if (_workContext.CurrentUser == null)
             {
                 return Redirect("http://www.iyookee.cn/#/user/login");
@@ -93,6 +106,11 @@ namespace Zerg.Event.Controllers.Coupons
                 Number = coupon.Number,
                 BrandName = brand.Bname
             };
+            var phone = _brokerService.GetBrokerByUserId(_workContext.CurrentUser.Id).Phone;
+
+            //短信发送
+            SMSHelper.Sending(phone, "优惠券为：" + brand.Bname + "，券号为：" + coupon.Number + " 【优客惠】");
+            
             return View(CouponOwn);
         }
         #endregion

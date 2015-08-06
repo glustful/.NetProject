@@ -21,7 +21,7 @@ namespace CRM.Entity.Mappings.BRECPay
 			Property(c => c.Addtime).HasColumnType("datetime");
 			Property(c => c.Upuser).HasColumnType("int");
 			Property(c => c.Uptime).HasColumnType("datetime");
-            Property(c => c.BankCard).HasColumnType("int");
+            Property(c => c.BankCard).HasColumnType("varchar").HasMaxLength(100);
 		}
 	}
 }

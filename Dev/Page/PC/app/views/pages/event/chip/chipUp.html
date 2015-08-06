@@ -27,7 +27,7 @@
         <div class="loadimg">
 <span ng-repeat ="imgitem in image track by $index  " >
             <img ng-click="del($index)" class={{$index+1}}  onmouseover="showSubNav(this.className);" onmouseout="hideSubNav(this.className);"  height="100" width="100"  src="{{SImg+imgitem}}" title="图片" />
-<span  id={{$index+1}}   style="width :20px; display:none;margin-left:-100px;color:red;font-weight:bolder;" >点击图片删除</span>
+<span  id={{$index+1}} ng-click="del($index)"  style="width :20px; display:none;margin-left:-100px;color:red;font-weight:bolder;" >点击图片删除</span>
 </span>
             <input name="Bimg" id="Bimg" type="hidden" class="form-control" required ng-model="crowdModel.Bimg" required value="{{image}}"/>
         </div>

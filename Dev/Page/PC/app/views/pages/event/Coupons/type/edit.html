@@ -34,6 +34,14 @@
                 <select name="BrandId" id="BrandId" ng-model="CouponCategory.BrandId" ng-options="list.Id as list.Bname for list in BrandList"></select>
             </div>
 
+            <div class="bottom" ><label for="Content">简介： </label>
+                <textarea  name="Intro" id="Intro" ng-model="CouponCategory.Intro" cols="42" rows="10" style="height: 100px" required></textarea>
+            </div>
+
+            <div class="bottom" ><label for="Content">内容： </label>
+                <textarea class="ueditor"  name="Content" id="Content" ng-model="CouponCategory.Content" cols="42" rows="10" style="height: 400px" required></textarea>
+            </div>
+
         <div>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button md-ink-ripple="" class="md-btn md-raised m-b btn-fw green" type="submit" ng-disabled="form.$invalid">确认<div class="md-ripple-container"></div></button>
