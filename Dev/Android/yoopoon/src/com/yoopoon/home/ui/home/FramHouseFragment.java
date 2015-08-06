@@ -695,7 +695,7 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		// 获取价格TextView中的数据，初始化价格参数
 		initPrice(housePrice_textview.getText().toString());
 		// 创建Popuwindow同时初始化PopuWindows的属性
-		houseTypeWindow = new PopupWindow(scrollView, mContext.getResources().getDisplayMetrics().widthPixels / 3,
+		houseTypeWindow = new PopupWindow(scrollView, mContext.getResources().getDisplayMetrics().widthPixels / 2,
 				mContext.getResources().getDisplayMetrics().heightPixels * 3 / 5, true);
 		houseTypeWindow.setTouchable(true);
 		houseTypeWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -797,8 +797,8 @@ public class FramHouseFragment extends FramSuper implements OnClickListener {
 		ScrollView scrollView = new ScrollView(mContext);
 		scrollView.setFillViewport(true);
 		scrollView.addView(linearLayout, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		housePriceWindow = new PopupWindow(scrollView, mContext.getResources().getDisplayMetrics().widthPixels / 3,
-				LayoutParams.WRAP_CONTENT, true);
+		housePriceWindow = new PopupWindow(scrollView, mContext.getResources().getDisplayMetrics().widthPixels / 2,
+				mContext.getResources().getDisplayMetrics().heightPixels * 3 / 5, true);
 		housePriceWindow.setTouchable(true);
 		housePriceWindow.setBackgroundDrawable(new BitmapDrawable());
 		housePriceWindow.setOutsideTouchable(true);
