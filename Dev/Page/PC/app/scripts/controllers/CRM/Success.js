@@ -1,8 +1,9 @@
+
 /**
  * Created by yangdingpeng on 2015/5/15.
  */
 
-//推荐洽谈成功列表
+//region 推荐洽谈成功相关信息
 angular.module("app").controller('SuccessListController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
@@ -11,8 +12,6 @@ angular.module("app").controller('SuccessListController', [
             page: 1,
             pageSize: 10
         };
-        //$scope.currentUser = AuthService.CurrentUser();
-        //$scope.searchCondition.brokername = $scope.currentUser.UserName;
 
         var getTagList = function() {
             $http.get(SETTING.ApiUrl+'/AdminRecom/BrokerList',{
@@ -33,8 +32,8 @@ angular.module("app").controller('SuccessListController', [
         getTagList();
     }
 ]);
-//带客洽谈成功列表
-///////CHEN///////////////////////////////////////////////////////////////////////////////////////////////////////
+//endregion
+//region 带客洽谈成功信息
 angular.module("app").controller('DKSuccessController',[
     '$http','$scope',function($http,$scope){
         $scope.searchDKCondition = {
@@ -43,8 +42,6 @@ angular.module("app").controller('DKSuccessController',[
             page:1,
             pageSize:10
         };
-        //$scope.currentUser = AuthService.CurrentUser();
-        //$scope.searchDKCondition.brokername = $scope.currentUser.UserName;
 
         var getTagList = function(){
             $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
@@ -64,9 +61,9 @@ angular.module("app").controller('DKSuccessController',[
         getTagList();
     }
 ])
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//endregion
 
-//详细信息
+//region 获取推荐洽谈成功详细信息
 angular.module("app").controller('SuccessDetialController',[
     '$http','$state','$scope','$stateParams',function($http,$state,$scope,$stateParams) {
         //获取详细信息
@@ -101,77 +98,78 @@ angular.module("app").controller('SuccessDetialController',[
         };
     }
 ]);
+//endregion
 
-//详细信息
-angular.module("app").controller('BRECPayController',[
-   'AuthService', '$http','$scope','$stateParams',function(AuthService,$http,$scope,$stateParams) {
+////region
+//angular.module("app").controller('BRECPayController',[
+//   'AuthService', '$http','$scope','$stateParams',function(AuthService,$http,$scope,$stateParams) {
+//
+//        $scope.PayInfo = {
+//            Id:$stateParams.id,
+//            Name:"",
+//            Statusname:"洽谈成功",
+//            Describe:"",
+//            Amount:"",
+//            BankCard:"",
+//            Accountantid:"",
+//            Upuser:"",
+//            Adduser:""
+//        };
+//        $scope.currentUser=AuthService.CurrentUser();
+//        $scope.PayInfo.Accountantid = $scope.currentUser.UserId;
+//        $scope.PayInfo.AddUser = $scope.currentUser.UserId;
+//        $scope.PayInfo.Upuser = $scope.currentUser.UserId;
+//        //变更用户状态
+//        $scope.SetPay=function(){
+//            $http.post(SETTING.ApiUrl + '/AdminPay/SetBREPay',$scope.PayInfo,{
+//                'withCredentials':true
+//            }).success(function(data){
+//                if(data.Status){
+//                    console.log(data.Msg);
+//                }else{
+//                    console.log(data.Msg);
+//                }
+//            });
+//        };
+//    }
+//]);
+////endregion
 
-        $scope.PayInfo = {
-            Id:$stateParams.id,
-            Name:"",
-            Statusname:"洽谈成功",
-            Describe:"",
-            Amount:"",
-            BankCard:"",
-            Accountantid:"",
-            Upuser:"",
-            Adduser:""
-        };
-        $scope.currentUser=AuthService.CurrentUser();
-        $scope.PayInfo.Accountantid = $scope.currentUser.UserId;
-        $scope.PayInfo.AddUser = $scope.currentUser.UserId;
-        $scope.PayInfo.Upuser = $scope.currentUser.UserId;
-        //变更用户状态
-        $scope.SetPay=function(){
-            $http.post(SETTING.ApiUrl + '/AdminPay/SetBREPay',$scope.PayInfo,{
-                'withCredentials':true
-            }).success(function(data){
-                if(data.Status){
-                    console.log(data.Msg);
-                }else{
-                    console.log(data.Msg);
-                }
-            });
-        };
-    }
-]);
+////详细信息
+//angular.module("app").controller('BLPayController',[
+//   'AuthService', '$http','$scope','$stateParams',function(AuthService,$http,$scope,$stateParams) {
+//
+//        $scope.PayInfo = {
+//            Id:$stateParams.id,
+//            Name:"",
+//            Statusname:"洽谈成功",
+//            Describe:"",
+//            Amount:"",
+//            BankCard:"",
+//            Accountantid:"",
+//            Adduser:"",
+//            Upuser:""
+//        };
+//        $scope.currentUser=AuthService.CurrentUser();
+//        $scope.PayInfo.Accountantid = $scope.currentUser.UserId;
+//        $scope.PayInfo.AddUser = $scope.currentUser.UserId;
+//        $scope.PayInfo.Upuser = $scope.currentUser.UserId;
+//        //变更用户状态
+//        $scope.SetPay=function(){
+//            $http.post(SETTING.ApiUrl + '/AdminPay/SetBLPay',$scope.PayInfo,{
+//                'withCredentials':true
+//            }).success(function(data){
+//                if(data.Status){
+//                    alert(data.Msg);
+//                }else{
+//                    alert(data.Msg);
+//                }
+//            });
+//        };
+//    }
+//]);
 
-//详细信息
-angular.module("app").controller('BLPayController',[
-   'AuthService', '$http','$scope','$stateParams',function(AuthService,$http,$scope,$stateParams) {
-
-        $scope.PayInfo = {
-            Id:$stateParams.id,
-            Name:"",
-            Statusname:"洽谈成功",
-            Describe:"",
-            Amount:"",
-            BankCard:"",
-            Accountantid:"",
-            Adduser:"",
-            Upuser:""
-        };
-        $scope.currentUser=AuthService.CurrentUser();
-        $scope.PayInfo.Accountantid = $scope.currentUser.UserId;
-        $scope.PayInfo.AddUser = $scope.currentUser.UserId;
-        $scope.PayInfo.Upuser = $scope.currentUser.UserId;
-        //变更用户状态
-        $scope.SetPay=function(){
-            $http.post(SETTING.ApiUrl + '/AdminPay/SetBLPay',$scope.PayInfo,{
-                'withCredentials':true
-            }).success(function(data){
-                if(data.Status){
-                    alert(data.Msg);
-                }else{
-                    alert(data.Msg);
-                }
-            });
-        };
-    }
-]);
-
-///////////////////////////////////////带客洽谈详细  Begin ///////////////////////////////////////////////////////////
-
+//region  获取带客洽谈成功详细信息
 angular.module("app").controller('DKSuccessDetialController',[
     '$http','$state','$scope','$stateParams',function($http,$state,$scope,$stateParams) {
         //获取详细信息
@@ -206,5 +204,4 @@ angular.module("app").controller('DKSuccessDetialController',[
         };
     }
 ]);
-
-///////////////////////////////////////////END//////////////////////////////////////////////////////////////////////////
+//endregion

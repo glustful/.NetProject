@@ -183,13 +183,13 @@ namespace Zerg.Controllers.Trading.Product
         [Description("查询所有，返回商品列表")]
         [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage GetAllProduct(int page = 1, int pageSize = 10, EnumProductSearchOrderBy orderByAll = EnumProductSearchOrderBy.OrderByAddtime)
+        public HttpResponseMessage GetAllProduct(int page = 1, int pageSize = 10, bool isDes = true, EnumProductSearchOrderBy orderByAll = EnumProductSearchOrderBy.OrderByAddtime)
         {
             ProductSearchCondition PSC = new ProductSearchCondition()
             {
                 Page = page,
                 PageCount = pageSize,
-                IsDescending = true,
+                IsDescending = isDes,
                 OrderBy = orderByAll
             };
             var productList = _productService.GetProductsByCondition(PSC).Select(a => new ProductDetail

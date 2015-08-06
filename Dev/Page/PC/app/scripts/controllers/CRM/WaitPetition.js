@@ -1,18 +1,33 @@
+
 /**
  * Created by yangdingpeng on 2015/5/15.
  */
 
-//上访列表
+//region 推荐待上访信息
 angular.module("app").controller('PetitionListController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
             status:"等待上访",
             Brokername:"",
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:'OrderById',
+            isDes:true
         };
 
-        var getTagList = function() {
+        var getTagList = function(orderByAll) {
+            $scope.UpOrDownImgClass='fa-caret-down';
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll;
+                if($scope.searchCondition.isDes==true){
+                    $scope.searchCondition.isDes=false;
+                    $scope.UpOrDownImgClass='fa-caret-up'
+                }
+                else if($scope.searchCondition.isDes==false){
+                    $scope.searchCondition.isDes=true;
+                    $scope.UpOrDownImgClass='fa-caret-down'
+                }
+            }
             $http.get(SETTING.ApiUrl+'/AdminRecom/BrokerList',{
                 params:$scope.searchCondition,
                 'withCredentials':true
@@ -30,9 +45,10 @@ angular.module("app").controller('PetitionListController', [
         getTagList();
     }
 ]);
+//endregion
 
 
-//详细信息
+//region 推荐待上访详细信息以及流程变更
 angular.module("app").controller('WPDetialController',[
     '$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams) {
         //获取详细信息
@@ -66,3 +82,4 @@ angular.module("app").controller('WPDetialController',[
         };
     }
 ]);
+//endregion

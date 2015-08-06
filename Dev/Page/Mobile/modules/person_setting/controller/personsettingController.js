@@ -72,10 +72,16 @@ app.controller('personsettingController',['$scope','$http','$state','AuthService
                 if(data.Status) {
                     var img = document.getElementById('imghead');
                     img.src = $scope.olduser.Headphoto;
+                    $scope.tips="资料更新成功！";
                     location.reload([true]);
+                    $state.go("app.personal");
+
                 }
-                $state.go("app.personal");
+
             });
+
+
+
     }
 }])
 /////////////////////////////头像修改////////////////////////////

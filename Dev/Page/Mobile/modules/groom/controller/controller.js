@@ -1,6 +1,7 @@
 /**
  * Created by chenda on 2015/5/27.
  */
+
 app.controller("tuijianController",['$http','$scope','$stateParams','AuthService','$state',function($http,$scope,$stateParams,AuthService,$state){
     $scope.BrokerRECClientEntity={
         AddUser:null,
@@ -39,3 +40,4 @@ app.controller("tuijianController",['$http','$scope','$stateParams','AuthService
     };
     $scope.add=getBrokerResult;
 }])
+

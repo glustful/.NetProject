@@ -1,8 +1,9 @@
+
 /**
  * Created by yangdingpeng on 2015/5/15.
  */
 
-//上访列表
+//region 洽谈失败信息
 angular.module("app").controller('FailListController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
@@ -30,9 +31,9 @@ angular.module("app").controller('FailListController', [
         getTagList();
     }
 ]);
+//endregion
 
-
-//详细信息
+//region 推荐失败详细信息
 angular.module("app").controller('FailDetialController',[
     '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
         //获取详细信息
@@ -67,9 +68,10 @@ angular.module("app").controller('FailDetialController',[
         };
     }
 ]);
+//endregion
 
-/////////////////////////////////////////////带客失败列表  chen ////////////////////////////////////////////////////////
 
+//region 带客洽谈失败相关信息
 angular.module("app").controller('DKFailListController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
@@ -97,9 +99,10 @@ angular.module("app").controller('DKFailListController', [
         getTagList();
     }
 ]);
+//endregion
 
 
-//详细信息
+//region  获取带客失败详细信息以及业务变更
 angular.module("app").controller('DKFailDetialController',[
     '$http','$scope','$stateParams',function($http,$scope,$stateParams) {
         //获取详细信息
@@ -134,4 +137,4 @@ angular.module("app").controller('DKFailDetialController',[
         };
     }
 ]);
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//endregion
