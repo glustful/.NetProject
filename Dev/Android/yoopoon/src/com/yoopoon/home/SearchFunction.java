@@ -192,7 +192,8 @@ public class SearchFunction {
 	public void setPageCount(int count) {
 		pageCount = count;
 		paramMap.put("page", pageCount + "");
-
+		paramMap.put("className", "房地产");
+		paramMap.put("PageCount", "10");
 	}
 
 	public int getPageCount() {

@@ -110,6 +110,7 @@ public abstract class SearchActionBarActivity extends ActionBarActivity {
 
 			@Override
 			public void search(ResponseData data) {
+				Log.i(TAG, data.toString());
 				if (data.getResultState() == ResultState.eSuccess) {
 					JSONArray list = data.getMRootData().optJSONArray("List");
 					if (list != null || list.length() > 0) {
@@ -118,11 +119,11 @@ public abstract class SearchActionBarActivity extends ActionBarActivity {
 							mJsonObjects.add(list.optJSONObject(i));
 						}
 					}
-					Log.i(TAG, data.toString());
 					mActiveBrandAdapter.refresh(mJsonObjects);
 					showResult(data.getMRootData().optJSONArray("List"));
 				} else {
-					ToastUtils.showToast(mContext, data.getMsg(), 3000);
+
+					ToastUtils.showToast(mContext, "结果未找到", 3000);
 				}
 			}
 

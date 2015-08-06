@@ -63,6 +63,7 @@
                     android:id="@+id/name"
                     style="@style/EditText_Normal"
                     android:layout_marginTop="5dp"
+                    
                     android:hint="姓名" />
 
                 <TextView
@@ -136,11 +137,12 @@
                     style="@style/TextView_Warning"
                     android:text="请正确的身份证号码" />
 
-                <TextView
+                
+                   <com.yoopoon.home.ui.view.RedStarTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="邮箱" />
+                    android:text="*邮箱" />
 
                 <EditText
                     android:id="@+id/email"

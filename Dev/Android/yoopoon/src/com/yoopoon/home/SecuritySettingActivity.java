@@ -28,6 +28,7 @@ import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -109,7 +110,12 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		String smsType = String.valueOf(SmsUtils.CHANGEPSW_IDENTIFY_CODE);
 		String json = "{\"SmsType\":\"" + smsType + "\"}";
 		startSmsService();
+		// if (!user.isBroker())
+		// json = "1";
+
+		Log.i(TAG, "user.isBroker:" + user.isBroker() + ",json = " + json);
 		SmsUtils.getCodeForBroker(this, json, new RequestSMSListener() {
+
 			@Override
 			public void succeed(String code) {
 				hidm = code;

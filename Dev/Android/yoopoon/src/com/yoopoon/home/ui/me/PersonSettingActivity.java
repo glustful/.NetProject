@@ -20,6 +20,7 @@ import java.util.TimerTask;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +32,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -52,6 +54,8 @@ import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.common.base.BrokerEntity;
 import com.yoopoon.common.base.Tools;
+import com.yoopoon.common.base.utils.RegxUtils;
+import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.common.base.utils.Utils;
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.MyApplication;
@@ -65,7 +69,6 @@ import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.UploadHeadImg;
 import com.yoopoon.home.data.net.UploadHeadImg.OnCompleteListener;
 import com.yoopoon.home.data.user.User;
-import com.yoopoon.home.data.user.User.UserInfoListener;
 import com.yoopoon.home.domain.Broker2.RequesListener;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
@@ -104,13 +107,35 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	LinearLayout ll_progress;
 	@ViewById(R.id.weixin)
 	EditText et_weixin;
+	@ViewById(R.id.tv_person_setting_name_warning)
+	TextView tv_warning_name;
+	@ViewById(R.id.tv_person_setting_email_warning)
+	TextView tv_warning_email;
+	@ViewById(R.id.tv_person_setting_sfz_warning)
+	TextView tv_warning_sfz;
 	private Animation animation_shake;
+	private Vibrator vibrator;
 	private BrokerEntity entity;
 	private String[] points = { "", ".", "..", "..." };
 	private int count = 0;
 	private Timer timer;
 	private TimerTask task;
 	private boolean uploadable = true;
+
+	@TextChange(R.id.card)
+	void cardChange() {
+		tv_warning_sfz.setVisibility(View.GONE);
+	}
+
+	@TextChange(R.id.name)
+	void nameChange() {
+		tv_warning_name.setVisibility(View.GONE);
+	}
+
+	@TextChange(R.id.email)
+	void mailChange() {
+		tv_warning_email.setVisibility(View.GONE);
+	}
 
 	@Click(R.id.iv_person_setting_avater)
 	void selectAvater() {
@@ -134,17 +159,45 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		String nickname = et_nickname.getText().toString();
 		String phone = tv_phone.getText().toString();
 		if (TextUtils.isEmpty(name)) {
-			et_name.startAnimation(animation_shake);
+			textWarning(et_name);
+			tv_warning_name.setText("请填写姓名");
+			tv_warning_name.setVisibility(View.VISIBLE);
 			return;
 		}
 		if (TextUtils.isEmpty(email)) {
-			et_email.startAnimation(animation_shake);
+			textWarning(et_email);
+			tv_warning_email.setText("请填写邮箱");
+			tv_warning_email.setVisibility(View.VISIBLE);
 			return;
 		}
 		if (TextUtils.isEmpty(sfz)) {
-			et_card.startAnimation(animation_shake);
+			textWarning(et_card);
+			tv_warning_sfz.setText("请填写身份证号码");
+			tv_warning_sfz.setVisibility(View.VISIBLE);
 			return;
 		}
+
+		if (!RegxUtils.isSfz(sfz)) {
+			textWarning(et_card);
+			tv_warning_sfz.setText("请填写正确的身份证号码");
+			tv_warning_sfz.setVisibility(View.VISIBLE);
+			return;
+		}
+
+		if (!RegxUtils.isName(name)) {
+			textWarning(et_name);
+			tv_warning_name.setText("名字的长度为2-5位");
+			tv_warning_name.setVisibility(View.VISIBLE);
+			return;
+		}
+
+		if (!RegxUtils.isEmail(email)) {
+			textWarning(et_email);
+			tv_warning_email.setText("请填写正确的邮箱");
+			tv_warning_email.setVisibility(View.VISIBLE);
+			return;
+		}
+
 		rl_progress.setVisibility(View.VISIBLE);
 		String sexy = rb_female.isChecked() ? "女士" : "先生";
 		entity.setRealname(name);
@@ -173,8 +226,12 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		});
 	}
 
+	private void textWarning(View v) {
+		v.startAnimation(animation_shake);
+		vibrator.vibrate(500);
+	}
+
 	private void parseToBroker(final String json) {
-		Log.i(TAG, json);
 		new ParserJSON(new ParseListener() {
 
 			@Override
@@ -206,6 +263,14 @@ public class PersonSettingActivity extends MainActionBarActivity {
 					et_nickname.setText(entity.getNickname());
 					tv_phone.setText(entity.getPhone());
 					et_weixin.setText(entity.getWeiXinNumber());
+
+					String photo = entity.getHeadphoto();
+
+					if (!TextUtils.isEmpty(photo)) {
+						String url = "http://img.yoopoon.com/" + photo;
+						ImageLoader.getInstance().displayImage(url, iv_avater);
+					}
+
 				}
 			}
 		}).execute();
@@ -224,14 +289,21 @@ public class PersonSettingActivity extends MainActionBarActivity {
 						String path = uri.toString().substring(7);
 						file = new File(path);
 					}
-					Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
-					/* 将Bitmap设定到ImageView */
-					iv_avater.setImageBitmap(bitmap);
-					if (file.length() > 150000) {
-						tv_uploading.setText("图片太大啦，换一张小一点的吧");
+					if (StringUtils.isPicFile(file)) {
+						Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
+						/* 将Bitmap设定到ImageView */
+						iv_avater.setImageBitmap(bitmap);
+						if (file.length() > 150000) {
+							tv_uploading.setTextColor(Color.BLACK);
+							tv_uploading.setText("图片太大啦，换一张小一点的吧");
+							tv_uploading.setVisibility(View.VISIBLE);
+						} else
+							uploadImage(file);
+					} else {
+						tv_uploading.setTextColor(Color.RED);
+						tv_uploading.setText("请选择正确的图片文件");
 						tv_uploading.setVisibility(View.VISIBLE);
-					} else
-						uploadImage(file);
+					}
 				} catch (FileNotFoundException e) {
 					Log.e("Exception", e.getMessage(), e);
 				}
@@ -357,55 +429,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("个人设置");
 		animation_shake = AnimationUtils.loadAnimation(this, R.anim.shake);
-		// requestUserInfo();
+		vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 		requestInfo();
-	}
-
-	private void requestUserInfo() {
-		ll_progress.setVisibility(View.VISIBLE);
-		User user = User.lastLoginUser(this);
-		if (user == null) {
-			user = new User();
-		}
-
-		user.getUserInfo(new UserInfoListener() {
-
-			@Override
-			public void success(User user) {
-				String nickName = user.getNickName();
-				String userName = user.getRealName();
-				String idCard = user.getIdCard();
-				String sex = user.getSex();
-				String phone = user.getPhone();
-				String email = user.getEmail();
-				String photo = user.getHeadUrl();
-				et_nickname.setText(TextUtils.isEmpty(nickName) ? "" : nickName);
-				et_name.setText(TextUtils.isEmpty(userName) ? "" : userName);
-				et_card.setText(TextUtils.isEmpty(idCard) ? "" : idCard);
-				tv_phone.setText(TextUtils.isEmpty(phone) ? "" : phone);
-				et_email.setText(TextUtils.isEmpty(email) ? "" : email);
-				if (sex != null) {
-					rb_female.setChecked(sex.equals("先生") ? false : true);
-					rb_male.setChecked(sex.equals("女士") ? false : true);
-				}
-				if (!TextUtils.isEmpty(photo)) {
-					String url = "http://img.yoopoon.com/" + photo;
-					ImageLoader.getInstance().displayImage(url, iv_avater);
-				}
-				SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(PersonSettingActivity.this);
-				String broker = sp.getString("broker", null);
-				if (!TextUtils.isEmpty(broker))
-					parseToBroker(broker);
-				ll_progress.setVisibility(View.GONE);
-			}
-
-			@Override
-			public void failed(String msg) {
-				// Log.i(TAG, msg);
-				Toast.makeText(PersonSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
-				ll_progress.setVisibility(View.GONE);
-			}
-		});
 	}
 
 	void requestInfo() {

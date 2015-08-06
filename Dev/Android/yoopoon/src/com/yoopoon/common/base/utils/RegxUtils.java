@@ -25,4 +25,19 @@ public class RegxUtils {
 		return phone.matches(regx);
 	}
 
+	public static boolean isSfz(String sfz) {
+		String sfzRegx = "^(\\d{15}$|^\\d{18}$|^\\d{17}(\\d|X|x))$";
+		return sfz.matches(sfzRegx);
+	}
+
+	public static boolean isEmail(String email) {
+		String emailRegx = "^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$";
+		return email.matches(emailRegx);
+	}
+
+	public static boolean isName(String name) {
+		int length = name.length();
+		return (length < 5) && (length > 2);
+	}
+
 }

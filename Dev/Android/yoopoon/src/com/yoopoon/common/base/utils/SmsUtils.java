@@ -86,7 +86,6 @@ public class SmsUtils {
 					}
 				}
 				lis.fail(data.getMsg());
-
 			}
 
 			@Override
