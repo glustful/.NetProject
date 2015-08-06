@@ -13,7 +13,7 @@ angular.module("app").controller('SCInfoListController', [
             orderByAll:"OrderById",//排序
             isDes:true//升序or降序,默认为降序
         };
-
+//初始化所有图标
         var iniImg=function(){
             $scope.OrderById="footable-sort-indicator";
             $scope.OrderByClientname="footable-sort-indicator";
@@ -29,8 +29,8 @@ angular.module("app").controller('SCInfoListController', [
                 if($scope.searchCondition.isDes==true)//如果为降序，
                 {
                     $scope.d="$scope."+orderByAll+"='fa-caret-up';";
-                    iniImg();
-                    eval($scope.d);//把$scope.d当做语句来执行
+                    iniImg();//将所有的图标变成一个月
+                    eval($scope.d);//把$scope.d当做语句来执行，把当前点击图片变成向上
                     $scope.searchCondition.isDes=false;//则变成升序
                 }
                 else if($scope.searchCondition.isDes==false)

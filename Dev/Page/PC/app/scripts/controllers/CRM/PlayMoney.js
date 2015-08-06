@@ -14,6 +14,7 @@ angular.module("app").controller('playMoney',[
         };
         $scope.UpOrDownImgClass='fa-caret-down';
         var getTagList = function(orderByAll){
+
             if(orderByAll!=undefined){
                 $scope.searchCondition.orderByAll=orderByAll;
                 if($scope.searchCondition.isDes==true){
