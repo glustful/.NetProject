@@ -10,13 +10,13 @@ angular.module("app").controller('FailListController', [
             Brokername:"",
             page: 1,
             pageSize: 10,
-            orderByAll:'',
+            orderByAll:'OrderByUptime',
             isDes:true
         };
-
+        $scope.UpOrDownImgClass='fa-caret-down';
         var getTagList = function(orderByAll) {
-            $scope.searchCondition.orderByAll=orderByAll;
-            if($scope.searchCondition.isDes!=undefined){
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll;
                 if($scope.searchCondition.isDes==true){
                     $scope.searchCondition.isDes=false;
                     $scope.UpOrDownImgClass='fa-caret-up'
@@ -81,8 +81,9 @@ angular.module("app").controller('FailDetialController',[
     }
 ]);
 
-/////////////////////////////////////////////带客失败列表  chen ////////////////////////////////////////////////////////
 
+
+//region 带客失败列表
 angular.module("app").controller('DKFailListController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
@@ -90,13 +91,13 @@ angular.module("app").controller('DKFailListController', [
             Brokername:"",
             page: 1,
             pageSize: 10,
-            orderByAll:'',
+            orderByAll:'OrderByUptime',
             isDes:true
         };
-
+        $scope.UpOrDownImgClass='fa-caret-down';
         var getTagList = function(orderByAll) {
-            $scope.searchCondition.orderByAll=orderByAll;
-            if($scope.searchCondition.isDes!=undefined){
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll;
                 if($scope.searchCondition.isDes==true){
                     $scope.searchCondition.isDes=false;
                     $scope.UpOrDownImgClass='fa-caret-up'
@@ -160,4 +161,4 @@ angular.module("app").controller('DKFailDetialController',[
         };
     }
 ]);
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//endregion
