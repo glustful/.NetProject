@@ -77,27 +77,7 @@ namespace Zerg.Controllers.CRM
 
         #region 单个任务配置 杨定鹏 2015年4月28日10:04:08
 
-        /// <summary>
-        /// 返回任务列表
-        /// </summary>
-        /// <param name="taskSearchModel">任务列表参数</param>
-        /// <returns>任务列表</returns>
-        
-        //public HttpResponseMessage TaskList(TaskSearchCondition searchCondition)
-        //{
-        //    if (searchCondition == null)
-        //    {
-        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "condition is null"));
-        //    }
-
-        //    var condition = new TaskSearchCondition
-        //    {
-        //        OrderBy = EnumTaskSearchOrderBy.OrderById,
-        //        Taskname = searchCondition.Taskname
-
-        //    };
-        //    return PageHelper.toJson(_taskService.GetTasksByCondition(condition).ToList());
-        //}
+       
         /// <summary>
         /// 返回任务列表
         /// </summary>
@@ -109,7 +89,7 @@ namespace Zerg.Controllers.CRM
         /// <returns>任务列表</returns>
         [Description("返回PC端任务列表")]
         [HttpGet]
-        public HttpResponseMessage TaskList(string Taskname, int page, int pageSize, EnumTaskSearchOrderBy orderByAll = EnumTaskSearchOrderBy .OrderById, bool isDes = true)
+        public HttpResponseMessage TaskList(string Taskname="", int page=1, int pageSize=10, EnumTaskSearchOrderBy orderByAll = EnumTaskSearchOrderBy .OrderById, bool isDes = true)
         {
             //验证是否有非法字符
             Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
@@ -146,8 +126,8 @@ namespace Zerg.Controllers.CRM
                     Taskname = p.Taskname,
                     Name = p.Name,
                     Endtime = p.Endtime.ToShortDateString(),
-                  //  Adduser = _brokerService.GetBrokerByUserId(p.Adduser).Brokername,
-                    Adduser =_userservice .GetUserById (p.Adduser).UserName,
+                    //  Adduser = _brokerService.GetBrokerByUserId(p.Adduser).Brokername,
+                    Adduser = _userservice.GetUserById(p.Adduser) == null ? p.Adduser.ToString() : _userservice.GetUserById(p.Adduser).UserName,
                     Id = p.Id
                 }).ToList();
                 var taskCount = _taskService.GetTaskCount(taskcondition);
@@ -160,16 +140,17 @@ namespace Zerg.Controllers.CRM
                     return PageHelper.toJson(PageHelper.ReturnValue(true, "不存在数据！"));
                 }
             }
-            catch { }
-            return null;
+            catch {
+                return PageHelper.toJson(PageHelper.ReturnValue(false , "出现数据错误！"));
+            }
         }
         /// <summary>
         /// 查询返回手机断任务列表
         /// </summary>
         /// <param name="page">页码</param>
         /// <param name="type">类型</param>
-        /// <returns>手机断任务列表</returns>
-        [Description("查询返回手机断任务列表")]
+        /// <returns>手机端任务列表</returns>
+        [Description("查询返回手机端任务列表")]
         [HttpGet]
         public HttpResponseMessage TaskListMobile(int page, string type)
         {

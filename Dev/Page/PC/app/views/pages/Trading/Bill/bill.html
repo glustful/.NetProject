@@ -1,15 +1,15 @@
 <div class="p-md" ng-app="App" ng-controller="billController">
-<div class="panel panel-default" align="center">
+<div class="panel-default panel panel-card ng-scope" align="center">
     <div class="panel-heading">订单列表</div>
-    <table st-table="rowCollectionPage" class="table table-striped" align="center">
+    <table st-table="rowCollectionPage" class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" align="center">
         <thead>
         <tr>
             <th align="center">经纪人名称</th>
             <th align="center">地产商名称</th>
-            <th align="center">金额</th>
+            <th align="center" ng-click="getList('OrderByAmount')">金额 <span class="fa {{OrderByAmount}}"></span></th>
             <th align="center">是否有发票</th>
             <th align="center">备注</th>
-            <th align="center">结算日期</th>
+            <th align="center" ng-click="getList('OrderByCheckoutdate')">结算日期 <span class="fa {{OrderByCheckoutdate}}"></span></th>
         </tr>
         </thead>
         <tbody>

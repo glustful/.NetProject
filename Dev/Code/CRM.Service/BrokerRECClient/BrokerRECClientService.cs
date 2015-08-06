@@ -166,37 +166,37 @@ namespace CRM.Service.BrokerRECClient
 					switch (condition.OrderBy.Value)
                     {
 						case EnumBrokerRECClientSearchOrderBy.OrderById:
-							query = condition.IsDescending?query.OrderBy(q=>q.Id):query.OrderByDescending(q=>q.Id);
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
 							break;
                         case EnumBrokerRECClientSearchOrderBy.OrderByTime:
-                            query = condition.IsDescending ? query.OrderBy(q => q.Uptime) : query.OrderByDescending(q => q.Uptime);
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Uptime) : query.OrderBy(q => q.Uptime);
                             break;
                         case EnumBrokerRECClientSearchOrderBy.OrderByBrokername :
-                            query = condition.IsDescending ? query.OrderBy(q => q.Brokername) : query.OrderByDescending(q => q.Brokername);
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Brokername) : query.OrderBy(q => q.Brokername);
                             break;
                         case EnumBrokerRECClientSearchOrderBy.OrderByBrokerlevel:
-                            query = condition.IsDescending ? query.OrderBy(q => q.Brokerlevel) : query.OrderByDescending(q => q.Brokerlevel);
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Brokerlevel) : query.OrderBy(q => q.Brokerlevel);
                             break;
                         case EnumBrokerRECClientSearchOrderBy.OrderByClientname:
-                            query = condition.IsDescending ? query.OrderBy(q => q.Clientname) : query.OrderByDescending(q => q.Clientname);
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Clientname) : query.OrderBy(q => q.Clientname);
                             break;
                         case EnumBrokerRECClientSearchOrderBy.OrderByPhone:
-                            query = condition.IsDescending ? query.OrderBy(q => q.Phone) : query.OrderByDescending(q => q.Phone);
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Phone) : query.OrderBy(q => q.Phone);
                             break;
                         case EnumBrokerRECClientSearchOrderBy.OrderByProjectname:
-                            query = condition.IsDescending ? query.OrderBy(q => q.Projectname) : query.OrderByDescending(q => q.Projectname);
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Projectname) : query.OrderBy(q => q.Projectname);
                             break;
                         case EnumBrokerRECClientSearchOrderBy.OrderByAddtime:
-                            query = condition.IsDescending ? query.OrderBy(q => q.Addtime) : query.OrderByDescending(q => q.Addtime);
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Addtime) : query.OrderBy(q => q.Addtime);
                             break;
                         case EnumBrokerRECClientSearchOrderBy.OrderBySecretaryName:
-                            query = condition.IsDescending ? query.OrderBy(q => q.SecretaryId.Brokername) : query.OrderByDescending(q => q.SecretaryId.Brokername);
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.SecretaryId.Brokername) : query.OrderBy(q => q.SecretaryId.Brokername);
                             break;
                         case EnumBrokerRECClientSearchOrderBy.OrderByWaiter:
-                            query = condition.IsDescending ? query.OrderBy(q => q.WriterId.Brokername) : query.OrderByDescending(q => q.WriterId.Brokername);
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.WriterId.Brokername) : query.OrderBy(q => q.WriterId.Brokername);
                             break;
                         case EnumBrokerRECClientSearchOrderBy.OrderByUptime:
-                            query = condition.IsDescending ? query.OrderBy(q => q.Uptime) : query.OrderByDescending(q => q.Uptime);
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Uptime) : query.OrderBy(q => q.Uptime);
                             break;
                     
                       

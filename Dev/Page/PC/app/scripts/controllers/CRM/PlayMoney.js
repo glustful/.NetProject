@@ -9,20 +9,32 @@ angular.module("app").controller('playMoney',[
         $scope.searchCondition = {
             page:1,
             pageSize:10,
-            orderByAll:'OrderByWithdrawTime',
+            orderByAll:'OrderById',
             isDes:true
         };
-        $scope.UpOrDownImgClass='fa-caret-down';
+        var iniImg=function(){
+            $scope.OrderById="footable-sort-indicator";
+            $scope.OrderByWithdrawTime="footable-sort-indicator";
+            $scope.OrderByaccacount="footable-sort-indicator";
+            $scope.OrderByBrokername="footable-sort-indicator";
+            $scope.OrderByState="footable-sort-indicator";
+        }
+        iniImg();
+        $scope.OrderById="fa-caret-down";
         var getTagList = function(orderByAll){
             if(orderByAll!=undefined){
                 $scope.searchCondition.orderByAll=orderByAll;
                 if($scope.searchCondition.isDes==true){
                     $scope.searchCondition.isDes=false;
-                    $scope.UpOrDownImgClass='fa-caret-up'
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
                 }
                 else if($scope.searchCondition.isDes==false){
                     $scope.searchCondition.isDes=true;
-                    $scope.UpOrDownImgClass='fa-caret-down'
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
                 }
             }
             $http.get(SETTING.ApiUrl+'/BrokerWithdraw/GetBrokerWithdraw',{

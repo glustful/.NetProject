@@ -1,7 +1,7 @@
 <div class="p-md" ng-app="App" ng-controller="NegotiateOrderController">
-    <div class="panel panel-default" align="center">
+    <div class="panel-default panel panel-card ng-scope" align="center">
         <div class="panel-heading">订单列表</div>
-        <table class="table table-striped" align="center">
+        <table class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" align="center">
             <thead>
             <tr>
                 <th align="center">编码</th>
@@ -10,11 +10,11 @@
                 <th align="center">经纪人名称</th>
                 <th align="center">客户电话</th>
                 <th align="center">地产商名称</th>
-                <th align="center" ng-click="getList('OrderByPrice')">价格<i class="fa {{UpOrDownImgClass}}"></i></th>
-                <th align="center" ng-click="getList('OrderByRecCommission')">推荐佣金<i class="fa {{UpOrDownImgClass}}"></i></th>
-                <th align="center" ng-click="getList('OrderByCommission')">带客佣金<i class="fa {{UpOrDownImgClass}}"></i></th>
-                <th align="center" ng-click="getList('OrderByDealcommission')">成交佣金<i class="fa {{UpOrDownImgClass}}"></i></th>
-                <th align="center" ng-click="getList('OrderByAddtime')">创建时间<i class="fa {{UpOrDownImgClass}}"></i></th>
+                <th align="center" ng-click="getList('OrderByPrice')">价格<span class="fa {{OrderByPrice}}"></span></th>
+                <th align="center" ng-click="getList('OrderByRecCommission')">推荐佣金<span class="fa {{OrderByRecCommission}}"></span></th>
+                <th align="center" ng-click="getList('OrderByCommission')">带客佣金<span class="fa {{OrderByCommission}}"></span></th>
+                <th align="center" ng-click="getList('OrderByDealcommission')">成交佣金<span class="fa {{OrderByDealcommission}}"></span></th>
+                <th align="center" ng-click="getList('OrderByAddtime')">创建时间<span class="fa {{OrderByAddtime}}"></span></th>
                 <th align="center">操作</th>
             </tr>
             </thead>

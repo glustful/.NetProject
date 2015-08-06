@@ -18,8 +18,9 @@ angular.module("app").controller('agentmanagerIndexController', [
 //------------------------获取经纪人列表 start--------------------
         var page= 0,howmany=0;
         $scope.getList  = function(orderByAll) {
-            $scope.searchCondition.orderByAll=orderByAll ;
-            if($scope.searchCondition.orderByAll!=undefined){
+
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll ;
             if($scope.searchCondition.isDes==true)//如果为降序，
             {
                 $scope.UpOrDownImgClass="fa-caret-up";//改变成升序图标

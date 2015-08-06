@@ -96,6 +96,12 @@ namespace CRM.Service.Event
                         case EnumEventSearchOrderBy.OrderById:
                             query = condition.IsDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
                             break;
+                        case EnumEventSearchOrderBy.OrderByEndtime:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Endtime) : query.OrderBy(q => q.Endtime);
+                            break;
+                        case EnumEventSearchOrderBy.OrderByStarttime:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Starttime) : query.OrderBy(q => q.Starttime);
+                            break;
                     }
 
                 }

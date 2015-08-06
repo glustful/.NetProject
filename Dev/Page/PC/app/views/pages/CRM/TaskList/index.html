@@ -14,34 +14,46 @@
 
 <div id="divTaskL"class="marginL">
     <!--表头-->
-    <div class="bord taskclear divheard">
-        <ul class="taskheader">
-            <li>任务名称</li>
-            <li>任务类型</li>
-            <li>结束时间</li>
-            <li>创建人</li>
-            <li >操作</li>
+    <div >
 
-        </ul>
+        <table class="table table-striped m-b-none tablet breakpoint footable-loaded footable" ui-jp="footable" data-filter="#filter" data-page-size="5">
+            <thead>
+            <tr>
+                <th ng-click="getList('OrderByTaskname')" data-toggle="true" class="footable-visible footable-sortable ">
+                    任务名称<span class="fa {{OrderByTaskname}}"></span></th>
+                <th   data-hide="phone" class="footable-visible footable-last-column footable-sortable"ng-click="getList('OrderByName')">
+                    任务类型<span class="fa {{OrderByName}}"></span></th>
+                <th  data-hide="phone" class="footable-visible footable-last-column footable-sortable"ng-click="getList('OrderByEndtime')">
+                    结束时间<span class="fa {{OrderByEndtime}}"></span> </th>
+
+                <th   data-hide="phone" class="footable-visible footable-last-column footable-sortable"ng-click="getList('OrderByAdduser')">
+                创建人<span class="fa {{OrderByAdduser}}"></span></th>
+                <th   data-hide="phone" class="footable-visible footable-last-column footable-sortable">操作
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in list">
+                <td >{{item.Taskname}}</td>
+                <td >{{item.Name}}</td>
+                <td >{{item.Endtime}}</td>
+                <td >{{item.Adduser}}</td>
+                <td class="col-3" >
+                    <a href="#page/CRM/TaskList/taskList?id={{item.Id}}" ><span class="label bg-success" title="Active">列表</span></a>
+                    <a href="#page/CRM/TaskList/taskDetail?id={{ item.Id}}" ><span class="label bg-success" title="Active">详情</span></a>
+                    <span class="label yellow"><a ng-click="delTask(item.Id)" tabindex="0">删除</a></span>
+                </td>
+
+            </tr>
+            <!--<tr>-->
+                <!--<td class="text-center" colspan="4">{{errorTip}}</td>-->
+            <!--</tr>-->
+            </tbody>
+
+        </table>
 
     </div>
     <!--列表内容-->
-    <div  ng-show="visibleif" style="height:auto;"  class="taskcenter bord bordTop0px divodd "ng-repeat="item in list">
-        <ul class="taskheader diveven" >
-            <li>{{item.Taskname}}</li>
-            <li>{{item.Name}}</li>
-            <li>{{item.Endtime}}</li>
-            <li>{{item.Adduser}}</li>
-            <li style="width:40%">
-                <a href="#page/CRM/TaskList/taskList?id={{item.Id}}" ><span class="label bg-success" title="Active">列表</span></a>
-                <a href="#page/CRM/TaskList/taskDetail?id={{ item.Id}}" ><span class="label bg-success" title="Active">详情</span></a>
-                <span class="label yellow"><a ng-click="delTask(item.Id)" tabindex="0">删除</a></span>
-             </li>
-
-        </ul>
-       <!--<alert ng-bing="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>-->
-
-    </div>
 
     <div  ng-show="visibleif" style="text-align: center"  class="text-center footable-visible ng-scope">
         <pagination boundary-links="true" total-items="searchCondition.totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
