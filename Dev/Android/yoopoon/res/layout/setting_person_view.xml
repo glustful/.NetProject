@@ -149,6 +149,32 @@
                     android:id="@+id/tv_person_setting_email_warning"
                     style="@style/TextView_Warning"
                     android:text="请输入邮箱" />
+                
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="微信" />
+
+                <EditText
+                    android:id="@+id/weixin"
+                    style="@style/EditText_Normal"
+                    android:layout_marginTop="5dp"
+                    android:hint="微信" />
+                
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="邀请码" />
+
+                <EditText
+                    android:id="@+id/invite_code"
+                    style="@style/EditText_Normal"
+                    android:layout_marginTop="5dp"
+                    android:hint="请填写邀请码" />
+                
+                
 
                 <Button
                     android:id="@+id/save"
@@ -157,10 +183,9 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/btn_not_enable"
-                    android:clickable="false"
-                    android:enabled="false"
-                    android:text="保存(还未开放哦)"
+                    android:background="@drawable/cycle_selector"
+                    
+                    android:text="保存"
                     android:textColor="@android:color/white" />
             </LinearLayout>
 

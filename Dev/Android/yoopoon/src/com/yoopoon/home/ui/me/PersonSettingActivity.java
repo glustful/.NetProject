@@ -46,7 +46,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.makeramen.RoundedImageView;
@@ -55,9 +54,14 @@ import com.yoopoon.common.base.BrokerEntity;
 import com.yoopoon.common.base.Tools;
 import com.yoopoon.common.base.utils.Utils;
 import com.yoopoon.home.MainActionBarActivity;
+import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.json.ParserJSON;
 import com.yoopoon.home.data.json.ParserJSON.ParseListener;
+import com.yoopoon.home.data.net.ProgressMessage;
+import com.yoopoon.home.data.net.RequestAdapter;
+import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
+import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.UploadHeadImg;
 import com.yoopoon.home.data.net.UploadHeadImg.OnCompleteListener;
 import com.yoopoon.home.data.user.User;
@@ -98,6 +102,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	RelativeLayout rl_progress;
 	@ViewById(R.id.ll_progress)
 	LinearLayout ll_progress;
+	@ViewById(R.id.weixin)
+	EditText et_weixin;
 	private Animation animation_shake;
 	private BrokerEntity entity;
 	private String[] points = { "", ".", "..", "..." };
@@ -149,11 +155,13 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		entity.setEmail(email);
 		entity.setSexy(sexy);
 		entity.setHeadphoto(user.getHeadUrl());
+		entity.setWeiXinNumber(et_weixin.getText().toString());
 		entity.modifyInfo(new RequesListener() {
+
 			@Override
 			public void succeed(String msg) {
 				rl_progress.setVisibility(View.GONE);
-				Toast.makeText(PersonSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
+				Toast.makeText(PersonSettingActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
 				finish();
 			}
 
@@ -166,14 +174,17 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	}
 
 	private void parseToBroker(final String json) {
+		Log.i(TAG, json);
 		new ParserJSON(new ParseListener() {
+
 			@Override
 			public Object onParse() {
 				ObjectMapper om = new ObjectMapper();
-				om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+				// om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 				BrokerEntity entity = null;
 				try {
 					entity = om.readValue(json, BrokerEntity.class);
+					Log.i(TAG, entity.toString());
 				} catch (JsonParseException e) {
 					e.printStackTrace();
 				} catch (JsonMappingException e) {
@@ -186,8 +197,15 @@ public class PersonSettingActivity extends MainActionBarActivity {
 
 			@Override
 			public void onComplete(Object parseResult) {
+				Log.i(TAG, parseResult.toString());
 				if (parseResult != null) {
 					entity = (BrokerEntity) parseResult;
+					et_card.setText(entity.getSfz());
+					et_email.setText(entity.getEmail());
+					et_name.setText(entity.getRealname());
+					tv_nickname.setText(entity.getNickname());
+					tv_phone.setText(entity.getPhone());
+					et_weixin.setText(entity.getWeiXinNumber());
 				}
 			}
 		}).execute();
@@ -339,7 +357,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("个人设置");
 		animation_shake = AnimationUtils.loadAnimation(this, R.anim.shake);
-		requestUserInfo();
+		// requestUserInfo();
+		requestInfo();
 	}
 
 	private void requestUserInfo() {
@@ -387,6 +406,29 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				ll_progress.setVisibility(View.GONE);
 			}
 		});
+	}
+
+	void requestInfo() {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
+		String userId = sp.getString("userId", "0");
+		ll_progress.setVisibility(View.VISIBLE);
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				ll_progress.setVisibility(View.GONE);
+				String json = data.getMRootData().toString();
+				parseToBroker(json);
+
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_brokeInfo_getBrokeInfoById) + userId).setRequestMethod(RequestMethod.eGet)
+				.notifyRequest();
 	}
 
 	@Override
