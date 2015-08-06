@@ -6,10 +6,10 @@
         <tr>
             <th align="center">经纪人名称</th>
             <th align="center">地产商名称</th>
-            <th align="center">金额</th>
+            <th align="center" ng-click="getList('OrderByAmount')">金额 <i class="fa {{UpOrDownImgClass}}"></i></th>
             <th align="center">是否有发票</th>
             <th align="center">备注</th>
-            <th align="center">结算日期</th>
+            <th align="center" ng-click="getList('OrderByCheckoutdate')">结算日期 <i class="fa {{UpOrDownImgClass}}"></i></th>
         </tr>
         </thead>
         <tbody>

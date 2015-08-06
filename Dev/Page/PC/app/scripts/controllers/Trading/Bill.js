@@ -5,9 +5,24 @@ angular.module("app").controller('billController', [
     '$http', '$scope', function ($http, $scope) {
         $scope.CFBill = {
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:"OrderByAddtime",//排序
+            isDes:true//升序or降序
         }
-        var getBillList = function () {
+        $scope.UpOrDownImgClass="fa-caret-down";
+        var getBillList = function (orderByAll) {
+            if(orderByAll!=undefined) {
+                $scope.CFBill.orderByAll=orderByAll ;
+                if ($scope.CFBill.isDes == true)//如果为降序，
+                {
+                    $scope.UpOrDownImgClass = "fa-caret-up";//改变成升序图标
+                    $scope.CFBill.isDes = false;//则变成升序
+                }
+                else if ($scope.CFBill.isDes == false) {
+                    $scope.UpOrDownImgClass = "fa-caret-down";
+                    $scope.CFBill.isDes = true;
+                }
+            }
             $http.get(SETTING.ApiUrl + '/bill/GetAdminBill',{params:$scope.CFBill}).success(function (data) {
                 $scope.rowCollectionBasic = data.AdminBill;
                 $scope.CFBill.page = data.Condition.Page;

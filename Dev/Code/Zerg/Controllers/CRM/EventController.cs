@@ -27,9 +27,14 @@ namespace Zerg.Controllers.CRM
         [Description("获取所有活动，返回活动列表")]
         [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-          public HttpResponseMessage GetEventList()
+          public HttpResponseMessage GetEventList(bool isDes = true, EnumEventSearchOrderBy orderByAll = EnumEventSearchOrderBy.OrderById)
         {
-            EventSearchCondition eventcoCondition = new EventSearchCondition();
+            EventSearchCondition eventcoCondition = new EventSearchCondition
+            {
+                IsDescending = isDes,
+                OrderBy = orderByAll,
+
+            };
             var eventList = _eventService.GetEventByCondition(eventcoCondition).Select(a => new
             {
                 a.Id,

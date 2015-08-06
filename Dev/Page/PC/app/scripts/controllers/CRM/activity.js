@@ -2,15 +2,30 @@
  * Created by gaofengming on 2015/7/22.
  */
 app.controller('activityController',['$scope','$http','$modal',function($scope,$http,$modal){
-    $scope.list={
-        Id:'',
-        EventContent:'',
-        Starttime:'',
-        Endtime:'',
-        State:''
+    $scope.condition={
+        //Id:'',
+        //EventContent:'',
+        //Starttime:'',
+        //Endtime:'',
+        //State:'',
+        orderByAll:"OrderById",//排序
+        isDes:true//升序or降序
     }
-    $scope.getlist=function(){
-        $http.get(SETTING.ApiUrl+'/Event/GetEventList',{params:$scope.list,'withCredentials':true}).success(function(data){
+    $scope.UpOrDownImgClass="fa-caret-down";
+    $scope.getlist=function(orderByAll){
+        if(orderByAll!=undefined) {
+            $scope.condition.orderByAll=orderByAll ;
+            if ($scope.condition.isDes == true)//如果为降序，
+            {
+                $scope.UpOrDownImgClass = "fa-caret-up";//改变成升序图标
+                $scope.condition.isDes = false;//则变成升序
+            }
+            else if ($scope.condition.isDes == false) {
+                $scope.UpOrDownImgClass = "fa-caret-down";
+                $scope.condition.isDes = true;
+            }
+        }
+        $http.get(SETTING.ApiUrl+'/Event/GetEventList',{params:$scope.condition,'withCredentials':true}).success(function(data){
             console.log(data);
 
             //document.getElementById("Starttime").value=FormatDate( data[0].Starttime);
@@ -19,6 +34,7 @@ app.controller('activityController',['$scope','$http','$modal',function($scope,$
             $scope.list = data;
         })
     }
+
     $scope.getlist();
     $scope.open = function(id){
        $scope.selectId=id;

@@ -240,6 +240,12 @@ namespace Trading.Service.CFBBill
 						case EnumCFBBillSearchOrderBy.OrderById:
 							query = condition.IsDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
 							break;
+                        case EnumCFBBillSearchOrderBy.OrderByAmount:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Amount) : query.OrderBy(q => q.Amount);
+                            break;
+                        case EnumCFBBillSearchOrderBy.OrderByCheckoutdate:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Checkoutdate) : query.OrderBy(q => q.Checkoutdate);
+                            break;
 
                     }
 					
