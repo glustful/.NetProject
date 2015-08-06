@@ -41,13 +41,16 @@
                     android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/tv_person_setting_nickname"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="昵称"
-                    android:textColor="@color/setting_text"
-                    android:textSize="@dimen/large_textSize" />
+                    android:layout_marginTop="5dp"
+                    android:text="昵称" />
+
+                <EditText
+                    android:id="@+id/nickname"
+                    style="@style/EditText_Normal"
+                    android:layout_marginTop="5dp"
+                    android:hint="昵称" />
 
                 <com.yoopoon.home.ui.view.RedStarTextView
                     android:id="@+id/rstv_person_setting_name"

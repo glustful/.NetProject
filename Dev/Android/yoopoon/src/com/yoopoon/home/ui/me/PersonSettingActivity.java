@@ -90,8 +90,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	RadioButton rb_male;
 	@ViewById(R.id.rb_person_setting_female)
 	RadioButton rb_female;
-	@ViewById(R.id.tv_person_setting_nickname)
-	TextView tv_nickname;
+	@ViewById(R.id.nickname)
+	TextView et_nickname;
 	@ViewById(R.id.tv_person_setting_phone)
 	TextView tv_phone;
 	@ViewById(R.id.iv_person_setting_avater)
@@ -131,7 +131,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		String name = et_name.getText().toString();
 		String sfz = et_card.getText().toString();
 		String email = et_email.getText().toString();
-		String nickname = tv_nickname.getText().toString();
+		String nickname = et_nickname.getText().toString();
 		String phone = tv_phone.getText().toString();
 		if (TextUtils.isEmpty(name)) {
 			et_name.startAnimation(animation_shake);
@@ -203,7 +203,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 					et_card.setText(entity.getSfz());
 					et_email.setText(entity.getEmail());
 					et_name.setText(entity.getRealname());
-					tv_nickname.setText(entity.getNickname());
+					et_nickname.setText(entity.getNickname());
 					tv_phone.setText(entity.getPhone());
 					et_weixin.setText(entity.getWeiXinNumber());
 				}
@@ -379,7 +379,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				String phone = user.getPhone();
 				String email = user.getEmail();
 				String photo = user.getHeadUrl();
-				tv_nickname.setText(TextUtils.isEmpty(nickName) ? "" : nickName);
+				et_nickname.setText(TextUtils.isEmpty(nickName) ? "" : nickName);
 				et_name.setText(TextUtils.isEmpty(userName) ? "" : userName);
 				et_card.setText(TextUtils.isEmpty(idCard) ? "" : idCard);
 				tv_phone.setText(TextUtils.isEmpty(phone) ? "" : phone);
