@@ -227,7 +227,7 @@ namespace CRM.Service.Broker
                 }
                 else
                 {
-                    query = query.OrderBy(q => q.Usertype);
+                   // query = query.OrderBy(q => q.Usertype);
                 }
 
                 if (condition.Page.HasValue && condition.PageCount.HasValue)

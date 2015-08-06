@@ -9,12 +9,25 @@ angular.module("app").controller('dkIndexController', [
             userType:"带客人员",
             page: 1,
             pageSize: 10,
-            state:2
+            state:2,
+            orderByAll:'OrderByUserRegtime',
+            isDes:true
         };
         $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
 //--------------------查询带客人员账户 start--------------------------
         var page= 0,howmany=0;
-        $scope.getList  = function() {
+        $scope.getList  = function(orderByAll) {
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll;
+                if($scope.searchCondition.isDes==true){
+                    $scope.searchCondition.isDes=false;
+                    $scope.UpOrDownImgClass='fa-caret-up'
+                }
+                else if($scope.searchCondition.isDes==false){
+                    $scope.searchCondition.isDes=true;
+                    $scope.UpOrDownImgClass='fa-caret-down'
+                }
+            }
             if($scope.searchCondition.phone==undefined)
             {$scope.searchCondition.phone="";}
             $http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{

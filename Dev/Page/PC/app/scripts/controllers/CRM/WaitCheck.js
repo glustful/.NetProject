@@ -1,18 +1,32 @@
+
 /**
  * Created by yangdingpeng on 2015/5/12.
  */
-
-//推荐列表
+//region 推荐待审核信息
 angular.module("app").controller('WaitListController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
             status:"审核中",
             Brokername:"",
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:'OrderById',
+            isDes:true
 };
 
-var getTagList = function() {
+var getTagList = function(orderByAll) {
+    $scope.UpOrDownImgClass='fa-caret-down';
+    if(orderByAll!=undefined){
+        $scope.searchCondition.orderByAll=orderByAll;
+        if($scope.searchCondition.isDes==true){
+            $scope.searchCondition.isDes=false;
+            $scope.UpOrDownImgClass='fa-caret-up'
+        }
+        else if($scope.searchCondition.isDes==false){
+            $scope.searchCondition.isDes=true;
+            $scope.UpOrDownImgClass='fa-caret-down'
+        }
+    }
     $http.get(SETTING.ApiUrl+'/AdminRecom/BrokerList',{
         params:$scope.searchCondition,
         'withCredentials':true
@@ -27,12 +41,12 @@ var getTagList = function() {
 
     });
 };
-$scope.getList = getTagList;
-getTagList();
-}
-]);
+    $scope.getList = getTagList;
+    getTagList();
+}]);
+//endregion
 
-//详细信息
+//region 推荐待审核详细信息以及流程变更操作
 angular.module("app").controller('ARDetialController',[
     '$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams) {
         //获取详细信息
@@ -80,3 +94,4 @@ angular.module("app").controller('ARDetialController',[
         };
     }
 ]);
+//endregion

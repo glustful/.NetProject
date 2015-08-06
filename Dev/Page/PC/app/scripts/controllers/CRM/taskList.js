@@ -6,13 +6,28 @@ app.controller('taskIndexController',['$http','$scope','$modal',function($http,$
         Taskname: '',
         Id:0,
         page: 1,
-        pageSize: 10
+        pageSize: 10,
+        orderByAll:"OrderByTaskname",//排序
+        isDes:true//升序or降序,
     };
+    $scope.UpOrDownImgClass="fa-caret-down";//升降序图标
 //------------------------查询任务 start--------------------------
-    var getTaskList  = function() {
+    var getTaskList  = function(orderByAll) {
+        if(orderByAll!=undefined){
+            $scope.searchCondition.orderByAll=orderByAll ;
+            if($scope.searchCondition.isDes==true)//如果为降序，
+            {
+                $scope.UpOrDownImgClass="fa-caret-up";//改变成升序图标
+                $scope.searchCondition.isDes=false;//则变成升序
+            }
+            else if($scope.searchCondition.isDes==false)
+            {
+                $scope.UpOrDownImgClass="fa-caret-down";
+                $scope.searchCondition.isDes=true;
+            }
+        }
         $http.get(SETTING.ApiUrl+'/Task/TaskList/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
             if(data.totalCount>0){
-                console.log(data);
                 $scope.visibleif=true;
                 $scope.tips="";
             $scope.list = data.list;

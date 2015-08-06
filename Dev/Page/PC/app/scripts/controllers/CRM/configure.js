@@ -6,9 +6,27 @@ angular.module("app").controller('configureIndexController', [
         $scope.searchCondition = {
             name:'',
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:"OrderByTaskname",//排序
+            isDes:true//升序or降序,
         };
-        $scope.getList  = function() {
+        $scope.UpOrDownImgClass="fa-caret-down";//升降序图标
+        $scope.getList  = function(orderByAll) {
+            if(orderByAll!=undefined){
+
+                $scope.searchCondition.orderByAll=orderByAll ;
+                if($scope.searchCondition.isDes==true)//如果为降序，
+                {
+                    $scope.UpOrDownImgClass="fa-caret-up";//改变成升序图标
+                    $scope.searchCondition.isDes=false;//则变成升序
+                }
+                else if($scope.searchCondition.isDes==false)
+                {
+                    $scope.UpOrDownImgClass="fa-caret-down";
+                    $scope.searchCondition.isDes=true;
+                }
+               
+            }
             $http.get(SETTING.ApiUrl+'/Level/SearchLevel',{
                 params:$scope.searchCondition,
                 'withCredentials':true
@@ -126,9 +144,25 @@ angular.module("app").controller('configureSetIndexController', [
         $scope.searchCondition = {
             name:'',
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:"OrderById",//排序
+            isDes:true//升序or降序,
         };
-        $scope.getList  = function() {
+        $scope.UpOrDownImgClass="fa-caret-down";//升降序图标
+        $scope.getList = function (orderByAll) {
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll ;
+                if($scope.searchCondition.isDes==true)//如果为降序，
+                {
+                    $scope.UpOrDownImgClass="fa-caret-up";//改变成升序图标
+                    $scope.searchCondition.isDes=false;//则变成升序
+                }
+                else if($scope.searchCondition.isDes==false)
+                {
+                    $scope.UpOrDownImgClass="fa-caret-down";
+                    $scope.searchCondition.isDes=true;
+                }
+            }
             $http.get(SETTING.ApiUrl+'/LevelConfig/SearchLevelConfig',{
                 params:$scope.searchCondition,
                 'withCredentials':true
