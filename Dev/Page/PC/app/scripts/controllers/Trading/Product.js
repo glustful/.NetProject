@@ -12,19 +12,33 @@ angular.module("app").controller('ProductController', [
             orderByAll:"OrderByAddtime",//排序
             isDes:true//升序or降序
         };
-        $scope.UpOrDownImgClass="fa-caret-down";
+        var iniImg=function(){
+            $scope.OrderByPrice="footable-sort-indicator";
+            $scope.OrderByRecCommission="footable-sort-indicator";
+            $scope.OrderByCommission="footable-sort-indicator";
+            $scope.OrderByDealcommission="footable-sort-indicator";
+            $scope.OrderByStockRule="footable-sort-indicator";
+            $scope.OrderByAddtime="footable-sort-indicator";
+        }
+        iniImg();
+        $scope.OrderByAddtime="fa-caret-down";//升降序图标
         $scope.rowCollectionProduct=[];
         var getProductList=function(orderByAll){
-            if(orderByAll!=undefined) {
+            if(orderByAll!=undefined){
                 $scope.product.orderByAll=orderByAll ;
-                if ($scope.product.isDes == true)//如果为降序，
+                if($scope.product.isDes==true)//如果为降序，
                 {
-                    $scope.UpOrDownImgClass = "fa-caret-up";//改变成升序图标
-                    $scope.product.isDes = false;//则变成升序
+                    $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                    iniImg();//将所有的图标变成一个月
+                    eval($scope.d);//把$scope.d当做语句来执行，把当前点击图片变成向上
+                    $scope.product.isDes=false;//则变成升序
                 }
-                else if ($scope.product.isDes == false) {
-                    $scope.UpOrDownImgClass = "fa-caret-down";
-                    $scope.product.isDes = true;
+                else if($scope.product.isDes==false)
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
+                    $scope.product.isDes=true;
                 }
             }
             $http.get(SETTING.ApiUrl + '/Product/GetAllProduct',{params:$scope.product,'withCredentials':true}).success(function (data) {

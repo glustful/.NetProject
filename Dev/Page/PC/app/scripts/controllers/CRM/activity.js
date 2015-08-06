@@ -11,18 +11,27 @@ app.controller('activityController',['$scope','$http','$modal',function($scope,$
         orderByAll:"OrderById",//排序
         isDes:true//升序or降序
     }
-    $scope.UpOrDownImgClass="fa-caret-down";
+    var iniImg=function(){
+        $scope.OrderByStarttime="footable-sort-indicator";
+        $scope.OrderByEndtime="footable-sort-indicator";
+    }
+    iniImg();
     $scope.getlist=function(orderByAll){
-        if(orderByAll!=undefined) {
+        if(orderByAll!=undefined){
             $scope.condition.orderByAll=orderByAll ;
-            if ($scope.condition.isDes == true)//如果为降序，
+            if($scope.condition.isDes==true)//如果为降序，
             {
-                $scope.UpOrDownImgClass = "fa-caret-up";//改变成升序图标
-                $scope.condition.isDes = false;//则变成升序
+                $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                iniImg();//将所有的图标变成一个月
+                eval($scope.d);//把$scope.d当做语句来执行，把当前点击图片变成向上
+                $scope.condition.isDes=false;//则变成升序
             }
-            else if ($scope.condition.isDes == false) {
-                $scope.UpOrDownImgClass = "fa-caret-down";
-                $scope.condition.isDes = true;
+            else if($scope.condition.isDes==false)
+            {
+                $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                iniImg();
+                eval($scope.d);
+                $scope.condition.isDes=true;
             }
         }
         $http.get(SETTING.ApiUrl+'/Event/GetEventList',{params:$scope.condition,'withCredentials':true}).success(function(data){

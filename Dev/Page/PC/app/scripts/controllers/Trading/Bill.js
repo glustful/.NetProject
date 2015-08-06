@@ -6,21 +6,31 @@ angular.module("app").controller('billController', [
         $scope.CFBill = {
             page: 1,
             pageSize: 10,
-            orderByAll:"OrderByAddtime",//排序
+            orderByAll:"OrderByCheckoutdate",//排序
             isDes:true//升序or降序
         }
-        $scope.UpOrDownImgClass="fa-caret-down";
+        var iniImg=function(){
+            $scope.OrderByAmount="footable-sort-indicator";
+            $scope.OrderByCheckoutdate="footable-sort-indicator";
+        }
+        iniImg();
+
         var getBillList = function (orderByAll) {
-            if(orderByAll!=undefined) {
+            if(orderByAll!=undefined){
                 $scope.CFBill.orderByAll=orderByAll ;
-                if ($scope.CFBill.isDes == true)//如果为降序，
+                if($scope.CFBill.isDes==true)//如果为降序，
                 {
-                    $scope.UpOrDownImgClass = "fa-caret-up";//改变成升序图标
-                    $scope.CFBill.isDes = false;//则变成升序
+                    $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                    iniImg();//将所有的图标变成一个月
+                    eval($scope.d);//把$scope.d当做语句来执行，把当前点击图片变成向上
+                    $scope.CFBill.isDes=false;//则变成升序
                 }
-                else if ($scope.CFBill.isDes == false) {
-                    $scope.UpOrDownImgClass = "fa-caret-down";
-                    $scope.CFBill.isDes = true;
+                else if($scope.CFBill.isDes==false)
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
+                    $scope.CFBill.isDes=true;
                 }
             }
             $http.get(SETTING.ApiUrl + '/bill/GetAdminBill',{params:$scope.CFBill}).success(function (data) {

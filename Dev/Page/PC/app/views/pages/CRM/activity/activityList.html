@@ -5,15 +5,15 @@
         <div class="line b-b m-v-md"></div>
 
     </div>
-    <div class="panel panel-default" align="center">
+    <div class="panel-default panel panel-card ng-scope" align="center">
         <div class="panel-heading">活动列表</div>
-        <table st-table="rowCollectionPage" class="table table-striped" align="center">
+        <table st-table="rowCollectionPage"  class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" align="center">
             <thead>
             <tr>
                 <th align="center">活动ID</th>
                 <th align="center">活动名称</th>
-                <th align="center"  ng-click="getlist('OrderByStarttime')">开始时间<i class="fa {{UpOrDownImgClass}}"></i></th>
-                <th align="center"  ng-click="getlist('OrderByEndtime')">截至时间<i class="fa {{UpOrDownImgClass}}"></i></th>
+                <th align="center"  ng-click="getlist('OrderByStarttime')">开始时间<span class="fa {{OrderByStarttime}}"></span></th>
+                <th align="center"  ng-click="getlist('OrderByEndtime')">截至时间<span class="fa {{OrderByEndtime}}"></span></th>
                 <th align="center">状态</th>
                 <th align="center">操作</th>
             </tr>
