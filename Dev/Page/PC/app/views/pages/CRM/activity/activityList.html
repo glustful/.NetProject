@@ -10,7 +10,7 @@
         <table st-table="rowCollectionPage"  class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" align="center">
             <thead>
             <tr>
-                <th align="center">活动ID</th>
+                <th align="center" ng-click="getlist('OrderById')">活动ID<span class="fa {{OrderById}}"></span></th>
                 <th align="center">活动名称</th>
                 <th align="center"  ng-click="getlist('OrderByStarttime')">开始时间<span class="fa {{OrderByStarttime}}"></span></th>
                 <th align="center"  ng-click="getlist('OrderByEndtime')">截至时间<span class="fa {{OrderByEndtime}}"></span></th>

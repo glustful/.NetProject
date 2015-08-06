@@ -14,8 +14,10 @@ app.controller('activityController',['$scope','$http','$modal',function($scope,$
     var iniImg=function(){
         $scope.OrderByStarttime="footable-sort-indicator";
         $scope.OrderByEndtime="footable-sort-indicator";
+        $scope.OrderById="footable-sort-indicator";
     }
     iniImg();
+    $scope.OrderById="fa-caret-down";
     $scope.getlist=function(orderByAll){
         if(orderByAll!=undefined){
             $scope.condition.orderByAll=orderByAll ;
