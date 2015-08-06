@@ -16,17 +16,29 @@ angular.module("app").controller('DKTalkingList', [
         };
 
         ////////////////////////���Ǣ̸�б�////////////////////////////////////
-        $scope.UpOrDownImgClass='fa-caret-down';
+        var iniImg=function(){
+            $scope.OrderById="footable-sort-indicator";
+            $scope.OrderByClientname="footable-sort-indicator";
+            $scope.OrderBySecretaryName="footable-sort-indicator";
+            $scope.OrderByProjectname="footable-sort-indicator";
+            $scope.OrderByUptime="footable-sort-indicator";
+        }
+        iniImg();
+        $scope.OrderByUptime="fa-caret-down";
         var  getTagList1 =  function(orderByAll){
             if(orderByAll!=undefined){
                 $scope.searchCondition.orderByAll=orderByAll;
                 if($scope.searchCondition.isDes==true){
                     $scope.searchCondition.isDes=false;
-                    $scope.UpOrDownImgClass='fa-caret-up'
+                    $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                    iniImg();
+                    eval($scope.d);
                 }
                 else if($scope.searchCondition.isDes==false){
                     $scope.searchCondition.isDes=true;
-                    $scope.UpOrDownImgClass='fa-caret-down'
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
                 }
             }
             $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetLeadClientInfoByBrokerName',{

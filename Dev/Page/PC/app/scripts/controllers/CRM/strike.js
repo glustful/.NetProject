@@ -22,7 +22,7 @@ angular.module("app").controller('SCInfoListController', [
             $scope.OrderByUptime="footable-sort-indicator";
         }
         iniImg();
-        $scope.OrderById="fa-caret-down";//升降序图标
+        $scope.OrderById="fa-caret-down";
         var getTagList = function (orderByAll) {
             if(orderByAll!=undefined){
                 $scope.searchCondition.orderByAll=orderByAll ;

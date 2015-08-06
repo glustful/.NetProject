@@ -15,7 +15,7 @@ angular.module("app").controller('adminIndexController', [
         };
         $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
         var page= 0,howmany=0;
-
+        $scope.UpOrDownImgClass='fa-caret-down';
         $scope.getList  = function(orderByAll){
             if(orderByAll!=undefined){
                 $scope.searchCondition.orderByAll=orderByAll;
