@@ -10,11 +10,11 @@
                 <th align="center">经纪人名称</th>
                 <th align="center">客户电话</th>
                 <th align="center">地产商名称</th>
-                <th align="center">价格</th>
-                <th align="center">推荐佣金</th>
-                <th align="center">带客佣金</th>
-                <th align="center">成交佣金</th>
-                <th align="center">创建时间</th>
+                <th align="center" ng-click="getList('OrderByPrice')">价格<i class="fa {{UpOrDownImgClass}}"></i></th>
+                <th align="center" ng-click="getList('OrderByRecCommission')">推荐佣金<i class="fa {{UpOrDownImgClass}}"></i></th>
+                <th align="center" ng-click="getList('OrderByCommission')">带客佣金<i class="fa {{UpOrDownImgClass}}"></i></th>
+                <th align="center" ng-click="getList('OrderByDealcommission')">成交佣金<i class="fa {{UpOrDownImgClass}}"></i></th>
+                <th align="center" ng-click="getList('OrderByAddtime')">创建时间<i class="fa {{UpOrDownImgClass}}"></i></th>
                 <th align="center">操作</th>
             </tr>
             </thead>

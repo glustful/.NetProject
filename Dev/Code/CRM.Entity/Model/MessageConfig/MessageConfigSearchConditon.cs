@@ -42,5 +42,7 @@ namespace CRM.Entity.Model
 	public enum EnumMessageConfigSearchOrderBy
 	{
 		OrderById,
+        OrderByName,
+        OrderByTemplate
 	}
 }

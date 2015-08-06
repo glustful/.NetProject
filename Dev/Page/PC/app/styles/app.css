@@ -6281,3 +6281,6 @@ td button{
 .green{
     margin:0 20px 0 20px;
 }
+.brand-table tr th{
+    text-align: center;
+}

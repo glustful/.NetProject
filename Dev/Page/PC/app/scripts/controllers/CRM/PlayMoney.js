@@ -8,9 +8,23 @@ angular.module("app").controller('playMoney',[
 
         $scope.searchCondition = {
             page:1,
-            pageSize:10
+            pageSize:10,
+            orderByAll:'OrderByWithdrawTime',
+            isDes:true
         };
-        var getTagList = function(){
+        $scope.UpOrDownImgClass='fa-caret-down';
+        var getTagList = function(orderByAll){
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll;
+                if($scope.searchCondition.isDes==true){
+                    $scope.searchCondition.isDes=false;
+                    $scope.UpOrDownImgClass='fa-caret-up'
+                }
+                else if($scope.searchCondition.isDes==false){
+                    $scope.searchCondition.isDes=true;
+                    $scope.UpOrDownImgClass='fa-caret-down'
+                }
+            }
             $http.get(SETTING.ApiUrl+'/BrokerWithdraw/GetBrokerWithdraw',{
                 params:$scope.searchCondition
             }).success(function(data){

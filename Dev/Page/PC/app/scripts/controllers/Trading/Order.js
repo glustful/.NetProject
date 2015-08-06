@@ -9,8 +9,24 @@ angular.module("app").controller('orderController', [
             page:1,
             pageSize:10,
             type:'推荐订单',
+            orderByAll:"OrderByAddtime",//排序
+            isDes:true//升序or降序
         }
-        var getOrderList=function(){
+        $scope.UpOrDownImgClass="fa-caret-down";
+        var getOrderList=function(orderByAll){
+            if(orderByAll!=undefined) {
+                $scope.searchCondition.orderByAll=orderByAll ;
+                if ($scope.searchCondition.isDes == true )//如果为降序，
+                {
+                    $scope.UpOrDownImgClass = "fa-caret-up";//改变成升序图标
+                    $scope.searchCondition.isDes = false;//则变成升序
+                }
+                else if ($scope.searchCondition.isDes == false) {
+                    $scope.UpOrDownImgClass = "fa-caret-down";
+                    $scope.searchCondition.isDes = true;
+                }
+            }
+
             $http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders',{params:$scope.searchCondition,'withCredentials':true}).success(function (data) {
                 $scope.rowCollectionBasic = data.List;
                 $scope.searchCondition.page = data.Condition.Page;
@@ -87,9 +103,25 @@ angular.module("app").controller('NegotiateOrderController', [
         $scope.order={
             status:1,
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:"OrderByAddTime",//排序
+            isDes:true//升序or降序
         };
-        var getOrderList=function(){
+        $scope.UpOrDownImgClass="fa-caret-down";
+
+        var getOrderList=function(orderByAll){
+            if(orderByAll!=undefined) {
+                $scope.order.orderByAll=orderByAll ;
+                if ($scope.order.isDes == true )//如果为降序，
+                {
+                    $scope.UpOrDownImgClass = "fa-caret-up";//改变成升序图标
+                    $scope.order.isDes = false;//则变成升序
+                }
+                else if ($scope.order.isDes == false) {
+                    $scope.UpOrDownImgClass = "fa-caret-down";
+                    $scope.order.isDes = true;
+                }
+            }
             $http.get(SETTING.ApiUrl+'/order/GetNegotiateOrders',{
                 params:$scope.order,'withCredentials':true
             }).success(function(data){

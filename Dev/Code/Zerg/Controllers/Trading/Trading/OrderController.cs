@@ -198,12 +198,13 @@ namespace Zerg.Controllers.Trading.Trading.Order
         [Description("查询所有推荐订单")]
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage GetAllRecommonOrders(EnumOrderType type, int page = 1, int pageSize = 10)
+        public HttpResponseMessage GetAllRecommonOrders(EnumOrderType type, int page = 1, int pageSize = 10, bool isDes = true, EnumOrderSearchOrderBy orderByAll = EnumOrderSearchOrderBy.OrderById)
         {
             OrderSearchCondition OSC = new OrderSearchCondition()
             {
-                Ordertype = type,                
-                OrderBy = EnumOrderSearchOrderBy.OrderById,
+                IsDescending = isDes,
+                Ordertype = type,
+                OrderBy = orderByAll,
                 Page = page,
                 PageCount = pageSize
             };          
@@ -235,7 +236,7 @@ namespace Zerg.Controllers.Trading.Trading.Order
    
         [System.Web.Http.HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage GetNegotiateOrders(int page,int pageSize,int status)
+        public HttpResponseMessage GetNegotiateOrders(int page, int pageSize, int status, bool isDes = true, EnumOrderSearchOrderBy orderByAll = EnumOrderSearchOrderBy.OrderByAddTime)
         {            
             OrderSearchCondition OSC = new OrderSearchCondition()
             {                
@@ -243,8 +244,8 @@ namespace Zerg.Controllers.Trading.Trading.Order
                 PageCount = pageSize,
                 Status = status,
                 Shipstatuses = new []{3,-3},
-                IsDescending = true,
-                OrderBy = EnumOrderSearchOrderBy.OrderByAddTime
+                IsDescending = isDes,
+                OrderBy = orderByAll
             };          
             var orderList = _orderService.GetOrdersByCondition(OSC).Select(a => new
             {

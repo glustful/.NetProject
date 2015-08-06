@@ -132,6 +132,12 @@ namespace CRM.Service.MessageConfig
 						case EnumMessageConfigSearchOrderBy.OrderById:
 							query = condition.isDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
 							break;
+                        case EnumMessageConfigSearchOrderBy.OrderByName:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Name) : query.OrderBy(q => q.Name);
+                            break;
+                        case EnumMessageConfigSearchOrderBy.OrderByTemplate:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Template) : query.OrderBy(q => q.Template);
+                            break;
                     }
 					
 				}

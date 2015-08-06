@@ -9,13 +9,27 @@ angular.module("app").controller('DkRecordController', [
             status:"预约中",
             Brokername:"",
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:'OrderById',
+            isDes:true
         };
         $scope.searchCondition1 = {
             userId:''
         }
+        $scope.UpOrDownImgClass="fa-caret-down";//升降序图标
+        var getTagList = function(orderByAll) {
 
-        var getTagList = function() {
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll;
+                if($scope.searchCondition.isDes==true){
+                    $scope.searchCondition.isDes=false;
+                    $scope.UpOrDownImgClass='fa-caret-up'
+                }
+                else if($scope.searchCondition.isDes==false){
+                    $scope.searchCondition.isDes=true;
+                    $scope.UpOrDownImgClass='fa-caret-down'
+                }
+            }
             $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
                 params:$scope.searchCondition,
                 'withCredentials':true

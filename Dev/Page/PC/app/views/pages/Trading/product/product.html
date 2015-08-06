@@ -12,13 +12,13 @@
             <tr>
                 <th align="center">缩略图</th>
                 <th align="center">名称</th>
-                <th align="center">价格</th>
-                <th align="center">推荐佣金</th>
-                <th align="center">带客佣金</th>
-                <th align="center">成交佣金</th>
+                <th align="center"  ng-click="getList('OrderByPrice')">价格<i class="fa {{UpOrDownImgClass}}"></i></th>
+                <th align="center"  ng-click="getList('OrderByRecCommission')">推荐佣金<i class="fa {{UpOrDownImgClass}}"></i></th>
+                <th align="center"  ng-click="getList('OrderByCommission')">带客佣金<i class="fa {{UpOrDownImgClass}}"></i></th>
+                <th align="center"  ng-click="getList('OrderByDealcommission')">成交佣金<i class="fa {{UpOrDownImgClass}}"></i></th>
                 <th align="center">项目</th>
                 <th align="center">库存</th>
-                <th align="center">添加时间</th>
+                <th align="center" ng-click="getList('OrderByAddtime')">添加时间 <i class="fa {{UpOrDownImgClass}}"></i></th>
                 <th align="center">操作</th>
             </tr>
             </thead>

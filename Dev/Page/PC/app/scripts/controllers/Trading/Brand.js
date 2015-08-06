@@ -8,20 +8,37 @@ angular.module("app").controller('BrandListController', [
         $scope.searchCondition = {
             page: 1,
             pageSize: 10,
-            className:''
+            className:'',
+            orderByAll:"OrderByAddtime",//排序
+            isDes:true//升序or降序
            // className:'房地产'
         };
-
+        $scope.UpOrDownImgClass="fa-caret-down";
         //--------------------------------------------获取项目列表----------------------------------------------//
-        $scope.getList  = function() {
+        $scope.getList  = function(orderByAll) {
+           //$scope.searchCondition.orderByAll=orderByAll ;
+           // alert($scope.searchCondition.isDes);
+            if(orderByAll!=undefined) {
+                $scope.searchCondition.orderByAll=orderByAll ;
+                if ($scope.searchCondition.isDes == true)//如果为降序，
+                {
+                    $scope.UpOrDownImgClass = "fa-caret-up";//改变成升序图标
+                    $scope.searchCondition.isDes = false;//则变成升序
+                }
+                else if ($scope.searchCondition.isDes == false) {
+                    $scope.UpOrDownImgClass = "fa-caret-down";
+                    $scope.searchCondition.isDes = true;
+                }
+            }
             $http.get(SETTING.ApiUrl+'/Brand/GetAllBrand',{
                 params:$scope.searchCondition,
                 'withCredentials':true
             }).success(function(data){
                 $scope.list = data.List;
-                $scope.searchCondition.page = data.Condition.page;
+                $scope.searchCondition.page = data.Condition.Page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
                 $scope.totalCount = data.totalCount;
+
             });
         };
         $scope.getList();
