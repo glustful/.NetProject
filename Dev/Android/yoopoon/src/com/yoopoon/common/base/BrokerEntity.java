@@ -33,147 +33,124 @@ import com.yoopoon.home.domain.Broker2.RequesListener;
  */
 public class BrokerEntity {
 
-	private static final String TAG = "BrokerEntity";
+	public static final String TAG = "BrokerEntity";
 
-	private String address = null;
-	private String addtime = "/Date(-62135596800000)/";
-	private int adduser = 0;
-	private String agentlevel = null;
-	private int amount = 0;
-	private String brokername;
-	private String email;
-	// private String headphoto;
-	private String Headphoto;
-	private String hidm = null;
-	private int id = 2033;
-	private int levelId = 0;
-	private String mobileYzm = null;
-	private String nickname;
-	private int partnersId = 0;
-	private String partnersName = null;
-	private String password = null;
-	private String phone;
-	private int qq;
-	private String realname;
-	private String regtime = "/Date(-62135596800000)/";
-	private String regtime1 = null;
-	private boolean remember = false;
-	private String secondPassword = null;
-	private String sexy;
-	private String sfz;
-	private String sfzPhoto = null;
-	private int state = 0;
-	private int status = 0;
-	private int totalPoints = 0;
-	private String type = null;
-	private int ucId = 0;
-	private String uptime = "/Date(-62135596800000)/";
-	private int userId = 0;
-	private String userName = null;
-	private int userType = 0;
-	private String userType1 = null;
-	private String weiXinNumber = null;
-	private int zip = 0;
-	private String inviteCode = null;
-	private String rgtime = null;
-	private String strState = null;
+	public String Address = null;
+	public String Addtime = "/Date(-62135596800000)/";
+	public int Adduser = 0;
+	public String Agentlevel = null;
+	public int Amount = 0;
+	public String Brokername;
+	public String Email;
+	// public String headphoto;
+	public String Headphoto;
+	public String Hidm = null;
+	public int Id = 2033;
+	public int LevelId = 0;
+	public String MobileYzm = null;
+	public String Nickname;
+	public int PartnersId = 0;
+	public String PartnersName = null;
+	public String Password = null;
+	public String Phone;
+	public int Qq;
+	public String Realname;
+	public String Regtime = "/Date(-62135596800000)/";
+	public String Regtime1 = null;
+	public boolean Remember = false;
+	public String SecondPassword = null;
+	public String Sexy;
+	public String Sfz;
+	public String SfzPhoto = null;
+	public int State = 0;
+	public int Status = 0;
+	public int Totalpoints = 0;
+	public String Type = null;
+	public int UcId = 0;
+	public String Uptime = "/Date(-62135596800000)/";
+	public int UserId = 0;
+	public String UserName = null;
+	public int UserType = 0;
+	public String Usertype1 = null;
+	public String WeiXinNumber = null;
+	public int Zip = 0;
+	public String inviteCode = null;
+	public String rgtime = null;
+	public String strState = null;
+	public int IsInvite = 1;
+	public int Upuser = 0;
+	public String code = null;
 
 	@Override
 	public String toString() {
-		return "BrokerEntity [address=" + address + ", addtime=" + addtime + ", adduser=" + adduser + ", agentlevel="
-				+ agentlevel + ", amount=" + amount + ", brokername=" + brokername + ", email=" + email
-				+ ", headphoto=" + Headphoto + ", hidm=" + hidm + ", id=" + id + ", levelId=" + levelId
-				+ ", mobileYzm=" + mobileYzm + ", nickname=" + nickname + ", partnersId=" + partnersId
-				+ ", partnersName=" + partnersName + ", password=" + password + ", phone=" + phone + ", qq=" + qq
-				+ ", realname=" + realname + ", regtime=" + regtime + ", regtime1=" + regtime1 + ", remember="
-				+ remember + ", secondPassword=" + secondPassword + ", sexy=" + sexy + ", sfz=" + sfz + ", sfzPhoto="
-				+ sfzPhoto + ", state=" + state + ", status=" + status + ", totalPoints=" + totalPoints + ", type="
-				+ type + ", ucId=" + ucId + ", uptime=" + uptime + ", userId=" + userId + ", userName=" + userName
-				+ ", userType=" + userType + ", userType1=" + userType1 + ", weiXinNumber=" + weiXinNumber + ", zip="
-				+ zip + ", inviteCode=" + inviteCode + ", rgtime=" + rgtime + ", strState=" + strState + "]";
-	}
-
-	public String toString2() {
-		return "{Address: null,Addtime: \"/Date(-62135596800000)/\",Adduser: 0,Agentlevel: null,Amount: 0,Brokername: \"xuyanghui\",Email: \"xuyanghui@live.com\","
-				+ "Headphoto: \"20150721/20150721_100516_222_173.jpg\",Hidm: null,Id: 2033,LevelId: 0,MobileYzm: null,Nickname: \"xuyanghui\",PartnersId: 0,"
-				+ "PartnersName: null,Password: null,Phone: \"13508713650\",Qq: 0,Realname: \"徐阳会\",Regtime: \"/Date(-62135596800000)/\",Regtime1: null,"
-				+ "Remember: false,SecondPassword: null,Sexy: \"先生\",Sfz: \"530302000000022\",SfzPhoto: null,State: 0,Status: 0,Totalpoints: 0,Type: null,"
-				+ "UcId: 0,Uptime: \"/Date(-62135596800000)/\",Upuser: 0,UserId: 0,UserName: null,UserType: 0,Usertype1: null,WeiXinNumber: null,Zip: 0,"
-				+ "inviteCode: null,rgtime: null,strState: null}";
-	}
-
-	public BrokerEntity() {
-
-	}
-
-	public BrokerEntity(int id, String brokername, String email, String headphoto, String nickname, String phone,
-			String realname, String sexy, String sfz) {
-		super();
-		this.id = id;
-		this.brokername = brokername;
-		this.email = email;
-		this.Headphoto = headphoto;
-		this.nickname = nickname;
-		this.phone = phone;
-		this.realname = realname;
-		this.sexy = sexy;
-		this.sfz = sfz;
+		return "BrokerEntity [Address=" + Address + ", Addtime=" + Addtime + ", Adduser=" + Adduser + ", Agentlevel="
+				+ Agentlevel + ", Amount=" + Amount + ", Brokername=" + Brokername + ", Email=" + Email + ", Hidm="
+				+ Hidm + ", Id=" + Id + ", LevelId=" + LevelId + ", MobileYzm=" + MobileYzm + ", Nickname=" + Nickname
+				+ ", PartnersId=" + PartnersId + ", PartnersName=" + PartnersName + ", Password=" + Password
+				+ ", Phone=" + Phone + ", Qq=" + Qq + ", Realname=" + Realname + ", Regtime=" + Regtime + ", Regtime1="
+				+ Regtime1 + ", Remember=" + Remember + ", SecondPassword=" + SecondPassword + ", Sexy=" + Sexy
+				+ ", Sfz=" + Sfz + ", SfzPhoto=" + SfzPhoto + ", State=" + State + ", Status=" + Status
+				+ ", TotalPoints=" + Totalpoints + ", Type=" + Type + ", UcId=" + UcId + ", Uptime=" + Uptime
+				+ ", UserId=" + UserId + ", UserName=" + UserName + ", UserType=" + UserType + ", UserType1="
+				+ Usertype1 + ", WeiXinNumber=" + WeiXinNumber + ", Zip=" + Zip + ", inviteCode=" + inviteCode
+				+ ", rgtime=" + rgtime + ", strState=" + strState + ", IsInvite=" + IsInvite + ", UpUser=" + Upuser
+				+ ", code=" + code + "]";
 	}
 
 	public String getAddress() {
-		return address;
+		return Address;
 	}
 
 	public void setAddress(String address) {
-		this.address = address;
+		Address = address;
 	}
 
 	public String getAddtime() {
-		return addtime;
+		return Addtime;
 	}
 
 	public void setAddtime(String addtime) {
-		this.addtime = addtime;
+		Addtime = addtime;
 	}
 
 	public int getAdduser() {
-		return adduser;
+		return Adduser;
 	}
 
 	public void setAdduser(int adduser) {
-		this.adduser = adduser;
+		Adduser = adduser;
 	}
 
 	public String getAgentlevel() {
-		return agentlevel;
+		return Agentlevel;
 	}
 
 	public void setAgentlevel(String agentlevel) {
-		this.agentlevel = agentlevel;
+		Agentlevel = agentlevel;
 	}
 
 	public int getAmount() {
-		return amount;
+		return Amount;
 	}
 
 	public void setAmount(int amount) {
-		this.amount = amount;
+		Amount = amount;
 	}
 
 	public String getBrokername() {
-		return brokername;
+		return Brokername;
 	}
 
 	public void setBrokername(String brokername) {
-		this.brokername = brokername;
+		Brokername = brokername;
 	}
 
 	public String getEmail() {
-		return email;
+		return Email;
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		Email = email;
 	}
 
 	public String getHeadphoto() {
@@ -181,248 +158,247 @@ public class BrokerEntity {
 	}
 
 	public void setHeadphoto(String headphoto) {
-		// this.headphoto = headphoto;
-		this.Headphoto = headphoto;
+		Headphoto = headphoto;
 	}
 
 	public String getHidm() {
-		return hidm;
+		return Hidm;
 	}
 
 	public void setHidm(String hidm) {
-		this.hidm = hidm;
+		Hidm = hidm;
 	}
 
 	public int getId() {
-		return id;
+		return Id;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		Id = id;
 	}
 
 	public int getLevelId() {
-		return levelId;
+		return LevelId;
 	}
 
 	public void setLevelId(int levelId) {
-		this.levelId = levelId;
+		LevelId = levelId;
 	}
 
 	public String getMobileYzm() {
-		return mobileYzm;
+		return MobileYzm;
 	}
 
 	public void setMobileYzm(String mobileYzm) {
-		this.mobileYzm = mobileYzm;
+		MobileYzm = mobileYzm;
 	}
 
 	public String getNickname() {
-		return nickname;
+		return Nickname;
 	}
 
 	public void setNickname(String nickname) {
-		this.nickname = nickname;
+		Nickname = nickname;
 	}
 
 	public int getPartnersId() {
-		return partnersId;
+		return PartnersId;
 	}
 
 	public void setPartnersId(int partnersId) {
-		this.partnersId = partnersId;
+		PartnersId = partnersId;
 	}
 
 	public String getPartnersName() {
-		return partnersName;
+		return PartnersName;
 	}
 
 	public void setPartnersName(String partnersName) {
-		this.partnersName = partnersName;
+		PartnersName = partnersName;
 	}
 
 	public String getPassword() {
-		return password;
+		return Password;
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		Password = password;
 	}
 
 	public String getPhone() {
-		return phone;
+		return Phone;
 	}
 
 	public void setPhone(String phone) {
-		this.phone = phone;
+		Phone = phone;
 	}
 
 	public int getQq() {
-		return qq;
+		return Qq;
 	}
 
 	public void setQq(int qq) {
-		this.qq = qq;
+		Qq = qq;
 	}
 
 	public String getRealname() {
-		return realname;
+		return Realname;
 	}
 
 	public void setRealname(String realname) {
-		this.realname = realname;
+		Realname = realname;
 	}
 
 	public String getRegtime() {
-		return regtime;
+		return Regtime;
 	}
 
 	public void setRegtime(String regtime) {
-		this.regtime = regtime;
+		Regtime = regtime;
 	}
 
 	public String getRegtime1() {
-		return regtime1;
+		return Regtime1;
 	}
 
 	public void setRegtime1(String regtime1) {
-		this.regtime1 = regtime1;
+		Regtime1 = regtime1;
 	}
 
 	public boolean isRemember() {
-		return remember;
+		return Remember;
 	}
 
 	public void setRemember(boolean remember) {
-		this.remember = remember;
+		Remember = remember;
 	}
 
 	public String getSecondPassword() {
-		return secondPassword;
+		return SecondPassword;
 	}
 
 	public void setSecondPassword(String secondPassword) {
-		this.secondPassword = secondPassword;
+		SecondPassword = secondPassword;
 	}
 
 	public String getSexy() {
-		return sexy;
+		return Sexy;
 	}
 
 	public void setSexy(String sexy) {
-		this.sexy = sexy;
+		Sexy = sexy;
 	}
 
 	public String getSfz() {
-		return sfz;
+		return Sfz;
 	}
 
 	public void setSfz(String sfz) {
-		this.sfz = sfz;
+		Sfz = sfz;
 	}
 
 	public String getSfzPhoto() {
-		return sfzPhoto;
+		return SfzPhoto;
 	}
 
 	public void setSfzPhoto(String sfzPhoto) {
-		this.sfzPhoto = sfzPhoto;
+		SfzPhoto = sfzPhoto;
 	}
 
 	public int getState() {
-		return state;
+		return State;
 	}
 
 	public void setState(int state) {
-		this.state = state;
+		State = state;
 	}
 
 	public int getStatus() {
-		return status;
+		return Status;
 	}
 
 	public void setStatus(int status) {
-		this.status = status;
+		Status = status;
 	}
 
 	public int getTotalPoints() {
-		return totalPoints;
+		return Totalpoints;
 	}
 
 	public void setTotalPoints(int totalPoints) {
-		this.totalPoints = totalPoints;
+		Totalpoints = totalPoints;
 	}
 
 	public String getType() {
-		return type;
+		return Type;
 	}
 
 	public void setType(String type) {
-		this.type = type;
+		Type = type;
 	}
 
 	public int getUcId() {
-		return ucId;
+		return UcId;
 	}
 
 	public void setUcId(int ucId) {
-		this.ucId = ucId;
+		UcId = ucId;
 	}
 
 	public String getUptime() {
-		return uptime;
+		return Uptime;
 	}
 
 	public void setUptime(String uptime) {
-		this.uptime = uptime;
+		Uptime = uptime;
 	}
 
 	public int getUserId() {
-		return userId;
+		return UserId;
 	}
 
 	public void setUserId(int userId) {
-		this.userId = userId;
+		UserId = userId;
 	}
 
 	public String getUserName() {
-		return userName;
+		return UserName;
 	}
 
 	public void setUserName(String userName) {
-		this.userName = userName;
+		UserName = userName;
 	}
 
 	public int getUserType() {
-		return userType;
+		return UserType;
 	}
 
 	public void setUserType(int userType) {
-		this.userType = userType;
+		UserType = userType;
 	}
 
 	public String getUserType1() {
-		return userType1;
+		return Usertype1;
 	}
 
 	public void setUserType1(String userType1) {
-		this.userType1 = userType1;
+		Usertype1 = userType1;
 	}
 
 	public String getWeiXinNumber() {
-		return weiXinNumber;
+		return WeiXinNumber;
 	}
 
 	public void setWeiXinNumber(String weiXinNumber) {
-		this.weiXinNumber = weiXinNumber;
+		WeiXinNumber = weiXinNumber;
 	}
 
 	public int getZip() {
-		return zip;
+		return Zip;
 	}
 
 	public void setZip(int zip) {
-		this.zip = zip;
+		Zip = zip;
 	}
 
 	public String getInviteCode() {
@@ -447,6 +423,34 @@ public class BrokerEntity {
 
 	public void setStrState(String strState) {
 		this.strState = strState;
+	}
+
+	public int getIsInvite() {
+		return IsInvite;
+	}
+
+	public void setIsInvite(int isInvite) {
+		IsInvite = isInvite;
+	}
+
+	public int getUpUser() {
+		return Upuser;
+	}
+
+	public void setUpUser(int upUser) {
+		Upuser = upUser;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public static String getTag() {
+		return TAG;
 	}
 
 	public void modifyInfo(final RequesListener listener) {
@@ -482,16 +486,19 @@ public class BrokerEntity {
 	}
 
 	protected void requestModifyInfo(String serializeResult, final RequesListener lis) {
+		Log.i(TAG, serializeResult);
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
 				Log.i(TAG, data.toString());
 
-				if (data.getMsg().contains("成功")) {
-					lis.succeed(data.getMsg());
+				boolean status = data.getMRootData().optBoolean("Status", false);
+				String msg = data.getMsg();
+				if (status) {
+					lis.succeed(msg);
 				} else {
-					lis.fail(data.getMsg());
+					lis.fail(msg);
 				}
 
 			}

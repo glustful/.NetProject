@@ -41,19 +41,13 @@
                     android:visibility="gone" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="昵称" />
-
-                <EditText
-                    android:id="@+id/ed_person_setting_nickname"
+                    android:id="@+id/tv_person_setting_nickname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                   android:layout_marginTop="5dp"
-                    style="@style/EditText_Normal"
-                    android:hint="昵称"
-                    />
+                    android:text="昵称"
+                    android:textColor="@color/setting_text"
+                    android:textSize="@dimen/large_textSize" />
 
                 <com.yoopoon.home.ui.view.RedStarTextView
                     android:id="@+id/rstv_person_setting_name"
@@ -106,17 +100,17 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                    android:orientation="horizontal" >
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:text="电话：" />
 
                     <TextView
                         android:id="@+id/tv_person_setting_phone"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/setting_text" />
@@ -139,57 +133,48 @@
                     style="@style/TextView_Warning"
                     android:text="请正确的身份证号码" />
 
-                <com.yoopoon.home.ui.view.RedStarTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="*邮箱" />
+                    android:text="邮箱" />
 
                 <EditText
                     android:id="@+id/email"
                     style="@style/EditText_Normal"
                     android:layout_marginTop="5dp"
                     android:hint="用户邮箱" />
-                <!-- 徐阳会 2015年8月5日添加 功能：完善经纪人个人信息，添加微信和邀请码以及修改用户昵称UI和电话号码UI START -->
 
+                <TextView
+                    android:id="@+id/tv_person_setting_email_warning"
+                    style="@style/TextView_Warning"
+                    android:text="请输入邮箱" />
+                
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="微信号" />
+                    android:layout_marginTop="10dp"
+                    android:text="微信" />
 
                 <EditText
-                    android:id="@+id/personal_weixin"
+                    android:id="@+id/weixin"
                     style="@style/EditText_Normal"
                     android:layout_marginTop="5dp"
-                    android:hint="请输入微信账号" />
-
+                    android:hint="微信" />
+                
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="邀请码" />
 
                 <EditText
-                    android:id="@+id/personal_invitation"
+                    android:id="@+id/invite_code"
                     style="@style/EditText_Normal"
                     android:layout_marginTop="5dp"
-                    android:hint="请输入邀请码" />
-                <!-- 徐阳会 2015年8月5日添加 功能：完善经纪人个人信息，添加微信和邀请码以及修改用户昵称UI和电话号码UI END -->
-                <!--
-                    彭佳媛编写
-                    <Button
-                    android:id="@+id/save"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/btn_not_enable"
-                    android:clickable="false"
-                    android:enabled="false"
-                    android:text="保存(还未开放哦)"
-                    android:textColor="@android:color/white" />
-                -->
-                <!-- 徐阳会 2015年8月5日修改 功能：放开用户个人信息保存功能  Start -->
+                    android:hint="请填写邀请码" />
+                
+                
 
                 <Button
                     android:id="@+id/save"
@@ -199,11 +184,9 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/cycle_selector"
-                    android:clickable="true"
-                    android:enabled="true"
+                    
                     android:text="保存"
                     android:textColor="@android:color/white" />
-                <!-- 徐阳会 2015年8月5日修改 功能：放开用户个人信息保存功能  End -->
             </LinearLayout>
 
             <RelativeLayout
@@ -247,10 +230,10 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:layout_centerInParent="true"
                 android:id="@+id/ll_progress"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerInParent="true"
                 android:gravity="center"
                 android:orientation="vertical" >
 

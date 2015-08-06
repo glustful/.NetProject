@@ -49,7 +49,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.makeramen.RoundedImageView;
@@ -58,9 +57,14 @@ import com.yoopoon.common.base.BrokerEntity;
 import com.yoopoon.common.base.Tools;
 import com.yoopoon.common.base.utils.Utils;
 import com.yoopoon.home.MainActionBarActivity;
+import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.json.ParserJSON;
 import com.yoopoon.home.data.json.ParserJSON.ParseListener;
+import com.yoopoon.home.data.net.ProgressMessage;
+import com.yoopoon.home.data.net.RequestAdapter;
+import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
+import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.UploadHeadImg;
 import com.yoopoon.home.data.net.UploadHeadImg.OnCompleteListener;
 import com.yoopoon.home.data.user.User;
@@ -89,23 +93,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	RadioButton rb_male;
 	@ViewById(R.id.rb_person_setting_female)
 	RadioButton rb_female;
-	// #########################徐阳会 2015年8月5日修改#####################################  START
-	//功能：修改了setting_person_view.xml中解析到的用户昵称EditText，让用户能修改自己的昵称
-	//#########################徐阳会 2015年8月5日修改######################################  START
-	@ViewById(R.id.ed_person_setting_nickname)
-	EditText ed_nickname;
-	@ViewById(R.id.personal_weixin)
-	EditText personalWeiXinEditText;
-	@ViewById(R.id.personal_invitation)
-	EditText personalInvitationEditText;
-	// #########################徐阳会 2015年8月5日修改#####################################  END
-	//功能：修改了setting_person_view.xml中解析到的用户昵称EditText，让用户能修改自己的昵称
-	//#########################徐阳会 2015年8月5日修改######################################  END
-	//
-	// ########################## 彭佳媛编写 ################################################### START
-	//@ViewById(R.id.tv_person_setting_nickname)
-	//TextView tv_nickname;
-	// ########################## 彭佳媛编写#################################################### END
+	@ViewById(R.id.tv_person_setting_nickname)
+	TextView tv_nickname;
 	@ViewById(R.id.tv_person_setting_phone)
 	TextView tv_phone;
 	@ViewById(R.id.iv_person_setting_avater)
@@ -116,6 +105,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	RelativeLayout rl_progress;
 	@ViewById(R.id.ll_progress)
 	LinearLayout ll_progress;
+	@ViewById(R.id.weixin)
+	EditText et_weixin;
 	private Animation animation_shake;
 	private BrokerEntity entity;
 	private String[] points = { "", ".", "..", "..." };
@@ -142,11 +133,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		String name = et_name.getText().toString();
 		String sfz = et_card.getText().toString();
 		String email = et_email.getText().toString();
-		String nickname = ed_nickname.getText().toString();
+		String nickname = tv_nickname.getText().toString();
 		String phone = tv_phone.getText().toString();
-		//个人微信和邀请码,不是必填项
-		String weiXinString = personalWeiXinEditText.getText().toString();
-		String invitationString = personalInvitationEditText.getText().toString();
 		if (TextUtils.isEmpty(name)) {
 			et_name.startAnimation(animation_shake);
 			return;
@@ -168,14 +156,13 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		entity.setPhone(phone);
 		entity.setEmail(email);
 		entity.setSexy(sexy);
-		entity.setWeiXinNumber(weiXinString);
-		entity.setInviteCode(invitationString);
 		entity.setHeadphoto(user.getHeadUrl());
+		entity.setWeiXinNumber(et_weixin.getText().toString());
 		entity.modifyInfo(new RequesListener() {
 			@Override
 			public void succeed(String msg) {
 				rl_progress.setVisibility(View.GONE);
-				Toast.makeText(PersonSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
+				Toast.makeText(PersonSettingActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
 				finish();
 			}
 			@Override
@@ -186,14 +173,16 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		});
 	}
 	private void parseToBroker(final String json) {
+		Log.i(TAG, json);
 		new ParserJSON(new ParseListener() {
 			@Override
 			public Object onParse() {
 				ObjectMapper om = new ObjectMapper();
-				om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+				// om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 				BrokerEntity entity = null;
 				try {
 					entity = om.readValue(json, BrokerEntity.class);
+					Log.i(TAG, entity.toString());
 				} catch (JsonParseException e) {
 					e.printStackTrace();
 				} catch (JsonMappingException e) {
@@ -205,8 +194,15 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			}
 			@Override
 			public void onComplete(Object parseResult) {
+				Log.i(TAG, parseResult.toString());
 				if (parseResult != null) {
 					entity = (BrokerEntity) parseResult;
+					et_card.setText(entity.getSfz());
+					et_email.setText(entity.getEmail());
+					et_name.setText(entity.getRealname());
+					tv_nickname.setText(entity.getNickname());
+					tv_phone.setText(entity.getPhone());
+					et_weixin.setText(entity.getWeiXinNumber());
 				}
 			}
 		}).execute();
@@ -352,7 +348,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("个人设置");
 		animation_shake = AnimationUtils.loadAnimation(this, R.anim.shake);
-		requestUserInfo();
+		// requestUserInfo();
+		requestInfo();
 	}
 	private void requestUserInfo() {
 		ll_progress.setVisibility(View.VISIBLE);
@@ -370,18 +367,11 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				String phone = user.getPhone();
 				String email = user.getEmail();
 				String photo = user.getHeadUrl();
-				// 徐阳会 2015年8月5日添加 功能：添加用户微信和邀请码显示
-				String weiXinString = user.getWeiXin();
-				String invitationNumberString = user.getInvitationCode();
-				ed_nickname.setText(TextUtils.isEmpty(nickName) ? "" : nickName);
+				tv_nickname.setText(TextUtils.isEmpty(nickName) ? "" : nickName);
 				et_name.setText(TextUtils.isEmpty(userName) ? "" : userName);
 				et_card.setText(TextUtils.isEmpty(idCard) ? "" : idCard);
 				tv_phone.setText(TextUtils.isEmpty(phone) ? "" : phone);
 				et_email.setText(TextUtils.isEmpty(email) ? "" : email);
-				//设置微信号码和邀请码
-				personalWeiXinEditText.setText(TextUtils.isEmpty(weiXinString) ? "" : weiXinString);
-				personalInvitationEditText.setText(TextUtils.isEmpty(invitationNumberString) ? ""
-						: invitationNumberString);
 				if (sex != null) {
 					rb_female.setChecked(sex.equals("先生") ? false : true);
 					rb_male.setChecked(sex.equals("女士") ? false : true);
@@ -403,6 +393,24 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				ll_progress.setVisibility(View.GONE);
 			}
 		});
+	}
+	void requestInfo() {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
+		String userId = sp.getString("userId", "0");
+		ll_progress.setVisibility(View.VISIBLE);
+		new RequestAdapter() {
+			@Override
+			public void onReponse(ResponseData data) {
+				ll_progress.setVisibility(View.GONE);
+				String json = data.getMRootData().toString();
+				parseToBroker(json);
+			}
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+			}
+		}.setUrl(getString(R.string.url_brokeInfo_getBrokeInfoById) + userId).setRequestMethod(RequestMethod.eGet)
+				.notifyRequest();
 	}
 	@Override
 	public void backButtonClick(View v) {
