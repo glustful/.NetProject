@@ -1,7 +1,5 @@
 package com.yoopoon.common.base.utils;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -14,7 +12,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
-import android.os.Environment;
 import android.os.Looper;
 import android.widget.Toast;
 import com.yoopoon.home.MyApplication;
@@ -171,22 +168,22 @@ public class CrashHandler implements UncaughtExceptionHandler {
 		String reString = writer.toString();
 		sb.append(reString);
 		sendMail(sb.toString());
-		try {
-			long time = System.currentTimeMillis();
-			String fileName = "crash-" + time + ".log";
-			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-				String path = "/mnt/sdcard/crash";
-				File dir = new File(path);
-				if (!dir.exists()) {
-					dir.mkdirs();
-				}
-				FileOutputStream stream = new FileOutputStream(path + fileName);
-				stream.write(sb.toString().getBytes());
-				stream.close();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		// try {
+		// long time = System.currentTimeMillis();
+		// String fileName = "crash-" + time + ".log";
+		// if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+		// String path = "/mnt/sdcard/crash";
+		// File dir = new File(path);
+		// if (!dir.exists()) {
+		// dir.mkdirs();
+		// }
+		// FileOutputStream stream = new FileOutputStream(path + fileName);
+		// stream.write(sb.toString().getBytes());
+		// stream.close();
+		// }
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	private void sendMail(String content) {

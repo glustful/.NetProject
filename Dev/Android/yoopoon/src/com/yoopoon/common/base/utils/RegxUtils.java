@@ -12,6 +12,7 @@
  */
 package com.yoopoon.common.base.utils;
 
+
 /**
  * @ClassName: RegxUtil
  * @Description: TODO
@@ -37,7 +38,8 @@ public class RegxUtils {
 
 	public static boolean isName(String name) {
 		int length = name.length();
-		return (length < 5) && (length > 2);
+
+		return (length <= 5) && (length >= 2);
 	}
 
 }

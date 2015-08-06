@@ -63,7 +63,7 @@
                     android:id="@+id/name"
                     style="@style/EditText_Normal"
                     android:layout_marginTop="5dp"
-                    
+                    android:maxLength="6"
                     android:hint="姓名" />
 
                 <TextView
