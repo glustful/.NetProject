@@ -1,8 +1,8 @@
+
 /**
  * Created by yangdingpeng on 2015/5/12.
  */
-
-//获取带客列表
+//region 获取带客记录信息
 angular.module("app").controller('DkRecordController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
@@ -33,28 +33,11 @@ angular.module("app").controller('DkRecordController', [
         };
         $scope.getList = getTagList;
         getTagList();
-
-        ////初始化区域列表
-        //$http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=推荐订单',{'withCredentials':true}).success(function (data) {
-        //    $scope.rowCollectionBasic = data;
-        //});
-        ////根据经纪人名字搜索该经纪人带客记录信息
-        //var getRecClientByUser = function(){
-        //    $http.get(SETTING.ApiUrl+'/BrokerLeadClient/SearchBrokerLeadClient',{
-        //            params:$scope.searchCondition1,
-        //            'withCredentials':true
-        //        }).success(function(data){
-        //            $scope.Brokerlist =data.list;
-        //            if (data.list == ""){
-        //                $scope.errorTip == "该经纪人没有带客记录信息"
-        //            }
-        //        });
-        //};
-        //$scope.getRecClientByUser= getRecClientByUser;
-        //getRecClientByUser();
     }
 ]);
+//endregion
 
+//region 获取带客列表详细信息以及带客流程变更操作
 angular.module("app").controller('DKRDetailedController',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
 //个人信息
     $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail?id=' + $stateParams.id,{
@@ -71,11 +54,6 @@ angular.module("app").controller('DKRDetailedController',['$http','$scope','$sta
     $scope.updateDKRecord = function(type){
         $scope.ARDetialModel.Status = type;
 
-        //if ($scope.SecretaryId == 0 || $scope.SecretaryId=="" ||  $scope.SecretaryId==undefined)
-        //{
-        //    alert("驻场秘书不能为空");
-        //    return;
-        //}
         $http.post(SETTING.ApiUrl +'/BrokerLeadClient/UpdateLeadClient',$scope.ARDetialModel,{ 'withCredentials':true}).success(function(data){
             if(data.Status){
                 alert(data.Msg);
@@ -87,3 +65,4 @@ angular.module("app").controller('DKRDetailedController',['$http','$scope','$sta
         });
     };
 }]);
+//endregion

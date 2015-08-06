@@ -1,8 +1,9 @@
+
 /**
  * Created by yangdingpeng on 2015/5/15.
  */
 
-//上访列表
+//region 推荐待上访信息
 angular.module("app").controller('PetitionListController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
@@ -30,9 +31,10 @@ angular.module("app").controller('PetitionListController', [
         getTagList();
     }
 ]);
+//endregion
 
 
-//详细信息
+//region 推荐待上访详细信息以及流程变更
 angular.module("app").controller('WPDetialController',[
     '$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams) {
         //获取详细信息
@@ -66,3 +68,4 @@ angular.module("app").controller('WPDetialController',[
         };
     }
 ]);
+//endregion

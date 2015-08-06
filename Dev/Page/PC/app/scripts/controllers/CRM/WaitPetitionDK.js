@@ -1,9 +1,6 @@
-/****
- *
- */
 
 
-//上访列表
+//region 带客待上访信息
 angular.module("app").controller('WaitVistController', [
     '$http','$scope','AuthService',function($http,$scope) {
         $scope.searchCondition = {
@@ -33,9 +30,10 @@ angular.module("app").controller('WaitVistController', [
         ////////////////////////////////////////////////////////////
     }
 ]);
+//endregion
 
 
-//详细信息
+//region 带客待上访详细信息以及流程变更
 angular.module("app").controller('DKDetialController',[
     '$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams) {
         //获取详细信息
@@ -68,3 +66,4 @@ angular.module("app").controller('DKDetialController',[
         };
     }
 ]);
+//endregion

@@ -1,8 +1,8 @@
+
 /**
  * Created by yangdingpeng on 2015/5/12.
  */
-
-//推荐列表
+//region 推荐待审核信息
 angular.module("app").controller('WaitListController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
@@ -27,12 +27,12 @@ var getTagList = function() {
 
     });
 };
-$scope.getList = getTagList;
-getTagList();
-}
-]);
+    $scope.getList = getTagList;
+    getTagList();
+}]);
+//endregion
 
-//详细信息
+//region 推荐待审核详细信息以及流程变更操作
 angular.module("app").controller('ARDetialController',[
     '$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams) {
         //获取详细信息
@@ -80,3 +80,4 @@ angular.module("app").controller('ARDetialController',[
         };
     }
 ]);
+//endregion

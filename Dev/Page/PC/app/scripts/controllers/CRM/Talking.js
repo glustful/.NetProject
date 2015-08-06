@@ -1,8 +1,9 @@
+
 /**
  * Created by yangdingpeng on 2015/5/15.
  */
 
-//推荐列表//带客列表
+//region 推荐/带客洽谈相关信息
 angular.module("app").controller('TalkingListController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
@@ -28,7 +29,7 @@ angular.module("app").controller('TalkingListController', [
         };
         $scope.getList = getTagList;
         getTagList();
-        ////////////////////////带客洽谈列表////////////////////////////////////
+        //带客洽谈列表
         var  getTagList1 =  function(){
             $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetLeadCientInfoByBrokerName',{
                 params:$scope.searchCondition,
@@ -45,11 +46,11 @@ angular.module("app").controller('TalkingListController', [
         };
         $scope.getList1 = getTagList1;
         getTagList1();
-        ///////////////////////////////////////////////////////////////////////
     }
 ]);
+//endregion
 
-//详细信息
+//region 推荐洽谈详细信息以及流程变更
 angular.module("app").controller('TaklDetialController',[
     '$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams) {
         //获取详细信息
@@ -80,3 +81,4 @@ angular.module("app").controller('TaklDetialController',[
         };
     }
 ]);
+//endregion

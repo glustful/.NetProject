@@ -1,8 +1,9 @@
+
 /**
- *
+ *带客洽谈相关业务操作
  */
 
-//获取洽谈中业务
+//region 获取洽谈业务信息
 angular.module("app").controller('DKTalkingList', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
@@ -29,11 +30,11 @@ angular.module("app").controller('DKTalkingList', [
         };
         $scope.getList = getTagList1;
         getTagList1();
-        ///////////////////////////////////////////////////////////////////////
     }
 ]);
+//endregion
 
-//获取洽谈中业务详细
+//region 获取洽谈业务详细信息以及洽谈业务流程变更操作
 angular.module("app").controller('DKTaklDetial',[
     '$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams) {
         $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/'+ $stateParams.id,{
@@ -61,3 +62,4 @@ angular.module("app").controller('DKTaklDetial',[
         };
     }
 ]);
+//endregion
