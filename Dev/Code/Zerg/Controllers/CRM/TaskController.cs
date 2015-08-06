@@ -126,33 +126,6 @@ namespace Zerg.Controllers.CRM
                     Taskname = p.Taskname,
                     Name = p.Name,
                     Endtime = p.Endtime.ToShortDateString(),
-                  //  Adduser = _brokerService.GetBrokerByUserId(p.Adduser).Brokername,
-                    Adduser = _userservice.GetUserById(p.Adduser).UserName,
-                    Id = p.Id
-                }).ToList();
-                var taskCount = _taskService.GetTaskCount(taskcondition);
-                if (taskCount > 0)
-                {
-                    return PageHelper.toJson(new { list = taskList, totalCount = taskCount, condition = taskcondition });
-                }
-                else
-                {
-                    return PageHelper.toJson(PageHelper.ReturnValue(true, "不存在数据！"));
-                }
-            }
-            catch {
-                var taskList = _taskService.GetTasksByCondition(taskcondition).Select(p => new
-                {
-                    Taskname = p.Taskname,
-                    Name = p.TaskType.Name,
-                    Endtime = p.Endtime,
-                    Adduser = p.Adduser,
-                    Id = p.Id
-                }).ToList().Select(p => new
-                {
-                    Taskname = p.Taskname,
-                    Name = p.Name,
-                    Endtime = p.Endtime.ToShortDateString(),
                     //  Adduser = _brokerService.GetBrokerByUserId(p.Adduser).Brokername,
                     Adduser = _userservice.GetUserById(p.Adduser) == null ? p.Adduser.ToString() : _userservice.GetUserById(p.Adduser).UserName,
                     Id = p.Id
@@ -166,6 +139,9 @@ namespace Zerg.Controllers.CRM
                 {
                     return PageHelper.toJson(PageHelper.ReturnValue(true, "不存在数据！"));
                 }
+            }
+            catch {
+                return PageHelper.toJson(PageHelper.ReturnValue(false , "出现数据错误！"));
             }
         }
         /// <summary>
