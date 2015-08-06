@@ -268,6 +268,9 @@ namespace Trading.Service.Product
                         case EnumProductSearchOrderBy.OrderByCommission:
                             query = condition.IsDescending ? query.OrderByDescending(q => q.Commission) : query.OrderBy(q => q.Commission);
                             break;
+                        case EnumProductSearchOrderBy.OrderByStockRule:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Stockrule) : query.OrderBy(q => q.Stockrule);
+                            break;
                     }
 
                 }

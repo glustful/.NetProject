@@ -614,13 +614,14 @@ namespace Zerg.Controllers.Trading.Trading
         [Description("查询账单")]
         [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage GetAdminBill(int page, int pageSize)
+        public HttpResponseMessage GetAdminBill(int page, int pageSize, bool isDes = true, EnumCFBBillSearchOrderBy orderByAll = EnumCFBBillSearchOrderBy.OrderById)
         {
             CFBBillSearchCondition CFBSC = new CFBBillSearchCondition
             {
+                IsDescending = isDes,
                 Page = page,
                 PageCount = pageSize,
-                OrderBy = EnumCFBBillSearchOrderBy.OrderById
+                OrderBy = orderByAll
             };
             var adminBill = _CFBBillService.GetCFBBillsByCondition(CFBSC).Select(p => new
             {

@@ -16,6 +16,7 @@ angular.module("app").controller('cwIndexController', [
         $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
 //-------------------------查询财务账号列表 start----------------------------
         var page= 0,howmany=0;
+        $scope.UpOrDownImgClass='fa-caret-down';
         $scope.getList  = function(orderByAll) {
             if(orderByAll!=undefined){
                 $scope.searchCondition.orderByAll=orderByAll;

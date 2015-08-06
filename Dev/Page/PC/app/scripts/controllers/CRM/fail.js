@@ -10,10 +10,37 @@ angular.module("app").controller('FailListController', [
             status:"洽谈失败",
             Brokername:"",
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:"OrderById",//排序
+            isDes:true//升序or降序,默认为降序
         };
-
-        var getTagList = function() {
+        var iniImg=function(){
+            $scope.OrderById="footable-sort-indicator";
+            $scope.OrderByClientname="footable-sort-indicator";
+            $scope.OrderBySecretaryName="footable-sort-indicator";
+            $scope.OrderByProjectname="footable-sort-indicator";
+            $scope.OrderByUptime="footable-sort-indicator";
+        }
+        iniImg();
+        $scope.OrderById="fa-caret-down";
+        var getTagList = function(orderByAll) {
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll ;
+                if($scope.searchCondition.isDes==true)//如果为降序，
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                    iniImg();//将所有的图标变成一个月
+                    eval($scope.d);//把$scope.d当做语句来执行，把当前点击图片变成向上
+                    $scope.searchCondition.isDes=false;//则变成升序
+                }
+                else if($scope.searchCondition.isDes==false)
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
+                    $scope.searchCondition.isDes=true;
+                }
+            }
             $http.get(SETTING.ApiUrl+'/AdminRecom/BrokerList',{
                 params:$scope.searchCondition,
                 'withCredentials':true
@@ -78,10 +105,37 @@ angular.module("app").controller('DKFailListController', [
             status:"洽谈失败",
             Brokername:"",
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:"OrderById",//排序
+            isDes:true//升序or降序,默认为降序
         };
-
-        var getTagList = function() {
+        var iniImg=function(){
+            $scope.OrderById="footable-sort-indicator";
+            $scope.OrderByClientname="footable-sort-indicator";
+            $scope.OrderBySecretaryName="footable-sort-indicator";
+            $scope.OrderByProjectname="footable-sort-indicator";
+            $scope.OrderByUptime="footable-sort-indicator";
+        }
+        iniImg();
+        $scope.OrderById="fa-caret-down";
+        var getTagList = function(orderByAll) {
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll ;
+                if($scope.searchCondition.isDes==true)//如果为降序，
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                    iniImg();//将所有的图标变成一个月
+                    eval($scope.d);//把$scope.d当做语句来执行，把当前点击图片变成向上
+                    $scope.searchCondition.isDes=false;//则变成升序
+                }
+                else if($scope.searchCondition.isDes==false)
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
+                    $scope.searchCondition.isDes=true;
+                }
+            }
             $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
                 params:$scope.searchCondition,
                 'withCredentials':true

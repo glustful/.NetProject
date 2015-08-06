@@ -16,18 +16,31 @@ angular.module("app").controller('DkRecordController', [
         $scope.searchCondition1 = {
             userId:''
         }
-        $scope.UpOrDownImgClass="fa-caret-down";//升降序图标
+        var iniImg=function(){
+            $scope.OrderById="footable-sort-indicator";
+            $scope.OrderByClientname="footable-sort-indicator";
+            $scope.OrderByPhone="footable-sort-indicator";
+            $scope.OrderByBrokername="footable-sort-indicator";
+            $scope.OrderByProjectname="footable-sort-indicator";
+            $scope.OrderByAppointmenttime="footable-sort-indicator";
+        }
+        iniImg();
+        $scope.OrderById="fa-caret-down";
         var getTagList = function(orderByAll) {
 
             if(orderByAll!=undefined){
                 $scope.searchCondition.orderByAll=orderByAll;
                 if($scope.searchCondition.isDes==true){
                     $scope.searchCondition.isDes=false;
-                    $scope.UpOrDownImgClass='fa-caret-up'
+                    $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                    iniImg();
+                    eval($scope.d);
                 }
                 else if($scope.searchCondition.isDes==false){
                     $scope.searchCondition.isDes=true;
-                    $scope.UpOrDownImgClass='fa-caret-down'
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
                 }
             }
             $http.get(SETTING.ApiUrl+'/BrokerLeadClient/GetLeadClientInfoByBrokerName',{

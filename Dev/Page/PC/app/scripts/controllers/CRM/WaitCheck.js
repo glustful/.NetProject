@@ -14,17 +14,31 @@ angular.module("app").controller('WaitListController', [
             isDes:true
 };
 
+        var iniImg=function(){
+            $scope.OrderById="footable-sort-indicator";
+            $scope.OrderByClientname="footable-sort-indicator";
+            $scope.OrderByPhone="footable-sort-indicator";
+            $scope.OrderByBrokername="footable-sort-indicator";
+            $scope.OrderByAddtime="footable-sort-indicator";
+            $scope.OrderByProjectname="footable-sort-indicator";
+            $scope.OrderByBrokerlevel="footable-sort-indicator";
+        }
+        iniImg();
 var getTagList = function(orderByAll) {
-    $scope.UpOrDownImgClass='fa-caret-down';
+    $scope.OrderById="fa-caret-down";
     if(orderByAll!=undefined){
         $scope.searchCondition.orderByAll=orderByAll;
         if($scope.searchCondition.isDes==true){
             $scope.searchCondition.isDes=false;
-            $scope.UpOrDownImgClass='fa-caret-up'
+            $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+            iniImg();
+            eval($scope.d);
         }
         else if($scope.searchCondition.isDes==false){
             $scope.searchCondition.isDes=true;
-            $scope.UpOrDownImgClass='fa-caret-down'
+            $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+            iniImg();
+            eval($scope.d);
         }
     }
     $http.get(SETTING.ApiUrl+'/AdminRecom/BrokerList',{
