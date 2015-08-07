@@ -3,7 +3,7 @@
 // */
 app.controller('StormRoomController',['$http','$scope','$timeout',function($http,$scope,$timeout){
 //    ----------------------------------------------轮播------------------------------------------------
-
+    $scope.imgUrl=SETTING.ImgUrl;
     $scope.channelName='banner';
     $http.get(SETTING.ApiUrl+'/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
         $scope.content=data;

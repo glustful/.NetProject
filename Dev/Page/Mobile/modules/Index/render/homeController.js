@@ -8,7 +8,7 @@ app.controller('homeController',['$http','$scope',function($http,$scope){
         pageSize:6,
         className:'房地产'
     };
-
+    $scope.ImgUrl=SETTING.ImgUrl
 
     var loading = false
         ,pages=2;                      //判断是否正在读取内容的变量

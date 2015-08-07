@@ -2,7 +2,7 @@
  * Created by Administrator on 2015/6/8.
  */
 app.controller('personController',['$http','$scope','AuthService','$state',function($http,$scope,AuthService,$state) {
-
+$scope.imgUrl=SETTING.ImgUrl;
         $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
    var coun=2;//1为经纪人
         //判断是否是经纪人

@@ -6,6 +6,7 @@ app.controller('partnerListController',['$http','$scope','$stateParams','AuthSer
       userId:4
     };
     //查询合伙人
+    $scope.ImgUrl=SETTING.ImgUrl
     $scope.currentuser= AuthService.CurrentUser();
     var getPartnerList  = function() {
         $http.get(SETTING.ApiUrl+'/PartnerList/PartnerListDetailed?userId='+$scope.currentuser.UserId,{'withCredentials':true}).success(function(data){
