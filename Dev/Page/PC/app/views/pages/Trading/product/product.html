@@ -24,7 +24,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="row in list">
-                <td><img width="40" height="40" src={{img+row.Productimg}}></td>
+                <td><img width="40" height="40" src={{img+row.Productimg}}@40w_40h_70q></td>
                 <td>{{row.Productname }}</td>
                 <td>{{row.Price }}</td>
                 <td>{{row.RecCommission }}</td>
@@ -34,7 +34,7 @@
                 <td>{{row.StockRule }}</td>
                 <td>{{row.Addtime | dateFilter }}</td>
                 <td>
-                    <a ui-sref="page.Trading.product.edit({productId:row.Id})" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 编辑
+                    <a ui-sref="page.Trading.product.edit({productId:row.Id})" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-edit"></i> 编辑
                     </a>
                     <button ng-click='del(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
                     </button>
