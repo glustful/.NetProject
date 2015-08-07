@@ -8,9 +8,35 @@ angular.module("app").controller('PartnerIndexController', [
             name: '',
             page: 1,
             status:1,
-            pageSize: 6
+            pageSize: 6,
+            orderByAll:"OrderByBrokername",//排序
+            isDes:true//升序or降序,
         };
-        $scope.getList  = function() {
+        //初始化所有图标
+        var iniImg=function(){
+            $scope.OrderByBrokername="footable-sort-indicator";
+            $scope.OrderByPartnersName="footable-sort-indicator";
+        }
+        iniImg();
+        $scope.OrderByBrokername="fa-caret-down";//升降序图标
+        $scope.getList = function (orderByAll) {
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll ;
+                if($scope.searchCondition.isDes==true)//如果为降序，
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                    iniImg();//将所有的图标变成一个月
+                    eval($scope.d);//把$scope.d当做语句来执行，把当前点击图片变成向上
+                    $scope.searchCondition.isDes=false;//则变成升序
+                }
+                else if($scope.searchCondition.isDes==false)
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
+                    $scope.searchCondition.isDes=true;
+                }
+            }
             $http.get(SETTING.ApiUrl+'/PartnerList/SearchPartnerList',{
                 params:$scope.searchCondition,
                 'withCredentials':true

@@ -207,6 +207,12 @@ namespace CRM.Service.Broker
                         case EnumBrokerSearchOrderBy.OrderByUserType:
                             query = condition.isDescending ? query.OrderByDescending(q => q.Usertype ) : query.OrderBy(q => q.Usertype);
                             break;
+                        case EnumBrokerSearchOrderBy.OrderByUserRegtime :
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Regtime ) : query.OrderBy(q => q.Regtime);
+                            break;
+                        case EnumBrokerSearchOrderBy.OrderByPartnersName :
+                            query = condition.isDescending ? query.OrderByDescending(q => q.PartnersName) : query.OrderBy(q => q.PartnersName);
+                            break; 
                     }
 
                 }
@@ -221,7 +227,7 @@ namespace CRM.Service.Broker
                 }
                 else
                 {
-                    query = query.OrderBy(q => q.Usertype);
+                   // query = query.OrderBy(q => q.Usertype);
                 }
 
                 if (condition.Page.HasValue && condition.PageCount.HasValue)

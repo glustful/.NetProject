@@ -1,18 +1,46 @@
+
 /**
  * Created by yangdingpeng on 2015/5/15.
  */
 
-//上访列表
+//region 推荐待上访信息
 angular.module("app").controller('PetitionListController', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
             status:"等待上访",
             Brokername:"",
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:'OrderById',
+            isDes:true
         };
+        var iniImg=function(){
+            $scope.OrderById="footable-sort-indicator";
+            $scope.OrderByClientname="footable-sort-indicator";
+            $scope.OrderBySecretaryName="footable-sort-indicator";
+            $scope.OrderByWaiter="footable-sort-indicator";
+            $scope.OrderByUptime="footable-sort-indicator";
+            $scope.OrderByProjectname="footable-sort-indicator";
+        }
 
-        var getTagList = function() {
+        iniImg();
+        $scope.OrderById="fa-caret-down";
+        var getTagList = function(orderByAll) {
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll;
+                if($scope.searchCondition.isDes==true){
+                    $scope.searchCondition.isDes=false;
+                    $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                    iniImg();
+                    eval($scope.d);
+                }
+                else if($scope.searchCondition.isDes==false){
+                    $scope.searchCondition.isDes=true;
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
+                }
+            }
             $http.get(SETTING.ApiUrl+'/AdminRecom/BrokerList',{
                 params:$scope.searchCondition,
                 'withCredentials':true
@@ -30,9 +58,10 @@ angular.module("app").controller('PetitionListController', [
         getTagList();
     }
 ]);
+//endregion
 
 
-//详细信息
+//region 推荐待上访详细信息以及流程变更
 angular.module("app").controller('WPDetialController',[
     '$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams) {
         //获取详细信息
@@ -66,3 +95,4 @@ angular.module("app").controller('WPDetialController',[
         };
     }
 ]);
+//endregion

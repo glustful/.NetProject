@@ -247,7 +247,7 @@ namespace Zerg.Controllers.Trading.Product
         [Description("获取所有品牌，返回品牌列表")]
         [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage GetAllBrand(int page = 1, int pageSize = 10,string className=null)
+        public HttpResponseMessage GetAllBrand(int page = 1, int pageSize = 10, string className = null, bool isDes = true, EnumProductBrandSearchOrderBy orderByAll = EnumProductBrandSearchOrderBy.OrderByAddtime)
         {
             var con=new ClassifySearchCondition()
             {
@@ -265,9 +265,10 @@ namespace Zerg.Controllers.Trading.Product
             var sech = new ProductBrandSearchCondition
             {
                 //=========================yangyue 2015/7/7 start=====================================================
-                IsDescending = true,
-                OrderBy = EnumProductBrandSearchOrderBy.OrderByAddtime,
+                IsDescending = isDes,
+                OrderBy = orderByAll,
                 Classify=classname,
+               
                 //========================  end   ====================================================================
                 Page = page,
                 PageCount = pageSize
@@ -549,7 +550,7 @@ namespace Zerg.Controllers.Trading.Product
         {
             var sech = new ProductSearchCondition
             {
-                OrderBy = EnumProductSearchOrderBy.Price,
+                OrderBy = EnumProductSearchOrderBy.OrderByPrice,
                 ProductBrand = BrandId
             };
             var model = _productService.GetProductsByCondition(sech).FirstOrDefault();

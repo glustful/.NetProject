@@ -2,15 +2,41 @@
  * Created by gaofengming on 2015/7/22.
  */
 app.controller('activityController',['$scope','$http','$modal',function($scope,$http,$modal){
-    $scope.list={
-        Id:'',
-        EventContent:'',
-        Starttime:'',
-        Endtime:'',
-        State:''
+    $scope.condition={
+        //Id:'',
+        //EventContent:'',
+        //Starttime:'',
+        //Endtime:'',
+        //State:'',
+        orderByAll:"OrderById",//排序
+        isDes:true//升序or降序
     }
-    $scope.getlist=function(){
-        $http.get(SETTING.ApiUrl+'/Event/GetEventList',{params:$scope.list,'withCredentials':true}).success(function(data){
+    var iniImg=function(){
+        $scope.OrderByStarttime="footable-sort-indicator";
+        $scope.OrderByEndtime="footable-sort-indicator";
+        $scope.OrderById="footable-sort-indicator";
+    }
+    iniImg();
+    $scope.OrderById="fa-caret-down";
+    $scope.getlist=function(orderByAll){
+        if(orderByAll!=undefined){
+            $scope.condition.orderByAll=orderByAll ;
+            if($scope.condition.isDes==true)//如果为降序，
+            {
+                $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                iniImg();//将所有的图标变成一个月
+                eval($scope.d);//把$scope.d当做语句来执行，把当前点击图片变成向上
+                $scope.condition.isDes=false;//则变成升序
+            }
+            else if($scope.condition.isDes==false)
+            {
+                $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                iniImg();
+                eval($scope.d);
+                $scope.condition.isDes=true;
+            }
+        }
+        $http.get(SETTING.ApiUrl+'/Event/GetEventList',{params:$scope.condition,'withCredentials':true}).success(function(data){
             console.log(data);
 
             //document.getElementById("Starttime").value=FormatDate( data[0].Starttime);
@@ -19,6 +45,7 @@ app.controller('activityController',['$scope','$http','$modal',function($scope,$
             $scope.list = data;
         })
     }
+
     $scope.getlist();
     $scope.open = function(id){
        $scope.selectId=id;

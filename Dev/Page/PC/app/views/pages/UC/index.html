@@ -7,9 +7,9 @@
     <table class="table table-striped m-b-none tablet breakpoint footable-loaded footable" ui-jp="footable" data-filter="#filter" data-page-size="5">
         <thead>
         <tr>
-            <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">用户名<span class="footable-sort-indicator"></span></th>
-            <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">状态<span class="footable-sort-indicator"></span></th>
-            <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">操作<span class="footable-sort-indicator"></span></th>
+            <th data-hide="phone" class="footable-visible footable-last-column footable-sortable"  ng-click="getList('OrderByName')">用户名<span class="fa {{OrderByName}}"></span></th>
+            <th data-hide="phone" class="footable-visible footable-last-column footable-sortable" ng-click="getList('OrderByState')">状态<span class="fa {{OrderByState}}"></span></th>
+            <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">操作</th>
         </tr>
         </thead>
         <tbody>

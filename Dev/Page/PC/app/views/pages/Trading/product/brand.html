@@ -13,16 +13,16 @@
         <div class="line b-b m-v-md"></div>
         <!--<div class="alert alert-info" align="center">{{output}}</div>-->
     </div>
-    <div class="panel panel-default" align="center">
-        <div class="panel-heading">项目列表</div>
-        <table st-table="rowCollectionPage" class="table table-striped" align="center">
+    <div class=" panel-default panel panel-card ng-scope" align="center">
+        <div class="panel-heading ">项目列表</div>
+        <table st-table="rowCollectionPage" class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" align="center">
             <thead>
             <tr >
-                <th align="center">缩略图</th>
-                <th align="center">项目名</th>
-                <th align="center">项目ID</th>
-                <th align="center">添加时间</th>
-                <th align="center">操作</th>
+                <th style="padding-left: 25px;text-align: center">缩略图</th>
+                <th style="padding-left: 25px;text-align: center">项目名</th>
+                <th style="padding-left: 25px;text-align: center" ng-click="getList('OrderById')" data-hide="phone,tablet" class="footable-visible footable-sortable" >项目ID <span class="fa {{OrderById}}"></span></th>
+                <th style="padding-left: 25px;text-align: center" ng-click="getList('OrderByAddtime')">添加时间<span class="fa {{OrderByAddtime}}"></span></th>
+                <th style="padding-left: 25px; text-align: center">操作</th>
             </tr>
             </thead>
             <tbody>

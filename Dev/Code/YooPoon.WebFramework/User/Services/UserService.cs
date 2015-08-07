@@ -130,25 +130,27 @@ namespace YooPoon.WebFramework.User.Services
                     switch (condition.OrderBy)
                     {
                         case EnumUserOrderBy.Default:
-                            query = condition.IsDescending
-                                ? query.OrderByDescending(c => c.Id)
-                                : query.OrderBy(c => c.Id);
+                            query = condition.IsDescending? query.OrderByDescending(c => c.Id): query.OrderBy(c => c.Id);
                             break;
                         case EnumUserOrderBy.ById:
-                            query = condition.IsDescending
-                                ? query.OrderByDescending(c => c.Id)
-                                : query.OrderBy(c => c.Id);
+                            query = condition.IsDescending? query.OrderByDescending(c => c.Id): query.OrderBy(c => c.Id);
                             break;
                         case EnumUserOrderBy.ByName:
-                            query = condition.IsDescending
-                                ? query.OrderByDescending(c => c.UserName)
-                                : query.OrderBy(c => c.UserName);
+                            query = condition.IsDescending? query.OrderByDescending(c => c.UserName): query.OrderBy(c => c.UserName);
                             break;
                         case EnumUserOrderBy.RegTime:
-                            query = condition.IsDescending
-                                ? query.OrderByDescending(c => c)
-                                : query.OrderBy(c => c.RegTime);
+                            query = condition.IsDescending? query.OrderByDescending(c => c): query.OrderBy(c => c.RegTime);
                             break;
+                        case EnumUserOrderBy.OrderById:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
+                            break;
+                        case EnumUserOrderBy.OrderByName:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.UserName) : query.OrderBy(q => q.UserName);
+                            break;
+                        case EnumUserOrderBy.OrderByState:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Status) : query.OrderBy(q => q.Status);
+                            break;
+                        
                     }
                 }
                 else

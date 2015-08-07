@@ -117,6 +117,18 @@ namespace CRM.Service.MessageDetail
 						case EnumMessageDetailSearchOrderBy.OrderById:
 							query = condition.isDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
 							break;
+                        case EnumMessageDetailSearchOrderBy.OrderByTitle:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Title) : query.OrderBy(q => q.Title);
+                            break;
+                        case EnumMessageDetailSearchOrderBy.OrderByContent:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Content) : query.OrderBy(q => q.Content);
+                            break;
+                        case EnumMessageDetailSearchOrderBy.OrderByMobile:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Mobile) : query.OrderBy(q => q.Mobile);
+                            break;
+                        case EnumMessageDetailSearchOrderBy.OrderByAddtime:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Addtime) : query.OrderBy(q => q.Addtime);
+                            break;
                     }
 					
 				}

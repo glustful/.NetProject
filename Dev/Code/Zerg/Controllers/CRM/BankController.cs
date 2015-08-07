@@ -40,15 +40,19 @@ namespace Zerg.Controllers.CRM
         /// </summary>
         /// <param name="page">页码</param>
         /// <param name="pageSize">页面数量</param>
+        /// /// <param name="orderByAll">排序参数{ＩＤ（OrderById），银行名称（OrderByCodeid），添加时间（OrderByAddtime）}</param>
+        /// <param name="isDes">是否降序</param>
         /// <returns>银行列表</returns>
         [HttpGet]
         [Description("获取银行列表")]
-        public HttpResponseMessage SearchBanks(int page = 1, int pageSize = 10)
+        public HttpResponseMessage SearchBanks(EnumBankSearchOrderBy orderByAll = EnumBankSearchOrderBy.OrderById, bool isDes = true, int page = 1, int pageSize = 10)
         {
             var bankSearchCon = new BankSearchCondition
             {
                 Page = Convert.ToInt32(page),
-                PageCount = pageSize
+                PageCount = pageSize,
+                OrderBy =orderByAll ,
+                isDescending =isDes 
             };
 
             var bankList = _bankService.GetBanksByCondition(bankSearchCon).Select(p => new
