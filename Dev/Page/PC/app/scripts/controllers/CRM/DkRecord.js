@@ -18,7 +18,7 @@ angular.module("app").controller('DkRecordController', [
         }
         var iniImg=function(){
             $scope.OrderById="footable-sort-indicator";
-            $scope.OrderByClientname="footable-sort-indicator";
+            $scope.OrderByClientName="footable-sort-indicator";
             $scope.OrderByPhone="footable-sort-indicator";
             $scope.OrderByBrokername="footable-sort-indicator";
             $scope.OrderByProjectname="footable-sort-indicator";

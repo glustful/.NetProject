@@ -6,9 +6,9 @@ app.controller('EditController',['$http','$scope','$stateParams','$state',functi
         'withCredentials':true
     }).success(function(data){
          console.log(data);
-        $scope.activity =data;
-        document.getElementById("domstarttime").value=FormatDate(data.StartTime);
+        $scope.activity =data;document.getElementById("domstarttime").value=FormatDate(data.StartTime);
         document.getElementById("domendtime").value=FormatDate(data.EndTime);
+
     });
 
     $scope.Save = function(){
