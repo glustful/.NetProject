@@ -17,6 +17,7 @@ import java.util.TimerTask;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,9 +26,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -68,14 +67,12 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 	EditText et_new;
 	@ViewById(R.id.et_security_confirm)
 	EditText et_confirm;
-	@ViewById(R.id.tv_security_warning)
-	TextView tv_warning;
-	@ViewById(R.id.et_security_setting_code)
+	@ViewById(R.id.et_security_code)
 	EditText et_code;
 	@ViewById(R.id.btn_security_setting_getcode)
 	Button btn_getcode;
-	@ViewById(R.id.tv_security_time)
-	TextView tv_time;
+	@ViewById(R.id.tv_security_code)
+	TextView tv_warning_code;
 	@ViewById(R.id.ib_security_clean_confirm)
 	ImageButton ib_clean_confirm;
 	@ViewById(R.id.ib_security_clean_new)
@@ -86,6 +83,10 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 	TextView tv_err;
 	@ViewById(R.id.tv_security_new)
 	TextView tv_warning_new;
+	@ViewById(R.id.tv_security_confirm)
+	TextView tv_warning_confirm;
+	@ViewById(R.id.tv_security_old)
+	TextView tv_warning_old;
 	@ViewById(R.id.rl_security_progress)
 	RelativeLayout rl_progress;
 	private Animation shake_animation;
@@ -99,6 +100,38 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 	private Animation anim_hide_err;
 	private Intent service;
 	private Vibrator vibrator;
+
+	@TextChange(R.id.et_security_new_psw)
+	void newChange() {
+		String psw = et_new.getText().toString();
+		if (psw.length() > 20 || psw.length() < 6) {
+			tv_warning_new.setText("密码必须为6-20位");
+			tv_warning_new.setVisibility(View.VISIBLE);
+		} else {
+			tv_warning_new.setVisibility(View.GONE);
+		}
+	}
+
+	@TextChange(R.id.et_security_confirm)
+	void confirmChange() {
+		String new_psw = et_new.getText().toString();
+		String cofirm_psw = et_confirm.getText().toString();
+		if (!new_psw.equals(cofirm_psw)) {
+			tv_warning_confirm.setVisibility(View.VISIBLE);
+		} else {
+			tv_warning_confirm.setVisibility(View.GONE);
+		}
+	}
+
+	@TextChange(R.id.et_security_old_psw)
+	void changeOld() {
+		tv_warning_old.setVisibility(View.GONE);
+	}
+
+	@TextChange(R.id.et_security_code)
+	void changeCode() {
+		tv_warning_code.setVisibility(View.GONE);
+	}
 
 	@Click(R.id.btn_security_setting_getcode)
 	void getCode() {
@@ -176,7 +209,6 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		btn_getcode.setText(enable ? "获取验证码" : "重新获取验证码");
 		btn_getcode.setFocusable(enable);
 		btn_getcode.setClickable(enable);
-		tv_time.setVisibility(enable ? View.GONE : View.VISIBLE);
 	}
 
 	@Click(R.id.btn_security_setting_save)
@@ -187,10 +219,13 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		String code = et_code.getText().toString();
 		if (TextUtils.isEmpty(oldPsw)) {
 			textWarning(et_old);
+			tv_warning_old.setVisibility(View.VISIBLE);
 			return;
 		}
 		if (TextUtils.isEmpty(newPsw)) {
 			textWarning(et_new);
+			tv_warning_new.setText("请输入新密码");
+			tv_warning_new.setVisibility(View.VISIBLE);
 			return;
 		}
 
@@ -208,12 +243,12 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 		}
 		if (TextUtils.isEmpty(code)) {
 			textWarning(et_code);
+			tv_warning_code.setVisibility(View.VISIBLE);
 			return;
 		}
 		if (!newPsw.equals(confirmPsw)) {
 			return;
 		}
-		tv_warning.setVisibility(newPsw.equals(confirmPsw) ? View.GONE : View.VISIBLE);
 		YzmWithPsw2 yzmWithPsw = new YzmWithPsw2(hidm, code, oldPsw, newPsw, confirmPsw);
 		changePswTask(yzmWithPsw);
 	}
@@ -279,38 +314,7 @@ public class SecuritySettingActivity extends MainActionBarActivity {
 			}
 		});
 
-		et_confirm.addTextChangedListener(watcher);
-		et_new.addTextChangedListener(watcher);
-		et_old.addTextChangedListener(watcher);
 	}
-
-	private TextWatcher watcher = new TextWatcher() {
-		@Override
-		public void onTextChanged(CharSequence s, int start, int before, int count) {
-			String old_psw = et_old.getText().toString();
-			String psw_new = et_new.getText().toString();
-			String psw_confirm = et_confirm.getText().toString();
-			ib_clean_confirm.setVisibility(TextUtils.isEmpty(psw_confirm) ? View.GONE : View.VISIBLE);
-			ib_clean_new.setVisibility(TextUtils.isEmpty(psw_new) ? View.GONE : View.VISIBLE);
-			ib_clean_old.setVisibility(TextUtils.isEmpty(old_psw) ? View.GONE : View.VISIBLE);
-			tv_warning_new.setVisibility(TextUtils.isEmpty(psw_new) ? View.VISIBLE : View.GONE);
-			if (psw_new.equals(psw_confirm)) {
-				tv_warning.setVisibility(View.GONE);
-			} else {
-				tv_warning.setVisibility(View.VISIBLE);
-			}
-		}
-
-		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void afterTextChanged(Editable s) {
-			// TODO Auto-generated method stub
-		}
-	};
 
 	private void requestChangePsw(String json) {
 		new RequestAdapter() {

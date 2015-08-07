@@ -45,7 +45,7 @@
         
     </RelativeLayout>
     
-    <LinearLayout 
+    <RelativeLayout 
         android:background="#ffffff"
         android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
@@ -61,8 +61,15 @@
             android:divider="@null"
             android:dividerHeight="10dp" />
         
+        <include 
+            android:visibility="gone"
+            android:id="@+id/rl_progress"
+            layout="@layout/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
         
-    </LinearLayout>
+        
+    </RelativeLayout>
     
     
 

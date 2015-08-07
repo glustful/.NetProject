@@ -17,6 +17,7 @@ import java.util.TimerTask;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,9 +26,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -93,11 +92,37 @@ public class FindPswActivity extends MainActionBarActivity {
 	private int countTimer = 60;
 	private Handler handler = new Handler();
 	private String hidm;
-	private static final String TAG = "FindPswActivity";
 	private Animation anim_open_err;
 	private Animation anim_hide_err;
 	private Intent service;
 	private Vibrator vibrator;
+
+	@TextChange(R.id.et_findpsw_code)
+	void codeChange() {
+		tv_warning_code.setVisibility(View.GONE);
+	}
+
+	@TextChange(R.id.et_findpsw_confirm)
+	void confirmChange() {
+		String new_psw = et_new.getText().toString();
+		String confirm_psw = et_confirm.getText().toString();
+		if (!new_psw.equals(confirm_psw)) {
+			tv_warning_confirm.setText("两次输入的密码不一致");
+			tv_warning_confirm.setVisibility(View.VISIBLE);
+		} else {
+			tv_warning_confirm.setVisibility(View.VISIBLE);
+		}
+	}
+
+	@TextChange(R.id.et_findpsw_new)
+	void newChange() {
+		tv_warning_new.setVisibility(View.GONE);
+	}
+
+	@TextChange(R.id.et_findpsw_phone)
+	void phoneChange() {
+		tv_warning_phone.setVisibility(View.GONE);
+	}
 
 	@Click(R.id.btn_findpsw_getcode)
 	void getCode() {
@@ -116,6 +141,7 @@ public class FindPswActivity extends MainActionBarActivity {
 		String json = "{\"Mobile\":\"" + phone + "\",\"SmsType\":\"" + smsType + "\"}";
 		startSmsService();
 		SmsUtils.requestIdentifyCode(this, json, new RequestSMSListener() {
+
 			@Override
 			public void succeed(String code) {
 				hidm = code;
@@ -128,6 +154,7 @@ public class FindPswActivity extends MainActionBarActivity {
 		});
 		setGetCodeEnable(false);
 		handler.postDelayed(new Runnable() {
+
 			@Override
 			public void run() {
 				setGetCodeEnable(true);
@@ -151,11 +178,6 @@ public class FindPswActivity extends MainActionBarActivity {
 		et_new.setText("");
 	}
 
-	// Hidm: "7bnjqic71CswqRgJnPD1M%2b%2fuDvR8DUPr5RbaUsaHe4Q%3d"
-	// Phone: "13508713650"
-	// Yzm: "105982"
-	// first_password: "123456"
-	// second_password: "123456"
 	@Click(R.id.btn_findpsw_ok)
 	void findPsw() {
 		String code = et_code.getText().toString().trim();
@@ -210,13 +232,13 @@ public class FindPswActivity extends MainActionBarActivity {
 	void findPswTask(final YzmWithPsw yzmWithPsw) {
 		rl_progress.setVisibility(View.VISIBLE);
 		new SerializerJSON(new SerializeListener() {
+
 			@Override
 			public String onSerialize() {
 				ObjectMapper om = new ObjectMapper();
 				try {
 					return om.writeValueAsString(yzmWithPsw);
 				} catch (JsonProcessingException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return null;
@@ -234,6 +256,7 @@ public class FindPswActivity extends MainActionBarActivity {
 
 	void requestFindPsw(String json) {
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				rl_progress.setVisibility(View.GONE);
@@ -259,6 +282,7 @@ public class FindPswActivity extends MainActionBarActivity {
 		tv_err.setVisibility(View.VISIBLE);
 		tv_err.startAnimation(anim_open_err);
 		handler.postDelayed(new Runnable() {
+
 			@Override
 			public void run() {
 				tv_err.startAnimation(anim_hide_err);
@@ -286,9 +310,11 @@ public class FindPswActivity extends MainActionBarActivity {
 			btn_getcode.setBackgroundResource(R.drawable.btn_not_enable);
 			timer = new Timer();
 			task = new TimerTask() {
+
 				@Override
 				public void run() {
 					runOnUiThread(new Runnable() {
+
 						@Override
 						public void run() {
 							String text = "重新获取验证码(" + countTimer-- + "s)";
@@ -314,14 +340,6 @@ public class FindPswActivity extends MainActionBarActivity {
 
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-		et_confirm.addTextChangedListener(watcher);
-		et_new.addTextChangedListener(watcher);
-		et_phone.addTextChangedListener(watcher);
-		et_code.addTextChangedListener(watcher);
-
-		et_confirm.addTextChangedListener(watcher);
-		et_new.addTextChangedListener(watcher);
-		et_phone.addTextChangedListener(watcher);
 		anim_open_err = AnimationUtils.loadAnimation(this, R.anim.push_down_in);
 
 		anim_hide_err = AnimationUtils.loadAnimation(this, R.anim.push_top_out);
@@ -351,38 +369,6 @@ public class FindPswActivity extends MainActionBarActivity {
 		v.startAnimation(shake_animation);
 		vibrator.vibrate(500);
 	}
-
-	private TextWatcher watcher = new TextWatcher() {
-		@Override
-		public void onTextChanged(CharSequence s, int start, int before, int count) {
-			String psw_new = et_new.getText().toString();
-			String psw_confirm = et_confirm.getText().toString();
-			String phone = et_phone.getText().toString();
-			String code = et_code.getText().toString();
-			ib_clean_confirm.setVisibility(TextUtils.isEmpty(psw_confirm) ? View.GONE : View.VISIBLE);
-			ib_clean_new.setVisibility(TextUtils.isEmpty(psw_new) ? View.GONE : View.VISIBLE);
-			ib_clean_phone.setVisibility(TextUtils.isEmpty(phone) ? View.GONE : View.VISIBLE);
-			tv_warning_phone.setVisibility(TextUtils.isEmpty(phone) ? View.VISIBLE : View.GONE);
-			tv_warning_code.setVisibility(TextUtils.isEmpty(code) ? View.VISIBLE : View.GONE);
-
-			tv_warning_new.setVisibility(TextUtils.isEmpty(psw_new) ? View.VISIBLE : View.GONE);
-			tv_warning_confirm.setVisibility(TextUtils.isEmpty(psw_confirm) ? View.VISIBLE : View.GONE);
-			if (psw_new.equals(psw_confirm)) {
-				tv_warning_confirm.setVisibility(View.GONE);
-			} else {
-				tv_warning_confirm.setText("两次输入的密码不一致");
-				tv_warning_confirm.setVisibility(View.VISIBLE);
-			}
-		}
-
-		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-		}
-
-		@Override
-		public void afterTextChanged(Editable s) {
-		}
-	};
 
 	@Override
 	public void backButtonClick(View v) {

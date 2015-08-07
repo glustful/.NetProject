@@ -59,5 +59,6 @@
     <string name="url_get_partner_list">/api/PartnerList/GetInviteForBroker</string>
     <string name="url_get_ipartner_list">/api/PartnerList/PartnerListDetailed</string>
     <string name="url_get_broker">/api/BrokerInfo/GetBroker</string>
+    <string name="url_delete_bank">/api/BankCard/DeleteBankCard</string>
 
 </resources>

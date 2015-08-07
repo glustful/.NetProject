@@ -12,16 +12,13 @@
  */
 package com.yoopoon.home;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
-
 import android.app.AlertDialog.Builder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -31,10 +28,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -43,18 +37,18 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yoopoon.common.base.utils.RegxUtils;
 import com.yoopoon.common.base.utils.SmsUtils;
 import com.yoopoon.common.base.utils.SmsUtils.RequestSMSListener;
+import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.common.base.utils.Utils;
 import com.yoopoon.home.data.json.SerializerJSON;
 import com.yoopoon.home.data.json.SerializerJSON.SerializeListener;
 import com.yoopoon.home.data.net.ProgressMessage;
 import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.ResponseData;
-import com.yoopoon.home.data.net.ResponseData.ResultState;
 import com.yoopoon.home.domain.Bank;
 import com.yoopoon.home.service.SmsService;
 
@@ -66,17 +60,33 @@ import com.yoopoon.home.service.SmsService;
  */
 @EActivity(R.layout.activity_add_bank)
 public class AddBankActivity extends MainActionBarActivity {
+	@TextChange(R.id.et_addbank_address)
+	void addressChange() {
+		tv_warning_address.setVisibility(View.GONE);
+	}
+
+	@TextChange(R.id.et_addbank_code)
+	void codeChange() {
+		tv_warning_code.setVisibility(View.GONE);
+	}
+
+	@TextChange(R.id.et_addbank_num)
+	void numChange() {
+		tv_warning_bank.setVisibility(View.GONE);
+	}
+
 	@Click(R.id.btn_add_bank_getcode)
 	void getCode() {
 		String smsType = String.valueOf(SmsUtils.ADD_BANKCARD_IDENTIFY_CODE);
 		String json = "{\"SmsType\":\"" + smsType + "\"}";
 		startSmsService();
 		SmsUtils.getCodeForBroker(this, json, new RequestSMSListener() {
+
 			@Override
 			public void succeed(String code) {
 				hidm = code;
-				Log.i(TAG, "hidm = " + hidm);
 			}
+
 			@Override
 			public void fail(String msg) {
 				Toast.makeText(AddBankActivity.this, msg, Toast.LENGTH_SHORT).show();
@@ -91,24 +101,59 @@ public class AddBankActivity extends MainActionBarActivity {
 			}
 		}, 60000);
 	}
+
 	@Click(R.id.btn_addbank_ok)
 	void addBank() {
-		for (int i = 0; i < info_ets.size(); i++) {
-			EditText et = info_ets.get(i);
-			String text = et.getText().toString();
-			if (TextUtils.isEmpty(text)) {
-				warning_tvs.get(i).setVisibility(View.VISIBLE);
-				et.startAnimation(shake_animation);
-				vibrator.vibrate(500);
-				return;
-			}
-		}
 		String address = et_address.getText().toString();
 		String code = et_code.getText().toString();
 		String num = et_card.getText().toString().trim();
 		String type = rb_credit.isChecked() ? "信用卡" : "储蓄卡";
-		addBankTask(new Bank(address, checkedBank + 1, hidm, code, num, type));
+
+		if (TextUtils.isEmpty(num)) {
+			textWarning(et_card);
+			tv_warning_bank.setText("请填写银行卡号");
+			tv_warning_bank.setVisibility(View.VISIBLE);
+			return;
+		}
+
+		if (!RegxUtils.isBankCard(num)) {
+			textWarning(et_card);
+			tv_warning_bank.setText("请填写正确的银行卡号");
+			tv_warning_bank.setVisibility(View.VISIBLE);
+			return;
+		}
+
+		if (TextUtils.isEmpty(address)) {
+			textWarning(et_address);
+			tv_warning_address.setText("请填写开户银行地址");
+			tv_warning_address.setVisibility(View.VISIBLE);
+			return;
+		}
+
+		if (TextUtils.isEmpty(code)) {
+			textWarning(et_code);
+			tv_warning_code.setText("请输入验证码");
+			tv_warning_code.setVisibility(View.VISIBLE);
+			return;
+		}
+
+		if (StringUtils.isEmpty(hidm)) {
+			textWarning(et_code);
+			tv_warning_code.setText("请获取验证码");
+			tv_warning_code.setVisibility(View.VISIBLE);
+			return;
+		}
+
+		Bank bank = new Bank();
+		bank.Address = address;
+		bank.Bank = checkedBank + 1;
+		bank.Hidm = hidm;
+		bank.MobileYzm = code;
+		bank.Num = num;
+		bank.Type = "储蓄卡";
+		addBankTask(bank);
 	}
+
 	@Click(R.id.tv_addbank_bank)
 	void selectBank() {
 		Builder builder = new Builder(this);
@@ -123,6 +168,7 @@ public class AddBankActivity extends MainActionBarActivity {
 		});
 		builder.show();
 	}
+
 	private void setGetCodeEnable(boolean enable) {
 		if (enable) {
 			btn_getcode.setBackgroundResource(R.drawable.cycle_selector);
@@ -149,8 +195,10 @@ public class AddBankActivity extends MainActionBarActivity {
 		btn_getcode.setClickable(enable);
 		btn_getcode.setFocusable(enable);
 	}
+
 	void addBankTask(final Bank bank) {
 		new SerializerJSON(new SerializeListener() {
+
 			@Override
 			public String onSerialize() {
 				ObjectMapper om = new ObjectMapper();
@@ -161,6 +209,7 @@ public class AddBankActivity extends MainActionBarActivity {
 				}
 				return null;
 			}
+
 			@Override
 			public void onComplete(String serializeResult) {
 				if (serializeResult == null || serializeResult.equals("")) {
@@ -170,34 +219,33 @@ public class AddBankActivity extends MainActionBarActivity {
 			}
 		}).execute();
 	}
+
 	void requestAddBank(String json) {
+		progress.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
-				if (data != null)
-					Log.i(TAG, data.toString());
-				if (data.getResultState() == ResultState.eSuccess) {
-					String msg = data.getMsg();
-					Toast.makeText(AddBankActivity.this, msg, Toast.LENGTH_SHORT).show();
-					if (msg.contains("成功")) {
-						finish();
-					}
-				}
-				if (data == null) {
-					Toast.makeText(AddBankActivity.this, "请检查网络", Toast.LENGTH_SHORT).show();
-				}
+				progress.setVisibility(View.GONE);
+				String msg = data.getMsg();
+				Toast.makeText(AddBankActivity.this, msg, Toast.LENGTH_SHORT).show();
+				if (msg.contains("成功"))
+					finish();
+
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
 			}
 		}.setUrl(getString(R.string.url_add_bank)).SetJSON(json).notifyRequest();
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 	}
-	
+
 	private String hidm;
 	private Timer timer;
 	private TimerTask task;
@@ -205,11 +253,8 @@ public class AddBankActivity extends MainActionBarActivity {
 	private Handler handler = new Handler();
 	private Animation shake_animation;
 	private Vibrator vibrator;
-	private static final String TAG = "AddBankActivity";
 	private String[] banks = { "中国银行", "中国工商银行", "中国农业银行", "中国建设银行", "交通银行", "中国邮政储蓄银行", "民生银行", "农村信用社", "光大银行" };
 	private int checkedBank = 0;
-	private List<EditText> info_ets = new ArrayList<EditText>();
-	private List<TextView> warning_tvs = new ArrayList<TextView>();
 	private Intent service;
 	@ViewById(R.id.btn_add_bank_getcode)
 	Button btn_getcode;
@@ -233,7 +278,9 @@ public class AddBankActivity extends MainActionBarActivity {
 	TextView tv_warning_address;
 	@ViewById(R.id.tv_addbank_warning4)
 	TextView tv_warning_code;
-	
+	@ViewById(R.id.rl_progress)
+	View progress;
+
 	/**
 	 * @Title: main
 	 * @Description: TODO
@@ -248,53 +295,33 @@ public class AddBankActivity extends MainActionBarActivity {
 		titleButton.setText("添加银行卡");
 		shake_animation = AnimationUtils.loadAnimation(this, R.anim.shake);
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		initDatas();
-	}
-	private void initDatas() {
+
 		tv_bank.setText(banks[checkedBank]);
-		info_ets.add(et_card);
-		info_ets.add(et_address);
-		info_ets.add(et_code);
-		warning_tvs.add(tv_warning_card);
-		// warning_tvs.add(tv_warning_bank);
-		warning_tvs.add(tv_warning_address);
-		warning_tvs.add(tv_warning_code);
-		for (EditText et : info_ets)
-			et.addTextChangedListener(watcher);
 	}
-	
-	private TextWatcher watcher = new TextWatcher() {
-		@Override
-		public void onTextChanged(CharSequence s, int start, int before, int count) {
-			for (int i = 0; i < info_ets.size(); i++) {
-				EditText et = info_ets.get(i);
-				String text = et.getText().toString();
-				if (!TextUtils.isEmpty(text))
-					warning_tvs.get(i).setVisibility(View.GONE);
-			}
-		}
-		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-		}
-		@Override
-		public void afterTextChanged(Editable s) {
-		}
-	};
-	
+
+	private void textWarning(View v) {
+		v.startAnimation(shake_animation);
+		vibrator.vibrate(500);
+	}
+
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		return true;
 	}
+
 	private void startSmsService() {
 		service = new Intent(this, SmsService.class);
 		startService(service);
@@ -302,7 +329,7 @@ public class AddBankActivity extends MainActionBarActivity {
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
 		this.registerReceiver(receiver, filter);
 	}
-	
+
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {

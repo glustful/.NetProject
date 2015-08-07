@@ -56,9 +56,10 @@ import com.yoopoon.home.ui.login.HomeLoginActivity_;
 public class IPocketActivity extends MainActionBarActivity {
 	@ViewById(R.id.lv_ipocket_bankcard)
 	ListView lv;
+	@ViewById(R.id.rl_progress)
+	View progress;
 	private MyBankListAdapter adapter;
 	private User user;
-	private static final String TAG = "IPocketActivity";
 	private List<Bank> bankDatas = new ArrayList<Bank>();
 	private int amountMoney = 0;
 	private AlertDialog deleteDialog;
@@ -89,21 +90,52 @@ public class IPocketActivity extends MainActionBarActivity {
 	}
 
 	private class MyLongClickListener implements OnItemLongClickListener {
+
 		@Override
 		public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+			final Bank bank = bankDatas.get(position);
 			Builder builder = new Builder(IPocketActivity.this);
 			View dialogView = View.inflate(IPocketActivity.this, R.layout.dialog_delete, null);
+			Button btn_delete = (Button) dialogView.findViewById(R.id.btn_dialog_delete);
+			btn_delete.setText("删除银行卡(" + "**** **** ****" + bank.Num + ")");
 			builder.setView(dialogView);
 			deleteDialog = builder.show();
-			Button btn_delete = (Button) dialogView.findViewById(R.id.btn_dialog_delete);
 			btn_delete.setOnClickListener(new OnClickListener() {
+
 				@Override
 				public void onClick(View v) {
 					deleteDialog.dismiss();
+					requestDelete(bank);
 				}
 			});
 			return false;
 		}
+	}
+
+	void requestDelete(final Bank bank) {
+		progress.setVisibility(View.VISIBLE);
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				progress.setVisibility(View.GONE);
+				Toast.makeText(IPocketActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+				if (data.getMRootData() != null) {
+					boolean status = data.getMRootData().optBoolean("Status", false);
+					if (status) {
+						bankDatas.remove(bank);
+						fillData();
+					}
+				}
+
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_delete_bank)).SetJSON(String.valueOf(bank.Id)).notifyRequest();
 	}
 
 	private void fillData() {
@@ -122,19 +154,23 @@ public class IPocketActivity extends MainActionBarActivity {
 	}
 
 	protected void request() {
+		progress.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
+				progress.setVisibility(View.GONE);
 				if (data.getResultState() == ResultState.eSuccess) {
-					JSONObject obj = data.getJsonObject2();
+					JSONObject obj = data.getMRootData();
 					try {
 						JSONArray list = obj.getJSONArray("List");
 						bankDatas.clear();
 						for (int i = 0; i < list.length(); i++) {
 							JSONObject bankObj = list.getJSONObject(i);
 							Bank bank = new Bank();
-							bank.setBankName(bankObj.getString("bankName"));
-							bank.setNum(bankObj.getString("Num"));
+							bank.Id = bankObj.optInt("Id", 0);
+							bank.BankName = bankObj.getString("bankName");
+							bank.Num = bankObj.getString("Num");
 							bankDatas.add(bank);
 						}
 						amountMoney = obj.getInt("AmountMoney");
@@ -154,6 +190,7 @@ public class IPocketActivity extends MainActionBarActivity {
 	}
 
 	private class MyBankItemClickListener implements OnItemClickListener {
+
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			BankCashActivity_.intent(IPocketActivity.this).start();
@@ -161,6 +198,7 @@ public class IPocketActivity extends MainActionBarActivity {
 	}
 
 	private class MyBankListAdapter extends BaseAdapter {
+
 		@Override
 		public int getCount() {
 			return bankDatas.size() + 1;
@@ -195,8 +233,8 @@ public class IPocketActivity extends MainActionBarActivity {
 			Bank bank = bankDatas.get(position);
 			TextView tv_bankname = (TextView) convertView.findViewById(R.id.tv_bankcard_bank);
 			TextView tv_num = (TextView) convertView.findViewById(R.id.tv_bankcard_card);
-			tv_bankname.setText(StringUtils.isEmpty(bank.getBankName()) ? "" : bank.getBankName());
-			tv_num.setText("**** **** ****" + bank.getNum());
+			tv_bankname.setText(StringUtils.isEmpty(bank.BankName) ? "" : bank.BankName);
+			tv_num.setText("**** **** ****" + bank.Num);
 			return convertView;
 		}
 	}
