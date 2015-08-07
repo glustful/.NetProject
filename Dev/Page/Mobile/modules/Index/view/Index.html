@@ -5,7 +5,7 @@
     <div id="carousel-bg">
         <carousel interval="2000">
             <slide ng-repeat="slide in content" active="slide.active">
-                <img src="http://img.yoopoon.com/{{slide.TitleImg}}" class="img-full" alt="成为经济人轻松赚大钱" width="640"
+                <img src="{{ImgUrl+slide.TitleImg}}@640w_230h_70Q" class="img-full" alt="成为经济人轻松赚大钱" width="640"
                      height="230"/>
             </slide>
         </carousel>
@@ -129,7 +129,7 @@
                         <p class="active_title ng-binding">常见问题</p>
 
                         <p class="well ng-binding">优客惠使用小贴士</p>
-                        <img src="http://img.yoopoon.com/20150630/20150630_155616_686_853.jpg" width="95" height="95">
+                        <img src="http://img.yoopoon.com/20150630/20150630_155616_686_853.jpg@95w_95h_70Q" width="95" height="95">
                     </a>
                 </li>
             </ul>
@@ -151,7 +151,7 @@
                     <!--</div>-->
                     <!--<a href="#/app/housesBuy?BrandId={{item.Id}}">-->
                     <a href="#/app/BrandDetail?brandId={{item.Id}}">
-                        <img src="http://img.yoopoon.com/{{item.Bimg}}" width="620" height="160"/>
+                        <img src="{{ImgUrl+item.Bimg}}@620w_160h_70Q" width="620" height="160"/>
 
                         <div class="summary">
                             <span>[{{ item.ProductParamater["所属城市"] }}]</span><span>{{item.Bname}}</span></span><span>{{item.ProductParamater["占地面积"] }}</span>
