@@ -94,10 +94,10 @@ namespace CRM.Service.Bank
                             query = condition.isDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
                             break;
                         case EnumBankSearchOrderBy.OrderByCodeid:
-                            query = condition.isDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Codeid) : query.OrderBy(q => q.Codeid);
                             break;
                         case EnumBankSearchOrderBy.OrderByAddtime:
-                            query = condition.isDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Addtime) : query.OrderBy(q => q.Addtime);
                             break;
                     }
                 }
