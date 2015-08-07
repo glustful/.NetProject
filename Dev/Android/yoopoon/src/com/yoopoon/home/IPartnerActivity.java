@@ -12,11 +12,14 @@
  */
 package com.yoopoon.home;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.Context;
@@ -25,6 +28,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,13 +43,25 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.common.base.utils.RegxUtils;
+import com.yoopoon.common.base.utils.StringUtils;
 import com.yoopoon.common.base.utils.ToastUtils;
+import com.yoopoon.home.data.json.ParserJSON;
+import com.yoopoon.home.data.json.ParserJSON.ParseListener;
+import com.yoopoon.home.data.net.ProgressMessage;
+import com.yoopoon.home.data.net.RequestAdapter;
+import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
+import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.data.user.User.InvitePartnerListener;
 import com.yoopoon.home.domain.Broker;
+import com.yoopoon.home.domain.Invitation;
+import com.yoopoon.home.domain.Partner;
 import com.yoopoon.home.domain.PartnerList;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
@@ -62,12 +78,10 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 	@ViewById(R.id.lv_partner)
 	ListView lv;
 	TextView tv_warning;
-	private MyPartnerListAdapter adapter;
-	// private String[] names = { "钱德勒", "莫妮卡", "格蕾丝", "威尔", "Grace", "Will", "Chandler", "Rachel",
-	// "Monica", "Ross",
-	// "Mood", "莫德", "sue", "苏", "Moening", "莫宁", "Alice", "爱丽丝" };
 	private static final String TAG = "IPartnerActivity";
-	private String[] showNameList;
+	private List<Partner> partners = new ArrayList<Partner>();
+	private List<Invitation> invitations = new ArrayList<Invitation>();
+	private MyListAdapter adapter;
 
 	@AfterViews
 	void initUI() {
@@ -78,116 +92,101 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		titleButton.setText("我的合伙人");
 		btn_add.setOnClickListener(this);
 		lv.setOnItemClickListener(new MyItemClickListener());
-		// showNameList = SortNameByOrder.getShowNameList(names);
-		// fillData();
+		requestList();
 	}
 
 	private class MyItemClickListener implements OnItemClickListener {
-		/*
-		 * (non Javadoc)
-		 * @Title: onItemClick
-		 * @Description: TODO
-		 * @param parent
-		 * @param view
-		 * @param position
-		 * @param id
-		 * @see
-		 * android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget.AdapterView,
-		 * android.view.View, int, long)
-		 */
+
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			String name = showNameList[position];
-			if (!name.startsWith("*****"))
-				PartnerDetailActivity_.intent(IPartnerActivity.this).start();
+			if (position < partners.size()) {
+				String partnerId = String.valueOf(partners.get(position).PartnerId);
+				PartnerDetailActivity_.intent(IPartnerActivity.this).id(partnerId).start();
+			}
 		}
 	}
 
 	private void fillData() {
 		if (adapter == null) {
-			adapter = new MyPartnerListAdapter();
+			adapter = new MyListAdapter();
 			lv.setAdapter(adapter);
 		} else {
 			adapter.notifyDataSetChanged();
 		}
 	}
 
-	private static class ViewHolder {
-		TextView tv_name;
+	static class PartnerHolder {
 		ImageView iv_avater;
+		TextView tv_name;
 	}
 
-	private class MyPartnerListAdapter extends BaseAdapter {
-		/*
-		 * (non Javadoc)
-		 * @Title: getCount
-		 * @Description: TODO
-		 * @return
-		 * @see android.widget.Adapter#getCount()
-		 */
+	static class InvitationHolder {
+		ImageView iv_avater;
+		TextView tv_phone;
+		Button btn_agree;
+		Button btn_ignore;
+	}
+
+	private class MyListAdapter extends BaseAdapter {
+
 		@Override
 		public int getCount() {
-			return showNameList.length;
+			return partners.size() + invitations.size() + 1;
 		}
 
-		/*
-		 * (non Javadoc)
-		 * @Title: getItem
-		 * @Description: TODO
-		 * @param position
-		 * @return
-		 * @see android.widget.Adapter#getItem(int)
-		 */
 		@Override
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
-			return position;
+			return null;
 		}
 
-		/*
-		 * (non Javadoc)
-		 * @Title: getItemId
-		 * @Description: TODO
-		 * @param position
-		 * @return
-		 * @see android.widget.Adapter#getItemId(int)
-		 */
 		@Override
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 
-		/*
-		 * (non Javadoc)
-		 * @Title: getView
-		 * @Description: TODO
-		 * @param position
-		 * @param convertView
-		 * @param parent
-		 * @return
-		 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
-		 */
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			String showName = showNameList[position];
-			if (showName.startsWith("*****")) {
+			if (position == partners.size()) {
 				TextView tv = new TextView(IPartnerActivity.this);
-				tv.setText(String.valueOf(showName.charAt(showName.length() - 1)));
-				tv.setPadding(10, 0, 0, 0);
+				tv.setPadding(10, 5, 0, 5);
+				tv.setTextColor(Color.RED);
+				tv.setBackgroundColor(Color.WHITE);
+				tv.setText("收到的邀请(" + invitations.size() + ")");
+				tv.setTextSize(20);
 				return tv;
 			}
-			ViewHolder holder = null;
-			if (convertView == null || !(convertView instanceof LinearLayout))
-				convertView = View.inflate(IPartnerActivity.this, R.layout.item_partner, null);
-			holder = (ViewHolder) convertView.getTag();
-			if (holder == null) {
-				holder = new ViewHolder();
-				holder.tv_name = (TextView) convertView.findViewById(R.id.tv_patner_name);
-				holder.iv_avater = (ImageView) convertView.findViewById(R.id.iv_partner_avater);
-				convertView.setTag(holder);
+			// 合伙人列表
+			if (position < partners.size()) {
+				if (convertView == null || !(convertView instanceof RelativeLayout))
+					convertView = View.inflate(IPartnerActivity.this, R.layout.item_partner, null);
+				PartnerHolder partnerHolder = (PartnerHolder) convertView.getTag();
+				if (partnerHolder == null) {
+					partnerHolder = new PartnerHolder();
+					partnerHolder.iv_avater = (ImageView) convertView.findViewById(R.id.iv_partner_avater);
+					partnerHolder.tv_name = (TextView) convertView.findViewById(R.id.tv_patner_name);
+					convertView.setTag(partnerHolder);
+				}
+				Partner entity = partners.get(position);
+				String photo = entity.Headphoto;
+				if (!StringUtils.isEmpty(photo)) {
+					String url = "http://img.yoopoon.com/" + photo;
+					ImageLoader.getInstance().displayImage(url, partnerHolder.iv_avater);
+				}
+				partnerHolder.tv_name.setText(entity.Name);
+
+				return convertView;
 			}
-			holder.tv_name.setText(showName);
+
+			// 邀请列表
+			if (convertView == null || !(convertView instanceof LinearLayout))
+				convertView = View.inflate(IPartnerActivity.this, R.layout.item_invitation, null);
+			InvitationHolder invitationHolder = (InvitationHolder) convertView.getTag();
+			if (invitationHolder == null) {
+				invitationHolder = new InvitationHolder();
+				invitationHolder.iv_avater = (ImageView) convertView.findViewById(R.id.iv_invitation);
+				invitationHolder.tv_phone = (TextView) convertView.findViewById(R.id.tv_invitation_phone);
+				convertView.setTag(invitationHolder);
+			}
 			return convertView;
 		}
 	}
@@ -375,6 +374,108 @@ public class IPartnerActivity extends MainActionBarActivity implements OnClickLi
 		dialog = builder.show();
 		cancel.setOnClickListener(this);
 		bt_invite.setOnClickListener(this);
+	}
+
+	void requestList() {
+		User user = User.lastLoginUser(this);
+		String brokerId = String.valueOf(user.id);
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				boolean status = data.getMRootData().optBoolean("Status", false);
+				if (status) {
+					JSONArray list = data.getMRootData().optJSONArray("list");
+					parseInvitations(list);
+				} else {
+					requestPartners();
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_get_partner_list)).addParam("brokerId", brokerId)
+				.setRequestMethod(RequestMethod.eGet).notifyRequest();
+	}
+
+	private void parseInvitations(final JSONArray list) {
+		new ParserJSON(new ParseListener() {
+
+			@Override
+			public Object onParse() {
+				try {
+					ObjectMapper om = new ObjectMapper();
+
+					for (int i = 0; i < list.length(); i++) {
+						String json = list.getJSONObject(i).toString();
+						Invitation invitation = om.readValue(json, Invitation.class);
+						invitations.add(invitation);
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return invitations;
+			}
+
+			@Override
+			public void onComplete(Object parseResult) {
+				Log.i(TAG, parseResult.toString());
+				requestPartners();
+
+			}
+		}).execute();
+	}
+
+	void requestPartners() {
+		User user = User.lastLoginUser(this);
+		String brokerId = String.valueOf(user.id);
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				Log.i(TAG, data.toString());
+				JSONArray list = data.getMRootData().optJSONArray("partnerList");
+				parsePartners(list);
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_get_ipartner_list)).addParam("userId", brokerId)
+				.setRequestMethod(RequestMethod.eGet).notifyRequest();
+	}
+
+	private void parsePartners(final JSONArray list) {
+		new ParserJSON(new ParseListener() {
+
+			@Override
+			public Object onParse() {
+				try {
+					ObjectMapper om = new ObjectMapper();
+					for (int i = 0; i < list.length(); i++) {
+						String json = list.getJSONObject(i).toString();
+						Partner partner = om.readValue(json, Partner.class);
+						partners.add(partner);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return partners;
+			}
+
+			@Override
+			public void onComplete(Object parseResult) {
+				Log.i(TAG, parseResult.toString());
+				fillData();
+
+			}
+		}).execute();
 	}
 
 	/*

@@ -24,7 +24,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -34,10 +34,8 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
         android:name="com.yoopoon.home.MyApplication_"
@@ -134,11 +132,6 @@
             android:theme="@style/ActionbarTheme" >
         </activity>
         <activity
-            android:name="com.yoopoon.home.PartnerDetailActivity_"
-            android:screenOrientation="portrait"
-            android:theme="@style/ActionbarTheme" >
-        </activity>
-        <activity
             android:name="com.yoopoon.house.ui.bonus.BrokerBonusActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
@@ -215,6 +208,12 @@
         </activity>
         <activity
             android:name="com.yoopoon.home.TakeCashStep2Activity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        
+        <activity
+            android:name="com.yoopoon.home.PartnerDetailActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>

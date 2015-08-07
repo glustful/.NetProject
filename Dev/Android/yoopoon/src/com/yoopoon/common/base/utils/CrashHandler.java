@@ -1,5 +1,7 @@
 package com.yoopoon.common.base.utils;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -12,12 +14,14 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Looper;
 import android.widget.Toast;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.data.user.User;
 
 public class CrashHandler implements UncaughtExceptionHandler {
+	// private static final String TAG = "CrashHandler";
 	// 系统默认的UncaughtException处理类
 	Thread.UncaughtExceptionHandler exceptionHandler;
 
@@ -84,6 +88,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 			return false;
 		}
 		// 有异常
+		// Log.i(TAG, "handleException" + ex.getMessage());
 		new Thread() {
 			@Override
 			public void run() {
@@ -93,14 +98,15 @@ public class CrashHandler implements UncaughtExceptionHandler {
 				Looper.prepare();
 				if (!User.lastLoginUser(MyApplication.getInstance()).remember)
 					SPUtils.clearAllInfo(MyApplication.getInstance());
-				Toast.makeText(context, "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_LONG).show();
+				Toast.makeText(context, "啊哦，我要挂啦！", Toast.LENGTH_LONG).show();
+
 				Looper.loop();
 			}
 		}.start();
 		// 手机设备信息
 		collectDeviceInfo(context);
-		// 保存到文件sdcard中区
-		wirteToFile(ex);
+		// 发送邮件
+		sendMail(ex);
 		return true;
 	}
 
@@ -167,31 +173,54 @@ public class CrashHandler implements UncaughtExceptionHandler {
 		printWriter.close();
 		String reString = writer.toString();
 		sb.append(reString);
-		sendMail(sb.toString());
-		// try {
-		// long time = System.currentTimeMillis();
-		// String fileName = "crash-" + time + ".log";
-		// if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-		// String path = "/mnt/sdcard/crash";
-		// File dir = new File(path);
-		// if (!dir.exists()) {
-		// dir.mkdirs();
-		// }
-		// FileOutputStream stream = new FileOutputStream(path + fileName);
-		// stream.write(sb.toString().getBytes());
-		// stream.close();
-		// }
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
+		try {
+			long time = System.currentTimeMillis();
+			String fileName = "crash-" + time + ".log";
+			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+				String path = "/mnt/sdcard/crash";
+				File dir = new File(path);
+				if (!dir.exists()) {
+					dir.mkdirs();
+				}
+				FileOutputStream stream = new FileOutputStream(path + fileName);
+				stream.write(sb.toString().getBytes());
+				stream.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	private void sendMail(String content) {
-		MailUtils mailUitls = new MailUtils();
-		mailUitls.setHost("smtp.qq.com"); // 指定要使用的邮件服务器
-		mailUitls.setAccount("286617690@qq.com", "liangying12138"); // 指定帐号和密码
+	private void sendMail(Throwable ex) {
 
-		mailUitls.send("286617690@qq.com", "286617690@qq.com", "yoopoon异常", content);
+		// 组拼邮件content
+		StringBuffer sb = new StringBuffer();
+		for (Map.Entry<String, String> map : infos.entrySet()) {
+			String key = map.getKey();
+			String value = map.getValue();
+			sb.append(key + "=" + value + "\n");
+		}
+		Writer writer = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(writer);
+		ex.printStackTrace(printWriter);
+		Throwable cause = ex.getCause();
+		while (cause != null) {
+			cause.printStackTrace(printWriter);
+			cause = cause.getCause();
+		}
+		printWriter.close();
+		String reString = writer.toString();
+		sb.append(reString);
+		// Log.i(TAG, "sendMail::" + sb.toString());
+
+		// 发送邮件
+		MailSender sender = new MailSender("smtp.qq.com", "286617690@qq.com", "liangying12138", true);
+		try {
+			sender.sendMail("yoopoon异常:优客惠(android)", sb.toString(), "286617690@qq.com", "286617690@qq.com");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
