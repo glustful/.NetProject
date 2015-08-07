@@ -6,6 +6,7 @@
 var httpimguri='';
 var app = angular.module("zergApp");
 app.controller('personsettingController',['$scope','$http','$state','AuthService',function($scope,$http,$state,AuthService){
+    $scope.imgUrl=SETTING.ImgUrl;
     $scope.olduser={
         Brokername:'',
         Realname:'',

@@ -2,6 +2,7 @@
  * Created by gaofengming on 2015/6/25.
  */
 app.controller('personal_userController',['$scope','$http','AuthService',function($scope,$http,AuthService){
+    $scope.imgUrl=SETTING.ImgUrl;
     $scope.user={
         Brokername:'',
         Headphoto:''
