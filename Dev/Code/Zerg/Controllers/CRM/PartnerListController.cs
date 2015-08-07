@@ -191,7 +191,8 @@ namespace Zerg.Controllers.CRM
         {
             var sech = new BrokerSearchCondition
             {
-                Phone = partnerList.Phone
+                Phone = partnerList.Phone,
+                State=1
             };
             var user = (UserBase)_workContext.CurrentUser;
             if (user != null)
