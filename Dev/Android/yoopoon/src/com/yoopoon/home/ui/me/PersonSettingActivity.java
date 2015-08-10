@@ -126,6 +126,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	private Timer timer;
 	private TimerTask task;
 	private boolean uploadable = true;
+	private User user;
 	
 	@TextChange(R.id.card)
 	void cardChange() {
@@ -234,7 +235,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				BrokerEntity entity = null;
 				try {
 					entity = om.readValue(json, BrokerEntity.class);
-					Log.i(TAG, entity.toString());
 				} catch (JsonParseException e) {
 					e.printStackTrace();
 				} catch (JsonMappingException e) {
@@ -246,7 +246,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			}
 			@Override
 			public void onComplete(Object parseResult) {
-				Log.i(TAG, parseResult.toString());
 				if (parseResult != null) {
 					entity = (BrokerEntity) parseResult;
 					et_card.setText(entity.getSfz());
@@ -261,6 +260,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 						ImageLoader.getInstance().displayImage(url, iv_avater);
 					}
 				}
+				ll_progress.setVisibility(View.GONE);
 			}
 		}).execute();
 	}
@@ -299,20 +299,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	private File getFile(Uri uri) {
-		try {
-			String[] proj = { MediaStore.Images.Media.DATA };
-			Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
-			int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-			actualimagecursor.moveToFirst();
-			String img_path = actualimagecursor.getString(actual_image_column_index);
-			// Log.i(TAG, img_path);
-			return new File(img_path);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 	private File getFileByUri(Uri uri) {
 		try {
 			String[] proj = { MediaStore.Images.Media.DATA };
@@ -322,7 +308,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				cursor.moveToFirst();
 				String img_path = cursor.getString(actual_image_column_index);
 				File file = new File(img_path);
-				Uri fileUri = Uri.fromFile(file);
+				// Uri fileUri = Uri.fromFile(file);
 				return file;
 			}
 		} catch (Exception e) {
@@ -354,7 +340,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 				new UploadHeadImg().post(path, file, null, new OnCompleteListener() {
 					@Override
 					public void onSuccess(final String json) {
-						// Log.i(TAG, json);
 						uploadable = true;
 						runOnUiThread(new Runnable() {
 							@Override
@@ -363,15 +348,15 @@ public class PersonSettingActivity extends MainActionBarActivity {
 								try {
 									JSONObject obj = new JSONObject(json);
 									boolean status = Tools.optBoolean(obj, "Status", false);
-									User user = User.lastLoginUser(PersonSettingActivity.this);
-									String headUrl = Tools.optString(obj, "Msg", user.getHeadUrl());
-									user.setHeadUrl(headUrl);
 									if (!status) {
 										tv_uploading.setText("上传失败>_<");
 										tv_uploading.setVisibility(View.VISIBLE);
 									} else {
 										tv_uploading.setText("上传成功^_^");
 										tv_uploading.setVisibility(View.VISIBLE);
+										String headUrl = Tools.optString(obj, "Msg", user.getHeadUrl());
+										entity.Headphoto = headUrl;
+										user.setHeadUrl(headUrl);
 									}
 								} catch (JSONException e) {
 									e.printStackTrace();
@@ -413,16 +398,16 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		titleButton.setText("个人设置");
 		animation_shake = AnimationUtils.loadAnimation(this, R.anim.shake);
 		vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+		user = User.lastLoginUser(this);
 		requestInfo();
 	}
 	void requestInfo() {
+		ll_progress.setVisibility(View.VISIBLE);
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
 		String userId = sp.getString("userId", "0");
-		ll_progress.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
-				ll_progress.setVisibility(View.GONE);
 				String json = data.getMRootData().toString();
 				parseToBroker(json);
 			}
