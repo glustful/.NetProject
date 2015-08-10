@@ -181,12 +181,12 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			tv_warning_sfz.setVisibility(View.VISIBLE);
 			return;
 		}
-		if (!RegxUtils.isName(name)) {
-			textWarning(et_name);
-			tv_warning_name.setText("名字的长度为2-5位");
-			tv_warning_name.setVisibility(View.VISIBLE);
-			return;
-		}
+		//		if (!RegxUtils.isName(name)) {
+		//			textWarning(et_name);
+		//			tv_warning_name.setText("名字的长度为2-5位");
+		//			tv_warning_name.setVisibility(View.VISIBLE);
+		//			return;
+		//		}
 		if (!RegxUtils.isEmail(email)) {
 			textWarning(et_email);
 			tv_warning_email.setText("请填写正确的邮箱");
