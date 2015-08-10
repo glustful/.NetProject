@@ -86,8 +86,8 @@ public final class FramMainActivity_
     public void onViewChanged(HasViews hasViews) {
         searchLayout = ((LinearLayout) hasViews.findViewById(com.yoopoon.home.R.id.search_layout));
         mainPager = ((ViewPager) hasViews.findViewById(com.yoopoon.home.R.id.home_main_pager));
-        tabHost = ((TabHost) hasViews.findViewById(android.R.id.tabhost));
         tv_network = ((TextView) hasViews.findViewById(com.yoopoon.home.R.id.tv_main_network));
+        tabHost = ((TabHost) hasViews.findViewById(android.R.id.tabhost));
         {
             View view = hasViews.findViewById(com.yoopoon.home.R.id.tv_main_network);
             if (view!= null) {

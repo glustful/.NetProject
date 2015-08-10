@@ -8,6 +8,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.makeramen.RoundedImageView;
@@ -129,6 +130,7 @@ public class BrokerInfoView extends RelativeLayout {
 			String url = "http://img.yoopoon.com/" + photo;
 			ImageLoader.getInstance().displayImage(url, headImg);
 		} else {
+			headImg.setScaleType(ScaleType.CENTER_CROP);
 			headImg.setImageResource(R.drawable.logo_gray);
 		}
 	}

@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -212,6 +213,10 @@ public class BrokerRecommendActivity extends MainActionBarActivity implements On
 	 */
 	private void serializationCommitinfo() {
 		String Phone = phone_numberEditText.getText().toString();
+		if (TextUtils.isEmpty(Phone)) {
+			Toast.makeText(this, "请输入手机号码", Toast.LENGTH_SHORT).show();
+			return;
+		}
 		if (!RegxUtils.isPhone(Phone)) {
 			Toast.makeText(this, "请填写正确的手机号码", Toast.LENGTH_SHORT).show();
 			return;

@@ -35,66 +35,65 @@ public class BrokerEntity {
 
 	public static final String TAG = "BrokerEntity";
 
-	public String Address = null;
-	public String Addtime = "/Date(-62135596800000)/";
-	public int Adduser = 0;
-	public String Agentlevel = null;
-	public int Amount = 0;
+	public String Address;
+	public String Addtime;
+	public int Adduser;
+	public String Agentlevel;
+	public int Amount;
 	public String Brokername;
 	public String Email;
-	// public String headphoto;
 	public String Headphoto;
-	public String Hidm = null;
-	public int Id = 2033;
-	public int LevelId = 0;
-	public String MobileYzm = null;
+	public String Hidm;
+	public int Id;
+	public int LevelId;
+	public String MobileYzm;
 	public String Nickname;
-	public int PartnersId = 0;
-	public String PartnersName = null;
-	public String Password = null;
+	public int PartnersId;
+	public String PartnersName;
+	public String Password;
 	public String Phone;
 	public int Qq;
 	public String Realname;
-	public String Regtime = "/Date(-62135596800000)/";
-	public String Regtime1 = null;
-	public boolean Remember = false;
-	public String SecondPassword = null;
+	public String Regtime;
+	public String Regtime1;
+	public boolean Remember;
+	public String SecondPassword;
 	public String Sexy;
 	public String Sfz;
-	public String SfzPhoto = null;
-	public int State = 0;
-	public int Status = 0;
-	public int Totalpoints = 0;
-	public String Type = null;
-	public int UcId = 0;
-	public String Uptime = "/Date(-62135596800000)/";
-	public int UserId = 0;
-	public String UserName = null;
-	public int UserType = 0;
-	public String Usertype1 = null;
-	public String WeiXinNumber = null;
-	public int Zip = 0;
-	public String inviteCode = null;
-	public String rgtime = null;
-	public String strState = null;
-	public int IsInvite = 1;
-	public int Upuser = 0;
-	public String code = null;
+	public String SfzPhoto;
+	public int State;
+	public int Status;
+	public int Totalpoints;
+	public String Type;
+	public int UcId;
+	public String Uptime;
+	public int UserId;
+	public String UserName;
+	public int UserType;
+	public String Usertype1;
+	public String WeiXinNumber;
+	public int Zip;
+	public String inviteCode;
+	public String rgtime;
+	public String strState;
+	public int IsInvite;
+	public int Upuser;
+	public String code;
 
 	@Override
 	public String toString() {
 		return "BrokerEntity [Address=" + Address + ", Addtime=" + Addtime + ", Adduser=" + Adduser + ", Agentlevel="
-				+ Agentlevel + ", Amount=" + Amount + ", Brokername=" + Brokername + ", Email=" + Email + ", Hidm="
-				+ Hidm + ", Id=" + Id + ", LevelId=" + LevelId + ", MobileYzm=" + MobileYzm + ", Nickname=" + Nickname
-				+ ", PartnersId=" + PartnersId + ", PartnersName=" + PartnersName + ", Password=" + Password
-				+ ", Phone=" + Phone + ", Qq=" + Qq + ", Realname=" + Realname + ", Regtime=" + Regtime + ", Regtime1="
-				+ Regtime1 + ", Remember=" + Remember + ", SecondPassword=" + SecondPassword + ", Sexy=" + Sexy
-				+ ", Sfz=" + Sfz + ", SfzPhoto=" + SfzPhoto + ", State=" + State + ", Status=" + Status
-				+ ", TotalPoints=" + Totalpoints + ", Type=" + Type + ", UcId=" + UcId + ", Uptime=" + Uptime
-				+ ", UserId=" + UserId + ", UserName=" + UserName + ", UserType=" + UserType + ", UserType1="
-				+ Usertype1 + ", WeiXinNumber=" + WeiXinNumber + ", Zip=" + Zip + ", inviteCode=" + inviteCode
-				+ ", rgtime=" + rgtime + ", strState=" + strState + ", IsInvite=" + IsInvite + ", UpUser=" + Upuser
-				+ ", code=" + code + "]";
+				+ Agentlevel + ", Amount=" + Amount + ", Brokername=" + Brokername + ", Email=" + Email
+				+ ", Headphoto=" + Headphoto + ", Hidm=" + Hidm + ", Id=" + Id + ", LevelId=" + LevelId
+				+ ", MobileYzm=" + MobileYzm + ", Nickname=" + Nickname + ", PartnersId=" + PartnersId
+				+ ", PartnersName=" + PartnersName + ", Password=" + Password + ", Phone=" + Phone + ", Qq=" + Qq
+				+ ", Realname=" + Realname + ", Regtime=" + Regtime + ", Regtime1=" + Regtime1 + ", Remember="
+				+ Remember + ", SecondPassword=" + SecondPassword + ", Sexy=" + Sexy + ", Sfz=" + Sfz + ", SfzPhoto="
+				+ SfzPhoto + ", State=" + State + ", Status=" + Status + ", Totalpoints=" + Totalpoints + ", Type="
+				+ Type + ", UcId=" + UcId + ", Uptime=" + Uptime + ", UserId=" + UserId + ", UserName=" + UserName
+				+ ", UserType=" + UserType + ", Usertype1=" + Usertype1 + ", WeiXinNumber=" + WeiXinNumber + ", Zip="
+				+ Zip + ", inviteCode=" + inviteCode + ", rgtime=" + rgtime + ", strState=" + strState + ", IsInvite="
+				+ IsInvite + ", Upuser=" + Upuser + ", code=" + code + "]";
 	}
 
 	public String getAddress() {
