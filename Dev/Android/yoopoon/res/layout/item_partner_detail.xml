@@ -1,77 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#ffffff" >
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:padding="10dp" 
+    android:layout_gravity="center_vertical">
     
-    <LinearLayout 
-        android:layout_width="fill_parent"
+    <ImageView 
+        android:id="@+id/iv_partde"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:orientation="horizontal">
-        
-        <ImageView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/partner_detail_avater"/>
-        
-        <LinearLayout 
-            android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            
-            <TextView 
-                android:id="@+id/tv_partner_detail_name"
-                style="@style/TextView_Partner_Detail"
-                android:text="杨婷"/>
-            <TextView 
-                android:id="@+id/tv_partner_detail_phone"
-                style="@style/TextView_Partner_Detail"
-                android:text="18313033523"/>
-            <TextView 
-                android:id="@+id/tv_partner_detail_professional"
-                style="@style/TextView_Partner_Detail"
-                android:text="教师"/>
-            <TextView 
-                android:id="@+id/tv_partner_detail_register_date"
-                style="@style/TextView_Partner_Detail"
-                android:text="2014-07-30"/>
-            
-        </LinearLayout>
-        
-        <ImageView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/partner_detail_level"/>
-        
-    </LinearLayout>
+        android:src="@drawable/partner_detail_level"/>
     
-    <View 
-        android:layout_width="fill_parent"
-        android:layout_height="0.1dp"
-        android:background="@drawable/vertical_line"/>
-    <LinearLayout 
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:gravity="center_vertical">
-        
-        <TextView 
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="贡献值：800"/>
-        
-        <Button 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="如何提高贡献值？"
-            android:background="#ffffff"
-            android:textSize="14sp"/>
-    </LinearLayout>
+    <TextView
+        android:padding="5dp"
+        android:id="@+id/tv_partde_name"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/iv_partde" 
+        style="@style/TextView_WrapContent"
+        android:text="姓名：优客惠"/>
+    
+    <TextView
+        android:padding="5dp"
+        android:layout_below="@id/tv_partde_name"
+        android:id="@+id/tv_partde_phone"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/iv_partde" 
+        style="@style/TextView_WrapContent"
+        android:text="电话：13508713650"/>
+    
+    <TextView
+        android:padding="5dp"
+        android:layout_below="@id/tv_partde_phone"
+        android:id="@+id/tv_partde_regtime"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/iv_partde" 
+        style="@style/TextView_WrapContent"
+        android:text="注册时间：2015-07-08"/>
     
 
-</LinearLayout>
+</RelativeLayout>

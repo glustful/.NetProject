@@ -12,7 +12,6 @@
  */
 package com.yoopoon.common.base.utils;
 
-
 /**
  * @ClassName: RegxUtil
  * @Description: TODO
@@ -40,6 +39,11 @@ public class RegxUtils {
 		int length = name.length();
 
 		return (length <= 5) && (length >= 2);
+	}
+
+	public static boolean isBankCard(String number) {
+		String regx = "^(\\d{16}|\\d{19})$";
+		return number.matches(regx);
 	}
 
 }

@@ -116,6 +116,8 @@ public class PersonSettingActivity extends MainActionBarActivity {
 	TextView tv_warning_email;
 	@ViewById(R.id.tv_person_setting_sfz_warning)
 	TextView tv_warning_sfz;
+	@ViewById(R.id.invite_code)
+	EditText et_code;
 	private Animation animation_shake;
 	private Vibrator vibrator;
 	private BrokerEntity entity;
@@ -203,6 +205,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		entity.setEmail(email);
 		entity.setSexy(sexy);
 		entity.setHeadphoto(user.getHeadUrl());
+		entity.setInviteCode(et_code.getText().toString());
 		entity.setWeiXinNumber(et_weixin.getText().toString());
 		entity.modifyInfo(new RequesListener() {
 			@Override

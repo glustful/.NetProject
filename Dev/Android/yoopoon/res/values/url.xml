@@ -4,8 +4,8 @@
     <!-- server host -->
 
 
-    <string name="url_host">http://api.iyookee.cn</string>  
-    <!-- <string name="url_host">http://192.168.1.199:9010</string>   -->
+    <!-- <string name="url_host">http://api.iyookee.cn</string>  --> 
+    <string name="url_host">http://192.168.1.199:9010</string>  
 
 
 
@@ -56,5 +56,9 @@
     <string name="url_bank_getall">/api/BankCard/SearchAllBankByUserToSelect</string>
     <string name="url_broker_withdraw_detail">/api/BrokerWithdrawDetail/AddBrokerWithdrawDetail</string>
     <string name="url_update_version">http://api.iyookee.cn/version.xml</string>
+    <string name="url_get_partner_list">/api/PartnerList/GetInviteForBroker</string>
+    <string name="url_get_ipartner_list">/api/PartnerList/PartnerListDetailed</string>
+    <string name="url_get_broker">/api/BrokerInfo/GetBroker</string>
+    <string name="url_delete_bank">/api/BankCard/DeleteBankCard</string>
 
 </resources>

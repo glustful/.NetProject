@@ -14,6 +14,5 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="/home/king/Engineering/workspace/Project_Zerg/Dev/Android/yoopoon/libs/mail.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

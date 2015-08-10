@@ -181,7 +181,7 @@ public class TakeCash2Activity extends MainActionBarActivity {
 									type = "推荐";
 									break;
 								case 2:
-									type = "奖励30元";
+									type = "奖励";
 									break;
 							}
 							String addTime = obj.optString("Addtime", "");
