@@ -1,9 +1,5 @@
 <nav ui-nav>
   <ul class="nav">
-    <!--<li class="nav-header m-v-sm hidden-folded">
-      UI Kits
-    </li>-->
-    
     <li access="superAdmin,admin">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
@@ -15,11 +11,9 @@
       </a>
       <ul class="nav nav-sub" >
         <li ui-sref-active="active">
-          <!--<a md-ink-ripple ui-sref="app.dashboard">Dashboard</a>-->
           <a md-ink-ripple ui-sref="page.CRM.AgentManager.index">经济人管理</a>
         </li>
         <li ui-sref-active="active">
-          <!--<a md-ink-ripple ui-sref="app.wall">Wall</a>-->
           <a md-ink-ripple ui-sref="page.CRM.BusMan.index">商家管理</a>
         </li>
           <li ui-sref-active="active">
@@ -89,56 +83,6 @@
 
       </ul>
     </li>
-    <!--<li ng-class="{active:$state.includes('ui.component')}" access="superAdmin,admin,merchant">-->
-      <!--<a md-ink-ripple>-->
-        <!--<span class="pull-right text-muted">-->
-          <!--<i class="fa fa-caret-down"></i>-->
-        <!--</span>-->
-        <!--<i class="icon mdi-action-subject i-20"></i>-->
-        <!--&lt;!&ndash;<span class="font-normal">Components</span>&ndash;&gt;-->
-         <!--<span class="font-normal">订/帐管理</span>-->
-      <!--</a>-->
-      <!--<ul class="nav nav-sub">-->
-        <!--<li ui-sref-active="active">-->
-          <!--&lt;!&ndash;<a md-ink-ripple ui-sref="ui.component.arrow">Arrow</a>&ndash;&gt;-->
-            <!--<a md-ink-ripple ui-sref="ui.component.Admin">Admin</a>-->
-        <!--</li>-->
-        <!--<li ui-sref-active="active">-->
-         <!--&lt;!&ndash; <a md-ink-ripple ui-sref="ui.component.badge-label">Badge &amp; Label</a>&ndash;&gt;-->
-            <!--<a md-ink-ripple ui-sref="ui.component.business">商家</a>-->
-        <!--</li>-->
-        <!--&lt;!&ndash;<li ui-sref-active="active">-->
-          <!--<a md-ink-ripple ui-sref="ui.component.button">Button</a>-->
-        <!--</li>-->
-        <!--<li ui-sref-active="active">-->
-          <!--<a md-ink-ripple ui-sref="ui.component.color">Color</a>-->
-        <!--</li>-->
-        <!--<li ui-sref-active="active">-->
-          <!--<a md-ink-ripple ui-sref="ui.component.grid">Grid</a>-->
-        <!--</li>-->
-        <!--<li ui-sref-active="active">-->
-          <!--<a md-ink-ripple ui-sref="ui.component.icon">Icon</a>-->
-        <!--</li>-->
-        <!--<li ui-sref-active="active">-->
-          <!--<a md-ink-ripple ui-sref="ui.component.list">List Group</a>-->
-        <!--</li>-->
-        <!--<li ui-sref-active="active">-->
-          <!--<a md-ink-ripple ui-sref="ui.component.nav">Nav</a>-->
-        <!--</li>-->
-        <!--<li ui-sref-active="active">-->
-          <!--<a md-ink-ripple ui-sref="ui.component.progressbar">Progressbar</a>-->
-        <!--</li>-->
-        <!--<li ui-sref-active="active">-->
-          <!--<a md-ink-ripple ui-sref="ui.component.streamline">Streamline</a>-->
-        <!--</li>-->
-        <!--<li ui-sref-active="active">-->
-          <!--<a md-ink-ripple ui-sref="ui.component.timeline">Timeline</a>-->
-        <!--</li>-->
-        <!--<li ui-sref-active="active">-->
-          <!--<a md-ink-ripple ui-sref="ui.component.uibootstrap">UI Bootstrap</a>-->
-        <!--</li>&ndash;&gt;-->
-      <!--</ul>-->
-    <!--</li>-->
     <li ng-class="{active:$state.includes('ui.material')}" access="superAdmin,admin,secretary,merchant">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
@@ -146,33 +90,15 @@
         </span>
         <i class="pull-right up"><b class="badge bg-success"></b></i>
         <i class="icon mdi-communication-quick-contacts-mail i-20"></i>
-        <!--<span class="font-normal">Material</span>-->
         <span class="font-normal">客户信息</span>
       </a>
       <ul class="nav nav-sub">
         <li ui-sref-active="active">
-         <!--<a md-ink-ripple ui-sref="ui.material.button">Button</a>-->
             <a md-ink-ripple ui-sref="page.CRM.CustomerInformation.index">带客推荐</a>
         </li>
         <li ui-sref-active="active">
-          <!--<a md-ink-ripple ui-sref="ui.material.icon">Icon</a>-->
           <a md-ink-ripple ui-sref="page.CRM.strike.index">所有成交</a>
         </li>
-        <!--<li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.material.color">Color</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.material.card">Card</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.material.form">Form</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.material.list">List</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.material.ngmaterial">NgMaterial</a>
-        </li>-->
       </ul>
     </li>
     <li ng-class="{active:$state.includes('ui.form')}" access="superAdmin,admin">
@@ -181,41 +107,12 @@
           <i class="fa fa-caret-down"></i>
         </span>
         <i class="icon mdi-action-favorite i-20"></i>
-        <!--<span class="font-normal">Form</span>-->
          <span class="font-normal">推荐经纪人</span>
       </a>
       <ul class="nav nav-sub">
         <li ui-sref-active="active">
-          <!--<a md-ink-ripple ui-sref="ui.form.layout">Form Layout</a>-->
           <a md-ink-ripple ui-sref="page.CRM.recommend.index">经纪人列表</a>
         </li>
-        <!--<li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.form.element">Form Element</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.form.validation">Form Validation</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.form.select">Select</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.form.editor">Editor</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.form.slider">Slider</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.form.tree">Tree</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.form.file-upload">File Upload</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.form.image-crop">Image Crop</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.form.editable">Editable</a>
-        </li>-->
       </ul>
     </li>
     <li ng-class="{active:$state.includes('ui.table')}" access="superAdmin,admin">
@@ -231,51 +128,20 @@
         <li ui-sref-active="active">
           <a md-ink-ripple ui-sref="page.CRM.partner.index">经纪人列表</a>
         </li>
-        <!--<li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.table.smart">Smart table</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.table.datatable">Datatable</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.table.footable">Footable</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.table.nggrid">NG Grid</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.table.uigrid">UI Grid</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.table.editable">Editable</a>
-        </li>-->
       </ul>
     </li>
-    <!--<li ui-sref-active="active">
-      <a md-ink-ripple ui-sref="ui.chart">
-        <i class="pull-right up"><b class="label bg-info">NEW</b></i> 
-        <i class="icon mdi-device-multitrack-audio i-20"></i>
-        <span class="font-normal">Charts</span>
-      </a>
-    </li>-->
     <li ng-class="{active:$state.includes('ui.map')}" access="superAdmin,admin">
         <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
         </span>
             <i class="icon mdi-action-credit-card i-20"></i>
-            <!--<span class="font-normal">Maps</span>-->
             <span class="font-normal">银行管理</span>
         </a>
         <ul class="nav nav-sub">
             <li ui-sref-active="active">
                 <a md-ink-ripple ui-sref="page.CRM.BankSet.index">银行设置</a>
             </li>
-
-
-            <!--<li ui-sref-active="active">
-              <a md-ink-ripple ui-sref="ui.map.vector">Vector Map</a>
-            </li-->
         </ul>
     </li>
     <li ng-class="{active:$state.includes('ui.map')}" access="superAdmin,admin">
@@ -284,7 +150,6 @@
           <i class="fa fa-caret-down"></i>
         </span>
         <i class="icon mdi-action-grade i-20"></i>
-        <!--<span class="font-normal">Maps</span>-->
         <span class="font-normal">等级配置</span>
       </a>
       <ul class="nav nav-sub">
@@ -295,9 +160,6 @@
           <li ui-sref-active="active">
               <a md-ink-ripple ui-sref="page.CRM.configure.indexset">等级设置</a>
         </li>
-        <!--<li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="ui.map.vector">Vector Map</a>
-        </li-->
       </ul>
     </li>
     <li ng-class="{active:$state.includes('pages')}" access="superAdmin,admin">
@@ -306,7 +168,6 @@
           <i class="fa fa-caret-down"></i>
         </span>
         <i class="icon mdi-communication-textsms i-20"></i>
-       <!-- <span class="font-normal">Pages</span>-->
           <span class="font-normal">短信管理</span>
       </a>
       <ul class="nav nav-sub">
@@ -320,47 +181,6 @@
                   <span>短信配置</span>
               </a>
           </li>
-
-        <!--<li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="page.settings">
-            <span>Settings</span>
-          </a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="page.blank">
-            <span>Blank</span>
-          </a>
-        </li>
-        <li>
-          <a md-ink-ripple ui-sref="access.signin">
-            <span>Sign In</span>
-          </a>
-        </li>
-        <li>
-          <a md-ink-ripple ui-sref="access.signup">
-            <span>Sign Up</span>
-          </a>
-        </li>
-        <li>
-          <a md-ink-ripple ui-sref="access.forgot-password">
-            <span>Forgot Password</span>
-          </a>
-        </li>
-        <li>
-          <a md-ink-ripple ui-sref="access.lockme">
-            <span>Lockme Screen</span>
-          </a>
-        </li>
-        <li>
-          <a md-ink-ripple ui-sref="404">
-            <span>Error 404</span>
-          </a>
-        </li>
-        <li>
-          <a md-ink-ripple ui-sref="505">
-            <span>Error 505</span>
-          </a>
-        </li>-->
       </ul>
     </li>
     <li ng-class="{active:$state.includes('ui.map')}" access="superAdmin,admin">
@@ -369,7 +189,6 @@
           <i class="fa fa-caret-down"></i>
         </span>
             <i class="icon mdi-action-wallet-membership i-20"></i>
-            <!--<span class="font-normal">Maps</span>-->
             <span class="font-normal">任务管理</span>
         </a>
         <ul class="nav nav-sub">
@@ -380,9 +199,6 @@
             <li ui-sref-active="active">
                 <a md-ink-ripple ui-sref="page.CRM.TaskConfigure.index">任务配置</a>
             </li>
-            <!--<li ui-sref-active="active">
-              <a md-ink-ripple ui-sref="ui.map.vector">Vector Map</a>
-            </li-->
         </ul>
     </li>
     <li access="superAdmin,admin">
@@ -407,16 +223,9 @@
             <li ui-sref-active="active">
                 <a md-ink-ripple ui-sref="page.CMS.content.index">内容页</a>
             </li>
-            <!--<li ui-sref-active="active">-->
-                <!--<a md-ink-ripple ui-sref="page.CMS.set.index">设置</a>-->
-            <!--</li>-->
             <li ui-sref-active="active">
                 <a md-ink-ripple ui-sref="page.CMS.fileManager.index">文件管理</a>
             </li>
-
-            <!--<li ui-sref-active="active">
-              <a md-ink-ripple ui-sref="ui.map.vector">Vector Map</a>
-            </li-->
         </ul>
     </li>
     <li access="superAdmin,admin">
@@ -562,10 +371,6 @@
             <li ui-sref-active="active">
                 <a md-ink-ripple ui-sref="page.event.Coupons.active.active">激活优惠券</a>
             </li>
-
-            <!--<li ui-sref-active="active">
-              <a md-ink-ripple ui-sref="ui.map.vector">Vector Map</a>
-            </li-->
         </ul>
     </li>
     <li>
@@ -581,10 +386,6 @@
             <li ui-sref-active="active">
                 <a md-ink-ripple ui-sref="page.event.chip.chip">众筹列表</a>
             </li>
-
-            <!--<li ui-sref-active="active">
-              <a md-ink-ripple ui-sref="ui.map.vector">Vector Map</a>
-            </li-->
         </ul>
     </li>
     <li>
@@ -600,10 +401,6 @@
             <li ui-sref-active="active">
                 <a md-ink-ripple ui-sref="page.Trading.CommissionRatio.index">佣金比例</a>
             </li>
-
-            <!--<li ui-sref-active="active">
-              <a md-ink-ripple ui-sref="ui.map.vector">Vector Map</a>
-            </li-->
         </ul>
     </li>
       <li>

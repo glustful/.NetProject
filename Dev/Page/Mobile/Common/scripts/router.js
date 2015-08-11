@@ -78,7 +78,7 @@ app.run(
             })
             .state('app.home',{
                 url:'/home',
-                templateUrl:'modules/Index/view/index.html',
+                templateUrl:'modules/Index/view/Index.html',
                 resolve:load(__uri('/modules/Index/render/homeController.js')),
                 data:{title:'首页'}
             })
