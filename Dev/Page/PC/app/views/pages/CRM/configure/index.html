@@ -8,23 +8,29 @@
     <table class="table table-striped m-b-none tablet breakpoint footable-loaded footable" ui-jp="footable" data-filter="#filter" data-page-size="5">
         <thead>
         <tr>
-            <th data-toggle="true" class="footable-visible footable-first-column footable-sortable footable-sorted">等级名称<span class="footable-sort-indicator"></span></th>
-            <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">描述<span class="footable-sort-indicator"></span></th>
-            <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">图标<span class="footable-sort-indicator"></span></th>
-            <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">操作<span class="footable-sort-indicator"></span></th>
-            <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">时间<span class="footable-sort-indicator"></span></th>
+            <th ng-click="getList('OrderByName')" data-toggle="true" class="footable-visible footable-sortable ">等级名称
+                <span class="fa {{OrderByName}}"></span></th>
+            <th ng-click="getList('OrderByDescribe')" data-hide="phone" class="footable-visible footable-last-column footable-sortable">描述
+                <span class="fa {{OrderByDescribe}}"></span></th>
+            <th  data-hide="phone" class="footable-visible footable-last-column footable-sortable">图标
+                </th>
+
+            <th ng-click="getList('OrderByAddtime')" data-hide="phone" class="footable-visible footable-last-column footable-sortable">时间
+                <span class="fa {{OrderByAddtime}}"></span></th>
+            <th   data-hide="phone" class="footable-visible footable-last-column footable-sortable">操作
+            </th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="item in list">
             <td >{{item.Name}}</td>
             <td >{{item.Describe}}</td>
-            <td ><img src="http://img.yoopoon.com/{{item.Url}}" width="10%" height="10%"/></td>
-            <td class="col-2" >
-                <a ui-sref="page.CRM.configure.edit({id: item.Id})"> <span class="label bg-success" title="Active">编辑</span></a>
-                <a href="#"> <span class="label yellow" title="Active" ng-click="open(item.Id)">删除</span></a>
-            </td>
+            <td ><img src="http://img.iyookee.cn/{{item.Url}}@40w_40h_70q"/></td>
             <td>{{item.Addtime | dateFilter}}</td>
+            <td class="col-2" >
+                <a ui-sref="page.CRM.configure.edit({id: item.Id})" class="btn btn-info btn-sm"> <span title="Active"><i md-ink-ripple="" class="fa fa-fw m-r-xs fa-edit"></i>编辑</span></a>
+                <a href="#" class="btn btn-info btn-sm"> <span  title="Active" ng-click="open(item.Id)"><i md-ink-ripple="" class="fa fa-fw m-r-xs fa-minus"></i>删除</span></a>
+            </td>
         </tr>
         <tr>
             <td class="text-center" colspan="4">{{errorTip}}</td>

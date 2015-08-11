@@ -58,18 +58,21 @@ namespace Zerg.Controllers.CRM
         /// <param name="page">页码</param>
         /// <param name="pageSize">页面数量</param>
         /// <returns>推荐经纪人列表</returns>
-
+        /// <param name="orderByAll">排序参数{序号（OrderById），客户姓名（OrderByClientname），联系电话（OrderByPhone），
+        /// 经纪人名（OrderByBrokername），操作时间（OrderByUptime）}</param>
+        /// <param name="isDes">是否降序</param>
         [Description("通过客户姓名查询到经纪人列表")]
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetClientInfoList(EnumBRECCType status, string clientName, int page, int pageSize)
+        public HttpResponseMessage GetClientInfoList(EnumBRECCType status, string clientName, int page, int pageSize, EnumBrokerRECClientSearchOrderBy orderByAll = EnumBrokerRECClientSearchOrderBy.OrderById, bool isDes = true)
         {
             var condition = new BrokerRECClientSearchCondition
             {
-                OrderBy = EnumBrokerRECClientSearchOrderBy.OrderById,
+                OrderBy =orderByAll ,
                 Page = page,
                 PageCount = pageSize,
                 Status = status,
                 Clientname = clientName,
+                IsDescending =isDes 
                 //Brokername = clientName
             };
 
@@ -244,7 +247,7 @@ namespace Zerg.Controllers.CRM
                 var conditon2 = new BrokerRECClientSearchCondition
                 {
                     OrderBy =EnumBrokerRECClientSearchOrderBy.OrderByTime,
-                     Page = page,
+                    Page = page,
                     PageCount = 10,
                     Brokers = broker
                 };

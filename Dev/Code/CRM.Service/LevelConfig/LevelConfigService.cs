@@ -124,6 +124,19 @@ namespace CRM.Service.LevelConfig
 						case EnumLevelConfigSearchOrderBy.OrderById:
 							query = condition.isDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
 							break;
+                        case EnumLevelConfigSearchOrderBy.OrderByName:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Name) : query.OrderBy(q => q.Name);
+                            break;
+                        case EnumLevelConfigSearchOrderBy.OrderByDescribe:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Describe) : query.OrderBy(q => q.Describe);
+                            break;
+                        case EnumLevelConfigSearchOrderBy.OrderByAddtime:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Addtime) : query.OrderBy(q => q.Addtime);
+                            break;
+                        case EnumLevelConfigSearchOrderBy.OrderByValue:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Value) : query.OrderBy(q => q.Value);
+                            break;
+                      
                     }
 					
 				}

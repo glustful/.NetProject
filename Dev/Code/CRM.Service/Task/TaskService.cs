@@ -177,6 +177,18 @@ namespace CRM.Service.Task
 						case EnumTaskSearchOrderBy.OrderById:
 							query = condition.IsDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
 							break;
+                        case EnumTaskSearchOrderBy.OrderByTaskname:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Taskname) : query.OrderBy(q => q.Taskname);
+                            break;
+                        case EnumTaskSearchOrderBy.OrderByName:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.TaskType.Name) : query.OrderBy(q => q.TaskType.Name);
+                            break;
+                        case EnumTaskSearchOrderBy.OrderByEndtime:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Endtime) : query.OrderBy(q => q.Endtime);
+                            break;
+                        case EnumTaskSearchOrderBy.OrderByAdduser:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Adduser) : query.OrderBy(q => q.Adduser);
+                            break;
 
                     }
 					

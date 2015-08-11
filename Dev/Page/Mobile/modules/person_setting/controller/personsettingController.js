@@ -6,6 +6,7 @@
 var httpimguri='';
 var app = angular.module("zergApp");
 app.controller('personsettingController',['$scope','$http','$state','AuthService',function($scope,$http,$state,AuthService){
+    $scope.imgUrl=SETTING.ImgUrl;
     $scope.olduser={
         Brokername:'',
         Realname:'',
@@ -72,11 +73,16 @@ app.controller('personsettingController',['$scope','$http','$state','AuthService
                 if(data.Status) {
                     var img = document.getElementById('imghead');
                     img.src = $scope.olduser.Headphoto;
-                    $state.go("app.personal");
+                    $scope.tips="资料更新成功！";
                     location.reload([true]);
+                    $state.go("app.personal");
 
                 }
+
             });
+
+
+
     }
 }])
 /////////////////////////////头像修改////////////////////////////

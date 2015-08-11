@@ -38,7 +38,7 @@
         <p class="zg">共{{Count}}个楼盘</p>
         <div class=" message-storeroom" ng-repeat="item in List">
             <div class="main-storeroom cf">
-                <a class="fl img" href="#/app/housesPic?productId={{item.Id}}"><img src="http://img.yoopoon.com/{{item.Productimg}}" alt="蓝光&nbsp;·&nbsp;颐明园"width="224" height="170"/></a>
+                <a class="fl img" href="#/app/housesPic?productId={{item.Id}}"><img src="{{ImgUrl+ item.Productimg}}@224w_170h_70Q" alt="蓝光&nbsp;·&nbsp;颐明园"width="224" height="170"/></a>
                 <div class="detail-storeroom fl ">
                     <p class="yhy">{{item.Productname}}</p>
                     <p class="yuan">{{item.Price}}/m²</p>

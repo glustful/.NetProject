@@ -107,7 +107,11 @@ namespace Trading.Entity.Model
 	{
 
         OrderById,
-        OrderByAddTime
+        OrderByAddTime,
+        OrderByPrice,
+        OrderByCommission,
+        OrderByDealcommission,
+        OrderByRecCommission
 	}
 
 }

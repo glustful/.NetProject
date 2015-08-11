@@ -7,7 +7,7 @@ app.controller('HousesBuyController',['$http','$scope','$stateParams',function($
 
     })
 
-
+    $scope.ImgUrl=SETTING.ImgUrl
     $http.get(SETTING.ApiUrl+'/Brand/GetByBrandId?BrandId='+$stateParams.BrandId,{'withCredentials':true}).success(function (data1) {
         $scope.brand=data1;
 

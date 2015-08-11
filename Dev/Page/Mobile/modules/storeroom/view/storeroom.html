@@ -96,7 +96,7 @@
     <div id="carousel-bg" style="padding-top:70px;">
     <carousel interval="2000">
         <slide ng-repeat="slide in content" active="slide.active">
-            <img src="http://img.yoopoon.com/{{slide.TitleImg}}" class="img-full" alt="成为经济人轻松赚大钱" width="640" height="230" />
+            <img src="{{imgUrl+slide.TitleImg}}@640w_230h_70Q" class="img-full" alt="成为经济人轻松赚大钱" width="640" height="230" />
         </slide>
     </carousel>
 </div>
@@ -115,7 +115,7 @@
                 <!--{{item.Productimg}}-->
                 <div class="main-storeroom cf">
                 <a class="fl img" href="#/app/housesPic?productId={{item.Id}}">
-                    <img src="http://img.yoopoon.com/{{item.Productimg}}" alt="蓝光&nbsp;·&nbsp;颐明园"width="231px" height="188px"/></a>
+                    <img src="{{imgUrl+item.Productimg}}@231w_188h_70Q" alt="蓝光&nbsp;·&nbsp;颐明园"width="231px" height="188px"/></a>
                 <div class="detail-storeroom fl ">
                     <p class="yhy">{{item.Productname}}</p>
                     <p class="yuan">{{item.Price}}元/m²</p>

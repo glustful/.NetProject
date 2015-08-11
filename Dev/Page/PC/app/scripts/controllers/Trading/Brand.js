@@ -8,20 +8,47 @@ angular.module("app").controller('BrandListController', [
         $scope.searchCondition = {
             page: 1,
             pageSize: 10,
-            className:''
+            className:'',
+            orderByAll:"OrderByAddtime",//排序
+            isDes:true//升序or降序
            // className:'房地产'
         };
-
+        var iniImg=function(){
+            $scope.OrderById="footable-sort-indicator";
+            $scope.OrderByAddtime="footable-sort-indicator";
+        }
+        iniImg();
+        $scope.OrderById="fa-caret-down";//升降序图标
         //--------------------------------------------获取项目列表----------------------------------------------//
-        $scope.getList  = function() {
+        $scope.getList  = function(orderByAll) {
+           //$scope.searchCondition.orderByAll=orderByAll ;
+           // alert($scope.searchCondition.isDes);
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll ;
+                if($scope.searchCondition.isDes==true)//如果为降序，
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                    iniImg();//将所有的图标变成一个月
+                    eval($scope.d);//把$scope.d当做语句来执行，把当前点击图片变成向上
+                    $scope.searchCondition.isDes=false;//则变成升序
+                }
+                else if($scope.searchCondition.isDes==false)
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
+                    $scope.searchCondition.isDes=true;
+                }
+            }
             $http.get(SETTING.ApiUrl+'/Brand/GetAllBrand',{
                 params:$scope.searchCondition,
                 'withCredentials':true
             }).success(function(data){
                 $scope.list = data.List;
-                $scope.searchCondition.page = data.Condition.page;
+                $scope.searchCondition.page = data.Condition.Page;
                 $scope.searchCondition.pageSize = data.Condition.PageCount;
                 $scope.totalCount = data.totalCount;
+
             });
         };
         $scope.getList();

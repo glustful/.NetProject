@@ -5,26 +5,26 @@
         <div class="line b-b m-v-md"></div>
         <div class="alert alert-info" align="center">{{output}}</div>
     </div>
-    <div class="panel panel-default" align="center">
+    <div class=" panel-default panel panel-card ng-scope" align="center">
         <div class="panel-heading">商品列表</div>
-        <table st-table="rowCollectionPage" class="table table-striped" align="center">
+        <table st-table="rowCollectionPage" class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" align="center">
             <thead>
             <tr>
                 <th align="center">缩略图</th>
                 <th align="center">名称</th>
-                <th align="center">价格</th>
-                <th align="center">推荐佣金</th>
-                <th align="center">带客佣金</th>
-                <th align="center">成交佣金</th>
+                <th align="center"  ng-click="getList('OrderByPrice')" data-hide="phone,tablet" class="footable-visible footable-sortable">价格<span class="fa {{OrderByPrice}}"></span></th>
+                <th align="center"  ng-click="getList('OrderByRecCommission')"  data-hide="phone,tablet" class="footable-visible footable-sortable">推荐佣金<span class="fa {{OrderByRecCommission}}"></span></th>
+                <th align="center"  ng-click="getList('OrderByCommission')" data-hide="phone,tablet" class="footable-visible footable-sortable">带客佣金<span class="fa {{OrderByCommission}}"></span></th>
+                <th align="center"  ng-click="getList('OrderByDealcommission')" data-hide="phone,tablet" class="footable-visible footable-sortable">成交佣金<span class="fa {{OrderByDealcommission}}"></span></th>
                 <th align="center">项目</th>
-                <th align="center">库存</th>
-                <th align="center">添加时间</th>
+                <th align="center"  ng-click="getList('OrderByStockRule')" data-hide="phone,tablet" class="footable-visible footable-sortable">库存<span class="fa {{OrderByStockRule}}"></span></th>
+                <th align="center" ng-click="getList('OrderByAddtime')"  data-hide="phone,tablet" class="footable-visible footable-sortable">添加时间 <span class="fa {{OrderByAddtime}}"></span></th>
                 <th align="center">操作</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="row in list">
-                <td><img width="40" height="40" src={{img+row.Productimg}}></td>
+                <td><img width="40" height="40" src={{img+row.Productimg}}@40w_40h_70q></td>
                 <td>{{row.Productname }}</td>
                 <td>{{row.Price }}</td>
                 <td>{{row.RecCommission }}</td>
@@ -34,7 +34,7 @@
                 <td>{{row.StockRule }}</td>
                 <td>{{row.Addtime | dateFilter }}</td>
                 <td>
-                    <a ui-sref="page.Trading.product.edit({productId:row.Id})" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 编辑
+                    <a ui-sref="page.Trading.product.edit({productId:row.Id})" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-edit"></i> 编辑
                     </a>
                     <button ng-click='del(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
                     </button>

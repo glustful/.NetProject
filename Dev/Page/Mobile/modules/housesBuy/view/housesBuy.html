@@ -4,7 +4,7 @@
 
             <div class="pic-housesBuy">
                 <a href="#">
-                    <img src="http://img.yoopoon.com/{{brand.Parameters['图片banner']}}"  width="640" height="290"/>
+                    <img src="{{ImgUrl+brand.Parameters['图片banner']}}@640w_290h_70Q"  width="640" height="290"/>
 
                     <div class="summary cf"><span class="zt fl">{{brand.Bname}}<br/><small>{{brand.SubTitle}} </small></span><span class="lp fr">楼盘<br/>详情</span></div>
                     <div class="summaryBg"> </div>
@@ -88,7 +88,7 @@
                             <p class="housesType">{{item.Productname}}</p>
                             <p>{{item.SubTitle}}</p>
                             <span class="average">均价{{item.Price}}元/m²起</span>
-                            <div><img src="http://img.yoopoon.com/{{item.Productimg}}" alt="户型图" width="231" height="188"></div>
+                            <div><img src="{{ImgUrl+ item.Productimg}}@231w_188h_70Q" alt="户型图" width="231" height="188"></div>
                         </div>
                         <a href="tel:{{item.Phone}}"><span class="ask">咨询热线</span></a>
                         </a>
