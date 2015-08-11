@@ -242,7 +242,7 @@ namespace Zerg.Controllers.CRM
              int Id;
              if (!Int32.TryParse(id, out Id))
              {
-                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据异常"));
+                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据转换异常"));
              }
              var user = (UserBase)_workContext.CurrentUser;
              if (user != null)
@@ -268,7 +268,7 @@ namespace Zerg.Controllers.CRM
                         var Bank=_bankcardService.GetBankCardById(Id);
                         if (Bank==null)
                         {
-                          return PageHelper.toJson(PageHelper.ReturnValue(false, "数据异常"));
+                          return PageHelper.toJson(PageHelper.ReturnValue(false, "此卡不存在"));
                         }
                         BankCardEntity[] banks={Bank};
                       BrokerWithdrawSearchCondition bwithSearchCon=new BrokerWithdrawSearchCondition{
@@ -285,7 +285,7 @@ namespace Zerg.Controllers.CRM
                     }
                     else
                     {
-                        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据异常"));
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "此卡不是您的，不能删除！"));
                     }
                                      
                  }
