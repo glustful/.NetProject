@@ -290,6 +290,10 @@ namespace Zerg.Controllers.CRM
                                      
                  }
              }
+             else
+             {
+                 return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+             }
            
            }
            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据异常"));
