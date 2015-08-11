@@ -221,6 +221,8 @@ namespace Zerg.Controllers.CRM
         /// <summary>
         /// 传入会员参数,检索会员信息,返回会员列表
         /// </summary>
+        /// <param name="orderByAll">排序类型，前端传来的值是OrderBy+要排序的字段名，例如根据Id排序为OrderById</param>
+        /// <param name="isDes">是否降序</param>
         /// <param name="userType">用户类型</param>
         /// <param name="name">用户名称</param>
         /// <param name="phone">电话</param>
@@ -229,7 +231,7 @@ namespace Zerg.Controllers.CRM
         /// <returns></returns>
         [HttpGet]
         [Description("传入会员参数,获取会员列表")]
-        public HttpResponseMessage SearchBrokers(EnumUserType userType, string phone = null, string name = null, int page = 1, int pageSize = 10, int state = 2)
+        public HttpResponseMessage SearchBrokers( EnumUserType userType,EnumBrokerSearchOrderBy orderByAll = EnumBrokerSearchOrderBy .OrderById, bool isDes = true,string phone = null, string name = null, int page = 1, int pageSize = 10, int state = 2)
         {
             //var phones = new int[1];
 
@@ -237,11 +239,12 @@ namespace Zerg.Controllers.CRM
             {
                 Brokername = name,
                 Phone1 = phone,
-                OrderBy = EnumBrokerSearchOrderBy.OrderById,
                 Page = Convert.ToInt32(page),
                 PageCount = 10,
                 UserType = userType,
-                State = state
+                State = state,
+                OrderBy = orderByAll,
+                isDescending =isDes 
 
             };
 

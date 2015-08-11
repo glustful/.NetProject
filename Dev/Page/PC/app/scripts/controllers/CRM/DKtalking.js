@@ -1,19 +1,46 @@
+
 /**
- *
+ *带客洽谈相关业务操作
  */
 
-//获取洽谈中业务
+//region 获取洽谈业务信息
 angular.module("app").controller('DKTalkingList', [
     '$http','$scope',function($http,$scope) {
         $scope.searchCondition = {
             status:"洽谈中",
             Brokername:"",
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:'OrderByUptime',
+            isDes:true
         };
 
         ////////////////////////���Ǣ̸�б�////////////////////////////////////
-        var  getTagList1 =  function(){
+        var iniImg=function(){
+            $scope.OrderById="footable-sort-indicator";
+            $scope.OrderByClientname="footable-sort-indicator";
+            $scope.OrderBySecretaryName="footable-sort-indicator";
+            $scope.OrderByProjectname="footable-sort-indicator";
+            $scope.OrderByUptime="footable-sort-indicator";
+        }
+        iniImg();
+        $scope.OrderByUptime="fa-caret-down";
+        var  getTagList1 =  function(orderByAll){
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll;
+                if($scope.searchCondition.isDes==true){
+                    $scope.searchCondition.isDes=false;
+                    $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                    iniImg();
+                    eval($scope.d);
+                }
+                else if($scope.searchCondition.isDes==false){
+                    $scope.searchCondition.isDes=true;
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
+                }
+            }
             $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetLeadClientInfoByBrokerName',{
                 params:$scope.searchCondition,
                 'withCredentials':true
@@ -29,11 +56,11 @@ angular.module("app").controller('DKTalkingList', [
         };
         $scope.getList = getTagList1;
         getTagList1();
-        ///////////////////////////////////////////////////////////////////////
     }
 ]);
+//endregion
 
-//获取洽谈中业务详细
+//region 获取洽谈业务详细信息以及洽谈业务流程变更操作
 angular.module("app").controller('DKTaklDetial',[
     '$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams) {
         $http.get(SETTING.ApiUrl + '/BrokerLeadClient/GetBlDetail/'+ $stateParams.id,{
@@ -61,3 +88,4 @@ angular.module("app").controller('DKTaklDetial',[
         };
     }
 ]);
+//endregion

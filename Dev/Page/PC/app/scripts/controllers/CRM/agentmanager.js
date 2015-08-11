@@ -9,12 +9,29 @@ angular.module("app").controller('agentmanagerIndexController', [
             userType:"经纪人",
             page: 1,
             pageSize: 10,
-            state:2//经纪人状态，1正常，0删除，-1注销
+            state:2,//经纪人状态，1正常，0删除，-1注销
+            orderByAll:"OrderByUserRegtime",//排序
+            isDes:true//升序or降序
         };
+        $scope.UpOrDownImgClass="fa-caret-down";//升降序图标
         $scope.SImg=SETTING.ImgUrl;//图片服务器基础路径
 //------------------------获取经纪人列表 start--------------------
         var page= 0,howmany=0;
-        $scope.getList  = function() {
+        $scope.getList  = function(orderByAll) {
+
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll ;
+            if($scope.searchCondition.isDes==true)//如果为降序，
+            {
+                $scope.UpOrDownImgClass="fa-caret-up";//改变成升序图标
+                $scope.searchCondition.isDes=false;//则变成升序
+            }
+            else if($scope.searchCondition.isDes==false)
+            {
+                $scope.UpOrDownImgClass="fa-caret-down";
+                $scope.searchCondition.isDes=true;
+            }
+            }
             if($scope.searchCondition.phone==undefined)
             {$scope.searchCondition.phone="";}
             $http.get(SETTING.ApiUrl+'/BrokerInfo/SearchBrokers',{

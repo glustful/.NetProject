@@ -1,29 +1,29 @@
-<div class="window" ng-controller="newAddressController">
-    <h2 class="address">新增地址</h2>
-    <ul class="detailAddress">
-        <li  ng-class="{removeBorder:province}">
+<div ng-controller="newAddressController">
+    <h2 class="addAddress">新增地址</h2>
+    <!--<ul class="detailAddress">-->
+        <!--<li  ng-class="{removeBorder:province}">-->
 
-               <span>{{selectedProvinces}}<br/><small>所在省份</small></span>
-            <a ng-click="open()" href=""><b class="pull-right dy" ng-show="down">&gt</b></a>
+               <!--<span><br/><small>所在省份</small></span>-->
+            <!--<a ng-click="open()" href=""><b class="pull-right dy" ng-show="down">&gt</b></a>-->
 
-            <ul ng-show="province">
-                <li ng-click="selectProvince()">云南省</li>
-            </ul>
-        </li>
-        <li>
-            <a href="">
-                <span>昆明市<br/><small>城市/县/区</small></span>
-                <b class="pull-right dy">&gt</b>
-            </a>
-        </li>
-        <li>
-            <a href="">
-                <span>联盟街道<br/><small>所在街道</small></span>
-                <b class="pull-right dy">&gt</b>
-            </a>
-        </li>
-    </ul>
-    <form name="form" novalidate>
+            <!--<ul ng-show="province">-->
+                <!--<li ng-click="selectProvince()">云南省</li>-->
+            <!--</ul>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<a href="">-->
+                <!--<span>昆明市<br/><small>城市/县/区</small></span>-->
+                <!--<b class="pull-right dy">&gt</b>-->
+            <!--</a>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<a href="">-->
+                <!--<span>联盟街道<br/><small>所在街道</small></span>-->
+                <!--<b class="pull-right dy">&gt</b>-->
+            <!--</a>-->
+        <!--</li>-->
+    <!--</ul>-->
+    <form name="form" class="form-horizontal">
         <div class="form-group">
             <label for="detailAddress">请输入详细地址</label>
             <textarea id="detailAddress" name="address" class="form-control" rows="4" placeholder="详细地址" required></textarea>
@@ -35,7 +35,7 @@
         </div>
         <div class="form-group">
             <label for="tell">请输入手机号码</label>
-            <input type="number" class="form-control" id="tell" name="userTell" required>
+            <input type="tel" class="form-control" id="tell" name="userTell" required>
         </div>
         <button type="submit" class="btn btn-default confirm">确认新增</button>
     </form>

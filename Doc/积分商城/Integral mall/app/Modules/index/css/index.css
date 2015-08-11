@@ -54,6 +54,8 @@
     color: #fff;
     padding-left: 5%;
     font-size: 1.2em;
+    height: 30px;
+    line-height: 30px;
 }
 .main .food {
     padding-top:1%;
@@ -67,8 +69,8 @@
     background-color: #ff3000;
     color: #ffe5df;
     width: 25%;
-    height: 20%;
+    height: 40px;
     border-radius: 5px;
-    font-size: 1.2em;
-    margin: 2% 1% 0 0;
+    font-size: 1.1em;
+    margin: 5px 1px 0 0;
 }

@@ -1,25 +1,28 @@
-.address{
+.addAddress{
     border-bottom: 10px solid #ebebeb;
 }
-.detailAddress li{
-    padding:20px;
-    border-bottom: 1px solid #ebebeb;
-}
-.detailAddress li span{
-    color: #414141;
-    font-size: 1.4em;
-}
-.detailAddress li span small{
-    color:#a0a0a0;
-    font-size: 0.8em;
-}
-.dy{
-    font-size: 3.0em;
-    margin-top: -30px;
-    color: #414141;
-}
+/*.detailAddress li{*/
+    /*padding:20px;*/
+    /*border-bottom: 1px solid #ebebeb;*/
+/*}*/
+/*.detailAddress li span{*/
+    /*color: #414141;*/
+    /*font-size: 1.4em;*/
+/*}*/
+/*.detailAddress li span small{*/
+    /*color:#a0a0a0;*/
+    /*font-size: 0.8em;*/
+/*}*/
+/*.dy{*/
+    /*font-size: 3.0em;*/
+    /*margin-top: -30px;*/
+    /*color: #414141;*/
+/*}*/
 form{
     font-size: 1.5em;
+}
+.form-group textarea,.form-group input{
+    width: 100%;
 }
 form .confirm{
     width: 100%;
@@ -30,6 +33,6 @@ form .confirm{
     margin-top: 100px;
 }
 
-.detailAddress .removeBorder{
-    border-bottom:none;
-}
+/*.detailAddress .removeBorder{*/
+    /*border-bottom:none;*/
+/*}*/

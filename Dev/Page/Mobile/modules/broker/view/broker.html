@@ -5,7 +5,7 @@
             <div class="pic" >
                 <carousel interval="3000">
                     <slide ng-repeat="slide in content" active="slide.active">
-                        <img src="http://img.yoopoon.com/{{slide.TitleImg}}" class="img-full">
+                        <img src="{{ImgUrl+ slide.TitleImg}}@640w_230h_70Q" class="img-full">
                     </slide>
                 </carousel>
                 <!--<ul>-->
@@ -105,7 +105,7 @@
 
                 <ul>
                     <li class="brand " ng-repeat="item in List">
-                        <a href="#/app/BrandDetail?brandId={{item.BrandId}}"><img src="http://img.yoopoon.com/{{item.Bimg}}" alt="蓝光&nbsp;·&nbsp;颐明园" width="620" height="160"/>
+                        <a href="#/app/BrandDetail?brandId={{item.BrandId}}"><img src="{{ImgUrl+ item.Bimg}}@620w_160h_70Q" alt="蓝光&nbsp;·&nbsp;颐明园" width="620" height="160"/>
                             <!--<img src="modules/broker//static/image/broker/lp1.png" alt="中天·水云间" width="620" height="160"/>-->
                             <div class="summary"><span>[{{ item.BrandName}}]</span>
                                 <span>户型:{{item.HouseType}}</span>

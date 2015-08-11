@@ -106,7 +106,10 @@ namespace CRM.Entity.Model
 	{
 
 		OrderById,
-
+        OrderByTaskname,
+        OrderByName,
+        OrderByEndtime,
+        OrderByAdduser
 	}
 
 }

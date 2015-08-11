@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Linq;
-using YooPoon.Core.Data;
-using YooPoon.Core.Logging;
 using CRM.Entity.Model;
-using CRM.Service.EventOrder;
+using YooPoon.Core.Logging;
+using Zerg.Common.Data;
 
 namespace CRM.Service.Event
 {
     public class EventService : IEventService
     {
-        private readonly Zerg.Common.Data.ICRMRepository<EventEntity> _eventRepository;
+        private readonly ICRMRepository<EventEntity> _eventRepository;
         private readonly ILog _log;
 
-        public EventService(Zerg.Common.Data.ICRMRepository<EventEntity> eventRepository, ILog log)
+        public EventService(ICRMRepository<EventEntity> eventRepository, ILog log)
         {
             _eventRepository = eventRepository;
             _log = log;
@@ -64,7 +63,7 @@ namespace CRM.Service.Event
         {
             try
             {
-                return _eventRepository.GetById(id); ;
+                return _eventRepository.GetById(id);
             }
             catch (Exception e)
             {
@@ -96,6 +95,12 @@ namespace CRM.Service.Event
                     {
                         case EnumEventSearchOrderBy.OrderById:
                             query = condition.IsDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
+                            break;
+                        case EnumEventSearchOrderBy.OrderByEndtime:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Endtime) : query.OrderBy(q => q.Endtime);
+                            break;
+                        case EnumEventSearchOrderBy.OrderByStarttime:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Starttime) : query.OrderBy(q => q.Starttime);
                             break;
                     }
 

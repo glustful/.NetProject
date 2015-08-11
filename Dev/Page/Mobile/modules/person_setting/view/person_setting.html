@@ -4,7 +4,7 @@
 	               <div class="headphoto">
 	               	
 	                   <div class="touxiang" id="preview">
-	                       <img src="http://img.yoopoon.com/{{olduser.Headphoto}}" id="imghead">
+	                       <img src="{{imgUrl+olduser.Headphoto}}@174w_174h_70Q" id="imghead">
 	                   </div>
 	                   <span class="input-file">
 	                   	<a id="Uptext">头像设置</a>
@@ -43,6 +43,7 @@
                        <p> 邀请码</p>
                        <input type="text" class="password old" placeholder="请输入邀请码" name="InvitedCode"  ng-model="olduser.code"/><br/>
                       </div>
+                       <p class="errorTip">{{tips}}</p>
                        <button class="save_button" type="submit" ng-disabled="information_form.$invalid">保存</button>
 
                    </form>

@@ -64,7 +64,9 @@ namespace Trading.Entity.Model
 	{
 
 		OrderById,
-        OrderByAddtime
+        OrderByAddtime,
+        
+        
 
 	}
 

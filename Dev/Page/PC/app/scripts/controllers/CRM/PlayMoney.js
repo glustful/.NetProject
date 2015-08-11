@@ -2,15 +2,41 @@
  * Created by chenda on 2015/7/9.
  */
 
-/*======================================获取提现信息==============================================================*/
+//region 获取提现信息
 angular.module("app").controller('playMoney',[
     '$http','$scope','AuthService',function($http,$scope,AuthService){
 
         $scope.searchCondition = {
             page:1,
-            pageSize:10
+            pageSize:10,
+            orderByAll:'OrderById',
+            isDes:true
         };
-        var getTagList = function(){
+        var iniImg=function(){
+            $scope.OrderById="footable-sort-indicator";
+            $scope.OrderByWithdrawTime="footable-sort-indicator";
+            $scope.OrderByaccacount="footable-sort-indicator";
+            $scope.OrderByBrokername="footable-sort-indicator";
+            $scope.OrderByState="footable-sort-indicator";
+        }
+        iniImg();
+        $scope.OrderById="fa-caret-down";
+        var getTagList = function(orderByAll){
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll;
+                if($scope.searchCondition.isDes==true){
+                    $scope.searchCondition.isDes=false;
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
+                }
+                else if($scope.searchCondition.isDes==false){
+                    $scope.searchCondition.isDes=true;
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
+                }
+            }
             $http.get(SETTING.ApiUrl+'/BrokerWithdraw/GetBrokerWithdraw',{
                 params:$scope.searchCondition
             }).success(function(data){
@@ -24,8 +50,6 @@ angular.module("app").controller('playMoney',[
         $scope.getList = getTagList;
         getTagList();
 
-
-        //////////////////////////////////////////////////////////////////////////////////////////
         $scope.BrokerWithdrawId=0;
         $scope.GetBrokerWithdrawById = function (WithdrawId) {
             $scope.BrokerWithdrawId=WithdrawId;
@@ -34,7 +58,7 @@ angular.module("app").controller('playMoney',[
                 $scope.PayInfo.Id = data.ID;
             });
         };
-        //////////////////////////////////////////////////////////////////////////////////////////////
+
         $scope.PayInfo = {
             Id:"",
             Ids:"",
@@ -49,7 +73,7 @@ angular.module("app").controller('playMoney',[
         $scope.PayInfo.Accountantid = $scope.currentUser.UserId;
         $scope.PayInfo.AddUser = $scope.currentUser.UserId;
         $scope.PayInfo.Upuser = $scope.currentUser.UserId;
-        ///////////////////////////////////ȷ�ϴ��////////////////////////////////////////////////////////////////////
+
         $scope.SetPay=function(){
             $http.post(SETTING.ApiUrl + '/AdminPay/SetPay',$scope.PayInfo,{
                 'withCredentials':true
@@ -63,11 +87,11 @@ angular.module("app").controller('playMoney',[
                 }
             });
         };
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 ])
-/*===================================================   ==============================================================*/
-/*===================================提取提现详细信息=====================================================*/
+//endregion
+
+//region  获取提现详细信息以及打款流程操作
 angular.module("app").controller('playMoneyDetails',[
     '$http','$scope','$stateParams','AuthService',function($http,$scope,$stateParams,AuthService){
 
@@ -79,7 +103,7 @@ angular.module("app").controller('playMoneyDetails',[
             $scope.PayInfo.BrokeAccountId = data.BrokeAccountId;
             console.log( $scope.BrokerWithdrawDetail);
         });
-        //////////////////////////////////////////////////////////////////////////////////////////////
+
         $scope.PayInfo = {
             BrokerWithdrawId:$stateParams.id,
             Ids:"",
@@ -94,7 +118,7 @@ angular.module("app").controller('playMoneyDetails',[
         $scope.PayInfo.Accountantid = $scope.currentUser.UserId;
         $scope.PayInfo.AddUser = $scope.currentUser.UserId;
         $scope.PayInfo.Upuser = $scope.currentUser.UserId;
-        ///////////////////////////////////ȷ�ϴ��////////////////////////////////////////////////////////////////////
+
             $scope.SetPay=function(){
                 $http.post(SETTING.ApiUrl + '/AdminPay/SetPay',$scope.PayInfo,{
                     'withCredentials':true
@@ -107,7 +131,8 @@ angular.module("app").controller('playMoneyDetails',[
                     }
                 });
             };
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     }
 ])
-/*==================================================================================================================*/
+//endregion
+

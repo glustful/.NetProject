@@ -4,9 +4,9 @@
         <option value="">选择审核状态</option>
     </select>
 </div>
-<div class="panel panel-default" align="center">
+<div class=" panel-default panel panel-card ng-scope" align="center">
     <div class="panel-heading">订单列表</div>
-    <table st-table="rowCollectionPage" class="table table-striped" align="center">
+    <table st-table="rowCollectionPage" class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" align="center">
         <thead>
         <tr>
             <th align="center">编码</th>
@@ -16,9 +16,9 @@
             <th align="center">经纪人名称</th>
             <th align="center">经纪人电话</th>
             <th align="center">地产商名称</th>
-            <th align="center">价格</th>
-            <th align="center">推荐佣金</th>
-            <th align="center">成交佣金</th>
+            <th align="center" ng-click="getList('OrderByPrice')">价格<span class="fa {{OrderByPrice}}"></span></th>
+            <th align="center" ng-click="getList('OrderByCommission')">推荐佣金<span class="fa {{OrderByCommission}}"></span></th>
+            <th align="center" ng-click="getList('OrderByDealcommission')">成交佣金<span class="fa {{OrderByDealcommission}}"></span></th>
             <th align="center">操作</th>
         </tr>
         </thead>
@@ -49,10 +49,10 @@
             <td align="center">{{row.Commission }}</td>
             <td align="center">{{row.Dealcommission }}</td>
             <td align="center">
-                <button ng-click='Pass(row.Id,2)' class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-edit"></i>通过审核
+                <button ng-click='Pass(row.Id,2)' class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs mdi-navigation-check"></i>通过审核
                 </button>
                 <button ng-click='Pass(row.Id,1)' class="btn btn-info btn-sm"><i md-ink-ripple
-                                                                                 class="fa fa-fw m-r-xs fa-minus"></i>
+                                                                                 class="fa fa-fw m-r-xs mdi-navigation-close"></i>
                     驳回审核
                 </button>
             </td>
@@ -60,8 +60,8 @@
         </tbody>
         <tfoot>
         <tr>
-            <td colspan="5" class="text-center">
-                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7" class="no-margin"></div>
+            <td colspan="12" class="text-center footable-visible">
+                <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.pageSize" ng-model="searchCondition.page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
             </td>
         </tr>
         </tfoot>

@@ -61,14 +61,15 @@ namespace Zerg.Event.API.Coupon
         /// <returns>list列表</returns>
         [HttpGet]
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
-        public HttpResponseMessage Index(int page, int pageSize, string number)
+        public HttpResponseMessage Index(int page, int pageSize, string number,bool isDes = true, EnumCouponSearchOrderBy orderByAll = EnumCouponSearchOrderBy.OrderById)
         {
             var condition = new CouponSearchCondition
             {
+                IsDescending = isDes,
                 Number = number,
                 Page = page,
                 PageCount = pageSize,
-                OrderBy = EnumCouponSearchOrderBy.OrderById
+                OrderBy = orderByAll
             };
             var coupon = _couponService.GetCouponByCondition(condition).Select(p => new
             {
@@ -192,7 +193,7 @@ namespace Zerg.Event.API.Coupon
         /// <param name="username">用户名</param>
         /// <returns>list</returns>
         [HttpGet]
-        public HttpResponseMessage GetUserAllCoupon(string username)
+        public HttpResponseMessage GetUserAllCoupon(string username, bool isDes = true, EnumCouponSearchOrderBy orderByAll = EnumCouponSearchOrderBy.OrderById)
         {
             YooPoon.WebFramework.User.Entity.UserBase us = _userService.GetUserByName(username);
             if (us == null)
