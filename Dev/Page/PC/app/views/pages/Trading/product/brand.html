@@ -27,7 +27,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="item in list">
-                <td align="center"><img width="40" height="40" src={{img+item.Bimg}}></td>
+                <td align="center"><img width="40" height="40" src={{img+item.Bimg}}@40w_40h_70q></td>
                 <td align="center">{{item.Bname }}</td>
                 <td align="center">{{item.Id }}</td>
                 <td align="center">{{item.Addtime |dateFilter}}</td>
@@ -36,7 +36,7 @@
                     </button>
                     <button ng-click='open(item.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
                     </button>
-                   <a href="#/page/Trading/product/upProductBrand?brandId={{item.Id}}"> <button   class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 编辑
+                   <a href="#/page/Trading/product/upProductBrand?brandId={{item.Id}}"> <button   class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-edit"></i> 编辑
                     </button></a>
                 </td>
             </tr>
