@@ -33,11 +33,14 @@ angular.module('app')
       }
     ]
   )
+    .config( function ($httpProvider) {
+        $httpProvider.interceptors.push('httpRequestInterceptor')})
   .config(
     ['$stateProvider', '$urlRouterProvider', 'MODULE_CONFIG',
       function ($stateProvider, $urlRouterProvider, MODULE_CONFIG) {
         $urlRouterProvider
           .otherwise('/page/Trading/product/product');
+          //.otherwise('/404');
         $stateProvider
           .state('app', {
             abstract: true,

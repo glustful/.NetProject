@@ -47,6 +47,7 @@ namespace Zerg.Controllers.CRM
         [System.Web.Http.HttpGet]
         public HttpResponseMessage SearchLevel(string name, EnumLevelSearchOrderBy orderByAll = EnumLevelSearchOrderBy.OrderById, bool isDes = true, int page = 1, int pageSize = 10)
         {
+         
             var leSearchCon = new LevelSearchCondition
             {   
                 Name=name,
