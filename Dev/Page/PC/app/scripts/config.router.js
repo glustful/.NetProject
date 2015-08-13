@@ -39,8 +39,8 @@ angular.module('app')
     ['$stateProvider', '$urlRouterProvider', 'MODULE_CONFIG',
       function ($stateProvider, $urlRouterProvider, MODULE_CONFIG) {
         $urlRouterProvider
-          .otherwise('/page/Trading/product/product');
-          //.otherwise('/404');
+          //.otherwise('/page/Trading/product/product');
+          .otherwise('/404');
         $stateProvider
           .state('app', {
             abstract: true,
