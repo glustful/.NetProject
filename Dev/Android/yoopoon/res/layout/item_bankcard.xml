@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/bankcard_selector"
     android:orientation="vertical"
     android:padding="10dp" >
@@ -13,6 +13,7 @@
         android:text="中国建设银行" />
     
     <TextView
+        android:height="60dp"
         style="@style/TextView_WhiteTextColor"
         android:id="@+id/tv_bankcard_type"
         android:textSize="@dimen/small_textSize"

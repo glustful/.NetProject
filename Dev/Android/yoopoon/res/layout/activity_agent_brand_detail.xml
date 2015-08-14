@@ -62,6 +62,7 @@
         </RelativeLayout>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_style_cash"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

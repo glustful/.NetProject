@@ -19,7 +19,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yoopoon.common.base.BrokerEntity;
 import com.yoopoon.common.base.Tools;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
@@ -32,6 +31,7 @@ import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
+import com.yoopoon.home.domain.BrokerEntity;
 import com.yoopoon.home.domain.PartnerList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)

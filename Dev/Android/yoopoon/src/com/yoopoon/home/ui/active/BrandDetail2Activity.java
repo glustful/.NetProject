@@ -37,16 +37,16 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 	TextView tv_subtitle;
 	@ViewById(R.id.iv_style)
 	ImageView iv_style;
-	@ViewById(R.id.tv_style_consult)
+	@ViewById(R.id.btn_style_consult)
 	Button btn_consult;
 
-	@Click(R.id.tv_style)
+	@Click(R.id.btn_style)
 	void style() {
 		if (!TextUtils.isEmpty(mJson))
 			BrandDetailActivity_.intent(this).mJson(mJson).start();
 	}
 
-	@Click(R.id.tv_style_consult)
+	@Click(R.id.btn_style_consult)
 	void consult() {
 		String phone = (String) btn_consult.getTag();
 		if (TextUtils.isEmpty(phone)) {
@@ -91,7 +91,7 @@ public class BrandDetail2Activity extends MainActionBarActivity {
 				//
 				//
 				// ######################## 徐阳会 2015年7月27日 修改 ######################### Start
-				String photo = parametersJsonObject.optString("图片banner");
+				String photo = parametersJsonObject.optString("图片banner", "");
 				btn_consult.setTag(parametersJsonObject.optString("来电咨询", ""));
 				if (!photo.equals("")) {
 					String url = "http://img.yoopoon.com/" + photo;

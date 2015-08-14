@@ -24,6 +24,14 @@
         android:minHeight="120dp"
         android:minWidth="180dp" />
 
+    <!--
+         <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+    -->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

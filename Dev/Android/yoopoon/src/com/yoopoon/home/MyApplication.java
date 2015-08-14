@@ -24,7 +24,6 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.utils.StorageUtils;
-import com.yoopoon.common.base.utils.CrashHandler;
 
 @EApplication
 public class MyApplication extends Application {
@@ -49,9 +48,9 @@ public class MyApplication extends Application {
 		deviceId = tm.getDeviceId();
 		initImageLoader();
 		// 通过单利模式，获得异常处理类
-		CrashHandler handler = CrashHandler.getInstance();
-		// 初始化
-		handler.init(getApplicationContext());
+		// CrashHandler handler = CrashHandler.getInstance();
+		// // 初始化
+		// handler.init(getApplicationContext());
 		super.onCreate();
 	}
 

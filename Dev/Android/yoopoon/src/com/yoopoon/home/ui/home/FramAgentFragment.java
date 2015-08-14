@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -267,6 +268,7 @@ public class FramAgentFragment extends FramSuper implements OnClickListener {
 						return;
 					mJsonObjects.clear();
 					for (int i = 0; i < list.length(); i++) {
+						Log.i(TAG, list.optJSONObject(i).toString());
 						mJsonObjects.add(list.optJSONObject(i));
 					}
 					mAgentBrandAdapter.refresh(mJsonObjects);
