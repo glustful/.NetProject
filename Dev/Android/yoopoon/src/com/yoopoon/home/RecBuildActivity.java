@@ -46,6 +46,7 @@ import com.yoopoon.home.data.net.RequestAdapter;
 import com.yoopoon.home.data.net.RequestAdapter.RequestMethod;
 import com.yoopoon.home.data.net.ResponseData;
 import com.yoopoon.home.data.net.ResponseData.ResultState;
+import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.ui.active.BrandDetail2Activity_;
 
 /**
@@ -65,6 +66,7 @@ public class RecBuildActivity extends MainActionBarActivity {
 	private MyRecsBuildAdapter adapter;
 	private ListView refreshView;
 	private HashMap<String, String> parameter;
+	private boolean isBroker = false;
 
 	@AfterViews
 	void initUI() {
@@ -74,6 +76,10 @@ public class RecBuildActivity extends MainActionBarActivity {
 		backButton.setTextColor(Color.WHITE);
 		titleButton.setText("推荐楼盘");
 		init();
+		User user = User.lastLoginUser(this);
+		isBroker = user.isBroker();
+		if (!isBroker)
+			lv.setBackgroundColor(Color.WHITE);
 		requestBrandList();
 	}
 
@@ -164,6 +170,7 @@ public class RecBuildActivity extends MainActionBarActivity {
 	}
 
 	private class MyRecsBuildAdapter extends BaseAdapter {
+
 		@Override
 		public int getCount() {
 			return datas.size();
@@ -207,6 +214,8 @@ public class RecBuildActivity extends MainActionBarActivity {
 			mHolder.tv_call.setTag(Tools.optString(parameter, "来电咨询", ""));
 			String preferential = parameter.optString("最高优惠");
 			mHolder.tv_detail1.setText(item.optString("SubTitle", ""));
+			mHolder.ll_broker.setVisibility(isBroker ? View.VISIBLE : View.GONE);
+
 			mHolder.tv_call.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -236,12 +245,14 @@ public class RecBuildActivity extends MainActionBarActivity {
 	}
 
 	class Holder {
+
 		ImageView iv;
 		TextView tv_detail1;
 		TextView tv_detail2;
 		TextView tv_right;
 		TextView tv_call;
 		TextView tv_guest;
+		LinearLayout ll_broker;
 
 		void init(View root) {
 			iv = (ImageView) root.findViewById(R.id.iv_rec);
@@ -250,6 +261,7 @@ public class RecBuildActivity extends MainActionBarActivity {
 			tv_right = (TextView) root.findViewById(R.id.tv_build_right);
 			tv_call = (TextView) root.findViewById(R.id.tv_rec_call);
 			tv_guest = (TextView) root.findViewById(R.id.tv_rec_guest);
+			ll_broker = (LinearLayout) root.findViewById(R.id.ll_rec_broker);
 		}
 	}
 
