@@ -25,6 +25,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -122,6 +123,7 @@ public class BrokerBrandActivity extends MainActionBarActivity {
 						String photo = params.optString("图片banner", "");
 						if (!StringUtils.isEmpty(photo)) {
 							String url = "http://img.yoopoon.com/" + photo;
+							iv_style.setScaleType(ScaleType.FIT_XY);
 							ImageLoader.getInstance().displayImage(url, iv_style);
 						}
 						String phone = params.optString("来电咨询", "");
