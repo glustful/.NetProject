@@ -13,7 +13,6 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -220,7 +219,6 @@ public class FramActiveFragment extends FramSuper {
 			public void onReponse(ResponseData data) {
 				listView.onRefreshComplete();
 				if (data.getResultState() == ResultState.eSuccess) {
-					Log.i(TAG, "requestBrandList : onResponse");
 					JSONArray list = data.getMRootData().optJSONArray("List");
 					if (list == null || list.length() < 1) {
 						ToastUtils.showToast(mContext, "亲，已经没有更多的品牌啦！", 3000);

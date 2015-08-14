@@ -16,6 +16,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.common.base.utils.DensityUtil;
 import com.yoopoon.home.MyApplication;
 import com.yoopoon.home.R;
+import com.yoopoon.home.ui.active.BrokerBrandActivity_;
 import com.yoopoon.house.ui.bonus.BrokerBonusActivity_;
 import com.yoopoon.house.ui.broker.BrokerRecommendActivity_;
 import com.yoopoon.house.ui.broker.BrokerScoreActivity_;
@@ -118,13 +119,7 @@ public class AgentBrandAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				String brandId = item.optString("BrandId", "");
-				int productId = item.optInt("ProductId", 0);
-				String productName = item.optString("Productname", "");
-				String houseType = item.optString("HouseType", "");
-				AgentBrandDetailActivity_.intent(mContext).brandId(brandId).productId(productId)
-						.productName(productName).houseType(houseType).start();
-
+				BrokerBrandActivity_.intent(mContext).mJson(item.toString()).start();
 			}
 		});
 

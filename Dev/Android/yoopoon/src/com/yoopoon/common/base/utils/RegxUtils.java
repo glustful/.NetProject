@@ -43,7 +43,16 @@ public class RegxUtils {
 
 	public static boolean isBankCard(String number) {
 		String regx = "^(\\d{16}|\\d{19})$";
-		return number.matches(regx);
+		if (!number.matches(regx))
+			return false;
+		int[] nums = { 10, 18, 30, 35, 37, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 58, 60,
+				62, 65, 68, 69, 84, 87, 88, 94, 95, 98, 99 };
+		int num = Integer.parseInt(number.substring(0, 2));
+		for (int i = 0; i < nums.length; i++) {
+			if (num == nums[i])
+				return true;
+		}
+		return false;
 	}
 
 }

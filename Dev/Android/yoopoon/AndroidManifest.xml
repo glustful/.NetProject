@@ -211,12 +211,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-        
         <activity
             android:name="com.yoopoon.home.PartnerDetailActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
+        <activity
+            android:name="com.yoopoon.home.ui.active.BrokerBrandActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" />
 
         <service android:name="com.yoopoon.home.service.SmsService" />
     </application>

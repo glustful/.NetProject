@@ -10,7 +10,7 @@
  * @date: 2015-7-21 下午1:44:45 
  * @version: V1.0   
  */
-package com.yoopoon.common.base;
+package com.yoopoon.home.domain;
 
 import android.util.Log;
 

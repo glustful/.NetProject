@@ -41,6 +41,7 @@
                     android:textColor="@color/setting_text" />
 
                 <RadioButton
+                    android:clickable="false"
                     android:id="@+id/rb_addbank_credit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -84,11 +85,6 @@
             android:layout_marginTop="5dp"
             android:clickable="true"
             android:focusable="true" />
-
-        <TextView
-            android:id="@+id/tv_addbank_warning2"
-            style="@style/TextView_Warning"
-            android:text="请选择开户银行" />
 
         <TextView
             style="@style/TextView_WrapContent"

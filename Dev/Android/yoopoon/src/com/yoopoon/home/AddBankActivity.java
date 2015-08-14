@@ -72,7 +72,7 @@ public class AddBankActivity extends MainActionBarActivity {
 
 	@TextChange(R.id.et_addbank_num)
 	void numChange() {
-		tv_warning_bank.setVisibility(View.GONE);
+		tv_warning_card.setVisibility(View.GONE);
 	}
 
 	@Click(R.id.btn_add_bank_getcode)
@@ -111,15 +111,15 @@ public class AddBankActivity extends MainActionBarActivity {
 
 		if (TextUtils.isEmpty(num)) {
 			textWarning(et_card);
-			tv_warning_bank.setText("请填写银行卡号");
-			tv_warning_bank.setVisibility(View.VISIBLE);
+			tv_warning_card.setText("请填写银行卡号");
+			tv_warning_card.setVisibility(View.VISIBLE);
 			return;
 		}
 
 		if (!RegxUtils.isBankCard(num)) {
 			textWarning(et_card);
-			tv_warning_bank.setText("请填写正确的银行卡号");
-			tv_warning_bank.setVisibility(View.VISIBLE);
+			tv_warning_card.setText("请填写正确的银行卡号");
+			tv_warning_card.setVisibility(View.VISIBLE);
 			return;
 		}
 
@@ -272,8 +272,6 @@ public class AddBankActivity extends MainActionBarActivity {
 	RadioButton rb_saving;
 	@ViewById(R.id.tv_addbank_warning1)
 	TextView tv_warning_card;
-	@ViewById(R.id.tv_addbank_warning2)
-	TextView tv_warning_bank;
 	@ViewById(R.id.tv_addbank_warning3)
 	TextView tv_warning_address;
 	@ViewById(R.id.tv_addbank_warning4)

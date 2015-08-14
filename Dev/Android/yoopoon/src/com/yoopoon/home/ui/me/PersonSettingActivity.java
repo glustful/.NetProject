@@ -55,7 +55,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.yoopoon.common.base.BrokerEntity;
 import com.yoopoon.common.base.Tools;
 import com.yoopoon.common.base.utils.RegxUtils;
 import com.yoopoon.common.base.utils.StringUtils;
@@ -73,6 +72,7 @@ import com.yoopoon.home.data.net.UploadHeadImg;
 import com.yoopoon.home.data.net.UploadHeadImg.OnCompleteListener;
 import com.yoopoon.home.data.user.User;
 import com.yoopoon.home.domain.Broker2.RequesListener;
+import com.yoopoon.home.domain.BrokerEntity;
 import com.yoopoon.home.ui.login.HomeLoginActivity_;
 
 /**
@@ -231,7 +231,6 @@ public class PersonSettingActivity extends MainActionBarActivity {
 			@Override
 			public Object onParse() {
 				ObjectMapper om = new ObjectMapper();
-				// om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 				BrokerEntity entity = null;
 				try {
 					entity = om.readValue(json, BrokerEntity.class);
@@ -349,7 +348,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 									JSONObject obj = new JSONObject(json);
 									boolean status = Tools.optBoolean(obj, "Status", false);
 									if (!status) {
-										tv_uploading.setText("上传失败>_<");
+										tv_uploading.setText("上传失败>_<,请重试");
 										tv_uploading.setVisibility(View.VISIBLE);
 									} else {
 										tv_uploading.setText("上传成功^_^");
@@ -361,10 +360,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 								} catch (JSONException e) {
 									e.printStackTrace();
 								} finally {
-									if (timer != null && task != null) {
-										timer.cancel();
-										task.cancel();
-									}
+									cancelTimer();
 								}
 							}
 						});
@@ -375,14 +371,21 @@ public class PersonSettingActivity extends MainActionBarActivity {
 						runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								tv_uploading.setText("上传失败>_<");
+								tv_uploading.setText("上传失败>_<,请重试");
 								tv_uploading.setVisibility(View.VISIBLE);
+								cancelTimer();
 							}
 						});
 					}
 				});
 			};
 		}.start();
+	}
+	private void cancelTimer() {
+		if (timer != null)
+			timer.cancel();
+		if (task != null)
+			task.cancel();
 	}
 	/**
 	 * @Title: initUI
