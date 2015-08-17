@@ -32,44 +32,44 @@
                     <rect key="frame" x="115" y="5" width="448" height="237"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="老雷斯" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" preferredMaxLayoutWidth="51" translatesAutoresizingMaskIntoConstraints="NO" id="3Si-Hg-HuI" userLabel="name">
-                            <rect key="frame" x="0.0" y="5" width="51" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <rect key="frame" x="0.0" y="5" width="45" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="铜" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="17" translatesAutoresizingMaskIntoConstraints="NO" id="dou-Qm-0Fb" userLabel="level">
-                            <rect key="frame" x="56" y="5" width="17" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <rect key="frame" x="50" y="5" width="15" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" red="0.52549019607843139" green="0.34509803921568627" blue="0.29411764705882354" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="总排名：1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" preferredMaxLayoutWidth="365" translatesAutoresizingMaskIntoConstraints="NO" id="bkD-Jw-D0r" userLabel="order">
-                            <rect key="frame" x="78" y="5" width="365" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="总排名：1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="365" translatesAutoresizingMaskIntoConstraints="NO" id="bkD-Jw-D0r" userLabel="order">
+                            <rect key="frame" x="70" y="5" width="373" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" red="0.42352941176470588" green="0.41960784313725491" blue="0.44705882352941179" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="axr-sI-qDJ">
-                            <rect key="frame" x="0.0" y="63" width="443" height="1"/>
+                            <rect key="frame" x="0.0" y="60" width="443" height="1"/>
                             <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="Ooi-RL-fiv"/>
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="钱包：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" preferredMaxLayoutWidth="51" translatesAutoresizingMaskIntoConstraints="NO" id="OxK-b2-Ch6">
-                            <rect key="frame" x="0.0" y="69" width="51" height="21"/>
+                            <rect key="frame" x="0.0" y="66" width="51" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.92549019607843142" green="0.12549019607843137" blue="0.019607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="0.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="387" translatesAutoresizingMaskIntoConstraints="NO" id="dqg-TD-XZS">
-                            <rect key="frame" x="56" y="69" width="387" height="21"/>
+                            <rect key="frame" x="56" y="66" width="387" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.91764705882352937" green="0.11764705882352941" blue="0.19215686274509805" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0u3-m4-6F6">
-                            <rect key="frame" x="10" y="100" width="60" height="30"/>
+                            <rect key="frame" x="10" y="97" width="60" height="30"/>
                             <color key="backgroundColor" red="0.91764705882352937" green="0.12549019607843137" blue="0.023529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="20"/>
                             <color key="tintColor" red="0.35516610282830979" green="0.93333333333333335" blue="0.29688202642069145" alpha="1" colorSpace="calibratedRGB"/>
@@ -82,7 +82,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="eCc-6P-zow">
-                            <rect key="frame" x="0.0" y="31" width="48" height="27"/>
+                            <rect key="frame" x="0.0" y="28" width="48" height="27"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <state key="normal" title="合伙人：">
                                 <color key="titleColor" red="0.32549019607843138" green="0.32549019607843138" blue="0.32549019607843138" alpha="1" colorSpace="calibratedRGB"/>
@@ -93,7 +93,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="bT9-jG-4XA">
-                            <rect key="frame" x="53" y="31" width="56" height="27"/>
+                            <rect key="frame" x="53" y="28" width="56" height="27"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <state key="normal" title="/ 推荐人：">
                                 <color key="titleColor" red="0.33333333333333331" green="0.32941176470588235" blue="0.41960784313725491" alpha="1" colorSpace="calibratedRGB"/>
@@ -104,7 +104,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="jpl-0d-E2z">
-                            <rect key="frame" x="114" y="31" width="329" height="27"/>
+                            <rect key="frame" x="114" y="28" width="329" height="27"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <state key="normal" title="/ 客户：">
                                 <color key="titleColor" red="0.32549019607843138" green="0.32549019607843138" blue="0.32549019607843138" alpha="1" colorSpace="calibratedRGB"/>
@@ -115,7 +115,7 @@
                             </connections>
                         </button>
                         <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="vOK-fe-rnT">
-                            <rect key="frame" x="8" y="135" width="440" height="102"/>
+                            <rect key="frame" x="8" y="132" width="440" height="105"/>
                         </view>
                     </subviews>
                     <constraints>

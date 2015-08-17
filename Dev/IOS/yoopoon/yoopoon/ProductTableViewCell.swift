@@ -17,7 +17,7 @@ class ProductTableViewCell: UITableViewCell {
     
     @IBAction func callPhoneAction(sender: UIButton) {
         if entity == nil || entity!.phone! != ""{
-            
+           
                 CommentTools.dialPhonNumber(entity!.phone!)
         }else{
             TipTools().showToast("提示", message: "电话号码未知", duration: 2)

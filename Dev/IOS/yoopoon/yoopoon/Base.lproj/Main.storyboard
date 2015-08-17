@@ -1436,7 +1436,7 @@
                                         <rect key="frame" x="130" y="0.0" width="470" height="40"/>
                                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="13"/>
                                         <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" title="咨询热线" image="ask.png">
+                                        <state key="normal" title="咨询热线" image="ask">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1444,7 +1444,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.13" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.70000000000000007" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" secondItem="oEP-r0-qkP" secondAttribute="height" multiplier="2:1" id="7nt-hR-hXo"/>
                                     <constraint firstItem="Ncc-Kt-ziL" firstAttribute="top" secondItem="slx-QP-kBf" secondAttribute="top" id="7v3-Sv-chm"/>
@@ -2655,7 +2655,7 @@
     </scenes>
     <resources>
         <image name="arrow1" width="30" height="30"/>
-        <image name="ask.png" width="17" height="17"/>
+        <image name="ask" width="40" height="40"/>
         <image name="cell" width="40" height="40"/>
         <image name="checkbox.png" width="21" height="21"/>
         <image name="jiantou_8b29006" width="50" height="50"/>

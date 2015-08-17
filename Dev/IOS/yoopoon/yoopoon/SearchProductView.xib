@@ -24,7 +24,7 @@
                     </variation>
                 </imageView>
                 <view contentMode="scaleToFill" horizontalHuggingPriority="246" translatesAutoresizingMaskIntoConstraints="NO" id="UBR-cT-wa6">
-                    <rect key="frame" x="110" y="2" width="536" height="85"/>
+                    <rect key="frame" x="107" y="2" width="539" height="85"/>
                     <subviews>
                         <view contentMode="scaleToFill" horizontalHuggingPriority="240" translatesAutoresizingMaskIntoConstraints="NO" id="OxX-Yi-lIR">
                             <rect key="frame" x="0.0" y="65" width="1" height="20"/>
@@ -35,14 +35,14 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" horizontalHuggingPriority="241" translatesAutoresizingMaskIntoConstraints="NO" id="I4v-Uv-FHN">
-                            <rect key="frame" x="0.0" y="84" width="536" height="1"/>
+                            <rect key="frame" x="0.0" y="84" width="539" height="1"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="TRI-8k-bUu"/>
                             </constraints>
                         </view>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="239" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="搜索楼盘" minimumFontSize="10" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Yk8-6s-Y09">
-                            <rect key="frame" x="100" y="2" width="387" height="77"/>
+                            <rect key="frame" x="60" y="2" width="430" height="77"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             <connections>
@@ -50,10 +50,10 @@
                             </connections>
                         </textField>
                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" horizontalCompressionResistancePriority="1000" image="search" translatesAutoresizingMaskIntoConstraints="NO" id="cse-VV-VMg">
-                            <rect key="frame" x="0.0" y="2" width="100" height="80"/>
+                            <rect key="frame" x="5" y="2" width="50" height="80"/>
                         </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQK-H2-ZL0">
-                            <rect key="frame" x="535" y="65" width="1" height="20"/>
+                            <rect key="frame" x="538" y="65" width="1" height="20"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="1" id="NDB-Q6-04y"/>
@@ -61,8 +61,9 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rl1-ya-0ad">
-                            <rect key="frame" x="501" y="2" width="30" height="80"/>
+                            <rect key="frame" x="504" y="2" width="30" height="80"/>
                             <state key="normal" title="搜索">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -70,7 +71,7 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vlH-aU-D9M">
-                            <rect key="frame" x="492" y="62" width="1" height="20"/>
+                            <rect key="frame" x="495" y="62" width="1" height="20"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="dG8-IB-1if"/>
@@ -91,12 +92,12 @@
                         <constraint firstAttribute="bottom" secondItem="I4v-Uv-FHN" secondAttribute="bottom" id="ZJK-SH-fJW"/>
                         <constraint firstItem="I4v-Uv-FHN" firstAttribute="top" secondItem="vlH-aU-D9M" secondAttribute="bottom" constant="2" id="bP5-Z0-co5"/>
                         <constraint firstAttribute="bottom" secondItem="OxX-Yi-lIR" secondAttribute="bottom" id="cus-jK-iyt"/>
-                        <constraint firstItem="cse-VV-VMg" firstAttribute="leading" secondItem="UBR-cT-wa6" secondAttribute="leading" id="dRE-VI-icZ"/>
+                        <constraint firstItem="cse-VV-VMg" firstAttribute="leading" secondItem="UBR-cT-wa6" secondAttribute="leading" constant="5" id="dRE-VI-icZ"/>
                         <constraint firstAttribute="bottom" secondItem="eQK-H2-ZL0" secondAttribute="bottom" id="dbM-xe-c7W"/>
                         <constraint firstItem="cse-VV-VMg" firstAttribute="bottom" secondItem="Rl1-ya-0ad" secondAttribute="bottom" id="mPI-R3-wEA"/>
                         <constraint firstItem="Yk8-6s-Y09" firstAttribute="top" secondItem="UBR-cT-wa6" secondAttribute="top" constant="2" id="oh2-ge-fGU"/>
                         <constraint firstItem="I4v-Uv-FHN" firstAttribute="top" secondItem="Yk8-6s-Y09" secondAttribute="bottom" constant="5" id="r9B-37-85g"/>
-                        <constraint firstItem="Yk8-6s-Y09" firstAttribute="leading" secondItem="cse-VV-VMg" secondAttribute="trailing" id="zR1-vU-oIl"/>
+                        <constraint firstItem="Yk8-6s-Y09" firstAttribute="leading" secondItem="cse-VV-VMg" secondAttribute="trailing" constant="5" id="zR1-vU-oIl"/>
                         <constraint firstAttribute="trailing" secondItem="Rl1-ya-0ad" secondAttribute="trailing" constant="5" id="zls-Bf-Q3v"/>
                     </constraints>
                 </view>
@@ -109,7 +110,7 @@
                 <constraint firstItem="F8Q-2R-BsZ" firstAttribute="leading" secondItem="6qX-HP-8N1" secondAttribute="leading" constant="2" id="m34-RC-HHN"/>
                 <constraint firstAttribute="trailing" secondItem="UBR-cT-wa6" secondAttribute="trailing" constant="2" id="ora-ct-8B6"/>
                 <constraint firstItem="UBR-cT-wa6" firstAttribute="top" secondItem="F8Q-2R-BsZ" secondAttribute="top" id="shq-qe-Q7z"/>
-                <constraint firstItem="UBR-cT-wa6" firstAttribute="leading" secondItem="F8Q-2R-BsZ" secondAttribute="trailing" constant="8" id="xoT-tC-idq"/>
+                <constraint firstItem="UBR-cT-wa6" firstAttribute="leading" secondItem="F8Q-2R-BsZ" secondAttribute="trailing" constant="5" id="xoT-tC-idq"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
@@ -123,6 +124,6 @@
     </objects>
     <resources>
         <image name="logo" width="100" height="100"/>
-        <image name="search" width="100" height="100"/>
+        <image name="search" width="50" height="50"/>
     </resources>
 </document>
