@@ -8,8 +8,8 @@
 
 import Foundation
  //api主机域名
-let apiHost = "http://192.168.1.199:9010"
-//let apiHost = "http://api.iyookee.cn"
+//let apiHost = "http://192.168.1.199:9010"
+let apiHost = "http://api.iyookee.cn"
 
 //图片服务器
 let imgHost = "http://img.yoopoon.com/"

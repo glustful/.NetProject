@@ -38,10 +38,13 @@ class CustomTableViewCell: UITableViewCell {
     }
     
     func toggle(){
+        
         if uiFooter.hidden{
             showFooter()
         }else{
+           
             hiddenFooter()
+            
         }
     }
     
@@ -55,7 +58,7 @@ class CustomTableViewCell: UITableViewCell {
         var appRedBackground = UIColor.redColor()//UIColor(red: 241/255, green: 56/255, blue: 0, alpha: 1)
         if let status = entity.status{
         switch status{
-        case CustomProgressStatus.first:
+        case CustomProgressStatus.first,CustomProgressStatus.first_copy:
             uiP1.image = image
             uiL1.textColor = appRedBackground
         case CustomProgressStatus.second:

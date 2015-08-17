@@ -39,6 +39,7 @@ class CustomListViewController: SuperViewController,UITableViewDataSource,UITabl
                 self.uiTableView.footerEndRefreshing()
                 if let list = json["List"].array{
                     if list.count > 0{
+                        self.index = nil
                         self.page++
                     }else{
                         TipTools().showToast("提示", message: "数据已加载完成", duration: 1)
@@ -78,6 +79,7 @@ class CustomListViewController: SuperViewController,UITableViewDataSource,UITabl
         if index != nil{
             
             if index == indexPath{
+               // println("toggle=\(self.tableView(tableView, heightForRowAtIndexPath: indexPath))")
                 
                 cell!.toggle()
                 return cell!;

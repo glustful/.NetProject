@@ -52,6 +52,7 @@ struct PopoverSegueIdentifier {
 
 struct CustomProgressStatus {
     static let first = "预约中"
+    static let first_copy = "审核中"
     static let second = "等待上访"
     static let third = "洽谈中"
     static let four = "洽谈成功"

@@ -48,6 +48,7 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
     }
     
     override func viewWillAppear(animated: Bool) {
+       
         isBroker = User.share.isBroker ?? false
         if self.productList.count == 0{
             requestADImg()
@@ -58,6 +59,7 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
     }
     
     override func viewWillDisappear(animated: Bool) {
+        
         User.share.fromType = HouseFromType.comment
     }
     

@@ -61,12 +61,15 @@ class TabBarViewController: UITabBarController ,UITabBarControllerDelegate{
     override func viewWillAppear(animated: Bool) {
         
         (self.navigationController!.view.subviews.last as! SearchProductView).hidden = false
-        if self.selectedIndex == 3{
-            self.selectedViewController!.viewWillAppear(true)
+        if selectedViewController != nil{
+        self.selectedViewController!.viewWillAppear(true)
         }
-        else if self.selectedIndex == 2{
-            self.selectedViewController!.viewWillAppear(true)
-        }
+//        if self.selectedIndex == 3{
+//            self.selectedViewController!.viewWillAppear(true)
+//        }
+//        else if self.selectedIndex == 2{
+//            self.selectedViewController!.viewWillAppear(true)
+//        }
 
     }
     

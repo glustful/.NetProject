@@ -33,6 +33,7 @@ class BrandOfProductListController: SuperViewController,UITableViewDataSource,UI
         User.share.fromType = HouseFromType.leadOrRec
         var tab = self.navigationController!.viewControllers.first as! TabBarViewController
         tab.selectedIndex = 1
+        
         self.navigationController!.popToViewController(tab, animated: true)
     }
     
@@ -57,8 +58,10 @@ class BrandOfProductListController: SuperViewController,UITableViewDataSource,UI
         self.uiLeftTableView.dataSource = self
         self.uiRightTableView.delegate = self
         self.uiRightTableView.dataSource = self
-       // self.uiLeftTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        //self.uiRightTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        self.uiLeftTableView.backgroundColor = appBackground
+        self.uiRightTableView.backgroundColor = appBackground
+        self.uiLeftTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        self.uiRightTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         requestProductsByBrandId()
     }
     
@@ -150,12 +153,14 @@ class BrandOfProductListController: SuperViewController,UITableViewDataSource,UI
             row = indexPath.row * 2 + 1
         }
         var entity = self.productList[row]
-        var nameSize = CommentTools.computerContentSize(entity.productName ?? "", fontSize: 17, widgetWidth: tableView.frame.size.width)
-        var subTitleSize = CommentTools.computerContentSize(entity.subTitle ?? "", fontSize: 14, widgetWidth: tableView.frame.size.width)
-        var priceSize = CommentTools.computerContentSize("均价\(entity.price ?? 0)\(unitMeter)起", fontSize: 15, widgetWidth: tableView.frame.size.width)
+        var nameSize = CommentTools.computerContentSize(entity.productName ?? "", fontSize: 17, widgetWidth: tableView.frame.size.width - 10)
+        var subTitleSize = CommentTools.computerContentSize(entity.subTitle ?? "", fontSize: 14, widgetWidth: tableView.frame.size.width - 10)
+        var priceSize = CommentTools.computerContentSize("均价\(entity.price ?? 0)\(unitMeter)起", fontSize: 15, widgetWidth: tableView.frame.size.width-10)
         var totalHeight = nameSize.height + subTitleSize.height + priceSize.height
+        
+        var height = (tableView.frame.size.width - 10 - 38) / (353/546)
        
-        return 40 + (screenBounds.width-15)/2 * 1.5  + totalHeight
+        return 40 + height  + totalHeight + 22
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
@@ -194,13 +199,16 @@ class BrandOfProductListController: SuperViewController,UITableViewDataSource,UI
     :returns: <#return value description#>
     */
     private func computerContentHeight()->CGFloat{
+
+        var height = (self.uiLeftTableView.frame.size.width - 10 - 38) / (353/546)
+      
         var leftHeight: CGFloat = 0
         var rightHeight: CGFloat = 0
         for i in 0..<self.productList.count{
             var entity = self.productList[i]
-            var nameSize = CommentTools.computerContentSize(entity.productName ?? "", fontSize: 17, widgetWidth: self.uiLeftTableView.frame.size.width)
-            var subTitleSize = CommentTools.computerContentSize(entity.subTitle ?? "", fontSize: 14, widgetWidth: self.uiLeftTableView.frame.size.width)
-            var priceSize = CommentTools.computerContentSize("均价\(entity.price ?? 0)\(unitMeter)起", fontSize: 15, widgetWidth: self.uiLeftTableView.frame.size.width)
+            var nameSize = CommentTools.computerContentSize(entity.productName ?? "", fontSize: 17, widgetWidth: self.uiLeftTableView.frame.size.width-10)
+            var subTitleSize = CommentTools.computerContentSize(entity.subTitle ?? "", fontSize: 14, widgetWidth: self.uiLeftTableView.frame.size.width-10)
+            var priceSize = CommentTools.computerContentSize("均价\(entity.price ?? 0)\(unitMeter)起", fontSize: 15, widgetWidth: self.uiLeftTableView.frame.size.width-10)
             var totalHeight = nameSize.height + subTitleSize.height + priceSize.height
             if i % 2 == 0{
                 leftHeight += totalHeight
@@ -210,6 +218,6 @@ class BrandOfProductListController: SuperViewController,UITableViewDataSource,UI
             }
         }
         var count = self.productList.count % 2 == 0 ? self.productList.count / 2 : self.productList.count / 2 + 1
-        return max(leftHeight,rightHeight) + ((screenBounds.width - 15) / 2 * 1.5 + 40) * CGFloat(count)
+        return max(leftHeight,rightHeight) + (height + 62) * CGFloat(count)
     }
 }

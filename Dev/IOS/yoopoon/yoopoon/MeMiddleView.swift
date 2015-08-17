@@ -82,7 +82,7 @@ class MeMiddleView: UIView {
         self.isBroker = isBroker
         uiLabel1.textColor = UIColor.redColor()
         if isBroker{
-            uiLabel2.textColor = (meTextColor)
+            uiLabel2.textColor = UIColor.blackColor()
             uiImg1.image = UIImage(named: "b1")
             uiImg2.image = UIImage(named: "b2")
             uiImg3.image = UIImage(named: "b3")

@@ -17,7 +17,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9a-1l-d63">
                             <rect key="frame" x="0.0" y="0.0" width="189" height="149"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="b1" translatesAutoresizingMaskIntoConstraints="NO" id="vnw-5n-FCU">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="b1" translatesAutoresizingMaskIntoConstraints="NO" id="vnw-5n-FCU">
                                     <rect key="frame" x="44" y="5" width="100" height="100"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="65" id="gRo-Sr-9Cb"/>
@@ -30,7 +30,7 @@
                                         </mask>
                                     </variation>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我要推荐" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cU4-L6-dOA">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="我要推荐" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cU4-L6-dOA">
                                     <rect key="frame" x="0.0" y="110" width="189" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="ZSd-ZB-Gwp"/>

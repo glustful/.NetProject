@@ -18,6 +18,7 @@ class ProductEntity: NSObject {
     var price: Double?
     var productName: String?
     var acreage: String?
+    var phone: String?
     private var _productImg: String?{
         didSet{
             self.productImg = imgHost + _productImg!
@@ -41,6 +42,7 @@ class ProductEntity: NSObject {
         self.price = json["Price"].double
         self.productName = json["Productname"].string
         self.acreage = json["Acreage"].string
+        self.phone = JSONTools.optStringFromOption(json["Phone"].string)
         return self
     }
 }
