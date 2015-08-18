@@ -41,6 +41,9 @@
             android:layout_marginTop="10dp"
             android:layout_below="@id/iv_ipocket_cashicon"
             style="@style/Red_Button_MarginTop"
+            android:background="@drawable/btn_not_enable"
+            android:enabled="false"
+            android:clickable="false"
             android:text="提现"/>
         
     </RelativeLayout>
