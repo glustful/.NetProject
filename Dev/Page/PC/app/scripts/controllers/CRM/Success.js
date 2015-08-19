@@ -64,7 +64,7 @@ angular.module("app").controller('DKSuccessController',[
     '$http','$scope',function($http,$scope){
         $scope.searchDKCondition = {
             status:"洽谈成功",
-            brokername:"",
+            Brokername:"",
             page:1,
             pageSize:10,
             orderByAll:"OrderById",//排序
@@ -106,7 +106,7 @@ angular.module("app").controller('DKSuccessController',[
                 $scope.searchDKCondition.page=data.condition1.Page;
                 $scope.searchDKCondition.PageCount=data.condition1.PageCount;
                 $scope.totalCount=data.totalCont1;
-                console.log($scope.Brokerlist);
+                //console.log($scope.Brokerlist);
             });
         };
         $scope.getDKList = getTagList;
