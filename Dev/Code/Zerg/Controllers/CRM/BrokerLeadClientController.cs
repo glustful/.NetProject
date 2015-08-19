@@ -293,7 +293,7 @@ namespace Zerg.Controllers.CRM
             }
             else
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在被代客！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在被带客！"));
             }
 
             //查询客户信息
