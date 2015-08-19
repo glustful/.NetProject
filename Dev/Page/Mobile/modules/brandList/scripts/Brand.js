@@ -2,6 +2,7 @@
  * Created by Administrator on 2015/6/10.
  */
 app.controller('BrandController',['$http','$scope','$stateParams','$timeout',function($http,$scope,$stateParams,$timeout){
+    $scope.imgUrl=SETTING.ImgUrl;
         var condition = {
             condition:$stateParams.condition==undefined?'':$stateParams.condition,
             //condition:$stateParams.condition,

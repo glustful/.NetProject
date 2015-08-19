@@ -572,13 +572,16 @@ namespace Zerg.Controllers.UC
         /// <returns>用户列表</returns>
         [Description("获取用户列表")]
         [HttpGet]
-        public HttpResponseMessage GetUserList(string userName = null, int page = 1, int pageSize = 10)
+        public HttpResponseMessage GetUserList(bool isDes = true, EnumUserOrderBy orderByAll = EnumUserOrderBy.OrderById, string userName = null, int page = 1, int pageSize = 10)
         {
             var userCondition = new UserSearchCondition
             {
                 UserName = userName,
                 Page = page,
-                PageSize = pageSize
+                PageSize = pageSize,
+                IsDescending = isDes,
+                OrderBy = orderByAll
+
             };
 
             var userList = _userService.GetUserByCondition(userCondition).Select(a => new UserModel

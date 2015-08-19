@@ -15,7 +15,7 @@
         <th data-hide="phone,tablet" class="footable-visible footable-sortable" ng-click="getDKList('OrderByProjectname')">
             项目名称
             <span class="fa {{OrderByProjectname}}"></span></th>
-        <th data-hide="phone,tablet" data-name="Date Of Birth" class="footable-visible footable-sortable" ng-getDKList="getList('OrderByUptime')">
+        <th data-hide="phone,tablet" data-name="Date Of Birth" class="footable-visible footable-sortable" ng-click="getDKList('OrderByUptime')">
             到场时间
             <span class="fa {{OrderByUptime}}"></span></th>
         <th data-hide="phone,tablet" class="footable-visible footable-sortable">
@@ -23,7 +23,7 @@
         </th>
         <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">
             操作
-            <span class="footable-sort-indicator"></span></th>
+            </th>
     </tr>
     </thead>
     <tbody>
@@ -33,7 +33,7 @@
         <td class="footable-visible">{{item.Projectname}}</td>
         <td data-value="78025368997" class="footable-visible">{{item.Uptime}}</td>
         <td class="footable-visible">交易成功</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.DKSuccess.detailed({id:item.Id})"><span class="label bg-success" >查看</span></a></td>
+        <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.DKSuccess.detailed({id:item.Id})" class="btn btn-info btn-sm"><span  >查看</span></a></td>
     </tr>
 
     </tbody>

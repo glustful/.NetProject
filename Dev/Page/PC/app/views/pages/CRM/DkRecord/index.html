@@ -27,7 +27,7 @@
             <span class="fa {{OrderByAppointmenttime}}"></span></th>
         <th data-hide="phone" class="footable-visible footable-last-column footable-sortable" >
             操作
-            <span class="footable-sort-indicator"></span></th>
+            </th>
     </tr>
     </thead>
     <tbody>
@@ -39,7 +39,7 @@
         <td data-value="78025368997" class="footable-visible">{{item.Phone}}</td>
         <td class="footable-visible">{{item.Projectname}}</td>
         <td data-value="78025368997" class="footable-visible">{{item.Appointmenttime}}</td>
-        <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.DkRecord.detailed({id:item.Id})"><span class="label bg-success">审核</span></a></td>
+        <td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.DkRecord.detailed({id:item.Id})" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs mdi-action-account-box i-24"></i>审核</a></td>
     </tr>
 
 

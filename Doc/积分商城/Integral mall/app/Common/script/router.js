@@ -1,8 +1,8 @@
 app.config(['$stateProvider','$urlRouterProvider','MAIN_CONFIG',function($stateProvider,$urlRouterProvider,MAIN_CONFIG){
-    $urlRouterProvider.otherwise('/index');
+    $urlRouterProvider.otherwise('/home');
     $stateProvider
-        .state('index',{
-            url:'/index',
+        .state('home',{
+            url:'/home',
             templateUrl:'Modules/index/index.html'
         })
         .state('intDetail',{

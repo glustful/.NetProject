@@ -1,7 +1,7 @@
 ﻿
 <div class="marginL" ng-app="app" ng-controller="bankController">
     <div>
-        <a href="#page/CRM/BankSet/create" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw orange-200"style="float:right;;margin-right: 50px;">新建<div class="md-ripple-container"></div></button></a>
+        <a href="#page/CRM/BankSet/create" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo"style="float:right;;margin-right: 50px;">新建<div class="md-ripple-container"></div></button></a>
     </div>
     <div id="divConfig">
 
@@ -33,7 +33,7 @@
                     <td class="footable-visible">{{item.Codeid}}</td>
                     <td class="footable-visible">{{item.Addtime | dateFilter }}</td>
                     <td >
-                        <a ui-sref="page.CRM.BankSet.edit({id: item.Id})"> <span class="label bg-success" title="Active">编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                        <a ui-sref="page.CRM.BankSet.edit({id: item.Id})" class="btn btn-info btn-sm"> <span title="Active"><i class="fa fa-fw m-r-xs fa-edit"></i>编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                     </td>
                 </tr>
             </tbody>

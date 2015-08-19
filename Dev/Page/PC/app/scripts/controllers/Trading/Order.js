@@ -1,6 +1,7 @@
 /**
  * Created by AddBean on 2015/5/13 0013.
  */
+//region 获取所有订单
 angular.module("app").controller('orderController', [
     '$http', '$scope', function ($http, $scope) {
         //默认初始化推荐订单；
@@ -108,6 +109,8 @@ angular.module("app").controller('orderController', [
         }
     }
 ]);
+//endregion
+//region 获取洽谈后的订单
 angular.module("app").controller('NegotiateOrderController', [
     '$http', '$scope', function ($http, $scope) {
         //获取洽谈后的订单
@@ -158,4 +161,4 @@ angular.module("app").controller('NegotiateOrderController', [
         getOrderList();
         $scope.getList=getOrderList;
     }]);
-
+//endregion
