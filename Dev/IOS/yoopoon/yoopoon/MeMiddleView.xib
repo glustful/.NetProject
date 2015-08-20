@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
@@ -17,7 +16,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9a-1l-d63">
                             <rect key="frame" x="0.0" y="0.0" width="189" height="149"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="b1" translatesAutoresizingMaskIntoConstraints="NO" id="vnw-5n-FCU">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="b1" translatesAutoresizingMaskIntoConstraints="NO" id="vnw-5n-FCU">
                                     <rect key="frame" x="44" y="5" width="100" height="100"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="65" id="gRo-Sr-9Cb"/>
@@ -30,7 +29,7 @@
                                         </mask>
                                     </variation>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="我要推荐" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cU4-L6-dOA">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我要推荐" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cU4-L6-dOA">
                                     <rect key="frame" x="0.0" y="110" width="189" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="ZSd-ZB-Gwp"/>
@@ -220,8 +219,8 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qa6-09-0jg">
                             <rect key="frame" x="190" y="1" width="188" height="147"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="b5" translatesAutoresizingMaskIntoConstraints="NO" id="6tG-wo-9uJ">
-                                    <rect key="frame" x="44" y="5" width="100" height="100"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="settingIcon" translatesAutoresizingMaskIntoConstraints="NO" id="6tG-wo-9uJ">
+                                    <rect key="frame" x="45" y="5" width="100" height="100"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="65" id="iOi-Mx-sHe"/>
                                         <constraint firstAttribute="width" constant="65" id="tIM-Ec-UPl"/>
@@ -233,7 +232,7 @@
                                         </mask>
                                     </variation>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="房贷计算器" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FnM-uU-QPd">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设置" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FnM-uU-QPd">
                                     <rect key="frame" x="0.0" y="110" width="188" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="txg-ot-fec"/>
@@ -306,9 +305,13 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
-                                <action selector="buttonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="EH5-L8-Xss"/>
+                                <action selector="settingAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="Ftl-J8-Zgg"/>
                             </connections>
                         </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a39-rf-IiR">
+                            <rect key="frame" x="379" y="1" width="189" height="147"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="deC-Bg-bpH" customClass="UIVerticalButton" customModule="yoopoon" customModuleProvider="target">
                             <rect key="frame" x="379" y="1" width="189" height="147"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -329,14 +332,19 @@
                         <constraint firstItem="deC-Bg-bpH" firstAttribute="bottom" secondItem="R03-PG-kHB" secondAttribute="bottom" id="H8s-ZU-mhg"/>
                         <constraint firstItem="bQg-VM-hre" firstAttribute="trailing" secondItem="ki2-Dh-0fP" secondAttribute="trailing" id="JXE-9K-VsM"/>
                         <constraint firstItem="bQg-VM-hre" firstAttribute="leading" secondItem="Dbg-hI-M7z" secondAttribute="leading" id="JwB-7W-PBu"/>
+                        <constraint firstItem="a39-rf-IiR" firstAttribute="top" secondItem="Dbg-hI-M7z" secondAttribute="top" constant="1" id="M0A-qG-CVO"/>
                         <constraint firstItem="deC-Bg-bpH" firstAttribute="width" secondItem="R03-PG-kHB" secondAttribute="width" id="NiU-S1-2hK"/>
+                        <constraint firstAttribute="trailing" secondItem="a39-rf-IiR" secondAttribute="trailing" id="Ow8-5Q-Gx5"/>
                         <constraint firstItem="deC-Bg-bpH" firstAttribute="top" secondItem="av4-nq-VIM" secondAttribute="top" id="WPz-Fl-M28"/>
+                        <constraint firstItem="bQg-VM-hre" firstAttribute="width" secondItem="a39-rf-IiR" secondAttribute="width" id="ZjF-hL-QHZ"/>
                         <constraint firstItem="Qa6-09-0jg" firstAttribute="trailing" secondItem="R03-PG-kHB" secondAttribute="trailing" id="bpv-77-eqc"/>
+                        <constraint firstItem="bQg-VM-hre" firstAttribute="bottom" secondItem="R03-PG-kHB" secondAttribute="bottom" id="cQw-nF-mcO"/>
                         <constraint firstItem="bQg-VM-hre" firstAttribute="top" secondItem="ki2-Dh-0fP" secondAttribute="top" id="cTr-js-mv9"/>
                         <constraint firstAttribute="bottom" secondItem="bQg-VM-hre" secondAttribute="bottom" id="d5S-30-5r7"/>
                         <constraint firstItem="deC-Bg-bpH" firstAttribute="top" secondItem="R03-PG-kHB" secondAttribute="top" id="dLs-xb-biP"/>
                         <constraint firstItem="Qa6-09-0jg" firstAttribute="leading" secondItem="R03-PG-kHB" secondAttribute="leading" id="gof-YL-UzE"/>
                         <constraint firstItem="deC-Bg-bpH" firstAttribute="bottom" secondItem="av4-nq-VIM" secondAttribute="bottom" id="how-Gz-Syi"/>
+                        <constraint firstItem="bQg-VM-hre" firstAttribute="top" secondItem="R03-PG-kHB" secondAttribute="top" id="iWj-cZ-OGf"/>
                         <constraint firstItem="R03-PG-kHB" firstAttribute="leading" secondItem="bQg-VM-hre" secondAttribute="trailing" constant="1" id="isr-dc-w3K"/>
                         <constraint firstItem="deC-Bg-bpH" firstAttribute="leading" secondItem="R03-PG-kHB" secondAttribute="trailing" constant="1" id="lQK-Jw-ftp"/>
                         <constraint firstAttribute="trailing" secondItem="deC-Bg-bpH" secondAttribute="trailing" id="mTj-3x-9aj"/>
@@ -344,9 +352,18 @@
                         <constraint firstItem="bQg-VM-hre" firstAttribute="leading" secondItem="ki2-Dh-0fP" secondAttribute="leading" id="ne1-Vx-iLy"/>
                         <constraint firstItem="deC-Bg-bpH" firstAttribute="trailing" secondItem="av4-nq-VIM" secondAttribute="trailing" id="p4P-Fm-QdT"/>
                         <constraint firstItem="Qa6-09-0jg" firstAttribute="top" secondItem="R03-PG-kHB" secondAttribute="top" id="pEx-Js-wly"/>
+                        <constraint firstItem="R03-PG-kHB" firstAttribute="width" secondItem="a39-rf-IiR" secondAttribute="width" id="pp9-tu-sxN"/>
                         <constraint firstItem="deC-Bg-bpH" firstAttribute="bottom" secondItem="bQg-VM-hre" secondAttribute="bottom" id="rn9-5R-H0r"/>
+                        <constraint firstAttribute="bottom" secondItem="a39-rf-IiR" secondAttribute="bottom" id="seR-2n-8dF"/>
+                        <constraint firstItem="a39-rf-IiR" firstAttribute="leading" secondItem="R03-PG-kHB" secondAttribute="trailing" constant="1" id="slx-1x-1wM"/>
                         <constraint firstItem="deC-Bg-bpH" firstAttribute="width" secondItem="bQg-VM-hre" secondAttribute="width" id="wDc-Yr-hIS"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="subviews">
+                            <exclude reference="av4-nq-VIM"/>
+                            <exclude reference="deC-Bg-bpH"/>
+                        </mask>
+                    </variation>
                 </view>
             </subviews>
             <constraints>
@@ -368,17 +385,14 @@
                 <outlet property="ui2" destination="ZcW-YO-5IP" id="ZBU-I2-lPc"/>
                 <outlet property="ui3" destination="gih-9U-VRI" id="yZl-ey-Sps"/>
                 <outlet property="ui4" destination="bQg-VM-hre" id="UJV-Cl-DdZ"/>
-                <outlet property="ui5" destination="R03-PG-kHB" id="OC5-fQ-fBL"/>
                 <outlet property="uiImg1" destination="vnw-5n-FCU" id="sZq-xF-j25"/>
                 <outlet property="uiImg2" destination="PPY-cR-x7f" id="P0H-gL-TDA"/>
                 <outlet property="uiImg3" destination="WRf-Vp-VXO" id="xuR-PE-MqE"/>
                 <outlet property="uiImg4" destination="eIF-hR-aem" id="wwx-lY-lbd"/>
-                <outlet property="uiImg5" destination="6tG-wo-9uJ" id="W7M-of-yGw"/>
                 <outlet property="uiLabel1" destination="cU4-L6-dOA" id="hqF-1O-b18"/>
                 <outlet property="uiLabel2" destination="f1Q-bc-XlH" id="Hf2-g1-b8F"/>
                 <outlet property="uiLabel3" destination="Pw1-4Y-icd" id="CjX-O7-gbg"/>
                 <outlet property="uiLabel4" destination="PDB-aK-xYT" id="KVn-nG-0Gv"/>
-                <outlet property="uiLabel5" destination="FnM-uU-QPd" id="icw-oN-233"/>
             </connections>
             <point key="canvasLocation" x="481" y="155.5"/>
         </view>
@@ -388,7 +402,6 @@
         <image name="b2" width="100" height="100"/>
         <image name="b3" width="100" height="100"/>
         <image name="b4" width="100" height="100"/>
-        <image name="b5" width="100" height="100"/>
         <image name="settingIcon" width="100" height="100"/>
     </resources>
 </document>

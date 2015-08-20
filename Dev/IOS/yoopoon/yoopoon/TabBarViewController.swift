@@ -25,6 +25,7 @@ class TabBarViewController: UITabBarController ,UITabBarControllerDelegate{
         item.setTitleTextAttributes([NSForegroundColorAttributeName:selectedColor], forState: UIControlState.Selected)
         
         item = tabBar.items![1] as! UITabBarItem
+        
         item.image = UIImage(named: "tabhouse")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         item.selectedImage = UIImage(named: "tabhouse1")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         item.setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.whiteColor()], forState: UIControlState.Normal)
@@ -73,6 +74,7 @@ class TabBarViewController: UITabBarController ,UITabBarControllerDelegate{
 
     }
     
+        
 
     
 }

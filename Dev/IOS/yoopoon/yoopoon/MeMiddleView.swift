@@ -15,7 +15,7 @@ class MeMiddleView: UIView {
     @IBOutlet weak var ui2: UIVerticalButton!
     @IBOutlet weak var ui3: UIVerticalButton!
     @IBOutlet weak var ui4: UIVerticalButton!
-    @IBOutlet weak var ui5: UIVerticalButton!
+   // @IBOutlet weak var ui5: UIVerticalButton!
     @IBOutlet weak var uiImg1: UIImageView!
     @IBOutlet weak var uiLabel1: UILabel!
     @IBOutlet weak var uiImg2: UIImageView!
@@ -24,8 +24,8 @@ class MeMiddleView: UIView {
     @IBOutlet weak var uiLabel3: UILabel!
     @IBOutlet weak var uiImg4: UIImageView!
     @IBOutlet weak var uiLabel4: UILabel!
-    @IBOutlet weak var uiImg5: UIImageView!
-    @IBOutlet weak var uiLabel5: UILabel!
+   // @IBOutlet weak var uiImg5: UIImageView!
+    //@IBOutlet weak var uiLabel5: UILabel!
     
     @IBAction func settingAction(sender: UIVerticalButton) {
         var storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
@@ -87,13 +87,13 @@ class MeMiddleView: UIView {
             uiImg2.image = UIImage(named: "b2")
             uiImg3.image = UIImage(named: "b3")
             uiImg4.image = UIImage(named: "b4")
-            uiImg5.image = UIImage(named: "b5")
+            //uiImg5.image = UIImage(named: "b5")
             
             uiLabel1.text = brokerTip1
             uiLabel2.text = brokerTip2
             uiLabel3.text = brokerTip3
             uiLabel4.text = brokerTip4
-            uiLabel5.text = brokerTip5
+            //uiLabel5.text = brokerTip5
             
         }
         else{
@@ -102,13 +102,13 @@ class MeMiddleView: UIView {
             uiImg2.image = UIImage(named: "c2")
             uiImg3.image = UIImage(named: "c3")
             uiImg4.image = UIImage(named: "c4")
-            uiImg5.image = UIImage(named: "c5")
+            //uiImg5.image = UIImage(named: "c5")
             
             uiLabel1.text = commentUserTip1
             uiLabel2.text = commentUserTip2
             uiLabel3.text = commentUserTip3
             uiLabel4.text = commentUserTip4
-            uiLabel5.text = commentUserTip5
+           // uiLabel5.text = commentUserTip5
         }
     }
     

@@ -23,13 +23,13 @@ class TaskListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var uiTaskName: UILabel!
     @IBOutlet weak var uiawardMsg: UILabel!
-    @IBOutlet weak var uiGoFinish: UIButton!{
-        didSet{
-            uiGoFinish.layer.cornerRadius = 5
-            uiGoFinish.layer.borderWidth = 1
-            uiGoFinish.layer.borderColor = appRedBackground.CGColor
-        }
-    }
+//    @IBOutlet weak var uiGoFinish: UIButton!{
+//        didSet{
+//            uiGoFinish.layer.cornerRadius = 5
+//            uiGoFinish.layer.borderWidth = 1
+//            uiGoFinish.layer.borderColor = appRedBackground.CGColor
+//        }
+//    }
     
   
 }

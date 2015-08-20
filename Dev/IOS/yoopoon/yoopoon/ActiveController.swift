@@ -42,6 +42,7 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
         }
     }
     
+    
     //初始化请求参数
     private func initParam(){
         paramter.updateValue("房地产", forKey: "className")
@@ -63,7 +64,7 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
                 var height = (json.count % 3 == 0) ? (json.count / 3) : (json.count / 3 + 1)
                 self.activeADView = ActiveADView(frame: CGRectMake(0, 0, self.mTableView!.bounds.width, screenBounds.height * 0.2 * CGFloat(height)))
                 self.activeADView!.json = json
-                self.activeADView!.backgroundColor = UIColor.redColor()
+                
                 self.mTableView.reloadData()
                 
                 
@@ -126,9 +127,9 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
                     
                 }
                 //如果你的这个广告视图是添加到导航控制器子控制器的View上,请添加此句,否则可忽略此句
-                self.automaticallyAdjustsScrollViewInsets = false;
+                self.automaticallyAdjustsScrollViewInsets = false
                 
-                self.adScrollerView = ADView.adScrollViewWithFrame(CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height/5),imageLinkUrl:imagesURL,placeHoderImageName:"placeHoder.jpg" ,pageControlShowStyle:UIPageControlShowStyle.UIPageControlShowStyleCenter)!;
+                self.adScrollerView = ADView.adScrollViewWithFrame(CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height/5),imageLinkUrl:imagesURL,placeHoderImageName:"placeHoder.jpg" ,pageControlShowStyle:UIPageControlShowStyle.UIPageControlShowStyleCenter)!
                 self.mTableView.reloadData()
                 
                 },

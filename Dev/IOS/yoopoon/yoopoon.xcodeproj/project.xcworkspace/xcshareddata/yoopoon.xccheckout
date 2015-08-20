@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>32E8A6E5-DB2F-4605-B4EA-33F769B7EBD2</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>yoopoon</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>3ABE7ECA9E63FD549706F1C0D7BE1CC78ED358B1</key>
 		<string>http://192.168.1.199:8080/tfs/DefaultCollection/_git/Project_Zerg</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Dev/IOS/yoopoon/yoopoon.xcodeproj/project.xcworkspace</string>
+	<string>Dev/IOS/yoopoon/yoopoon.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>3ABE7ECA9E63FD549706F1C0D7BE1CC78ED358B1</key>
