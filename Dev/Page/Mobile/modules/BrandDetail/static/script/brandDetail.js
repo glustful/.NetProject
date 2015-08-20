@@ -7,8 +7,8 @@ app.controller('BrandDetailController',['$http','$scope','$stateParams',function
         $scope.brandDetail=data
     })
 }])
-app.filter('trustHtml', function ($sce) {
+app.filter('trustHtml',['$sce',function ($sce) {
     return function (input) {
         return $sce.trustAsHtml(input);
     }
-})
+}])

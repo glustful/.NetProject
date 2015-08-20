@@ -59,11 +59,11 @@ angular.module("app").controller('orderController', [
             {
                 id: 1,
                 title: "带客订单"
-            },
-            {
-                id: 2,
-                title: "成交订单"
             }
+            //{
+            //    id: 2,
+            //    title: "成交订单"
+            //}
         ];
 
         //点击选择订单状态；
@@ -83,13 +83,13 @@ angular.module("app").controller('orderController', [
                 $scope.searchCondition.type="带客订单",
                     getOrderList()
             }
-            else {
-                //$http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=成交订单',{'withCredentials':true}).success(function (data) {
-                //    $scope.rowCollectionBasic = data.List;
-                //});
-                $scope.searchCondition.type="成交订单",
-                    getOrderList()
-            }
+            //else {
+            //    //$http.get(SETTING.ApiUrl + '/order/getAllRecommonOrders?type=成交订单',{'withCredentials':true}).success(function (data) {
+            //    //    $scope.rowCollectionBasic = data.List;
+            //    //});
+            //    $scope.searchCondition.type="成交订单",
+            //        getOrderList()
+            //}
         };
 
         //审查；

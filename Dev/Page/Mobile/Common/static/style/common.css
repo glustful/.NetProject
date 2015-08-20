@@ -52,7 +52,7 @@ a,a:hover{
     position: fixed;
     width:640px;
     top:0;
-    z-index: 10;
+    z-index: 10000;
 }
 .logo{
     margin:13px 0 0 27px;
@@ -106,7 +106,7 @@ a,a:hover{
     width:640px;
     position:fixed;
     bottom:0;
-    z-index: 10;
+    z-index: 10000;
 }
 .footer span{
     display: inline-block;

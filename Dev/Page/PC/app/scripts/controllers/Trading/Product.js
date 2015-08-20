@@ -70,8 +70,14 @@ angular.module("app").controller('ProductController', [
                         if (data.Status) {
                             getProductList();
                         }
+                        else{
+                            $scope.alerts=[{type:'danger',msg:data.Msg}];
+                        }
                     });
             })
+            $scope.closeAlert = function(index) {
+                $scope.alerts.splice(index, 1);
+            };
         }
 //        $scope.delProduct=function(productId){
 //            $http.get(SETTING.ApiUrl + '/Product/delProduct?productId='+productId,{'withCredentials':true}).success(function (data) {

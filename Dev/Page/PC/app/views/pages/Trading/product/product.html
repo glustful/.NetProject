@@ -3,7 +3,8 @@
         <button ui-sref="page.Trading.product.createProduct" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加商品
         </button>
         <div class="line b-b m-v-md"></div>
-        <div class="alert alert-info" align="center">{{output}}</div>
+        <!--<div class="alert alert-info" align="center">{{output}}</div>-->
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
     </div>
     <div class=" panel-default panel panel-card ng-scope" align="center">
         <div class="panel-heading">商品列表</div>
