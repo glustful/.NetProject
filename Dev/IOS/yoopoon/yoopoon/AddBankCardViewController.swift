@@ -25,6 +25,7 @@ class AddBankCardViewController: TextFieldViewController,UIPopoverPresentationCo
         sendSMS()
     }
     @IBAction func sureAction(sender: UIButton){
+        hidenKeyBoard()
         if validate(){
             post()
         }

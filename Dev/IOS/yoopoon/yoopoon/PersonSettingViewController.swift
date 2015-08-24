@@ -36,6 +36,7 @@ class PersonSettingViewController: SuperViewController,UITextFieldDelegate,UINav
         self.presentViewController(picker, animated: true, completion: nil)
     }
     @IBAction func storeAction(sender: UIButton) {
+        hidenKeyBoard()
         if validate(){
         post()
         }

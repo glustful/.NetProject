@@ -16,6 +16,7 @@ class TakeMoneyViewController: SuperViewController,UIAlertViewDelegate {
     @IBOutlet weak var constraintTopWidth: NSLayoutConstraint!
     @IBOutlet weak var constraintMiddleHeight: NSLayoutConstraint!
     @IBAction func takeMoneyAction(sender: UIButton) {
+        TipTools().showToast("提示", message: "余额还没有达到提现的最低标准，继续努力！！！", duration: 2)
     }
     override func viewDidLoad() {
         super.viewDidLoad()

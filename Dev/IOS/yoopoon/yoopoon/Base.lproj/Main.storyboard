@@ -2095,17 +2095,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="redPackage.png" translatesAutoresizingMaskIntoConstraints="NO" id="uoZ-hB-fDk">
-                                <rect key="frame" x="0.0" y="74" width="600" height="516"/>
-                                <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
-                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="敬请期待下一版本的来临" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AHH-cb-0p6">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="uoZ-hB-fDk" secondAttribute="trailing" id="N0e-n3-WeH"/>
-                            <constraint firstItem="uoZ-hB-fDk" firstAttribute="top" secondItem="Ufa-jj-c2L" secondAttribute="bottom" constant="10" id="O3f-Zp-31C"/>
-                            <constraint firstItem="uoZ-hB-fDk" firstAttribute="leading" secondItem="Egs-Z6-tQb" secondAttribute="leading" id="jRr-FY-FIT"/>
-                            <constraint firstAttribute="bottom" secondItem="uoZ-hB-fDk" secondAttribute="bottom" constant="10" id="tuq-Rn-vNk"/>
+                            <constraint firstItem="AHH-cb-0p6" firstAttribute="leading" secondItem="Egs-Z6-tQb" secondAttribute="leading" id="CG6-4w-huM"/>
+                            <constraint firstAttribute="trailing" secondItem="AHH-cb-0p6" secondAttribute="trailing" id="Ppn-uK-VCu"/>
+                            <constraint firstItem="AHH-cb-0p6" firstAttribute="top" secondItem="Ufa-jj-c2L" secondAttribute="bottom" id="rCs-mV-oLf"/>
+                            <constraint firstItem="sVM-Ym-gQ7" firstAttribute="top" secondItem="AHH-cb-0p6" secondAttribute="bottom" id="wcZ-Cs-tev"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -2164,11 +2166,11 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8jD-1y-vIc">
                                                 <rect key="frame" x="0.0" y="320" width="600" height="50"/>
                                                 <subviews>
-                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" image="jiantou_8b29006.png" translatesAutoresizingMaskIntoConstraints="NO" id="nXq-TT-Gxl">
-                                                        <rect key="frame" x="578" y="2" width="12" height="46"/>
+                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" image="jiantou_8b29006" translatesAutoresizingMaskIntoConstraints="NO" id="nXq-TT-Gxl">
+                                                        <rect key="frame" x="540" y="2" width="50" height="46"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="奖励明细" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zFH-IC-Z3x">
-                                                        <rect key="frame" x="10" y="0.0" width="568" height="50"/>
+                                                        <rect key="frame" x="10" y="0.0" width="530" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -2189,11 +2191,11 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xva-mO-5Ee">
                                                 <rect key="frame" x="0.0" y="371" width="600" height="50"/>
                                                 <subviews>
-                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" image="jiantou_8b29006.png" translatesAutoresizingMaskIntoConstraints="NO" id="Wc7-qe-ud4">
-                                                        <rect key="frame" x="578" y="2" width="12" height="46"/>
+                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" image="jiantou_8b29006" translatesAutoresizingMaskIntoConstraints="NO" id="Wc7-qe-ud4">
+                                                        <rect key="frame" x="540" y="2" width="50" height="46"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="积分兑换" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KR5-Ov-udO">
-                                                        <rect key="frame" x="10" y="0.0" width="568" height="50"/>
+                                                        <rect key="frame" x="10" y="0.0" width="530" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -2248,6 +2250,11 @@
                                             <constraint firstAttribute="trailing" secondItem="EYy-sf-mWu" secondAttribute="trailing" id="yMR-3z-hmx"/>
                                         </constraints>
                                         <variation key="default">
+                                            <mask key="subviews">
+                                                <exclude reference="8jD-1y-vIc"/>
+                                                <exclude reference="Xva-mO-5Ee"/>
+                                                <exclude reference="8Ix-41-JyG"/>
+                                            </mask>
                                             <mask key="constraints">
                                                 <exclude reference="8A8-b2-a0P"/>
                                             </mask>
@@ -2658,11 +2665,9 @@
         <image name="cell" width="40" height="40"/>
         <image name="checkbox.png" width="21" height="21"/>
         <image name="jiantou_8b29006" width="50" height="50"/>
-        <image name="jiantou_8b29006.png" width="12" height="28"/>
         <image name="passwdIcon" width="30" height="30"/>
         <image name="phoneIcon" width="30" height="30"/>
         <image name="placeHoder.jpg" width="262" height="198"/>
-        <image name="redPackage.png" width="632" height="743"/>
         <image name="referhouse" width="50" height="50"/>
         <image name="todaytask" width="50" height="50"/>
         <image name="useIcon" width="30" height="30"/>

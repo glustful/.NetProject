@@ -9,6 +9,7 @@
 import UIKit
 
 class AgentHoreTableViewCell: UITableViewCell {
+    @IBOutlet weak var uiBottomView: UIView!
     @IBOutlet weak var uiNo1: UIView!
     @IBOutlet weak var uiNo2: UIView!
     @IBOutlet weak var uiNo3: UIView!
@@ -18,6 +19,13 @@ class AgentHoreTableViewCell: UITableViewCell {
     @IBOutlet weak var uiNo2Price: UILabel!
     @IBOutlet weak var uiNo3Name: UILabel!
     @IBOutlet weak var uiNo3Price: UILabel!
+    
+    func removeChild(){
+        
+        if uiBottomView != nil{
+        uiBottomView.removeFromSuperview()
+        }
+    }
     
     func initLayout(json: JSON){
         if let array = json["List"].array{

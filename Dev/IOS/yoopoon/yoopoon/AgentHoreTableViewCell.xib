@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -51,7 +51,7 @@
                                         <color key="textColor" red="0.43529411764705883" green="0.40000000000000002" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="总佣金：1000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="HVx-ie-bfo">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="总佣金：0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="HVx-ie-bfo">
                                         <rect key="frame" x="0.0" y="98" width="152" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="3Tu-qU-X25"/>
@@ -90,7 +90,7 @@
                                         <color key="textColor" red="0.41960784313725491" green="0.40392156862745099" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="总佣金：911" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="XcF-Mf-FQv">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="总佣金：0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="XcF-Mf-FQv">
                                         <rect key="frame" x="0.0" y="98" width="151" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="Imy-10-YaD"/>
@@ -129,7 +129,7 @@
                                         <color key="textColor" red="0.40392156862745099" green="0.40392156862745099" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="总佣金：101" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="NK7-AA-3f2">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="总佣金：0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="NK7-AA-3f2">
                                         <rect key="frame" x="0.0" y="98" width="152" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="vsx-E1-b2Q"/>
@@ -182,9 +182,11 @@
                     <constraint firstItem="zzx-7Z-19x" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="IEk-ae-PJb"/>
                     <constraint firstAttribute="trailing" secondItem="zzx-7Z-19x" secondAttribute="trailing" constant="5" id="PU8-Ng-zKi"/>
                     <constraint firstAttribute="bottom" secondItem="rOL-wH-7sm" secondAttribute="bottom" id="QpY-j6-duJ"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="zzx-7Z-19x" secondAttribute="bottom" priority="999" id="ZbH-Do-Dsl"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="uiBottomView" destination="rOL-wH-7sm" id="NJf-Y5-WEd"/>
                 <outlet property="uiNo1" destination="ngO-17-juT" id="fZF-lb-EE1"/>
                 <outlet property="uiNo1Name" destination="mRv-g9-emO" id="bHn-Px-p16"/>
                 <outlet property="uiNo1Price" destination="HVx-ie-bfo" id="6l3-Zp-p2i"/>

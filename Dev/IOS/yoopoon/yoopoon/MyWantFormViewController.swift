@@ -26,7 +26,9 @@ class MyWantFormViewController: TextFieldViewController,UIPopoverPresentationCon
     @IBOutlet weak var uiHouseName: UITextField!
     @IBOutlet weak var uiHouseType: UITextField!
     @IBAction func commitAction(sender: UIButton) {
-        self.currentField!.resignFirstResponder()
+        if let field = self.currentField{
+            field.resignFirstResponder()
+        }
         if uiCustomName.text == nil || uiCustomName.text == ""{
             uiCustomName.shake(5, delta: 3)
             return

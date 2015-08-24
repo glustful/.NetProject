@@ -182,6 +182,8 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
         }
         if horeDataSource != nil{
             cell!.initLayout(horeDataSource!)
+        }else{
+            cell!.removeChild()
         }
         return cell!
         }
@@ -220,7 +222,10 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
 
             return screenBounds.width / 4 + 50
         }else if indexPath.row == 3{
-            if let img = UIImage(named: "1"){
+            if self.horeDataSource == nil{
+                return 45
+            }
+            if let img = UIImage(named: "no1"){
                 return img.size.height + 93
             }
             return screenBounds.height/4

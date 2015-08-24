@@ -18,9 +18,11 @@ class TipTools: NSObject {
     :param: duration 显示时间，eg. 3 (3秒)
     */
     func showToast(title:String,message:String,duration:Double){
-        var toast = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: nil)
-        NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: "cancelToast:", userInfo: toast, repeats: true)
-        toast.show()
+        var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+       CommentTools.getCurrentController()!.presentViewController(alert, animated: true, completion: nil)
+       
+        NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: "cancelToast:", userInfo: alert, repeats: true)
+      
     }
     
     /**
@@ -30,8 +32,9 @@ class TipTools: NSObject {
     */
     func cancelToast(alert: NSTimer){
         if alert.userInfo != nil{
-            if alert.userInfo is UIAlertView{
-                (alert.userInfo as! UIAlertView).dismissWithClickedButtonIndex(0, animated: true)
+            if alert.userInfo is UIAlertController{
+                
+                (alert.userInfo as! UIAlertController).dismissViewControllerAnimated(true, completion: nil)
             }
         }
        

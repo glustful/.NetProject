@@ -34,6 +34,7 @@ class RegisterViewController: TextFieldViewController {
     }
     
     @IBAction func registerAction(sender: UIButton) {
+        hidenKeyBoard()
         if validate(){
             register()
         }

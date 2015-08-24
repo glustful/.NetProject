@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -44,14 +43,6 @@
                                     <action selector="dialPhoneAction:" destination="6EP-b2-JZc" eventType="touchUpInside" id="nTl-TY-JAo"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Q8-5J-2ax">
-                                <rect key="frame" x="314" y="0.0" width="313" height="67"/>
-                                <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
-                                <state key="normal">
-                                    <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4N6-pn-Xei">
                                 <rect key="frame" x="314" y="8" width="1" height="51"/>
                                 <color key="backgroundColor" red="0.65368529040404044" green="0.65368529040404044" blue="0.65368529040404044" alpha="1" colorSpace="calibratedRGB"/>
@@ -59,28 +50,31 @@
                                     <constraint firstAttribute="width" constant="1" id="nRU-9f-giL"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GFq-Ke-d1A">
+                                <rect key="frame" x="317" y="0.0" width="310" height="67"/>
+                                <fontDescription key="fontDescription" name="STHeitiSC-Medium" family="Heiti SC" pointSize="14"/>
+                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="4N6-pn-Xei" firstAttribute="leading" secondItem="5Q8-5J-2ax" secondAttribute="leading" id="05y-g7-9ge"/>
-                            <constraint firstItem="5Q8-5J-2ax" firstAttribute="top" secondItem="hF7-Uc-MN4" secondAttribute="top" id="1Z5-AW-U1J"/>
-                            <constraint firstAttribute="bottom" secondItem="5Q8-5J-2ax" secondAttribute="bottom" id="328-51-a6X"/>
+                            <constraint firstItem="GFq-Ke-d1A" firstAttribute="top" secondItem="hF7-Uc-MN4" secondAttribute="top" id="00z-t7-si1"/>
                             <constraint firstItem="4N6-pn-Xei" firstAttribute="centerX" secondItem="hF7-Uc-MN4" secondAttribute="centerX" id="3cP-rw-cDt"/>
                             <constraint firstItem="Vag-iT-9Za" firstAttribute="top" secondItem="hF7-Uc-MN4" secondAttribute="top" id="71N-ck-Zuy"/>
                             <constraint firstAttribute="centerY" secondItem="4N6-pn-Xei" secondAttribute="centerY" id="A2Z-AX-4WI"/>
                             <constraint firstItem="Vag-iT-9Za" firstAttribute="leading" secondItem="hF7-Uc-MN4" secondAttribute="leading" constant="2" id="Bke-mj-EEp"/>
                             <constraint firstItem="4N6-pn-Xei" firstAttribute="top" relation="greaterThanOrEqual" secondItem="hF7-Uc-MN4" secondAttribute="top" priority="999" constant="8" id="Byy-Yy-8Xo"/>
-                            <constraint firstAttribute="trailing" secondItem="5Q8-5J-2ax" secondAttribute="trailing" constant="2" id="IXn-SM-obf"/>
+                            <constraint firstAttribute="bottom" secondItem="GFq-Ke-d1A" secondAttribute="bottom" id="JOJ-Ii-Ytz"/>
                             <constraint firstAttribute="bottom" secondItem="Vag-iT-9Za" secondAttribute="bottom" id="KWz-x4-6YL"/>
+                            <constraint firstItem="GFq-Ke-d1A" firstAttribute="leading" secondItem="4N6-pn-Xei" secondAttribute="trailing" constant="2" id="Oga-1J-sCa"/>
+                            <constraint firstAttribute="trailing" secondItem="GFq-Ke-d1A" secondAttribute="trailing" constant="2" id="XTr-HF-XTa"/>
                             <constraint firstItem="4N6-pn-Xei" firstAttribute="centerY" secondItem="hF7-Uc-MN4" secondAttribute="centerY" priority="999" id="ZkB-s1-f7H"/>
                             <constraint firstAttribute="bottom" secondItem="4N6-pn-Xei" secondAttribute="bottom" priority="999" constant="8" id="cH4-nG-g9e"/>
                             <constraint firstItem="4N6-pn-Xei" firstAttribute="bottom" secondItem="Vag-iT-9Za" secondAttribute="bottom" constant="-8" id="g1W-Sa-itk"/>
-                            <constraint firstItem="4N6-pn-Xei" firstAttribute="top" secondItem="5Q8-5J-2ax" secondAttribute="top" priority="999" constant="8" id="gVX-zA-fQ4"/>
                             <constraint firstItem="4N6-pn-Xei" firstAttribute="top" secondItem="hF7-Uc-MN4" secondAttribute="top" priority="999" constant="8" id="hvw-JC-I5V"/>
-                            <constraint firstItem="4N6-pn-Xei" firstAttribute="bottom" secondItem="5Q8-5J-2ax" secondAttribute="bottom" priority="999" constant="-8" id="jY8-4O-Ley"/>
                             <constraint firstAttribute="width" secondItem="hF7-Uc-MN4" secondAttribute="height" multiplier="729:77" id="mGH-5o-VAi"/>
                             <constraint firstItem="4N6-pn-Xei" firstAttribute="leading" secondItem="Vag-iT-9Za" secondAttribute="trailing" constant="2" id="q66-gn-DX5"/>
-                            <constraint firstItem="5Q8-5J-2ax" firstAttribute="top" secondItem="hF7-Uc-MN4" secondAttribute="top" id="uR0-Ki-jD1"/>
                             <constraint firstItem="4N6-pn-Xei" firstAttribute="top" secondItem="Vag-iT-9Za" secondAttribute="top" priority="999" constant="8" id="v7W-vQ-NkC"/>
                         </constraints>
                     </view>
@@ -148,7 +142,7 @@
                 <outlet property="mAdContent" destination="HK8-D7-xjz" id="tks-Qp-tYT"/>
                 <outlet property="mImage" destination="Pj0-cc-jDE" id="isi-7S-Szb"/>
                 <outlet property="mPhone" destination="Vag-iT-9Za" id="Ztb-04-Eou"/>
-                <outlet property="mPrefencetia" destination="5Q8-5J-2ax" id="P0E-ow-YcV"/>
+                <outlet property="mPrefencetia" destination="GFq-Ke-d1A" id="TO9-fr-8lK"/>
                 <outlet property="mTitle" destination="cRL-yS-anY" id="ZMJ-WP-11b"/>
                 <outlet property="uiText" destination="CPF-iY-77z" id="3qP-ya-qbM"/>
             </connections>

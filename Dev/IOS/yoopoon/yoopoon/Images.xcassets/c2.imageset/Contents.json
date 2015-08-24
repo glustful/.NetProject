@@ -9,12 +9,12 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "会员专属红包.pdf"
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "会员专属红包.pdf"
     }
   ],
   "info" : {

@@ -32,6 +32,7 @@ class ForgetPasswdViewController: TextFieldViewController {
     }
     
     @IBAction func registerAction(sender: UIButton) {
+        hidenKeyBoard()
         if validate(){
             register()
         }

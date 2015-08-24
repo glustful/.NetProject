@@ -21,6 +21,12 @@ class AgentCommentFunctionViewTableViewCell: UITableViewCell {
         var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.takeMoneyIdentifier) as! UIViewController
         CommentTools.getCurrentController()?.navigationController!.pushViewController(controller, animated: true)
     }
+    @IBAction func newBabyCourseAction(sender: UIVerticalButton) {
+        TipTools().showToast("提示", message: "请关注我们的官网主页", duration: 2)
+    }
+    @IBAction func offenQuestionAction(sender: UIVerticalButton) {
+         TipTools().showToast("提示", message: "请关注我们的官网主页", duration: 2)
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

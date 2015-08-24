@@ -19,7 +19,7 @@ class ActiveTableCell: UITableViewCell{
 //    @IBOutlet weak var mAddress: UILabel!
 //    @IBOutlet weak var mCity: UILabel!
     
-    @IBOutlet weak var mPrefencetia: UIButton!
+    @IBOutlet weak var mPrefencetia: UILabel!
     @IBOutlet weak var mPhone: UIButton!
     
     @IBAction func dialPhoneAction(sender: UIButton) {
@@ -85,7 +85,7 @@ class ActiveTableCell: UITableViewCell{
         mPhone.setTitle("来电咨询：\(phone)", forState: UIControlState.Normal)
         }
         let prefencetia = brand.productParamater?["最高优惠"]
-        mPrefencetia.setTitle("最高优惠：\(prefencetia!)", forState: UIControlState.Normal)
+        mPrefencetia.text = "最高优惠：\(prefencetia!)"
        
     }
 }
