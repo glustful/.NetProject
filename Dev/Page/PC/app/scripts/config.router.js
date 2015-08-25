@@ -559,13 +559,6 @@ angular.module('app')
             //    templateUrl: 'views/pages/setting.html',
             //      data: { title: '短信列表', theme: { primary: 'green' } }
             //})
-
-            .state('page.allocation', {
-                url: '/allocation',
-                templateUrl: 'views/pages/allocation.html',
-                  data: { title: '短信配置', theme: { primary: 'green' } }
-            })
-
             .state('ui.map.list', {
                 url: '/list',
                 templateUrl: 'views/ui/map/list.html',
@@ -1609,17 +1602,21 @@ angular.module('app')
             .state('page.CRM.activity.activityList', {
                 url: '/activityList',
                 templateUrl: 'views/pages/CRM/activity/activityList.html',
-                data: { title: '活动列表' }
+                data: { title: '活动列表' },
+                resolve: load(['scripts/controllers/CRM/activity.js'])
+                //controller:"activityController"
             })
             .state('page.CRM.activity.Edit', {
-                url: '/Edit',
+                url: '/Edit?id',
                 templateUrl: 'views/pages/CRM/activity/Edit.html',
-                data: { title: '活动编辑' }
+                data: { title: '活动编辑' },
+                resolve: load(['scripts/controllers/CRM/editActivity.js'])
             })
             .state('page.CRM.activity.Addactivity', {
                 url: '/Addactivity',
                 templateUrl: 'views/pages/CRM/activity/Addactivity.html',
-                data: { title: '新建活动' }
+                data: { title: '新建活动' },
+                resolve: load(['scripts/controllers/CRM/Addactivity.js'])
             })
 
 

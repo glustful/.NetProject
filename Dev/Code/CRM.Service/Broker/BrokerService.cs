@@ -133,6 +133,10 @@ namespace CRM.Service.Broker
                 {
                     query = query.Where(q => q.Phone==condition.Phone);
                 }
+                if (!string.IsNullOrEmpty(condition.Phone1))
+                {
+                    query = query.Where(q => q.Phone .Contains (condition.Phone1));
+                }
                 if (!string.IsNullOrEmpty(condition.Email))
                 {
                     query = query.Where(q => q.Email.Contains(condition.Email));
@@ -197,6 +201,18 @@ namespace CRM.Service.Broker
                         case EnumBrokerSearchOrderBy.OrderById:
                             query = condition.isDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
                             break;
+                        case EnumBrokerSearchOrderBy.OrderByBrokername :
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Brokername ) : query.OrderBy(q => q.Brokername);
+                            break;
+                        case EnumBrokerSearchOrderBy.OrderByUserType:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Usertype ) : query.OrderBy(q => q.Usertype);
+                            break;
+                        case EnumBrokerSearchOrderBy.OrderByUserRegtime :
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Regtime ) : query.OrderBy(q => q.Regtime);
+                            break;
+                        case EnumBrokerSearchOrderBy.OrderByPartnersName :
+                            query = condition.isDescending ? query.OrderByDescending(q => q.PartnersName) : query.OrderBy(q => q.PartnersName);
+                            break; 
                     }
 
                 }
@@ -211,7 +227,7 @@ namespace CRM.Service.Broker
                 }
                 else
                 {
-                    query = query.OrderBy(q => q.Usertype);
+                   // query = query.OrderBy(q => q.Usertype);
                 }
 
                 if (condition.Page.HasValue && condition.PageCount.HasValue)
@@ -291,6 +307,10 @@ namespace CRM.Service.Broker
                 if (!string.IsNullOrEmpty(condition.Phone))
                 {
                     query = query.Where(q => q.Phone==condition.Phone);
+                }
+                if (!string.IsNullOrEmpty(condition.Phone1))
+                {
+                    query = query.Where(q => q.Phone.Contains(condition.Phone1));
                 }
                 if (!string.IsNullOrEmpty(condition.Headphoto))
                 {

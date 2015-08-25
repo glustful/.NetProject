@@ -2,12 +2,12 @@
  * Created by Craig.Y.Duan on 2015/5/21.
  */
 'use strict';
-var app = angular.module('zergApp', [ 'ui.router','ngCookies','oc.lazyLoad','ngStorage','ui.bootstrap']);
+var app = angular.module('zergApp', [ 'ui.router','ngCookies','oc.lazyLoad','ngStorage','ui.bootstrap','ngAnimate']);
 
 var SETTING = {
     BaseUrl:'http://192.168.1.199/',
     ApiUrl:'http://localhost:50597/api',
-    ImgUrl:'http://img.yoopoon.com/',
+    ImgUrl:'http://img.iyookee.cn/',
     eventApiUrl:'http://localhost:16857/API'
 };
 //var SETTING = {

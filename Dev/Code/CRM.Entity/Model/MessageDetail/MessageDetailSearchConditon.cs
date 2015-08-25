@@ -50,5 +50,9 @@ namespace CRM.Entity.Model
 	public enum EnumMessageDetailSearchOrderBy
 	{
 		OrderById,
+        OrderByTitle,
+        OrderByContent,
+        OrderByMobile,
+        OrderByAddtime
 	}
 }

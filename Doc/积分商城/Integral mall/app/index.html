@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="intMallApp" lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title ng-bind="$state.current.data.title"></title>
+    <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="Common/css/common.css" rel="stylesheet"/>
+    <link href="Modules/index/css/index.css" rel="stylesheet"/>
+    <link href="Modules/intDetail/css/intDetail.css" rel="stylesheet"/>
+    <link href="Modules/Settlement/css/Settlement.css" rel="stylesheet"/>
+    <link href="Modules/purchaseSuccess/css/purchaseSuccess.css" rel="stylesheet"/>
+    <link href="Modules/newAddress/css/newAddress.css" rel="stylesheet"/>
+
+</head>
+<body>
+     <div ui-view></div>
+     <!-- Vendor -->
+     <script src="libs/vendor/angular/angular.min.js"></script>
+     <script src="libs/vendor/angular-cookies/angular-cookies.js"></script>
+     <script src="libs/vendor/ui-router/src/angular-ui-router.min.js"></script>
+     <script src="libs/vendor/oclazyload/dist/ocLazyLoad.js"></script>
+     <script src="libs/vendor/ngstorage/ngStorage.js"></script>
+     <!--jquery-->
+     <script src="libs/vendor/jquery/dist/jquery.js"></script>
+     <script src="libs/bootstrap/js/jquery-1.11.1.min.js"></script>
+     <!--bootstrap-->
+     <script src="libs/bootstrap/js/bootstrap.min.js"></script>
+     <script src="libs/vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+     <!--app-->
+     <script src="app.js"></script>
+     <script src="Common/script/router.js"></script>
+</body>
+</html>

@@ -122,7 +122,7 @@ namespace CRM.Service.BrokerWithdraw
                     query = query.Where(q => condition.Addusers.Contains(q.Adduser));
                 }
 
-                if (condition.State.HasValue)
+                if (condition.State!=null)
                 {
                     query = query.Where(q => q.State == condition.State);
                 }
@@ -139,8 +139,21 @@ namespace CRM.Service.BrokerWithdraw
                             query = condition.isDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
                             break;
                         case EnumBrokerWithdrawSearchOrderBy.State:
-                            query = condition.isAescending ? query.OrderBy(q => q.State) : query.OrderByDescending(q => q.State);
+                            query = condition.isDescending ? query.OrderByDescending(q => q.State) : query.OrderBy(q => q.State);
                             break;
+                        case EnumBrokerWithdrawSearchOrderBy.OrderByBrokername:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.Broker.Brokername) : query.OrderBy(q => q.Broker.Brokername);
+                            break;
+                        case EnumBrokerWithdrawSearchOrderBy.OrderByWithdrawTime:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.WithdrawTime) : query.OrderBy(q => q.WithdrawTime);
+                            break;
+                        case EnumBrokerWithdrawSearchOrderBy.OrderByaccacount:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.AccAccountantId.Brokername) : query.OrderBy(q => q.AccAccountantId.Brokername);
+                            break;
+                        case EnumBrokerWithdrawSearchOrderBy.OrderByState:
+                            query = condition.isDescending ? query.OrderByDescending(q => q.State) : query.OrderBy(q => q.State);
+                            break;
+                          
                     }
 
                 }
@@ -188,10 +201,10 @@ namespace CRM.Service.BrokerWithdraw
                     query = query.Where(q => q.Uptime >= condition.UptimeBegin.Value);
                 }
 
-                //if (condition.State)
-                //{
+                if (condition.State!=null)
+                {
                 query = query.Where(q => q.State == condition.State);
-                //}
+                }
                 if (condition.UptimeEnd.HasValue)
                 {
                     query = query.Where(q => q.Uptime < condition.UptimeEnd.Value);
@@ -206,7 +219,7 @@ namespace CRM.Service.BrokerWithdraw
                 }
                 if (condition.Brokers != null)
                 {
-                    query = query.Where(q => condition.Brokers.Id == (q.Broker.Id));
+                    query = query.Where(q => q.Broker.Id==condition.Brokers.Id);
                 }
                 if (condition.BankCards != null && condition.BankCards.Any())
                 {

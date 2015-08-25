@@ -29,6 +29,7 @@ namespace Zerg.Controllers.CRM
         private IBrokerWithdrawService _brokerwithdrawService;
         private readonly IWorkContext _workContext;
         private readonly IBankCardService _bankcardService;
+     
         /// <summary>
         /// 经纪人提现初始化
         /// </summary>
@@ -43,7 +44,11 @@ namespace Zerg.Controllers.CRM
             _workContext = workContext;
             _bankcardService = bankcardService;
         }
+       
+        
         #region   查询所有提现信息
+
+
         /// <summary>
         /// 根据经纪人ID查询经纪人提现信息
         /// </summary>
@@ -53,15 +58,16 @@ namespace Zerg.Controllers.CRM
         /// <returns></returns>
         [Description("查询所有提现信息")]
         [HttpGet]
-        public HttpResponseMessage GetBrokerWithdraw(int page = 1, int pageSize = 10) 
+        public HttpResponseMessage GetBrokerWithdraw(EnumBrokerWithdrawSearchOrderBy orderByAll = EnumBrokerWithdrawSearchOrderBy.State, bool isDes = true, int page = 1, int pageSize = 10)
         {
             var condition = new BrokerWithdrawSearchCondition
             {
-                OrderBy = EnumBrokerWithdrawSearchOrderBy.State,
+                OrderBy = orderByAll,
                 Page = Convert.ToInt32(page),
-                PageCount = pageSize
+                PageCount = pageSize,
+                isDescending =isDes 
             };
-            var list= _brokerwithdrawService.GetBrokerWithdrawsByCondition(condition).Select(p => new
+            var list = _brokerwithdrawService.GetBrokerWithdrawsByCondition(condition).Select(p => new
             {
                 Id = p.Id,
                 bankname = p.BankCard.Bank.Codeid,
@@ -82,20 +88,22 @@ namespace Zerg.Controllers.CRM
                 accacount = p.accacount,
                 WithdrawTime = p.WithdrawTime.ToString("yyyy-MM-dd")
             });
-            var Count = _brokerwithdrawService.GetBrokerWithdrawCount(condition);  
+            var Count = _brokerwithdrawService.GetBrokerWithdrawCount(condition);
             return PageHelper.toJson(new { List = list, Condition = condition, totalCount = Count });
         }
         #endregion
+        
+        
         [Description("根据ID查询")]
         [HttpGet]
-        public HttpResponseMessage GetBrokerWithdrawById(int id) 
+        public HttpResponseMessage GetBrokerWithdrawById(int id)
         {
-            if (id == 0) 
+            if (id == 0)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据错误"));
             }
             var model = _brokerwithdrawService.GetBrokerWithdrawById(id);
-            var NewModel = new ReturnModel 
+            var NewModel = new ReturnModel
             {
                 ID = model.Id.ToString(),
                 Withdrawnum = model.WithdrawTotalNum,
@@ -105,12 +113,53 @@ namespace Zerg.Controllers.CRM
             };
             return PageHelper.toJson(NewModel);
         }
-        
+
+
+        /// <summary>
+        /// 查询用户所有的提现记录
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetAllBrokerWithdrawByUser()
+        {
+              var user = (UserBase)_workContext.CurrentUser;
+              if (user != null)
+              {
+                  var broker = _brokerService.GetBrokerByUserId(user.Id);//获取当前经纪人
+                  if (broker == null)
+                  {
+                      return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));
+                  }
+                    
+            var condition = new BrokerWithdrawSearchCondition
+            {             
+                Brokers=broker
+            };
+             object list = null;
+             if(_brokerwithdrawService.GetBrokerWithdrawCount(condition)>0)
+             {
+                 list = _brokerwithdrawService.GetBrokerWithdrawsByCondition(condition).Select(p => new
+                 {
+                     Id = p.Id,
+                     bankname = p.BankCard.Bank.Codeid,
+                     withdrawnum = p.WithdrawTotalNum,
+                     state = p.State == 0 ? "处理中" : p.State == 1 ? "已打款" : "",
+                     WithdrawTime = p.WithdrawTime
+                 }).ToList();
+
+             }            
+                return PageHelper.toJson(new { List = list });
+
+              }
+              return PageHelper.toJson(PageHelper.ReturnValue(false, "获取用户失败，请检查是否登陆"));     
+        }
+
+
     }
     /// <summary>
     /// 返回实体
     /// </summary>
-    public class ReturnModel 
+    public class ReturnModel
     {
         public virtual string ID { get; set; }
         public virtual string BankType { get; set; }

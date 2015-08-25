@@ -2,7 +2,7 @@
  * Created by gaofengming on 2015/6/15.
  */
 
-app.controller('AddBrokerController',function($scope,$http){
+app.controller('AddBrokerController',['$scope','$http',function($scope,$http){
         $scope.YQM={
             Mobile:'',
             SmsType:'6'
@@ -23,7 +23,7 @@ app.controller('AddBrokerController',function($scope,$http){
         }
     }
 
-)
+])
 
 //计时器
 var countdown=60;

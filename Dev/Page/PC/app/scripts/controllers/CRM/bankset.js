@@ -5,9 +5,36 @@
 angular.module("app").controller('bankController', ['$http', '$scope', '$state', function ($http, $scope, $state) {
     $scope.searchCondition = {
         page: 1,
-        pageSize: 10
+        pageSize: 10,
+        orderByAll:"OrderById",//排序
+        isDes:true//升序or降序,
     };
-    $scope.getList = function () {
+    //初始化所有图标
+    var iniImg=function(){
+        $scope.OrderById="footable-sort-indicator";
+        $scope.OrderByCodeid="footable-sort-indicator";
+        $scope.OrderByAddtime="footable-sort-indicator";
+    }
+    iniImg();
+    $scope.OrderById="fa-caret-down";//升降序图标
+    $scope.getList = function (orderByAll) {
+        if(orderByAll!=undefined){
+            $scope.searchCondition.orderByAll=orderByAll ;
+            if($scope.searchCondition.isDes==true)//如果为降序，
+            {
+                $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                iniImg();//将所有的图标变成一个月
+                eval($scope.d);//把$scope.d当做语句来执行，把当前点击图片变成向上
+                $scope.searchCondition.isDes=false;//则变成升序
+            }
+            else if($scope.searchCondition.isDes==false)
+            {
+                $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                iniImg();
+                eval($scope.d);
+                $scope.searchCondition.isDes=true;
+            }
+        }
         $http.get(SETTING.ApiUrl + '/Bank/SearchBanks', {
             params: $scope.searchCondition ,
             'withCredentials':true
@@ -58,39 +85,5 @@ angular.module("app").controller('bankEditController',['$http','$scope','$stateP
         });
     }
 }]);
-
-
-app.filter('dateFilter',function(){
-    return function(date){
-        return FormatDate(date);
-    }
-})
-function FormatDate(JSONDateString) {
-    jsondate = JSONDateString.replace("/Date(", "").replace(")/", "");
-    if (jsondate.indexOf("+") > 0) {
-        jsondate = jsondate.substring(0, jsondate.indexOf("+"));
-    }
-    else if (jsondate.indexOf("-") > 0) {
-        jsondate = jsondate.substring(0, jsondate.indexOf("-"));
-    }
-
-    var date = new Date(parseInt(jsondate, 10));
-    var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-    var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-
-    return date.getFullYear()
-        + "-"
-        + month
-        + "-"
-        + currentDate
-        + "-"
-        + date.getHours()
-        + ":"
-        + date.getMinutes()
-        + ":"
-        + date.getSeconds()
-        ;
-
-}
 
 

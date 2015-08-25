@@ -8,95 +8,95 @@
                 <!--<a class="price-storer" href="#" ng-click="togglePrice()">价格<span class="icon-storeroom"></span></a>-->
                 <!--&lt;!&ndash;<a class="more-storeroom" href="#">更多<span class="icon-storeroom"></span></a>&ndash;&gt;-->
             <!--</div>-->
-    <div class="nav-storeroom cf" style="position: absolute;z-index:4;">
-        <div id="area"><a class="area-storeroom sub-nav" href="#" ng-click="open1()">{{selectArea}}<span class="icon-storeroom"></span></a>
+    <div class="nav-storeroom cf" style="position: absolute;z-index:999;">
+        <div id="area"><a class="area-storeroom sub-nav" href="#" ng-click="toggleProvince()">{{selectArea}}<span class="icon-storeroom"></span></a>
 
         </div>
-        <div id="type"><a class="type-storeroom sub-nav" href="#" ng-click="open2()">{{selectType}}<span class="icon-storeroom"></span></a>
+        <div id="type"><a class="type-storeroom sub-nav" href="#" ng-click="toggleType()">{{selectType}}<span class="icon-storeroom"></span></a>
         </div>
-        <div id="price"><a class="price-storer sub-nav" href="#" ng-click="open3()">{{selectPrice}}<span class="icon-storeroom"></span></a></div>
+        <div id="price"><a class="price-storer sub-nav" href="#" ng-click="togglePrice()">{{selectPrice}}<span class="icon-storeroom"></span></a></div>
         <div class="fl"><a class="more-storeroom sub-nav" href="#" ng-click="Reset()">重置</a></div>
-        <div class="query" ng-show="condition1">
-            <div class="inner-area">
-                <span>区域</span>
-                <a href="javascript:void(0);" ng-click="close1()" class="fr">返回</a>
-            </div>
-            <div id="province">
-                <ul>
-                    <li class="li" ng-class='{selected: $index==selectedRow}' ng-repeat="area in Area" ng-click="getCityList(area.Id,$index)">{{area.AreaName}}</li>
-                </ul>
-            </div>
-            <div id="city" ng-hide="city" ng-class="{select:selectCity}">
-                <ul>
-                    <li class="li" ng-class='{selected: $index==selectedRow1}' ng-repeat="areaCity in AreaCity" ng-click="getCountyList(areaCity.Id,$index)">{{areaCity.AreaName}}</li>
-                </ul>
-            </div>
-            <div id="county" ng-hide="county" ng-class="{select:selectCounty}">
-                <ul>
-                    <li class="li" ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li>
-                </ul>
-            </div>
-        </div>
-        <div class="query" ng-show="condition2">
-            <div class="inner-area">
-                <span>类型</span>
-                <a href="javascript:void(0);" ng-click="close2()" class="fr">返回</a>
-            </div>
-            <div class="type"  >
-            <ul><li class="typeOption" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId,type.TypeName)">{{type.TypeName}}</li></ul>
-            </div>
-        </div>
-        <div class="query" ng-show="condition3">
-            <div class="inner-area">
-                <span>价钱</span>
-                <a href="javascript:void(0);" ng-click="close3()" class="fr">返回</a>
-            </div>
-            <div id="priceCondition">
-            <ul>
-            <li class="priceOption" ng-click="getPriceCondition(0,4000)"><span>4000以下</span></li>
-            <li class="priceOption" ng-click="getPriceCondition(4000,5000)"><span>4000</span>-<span>5000</span></li>
-            <li class="priceOption" ng-click="getPriceCondition(5000,6000)"><span>5000</span>-<span>6000</span></li>
-            <li class="priceOption" ng-click="getPriceCondition(6000,7000)"><span>6000</span>-<span>7000</span></li>
-            <li class="priceOption" ng-click="getPriceCondition(7000,8000)"><span>7000</span>-<span>8000</span></li>
-            <li class="priceOption" ng-click="getPriceCondition(8000,9000)"><span>8000</span>-<span>9000</span></li>
-            <li class="priceOption" ng-click="getPriceCondition(9000,10000)"><span>9000</span>-<span>10000</span></li>
-            <li class="priceOption" ng-click="getPriceCondition(10000,50000)"><span>10000以上</span></li>
-            </ul>
-            </div>
-        </div>
-        <!--<div id="condition" class="cf" ng-hide="condition">-->
-            <!--<div id="province" ng-hide="province">-->
+        <!--<div class="query" ng-show="condition1">-->
+            <!--<div class="inner-area">-->
+                <!--<span>区域</span>-->
+                <!--<a href="javascript:void(0);" ng-click="close1()" class="fr">返回</a>-->
+            <!--</div>-->
+            <!--<div id="province">-->
                 <!--<ul>-->
                     <!--<li class="li" ng-class='{selected: $index==selectedRow}' ng-repeat="area in Area" ng-click="getCityList(area.Id,$index)">{{area.AreaName}}</li>-->
                 <!--</ul>-->
             <!--</div>-->
             <!--<div id="city" ng-hide="city" ng-class="{select:selectCity}">-->
-                <!--<ul><li class="li" ng-class='{selected: $index==selectedRow1}' ng-repeat="areaCity in AreaCity" ng-click="getCountyList(areaCity.Id,$index)">{{areaCity.AreaName}}</li></ul>-->
+                <!--<ul>-->
+                    <!--<li class="li" ng-class='{selected: $index==selectedRow1}' ng-repeat="areaCity in AreaCity" ng-click="getCountyList(areaCity.Id,$index)">{{areaCity.AreaName}}</li>-->
+                <!--</ul>-->
             <!--</div>-->
             <!--<div id="county" ng-hide="county" ng-class="{select:selectCounty}">-->
-                <!--<ul><li class="li" ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li></ul>-->
-            <!--</div>-->
-            <!--<div class="type" ng-hide="type" >-->
-                <!--<ul><li class="typeOption" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId,type.TypeName)">{{type.TypeName}}</li></ul>-->
-            <!--</div>-->
-            <!--<div id="priceCondition" ng-hide="price">-->
                 <!--<ul>-->
-                    <!--<li class="priceOption" ng-click="getPriceCondition(0,4000)"><span>4000以下</span></li>-->
-                    <!--<li class="priceOption" ng-click="getPriceCondition(4000,5000)"><span>4000</span>-<span>5000</span></li>-->
-                    <!--<li class="priceOption" ng-click="getPriceCondition(5000,6000)"><span>5000</span>-<span>6000</span></li>-->
-                    <!--<li class="priceOption" ng-click="getPriceCondition(6000,7000)"><span>6000</span>-<span>7000</span></li>-->
-                    <!--<li class="priceOption" ng-click="getPriceCondition(7000,8000)"><span>7000</span>-<span>8000</span></li>-->
-                    <!--<li class="priceOption" ng-click="getPriceCondition(8000,9000)"><span>8000</span>-<span>9000</span></li>-->
-                    <!--<li class="priceOption" ng-click="getPriceCondition(9000,10000)"><span>9000</span>-<span>10000</span></li>-->
-                    <!--<li class="priceOption" ng-click="getPriceCondition(10000,50000)"><span>10000以上</span></li>-->
+                    <!--<li class="li" ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li>-->
                 <!--</ul>-->
             <!--</div>-->
         <!--</div>-->
+        <!--<div class="query" ng-show="condition2">-->
+            <!--<div class="inner-area">-->
+                <!--<span>类型</span>-->
+                <!--<a href="javascript:void(0);" ng-click="close2()" class="fr">返回</a>-->
+            <!--</div>-->
+            <!--<div class="type"  >-->
+            <!--<ul><li class="typeOption" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId,type.TypeName)">{{type.TypeName}}</li></ul>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="query" ng-show="condition3">-->
+            <!--<div class="inner-area">-->
+                <!--<span>价钱</span>-->
+                <!--<a href="javascript:void(0);" ng-click="close3()" class="fr">返回</a>-->
+            <!--</div>-->
+            <!--<div id="priceCondition">-->
+            <!--<ul>-->
+            <!--<li class="priceOption" ng-click="getPriceCondition(0,4000)"><span>4000以下</span></li>-->
+            <!--<li class="priceOption" ng-click="getPriceCondition(4000,5000)"><span>4000</span>-<span>5000</span></li>-->
+            <!--<li class="priceOption" ng-click="getPriceCondition(5000,6000)"><span>5000</span>-<span>6000</span></li>-->
+            <!--<li class="priceOption" ng-click="getPriceCondition(6000,7000)"><span>6000</span>-<span>7000</span></li>-->
+            <!--<li class="priceOption" ng-click="getPriceCondition(7000,8000)"><span>7000</span>-<span>8000</span></li>-->
+            <!--<li class="priceOption" ng-click="getPriceCondition(8000,9000)"><span>8000</span>-<span>9000</span></li>-->
+            <!--<li class="priceOption" ng-click="getPriceCondition(9000,10000)"><span>9000</span>-<span>10000</span></li>-->
+            <!--<li class="priceOption" ng-click="getPriceCondition(10000,50000)"><span>10000以上</span></li>-->
+            <!--</ul>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div id="condition" class="cf" ng-hide="condition">
+            <div id="province" ng-hide="province">
+                <ul>
+                    <li class="li" ng-class='{selected: $index==selectedRow}' ng-repeat="area in Area" ng-click="getCityList(area.Id,$index)">{{area.AreaName}}</li>
+                </ul>
+            </div>
+            <div id="city" ng-hide="city" ng-class="{select:selectCity}">
+                <ul><li class="li" ng-class='{selected: $index==selectedRow1}' ng-repeat="areaCity in AreaCity" ng-click="getCountyList(areaCity.Id,$index)">{{areaCity.AreaName}}</li></ul>
+            </div>
+            <div id="county" ng-hide="county" ng-class="{select:selectCounty}">
+                <ul><li class="li" ng-repeat="areaCounty in AreaCounty" ng-click="getAreaCondition(areaCounty.AreaName)">{{areaCounty.AreaName}}</li></ul>
+            </div>
+            <div class="type" ng-hide="type" >
+                <ul><li class="typeOption" ng-repeat="type in Type" ng-click="getTypeCondition(type.TypeId,type.TypeName)">{{type.TypeName}}</li></ul>
+            </div>
+            <div id="priceCondition" ng-hide="price">
+                <ul>
+                    <li class="priceOption" ng-click="getPriceCondition(0,4000)"><span>4000以下</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(4000,5000)"><span>4000</span>-<span>5000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(5000,6000)"><span>5000</span>-<span>6000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(6000,7000)"><span>6000</span>-<span>7000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(7000,8000)"><span>7000</span>-<span>8000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(8000,9000)"><span>8000</span>-<span>9000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(9000,10000)"><span>9000</span>-<span>10000</span></li>
+                    <li class="priceOption" ng-click="getPriceCondition(10000,50000)"><span>10000以上</span></li>
+                </ul>
+            </div>
+        </div>
     </div>
     <div id="carousel-bg" style="padding-top:70px;">
-    <carousel interval="2000">
+    <carousel interval="2000" >
         <slide ng-repeat="slide in content" active="slide.active">
-            <img src="http://img.yoopoon.com/{{slide.TitleImg}}" class="img-full" alt="成为经济人轻松赚大钱" width="640" height="230" />
+            <img src="{{imgUrl+slide.TitleImg}}@640w_230h_70Q" class="img-full" alt="成为经济人轻松赚大钱" width="640" height="230" />
         </slide>
     </carousel>
 </div>
@@ -115,7 +115,7 @@
                 <!--{{item.Productimg}}-->
                 <div class="main-storeroom cf">
                 <a class="fl img" href="#/app/housesPic?productId={{item.Id}}">
-                    <img src="http://img.yoopoon.com/{{item.Productimg}}" alt="蓝光&nbsp;·&nbsp;颐明园"width="231px" height="188px"/></a>
+                    <img src="{{imgUrl+item.Productimg}}@231w_188h_70Q" alt="蓝光&nbsp;·&nbsp;颐明园"width="231px" height="188px"/></a>
                 <div class="detail-storeroom fl ">
                     <p class="yhy">{{item.Productname}}</p>
                     <p class="yuan">{{item.Price}}元/m²</p>
@@ -152,24 +152,24 @@
             <!--</div>-->
 </div>
     <div class="masked" style="display: none">
-        <a href="#"><img class="Brush location" src="modules/storeroom/static/image/storeroom/selected.png" alt="选择" width="568" height="621"/></a>
+        <a href="#"><img class="Brush location" src="/modules/storeroom/static/image/storeroom/selected.png" alt="选择" width="568" height="621"/></a>
     </div>
     <div class="masked" style="display: none">
-        <a href="#"><img class="clickMore location" src="modules/storeroom/static/image/storeroom/more.png" alt="选择更多" width="573" height="681"/></a>
+        <a href="#"><img class="clickMore location" src="/modules/storeroom/static/image/storeroom/more.png" alt="选择更多" width="573" height="681"/></a>
     </div>
     <div class="masked" style="display: none">
-        <a href="#"><img class="dropDown location" src="modules/storeroom/static/image/storeroom/dropDown.png" alt="下拉" width="386" height="504"/></a>
+        <a href="#"><img class="dropDown location" src="/modules/storeroom/static/image/storeroom/dropDown.png" alt="下拉" width="386" height="504"/></a>
     </div>
     <div class="masked" style="display: none">
-        <a href="#"><img class="clickKnow location" src="modules/storeroom/static/image/storeroom/clickKnow.png" alt="下拉" width="600" height="673"/></a>
+        <a href="#"><img class="clickKnow location" src="/modules/storeroom/static/image/storeroom/clickKnow.png" alt="下拉" width="600" height="673"/></a>
     </div>
     <div class="masked" style="display: none">
-        <img class="finishTask location" src="modules/storeroom/static/image/storeroom/finish.png" alt="恭喜您，完成了搜房任务！" width="536" height="556"/>
-        <a href="#" class=""><img class="btn-back location" src="modules/storeroom/static/image/storeroom/btn.png" alt="返回" width="219" height="93"/></a>
+        <img class="finishTask location" src="/modules/storeroom/static/image/storeroom/finish.png" alt="恭喜您，完成了搜房任务！" width="536" height="556"/>
+        <a href="#" class=""><img class="btn-back location" src="/modules/storeroom/static/image/storeroom/btn.png" alt="返回" width="219" height="93"/></a>
     </div>
     <div class="masked" style="display: none" >
-        <img class="nominateFinish location" src="modules/storeroom/static/image/storeroom/nominateFinish.png" alt="恭喜您，完成了推荐任务！" width="535" height="549"/>
-        <a href="#" class=""><img class="nominateBack location" src="modules/storeroom/static/image/storeroom/btn.png" alt="返回" width="219" height="93"/></a>
+        <img class="nominateFinish location" src="/modules/storeroom/static/image/storeroom/nominateFinish.png" alt="恭喜您，完成了推荐任务！" width="535" height="549"/>
+        <a href="#" class=""><img class="nominateBack location" src="/modules/storeroom/static/image/storeroom/btn.png" alt="返回" width="219" height="93"/></a>
     </div>
 
 </div>

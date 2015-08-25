@@ -147,21 +147,29 @@ namespace Zerg.Controllers.CRM
         }
         #endregion
         #region 经纪人列表
-        /// <summary>
-        /// 经纪人列表
-        /// </summary>
-        /// <returns></returns>
+       /// <summary>
+       /// 经纪人列表
+       /// </summary>
+       /// <param name="status">带客推荐状态</param>
+       /// <param name="brokername">经纪人名称</param>
+       /// <param name="orderByAll">排序 参数{序号（OrderById），经纪人名（OrderByBrokername），客户名（OrderByClientName），
+       ///客户电话（OrderByPhone），项目名称（OrderByProjectname），预约时间（OrderByAppointmenttime）}</param>
+       /// <param name="isDes">是否降序</param>
+       /// <param name="page"></param>
+       /// <param name="pageSize"></param>
+       /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetLeadClientInfoByBrokerName(EnumBLeadType status, string brokername, int page=1, int pageSize=10)
+        public HttpResponseMessage GetLeadClientInfoByBrokerName(EnumBLeadType status, string brokername, EnumBrokerLeadClientSearchOrderBy orderByAll = EnumBrokerLeadClientSearchOrderBy .OrderByTime, bool isDes = true, int page = 1, int pageSize = 10)
         {
 
             var condition = new BrokerLeadClientSearchCondition
             {
-                OrderBy = EnumBrokerLeadClientSearchOrderBy.OrderById,
+                OrderBy = orderByAll,
                 Page = page,
                 PageCount = pageSize,
                 Status = status,
-                ClientName = brokername
+                ClientName = brokername,
+                isDescending =isDes 
 
             };
 
@@ -285,7 +293,7 @@ namespace Zerg.Controllers.CRM
             }
             else
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在被代客！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "该客户正在被带客！"));
             }
 
             //查询客户信息
@@ -539,6 +547,7 @@ namespace Zerg.Controllers.CRM
                     comOrder.Status = (int)EnumOrderStatus.审核失败;
                     comOrder.Upduser = _workContext.CurrentUser.Id.ToString(CultureInfo.InvariantCulture);
                     comOrder.Upddate = DateTime.Now;
+                    model.DelFlag = (int)EnumDelFlag.删除;
                     _orderService.Update(comOrder);
                     break;
             }

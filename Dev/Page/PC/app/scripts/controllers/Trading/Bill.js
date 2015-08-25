@@ -5,9 +5,34 @@ angular.module("app").controller('billController', [
     '$http', '$scope', function ($http, $scope) {
         $scope.CFBill = {
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:"OrderByCheckoutdate",//排序
+            isDes:true//升序or降序
         }
-        var getBillList = function () {
+        var iniImg=function(){
+            $scope.OrderByAmount="footable-sort-indicator";
+            $scope.OrderByCheckoutdate="footable-sort-indicator";
+        }
+        iniImg();
+
+        var getBillList = function (orderByAll) {
+            if(orderByAll!=undefined){
+                $scope.CFBill.orderByAll=orderByAll ;
+                if($scope.CFBill.isDes==true)//如果为降序，
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                    iniImg();//将所有的图标变成一个月
+                    eval($scope.d);//把$scope.d当做语句来执行，把当前点击图片变成向上
+                    $scope.CFBill.isDes=false;//则变成升序
+                }
+                else if($scope.CFBill.isDes==false)
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
+                    $scope.CFBill.isDes=true;
+                }
+            }
             $http.get(SETTING.ApiUrl + '/bill/GetAdminBill',{params:$scope.CFBill}).success(function (data) {
                 $scope.rowCollectionBasic = data.AdminBill;
                 $scope.CFBill.page = data.Condition.Page;
@@ -85,35 +110,3 @@ angular.module("app").controller('createBillController', [
             $scope.alerts.splice(index, 1);
         };
     }])
-app.filter('dateFilter',function(){
-    return function(date){
-        return FormatDate(date);
-    }
-})
-function FormatDate(JSONDateString) {
-    jsondate = JSONDateString.replace("/Date(", "").replace(")/", "");
-    if (jsondate.indexOf("+") > 0) {
-        jsondate = jsondate.substring(0, jsondate.indexOf("+"));
-    }
-    else if (jsondate.indexOf("-") > 0) {
-        jsondate = jsondate.substring(0, jsondate.indexOf("-"));
-    }
-
-    var date = new Date(parseInt(jsondate, 10));
-    var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-    var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-
-    return date.getFullYear()
-        + "-"
-        + month
-        + "-"
-        + currentDate
-        + "-"
-        + date.getHours()
-        + ":"
-        + date.getMinutes()
-        + ":"
-        + date.getSeconds()
-        ;
-
-}

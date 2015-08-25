@@ -1,43 +1,46 @@
-<div class="p-md" ng-app="App" ng-controller="">
+<div class="p-md" ng-app="App" ng-controller="activityController">
     <div>
-        <a href="#page/CRM/activity/Addactivity"><button  class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加活动
+        <a href="#page/CRM/activity/Addactivity"><button  class="md-btn md-raised m-b btn-fw indigo"><i class="fa fa-fw m-r-xs fa-plus"></i>添加活动
         </button></a>
         <div class="line b-b m-v-md"></div>
 
     </div>
-    <div class="panel panel-default" align="center">
+    <div class="panel-default panel panel-card ng-scope" align="center">
         <div class="panel-heading">活动列表</div>
-        <table st-table="rowCollectionPage" class="table table-striped" align="center">
+        <table st-table="rowCollectionPage"  class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" align="center">
             <thead>
             <tr>
-                <th align="center">活动ID</th>
+                <th align="center" ng-click="getlist('OrderById')">活动ID<span class="fa {{OrderById}}"></span></th>
                 <th align="center">活动名称</th>
-                <th align="center">开始时间</th>
-                <th align="center">截至时间</th>
+                <th align="center"  ng-click="getlist('OrderByStarttime')">开始时间<span class="fa {{OrderByStarttime}}"></span></th>
+                <th align="center"  ng-click="getlist('OrderByEndtime')">截至时间<span class="fa {{OrderByEndtime}}"></span></th>
+                <th align="center">状态</th>
                 <th align="center">操作</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="row in list">
-                <td>{{row.activityId}}</td>
-                <td>{{row.Activitytname }}</td>
-                <td>{{row.Starttime | dateFilter }}</td>
-                <td>{{row.Endtime}}</td>
+                <td>{{row.Id}}</td>
+                <td>{{row.EventContent }}</td>
+                <td>{{row.Starttime | dateFilter}}</td>
+                <td>{{row.Endtime | dateFilter}}</td>
+                <td ng-if="row.State==true">上线</td>
+                <td ng-if="row.State==false">下线</td>
                 <td>
-                    <a ui-sref="page.CRM.activity.Edit" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 编辑
+                    <a ui-sref="page.CRM.activity.Edit({id: row.Id})" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-edit"></i> 编辑
                     </a>
-                    <button ng-click='del(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
+                    <button ng-click='open(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
                     </button>
                 </td>
             </tr>
             </tbody>
-            <tfoot class="hide-if-no-paging">
-            <tr>
-                <td colspan="10" class="text-center">
-                    <pagination boundary-links="true" total-items="totalCount" items-per-page="" ng-model="" ng-change="" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
-                </td>
-            </tr>
-            </tfoot>
+            <!--<tfoot class="hide-if-no-paging">-->
+            <!--<tr>-->
+                <!--<td colspan="10" class="text-center">-->
+                    <!--<pagination boundary-links="true" total-items="totalCount" items-per-page="" ng-model="" ng-change="" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--</tfoot>-->
         </table>
     </div>
     <script type="text/ng-template" id="myModalContent.html">

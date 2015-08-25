@@ -6,7 +6,7 @@ app.controller('HousesController',['$http','$scope','$stateParams',function($htt
         $scope.ProductList=data.productList;
         $scope.tent=data.content;
     })
-
+    $scope.ImgUrl=SETTING.ImgUrl
 
     $http.get(SETTING.ApiUrl+'/Brand/GetByBrandId?BrandId='+$stateParams.BrandId,{'withCredentials':true}).success(function (data1) {
         $scope.brand=data1;

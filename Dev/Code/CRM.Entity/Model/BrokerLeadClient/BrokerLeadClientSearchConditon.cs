@@ -60,5 +60,11 @@ namespace CRM.Entity.Model
 	{
 		OrderById,
         OrderByTime,
+        OrderByBrokername,
+        OrderByClientName,
+        OrderByPhone,
+        OrderByProjectname,
+        OrderByAppointmenttime,
+        OrderByClientname
 	}
 }

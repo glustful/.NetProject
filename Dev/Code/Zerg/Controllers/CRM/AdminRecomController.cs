@@ -81,22 +81,27 @@ namespace Zerg.Controllers.CRM
         /// 传入经纪人推荐类型,经纪人名称,页面设置等,查询经济人列表,返回经纪人列表 
         /// </summary>
         /// <param name="status">状态</param>
-        /// <param name="brokername">经纪人名称</param>
+        /// <param name="orderByAll">排序参数{序号（OrderById），经纪人名（OrderByBrokername），经纪人等级（OrderByBrokerlevel），
+        ///客户姓名（OrderByClientname），客户电话（OrderByPhone），项目名称（OrderByProjectname），
+        ///推荐时间（OrderByAddtime）负责场秘（OrderBySecretaryName），带客人员（OrderByWaiter），项目名称（OrderByProjectname），审核时间（OrderByUptime）}</param>
+        /// <param name="isDes">是否降序</param>
+        /// <param name="brokername">经纪人名称或者客户名称</param>
         /// <param name="page">页码</param>
         /// <param name="pageSize">页面数量</param>
         /// <returns>经纪人列表</returns>
         [HttpGet]
         [Description("查询经纪人列表")]
-        public HttpResponseMessage BrokerList(EnumBRECCType status, string brokername, int page, int pageSize)
+        public HttpResponseMessage BrokerList(EnumBRECCType status, string brokername, int page, int pageSize, EnumBrokerRECClientSearchOrderBy orderByAll = EnumBrokerRECClientSearchOrderBy .OrderByTime, bool isDes = true)
         {
 
             var condition = new BrokerRECClientSearchCondition
             {
-                OrderBy = EnumBrokerRECClientSearchOrderBy.OrderByTime,
+                OrderBy = orderByAll,
                 Page = page,
                 PageCount = pageSize,
                 Status = status,
-                Clientname = brokername
+                Clientname = brokername,
+                IsDescending =isDes 
 
             };
             var list = _brokerRecClientService.GetBrokerRECClientsByCondition(condition).Select(a => new
@@ -496,7 +501,8 @@ namespace Zerg.Controllers.CRM
             var condition = new BrokerSearchCondition
             {
                 OrderBy = EnumBrokerSearchOrderBy.OrderById,
-                UserType = EnumUserType.带客人员
+                UserType = EnumUserType.带客人员,
+                State =1
             };
             var list = _brokerService.GetBrokersByCondition(condition).Select(a => new
             {

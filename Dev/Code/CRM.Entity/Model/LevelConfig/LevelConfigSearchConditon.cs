@@ -46,5 +46,9 @@ namespace CRM.Entity.Model
 	public enum EnumLevelConfigSearchOrderBy
 	{
 		OrderById,
+        OrderByName,
+        OrderByDescribe,
+        OrderByAddtime,
+        OrderByValue
 	}
 }

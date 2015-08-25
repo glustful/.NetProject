@@ -36,14 +36,14 @@
                 意向楼盘
             </p>
             <p>
-                <input readonly="true" type="" required ng-model="BrokerRECClientEntity.Houses" list="house_type" name="houses" class="client_information" placeholder="意向楼盘">
+                <input  type="" required ng-model="BrokerRECClientEntity.Houses" list="house_type" name="houses" class="client_information" placeholder="意向楼盘">
                 <span ng-show="form.houses.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
             </p>
             <p class="client_choice">
                 意向户型
             </p>
             <p>
-                <input readonly="true" type="" required ng-model="BrokerRECClientEntity.HouseType" name="housetype" class="client_information" placeholder="意向户型"/>
+                <input  type="" required ng-model="BrokerRECClientEntity.HouseType" name="housetype" class="client_information" placeholder="意向户型"/>
                 <span ng-show="form.housetype.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
             </p>
                 <p class="client_choice">
@@ -61,21 +61,22 @@
                 <span ng-show="form.phone.$error.pattern" style="font-size:20px;color: #ff0000">*号码格式错误</span>
             </p>
             <p class="client_choice">
-                备注
+                详情
+
             </p>
             <p><input type="" required ng-model="BrokerRECClientEntity.Note" class="client_information"  autofocus="autofocus" placeholder="备注"/><br/></p>
             <p><button class="submit_button" ng-click="add()" >提交信息</button></p>
         </form>
     </div>
     <div class="masked" style="display: none">
-        <a href="#" class="fillIn location"><img src="modules/personal/static/image/personal/fillIn.png" alt="填写表单" width="568" height="897"/></a>
+        <a href="#" class="fillIn location"><img src="/modules/personal/static/image/personal/fillIn.png" alt="填写表单" width="568" height="897"/></a>
     </div>
     <div class="masked" style="display: none">
-        <img class="wantTake location" src="modules/personal/static/image/personal/wantTake.png" alt="带客" width="439" height="726"/>
-        <a href="#" class="upWardTake location"><img src="modules/personal/static/image/personal/upWard.png" alt="向上"/></a>
+        <img class="wantTake location" src="/modules/personal/static/image/personal/wantTake.png" alt="带客" width="439" height="726"/>
+        <a href="#" class="upWardTake location"><img src="/modules/personal/static/image/personal/upWard.png" alt="向上"/></a>
     </div>
     <div class="masked" style="display: none">
-        <img class="takeFinish location" src="modules/personal/static/image/personal/takeFinish.png" alt="带客完成" width="508" height="746"/>
-        <a href="#" class="takeBack location"><img src="modules/personal/static/image/personal/btn.png" alt=""/></a>
+        <img class="takeFinish location" src="/modules/personal/static/image/personal/takeFinish.png" alt="带客完成" width="508" height="746"/>
+        <a href="#" class="takeBack location"><img src="/modules/personal/static/image/personal/btn.png" alt=""/></a>
     </div>
 </div>

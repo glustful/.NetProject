@@ -1,28 +1,29 @@
 ﻿
 <div class="marginL" ng-app="app" ng-controller="bankController">
     <div>
-        <a href="#page/CRM/BankSet/create" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw orange-200"style="float:right;;margin-right: 50px;">新建<div class="md-ripple-container"></div></button></a>
+        <a href="#page/CRM/BankSet/create" ><button md-ink-ripple="" class="md-btn md-raised m-b btn-fw indigo"style="float:right;;margin-right: 50px;">新建<div class="md-ripple-container"></div></button></a>
     </div>
     <div id="divConfig">
 
         <table class="table m-b-none footable-loaded footable default" ui-jp="footable" data-filter="#filter" data-page-size="5">
             <thead class="divheard">
                 <tr>
-                    <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">
+                    <th ng-click="getList('OrderById')" data-toggle="true" class="footable-visible footable-sortable footable-first-column">
                         ID
-                        <span class="footable-sort-indicator"></span>
+                        <span class="fa {{OrderById}}"></span>
                     </th>
-                    <th class="footable-visible footable-sortable footable-sorted-desc">
+                    <th ng-click="getList('OrderByCodeid')" class="footable-visible footable-sortable">
                         银行名称
-                        <span class="footable-sort-indicator"></span>
+                        <span class="fa {{OrderByCodeid}}"></span>
                     </th>
-                    <th data-hide="phone,tablet" class="footable-sortable footable-visible" style="display: table-cell;">
+                    <th ng-click="getList('OrderByAddtime')" data-hide="phone,tablet" class="footable-sortable footable-visible" style="display: table-cell;">
                         添加时间
-                        <span class="footable-sort-indicator"></span>
+                        <span class="fa {{OrderByAddtime}}"></span>
                     </th>
 
 
-                    <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">操作<span class="footable-sort-indicator"></span></th>
+                    <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">
+                        操作</th>
 
                 </tr>
             </thead>
@@ -32,7 +33,7 @@
                     <td class="footable-visible">{{item.Codeid}}</td>
                     <td class="footable-visible">{{item.Addtime | dateFilter }}</td>
                     <td >
-                        <a ui-sref="page.CRM.BankSet.edit({id: item.Id})"> <span class="label bg-success" title="Active">编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                        <a ui-sref="page.CRM.BankSet.edit({id: item.Id})" class="btn btn-info btn-sm"> <span title="Active"><i class="fa fa-fw m-r-xs fa-edit"></i>编辑</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                     </td>
                 </tr>
             </tbody>

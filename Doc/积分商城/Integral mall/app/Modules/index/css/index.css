@@ -1,0 +1,76 @@
+.head .carousel-control{
+    opacity: 0;
+}
+.head nav{
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    background: url("../img/head1.png") no-repeat 98% center #ff3000;
+}
+.head nav a{
+    display: inline-block;
+    width: 20%;
+    height: 20px;
+    line-height: 22px;
+    text-align: center;
+    font-size: 1.5em;
+    border-right: 1px solid #848484;
+    color: #f9f3c5;
+}
+.head nav .current{
+    color: #fff;
+}
+.head nav .luck{
+    border-right: none;
+}
+.main{
+    background-color: #ececec;
+    margin-top: -20px;
+    width:100%;
+    padding:20px 2% 0;
+}
+.main h3{
+    padding-left: 30px;
+    margin-bottom: 20px;
+}
+.main ul li{
+    background-color: #fff;
+    margin: 1%;
+    width: 48%;
+}
+.main ul li a{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 70%;
+}
+.main ul li a .summaryBg{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #dd350e;
+    opacity: 0.9;
+    width: 100%;
+    color: #fff;
+    padding-left: 5%;
+    font-size: 1.2em;
+    height: 30px;
+    line-height: 30px;
+}
+.main .food {
+    padding-top:1%;
+    color: #707070;
+}
+.main .food  .int{
+    color:#ff3100;
+    font-size: 1.4em;
+}
+.main button{
+    background-color: #ff3000;
+    color: #ffe5df;
+    width: 25%;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 1.1em;
+    margin: 5px 1px 0 0;
+}

@@ -1627,7 +1627,7 @@ a.list-group-item.hover {
 }
 
 .table > thead > tr > th {
-  padding: 12px 24px;
+  padding: 12px 10px;
   border-bottom: 1px solid #e7e8ea;
 }
 
@@ -6281,3 +6281,8 @@ td button{
 .green{
     margin:0 20px 0 20px;
 }
+.brand-table tr th{
+    text-align: center;
+}
+th{text-align: center;}
+td{text-align: center;}

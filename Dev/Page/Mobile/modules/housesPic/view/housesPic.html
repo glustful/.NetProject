@@ -11,10 +11,10 @@
                 <p>{{ProductDetail.SubTitle}}</p>
                 <!--<p>四室、两厅、一厨、双卫、双阳台</p>-->
             </div>
-            <div><img src="http://img.yoopoon.com/{{ProductDetail.ProductDetailImg}}" alt="户型图" width="640px"/></div>
+            <div><img src="{{imgUrl+ProductDetail.ProductDetailImg}}@640w_70Q" alt="户型图" width="640px"/></div>
               <h3 style="width: 640px; font-weight: 900;">图文详情</h3>
-                 <div class="hjt" id="scimg" ng-class="{selected:select}">
-                     <img src="http://img.yoopoon.com/{{ProductDetail.Productimg1}}" alt="海景图"width="515px"/>
+                 <div class="hjt" id="scimg" ng-class="{hideImg:select}">
+                     <img src="{{imgUrl+ProductDetail.Productimg1}}@515w_70Q" alt="海景图"width="515px"/>
                      <!--<img src="http://img.yoopoon.com/{{ProductDetail.Productimg2}}" alt="海景图"width="300" height="200"/>-->
                      <!--<img src="http://img.yoopoon.com/{{ProductDetail.Productimg3}}" alt="海景图"width="300" height="200"/>-->
                      <!--<img src="http://img.yoopoon.com/{{ProductDetail.Productimg4}}" alt="海景图"width="300" height="200"/>-->

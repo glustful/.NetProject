@@ -6,13 +6,40 @@ app.controller('taskIndexController',['$http','$scope','$modal',function($http,$
         Taskname: '',
         Id:0,
         page: 1,
-        pageSize: 10
+        pageSize: 10,
+        orderByAll:"OrderByTaskname",//排序
+        isDes:true//升序or降序,
     };
+    //初始化所有图标
+    var iniImg=function(){
+        $scope.OrderByTaskname="footable-sort-indicator";
+        $scope.OrderByName="footable-sort-indicator";
+        $scope.OrderByEndtime="footable-sort-indicator";
+        $scope.OrderByAdduser="footable-sort-indicator";
+    }
+    iniImg();
+    $scope.OrderByTaskname="fa-caret-down";//升降序图标
 //------------------------查询任务 start--------------------------
-    var getTaskList  = function() {
+    var getTaskList  = function(orderByAll) {
+        if(orderByAll!=undefined){
+            $scope.searchCondition.orderByAll=orderByAll ;
+            if($scope.searchCondition.isDes==true)//如果为降序，
+            {
+                $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                iniImg();//将所有的图标变成一个月
+                eval($scope.d);//把$scope.d当做语句来执行，把当前点击图片变成向上
+                $scope.searchCondition.isDes=false;//则变成升序
+            }
+            else if($scope.searchCondition.isDes==false)
+            {
+                $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                iniImg();
+                eval($scope.d);
+                $scope.searchCondition.isDes=true;
+            }
+        }
         $http.get(SETTING.ApiUrl+'/Task/TaskList/',{params:$scope.searchCondition,'withCredentials':true}).success(function(data){
             if(data.totalCount>0){
-                console.log(data);
                 $scope.visibleif=true;
                 $scope.tips="";
             $scope.list = data.list;
