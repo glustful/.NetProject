@@ -6,7 +6,7 @@ app.factory('httpRequestInterceptor', ['$q','$location', function($q, $location)
         'responseError': function(rejection) {
             console.log(rejection);
              //do something on error
-            if(rejection.status === 0){
+            if(rejection.status === 404){
              $location.path('/404');
             }
             if (rejection.status === 401) {

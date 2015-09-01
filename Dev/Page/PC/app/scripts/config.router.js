@@ -380,11 +380,6 @@ angular.module('app')
                   data: { title: 'Profile', theme: { primary: 'green' } }
             })
 
-            //.state('page.settings', {
-            //  url: '/settings',
-            //  templateUrl: 'views/pages/settings.html',
-            //      data: { title: 'Settings' }
-            //})
             .state('page.blank', {
               url: '/blank',
               templateUrl: 'views/pages/blank.html',
@@ -562,13 +557,6 @@ angular.module('app')
             //    templateUrl: 'views/pages/setting.html',
             //      data: { title: '短信列表', theme: { primary: 'green' } }
             //})
-
-            .state('page.allocation', {
-                url: '/allocation',
-                templateUrl: 'views/pages/allocation.html',
-                  data: { title: '短信配置', theme: { primary: 'green' } }
-            })
-
             .state('ui.map.list', {
                 url: '/list',
                 templateUrl: 'views/ui/map/list.html',

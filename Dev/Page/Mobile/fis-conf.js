@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015/7/28.
  */
-// 下面的开启simple插件，注意需要先进行插件安装 npm install -g fis-postpackager-simple
+//下面的开启simple插件，注意需要先进行插件安装 npm install -g fis-postpackager-simple
 //fis.config.set('modules.postpackager', 'simple');
 ////排除
 //fis.config.set('project.exclude', [
@@ -94,8 +94,8 @@ fis.media("p")
         optimizer: fis.plugin('clean-css')
     })
 /**
- * application部分
- */
+* application部分
+*/
     .match('app.js',{
         packTo: 'application.js'
     })
@@ -109,8 +109,8 @@ fis.media("p")
         packTo: 'application.js'
     })
 /**
- * vendor部分
- **/
+* vendor部分
+**/
     .match('libs/vendor/angular/angular.js', {
         packTo: 'vendor.js'
     })
@@ -133,8 +133,8 @@ fis.media("p")
         packTo: 'vendor.js'
     })
 /**
- * CSS部分
- **/
+* CSS部分
+**/
     .match('libs/bootstrap/css/bootstrap.css', {
         packTo: 'style.css'
     })
