@@ -114,6 +114,9 @@ fis.media("p")
     .match('libs/vendor/angular/angular.js', {
         packTo: 'vendor.js'
     })
+    .match('libs/vendor/angular-animate/angular-animate.js',{
+        packTo:'vendor.js'
+    })
     .match('libs/vendor/angular-cookies/angular-cookies.js', {
         packTo: 'vendor.js'
     })

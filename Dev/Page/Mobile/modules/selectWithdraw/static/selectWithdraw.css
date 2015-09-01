@@ -11,7 +11,7 @@
 .next{
     text-align: center;
     background-color: #fff;
-    padding-top: 100px;
+    /*padding-top: 100px;*/  /*此样式与轮播器滚动时样式冲突*/
 
 }
 .next button {

@@ -2,7 +2,7 @@
  * Created by Craig.Y.Duan on 2015/5/21.
  */
 'use strict';
-var app = angular.module('zergApp', [ 'ui.router','ngCookies','oc.lazyLoad','ngStorage','ui.bootstrap']);
+var app = angular.module('zergApp', [ 'ui.router','ngCookies','oc.lazyLoad','ngStorage','ui.bootstrap','ngAnimate']);
 
 var SETTING = {
     BaseUrl:'http://192.168.1.199/',
