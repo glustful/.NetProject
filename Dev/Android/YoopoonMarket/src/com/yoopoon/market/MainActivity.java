@@ -14,9 +14,10 @@ package com.yoopoon.market;
 
 import java.util.ArrayList;
 import java.util.List;
-import android.annotation.SuppressLint;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -36,21 +37,15 @@ import com.yoopoon.market.fragment.ShopFragment;
  * @author: guojunjun
  * @date: 2015-9-7 下午4:51:39
  */
+@EActivity(R.layout.activity_main)
 public class MainActivity extends MainActionBarActivity implements OnClickListener {
-	private ViewPager vp;
-	private List<Fragment> fragments = new ArrayList<Fragment>();
-	private List<TextView> textviews = new ArrayList<TextView>();
+	@ViewById
+	ViewPager vp;
+	List<Fragment> fragments = new ArrayList<Fragment>();
+	List<TextView> textviews = new ArrayList<TextView>();
 
-	@Override
-	@SuppressLint("InflateParams")
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		init();
-	}
-
-	private void init() {
-		vp = (ViewPager) findViewById(R.id.vp);
+	@AfterViews
+	void initUI() {
 		fragments.add(new ShopFragment());
 		fragments.add(new ServeFragment());
 		fragments.add(new CartFragment());

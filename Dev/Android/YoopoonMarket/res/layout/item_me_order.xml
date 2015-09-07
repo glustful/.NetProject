@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:background="@color/white" >
+    
+    <TextView 
+        style="@style/TextView_Me"
+        android:text="我的订单"/>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+        
+        <TextView 
+            style="@style/TextView_Me_Order"
+            android:text="待付款"/>
+        
+         <TextView 
+            style="@style/TextView_Me_Order"
+            android:text="待发货"/>
+         
+          <TextView 
+            style="@style/TextView_Me_Order"
+            android:text="待收货"/>
+          
+           <TextView 
+            style="@style/TextView_Me_Order"
+            android:text="待评价"/>
+        
+        
+    </LinearLayout>
+    
+
+</LinearLayout>
