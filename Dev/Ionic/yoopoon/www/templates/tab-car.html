@@ -1,0 +1,17 @@
+<ion-view view-title="购物车">
+  <ion-content>
+    <div class="test"></div>
+      <ion-list>
+      <ion-item class="item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/car/{{chat.id}}">
+        <img ng-src="{{chat.face}}">
+        <h2>{{chat.name}}</h2>
+        <p>{{chat.lastText}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+
+        
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
+
+ 
