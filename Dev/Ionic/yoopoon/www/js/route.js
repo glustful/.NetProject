@@ -37,64 +37,64 @@ app.config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
         
         // setup an abstract state for the tabs directive
-        .state('tab', {
-               url: '/tab',
+        .state('page', {
+               url: '/page',
                abstract: true,
-               templateUrl: 'templates/tabs.html'
+               templateUrl: 'page/tabs.html'
                })
         
         // Each tab has its own nav history stack:
         
-        .state('tab.shopping', {
+        .state('page.shopping', {
                url: '/shopping',
                views: {
-               'tab-shopping': {
-               templateUrl: 'templates/tab-shopping.html',
+               'page-shopping': {
+               templateUrl: 'page/shopping/tab-shopping.html',
                controller: 'TabShoppingCtrl'
                }
                }
                })
         
-        .state('tab.service', {
+        .state('page.service', {
                url: '/service',
                views: {
-               'tab-service': {
-               templateUrl: 'templates/tab-service.html',
+               'page-service': {
+               templateUrl: 'page/service/tab-service.html',
                controller: 'TabServiceCtrl'
                }
                }
                })
         
-        .state('tab.car', {
+        .state('page.car', {
                url: '/car',
                views: {
-               'tab-car': {
-               templateUrl: 'templates/tab-car.html',
+               'page-car': {
+               templateUrl: 'page/car/tab-car.html',
                controller: 'TabCarCtrl'
                }
                }
                })
-        .state('tab.car-detail',{
+        .state('page.car-detail',{
           url: '/car/:chatId',
           views: {
-            'tab-car':{
-              templateUrl: 'templates/car-detail.html',
+            'page-car':{
+              templateUrl: 'page/car-detail.html',
               controller: 'CarDetailCtrl'
             }
           }
         })
-        .state('tab.me', {
+        .state('page.me', {
                url: '/me',
                views: {
-               'tab-me': {
-               templateUrl: 'templates/tab-me.html',
+               'page-me': {
+               templateUrl: 'page/me/tab-me.html',
                controller: 'TabMeCtrl'
                }
                }
                });
         
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/tab/shopping');
+        $urlRouterProvider.otherwise('/page/shopping');
         
 });
 
