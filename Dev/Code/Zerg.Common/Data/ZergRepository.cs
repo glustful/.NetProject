@@ -41,4 +41,13 @@ namespace Zerg.Common.Data
 
         }
     }
+
+    public class CommunityRepository<T> : EfRepository<T>, ICommunityRepository<T> where T : class, IBaseEntity
+    {
+        public CommunityRepository(IDbContext context)
+            : base(context)
+        {
+
+        }
+    }
 }
