@@ -6,8 +6,8 @@
     android:orientation="vertical" 
     android:paddingBottom="10dp">
 
-    <TextView
-        style="@style/TextView_Me"
+    <Button
+        style="@style/Button_Me"
         android:text="我的服务" />
 
     <LinearLayout

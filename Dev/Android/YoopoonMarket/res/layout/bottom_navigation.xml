@@ -6,34 +6,26 @@
 
     <TextView
         android:id="@+id/tv1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        style="@style/TextView_Bottom_Navigation"
         android:background="@color/black"
-        android:clickable="true" />
+        android:text="优·服务"/>
 
     <TextView
         android:id="@+id/tv2"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        style="@style/TextView_Bottom_Navigation"
         android:background="@color/white"
-        android:clickable="true" />
+        android:text="优·购物" />
 
     <TextView
         android:id="@+id/tv3"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        style="@style/TextView_Bottom_Navigation"
         android:background="@color/white"
-        android:clickable="true" />
+        android:text="购物车" />
 
     <TextView
         android:id="@+id/tv4"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        style="@style/TextView_Bottom_Navigation"
         android:background="@color/white"
-        android:clickable="true" />
+        android:text="我"/>
 
 </LinearLayout>

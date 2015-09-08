@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:padding="5dp">
+    
+    <ImageView 
+        android:id="@+id/iv"
+        android:paddingLeft="5dp"
+        android:background="@drawable/logo_gray"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginRight="10dp"/>
+    
+    <TextView 
+		android:id="@+id/tv_name"
+        android:text="我是花吃 云南特产零食糕点 玫瑰鲜花饼 6枚*2盒 包邮包邮 神犬小七同款"
+        android:layout_toRightOf="@id/iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    
+    <TextView 
+        android:id="@+id/tv_category"
+        android:textColor="@color/text_gray"
+        android:text="口味：甜味"
+        android:layout_toRightOf="@id/iv"
+        android:layout_below="@id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    
+    <TextView 
+        android:id="@+id/tv_price_counted"
+        android:layout_alignBottom="@id/iv"
+        android:textColor="@color/red"
+        android:text="￥69.9"
+        android:layout_toRightOf="@id/iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    
+    <TextView 
+        android:id="@+id/tv_price_previous"
+        android:layout_alignBottom="@id/tv_price_counted"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/black"
+        android:text="x2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    
+    
+
+</RelativeLayout>

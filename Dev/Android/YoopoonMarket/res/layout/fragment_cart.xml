@@ -2,13 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical" >
     
-    <TextView 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CartFragment"/>
+    <com.handmark.pulltorefresh.library.PullToRefreshListView  
+        android:id="@+id/lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="5dp"
+        android:layout_weight="1"
+        android:cacheColorHint="#00000000"/>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center">
+        
+        <TextView 
+            android:gravity="center"
+            android:id="@+id/tv_price_total"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="合计：￥378.00"/>
+        
+        <Button 
+            android:id="@+id/btn_balance"
+            android:layout_alignParentRight="true"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="#88ff0000"
+            android:textColor="@color/white"
+            android:text="结算(5)"/>
+        
+    </LinearLayout>
     
 
 </LinearLayout>
