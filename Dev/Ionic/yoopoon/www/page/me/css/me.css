@@ -25,7 +25,7 @@
 	margin-left: 16px;
 	color: white;
 }
-.list-inset {
+.list {
 	padding: 0;
 	margin: 0;
 	background-color: #E2DFDF;
@@ -69,24 +69,31 @@
 	border-radius: 5px;
 }
 .myclipul {
-	margin-left: -3%;
+	margin-left: -7%;
 	margin-top: 5%;
+	text-align: center;
 }
 .myclipul i {
 	color: #CCCBCB;
 	font-size: 45px;
 }
 
-.myclipul a{
-	float: left;
+.myclipul p{
+	color: #000000;
 }
 .mysever{
+	text-align: center;
 	margin-top: 5%;
+	    margin-left: -7%;
 }
 .mysever i {
 	color: #CCCBCB;
 	font-size: 45px;
 }
-.mysever a{
-	float: right;
+.mysever p{
+	color: #000000;
+}
+.list h2 a
+{
+	color:#E2DFDF;float: right;
 }
