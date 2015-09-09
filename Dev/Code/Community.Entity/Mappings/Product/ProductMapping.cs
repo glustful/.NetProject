@@ -8,7 +8,7 @@ namespace Community.Entity.Mappings.Product
 	{
 		public ProductMapping()
 		{
-			ToTable("Product");
+            ToTable("Product");
 			HasKey(c => c.Id);
 			
 			HasRequired(c =>c.Category);
@@ -16,9 +16,9 @@ namespace Community.Entity.Mappings.Product
 			Property(c =>c.BussnessName).HasColumnType("varchar").HasMaxLength(100).IsOptional();
 			Property(c => c.Price).HasColumnType("decimal").IsOptional();
 			Property(c => c.Name).HasColumnType("varchar").HasMaxLength(200).IsOptional();
-			Property(c => c.Status).HasColumnType("bit").IsOptional();
+			Property(c => c.Status).HasColumnType("bit").IsRequired();
 			Property(c => c.MainImg).HasColumnType("varchar").HasMaxLength(256).IsOptional();
-			Property(c => c.IsRecommend).HasColumnType("bit").IsOptional();
+			Property(c => c.IsRecommend).HasColumnType("bit").IsRequired();
 			Property(c => c.Sort).HasColumnType("int").IsOptional();
 			Property(c => c.Stock).HasColumnType("int").IsOptional();
 			Property(c =>c.AddUser).HasColumnType("int").IsRequired();
@@ -31,6 +31,8 @@ namespace Community.Entity.Mappings.Product
 			HasRequired(c =>c.Detail).WithRequiredPrincipal();
 			HasMany(c =>c.Comments).WithRequired(c=>c.Product);
 			HasMany(c =>c.Parameters).WithRequired(c=>c.Product);
+		    Property(c => c.NewPrice).HasColumnType("decimal").IsOptional();
+		    Property(c => c.Owner).HasColumnType("int").IsOptional();
 		}
 	}
 }

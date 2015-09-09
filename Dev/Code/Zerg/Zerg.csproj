@@ -153,9 +153,10 @@
     <Compile Include="Controllers\Community\ParameterController.cs" />
     <Compile Include="Controllers\Community\ParameterValueController.cs" />
     <Compile Include="Controllers\Community\ProductCommentController.cs" />
-    <Compile Include="Controllers\Community\ProductController.cs" />
+    <Compile Include="Controllers\Community\CommunityProductController.cs" />
     <Compile Include="Controllers\Community\ProductDetailController.cs" />
     <Compile Include="Controllers\Community\ProductParameterController.cs" />
+    <Compile Include="Controllers\Community\ServiceController.cs" />
     <Compile Include="Controllers\Community\ServiceOrderController.cs" />
     <Compile Include="Controllers\Community\ServiceOrderDetailController.cs" />
     <Compile Include="Controllers\CRM\AdminInfoController.cs">
@@ -237,6 +238,7 @@
     <Compile Include="Models\Community\OrderModel.cs" />
     <Compile Include="Models\Community\ParameterModel.cs" />
     <Compile Include="Models\Community\ParameterValueModel.cs" />
+    <Compile Include="Models\Community\ProductComment.cs" />
     <Compile Include="Models\Community\ProductCommentModel.cs" />
     <Compile Include="Models\Community\ProductDetailModel.cs" />
     <Compile Include="Models\Community\ProductModel.cs" />

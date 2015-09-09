@@ -94,5 +94,13 @@ namespace Community.Entity.Model.Product
 		/// 商品属性
 		/// </summary>
 		public virtual List<ProductParameterEntity> Parameters { get; set; }
+        /// <summary>
+        /// 折后价
+        /// </summary>
+        public virtual decimal NewPrice { get; set; }
+        /// <summary>
+        /// 有多少人抢购
+        /// </summary>
+        public virtual int Owner { get; set; }
 	}
 }
