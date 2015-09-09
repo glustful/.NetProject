@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('starter', ['ionic']);
+var app = angular.module('starter', ['ionic','ngCordova']);
 var SETTING = {
 BaseUrl:'http://www.iyookee.cn/',
 ApiUrl:'http://api.iyookee.cn/api',
@@ -24,8 +24,11 @@ app.run(function($ionicPlatform) {
                           if (window.StatusBar) {
                           // org.apache.cordova.statusbar required
                           StatusBar.styleLightContent();
+                          //StatusBar.hide();
                           }
+                          
                           });
+
         });
 
 app.config(function($stateProvider, $urlRouterProvider) {

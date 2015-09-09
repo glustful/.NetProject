@@ -99,4 +99,27 @@ namespace Zerg.Common.Data
             base.BaseOnModelCreate(modelBuilder);
         }
     }
+
+    public class CommunityDbContext : EfDbContext
+    {
+        public CommunityDbContext() { }
+        public CommunityDbContext(string nameOrConnectionString)
+            : base(nameOrConnectionString)
+        {
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            var typeFinder = new AppDomainTypeFinder();
+            var typesToRegister = typeFinder.FindClassesOfType(typeof(IZergMapping), false)
+                .Where(type => !String.IsNullOrEmpty(type.Namespace) && type.Namespace.StartsWith("Community"))
+                .Where(type => type.BaseType != null && type.BaseType.IsGenericType && type.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>));
+            foreach (var type in typesToRegister)
+            {
+                dynamic configurationInstance = Activator.CreateInstance(type);
+                modelBuilder.Configurations.Add(configurationInstance);
+            }
+
+            base.BaseOnModelCreate(modelBuilder);
+        }
+    }
 }

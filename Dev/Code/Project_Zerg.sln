@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YooPoon.Core", "YooPoon.Core\YooPoon.Core.csproj", "{9E9ECF02-0EEC-449D-8756-E1515D9F8EC8}"
 EndProject
@@ -77,6 +77,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event.Entity", "Event.Entity\Event.Entity.csproj", "{3B216E08-D0EC-4AA2-98D3-1EAACA97FE07}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Event.Service", "Event.Service\Event.Service.csproj", "{F084B802-3896-4300-8A5D-C53AD4B09891}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Community.Entity", "Community.Entity\Community.Entity.csproj", "{250CC499-EAE6-46B1-96B8-11C02C913529}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Community", "Community", "{852841BA-5301-4025-ACA7-B67C8F004BB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Community.Service", "Community.Service\Community.Service.csproj", "{95EA6C3C-AEAB-4517-A801-DA33A9A2A80F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -180,6 +186,14 @@ Global
 		{F084B802-3896-4300-8A5D-C53AD4B09891}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F084B802-3896-4300-8A5D-C53AD4B09891}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F084B802-3896-4300-8A5D-C53AD4B09891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{250CC499-EAE6-46B1-96B8-11C02C913529}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{250CC499-EAE6-46B1-96B8-11C02C913529}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{250CC499-EAE6-46B1-96B8-11C02C913529}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{250CC499-EAE6-46B1-96B8-11C02C913529}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95EA6C3C-AEAB-4517-A801-DA33A9A2A80F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95EA6C3C-AEAB-4517-A801-DA33A9A2A80F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95EA6C3C-AEAB-4517-A801-DA33A9A2A80F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95EA6C3C-AEAB-4517-A801-DA33A9A2A80F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -214,5 +228,8 @@ Global
 		{0FF1F27D-7839-47BF-8724-EAFC782093DC} = {C5D7129F-F480-4DDB-95BB-B4946EC6C087}
 		{3B216E08-D0EC-4AA2-98D3-1EAACA97FE07} = {0FF1F27D-7839-47BF-8724-EAFC782093DC}
 		{F084B802-3896-4300-8A5D-C53AD4B09891} = {0FF1F27D-7839-47BF-8724-EAFC782093DC}
+		{250CC499-EAE6-46B1-96B8-11C02C913529} = {852841BA-5301-4025-ACA7-B67C8F004BB2}
+		{852841BA-5301-4025-ACA7-B67C8F004BB2} = {C5D7129F-F480-4DDB-95BB-B4946EC6C087}
+		{95EA6C3C-AEAB-4517-A801-DA33A9A2A80F} = {852841BA-5301-4025-ACA7-B67C8F004BB2}
 	EndGlobalSection
 EndGlobal
