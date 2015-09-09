@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using YooPoon.Core.Data;
 
 namespace Community.Entity.Model.Area
@@ -6,11 +7,11 @@ namespace Community.Entity.Model.Area
 	public class AreaEntity : IBaseEntity
 	{
 		/// <summary>
-		/// 行政区划ID
+		/// ID
 		/// </summary>
 		public virtual int Id { get; set; }
 		/// <summary>
-		/// 区位码ID
+		/// 编号ID
 		/// </summary>
 		public virtual string CodeId { get; set; }
 		/// <summary>

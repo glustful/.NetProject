@@ -1,12 +1,12 @@
-
+﻿
 namespace CRM.Entity.Model
 {
     /// <summary>
-    /// ������״̬
+    /// 财务打款状态
     /// </summary>
     public enum EnumBRECP
     {
-        �Ϸóɹ�=0,
-        Ǣ̸�ɹ�=1,
+        上访成功=0,
+        洽谈成功=1,
     }
 }
