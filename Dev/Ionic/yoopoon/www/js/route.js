@@ -64,7 +64,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
                }
                }
                })
-        
+            .state('page.clear', {
+                url: '/service/clear',
+                views: {
+                    'page-service': {
+                        templateUrl: 'page/service/clear.html'
+                    }
+                }
+            })
         .state('page.car', {
                url: '/car',
                views: {

@@ -1,0 +1,68 @@
+.header{
+    background-color: #ff3000;
+}
+.header button{
+    color: #fff;
+}
+.header select{
+    background:none;
+    border: none;
+    color: #fff;
+}
+.service{
+    padding: 0;
+}
+.service div {
+    text-align: center;
+    padding: 18px ;
+    background-color: #fff;
+}
+.service div p{
+    color: #b0b0b0;
+}
+.jgg1,.jgg2{
+    margin:0 3px 8px 0 ;
+}
+.jgg3{
+    margin-bottom: 8px;
+}
+.jgg4,.jgg5{
+    margin:0 3px 3px 0 ;
+}
+.jgg6{
+    margin-bottom: 3px;
+}
+
+
+/*清洗服务*/
+.subheader{
+    width: 100%;
+    padding:10px 0;
+    background-color: #ffcc00;
+    color: #7b7769;
+    font-size: 12px;
+}
+
+.select{
+    text-align:center;
+}
+.select .col{
+    border:2px solid #b2b2b2;
+
+}
+.distance1{
+    margin: 0 15px 15px 0;
+}
+.distance2{
+    margin-bottom:15px;
+}
+h4{
+    color: #727171;
+}
+.select .col p{
+    color: #aaaaaa;
+}
+.btn{
+    background-color: #ff3000;
+    font-size: 20px;
+}
