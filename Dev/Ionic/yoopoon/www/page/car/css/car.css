@@ -6,3 +6,29 @@
     font-weight:bold;
     color: #3a3f42;
 }
+.car-list{
+    border-bottom-width: 15px;
+}
+.car-list h2{
+    white-space: normal;
+    font-size: 14px;
+}
+.car-list p{
+    color:#a5a5a5 ;
+}
+.red{
+    color:#ff4c00
+}
+.del{
+    color: #a0a0a0;
+    font-size: 14px;
+}
+.checkout{
+    height: 48px;
+    line-height: 50px;
+    text-align: center;
+    border-bottom: 1px solid #cecece;
+}
+.checkout button{
+    background-color: #ff5000;
+}
