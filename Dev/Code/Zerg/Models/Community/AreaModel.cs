@@ -1,10 +1,12 @@
+using Community.Entity.Model.Area;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Zerg.Models.Community
 {
 	public class AreaModel
 	{
-
+       
 		/// <summary>
         /// 行政区划ID
         /// </summary>
@@ -23,16 +25,17 @@ namespace Zerg.Models.Community
 		public DateTime Adddate {get;set;}
 
 
-		/// <summary>
+        /// <summary>
         /// 父级ID
         /// </summary>
-//		public Area Parent {get;set;}
+        public AreaModel Parent { get; set; }
 
 
-		/// <summary>
+
+        /// <summary>
         /// 区位名
         /// </summary>
-		public string Name {get;set;}
+        public string Name {get;set;}
 
 
 

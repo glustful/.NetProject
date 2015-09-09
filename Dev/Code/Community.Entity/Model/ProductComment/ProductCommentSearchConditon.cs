@@ -29,9 +29,9 @@ namespace Community.Entity.Model.ProductComment
 
 		public ProductEntity[] Products { get; set; }
 
+	    public int? ProductId { get; set; }
 
-
-		public int? AddUser { get; set; }
+	    public int? AddUser { get; set; }
 
 
 
