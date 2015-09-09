@@ -1,0 +1,67 @@
+.bg-yellow{
+    padding: 10px 0 0 0 ;
+    background-color: #ffcc00;
+    height: 110px;
+}
+.circle{
+    width: 50px;
+    height:100px;
+    background-color: white;
+    border-radius:50% ;
+}
+.button-service{
+    height: 90px;
+    width: 35px;
+    background-color: red;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    margin:0 10px 0 0 ;
+}
+.p-red{
+    color: red;
+}
+.p-invisible{
+   background-color: #111111;
+    opacity: 0.8;
+    color: white;
+    height: 30px;
+    width: 100px;
+    border-radius: 30px;
+    line-height: 30px;
+    z-index: 999;
+    text-align: center;
+}
+.p-location{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+.f-show{
+    z-index: 1;
+}
+.activity{
+    width: 200px;
+    height: 100%;
+    background-color: #111111;
+    position: absolute;
+    top:0;
+    right: 0;
+    opacity: 0.9;
+}
+.s-location{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.p-relative{
+    position: relative;
+}
+.p-price{
+    color: red;
+    font-size: 20px;
+}
+.shop-cart{
+    font-size: 20px;
+    color: #ffcc00;
+}
