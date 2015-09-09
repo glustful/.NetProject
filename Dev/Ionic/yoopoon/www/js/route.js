@@ -72,6 +72,22 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     }
                 }
             })
+            .state('page.safe', {
+                url: '/service/safe',
+                views: {
+                    'page-service': {
+                        templateUrl: 'page/service/safe.html'
+                    }
+                }
+            })
+            .state('page.safe-detail', {
+                url: '/service/safe-detail',
+                views: {
+                    'page-service': {
+                        templateUrl: 'page/service/safe-detail.html'
+                    }
+                }
+            })
         .state('page.car', {
                url: '/car',
                views: {

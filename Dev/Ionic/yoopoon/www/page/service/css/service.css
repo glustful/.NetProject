@@ -43,15 +43,14 @@
     font-size: 12px;
 }
 
-.select{
-    text-align:center;
-}
+
 .select .col{
     border:2px solid #b2b2b2;
+    text-align: center;
 
 }
 .distance1{
-    margin: 0 15px 15px 0;
+    margin: 0 10px 15px 0;
 }
 .distance2{
     margin-bottom:15px;
@@ -61,8 +60,45 @@ h4{
 }
 .select .col p{
     color: #aaaaaa;
+    text-decoration: underline;
 }
 .btn{
     background-color: #ff3000;
     font-size: 20px;
+}
+
+.line{
+    color: #cb1d00;
+
+}
+
+/*保险*/
+.safe-list .item{
+
+    /*height: 100px;*/
+}
+.safe-list li h2{
+    padding-top:5px;
+}
+.safe-list li p{
+    margin-top:30px;
+    color:#ff3000;
+}
+
+/*保险详情*/
+.safe-detail img{
+    width: 100%;
+    height: 200px;
+}
+.safe-list .tell{
+    border-bottom-width: 10px;
+}
+.safe-list .tell h2{
+    color:#ff3000;
+}
+.safe-list .tell i{
+    color: #727171;
+}
+.safe-list .detail h2{
+    color: #545556;
 }
