@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
     android:padding="5dp"
-    android:background="@color/white">
+    android:background="@drawable/white_bg">
     
     <ImageView 
         android:id="@+id/iv"
@@ -62,7 +62,7 @@
             android:layout_width="20dp"
             android:layout_height="30dp"
             android:gravity="center"
-            android:background="@drawable/button_me_bg"
+            android:background="@drawable/white_bg"
             android:text="-" 
             android:padding="5dp"
             android:clickable="true"/>
@@ -85,7 +85,7 @@
             android:id="@+id/btn_countup"
             android:layout_width="20dp"
             android:layout_height="30dp"
-            android:background="@drawable/button_me_bg"
+            android:background="@drawable/white_bg"
             android:text="+" 
             android:padding="5dp"
             android:clickable="true"/>

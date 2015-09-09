@@ -40,7 +40,7 @@ public class BalanceActivity extends MainActionBarActivity {
 		backButton.setText("返回");
 		titleButton.setText("确认订单");
 		Utils.spanTextStyle(tv_price_total, this);
-		Utils.spanTextSize(tv_price_counted);
+		Utils.spanTextSize(tv_price_counted, "\\.", true, new int[] { 16, 12 });
 	}
 
 	@Override

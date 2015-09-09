@@ -42,7 +42,6 @@ import com.yoopoon.market.utils.Utils;
  * @date: 2015-9-7 下午4:50:59
  */
 public class CartFragment extends Fragment implements OnClickListener {
-	private static final String TAG = "CartFragment";
 	View rootView;
 	PullToRefreshListView lv;
 	TextView tv_price_total;
@@ -149,7 +148,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 				convertView.setTag(holder);
 			}
 			holder.tv_price_previous.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-			Utils.spanTextSize(holder.tv_price_counted);
+			Utils.spanTextSize(holder.tv_price_counted, "\\.", true, new int[] { 16, 12 });
 			holder.btn_countdown.setOnClickListener(new OnClickListener() {
 
 				@Override

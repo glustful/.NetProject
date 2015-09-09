@@ -28,7 +28,7 @@
         <item name="android:drawableRight">@drawable/right_next_icon</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/button_me_bg</item>
+        <item name="android:background">@drawable/white_bg</item>
         <item name="android:layout_marginTop">5dp</item>
     </style>
 
@@ -38,7 +38,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/button_me_bg</item>
+        <item name="android:background">@drawable/white_bg</item>
         <item name="android:clickable">true</item>
     </style>
 
@@ -60,6 +60,14 @@
     
     <style name="TextView_RedColor_SmallSize" parent="TextView_TextColor_Red">
         <item name="android:textSize">@dimen/small_textsize</item>
+    </style>
+    
+    <style name="TextView_ScrollAble">
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
     </style>
 
 </resources>

@@ -40,16 +40,21 @@ public class Utils {
 		textView.setText(builder);
 	}
 
-	public static void spanTextSize(TextView textView) {
+	public static void spanTextSize(TextView textView, String split, boolean former, int[] nums) {
 		String text = textView.getText().toString();
 		SpannableStringBuilder builder = new SpannableStringBuilder(text);
 
-		String[] price = text.split("\\.");
-		AbsoluteSizeSpan largeSizeSpan = new AbsoluteSizeSpan(16);
-		AbsoluteSizeSpan smallSizeSpan = new AbsoluteSizeSpan(12);
+		String[] price = text.split(split);
+		AbsoluteSizeSpan largeSizeSpan = new AbsoluteSizeSpan(nums[0]);
+		AbsoluteSizeSpan smallSizeSpan = new AbsoluteSizeSpan(nums[1]);
 
-		builder.setSpan(largeSizeSpan, 0, price[0].length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		builder.setSpan(smallSizeSpan, price[0].length(), text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		if (former) {
+			builder.setSpan(largeSizeSpan, 0, price[0].length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			builder.setSpan(smallSizeSpan, price[0].length(), text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		} else {
+			builder.setSpan(smallSizeSpan, 0, price[0].length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			builder.setSpan(largeSizeSpan, price[0].length(), text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		}
 		textView.setText(builder);
 
 	}
@@ -70,5 +75,15 @@ public class Utils {
 		builder.setSpan(red_span_small, 3 + prices[0].length(), text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		textView.setText(builder);
 
+	}
+
+	public static int dp2px(Context context, float dp) {
+		final float scale = context.getResources().getDisplayMetrics().density;
+		return (int) (dp * scale + 0.5f);
+	}
+
+	public static int px2dp(Context context, float px) {
+		final float scale = context.getResources().getDisplayMetrics().density;
+		return (int) (px / scale + 0.5f);
 	}
 }

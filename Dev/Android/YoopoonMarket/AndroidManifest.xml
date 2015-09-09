@@ -16,24 +16,36 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat.Light" >
-        <activity android:name="com.yoopoon.market.MainActivity_"
+        <activity
+            android:name="com.yoopoon.market.MainActivity_"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeNoTitle">
+            android:theme="@style/ThemeNoTitle" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
+        <activity
             android:name="com.yoopoon.market.PersonalInfoActivity_"
             android:screenOrientation="portrait" />
-        <activity android:name="com.yoopoon.market.AddressManageActivity_"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.yoopoon.market.AboutUActivity_"
+        <activity
+            android:name="com.yoopoon.market.AddressManageActivity_"
             android:screenOrientation="portrait" />
-        <activity android:name="com.yoopoon.market.BalanceActivity_"
-            android:screenOrientation="portrait" /> 
+        <activity
+            android:name="com.yoopoon.market.AboutUActivity_"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.yoopoon.market.BalanceActivity_"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.yoopoon.market.CleanServeActivity_"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.yoopoon.market.AssuranceActivity_"
+            android:screenOrientation="portrait" />
+        
+        <activity android:name="com.yoopoon.market.AssuranceDetailActivity_"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
