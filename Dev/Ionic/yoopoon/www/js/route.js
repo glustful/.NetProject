@@ -126,7 +126,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
                controller: 'TabMeCtrl'
                }
                }
-               });
+               })
+    .state('page.Product-Catagory', {
+        url: '/shopping/Product-Catagory',
+        views: {
+            'page-shopping': {
+                templateUrl: 'page/shopping/Product-Catagory.html'
+            }
+        }
+    });
         
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/page/shopping');

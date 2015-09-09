@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Community.Entity.Model.Product;
 using Community.Entity.Model.ProductComment;
 using YooPoon.Core.Logging;
 using Zerg.Common.Data;
@@ -71,6 +72,7 @@ namespace Community.Service.ProductComment
                 return null;
             }
 		}
+      
 
 		public IQueryable<ProductCommentEntity> GetProductCommentsByCondition(ProductCommentSearchCondition condition)
 		{
@@ -93,7 +95,8 @@ namespace Community.Service.ProductComment
                 {
                     query = query.Where(q => q.Stars < condition.StarsEnd.Value);
                 }
-				if (condition.AddUser.HasValue)
+			   
+			    if (condition.AddUser.HasValue)
                 {
                     query = query.Where(q => q.AddUser==condition.AddUser.Value);
                 }
@@ -108,6 +111,10 @@ namespace Community.Service.ProductComment
 				if (condition.Products != null && condition.Products.Any())
                 {
                     query = query.Where(q => condition.Products.Contains(q.Product));
+                }
+                if (condition.ProductId!=null)
+                {
+                    query = query.Where(q => q.Product.Id == condition.ProductId);
                 }
 				if(condition.OrderBy.HasValue)
 				{
@@ -134,6 +141,7 @@ namespace Community.Service.ProductComment
                 {
                     query = query.Skip((condition.Page.Value - 1)*condition.PageCount.Value).Take(condition.PageCount.Value);
                 }
+                
 				return query;
 			}
 			catch(Exception e)
@@ -180,6 +188,10 @@ namespace Community.Service.ProductComment
                 {
                     query = query.Where(q => condition.Products.Contains(q.Product));
                 }
+			    if (condition.ProductId.HasValue)
+			    {
+			        query = query.Where(q => q.Product.Id == condition.ProductId);
+			    }
 				return query.Count();
 			}
 			catch(Exception e)

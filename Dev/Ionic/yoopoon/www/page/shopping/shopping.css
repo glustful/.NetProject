@@ -10,8 +10,8 @@
     border-radius:50% ;
 }
 .button-service{
-    height: 90px;
-    width: 35px;
+    height: 90%;
+    width: 8%;
     background-color: red;
     color: white;
     padding: 8px;
@@ -41,7 +41,7 @@
     z-index: 1;
 }
 .activity{
-    width: 200px;
+    width: 50%;
     height: 100%;
     background-color: #111111;
     position: absolute;
@@ -59,9 +59,25 @@
 }
 .p-price{
     color: red;
-    font-size: 20px;
+    font-size: 1.3em;
 }
 .shop-cart{
     font-size: 20px;
     color: #ffcc00;
+}
+
+/*узуж*/
+.p-head{
+    background-color: black;
+    opacity: 0.8;
+    z-index: 999;
+    width: 86.7%;
+    margin-left: 55px;
+}
+.button-location{
+    position: absolute;
+   bottom: 0;
+    right: 10px;
+    width: 120px;
+    height: 50px;
 }

@@ -1,4 +1,5 @@
 using System;
+using Community.Entity.Model.Product;
 
 namespace Zerg.Models.Community
 {
@@ -12,12 +13,15 @@ namespace Zerg.Models.Community
 
 
 		/// <summary>
+        /// 商品实体
+        /// </summary>
+		public ProductEntity Product {get;set;}
+        /// <summary>
         /// 商品ID
         /// </summary>
-//		public ProductEntity Product {get;set;}
+        public int ProductId { get; set; }
 
-
-		/// <summary>
+	    /// <summary>
         /// AddUser
         /// </summary>
 		public int AddUser {get;set;}
