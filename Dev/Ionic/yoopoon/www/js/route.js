@@ -100,6 +100,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
                }
                }
                })
+            .state('page.order', {
+                url: '/car/order',
+                views: {
+                    'page-car': {
+                        templateUrl: 'page/car/order.html',
+                        controller: 'TabCarCtrl'
+                    }
+                }
+            })
         .state('page.car-detail',{
           url: '/car/:chatId',
           views: {
