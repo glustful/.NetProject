@@ -1,0 +1,49 @@
+<div class="modal-body wrapper-lg">
+	<div class="row">
+		<div class="col-sm-6 b-r" style="width: 100%;">
+			<h3 class="m-t-none m-b font-thin">菜单编辑</h3>
+			<form role="form">
+				<div class="form-group">
+					<label>类型</label>
+					<script type="text/javascript">
+						 //						$(function() {
+						 //							$("#type option[value='']").attr("selected", true);
+						 //						})
+						$("#urlnext").hide();
+						$("#type").change(function() {
+							if ($("#type").val() != "click" || $("#type").val() != "view") {
+								$("#urlnext").hide();
+							}
+							if ($("#type").val() == "click" || $("#type").val() == "view") {
+								$("#urlnext").show();
+							}
+						});
+					</script>
+					<select name="type" id="type" class="form-control" ng-model="child.type" required>
+						<option value="">请选择</option>
+						<option value="view">跳转URL</option>
+						<option value="click">点击推事件</option>
+						<option value="pic_sysphoto">弹出系统拍照发图</option>
+						<option value="scancode_push">扫码推事件</option>
+						<option value="scancode_waitmsg">扫码推事件且弹出“消息接收中”提示框</option>
+						<option value="pic_photo_or_album">弹出拍照或者相册发图</option>
+						<option value="pic_weixin">弹出微信相册发图器</option>
+						<option value="location_select">弹出地理位置选择器</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>菜单名称</label>
+					<input class="form-control" placeholder="请输入菜单名" ng-model="child.name" required />
+				</div>
+				<div class="form-group" id="urlnext">
+					<label>键|值(URL)</label>
+					<input type="text" class="form-control" placeholder="示列:http://www.baidu.com" ng-model="child.key" required />
+				</div>
+				
+				<div class="checkbox m-t-lg" style="text-align: center;">
+					<button style="float:none !important;width: 80%;" type="submit" class="btn btn-sm btn-success pull-right text-uc m-t-n-xs" ng-click="ok()"><strong>保存</strong></button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{statusModal.title}}</h3>
+</div>
+
+<div class="modal-body">
+    <div class="h4 m-b font-thin">{{statusModal.warning}}</div>
+    <p class="text-muted">{{statusModal.content}}</p>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()">{{statusModal.close}}</button>
+    <button class="btn btn-info" ng-click="ok()">{{statusModal.ok}}</button>
+</div>

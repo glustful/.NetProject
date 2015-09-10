@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('starter', ['ionic']);
+var app = angular.module('starter', ['ionic','ngCordova']);
 var SETTING = {
 BaseUrl:'http://www.iyookee.cn/',
 ApiUrl:'http://api.iyookee.cn/api',
@@ -24,8 +24,11 @@ app.run(function($ionicPlatform) {
                           if (window.StatusBar) {
                           // org.apache.cordova.statusbar required
                           StatusBar.styleLightContent();
+                          //StatusBar.hide();
                           }
+                          
                           });
+
         });
 
 app.config(function($stateProvider, $urlRouterProvider) {
@@ -64,7 +67,30 @@ app.config(function($stateProvider, $urlRouterProvider) {
                }
                }
                })
-        
+            .state('page.clear', {
+                url: '/service/clear',
+                views: {
+                    'page-service': {
+                        templateUrl: 'page/service/clear.html'
+                    }
+                }
+            })
+            .state('page.safe', {
+                url: '/service/safe',
+                views: {
+                    'page-service': {
+                        templateUrl: 'page/service/safe.html'
+                    }
+                }
+            })
+            .state('page.safe-detail', {
+                url: '/service/safe-detail',
+                views: {
+                    'page-service': {
+                        templateUrl: 'page/service/safe-detail.html'
+                    }
+                }
+            })
         .state('page.car', {
                url: '/car',
                views: {
@@ -74,6 +100,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
                }
                }
                })
+            .state('page.order', {
+                url: '/car/order',
+                views: {
+                    'page-car': {
+                        templateUrl: 'page/car/order.html',
+                        controller: 'TabCarCtrl'
+                    }
+                }
+            })
         .state('page.car-detail',{
           url: '/car/:chatId',
           views: {
@@ -91,7 +126,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
                controller: 'TabMeCtrl'
                }
                }
-               });
+               })
+    .state('page.Product-Catagory', {
+        url: '/shopping/Product-Catagory',
+        views: {
+            'page-shopping': {
+                templateUrl: 'page/shopping/Product-Catagory.html'
+            }
+        }
+    });
         
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/page/shopping');

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using Community.Entity.Model.Product;
 using Community.Entity.Model.ProductComment;
 
@@ -23,13 +24,13 @@ namespace Zerg.Models.Community
 		/// <summary>
         /// 商家Id
         /// </summary>
-		public int Bussnessid {get;set;}
+		public int BussnessId {get;set;}
 
 
 		/// <summary>
         /// 商家名称
         /// </summary>
-		public string Bussnessname {get;set;}
+		public string BussnessName {get;set;}
 
 
 		/// <summary>
@@ -115,24 +116,24 @@ namespace Zerg.Models.Community
         /// </summary>
 		public EnumProductType Type {get;set;}
 
-		public string TypeString
-		{
-			get
-			{
-				switch(Type)
-				{
+        public string TypeString
+        {
+            get
+            {
+                switch (Type)
+                {
 
-					case EnumProductType.Product:
-						return "实物商品";
+                    case EnumProductType.Product:
+                        return "实物商品";
 
-					case EnumProductType.Service:
-						return "服务商品";
+                    case EnumProductType.Service:
+                        return "服务商品";
 
-					default:
-						return "";
-				}
-			}
-		}
+                    default:
+                        return "";
+                }
+            }
+        }
 
 
 		/// <summary>
@@ -144,15 +145,27 @@ namespace Zerg.Models.Community
 		/// <summary>
         /// 商品评论
         /// </summary>
-		public List<ProductCommentEntity> Comments {get;set;}
+		//public List<ProductCommentEntity> Comments {get;set;}
 
 
 		/// <summary>
         /// 商品属性
         /// </summary>
 //		public List<ProductParameterEntity> Parameters {get;set;}
-
-
+        public decimal NewPrice { get; set; }
+        public int Owner { get; set; }
+        public int CategoryId { get; set; }
+        public string Detail { get; set; }
+        public string Img { get; set; }
+        public string Img1 { get; set; }
+        public string Img2 { get; set; }
+        public string Img3 { get; set; }
+        public string Img4 { get; set; }
+        public string SericeInstruction { get; set; }
+                
+        public string Ad1 { get; set; }
+        public string Ad2 { get; set; }
+        public string Ad3 { get; set; }
 
 	}
 }

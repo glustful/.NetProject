@@ -57,9 +57,12 @@ app.controller('CarDetailCtrl', function($scope, $stateParams) {
     lastText: 'You on your way?',
     face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
   };
+  
 
   $scope.goBack = function(){
     
     window.history.go(-1);
   };
+
+  
 });
