@@ -8,13 +8,13 @@
         android:id="@+id/tv1"
         style="@style/TextView_Bottom_Navigation"
         android:background="@color/black"
-        android:text="优·服务"/>
+        android:text="优·购物"/>
 
     <TextView
         android:id="@+id/tv2"
         style="@style/TextView_Bottom_Navigation"
         android:background="@color/white"
-        android:text="优·购物" />
+        android:text="优·服务" />
 
     <TextView
         android:id="@+id/tv3"

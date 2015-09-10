@@ -5,8 +5,8 @@
  * @Project: YoopoonMarket
  * @Package: com.yoopoon.market.fragment 
  * @Description: TODO
- * @author: guojunjun  
- * @updater: guojunjun 
+ * @author: 徐阳会  
+ * @updater: 徐阳会 
  * @date: 2015-9-7 下午4:50:59 
  * @version: V1.0   
  */
@@ -27,9 +27,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yoopoon.advertisement.ADController;
+import com.yoopoon.component.YoopoonServiceController;
 import com.yoopoon.market.R;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
@@ -40,6 +42,7 @@ import com.yoopoon.market.net.ResponseData.ResultState;
 public class ShopFragment extends Fragment {
 	private Context						mContext;
 	private ADController				mADController;
+	private YoopoonServiceController	serviceController;
 	private View						rootView;
 	private ArrayList<String>			imgs;						//存储顶端的广告图片地址
 	private GridView					commodityGridView;
@@ -67,10 +70,11 @@ public class ShopFragment extends Fragment {
 			burstPackageTextView = (TextView) rootView.findViewById(R.id.btn_fragment_shop_burstpackage);
 			burstPackageTextView.getPaint().setFakeBoldText(true);
 			mADController = new ADController(mContext);
+			serviceController = new YoopoonServiceController(mContext);
 			commodityGridView = (GridView) rootView.findViewById(R.id.gridview_commodity);
 			//测试用数据
 			ArrayList<JSONObject> arrayList = new ArrayList<JSONObject>();
-			for (int i = 0; i < 100; i++) {
+			for (int i = 0; i < 10; i++) {
 				JSONObject jsonObject = new JSONObject();
 				try {
 					jsonObject.put("productName", "方便面" + i);
@@ -83,11 +87,21 @@ public class ShopFragment extends Fragment {
 			}
 			mCommodityGridViewAdapter = new CommodityGridViewAdapter(mContext, arrayList);
 			commodityGridView.setAdapter(mCommodityGridViewAdapter);
+			//对Fragment_shop中的视图控件初始化和设置
+			initShopFragment();
 		}
 		return rootView;
 	}
+	/**
+	 * @Title: initShopFragment
+	 * @Description: 初始化和设置视图控件
+	 */
 	private void initShopFragment() {
-		mADController.getRootView();
+		requestAdvertisements();
+		requestServices();
+		LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.linearlayout_fragment_shop);
+		linearLayout.addView(serviceController.getRootView(), 1);
+		linearLayout.addView(mADController.getRootView(), 0);
 	}
 	private void requestAdvertisements() {
 		if (imgs == null)
@@ -113,5 +127,35 @@ public class ShopFragment extends Fragment {
 				}
 			}.setUrl("/api/Channel/GetTitleImg").setRequestMethod(RequestMethod.eGet).addParam("channelName", "banner")
 					.notifyRequest();
+	}
+	
+	private ArrayList<JSONArray>	servicesArrayList;
+	
+	/**
+	 * @Title: requestServices
+	 * @Description: 获取首页优服务
+	 */
+	private void requestServices() {
+		if (servicesArrayList == null) {
+			new RequestAdapter() {
+				@Override
+				public void onReponse(ResponseData data) {
+					if (data.getResultState() == ResultState.eSuccess) {
+						if (servicesArrayList == null) {
+							servicesArrayList = new ArrayList<JSONArray>();
+							JSONArray list = data.getJsonArray();
+							if (list == null || list.length() < 1)
+								return;
+							servicesArrayList.add(list);
+							serviceController.show(servicesArrayList);
+						}
+					}
+				}
+				@Override
+				public void onProgress(ProgressMessage msg) {
+				}
+			}.setUrl("/api/channel/GetActiveTitleImg").setRequestMethod(RequestMethod.eGet)
+					.addParam("ChannelName", "活动").notifyRequest();
+		}
 	}
 }
