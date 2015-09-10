@@ -20,12 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.yoopoon.market.R;
 
-/**
- * @ClassName: ShopFragment
- * @Description: TODO
- * @author: guojunjun
- * @date: 2015-9-7 下午4:50:59
- */
 public class ShopFragment extends Fragment {
 	@Override
 	@Nullable

@@ -14,6 +14,9 @@ package com.yoopoon.market.fragment;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +25,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +35,18 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.AssuranceActivity_;
 import com.yoopoon.market.CleanServeActivity_;
 import com.yoopoon.market.R;
+import com.yoopoon.market.net.ProgressMessage;
+import com.yoopoon.market.net.RequestAdapter;
+import com.yoopoon.market.net.RequestAdapter.RequestMethod;
+import com.yoopoon.market.net.ResponseData;
 
 /**
  * @ClassName: ShopFragment
@@ -49,13 +60,17 @@ public class ServeFragment extends Fragment {
 	View rootView;
 	GridView gv;
 	ViewPager vp;
+	// 9大功能
 	String[] functions = { "保险", "金融理财", "旅游", "汽车类服务", "家政", "清洗服务", "教育", "生活缴费", "快递代收" };
 	int[] imgIdArray;
 	ImageView[] tips;
 	ImageView[] mImageViews;
 	LinearLayout ll_points;
 	boolean loopped = false;
+	boolean isFirst = true;
+	// hanlder用来处理ViewPager图片的轮播
 	Handler handler = new Handler() {
+
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 				case LOOPIMAGE:
@@ -73,6 +88,7 @@ public class ServeFragment extends Fragment {
 		return rootView;
 	}
 
+	// 初始化
 	private void init() {
 		gv = (GridView) rootView.findViewById(R.id.gv);
 		vp = (ViewPager) rootView.findViewById(R.id.vp);
@@ -81,18 +97,56 @@ public class ServeFragment extends Fragment {
 		gv.setAdapter(new MyGridViewAdapter());
 		gv.setOnItemClickListener(new MyGridViewItemClickListener());
 
-		initImages();
-		vp.setAdapter(new MyViewPagerAdapter());
-		vp.setCurrentItem((mImageViews.length) * 100);
-		vp.addOnPageChangeListener(new MyPageChangeListener());
+		// initImages();
 
-		if (!loopped) {
-			loopped = true;
-			loopImage();
+		if (mImageViews == null)
+			requestData();
+		else {
+			addTips(mImageViews.length);
+			vp.setAdapter(new MyViewPagerAdapter());
+			vp.setCurrentItem((mImageViews.length) * 100);
+			vp.addOnPageChangeListener(new MyPageChangeListener());
 		}
 
 	}
 
+	private void requestData() {
+		Log.i(TAG, "requestData");
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONObject object = data.getMRootData();
+				boolean status = object.optBoolean("Status", false);
+				if (status) {
+					try {
+						JSONArray array = object.getJSONArray("Object");
+						String[] urls = new String[array.length()];
+						for (int i = 0; i < array.length(); i++) {
+							JSONObject jsonObject = array.getJSONObject(i);
+							String url = jsonObject.optString("TitleImg", "");
+							urls[i] = getString(R.string.url_image) + url;
+						}
+						initImages(urls);
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
+				}
+
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_test)).setRequestMethod(RequestMethod.eGet).notifyRequest();
+	}
+
+	// GridView的每个Item都代表一个功能，点击后就触发相应的界面
 	private class MyGridViewItemClickListener implements OnItemClickListener {
 
 		@Override
@@ -113,6 +167,7 @@ public class ServeFragment extends Fragment {
 
 	}
 
+	// 图片的轮播用Timer实现，但必须放在子线程中
 	private void loopImage() {
 		new Timer().schedule(new TimerTask() {
 
@@ -123,9 +178,10 @@ public class ServeFragment extends Fragment {
 				handler.sendMessage(msg);
 
 			}
-		}, 1000, 2000);
+		}, 4000, 4000);
 	}
 
+	// ViewPager的页面发生改变时，下面相应的点的颜色也要改变
 	private class MyPageChangeListener implements OnPageChangeListener {
 
 		@Override
@@ -149,12 +205,33 @@ public class ServeFragment extends Fragment {
 
 	}
 
-	void initImages() {
-		imgIdArray = new int[] { R.drawable.logo_gray, R.drawable.logo_gray, R.drawable.logo_gray,
-				R.drawable.logo_gray, R.drawable.logo_gray };
-
+	// 初始化图片
+	void initImages(String[] urls) {
 		// 将点点加入到ViewGroup中
-		tips = new ImageView[imgIdArray.length];
+		addTips(urls.length);
+
+		// 将图片装载到数组中
+		mImageViews = new ImageView[urls.length];
+		for (int i = 0; i < urls.length; i++) {
+			ImageView imageView = new ImageView(getActivity());
+			imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+			imageView.setScaleType(ScaleType.FIT_XY);
+			ImageLoader.getInstance().displayImage(urls[i], imageView);
+			mImageViews[i] = imageView;
+		}
+
+		vp.setAdapter(new MyViewPagerAdapter());
+		vp.setCurrentItem((mImageViews.length) * 100);
+		vp.addOnPageChangeListener(new MyPageChangeListener());
+
+		if (!loopped) {
+			loopped = true;
+			loopImage();
+		}
+	}
+
+	void addTips(int length) {
+		tips = new ImageView[length];
 		for (int i = 0; i < tips.length; i++) {
 			ImageView imageView = new ImageView(getActivity());
 			imageView.setLayoutParams(new LayoutParams(10, 10));
@@ -171,14 +248,6 @@ public class ServeFragment extends Fragment {
 			layoutParams.rightMargin = 5;
 			ll_points.addView(imageView, layoutParams);
 		}
-
-		// 将图片装载到数组中
-		mImageViews = new ImageView[imgIdArray.length];
-		for (int i = 0; i < mImageViews.length; i++) {
-			ImageView imageView = new ImageView(getActivity());
-			mImageViews[i] = imageView;
-			imageView.setBackgroundResource(imgIdArray[i]);
-		}
 	}
 
 	static class ViewHolder {
@@ -186,6 +255,7 @@ public class ServeFragment extends Fragment {
 		ImageView iv_function;
 	}
 
+	// GridView的Adapter
 	private class MyGridViewAdapter extends BaseAdapter {
 
 		@Override
@@ -224,6 +294,7 @@ public class ServeFragment extends Fragment {
 		}
 	}
 
+	// ViewPager的Adapter
 	public class MyViewPagerAdapter extends PagerAdapter {
 
 		@Override
