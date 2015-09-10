@@ -4,9 +4,11 @@ using System.Web.Http;
 using Community.Entity.Model.MemberAddress;
 using Community.Service.MemberAddress;
 using Zerg.Models.Community;
+using Community.Entity.Model.Member;
 
 namespace Zerg.Controllers.Community
 {
+    [AllowAnonymous]
 	public class MemberAddressController : ApiController
 	{
 		private readonly IMemberAddressService _memberAddressService;
@@ -19,17 +21,19 @@ namespace Zerg.Controllers.Community
 		public MemberAddressModel Get(int id)
 		{
 			var entity =_memberAddressService.GetMemberAddressById(id);
-			var model = new MemberAddressModel
-			{
-				Id = entity.Id,
-//                Member = entity.Member,		
-                Address = entity.Address,	
-                Zip = entity.Zip,	
-                Linkman = entity.Linkman,	
-                Tel = entity.Tel,		
-                Adduser = entity.Adduser,	
-                Addtime = entity.Addtime,		
-                Upduser = entity.Upduser,		
+            if (entity == null)
+                return null;
+            var model = new MemberAddressModel
+            {
+                Id = entity.Id,
+                Member = entity.Member.Id,
+                Address = entity.Address,
+                Zip = entity.Zip,
+                Linkman = entity.Linkman,
+                Tel = entity.Tel,
+                Adduser = entity.Adduser,
+                Addtime = entity.Addtime,
+                Upduser = entity.Upduser,
                 Updtime = entity.Updtime
             };
 			return model;
@@ -40,7 +44,7 @@ namespace Zerg.Controllers.Community
 			var model = _memberAddressService.GetMemberAddresssByCondition(condition).Select(c=>new MemberAddressModel
 			{
 				Id = c.Id,
-//				Member = c.Member,
+				Member = c.Member.Id,
 				Address = c.Address,
 				Zip = c.Zip,
 				Linkman = c.Linkman,
@@ -53,11 +57,11 @@ namespace Zerg.Controllers.Community
 			return model;
 		}
 
-		public bool Post(MemberAddressModel model)
+		public bool Post([FromBody]MemberAddressModel model)
 		{
 			var entity = new MemberAddressEntity
 			{
-//				Member = model.Member,
+				//Member = model.Member,
 				Address = model.Address,
 				Zip = model.Zip,
 				Linkman = model.Linkman,
@@ -74,12 +78,12 @@ namespace Zerg.Controllers.Community
 			return false;
 		}
 
-		public bool Put(MemberAddressModel model)
+		public bool Put([FromBody]MemberAddressModel model)
 		{
 			var entity = _memberAddressService.GetMemberAddressById(model.Id);
 			if(entity == null)
 				return false;
-//			entity.Member = model.Member;
+			entity.Member.Id = model.Member;
 			entity.Address = model.Address;
 			entity.Zip = model.Zip;
 			entity.Linkman = model.Linkman;
