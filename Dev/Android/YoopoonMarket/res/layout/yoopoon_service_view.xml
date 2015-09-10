@@ -5,14 +5,14 @@
     android:animateLayoutChanges="true"
     android:orientation="vertical" >
 
-    <com.yoopoon.home.ui.view.MyViewPager
+    <com.yoopoon.base.ui.MyViewPager
         android:id="@+id/vPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:flipInterval="30"
         android:persistentDrawingCache="animation" />
 
-    <com.yoopoon.home.ui.view.MyGridView
+    <com.yoopoon.base.ui.MyGridView
         android:id="@+id/myGrid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,6 +22,6 @@
         android:stretchMode="columnWidth"
         android:verticalSpacing="1dp"
         android:visibility="gone" >
-    </com.yoopoon.home.ui.view.MyGridView>
+    </com.yoopoon.base.ui.MyGridView>
 
 </LinearLayout>

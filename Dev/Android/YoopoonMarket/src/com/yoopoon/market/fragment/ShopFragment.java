@@ -12,13 +12,30 @@
  */
 package com.yoopoon.market.fragment;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.TextView;
+
+import com.yoopoon.advertisement.ADController;
 import com.yoopoon.market.R;
+import com.yoopoon.market.net.ProgressMessage;
+import com.yoopoon.market.net.RequestAdapter;
+import com.yoopoon.market.net.RequestAdapter.RequestMethod;
+import com.yoopoon.market.net.ResponseData;
+import com.yoopoon.market.net.ResponseData.ResultState;
 
 /**
  * @ClassName: ShopFragment
@@ -27,10 +44,80 @@ import com.yoopoon.market.R;
  * @date: 2015-9-7 下午4:50:59
  */
 public class ShopFragment extends Fragment {
+	private Context						mContext;
+	private ADController				mADController;
+	private View						rootView;
+	private ArrayList<String>			imgs;						//存储顶端的广告图片地址
+	private GridView					commodityGridView;
+	private CommodityGridViewAdapter	mCommodityGridViewAdapter;
+	private TextView					beforePriceTextView;		//折扣前价格
+	private TextView					burstPackageTextView;
+	
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-		return inflater.inflate(R.layout.fragment_shop, null, false);
+		//如果获取的view存在父View则不解析直接去除原来的Fragment
+		if (rootView != null) {
+			ViewGroup parentViewGroup = (ViewGroup) rootView.getParent();
+			if (parentViewGroup != null) {
+				parentViewGroup.removeView(rootView);
+			}
+		} else {
+			mContext = getActivity();
+			//解析布局
+			rootView = inflater.inflate(R.layout.fragment_shop, null);
+			//获取套餐折扣价后加上划线
+			beforePriceTextView = (TextView) rootView.findViewById(R.id.tv_fragment_before_price);
+			beforePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+			//爆款套餐和省到不行加粗样式设置
+			burstPackageTextView = (TextView) rootView.findViewById(R.id.btn_fragment_shop_burstpackage);
+			burstPackageTextView.getPaint().setFakeBoldText(true);
+			mADController = new ADController(mContext);
+			commodityGridView = (GridView) rootView.findViewById(R.id.gridview_commodity);
+			//测试用数据
+			ArrayList<JSONObject> arrayList = new ArrayList<JSONObject>();
+			for (int i = 0; i < 100; i++) {
+				JSONObject jsonObject = new JSONObject();
+				try {
+					jsonObject.put("productName", "方便面" + i);
+					jsonObject.put("currentPrice", "80" + i);
+					jsonObject.put("beforePrice", "180" + i);
+					arrayList.add(jsonObject);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+			mCommodityGridViewAdapter = new CommodityGridViewAdapter(mContext, arrayList);
+			commodityGridView.setAdapter(mCommodityGridViewAdapter);
+		}
+		return rootView;
+	}
+	private void initShopFragment() {
+		mADController.getRootView();
+	}
+	private void requestAdvertisements() {
+		if (imgs == null)
+			new RequestAdapter() {
+				@Override
+				public void onReponse(ResponseData data) {
+					if (data.getResultState() == ResultState.eSuccess) {
+						if (imgs == null) {
+							imgs = new ArrayList<String>();
+							JSONArray list = data.getJsonArray();
+							if (list == null || list.length() < 1)
+								return;
+							for (int i = 0; i < list.length(); i++) {
+								imgs.add(list.optJSONObject(i).optString("TitleImg"));
+							}
+							// 添加广告
+							mADController.show(imgs);
+						}
+					}
+				}
+				@Override
+				public void onProgress(ProgressMessage msg) {
+				}
+			}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
+					.addParam("channelName", "banner").notifyRequest();
 	}
 }
