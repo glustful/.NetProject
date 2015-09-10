@@ -55,13 +55,15 @@ namespace Zerg.Controllers.Community
 			var model = _productCommentService.GetProductCommentsByCondition(condition).Select(c=>new ProductCommentModel
 			{
 				Id = c.Id,
-				ProductId = c.Product.Id,
+				ProductName = c.Product.Name,
 				AddUser = c.AddUser,
 				AddTime = c.AddTime,
 				Content = c.Content,
 				Stars = c.Stars,
 			}).ToList();
-            return PageHelper.toJson(model);
+            var totalCount = _productCommentService.GetProductCommentCount(condition);
+
+            return PageHelper.toJson(new { Model = model, Condition=condition,TotalCount = totalCount });
 		}
 
 
@@ -117,7 +119,7 @@ namespace Zerg.Controllers.Community
         /// </summary>
         /// <param name="id">ÆÀÂÛID</param>
         /// <returns></returns>
-        [HttpGet]
+        
         public HttpResponseMessage Delete(int id)
 		{
 			var entity = _productCommentService.GetProductCommentById(id);

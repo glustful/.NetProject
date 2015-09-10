@@ -131,6 +131,20 @@ angular.module('app')
                             }]
                     }
                 })
+                .state('app.comment', {
+                    url: '/contact',
+                    template: '<div ui-view class="fade-in-up"></div>'
+                })
+                .state('app.comment.productComment', {
+                    url: '/productComment',
+                    templateUrl: 'app/module/comment/view/productComment.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/comment/controller/productCommentController.js']);
+                            }]
+                    }
+                })
                 //------------自定义菜单
               .state('app.menu', {
                   url: '/menu',
