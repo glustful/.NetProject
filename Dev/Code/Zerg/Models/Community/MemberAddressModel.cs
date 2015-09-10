@@ -14,7 +14,7 @@ namespace Zerg.Models.Community
 		/// <summary>
         /// 地址ID
         /// </summary>
-//		public Member Member {get;set;}
+        public int Member { get; set; }
 
 
 		/// <summary>
