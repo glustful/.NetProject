@@ -6,6 +6,7 @@ package com.yoopoon.market;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -24,8 +25,10 @@ public class AssuranceDetailActivity extends MainActionBarActivity {
 	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
-		backButton.setText("返回");
+		rightButton.setVisibility(View.GONE);
 		titleButton.setText("保险详情");
+		titleButton.setTextColor(Color.WHITE);
+		headView.setBackgroundColor(Color.RED);
 		gv.setAdapter(new MyGridViewAdapter());
 	}
 

@@ -8,6 +8,8 @@
 
     <Button
         style="@style/Button_Me"
+        android:drawableLeft="@drawable/me_booking"
+        android:drawablePadding="5dp"
         android:text="我的订单" />
 
     <LinearLayout
@@ -15,21 +17,94 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp" >
 
-        <TextView
-            style="@style/TextView_Me_Order"
-            android:text="待付款" />
+        <RelativeLayout
+            android:id="@+id/rl1"
+            style="@style/RelativeLayout_Me"
+            android:background="@drawable/white_bg"
+            android:clickable="true"
+            android:gravity="center" >
 
-        <TextView
-            style="@style/TextView_Me_Order"
-            android:text="待发货" />
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/pocket"
+                android:text="待付款" />
 
-        <TextView
-            style="@style/TextView_Me_Order"
-            android:text="待收货" />
+            <TextView
+                android:layout_alignRight="@id/tv1"
+                style="@style/TextView_Circle"
+                android:background="@drawable/circle"
+                android:gravity="center"
+                android:text="1" />
+        </RelativeLayout>
 
-        <TextView
-            style="@style/TextView_Me_Order"
-            android:text="待评价" />
+        <RelativeLayout
+            android:id="@+id/rl2"
+            style="@style/RelativeLayout_Me"
+            android:background="@drawable/white_bg"
+            android:clickable="true"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/box"
+                android:text="待發貨" />
+
+            <TextView
+                android:layout_alignRight="@id/tv2"
+                style="@style/TextView_Circle"
+                android:background="@drawable/circle"
+                android:gravity="center"
+                android:text="1"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl3"
+            style="@style/RelativeLayout_Me"
+            android:background="@drawable/white_bg"
+            android:clickable="true"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/truck"
+                android:text="待收货" />
+
+            <TextView
+                android:layout_alignRight="@id/tv3"
+                style="@style/TextView_Circle"
+                android:background="@drawable/circle"
+                android:gravity="center"
+                android:text="1" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl4"
+            style="@style/RelativeLayout_Me"
+            android:background="@drawable/white_bg"
+            android:clickable="true"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tv4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/quill"
+                android:text="待评价" />
+
+            <TextView
+                android:layout_alignRight="@id/tv4"
+                style="@style/TextView_Circle"
+                android:background="@drawable/circle"
+                android:gravity="center"
+                android:text="1" />
+        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

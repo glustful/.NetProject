@@ -4,5 +4,6 @@
     <string name="url_host">http://192.168.1.199:9010</string>
     <string name="url_test">/api/Channel/GetTitleImg?ChannelName=banner</string>
     <string name="url_image">http://img.yoopoon.com/</string>
-
+    <string name="url_test2">/api/Brand/GetAllBrand</string>
+    
 </resources>

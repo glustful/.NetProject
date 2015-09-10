@@ -62,6 +62,8 @@ public class ServeFragment extends Fragment {
 	ViewPager vp;
 	// 9大功能
 	String[] functions = { "保险", "金融理财", "旅游", "汽车类服务", "家政", "清洗服务", "教育", "生活缴费", "快递代收" };
+	int[] icons = { R.drawable.inssurance, R.drawable.wash_machine, R.drawable.travel, R.drawable.uber,
+			R.drawable.political, R.drawable.wash_machine, R.drawable.education, R.drawable.charge, R.drawable.delivery };
 	int[] imgIdArray;
 	ImageView[] tips;
 	ImageView[] mImageViews;
@@ -217,6 +219,7 @@ public class ServeFragment extends Fragment {
 			imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 			imageView.setScaleType(ScaleType.FIT_XY);
 			ImageLoader.getInstance().displayImage(urls[i], imageView);
+			Log.i(TAG, urls[i]);
 			mImageViews[i] = imageView;
 		}
 
@@ -290,6 +293,7 @@ public class ServeFragment extends Fragment {
 				convertView.setTag(holder);
 			}
 			holder.tv_function.setText(functions[position]);
+			holder.iv_function.setImageResource(icons[position]);
 			return convertView;
 		}
 	}

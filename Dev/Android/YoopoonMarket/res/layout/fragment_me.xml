@@ -15,24 +15,30 @@
             android:layout_height="150dp"
             android:orientation="vertical" >
 
-            <TextView
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="125dp"
-                android:background="#880000ff"
-                android:gravity="bottom"
-                android:paddingLeft="100dp"
-                android:text="张三"
-                android:textColor="#ffffff" />
+                android:background="@drawable/logo_gray" />
 
             <com.makeramen.RoundedImageView
-                android:layout_alignParentBottom="true"
                 android:id="@+id/imageView1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_alignParentBottom="true"
                 android:padding="10dip"
                 android:scaleType="center"
-                android:src="@drawable/logo_gray"
+                android:src="@drawable/me_avater"
                 makeramen:corner_radius="100dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/imageView1"
+                android:paddingBottom="40dp"
+                android:text="张三"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
         </RelativeLayout>
 
         <include
@@ -50,16 +56,22 @@
         <Button
             android:id="@+id/btn_info"
             style="@style/Button_Me"
+            android:drawableLeft="@drawable/me_info"
+            android:drawablePadding="5dp"
             android:text="个人资料" />
 
         <Button
             android:id="@+id/btn_address"
             style="@style/Button_Me"
+            android:drawableLeft="@drawable/address"
+            android:drawablePadding="5dp"
             android:text="地址管理" />
 
         <Button
             android:id="@+id/btn_about"
             style="@style/Button_Me"
+            android:drawableLeft="@drawable/u"
+            android:drawablePadding="5dp"
             android:text="关于U+" />
     </LinearLayout>
 

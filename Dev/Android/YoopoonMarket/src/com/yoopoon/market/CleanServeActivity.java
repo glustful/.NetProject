@@ -20,7 +20,6 @@ import com.yoopoon.market.view.MyGridView;
 
 @EActivity(R.layout.activity_clean_serve)
 public class CleanServeActivity extends MainActionBarActivity {
-	private static final String TAG = "CleanServeActivity";
 	@ViewById(R.id.gv)
 	MyGridView gv;
 
@@ -28,8 +27,10 @@ public class CleanServeActivity extends MainActionBarActivity {
 	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
-		backButton.setText("返回");
+		rightButton.setVisibility(View.GONE);
 		titleButton.setText("清洗服务");
+		headView.setBackgroundColor(Color.RED);
+		titleButton.setTextColor(Color.WHITE);
 		initData();
 	}
 
