@@ -35,6 +35,7 @@ import android.widget.TextView;
 import com.yoopoon.advertisement.ADController;
 import com.yoopoon.component.YoopoonServiceController;
 import com.yoopoon.market.ProductClassifyActivity_;
+import com.yoopoon.market.ProductList_;
 import com.yoopoon.market.R;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
@@ -79,6 +80,17 @@ public class ShopFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 					Intent intent = new Intent(mContext, ProductClassifyActivity_.class);
+					startActivity(intent);
+				}
+			});
+			TextView saveMoneyTextView = (TextView) rootView.findViewById(R.id.btn_save_money);
+			saveMoneyTextView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(mContext, ProductList_.class);
+					Bundle bundle = new Bundle();
+					bundle.putString("productClassification", "云南特产");
+					intent.putExtras(bundle);
 					startActivity(intent);
 				}
 			});
