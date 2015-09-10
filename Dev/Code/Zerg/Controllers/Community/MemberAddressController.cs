@@ -57,16 +57,11 @@ namespace Zerg.Controllers.Community
 			return model;
 		}
 
-		public bool Post(MemberAddressModel model)
+		public bool Post([FromBody]MemberAddressModel model)
 		{
-            MemberAddressEntity mem = null;
-            if (model.Member > 0)
-            {
-                mem = _memberAddressService.GetMemberAddressById(model.Member);
-            }
 			var entity = new MemberAddressEntity
 			{
-				Member = mem.Member,
+				//Member = model.Member,
 				Address = model.Address,
 				Zip = model.Zip,
 				Linkman = model.Linkman,
@@ -83,7 +78,7 @@ namespace Zerg.Controllers.Community
 			return false;
 		}
 
-		public bool Put(MemberAddressModel model)
+		public bool Put([FromBody]MemberAddressModel model)
 		{
 			var entity = _memberAddressService.GetMemberAddressById(model.Id);
 			if(entity == null)
