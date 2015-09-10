@@ -1,6 +1,7 @@
 package com.yoopoon.market;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -50,6 +51,7 @@ public abstract class MainActionBarActivity extends ActionBarActivity {
 		backButton = (Button) headView.findViewById(R.id.leftBtn);
 		rightButton = (Button) headView.findViewById(R.id.rightBtn);
 		titleButton = (Button) headView.findViewById(R.id.titleBtn);
+		backButton.setTextColor(Color.BLACK);
 		backButton.setOnClickListener(new OnClickListener() {
 
 			@Override

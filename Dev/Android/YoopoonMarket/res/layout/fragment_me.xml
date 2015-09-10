@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:makeramen="http://schemas.android.com/apk/res/com.yoopoon.market"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -8,31 +9,58 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical" >
-        
-        <include 
-            android:layout_marginTop="5dp"
-            layout="@layout/item_me_order"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        
-        <include 
-            android:layout_marginTop="5dp"
-            layout="@layout/item_me_serve"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
-        <TextView
-            style="@style/TextView_Me"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="125dp"
+                android:background="#880000ff"
+                android:gravity="bottom"
+                android:paddingLeft="100dp"
+                android:text="张三"
+                android:textColor="#ffffff" />
+
+            <com.makeramen.RoundedImageView
+                android:layout_alignParentBottom="true"
+                android:id="@+id/imageView1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:padding="10dip"
+                android:scaleType="center"
+                android:src="@drawable/logo_gray"
+                makeramen:corner_radius="100dp" />
+        </RelativeLayout>
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            layout="@layout/item_me_order" />
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            layout="@layout/item_me_serve" />
+
+        <Button
+            android:id="@+id/btn_info"
+            style="@style/Button_Me"
             android:text="个人资料" />
-        
-        <TextView
-            style="@style/TextView_Me"
+
+        <Button
+            android:id="@+id/btn_address"
+            style="@style/Button_Me"
             android:text="地址管理" />
-        
-        <TextView
-            style="@style/TextView_Me"
+
+        <Button
+            android:id="@+id/btn_about"
+            style="@style/Button_Me"
             android:text="关于U+" />
-        
     </LinearLayout>
 
 </ScrollView>
