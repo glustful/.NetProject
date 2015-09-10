@@ -1,0 +1,62 @@
+<div class="panel panel-default" ng-controller="menulistCtr">
+	<div class="panel-heading">
+		菜单管理
+	</div>
+	<div class="row wrapper">
+		<div class="col-sm-5 m-b-xs">
+			<button class="btn btn-sm btn-default" ng-click="add()"><i class="fa fa-plus"></i>&nbsp;新增</button>
+		</div>
+		<div class="col-sm-4">
+		</div>
+		<div class="col-sm-3">
+			<div class="input-group">
+				<input type="text" class="input-sm form-control" placeholder="Search">
+				<span class="input-group-btn">
+            <button class="btn btn-sm btn-default" type="button">Go!</button>
+          </span>
+			</div>
+		</div>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-striped b-t b-light">
+			<thead>
+				<tr>
+					<th>菜单名称</th>
+					<th>类型&nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-question-sign" title="
+0:点击推事件
+1:跳转URL
+2:扫码推事件
+3:扫码推事件且弹出“消息接收中”提示框
+4:弹出系统拍照发图
+5:弹出拍照或者相册发图
+6:弹出微信相册发图器
+7:弹出地理位置选择器"></i>
+					</th>
+					<th>键值</th>
+					<th>操作</th>
+					<th style="width:30px;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="list in menulist">
+					<td>{{list.Name}}</td>
+					<td>{{list.Type}}</td>
+					<td>{{list.Key}}</td>
+					<td>
+						<i style="cursor: pointer;font-size: 18px;" class="fa fa-edit" ng-click="edit(list)" title="修改"></i>
+						<a href="/zerg.wc/Page/index.html#/app/menu/childmenulist?fatherid={{list.Id}}" title="子菜单"><i style="cursor: pointer;font-size: 18px;" class="fa fa-child"></i></a>
+						<i style="cursor: pointer;font-size: 18px;" class="fa fa-minus-square" ng-click="del(list.Id,list.Name)" title="删除"></i>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<script type="text/ng-template" id="editmenu.html">
+	<div ng-include="'app/module/menu/view/editmenu.html'"></div>
+</script>
+<script type="text/ng-template" id="addmenu.html">
+	<div ng-include="'app/module/menu/view/addmenu.html'"></div>
+</script>
+<script src="app/module/menu/controller/editmenuCtr.js"></script>
+<script src="app/module/menu/controller/addmenuCtr.js"></script>
