@@ -18,7 +18,9 @@ namespace Community.Entity.Mappings.ServiceOrder
 			Property(c => c.Address).HasColumnType("varchar").HasMaxLength(200).IsOptional();
 			Property(c =>c.Servicetime).HasColumnType("datetime").IsOptional();
 			Property(c => c.Remark).HasColumnType("text").IsOptional();
-
+		    Property(c => c.Status).HasColumnType("int").IsRequired();
+		    Property(c => c.UpdUser).HasColumnType("int").IsOptional();
+		    Property(c => c.UpdTime).HasColumnType("datetime").IsOptional();
 		    HasMany(c => c.Details).WithRequired(c => c.ServiceOrder);
 		}
 	}
