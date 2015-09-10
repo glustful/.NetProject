@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+    <color name="yellow">#FED600</color>
     <color name="background_gray">#f0f0f0</color>
     <color name="red">#ff0000</color>
     <color name="text_gray">#848484</color>
-    <color name="second_red" >#88ff0000</color>
-    
+    <color name="second_red">#88ff0000</color>
     <color name="red_button_nofucused">#88ff0000</color>
     <color name="red_button_fucused">#aaff0000</color>
     <color name="transparent_black">#88000000</color>
-    
+
 </resources>
