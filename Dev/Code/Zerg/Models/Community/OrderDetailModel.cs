@@ -82,7 +82,7 @@ namespace Zerg.Models.Community
         /// </summary>
 //		public Order Order {get;set;}
 
-
+        public ProductModel Product { get; set; }
 
 	}
 }

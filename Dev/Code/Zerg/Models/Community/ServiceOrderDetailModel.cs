@@ -18,7 +18,7 @@ namespace Zerg.Models.Community
 		/// <summary>
         /// Product_Id
         /// </summary>
-//		public ProductEntity Product {get;set;}
+		public ProductModel Product {get;set;}
 
 
 		/// <summary>

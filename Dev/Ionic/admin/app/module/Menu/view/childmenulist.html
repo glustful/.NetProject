@@ -1,0 +1,52 @@
+<div class="panel panel-default" ng-controller="childmenulistCtr">
+	<div class="panel-heading">
+		<a href="/zerg.wc/Page/index.html#/app/menu/menulist">菜单管理</a><span class="crumb-step">&nbsp;&gt;&nbsp;</span><span class="crumb-name">{{fatherName}}</span>
+	</div>
+	<div class="row wrapper">
+		<div class="col-sm-5 m-b-xs">
+			<button class="btn btn-sm btn-default" ng-click="addchildmenu()"><i class="fa fa-plus"></i>&nbsp;新增</button>
+		</div>
+		<div class="col-sm-4">
+		</div>
+		<div class="col-sm-3">
+			<div class="input-group">
+				<input type="text" class="input-sm form-control" placeholder="Search">
+				<span class="input-group-btn">
+            <button class="btn btn-sm btn-default" type="button">Go!</button>
+          </span>
+			</div>
+		</div>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-striped b-t b-light">
+			<thead>
+				<tr>
+					<th>菜单名称</th>
+					<th>类型</th>
+					<th>键值</th>
+					<th>操作</th>
+					<th style="width:30px;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="list in childmenulist">
+					<td>{{list.Name}}</td>
+					<td>{{list.Type}}</td>
+					<td>{{list.Key}}</td>
+					<td>
+						<i style="cursor: pointer;font-size: 18px;" class="fa fa-edit" ng-click="edit(list)" title="修改"></i>
+						<i style="cursor: pointer;font-size: 18px;" class="fa fa-minus-square" ng-click="del(list.Id,list.Name)" title="删除"></i>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<script type="text/ng-template" id="addchildmenu.html">
+	<div ng-include="'app/module/menu/view/addchildmenu.html'"></div>
+</script>
+<script type="text/ng-template" id="editchildmenu.html">
+	<div ng-include="'app/module/menu/view/editchildmenu.html'"></div>
+</script>
+<script src="app/module/menu/controller/editchildmenuCtr.js"></script>
+<script src="app/module/menu/controller/addchildmenuCtr.js"></script>
