@@ -37,12 +37,6 @@ import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.ResponseData.ResultState;
 
-/**
- * @ClassName: ShopFragment
- * @Description: TODO
- * @author: guojunjun
- * @date: 2015-9-7 下午4:50:59
- */
 public class ShopFragment extends Fragment {
 	private Context						mContext;
 	private ADController				mADController;
@@ -117,7 +111,7 @@ public class ShopFragment extends Fragment {
 				@Override
 				public void onProgress(ProgressMessage msg) {
 				}
-			}.setUrl(getString(R.string.url_channel_titleimg)).setRequestMethod(RequestMethod.eGet)
-					.addParam("channelName", "banner").notifyRequest();
+			}.setUrl("/api/Channel/GetTitleImg").setRequestMethod(RequestMethod.eGet).addParam("channelName", "banner")
+					.notifyRequest();
 	}
 }

@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- 如下的地址暂做功能测试用途 -->
-    <!-- 服务器地址 -->
-    <string name="url_host">http://api.iyookee.cn</string>
-    <!-- 图片服务器地址 -->
-    <string name="url_image_server">http://img.yoopoon.com/</string>
-    <!-- 广告测试使用 -->
-     <string name="url_channel_titleimg">/api/channel/GetTitleImg</string>
-    <!-- 如下的地址暂做功能测试用途 -->
+    <string name="url_host">http://192.168.1.199:9010</string>
+    <string name="url_test">/api/Channel/GetTitleImg?ChannelName=banner</string>
+    <string name="url_image">http://img.yoopoon.com/</string>
 
 </resources>

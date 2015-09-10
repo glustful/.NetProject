@@ -36,6 +36,7 @@ public class AboutUActivity extends MainActionBarActivity {
 	@Override
 	public void backButtonClick(View v) {
 		finish();
+
 	}
 
 	@Override

@@ -73,7 +73,7 @@ public class CommodityGridViewAdapter extends BaseAdapter {
 		//具体获取的key等API完成修改
 		//int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
 		//url等待后台API确定
-		//String url = mContext.getString(R.string.url_image_server);
+		//String url = mContext.getString(R.string.url_image);
 		String url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
 		commodityViewHandler.commodityNameTextView.setText(datas.get(position).optString("productName", ""));
 		commodityViewHandler.commodityCurrentPriceTextView.setText("RMB "

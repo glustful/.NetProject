@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@drawable/white_bg"
+    android:gravity="center_horizontal"
+    android:id="@+id/ll_bg" >
+    
+    <TextView 
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/large_textsize"
+        android:text="德奈福洗衣店"
+        android:layout_marginBottom="5dp"/>
+    <TextView 
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="@color/text_gray"
+        android:layout_marginBottom="5dp"
+        android:text="全国连锁"/>
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/line"
+        android:layout_marginBottom="5dp"/>
+    <TextView 
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:text="需付定金：￥30.00"/>
+    
+
+</LinearLayout>

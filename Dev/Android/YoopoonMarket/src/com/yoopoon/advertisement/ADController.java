@@ -119,7 +119,7 @@ public class ADController {
 			for (int i = 0; i < urls.size(); i++) {
 				ImageView img = new ImageView(mContext);
 				//设置图片获取URL
-				img.setTag(mContext.getString(R.string.url_image_server) + urls.get(i));
+				img.setTag(mContext.getString(R.string.url_image) + urls.get(i));
 				img.setScaleType(ScaleType.FIT_XY);
 				pageViews.add(img);
 			}

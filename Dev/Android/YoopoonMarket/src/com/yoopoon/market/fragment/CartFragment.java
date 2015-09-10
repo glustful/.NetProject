@@ -62,7 +62,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 		tv_price_total = (TextView) rootView.findViewById(R.id.tv_price_total);
 		btn_balance = (Button) rootView.findViewById(R.id.btn_balance);
 
-		lv.setMode(Mode.PULL_FROM_START);
+		lv.setMode(Mode.BOTH);
 		refreshView = lv.getRefreshableView();
 		refreshView.setFastScrollEnabled(false);
 		refreshView.setFadingEdgeLength(0);
@@ -76,6 +76,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 	}
 
 	class HowWillIrefresh implements PullToRefreshBase.OnRefreshListener2<ListView> {
+
 		@Override
 		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 			String label = DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(),
@@ -92,6 +93,13 @@ public class CartFragment extends Fragment implements OnClickListener {
 
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+			new Handler().postDelayed(new Runnable() {
+
+				@Override
+				public void run() {
+					lv.onRefreshComplete();
+				}
+			}, 1000);
 		}
 	}
 
