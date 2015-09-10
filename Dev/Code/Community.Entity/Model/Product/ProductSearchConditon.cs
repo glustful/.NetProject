@@ -43,11 +43,11 @@ namespace Community.Entity.Model.Product
 
 
 
-		public bool? Status { get; set; }
+        public EnumProductStatus? Status { get; set; }
 
 
 
-		public bool? IsRecommend { get; set; }
+		public int? IsRecommend { get; set; }
 
 
 

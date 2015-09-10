@@ -283,7 +283,43 @@ angular.module('app')
                                 return uiLoad.load( ['js/controllers/signup.js'] );
                             }]
                     }
-                });
+                })
+                //商品管理页
+                .state('app.product',{
+                    url: '/product',
+                    template: '<div ui-view class="fade-in-up"></div>',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
+                            }]
+                    }
+                })
+                .state('app.product.productList',{
+                    url:'/productList',
+                    templateUrl:'app/module/Product/view/Index.html',
+
+                })
+                .state('app.product.createProduct',{
+                    url:'/createProct',
+                    templateUrl:'app/module/Product/view/Create.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['angularFileUpload']);
+                            }]
+                    }
+                })
+                .state('app.product.editProduct',{
+                    url:'/editProduct?id',
+                    templateUrl:'app/module/Product/view/Edit.html',
+                    //resolve: {
+                    //    deps: ['$ocLazyLoad',
+                    //        function( $ocLazyLoad ){
+                    //            return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
+                    //        }]
+                    //}
+                })
         }
     ]
 );

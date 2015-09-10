@@ -10,7 +10,6 @@ using Community.Service.Category;
 using Community.Service.Product;
 using Community.Service.ProductDetail;
 using Zerg.Common;
-using Zerg.Models;
 using Zerg.Models.Community;
 
 namespace Zerg.Controllers.Community
@@ -56,8 +55,8 @@ namespace Zerg.Controllers.Community
             }
 			var model = new ProductModel
 			{
-				//Id = entity.Id,	
-//                Category = entity.Category,	
+				Id = entity.Id,	
+                CategoryId = entity.Category.Id,	
                 BussnessId= entity.BussnessId,	
                 BussnessName = entity.BussnessName,	
                 Price = entity.Price,		
@@ -94,7 +93,7 @@ namespace Zerg.Controllers.Community
 			var model = _productService.GetProductsByCondition(condition).Select(c=>new ProductModel
 			{
 				Id = c.Id,
-//				Category = c.Category,
+				CategoryId = c.Category.Id,
 				BussnessId = c.BussnessId,
 				BussnessName = c.BussnessName,
 				Price = c.Price,
@@ -230,7 +229,7 @@ namespace Zerg.Controllers.Community
                     return PageHelper.toJson(PageHelper.ReturnValue(true,"数据更新成功"));
                 return PageHelper.toJson(PageHelper.ReturnValue(false,"商品详细更新失败"));
 		    }
-			return PageHelper.toJson(PageHelper.ReturnValue(false,"数据更惨失败"));
+			return PageHelper.toJson(PageHelper.ReturnValue(false,"数据更新失败"));
 		}
         /// <summary>
         /// 删除商品
@@ -238,13 +237,20 @@ namespace Zerg.Controllers.Community
         /// <param name="id">商品Id</param>
         /// <returns>提示信息</returns>
 		public HttpResponseMessage Delete(int id)
-		{
-			var entity = _productService.GetProductById(id);
-			if(entity == null)
-				return PageHelper.toJson(PageHelper.ReturnValue(false,"数据不存在"));
-			if(_productService.Delete(entity))
-				return PageHelper.toJson(PageHelper.ReturnValue(true,"数据删除成功"));
-			return PageHelper.toJson(PageHelper.ReturnValue(false,"数据删除失败"));
-		}
+        {
+            var productDetail = _productDetailService.GetProductDetailById(id);
+            if (productDetail == null)
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "商品详细不存在"));            
+                if (_productDetailService.Delete(productDetail))
+                {
+                    var entity = _productService.GetProductById(id);
+                    if (entity == null)
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不存在"));                                       
+                        if (_productService.Delete(entity))
+                            return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功"));                   
+                }
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除失败"));
+           
+        }
 	}
 }
