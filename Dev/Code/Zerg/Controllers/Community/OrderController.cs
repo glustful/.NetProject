@@ -13,13 +13,13 @@ using Zerg.Models.Community;
 
 namespace Zerg.Controllers.Community
 {
-	public class OrderController : ApiController
+	public class CommunityOrderController : ApiController
 	{
 		private readonly IOrderService _orderService;
 	    private readonly IProductService _productService;
 	    private readonly IWorkContext _workContext;
 
-	    public OrderController(IOrderService orderService,IProductService productService,IWorkContext workContext)
+        public CommunityOrderController(IOrderService orderService, IProductService productService, IWorkContext workContext)
 	    {
 	        _orderService = orderService;
 	        _productService = productService;
@@ -81,7 +81,7 @@ namespace Zerg.Controllers.Community
 			return model;
 		}
 
-		public bool Post(OrderModel model)
+		public bool Post([FromBody]OrderModel model)
 		{
             //获取订单明细对应的商品
             var products = _productService.GetProductsByCondition(new ProductSearchCondition
