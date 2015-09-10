@@ -20,6 +20,9 @@
 .service div p{
     color: #b0b0b0;
 }
+.service i{
+    font-size: 26px;
+}
 .jgg1,.jgg2{
     margin:0 3px 8px 0 ;
 }
@@ -79,9 +82,10 @@ h4{
 }
 .safe-list li h2{
     padding-top:5px;
+    white-space: normal;
 }
 .safe-list li p{
-    margin-top:30px;
+    margin-top:10px;
     color:#ff3000;
 }
 
