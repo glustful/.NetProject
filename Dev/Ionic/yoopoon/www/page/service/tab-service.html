@@ -13,7 +13,7 @@
     </div>
     <button class="button button-icon icon icon-search"></button>
 </div>
-<ion-view view-title="优·服务">
+<ion-view view-title="优·服务" ng-controller="TabServiceCtrl">
 
   <ion-content>
   <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true">
@@ -35,19 +35,19 @@
 </ion-slide-box>
     <div style="background-color: #e8e8e8;">
     <div class="row service">
-        <div class="col jgg1" ><img src="page/service/img/bx_03.png"  alt=""/><p>保险</p></div>
-        <div class="col jgg2"><img src="page/service/img/bx_03.png" alt=""/><p>金融理财</p></div>
-        <div class="col jgg3"><img src="page/service/img/bx_03.png" alt=""/><p>旅游</p></div>
+        <div class="col jgg1" href="#/page/car" ng-click="go('index.html#/page/service/safe')"><i class="icon icon-baoxian" style="color: #6bcd76"></i><p>保险</p></div>
+        <div class="col jgg2"><i class="icon icon-jinronglicai" style="color: #f6c108"></i><p>金融理财</p></div>
+        <div class="col jgg3"><i class="icon icon-luyou" style="color: #52a8f7"></i><p>旅游</p></div>
     </div>
       <div class="row service">
-          <div class="col jgg1"><img src="page/service/img/bx_03.png"  alt=""/><p>汽车类服务</p></div>
-          <div class="col jgg2"><img src="page/service/img/bx_03.png" alt=""/><p>家政</p></div>
-          <div class="col jgg3"><img src="page/service/img/bx_03.png" alt=""/><p>清洗服务</p></div>
+          <div class="col jgg1"><i class="icon icon-qicheleifuwu" style="color: #d5140a"></i><p>汽车类服务</p></div>
+          <div class="col jgg2"><i class="icon icon-uniE60B" style="color: #f09902"></i><p>家政</p></div>
+          <div class="col jgg3" ng-click="go('index.html#/page/service/clear')"><i class="icon icon-uniE60F" style="color: #48ccfd"></i><p>清洗服务</p></div>
       </div>
       <div class="row service">
-          <div class="col jgg4"><img src="page/service/img/bx_03.png"  alt=""/><p>教育</p></div>
-          <div class="col jgg5"><img src="page/service/img/bx_03.png" alt=""/><p>生活缴费</p></div>
-          <div class="col jgg6"><img src="page/service/img/bx_03.png" alt=""/><p>快递代收</p></div>
+          <div class="col jgg4"><i class="icon icon-jiaoyu" style="color: #52a8f7"></i><p>教育</p></div>
+          <div class="col jgg5"><i class="icon icon-shenghuojiaofei" style="color: #48ccfd"></i><p>生活缴费</p></div>
+          <div class="col jgg6"><i class="icon icon-uniE60C" style="color: #fac545"></i><p>快递代收</p></div>
       </div>
           </div>
 

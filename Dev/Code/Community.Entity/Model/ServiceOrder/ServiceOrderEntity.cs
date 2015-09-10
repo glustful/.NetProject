@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Community.Entity.Model.Order;
 using Community.Entity.Model.ServiceOrderDetail;
 using YooPoon.Core.Data;
 
@@ -19,6 +20,16 @@ namespace Community.Entity.Model.ServiceOrder
 		/// 添加时间
 		/// </summary>
 		public virtual DateTime AddTime { get; set; }
+
+        /// <summary>
+        /// 更新人
+        /// </summary>
+        public virtual int UpdUser { get; set; }
+        /// <summary>
+        /// 更新时间
+        /// </summary>
+        public virtual DateTime UpdTime { get; set; }
+
 		/// <summary>
 		/// 添加人
 		/// </summary>
@@ -39,6 +50,11 @@ namespace Community.Entity.Model.ServiceOrder
 		/// 备注
 		/// </summary>
 		public virtual string Remark { get; set; }
+
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public virtual EnumOrderStatus Status { get; set; }
 
         /// <summary>
         /// 订单明细
