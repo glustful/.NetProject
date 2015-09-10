@@ -81,3 +81,16 @@
     width: 120px;
     height: 50px;
 }
+
+
+/*商品分类*/
+.border-input{
+    border-radius: 10px;
+    background-color: #eeeeee;
+}
+.content-margin{
+    margin-top: 30px;
+}
+.orange{
+    color: #eb6100;
+}
