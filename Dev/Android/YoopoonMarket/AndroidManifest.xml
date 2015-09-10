@@ -41,11 +41,17 @@
         <activity
             android:name="com.yoopoon.market.CleanServeActivity_"
             android:screenOrientation="portrait" />
-        <activity android:name="com.yoopoon.market.AssuranceActivity_"
+        <activity
+            android:name="com.yoopoon.market.AssuranceActivity_"
             android:screenOrientation="portrait" />
-        
-        <activity android:name="com.yoopoon.market.AssuranceDetailActivity_"
+        <activity
+            android:name="com.yoopoon.market.AssuranceDetailActivity_"
             android:screenOrientation="portrait" />
+        <!-- 产品分类Activity -->
+        <activity
+            android:name="com.yoopoon.market.ProductClassifyActivity_"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

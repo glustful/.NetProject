@@ -19,12 +19,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -32,6 +34,7 @@ import android.widget.TextView;
 
 import com.yoopoon.advertisement.ADController;
 import com.yoopoon.component.YoopoonServiceController;
+import com.yoopoon.market.ProductClassifyActivity_;
 import com.yoopoon.market.R;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
@@ -67,8 +70,21 @@ public class ShopFragment extends Fragment {
 			beforePriceTextView = (TextView) rootView.findViewById(R.id.tv_fragment_before_price);
 			beforePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 			//爆款套餐和省到不行加粗样式设置
-			burstPackageTextView = (TextView) rootView.findViewById(R.id.btn_fragment_shop_burstpackage);
+			burstPackageTextView = (TextView) rootView.findViewById(R.id.btn_burstpackage);
 			burstPackageTextView.getPaint().setFakeBoldText(true);
+			//###############################################################################
+			//                      如下的代码只做API出来前的测试用途
+			//###############################################################################
+			burstPackageTextView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(mContext, ProductClassifyActivity_.class);
+					startActivity(intent);
+				}
+			});
+			//###############################################################################
+			//                      如上的代码只做API出来前的测试用途
+			//###############################################################################
 			mADController = new ADController(mContext);
 			serviceController = new YoopoonServiceController(mContext);
 			commodityGridView = (GridView) rootView.findViewById(R.id.gridview_commodity);
@@ -100,8 +116,8 @@ public class ShopFragment extends Fragment {
 		requestAdvertisements();
 		requestServices();
 		LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.linearlayout_fragment_shop);
-		linearLayout.addView(serviceController.getRootView(), 1);
 		linearLayout.addView(mADController.getRootView(), 0);
+		linearLayout.addView(serviceController.getRootView(), 1);
 	}
 	private void requestAdvertisements() {
 		if (imgs == null)

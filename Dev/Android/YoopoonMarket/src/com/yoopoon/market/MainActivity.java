@@ -14,9 +14,11 @@ package com.yoopoon.market;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +28,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+
 import com.yoopoon.market.fragment.CartFragment;
 import com.yoopoon.market.fragment.MeFragment;
 import com.yoopoon.market.fragment.ServeFragment;
@@ -40,10 +43,10 @@ import com.yoopoon.market.fragment.ShopFragment;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends MainActionBarActivity implements OnClickListener {
 	@ViewById
-	ViewPager vp;
-	List<Fragment> fragments = new ArrayList<Fragment>();
-	List<TextView> textviews = new ArrayList<TextView>();
-
+	ViewPager		vp;
+	List<Fragment>	fragments	= new ArrayList<Fragment>();
+	List<TextView>	textviews	= new ArrayList<TextView>();
+	
 	@AfterViews
 	void initUI() {
 		fragments.add(new ShopFragment());
@@ -51,7 +54,6 @@ public class MainActivity extends MainActionBarActivity implements OnClickListen
 		fragments.add(new CartFragment());
 		fragments.add(new MeFragment());
 		vp.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
-
 		textviews.add((TextView) findViewById(R.id.tv1));
 		textviews.add((TextView) findViewById(R.id.tv2));
 		textviews.add((TextView) findViewById(R.id.tv3));
@@ -59,50 +61,39 @@ public class MainActivity extends MainActionBarActivity implements OnClickListen
 		vp.setOnPageChangeListener(new MyPagerChangeListener());
 		for (int i = 0; i < textviews.size(); i++)
 			textviews.get(i).setOnClickListener(this);
-
 	}
-
+	
 	private class MyPageAdapter extends FragmentPagerAdapter {
-
 		public MyPageAdapter(FragmentManager fm) {
 			super(fm);
 		}
-
 		@Override
 		public Fragment getItem(int arg0) {
 			return fragments.get(arg0);
 		}
-
 		@Override
 		public int getCount() {
 			return fragments.size();
 		}
-
 	}
-
+	
 	private class MyPagerChangeListener implements OnPageChangeListener {
-
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 			// TODO Auto-generated method stub
-
 		}
-
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 			// TODO Auto-generated method stub
-
 		}
-
 		@Override
 		public void onPageSelected(int arg0) {
 			for (int i = 0; i < textviews.size(); i++)
 				textviews.get(i).setBackgroundColor(Color.WHITE);
 			textviews.get(arg0).setBackgroundColor(Color.BLACK);
 		}
-
 	}
-
+	
 	@Override
 	public void onClick(View v) {
 		for (int i = 0; i < textviews.size(); i++)
@@ -112,40 +103,28 @@ public class MainActivity extends MainActionBarActivity implements OnClickListen
 			case R.id.tv1:
 				vp.setCurrentItem(0);
 				break;
-
 			case R.id.tv2:
 				vp.setCurrentItem(1);
 				break;
-
 			case R.id.tv3:
 				vp.setCurrentItem(2);
 				break;
-
 			case R.id.tv4:
 				vp.setCurrentItem(3);
 				break;
-
 		}
 	}
-
 	@Override
 	public void backButtonClick(View v) {
-
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
-
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
-
 	}
-
 	@Override
 	public Boolean showHeadView() {
 		return false;
 	}
-
 }
