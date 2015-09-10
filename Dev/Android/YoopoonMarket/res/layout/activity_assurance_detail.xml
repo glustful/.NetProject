@@ -28,7 +28,8 @@
             android:padding="15dp"
             android:text="联系电话：400 105 0101"
             android:textColor="@color/red"
-            android:background="@color/white"/>
+            android:background="@color/white"
+            android:drawableRight="@drawable/phone"/>
         
         <TextView 
             android:layout_marginTop="10dp"

@@ -8,9 +8,10 @@
     <ImageView 
         android:id="@+id/iv"
         android:paddingLeft="5dp"
-        android:background="@drawable/logo_gray"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:src="@drawable/logo_gray"
+        android:scaleType="fitXY"
         android:layout_marginRight="10dp"/>
     
     <TextView 

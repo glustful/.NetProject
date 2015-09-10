@@ -7,6 +7,7 @@ package com.yoopoon.market;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import android.graphics.Color;
 import android.os.Handler;
 import android.text.format.DateUtils;
 import android.view.View;
@@ -31,8 +32,10 @@ public class AssuranceActivity extends MainActionBarActivity {
 	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
-		backButton.setText("返回");
 		titleButton.setText("保险列表");
+		titleButton.setTextColor(Color.WHITE);
+		rightButton.setVisibility(View.VISIBLE);
+		headView.setBackgroundColor(Color.RED);
 		initData();
 	}
 

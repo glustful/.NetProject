@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_name"
             android:layout_marginTop="5dp"
+            android:drawablePadding="5dp"
             android:drawableLeft="@drawable/location"
             android:drawableRight="@drawable/right_next_icon"
             android:gravity="center_vertical"

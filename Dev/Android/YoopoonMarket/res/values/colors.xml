@@ -9,5 +9,6 @@
     
     <color name="red_button_nofucused">#88ff0000</color>
     <color name="red_button_fucused">#aaff0000</color>
+    <color name="transparent_black">#88000000</color>
     
 </resources>

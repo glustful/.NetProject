@@ -18,8 +18,9 @@ public abstract class MainActionBarActivity extends ActionBarActivity {
 
 	String showBackStr = null;
 	Boolean isShowBackButton = false;
-	View headView;
 	ActionBar actionBar;
+
+	protected View headView;
 
 	protected Button rightButton;
 
@@ -132,4 +133,5 @@ public abstract class MainActionBarActivity extends ActionBarActivity {
 	public abstract void rightButtonClick(View v);
 
 	public abstract Boolean showHeadView();
+
 }

@@ -25,7 +25,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.TextView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import com.yoopoon.market.fragment.CartFragment;
 import com.yoopoon.market.fragment.MeFragment;
 import com.yoopoon.market.fragment.ServeFragment;
@@ -38,11 +40,15 @@ import com.yoopoon.market.fragment.ShopFragment;
  * @date: 2015-9-7 下午4:51:39
  */
 @EActivity(R.layout.activity_main)
-public class MainActivity extends MainActionBarActivity implements OnClickListener {
-	@ViewById
+public class MainActivity extends MainActionBarActivity {
+	@ViewById(R.id.vp)
 	ViewPager vp;
+	@ViewById(R.id.rg)
+	RadioGroup rg;
+	@ViewById(R.id.search_layout)
+	View searchLayout;
 	List<Fragment> fragments = new ArrayList<Fragment>();
-	List<TextView> textviews = new ArrayList<TextView>();
+	List<RadioButton> radioButtons = new ArrayList<RadioButton>();
 
 	@AfterViews
 	void initUI() {
@@ -52,13 +58,50 @@ public class MainActivity extends MainActionBarActivity implements OnClickListen
 		fragments.add(new MeFragment());
 		vp.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
 
-		textviews.add((TextView) findViewById(R.id.tv1));
-		textviews.add((TextView) findViewById(R.id.tv2));
-		textviews.add((TextView) findViewById(R.id.tv3));
-		textviews.add((TextView) findViewById(R.id.tv4));
+		radioButtons.add((RadioButton) findViewById(R.id.rb1));
+		radioButtons.add((RadioButton) findViewById(R.id.rb2));
+		radioButtons.add((RadioButton) findViewById(R.id.rb3));
+		radioButtons.add((RadioButton) findViewById(R.id.rb4));
 		vp.setOnPageChangeListener(new MyPagerChangeListener());
-		for (int i = 0; i < textviews.size(); i++)
-			textviews.get(i).setOnClickListener(this);
+
+		for (final RadioButton radioButton : radioButtons) {
+			radioButton.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					radioButton.setChecked(true);
+
+				}
+			});
+		}
+
+		rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				for (RadioButton radioButton : radioButtons)
+					radioButton.setTextColor(Color.GRAY);
+				switch (checkedId) {
+					case R.id.rb1:
+						vp.setCurrentItem(0);
+						radioButtons.get(0).setTextColor(Color.RED);
+						break;
+					case R.id.rb2:
+						vp.setCurrentItem(1);
+						radioButtons.get(1).setTextColor(Color.RED);
+						break;
+					case R.id.rb3:
+						vp.setCurrentItem(2);
+						radioButtons.get(2).setTextColor(Color.RED);
+						break;
+					case R.id.rb4:
+						vp.setCurrentItem(3);
+						radioButtons.get(3).setTextColor(Color.RED);
+						break;
+				}
+
+			}
+		});
 
 	}
 
@@ -96,36 +139,14 @@ public class MainActivity extends MainActionBarActivity implements OnClickListen
 
 		@Override
 		public void onPageSelected(int arg0) {
-			for (int i = 0; i < textviews.size(); i++)
-				textviews.get(i).setBackgroundColor(Color.WHITE);
-			textviews.get(arg0).setBackgroundColor(Color.BLACK);
+			radioButtons.get(arg0).setChecked(true);
+			searchLayout.setVisibility((arg0 > 1) ? View.GONE : View.VISIBLE);
 		}
 
 	}
 
-	@Override
-	public void onClick(View v) {
-		for (int i = 0; i < textviews.size(); i++)
-			textviews.get(i).setBackgroundColor(Color.WHITE);
-		v.setBackgroundColor(Color.BLACK);
-		switch (v.getId()) {
-			case R.id.tv1:
-				vp.setCurrentItem(0);
-				break;
-
-			case R.id.tv2:
-				vp.setCurrentItem(1);
-				break;
-
-			case R.id.tv3:
-				vp.setCurrentItem(2);
-				break;
-
-			case R.id.tv4:
-				vp.setCurrentItem(3);
-				break;
-
-		}
+	public void toServe(View v) {
+		vp.setCurrentItem(1);
 	}
 
 	@Override

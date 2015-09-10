@@ -12,6 +12,12 @@
  */
 package com.yoopoon.market.fragment;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,13 +32,22 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.BalanceActivity_;
 import com.yoopoon.market.R;
+import com.yoopoon.market.domain.Staff;
+import com.yoopoon.market.net.ProgressMessage;
+import com.yoopoon.market.net.RequestAdapter;
+import com.yoopoon.market.net.RequestAdapter.RequestMethod;
+import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.utils.Utils;
 
 /**
@@ -47,7 +62,10 @@ public class CartFragment extends Fragment implements OnClickListener {
 	TextView tv_price_total;
 	Button btn_balance;
 	ListView refreshView;
-	MyListViewAdapter adpter;
+	MyListViewAdapter adapter;
+	List<Staff> staffList = new ArrayList<Staff>();
+	View ll_loading;
+	TextView tv_title_count;
 
 	@Override
 	@Nullable
@@ -61,18 +79,66 @@ public class CartFragment extends Fragment implements OnClickListener {
 		lv = (PullToRefreshListView) rootView.findViewById(R.id.lv);
 		tv_price_total = (TextView) rootView.findViewById(R.id.tv_price_total);
 		btn_balance = (Button) rootView.findViewById(R.id.btn_balance);
+		ll_loading = rootView.findViewById(R.id.ll_loading);
+		tv_title_count = (TextView) rootView.findViewById(R.id.tv_title_count);
 
 		lv.setMode(Mode.BOTH);
-		refreshView = lv.getRefreshableView();
-		refreshView.setFastScrollEnabled(false);
-		refreshView.setFadingEdgeLength(0);
-		adpter = new MyListViewAdapter();
-		refreshView.setAdapter(adpter);
+		adapter = new MyListViewAdapter();
+		lv.setAdapter(adapter);
 
-		lv.setAdapter(new MyListViewAdapter());
-		Utils.spanTextStyle(tv_price_total, getActivity());
 		btn_balance.setOnClickListener(this);
 		lv.setOnRefreshListener(new HowWillIrefresh());
+
+		if (staffList.size() == 0)
+			requestData();
+		else
+			fillData();
+
+	}
+
+	private void requestData() {
+		ll_loading.setVisibility(View.VISIBLE);
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONObject object = data.getMRootData();
+				boolean status = object.optBoolean("Status", false);
+				if (status) {
+					try {
+						JSONArray array = object.getJSONArray("Object");
+						for (int i = 0; i < array.length(); i++) {
+							JSONObject staffObject = array.getJSONObject(i);
+							int price = staffObject.optInt("Id", 0);
+							String title = staffObject.optString("Title", "");
+							String img = getString(R.string.url_image) + staffObject.optString("TitleImg", "");
+							String category = staffObject.optString("AdSubTitle", "");
+							staffList.add(new Staff(title, category, img, i, price + 0.9, price + 20.9));
+						}
+						fillData();
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+
+				} else {
+					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
+					ll_loading.setVisibility(View.GONE);
+				}
+
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_test)).setRequestMethod(RequestMethod.eGet).notifyRequest();
+	}
+
+	void fillData() {
+		adapter.notifyDataSetChanged();
+		calcTotalPrice();
+		ll_loading.setVisibility(View.GONE);
 	}
 
 	class HowWillIrefresh implements PullToRefreshBase.OnRefreshListener2<ListView> {
@@ -105,6 +171,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 
 	static class ViewHolder {
 
+		ImageView iv;
 		TextView tv_name;
 		TextView tv_category;
 		TextView tv_price_previous;
@@ -121,7 +188,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 		@Override
 		public int getCount() {
 
-			return 10;
+			return staffList.size();
 		}
 
 		@Override
@@ -144,6 +211,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 			holder = (ViewHolder) convertView.getTag();
 			if (holder == null) {
 				holder = new ViewHolder();
+				holder.iv = (ImageView) convertView.findViewById(R.id.iv);
 				holder.tv_category = (TextView) convertView.findViewById(R.id.tv_category);
 				holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
 				holder.tv_price_counted = (TextView) convertView.findViewById(R.id.tv_price_counted);
@@ -156,7 +224,16 @@ public class CartFragment extends Fragment implements OnClickListener {
 				convertView.setTag(holder);
 			}
 			holder.tv_price_previous.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+			final Staff staff = staffList.get(position);
+			holder.tv_price_counted.setText("￥" + staff.price_counted);
+			holder.tv_name.setText(staff.title);
+			holder.tv_price_previous.setText("￥" + staff.price_previous);
+			holder.tv_category.setText(staff.category);
+			holder.et_count.setText(staff.count + "");
+			ImageLoader.getInstance().displayImage(staff.image, holder.iv);
+			holder.iv.setScaleType(ScaleType.CENTER_CROP);
 			Utils.spanTextSize(holder.tv_price_counted, "\\.", true, new int[] { 16, 12 });
+
 			holder.btn_countdown.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -166,8 +243,11 @@ public class CartFragment extends Fragment implements OnClickListener {
 
 					if (!TextUtils.isEmpty(text)) {
 						int count = Integer.parseInt(text);
-						if (count > 0)
+						if (count > 0) {
 							et.setText(String.valueOf(--count));
+							staff.count--;
+							calcTotalPrice();
+						}
 					}
 
 				}
@@ -182,12 +262,29 @@ public class CartFragment extends Fragment implements OnClickListener {
 					if (!TextUtils.isEmpty(text)) {
 						int count = Integer.parseInt(text);
 						et.setText(String.valueOf(++count));
+
+						staff.count++;
+						calcTotalPrice();
 					}
 
 				}
 			});
 			return convertView;
 		}
+	}
+
+	void calcTotalPrice() {
+		double sumPrice = 0;
+		int sumCount = 0;
+		for (Staff staff : staffList) {
+			sumPrice += staff.price_counted * staff.count;
+			sumCount += staff.count;
+		}
+		DecimalFormat df = new DecimalFormat("#.00");
+		tv_price_total.setText("合计：￥" + df.format(sumPrice));
+		Utils.spanTextStyle(tv_price_total, getActivity());
+		btn_balance.setText("结算(" + sumCount + ")");
+		tv_title_count.setText("购物车(" + sumCount + ")");
 	}
 
 	@Override
