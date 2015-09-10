@@ -67,6 +67,31 @@ angular.module('app')
                             }]
                     }
                 })
+                //--------------会员信息管理
+                .state('app.member', {
+                    url: '/member',
+                    template: '<div ui-view class="fade-in-up"></div>'
+                })
+                .state('app.member.memlist',{
+                    url:'memlist',
+                    templateUrl:'app/module/member/view/memlist.html',
+                    resolve:{
+                        deps:['$ocLazyLoad',
+                        function($ocLazyLoad){
+                            return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
+                        }]
+                    }
+                })
+                .state('app.member.detail',{
+                    url:'detail',
+                    templateUrl:'app/module/member/view/detail.html',
+                    resolve:{
+                        deps:['$ocLazyLoad',
+                            function($ocLazyLoad){
+                                return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
+                            }]
+                    }
+                })
 
                 //--------------公众号基本设置
                 .state('app.autoRes', {

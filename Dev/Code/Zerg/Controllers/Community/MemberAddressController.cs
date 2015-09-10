@@ -5,10 +5,14 @@ using Community.Entity.Model.MemberAddress;
 using Community.Service.MemberAddress;
 using Zerg.Models.Community;
 using Community.Entity.Model.Member;
+using System.Web.Http.Cors;
+using System.Net.Http;
+using Zerg.Common;
 
 namespace Zerg.Controllers.Community
 {
     [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
 	public class MemberAddressController : ApiController
 	{
 		private readonly IMemberAddressService _memberAddressService;
@@ -18,7 +22,7 @@ namespace Zerg.Controllers.Community
 			_memberAddressService = memberAddressService;
 		}
 
-		public MemberAddressModel Get(int id)
+        public HttpResponseMessage Get(int id)
 		{
 			var entity =_memberAddressService.GetMemberAddressById(id);
             if (entity == null)
@@ -36,10 +40,10 @@ namespace Zerg.Controllers.Community
                 Upduser = entity.Upduser,
                 Updtime = entity.Updtime
             };
-			return model;
+            return PageHelper.toJson(model);
 		}
 
-		public List<MemberAddressModel> Get(MemberAddressSearchCondition condition)
+        public HttpResponseMessage Get([FromUri]MemberAddressSearchCondition condition)
 		{
 			var model = _memberAddressService.GetMemberAddresssByCondition(condition).Select(c=>new MemberAddressModel
 			{
@@ -54,10 +58,11 @@ namespace Zerg.Controllers.Community
 				Upduser = c.Upduser,
 				Updtime = c.Updtime,
 			}).ToList();
-			return model;
+            var totalCount = _memberAddressService.GetMemberAddressCount(condition);
+            return PageHelper.toJson(new { List = model, TotalCount = totalCount });
 		}
 
-		public bool Post([FromBody]MemberAddressModel model)
+        public HttpResponseMessage Post([FromBody]MemberAddressModel model)
 		{
 			var entity = new MemberAddressEntity
 			{
@@ -73,16 +78,16 @@ namespace Zerg.Controllers.Community
 			};
 			if(_memberAddressService.Create(entity).Id > 0)
 			{
-				return true;
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "post ³É¹¦"));
 			}
-			return false;
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "post  Ê§°Ü")); 
 		}
 
-		public bool Put([FromBody]MemberAddressModel model)
+        public HttpResponseMessage Put([FromBody]MemberAddressModel model)
 		{
 			var entity = _memberAddressService.GetMemberAddressById(model.Id);
 			if(entity == null)
-				return false;
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "ÐÞ¸ÄÊ§°Ü"));
 			entity.Member.Id = model.Member;
 			entity.Address = model.Address;
 			entity.Zip = model.Zip;
@@ -93,18 +98,18 @@ namespace Zerg.Controllers.Community
 			entity.Upduser = model.Upduser;
 			entity.Updtime = model.Updtime;
 			if(_memberAddressService.Update(entity) != null)
-				return true;
-			return false;
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "ÐÞ¸Ä³É¹¦"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "ÐÞ¸ÄÊ§°Ü"));
 		}
 
-		public bool Delete(int id)
+        public HttpResponseMessage Delete(int id)
 		{
 			var entity = _memberAddressService.GetMemberAddressById(id);
 			if(entity == null)
-				return false;
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "É¾³ýÊ§°Ü"));
 			if(_memberAddressService.Delete(entity))
-				return true;
-			return false;
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "É¾³ý³É¹¦"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "É¾³ýÊ§°Ü"));
 		}
 	}
 }
