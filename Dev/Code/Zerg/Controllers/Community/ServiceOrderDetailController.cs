@@ -16,21 +16,21 @@ namespace Zerg.Controllers.Community
 			_serviceOrderDetailService = serviceOrderDetailService;
 		}
 
-		public ServiceOrderDetailModel Get(int id)
-		{
-			var entity =_serviceOrderDetailService.GetServiceOrderDetailById(id);
-			var model = new ServiceOrderDetailModel
-			{
-				Id = entity.Id,				
-//                ServiceOrder = entity.ServiceOrder,	
-//                Product = entity.Product,	
-                Count = entity.Count,		
-                Price = entity.Price,	
-            };
-			return model;
-		}
+//		public ServiceOrderDetailModel Get(int id)
+//		{
+//			var entity =_serviceOrderDetailService.GetServiceOrderDetailById(id);
+//			var model = new ServiceOrderDetailModel
+//			{
+//				Id = entity.Id,				
+////                ServiceOrder = entity.ServiceOrder,	
+////                Product = entity.Product,	
+//                Count = entity.Count,		
+//                Price = entity.Price,	
+//            };
+//			return model;
+//		}
 
-		public List<ServiceOrderDetailModel> Get(ServiceOrderDetailSearchCondition condition)
+		public List<ServiceOrderDetailModel> Get([FromUri]ServiceOrderDetailSearchCondition condition)
 		{
 			var model = _serviceOrderDetailService.GetServiceOrderDetailsByCondition(condition).Select(c=>new ServiceOrderDetailModel
 			{
@@ -43,44 +43,44 @@ namespace Zerg.Controllers.Community
 			return model;
 		}
 
-		public bool Post(ServiceOrderDetailModel model)
-		{
-			var entity = new ServiceOrderDetailEntity
-			{
-//				ServiceOrder = model.ServiceOrder,
-//				Product = model.Product,
-				Count = model.Count,
-				Price = model.Price,
-			};
-			if(_serviceOrderDetailService.Create(entity).Id > 0)
-			{
-				return true;
-			}
-			return false;
-		}
+//		public bool Post(ServiceOrderDetailModel model)
+//		{
+//			var entity = new ServiceOrderDetailEntity
+//			{
+////				ServiceOrder = model.ServiceOrder,
+////				Product = model.Product,
+//				Count = model.Count,
+//				Price = model.Price,
+//			};
+//			if(_serviceOrderDetailService.Create(entity).Id > 0)
+//			{
+//				return true;
+//			}
+//			return false;
+//		}
 
-		public bool Put(ServiceOrderDetailModel model)
-		{
-			var entity = _serviceOrderDetailService.GetServiceOrderDetailById(model.Id);
-			if(entity == null)
-				return false;
-//			entity.ServiceOrder = model.ServiceOrder;
-//			entity.Product = model.Product;
-			entity.Count = model.Count;
-			entity.Price = model.Price;
-			if(_serviceOrderDetailService.Update(entity) != null)
-				return true;
-			return false;
-		}
-
-		public bool Delete(int id)
-		{
-			var entity = _serviceOrderDetailService.GetServiceOrderDetailById(id);
-			if(entity == null)
-				return false;
-			if(_serviceOrderDetailService.Delete(entity))
-				return true;
-			return false;
-		}
+//		public bool Put(ServiceOrderDetailModel model)
+//		{
+//			var entity = _serviceOrderDetailService.GetServiceOrderDetailById(model.Id);
+//			if(entity == null)
+//				return false;
+////			entity.ServiceOrder = model.ServiceOrder;
+////			entity.Product = model.Product;
+//			entity.Count = model.Count;
+//			entity.Price = model.Price;
+//			if(_serviceOrderDetailService.Update(entity) != null)
+//				return true;
+//			return false;
+//		}
+//
+//		public bool Delete(int id)
+//		{
+//			var entity = _serviceOrderDetailService.GetServiceOrderDetailById(id);
+//			if(entity == null)
+//				return false;
+//			if(_serviceOrderDetailService.Delete(entity))
+//				return true;
+//			return false;
+//		}
 	}
 }

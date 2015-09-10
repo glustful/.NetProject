@@ -22,4 +22,7 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate) {
     //alert($scope.model.activeIndex);
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
+    $scope.go=function(state){
+        window.location.href=state;
+    }
                });

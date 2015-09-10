@@ -104,7 +104,7 @@ namespace Zerg.Models.Community
 		/// <summary>
         /// 订单明细
         /// </summary>
-//		public List<OrderDetail> Details {get;set;}
+		public List<OrderDetailModel> Details {get;set;}
 
 
 

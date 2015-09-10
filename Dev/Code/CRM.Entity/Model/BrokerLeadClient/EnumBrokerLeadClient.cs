@@ -1,36 +1,36 @@
-
+﻿
 namespace CRM.Entity.Model
 {
 
     public enum EnumBLeadType
     {
         /// <summary>
-        /// �����
+        /// 审核中
         /// </summary>
-        ԤԼ�� = 0,
+        预约中 = 0,
         /// <summary>
-        /// �����
+        /// 审核中
         /// </summary>
-        ԤԼ��ͨ�� = -1,
+        预约不通过 = -1,
         /// <summary>
-        /// �ȴ��Ϸ�
+        /// 等待上访
         /// </summary>
-        �ȴ��Ϸ� = 1,
+        等待上访 = 1,
         /// <summary>
-        /// �ȴ��Ϸ�
+        /// 等待上访
         /// </summary>
-        ����δ�� = -2,
+        客人未到 = -2,
         /// <summary>
-        /// Ǣ̸��
+        /// 洽谈中
         /// </summary>
-        Ǣ̸�� = 2,
+        洽谈中 = 2,
         /// <summary>
-        /// Ǣ̸ʧ��
+        /// 洽谈失败
         /// </summary>
-        Ǣ̸ʧ�� = -3,
+        洽谈失败 = -3,
         /// <summary>
-        /// Ǣ̸�ɹ�
+        /// 洽谈成功
         /// </summary>
-        Ǣ̸�ɹ� = 3,
+        洽谈成功 = 3,
     }
 }

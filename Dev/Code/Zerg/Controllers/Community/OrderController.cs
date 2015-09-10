@@ -1,8 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using Community.Entity.Model.Order;
+using Community.Entity.Model.OrderDetail;
+using Community.Entity.Model.Product;
+using Community.Entity.Model.ServiceOrderDetail;
 using Community.Service.Order;
+using Community.Service.Product;
+using YooPoon.Core.Site;
 using Zerg.Models.Community;
 
 namespace Zerg.Controllers.Community
@@ -10,13 +16,17 @@ namespace Zerg.Controllers.Community
 	public class OrderController : ApiController
 	{
 		private readonly IOrderService _orderService;
+	    private readonly IProductService _productService;
+	    private readonly IWorkContext _workContext;
 
-		public OrderController(IOrderService orderService)
-		{
-			_orderService = orderService;
-		}
+	    public OrderController(IOrderService orderService,IProductService productService,IWorkContext workContext)
+	    {
+	        _orderService = orderService;
+	        _productService = productService;
+	        _workContext = workContext;
+	    }
 
-		public OrderModel Get(int id)
+	    public OrderModel Get(int id)
 		{
 			var entity =_orderService.GetOrderById(id);
 			var model = new OrderModel
@@ -32,7 +42,21 @@ namespace Zerg.Controllers.Community
                 Upddate = entity.UpdDate,	
                 Totalprice = entity.Totalprice,	
                 Actualprice = entity.Actualprice,	
-//                Details = entity.Details,		
+                Details = entity.Details.Select(c=>new OrderDetailModel
+                {
+                    Count = c.Count,
+                    Id = c.Id,
+                    Product = new ProductModel
+                    {
+                        Name = c.Product.Name,
+                        Id = c.Product.Id
+                    },
+                    ProductName = c.ProductName,
+                    UnitPrice = c.UnitPrice,
+                    Remark = c.Remark,
+                    Snapshoturl = c.Snapshoturl,
+                    Totalprice = c.Totalprice,
+                }).ToList(),		
             };
 			return model;
 		}
@@ -59,19 +83,43 @@ namespace Zerg.Controllers.Community
 
 		public bool Post(OrderModel model)
 		{
+            //获取订单明细对应的商品
+            var products = _productService.GetProductsByCondition(new ProductSearchCondition
+            {
+                Ids = model.Details.Select(c => c.Product.Id).ToArray(),
+                Type = EnumProductType.Service
+            }).ToList().Select(p => new OrderDetailEntity
+            {
+                Count = model.Details.First(d => d.Product.Id == p.Id).Count,
+                Product = p,
+                UnitPrice = p.Price,
+                Adddate = DateTime.Now,
+                Adduser = _workContext.CurrentUser.Id,
+                ProductName = p.Name,
+                Remark = "",
+                Snapshoturl = "",
+                Totalprice = model.Details.First(d => d.Product.Id == p.Id).Count * p.Price
+            }).ToList();
+            if (products.Count < 1)
+                return false;
+
+            //订单编号
+            Random rd = new Random();
+            var orderNumber = "O" + DateTime.Now.ToString("yyyyMMddHHmmssffff") + rd.Next(100, 999);
+
 			var entity = new OrderEntity
 			{
-				No = model.No,
-				Status = model.Status,
+                No = orderNumber,
+				Status = EnumOrderStatus.Created,
 				CustomerName = model.CustomerName,
 				Remark = model.Remark,
-				AddDate = model.Adddate,
-				AddUser = model.Adduser,
-				UpdUser = model.Upduser,
-				UpdDate = model.Upddate,
-				Totalprice = model.Totalprice,
-				Actualprice = model.Actualprice,
-//				Details = model.Details,
+                AddDate = DateTime.Now,
+                AddUser = _workContext.CurrentUser.Id,
+                UpdUser = _workContext.CurrentUser.Id,
+                UpdDate = DateTime.Now,
+                Totalprice = products.Sum(c => (c.Count * c.UnitPrice)),
+                Actualprice = products.Sum(c => (c.Count * c.UnitPrice)),
+				Details = products,
 			};
 			if(_orderService.Create(entity).Id > 0)
 			{
@@ -85,17 +133,9 @@ namespace Zerg.Controllers.Community
 			var entity = _orderService.GetOrderById(model.Id);
 			if(entity == null)
 				return false;
-			entity.No = model.No;
 			entity.Status = model.Status;
-			entity.CustomerName = model.CustomerName;
-			entity.Remark = model.Remark;
-			entity.AddDate = model.Adddate;
-			entity.AddUser = model.Adduser;
-			entity.UpdUser = model.Upduser;
-			entity.UpdDate = model.Upddate;
-			entity.Totalprice = model.Totalprice;
-			entity.Actualprice = model.Actualprice;
-//			entity.Details = model.Details;
+			entity.UpdUser = _workContext.CurrentUser.Id;
+			entity.UpdDate = DateTime.Now;
 			if(_orderService.Update(entity) != null)
 				return true;
 			return false;

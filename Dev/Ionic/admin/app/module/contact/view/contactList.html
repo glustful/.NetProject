@@ -1,0 +1,103 @@
+<div>
+
+    <div class="hbox hbox-auto-xs hbox-auto-sm ng-scope" ng-controller="contactController">
+        <div class="col w-md bg-light dk b-r bg-auto">
+            <div class="wrapper b-b bg">
+                <button class="btn btn-sm btn-default pull-right visible-sm visible-xs" ui-toggle-class="show" target="#email-menu"><i class="fa fa-bars"></i></button>
+                <a ui-sref="app.mail.compose" class="btn btn-sm btn-danger w-xs font-bold" href="#">刷新分组</a>
+            </div>
+            <div class="wrapper hidden-sm hidden-xs" id="email-menu">
+
+                <div class="wrapper">分组</div>
+
+                <div class="wrapper">
+                    <form name="label" class="ng-pristine ng-invalid ng-invalid-required">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-invalid ng-invalid-required" ng-model="newLabel.name" placeholder="新的分组" required="">
+                            <span class="input-group-btn">
+                                <button class="btn btn-sm btn-default" type="button" ng-click="" ng-disabled="" disabled="disabled">添加</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <!-- uiView:  --><div ui-view="" class="ng-scope">
+            <div  class="ng-scope">
+                <!-- header -->
+                <div class="wrapper bg-light lter b-b">
+                    <div class="col-sm-4">
+                        <span class="text-muted">关注者列表</span>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            <input type="text" class="input-sm form-control" placeholder="Search">
+                            <span class="input-group-btn">
+                                <button class="btn btn-sm btn-default" type="button">Go!</button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="btn-toolbar">
+                        <div class="btn-group dropdown">
+                            <button class="btn btn-default btn-sm btn-bg dropdown-toggle" data-toggle="dropdown">
+                                <span class="dropdown-label">Filter</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu text-left text-sm">
+                                <li><a ui-sref="app.mail.list({fold:'unread'})" href="#/app/mail/inbox/unread">Unread</a></li>
+                                <li><a ui-sref="app.mail.list({fold:'starred'})" href="#/app/mail/inbox/starred">Starred</a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-bg btn-default" data-toggle="tooltip" data-placement="bottom" data-title="Refresh" data-original-title="" title=""><i class="fa fa-refresh"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- / header -->
+
+                <!-- list -->
+                <li class="list-group-item clearfix b-l-3x ng-scope b-l-info">
+                    <a class="avatar thumb pull-left m-r" href="#">
+                        <img src="../../../../../Page/app/common/static/images/a10.jpg">
+                    </a>
+                    <div class="pull-right text-sm text-muted">
+                        <span class="hidden-xs ng-binding">a year ago</span>
+                        <i class="fa fa-paperclip m-l-sm"></i>
+                    </div>
+                    <div class="clear">
+                        <div><a ui-sref="app.mail.detail({mailId:mail.id})" class="text-md ng-binding"
+                                href="../../../../../Page/app/common/static/images/a10.jpg">Angular is Awesome</a>
+                            <span class="label bg-light m-l-sm ng-binding">angular</span></div>
+                        <div class="text-ellipsis m-t-xs ng-binding">Titudin venenatis ipsum ac feugiat. Vestibulum ullamcorper Neque quam.
+                            Aliquam sollicitudin venenati</div>
+                    </div>
+                </li>
+                <!-- / list -->
+
+                <footer class="panel-footer">
+                    <div class="row">
+                        <div class="text-center text-center-xs">
+                            <ul class="pagination pagination-sm m-t-none m-b-none">
+                                <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
+                                <li><a href="">1</a></li>
+                                <li><a href="">2</a></li>
+                                <li><a href="">3</a></li>
+                                <li><a href="">4</a></li>
+                                <li><a href="">5</a></li>
+                                <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+        </div>
+
+        </div>
+    </div>
+</div>
