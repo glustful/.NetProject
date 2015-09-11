@@ -1,18 +1,17 @@
 
-<div class="bar bar-header header">
-    <button class="button  button-icon icon icon-fuwuanniu"></button>
+<ion-header-bar class=" header">
 
-    <div class="title " >
-
-        <!--<input type="text" placeholder="">-->
+    <a class="button  button-icon icon icon-fuwuanniu"></a>
+    <label class=" item-select select-header" ng-hide="showSelect">
         <select>
             <option>金尚俊园A座</option>
             <option >CSS</option>
             <option>JavaScript</option>
         </select>
-    </div>
-    <button class="button button-icon icon icon-search"></button>
-</div>
+    </label>
+  <a class="button button-icon icon icon-search search" ng-click="showInput()"></a>
+    <input class="header-input" ng-class="{'header-input-show':isShow}" type="text" placeholder="" style="border: 1px solid #fff; height: 70%;z-index: 0;padding-left: 10px;color: #fff">
+</ion-header-bar>
 <ion-view view-title="优·服务" ng-controller="TabServiceCtrl">
 
   <ion-content>
@@ -53,5 +52,7 @@
 
       <h4 style="text-align: center; color:#b0b0b0 ">······更多精彩，敬请期待！</h4>
 
+
   </ion-content>
 </ion-view>
+<link rel="stylesheet" href="page/service/css/service.css">

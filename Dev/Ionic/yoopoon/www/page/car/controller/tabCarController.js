@@ -47,6 +47,19 @@ app.controller('TabCarCtrl', function($scope, $ionicSlideBoxDelegate) {
     //alert($scope.model.activeIndex);
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
+
+    ////全选按钮功能
+    $scope.start=false;
+    $scope.allButton=false;
+    $scope.all=function(){
+
+        if($scope.allButton==false){
+            $scope.start=false;
+
+        }else{
+            $scope.start=true;
+        }
+    }
                });
 
 app.controller('CarDetailCtrl', function($scope, $stateParams) {
