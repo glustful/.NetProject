@@ -52,12 +52,14 @@ app.controller('TabCarCtrl', function($scope, $ionicSlideBoxDelegate) {
     $scope.start=false;
     $scope.allButton=false;
     $scope.all=function(){
+//alert($scope.start)
 
         if($scope.allButton==false){
             $scope.start=false;
-
-        }else{
+//            alert("nihao")
+        }if($scope.allButton==true){
             $scope.start=true;
+//            alert($scope.start)
         }
     }
                });

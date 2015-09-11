@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="page/car/css/car.css">
   <ion-header-bar>
-      <a href="#" class="button button-clear icon ion-chevron-left button-dark"></a>
+      
       <h2 class=" title">确认订单</h2>
       <a href="" class="button button-clear">编辑</a>
 
   </ion-header-bar>
-  <ion-content>
+  <ion-content ">
     <!--<div class="test">购物车(5)</div>-->
       <ion-list>
       <!--<ion-item class="item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/page/car/{{chat.id}}">-->
@@ -22,7 +22,7 @@
                 <div style="float:left"><span class="red">￥69.9</span><del class="del">￥87</del></div>
                 <div style="float:right"><span class="ion-android-remove" style="float:left;margin-right: 5px;color: #000;"></span><input type="text" placeholder="0" style=" float:left;height: 20px;width: 20px;border: 1px solid #d2d2d2;text-align: center;font-size:12px;color: #000;"/><span class="ion-android-add" style="float:left;margin-left: 5px;"></span></div>
             </div>
-            <ion-checkbox ng-selected="start"  style="width: 10px;height: 10px;  position: absolute;left: 0;top: 30%;background: none;border: none"></ion-checkbox>
+            <ion-checkbox ng-model="start" style="width: 10px;height: 10px;  position: absolute;left: 0;top: 30%;background: none;border: none"></ion-checkbox>
 
 
 
@@ -35,7 +35,7 @@
                   <div style="float:left"><span class="red">￥69.9</span><del class="del">￥87</del></div>
                   <div style="float:right"><span class="ion-android-remove" style="float:left;margin-right: 5px;color: #000;"></span><input type="text" placeholder="0" style=" float:left;height: 20px;width: 20px;border: 1px solid #d2d2d2;text-align: center;font-size:12px;color: #000;"/><span class="ion-android-add" style="float:left;margin-left: 5px;"></span></div>
               </div>
-              <ion-checkbox  style="width: 10px;height: 10px;  position: absolute;left: 0;top: 30%;background: none;border: none"></ion-checkbox>
+              <ion-checkbox ng-model="start" style="width: 10px;height: 10px;  position: absolute;left: 0;top: 30%;background: none;border: none"></ion-checkbox>
           </ion-item >
           <ion-item class="item-thumbnail-left car-list">
               <img src="page/car/img/car.png" alt=""/>
@@ -45,7 +45,7 @@
                   <div style="float:left"><span class="red">￥69.9</span><del class="del">￥87</del></div>
                   <div style="float:right"><span class="ion-android-remove" style="float:left;margin-right: 5px;color: #000;"></span><input type="text" placeholder="0" style=" float:left;height: 20px;width: 20px;border: 1px solid #d2d2d2;text-align: center;font-size:12px;color: #000;"/><span class="ion-android-add" style="float:left;margin-left: 5px;"></span></div>
               </div>
-              <ion-checkbox  style="width: 10px;height: 10px;  position: absolute;left: 0;top: 30%;background: none;border: none"></ion-checkbox>
+              <ion-checkbox ng-model="start" style="width: 10px;height: 10px;  position: absolute;left: 0;top: 30%;background: none;border: none"></ion-checkbox>
           </ion-item >
           <ion-item class="item-thumbnail-left car-list" style="border-bottom-width: 40px;">
               <img src="page/car/img/car.png" alt=""/>
@@ -55,15 +55,15 @@
                   <div style="float:left"><span class="red">￥69.9</span><del class="del">￥87</del></div>
                   <div style="float:right"><span class="ion-android-remove" style="float:left;margin-right: 5px;color: #000;"></span><input type="text" placeholder="0" style=" float:left;height: 20px;width: 20px;border: 1px solid #d2d2d2;text-align: center;font-size:12px;color: #000;"/><span class="ion-android-add" style="float:left;margin-left: 5px;"></span></div>
               </div>
-              <ion-checkbox  style="width: 10px;height: 10px;  position: absolute;left: 0;top: 30%;background: none;border: none"></ion-checkbox>
+              <ion-checkbox ng-model="start" style="width: 10px;height: 10px;  position: absolute;left: 0;top: 30%;background: none;border: none"></ion-checkbox>
           </ion-item>
 
 
       
     </ion-list>
   </ion-content>
-            <div class="bar bar-subfooter checkout" ng-controller="TabCarCtrl">
-                <ion-checkbox style="margin-top: -12px;" ng-click="all()" ng-selected="allButton">全选</ion-checkbox>
+            <div class="bar bar-subfooter checkout"">
+                <ion-checkbox style="margin-top: -12px;margin-left: -10px;width: 100px;" ng-click="all()" ng-model="allButton">全选</ion-checkbox>
                 <h2 class="title">合计<span class="red">￥387.00</span></h2>
                 <button class="button light ">结算(5)</button>
             </div>
