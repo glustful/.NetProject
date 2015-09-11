@@ -30,7 +30,7 @@ public class AboutUActivity extends MainActionBarActivity {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setText("返回");
-		titleButton.setText("地址管理");
+		titleButton.setText("关于U+");
 	}
 
 	@Override

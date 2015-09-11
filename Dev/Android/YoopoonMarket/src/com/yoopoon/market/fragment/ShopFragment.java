@@ -13,11 +13,9 @@
 package com.yoopoon.market.fragment;
 
 import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.Context;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -29,7 +27,6 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.yoopoon.advertisement.ADController;
 import com.yoopoon.component.YoopoonServiceController;
 import com.yoopoon.market.R;
@@ -40,20 +37,20 @@ import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.ResponseData.ResultState;
 
 public class ShopFragment extends Fragment {
-	private Context						mContext;
-	private ADController				mADController;
-	private YoopoonServiceController	serviceController;
-	private View						rootView;
-	private ArrayList<String>			imgs;						//存储顶端的广告图片地址
-	private GridView					commodityGridView;
-	private CommodityGridViewAdapter	mCommodityGridViewAdapter;
-	private TextView					beforePriceTextView;		//折扣前价格
-	private TextView					burstPackageTextView;
-	
+	private Context mContext;
+	private ADController mADController;
+	private YoopoonServiceController serviceController;
+	private View rootView;
+	private ArrayList<String> imgs; // 存储顶端的广告图片地址
+	private GridView commodityGridView;
+	private CommodityGridViewAdapter mCommodityGridViewAdapter;
+	private TextView beforePriceTextView; // 折扣前价格
+	private TextView burstPackageTextView;
+
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		//如果获取的view存在父View则不解析直接去除原来的Fragment
+		// 如果获取的view存在父View则不解析直接去除原来的Fragment
 		if (rootView != null) {
 			ViewGroup parentViewGroup = (ViewGroup) rootView.getParent();
 			if (parentViewGroup != null) {
@@ -61,18 +58,18 @@ public class ShopFragment extends Fragment {
 			}
 		} else {
 			mContext = getActivity();
-			//解析布局
+			// 解析布局
 			rootView = inflater.inflate(R.layout.fragment_shop, null);
-			//获取套餐折扣价后加上划线
+			// 获取套餐折扣价后加上划线
 			beforePriceTextView = (TextView) rootView.findViewById(R.id.tv_fragment_before_price);
 			beforePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-			//爆款套餐和省到不行加粗样式设置
+			// 爆款套餐和省到不行加粗样式设置
 			burstPackageTextView = (TextView) rootView.findViewById(R.id.btn_fragment_shop_burstpackage);
 			burstPackageTextView.getPaint().setFakeBoldText(true);
 			mADController = new ADController(mContext);
 			serviceController = new YoopoonServiceController(mContext);
 			commodityGridView = (GridView) rootView.findViewById(R.id.gridview_commodity);
-			//测试用数据
+			// 测试用数据
 			ArrayList<JSONObject> arrayList = new ArrayList<JSONObject>();
 			for (int i = 0; i < 10; i++) {
 				JSONObject jsonObject = new JSONObject();
@@ -87,11 +84,12 @@ public class ShopFragment extends Fragment {
 			}
 			mCommodityGridViewAdapter = new CommodityGridViewAdapter(mContext, arrayList);
 			commodityGridView.setAdapter(mCommodityGridViewAdapter);
-			//对Fragment_shop中的视图控件初始化和设置
+			// 对Fragment_shop中的视图控件初始化和设置
 			initShopFragment();
 		}
 		return rootView;
 	}
+
 	/**
 	 * @Title: initShopFragment
 	 * @Description: 初始化和设置视图控件
@@ -103,6 +101,7 @@ public class ShopFragment extends Fragment {
 		linearLayout.addView(serviceController.getRootView(), 1);
 		linearLayout.addView(mADController.getRootView(), 0);
 	}
+
 	private void requestAdvertisements() {
 		if (imgs == null)
 			new RequestAdapter() {
@@ -122,15 +121,16 @@ public class ShopFragment extends Fragment {
 						}
 					}
 				}
+
 				@Override
 				public void onProgress(ProgressMessage msg) {
 				}
 			}.setUrl("/api/Channel/GetTitleImg").setRequestMethod(RequestMethod.eGet).addParam("channelName", "banner")
 					.notifyRequest();
 	}
-	
-	private ArrayList<JSONArray>	servicesArrayList;
-	
+
+	private ArrayList<JSONArray> servicesArrayList;
+
 	/**
 	 * @Title: requestServices
 	 * @Description: 获取首页优服务
@@ -151,6 +151,7 @@ public class ShopFragment extends Fragment {
 						}
 					}
 				}
+
 				@Override
 				public void onProgress(ProgressMessage msg) {
 				}
@@ -158,4 +159,5 @@ public class ShopFragment extends Fragment {
 					.addParam("ChannelName", "活动").notifyRequest();
 		}
 	}
+
 }

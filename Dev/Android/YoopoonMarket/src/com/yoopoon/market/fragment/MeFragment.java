@@ -65,4 +65,5 @@ public class MeFragment extends Fragment implements OnClickListener {
 				break;
 		}
 	}
+
 }

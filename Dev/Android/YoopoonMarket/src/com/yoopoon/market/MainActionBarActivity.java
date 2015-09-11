@@ -28,6 +28,8 @@ public abstract class MainActionBarActivity extends ActionBarActivity {
 
 	protected Button backButton;
 
+	protected Button backWhiteButton;
+
 	LayoutInflater inflater;
 
 	@SuppressLint("InflateParams")
@@ -52,8 +54,17 @@ public abstract class MainActionBarActivity extends ActionBarActivity {
 		backButton = (Button) headView.findViewById(R.id.leftBtn);
 		rightButton = (Button) headView.findViewById(R.id.rightBtn);
 		titleButton = (Button) headView.findViewById(R.id.titleBtn);
+		backWhiteButton = (Button) headView.findViewById(R.id.leftWhiteBtn);
 		backButton.setTextColor(Color.BLACK);
 		backButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				backButtonClick(v);
+			}
+		});
+
+		backWhiteButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {

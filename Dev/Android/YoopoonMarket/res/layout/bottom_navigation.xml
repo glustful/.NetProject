@@ -5,32 +5,119 @@
     android:orientation="horizontal" 
     android:paddingTop="5dp"
     android:id="@+id/rg">
+    
+    
+    <LinearLayout 
+        android:id="@+id/ll1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:clickable="true">
+        
+        <RadioButton 
+            android:id="@+id/rb1"
+            android:clickable="false"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/shop_bg"
+            android:checked="true"
+            android:button="@null"/>
+        <TextView 
+            android:id="@+id/tv1"
+            android:layout_marginTop="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="@color/red"
+            android:text="优·购物"/>
+        
+        
+    </LinearLayout>
 
-    <RadioButton
-        android:id="@+id/rb1"
-        style="@style/Button_Bottom_Navigation"
-        android:drawableTop="@drawable/shop_bg"
-        android:textColor="@color/red"
-        android:checked="true"
-        android:text="优·购物"  />
-
-    <RadioButton
-        android:id="@+id/rb2"
-        style="@style/Button_Bottom_Navigation"
-        android:drawableTop="@drawable/serve_bg"
-        android:text="优·服务"  />
-
-    <RadioButton
-        android:id="@+id/rb3"
-        style="@style/Button_Bottom_Navigation"
-        android:drawableTop="@drawable/cart_bg"
-        android:text="购物车"
-        android:textSize="12sp" />
-
-    <RadioButton
-        android:id="@+id/rb4"
-        style="@style/Button_Bottom_Navigation"
-        android:drawableTop="@drawable/me_bg"
-        android:text="我" />
+    <LinearLayout 
+        android:id="@+id/ll2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:clickable="true">
+        
+        <RadioButton 
+            android:clickable="false"
+            android:id="@+id/rb2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/serve_bg"
+            android:button="@null"/>
+        <TextView 
+            android:id="@+id/tv2"
+            android:layout_marginTop="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="#ff888888"
+            android:text="优·服务"/>
+        
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:id="@+id/ll3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:clickable="true">
+        
+        <RadioButton 
+            android:clickable="false"
+            android:id="@+id/rb3"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/cart_bg"
+            android:button="@null"/>
+        <TextView 
+            android:id="@+id/tv3"
+            android:layout_marginTop="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="#ff888888"
+            android:text="购物车"/>
+        
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:id="@+id/ll4"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:clickable="true">
+        
+        <RadioButton 
+            android:clickable="false"
+            android:id="@+id/rb4"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/me_bg"
+            android:button="@null"/>
+        <TextView 
+            android:id="@+id/tv4"
+            android:layout_marginTop="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="#ff888888"
+            android:text="我"/>
+        
+        
+    </LinearLayout>
 
 </RadioGroup>

@@ -19,15 +19,18 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.yoopoon.market.fragment.CartFragment;
 import com.yoopoon.market.fragment.MeFragment;
 import com.yoopoon.market.fragment.ServeFragment;
@@ -40,7 +43,7 @@ import com.yoopoon.market.fragment.ShopFragment;
  * @date: 2015-9-7 下午4:51:39
  */
 @EActivity(R.layout.activity_main)
-public class MainActivity extends MainActionBarActivity {
+public class MainActivity extends FragmentActivity implements OnClickListener {
 	@ViewById(R.id.vp)
 	ViewPager vp;
 	@ViewById(R.id.rg)
@@ -48,7 +51,7 @@ public class MainActivity extends MainActionBarActivity {
 	@ViewById(R.id.search_layout)
 	View searchLayout;
 	List<Fragment> fragments = new ArrayList<Fragment>();
-	List<RadioButton> radioButtons = new ArrayList<RadioButton>();
+	List<LinearLayout> lls = new ArrayList<LinearLayout>();
 
 	@AfterViews
 	void initUI() {
@@ -58,50 +61,15 @@ public class MainActivity extends MainActionBarActivity {
 		fragments.add(new MeFragment());
 		vp.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
 
-		radioButtons.add((RadioButton) findViewById(R.id.rb1));
-		radioButtons.add((RadioButton) findViewById(R.id.rb2));
-		radioButtons.add((RadioButton) findViewById(R.id.rb3));
-		radioButtons.add((RadioButton) findViewById(R.id.rb4));
+		lls.add((LinearLayout) findViewById(R.id.ll1));
+		lls.add((LinearLayout) findViewById(R.id.ll2));
+		lls.add((LinearLayout) findViewById(R.id.ll3));
+		lls.add((LinearLayout) findViewById(R.id.ll4));
+
+		for (LinearLayout ll : lls)
+			ll.setOnClickListener(this);
+
 		vp.setOnPageChangeListener(new MyPagerChangeListener());
-
-		for (final RadioButton radioButton : radioButtons) {
-			radioButton.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					radioButton.setChecked(true);
-
-				}
-			});
-		}
-
-		rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				for (RadioButton radioButton : radioButtons)
-					radioButton.setTextColor(Color.GRAY);
-				switch (checkedId) {
-					case R.id.rb1:
-						vp.setCurrentItem(0);
-						radioButtons.get(0).setTextColor(Color.RED);
-						break;
-					case R.id.rb2:
-						vp.setCurrentItem(1);
-						radioButtons.get(1).setTextColor(Color.RED);
-						break;
-					case R.id.rb3:
-						vp.setCurrentItem(2);
-						radioButtons.get(2).setTextColor(Color.RED);
-						break;
-					case R.id.rb4:
-						vp.setCurrentItem(3);
-						radioButtons.get(3).setTextColor(Color.RED);
-						break;
-				}
-
-			}
-		});
 
 	}
 
@@ -139,10 +107,27 @@ public class MainActivity extends MainActionBarActivity {
 
 		@Override
 		public void onPageSelected(int arg0) {
-			radioButtons.get(arg0).setChecked(true);
+			onClick(lls.get(arg0));
 			searchLayout.setVisibility((arg0 > 1) ? View.GONE : View.VISIBLE);
 		}
 
+	}
+
+	@Override
+	public void onBackPressed() {
+		// super.onBackPressed();
+		exit();
+	}
+	long exitTime;
+
+	public void exit() {
+		if ((System.currentTimeMillis() - exitTime) > 2000) {
+			Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+			exitTime = System.currentTimeMillis();
+		} else {
+			finish();
+			System.exit(0);
+		}
 	}
 
 	public void toServe(View v) {
@@ -150,23 +135,35 @@ public class MainActivity extends MainActionBarActivity {
 	}
 
 	@Override
-	public void backButtonClick(View v) {
+	public void onClick(View v) {
+		for (LinearLayout ll : lls) {
+			RadioButton radioButton = (RadioButton) ll.getChildAt(0);
+			TextView textView = (TextView) ll.getChildAt(1);
+			radioButton.setChecked(false);
+			textView.setTextColor(Color.GRAY);
+		}
 
-	}
+		LinearLayout ll = (LinearLayout) v;
+		RadioButton radioButton = (RadioButton) ll.getChildAt(0);
+		TextView textView = (TextView) ll.getChildAt(1);
+		radioButton.setChecked(true);
+		textView.setTextColor(Color.RED);
 
-	@Override
-	public void titleButtonClick(View v) {
+		switch (v.getId()) {
+			case R.id.ll1:
+				vp.setCurrentItem(0);
+				break;
+			case R.id.ll2:
+				vp.setCurrentItem(1);
+				break;
+			case R.id.ll3:
+				vp.setCurrentItem(2);
+				break;
+			case R.id.ll4:
+				vp.setCurrentItem(3);
+				break;
+		}
 
-	}
-
-	@Override
-	public void rightButtonClick(View v) {
-
-	}
-
-	@Override
-	public Boolean showHeadView() {
-		return false;
 	}
 
 }
