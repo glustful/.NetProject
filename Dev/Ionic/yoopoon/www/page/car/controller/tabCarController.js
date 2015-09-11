@@ -47,6 +47,21 @@ app.controller('TabCarCtrl', function($scope, $ionicSlideBoxDelegate) {
     //alert($scope.model.activeIndex);
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
+
+    ////全选按钮功能
+    $scope.start=false;
+    $scope.allButton=false;
+    $scope.all=function(){
+//alert($scope.start)
+
+        if($scope.allButton==false){
+            $scope.start=false;
+//            alert("nihao")
+        }if($scope.allButton==true){
+            $scope.start=true;
+//            alert($scope.start)
+        }
+    }
                });
 
 app.controller('CarDetailCtrl', function($scope, $stateParams) {
