@@ -153,9 +153,8 @@ namespace Zerg.Models.Community
 		/// <summary>
         /// 商品明细
         /// </summary>
-//		public ProductDetailEntity Detail {get;set;}
-
-
+		//public ProductDetailEntity Detail {get;set;}
+        
 		/// <summary>
         /// 商品评论
         /// </summary>
