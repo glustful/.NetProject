@@ -1,81 +1,39 @@
 <div ng-controller="memController">
     <ul class="nav nav-tabs">
         <li class="">
-            <a href="" data-toggle="tab" data-target="#tab1" aria-expanded="false">个人信息</a>
+            <a href="" data-toggle="tab" data-target="#tab1" aria-expanded="false">个人详细信息</a>
         </li>
-        <li class="active">
-            <a href="" data-toggle="tab" data-target="#tab2" aria-expanded="true">地址信息</a>
-        </li>
+
         <li class="">
-            <a href="#page/CRM/AgentManager/index" ><span class="label bg-success" title="Active">返回</span></a>
+            <a ui-sref="app.member.memlist" ><span class="label bg-success" title="Active">返回</span></a>
         </li>
     </ul>
-    <div class="tab-content p b-a no-b-t bg-white m-b-md">
-
-        <div role="tabpanel" class="tab-pane animated fadeIn " id="tab1">
+    <div  class="tab-content p b-a no-b-t bg-white m-b-md">
             <div class="md-list-item">
                 <div class="md-list-item-left">
-                    <img src="{{SImg+memModel.Thumbnail}}@40w_40h_70q" class="w-full circle">
+                    <img src="{{SImg+memModels.Thumbnail}}@40w_40h_70q" class="w-full circle">
                 </div>
                 <div class="md-list-item-content details"  >
-                    <div><small>{{memModel.RealName}}</small></div>
-                    <div><small>{{memModel.Gender}}</small></div>
-                    <div><small>{{memModel.Realname}}</small></div>
-                    <div><small>积分总额：{{memModel.Points}}</small><small>账户余额：{{memModel.AccountNumber}}</small></div>
+                    <div>hello<small>{{memModels.RealName}}</small></div>
+                    <div><small>{{memModels.Gender}}</small></div>
+                    <div><small>{{memModels.Realname}}</small></div>
+                    <div><small>积分总额：{{memModels.Points}}</small><small>账户余额：{{memModels.AccountNumber}}</small></div>
                 </div>
             </div>
             <table class="table">
 
-
                 <tr>
-                    <td>电话：{{memModel.Phone}}</td>
-                    <td>QQ：{{memModel.Icq}}</td>
-                    <td>邮编：{{memModel.PostNo}}</td>
+                    <td>电话：{{memModels.Phone}}</td>
+                    <td>QQ：{{memModels.Icq}}</td>
+                    <td>邮编：{{memModels.PostNo}}</td>
                 </tr>
                 <tr>
-                    <td>身份证：{{memModel.IdentityNo}}</td>
-                    <td>性别：{{memModel.Gender}}</td>
-                    <td>注册时间：{{memModel.AddTime}}</td>
+                    <td>身份证：{{memModels.IdentityNo}}</td>
+                    <td>性别：{{memModels.Gender}}</td>
+                    <td>注册时间：{{memModels.AddTime}}</td>
 
                 </tr>
-
             </table>
-
-
-        </div>
-
-        <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab2">
-
-            <div ng-show="visibleAccount">
-                <div class="row border" style="background-color:#EFEFEF;">
-                    <div class="col-md-6">
-                        <div class="col-md-4">ID</div>
-                        <div class="col-md-4">邮编</div>
-                        <div class="col-md-4">地址</div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="col-md-6">联系人</div>
-                        <div class="col-md-6">联系电话</div>
-                    </div>
-                </div>
-                <div class="row border" ng-repeat="item in listAddress">
-                    <div class="col-md-6">
-                        <div class="col-md-4">ID:{{item.Id}}</div>
-                        <div class="col-md-4">￥{{item.Zip}}</div>
-                        <div class="col-md-4">{{item.Address}}</div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="col-md-6">{{item.Linkman}}</div>
-                        <div class="col-md-6">{{item.Tel}}</div>
-                    </div>
-                </div>
-                <div colspan="5" class="text-center footable-visible">
-                    <pagination boundary-links="true" total-items="totalCountCRZ" items-per-page="searchCRZCondition.pageSize" ng-model="searchCRZCondition.page" ng-change="getCRZList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
-                </div>
-            </div>
-            <div class="posonfont" ng-bind="tipsAccount"></div>
-        </div>
-
 
     </div>
 </div>

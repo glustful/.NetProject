@@ -13,7 +13,7 @@ namespace Event.Entity.Mappings.Coupon
             Property(c => c.Price).HasColumnType("decimal").IsOptional();
             Property(c => c.Status).HasColumnType("int").IsOptional();
             Property(c => c.CouponCategoryId).HasColumnType("int").IsOptional();
-            Property(c => c.Content).HasColumnType("varchar").IsOptional().IsMaxLength();
+            Property(c => c.Content).HasColumnType("text").IsOptional();
         }
     }
 }

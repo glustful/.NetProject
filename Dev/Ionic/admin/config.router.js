@@ -83,7 +83,7 @@ angular.module('app')
                     }
                 })
                 .state('app.member.detail',{
-                    url:'detail',
+                    url:'detail?id',
                     templateUrl:'app/module/member/view/detail.html',
                     resolve:{
                         deps:['$ocLazyLoad',
@@ -323,6 +323,31 @@ angular.module('app')
                             }]
                     }
                 })
+                //商品属性管理 app.parameter.parameterList
+                .state('app.parameter',{
+                    url: '/parameter',
+                    template: '<div ui-view class="fade-in-up"></div>',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/Parameter/controller/parameter.js']);
+                            }]
+                    }
+                })
+                .state('app.parameter.parameterList',{
+                    url:'/parameterList',
+                    templateUrl:'app/module/Parameter/view/Index.html'
+
+                })
+                .state('app.parameter.createParameter',{
+                    url:'/createParameter',
+                    templateUrl:'app/module/Parameter/view/Create.html'
+                })
+                .state('app.parameter.editParameter',{
+                    url:'/editParameter?id',
+                    templateUrl:'app/module/Parameter/view/Edit.html'
+                })
+
                 //商品管理页
                 .state('app.product',{
                     url: '/product',
