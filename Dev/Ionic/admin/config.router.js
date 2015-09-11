@@ -83,7 +83,7 @@ angular.module('app')
                     }
                 })
                 .state('app.member.detail',{
-                    url:'detail',
+                    url:'detail?id',
                     templateUrl:'app/module/member/view/detail.html',
                     resolve:{
                         deps:['$ocLazyLoad',
@@ -362,7 +362,7 @@ angular.module('app')
                 .state('app.product.productList',{
                     url:'/productList',
                     templateUrl:'app/module/Product/view/Index.html',
-
+                    data : { title: '商品列表' }
                 })
                 .state('app.product.createProduct',{
                     url:'/createProct',
