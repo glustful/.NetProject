@@ -74,7 +74,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private class MyPageAdapter extends FragmentPagerAdapter {
-
 		public MyPageAdapter(FragmentManager fm) {
 			super(fm);
 		}
@@ -88,21 +87,17 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		public int getCount() {
 			return fragments.size();
 		}
-
 	}
 
 	private class MyPagerChangeListener implements OnPageChangeListener {
-
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
@@ -110,7 +105,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			onClick(lls.get(arg0));
 			searchLayout.setVisibility((arg0 > 1) ? View.GONE : View.VISIBLE);
 		}
-
 	}
 
 	@Override
@@ -163,7 +157,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				vp.setCurrentItem(3);
 				break;
 		}
-
 	}
 
 }

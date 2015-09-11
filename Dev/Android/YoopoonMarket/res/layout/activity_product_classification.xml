@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical" >
+
+    <EditText
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:id="@+id/et_search_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_grey_background"
+        android:drawableLeft="@drawable/search"
+        android:hint="寻找你喜欢的宝贝"
+         
+        android:paddingLeft="80dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is the product classification" />
+
+</LinearLayout>
