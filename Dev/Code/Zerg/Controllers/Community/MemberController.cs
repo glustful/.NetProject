@@ -4,9 +4,14 @@ using System.Web.Http;
 using Community.Entity.Model.Member;
 using Community.Service.Member;
 using Zerg.Models.Community;
+using System.Net.Http;
+using Zerg.Common;
+using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.Community
 {
+     [AllowAnonymous]
+     [EnableCors("*", "*", "*", SupportsCredentials = true)]
 	public class MemberController : ApiController
 	{
 		private readonly IMemberService _memberService;
@@ -16,9 +21,10 @@ namespace Zerg.Controllers.Community
 			_memberService = memberService;
 		}
 
-		public MemberModel Get(int id)
+        public HttpResponseMessage Get(int id)
 		{
 			var entity =_memberService.GetMemberById(id);
+            
 			var model = new MemberModel
 			{
 				Id = entity.Id,
@@ -36,10 +42,11 @@ namespace Zerg.Controllers.Community
                 UpdUser = entity.UpdUser,	
                 UpdTime = entity.UpdTime,	
             };
-			return model;
+           
+			return PageHelper.toJson(model);
 		}
 
-		public List<MemberModel> Get(MemberSearchCondition condition)
+        public HttpResponseMessage Get([FromUri]MemberSearchCondition condition)
 		{
 			var model = _memberService.GetMembersByCondition(condition).Select(c=>new MemberModel
 			{
@@ -54,14 +61,15 @@ namespace Zerg.Controllers.Community
 				AccountNumber = c.AccountNumber,
 				Points = c.Points,
 				Level = c.Level,
-				AddTime = c.AddTime,
+				AddTime = c.AddTime,                                                              
 				UpdUser = c.UpdUser,
 				UpdTime = c.UpdTime,
 			}).ToList();
-			return model;
+            var totalCount = _memberService.GetMemberCount(condition);
+            return PageHelper.toJson(new { List = model,TotalCount = totalCount});
 		}
 
-		public bool Post(MemberModel model)
+        public HttpResponseMessage Post(MemberModel model)
 		{
 			var entity = new MemberEntity
 			{
@@ -78,19 +86,21 @@ namespace Zerg.Controllers.Community
 				AddTime = model.AddTime,
 				UpdUser = model.UpdUser,
 				UpdTime = model.UpdTime,
+               
 			};
 			if(_memberService.Create(entity).Id > 0)
 			{
-				return true;
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "post ³É¹¦"));
 			}
-			return false;
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "post  Ê§°Ü")); 
 		}
 
-		public bool Put(MemberModel model)
+		public HttpResponseMessage Put(MemberModel model)
 		{
 			var entity = _memberService.GetMemberById(model.Id);
 			if(entity == null)
-				return false;
+
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "ÐÞ¸ÄÊ§°Ü"));
 			entity.RealName = model.RealName;
 			entity.IdentityNo = model.IdentityNo;
 			entity.Gender = model.Gender;
@@ -105,18 +115,18 @@ namespace Zerg.Controllers.Community
 			entity.UpdUser = model.UpdUser;
 			entity.UpdTime = model.UpdTime;
 			if(_memberService.Update(entity) != null)
-				return true;
-			return false;
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "ÐÞ¸Ä³É¹¦"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "ÐÞ¸ÄÊ§°Ü"));
 		}
 
-		public bool Delete(int id)
+		public HttpResponseMessage Delete(int id)
 		{
 			var entity = _memberService.GetMemberById(id);
 			if(entity == null)
-				return false;
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "É¾³ýÊ§°Ü"));
 			if(_memberService.Delete(entity))
-				return true;
-			return false;
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "É¾³ý³É¹¦"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "É¾³ýÊ§°Ü"));
 		}
 	}
 }

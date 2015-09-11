@@ -9,10 +9,12 @@ using System.Net.Http;
 using Zerg.Common;
 using System.EnterpriseServices;
 using System.Text.RegularExpressions;
+using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.Community
 {
     [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
 	public class CategoryController : ApiController
 	{
 		private readonly ICategoryService _categoryService;
