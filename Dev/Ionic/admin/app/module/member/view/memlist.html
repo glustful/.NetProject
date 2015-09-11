@@ -18,7 +18,7 @@
                     <p><span>身份证：<small>{{item.IdentityNo}}</small></span><span>余额：<small>{{item.AccountNumber}}</small></span><span>积分：<small>{{item.Points}}</small></span> </p>
                 </div>
             </td>
-            <td><time>{{item.AddTime}}</time></td>
+            <td><time>{{item.AddTime| dateFilter}}</time></td>
             <td>
                 <a ui-sref="app.member.detail({id:item.Id})" ><button  md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">详情</button></a>
                 <button  md-ink-ripple=""  ng-click="deleteMem(item.Id)" class="md-btn md-raised m-b btn-fw yellow">删除</button>
