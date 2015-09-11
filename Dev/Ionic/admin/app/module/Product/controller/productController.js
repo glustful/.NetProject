@@ -239,11 +239,11 @@ function updatevcImg(file) {
             //回调函数
             function callback () {
                 //将response提取出来分割出文件名
-                Img=  xmlhttp.response;
-                var g1=Img.split(':"');
-                var g2= Img.split(',')[1].split(':"')[1];
+                Img1=  xmlhttp.response;
+                var g1=Img1.split(':"');
+                var g2= Img1.split(',')[1].split(':"')[1];
                 //将分割好的文件名赋予给img全局变量
-                Img=g2.substring(0,g2.length-1);
+                Img1=g2.substring(0,g2.length-1);
                 //图片上传成功字样样式
                 headtext.innerHTML = '上传成功!';
                 headtext.style.color ='red';
@@ -297,4 +297,3 @@ function updatevcImg1(file) {
         reader.readAsDataURL(files);
     }
 }
-

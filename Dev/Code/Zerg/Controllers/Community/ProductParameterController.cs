@@ -1,8 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
 using Community.Entity.Model.ProductParameter;
+using Community.Service.Parameter;
+using Community.Service.ParameterValue;
+using Community.Service.Product;
 using Community.Service.ProductParameter;
+using Zerg.Common;
 using Zerg.Models.Community;
 
 namespace Zerg.Controllers.Community
@@ -10,10 +15,16 @@ namespace Zerg.Controllers.Community
 	public class ProductParameterController : ApiController
 	{
 		private readonly IProductParameterService _productParameterService;
+	    private readonly IParameterService _parameterService;
+	    private readonly IParameterValueService _parameterValueService;
+	    private readonly IProductService _productService;
 
-		public ProductParameterController(IProductParameterService productParameterService)
+	    public ProductParameterController(IProductParameterService productParameterService,IParameterService parameterService,IParameterValueService parameterValueService,IProductService productService)
 		{
 			_productParameterService = productParameterService;
+		    _parameterService = parameterService;
+		    _parameterValueService = parameterValueService;
+		    _productService = productService;
 		}
 
 		public ProductParameterModel Get(int id)
@@ -34,59 +45,62 @@ namespace Zerg.Controllers.Community
 			return model;
 		}
 
-		public List<ProductParameterModel> Get(ProductParameterSearchCondition condition)
+		public HttpResponseMessage Get(ProductParameterSearchCondition condition)
 		{
 			var model = _productParameterService.GetProductParametersByCondition(condition).Select(c=>new ProductParameterModel
 			{
 				Id = c.Id,
-//				ParameterValue = c.ParameterValue,
-//				Parameter = c.Parameter,
-//				Product = c.Product,
+
 				Sort = c.Sort,
 				AddUser = c.AddUser,
 				AddTime = c.AddTime,
 				UpdUser = c.UpdUser,
 				UpdTime = c.UpdTime,
 			}).ToList();
-			return model;
+			return PageHelper.toJson(model);
 		}
 
-		public bool Post(ProductParameterModel model)
+		public HttpResponseMessage Post(ProductParameterModel model)
 		{
-			var entity = new ProductParameterEntity
-			{
-//				ParameterValue = model.ParameterValue,
-//				Parameter = model.Parameter,
-//				Product = model.Product,
-				Sort = model.Sort,
-				AddUser = model.AddUser,
-				AddTime = model.AddTime,
-				UpdUser = model.UpdUser,
-				UpdTime = model.UpdTime,
-			};
-			if(_productParameterService.Create(entity).Id > 0)
-			{
-				return true;
-			}
-			return false;
+		    var parameterValue = _parameterValueService.GetParameterValueById(model.ParameterValueId);
+		    var parameter = _parameterService.GetParameterById(model.ParameterId);
+		    var product = _productService.GetProductById(model.Id);
+            var entity = new ProductParameterEntity
+            {
+                ParameterValue = parameterValue,
+                Parameter = parameter,
+                Product = product,                
+                AddUser = model.AddUser,
+                AddTime = model.AddTime,
+                UpdUser = model.UpdUser,
+                UpdTime = model.UpdTime,
+            };
+            if(_productParameterService.Create(entity).Id > 0)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true,"属性添加成功"));
+            }
+			return PageHelper.toJson(PageHelper.ReturnValue(false,"数据添加失败"));
 		}
 
-		public bool Put(ProductParameterModel model)
+		public HttpResponseMessage Put(ProductParameterModel model)
 		{
+            var parameterValue = _parameterValueService.GetParameterValueById(model.ParameterValueId);
+            var parameter = _parameterService.GetParameterById(model.ParameterId);
+            var product = _productService.GetProductById(model.Id);
 			var entity = _productParameterService.GetProductParameterById(model.Id);
 			if(entity == null)
-				return false;
-//			entity.ParameterValue = model.ParameterValue;
-//			entity.Parameter = model.Parameter;
-//			entity.Product = model.Product;
+				return PageHelper.toJson(PageHelper.ReturnValue(false,"数据不存在"));
+            entity.ParameterValue = parameterValue;
+            entity.Parameter = parameter;
+            entity.Product = product;
 			entity.Sort = model.Sort;
 			entity.AddUser = model.AddUser;
 			entity.AddTime = model.AddTime;
 			entity.UpdUser = model.UpdUser;
 			entity.UpdTime = model.UpdTime;
 			if(_productParameterService.Update(entity) != null)
-				return true;
-			return false;
+				return PageHelper.toJson(PageHelper.ReturnValue(true,"数据更新成功"));
+			return PageHelper.toJson(PageHelper.ReturnValue(false,"数据更新失败"));
 		}
 
 		public bool Delete(int id)
