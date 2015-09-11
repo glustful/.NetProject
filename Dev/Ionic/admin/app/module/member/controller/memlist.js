@@ -38,9 +38,9 @@ app.controller('memController', ['$scope', '$http','$stateParams',
            });
        //}
 
-        $scope.deleteMem=function (id) {
+        $scope.deleteMem=function (Id) {
 
-                $http.delete(SETTING.ZergWcApiUrl+'/Member/Delete',id,{
+                $http.delete(SETTING.ZergWcApiUrl+'/Member/Delete?id='+Id,{
                     'withCredentials':true
                 }).success(function (data) {
                     alert(data.Msg);
