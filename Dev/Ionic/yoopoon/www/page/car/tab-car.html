@@ -1,7 +1,14 @@
 <link rel="stylesheet" href="page/car/css/car.css">
-<ion-view hide-nav-bar="true">
-  <ion-content>
-    <div class="test">购物车(5)</div>
+
+  <ion-header-bar>
+      
+      <h2 class=" title">确认订单</h2>
+      <a href="" class="button button-clear">编辑</a>
+
+  </ion-header-bar>
+  <ion-content ">
+    <!--<div class="test">购物车(5)</div>-->
+
       <ion-list>
       <!--<ion-item class="item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/page/car/{{chat.id}}">-->
         <!--<img ng-src="{{chat.face}}">-->
@@ -9,50 +16,61 @@
         <!--<p>{{chat.lastText}}</p>-->
         <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
         <ion-item class="item-thumbnail-left car-list">
-            <img src="page/car/img/car.png" alt=""/>
+
+            <img src="page/car/img/car.png" alt=""" />
             <h2>我是花吃 云南特产零食糕点 玫瑰鲜花饼6枚*2盒 包邮 包邮 神犬小七同款</h2>
             <p>口味：甜味</p>
-            <div>
+            <div style="margin-left: 30px;">
                 <div style="float:left"><span class="red">￥69.9</span><del class="del">￥87</del></div>
                 <div style="float:right"><span class="ion-android-remove" style="float:left;margin-right: 5px;color: #000;"></span><input type="text" placeholder="0" style=" float:left;height: 20px;width: 20px;border: 1px solid #d2d2d2;text-align: center;font-size:12px;color: #000;"/><span class="ion-android-add" style="float:left;margin-left: 5px;"></span></div>
             </div>
+            <ion-checkbox ng-model="start" style="width: 10px;height: 10px;  position: absolute;left: 0;top: 30%;background: none;border: none"></ion-checkbox>
+
+
+
         </ion-item >
           <ion-item class="item-thumbnail-left car-list">
               <img src="page/car/img/car.png" alt=""/>
               <h2>我是花吃 云南特产零食糕点 玫瑰鲜花饼6枚*2盒 包邮 包邮 神犬小七同款</h2>
               <p>口味：甜味</p>
-              <div>
+              <div style="margin-left: 30px;">
                   <div style="float:left"><span class="red">￥69.9</span><del class="del">￥87</del></div>
                   <div style="float:right"><span class="ion-android-remove" style="float:left;margin-right: 5px;color: #000;"></span><input type="text" placeholder="0" style=" float:left;height: 20px;width: 20px;border: 1px solid #d2d2d2;text-align: center;font-size:12px;color: #000;"/><span class="ion-android-add" style="float:left;margin-left: 5px;"></span></div>
               </div>
+              <ion-checkbox ng-model="start" style="width: 10px;height: 10px;  position: absolute;left: 0;top: 30%;background: none;border: none"></ion-checkbox>
           </ion-item >
           <ion-item class="item-thumbnail-left car-list">
               <img src="page/car/img/car.png" alt=""/>
               <h2>我是花吃 云南特产零食糕点 玫瑰鲜花饼6枚*2盒 包邮 包邮 神犬小七同款</h2>
               <p>口味：甜味</p>
-              <div>
+              <div style="margin-left: 30px;">
                   <div style="float:left"><span class="red">￥69.9</span><del class="del">￥87</del></div>
                   <div style="float:right"><span class="ion-android-remove" style="float:left;margin-right: 5px;color: #000;"></span><input type="text" placeholder="0" style=" float:left;height: 20px;width: 20px;border: 1px solid #d2d2d2;text-align: center;font-size:12px;color: #000;"/><span class="ion-android-add" style="float:left;margin-left: 5px;"></span></div>
               </div>
+              <ion-checkbox ng-model="start" style="width: 10px;height: 10px;  position: absolute;left: 0;top: 30%;background: none;border: none"></ion-checkbox>
           </ion-item >
           <ion-item class="item-thumbnail-left car-list" style="border-bottom-width: 40px;">
               <img src="page/car/img/car.png" alt=""/>
               <h2>我是花吃 云南特产零食糕点 玫瑰鲜花饼6枚*2盒 包邮 包邮 神犬小七同款</h2>
               <p>口味：甜味</p>
-              <div>
+              <div style="margin-left: 30px;">
                   <div style="float:left"><span class="red">￥69.9</span><del class="del">￥87</del></div>
                   <div style="float:right"><span class="ion-android-remove" style="float:left;margin-right: 5px;color: #000;"></span><input type="text" placeholder="0" style=" float:left;height: 20px;width: 20px;border: 1px solid #d2d2d2;text-align: center;font-size:12px;color: #000;"/><span class="ion-android-add" style="float:left;margin-left: 5px;"></span></div>
               </div>
+              <ion-checkbox ng-model="start" style="width: 10px;height: 10px;  position: absolute;left: 0;top: 30%;background: none;border: none"></ion-checkbox>
           </ion-item>
-          <div class="checkout">
-              合计<span class="red">￥387.00</span>
-              <button style="float:right" class="button light">结算(5)</button>
-          </div>
+
 
       
     </ion-list>
   </ion-content>
-</ion-view>
+
+            <div class="bar bar-subfooter checkout"">
+                <ion-checkbox style="margin-top: -12px;margin-left: -10px;width: 100px;" ng-click="all()" ng-model="allButton">全选</ion-checkbox>
+                <h2 class="title">合计<span class="red">￥387.00</span></h2>
+                <button class="button light ">结算(5)</button>
+            </div>
+
 
 
  

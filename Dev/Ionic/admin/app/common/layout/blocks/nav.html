@@ -227,6 +227,38 @@
     </ul>
   </li>
 
+  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+    <span translate="订单管理"></span>
+  </li>
+  <li>
+    <a href class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="glyphicon glyphicon-edit"></i>
+      <span translate="">订单列表</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a href>
+          <span translate="订单列表"></span>
+        </a>
+      </li>
+
+      <li ui-sref-active="active">
+        <a ui-sref="order.list">
+          <span>商品订单列表</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="order.serviceList">
+          <span>服务订单列表</span>
+        </a>
+      </li>
+
+    </ul>
+  </li>
   <!---------------------------------------系统部署------------------------------------->
   <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
     <span translate="系统部署"></span>
@@ -276,6 +308,12 @@
     <a ui-sref="app.product.productList">
       <i class="glyphicon glyphicon-edit"></i>
       <span>商品管理</span>
+    </a>
+  </li>
+  <li>
+    <a ui-sref="app.parameter.parameterList">
+      <i class="glyphicon glyphicon-edit"></i>
+      <span>商品属性管理</span>
     </a>
   </li>
 <!--------------------------------用户评论------------------------------------------------>  <li>

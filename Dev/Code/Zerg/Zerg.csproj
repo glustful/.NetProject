@@ -240,7 +240,6 @@
     <Compile Include="Models\Community\ParameterValueModel.cs" />
     <Compile Include="Models\Community\ProductComment.cs" />
     <Compile Include="Models\Community\ProductCommentModel.cs" />
-    <Compile Include="Models\Community\ProductDetail.cs" />
     <Compile Include="Models\Community\ProductDetailModel.cs" />
     <Compile Include="Models\Community\ProductModel.cs" />
     <Compile Include="Models\Community\ProductParameterModel.cs" />

@@ -83,7 +83,7 @@ angular.module('app')
                     }
                 })
                 .state('app.member.detail',{
-                    url:'detail',
+                    url:'detail?id',
                     templateUrl:'app/module/member/view/detail.html',
                     resolve:{
                         deps:['$ocLazyLoad',
@@ -323,6 +323,31 @@ angular.module('app')
                             }]
                     }
                 })
+                //商品属性管理 app.parameter.parameterList
+                .state('app.parameter',{
+                    url: '/parameter',
+                    template: '<div ui-view class="fade-in-up"></div>',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/Parameter/controller/parameter.js']);
+                            }]
+                    }
+                })
+                .state('app.parameter.parameterList',{
+                    url:'/parameterList',
+                    templateUrl:'app/module/Parameter/view/Index.html'
+
+                })
+                .state('app.parameter.createParameter',{
+                    url:'/createParameter',
+                    templateUrl:'app/module/Parameter/view/Create.html'
+                })
+                .state('app.parameter.editParameter',{
+                    url:'/editParameter?id',
+                    templateUrl:'app/module/Parameter/view/Edit.html'
+                })
+
                 //商品管理页
                 .state('app.product',{
                     url: '/product',
@@ -337,7 +362,7 @@ angular.module('app')
                 .state('app.product.productList',{
                     url:'/productList',
                     templateUrl:'app/module/Product/view/Index.html',
-
+                    data : { title: '商品列表' }
                 })
                 .state('app.product.createProduct',{
                     url:'/createProct',
@@ -359,6 +384,28 @@ angular.module('app')
                     //        }]
                     //}
                 })
+                .state('order',{
+                    url:'/order',
+                    templateUrl: 'app/common/layout/app.html'
+                })
+                .state('order.list',{
+                    url:'/list',
+                    templateUrl:'app/module/order/view/list.html',
+                    resolve:{
+                        deps:['uiLoad',function(uiLoad){
+                            return uiLoad.load(['app/module/order/controller/orderController.js']);
+                        }]
+                    }
+                })
+                .state('order.serviceList',{
+                    url:'/serviceList',
+                    templateUrl:'app/module/order/view/serviceList.html',
+                    resolve:{
+                        deps:['uiLoad',function(uiLoad){
+                            return uiLoad.load(['app/module/order/controller/orderServiceController.js']);
+                        }]
+                    }
+                });
         }
     ]
 );
