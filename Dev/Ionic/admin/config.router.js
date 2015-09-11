@@ -83,7 +83,7 @@ angular.module('app')
                     }
                 })
                 .state('app.member.detail',{
-                    url:'detail',
+                    url:'detail?id',
                     templateUrl:'app/module/member/view/detail.html',
                     resolve:{
                         deps:['$ocLazyLoad',
