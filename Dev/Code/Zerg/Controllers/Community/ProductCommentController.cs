@@ -62,6 +62,7 @@ namespace Zerg.Controllers.Community
 				Stars = c.Stars,
 			}).ToList();
             var totalCount = _productCommentService.GetProductCommentCount(condition);
+            
 
             return PageHelper.toJson(new { Model = model, Condition=condition,TotalCount = totalCount });
 		}
