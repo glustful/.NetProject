@@ -12,9 +12,13 @@
  */
 package com.yoopoon.market;
 
+import java.util.ArrayList;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -37,12 +41,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
  */
 @EActivity(R.layout.acitvity_product_list)
 public class ProductList extends MainActionBarActivity {
-	private Context			mContext;
-	private ListView		productListView;
+	private Context					mContext;
+	private ListView				productListView;
+	private ProductListViewAdapter	mProductListViewAdapter;
+	private ArrayList<JSONObject>	jsonArrayList;
 	@ViewById
-	LinearLayout			linearLayout_product_list;
+	LinearLayout					linearLayout_product_list;
 	@ViewById
-	PullToRefreshListView	ptr_listview_product_list;
+	PullToRefreshListView			ptr_listview_product_list;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +75,21 @@ public class ProductList extends MainActionBarActivity {
 		ptr_listview_product_list.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
 		ptr_listview_product_list.setOnRefreshListener(new RefreshListener());
 		productListView = ptr_listview_product_list.getRefreshableView();
+		jsonArrayList = new ArrayList<JSONObject>();
+		for (int i = 0; i < 20; i++) {
+			JSONObject jsonObject = new JSONObject();
+			try {
+				jsonObject.put("productTitle", "米糕" + i);
+				jsonObject.put("productSubtitle", "云南雪糕" + i);
+				jsonObject.put("productAdvertisement", "30免运费" + i);
+				jsonObject.put("productPrict", "￥80.0" + i);
+				jsonObject.put("productSalesValuem", "100" + i);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		mProductListViewAdapter = new ProductListViewAdapter(mContext, jsonArrayList);
+		productListView.setAdapter(mProductListViewAdapter);
 	}
 	
 	/**

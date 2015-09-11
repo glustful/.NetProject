@@ -40,7 +40,7 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:drawablePadding="0dp"
-                android:drawableRight="@drawable/indicator_arrow"
+                android:drawableRight="@drawable/black_down_arrow"
                 android:text="综合排序" />
         </LinearLayout>
 
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
-                android:drawableRight="@drawable/indicator_arrow"
+                android:drawableRight="@drawable/black_down_arrow"
                 android:text="筛选" />
         </LinearLayout>
     </LinearLayout>
