@@ -131,7 +131,7 @@ namespace Community.Service.Product
                 }
                 if (condition.IsRecommend.HasValue)
                 {
-                    query = query.Where(q => q.IsRecommend == condition.IsRecommend.Value);
+                    query = query.Where(q => q.IsRecommend == condition.IsRecommend);
                 }
                 if (!string.IsNullOrEmpty(condition.Subtitte))
                 {

@@ -304,6 +304,55 @@
 
     </ul>
   </li>
+  <li>
+    <a ui-sref="app.product.productList">
+      <i class="glyphicon glyphicon-edit"></i>
+      <span>商品管理</span>
+    </a>
+  </li>
+  <li>
+    <a ui-sref="app.parameter.parameterList">
+      <i class="glyphicon glyphicon-edit"></i>
+      <span>商品属性管理</span>
+    </a>
+  </li>
+<!--------------------------------用户评论------------------------------------------------>  <li>
+        <a ui-sref="app.comment.productComment">
+            <i class="glyphicon glyphicon-edit"></i>
+            <b class="label bg-info pull-right">N</b>
+            <span>用户评论</span>
+        </a>
+    </li>
+  <!--------------------------------------------会员信息管理------------------------------------------------------>
+  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+    <span translate="会员信息管理"></span>
+  </li>
 
+  <li>
+    <a href class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="glyphicon glyphicon-edit"></i>
+      <span translate="">会员信息管理</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a href>
+          <span translate="">会员信息管理</span>
+        </a>
+      </li>
+
+      <li ui-sref-active="active">
+        <a ui-sref="app.member.memlist">
+          <span>会员列表</span>
+        </a>
+      </li>
+
+    </ul>
+  </li>
 </ul>
 <!-- / list -->
+
+
