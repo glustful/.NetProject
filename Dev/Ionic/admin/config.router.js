@@ -337,7 +337,7 @@ angular.module('app')
                 .state('app.product.productList',{
                     url:'/productList',
                     templateUrl:'app/module/Product/view/Index.html',
-
+                    data : { title: '商品列表' }
                 })
                 .state('app.product.createProduct',{
                     url:'/createProct',
