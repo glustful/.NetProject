@@ -1,0 +1,42 @@
+<div class="p-md" ng-app="App" ng-controller="productCommentController">
+    <div>
+
+    </div>
+    <div class="panel-default panel panel-card ng-scope" align="center">
+        <div class="panel-heading" style="height: 100px; font-size: 24px; font-weight: bolder">用户评论列表</div>
+        <table st-table="rowCollectionPage"  class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" align="center">
+            <thead>
+            <tr>
+                <th align="center">评论ID<span ></span></th>
+                <th align="center">商品名称</th>
+                <th align="center" >评论时间<span ></span></th>
+                <th align="center" >评论内容<span ></span></th>
+                <th align="center">评论星级</th>
+                <th align="center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in list">
+                <td>{{row.Id}}</td>
+                <td>{{row.ProductName}}</td>
+                <td>{{row.AddTime | dateFilter}}</td>
+                <td>{{row.Content}}</td>
+                <td>{{row.Stars}}</td>
+
+                <td>
+
+                    <button ng-click='del(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot class="hide-if-no-paging">
+            <tr>
+                <td colspan="10" class="text-center">
+                    <pagination boundary-links="true" total-items="totalCount" items-per-page="searchCondition.PageCount" ng-model="searchCondition.Page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

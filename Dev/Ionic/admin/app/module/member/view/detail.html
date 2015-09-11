@@ -1,0 +1,39 @@
+<div ng-controller="memController">
+    <ul class="nav nav-tabs">
+        <li class="">
+            <a href="" data-toggle="tab" data-target="#tab1" aria-expanded="false">个人详细信息</a>
+        </li>
+
+        <li class="">
+            <a ui-sref="app.member.memlist" ><span class="label bg-success" title="Active">返回</span></a>
+        </li>
+    </ul>
+    <div  class="tab-content p b-a no-b-t bg-white m-b-md">
+            <div class="md-list-item">
+                <div class="md-list-item-left">
+                    <img src="{{SImg+memModels.Thumbnail}}@40w_40h_70q" class="w-full circle">
+                </div>
+                <div class="md-list-item-content details"  >
+                    <div>hello<small>{{memModels.RealName}}</small></div>
+                    <div><small>{{memModels.Gender}}</small></div>
+                    <div><small>{{memModels.Realname}}</small></div>
+                    <div><small>积分总额：{{memModels.Points}}</small><small>账户余额：{{memModels.AccountNumber}}</small></div>
+                </div>
+            </div>
+            <table class="table">
+
+                <tr>
+                    <td>电话：{{memModels.Phone}}</td>
+                    <td>QQ：{{memModels.Icq}}</td>
+                    <td>邮编：{{memModels.PostNo}}</td>
+                </tr>
+                <tr>
+                    <td>身份证：{{memModels.IdentityNo}}</td>
+                    <td>性别：{{memModels.Gender}}</td>
+                    <td>注册时间：{{memModels.AddTime | dateFilter}}</td>
+
+                </tr>
+            </table>
+
+    </div>
+</div>
