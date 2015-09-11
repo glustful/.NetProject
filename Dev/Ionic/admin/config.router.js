@@ -156,6 +156,20 @@ angular.module('app')
                             }]
                     }
                 })
+                .state('app.comment', {
+                    url: '/contact',
+                    template: '<div ui-view class="fade-in-up"></div>'
+                })
+                .state('app.comment.productComment', {
+                    url: '/productComment',
+                    templateUrl: 'app/module/comment/view/productComment.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/comment/controller/productCommentController.js']);
+                            }]
+                    }
+                })
                 //------------自定义菜单
               .state('app.menu', {
                   url: '/menu',
@@ -308,7 +322,68 @@ angular.module('app')
                                 return uiLoad.load( ['js/controllers/signup.js'] );
                             }]
                     }
-                });
+                })
+                //商品属性管理 app.parameter.parameterList
+                .state('app.parameter',{
+                    url: '/parameter',
+                    template: '<div ui-view class="fade-in-up"></div>',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/Parameter/controller/parameter.js']);
+                            }]
+                    }
+                })
+                .state('app.parameter.parameterList',{
+                    url:'/parameterList',
+                    templateUrl:'app/module/Parameter/view/Index.html'
+
+                })
+                .state('app.parameter.createParameter',{
+                    url:'/createParameter',
+                    templateUrl:'app/module/Parameter/view/Create.html'
+                })
+                .state('app.parameter.editParameter',{
+                    url:'/editParameter?id',
+                    templateUrl:'app/module/Parameter/view/Edit.html'
+                })
+
+                //商品管理页
+                .state('app.product',{
+                    url: '/product',
+                    template: '<div ui-view class="fade-in-up"></div>',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
+                            }]
+                    }
+                })
+                .state('app.product.productList',{
+                    url:'/productList',
+                    templateUrl:'app/module/Product/view/Index.html',
+
+                })
+                .state('app.product.createProduct',{
+                    url:'/createProct',
+                    templateUrl:'app/module/Product/view/Create.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['angularFileUpload']);
+                            }]
+                    }
+                })
+                .state('app.product.editProduct',{
+                    url:'/editProduct?id',
+                    templateUrl:'app/module/Product/view/Edit.html',
+                    //resolve: {
+                    //    deps: ['$ocLazyLoad',
+                    //        function( $ocLazyLoad ){
+                    //            return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
+                    //        }]
+                    //}
+                })
         }
     ]
 );
