@@ -16,9 +16,9 @@ namespace Community.Entity.Mappings.Product
 			Property(c =>c.BussnessName).HasColumnType("varchar").HasMaxLength(100).IsOptional();
 			Property(c => c.Price).HasColumnType("decimal").IsOptional();
 			Property(c => c.Name).HasColumnType("varchar").HasMaxLength(200).IsOptional();
-			Property(c => c.Status).HasColumnType("bit").IsRequired();
+			Property(c => c.Status).HasColumnType("int").IsRequired();
 			Property(c => c.MainImg).HasColumnType("varchar").HasMaxLength(256).IsOptional();
-			Property(c => c.IsRecommend).HasColumnType("bit").IsRequired();
+			Property(c => c.IsRecommend).HasColumnType("int").IsRequired();
 			Property(c => c.Sort).HasColumnType("int").IsOptional();
 			Property(c => c.Stock).HasColumnType("int").IsOptional();
 			Property(c =>c.AddUser).HasColumnType("int").IsRequired();

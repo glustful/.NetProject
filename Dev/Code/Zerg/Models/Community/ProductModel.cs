@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using Community.Entity.Model.Product;
-using Community.Entity.Model.ProductComment;
 
 namespace Zerg.Models.Community
 {
@@ -48,7 +45,7 @@ namespace Zerg.Models.Community
 		/// <summary>
         /// 商品状态
         /// </summary>
-		public bool Status {get;set;}
+		public EnumProductStatus Status {get;set;}
 
 
 		/// <summary>
@@ -60,7 +57,7 @@ namespace Zerg.Models.Community
 		/// <summary>
         /// 商家推荐标识
         /// </summary>
-		public bool IsRecommend {get;set;}
+		public int IsRecommend {get;set;}      
 
 
 		/// <summary>
@@ -134,14 +131,30 @@ namespace Zerg.Models.Community
                 }
             }
         }
+        public string StatusString
+        {
+            get
+            {
+                switch (Status)
+                {
 
+                    case EnumProductStatus.Normal:
+                        return "正常";
+
+                    case EnumProductStatus.Delete:
+                        return "删除";
+
+                    default:
+                        return "";
+                }
+            }
+        }
 
 		/// <summary>
         /// 商品明细
         /// </summary>
-//		public ProductDetailEntity Detail {get;set;}
-
-
+		//public ProductDetailEntity Detail {get;set;}
+        
 		/// <summary>
         /// 商品评论
         /// </summary>
