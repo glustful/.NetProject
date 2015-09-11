@@ -134,6 +134,22 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 templateUrl: 'page/shopping/Product-Catagory.html'
             }
         }
+    })
+    .state('page.product-list', {
+        url: '/shopping/product-list',
+        views: {
+            'page-shopping': {
+                templateUrl: 'page/shopping/product-list.html'
+            }
+        }
+    })
+    .state('page.product-detail', {
+        url: '/shopping/product-detail',
+        views: {
+            'page-shopping': {
+                templateUrl: 'page/shopping/product-detail.html'
+            }
+        }
     });
         
         // if none of the above states are matched, use this as the fallback
