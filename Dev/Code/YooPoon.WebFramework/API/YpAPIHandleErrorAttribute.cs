@@ -9,7 +9,7 @@ namespace YooPoon.WebFramework.API
     {
         private readonly ILog _log;
 
-        public YpAPIHandleErrorAttribute(ILog log)
+         public YpAPIHandleErrorAttribute(ILog log)
         {
             _log = log;
         }

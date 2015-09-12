@@ -57,5 +57,8 @@ namespace CRM.Entity.Model
 	public enum EnumRecommendAgentSearchOrderBy
 	{
 		OrderById,
+        OrderByBBrokername,
+        OrderByBrokername,
+        OrderByPresenteebId
 	}
 }

@@ -24,6 +24,7 @@ namespace Zerg.Common.Data
             Database.SetInitializer(new EfInitializer<CRMDbContext, CRMConfiguration>(dataProviderSettings.RawDataSettings["CRMConnection"]));
             Database.SetInitializer(new EfInitializer<TradingDbContext, TradingConfiguration>(dataProviderSettings.RawDataSettings["TradingConnection"]));
             Database.SetInitializer(new EfInitializer<EventDbContext, EventConfiguration>(dataProviderSettings.RawDataSettings["EventConnection"]));
+            Database.SetInitializer(new EfInitializer<CommunityDbContext, CommunityConfiguration>(dataProviderSettings.RawDataSettings["CommunityConnection"]));
         }
     }
 }

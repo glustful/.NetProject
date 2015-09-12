@@ -150,8 +150,26 @@ namespace CRM.Service.BrokerLeadClient
 							break;
                         case EnumBrokerLeadClientSearchOrderBy.OrderByTime:
                             query = condition.isDescending ? query.OrderBy(q => q.Uptime) : query.OrderByDescending(q => q.Uptime);
-
                             break;
+                        case EnumBrokerLeadClientSearchOrderBy.OrderByBrokername:
+                            query = condition.isDescending ? query.OrderBy(q => q.Brokername) : query.OrderByDescending(q => q.Brokername);
+                            break;
+                        case EnumBrokerLeadClientSearchOrderBy.OrderByClientName:
+                            query = condition.isDescending ? query.OrderBy(q => q.ClientName) : query.OrderByDescending(q => q.ClientName);
+                            break;
+                        case EnumBrokerLeadClientSearchOrderBy.OrderByPhone:
+                            query = condition.isDescending ? query.OrderBy(q => q.Phone) : query.OrderByDescending(q => q.Phone);
+                            break;
+                        case EnumBrokerLeadClientSearchOrderBy.OrderByProjectname:
+                            query = condition.isDescending ? query.OrderBy(q => q.Projectname) : query.OrderByDescending(q => q.Projectname);
+                            break;
+                        case EnumBrokerLeadClientSearchOrderBy.OrderByAppointmenttime:
+                            query = condition.isDescending ? query.OrderBy(q => q.Appointmenttime) : query.OrderByDescending(q => q.Appointmenttime);
+                            break;
+                        case EnumBrokerLeadClientSearchOrderBy.OrderByClientname:
+                            query = condition.isDescending ? query.OrderBy(q => q.ClientName) : query.OrderByDescending(q => q.ClientName);
+                            break;
+                      
                     }
 					
 				}

@@ -32,5 +32,7 @@ namespace CRM.Entity.Model
 	public enum EnumBankSearchOrderBy
 	{
 		OrderById,
+        OrderByCodeid,
+        OrderByAddtime
 	}
 }

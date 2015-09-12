@@ -5,10 +5,36 @@ angular.module("app").controller('CouponIndexController', ['$http','$scope','$mo
     $scope.condition={
         number:'',
         page:1,
-        pageSize:10
+        pageSize:10,
+        orderByAll:"OrderByAddtime",//排序
+        isDes:true//升序or降序
+        // className:'房地产'
+    };
+    var iniImg=function(){
+        $scope.OrderById="footable-sort-indicator";
+
     }
-    var getCouponList=function(){$http.get(SETTING.eventApiUrl+'/Coupon/Index',
-        {params: $scope.condition,'withCredentials': true}).success(function(data){
+    iniImg();
+    $scope.OrderById="fa-caret-down";//升降序图标
+    var getCouponList=function(orderByAll){
+        if(orderByAll!=undefined){
+            $scope.condition.orderByAll=orderByAll ;
+            if($scope.condition.isDes==true)//如果为降序，
+            {
+                $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                iniImg();//将所有的图标变成一个月
+                eval($scope.d);//把$scope.d当做语句来执行，把当前点击图片变成向上
+                $scope.condition.isDes=false;//则变成升序
+            }
+            else if($scope.condition.isDes==false)
+            {
+                $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                iniImg();
+                eval($scope.d);
+                $scope.condition.isDes=true;
+            }
+        }
+        $http.get(SETTING.eventApiUrl+'/Coupon/Index',{params: $scope.condition,'withCredentials': true}).success(function(data){
             $scope.List=data.List;
             $scope.condition.page=data.Condition.Page;
             $scope.condition.pageSize=data.Condition.PageCount;

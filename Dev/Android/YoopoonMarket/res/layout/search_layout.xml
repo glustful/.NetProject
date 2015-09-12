@@ -1,47 +1,64 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/red"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:padding="10dp" 
-    android:gravity="center_vertical">
+    android:layout_height="match_parent" >
 
-    <requestFocus />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/red"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
 
-    <Button
-        android:id="@+id/btn_smile"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/smile_face"
-        android:onClick="toServe" />
+        <requestFocus />
 
-    <Button
-        android:layout_marginLeft="20dp"
-        android:id="@+id/btn_select"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:text="请选择地区"
-        android:textSize="12sp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/search_et_border"
-        android:textColor="@color/white"/>
+        <Button
+            android:id="@+id/btn_smile"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/smile_face"
+            android:onClick="toServe" />
 
-    <Button
-        android:id="@+id/btn_search"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/search" />
+        <Button
+            android:id="@+id/btn_select"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/search_et_border"
+            android:text="请选择地区"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
 
-    <Button
-        android:id="@+id/rightBtn"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginLeft="10dp"
-        android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/category" />
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/search" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/rightBtn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/category" />
+    </LinearLayout>
+    
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_firstserve"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_search_height"
+        android:layout_marginLeft="50dp"
+        android:background="#66000000"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:layout_centerVertical="true"
+        android:textColor="@color/white" />
+
+</RelativeLayout>

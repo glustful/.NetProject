@@ -44,6 +44,7 @@
             android:dividerHeight="1dp" />
 
         <LinearLayout
+            android:id="@+id/ll_balance"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/white"

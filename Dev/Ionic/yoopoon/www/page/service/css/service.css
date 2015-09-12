@@ -1,0 +1,149 @@
+
+.header{
+    background-color: #ff3000;
+}
+.header a{
+    color: #fff;
+
+}
+
+.select-header{
+    position: absolute;
+    /*width: 50%;*/
+    top:25%;
+    left:40% ;
+}
+
+.header .item-select select{
+    position: static;
+    background:none;
+    border: none;
+    color: #fff;
+    padding:0;
+    max-width: 100%;
+    height: 100%;
+
+
+}
+.header .item-select:after{
+    color: #fff;
+    right: -5%;
+
+}
+.header-input{
+    position: absolute;
+    width: 60%;
+    top:15%;
+    left:120%;
+    background:none;
+    z-index: 1212121212;
+    border-radius: 20px;
+    -webkit-transition:all 0.3s;
+    -webkit-transition-delay:0s;
+}
+.header-input-show{
+
+    left: 21%;
+}
+.header .search{
+    position: absolute;
+    top:12%;
+    right: 1%;
+}
+.service{
+    padding: 0;
+}
+.service div {
+    text-align: center;
+    padding: 18px ;
+    background-color: #fff;
+}
+.service div p{
+    color: #b0b0b0;
+}
+.service i{
+    font-size: 36px;
+}
+.jgg1,.jgg2{
+    margin:0 3px 8px 0 ;
+}
+.jgg3{
+    margin-bottom: 8px;
+}
+.jgg4,.jgg5{
+    margin:0 3px 3px 0 ;
+}
+.jgg6{
+    margin-bottom: 3px;
+}
+
+
+/*清洗服务*/
+.subheader{
+    width: 100%;
+    padding:10px 0;
+    background-color: #ffcc00;
+    color: #7b7769;
+    font-size: 12px;
+}
+
+
+.select .col{
+    border:2px solid #b2b2b2;
+    text-align: center;
+
+}
+.distance1{
+    margin: 0 10px 15px 0;
+}
+.distance2{
+    margin-bottom:15px;
+}
+h4{
+    color: #727171;
+}
+.select .col p{
+    color: #aaaaaa;
+    text-decoration: underline;
+}
+.btn{
+    background-color: #ff3000;
+    font-size: 20px;
+}
+
+.line{
+    color: #cb1d00;
+
+}
+
+/*保险*/
+.safe-list .item{
+
+    /*height: 100px;*/
+}
+.safe-list li h2{
+    padding-top:5px;
+    white-space: normal;
+}
+.safe-list li p{
+    margin-top:10px;
+    color:#ff3000;
+}
+
+/*保险详情*/
+.safe-detail img{
+    width: 100%;
+    height: 200px;
+}
+.safe-list .tell{
+    border-bottom-width: 10px;
+}
+.safe-list .tell h2{
+    color:#ff3000;
+}
+.safe-list .tell i{
+    color: #727171;
+}
+.safe-list .detail h2{
+    color: #545556;
+}

@@ -49,10 +49,12 @@ namespace Zerg.Controllers.CRM
         /// <param name="type">类型</param>
         /// <param name="page">页码</param>
         /// <param name="pageSize">页面大小</param>
+        /// <param name="orderByAll">｛ＩＤ（OrderById），标题（OrderByTitle），发送内容（OrderByContent），发送号码（OrderByMobile），发送时间（OrderByAddtime）｝</param>
+        /// <param name="isDes">是否降序</param>
         /// <returns>短信详细信息</returns>
         [Description("检索返回短信详细信息")]
         [HttpGet]
-        public HttpResponseMessage SearchMessageDetail(string endTime, string startTime, string type, int page = 1, int pageSize = 10)
+        public HttpResponseMessage SearchMessageDetail(string endTime, string startTime, string type, EnumMessageDetailSearchOrderBy orderByAll = EnumMessageDetailSearchOrderBy .OrderById, bool isDes = true, int page = 1, int pageSize = 10)
         {
             //================================================赵旭初 by 2015-05-13 start===============================================================
             string strStarttime = "";
@@ -80,7 +82,9 @@ namespace Zerg.Controllers.CRM
                 AddtimeEnd = Convert.ToDateTime(strEndtime).AddDays(1),
                 Title = strType,
                 Page = Convert.ToInt32(page),
-                PageCount = pageSize
+                PageCount = pageSize,
+                OrderBy =orderByAll ,
+                isDescending =isDes 
             };
 
 

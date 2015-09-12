@@ -6,9 +6,37 @@ angular.module("app").controller('configureIndexController', [
         $scope.searchCondition = {
             name:'',
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:"OrderByName",//排序
+            isDes:true//升序or降序,
         };
-        $scope.getList  = function() {
+        var iniImg=function(){
+            $scope.OrderByName="footable-sort-indicator";
+            $scope.OrderByDescribe="footable-sort-indicator";
+            $scope.OrderByAddtime="footable-sort-indicator";
+        }
+        iniImg();
+        $scope.OrderByName="fa-caret-down";//升降序图标
+        $scope.getList  = function(orderByAll) {
+            if(orderByAll!=undefined){
+
+                $scope.searchCondition.orderByAll=orderByAll ;
+                if($scope.searchCondition.isDes==true)//如果为降序，
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                    iniImg();//将所有的图标变成一个月
+                    eval($scope.d);//把$scope.d当做语句来执行，把当前点击图片变成向上
+                    $scope.searchCondition.isDes=false;//则变成升序
+                }
+                else if($scope.searchCondition.isDes==false)
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
+                    $scope.searchCondition.isDes=true;
+                }
+               
+            }
             $http.get(SETTING.ApiUrl+'/Level/SearchLevel',{
                 params:$scope.searchCondition,
                 'withCredentials':true
@@ -126,9 +154,38 @@ angular.module("app").controller('configureSetIndexController', [
         $scope.searchCondition = {
             name:'',
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            orderByAll:"OrderByName",//排序
+            isDes:true//升序or降序,
         };
-        $scope.getList  = function() {
+        //初始化所有图标
+        var iniImg=function(){
+            $scope.OrderByName="footable-sort-indicator";
+            $scope.OrderByDescribe="footable-sort-indicator";
+            $scope.OrderByValue="footable-sort-indicator";
+            $scope.OrderByAddtime="footable-sort-indicator";
+
+        }
+        iniImg();
+        $scope.OrderByName="fa-caret-down";//升降序图标
+        $scope.getList = function (orderByAll) {
+            if(orderByAll!=undefined){
+                $scope.searchCondition.orderByAll=orderByAll ;
+                if($scope.searchCondition.isDes==true)//如果为降序，
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-up';";
+                    iniImg();//将所有的图标变成一个月
+                    eval($scope.d);//把$scope.d当做语句来执行，把当前点击图片变成向上
+                    $scope.searchCondition.isDes=false;//则变成升序
+                }
+                else if($scope.searchCondition.isDes==false)
+                {
+                    $scope.d="$scope."+orderByAll+"='fa-caret-down';";
+                    iniImg();
+                    eval($scope.d);
+                    $scope.searchCondition.isDes=true;
+                }
+            }
             $http.get(SETTING.ApiUrl+'/LevelConfig/SearchLevelConfig',{
                 params:$scope.searchCondition,
                 'withCredentials':true

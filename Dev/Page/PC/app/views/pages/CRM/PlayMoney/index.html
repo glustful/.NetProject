@@ -2,25 +2,25 @@
 <table class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" data-page-size="5"  >
     <thead>
     <tr>
-        <th data-toggle="true" class="footable-visible footable-first-column footable-sortable">
+        <th data-toggle="true" class="footable-visible footable-first-column footable-sortable" ng-click="getList('OrderById')">
             序号
-            <span class="footable-sort-indicator"></span></th>
-        <th class="footable-visible footable-sortable">
+            <span class="fa {{OrderById}}"></span></th>
+        <th class="footable-visible footable-sortable" ng-click="getList('OrderByBrokername')">
             经纪人名
-            <span class="footable-sort-indicator"></span></th>
+            <span class="fa {{OrderByBrokername}}"></span></th>
 
-        <th data-hide="phone,tablet" class="footable-visible footable-sortable">
+        <th data-hide="phone,tablet" class="footable-visible footable-sortable" ng-click="getList('OrderByWithdrawTime')">
             提现时间
-            <span class="footable-sort-indicator"></span></th>
-        <th data-hide="phone,tablet" class="footable-visible footable-sortable">
+            <span class="fa {{OrderByWithdrawTime}}"></span></th>
+        <th data-hide="phone,tablet" class="footable-visible footable-sortable" ng-click="getList('OrderByaccacount')">
             财务
-            <span class="footable-sort-indicator"></span></th>
-        <th data-hide="phone,tablet" class="footable-visible footable-sortable">
+            <span class="fa {{OrderByaccacount}}"></span></th>
+        <th data-hide="phone,tablet" class="footable-visible footable-sortable" ng-click="getList('OrderByState')">
             状态
-            <span class="footable-sort-indicator"></span></th>
+            <span class="fa {{OrderByState}}"></span></th>
         <th data-hide="phone" class="footable-visible footable-last-column footable-sortable">
             操作
-            <span class="footable-sort-indicator"></span></th>
+            </th>
     </tr>
     </thead>
     <tbody>
@@ -33,8 +33,8 @@
         <td data-value="78025368997" class="footable-visible" ng-if="item.state==0">处理中</td>
         <td data-value="78025368997" class="footable-visible" ng-if="item.state==1">完成</td>
         <!--<td data-value="1" class="footable-visible footable-last-column"><a ui-sref="page.CRM.PlayMoney.detailed({id:item.Id})"><span class="label bg-success" >查看</span></a></td>-->
-        <td data-value="1" ng-if="item.state==0" class="footable-visible footable-last-column"><button onclick="WindowShow()" ng-click="GetBrokerWithdrawById(item.Id)" type="button"><span class="label bg-success">打款</span></button></td>
-        <td data-value="1" ng-if="item.state==1"  class="footable-visible footable-last-column"><button onclick="javascript:void(0)" ng-click="javascript:void(0)" type="button"><span class="label bg-success">财务已打款</span></button></td>
+        <td data-value="1" ng-if="item.state==0" class=""><button onclick="WindowShow()" ng-click="GetBrokerWithdrawById(item.Id)" type="button" class="md-btn md-raised m-b btn-fw green">打款</span></button></td>
+        <td data-value="1" ng-if="item.state==1"  class=""><button onclick="javascript:void(0)"  type="button" class="md-btn md-raised m-b btn-fw green">财务已打款</button></td>
     </tr>
 
     </tbody>

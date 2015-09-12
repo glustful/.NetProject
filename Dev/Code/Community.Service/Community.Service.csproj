@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{95EA6C3C-AEAB-4517-A801-DA33A9A2A80F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Community.Service</RootNamespace>
+    <AssemblyName>Community.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Area\AreaService.cs" />
+    <Compile Include="Area\IAreaService.cs" />
+    <Compile Include="Category\CategoryService.cs" />
+    <Compile Include="Category\ICategoryService.cs" />
+    <Compile Include="MemberAddress\IMemberAddressService.cs" />
+    <Compile Include="MemberAddress\MemberAddressService.cs" />
+    <Compile Include="Member\IMemberService.cs" />
+    <Compile Include="Member\MemberService.cs" />
+    <Compile Include="OrderDetail\IOrderDetailService.cs" />
+    <Compile Include="OrderDetail\OrderDetailService.cs" />
+    <Compile Include="Order\IOrderService.cs" />
+    <Compile Include="Order\OrderService.cs" />
+    <Compile Include="ParameterValue\IParameterValueService.cs" />
+    <Compile Include="ParameterValue\ParameterValueService.cs" />
+    <Compile Include="Parameter\IParameterService.cs" />
+    <Compile Include="Parameter\ParameterService.cs" />
+    <Compile Include="ProductComment\IProductCommentService.cs" />
+    <Compile Include="ProductComment\ProductCommentService.cs" />
+    <Compile Include="ProductDetail\IProductDetailService.cs" />
+    <Compile Include="ProductDetail\ProductDetailService.cs" />
+    <Compile Include="ProductParameter\IProductParameterService.cs" />
+    <Compile Include="ProductParameter\ProductParameterService.cs" />
+    <Compile Include="Product\IProductService.cs" />
+    <Compile Include="Product\ProductService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceOrderDetail\IServiceOrderDetailService.cs" />
+    <Compile Include="ServiceOrderDetail\ServiceOrderDetailService.cs" />
+    <Compile Include="ServiceOrder\IServiceOrderService.cs" />
+    <Compile Include="ServiceOrder\ServiceOrderService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Community.Entity\Community.Entity.csproj">
+      <Project>{250cc499-eae6-46b1-96b8-11c02c913529}</Project>
+      <Name>Community.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YooPoon.Common\YooPoon.Common.csproj">
+      <Project>{a09e564c-ec00-4bfa-acfd-371b45abeeed}</Project>
+      <Name>YooPoon.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YooPoon.Core\YooPoon.Core.csproj">
+      <Project>{9e9ecf02-0eec-449d-8756-e1515d9f8ec8}</Project>
+      <Name>YooPoon.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YooPoon.Data\YooPoon.Data.csproj">
+      <Project>{2c74c9cf-a131-49e2-99bf-717315b46b4b}</Project>
+      <Name>YooPoon.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YooPoon.WebFramework\YooPoon.WebFramework.csproj">
+      <Project>{ae97a52e-b5f5-469d-95cb-94e14883ad01}</Project>
+      <Name>YooPoon.WebFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zerg.Common\Zerg.Common.csproj">
+      <Project>{db11f281-e24f-4237-b77f-0cfdcf8dd647}</Project>
+      <Name>Zerg.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

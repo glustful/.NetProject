@@ -39,5 +39,7 @@ namespace CRM.Entity.Model
     public enum EnumEventSearchOrderBy
     {
         OrderById,
+        OrderByStarttime,
+        OrderByEndtime
     }
 }

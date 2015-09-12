@@ -1,0 +1,101 @@
+.headimg {
+	width: 100%;
+	height: 100px;
+	z-index: -999;
+}
+.marginTop{
+	margin-top: 23px;
+}
+.top {
+	display: inline-flex;
+	width: 100%;
+}
+.pane {
+	background-color: #E2DFDF;
+}
+.headpic {
+	border-radius: 500px;
+	width: 84px;
+	height: 84px;
+	margin-top: -60px;
+	margin-left: 10px;
+}
+.username {
+	font-size: 25px;
+	font-weight: bold;
+	margin-top: -35px;
+	margin-left: 16px;
+	color: white;
+}
+.list {
+	padding: 0;
+	margin: 0;
+	background-color: #E2DFDF;
+	height: 100%;
+	margin-top: 10px;
+}
+#myclip {
+	height: 35px;
+	top: 10px;
+	background-color: #0DC2E8;
+	color: white;
+	border-radius: 5px;
+}
+#mysever {
+	height: 35px;
+	top: 10px;
+	background-color: #10C100;
+	color: white;
+	border-radius: 5px;
+}
+#myinfo {
+	height: 35px;
+	top: 10px;
+	color: white;
+	background-color: #DA0606;
+	font-size: 40px;
+	border-radius: 5px;
+}
+#myaddress {
+	height: 35px;
+	top: 10px;
+	color: white;
+	background-color: #DE6C2C;
+	border-radius: 5px;
+}
+#U {
+	height: 35px;
+	top: 10px;
+	color: white;
+	background-color: #E8AB46;
+	border-radius: 5px;
+}
+.myclipul {
+	margin-left: -7%;
+	margin-top: 5%;
+	text-align: center;
+}
+.myclipul i {
+	color: #CCCBCB;
+	font-size: 45px;
+}
+
+.myclipul p{
+	color: #000000;
+}
+.mysever{
+	text-align: center;
+	margin-top: 5%;
+	    margin-left: -7%;
+}
+.mysever i {
+	color: #CCCBCB;
+	font-size: 45px;
+}
+.mysever p{
+	color: #000000;
+}
+.list h2 a
+{
+	color:#E2DFDF;float: right;
+}

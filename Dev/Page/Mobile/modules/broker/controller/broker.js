@@ -7,6 +7,7 @@ app.controller('BrokerTopThreeController',['$scope','$http','AuthService','$stat
             coun=response.count;
             action();
         });
+    $scope.ImgUrl=SETTING.ImgUrl
     function action() {
         if (coun === 1)//为经纪人状态
         {
