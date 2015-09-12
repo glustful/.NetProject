@@ -4,9 +4,9 @@
 angular.module("app").controller('productCommentController',['$http','$scope','$modal',function($http,$scope,$modal){
     $scope.searchCondition = {
         Page: 1,
+        PageCount:'10'
 
-        PageCount:'10',
-        ProductId:''
+        //ProductId:''
 
     };
     //查询所有
@@ -24,7 +24,28 @@ angular.module("app").controller('productCommentController',['$http','$scope','$
     getCommentList();
     $scope.getList=getCommentList;
     //删除
-    $scope.del =(function(Id){
+    //$scope.del =(function(Id){
+    //        $http.delete('http://localhost:50597/api/ProductComment/Delete?Id='+Id,{
+    //
+    //                'withCredentials':true
+    //            }
+    //        ).success(function(data) {
+    //                if (data.Status) {
+    //                    getCommentList();
+    //                }
+    //            });
+    //    })
+
+    $scope.del = function (Id) {
+        $scope.selectedId = Id;
+        var modalInstance = $modal.open({
+            templateUrl: 'myModalContent.html',
+            controller:'ModalInstanceCtrl',
+            resolve: {
+                msg:function(){return "你确定要删除吗？";}
+            }
+        });
+        modalInstance.result.then(function(){
             $http.delete('http://localhost:50597/api/ProductComment/Delete?Id='+Id,{
 
                     'withCredentials':true
@@ -34,7 +55,9 @@ angular.module("app").controller('productCommentController',['$http','$scope','$
                         getCommentList();
                     }
                 });
+
         })
+    }
 
 
 
