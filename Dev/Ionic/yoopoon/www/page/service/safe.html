@@ -1,12 +1,13 @@
 <link rel="stylesheet" href="page/service/css/service.css">
 <ion-side-menus>
         <ion-side-menu-content>
-            <ion-header-bar class="header">
+            <div class="bar header" style="height: 44px">
                 <a href="#/page/service" class="button button-clear icon ion-chevron-left button-light"></a>
                 <h2 class="title light">保险</h2>
                 <a menu-toggle="right"  class="button button-clear icon ion-navicon-round button-light"></a>
-            </ion-header-bar>
-            <ion-content class="scroll-content has-header">
+            </div>
+            <ion-view hide-nav-bar="true" hide-tabs="false">
+            <ion-content class="scroll-content has-header"  no-header="true" style="top:44px;">
                     <ul class="list safe-list">
                         <li class="item item-thumbnail-left item-borderless">
                             <img src="page/service/img/bx.png" alt=""/>
@@ -39,10 +40,13 @@
                             <p>联系电话：400 105 0101</p>
                         </li>
                     </ul>
+                <ion-infinite-scroll on-infinite="load_more();">
+                </ion-infinite-scroll>
             </ion-content>
         </ion-side-menu-content>
     <ion-side-menu side="right" width="150">
     <ion-content class="dark-bg">
     </ion-content>
+        </ion-view>
     </ion-side-menu>
 </ion-side-menus>

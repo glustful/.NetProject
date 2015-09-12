@@ -1,44 +1,50 @@
-    <div class="bar bar-header header ">
+<link rel="stylesheet" href="page/service/css/service.css">
+<div class="bar header" style="height: 44px">
         <a href="#/page/service" class="button button-clear icon ion-chevron-left button-light"></a>
         <h2 class="title light">清洗服务</h2>
     </div>
-    <div class="bar bar-subheader subheader">
+    <div class="bar subheader" style="top:44px;height:44px;">
         在此，我们只收取预定金，所产生的具体费用请与服务提供商结算。
     </div>
-    <ion-view hide-tabs="true">
-        <ion-content style="background-color: #eeeeee" class="scroll-content has-subheader padding content-clear">
+<ion-view hide-nav-bar="true" hide-tabs="true">
+        <ion-content  class="scroll-content has-subheader padding content-clear" no-header="true" style="top:88px;background-color: #eeeeee">
             <p>选择服务</p>
             <div class="row select">
-                <div class="col distance1">
+                <div class="col distance1" ng-click="selectService(1)" ng-class="{'border-css':selected1}">
                     <h4>德奈福洗衣店</h4>
                     <p>全国连锁</p>
+                    <hr/>
                     <div class="line">需付定金：￥30.00</div>
                 </div>
-                <div class="col distance2">
+                <div class="col distance2" ng-click="selectService(2)" ng-class="{'border-css':selected2}">
                     <h4>UCC国际干洗店</h4>
                     <p>专业服务，更放心</p>
+                    <hr/>
                     <div class="line">需付定金：￥50.00</div>
                 </div>
             </div>
             <div class="row select">
-                <div class="col distance1">
+                <div class="col distance1" ng-click="selectService(3)" ng-class="{'border-css':selected3}">
                     <h4>爱家洗衣店</h4>
                     <p>单间干洗9元起</p>
+                    <hr/>
                     <div class="line">需付定金：￥25.00</div>
                 </div>
-                <div class="col distance2">
+                <div class="col distance2" ng-click="selectService(4)" ng-class="{'border-css':selected4}">
                     <h4>天天水洗店</h4>
                     <p>量大从优</p>
+                    <hr/>
                     <div class="line">需付定金：￥35.00</div>
                 </div>
             </div>
             <div class="row select">
-                <div class="col  distance1">
+                <div class="col distance1" ng-click="selectService(5)" ng-class="{'border-css':selected5}">
                     <h4>赛维干洗</h4>
                     <p>用心洗好每一件</p>
+                    <hr/>
                     <div class="line">需付定金：￥45.00</div>
                 </div>
-                <div class="col" style="border: none">
+                <div class="col" style="border: none;background: none">
                     <h4></h4>
                     <p></p>
                     <p></p>

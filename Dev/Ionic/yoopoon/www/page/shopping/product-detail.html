@@ -1,12 +1,13 @@
 
-    <div class="icon-size detail-back">
+    <div class="icon-size detail-back" ng-click="go('index.html#/page/shopping')">
+
         <i class="ion-chevron-left color-silver" ></i>
     </div>
-    <div class="icon-size detail-car ">
+    <div class="icon-size detail-car " ng-click="go('index.html#/page/car')">
         <i class="icon-gouwuche color-white"></i>
     </div>
 
-<ion-view hide-tabs="true">
+<ion-view hide-tabs="true" hide-nav-bar="true">
     <ion-content class="detail-position">
         <!-- 滚动图-->
             <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" >
@@ -61,10 +62,12 @@
                 <p><span class="font-title"> 继续拖动，查看图文详情</span></p>
             </div>
         </div>
-        <div class="div-null"></div>
+        <!--<div class="div-null"></div>-->
+        <ion-infinite-scroll on-infinite="load_more();">
+        </ion-infinite-scroll>
     </ion-content>
     <div class=" row detail-padding button-position">
-        <button class="col button-large assertive-bg none-border p-button">立即购买</button>
-        <button class="col button-large  energized-bg none-border p-button">加入购物车</button>
+        <button class="col button-large assertive-bg none-border p-button" ng-click="go('index.html#/page/car')">立即购买</button>
+        <button class="col button-large  energized-bg none-border p-button" ng-click="go('index.html#/page/car/order')">加入购物车</button>
     </div>
 </ion-view>

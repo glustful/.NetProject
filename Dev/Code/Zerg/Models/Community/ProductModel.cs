@@ -166,7 +166,7 @@ namespace Zerg.Models.Community
         /// </summary>
 //		public List<ProductParameterEntity> Parameters {get;set;}
         public decimal? NewPrice { get; set; }
-        public int Owner { get; set; }
+        public int? Owner { get; set; }
         public int CategoryId { get; set; }
         public string Detail { get; set; }
         public string Img { get; set; }

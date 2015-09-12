@@ -103,14 +103,15 @@
     border-radius: 10px;
     background-color: #eeeeee;
 }
-.content-margin{
-    margin-top: 30px;
+.input-size{
+    height: 44px;
+    width: 100%;
 }
 .color-orange{
     color: #eb6100;
 }
 
-.bar-subheader .icon-search:before{
+.bar .icon-search:before{
   margin-left: 30%;
     margin-right: 2%;
     font-size: 18px;
@@ -140,6 +141,9 @@
 }
 .border-label{
     border-bottom: 1px  solid #dddddd
+}
+.padding-top8{
+    padding-top: 8px;
 }
 /*…Ã∆∑œÍ«È*/
 .icon-size{

@@ -101,6 +101,6 @@ namespace Community.Entity.Model.Product
         /// <summary>
         /// 有多少人抢购
         /// </summary>
-        public virtual int Owner { get; set; }
+        public virtual int? Owner { get; set; }
 	}
 }

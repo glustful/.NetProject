@@ -305,6 +305,7 @@
     </ul>
   </li>
   <li>
+      <a href class="auto">
     <a ui-sref="app.product.productList">
       <i class="glyphicon glyphicon-edit"></i>
       <span>商品管理</span>
@@ -327,6 +328,7 @@
   <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
     <span translate="会员信息管理"></span>
   </li>
+  <!--------------------------------------------商品分类管理------------------------------------------------------>
 
   <li>
     <a href class="auto">
@@ -334,6 +336,19 @@
         <i class="fa fa-fw fa-angle-right text"></i>
         <i class="fa fa-fw fa-angle-down text-active"></i>
       </span>
+
+          <i class="glyphicon glyphicon-edit"></i>
+          <span translate="">商品分类管理</span>
+      </a>
+      <ul class="nav nav-sub dk">
+          <li ui-sref-active="active">
+              <a ui-sref="app.category.index">
+                  <span>商品列表</span>
+              </a>
+          </li>
+
+      </ul>
+
       <i class="glyphicon glyphicon-edit"></i>
       <span translate="">会员信息管理</span>
     </a>
@@ -353,6 +368,6 @@
     </ul>
   </li>
 </ul>
-<!-- / list -->
+
 
 

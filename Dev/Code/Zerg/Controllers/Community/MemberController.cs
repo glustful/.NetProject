@@ -23,27 +23,37 @@ namespace Zerg.Controllers.Community
 
         public HttpResponseMessage Get(int id)
 		{
+            if (id == 0) 
+            {
+                return  PageHelper.toJson(PageHelper.ReturnValue(false, "ID 不能为空")); 
+            }
 			var entity =_memberService.GetMemberById(id);
-            
-			var model = new MemberModel
-			{
-				Id = entity.Id,
-                RealName = entity.RealName,		
-                IdentityNo = entity.IdentityNo,		
-                Gender = entity.Gender,			
-                Phone = entity.Phone,		
-                Icq = entity.Icq,			
-                PostNo = entity.PostNo,	
-                Thumbnail = entity.Thumbnail,	
-                AccountNumber = entity.AccountNumber,	
-                Points = entity.Points,			
-                Level = entity.Level,		
-                AddTime = entity.AddTime,	
-                UpdUser = entity.UpdUser,	
-                UpdTime = entity.UpdTime,	
-            };
-           
-			return PageHelper.toJson(model);
+            if (entity != null)
+            {
+                var model = new MemberModel
+                {
+                    Id = entity.Id,
+                    RealName = entity.RealName,
+                    IdentityNo = entity.IdentityNo,
+                    Gender = entity.Gender,
+                    Phone = entity.Phone,
+                    Icq = entity.Icq,
+                    PostNo = entity.PostNo,
+                    Thumbnail = entity.Thumbnail,
+                    AccountNumber = entity.AccountNumber,
+                    Points = entity.Points,
+                    Level = entity.Level,
+                    AddTime = entity.AddTime,
+                    UpdUser = entity.UpdUser,
+                    UpdTime = entity.UpdTime,
+                };
+                return PageHelper.toJson(model);
+            }
+            else 
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "不存在数据")); 
+            }
+			
 		}
 
         public HttpResponseMessage Get([FromUri]MemberSearchCondition condition)
@@ -65,62 +75,84 @@ namespace Zerg.Controllers.Community
 				UpdUser = c.UpdUser,
 				UpdTime = c.UpdTime,
 			}).ToList();
+            if (model == null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "不存在数据")); 
+            }
             var totalCount = _memberService.GetMemberCount(condition);
             return PageHelper.toJson(new { List = model,TotalCount = totalCount});
 		}
 
         public HttpResponseMessage Post(MemberModel model)
 		{
-			var entity = new MemberEntity
-			{
-				RealName = model.RealName,
-				IdentityNo = model.IdentityNo,
-				Gender = model.Gender,
-				Phone = model.Phone,
-				Icq = model.Icq,
-				PostNo = model.PostNo,
-				Thumbnail = model.Thumbnail,
-				AccountNumber = model.AccountNumber,
-				Points = model.Points,
-				Level = model.Level,
-				AddTime = model.AddTime,
-				UpdUser = model.UpdUser,
-				UpdTime = model.UpdTime,
-               
-			};
-			if(_memberService.Create(entity).Id > 0)
-			{
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "post 成功"));
-			}
+            if (model != null) 
+            {
+                var entity = new MemberEntity
+                {
+                    RealName = model.RealName,
+                    IdentityNo = model.IdentityNo,
+                    Gender = model.Gender,
+                    Phone = model.Phone,
+                    Icq = model.Icq,
+                    PostNo = model.PostNo,
+                    Thumbnail = model.Thumbnail,
+                    AccountNumber = model.AccountNumber,
+                    Points = model.Points,
+                    Level = model.Level,
+                    AddTime = model.AddTime,
+                    UpdUser = model.UpdUser,
+                    UpdTime = model.UpdTime,
+
+                };
+                if (_memberService.Create(entity).Id > 0)
+                {
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "post 成功"));
+                }
+            }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "post  失败")); 
 		}
 
 		public HttpResponseMessage Put(MemberModel model)
 		{
-			var entity = _memberService.GetMemberById(model.Id);
-			if(entity == null)
+            if (model != null)
+            {
+                var entity = _memberService.GetMemberById(model.Id);
 
+                if (entity != null)
+                {
+                    entity.RealName = model.RealName;
+                    entity.IdentityNo = model.IdentityNo;
+                    entity.Gender = model.Gender;
+                    entity.Phone = model.Phone;
+                    entity.Icq = model.Icq;
+                    entity.PostNo = model.PostNo;
+                    entity.Thumbnail = model.Thumbnail;
+                    entity.AccountNumber = model.AccountNumber;
+                    entity.Points = model.Points;
+                    entity.Level = model.Level;
+                    entity.AddTime = model.AddTime;
+                    entity.UpdUser = model.UpdUser;
+                    entity.UpdTime = model.UpdTime;
+                    if (_memberService.Update(entity) != null)
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(true, "修改成功"));
+                    }
+                    else
+                    {
+                        return PageHelper.toJson(PageHelper.ReturnValue(false, "修改失败"));
+                    }
+                }
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "修改失败"));
-			entity.RealName = model.RealName;
-			entity.IdentityNo = model.IdentityNo;
-			entity.Gender = model.Gender;
-			entity.Phone = model.Phone;
-			entity.Icq = model.Icq;
-			entity.PostNo = model.PostNo;
-			entity.Thumbnail = model.Thumbnail;
-			entity.AccountNumber = model.AccountNumber;
-			entity.Points = model.Points;
-			entity.Level = model.Level;
-			entity.AddTime = model.AddTime;
-			entity.UpdUser = model.UpdUser;
-			entity.UpdTime = model.UpdTime;
-			if(_memberService.Update(entity) != null)
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "修改成功"));
+            }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "修改失败"));
 		}
 
 		public HttpResponseMessage Delete(int id)
 		{
+            if (id == 0) 
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "删除失败"));
+            }
 			var entity = _memberService.GetMemberById(id);
 			if(entity == null)
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "删除失败"));
