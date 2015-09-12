@@ -72,6 +72,16 @@ angular.module('app')
                     url: '/member',
                     template: '<div ui-view class="fade-in-up"></div>'
                 })
+                .state('app.member.edit',{
+                    url:'edit?id',
+                    templateUrl:'app/module/member/view/edit.html',
+                    resolve:{
+                        deps:['$ocLazyLoad',
+                            function($ocLazyLoad){
+                                return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
+                            }]
+                    }
+                })
                 .state('app.member.memlist',{
                     url:'memlist',
                     templateUrl:'app/module/member/view/memlist.html',

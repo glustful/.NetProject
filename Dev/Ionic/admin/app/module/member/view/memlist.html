@@ -1,35 +1,41 @@
 
-<div ng-controller="memController">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>基本情况</th>
-            <th>注册时间</th>
-            <th>操作</th>
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">会员信息</h1>
+</div>
+<div class="wrapper-md">
+    <div class="panel panel-default">
 
-        </tr>
-        </thead>
-        <tbody ng-repeat="item in list">
-        <tr>
-            <td>
+        <div class="table-responsive" ng-controller="memController">
+            <table  class="table table-striped m-b-none">
+                <thead>
+                <tr>
+                    <th style="width:20%">基本情况</th>
+                    <th style="width:20%">注册时间</th>
+                    <th style="width:20%">操作</th>
+                </tr>
+                </thead>
+                <tbody ng-repeat="item in list">
+                <tr>
+                    <td>
+                        <div class="md-list-item-left">
+                            <img src="{{item.Thumbnail}}" class="w-full circle">
+                        </div>
+                        <div  class="table-responsive">
+                            <p><span>手机：<small class="small">{{item.Phone}}</small></span><span>姓名：<small>{{item.RealName}}</small></span><span>性别:<small>{{item.Gender}}</small></span></p>
+                            <p><span>身份证：<small>{{item.IdentityNo}}</small></span><span>余额：<small>{{item.AccountNumber}}</small></span><span>积分：<small>{{item.Points}}</small></span> </p>
+                        </div>
+                    </td>
 
-                <div class="information">
-                    <p><span>手机：<small class="small">{{item.Phone}}</small></span><span>姓名：<small>{{item.RealName}}</small></span><span>性别:<small>{{item.Gender}}</small></span></p>
-                    <p><span>身份证：<small>{{item.IdentityNo}}</small></span><span>余额：<small>{{item.AccountNumber}}</small></span><span>积分：<small>{{item.Points}}</small></span> </p>
-                </div>
-            </td>
-            <td><time>{{item.AddTime| dateFilter}}</time></td>
-            <td>
-                <a ui-sref="app.member.detail({id:item.Id})" ><button  md-ink-ripple="" class="md-btn md-raised m-b btn-fw green">详情</button></a>
-                <button  md-ink-ripple=""  ng-click="deleteMem(item.Id)" class="md-btn md-raised m-b btn-fw yellow">删除</button>
-            </td>
+                    <td><time>{{item.AddTime| dateFilter}}</time></td>
+                    <td>
+                        <a ui-sref="app.member.edit({id:item.Id})" ><button  type="submit"  class="btn btn-success">编辑</button></a>
+                        <a ui-sref="app.member.detail({id:item.Id})" ><button  type="submit" class="btn btn-success">详情</button></a>
+                        <button  ng-click="deleteMem(item.Id)" type="submit" class="btn btn-success">删除</button>
+                    </td>
 
-        </tr>
-
-        </tbody>
-    </table>
-
-    <script type="text/ng-template" id="myModalContent.html">
-        <div ng-include="'app/module/modal.html'"></div>
-    </script>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
