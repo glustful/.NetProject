@@ -1,32 +1,33 @@
-<div class="bar bar-header header">
+<div class="bar  assertive-bg" style="height: 44px">
     <button class="button  button-icon icon icon-fuwuanniu"></button>
     <h1 class="title font-title color-white">云南特产</h1>
     <button class="button button-icon icon icon-search"></button>
 </div>
-<div class="bar bar-subheader row border-label " >
+
+<div class="bar  row border-label " style="top:44px">
       <label class="col text-center">
-          <select  class="none-border lable-size">
+          <select  class="none-border lable-size font-12">
               <option>HTML</option>
               <option selected>综合排序</option>
               <option>JavaScript</option>
           </select>
       </label>
     <label class="col text-center">
-        <select class="none-border lable-size">
+        <select class="none-border lable-size font-12">
             <option>HTML</option>
             <option selected>筛选</option>
             <option>JavaScript</option>
         </select>
     </label>
 </div>
-<ion-view hide-tabs="true">
-<ion-content class="content has-subheader ">
-    <div class="row padding text-center " >
-        <div class="col-20 stable-bg">品牌</div>
-        <div class="col-20 stable-bg col-offset">适用季节</div>
-        <div class="col-20 stable-bg col-offset">选购热点</div>
-        <div class="col-20 stable-bg col-offset">特产品类</div>
-    </div>
+<div class="bar row padding text-center " style="top: 98px">
+    <div class="col-20 stable-bg padding-top8" >品牌</div>
+    <div class="col-20 stable-bg col-offset padding-top8">适用季节</div>
+    <div class="col-20 stable-bg col-offset padding-top8">选购热点</div>
+    <div class="col-20 stable-bg col-offset padding-top8">特产品类</div>
+</div>
+<ion-view hide-tabs="true" hide-nav-bar="true">
+<ion-content class="content  " style="top: 138px">
     <ion-list>
         <ion-item  class="row" ng-click="go('index.html#/page/shopping/product-detail')">
             <div class="product col col-25">

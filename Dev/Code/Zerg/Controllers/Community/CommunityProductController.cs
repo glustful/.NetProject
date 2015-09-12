@@ -114,8 +114,8 @@ namespace Zerg.Controllers.Community
 				Subtitte = c.Subtitte,
 				Contactphone = c.Contactphone,
 				Type = c.Type,
-                NewPrice = c.NewPrice,
-                Owner =c.Owner,
+                NewPrice = c.NewPrice.Value,
+                Owner =c.Owner.Value,
                 Addtime = c.AddTime,
 				Detail = c.Detail.Detail
 //				Comments = c.Comments,

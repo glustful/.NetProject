@@ -1,8 +1,8 @@
 /*
 
  */
-app.controller('memController', ['$scope', '$http','$stateParams','$modal',
-    function($scope, $http,$stateParams,$modal) {
+app.controller('memController', ['$scope', '$http','$stateParams','$modal','$state',
+    function($scope, $http,$stateParams,$modal,$state) {
         $scope.searchCondition = {
             page: 1,
             pageSize: 10
@@ -28,18 +28,18 @@ app.controller('memController', ['$scope', '$http','$stateParams','$modal',
             });
         }
         getMemById();
-        //获取会员地址信息
-
-       var getMemAddress = function() {
-           $http.get(SETTING.ZergWcApiUrl + "/MemberAddress/Get?id="+$stateParams.id, {
-               //params: $stateParams.id,
-               'withCredentials': true
-           }).success(function (data) {
-               $scope.memAddress = data.List;
-
-           });
-       }
-        getMemAddress();
+       // //获取会员地址信息
+       //
+       //var getMemAddress = function() {
+       //    $http.get(SETTING.ZergWcApiUrl + "/MemberAddress/Get?id="+$stateParams.id, {
+       //        //params: $stateParams.id,
+       //        'withCredentials': true
+       //    }).success(function (data) {
+       //        $scope.memAddress = data.List;
+       //
+       //    });
+       //}
+       // getMemAddress();
 
         $scope.deleteMem=function (Id) {
             var modalInstance = $modal.open({
@@ -53,7 +53,6 @@ app.controller('memController', ['$scope', '$http','$stateParams','$modal',
                 $http.delete(SETTING.ZergWcApiUrl + '/Member/Delete?id=' + Id, {
                     'withCredentials': true
                 }).success(function (data) {
-
                     if (data.Status) {
                         getMember();
                     }else{
@@ -62,5 +61,15 @@ app.controller('memController', ['$scope', '$http','$stateParams','$modal',
                 });
             });
         }
-//-------------------------删除会员 end------------------------
+    //-------------------------删除会员 end------------------------
+        $scope.updateMem = function(){
+            $http.put(SETTING.ZergWcApiUrl + "/Member/Put",$scope.memModels,{
+                'withCredentials': true
+            }).success(function(data){
+                if(data.Status)
+                {
+                    $state.go("app.member.memlist");
+                }
+            })
+        }
     }]);

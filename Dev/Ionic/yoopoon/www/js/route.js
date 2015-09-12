@@ -12,7 +12,7 @@ ApiUrl:'http://api.iyookee.cn/api',
 ImgUrl:'http://img.iyookee.cn/',
 eventApiUrl:'http://www.iyookee.cn/API'
 };
-app.run(function($ionicPlatform) {
+app.run(function($ionicPlatform,$ionicHistory,$ionicLoading) {
      $ionicPlatform.ready(function() {
                           // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                           // for form inputs)
@@ -28,6 +28,17 @@ app.run(function($ionicPlatform) {
                           }
                           
                           });
+        $ionicPlatform.registerBackButtonAction(function(event) {
+          event.preventDefault();
+
+          if ($ionicHistory.currentStateName() === 'page.shopping') {
+            window.close();
+            ionic.Platform.exitApp();
+          } else {
+            $ionicHistory.goBack();
+          }
+          return false;
+         }, 101);
 
         });
 
