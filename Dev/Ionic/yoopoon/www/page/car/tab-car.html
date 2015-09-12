@@ -6,6 +6,7 @@
       <a href="" class="button button-clear" ng-click="flag.showDelete=!flag.showDelete;flag.showReorder=false;">编辑</a>
 
   </ion-header-bar>
+  <ion-view>
   <ion-content ">
     <!--<div class="test">购物车(5)</div>-->
 
@@ -71,13 +72,16 @@
 
       
     </ion-list>
+     
   </ion-content>
-
-            <div class="bar bar-subfooter checkout"">
+  <div class="bar bar-subfooter checkout"">
                 <ion-checkbox style="margin-top: -12px;margin-left: -10px;width: 100px;" ng-click="all()" ng-model="allButton">全选</ion-checkbox>
                 <h2 class="title">合计<span class="red">￥387.00</span></h2>
                 <button class="button light ">结算(5)</button>
             </div>
+  </ion-view
+
+           
 
 
 
