@@ -402,7 +402,7 @@ angular.module('app')
                     templateUrl:'app/module/order/view/serviceList.html',
                     resolve:{
                         deps:['uiLoad',function(uiLoad){
-                            return uiLoad.load(['app/module/order/controller/orderServiceController.js']);
+                            return uiLoad.load(['app/module/order/controller/serviceOrderController.js']);
                         }]
                     }
                 });
