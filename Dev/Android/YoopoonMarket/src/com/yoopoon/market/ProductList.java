@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yoopoon.view.adapter.ProductListViewAdapter;
 
 /**
  * @ClassName: ProductList

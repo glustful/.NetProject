@@ -1,17 +1,11 @@
 package com.yoopoon.market;
 
 import java.util.ArrayList;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.advertisement.ADController;
 import com.yoopoon.market.net.ProgressMessage;
@@ -19,31 +13,23 @@ import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData.ResultState;
-
 import android.app.ActionBar.LayoutParams;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 @EActivity(R.layout.activity_product_detail)
 public class ProductDetailActivity extends MainActionBarActivity {
 	private ADController mADController;
-	private ProductCommentListViewAdapter commentAdapter;
 	private ArrayList<String> imgs;
 	private LinearLayout linearLayout;
 	private Context mContext;
@@ -53,7 +39,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	//评论对应的布局
 	private LinearLayout commentLinearlayout;
 	//添加更多评论对应的布局
-	private LinearLayout addMoreCommentLinearLayout;
 	private static int count = 2;
 	private ArrayList<JSONObject> jsonObjects;
 
@@ -122,7 +107,8 @@ public class ProductDetailActivity extends MainActionBarActivity {
 			TextView commentContentTextView = (TextView) commentItemLinearLayout.findViewById(R.id.tv_comment_content);
 			String url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
 			userPhotoImageView.setTag(url);
-			ImageLoader.getInstance().displayImage(url, userPhotoImageView,MyApplication.getOptions(),MyApplication.getLoadingListener());
+			ImageLoader.getInstance().displayImage(url, userPhotoImageView, MyApplication.getOptions(),
+					MyApplication.getLoadingListener());
 			userNickNameTextView.setText(jsonObject.optString("nickName"));
 			commentContentTextView.setText(jsonObject.optString("comment"));
 			commentLinearlayout.addView(commentItemLinearLayout, i);
@@ -154,7 +140,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		count=2;
+		count = 2;
 	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -199,15 +185,14 @@ public class ProductDetailActivity extends MainActionBarActivity {
 			}.setUrl("/api/Channel/GetTitleImg").setRequestMethod(RequestMethod.eGet).addParam("channelName", "banner")
 					.notifyRequest();
 	}
-
-	private class RefreshListener implements OnRefreshListener2<ListView> {
-		@Override
-		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-			Toast.makeText(mContext, "pull down to refresh", Toast.LENGTH_SHORT).show();
-		}
-		@Override
-		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-			Toast.makeText(mContext, "pull up to refresh", Toast.LENGTH_SHORT).show();
-		}
-	}
+	/*	private class RefreshListener implements OnRefreshListener2<ListView> {
+			@Override
+			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+				Toast.makeText(mContext, "pull down to refresh", Toast.LENGTH_SHORT).show();
+			}
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+				Toast.makeText(mContext, "pull up to refresh", Toast.LENGTH_SHORT).show();
+			}
+		}*/
 }

@@ -10,7 +10,7 @@
  * @date: 2015年9月10日 下午5:41:17 
  * @version: V1.0   
  */
-package com.yoopoon.market;
+package com.yoopoon.view.adapter;
 
 import java.util.ArrayList;
 
@@ -28,6 +28,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yoopoon.market.MyApplication;
+import com.yoopoon.market.ProductDetailActivity_;
+import com.yoopoon.market.R;
+import com.yoopoon.market.R.id;
+import com.yoopoon.market.R.layout;
 
 public class ProductListViewAdapter extends BaseAdapter {
 	private Context mContext;

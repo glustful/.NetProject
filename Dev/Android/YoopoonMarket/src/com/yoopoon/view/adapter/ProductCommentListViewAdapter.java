@@ -4,7 +4,7 @@
  * @author: king
  * @date: 2015年9月11日 下午4:56:12  
  */
-package com.yoopoon.market;
+package com.yoopoon.view.adapter;
 
 import java.util.ArrayList;
 
@@ -13,6 +13,10 @@ import javax.security.auth.PrivateCredentialPermission;
 import org.json.JSONObject;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yoopoon.market.MyApplication;
+import com.yoopoon.market.R;
+import com.yoopoon.market.R.id;
+import com.yoopoon.market.R.layout;
 
 import android.R.string;
 import android.content.Context;
