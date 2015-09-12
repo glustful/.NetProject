@@ -3,29 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/red"
-    android:padding="10dp" 
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:gravity="center">
+    android:padding="10dp" 
+    android:gravity="center_vertical">
+
     <requestFocus />
 
     <Button
-        android:onClick="toServe"
         android:id="@+id/btn_smile"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/smile_face" />
+        android:background="@drawable/smile_face"
+        android:onClick="toServe" />
 
-    <EditText
+    <Button
+        android:layout_marginLeft="20dp"
+        android:id="@+id/btn_select"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textColor="@color/white"
+        android:text="请选择地区"
+        android:textSize="12sp"
+        android:layout_height="wrap_content"
         android:background="@drawable/search_et_border"
-        android:padding="5dp"
-		android:textColorHint="@color/white"
-		android:hint="aaa"/>
+        android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/btn_search"
@@ -33,7 +35,13 @@
         android:layout_height="20dp"
         android:layout_marginLeft="10dp"
         android:background="@drawable/search" />
-    
-    
+
+    <Button
+        android:id="@+id/rightBtn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="10dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/category" />
 
 </LinearLayout>

@@ -31,8 +31,10 @@ import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -153,6 +155,15 @@ public class RequestTask implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} else if (mRequestData.getRequestMethod() == RequestAdapter.RequestMethod.ePut) {
+			try {
+				RequestPutMethod(urlString);
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if (mRequestData.getRequestMethod() == RequestAdapter.RequestMethod.eDelete) {
+			RequestDeleteMethod(urlString);
 		} else {
 			// upLoadRequestPostMethod(urlString);
 			uploadImage(urlString);
@@ -236,6 +247,164 @@ public class RequestTask implements Runnable {
 			ResponseMessage msg = new ResponseMessage();
 			msg.setCode(-1);
 			msg.setMsg(e.getMessage());
+			msg.setData(null);
+			sendResponseMessage(msg);
+		}
+	}
+
+	private void RequestDeleteMethod(String urlString) {
+		IdentityHashMap<String, String> params = mRequestData.getParams();
+		if ((null != params) && (params.size() > 0)) {
+			urlString += "?";
+			for (Map.Entry<String, String> entry : params.entrySet()) {
+				String key = entry.getKey();
+				String value = entry.getValue();
+				if (value instanceof String) {
+					urlString += key + "=" + value;
+					urlString += "&";
+				}
+			}
+			urlString = urlString.substring(0, urlString.length() - 1);// 去掉最后的&字符
+		}
+		HttpResponse httpResponse = null;
+		try {
+			HttpDelete delete = new HttpDelete(urlString);
+			delete.setHeader("x-requested-with", "XMLHttpRequest");
+			// get.setHeader("Content-Type", "application/json");
+			httpResponse = mHttpClient.execute(delete, mHttpContext);
+			int responseCode = httpResponse.getStatusLine().getStatusCode();
+			if (responseCode >= 200 && responseCode < 400) {
+				if (mRequestData.getSaveSession()) {
+					CookieStore cookie = mHttpClient.getCookieStore();
+					if (null != cookie) {
+						saveCookie(cookie);
+					}
+				}
+				if (mRequestData.getRequestType() == RequestAdapter.RequestType.eGeneral) {
+					ResponseMessage msg = new ResponseMessage();
+					msg.setCode(responseCode);
+					msg.setMsg("获取数据成功");
+					msg.setData(EntityUtils.toByteArray(httpResponse.getEntity()));
+					sendResponseMessage(msg);
+				} else if (mRequestData.getRequestType() == RequestAdapter.RequestType.eFileDown) {
+					HttpEntity entity = httpResponse.getEntity();
+					BufferedHttpEntity bufHttpEntity = new BufferedHttpEntity(entity);
+					InputStream is = bufHttpEntity.getContent();
+					downloadFile(is, responseCode);
+				} else if (mRequestData.getRequestType() == RequestAdapter.RequestType.eFileUp) {
+					ResponseMessage msg = new ResponseMessage();
+					msg.setCode(responseCode);
+					msg.setMsg(httpResponse.getStatusLine().getReasonPhrase());
+					msg.setData(null);
+					sendResponseMessage(msg);
+				} else if (mRequestData.getRequestType() == RequestAdapter.RequestType.eFileStream) {
+					HttpEntity entity = httpResponse.getEntity();
+					BufferedHttpEntity bufferedHttpEntity = new BufferedHttpEntity(entity);
+					InputStream is = bufferedHttpEntity.getContent();
+					mIs = is;
+					Log.d("RequestTask", "InputStream size is +" + "..." + is.available());
+					ResponseMessage msg = new ResponseMessage();
+					msg.setCode(responseCode);
+					msg.setInstream(mIs);
+					sendResponseMessage(msg);
+				}
+			} else {
+				ResponseMessage msg = new ResponseMessage();
+				msg.setCode(responseCode);
+				msg.setMsg(httpResponse.getStatusLine().getReasonPhrase());
+				msg.setData(null);
+				sendResponseMessage(msg);
+			}
+		} catch (IOException e) {
+			ResponseMessage msg = new ResponseMessage();
+			msg.setCode(-1);
+			msg.setMsg(e.getMessage());
+			msg.setData(null);
+			sendResponseMessage(msg);
+		}
+	}
+
+	private void RequestPutMethod(String urlString) throws UnsupportedEncodingException {
+		IdentityHashMap<String, String> params = mRequestData.getParams();
+		HttpPut httpPut = new HttpPut(urlString);
+		httpPut.setHeader("x-requested-with", "XMLHttpRequest");
+		// httpPost.setHeader("Access-Control-Allow-Credentials", "true");
+		httpPut.setHeader("Accept", "application/json, text/plain, */*");
+		httpPut.setHeader("Connection", "keep-alive");
+		if (mRequestData.getContentType() == RequestContentType.eJSON) {
+			httpPut.setHeader("Content-Type", "application/json;charset=UTF-8");
+		} else if (mRequestData.getContentType() == RequestContentType.eImage) {
+			httpPut.setHeader("Content-Type", "image/jpeg");
+		}
+		List<NameValuePair> reqPar = new ArrayList<NameValuePair>();
+		if (null != params) {
+			for (Map.Entry<String, String> entry : params.entrySet()) {
+				String key = entry.getKey();
+				String value = entry.getValue();
+				reqPar.add(new BasicNameValuePair(key, value));
+			}
+		}
+		try {
+			if (mRequestData.getContentType() == RequestContentType.eGeneral) {
+				httpPut.setEntity(new UrlEncodedFormEntity(reqPar, "UTF-8"));
+			} else if (mRequestData.getContentType() == RequestContentType.eJSON) {
+				httpPut.setEntity(new StringEntity(mRequestData.getJSON(), "UTF-8"));
+			} else {
+				httpPut.setEntity(new StringEntity(mRequestData.getJSON(), "UTF-8"));
+			}
+			HttpResponse httpResponse = mHttpClient.execute(httpPut);
+
+			int responseCode = httpResponse.getStatusLine().getStatusCode();
+			if ((responseCode > 199) && (responseCode < 400)) {
+				if (!mStopRunning && mRequestData.getSaveSession()) {
+					CookieStore cookie = mHttpClient.getCookieStore();
+					if (null != cookie) {
+						saveCookie(cookie);
+					}
+				}
+				if (mRequestData.getRequestType() == RequestAdapter.RequestType.eGeneral) {
+					ResponseMessage msg = new ResponseMessage();
+					msg.setCode(responseCode);
+					msg.setMsg("获取数据成功");
+					// System.out.println("response="+httpResponse.getEntity());
+					msg.setData(EntityUtils.toByteArray(httpResponse.getEntity()));
+					sendResponseMessage(msg);
+					/*
+					 * InputStream in = httpResponse.getEntity().getContent(); BufferedReader bw =
+					 * new BufferedReader(new InputStreamReader(in)); String line = bw.readLine();
+					 * while(line != null){ System.out.println("line="+line); line = bw.readLine();
+					 * } bw.close();
+					 */
+				} else if (mRequestData.getRequestType() == RequestAdapter.RequestType.eFileDown) {
+					HttpEntity entity = httpResponse.getEntity();
+					BufferedHttpEntity bufHttpEntity = new BufferedHttpEntity(entity);
+					InputStream is = bufHttpEntity.getContent();
+					downloadFile(is, responseCode);
+				} else if (mRequestData.getRequestType() == RequestAdapter.RequestType.eFileUp) {
+					ResponseMessage msg = new ResponseMessage();
+					msg.setCode(responseCode);
+					msg.setMsg(httpResponse.getStatusLine().getReasonPhrase());
+					msg.setData(null);
+					sendResponseMessage(msg);
+				} else {
+					ResponseMessage msg = new ResponseMessage();
+					msg.setCode(responseCode);
+					msg.setMsg(httpResponse.getStatusLine().getReasonPhrase());
+					msg.setData(null);
+					sendResponseMessage(msg);
+				}
+			} else {
+				ResponseMessage msg = new ResponseMessage();
+				msg.setCode(responseCode);
+				msg.setMsg("请求错误");
+				msg.setData(null);
+				sendResponseMessage(msg);
+			}
+		} catch (Exception e) {
+			ResponseMessage msg = new ResponseMessage();
+			msg.setCode(-1);
+			// msg.setMsg(e.getMessage());
+			msg.setMsg("网络不给力，请稍后重试！");
 			msg.setData(null);
 			sendResponseMessage(msg);
 		}
@@ -425,7 +594,7 @@ public class RequestTask implements Runnable {
 		FileOutputStream out = null;
 		int readCount = 0;
 		try {
-			Log.d("RequsetTask", "download File path is" + mRequestData.getLocalPath());
+			// Log.d("RequsetTask", "download File path is" + mRequestData.getLocalPath());
 			out = new FileOutputStream(mRequestData.getLocalPath(), false);
 			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(out);
 			BufferedInputStream bufferedInputStream = new BufferedInputStream(is);

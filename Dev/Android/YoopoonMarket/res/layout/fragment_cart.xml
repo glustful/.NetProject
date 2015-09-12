@@ -7,16 +7,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
-        
-        <TextView 
-            android:id="@+id/tv_title_count"
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="购物车(5)"
-            android:background="@color/white"
-            android:textSize="@dimen/large_textsize"/>
+                android:background="@color/white" >
+
+            <TextView
+                android:layout_centerInParent="true"
+                android:id="@+id/tv_title_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="购物车(5)"
+                android:textSize="@dimen/large_textsize" />
+            
+            <Button 
+                android:id="@+id/btn_edit"
+                style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_gray"
+                android:tag="false"
+                android:text="编辑"/>
+        </RelativeLayout>
 
         <com.handmark.pulltorefresh.library.PullToRefreshListView
             android:id="@+id/lv"
@@ -32,6 +48,12 @@
             android:layout_height="50dp"
             android:background="@color/white"
             android:gravity="center" >
+
+            <CheckBox
+                android:id="@+id/cb_chooseall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全选" />
 
             <TextView
                 android:id="@+id/tv_price_total"
@@ -51,10 +73,11 @@
                 android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
-    <include 
+
+    <include
         android:id="@+id/ll_loading"
-        layout="@layout/loading"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        layout="@layout/loading" />
 
 </RelativeLayout>

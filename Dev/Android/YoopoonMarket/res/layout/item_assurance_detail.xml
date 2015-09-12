@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dip"
-        android:background="@drawable/logo_gray" />
+        android:background="@drawable/default_img" />
     <TextView 
         android:id="@+id/tv"
         android:padding="5dp"

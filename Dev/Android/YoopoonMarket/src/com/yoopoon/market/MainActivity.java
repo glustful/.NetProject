@@ -17,6 +17,9 @@ import java.util.List;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -26,6 +29,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -44,14 +48,19 @@ import com.yoopoon.market.fragment.ShopFragment;
  */
 @EActivity(R.layout.activity_main)
 public class MainActivity extends FragmentActivity implements OnClickListener {
+	private static final String TAG = "MainActivity";
 	@ViewById(R.id.vp)
 	ViewPager vp;
 	@ViewById(R.id.rg)
 	RadioGroup rg;
 	@ViewById(R.id.search_layout)
 	View searchLayout;
+	@ViewById(R.id.btn_select)
+	Button btn_select;
 	List<Fragment> fragments = new ArrayList<Fragment>();
 	List<LinearLayout> lls = new ArrayList<LinearLayout>();
+	String[] areas = { "北京", "大理", "香格里拉", "西双版纳" };
+	int checkedItem = 0;
 
 	@AfterViews
 	void initUI() {
@@ -68,9 +77,52 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 		for (LinearLayout ll : lls)
 			ll.setOnClickListener(this);
+		btn_select.setOnClickListener(new SearchViewClickListener());
 
 		vp.setOnPageChangeListener(new MyPagerChangeListener());
 
+	}
+
+	private class SearchViewClickListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+				case R.id.btn_select:
+					AlertDialog.Builder builder = new Builder(MainActivity.this);
+					builder.setTitle("请选择地区");
+					builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							btn_select.setText(areas[checkedItem]);
+							dialog.dismiss();
+						}
+					});
+					builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+					builder.setSingleChoiceItems(areas, checkedItem, new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							checkedItem = which;
+							btn_select.setText(areas[which]);
+							dialog.dismiss();
+
+						}
+					});
+					builder.show();
+					break;
+
+				default:
+					break;
+			}
+		}
 	}
 
 	private class MyPageAdapter extends FragmentPagerAdapter {

@@ -18,12 +18,15 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +34,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -42,6 +48,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.BalanceActivity_;
+import com.yoopoon.market.MyApplication;
 import com.yoopoon.market.R;
 import com.yoopoon.market.domain.Staff;
 import com.yoopoon.market.net.ProgressMessage;
@@ -57,6 +64,7 @@ import com.yoopoon.market.utils.Utils;
  * @date: 2015-9-7 下午4:50:59
  */
 public class CartFragment extends Fragment implements OnClickListener {
+	private static final String TAG = "CartFragment";
 	View rootView;
 	PullToRefreshListView lv;
 	TextView tv_price_total;
@@ -66,6 +74,8 @@ public class CartFragment extends Fragment implements OnClickListener {
 	List<Staff> staffList = new ArrayList<Staff>();
 	View ll_loading;
 	TextView tv_title_count;
+	CheckBox cb_selectall;
+	Button btn_edit;
 
 	@Override
 	@Nullable
@@ -81,12 +91,16 @@ public class CartFragment extends Fragment implements OnClickListener {
 		btn_balance = (Button) rootView.findViewById(R.id.btn_balance);
 		ll_loading = rootView.findViewById(R.id.ll_loading);
 		tv_title_count = (TextView) rootView.findViewById(R.id.tv_title_count);
+		cb_selectall = (CheckBox) rootView.findViewById(R.id.cb_chooseall);
+		btn_edit = (Button) rootView.findViewById(R.id.btn_edit);
 
 		lv.setMode(Mode.BOTH);
 		adapter = new MyListViewAdapter();
 		lv.setAdapter(adapter);
 
 		btn_balance.setOnClickListener(this);
+		cb_selectall.setOnClickListener(this);
+		btn_edit.setOnClickListener(this);
 		lv.setOnRefreshListener(new HowWillIrefresh());
 
 		if (staffList.size() == 0)
@@ -103,23 +117,28 @@ public class CartFragment extends Fragment implements OnClickListener {
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
-				boolean status = object.optBoolean("Status", false);
-				if (status) {
-					try {
-						JSONArray array = object.getJSONArray("Object");
-						for (int i = 0; i < array.length(); i++) {
-							JSONObject staffObject = array.getJSONObject(i);
-							int price = staffObject.optInt("Id", 0);
-							String title = staffObject.optString("Title", "");
-							String img = getString(R.string.url_image) + staffObject.optString("TitleImg", "");
-							String category = staffObject.optString("AdSubTitle", "");
-							staffList.add(new Staff(title, category, img, i, price + 0.9, price + 20.9));
+				if (object != null) {
+					boolean status = object.optBoolean("Status", false);
+					if (status) {
+						try {
+							JSONArray array = object.getJSONArray("Object");
+							for (int i = 0; i < array.length(); i++) {
+								JSONObject staffObject = array.getJSONObject(i);
+								int price = staffObject.optInt("Id", 0);
+								String title = staffObject.optString("Title", "");
+								String img = getString(R.string.url_image) + staffObject.optString("TitleImg", "");
+								String category = staffObject.optString("AdSubTitle", "");
+								staffList.add(new Staff(title, category, img, i, price + 0.9, price + 20.9));
+							}
+							fillData();
+						} catch (JSONException e) {
+							e.printStackTrace();
 						}
-						fillData();
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
 
+					} else {
+						Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
+						ll_loading.setVisibility(View.GONE);
+					}
 				} else {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 					ll_loading.setVisibility(View.GONE);
@@ -171,6 +190,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 
 	static class ViewHolder {
 
+		CheckBox cb;
 		ImageView iv;
 		TextView tv_name;
 		TextView tv_category;
@@ -221,6 +241,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 				holder.et_count = (EditText) convertView.findViewById(R.id.et_count);
 				holder.btn_countdown.setTag(holder.et_count);
 				holder.btn_countup.setTag(holder.et_count);
+				holder.cb = (CheckBox) convertView.findViewById(R.id.cb);
 				convertView.setTag(holder);
 			}
 			holder.tv_price_previous.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -230,9 +251,23 @@ public class CartFragment extends Fragment implements OnClickListener {
 			holder.tv_price_previous.setText("￥" + staff.price_previous);
 			holder.tv_category.setText(staff.category);
 			holder.et_count.setText(staff.count + "");
-			ImageLoader.getInstance().displayImage(staff.image, holder.iv);
+			holder.iv.setTag(staff.image);
+			ImageLoader.getInstance().displayImage(staff.image, holder.iv, MyApplication.getOptions(),
+					MyApplication.getLoadingListener());
 			holder.iv.setScaleType(ScaleType.CENTER_CROP);
 			Utils.spanTextSize(holder.tv_price_counted, "\\.", true, new int[] { 16, 12 });
+
+			holder.cb.setChecked(staff.chosen ? true : false);
+			holder.cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					staff.chosen = isChecked;
+					if (!isChecked)
+						cb_selectall.setChecked(false);
+					calcTotalPrice();
+				}
+			});
 
 			holder.btn_countdown.setOnClickListener(new OnClickListener() {
 
@@ -269,6 +304,29 @@ public class CartFragment extends Fragment implements OnClickListener {
 
 				}
 			});
+
+			holder.et_count.addTextChangedListener(new TextWatcher() {
+
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					if (!TextUtils.isEmpty(s.toString())) {
+						staff.count = Integer.parseInt(s.toString());
+						calcTotalPrice();
+					}
+				}
+
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void afterTextChanged(Editable s) {
+					// TODO Auto-generated method stub
+
+				}
+			});
 			return convertView;
 		}
 	}
@@ -277,8 +335,10 @@ public class CartFragment extends Fragment implements OnClickListener {
 		double sumPrice = 0;
 		int sumCount = 0;
 		for (Staff staff : staffList) {
-			sumPrice += staff.price_counted * staff.count;
-			sumCount += staff.count;
+			if (staff.chosen) {
+				sumPrice += staff.price_counted * staff.count;
+				sumCount += staff.count;
+			}
 		}
 		DecimalFormat df = new DecimalFormat("#.00");
 		tv_price_total.setText("合计：￥" + df.format(sumPrice));
@@ -289,7 +349,21 @@ public class CartFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		BalanceActivity_.intent(getActivity()).start();
+		switch (v.getId()) {
+			case R.id.btn_balance:
+				BalanceActivity_.intent(getActivity()).start();
+				break;
+			case R.id.cb_chooseall:
+				for (Staff staff : staffList)
+					staff.chosen = true;
+				fillData();
+				break;
+			case R.id.btn_edit:
+				boolean edit = Boolean.parseBoolean((String) v.getTag());
+				btn_edit.setTextColor(!edit ? Color.BLACK : getResources().getColor(R.color.text_gray));
+				btn_edit.setTag(!edit ? "true" : "false");
+				break;
+		}
 	}
 
 }

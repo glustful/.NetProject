@@ -10,7 +10,7 @@
         android:id="@+id/iv"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@drawable/logo_gray"
+        android:background="@drawable/default_img"
         android:layout_marginRight="10dp"/>
     
     <TextView 

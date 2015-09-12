@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.AssuranceActivity_;
 import com.yoopoon.market.CleanServeActivity_;
+import com.yoopoon.market.MyApplication;
 import com.yoopoon.market.R;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
@@ -219,7 +220,9 @@ public class ServeFragment extends Fragment {
 			ImageView imageView = new ImageView(getActivity());
 			imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 			imageView.setScaleType(ScaleType.FIT_XY);
-			ImageLoader.getInstance().displayImage(urls[i], imageView);
+			imageView.setTag(urls[i]);
+			ImageLoader.getInstance().displayImage(urls[i], imageView, MyApplication.getOptions(),
+					MyApplication.getLoadingListener());
 			mImageViews[i] = imageView;
 		}
 
