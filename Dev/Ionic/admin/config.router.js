@@ -72,6 +72,16 @@ angular.module('app')
                     url: '/member',
                     template: '<div ui-view class="fade-in-up"></div>'
                 })
+                .state('app.member.edit',{
+                    url:'edit?id',
+                    templateUrl:'app/module/member/view/edit.html',
+                    resolve:{
+                        deps:['$ocLazyLoad',
+                            function($ocLazyLoad){
+                                return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
+                            }]
+                    }
+                })
                 .state('app.member.memlist',{
                     url:'memlist',
                     templateUrl:'app/module/member/view/memlist.html',
@@ -214,6 +224,7 @@ angular.module('app')
                 })
 
                 //--------------红包模板
+
                 .state('event.redModel', {
                     url: '/redModel',
                     template: '<div ui-view class="fade-in-up"></div>'
@@ -311,7 +322,22 @@ angular.module('app')
                             }]
                     }
                 })
-
+//商品分类
+              .state('app.category', {
+                  url: '/category',
+                  template: '<div ui-view class="fade-in-up"></div>'
+              })
+              .state('app.category.index', {
+                  url: '/index',
+                  templateUrl: 'app/module/category/view/index.html',
+                  resolve: {
+                      deps: ['$ocLazyLoad',
+                          function( $ocLazyLoad ){
+                              return $ocLazyLoad.load(['app/module/category/controller/indexController.js',
+                                  'app/common/scripts/controllers/vectormap.js']);
+                          }]
+                  }
+              })
                 //注册页
                 .state('access.signup', {
                     url: '/signup',
