@@ -99,8 +99,8 @@ public class MyApplication extends Application {
 
 	public static DisplayImageOptions getOptions() {
 		if (mOptions == null) {
-			mOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.logo_gray)
-					.showImageForEmptyUri(R.drawable.logo_gray).showImageOnFail(R.drawable.logo_gray)
+			mOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.default_img)
+					.showImageForEmptyUri(R.drawable.default_img).showImageOnFail(R.drawable.default_img)
 					.cacheInMemory(true).cacheOnDisk(true).build();
 		}
 		return mOptions;

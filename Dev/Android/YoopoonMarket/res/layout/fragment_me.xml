@@ -18,7 +18,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="125dp"
-                android:background="@drawable/logo_gray" />
+                android:background="@drawable/default_img" />
 
             <com.makeramen.RoundedImageView
                 android:id="@+id/imageView1"

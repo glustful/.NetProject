@@ -8,6 +8,7 @@ public class Staff {
 	public int count;
 	public double price_counted;
 	public double price_previous;
+	public boolean chosen = true;
 
 	public Staff(String title, String category, String image, int count, double price_counted, double price_previous) {
 		super();
@@ -22,7 +23,8 @@ public class Staff {
 	@Override
 	public String toString() {
 		return "Staff [title=" + title + ", category=" + category + ", image=" + image + ", count=" + count
-				+ ", price_counted=" + price_counted + ", price_previous=" + price_previous + "]";
+				+ ", price_counted=" + price_counted + ", price_previous=" + price_previous + ", chosen=" + chosen
+				+ "]";
 	}
 
 }

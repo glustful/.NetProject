@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.UUID;
 import android.graphics.Bitmap;
-import android.util.Log;
 import com.yoopoon.market.domain.UserAccount;
 
 /**
@@ -220,7 +219,7 @@ public abstract class RequestAdapter implements Serializable {
 
 	final public RequestAdapter setLocalPath(String localPath) {
 		mLocalPath = localPath;
-		Log.d("requsetAdapter", "mLocal path is " + mLocalPath);
+		// Log.d("requsetAdapter", "mLocal path is " + mLocalPath);
 		return this;
 	}
 
@@ -296,7 +295,7 @@ public abstract class RequestAdapter implements Serializable {
 
 	public enum RequestMethod {
 
-		ePost, eGet, eFileUp
+		ePost, eGet, eFileUp, ePut, eDelete
 
 	}
 
