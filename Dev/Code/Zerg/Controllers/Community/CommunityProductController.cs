@@ -80,9 +80,9 @@ namespace Zerg.Controllers.Community
                 Detail = entity.Detail.Detail,
 		        Ad1 = entity.Detail.Ad1,
                 Ad2 = entity.Detail.Ad2,
-                Ad3 = entity.Detail.Ad3
+                Ad3 = entity.Detail.Ad3,
                 //Comments = entity.Comments,		
-//                Parameters = entity.Parameters,
+                ParameterValue =entity.Parameters.Select(c => new ProductParameterValueModel { ParameterId = c.Parameter.Id, ParameterString = c.Parameter.Name, ValueId = c.ParameterValue.Id, Value = c.ParameterValue.Value}).ToArray(),
             };
             var product=new ProductComment
             {
@@ -114,8 +114,8 @@ namespace Zerg.Controllers.Community
 				Subtitte = c.Subtitte,
 				Contactphone = c.Contactphone,
 				Type = c.Type,
-                NewPrice = c.NewPrice,
-                Owner =c.Owner,
+                NewPrice = c.NewPrice.Value,
+                Owner =c.Owner.Value,
                 Addtime = c.AddTime,
 				Detail = c.Detail.Detail
 //				Comments = c.Comments,
