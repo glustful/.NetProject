@@ -34,4 +34,4 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate) {
         $scope.showSelect=true;
         $scope.isShow=true;
     }
-               });
+});
