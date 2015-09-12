@@ -38,8 +38,9 @@
     border-bottom: 6px solid #eeeeee;
 
 }
-.checkout button{
+.checkout a{
     background-color: #ff5000;
+    height: 100%;
 
 }
 .checkout .item{
