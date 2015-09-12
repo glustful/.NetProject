@@ -109,9 +109,9 @@ namespace Community.Service.ParameterValue
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Parameters != null && condition.Parameters.Any())
+				if (condition.Parameters != null)
                 {
-                    query = query.Where(q => condition.Parameters.Contains(q.Parameter));
+                    query = query.Where(q => condition.Parameters==(q.Parameter));
                 }
 				if (condition.Sorts != null && condition.Sorts.Any())
                 {
@@ -182,9 +182,9 @@ namespace Community.Service.ParameterValue
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Parameters != null && condition.Parameters.Any())
+				if (condition.Parameters != null )
                 {
-                    query = query.Where(q => condition.Parameters.Contains(q.Parameter));
+                    query = query.Where(q => condition.Parameters==(q.Parameter));
                 }
 				if (condition.Sorts != null && condition.Sorts.Any())
                 {

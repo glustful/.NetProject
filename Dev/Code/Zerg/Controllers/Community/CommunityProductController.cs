@@ -9,6 +9,7 @@ using Community.Entity.Model.ProductDetail;
 using Community.Service.Category;
 using Community.Service.Product;
 using Community.Service.ProductDetail;
+using YooPoon.Core.Site;
 using Zerg.Common;
 using Zerg.Models.Community;
 
@@ -21,12 +22,14 @@ namespace Zerg.Controllers.Community
 		private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly IProductDetailService _productDetailService;
+        private readonly IWorkContext _workContext;
 
-        public CommunityProductController(IProductService productService,ICategoryService categoryService,IProductDetailService productDetailService)
+        public CommunityProductController(IProductService productService,ICategoryService categoryService,IProductDetailService productDetailService,IWorkContext workContext)
 		{
 			_productService = productService;
 		    _categoryService = categoryService;
             _productDetailService = productDetailService;
+            _workContext = workContext;
 		}
         /// <summary>
         /// 获取商品详情
@@ -144,9 +147,9 @@ namespace Zerg.Controllers.Community
 				IsRecommend =model.IsRecommend,
 				Sort = model.Sort,
 				Stock = model.Stock,
-				AddUser = 1,
+				AddUser = _workContext.CurrentUser.Id,
 				AddTime =DateTime.Now,
-				UpdUser =1,
+				UpdUser =_workContext.CurrentUser.Id,
 				UpdTime = DateTime.Now,
 				Subtitte = model.Subtitte,
 				Contactphone = model.Contactphone,
@@ -171,9 +174,9 @@ namespace Zerg.Controllers.Community
                     Img3 = model.Img3,
                     Img4 = model.Img4,
                     SericeInstruction = model.SericeInstruction,
-                    AddUser = 1,
+                    AddUser = _workContext.CurrentUser.Id,
                     AddTime = DateTime.Now,
-                    UpdUser = 1,
+                    UpdUser = _workContext.CurrentUser.Id,
                     UpdTime = DateTime.Now,
                     Ad1 = model.Ad1,
                     Ad2 = model.Ad2,

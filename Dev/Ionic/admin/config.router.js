@@ -352,16 +352,22 @@ angular.module('app')
                 .state('app.product',{
                     url: '/product',
                     template: '<div ui-view class="fade-in-up"></div>',
+                    //resolve: {
+                    //    deps: ['$ocLazyLoad',
+                    //        function( $ocLazyLoad ){
+                    //            return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
+                    //        }]
+                    //}
+                })
+                .state('app.product.productList',{
+                    url:'/productList',
+                    templateUrl:'app/module/Product/view/Index.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
                             function( $ocLazyLoad ){
                                 return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
                             }]
-                    }
-                })
-                .state('app.product.productList',{
-                    url:'/productList',
-                    templateUrl:'app/module/Product/view/Index.html',
+                    },
                     data : { title: '商品列表' }
                 })
                 .state('app.product.createProduct',{
@@ -370,24 +376,29 @@ angular.module('app')
                     resolve: {
                         deps: ['$ocLazyLoad',
                             function( $ocLazyLoad ){
-                                return $ocLazyLoad.load(['angularFileUpload']);
+                                return $ocLazyLoad.load(['angularFileUpload','app/module/Product/controller/productController.js']);
                             }]
                     }
                 })
                 .state('app.product.editProduct',{
                     url:'/editProduct?id',
-                    templateUrl:'app/module/Product/view/Edit.html'
-                    //resolve: {
-                    //    deps: ['$ocLazyLoad',
-                    //        function( $ocLazyLoad ){
-                    //            return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
-                    //        }]
-                    //}
+                    templateUrl:'app/module/Product/view/Edit.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
+                            }]
+                    }
                 })
                 .state('app.product.productProperty',{
-                    url:'/productProperty',
+                    url:'/productProperty?CategoryId&productId',
                     templateUrl:'app/module/Product/view/Property.html',
-                    data : { title: '商品列表' }
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/Product/controller/parameterController.js']);
+                            }]
+                    }
                 })
                 .state('order',{
                     url:'/order',

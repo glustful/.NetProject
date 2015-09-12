@@ -31,7 +31,7 @@
                     </a>
                     <button ng-click='del(item.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
                     </button>
-                    <a ui-sref="app.product.productProperty({id:item.Id})" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-edit"></i> 属性编辑
+                    <a ui-sref="app.product.productProperty({CategoryId:item.CategoryId,productId:item.Id})" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-edit"></i> 属性编辑
                     </a>
                 </td>
             </tr>

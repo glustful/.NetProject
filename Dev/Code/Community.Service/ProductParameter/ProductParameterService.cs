@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Community.Entity.Model.ProductParameter;
 using YooPoon.Core.Logging;
@@ -30,6 +31,19 @@ namespace Community.Service.ProductParameter
                 return null;
             }
 		}
+        public bool BulkCreate(List<ProductParameterEntity> entities)
+        {
+            try
+            {
+                _productparameterRepository.BulkInsert(entities);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return false;
+            }
+        }
 
 		public bool Delete(ProductParameterEntity entity)
 		{
