@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -87,19 +88,46 @@ namespace Zerg.Controllers.Community
             var parameterValue = _parameterValueService.GetParameterValueById(model.ParameterValueId);
             var parameter = _parameterService.GetParameterById(model.ParameterId);
             var product = _productService.GetProductById(model.Id);
-			var entity = _productParameterService.GetProductParameterById(model.Id);
-			if(entity == null)
-				return PageHelper.toJson(PageHelper.ReturnValue(false,"数据不存在"));
-            entity.ParameterValue = parameterValue;
-            entity.Parameter = parameter;
-            entity.Product = product;
-			entity.Sort = model.Sort;
-			entity.AddUser = model.AddUser;
-			entity.AddTime = model.AddTime;
-			entity.UpdUser = model.UpdUser;
-			entity.UpdTime = model.UpdTime;
-			if(_productParameterService.Update(entity) != null)
-				return PageHelper.toJson(PageHelper.ReturnValue(true,"数据更新成功"));
+            var con = new ProductParameterSearchCondition
+            {
+                Product = product,
+                Parameter = parameter               
+            };
+            var productParameter = _productParameterService.GetProductParametersByCondition(con).FirstOrDefault();
+		    if (productParameter != null)
+		    {
+                productParameter.ParameterValue = parameterValue;
+		        productParameter.UpdUser = 1;
+                productParameter.UpdTime = DateTime.Now;
+                _productParameterService.Update(productParameter);
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功"));
+		    }
+            var newProductParameter = new ProductParameterEntity
+            {
+                AddTime = DateTime.Now,
+                AddUser =1,
+                Parameter = parameter,
+                ParameterValue = parameterValue,
+                Product = _productService.GetProductById(model.ProductId),
+                UpdTime = DateTime.Now,
+                UpdUser =1,
+                Sort = 0
+            };
+            _productParameterService.Create(newProductParameter);
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功"));
+            //var entity = _productParameterService.GetProductParameterById(model.Id);
+            //if(entity == null)
+            //    return PageHelper.toJson(PageHelper.ReturnValue(false,"数据不存在"));
+            //entity.ParameterValue = parameterValue;
+            //entity.Parameter = parameter;
+            //entity.Product = product;
+            //entity.Sort = model.Sort;
+            //entity.AddUser = model.AddUser;
+            //entity.AddTime = model.AddTime;
+            //entity.UpdUser = model.UpdUser;
+            //entity.UpdTime = model.UpdTime;
+            //if(_productParameterService.Update(entity) != null)
+            //    return PageHelper.toJson(PageHelper.ReturnValue(true,"数据更新成功"));
 			return PageHelper.toJson(PageHelper.ReturnValue(false,"数据更新失败"));
 		}
 
