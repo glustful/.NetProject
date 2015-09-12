@@ -2118,8 +2118,8 @@ ion-tabs.tabs-color-active-royal .tab-item { color: #444; }
 ion-tabs.tabs-color-active-royal .tab-item.tab-item-active, ion-tabs.tabs-color-active-royal .tab-item.active, ion-tabs.tabs-color-active-royal .tab-item.activated { color: #886aea; }
 ion-tabs.tabs-color-active-dark .tab-item { color: #fff; }
 ion-tabs.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs.tabs-color-active-dark .tab-item.active, ion-tabs.tabs-color-active-dark .tab-item.activated { color: #444; }
-ion-tabs.tabs-color-active-app .tab-item { color: #ffffff; }
-ion-tabs.tabs-color-active-app .tab-item.tab-item-active, ion-tabs.tabs-color-active-app .tab-item.active, ion-tabs.tabs-color-active-app .tab-item.activated { color: #ffff00; }
+ion-tabs.tabs-color-active-app .tab-item { color: #ffffffff; }
+ion-tabs.tabs-color-active-app .tab-item.tab-item-active, ion-tabs.tabs-color-active-app .tab-item.active, ion-tabs.tabs-color-active-app .tab-item.activated { color: #fe0000; }
 
 .tabs-top.tabs-striped { padding-bottom: 0; }
 .tabs-top.tabs-striped .tab-item { background: transparent; -webkit-transition: color .1s ease; -moz-transition: color .1s ease; -ms-transition: color .1s ease; -o-transition: color .1s ease; transition: color .1s ease; }
