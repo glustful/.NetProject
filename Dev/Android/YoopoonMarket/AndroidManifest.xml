@@ -52,7 +52,12 @@
             android:name="com.yoopoon.market.ProductClassifyActivity_"
             android:screenOrientation="portrait" >
         </activity>
-          <!-- 产品列表Activity -->
+        <!-- 产品详细信息Activity -->
+        <activity
+            android:name="com.yoopoon.market.ProductDetailActivity_"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 产品列表Activity -->
         <activity
             android:name="com.yoopoon.market.ProductList_"
             android:screenOrientation="portrait" >

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,9 +30,9 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class ProductListViewAdapter extends BaseAdapter {
-	private Context					mContext;
-	private ArrayList<JSONObject>	datas;
-	
+	private Context mContext;
+	private ArrayList<JSONObject> datas;
+
 	public ProductListViewAdapter(Context context, ArrayList<JSONObject> arrayList) {
 		mContext = context;
 		datas = arrayList;
@@ -61,6 +62,7 @@ public class ProductListViewAdapter extends BaseAdapter {
 			//                      如下的代码只做API出来前的测试用途
 			//###############################################################################
 			String url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
+			productViewHandler.productPhotoImageView.setTag(url);
 			ImageLoader.getInstance().displayImage(url, productViewHandler.productPhotoImageView,
 					MyApplication.getOptions(), MyApplication.getLoadingListener());
 			productViewHandler.productTitleTextView.setText(datas.get(position).optString("productTitle", ""));
@@ -73,7 +75,10 @@ public class ProductListViewAdapter extends BaseAdapter {
 			convertView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Toast.makeText(mContext, "Testing" + position, Toast.LENGTH_SHORT);
+					//跳转到产品详情
+					Intent intent = new Intent(mContext, ProductDetailActivity_.class);
+					mContext.startActivity(intent);
+					Toast.makeText(mContext, "Testing" + position, Toast.LENGTH_SHORT).show();
 				}
 			});
 			//###############################################################################
@@ -95,15 +100,15 @@ public class ProductListViewAdapter extends BaseAdapter {
 		}
 		this.notifyDataSetChanged();
 	}
-	
+
 	class ProductViewHandler {
-		private ImageView	productPhotoImageView;
-		private TextView	productTitleTextView;
-		private TextView	productSubtitleTextView;
-		private TextView	productAdvertisemenTextView;
-		private TextView	productPricTextView;
-		private TextView	productSalesValuemtTextView;
-		
+		private ImageView productPhotoImageView;
+		private TextView productTitleTextView;
+		private TextView productSubtitleTextView;
+		private TextView productAdvertisemenTextView;
+		private TextView productPricTextView;
+		private TextView productSalesValuemtTextView;
+
 		void initViewHandler(View view) {
 			productPhotoImageView = (ImageView) view.findViewById(R.id.img_product_photo);
 			productTitleTextView = (TextView) view.findViewById(R.id.tv_product_title);
