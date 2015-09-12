@@ -153,9 +153,8 @@ namespace Zerg.Models.Community
 		/// <summary>
         /// 商品明细
         /// </summary>
-//		public ProductDetailEntity Detail {get;set;}
-
-
+		//public ProductDetailEntity Detail {get;set;}
+        
 		/// <summary>
         /// 商品评论
         /// </summary>
@@ -166,8 +165,8 @@ namespace Zerg.Models.Community
         /// 商品属性
         /// </summary>
 //		public List<ProductParameterEntity> Parameters {get;set;}
-        public decimal NewPrice { get; set; }
-        public int Owner { get; set; }
+        public decimal? NewPrice { get; set; }
+        public int? Owner { get; set; }
         public int CategoryId { get; set; }
         public string Detail { get; set; }
         public string Img { get; set; }
@@ -181,5 +180,6 @@ namespace Zerg.Models.Community
         public string Ad2 { get; set; }
         public string Ad3 { get; set; }
 
+        public ProductParameterValueModel[] ParameterValue { get;set; }
 	}
 }

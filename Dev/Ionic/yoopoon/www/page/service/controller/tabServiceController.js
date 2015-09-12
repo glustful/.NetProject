@@ -22,7 +22,16 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate) {
     //alert($scope.model.activeIndex);
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
+    //    页面跳转
     $scope.go=function(state){
         window.location.href=state;
     }
-               });
+
+//    搜索功能
+    $scope.showSelect=false;
+    $scope.isShow=false;
+    $scope.showInput=function(){
+        $scope.showSelect=true;
+        $scope.isShow=true;
+    }
+});

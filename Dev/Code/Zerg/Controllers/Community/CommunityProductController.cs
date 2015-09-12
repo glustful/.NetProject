@@ -62,7 +62,12 @@ namespace Zerg.Controllers.Community
                 Price = entity.Price,		
                 Name = entity.Name,			
                 Status = entity.Status,		
-                MainImg = entity.MainImg,		
+                MainImg = entity.MainImg,
+		        Img = entity.Detail.Img,
+                Img1 = entity.Detail.Img1,
+                Img2 = entity.Detail.Img2,
+                Img3 = entity.Detail.Img3,
+                Img4 = entity.Detail.Img4,
                 IsRecommend = entity.IsRecommend,
                 Sort = entity.Sort,				
                 Stock = entity.Stock,		            	
@@ -71,10 +76,13 @@ namespace Zerg.Controllers.Community
                 SericeInstruction = entity.Detail.SericeInstruction,
                 Type = entity.Type,
 			    NewPrice = entity.NewPrice,
-                Owner = entity.Owner
-//                Detail = entity.Detail,		
+                Owner = entity.Owner,
+                Detail = entity.Detail.Detail,
+		        Ad1 = entity.Detail.Ad1,
+                Ad2 = entity.Detail.Ad2,
+                Ad3 = entity.Detail.Ad3,
                 //Comments = entity.Comments,		
-//                Parameters = entity.Parameters,
+                ParameterValue =entity.Parameters.Select(c => new ProductParameterValueModel { ParameterId = c.Parameter.Id, ParameterString = c.Parameter.Name, ValueId = c.ParameterValue.Id, Value = c.ParameterValue.Value}).ToArray(),
             };
             var product=new ProductComment
             {
@@ -106,9 +114,10 @@ namespace Zerg.Controllers.Community
 				Subtitte = c.Subtitte,
 				Contactphone = c.Contactphone,
 				Type = c.Type,
-                NewPrice = c.NewPrice,
-                Owner =c.Owner
-//				Detail = c.Detail,
+                NewPrice = c.NewPrice.Value,
+                Owner =c.Owner.Value,
+                Addtime = c.AddTime,
+				Detail = c.Detail.Detail
 //				Comments = c.Comments,
 //				Parameters = c.Parameters,
 			}).ToList();

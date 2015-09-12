@@ -12,7 +12,7 @@ ApiUrl:'http://api.iyookee.cn/api',
 ImgUrl:'http://img.iyookee.cn/',
 eventApiUrl:'http://www.iyookee.cn/API'
 };
-app.run(function($ionicPlatform) {
+app.run(function($ionicPlatform,$ionicHistory,$ionicLoading) {
      $ionicPlatform.ready(function() {
                           // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                           // for form inputs)
@@ -28,6 +28,17 @@ app.run(function($ionicPlatform) {
                           }
                           
                           });
+        $ionicPlatform.registerBackButtonAction(function(event) {
+          event.preventDefault();
+
+          if ($ionicHistory.currentStateName() === 'page.shopping') {
+            window.close();
+            ionic.Platform.exitApp();
+          } else {
+            $ionicHistory.goBack();
+          }
+          return false;
+         }, 101);
 
         });
 
@@ -131,7 +142,26 @@ app.config(function($stateProvider, $urlRouterProvider) {
         url: '/shopping/Product-Catagory',
         views: {
             'page-shopping': {
-                templateUrl: 'page/shopping/Product-Catagory.html'
+                templateUrl: 'page/shopping/Product-Catagory.html',
+                controller: 'TabShoppingCtrl'
+            }
+        }
+    })
+    .state('page.product-list', {
+        url: '/shopping/product-list',
+        views: {
+            'page-shopping': {
+                templateUrl: 'page/shopping/product-list.html',
+                controller: 'TabShoppingCtrl'
+            }
+        }
+    })
+    .state('page.product-detail', {
+        url: '/shopping/product-detail',
+        views: {
+            'page-shopping': {
+                templateUrl: 'page/shopping/product-detail.html',
+                controller: 'TabShoppingCtrl'
             }
         }
     });

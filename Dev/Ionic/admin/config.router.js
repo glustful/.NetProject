@@ -72,6 +72,16 @@ angular.module('app')
                     url: '/member',
                     template: '<div ui-view class="fade-in-up"></div>'
                 })
+                .state('app.member.edit',{
+                    url:'edit?id',
+                    templateUrl:'app/module/member/view/edit.html',
+                    resolve:{
+                        deps:['$ocLazyLoad',
+                            function($ocLazyLoad){
+                                return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
+                            }]
+                    }
+                })
                 .state('app.member.memlist',{
                     url:'memlist',
                     templateUrl:'app/module/member/view/memlist.html',
@@ -83,7 +93,7 @@ angular.module('app')
                     }
                 })
                 .state('app.member.detail',{
-                    url:'detail',
+                    url:'detail?id',
                     templateUrl:'app/module/member/view/detail.html',
                     resolve:{
                         deps:['$ocLazyLoad',
@@ -214,6 +224,7 @@ angular.module('app')
                 })
 
                 //--------------红包模板
+
                 .state('event.redModel', {
                     url: '/redModel',
                     template: '<div ui-view class="fade-in-up"></div>'
@@ -311,7 +322,22 @@ angular.module('app')
                             }]
                     }
                 })
-
+//商品分类
+              .state('app.category', {
+                  url: '/category',
+                  template: '<div ui-view class="fade-in-up"></div>'
+              })
+              .state('app.category.index', {
+                  url: '/index',
+                  templateUrl: 'app/module/category/view/index.html',
+                  resolve: {
+                      deps: ['$ocLazyLoad',
+                          function( $ocLazyLoad ){
+                              return $ocLazyLoad.load(['app/module/category/controller/indexController.js',
+                                  'app/common/scripts/controllers/vectormap.js']);
+                          }]
+                  }
+              })
                 //注册页
                 .state('access.signup', {
                     url: '/signup',
@@ -362,7 +388,7 @@ angular.module('app')
                 .state('app.product.productList',{
                     url:'/productList',
                     templateUrl:'app/module/Product/view/Index.html',
-
+                    data : { title: '商品列表' }
                 })
                 .state('app.product.createProduct',{
                     url:'/createProct',
@@ -376,7 +402,7 @@ angular.module('app')
                 })
                 .state('app.product.editProduct',{
                     url:'/editProduct?id',
-                    templateUrl:'app/module/Product/view/Edit.html',
+                    templateUrl:'app/module/Product/view/Edit.html'
                     //resolve: {
                     //    deps: ['$ocLazyLoad',
                     //        function( $ocLazyLoad ){
@@ -384,6 +410,33 @@ angular.module('app')
                     //        }]
                     //}
                 })
+                .state('app.product.productProperty',{
+                    url:'/productProperty',
+                    templateUrl:'app/module/Product/view/Property.html',
+                    data : { title: '商品列表' }
+                })
+                .state('order',{
+                    url:'/order',
+                    templateUrl: 'app/common/layout/app.html'
+                })
+                .state('order.list',{
+                    url:'/list',
+                    templateUrl:'app/module/order/view/list.html',
+                    resolve:{
+                        deps:['uiLoad',function(uiLoad){
+                            return uiLoad.load(['app/module/order/controller/orderController.js']);
+                        }]
+                    }
+                })
+                .state('order.serviceList',{
+                    url:'/serviceList',
+                    templateUrl:'app/module/order/view/serviceList.html',
+                    resolve:{
+                        deps:['uiLoad',function(uiLoad){
+                            return uiLoad.load(['app/module/order/controller/serviceOrderController.js']);
+                        }]
+                    }
+                });
         }
     ]
 );

@@ -9,12 +9,17 @@
 .car-list{
     border-bottom-width: 15px;
 }
+.car-list img{
+    margin-left: 40px;
+}
 .car-list h2{
     white-space: normal;
     font-size: 14px;
+    margin-left: 35px;
 }
 .car-list p{
     color:#a5a5a5 ;
+    margin-left: 35px;
 }
 .red{
     color:#ff4c00
@@ -23,16 +28,29 @@
     color: #a0a0a0;
     font-size: 14px;
 }
+
+.checkout .item{
+    background:none;
+    border: none;
+}
+
 .checkout{
-    height: 48px;
-    line-height: 50px;
-    text-align: center;
-    border-bottom: 1px solid #cecece;
+    border-bottom: 6px solid #eeeeee;
+
 }
-.checkout button{
+.checkout a{
     background-color: #ff5000;
-    padding:0 20px;
+    height: 100%;
+
 }
+.checkout .item{
+    background:none;
+    border: none;
+}
+.item-checkbox {
+    padding-left:  50px;
+}
+
 
 .submit{
     width: 100%;
@@ -46,6 +64,5 @@
 }
 .submit button{
     background-color: #ff5000;
-    padding:0 25px;
     margin-left: 10px;
 }
