@@ -33,9 +33,5 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate) {
     $scope.showInput=function(){
         $scope.showSelect=true;
         $scope.isShow=true;
-        alert($scope.isShow)
-
-
-
     }
                });

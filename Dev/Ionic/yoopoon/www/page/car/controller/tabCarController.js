@@ -62,6 +62,18 @@ app.controller('TabCarCtrl', function($scope, $ionicSlideBoxDelegate) {
 //            alert($scope.start)
         }
     }
+
+//编辑
+    $scope.flag={showDelete:false,showReorder:false};
+    $scope.items=["Chinese","English","German","Italian","Janapese","Sweden","Koeran","Russian","French"];
+    $scope.delete_item=function(item){
+        var idx = $scope.items.indexOf(item);
+        $scope.items.splice(idx,1);
+    };
+    $scope.move_item = function(item, fromIndex, toIndex) {
+        $scope.items.splice(fromIndex, 1);
+        $scope.items.splice(toIndex, 0, item);
+    };
                });
 
 app.controller('CarDetailCtrl', function($scope, $stateParams) {
