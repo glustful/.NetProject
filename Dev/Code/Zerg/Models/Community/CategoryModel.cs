@@ -9,7 +9,10 @@ namespace Zerg.Models.Community
         /// Id
         /// </summary>
 		public int Id {get;set;}
-
+        /// <summary>
+        /// 父分类
+        /// </summary>
+        public int FatherId { get; set; }
 
 		/// <summary>
         /// 父分类
