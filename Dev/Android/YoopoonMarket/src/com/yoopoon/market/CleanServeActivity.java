@@ -25,7 +25,7 @@ public class CleanServeActivity extends MainActionBarActivity {
 
 	@AfterViews
 	void initUI() {
-		backButton.setVisibility(View.VISIBLE);
+		backWhiteButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		rightButton.setVisibility(View.GONE);
 		titleButton.setText("清洗服务");
@@ -100,7 +100,7 @@ public class CleanServeActivity extends MainActionBarActivity {
 				convertView.setTag(holder);
 			}
 
-			Utils.spanTextSize(holder.tv_price, "：", false, new int[] { 16, 14 });
+			Utils.spanTextSize(holder.tv_price, "：", false, new int[] { 18, 13 });
 
 			return convertView;
 

@@ -25,7 +25,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +54,6 @@ import com.yoopoon.market.net.ResponseData;
  * @date: 2015-9-7 下午4:50:59
  */
 public class ServeFragment extends Fragment {
-	private static final String TAG = "ServeFragment";
 	private static final int LOOPIMAGE = 0;
 	View rootView;
 	GridView gv;
@@ -113,26 +111,29 @@ public class ServeFragment extends Fragment {
 	}
 
 	private void requestData() {
-		Log.i(TAG, "requestData");
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
-				boolean status = object.optBoolean("Status", false);
-				if (status) {
-					try {
-						JSONArray array = object.getJSONArray("Object");
-						String[] urls = new String[array.length()];
-						for (int i = 0; i < array.length(); i++) {
-							JSONObject jsonObject = array.getJSONObject(i);
-							String url = jsonObject.optString("TitleImg", "");
-							urls[i] = getString(R.string.url_image) + url;
+				if (object != null) {
+					boolean status = object.optBoolean("Status", false);
+					if (status) {
+						try {
+							JSONArray array = object.getJSONArray("Object");
+							String[] urls = new String[array.length()];
+							for (int i = 0; i < array.length(); i++) {
+								JSONObject jsonObject = array.getJSONObject(i);
+								String url = jsonObject.optString("TitleImg", "");
+								urls[i] = getString(R.string.url_image) + url;
+							}
+							initImages(urls);
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-						initImages(urls);
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					} else {
+						Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 					}
 				} else {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
@@ -219,7 +220,6 @@ public class ServeFragment extends Fragment {
 			imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 			imageView.setScaleType(ScaleType.FIT_XY);
 			ImageLoader.getInstance().displayImage(urls[i], imageView);
-			Log.i(TAG, urls[i]);
 			mImageViews[i] = imageView;
 		}
 
@@ -327,4 +327,5 @@ public class ServeFragment extends Fragment {
 		}
 
 	}
+
 }

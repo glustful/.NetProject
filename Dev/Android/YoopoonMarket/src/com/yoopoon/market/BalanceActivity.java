@@ -37,8 +37,9 @@ public class BalanceActivity extends MainActionBarActivity {
 	void initUI() {
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
-		backButton.setText("返回");
+		rightButton.setVisibility(View.GONE);
 		titleButton.setText("确认订单");
+
 		Utils.spanTextStyle(tv_price_total, this);
 		Utils.spanTextSize(tv_price_counted, "\\.", true, new int[] { 16, 12 });
 	}

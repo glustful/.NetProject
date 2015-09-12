@@ -23,7 +23,7 @@ public class AssuranceDetailActivity extends MainActionBarActivity {
 
 	@AfterViews
 	void initUI() {
-		backButton.setVisibility(View.VISIBLE);
+		backWhiteButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		rightButton.setVisibility(View.GONE);
 		titleButton.setText("保险详情");

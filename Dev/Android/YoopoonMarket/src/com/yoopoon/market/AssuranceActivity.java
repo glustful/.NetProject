@@ -30,7 +30,7 @@ public class AssuranceActivity extends MainActionBarActivity {
 
 	@AfterViews
 	void initUI() {
-		backButton.setVisibility(View.VISIBLE);
+		backWhiteButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		titleButton.setText("保险列表");
 		titleButton.setTextColor(Color.WHITE);

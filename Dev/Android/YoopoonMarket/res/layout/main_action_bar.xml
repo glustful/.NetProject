@@ -13,7 +13,17 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/back_arrow"
-        android:visibility="visible" />
+        android:visibility="gone" />
+    
+    <Button
+        android:layout_marginLeft="15dp"
+        android:id="@+id/leftWhiteBtn"
+        style="@android:style/Widget.DeviceDefault.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/white_back_arrow"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/titleBtn"
@@ -28,7 +38,7 @@
 
     <Button
         android:layout_centerVertical="true"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="15dp"
         android:id="@+id/rightBtn"
         android:layout_width="20dp"
         android:layout_height="20dp"

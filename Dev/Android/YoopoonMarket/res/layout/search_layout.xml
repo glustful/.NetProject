@@ -22,8 +22,10 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="@color/white"
-        android:background="@drawable/et_border"
-        android:padding="5dp" />
+        android:background="@drawable/search_et_border"
+        android:padding="5dp"
+		android:textColorHint="@color/white"
+		android:hint="aaa"/>
 
     <Button
         android:id="@+id/btn_search"

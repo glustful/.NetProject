@@ -77,7 +77,7 @@
             android:text="5"
             android:gravity="center"
             android:textSize="@dimen/small_textsize"
-            android:background="@drawable/et_border"
+            android:background="@drawable/search_et_border"
             android:clickable="true"
              />
 
