@@ -1,19 +1,21 @@
 <link rel="stylesheet" href="page/service/css/service.css">
 
 <ion-header-bar class=" header">
-    <a class="button  button-icon icon icon-fuwuanniu"></a>
+    <a class="button  button-icon icon icon-fuwuanniu" ng-click="go('index.html#/page/shopping/Product-Catagory')"></a>
     <label class=" item-select select-header" ng-hide="showSelect">
         <select>
             <option>金尚俊园A座</option>
             <option >CSS</option>
             <option>JavaScript</option>
         </select>
+
     </label>
     <a class="button button-icon icon icon-search search" ng-click="showInput()"></a>
     <input class="header-input" ng-class="{'header-input-show':isShow}" type="text" placeholder="" style="border: 1px solid #fff; height: 70%;z-index: 0;padding-left: 10px;color: #fff">
 </ion-header-bar>
 
-<ion-view view-title="优·购物" hide-tabs="">
+
+<ion-view view-title="优·购物" hide-tabs="false">
     <!-- 主页-->
   <ion-content class="scroll-content has-header">
       <!-- <ion-refresher pulling-text="下拉刷新" on-refresh="vm.doRefresh()"></ion-refresher>-->
@@ -38,7 +40,7 @@
     <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="1%" ></ion-infinite-scroll>
 
           <div class="row bg-yellow">
-              <a class="button-service">优服务</a>
+              <a class="button-service" ng-click="go('index.html#/page/service/safe')">优服务</a>
               <a class="col tab-item">
                   <i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">家政服务</p>
               </a>
@@ -61,28 +63,28 @@
                  <h4 class="title p-red font-12"><strong>| 爆款套餐</strong>&nbsp;| 省到不行</h4>
              </div>
              <div class="item item-image">
-                 <img src="img/product1.png" class="f-show">
+                <img src="img/product1.png" class="f-show" ng-click="go('index.html#/page/shopping/product-detail')">
                  <div class="p-location">
                      <div class="p-invisible">5281人已抢购</div>
                  </div>
                  <div class="activity padding text-left" >
                      <div class="color-white">电视狗套餐</div>
                      <p><span class="p-price">RMB 68</span>/<del class="color-white">折扣前128</del></p>
-                     <i class="icon icon-gouwuche shop-cart"></i><br>
-                     <button class=" energized-bg none-border button-size "  >立即购买</button>
+                     <i class="icon icon-gouwuche shop-cart" ng-click="go('index.html#/page/car')"></i><br>
+                     <button class=" energized-bg none-border button-size" ng-click="go('index.html#/page/car/order')">立即购买</button>
 
                  </div>
              </div>
              <div class="row">
                  <div class="col p-relative" >
-                     <img src="img/product2.png">
+                     <img src="img/product2.png" ng-click="go('index.html#/page/shopping/product-detail')">
                      <div class="s-location">
                          <p class="p-invisible">5281人已抢购</p>
                      </div>
                      <div class="padding">
                          <p>夜饿魔套餐</p>
                          <p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>
-                         <p><button class="button  button-small   button-energized">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px"></i></p>
+                         <p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>
                      </div>
 
                  </div>
@@ -94,21 +96,22 @@
                      <div class="padding">
                          <p>夜饿魔套餐</p>
                          <p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>
-                         <p><button class="button  button-small   button-energized">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px"></i></p>
+                         <p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>
                      </div>
                  </div>
              </div>
              <div class="row">
-                 <div class="col p-relative">
-                     <img src="img/product3.png">
+                 <div class="col p-relative" >
+                     <img src="img/product2.png" ng-click="go('index.html#/page/shopping/product-detail')">
                      <div class="s-location">
                          <p class="p-invisible">5281人已抢购</p>
                      </div>
                      <div class="padding">
                          <p>夜饿魔套餐</p>
                          <p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>
-                         <p><button class="button  button-small   button-energized">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px"></i></p>
+                         <p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>
                      </div>
+
                  </div>
                  <div class="col p-relative">
                      <img src="img/product3.png">
@@ -118,7 +121,7 @@
                      <div class="padding">
                          <p>夜饿魔套餐</p>
                          <p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>
-                         <p><button class="button  button-small   button-energized">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px"></i></p>
+                         <p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>
                      </div>
                  </div>
              </div>

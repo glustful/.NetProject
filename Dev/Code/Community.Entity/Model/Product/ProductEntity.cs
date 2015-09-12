@@ -97,7 +97,7 @@ namespace Community.Entity.Model.Product
         /// <summary>
         /// 折后价
         /// </summary>
-        public virtual decimal NewPrice { get; set; }
+        public virtual decimal? NewPrice { get; set; }
         /// <summary>
         /// 有多少人抢购
         /// </summary>

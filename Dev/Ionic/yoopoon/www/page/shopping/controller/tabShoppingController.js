@@ -3,7 +3,9 @@
  */
 app.controller('TabShoppingCtrl',['$http','$scope',function($http,$scope){
 
-
+    $scope.go=function(state){
+        window.location.href=state;
+    }
 }]);
 
 
