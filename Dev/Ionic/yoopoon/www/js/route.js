@@ -71,7 +71,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 url: '/service/clear',
                 views: {
                     'page-service': {
-                        templateUrl: 'page/service/clear.html'
+                        templateUrl: 'page/service/clear.html',
+                        controller: 'TabServiceCtrl'
                     }
                 }
             })
@@ -79,7 +80,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 url: '/service/safe',
                 views: {
                     'page-service': {
-                        templateUrl: 'page/service/safe.html'
+                        templateUrl: 'page/service/safe.html',
+                        controller: 'TabServiceCtrl'
                     }
                 }
             })
