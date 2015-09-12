@@ -376,13 +376,18 @@ angular.module('app')
                 })
                 .state('app.product.editProduct',{
                     url:'/editProduct?id',
-                    templateUrl:'app/module/Product/view/Edit.html',
+                    templateUrl:'app/module/Product/view/Edit.html'
                     //resolve: {
                     //    deps: ['$ocLazyLoad',
                     //        function( $ocLazyLoad ){
                     //            return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
                     //        }]
                     //}
+                })
+                .state('app.product.productProperty',{
+                    url:'/productProperty',
+                    templateUrl:'app/module/Product/view/Property.html',
+                    data : { title: '商品列表' }
                 })
                 .state('order',{
                     url:'/order',
@@ -402,7 +407,7 @@ angular.module('app')
                     templateUrl:'app/module/order/view/serviceList.html',
                     resolve:{
                         deps:['uiLoad',function(uiLoad){
-                            return uiLoad.load(['app/module/order/controller/orderServiceController.js']);
+                            return uiLoad.load(['app/module/order/controller/serviceOrderController.js']);
                         }]
                     }
                 });

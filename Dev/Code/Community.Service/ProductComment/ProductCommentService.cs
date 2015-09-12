@@ -116,7 +116,11 @@ namespace Community.Service.ProductComment
                 {
                     query = query.Where(q => q.Product.Id == condition.ProductId);
                 }
-				if(condition.OrderBy.HasValue)
+			    if (condition.Stars.HasValue)
+			    {
+			        query = query.Where(q => q.Stars == condition.Stars);
+			    }
+			    if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
                     {
