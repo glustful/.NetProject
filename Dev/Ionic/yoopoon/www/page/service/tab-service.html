@@ -1,5 +1,5 @@
 
-<ion-header-bar class=" header">
+<div class="bar header" style="height: 44px">
     <a class="button  button-icon icon icon-fuwuanniu"></a>
     <label class=" item-select select-header" ng-hide="showSelect">
         <select>
@@ -10,16 +10,15 @@
     </label>
   <a class="button button-icon icon icon-search search" ng-click="showInput()"></a>
     <input class="header-input" ng-class="{'header-input-show':isShow}" type="text" placeholder="" style="border: 1px solid #fff; height: 70%;z-index: 0;padding-left: 10px;color: #fff">
-</ion-header-bar>
+</div>
 
 <!--头部遮罩-->
 <div class="bar bar-header  p-head">
     <img src="page/shopping/img/head.png">
 </div>
 
-<ion-view view-title="优·服务"  hide-tabs="true">
-
-  <ion-content >
+<ion-view hide-nav-bar="true" hide-tabs="false">
+  <ion-content no-header="true" style="top:44px;">
   <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true">
   <ion-slide>
     <div class="box">

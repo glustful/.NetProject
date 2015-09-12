@@ -8,12 +8,14 @@
             <option >CSS</option>
             <option>JavaScript</option>
         </select>
+
     </label>
     <a class="button button-icon icon icon-search search" ng-click="showInput()"></a>
     <input class="header-input" ng-class="{'header-input-show':isShow}" type="text" placeholder="" style="border: 1px solid #fff; height: 70%;z-index: 0;padding-left: 10px;color: #fff">
 </ion-header-bar>
 
-<ion-view view-title="优·购物" hide-tabs="">
+
+<ion-view view-title="优·购物" hide-tabs="false">
     <!-- 主页-->
   <ion-content class="scroll-content has-header">
       <!-- <ion-refresher pulling-text="下拉刷新" on-refresh="vm.doRefresh()"></ion-refresher>-->
