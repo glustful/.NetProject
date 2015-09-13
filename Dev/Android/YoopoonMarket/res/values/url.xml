@@ -18,4 +18,8 @@
     <string name="url_modify_address">/api/memberaddress/put</string>
     <string name="url_add_address">/api/memberaddress/post</string>
     <string name="url_delete_address">/api/memberaddress/delete</string>
+    
+    <!-- 分类 -->
+    <string name="url_category_get">/api/category/get</string>
+    
 </resources>

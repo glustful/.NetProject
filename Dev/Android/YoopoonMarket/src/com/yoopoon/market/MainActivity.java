@@ -59,10 +59,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	Button btn_select;
 	@ViewById(R.id.tv_firstserve)
 	TextView tv_first;
-	// @ViewById(R.id.rl_first)
-	// View first;
-	// @ViewById(R.id.btn_iknow)
-	// Button btn_iknow;
+	@ViewById(R.id.rightBtn)
+	Button btn_category;
 	List<Fragment> fragments = new ArrayList<Fragment>();
 	List<LinearLayout> lls = new ArrayList<LinearLayout>();
 	String[] areas = { "北京", "大理", "香格里拉", "西双版纳" };
@@ -84,6 +82,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		for (LinearLayout ll : lls)
 			ll.setOnClickListener(this);
 		btn_select.setOnClickListener(new SearchViewClickListener());
+		btn_category.setOnClickListener(new SearchViewClickListener());
 
 		vp.setOnPageChangeListener(new MyPagerChangeListener());
 
@@ -123,6 +122,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 						}
 					});
 					builder.show();
+					break;
+				case R.id.rightBtn:
+					ProductClassifyActivity_.intent(MainActivity.this).start();
 					break;
 
 				default:

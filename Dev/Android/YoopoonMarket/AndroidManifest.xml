@@ -57,12 +57,14 @@
         <!-- 产品分类Activity -->
         <activity
             android:name="com.yoopoon.market.ProductClassifyActivity_"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_Activity_Animation" >
         </activity>
           <!-- 产品列表Activity -->
         <activity
             android:name="com.yoopoon.market.ProductList_"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_Activity_Animation" >
         </activity>
     </application>
 
