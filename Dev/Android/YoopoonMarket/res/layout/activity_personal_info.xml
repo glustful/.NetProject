@@ -2,13 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical" >
     
     <TextView 
+        android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="个人资料"/>
+   <Button 
+       android:onClick="modify"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="修改"/>
+  <Button 
+      android:onClick="add"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="添加"
+      />
+  <Button 
+      android:onClick="delete"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="删除"/>
     
 
 </LinearLayout>
