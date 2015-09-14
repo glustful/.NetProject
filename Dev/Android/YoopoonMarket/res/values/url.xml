@@ -22,4 +22,7 @@
     <!-- 分类 -->
     <string name="url_category_get">/api/category/get</string>
     
+    <!-- 地区 -->
+    <string name="url_area_get">/api/CommunityArea/get</string>
+    
 </resources>

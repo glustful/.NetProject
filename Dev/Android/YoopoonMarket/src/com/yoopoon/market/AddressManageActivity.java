@@ -107,7 +107,6 @@ public class AddressManageActivity extends MainActionBarActivity {
 	}
 
 	public void modify(View v) {
-		Log.i(TAG, "modify");
 		new SerializerJSON(new SerializeListener() {
 
 			@Override

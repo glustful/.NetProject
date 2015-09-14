@@ -210,6 +210,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		entity.setInviteCode(et_code.getText().toString());
 		entity.setWeiXinNumber(et_weixin.getText().toString());
 		entity.modifyInfo(new RequesListener() {
+
 			@Override
 			public void succeed(String msg) {
 				rl_progress.setVisibility(View.GONE);
@@ -232,6 +233,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 
 	private void parseToBroker(final String json) {
 		new ParserJSON(new ParseListener() {
+
 			@Override
 			public Object onParse() {
 				ObjectMapper om = new ObjectMapper();

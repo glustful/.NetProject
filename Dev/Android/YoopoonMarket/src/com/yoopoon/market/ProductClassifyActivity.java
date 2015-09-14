@@ -12,7 +12,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.graphics.Color;
 import android.text.TextPaint;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -28,7 +27,6 @@ import com.yoopoon.market.view.FixGridLayout;
 
 @EActivity(R.layout.activity_product_classification)
 public class ProductClassifyActivity extends MainActionBarActivity {
-	private static final String TAG = "ProductClassifyActivity";
 	@ViewById(R.id.ll_category)
 	LinearLayout ll_category;
 	List<CategoryEntity> categoryList = new ArrayList<CategoryEntity>();
@@ -61,7 +59,6 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 							for (int j = builder.length() - 1; j < 4; j++)
 								builder.append("        ");
 							categoryList.add(new CategoryEntity(id, builder.toString(), sort));
-							Log.i(TAG, builder.toString() + "aaaa");
 							builder.append(categoryObject.toString() + "\n");
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
