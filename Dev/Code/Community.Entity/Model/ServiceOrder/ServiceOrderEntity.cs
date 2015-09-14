@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Community.Entity.Model.Member;
 using Community.Entity.Model.Order;
 using Community.Entity.Model.ServiceOrderDetail;
 using YooPoon.Core.Data;
@@ -59,6 +60,11 @@ namespace Community.Entity.Model.ServiceOrder
         /// <summary>
         /// 订单明细
         /// </summary>
-        public virtual List<ServiceOrderDetailEntity> Details { get; set; } 
+        public virtual List<ServiceOrderDetailEntity> Details { get; set; }
+
+        /// <summary>
+        /// 下单人实体
+        /// </summary>
+        public virtual MemberEntity AddMember { get; set; }
 	}
 }

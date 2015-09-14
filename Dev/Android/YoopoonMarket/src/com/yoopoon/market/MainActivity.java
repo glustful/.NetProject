@@ -12,13 +12,15 @@
  */
 package com.yoopoon.market;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -39,11 +41,20 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yoopoon.market.domain.AreaEntity;
 import com.yoopoon.market.fragment.CartFragment;
 import com.yoopoon.market.fragment.MeFragment;
 import com.yoopoon.market.fragment.ServeFragment;
 import com.yoopoon.market.fragment.ShopFragment;
+import com.yoopoon.market.net.ProgressMessage;
+import com.yoopoon.market.net.RequestAdapter;
+import com.yoopoon.market.net.RequestAdapter.RequestMethod;
+import com.yoopoon.market.net.ResponseData;
+import com.yoopoon.market.utils.ParserJSON;
+import com.yoopoon.market.utils.ParserJSON.ParseListener;
 
 /**
  * @ClassName: MainActivity
@@ -69,10 +80,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	TextView tv_first;
 	@ViewById(R.id.rightBtn)
 	Button btn_category;
+	@ViewById(R.id.ll_loading)
+	LinearLayout ll_loading;
 	List<Fragment> fragments = new ArrayList<Fragment>();
 	List<LinearLayout> lls = new ArrayList<LinearLayout>();
-	String[] areas = { "北京", "大理", "香格里拉", "西双版纳" };
 	int checkedItem = 0;
+	List<AreaEntity> areaList = new ArrayList<AreaEntity>();
+	String[] areaItems;
 
 	@AfterViews
 	void initUI() {
@@ -91,6 +105,78 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		btn_select.setOnClickListener(new SearchViewClickListener());
 		btn_category.setOnClickListener(new SearchViewClickListener());
 		vp.setOnPageChangeListener(new MyPagerChangeListener());
+		requestArea();
+	}
+
+	void requestArea() {
+		ll_loading.setVisibility(View.VISIBLE);
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					boolean status = object.optBoolean("Status", false);
+					if (status) {
+						JSONArray array = object.optJSONArray("Object");
+						parseToObject(array);
+
+					} else {
+						Toast.makeText(MainActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+						ll_loading.setVisibility(View.GONE);
+					}
+				} else {
+					Toast.makeText(MainActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+					ll_loading.setVisibility(View.GONE);
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_area_get)).setRequestMethod(RequestMethod.eGet).notifyRequest();
+	}
+
+	void parseToObject(final JSONArray array) {
+		new ParserJSON(new ParseListener() {
+
+			@Override
+			public Object onParse() {
+				ObjectMapper om = new ObjectMapper();
+				for (int i = 0; i < array.length(); i++) {
+					try {
+						JSONObject areaObject = array.getJSONObject(i);
+						try {
+							areaList.add(om.readValue(areaObject.toString(), AreaEntity.class));
+						} catch (JsonParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (JsonMappingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+				return areaList;
+			}
+
+			@Override
+			public void onComplete(Object parseResult) {
+				areaItems = new String[areaList.size()];
+				for (int i = 0; i < areaList.size(); i++) {
+					AreaEntity entity = areaList.get(i);
+					areaItems[i] = entity.Name;
+				}
+				ll_loading.setVisibility(View.GONE);
+			}
+		}).execute();
 		rightBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -101,33 +187,40 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private class SearchViewClickListener implements OnClickListener {
+
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
 				case R.id.btn_select:
 					AlertDialog.Builder builder = new Builder(MainActivity.this);
+					builder.setSingleChoiceItems(areaItems, checkedItem, new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							checkedItem = which;
+							btn_select.setText(areaItems[checkedItem]);
+							dialog.dismiss();
+						}
+					});
+
 					builder.setTitle("请选择地区");
 					builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							btn_select.setText(areas[checkedItem]);
+							btn_select.setText(areaItems[checkedItem]);
 							dialog.dismiss();
 						}
 					});
+
 					builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
+							// checkedItem = which;
+							btn_select.setText(areaItems[checkedItem]);
 							dialog.dismiss();
 						}
 					});
-					builder.setSingleChoiceItems(areas, checkedItem, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							checkedItem = which;
-							btn_select.setText(areas[which]);
-							dialog.dismiss();
-						}
-					});
+
 					builder.show();
 					break;
 				case R.id.rightBtn:
@@ -143,10 +236,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		public MyPageAdapter(FragmentManager fm) {
 			super(fm);
 		}
+
 		@Override
 		public Fragment getItem(int arg0) {
 			return fragments.get(arg0);
 		}
+
 		@Override
 		public int getCount() {
 			return fragments.size();
@@ -158,10 +253,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		public void onPageScrollStateChanged(int arg0) {
 			// TODO Auto-generated method stub
 		}
+
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 			// TODO Auto-generated method stub
 		}
+
 		@Override
 		public void onPageSelected(int arg0) {
 			onClick(lls.get(arg0));
@@ -187,13 +284,16 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			System.exit(0);
 		}
 	}
+
 	public void toServe(View v) {
 		vp.setCurrentItem(1);
 		showFirstTv(false);
 	}
+
 	public void showFirstTv(boolean shown) {
 		tv_first.setVisibility(shown ? View.VISIBLE : View.GONE);
 	}
+
 	@Override
 	public void onClick(View v) {
 		for (LinearLayout ll : lls) {

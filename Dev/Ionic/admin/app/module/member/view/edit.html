@@ -3,7 +3,7 @@
        会员信息
     </div>
     <div class="panel-body" ng-controller="memController">
-        <form class="form-horizontal" method="PUT">
+        <form class="form-horizontal" name="form" method="PUT">
 
                     <input type="hidden"  ng-model="memModels.Id" class="form-control" placeholder="ID">
 
@@ -27,7 +27,9 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">电话</label>
                 <div class="col-sm-4">
-                    <input type="text"  ng-model="memModels.Phone" class="form-control" placeholder="电话">
+                    <input type="text"  name="Phone" id="Phone"  ng-pattern="/^1[3|4|5|7|8][0-9]\d{8}$/"  ng-model="memModels.Phone" class="form-control" placeholder="电话">
+                    <span ng-show="form.Phone.$error.required" class="tipshowcl" aria-hidden="false">*必填项</span>
+                    <div style="font-size: 15px;color: #FC3B4F" ng-show="form.Phone.$invalid&&form.Phone.$dirty">请正确输入手机号码</div>
                 </div>
             </div>
 

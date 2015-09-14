@@ -63,14 +63,6 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					// JSONArray array = object.optJSONArray("List");
-					// try {
-					// JSONObject memberJson = array.getJSONObject(0);
-					// parseToMember(memberJson.toString());
-					// } catch (JSONException e) {
-					// // TODO Auto-generated catch block
-					// e.printStackTrace();
-					// }
 					parseToMember(object.toString());
 
 				} else {

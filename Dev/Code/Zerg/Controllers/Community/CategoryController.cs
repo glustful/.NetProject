@@ -11,6 +11,7 @@ using System.EnterpriseServices;
 using System.Text.RegularExpressions;
 using System.Web.Http.Cors;
 
+
 namespace Zerg.Controllers.Community
 {
     [AllowAnonymous]
@@ -24,6 +25,14 @@ namespace Zerg.Controllers.Community
 			_categoryService = categoryService;
 		}
         #region 商品分类管理 2015.9.9 黄秀宇
+
+        //public JsonResult Get()
+        //{
+        //    _categoryService.GetCategorysByCondition()
+        //    return Json(sb.ToString(), JsonRequestBehavior.AllowGet);
+        //}
+
+
         /// <summary>
         /// 根据id查找商品分类
         /// </summary>

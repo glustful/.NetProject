@@ -13,7 +13,6 @@
 package com.yoopoon.home.domain;
 
 import android.util.Log;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.home.MyApplication;
@@ -78,7 +77,7 @@ public class BrokerEntity {
 	public int IsInvite;
 	public int Upuser;
 	public String code;
-	
+
 	@Override
 	public String toString() {
 		return "BrokerEntity [Address=" + Address + ", Addtime=" + Addtime + ", Adduser=" + Adduser + ", Agentlevel="
@@ -94,275 +93,366 @@ public class BrokerEntity {
 				+ Zip + ", inviteCode=" + inviteCode + ", rgtime=" + rgtime + ", strState=" + strState + ", IsInvite="
 				+ IsInvite + ", Upuser=" + Upuser + ", code=" + code + "]";
 	}
+
 	public String getAddress() {
 		return Address;
 	}
+
 	public void setAddress(String address) {
 		Address = address;
 	}
+
 	public String getAddtime() {
 		return Addtime;
 	}
+
 	public void setAddtime(String addtime) {
 		Addtime = addtime;
 	}
+
 	public int getAdduser() {
 		return Adduser;
 	}
+
 	public void setAdduser(int adduser) {
 		Adduser = adduser;
 	}
+
 	public String getAgentlevel() {
 		return Agentlevel;
 	}
+
 	public void setAgentlevel(String agentlevel) {
 		Agentlevel = agentlevel;
 	}
+
 	public int getAmount() {
 		return Amount;
 	}
+
 	public void setAmount(int amount) {
 		Amount = amount;
 	}
+
 	public String getBrokername() {
 		return Brokername;
 	}
+
 	public void setBrokername(String brokername) {
 		Brokername = brokername;
 	}
+
 	public String getEmail() {
 		return Email;
 	}
+
 	public void setEmail(String email) {
 		Email = email;
 	}
+
 	public String getHeadphoto() {
 		return Headphoto;
 	}
+
 	public void setHeadphoto(String headphoto) {
 		Headphoto = headphoto;
 	}
+
 	public String getHidm() {
 		return Hidm;
 	}
+
 	public void setHidm(String hidm) {
 		Hidm = hidm;
 	}
+
 	public int getId() {
 		return Id;
 	}
+
 	public void setId(int id) {
 		Id = id;
 	}
+
 	public int getLevelId() {
 		return LevelId;
 	}
+
 	public void setLevelId(int levelId) {
 		LevelId = levelId;
 	}
+
 	public String getMobileYzm() {
 		return MobileYzm;
 	}
+
 	public void setMobileYzm(String mobileYzm) {
 		MobileYzm = mobileYzm;
 	}
+
 	public String getNickname() {
 		return Nickname;
 	}
+
 	public void setNickname(String nickname) {
 		Nickname = nickname;
 	}
+
 	public int getPartnersId() {
 		return PartnersId;
 	}
+
 	public void setPartnersId(int partnersId) {
 		PartnersId = partnersId;
 	}
+
 	public String getPartnersName() {
 		return PartnersName;
 	}
+
 	public void setPartnersName(String partnersName) {
 		PartnersName = partnersName;
 	}
+
 	public String getPassword() {
 		return Password;
 	}
+
 	public void setPassword(String password) {
 		Password = password;
 	}
+
 	public String getPhone() {
 		return Phone;
 	}
+
 	public void setPhone(String phone) {
 		Phone = phone;
 	}
+
 	public int getQq() {
 		return Qq;
 	}
+
 	public void setQq(int qq) {
 		Qq = qq;
 	}
+
 	public String getRealname() {
 		return Realname;
 	}
+
 	public void setRealname(String realname) {
 		Realname = realname;
 	}
+
 	public String getRegtime() {
 		return Regtime;
 	}
+
 	public void setRegtime(String regtime) {
 		Regtime = regtime;
 	}
+
 	public String getRegtime1() {
 		return Regtime1;
 	}
+
 	public void setRegtime1(String regtime1) {
 		Regtime1 = regtime1;
 	}
+
 	public boolean isRemember() {
 		return Remember;
 	}
+
 	public void setRemember(boolean remember) {
 		Remember = remember;
 	}
+
 	public String getSecondPassword() {
 		return SecondPassword;
 	}
+
 	public void setSecondPassword(String secondPassword) {
 		SecondPassword = secondPassword;
 	}
+
 	public String getSexy() {
 		return Sexy;
 	}
+
 	public void setSexy(String sexy) {
 		Sexy = sexy;
 	}
+
 	public String getSfz() {
 		return Sfz;
 	}
+
 	public void setSfz(String sfz) {
 		Sfz = sfz;
 	}
+
 	public String getSfzPhoto() {
 		return SfzPhoto;
 	}
+
 	public void setSfzPhoto(String sfzPhoto) {
 		SfzPhoto = sfzPhoto;
 	}
+
 	public int getState() {
 		return State;
 	}
+
 	public void setState(int state) {
 		State = state;
 	}
+
 	public int getStatus() {
 		return Status;
 	}
+
 	public void setStatus(int status) {
 		Status = status;
 	}
+
 	public int getTotalPoints() {
 		return Totalpoints;
 	}
+
 	public void setTotalPoints(int totalPoints) {
 		Totalpoints = totalPoints;
 	}
+
 	public String getType() {
 		return Type;
 	}
+
 	public void setType(String type) {
 		Type = type;
 	}
+
 	public int getUcId() {
 		return UcId;
 	}
+
 	public void setUcId(int ucId) {
 		UcId = ucId;
 	}
+
 	public String getUptime() {
 		return Uptime;
 	}
+
 	public void setUptime(String uptime) {
 		Uptime = uptime;
 	}
+
 	public int getUserId() {
 		return UserId;
 	}
+
 	public void setUserId(int userId) {
 		UserId = userId;
 	}
+
 	public String getUserName() {
 		return UserName;
 	}
+
 	public void setUserName(String userName) {
 		UserName = userName;
 	}
+
 	public int getUserType() {
 		return UserType;
 	}
+
 	public void setUserType(int userType) {
 		UserType = userType;
 	}
+
 	public String getUserType1() {
 		return Usertype1;
 	}
+
 	public void setUserType1(String userType1) {
 		Usertype1 = userType1;
 	}
+
 	public String getWeiXinNumber() {
 		return WeiXinNumber;
 	}
+
 	public void setWeiXinNumber(String weiXinNumber) {
 		WeiXinNumber = weiXinNumber;
 	}
+
 	public int getZip() {
 		return Zip;
 	}
+
 	public void setZip(int zip) {
 		Zip = zip;
 	}
+
 	public String getInviteCode() {
 		return inviteCode;
 	}
+
 	public void setInviteCode(String inviteCode) {
 		this.inviteCode = inviteCode;
 	}
+
 	public String getRgtime() {
 		return rgtime;
 	}
+
 	public void setRgtime(String rgtime) {
 		this.rgtime = rgtime;
 	}
+
 	public String getStrState() {
 		return strState;
 	}
+
 	public void setStrState(String strState) {
 		this.strState = strState;
 	}
+
 	public int getIsInvite() {
 		return IsInvite;
 	}
+
 	public void setIsInvite(int isInvite) {
 		IsInvite = isInvite;
 	}
+
 	public int getUpUser() {
 		return Upuser;
 	}
+
 	public void setUpUser(int upUser) {
 		Upuser = upUser;
 	}
+
 	public String getCode() {
 		return code;
 	}
+
 	public void setCode(String code) {
 		this.code = code;
 	}
+
 	public static String getTag() {
 		return TAG;
 	}
+
 	public void modifyInfo(final RequesListener listener) {
 		new SerializerJSON(new SerializeListener() {
+
 			@Override
 			public String onSerialize() {
 				ObjectMapper om = new ObjectMapper();
@@ -375,6 +465,7 @@ public class BrokerEntity {
 				}
 				return null;
 			}
+
 			@Override
 			public void onComplete(String serializeResult) {
 				if (serializeResult == null || serializeResult.equals("")) {
@@ -384,9 +475,11 @@ public class BrokerEntity {
 			}
 		}).execute();
 	}
+
 	protected void requestModifyInfo(String serializeResult, final RequesListener lis) {
 		Log.i(TAG, serializeResult);
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				Log.i(TAG, data.toString());
@@ -398,6 +491,7 @@ public class BrokerEntity {
 					lis.fail(msg);
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub

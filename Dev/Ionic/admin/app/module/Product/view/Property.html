@@ -1,7 +1,7 @@
 <div class="bg-light lter b-b wrapper-md">
     <h1 class="m-n font-thin h3">属性设置</h1>
 </div>
-<div class="wrapper-md">
+<div class="wrapper-md" ng-controller="getParameter">
     <div class="panel panel-default">
 
         <div>
@@ -11,7 +11,9 @@
                     <th>
                         &nbsp;
                     </th>
-
+                    <th>
+                        ID
+                    </th>
                     <th>
                         参数
                     </th>
@@ -40,53 +42,23 @@
                 </thead>
                 <tbody>
 
-                <tr>
+                <tr ng-repeat="item in list">
                     <td>&nbsp;</td>
-                    <td><a href>颜色</a></td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td><select style="width: 150px;"></select></td>
+                    <td>{{item.Id}}</td>
+                    <td><a href>{{item.ParameterName}}</a></td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
-                </tr>
-
-                <tr>
-                    <td>&nbsp;</td>
-                    <td><a href>大小</a></td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td><select style="width: 150px;"></select></td>
+                    <td>
+                        <div  ng-repeat="v in item.ParameterValues">
+                            <input type="radio" class="ace" name={{item.Id}} value={{v.id}} ng-model="item.value"required/>
+                            <span class="lbl">{{v.name}}</span>
+                        </div>
+                    </td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                 </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td><a href>口味</a></td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td><select style="width: 150px;"></select></td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-
-                    <td>&nbsp;</td>
-                    <td><a href>品质</a></td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td><select style="width: 150px;"></select></td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-
                 </tbody>
 
             </table>
@@ -100,7 +72,7 @@
             <!--<i class="icon-ok bigger-110"></i>-->
             <!--提交-->
             <!--</button>-->
-            <button id="btn_ok" class="btn btn-info" type="submit">
+            <button id="btn_ok" class="btn btn-info" type="button" ng-click="save()">
                 <i class="icon-ok bigger-110"></i>
                 提交
             </button>
