@@ -27,6 +27,7 @@ namespace Community.Entity.Mappings.Member
 		    Property(c => c.UserId).HasColumnType("int").IsRequired();
 
 		    HasMany(c => c.Address).WithRequired(c=>c.Member);
+		    Property(c => c.UserName).HasColumnType("varchar").HasMaxLength(50).IsOptional();
 		}
 	}
 }

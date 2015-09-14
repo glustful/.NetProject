@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using Community.Entity.Model.ParameterValue;
+using Community.Entity.Model.Category;
 
 namespace Zerg.Models.Community
 {
@@ -14,7 +17,7 @@ namespace Zerg.Models.Community
 		/// <summary>
         /// 平台商品分类ID
         /// </summary>
-//		public CategoryEntity Category {get;set;}
+		public CategoryEntity Category {get;set;}
 
 
 		/// <summary>
@@ -51,8 +54,7 @@ namespace Zerg.Models.Community
         /// UpdTime
         /// </summary>
 		public DateTime UpdTime {get;set;}
-
-
+        //public virtual List<ParameterValueEntity> Values { get; set; }
 
 	}
 }

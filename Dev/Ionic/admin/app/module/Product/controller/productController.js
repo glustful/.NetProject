@@ -209,6 +209,7 @@ function updatemainImage(file) {
                 var g1=mainImg.split(':"');
                 var g2= mainImg.split(',')[1].split(':"')[1];
                 //将分割好的文件名赋予给img全局变量
+
                 mainImg=g2.substring(0,g2.length-1);
                 //图片上传成功字样样式
                 headtext.innerHTML = '上传成功!';
