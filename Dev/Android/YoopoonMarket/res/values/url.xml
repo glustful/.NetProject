@@ -8,6 +8,9 @@
     <string name="url_product_search">/api/Product/GetSearchProduct</string>
     <!-- 获取广告API -->
     <string name="url_get_advertisement">/api/ad/get</string>
+    <!-- 获取商品API -->
+    <string name="url_get_communityproduct">/api/communityproduct/get</string>
+
     <!-- 我 -->
     <string name="url_getmemeber_byid">/api/member/get</string>
     <string name="url_member_modify">/api/member/put</string>

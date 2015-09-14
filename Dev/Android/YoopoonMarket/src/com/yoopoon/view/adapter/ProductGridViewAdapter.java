@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,7 +64,7 @@ public class ProductGridViewAdapter extends BaseAdapter {
 		return position;
 	}
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		ProductViewHandler productityViewHandler = null;
 		if (convertView != null) {
 			productityViewHandler = (ProductViewHandler) convertView.getTag();
@@ -77,13 +78,23 @@ public class ProductGridViewAdapter extends BaseAdapter {
 		//int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
 		//url等待后台API确定
 		//String url = mContext.getString(R.string.url_image);
-		String url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
-		productityViewHandler.productityNameTextView.setText(datas.get(position).optString("productName", ""));
+		//判断图片链接是否存在，不存在的时候使用默认图片
+		String url;
+		if (datas.get(position).optString("MainImg") == null || datas.get(position).optString("MainImg").equals("null")) {
+			url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
+		} else {
+			url = datas.get(position).optString("MainImg");
+		}
+		//产品名称
+		productityViewHandler.productityNameTextView.setText(datas.get(position).optString("Name", ""));
+		//产品当前价格
 		productityViewHandler.productityCurrentPriceTextView.setText("RMB "
-				+ datas.get(position).optString("currentPrice", ""));
+				+ datas.get(position).optString("Price", "0.00"));
+		//产品未打折前价格
 		productityViewHandler.productityBeforePriceTextView.setText(" /折扣前"
-				+ datas.get(position).optString("beforePrice", ""));
+				+ datas.get(position).optString("NewPrice", "0.00"));
 		productityViewHandler.productityBeforePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+		//加载图片
 		productityViewHandler.productityPhotoImageView.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 		productityViewHandler.productityPhotoImageView.setTag(url);
@@ -107,7 +118,10 @@ public class ProductGridViewAdapter extends BaseAdapter {
 		convertView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Bundle bundle = new Bundle();
+				bundle.putString("productId", datas.get(position).optString("Id"));
 				Intent intent = new Intent(mContext, ProductDetailActivity_.class);
+				intent.putExtras(bundle);
 				mContext.startActivity(intent);
 			}
 		});

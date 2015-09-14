@@ -24,6 +24,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,11 +40,13 @@ import com.yoopoon.market.ProductClassifyActivity_;
 import com.yoopoon.market.ProductDetailActivity_;
 import com.yoopoon.market.ProductList_;
 import com.yoopoon.market.R;
+import com.yoopoon.market.R.string;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.ResponseData.ResultState;
+import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
 import com.yoopoon.view.adapter.ProductGridViewAdapter;
 
 public class ShopFragment extends Fragment {
@@ -57,6 +60,7 @@ public class ShopFragment extends Fragment {
 	private TextView beforePriceTextView; // 折扣前价格
 	private TextView burstPackageTextView;
 	private ImageView burstPackageImageView;
+	private static final String TAG = "ShopFragment";
 
 	@Override
 	@Nullable
@@ -126,9 +130,9 @@ public class ShopFragment extends Fragment {
 					e.printStackTrace();
 				}
 			}
-			mProductGridViewAdapter = new ProductGridViewAdapter(mContext, arrayList);
+			/*mProductGridViewAdapter = new ProductGridViewAdapter(mContext, arrayList);
 			commodityGridView.setAdapter(mProductGridViewAdapter);
-			// 对Fragment_shop中的视图控件初始化和设置
+*/			// 对Fragment_shop中的视图控件初始化和设置
 			initShopFragment();
 		}
 		return rootView;
@@ -140,6 +144,7 @@ public class ShopFragment extends Fragment {
 	private void initShopFragment() {
 		requestAdvertisements();
 		requestServices();
+		requestProduct();
 		LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.linearlayout_fragment_shop);
 		linearLayout.addView(mADController.getRootView(), 0);
 		linearLayout.addView(serviceController.getRootView(), 1);
@@ -198,5 +203,23 @@ public class ShopFragment extends Fragment {
 			}.setUrl("/api/channel/GetActiveTitleImg").setRequestMethod(RequestMethod.eGet)
 					.addParam("ChannelName", "活动").notifyRequest();
 		}
+	}
+	private void requestProduct() {
+		new RequestAdapter() {
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONArray jsonArray;
+				try {
+					jsonArray = data.getMRootData().getJSONArray("List");
+					mProductGridViewAdapter = new ProductGridViewAdapter(mContext, JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
+					commodityGridView.setAdapter(mProductGridViewAdapter);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+			@Override
+			public void onProgress(ProgressMessage msg) {
+			}
+		}.setUrl(getString(R.string.url_get_communityproduct)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
 }

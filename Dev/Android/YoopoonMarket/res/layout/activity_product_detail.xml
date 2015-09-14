@@ -131,7 +131,7 @@
                     android:id="@+id/tv_product_comment_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="188"
+                    android:text="0"
                     android:textSize="15sp" />
 
                 <TextView

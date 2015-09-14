@@ -33,6 +33,10 @@ import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yoopoon.market.net.ProgressMessage;
+import com.yoopoon.market.net.RequestAdapter;
+import com.yoopoon.market.net.RequestAdapter.RequestMethod;
+import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.view.adapter.ProductListViewAdapter;
 
 /**
@@ -91,8 +95,9 @@ public class ProductList extends MainActionBarActivity {
 			}
 			jsonArrayList.add(jsonObject);
 		}
+		 
+		requsetProductList();
 		mProductListViewAdapter = new ProductListViewAdapter(mContext, jsonArrayList);
-		
 		productListView.setAdapter(mProductListViewAdapter);
 	}
 
@@ -126,5 +131,20 @@ public class ProductList extends MainActionBarActivity {
 	@Override
 	public Boolean showHeadView() {
 		return true;
+	}
+	/**
+	 * @Title: requsetProductList
+	 * @Description: 获取商品列表
+	 */
+	private void requsetProductList() {
+		new RequestAdapter() {
+			@Override
+			public void onReponse(ResponseData data) {
+				Log.e("111111", data.toString());
+			}
+			@Override
+			public void onProgress(ProgressMessage msg) {
+			}
+		}.setUrl(getString(R.string.url_get_communityproduct)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
 }
