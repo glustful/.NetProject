@@ -70,6 +70,7 @@
     <!--</ion-content>-->
     <!-- 待评价-->
     <ion-content style="top: 88px">
+        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="1%" ></ion-infinite-scroll>
     <ion-list>
         <div>
             <div class="item row bar padding">

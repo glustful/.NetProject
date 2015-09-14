@@ -65,7 +65,7 @@ app.controller('TabCarCtrl', function($scope, $ionicSlideBoxDelegate) {
 ///数量增加减
     $scope.number=0;
     $scope.adding=function(){
-       
+
         if($scope.number>=0){
             $scope.number=$scope.number+1;
 //            alert($scope.number)
