@@ -62,5 +62,7 @@ namespace Zerg.Models.Community
         public int ParameterId { get; set; }
         public int ParameterValueId { get; set; }
 
+        public int[] ValueIds { get; set; }
+
 	}
 }
