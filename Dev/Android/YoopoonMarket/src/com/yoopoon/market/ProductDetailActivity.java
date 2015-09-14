@@ -1,11 +1,13 @@
 package com.yoopoon.market;
 
 import java.util.ArrayList;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.advertisement.ADController;
 import com.yoopoon.market.net.ProgressMessage;
@@ -13,12 +15,15 @@ import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData.ResultState;
+
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
+
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -126,7 +131,40 @@ public class ProductDetailActivity extends MainActionBarActivity {
 				loadMoreComment();
 			}
 		});
+		//添加滑动获取更多图文详情
+		int sceenWidth = this.getWindowManager().getDefaultDisplay().getWidth();
+		LinearLayout linearLayout = new LinearLayout(mContext);
+		android.view.ViewGroup.LayoutParams linearLayoutLayoutParams = new android.view.ViewGroup.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT, 150);
+		linearLayout.setLayoutParams(linearLayoutLayoutParams);
+		linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+		//
+		View view = new View(mContext);
+		android.view.ViewGroup.LayoutParams viewLayoutParams = new android.view.ViewGroup.LayoutParams(
+				Integer.parseInt(sceenWidth / 4 + ""), 2);
+		view.setLayoutParams(viewLayoutParams);
+		view.setBackgroundColor(Color.BLACK);
+		linearLayout.addView(view, 0);
+		//
+		TextView addMoreTextView = new TextView(mContext);
+		addMoreTextView.setBackgroundColor(Color.TRANSPARENT);
+		addMoreTextView.setText("继续拖动，查看图文详情");
+		android.view.ViewGroup.LayoutParams buttonLayoutParams = new android.view.ViewGroup.LayoutParams(
+				android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+		addMoreTextView.setLayoutParams(buttonLayoutParams);
+		addMoreTextView.setGravity(Gravity.CENTER_VERTICAL);
+		linearLayout.addView(addMoreTextView, 1);
+		//
+		View view2 = new View(mContext);
+		android.view.ViewGroup.LayoutParams view2Params = new android.view.ViewGroup.LayoutParams(
+				Integer.parseInt(sceenWidth / 4 + ""), 2);
+		view2.setLayoutParams(view2Params);
+		view2.setBackgroundColor(Color.BLACK);
+		linearLayout.addView(view2);
+		linearLayout.setGravity(Gravity.CENTER);
+		linearLayout.setBackgroundColor(Color.rgb(228, 228, 228));
 		commentLinearlayout.addView(addMoreCommentButton, count);
+		commentLinearlayout.addView(linearLayout, count + 1);
 	}
 	/**
 	 * @Title: loadMoreComment

@@ -89,13 +89,13 @@ public class ShopFragment extends Fragment {
 			// ###############################################################################
 			// 如下的代码只做API出来前的测试用途
 			// ###############################################################################
-			burstPackageTextView.setOnClickListener(new OnClickListener() {
+			/*burstPackageTextView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					Intent intent = new Intent(mContext, ProductClassifyActivity_.class);
 					startActivity(intent);
 				}
-			});
+			});*/
 			TextView saveMoneyTextView = (TextView) rootView.findViewById(R.id.btn_save_money);
 			saveMoneyTextView.setOnClickListener(new OnClickListener() {
 				@Override
