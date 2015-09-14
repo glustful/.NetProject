@@ -23,7 +23,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -63,10 +65,13 @@ import com.yoopoon.market.utils.ParserJSON.ParseListener;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends FragmentActivity implements OnClickListener {
 	private static final String TAG = "MainActivity";
+	private Context mContext;
 	@ViewById(R.id.vp)
 	ViewPager vp;
 	@ViewById(R.id.rg)
 	RadioGroup rg;
+	@ViewById(R.id.rightBtn)
+	Button rightBtn;
 	@ViewById(R.id.search_layout)
 	View searchLayout;
 	@ViewById(R.id.btn_select)
@@ -85,22 +90,20 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 	@AfterViews
 	void initUI() {
+		mContext = MainActivity.this;
 		fragments.add(new ShopFragment());
 		fragments.add(new ServeFragment());
 		fragments.add(new CartFragment());
 		fragments.add(new MeFragment());
 		vp.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
-
 		lls.add((LinearLayout) findViewById(R.id.ll1));
 		lls.add((LinearLayout) findViewById(R.id.ll2));
 		lls.add((LinearLayout) findViewById(R.id.ll3));
 		lls.add((LinearLayout) findViewById(R.id.ll4));
-
 		for (LinearLayout ll : lls)
 			ll.setOnClickListener(this);
 		btn_select.setOnClickListener(new SearchViewClickListener());
 		btn_category.setOnClickListener(new SearchViewClickListener());
-
 		vp.setOnPageChangeListener(new MyPagerChangeListener());
 		requestArea();
 	}
@@ -174,6 +177,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				ll_loading.setVisibility(View.GONE);
 			}
 		}).execute();
+		rightBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(mContext, ProductClassifyActivity_.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	private class SearchViewClickListener implements OnClickListener {
@@ -190,23 +200,23 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 							checkedItem = which;
 							btn_select.setText(areaItems[checkedItem]);
 							dialog.dismiss();
-
 						}
 					});
+
 					builder.setTitle("请选择地区");
 					builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// checkedItem = which;
 							btn_select.setText(areaItems[checkedItem]);
 							dialog.dismiss();
 						}
 					});
-					builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
 
+					builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
+							// checkedItem = which;
+							btn_select.setText(areaItems[checkedItem]);
 							dialog.dismiss();
 						}
 					});
@@ -216,7 +226,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				case R.id.rightBtn:
 					ProductClassifyActivity_.intent(MainActivity.this).start();
 					break;
-
 				default:
 					break;
 			}
@@ -240,7 +249,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private class MyPagerChangeListener implements OnPageChangeListener {
-
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 			// TODO Auto-generated method stub
@@ -264,6 +272,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		// super.onBackPressed();
 		exit();
 	}
+
 	long exitTime;
 
 	public void exit() {
@@ -293,13 +302,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			radioButton.setChecked(false);
 			textView.setTextColor(Color.GRAY);
 		}
-
 		LinearLayout ll = (LinearLayout) v;
 		RadioButton radioButton = (RadioButton) ll.getChildAt(0);
 		TextView textView = (TextView) ll.getChildAt(1);
 		radioButton.setChecked(true);
 		textView.setTextColor(Color.RED);
-
 		switch (v.getId()) {
 			case R.id.ll1:
 				vp.setCurrentItem(0);
@@ -315,5 +322,4 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				break;
 		}
 	}
-
 }

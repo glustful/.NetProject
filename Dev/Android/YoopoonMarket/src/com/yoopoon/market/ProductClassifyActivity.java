@@ -10,13 +10,19 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.TextPaint;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import com.yoopoon.market.domain.CategoryEntity;
 import com.yoopoon.market.net.ProgressMessage;
@@ -27,6 +33,9 @@ import com.yoopoon.market.view.FixGridLayout;
 
 @EActivity(R.layout.activity_category)
 public class ProductClassifyActivity extends MainActionBarActivity {
+	@ViewById(R.id.et_search_product)
+	EditText searchProductEditText;
+	private static final String TAG = "ProductClassifyActivity";
 	@ViewById(R.id.ll_category)
 	LinearLayout ll_category;
 	@ViewById(R.id.ll_loading)
@@ -40,13 +49,30 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 		titleButton.setVisibility(View.VISIBLE);
 		rightButton.setVisibility(View.GONE);
 		titleButton.setText("分类");
+		// 添加用户输入内容后输入法可以使用键盘上的搜索框搜索
+		searchProductEditText.setImeActionLabel("搜索", EditorInfo.IME_ACTION_SEARCH);
+		searchProductEditText.setSingleLine();
+		searchProductEditText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+		searchProductEditText.setOnEditorActionListener(new OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+					Intent intent = new Intent(ProductClassifyActivity.this, ProductList_.class);
+					Bundle bundle = new Bundle();
+					bundle.putString("productClassification", "曲靖特产");
+					intent.putExtras(bundle);
+					startActivity(intent);
+					return true;
+				}
+				return false;
+			}
+		});
 		requestData();
 	}
 
 	void requestData() {
 		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
@@ -64,7 +90,6 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 							categoryList.add(new CategoryEntity(id, builder.toString(), sort));
 							builder.append(categoryObject.toString() + "\n");
 						} catch (JSONException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 							ll_loading.setVisibility(View.GONE);
 						}
@@ -79,7 +104,6 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
-
 			}
 		}.setUrl(getString(R.string.url_category_get)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
@@ -113,7 +137,6 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 					count++;
 				}
 				count += 2;
-
 			}
 			TextView tv = new TextView(ProductClassifyActivity.this);
 			LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);;
@@ -127,7 +150,6 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 			FixGridLayout ll = (FixGridLayout) ll_category.getChildAt(count - 1);
 			ll.addView(tv);
 			tv.setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					TextView tv = (TextView) v;
@@ -142,7 +164,6 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 
 	}
 	Comparator<CategoryEntity> comparator = new Comparator<CategoryEntity>() {
-
 		@Override
 		public int compare(CategoryEntity lhs, CategoryEntity rhs) {
 			if (lhs.sort > rhs.sort)

@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -32,6 +33,11 @@ import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yoopoon.market.net.ProgressMessage;
+import com.yoopoon.market.net.RequestAdapter;
+import com.yoopoon.market.net.RequestAdapter.RequestMethod;
+import com.yoopoon.market.net.ResponseData;
+import com.yoopoon.view.adapter.ProductListViewAdapter;
 
 /**
  * @ClassName: ProductList
@@ -41,15 +47,15 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
  */
 @EActivity(R.layout.acitvity_product_list)
 public class ProductList extends MainActionBarActivity {
-	private Context					mContext;
-	private ListView				productListView;
-	private ProductListViewAdapter	mProductListViewAdapter;
-	private ArrayList<JSONObject>	jsonArrayList;
+	private Context mContext;
+	private ListView productListView;
+	private ProductListViewAdapter mProductListViewAdapter;
+	private ArrayList<JSONObject> jsonArrayList;
 	@ViewById
-	LinearLayout					linearLayout_product_list;
+	LinearLayout linearLayout_product_list;
 	@ViewById
-	PullToRefreshListView			ptr_listview_product_list;
-	
+	PullToRefreshListView ptr_listview_product_list;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,11 +93,14 @@ public class ProductList extends MainActionBarActivity {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
+			jsonArrayList.add(jsonObject);
 		}
+		 
+		requsetProductList();
 		mProductListViewAdapter = new ProductListViewAdapter(mContext, jsonArrayList);
 		productListView.setAdapter(mProductListViewAdapter);
 	}
-	
+
 	/**
 	 * @ClassName: RefreshListenerSetting
 	 * @Description: 设置PTR刷新的方式
@@ -108,7 +117,7 @@ public class ProductList extends MainActionBarActivity {
 			Toast.makeText(mContext, "pull up to refresh", Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+
 	@Override
 	public void backButtonClick(View v) {
 		finish();
@@ -122,5 +131,20 @@ public class ProductList extends MainActionBarActivity {
 	@Override
 	public Boolean showHeadView() {
 		return true;
+	}
+	/**
+	 * @Title: requsetProductList
+	 * @Description: 获取商品列表
+	 */
+	private void requsetProductList() {
+		new RequestAdapter() {
+			@Override
+			public void onReponse(ResponseData data) {
+				Log.e("111111", data.toString());
+			}
+			@Override
+			public void onProgress(ProgressMessage msg) {
+			}
+		}.setUrl(getString(R.string.url_get_communityproduct)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
@@ -11,17 +12,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
+            android:paddingLeft="5dp"
             android:orientation="vertical" >
 
             <ImageView
-                android:id="@+id/img_commodity_photo"
+                android:id="@+id/img_product_photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
                 android:src="@drawable/commodity_testing" />
 
             <TextView
-                android:id="@+id/tv_commodity_name"
+                android:id="@+id/tv_product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
@@ -53,16 +56,29 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_purchase"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:background="@drawable/rounded_yellow_background"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="立即购买"
-                android:textColor="#000000"
-                android:textSize="15sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp" >
+
+                <Button
+                    android:id="@+id/btn_purchase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/rounded_yellow_background"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="立即购买"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/img_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/cart_gray" />
+            </RelativeLayout>
         </LinearLayout>
 
         <Button
@@ -77,6 +93,17 @@
             android:text="300人已抢购"
             android:textColor="@android:color/white"
             android:textSize="10sp" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="#DDDDDD" />
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#DDDDDD" />
 
 </LinearLayout>

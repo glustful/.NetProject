@@ -116,7 +116,7 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@drawable/cart_red" />
 
                 <View
                     android:layout_width="match_parent"
@@ -159,7 +159,9 @@
             android:id="@+id/gridview_commodity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#F8F8F8"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="#DDDDDD"
             android:gravity="center"
             android:horizontalSpacing="5dp"
             android:numColumns="2"

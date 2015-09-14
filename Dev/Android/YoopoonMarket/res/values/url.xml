@@ -6,8 +6,11 @@
     <string name="url_image">http://img.yoopoon.com/</string>
     <string name="url_test2">/api/Brand/GetAllBrand</string>
     <string name="url_product_search">/api/Product/GetSearchProduct</string>
-    
-    
+    <!-- 获取广告API -->
+    <string name="url_get_advertisement">/api/ad/get</string>
+    <!-- 获取商品API -->
+    <string name="url_get_communityproduct">/api/communityproduct/get</string>
+
     <!-- 我 -->
     <string name="url_getmemeber_byid">/api/member/get</string>
     <string name="url_member_modify">/api/member/put</string>
@@ -18,9 +21,10 @@
     <string name="url_modify_address">/api/memberaddress/put</string>
     <string name="url_add_address">/api/memberaddress/post</string>
     <string name="url_delete_address">/api/memberaddress/delete</string>
-    
+
     <!-- 分类 -->
     <string name="url_category_get">/api/category/get</string>
+
     
     <!-- 地区 -->
     <string name="url_area_get">/api/CommunityArea/get</string>
