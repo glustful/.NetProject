@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Community.Entity.Model.Member;
+using Community.Entity.Model.MemberAddress;
 using Community.Entity.Model.Order;
 using Community.Entity.Model.ServiceOrderDetail;
 using YooPoon.Core.Data;
@@ -39,10 +40,10 @@ namespace Community.Entity.Model.ServiceOrder
 		/// 费用
 		/// </summary>
 		public virtual decimal Flee { get; set; }
-		/// <summary>
-		/// 地址
-		/// </summary>
-		public virtual string Address { get; set; }
+//		/// <summary>
+//		/// 地址
+//		/// </summary>
+//		public virtual string Address { get; set; }
 		/// <summary>
 		/// 服务时间
 		/// </summary>
@@ -66,5 +67,10 @@ namespace Community.Entity.Model.ServiceOrder
         /// 下单人实体
         /// </summary>
         public virtual MemberEntity AddMember { get; set; }
+
+        /// <summary>
+        /// 地址
+        /// </summary>
+        public virtual MemberAddressEntity Address { get; set; }
 	}
 }

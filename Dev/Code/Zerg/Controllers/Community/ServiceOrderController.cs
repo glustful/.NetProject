@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
@@ -8,6 +7,7 @@ using Community.Entity.Model.Order;
 using Community.Entity.Model.Product;
 using Community.Entity.Model.ServiceOrder;
 using Community.Entity.Model.ServiceOrderDetail;
+using Community.Service.MemberAddress;
 using Community.Service.Product;
 using Community.Service.ServiceOrder;
 using YooPoon.Core.Site;
@@ -22,12 +22,14 @@ namespace Zerg.Controllers.Community
         private readonly IServiceOrderService _serviceOrderService;
         private readonly IProductService _productService;
         private readonly IWorkContext _workContext;
+        private readonly IMemberAddressService _memberAddressService;
 
-        public ServiceOrderController(IServiceOrderService serviceOrderService, IProductService productService, IWorkContext workContext)
+        public ServiceOrderController(IServiceOrderService serviceOrderService, IProductService productService, IWorkContext workContext,IMemberAddressService memberAddressService)
         {
             _serviceOrderService = serviceOrderService;
             _productService = productService;
             _workContext = workContext;
+            _memberAddressService = memberAddressService;
         }
 
         public ServiceOrderModel Get(int id)
@@ -42,7 +44,7 @@ namespace Zerg.Controllers.Community
                 Addtime = entity.AddTime,
                 AddUser = entity.AddUser,
                 Flee = entity.Flee,
-                Address = entity.Address,
+                Address = entity.Address.Address,
                 Servicetime = entity.Servicetime,
                 Remark = entity.Remark,
                 Details = entity.Details.Select(c => new ServiceOrderDetailModel()
@@ -59,7 +61,8 @@ namespace Zerg.Controllers.Community
                 }).ToList(),
                 Status = entity.Status,
                 UpdUser = entity.UpdUser,
-                UpdTime = entity.UpdTime
+                UpdTime = entity.UpdTime,
+                MemberAddressId = entity.Address.Id
             };
             return model;
         }
@@ -73,7 +76,7 @@ namespace Zerg.Controllers.Community
                 Addtime = c.AddTime,
                 AddUser = c.AddUser,
                 Flee = c.Flee,
-                Address = c.Address,
+                Address = c.Address.Address,
                 Servicetime = c.Servicetime,
                 Remark = c.Remark,
                 Status = c.Status,
@@ -111,7 +114,7 @@ namespace Zerg.Controllers.Community
                 AddTime = DateTime.Now,
                 AddUser = _workContext.CurrentUser.Id,
                 Flee = products.Sum(c => (c.Count * c.Price)),
-                Address = model.Address,
+                Address = _memberAddressService.GetMemberAddressById(model.MemberAddressId),
                 Servicetime = model.Servicetime,
                 Remark = model.Remark,
                 Details = products,
