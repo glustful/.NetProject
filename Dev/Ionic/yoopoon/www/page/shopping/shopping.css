@@ -125,6 +125,10 @@
     font-size: 1.2em;
     font-family: "Microsoft YaHei";
 }
+.font-11{
+    font-size: 1em;
+    font-family: "Microsoft YaHei";
+}
 /*商品列表*/
 .float-right{
     float: right;

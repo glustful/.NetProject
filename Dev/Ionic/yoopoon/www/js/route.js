@@ -140,6 +140,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
                }
                }
                })
+            .state('page.myOrder', {
+                url: '/me/myOrder',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/myOrder.html'
+                    }
+                }
+            })
     .state('page.Product-Catagory', {
         url: '/shopping/Product-Catagory',
         views: {
