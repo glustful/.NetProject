@@ -6,10 +6,35 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeou
   //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
+    var tip1=document.getElementById("tiphidden1");
+    var tip2=document.getElementById("tiphidden2");
+    function getCookie(cookie_name)
+    {
+        var allcookies = document.cookie;
+        var cookie_pos = allcookies.indexOf(cookie_name);
+        if (cookie_pos != -1)
+        {
+            cookie_pos += cookie_name.length + 1;
+            var cookie_end = allcookies.indexOf(";", cookie_pos);
+            if (cookie_end == -1)
+            {
+                cookie_end = allcookies.length;
+            }
+            var value = unescape(allcookies.substring(cookie_pos, cookie_end));
+        }
+        return value;
+    }
+    var tipcookietext = getCookie('tipcookie');
+    //如果有cookie
+    if(tipcookietext) {
+        tip1.style.display = "none";
+        tip2.style.display = "none";
+    }
+
   $scope.model = {
     activeIndex:0
   };
-  
+
 
   $scope.pageClick = function(index){
     //alert(index);
@@ -33,6 +58,25 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeou
     $scope.showInput=function(){
         $scope.showSelect=true;
         $scope.isShow=true;
+    };
+// 遮罩层
+    $scope.closetips=function()
+    {
+        tip1.style.display = "none";
+        tip2.style.display = "none";
+        writeCookie('tipcookie',1000,'999999');
+
+    };
+    ///Savecookie
+    function writeCookie(name, value, hours)
+    {
+        var expire = "";
+        if(hours != null)
+        {
+            expire = new Date((new Date()).getTime() + hours * 3600000);
+            expire = "; expires=" + expire.toGMTString();
+        }
+        document.cookie = name + "=" + escape(value) + expire;
     }
 
 //    滚动刷新
