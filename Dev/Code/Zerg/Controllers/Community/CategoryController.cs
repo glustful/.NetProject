@@ -60,6 +60,34 @@ namespace Zerg.Controllers.Community
           }
           return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不存在！"));
 		}
+
+        /// <summary>
+        /// 根据父级商品分类id查找子商品分类，传递0时获取一级分类
+        /// </summary>
+        /// <param name="id">商品分类id</param>
+        /// <returns></returns>
+        [Description("根据父级商品分类id查找子商品分类")]
+        public HttpResponseMessage GetChildByFatherId(int id)
+        {
+            var entity = _categoryService.GetCategorysBySuperFather(id);
+            if (entity != null)
+            {
+              var model=  entity.Select(q => new CategoryModel
+                {
+                    Id = q.Id,
+                    //                Father = entity.Father,
+                    Name = q.Name,
+                    Sort = q.Sort,
+                    AddUser = q.AddUser,
+                    AddTime = q.AddTime,
+                    UpdUser = q.UpdUser,
+                    UpdTime = q.UpdTime
+                });
+              
+                return PageHelper.toJson(model);
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不存在！"));
+        }
         /// <summary>
         /// 根据条件查找商品类别
         /// </summary>

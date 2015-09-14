@@ -27,38 +27,7 @@
             <i class="icon-user fa-fw"></i>
           </a>
         </div>
-        <!-- / buttons -->
 
-        <!-- link and dropdown -->
-        <div ng-show="portalShow">
-          <ul class="nav navbar-nav hidden-sm">
-            <li class="dropdown pos-stc" dropdown>
-              <a class="nav navbar-nav hidden-xs">
-                当前公众号:
-              </a>
-            </li>
-
-            <li class="dropdown" dropdown>
-
-              <a class="dropdown-toggle" dropdown-toggle>
-                <i class="fa fa-fw fa-plus visible-xs-inline-block"></i>
-                <span>{{activedPortal.Name}}</span> <span class="caret"></span>
-              </a>
-
-              <ul class="dropdown-menu" role="menu">
-
-                <li ng-repeat="p in portalList">
-                  <a href ng-click="CheckPortal(p.Id)">
-                    <span class="badge bg-info pull-right">5</span>
-                    <span>{{p.Name}}</span>
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <!-- / link and dropdown -->
 
         <!-- search form -->
         <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" target=".navbar-collapse" role="search" ng-controller="TypeaheadDemoCtrl">
