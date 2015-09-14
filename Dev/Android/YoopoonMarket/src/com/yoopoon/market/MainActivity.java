@@ -75,6 +75,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	TextView tv_first;
 	@ViewById(R.id.rightBtn)
 	Button btn_category;
+	@ViewById(R.id.ll_loading)
+	LinearLayout ll_loading;
 	List<Fragment> fragments = new ArrayList<Fragment>();
 	List<LinearLayout> lls = new ArrayList<LinearLayout>();
 	int checkedItem = 0;
@@ -104,6 +106,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	void requestArea() {
+		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
@@ -117,9 +120,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 					} else {
 						Toast.makeText(MainActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+						ll_loading.setVisibility(View.GONE);
 					}
 				} else {
 					Toast.makeText(MainActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+					ll_loading.setVisibility(View.GONE);
 				}
 			}
 
@@ -166,6 +171,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					AreaEntity entity = areaList.get(i);
 					areaItems[i] = entity.Name;
 				}
+				ll_loading.setVisibility(View.GONE);
 			}
 		}).execute();
 	}
@@ -192,7 +198,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							checkedItem = which;
+							// checkedItem = which;
 							btn_select.setText(areaItems[checkedItem]);
 							dialog.dismiss();
 						}

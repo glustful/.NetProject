@@ -4,7 +4,8 @@
     android:layout_height="@dimen/bottom_navigation_height"
     android:orientation="horizontal" 
     android:paddingTop="5dp"
-    android:id="@+id/rg">
+    android:id="@+id/rg"
+    android:background="@color/white">
     
     
     <LinearLayout 

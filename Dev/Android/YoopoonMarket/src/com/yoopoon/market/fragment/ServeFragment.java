@@ -359,9 +359,6 @@ public class ServeFragment extends Fragment {
 
 		}
 
-		/**
-		 * 载入图片进去，用当前的position 除以 图片数组长度取余数是关键
-		 */
 		@Override
 		public Object instantiateItem(View container, int position) {
 			((ViewPager) container).addView(mImageViews[position % mImageViews.length], 0);

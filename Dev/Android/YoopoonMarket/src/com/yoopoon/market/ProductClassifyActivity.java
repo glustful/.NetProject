@@ -25,10 +25,12 @@ import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.view.FixGridLayout;
 
-@EActivity(R.layout.activity_product_classification)
+@EActivity(R.layout.activity_category)
 public class ProductClassifyActivity extends MainActionBarActivity {
 	@ViewById(R.id.ll_category)
 	LinearLayout ll_category;
+	@ViewById(R.id.ll_loading)
+	LinearLayout ll_loading;
 	List<CategoryEntity> categoryList = new ArrayList<CategoryEntity>();
 	int[] colors = { Color.rgb(236, 109, 23), Color.rgb(40, 174, 62), Color.rgb(39, 127, 194), Color.rgb(175, 97, 163) };
 
@@ -42,6 +44,7 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 	}
 
 	void requestData() {
+		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
@@ -63,11 +66,13 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+							ll_loading.setVisibility(View.GONE);
 						}
 					}
 					initList();
 				} else {
 					Toast.makeText(ProductClassifyActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+					ll_loading.setVisibility(View.GONE);
 				}
 			}
 
@@ -132,6 +137,8 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 			});
 		}
 		ll_category.removeViewAt(ll_category.getChildCount() - 1);
+
+		ll_loading.setVisibility(View.GONE);
 
 	}
 	Comparator<CategoryEntity> comparator = new Comparator<CategoryEntity>() {
