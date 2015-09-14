@@ -68,7 +68,7 @@
 }
 .p-price{
     color: red;
-    font-size: 1.3em;
+    font-size: 1.1em;
 }
 .shop-cart{
     font-size:1.5em;
@@ -123,6 +123,10 @@
 }
 .font-12{
     font-size: 1.2em;
+    font-family: "Microsoft YaHei";
+}
+.font-11{
+    font-size: 1em;
     font-family: "Microsoft YaHei";
 }
 /*商品列表*/

@@ -80,7 +80,7 @@ namespace Community.Service.Product
                 if (condition.PriceBegin.HasValue)
                 {
                     query = query.Where(q => q.Price >= condition.PriceBegin.Value);
-                }
+                }               
                 if (condition.PriceEnd.HasValue)
                 {
                     query = query.Where(q => q.Price < condition.PriceEnd.Value);
@@ -144,6 +144,10 @@ namespace Community.Service.Product
                 if (condition.Categorys != null && condition.Categorys.Any())
                 {
                     query = query.Where(q => condition.Categorys.Contains(q.Category));
+                }
+                if (condition.CategoryId.HasValue)
+                {
+                    query = query.Where(q => q.Category.Id == condition.CategoryId);
                 }
                 if (condition.OrderBy.HasValue)
                 {
@@ -254,6 +258,10 @@ namespace Community.Service.Product
                 if (condition.Categorys != null && condition.Categorys.Any())
                 {
                     query = query.Where(q => condition.Categorys.Contains(q.Category));
+                }
+                if (condition.CategoryId.HasValue)
+                {
+                    query = query.Where(q => q.Category.Id == condition.CategoryId);
                 }
                 return query.Count();
             }

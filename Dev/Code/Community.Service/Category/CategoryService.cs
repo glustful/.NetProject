@@ -71,12 +71,20 @@ namespace Community.Service.Category
                 return null;
             }
 		}
+      
         public IQueryable<CategoryEntity> GetCategorysBySuperFather(int father)
         {
             var query = _categoryRepository.Table;
             try
             {
+                if(father==0)
+                {
+                    query = query.Where(q => q.Father.Id == null);
+                }
+                else 
+                { 
                 query = query.Where(q => q.Father.Id == father);
+                }
                 return query.OrderBy(q => q.Id);
             }
             catch (Exception e)
