@@ -140,6 +140,33 @@ app.config(function($stateProvider, $urlRouterProvider) {
                }
                }
                })
+            .state('page.personalData', {
+                url: '/me/personalData',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/personalData.html',
+                        controller: 'TabMeCtrl'
+                    }
+                }
+            })
+            .state('page.addressAdm', {
+                url: '/me/addressAdm',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/addressAdm.html',
+                        controller: 'TabMeCtrl'
+                    }
+                }
+            })
+            .state('page.selectAddress', {
+                url: '/me/selectAddress',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/selectAddress.html',
+                        controller: 'TabMeCtrl'
+                    }
+                }
+            })
     .state('page.Product-Catagory', {
         url: '/shopping/Product-Catagory',
         views: {
