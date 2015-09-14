@@ -62,7 +62,27 @@ app.controller('TabCarCtrl', function($scope, $ionicSlideBoxDelegate) {
 //            alert($scope.start)
         }
     }
-
+///数量增加减
+    $scope.number=0;
+    $scope.adding=function(){
+        alert($scope.number)
+        if($scope.number>=0){
+            $scope.number=$scope.number+1;
+//            alert($scope.number)
+        }
+        else{
+            $scope.number=0;
+        }
+    }
+    $scope.decrease=function(){
+        if($scope.number>=0){
+            $scope.number=$scope.number-1;
+//            alert($scope.number)
+        }
+        else{
+            $scope.number=0;
+        }
+}
 //编辑
     $scope.flag={showDelete:false,showReorder:false};
     $scope.items=["Chinese","English","German","Italian","Janapese","Sweden","Koeran","Russian","French"];

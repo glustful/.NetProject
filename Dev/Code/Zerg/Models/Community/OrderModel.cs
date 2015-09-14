@@ -107,6 +107,6 @@ namespace Zerg.Models.Community
 		public List<OrderDetailModel> Details {get;set;}
 
 
-
+        public string UserName { get; set; }
 	}
 }
