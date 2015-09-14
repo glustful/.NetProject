@@ -21,4 +21,9 @@ namespace Zerg.Common.Data
     {
 
     }
+
+    public interface ICommunityRepository<T> : IRepository<T> where T : class, IBaseEntity
+    {
+        
+    }
 }

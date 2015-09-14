@@ -58,13 +58,14 @@ namespace Zerg.Controllers.CRM
         /// <returns></returns>
         [Description("查询所有提现信息")]
         [HttpGet]
-        public HttpResponseMessage GetBrokerWithdraw(int page = 1, int pageSize = 10)
+        public HttpResponseMessage GetBrokerWithdraw(EnumBrokerWithdrawSearchOrderBy orderByAll = EnumBrokerWithdrawSearchOrderBy.State, bool isDes = true, int page = 1, int pageSize = 10)
         {
             var condition = new BrokerWithdrawSearchCondition
             {
-                OrderBy = EnumBrokerWithdrawSearchOrderBy.State,
+                OrderBy = orderByAll,
                 Page = Convert.ToInt32(page),
-                PageCount = pageSize
+                PageCount = pageSize,
+                isDescending =isDes 
             };
             var list = _brokerwithdrawService.GetBrokerWithdrawsByCondition(condition).Select(p => new
             {

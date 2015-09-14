@@ -144,6 +144,21 @@
     <Compile Include="Controllers\CMS\ResourceController.cs" />
     <Compile Include="Controllers\CMS\SettingController.cs" />
     <Compile Include="Controllers\CMS\TagController.cs" />
+    <Compile Include="Controllers\Community\AreaController.cs" />
+    <Compile Include="Controllers\Community\CategoryController.cs" />
+    <Compile Include="Controllers\Community\MemberAddressController.cs" />
+    <Compile Include="Controllers\Community\MemberController.cs" />
+    <Compile Include="Controllers\Community\OrderController.cs" />
+    <Compile Include="Controllers\Community\OrderDetailController.cs" />
+    <Compile Include="Controllers\Community\ParameterController.cs" />
+    <Compile Include="Controllers\Community\ParameterValueController.cs" />
+    <Compile Include="Controllers\Community\ProductCommentController.cs" />
+    <Compile Include="Controllers\Community\CommunityProductController.cs" />
+    <Compile Include="Controllers\Community\ProductDetailController.cs" />
+    <Compile Include="Controllers\Community\ProductParameterController.cs" />
+    <Compile Include="Controllers\Community\ServiceController.cs" />
+    <Compile Include="Controllers\Community\ServiceOrderController.cs" />
+    <Compile Include="Controllers\Community\ServiceOrderDetailController.cs" />
     <Compile Include="Controllers\CRM\AdminInfoController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -215,6 +230,22 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Community\AreaModel.cs" />
+    <Compile Include="Models\Community\CategoryModel.cs" />
+    <Compile Include="Models\Community\MemberAddressModel.cs" />
+    <Compile Include="Models\Community\MemberModel.cs" />
+    <Compile Include="Models\Community\OrderDetailModel.cs" />
+    <Compile Include="Models\Community\OrderModel.cs" />
+    <Compile Include="Models\Community\ParameterModel.cs" />
+    <Compile Include="Models\Community\ParameterValueModel.cs" />
+    <Compile Include="Models\Community\ProductComment.cs" />
+    <Compile Include="Models\Community\ProductCommentModel.cs" />
+    <Compile Include="Models\Community\ProductDetailModel.cs" />
+    <Compile Include="Models\Community\ProductModel.cs" />
+    <Compile Include="Models\Community\ProductParameterModel.cs" />
+    <Compile Include="Models\Community\ProductParameterValueModel.cs" />
+    <Compile Include="Models\Community\ServiceOrderDetailModel.cs" />
+    <Compile Include="Models\Community\ServiceOrderModel.cs" />
     <Compile Include="Models\CRM\AdminPayModel.cs" />
     <Compile Include="Models\CRM\BrokerLeadClientPay .cs" />
     <Compile Include="Models\CRM\BrokerRECClientModel.cs">
@@ -300,6 +331,14 @@
     <ProjectReference Include="..\CMS.Service\CMS.Service.csproj">
       <Project>{6b9731e4-a77e-4d96-90ea-28032a8ba7e1}</Project>
       <Name>CMS.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Community.Entity\Community.Entity.csproj">
+      <Project>{250cc499-eae6-46b1-96b8-11c02c913529}</Project>
+      <Name>Community.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Community.Service\Community.Service.csproj">
+      <Project>{95ea6c3c-aeab-4517-a801-da33a9a2a80f}</Project>
+      <Name>Community.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\CRM.Entity\CRM.Entity.csproj">
       <Project>{26e023fe-c94f-440a-8192-d33e22ca09bd}</Project>

@@ -3,7 +3,7 @@
         <li class="brand" ng-repeat="item in BrandList">
             <!--<a href="#/app/housesBuy?BrandId={{item.Id}}">-->
             <a href="#/app/BrandDetail?brandId={{item.Id}}">
-                <img src="http://img.yoopoon.com/{{item.Bimg}}" alt="中天·水云间" width="620" height="160"/>
+                <img src="{{imgUrl+item.Bimg}}@640w_160h_70Q" alt="中天·水云间" width="620" height="160"/>
                 <!--<div class="summary"><span>{{ item.Bname }}</span><span>{{item.Adduser}}</span><span>总价：110万</span></div>-->
                 <div class="summary">
                     <span>[{{ item.ProductParamater["所属城市"] }}]</span><span>{{item.Bname}}</span></span><span>{{item.ProductParamater["占地面积"] }}</span>
@@ -31,5 +31,5 @@
             </div>
         </li>
     </ul>
-    <div style="text-align: center"><span ng-click="more()" >{{tipp}}</span></div>
+    <div style="text-align: center"><span>{{tipp}}</span></div>
 </div>

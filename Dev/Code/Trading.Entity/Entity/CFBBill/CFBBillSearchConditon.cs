@@ -126,6 +126,8 @@ namespace Trading.Entity.Model
 	{
 
 		OrderById,
+        OrderByCheckoutdate,
+        OrderByAmount
 
 	}
 

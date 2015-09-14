@@ -63,6 +63,10 @@ namespace CRM.Entity.Model
 	{
 		OrderById,
         State,
+        OrderByBrokername,
+        OrderByWithdrawTime,
+        OrderByaccacount,
+        OrderByState
 	}
     
 }

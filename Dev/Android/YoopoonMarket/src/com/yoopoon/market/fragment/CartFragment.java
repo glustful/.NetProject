@@ -40,6 +40,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,6 +77,8 @@ public class CartFragment extends Fragment implements OnClickListener {
 	TextView tv_title_count;
 	CheckBox cb_selectall;
 	Button btn_edit;
+	boolean editable = false;
+	LinearLayout ll_balance;
 
 	@Override
 	@Nullable
@@ -93,6 +96,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 		tv_title_count = (TextView) rootView.findViewById(R.id.tv_title_count);
 		cb_selectall = (CheckBox) rootView.findViewById(R.id.cb_chooseall);
 		btn_edit = (Button) rootView.findViewById(R.id.btn_edit);
+		ll_balance = (LinearLayout) rootView.findViewById(R.id.ll_balance);
 
 		lv.setMode(Mode.BOTH);
 		adapter = new MyListViewAdapter();
@@ -190,6 +194,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 
 	static class ViewHolder {
 
+		TextView tv_delete;
 		CheckBox cb;
 		ImageView iv;
 		TextView tv_name;
@@ -242,8 +247,12 @@ public class CartFragment extends Fragment implements OnClickListener {
 				holder.btn_countdown.setTag(holder.et_count);
 				holder.btn_countup.setTag(holder.et_count);
 				holder.cb = (CheckBox) convertView.findViewById(R.id.cb);
+				holder.tv_delete = (TextView) convertView.findViewById(R.id.tv_delete);
 				convertView.setTag(holder);
 			}
+			holder.tv_delete.setVisibility(editable ? View.VISIBLE : View.GONE);
+
+			holder.cb.setVisibility(!editable ? View.VISIBLE : View.GONE);
 			holder.tv_price_previous.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 			final Staff staff = staffList.get(position);
 			holder.tv_price_counted.setText("￥" + staff.price_counted);
@@ -327,6 +336,15 @@ public class CartFragment extends Fragment implements OnClickListener {
 
 				}
 			});
+
+			holder.tv_delete.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					staffList.remove(staff);
+					fillData();
+				}
+			});
 			return convertView;
 		}
 	}
@@ -362,6 +380,9 @@ public class CartFragment extends Fragment implements OnClickListener {
 				boolean edit = Boolean.parseBoolean((String) v.getTag());
 				btn_edit.setTextColor(!edit ? Color.BLACK : getResources().getColor(R.color.text_gray));
 				btn_edit.setTag(!edit ? "true" : "false");
+				editable = !editable;
+				ll_balance.setVisibility(editable ? View.GONE : View.VISIBLE);
+				fillData();
 				break;
 		}
 	}

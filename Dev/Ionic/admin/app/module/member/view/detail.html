@@ -1,0 +1,47 @@
+
+<div class="bg-light lter b-b wrapper-md">
+    <ul class="nav nav-tabs">
+    <li class="">
+    <a href="" data-toggle="tab" data-target="#tab1" aria-expanded="false">详细信息</a>
+    </li>
+
+    <li class="">
+        <button type="submit"  ui-sref="app.member.memlist" class="btn btn-primary">返回</button>
+    </li>
+    </ul>
+
+</div>
+<div class="wrapper-md" ng-controller="memController">
+    <div class="panel panel-default">
+        <div class="m-md">
+
+            <div class="item-icon-left">
+                <img src="{{memModels.Thumbnail}}@40w_40h_70q" class="w-full circle">
+            </div>
+            <div class="m-md">
+                <div><small>{{memModels.RealName}}</small></div>
+                <div><small>{{memModels.Gender}}</small></div>
+                <div><small>积分总额：{{memModels.Points}}</small><small>账户余额：{{memModels.AccountNumber}}</small></div>
+            </div>
+        </div>
+        <div class="table-responsive" >
+            <table  class="table table-striped m-b-none">
+
+                <tr>
+                    <td >电话：{{memModels.Phone}}</td>
+                    <td>QQ：{{memModels.Icq}}</td>
+                    <td>邮编：{{memModels.PostNo}}</td>
+                </tr>
+
+                <tr>
+                    <td>身份证：{{memModels.IdentityNo}}</td>
+                    <td>性别：{{memModels.Gender}}</td>
+                    <td>注册时间：{{memModels.AddTime | dateFilter}}</td>
+                </tr>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>

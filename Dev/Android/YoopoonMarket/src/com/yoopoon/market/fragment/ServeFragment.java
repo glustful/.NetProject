@@ -17,6 +17,9 @@ import java.util.TimerTask;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,11 +30,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -41,6 +46,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.AssuranceActivity_;
 import com.yoopoon.market.CleanServeActivity_;
+import com.yoopoon.market.MainActivity;
 import com.yoopoon.market.MyApplication;
 import com.yoopoon.market.R;
 import com.yoopoon.market.net.ProgressMessage;
@@ -69,6 +75,8 @@ public class ServeFragment extends Fragment {
 	LinearLayout ll_points;
 	boolean loopped = false;
 	boolean isFirst = true;
+	View view_first;
+	Button btn_iknow;
 	// hanlder用来处理ViewPager图片的轮播
 	Handler handler = new Handler() {
 
@@ -89,11 +97,26 @@ public class ServeFragment extends Fragment {
 		return rootView;
 	}
 
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if (isVisibleToUser) {
+			SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.share_preference),
+					Context.MODE_PRIVATE);
+			MainActivity activity = (MainActivity) getActivity();
+			boolean shown = sp.getBoolean("isServeFirst", true);
+			activity.showFirstTv(shown);
+			view_first.setVisibility(shown ? View.VISIBLE : View.GONE);
+		}
+	}
+
 	// 初始化
 	private void init() {
 		gv = (GridView) rootView.findViewById(R.id.gv);
 		vp = (ViewPager) rootView.findViewById(R.id.vp);
 		ll_points = (LinearLayout) rootView.findViewById(R.id.ll_points);
+		view_first = rootView.findViewById(R.id.rl_first);
+		btn_iknow = (Button) rootView.findViewById(R.id.btn_iknow);
 
 		gv.setAdapter(new MyGridViewAdapter());
 		gv.setOnItemClickListener(new MyGridViewItemClickListener());
@@ -108,6 +131,22 @@ public class ServeFragment extends Fragment {
 			vp.setCurrentItem((mImageViews.length) * 100);
 			vp.addOnPageChangeListener(new MyPageChangeListener());
 		}
+
+		btn_iknow.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.share_preference),
+						Context.MODE_PRIVATE);
+				Editor editor = sp.edit();
+				editor.putBoolean("isServeFirst", false);
+				editor.commit();
+
+				MainActivity activity = (MainActivity) getActivity();
+				activity.showFirstTv(false);
+				view_first.setVisibility(View.GONE);
+			}
+		});
 
 	}
 

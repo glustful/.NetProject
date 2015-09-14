@@ -122,10 +122,17 @@ namespace CRM.Entity.Model
 	{
 
 		OrderById,
-
+        OrderByBrokername,
 		OrderByAmount,
         OrderByTime,
-
+        OrderByBrokerlevel,
+        OrderByClientname,
+        OrderByPhone,
+        OrderByProjectname,
+        OrderByAddtime,
+        OrderBySecretaryName,
+        OrderByWaiter,
+        OrderByUptime
 	}
 
 }

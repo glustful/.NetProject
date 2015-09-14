@@ -14,6 +14,7 @@ app.controller('StormRoomController',['$http','$scope','$timeout',function($http
         OrderBy:'OrderByAddtime',
         IsDescending:true
     };
+    $scope.ImgUrl=SETTING.ImgUrl
     $scope.tipp="正在加载......";
     var loading = false
         ,pages=2;                      //判断是否正在读取内容的变量

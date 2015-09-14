@@ -112,7 +112,8 @@ namespace Trading.Entity.Model
         OrderByPrice,
         OrderByDealcommission,
         OrderByRecCommission,
-        OrderByCommission
+        OrderByCommission,
+        OrderByStockRule
 	}
 
 }

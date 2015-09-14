@@ -45,15 +45,16 @@ namespace Zerg.Controllers.CRM
        
         [Description("检索返回等级信息")]
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage SearchLevel(string name, int page = 1, int pageSize = 10)
+        public HttpResponseMessage SearchLevel(string name, EnumLevelSearchOrderBy orderByAll = EnumLevelSearchOrderBy.OrderById, bool isDes = true, int page = 1, int pageSize = 10)
         {
+         
             var leSearchCon = new LevelSearchCondition
             {   
                 Name=name,
                 Page =page,
                 PageCount = pageSize,
-                OrderBy = EnumLevelSearchOrderBy.OrderById,
-                isDescending = true
+                OrderBy = orderByAll,
+                isDescending = isDes
             };
             var levelList = _levelService.GetLevelsByCondition(leSearchCon).ToList();
 

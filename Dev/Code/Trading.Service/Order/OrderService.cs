@@ -250,13 +250,24 @@ namespace Trading.Service.Order
                     {
 
 						case EnumOrderSearchOrderBy.OrderById:
-							query = condition.IsDescending?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
+							query = condition.IsDescending ?query.OrderByDescending(q=>q.Id):query.OrderBy(q=>q.Id);
 							break;
                         case EnumOrderSearchOrderBy.OrderByAddTime:
-                            query = condition.IsDescending ? query.OrderByDescending(q => q.Id) : query.OrderBy(q => q.Id);
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.Adddate) : query.OrderBy(q => q.Adddate);
                             break;
-
-
+                        case EnumOrderSearchOrderBy.OrderByCommission:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.OrderDetail.Commission) : query.OrderBy(q => q.OrderDetail.Commission);
+                            break;
+                        case EnumOrderSearchOrderBy.OrderByPrice:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.OrderDetail.Price) : query.OrderBy(q => q.OrderDetail.Price);
+                            break;
+                        case EnumOrderSearchOrderBy.OrderByDealcommission:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.OrderDetail.Dealcommission) : query.OrderBy(q => q.OrderDetail.Dealcommission);
+                            break;
+                        case EnumOrderSearchOrderBy.OrderByRecCommission:
+                            query = condition.IsDescending ? query.OrderByDescending(q => q.OrderDetail.RecCommission) : query.OrderBy(q => q.OrderDetail.RecCommission);
+                            break;
+                      
                     }
 					
 				}

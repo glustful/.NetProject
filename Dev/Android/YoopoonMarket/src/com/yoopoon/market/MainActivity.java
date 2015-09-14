@@ -65,6 +65,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	View searchLayout;
 	@ViewById(R.id.btn_select)
 	Button btn_select;
+	@ViewById(R.id.tv_firstserve)
+	TextView tv_first;
+	@ViewById(R.id.rightBtn)
+	Button btn_category;
 	List<Fragment> fragments = new ArrayList<Fragment>();
 	List<LinearLayout> lls = new ArrayList<LinearLayout>();
 	String[] areas = { "北京", "大理", "香格里拉", "西双版纳" };
@@ -85,6 +89,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		for (LinearLayout ll : lls)
 			ll.setOnClickListener(this);
 		btn_select.setOnClickListener(new SearchViewClickListener());
+		btn_category.setOnClickListener(new SearchViewClickListener());
 		vp.setOnPageChangeListener(new MyPagerChangeListener());
 		rightBtn.setOnClickListener(new OnClickListener() {
 			@Override
@@ -125,6 +130,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					});
 					builder.show();
 					break;
+				case R.id.rightBtn:
+					ProductClassifyActivity_.intent(MainActivity.this).start();
+					break;
 				default:
 					break;
 			}
@@ -158,6 +166,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		public void onPageSelected(int arg0) {
 			onClick(lls.get(arg0));
 			searchLayout.setVisibility((arg0 > 1) ? View.GONE : View.VISIBLE);
+			tv_first.setVisibility((arg0 == 0) ? View.GONE : View.VISIBLE);
 		}
 	}
 
@@ -180,6 +189,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 	public void toServe(View v) {
 		vp.setCurrentItem(1);
+		showFirstTv(false);
+	}
+	public void showFirstTv(boolean shown) {
+		tv_first.setVisibility(shown ? View.VISIBLE : View.GONE);
 	}
 	@Override
 	public void onClick(View v) {

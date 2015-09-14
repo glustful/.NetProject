@@ -1,7 +1,5 @@
-﻿using System.Web.Http;
-using Autofac;
+﻿using Autofac;
 using Autofac.Core;
-using Autofac.Integration.WebApi;
 using YooPoon.Core.Autofac;
 using YooPoon.Core.Data;
 using YooPoon.Data.EntityFramework;
@@ -26,6 +24,7 @@ namespace Zerg.Base.Dependency
                 builder.Register<IDbContext>(c => new CRMDbContext(dataProviderSettings.RawDataSettings["CRMConnection"])).Named<IDbContext>("CRM").InstancePerRequest();
                 builder.Register<IDbContext>(c => new TradingDbContext(dataProviderSettings.RawDataSettings["TradingConnection"])).Named<IDbContext>("Trading").InstancePerRequest();
                 builder.Register<IDbContext>(c => new EventDbContext(dataProviderSettings.RawDataSettings["EventConnection"])).Named<IDbContext>("Event").InstancePerRequest();
+                builder.Register<IDbContext>(c => new CommunityDbContext(dataProviderSettings.RawDataSettings["CommunityConnection"])).Named<IDbContext>("Community").InstancePerRequest();
             }
 
             #region 不同的数据库对应不同仓库
@@ -34,9 +33,11 @@ namespace Zerg.Base.Dependency
             var crmParameter = new ResolvedParameter((pi, ctx) => pi.Name == "context",
                                             (pi, ctx) => ctx.ResolveNamed<IDbContext>("CRM"));
             var tradingParameter = new ResolvedParameter((pi, ctx) => pi.Name == "context",
-                                         (pi, ctx) => ctx.ResolveNamed<IDbContext>("Trading"));
+                                            (pi, ctx) => ctx.ResolveNamed<IDbContext>("Trading"));
             var eventPrameter = new ResolvedParameter((pi, ctx) => pi.Name == "context",
-                (pi, ctx) => ctx.ResolveNamed<IDbContext>("Event"));
+                                            (pi, ctx) => ctx.ResolveNamed<IDbContext>("Event"));
+            var communityPrameter = new ResolvedParameter((pi, ctx) => pi.Name == "context",
+                                            (pi, ctx) => ctx.ResolveNamed<IDbContext>("Community"));
 
             builder.RegisterGeneric(typeof(CMSRepository<>))
                 .WithParameter(cmsParameter)
@@ -57,12 +58,18 @@ namespace Zerg.Base.Dependency
                 .WithParameter(eventPrameter)
                 .As(typeof(IEventRepository<>))
                 .InstancePerRequest();
+
+
+            builder.RegisterGeneric(typeof(CommunityRepository<>))
+                .WithParameter(communityPrameter)
+                .As(typeof(ICommunityRepository<>))
+                .InstancePerRequest();
             #endregion
             //            builder.RegisterAssemblyTypes(typeFinder.GetAssemblies().ToArray())
             //                .Where(t =>!String.IsNullOrEmpty(t.Namespace)&& t.Namespace.StartsWith("CMS") && t.Name.Contains("Service"))
             //                .WithParameter(repositeryParameter);
         }
 
-        public int Order { get { return 1; } }
+        public int Order { get; set; }
     }
 }

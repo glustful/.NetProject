@@ -2,7 +2,7 @@
 <!--required:../static/style/personal.css-->
 <div  ng-controller="personal_userController">
     <div class="main-personal cf">
-        <a class="fl img" href="#/app/person_setting"><img id="img" src="http://img.yoopoon.com/{{user.Headphoto}}" alt="" width="174" height="174"/></a>
+        <a class="fl img" href="#/app/person_setting"><img id="img" src="{{imgUrl+user.Headphoto}}@174w_174h_70Q" alt="" width="174" height="174"/></a>
         <div class="detail fl">
             <p class="pm">{{user.Brokername}}</p>
             <p style="color: #fc3b00;font-size: 18px;">马上完善资料成为经纪人领取现金大礼包</p>
