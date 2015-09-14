@@ -31,23 +31,28 @@ namespace Zerg.Controllers.Community
             if (id > 0)
             {
                 var entity = _areaService.GetAreaById(id);
-                model = new AreaModel
+                if (entity != null)
                 {
-                    Id = entity.Id,
-                    Codeid = entity.CodeId,
-                    Adddate = entity.AddDate,
-                    Name = entity.Name,
-                };
-                if (model.Parent != null)
-                {
-                    model.Parent = new AreaModel
+                    model = new AreaModel
                     {
-                        Name = entity.Parent.Name,
-                        Adddate = entity.Parent.AddDate,
-                        Codeid = entity.Parent.CodeId,
-                        Id = entity.Parent.Id,
+                        Id = entity.Id,
+                        Codeid = entity.CodeId,
+                        Adddate = entity.AddDate,
+                        Name = entity.Name,
                     };
+                    if (model.Parent != null)
+                    {
+                        model.Parent = new AreaModel
+                        {
+                            Name = entity.Parent.Name,
+                            Adddate = entity.Parent.AddDate,
+                            Codeid = entity.Parent.CodeId,
+                            Id = entity.Parent.Id,
+                        };
+                    }
                 }
+                else
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "数据库没有此记录！"));
             }
             return PageHelper.toJson(model);
         }
@@ -56,7 +61,7 @@ namespace Zerg.Controllers.Community
         /// </summary>
         /// <param name="condition">条件</param>
         /// <returns></returns>
-        public /*List<AreaModel>*/HttpResponseMessage Get([FromUri]AreaSearchCondition condition)
+        public HttpResponseMessage Get([FromUri]AreaSearchCondition condition)
         {
             var models = _areaService.GetAreasByCondition(condition).Select(c => new AreaModel
             {
@@ -65,7 +70,6 @@ namespace Zerg.Controllers.Community
                 Adddate = c.AddDate,
                 Name = c.Name,
             }).ToList();
-            //return models;
             return PageHelper.toJson(models);
         }
         /// <summary>
@@ -73,7 +77,7 @@ namespace Zerg.Controllers.Community
         /// </summary>
         /// <param name="model">信息参数</param>
         /// <returns></returns>
-        public HttpResponseMessage Post(AreaModel model)
+        public HttpResponseMessage Post([FromBody]AreaModel model)
         {
             AreaEntity father = null;
             if (model.Parent != null && model.Parent.Id > 0)
@@ -84,14 +88,14 @@ namespace Zerg.Controllers.Community
             var entity = new AreaEntity
             {
                 CodeId = model.Codeid,
-                AddDate = DateTime.Now.ToLocalTime(),
+                AddDate = DateTime.Now,
                 //Parent = model.Parent,
                 Parent = father,
                 Name = model.Name,
             };
             if (_areaService.Create(entity).Id > 0)
             {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "添加成功！"));
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功！"));
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败！"));
         }
@@ -118,7 +122,7 @@ namespace Zerg.Controllers.Community
             //entity.Parent = father;
             entity.Name = model.Name;
             if (_areaService.Update(entity) != null)
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "修改成功！")); ;
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "修改成功！")); ;
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "修改失败！"));
 
         }
@@ -149,7 +153,7 @@ namespace Zerg.Controllers.Community
                 return PageHelper.toJson(PageHelper.ReturnValue(false,"数据库没有此记录！"));
             if (_areaService.Delete(entity))
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功！")); 
-            return PageHelper.toJson(PageHelper.ReturnValue(true, "删除失败！"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "删除失败！"));
         }
     }
 }
