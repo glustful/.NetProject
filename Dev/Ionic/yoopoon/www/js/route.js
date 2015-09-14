@@ -179,7 +179,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 url: '/me/comment',
                 views: {
                     'page-me': {
-                        templateUrl: 'page/me/comment.html'
+                        templateUrl: 'page/me/comment.html',
+                        controller: 'TabMeCtrl'
                     }
                 }
             })
