@@ -107,7 +107,6 @@ app.controller('CarDetailCtrl', function($scope, $stateParams) {
   
 
   $scope.goBack = function(){
-    
     window.history.go(-1);
   };
 

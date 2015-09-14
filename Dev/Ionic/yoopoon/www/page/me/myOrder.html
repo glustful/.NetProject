@@ -1,0 +1,91 @@
+<div class="bar stable-bg padding-left" style="height: 44px">
+    <i class="ion-chevron-left font-24" ng-click="goBack()"></i>
+    <h1 class="title font-title">我的订单</h1>
+</div>
+<ion-view hide-tabs="true">
+    <div class="tabs-striped tabs-top tabs-background-light ">
+        <div class="tabs" style="border-bottom:1px solid #eee;">
+            <span class="tab-item font-title" ng-class="{'active': tabIndex==1}" ng-click="getOrderList(10)">待付款 <em ng-show="unpaidCount">{{ unpaidCount }}</em></span>
+            <span class="tab-item font-title" ng-class="{'active': tabIndex==2}" ng-click="getOrderList(70)">待发货</span>
+            <span class="tab-item font-title" ng-class="{'active': tabIndex==3}" ng-click="getOrderList(50)">待收货</span>
+            <span class="tab-item font-title" ng-class="{'active': tabIndex==4}" ng-click="getOrderList(50)">待评价</span>
+        </div>
+    </div>
+    <!-- 待发货-->
+    <!--<ion-content style="top: 88px">-->
+        <!--<ion-list>-->
+            <!--<div>-->
+                <!--<div class="item row bar padding">-->
+                    <!--<p>订单号：201502061115</p>-->
+                <!--</div>-->
+                <!--<ion-item class="item-thumbnail-left ">-->
+                    <!--<img src="page/car/img/car.png" alt=""/>-->
+                    <!--<h2 style="white-space: normal" class="font-title">我是花吃 云南特产零食糕点 玫瑰鲜花饼</h2>-->
+                    <!--<p>口味：甜味</p>-->
+                    <!--<div ><span>X1</span><span class="float-right"><span class="p-price">￥69.9</span><del >￥87</del></span></div>-->
+                <!--</ion-item >-->
+                <!--<div class="item  bar padding">-->
+                    <!--<div><span>买家已付款</span> <span class="float-right font-11 color-silver">待发货</span></div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</ion-list>-->
+    <!--</ion-content>-->
+    <!-- 待付款-->
+    <!--<ion-content style="top: 88px">-->
+        <!--<ion-list>-->
+            <!--<div>-->
+                <!--<div class="item row bar padding">-->
+                    <!--<p>订单号：201502061115</p>-->
+                <!--</div>-->
+                <!--<ion-item class="item-thumbnail-left ">-->
+                    <!--<img src="page/car/img/car.png" alt=""/>-->
+                    <!--<h2 style="white-space: normal" class="font-title">我是花吃 云南特产零食糕点 玫瑰鲜花饼</h2>-->
+                    <!--<p>口味：甜味</p>-->
+                    <!--<div ><span>X1</span><span class="float-right"><span class="p-price">￥69.9</span><del >￥87</del></span></div>-->
+                <!--</ion-item >-->
+                <!--<div class="item  bar padding">-->
+                    <!--<div><span>商品已送达</span> <button class="float-right font-11" style="background-color: #ff5000;color: white;width: 60px;height: 25px;border: none;border-radius: 5px">付 款</button></div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</ion-list>-->
+    <!--</ion-content>-->
+    <!-- 待收货-->
+    <!--<ion-content style="top: 88px">-->
+        <!--<ion-list>-->
+            <!--<div>-->
+                <!--<div class="item row bar padding">-->
+                    <!--<p>订单号：201502061115</p>-->
+                <!--</div>-->
+                <!--<ion-item class="item-thumbnail-left ">-->
+                    <!--<img src="page/car/img/car.png" alt=""/>-->
+                    <!--<h2 style="white-space: normal" class="font-title">我是花吃 云南特产零食糕点 玫瑰鲜花饼</h2>-->
+                    <!--<p>口味：甜味</p>-->
+                    <!--<div ><span>X1</span><span class="float-right"><span class="p-price">￥69.9</span><del >￥87</del></span></div>-->
+                <!--</ion-item >-->
+                <!--<div class="item  bar padding">-->
+                    <!--<div><span>买家未付款</span> <button class="float-right font-11" style="background-color: #ff5000;color: white;width: 80px;height: 25px;border: none;border-radius: 5px">确认收货</button></div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</ion-list>-->
+    <!--</ion-content>-->
+    <!-- 待评价-->
+    <ion-content style="top: 88px">
+        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="1%" ></ion-infinite-scroll>
+    <ion-list>
+        <div>
+            <div class="item row bar padding">
+                <p>订单号：201502061115</p>
+            </div>
+            <ion-item class="item-thumbnail-left ">
+                <img src="page/car/img/car.png" alt=""/>
+                <h2 style="white-space: normal" class="font-title">我是花吃 云南特产零食糕点 玫瑰鲜花饼</h2>
+                <p>口味：甜味</p>
+                <div ><span>X1</span><span class="float-right"><span class="p-price">￥69.9</span><del >￥87</del></span></div>
+            </ion-item >
+            <div class="item  bar padding">
+                <div><span>买家已签收</span> <button class="float-right light-bg font-11" style="width: 80px;height: 25px;border: 1px solid #ff5000;border-radius: 5px">评&nbsp;&nbsp;&nbsp;价</button></div>
+            </div>
+        </div>
+    </ion-list>
+</ion-content>
+</ion-view>
