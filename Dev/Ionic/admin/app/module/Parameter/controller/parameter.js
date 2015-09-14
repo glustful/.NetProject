@@ -3,78 +3,62 @@
  */
 
 app.controller('ParameterController', ['$scope', '$http', '$state','$modal', function ($scope, $http, $state,$modal) {
-    var tree, treedata_avm;
-    $scope.rowParameter = [];
-    //Ñ¡ÖĞÊÂ¼ş£»
-    $scope.selectEvent = function (branch) {
-        var _ref;
-        $scope.output = 'ÄúÑ¡ÔñÁË" ' + branch.label + '", IDÎª£º"' + branch.Id+'"';;
-        if (branch.children.length == 0) {
-            $http.get(SETTING.ApiUrl + '/Classify/GetParameterByClassify?classifyId=' + branch.Id,{'withCredentials':true}).success(function (data) {
-                $scope.rowParameter = data;
-            });
-        } else {
-            $scope.output = "ÎÂÜ°ÌáÊ¾£ºÖ»ÓĞÄ©¶Ë·ÖÖ§²ÅÄÜÌí¼ÓÊôĞÔ²ÎÊı£¡";
-        }
-    };
-    $scope.classifyType = 0;
-    $scope.classifyValue = "";
     $scope.my_data = [];
-    $scope.my_tree = tree = {};
+    $scope.Parameter = {
+        Id: '',
+        Name:'',
+        Sort:'',
+        Category:''
+    };
+    $scope.searchCondition = {
+        CategoryId:''
+    };
 
-    //³õÊ¼»¯Ê÷ĞÎÍ¼
-    $http.get(SETTING.ApiUrl + '/Classify/GetAllClassify/',{'withCredentials':true}).success(function (data) {
-        $scope.my_data = data;
-        $scope.my_tree.select_branch($scope.my_tree.get);
-    });
+    $scope.getList=function() {
+        $http.get(SETTING.ZergWcApiUrl+ '/Parameter/Get/', {params:$scope.searchCondition,'withCredentials': true}).success(function (data) {
+            $scope.list = data;
+        })
+    };
 
-    //Ìí¼Ó²ÎÊı
-    $scope.parameterName = "";
+
+    $scope.getClassList=function() {
+        $http.get(SETTING.ZergWcApiUrl+ '/Category/GetAllClassify/', {'withCredentials': true}).success(function (data) {
+            $scope.my_data = data;
+            console.log($scope.my_data);
+
+        })
+    };
+    $scope.getClassList();
+
+    //æ·»åŠ å‚æ•°
     $scope.addParameter = function () {
-        var selectedBranch = tree.get_selected_branch();
-        if (selectedBranch!=null) {
-            var par = {
-                ClassifyId: selectedBranch.Id,
-                Name: $scope.parameterName,
-                Sort: 1
-                //Adduser: 'jiadou',
-                //Upduser: 'jiadou'
-            };
-            var parJson = JSON.stringify(par);
-            $http.post(SETTING.ApiUrl + '/Classify/AddParameter', parJson, {
+        if( $scope.searchCondition.CategoryId==undefined ||  $scope.searchCondition.CategoryId=="")
+        {
+         alert("è¯·é€‰æ‹©ç›¸åº”çš„åˆ†ç±»ï¼");
+
+        }else
+        {
+            $http.post(SETTING.ZergWcApiUrl + '/Parameter/Post',   $scope.Parameter, {
                 'withCredentials': true
             }).success(function (data) {
                 if(data.Status)
                 {
-                    var selectedBranch = tree.get_selected_branch();
-                    $http.get(SETTING.ApiUrl + '/Classify/GetParameterByClassify?classifyId=' + selectedBranch.Id,
-                        {'withCredentials':true}).success(function (data) {
-                            $scope.rowParameter = data;
-                        });
+                    AddParameterWindowClose();
+
                 }
-                else{
-                    $scope.alerts=[{type:'danger',msg:data.Msg}];
-                }
-                //$scope.output = "ÎÂÜ°ÌáÊ¾£ºÖ»ÓĞÄ©¶Ë·ÖÖ§²ÅÄÜÌí¼ÓÊôĞÔ²ÎÊı£¡";
-                AddParameterWindowClose();
             });
-            $scope.closeAlert = function(index) {
-                $scope.alerts.splice(index, 1);
-            };
-        } else {
-            $scope.output = "ÎÂÜ°ÌáÊ¾£ºÖ»ÓĞÄ©¶Ë·ÖÖ§²ÅÄÜÌí¼ÓÊôĞÔ²ÎÊı£¡";
-            AddParameterWindowClose();
         }
+
     }
 
-    //É¾³ı²ÎÊı
+    //åˆ é™¤å‚æ•°
     $scope.delParameter = function (parameterId) {
         var modalInstance = $modal.open({
             templateUrl: 'myModalContent.html',
             controller: 'ModalInstanceCtrl',
             resolve: {
                 msg: function () {
-                    return "ÄãÈ·¶¨ÒªÉ¾³ıÂğ£¿";
+                    return "ä½ ç¡®å®šè¦åˆ é™¤å—ï¼Ÿ";
                 }
             }
         });
@@ -107,7 +91,42 @@ app.controller('ParameterController', ['$scope', '$http', '$state','$modal', fun
 //        });
     }
 
-    //»ñÈ¡ËùÓĞ²ÎÊıÖµ£»
+
+    //é€‰ä¸­äº‹ä»¶ï¼›
+    $scope.selectEvent = function (branch) {
+        $scope.output = 'æ‚¨é€‰æ‹©äº†åˆ†ç±»ï¼š" ' + branch.label + '", IDä¸ºï¼š"' + branch.Id+'"';;
+        if (branch.children ==null) {
+            $scope.Parameter.Id=branch.Id;//æ·»åŠ æ—¶å€™ è¿™é‡Œä¼ çš„æ˜¯åˆ†ç±»ID
+            $scope.searchCondition.CategoryId = branch.Id;
+            document.getElementById("btnok").disabled=true;
+            $scope.getList();
+        } else {
+            $scope.output = 'æ‚¨é€‰æ‹©äº†åˆ†ç±»ï¼š" ' + branch.label + '", IDä¸ºï¼š"' + branch.Id+'"  '+ "[æ¸©é¦¨æç¤ºï¼šåªæœ‰æœ«ç«¯åˆ†æ”¯æ‰èƒ½æ·»åŠ å±æ€§å‚æ•°ï¼]";
+            $scope.searchCondition.CategoryId="";
+            document.getElementById("btnok").disabled=false;
+        }
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //è·å–æ‰€æœ‰å‚æ•°å€¼ï¼›
     $scope.rowParameterValue = [];
     $scope.selectParameterId = 0;
     $scope.getParameterValue = function (parameterId) {
@@ -117,7 +136,7 @@ app.controller('ParameterController', ['$scope', '$http', '$state','$modal', fun
         });
     }
 
-    //Ìí¼Ó²ÎÊıÖµ
+    //æ·»åŠ å‚æ•°å€¼
     $scope.ClassifyParameterValue = "";
     $scope.addParameterValue = function () {
         var parValue = {
@@ -147,14 +166,14 @@ app.controller('ParameterController', ['$scope', '$http', '$state','$modal', fun
         };
     }
 
-    //É¾³ı²ÎÊıÖµ
+    //åˆ é™¤å‚æ•°å€¼
     $scope.delParameterValue=function(parameterValueId){
         var modalInstance = $modal.open({
             templateUrl: 'myModalContent.html',
             controller: 'ModalInstanceCtrl',
             resolve: {
                 msg: function () {
-                    return "ÄãÈ·¶¨ÒªÉ¾³ıÂğ£¿";
+                    return "ä½ ç¡®å®šè¦åˆ é™¤å—ï¼Ÿ";
                 }
             }
         });
@@ -176,155 +195,3 @@ app.controller('ParameterController', ['$scope', '$http', '$state','$modal', fun
 }]);
 
 
-
-app.controller('parameterIndex', ['$scope', '$http','$modal', function($scope, $http,$modal) {
-    $scope.sech={
-        Page:1,
-        PageCount:10
-    };
-    var getparameterList=function()
-    {
-        $http.get(SETTING.ZergWcApiUrl+"/CommunityProduct/Get",{
-            params: $scope.sech,
-            'withCredentials':true  //¿çÓò
-        }).success(function(data){
-            $scope.list=data.List;
-            $scope.sech.Page=data.Condition.Page;
-            $scope.sech.PageCount=data.Condition.PageCount;
-            $scope.totalCount = data.TotalCount;
-        });
-    }
-    getparameterList();
-    $scope.getList=getProductList;
-
-    $scope.del=function(id){
-        $scope.selectedId = id;
-        var modalInstance = $modal.open({
-            templateUrl: 'myModalContent.html',
-            controller:'ModalInstanceCtrl',
-            resolve: {
-                msg:function(){return "ÄãÈ·¶¨ÒªÉ¾³ıÂğ£¿";}
-            }
-        });
-        modalInstance.result.then(function(){
-            $http.delete(SETTING.ZergWcApiUrl + '/CommunityProduct/Delete',{
-                    params:{
-                        id:$scope.selectedId
-                    },
-                    'withCredentials':true
-                }
-            ).success(function(data) {
-                    if (data.Status) {
-                        getProductList();
-                    }
-                    else{
-                        //$scope.Message=data.Msg;
-                        $scope.alerts=[{type:'danger',msg:data.Msg}];
-                    }
-                });
-        });
-        $scope.closeAlert = function(index) {
-            $scope.alerts.splice(index, 1);
-        };
-    }
-}]);
-
-app.controller('editparameter',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
-    $http.get(SETTING.ZergWcApiUrl+"/Category/Get",{
-        'withCredentials':true
-    }).success(function (data) {
-        $scope.CategoryList=data;
-    })
-    $http.get(SETTING.ZergWcApiUrl+"/CommunityProduct/Get?id="+$stateParams.id,{
-        'withCredentials':true  //¿çÓò
-    }).success(function(data){
-        $scope.product=data.ProductModel;
-    })
-    $scope.update= function () {
-        $http.put(SETTING.ZergWcApiUrl+'/CommunityProduct/Put',$scope.product,{
-            'withCredentials':true
-        }).success(function(data){
-            if(data.Status)
-            {
-                $state.go("app.product.productList");
-            }
-        })
-    }
-}])
-
-app.controller('createparameter',['$http','$scope','$state','FileUploader',function($http,$scope,$state,FileUploader){
-    $http.get(SETTING.ZergWcApiUrl+"/Category/Get",{
-        'withCredentials':true
-    }).success(function (data) {
-        $scope.CategoryList=data;
-    })
-    $scope.product={
-        CategoryId:'',
-        Price :'',
-        Name :'',
-        Status : '',
-        MainImg : '',
-        IsRecommend :'',
-        Sort :'' ,
-        Stock : '',
-        Subtitte :'',
-        Contactphone :'',
-        Detail :'',
-        SericeInstruction:''
-    }
-    $scope.save=function(){
-        $http.post(SETTING.ZergWcApiUrl+"/CommunityProduct/Post",$scope.product,{
-            'withCredentials':true
-        }).success(function(data){
-            if(data.Status)
-            {
-                $state.go("app.product.productList")
-            }
-        })
-    }
-    //ÉÏ´«²¿·Ö
-
-    $scope.images = [];
-    function completeHandler(e) {
-
-//            $scope.images.push("http://img.yoopoon.com/"  +e);
-//            $scope.Productimg = "http://img.yoopoon.com/" +  strs[0];
-//            $scope.Productimg1 = "http://img.yoopoon.com/" +  strs[1];
-//            $scope.Productimg2 = "http://img.yoopoon.com/" +  strs[2];
-//            $scope.Productimg3 = "http://img.yoopoon.com/" +  strs[3];
-//            $scope.Productimg4 = "http://img.yoopoon.com/" +  strs[4];
-        $scope.images.push(e);
-        $scope.MainImg =$scope.images[0];
-        $scope.Img=$scope.images[1];
-        $scope.Img1 =$scope.images[2];
-        $scope.Img2 =$scope.images[3];
-        $scope.Img3 =$scope.images[4];
-        $scope.Img4 =$scope.images[5];
-//
-//            $scope.imgUrl = "http://img.yoopoon.com/" + e.Msg;
-    }
-
-    function errorHandler(e) {
-        // console.log(e);
-    }
-
-    function progressHandlingFunction(e) {
-        if (e.lengthComputable) {
-            $('progress').attr({value: e.loaded, max: e.total});
-        }
-    }
-
-    var uploader = $scope.uploader = new FileUploader({
-        url: SETTING.ZergWcApiUrl+'/Resource/Upload',
-        'withCredentials':true
-    })
-    uploader.onSuccessItem = function(fileItem, response, status, headers) {
-        console.info('onSuccessItem', fileItem, response, status, headers);
-        completeHandler(response.Msg);
-    };
-    $scope.deleteImg=function(item){
-        item.remove();
-        $scope.images.pop();
-    }
-
-}])
