@@ -158,11 +158,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     }
                 }
             })
-            .state('page.addressAdm', {
+            .state('page.selectAddress', {
                 url: '/me/addressAdm',
                 views: {
                     'page-me': {
-                        templateUrl: 'page/me/addressAdm.html',
+                        templateUrl: 'page/me/selectAddress.html',
                         controller: 'TabMeCtrl'
                     }
                 }
