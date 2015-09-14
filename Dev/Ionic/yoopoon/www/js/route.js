@@ -8,7 +8,7 @@
 var app = angular.module('starter', ['ionic','ngCordova']);
 var SETTING = {
 BaseUrl:'http://www.iyookee.cn/',
-ApiUrl:'http://api.iyookee.cn/api',
+ApiUrl:'http://localhost:50597/api',
 ImgUrl:'http://img.iyookee.cn/',
 eventApiUrl:'http://www.iyookee.cn/API'
 };
