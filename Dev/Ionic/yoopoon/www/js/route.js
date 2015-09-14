@@ -159,7 +159,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 }
             })
             .state('page.selectAddress', {
-                url: '/me/addressAdm',
+                url: '/me/selectAddress',
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/selectAddress.html',
