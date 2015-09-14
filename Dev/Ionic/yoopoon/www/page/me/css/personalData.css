@@ -49,7 +49,7 @@
     line-height: 44px;
     background-color: #fff;
 }
-.save-setting button{
+.save-setting a{
     width: 100%;
     background-color: #ff3000;
     border: none;
