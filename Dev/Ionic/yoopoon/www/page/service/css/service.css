@@ -91,8 +91,42 @@
 .select .col{
     border:2px solid #b2b2b2;
     text-align: center;
+    background-color: #fff;
 
 }
+ .select .border-css{
+    border:2px solid #32b16c;
+     position: relative;
+}
+ .select .border-css:before{
+     content:"";
+     width: 0;
+     height: 0;
+     border: 10px solid #32b16c;
+     border-color: transparent #32b16c  #32b16c transparent;
+     position:absolute ;
+     bottom: 0;
+     right: 0;
+ }
+ .select .border-css:after{
+
+     content: '';
+     position: absolute;
+     width: 10px;
+     height: 6px;
+     background: transparent;
+     bottom:3px;
+     right: 1px;
+     border: 3px solid #fff;
+     border-top: none;
+     border-right: none;
+
+     -webkit-transform: rotate(-45deg);
+     -moz-transform: rotate(-45deg);
+     -o-transform: rotate(-45deg);
+     -ms-transform: rotate(-45deg);
+     transform: rotate(-45deg);
+ }
 .distance1{
     margin: 0 10px 15px 0;
 }
@@ -104,7 +138,11 @@ h4{
 }
 .select .col p{
     color: #aaaaaa;
-    text-decoration: underline;
+
+}
+hr{
+    margin: -5px 30px 5px;
+
 }
 .btn{
     background-color: #ff3000;

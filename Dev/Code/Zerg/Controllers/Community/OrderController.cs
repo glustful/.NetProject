@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
 using Community.Entity.Model.Order;
 using Community.Entity.Model.OrderDetail;
@@ -9,6 +10,7 @@ using Community.Entity.Model.ServiceOrderDetail;
 using Community.Service.Order;
 using Community.Service.Product;
 using YooPoon.Core.Site;
+using Zerg.Common;
 using Zerg.Models.Community;
 
 namespace Zerg.Controllers.Community
@@ -56,12 +58,13 @@ namespace Zerg.Controllers.Community
                     Remark = c.Remark,
                     Snapshoturl = c.Snapshoturl,
                     Totalprice = c.Totalprice,
-                }).ToList(),		
+                }).ToList(),
+		        UserName = entity.AddMember.UserName
             };
 			return model;
 		}
 
-		public List<OrderModel> Get(OrderSearchCondition condition)
+		public HttpResponseMessage Get(OrderSearchCondition condition)
 		{
 			var model = _orderService.GetOrdersByCondition(condition).Select(c=>new OrderModel
 			{
@@ -77,8 +80,10 @@ namespace Zerg.Controllers.Community
 				Totalprice = c.Totalprice,
 				Actualprice = c.Actualprice,
 //				Details = c.Details,
+                UserName = c.AddMember.UserName
 			}).ToList();
-			return model;
+		    var totalCount = _orderService.GetOrdersByCondition(condition);
+			return PageHelper.toJson(new {List = model,Condition = condition,TotalCount=totalCount});
 		}
 
 		public bool Post([FromBody]OrderModel model)

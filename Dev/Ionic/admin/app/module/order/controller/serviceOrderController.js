@@ -25,7 +25,7 @@ app.controller('serviceOrderListController', ['$scope', 'repository', function (
             $scope.condition = data.Condition;
             $scope.totalPages = data.TotalPages;
         });
-    }
+    };
 
     getList();
     $scope.getList = getList;

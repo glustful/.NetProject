@@ -22,6 +22,7 @@ namespace Community.Entity.Mappings.ServiceOrder
 		    Property(c => c.UpdUser).HasColumnType("int").IsOptional();
 		    Property(c => c.UpdTime).HasColumnType("datetime").IsOptional();
 		    HasMany(c => c.Details).WithRequired(c => c.ServiceOrder);
+		    HasRequired(c => c.AddMember);
 		}
 	}
 }

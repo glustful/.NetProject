@@ -1,4 +1,6 @@
+using Community.Entity.Model.Parameter;
 using System;
+
 
 namespace Zerg.Models.Community
 {
@@ -14,7 +16,7 @@ namespace Zerg.Models.Community
 		/// <summary>
         /// 参数Id
         /// </summary>
-//		public ParameterEntity Parameter {get;set;}
+		public ParameterEntity Parameter {get;set;}
 
 
 		/// <summary>
