@@ -175,6 +175,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     }
                 }
             })
+            .state('page.comment', {
+                url: '/me/comment',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/comment.html'
+                    }
+                }
+            })
     .state('page.Product-Catagory', {
         url: '/shopping/Product-Catagory',
         views: {
