@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Community.Entity.Model.Order;
 using Community.Entity.Model.Product;
 using Community.Entity.Model.ServiceOrder;
@@ -9,11 +11,12 @@ using Community.Entity.Model.ServiceOrderDetail;
 using Community.Service.Product;
 using Community.Service.ServiceOrder;
 using YooPoon.Core.Site;
+using Zerg.Common;
 using Zerg.Models.Community;
 
 namespace Zerg.Controllers.Community
 {
-    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class ServiceOrderController : ApiController
     {
         private readonly IServiceOrderService _serviceOrderService;
@@ -61,7 +64,7 @@ namespace Zerg.Controllers.Community
             return model;
         }
 
-        public List<ServiceOrderModel> Get([FromUri]ServiceOrderSearchCondition condition)
+        public HttpResponseMessage Get([FromUri]ServiceOrderSearchCondition condition)
         {
             var model = _serviceOrderService.GetServiceOrdersByCondition(condition).Select(c => new ServiceOrderModel
             {
@@ -77,7 +80,8 @@ namespace Zerg.Controllers.Community
                 UpdUser = c.UpdUser,
                 UpdTime = c.UpdTime
             }).ToList();
-            return model;
+            var totalPages = _serviceOrderService.GetServiceOrderCount(condition);
+            return PageHelper.toJson(new { List = model, Condition = condition, TotalPages = totalPages });
         }
 
         public bool Post([FromBody]ServiceOrderModel model)
@@ -93,7 +97,7 @@ namespace Zerg.Controllers.Community
                 Product = p,
                 Price = p.Price
             }).ToList();
-            if (products.Count <1)
+            if (products.Count < 1)
                 return false;
             //¶©µ¥±àºÅ
             Random rd = new Random();
@@ -105,7 +109,7 @@ namespace Zerg.Controllers.Community
                 OrderNo = orderNumber,
                 AddTime = DateTime.Now,
                 AddUser = _workContext.CurrentUser.Id,
-                Flee = products.Sum(c=>(c.Count*c.Price)),
+                Flee = products.Sum(c => (c.Count * c.Price)),
                 Address = model.Address,
                 Servicetime = model.Servicetime,
                 Remark = model.Remark,

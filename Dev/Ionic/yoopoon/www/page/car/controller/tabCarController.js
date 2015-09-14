@@ -47,6 +47,53 @@ app.controller('TabCarCtrl', function($scope, $ionicSlideBoxDelegate) {
     //alert($scope.model.activeIndex);
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
+
+    ////全选按钮功能
+    $scope.start=false;
+    $scope.allButton=false;
+    $scope.all=function(){
+//alert($scope.start)
+
+        if($scope.allButton==false){
+            $scope.start=false;
+//            alert("nihao")
+        }if($scope.allButton==true){
+            $scope.start=true;
+//            alert($scope.start)
+        }
+    }
+///数量增加减
+    $scope.number=0;
+    $scope.adding=function(){
+       
+        if($scope.number>=0){
+            $scope.number=$scope.number+1;
+//            alert($scope.number)
+        }
+        else{
+            $scope.number=0;
+        }
+    }
+    $scope.decrease=function(){
+        if($scope.number>=0){
+            $scope.number=$scope.number-1;
+//            alert($scope.number)
+        }
+        else{
+            $scope.number=0;
+        }
+}
+//编辑
+    $scope.flag={showDelete:false,showReorder:false};
+    $scope.items=["Chinese","English","German","Italian","Janapese","Sweden","Koeran","Russian","French"];
+    $scope.delete_item=function(item){
+        var idx = $scope.items.indexOf(item);
+        $scope.items.splice(idx,1);
+    };
+    $scope.move_item = function(item, fromIndex, toIndex) {
+        $scope.items.splice(fromIndex, 1);
+        $scope.items.splice(toIndex, 0, item);
+    };
                });
 
 app.controller('CarDetailCtrl', function($scope, $stateParams) {

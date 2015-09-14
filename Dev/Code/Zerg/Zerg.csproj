@@ -243,6 +243,7 @@
     <Compile Include="Models\Community\ProductDetailModel.cs" />
     <Compile Include="Models\Community\ProductModel.cs" />
     <Compile Include="Models\Community\ProductParameterModel.cs" />
+    <Compile Include="Models\Community\ProductParameterValueModel.cs" />
     <Compile Include="Models\Community\ServiceOrderDetailModel.cs" />
     <Compile Include="Models\Community\ServiceOrderModel.cs" />
     <Compile Include="Models\CRM\AdminPayModel.cs" />

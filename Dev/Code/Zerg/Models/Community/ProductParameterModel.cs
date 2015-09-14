@@ -58,7 +58,11 @@ namespace Zerg.Models.Community
         /// </summary>
 		public DateTime UpdTime {get;set;}
 
+        public int ProductId { get; set; }
+        public int ParameterId { get; set; }
+        public int ParameterValueId { get; set; }
 
+        public int[] ValueIds { get; set; }
 
 	}
 }
