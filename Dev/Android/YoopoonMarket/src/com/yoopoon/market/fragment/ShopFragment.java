@@ -24,29 +24,27 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yoopoon.advertisement.ADController;
+import com.yoopoon.base.ui.MyGridView;
 import com.yoopoon.component.YoopoonServiceController;
-import com.yoopoon.market.ProductClassifyActivity_;
 import com.yoopoon.market.ProductDetailActivity_;
 import com.yoopoon.market.ProductList_;
 import com.yoopoon.market.R;
-import com.yoopoon.market.R.string;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.ResponseData.ResultState;
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
+import com.yoopoon.market.view.NoScrollGridView;
 import com.yoopoon.view.adapter.ProductGridViewAdapter;
 
 public class ShopFragment extends Fragment {
@@ -55,7 +53,7 @@ public class ShopFragment extends Fragment {
 	private YoopoonServiceController serviceController;
 	private View rootView;
 	private ArrayList<String> imgs; // 存储顶端的广告图片地址
-	private GridView commodityGridView;
+	private NoScrollGridView commodityGridView;
 	private ProductGridViewAdapter mProductGridViewAdapter;
 	private TextView beforePriceTextView; // 折扣前价格
 	private TextView burstPackageTextView;
@@ -86,7 +84,10 @@ public class ShopFragment extends Fragment {
 			burstPackageImageView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					Bundle bundle = new Bundle();
+					bundle.putString("productId", "1");
 					Intent intent = new Intent(mContext, ProductDetailActivity_.class);
+					intent.putExtras(bundle);
 					mContext.startActivity(intent);
 				}
 			});
@@ -116,7 +117,7 @@ public class ShopFragment extends Fragment {
 			// ###############################################################################
 			mADController = new ADController(mContext);
 			serviceController = new YoopoonServiceController(mContext);
-			commodityGridView = (GridView) rootView.findViewById(R.id.gridview_commodity);
+			commodityGridView = (NoScrollGridView) rootView.findViewById(R.id.gridview_commodity);
 			// 测试用数据
 			ArrayList<JSONObject> arrayList = new ArrayList<JSONObject>();
 			for (int i = 0; i < 10; i++) {
@@ -132,7 +133,7 @@ public class ShopFragment extends Fragment {
 			}
 			/*mProductGridViewAdapter = new ProductGridViewAdapter(mContext, arrayList);
 			commodityGridView.setAdapter(mProductGridViewAdapter);
-*/			// 对Fragment_shop中的视图控件初始化和设置
+			*/// 对Fragment_shop中的视图控件初始化和设置
 			initShopFragment();
 		}
 		return rootView;
@@ -211,7 +212,8 @@ public class ShopFragment extends Fragment {
 				JSONArray jsonArray;
 				try {
 					jsonArray = data.getMRootData().getJSONArray("List");
-					mProductGridViewAdapter = new ProductGridViewAdapter(mContext, JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
+					mProductGridViewAdapter = new ProductGridViewAdapter(mContext,
+							JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
 					commodityGridView.setAdapter(mProductGridViewAdapter);
 				} catch (JSONException e) {
 					e.printStackTrace();

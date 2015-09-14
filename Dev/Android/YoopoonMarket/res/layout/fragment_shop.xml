@@ -155,10 +155,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <com.yoopoon.base.ui.MyGridView
+        <com.yoopoon.market.view.NoScrollGridView
             android:id="@+id/gridview_commodity"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:background="#DDDDDD"
@@ -167,7 +167,7 @@
             android:numColumns="2"
             android:padding="5dp"
             android:verticalSpacing="5dp" >
-        </com.yoopoon.base.ui.MyGridView>
+        </com.yoopoon.market.view.NoScrollGridView>
     </LinearLayout>
 
 </ScrollView>
