@@ -108,5 +108,7 @@ namespace Zerg.Models.Community
 
 
         public string UserName { get; set; }
+
+        public int MemberAddressId { get; set; }
 	}
 }
