@@ -78,7 +78,8 @@ namespace Zerg.Controllers.Community
                 Remark = c.Remark,
                 Status = c.Status,
                 UpdUser = c.UpdUser,
-                UpdTime = c.UpdTime
+                UpdTime = c.UpdTime,
+                UserName = c.AddMember.UserName
             }).ToList();
             var totalPages = _serviceOrderService.GetServiceOrderCount(condition);
             return PageHelper.toJson(new { List = model, Condition = condition, TotalPages = totalPages });
