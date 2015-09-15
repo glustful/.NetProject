@@ -1,18 +1,15 @@
 <div class="padding-out" ng-app="App"  ng-controller="ParameterController">
+
+    <br>
     <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
     <div class="box">
         <div class="col-md-3 col-sm-6">
             <div class="p-md">
-                <div class="m-v-sm btn-groups">
-                    <button ng-click="my_tree.expand_all()" class="btn btn-default btn-sm">全部展开</button>
-                    <button ng-click="my_tree.collapse_all()" class="btn btn-default btn-sm">全部折叠</button>
-                    <button ng-click="my_tree.expand_branch()" class="btn btn-default btn-sm">展开</button>
-                    <button ng-click="my_tree.collapse_branch()" class="btn btn-default btn-sm">折叠</button>
-                </div>
-                <div class="line b-b m-v-md"></div>
-                <span ng-if="doing_async">...正在加载...</span>
+
+
 
                 <div lazy-load="angularBootstrapNavTree">
+                    <ul style="list-style-type:none" ng-include="'recursion'"></ul>
                     <abn-tree
                             tree-data="my_data"
                             tree-control="my_tree"
@@ -30,24 +27,26 @@
         <div class="col-md-9 col-sm-6 bg-light b-l bg-auto">
             <div class="p-md">
                 <div class="alert alert-info">{{output}}</div>
-                <button onclick="AddParameterWindowShow()" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加参数
+                <button id="btnok" onclick="AddParameterWindowShow()" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加参数
                 </button>
                 <div class="line b-b m-v-md"></div>
                 <div class="panel panel-default" align="center">
                     <table st-table="rowCollectionPage" class="table table-striped" align="center">
                         <thead>
                         <tr>
+                            <th align="center">ID</th>
                             <th align="center">参数名称</th>
-                            <th align="center">参数ID</th>
+
                             <th align="center">添加时间</th>
                             <th align="center">操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="row in rowParameter">
-                            <td>{{row.Name }}</td>
+                        <tr ng-repeat="row in list">
                             <td>{{row.Id }}</td>
-                            <td>{{row.Addtime| dateFilter }}</td>
+                            <td>{{row.Name }}</td>
+
+                            <td>{{row.AddTime| dateFilter }}</td>
                             <td>
                                 <button class="btn btn-info btn-sm"  ng-click="getParameterValue(row.Id)" onclick="ParameterValueWindowShow()"><i class="fa fa-fw m-r-xs fa-edit"></i>参数值管理
                                 </button>
@@ -69,6 +68,7 @@
             </div>
         </div>
     </div>
+
     <!--弹出层开始  -->
     <div id="modal-form-addparameter" class="modal in" tabindex="-1" aria-hidden="false" style="display:none;">
         <div class="modal-dialog" style="padding-top:100px">
@@ -82,9 +82,14 @@
                         <div class="row">
                             <div class="col-xs-12 ">
                                 <div class="space-4"></div>
+                                <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
                                 <div class="form-group" style="text-align:center">
                                     <label for="parameterName">参数名称</label>
-                                    <input class="input-large" type="text" ng-model="parameterName" name="parameterName" id="parameterName"
+                                    <input class="input-large" type="text" ng-model="Parameter.Name" name="parameterName" id="parameterName"
+                                           placeholder="" value="" required ng-maxlength="20">
+                                    <span ng-show="form.parameterName.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                                    <label for="parameterName">序号</label>
+                                    <input class="input-large" type="number" ng-model="Parameter.Sort" name="parameterName" id="parameterSort"
                                            placeholder="" value="" required ng-maxlength="20">
                                     <span ng-show="form.parameterName.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
                                     <span ng-show="form.parameterName.$error.maxlength" style="font-size:20px;color: #ff0000">*输入字符在20以内</span>
@@ -107,6 +112,7 @@
         </div>
     </div>
     <!--弹出层结束-->
+
     <!--弹出层开始  -->
     <div id="modal-form-parametervalue" class="modal in" tabindex="-1" aria-hidden="false" style="display:none;">
         <div class="modal-dialog" style="padding-top:100px">
@@ -156,6 +162,7 @@
         </div>
     </div>
     <!--弹出层结束  -->
+
     <!--弹出层开始  -->
     <div id="modal-form-addvalue" class="modal in" tabindex="-1" aria-hidden="false" style="display:none;">
         <div class="modal-dialog" style="padding-top:100px">
@@ -194,6 +201,7 @@
         </div>
     </div>
     <!--弹出层结束  -->
+
     <script>
         function AddParameterWindowClose() {
             $("#modal-form-addparameter").hide();
@@ -218,6 +226,14 @@
         }
     </script>
 </div>
+
 <script type="text/ng-template" id="myModalContent.html">
     <div ng-include="'views/partials/modal.html'"></div>
+</script>
+<script id="recursion" type="text/ng-template">
+    <li    ng-repeat="item in my_data">
+        <span ng-click="selectEvent(item)"><span ng-if="item.children.length">-</span>
+            {{item.label}}</span>
+        <ul  style="list-style-type:none;" ng-if="item.children.length" ng-include="'recursion'"  ng-init="my_data=item.children"></ul>
+    </li>
 </script>

@@ -17,6 +17,7 @@ import android.text.TextPaint;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -29,6 +30,7 @@ import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
+import com.yoopoon.market.utils.Utils;
 import com.yoopoon.market.view.FixGridLayout;
 
 @EActivity(R.layout.activity_category)
@@ -42,6 +44,7 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 	LinearLayout ll_loading;
 	List<CategoryEntity> categoryList = new ArrayList<CategoryEntity>();
 	int[] colors = { Color.rgb(236, 109, 23), Color.rgb(40, 174, 62), Color.rgb(39, 127, 194), Color.rgb(175, 97, 163) };
+	List<Integer> counts = new ArrayList<Integer>();
 
 	@AfterViews
 	void initProductClassification() {
@@ -73,6 +76,7 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 	void requestData() {
 		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
@@ -108,8 +112,28 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 		}.setUrl(getString(R.string.url_category_get)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
 
+	void calcCount() {
+		int sort = categoryList.get(0).sort;
+		int count = 0;
+		for (CategoryEntity entity : categoryList) {
+			if (entity.sort != sort) {
+				sort = entity.sort;
+				counts.add(count);
+				count = 0;
+			}
+			count++;
+		}
+		counts.add(2);
+		for (Integer i : counts)
+			i = i / 4 + 1;
+	}
+
 	void initList() {
+		WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+		int width = wm.getDefaultDisplay().getWidth() / 5;
+
 		Collections.sort(categoryList, comparator);
+		calcCount();
 		int sort = -1;
 		int count = -1;
 		for (int i = 0; i < categoryList.size(); i++) {
@@ -124,9 +148,13 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 				paint.setFakeBoldText(true);
 				ll_category.addView(tv);
 				FixGridLayout ll = new FixGridLayout(ProductClassifyActivity.this);
-				ll.setmCellWidth(100);
-				ll.setmCellHeight(30);
-				ll_category.addView(ll);
+				ll.setmCellWidth(width);
+				int px = Utils.dp2px(ProductClassifyActivity.this, 20);
+				ll.setmCellHeight(px);
+				int columns = ((counts.get(sort) % 4) == 0) ? counts.get(sort) / 4 : counts.get(sort) / 4 + 1;
+				int px2 = Utils.dp2px(ProductClassifyActivity.this, 10);
+				ll_category.addView(ll, new LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, px * columns
+						+ px2));
 				if (sort >= 0) {
 					View v = new View(ProductClassifyActivity.this);
 					android.view.ViewGroup.LayoutParams params = new android.view.ViewGroup.LayoutParams(
@@ -139,17 +167,19 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 				count += 2;
 			}
 			TextView tv = new TextView(ProductClassifyActivity.this);
-			LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);;
+			LayoutParams params = new LayoutParams(200, LayoutParams.WRAP_CONTENT);;
 			params.setMargins(5, 10, 10, 5);
 			tv.setLayoutParams(params);
-			tv.setTextSize(16);
+			tv.setTextSize(14);
+			tv.setLines(1);
 			tv.setBackgroundResource(R.drawable.white_bg);
 			tv.setClickable(true);
 			tv.setTextColor(Color.GRAY);
 			tv.setText(entity.name);
 			FixGridLayout ll = (FixGridLayout) ll_category.getChildAt(count - 1);
-			ll.addView(tv);
+			ll.addView(tv, params);
 			tv.setOnClickListener(new OnClickListener() {
+
 				@Override
 				public void onClick(View v) {
 					TextView tv = (TextView) v;

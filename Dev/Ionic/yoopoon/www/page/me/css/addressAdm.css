@@ -1,0 +1,29 @@
+
+.edit{
+    position: absolute;
+    top:25%;
+    right: 15%;
+    z-index: 1111;
+}
+.remove{
+    position: absolute;
+    top:25%;
+    right: 3%;
+    z-index: 1111;
+}
+.red{
+    color: #ff3e11;
+}
+.addAddress{
+    background-color: #fff;
+    height: 60px;
+    line-height: 60px;
+    margin-top: 30px;
+    padding:0 25px 0 30px;
+
+}
+.addAddress p{
+    font-size: 18px;
+    color: #999999;
+}
+

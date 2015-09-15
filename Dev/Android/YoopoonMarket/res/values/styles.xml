@@ -2,13 +2,13 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
@@ -21,7 +21,7 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-    
+
     <style name="Theme_Activity_Animation" parent="Theme.AppCompat.Light">
         <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
     </style>
@@ -65,6 +65,11 @@
         <item name="android:textColor">@color/red</item>
     </style>
 
+    <style name="TextView_LargeSize_RedColor">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="TextView_RedColor_SmallSize" parent="TextView_TextColor_Red">
         <item name="android:textSize">@dimen/small_textsize</item>
     </style>
@@ -86,8 +91,27 @@
     </style>
 
     <style name="RelativeLayout_Me">
-         <item name="android:layout_weight">1</item>  
-         <item name="android:layout_width">0dp</item>
-         <item name="android:layout_height">wrap_content</item>  
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
+
+    <style name="TextView_Order_Navigation">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="TextView_New_Address">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:drawableRight">@drawable/right_next_icon</item>
+        <item name="android:background">@drawable/white_bg</item>
+        <item name="android:layout_marginBottom">1dp</item>
+    </style>
+
 </resources>

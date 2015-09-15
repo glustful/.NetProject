@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:drawableTop="@drawable/success_icon"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:textColor="@color/green"
+        android:text="付款成功"/>
+    
+    <ListView 
+        android:id="@+id/lv"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:dividerHeight="1dp"
+        android:divider="@null"
+        android:cacheColorHint="#00000000" />
+    
+
+</LinearLayout>

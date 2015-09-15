@@ -36,9 +36,19 @@
         android:layout_toRightOf="@id/iv"
         android:text="￥69.9"
         android:textColor="@color/red" />
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_price_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv"
+        android:layout_toRightOf="@id/tv_price_counted"
+        android:text="￥87"
+        android:textColor="@color/text_gray" 
+        android:textSize="12sp"/>
 
     <TextView
-        android:id="@+id/tv_price_previous"
+        android:id="@+id/tv_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tv_price_counted"

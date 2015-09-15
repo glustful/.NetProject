@@ -13,11 +13,9 @@
 package com.yoopoon.market.fragment;
 
 import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -31,9 +29,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.yoopoon.advertisement.ADController;
-import com.yoopoon.base.ui.MyGridView;
 import com.yoopoon.component.YoopoonServiceController;
 import com.yoopoon.market.ProductDetailActivity_;
 import com.yoopoon.market.ProductList_;
@@ -80,7 +77,7 @@ public class ShopFragment extends Fragment {
 			// 爆款套餐和省到不行加粗样式设置
 			burstPackageTextView = (TextView) rootView.findViewById(R.id.btn_burstpackage);
 			burstPackageTextView.getPaint().setFakeBoldText(true);
-			//添加商品首页点击推荐商品后的事件
+			// 添加商品首页点击推荐商品后的事件
 			burstPackageImageView = (ImageView) rootView.findViewById(R.id.burst_package_image);
 			burstPackageImageView.setOnClickListener(new OnClickListener() {
 				@Override
@@ -95,13 +92,11 @@ public class ShopFragment extends Fragment {
 			// ###############################################################################
 			// 如下的代码只做API出来前的测试用途
 			// ###############################################################################
-			/*burstPackageTextView.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(mContext, ProductClassifyActivity_.class);
-					startActivity(intent);
-				}
-			});*/
+			/*
+			 * burstPackageTextView.setOnClickListener(new OnClickListener() {
+			 * @Override public void onClick(View v) { Intent intent = new Intent(mContext,
+			 * ProductClassifyActivity_.class); startActivity(intent); } });
+			 */
 			TextView saveMoneyTextView = (TextView) rootView.findViewById(R.id.btn_save_money);
 			saveMoneyTextView.setOnClickListener(new OnClickListener() {
 				@Override
@@ -132,13 +127,19 @@ public class ShopFragment extends Fragment {
 					e.printStackTrace();
 				}
 			}
-			/*mProductGridViewAdapter = new ProductGridViewAdapter(mContext, arrayList);
-			commodityGridView.setAdapter(mProductGridViewAdapter);
-			*/// 对Fragment_shop中的视图控件初始化和设置
+			/*
+			 * mProductGridViewAdapter = new ProductGridViewAdapter(mContext, arrayList);
+			 * commodityGridView.setAdapter(mProductGridViewAdapter);
+			 */// 对Fragment_shop中的视图控件初始化和设置
+			/*
+			 * mProductGridViewAdapter = new ProductGridViewAdapter(mContext, arrayList);
+			 * commodityGridView.setAdapter(mProductGridViewAdapter);
+			 */// 对Fragment_shop中的视图控件初始化和设置
 			initShopFragment();
 		}
 		return rootView;
 	}
+
 	/**
 	 * @Title: initShopFragment
 	 * @Description: 初始化和设置视图控件
@@ -151,6 +152,7 @@ public class ShopFragment extends Fragment {
 		linearLayout.addView(mADController.getRootView(), 0);
 		linearLayout.addView(serviceController.getRootView(), 1);
 	}
+
 	private void requestAdvertisements() {
 		if (imgs == null)
 			new RequestAdapter() {
@@ -170,6 +172,7 @@ public class ShopFragment extends Fragment {
 						}
 					}
 				}
+
 				@Override
 				public void onProgress(ProgressMessage msg) {
 				}
@@ -199,6 +202,7 @@ public class ShopFragment extends Fragment {
 						}
 					}
 				}
+
 				@Override
 				public void onProgress(ProgressMessage msg) {
 				}
@@ -206,20 +210,27 @@ public class ShopFragment extends Fragment {
 					.addParam("ChannelName", "活动").notifyRequest();
 		}
 	}
+
 	private void requestProduct() {
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONArray jsonArray;
-				try {
-					jsonArray = data.getMRootData().getJSONArray("List");
-					mProductGridViewAdapter = new ProductGridViewAdapter(mContext,
-							JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
-					commodityGridView.setAdapter(mProductGridViewAdapter);
-				} catch (JSONException e) {
-					e.printStackTrace();
+				if (data.getMRootData() != null) {
+					try {
+						jsonArray = data.getMRootData().getJSONArray("List");
+						mProductGridViewAdapter = new ProductGridViewAdapter(mContext,
+								JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
+						commodityGridView.setAdapter(mProductGridViewAdapter);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}

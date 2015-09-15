@@ -3,26 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <TextView 
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <Button 
-        android:onClick="modify"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="修改"/>
-    <Button 
-        android:onClick="add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="添加"/>
-    <Button 
-		android:onClick="delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="删除"/>
-    
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:cacheColorHint="#00000000"
+        android:divider="@null"
+        android:dividerHeight="1dp" />
 
 </LinearLayout>
