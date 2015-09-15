@@ -21,4 +21,15 @@ app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate) {
     //alert($scope.model.activeIndex);
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
+
+
+
+
+//´ò¿ªÆÀÂÛ
+  var comment=document.getElementById("userComment");
+  $scope.open=function(){
+    comment.style.display="";
+  }
+
                });
+

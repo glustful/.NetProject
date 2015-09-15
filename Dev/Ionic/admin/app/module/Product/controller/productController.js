@@ -5,7 +5,9 @@
 app.controller('productCtr', ['$scope', '$http','$modal', function($scope, $http,$modal) {
     $scope.sech={
         Page:1,
-        PageCount:10
+        PageCount:10,
+        IsDescending:true,
+        OrderBy:'OrderByAddtime'
     };
         var getProductList=function()
         {
