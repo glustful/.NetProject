@@ -7,6 +7,7 @@ using Community.Entity.Model.Order;
 using Community.Entity.Model.OrderDetail;
 using Community.Entity.Model.Product;
 using Community.Entity.Model.ServiceOrderDetail;
+using Community.Service.MemberAddress;
 using Community.Service.Order;
 using Community.Service.Product;
 using YooPoon.Core.Site;
@@ -20,12 +21,14 @@ namespace Zerg.Controllers.Community
 		private readonly IOrderService _orderService;
 	    private readonly IProductService _productService;
 	    private readonly IWorkContext _workContext;
+	    private readonly IMemberAddressService _memberAddressService;
 
-        public CommunityOrderController(IOrderService orderService, IProductService productService, IWorkContext workContext)
+	    public CommunityOrderController(IOrderService orderService, IProductService productService, IWorkContext workContext,IMemberAddressService memberAddressService)
 	    {
 	        _orderService = orderService;
 	        _productService = productService;
 	        _workContext = workContext;
+	        _memberAddressService = memberAddressService;
 	    }
 
 	    public OrderModel Get(int id)
@@ -125,6 +128,7 @@ namespace Zerg.Controllers.Community
                 Totalprice = products.Sum(c => (c.Count * c.UnitPrice)),
                 Actualprice = products.Sum(c => (c.Count * c.UnitPrice)),
 				Details = products,
+                Address = _memberAddressService.GetMemberAddressById(model.MemberAddressId)
 			};
 			if(_orderService.Create(entity).Id > 0)
 			{
