@@ -23,6 +23,7 @@ namespace Community.Entity.Mappings.Order
 			Property(c => c.Actualprice).HasColumnType("decimal").IsOptional();
 			HasMany(c =>c.Details).WithRequired(c=>c.Order);
 		    HasRequired(c => c.AddMember);
+		    HasRequired(c => c.Address).WithMany().WillCascadeOnDelete(false);
 		}
 	}
 }

@@ -26,10 +26,22 @@ namespace Zerg.Controllers.Community
 		}
         #region 商品分类管理 2015.9.9 黄秀宇
 
-        //public JsonResult Get()
+        //public System.Web.Mvc.JsonResult Get()
         //{
-        //    _categoryService.GetCategorysByCondition()
-        //    return Json(sb.ToString(), JsonRequestBehavior.AllowGet);
+        //     CategorySearchCondition  csc = new CategorySearchCondition()
+        //    {
+        //        OrderBy = EnumCategorySearchOrderBy.OrderById,                
+        //    };
+        //    List<CategoryEntity> listCategofyOne = _categoryService.GetCategorysByCondition(csc).Where(o=>o.Father==null).ToList();
+        //    foreach (var p in listCategofyOne)
+        //    {
+        //        if (p.Father == null)
+        //        {
+        //           //查找第一级；
+        //        }
+        //    }
+
+        //    return System.Web.Mvc.Json("", System.Web.Mvc.JsonRequestBehavior.AllowGet);
         //}
 
 
@@ -60,13 +72,41 @@ namespace Zerg.Controllers.Community
           }
           return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不存在！"));
 		}
+
+        /// <summary>
+        /// 根据父级商品分类id查找子商品分类，传递0时获取一级分类
+        /// </summary>
+        /// <param name="id">商品分类id</param>
+        /// <returns></returns>
+        [Description("根据父级商品分类id查找子商品分类")]
+        public HttpResponseMessage GetChildByFatherId(int id)
+        {
+            var entity = _categoryService.GetCategorysBySuperFather(id);
+            if (entity != null)
+            {
+              var model=  entity.Select(q => new CategoryModel
+                {
+                    Id = q.Id,
+                    //                Father = entity.Father,
+                    Name = q.Name,
+                    Sort = q.Sort,
+                    AddUser = q.AddUser,
+                    AddTime = q.AddTime,
+                    UpdUser = q.UpdUser,
+                    UpdTime = q.UpdTime
+                });
+              
+                return PageHelper.toJson(model);
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不存在！"));
+        }
         /// <summary>
         /// 根据条件查找商品类别
         /// </summary>
         /// <param name="condition">Name商品类别名称，Sorts排序类型</param>
         /// <returns></returns>
         [Description("根据条件查找商品类别")]
-      public HttpResponseMessage Get([FromUri]CategorySearchCondition condition)
+      public HttpResponseMessage Get(CategorySearchCondition condition)
 		{
             //验证是否有非法字符
             Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");

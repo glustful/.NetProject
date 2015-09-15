@@ -17,8 +17,22 @@ app.controller('TabShoppingCtrl',['$http','$scope',function($http,$scope){
             $scope.$broadcast("scroll.infiniteScrollComplete");
         },500);
     };
-
-
+    $scope.sech={
+        Page:1,
+        PageCount:10,
+        IsDescending:true,
+        OrderBy:'OrderByAddtime',
+        CategoryId:1
+    };
+        $http.get(SETTING.ApiUrl+"/CommunityProduct/Get",{
+            params: $scope.sech,
+            'withCredentials':true  //øÁ”Ú
+        }).success(function(data){
+            $scope.list=data.List;
+            $scope.sech.Page=data.Condition.Page;
+            $scope.sech.PageCount=data.Condition.PageCount;
+            $scope.totalCount = data.TotalCount;
+        });
 }]);
 
 
