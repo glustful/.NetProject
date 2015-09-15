@@ -45,26 +45,37 @@
 </ion-slide-box>
     <!-- ion-infinite-scroll 上拉加载数据指令 distance默认1% nf-if的值为false时，就禁止执行on-infinite  -->
     <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="1%" ></ion-infinite-scroll>
-
+      <a class="button-service" ng-click="go('index.html#/page/service/safe')" style="">优服务</a>
+      <ion-scroll zooming="true" direction="x" class="scroll-home">
           <div class="row bg-yellow">
-              <a class="button-service" ng-click="go('index.html#/page/service/safe')">优服务</a>
-              <a class="col tab-item">
+
+              <a class="col-20 tab-item">
                   <i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">家政服务</p>
               </a>
-              <a class="col tab-item">
+              <a class="col-20 tab-item">
                   <i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">衣物清洗</p>
               </a>
-              <a class="col tab-item">
+              <a class="col-20 tab-item">
                   <i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">快递代收</p>
               </a>
-              <a class="col tab-item">
+              <a class="col-20 tab-item">
                   <i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">月嫂</p>
               </a>
-              <a class=" col tab-item">
-                  <i class="icon icon-jiazhenfuwu circle assertive" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">更多</p>
+              <a class="col-20 tab-item">
+                  <i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">家政服务</p>
               </a>
-          </div>
+              <a class="col-20 tab-item">
+                  <i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">衣物清洗</p>
+              </a>
+              <a class="col-20 tab-item">
+                  <i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">快递代收</p>
+              </a>
+              <a class="col-20 tab-item">
+                  <i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">月嫂</p>
+              </a>
 
+          </div>
+       </ion-scroll>
          <div class="padding stable-bg">
              <div class="  bar-light  ">
                  <h4 class="title p-red font-12"><strong>| 爆款套餐</strong>&nbsp;| 省到不行</h4>
@@ -169,8 +180,8 @@
         <!--<div class="row ">-->
             <!--<h4  class="col" style="text-align: center; color:#b0b0b0 ">······更多精彩，敬请期待！</h4>-->
         <!--</div>-->
-    <!--&lt;!&ndash;<div class="div-null1"></div>&ndash;&gt;-->
-        <!--&lt;!&ndash;底部&ndash;&gt;-->
+    <!--<!--<div class="div-null1"></div>-->-->
+        <!--<!--底部-->-->
         <!--<div class="row dark-bg " >-->
             <!--<img src="page/shopping/img/foot.png">-->
         <!--</div>-->

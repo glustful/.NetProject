@@ -101,18 +101,17 @@ namespace Zerg.Controllers.Community
             if (product == null)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "商品不存在"));
-            }
-            //TODO:判断空值
+            }                       
             var parameterValue = _parameterValueService.GetParameterValuesByCondition(new ParameterValueSearchCondition { Ids = model.ValueIds }).ToList().Select(pv => new ProductParameterEntity
             {
                 Product = product,
                 AddTime = DateTime.Now,
-                AddUser = _workContext.CurrentUser.Id,//TODO:修改为当前用户
+                AddUser = _workContext.CurrentUser.Id,
                 Parameter = pv.Parameter,
                 ParameterValue = pv,
                 Sort = 0,
                 UpdTime = DateTime.Now,
-                UpdUser = _workContext.CurrentUser.Id //TODO:修改为当前用户
+                UpdUser = _workContext.CurrentUser.Id
             }).ToList();            
             _productParameterService.BulkCreate(parameterValue);
             return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功"));                             

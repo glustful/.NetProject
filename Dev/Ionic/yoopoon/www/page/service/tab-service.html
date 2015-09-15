@@ -13,7 +13,7 @@
 </div>
 
 <!--头部遮罩-->
-<div class="bar p-head" style="height: 44px">
+<div class="bar p-head" style="height: 44px" id="tiphidden1">
     <img src="page/shopping/img/head.png">
 </div>
 
@@ -59,12 +59,13 @@
   </ion-content>
 
     <!--底部-->
-
-        <div class="row dark-bg " style="position: fixed;bottom: 0;">
+    <div id="tiphidden2">
+        <div class="row dark-bg hidden-pg" style="position: fixed;bottom: 0;" >
             <img src="page/shopping/img/foot.png">
         </div>
-        <div class="button-location" >
+        <div class="button-location" ng-click="closetips()" >
             <img src="page/shopping/img/button.png" >
         </div>
+    </div>
 </ion-view>
 <link rel="stylesheet" href="page/service/css/service.css">

@@ -1,4 +1,4 @@
-app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeout) {
+app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeout,$ionicHistory) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -6,10 +6,35 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeou
   //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
+    var tip1=document.getElementById("tiphidden1");
+    var tip2=document.getElementById("tiphidden2");
+    function getCookie(cookie_name)
+    {
+        var allcookies = document.cookie;
+        var cookie_pos = allcookies.indexOf(cookie_name);
+        if (cookie_pos != -1)
+        {
+            cookie_pos += cookie_name.length + 1;
+            var cookie_end = allcookies.indexOf(";", cookie_pos);
+            if (cookie_end == -1)
+            {
+                cookie_end = allcookies.length;
+            }
+            var value = unescape(allcookies.substring(cookie_pos, cookie_end));
+        }
+        return value;
+    }
+    var tipcookietext = getCookie('tipcookie');
+    //如果有cookie
+    if(tipcookietext) {
+        tip1.style.display = "none";
+        tip2.style.display = "none";
+    }
+
   $scope.model = {
     activeIndex:0
   };
-  
+
 
   $scope.pageClick = function(index){
     //alert(index);
@@ -22,10 +47,16 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeou
     //alert($scope.model.activeIndex);
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
+
     //    页面跳转
     $scope.go=function(state){
         window.location.href=state;
     }
+
+//    页面跳转到页脚导航
+    $scope.goes=function(state){
+        $ionicHistory.clearHistory();
+        window.location.href=state;
 
 //    搜索功能
     $scope.showSelect=false;
@@ -33,6 +64,25 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeou
     $scope.showInput=function(){
         $scope.showSelect=true;
         $scope.isShow=true;
+    };
+// 遮罩层
+    $scope.closetips=function()
+    {
+        tip1.style.display = "none";
+        tip2.style.display = "none";
+        writeCookie('tipcookie',1000,'999999');
+
+    };
+    ///Savecookie
+    function writeCookie(name, value, hours)
+    {
+        var expire = "";
+        if(hours != null)
+        {
+            expire = new Date((new Date()).getTime() + hours * 3600000);
+            expire = "; expires=" + expire.toGMTString();
+        }
+        document.cookie = name + "=" + escape(value) + expire;
     }
 
 //    滚动刷新

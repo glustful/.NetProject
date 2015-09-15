@@ -5,7 +5,9 @@
 app.controller('productCtr', ['$scope', '$http','$modal', function($scope, $http,$modal) {
     $scope.sech={
         Page:1,
-        PageCount:10
+        PageCount:10,
+        IsDescending:true,
+        OrderBy:'OrderByAddtime'
     };
         var getProductList=function()
         {
@@ -99,12 +101,28 @@ app.controller('editProductCtr',['$http','$scope','$state','$stateParams',functi
     }
 }])
 app.controller('createProductCtr',['$http','$scope','$state','FileUploader',function($http,$scope,$state,FileUploader){
-    $http.get(SETTING.ZergWcApiUrl+"/Category/Get",{
-        'withCredentials':true
-    }).success(function (data) {
-        $scope.CategoryList=data;
-    })
-
+        $http.get(SETTING.ZergWcApiUrl + "/Category/GetChildByFatherId?id="+0, {
+            'withCredentials': true
+        }).success(function (data) {
+            $scope.CategoryOneList = data;
+        })
+    $scope.oneId='';$scope.twoId=''
+    $scope.selectTwoChange=function()
+    {
+        $http.get(SETTING.ZergWcApiUrl + "/Category/GetChildByFatherId?id="+$scope.oneId, {
+            'withCredentials': true
+        }).success(function (data) {
+            $scope.CategoryTwoList = data;
+        })
+    }
+    $scope.selectThreeChange=function()
+    {
+        $http.get(SETTING.ZergWcApiUrl + "/Category/GetChildByFatherId?id="+$scope.twoId, {
+            'withCredentials': true
+        }).success(function (data) {
+            $scope.CategoryThreeList = data;
+        })
+    }
       $scope.product={
             CategoryId:'',
             Price :'',
