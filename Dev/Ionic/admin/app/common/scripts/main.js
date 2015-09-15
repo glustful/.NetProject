@@ -4,8 +4,8 @@
 
 angular.module('app')
     .controller('AppCtrl', ['$scope', '$translate', '$localStorage',
-        '$window',  'openModal', '$state','$rootScope','PortalService',
-        function ($scope, $translate, $localStorage, $window,openModal, $state,$rootScope,PortalService) {
+        '$window',  'openModal', '$state','$rootScope',
+        function ($scope, $translate, $localStorage, $window,openModal, $state,$rootScope) {
             // add 'ie' classes to html
             var isIE = !!navigator.userAgent.match(/MSIE/i);
             isIE && angular.element($window.document.body).addClass('ie');
@@ -75,15 +75,6 @@ angular.module('app')
             }
 
             //-------------------- header portal ----------------------//
-
-            //切换portal
-            $scope.CheckPortal = function (id) {
-                PortalService.SetActivePortalId(id);
-
-                openModal.openModal(1, "提示", "当前操作公众号已切换为：" + $scope.activedPortal.Name, "", "关闭", "确定", function () {
-                    window.location.reload();
-                });
-            };
 
             //刷新列表
             $scope.RefreshPortalList = function () {

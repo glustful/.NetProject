@@ -55,6 +55,8 @@ namespace Community.Entity.Model.Parameter
 
 		public DateTime? UpdTimeEnd { get; set; }
 
+        public string CategoryId { get; set; }
+
         public CategoryEntity Category { get; set; }
 
 
