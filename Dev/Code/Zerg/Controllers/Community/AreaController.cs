@@ -8,10 +8,12 @@ using System;
 using System.ComponentModel;
 using Zerg.Common;
 using System.Net.Http;
+using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.Community
 {
     [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class CommunityAreaController : ApiController
     {
         private readonly IAreaService _areaService;
@@ -25,6 +27,7 @@ namespace Zerg.Controllers.Community
         /// </summary>
         /// <param name="id">ID参数</param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage Get(int id)
         {
             AreaModel model=null;
@@ -61,6 +64,7 @@ namespace Zerg.Controllers.Community
         /// </summary>
         /// <param name="condition">条件</param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage Get([FromUri]AreaSearchCondition condition)
         {
             var models = _areaService.GetAreasByCondition(condition).Select(c => new AreaModel
@@ -77,6 +81,7 @@ namespace Zerg.Controllers.Community
         /// </summary>
         /// <param name="model">信息参数</param>
         /// <returns></returns>
+        [HttpPost]
         public HttpResponseMessage Post([FromBody]AreaModel model)
         {
             AreaEntity father = null;
@@ -105,6 +110,7 @@ namespace Zerg.Controllers.Community
         /// </summary>
         /// <param name="model">修改参数</param>
         /// <returns></returns>
+        [HttpPost]
         public HttpResponseMessage Put(AreaModel model)
         {
             AreaEntity entity = _areaService.GetAreaById(model.Id);
@@ -146,6 +152,7 @@ namespace Zerg.Controllers.Community
         /// </summary>
         /// <param name="id">ID参数</param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage Delete(int id)
         {
             AreaEntity entity = _areaService.GetAreaById(id);
