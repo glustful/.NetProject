@@ -12,6 +12,8 @@
  */
 package com.yoopoon.market.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,8 +22,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import com.yoopoon.market.AboutUActivity_;
+import android.widget.RelativeLayout;
 import com.yoopoon.market.AddressManageActivity_;
+import com.yoopoon.market.MeOrderActivity_;
+import com.yoopoon.market.PayDemoActivity_;
 import com.yoopoon.market.PersonalInfoActivity_;
 import com.yoopoon.market.R;
 
@@ -32,23 +36,38 @@ import com.yoopoon.market.R;
  * @date: 2015-9-7 下午4:50:59
  */
 public class MeFragment extends Fragment implements OnClickListener {
-	View convertView;
+	View rootView;
+	Button btn_order;
+	List<RelativeLayout> rls = new ArrayList<RelativeLayout>();
 
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		convertView = inflater.inflate(R.layout.fragment_me, null, false);
+		rootView = inflater.inflate(R.layout.fragment_me, null, false);
 		init();
-		return convertView;
+		return rootView;
 	}
 
 	private void init() {
-		Button btn_info = (Button) convertView.findViewById(R.id.btn_info);
-		Button btn_address = (Button) convertView.findViewById(R.id.btn_address);
-		Button btn_about = (Button) convertView.findViewById(R.id.btn_about);
+		Button btn_info = (Button) rootView.findViewById(R.id.btn_info);
+		Button btn_address = (Button) rootView.findViewById(R.id.btn_address);
+		Button btn_about = (Button) rootView.findViewById(R.id.btn_about);
+		btn_order = (Button) rootView.findViewById(R.id.btn_order);
+		rls.add((RelativeLayout) rootView.findViewById(R.id.rl1));
+		rls.add((RelativeLayout) rootView.findViewById(R.id.rl2));
+		rls.add((RelativeLayout) rootView.findViewById(R.id.rl3));
+		rls.add((RelativeLayout) rootView.findViewById(R.id.rl4));
+		rls.add((RelativeLayout) rootView.findViewById(R.id.rl5));
+		rls.add((RelativeLayout) rootView.findViewById(R.id.rl6));
+		rls.add((RelativeLayout) rootView.findViewById(R.id.rl7));
+
+		for (RelativeLayout rl : rls)
+			rl.setOnClickListener(this);
+
 		btn_info.setOnClickListener(this);
 		btn_address.setOnClickListener(this);
 		btn_about.setOnClickListener(this);
+		btn_order.setOnClickListener(this);
 	}
 
 	@Override
@@ -61,8 +80,23 @@ public class MeFragment extends Fragment implements OnClickListener {
 				AddressManageActivity_.intent(getActivity()).start();
 				break;
 			case R.id.btn_about:
-				AboutUActivity_.intent(getActivity()).start();
+				PayDemoActivity_.intent(getActivity()).start();
 				break;
+			case R.id.btn_order:
+			case R.id.rl1:
+				MeOrderActivity_.intent(getActivity()).item(0).start();
+				break;
+
+			case R.id.rl2:
+				MeOrderActivity_.intent(getActivity()).item(1).start();
+				break;
+			case R.id.rl3:
+				MeOrderActivity_.intent(getActivity()).item(2).start();
+				break;
+			case R.id.rl4:
+				MeOrderActivity_.intent(getActivity()).item(3).start();
+				break;
+
 		}
 	}
 

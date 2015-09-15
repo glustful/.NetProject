@@ -17,6 +17,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,11 +50,14 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 
 	@AfterViews
 	void initUI() {
-		backButton.setVisibility(View.VISIBLE);
+		backButton.setVisibility(View.GONE);
+		backWhiteButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
-		backButton.setText("返回");
+
+		headView.setBackgroundColor(Color.RED);
 		titleButton.setText("个人资料");
-		requestData();
+		titleButton.setTextColor(Color.WHITE);
+		// requestData();
 	}
 
 	public void requestData() {
@@ -106,7 +110,7 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 		}).execute();
 	}
 
-	public void modify(View v) {
+	void modify() {
 		new SerializerJSON(new SerializeListener() {
 
 			@Override
@@ -150,7 +154,7 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 				.notifyRequest();
 	}
 
-	public void add(View v) {
+	void add() {
 		new SerializerJSON(new SerializeListener() {
 
 			@Override
@@ -193,7 +197,7 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 				.notifyRequest();
 	}
 
-	public void delete(View v) {
+	void delete() {
 		new RequestAdapter() {
 
 			@Override

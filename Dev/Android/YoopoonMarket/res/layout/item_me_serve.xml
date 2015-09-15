@@ -18,7 +18,7 @@
         android:layout_margin="5dp" >
 
         <RelativeLayout
-			android:id="@+id/rl1"
+			android:id="@+id/rl5"
             style="@style/RelativeLayout_Me"
             android:background="@drawable/white_bg"
             android:clickable="true"
@@ -41,7 +41,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl2"
+            android:id="@+id/rl6"
             style="@style/RelativeLayout_Me"
             android:background="@drawable/white_bg"
             android:clickable="true"
@@ -63,7 +63,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl3"
+            android:id="@+id/rl7"
             style="@style/RelativeLayout_Me"
             android:background="@drawable/white_bg"
             android:clickable="true"

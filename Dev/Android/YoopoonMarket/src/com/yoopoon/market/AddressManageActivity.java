@@ -17,14 +17,21 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yoopoon.market.domain.MemberAddressEntity;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
@@ -46,15 +53,77 @@ public class AddressManageActivity extends MainActionBarActivity {
 	private static final String TAG = "AddressManageActivity";
 	@ViewById(R.id.tv)
 	TextView tv;
+	@ViewById(R.id.lv)
+	PullToRefreshListView lv;
 	MemberAddressEntity addressEntity = null;
 
 	@AfterViews
 	void initUI() {
-		backButton.setVisibility(View.VISIBLE);
+		backButton.setVisibility(View.GONE);
 		titleButton.setVisibility(View.VISIBLE);
-		backButton.setText("返回");
+		rightButton.setVisibility(View.GONE);
 		titleButton.setText("地址管理");
-		requestData();
+		titleButton.setTextColor(Color.WHITE);
+		backWhiteButton.setVisibility(View.VISIBLE);
+		headView.setBackgroundColor(Color.RED);
+		// requestData();
+		lv.setAdapter(new MyListViewAdapter());
+	}
+
+	static class ViewHolder {
+		TextView tv_name;
+		TextView tv_phone;
+		TextView tv_address;
+		TextView tv_modify;
+		TextView tv_delete;
+	}
+
+	class MyListViewAdapter extends BaseAdapter {
+
+		@Override
+		public int getCount() {
+
+			return 3;
+		}
+
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			if (position == 2) {
+				TextView tv = new TextView(AddressManageActivity.this);
+				tv.setPadding(20, 20, 20, 20);
+				tv.setGravity(Gravity.CENTER_VERTICAL);
+				tv.setText("+新增收货地址");
+				tv.setTextColor(Color.GRAY);
+				Drawable drawableRight = getResources().getDrawable(R.drawable.right_next_icon);
+				drawableRight.setBounds(0, 0, drawableRight.getMinimumWidth(), drawableRight.getMinimumHeight());
+				tv.setCompoundDrawables(null, null, drawableRight, null);
+				tv.setBackgroundResource(R.drawable.white_bg);
+				tv.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						NewAddressActivity_.intent(AddressManageActivity.this).start();
+					}
+				});
+				return tv;
+			}
+			if (convertView == null)
+				convertView = View.inflate(AddressManageActivity.this, R.layout.item_address, null);
+			return convertView;
+		}
+
 	}
 
 	void requestData() {
@@ -106,7 +175,7 @@ public class AddressManageActivity extends MainActionBarActivity {
 		}).execute();
 	}
 
-	public void modify(View v) {
+	void modify() {
 		new SerializerJSON(new SerializeListener() {
 
 			@Override
@@ -149,7 +218,7 @@ public class AddressManageActivity extends MainActionBarActivity {
 				.notifyRequest();
 	}
 
-	public void add(View v) {
+	void add() {
 		new SerializerJSON(new SerializeListener() {
 
 			@Override

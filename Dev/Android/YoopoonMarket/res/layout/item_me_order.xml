@@ -7,6 +7,7 @@
     android:paddingBottom="10dp" >
 
     <Button
+        android:id="@+id/btn_order"
         style="@style/Button_Me"
         android:drawableLeft="@drawable/me_booking"
         android:drawablePadding="5dp"
