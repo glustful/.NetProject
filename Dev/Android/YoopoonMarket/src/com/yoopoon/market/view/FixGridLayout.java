@@ -102,7 +102,7 @@ public class FixGridLayout extends ViewGroup {
 		// 注意setMeasuredDimension和resolveSize的用法
 		if (count / 3 > 0) {
 			setMeasuredDimension(resolveSize(mCellWidth * count, widthMeasureSpec),
-					resolveSize(mCellHeight * (count / 3) + 20, heightMeasureSpec));
+					resolveSize(mCellHeight * (count / 3), heightMeasureSpec));
 		} else {
 			setMeasuredDimension(resolveSize(mCellWidth * count, widthMeasureSpec),
 					resolveSize(mCellHeight + 20, heightMeasureSpec));
