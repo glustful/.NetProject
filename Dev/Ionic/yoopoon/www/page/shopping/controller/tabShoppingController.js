@@ -2,12 +2,12 @@
  * Created by Administrator on 2015/9/7.
  */
 app.controller('TabShoppingCtrl',['$http','$scope',function($http,$scope){
-    //页面跳转
+    //脪鲁脙忙脤酶脳陋
     $scope.go=function(state){
         window.location.href=state;
     }
 
-//向下滚动刷新
+//脧貌脧脗鹿枚露炉脣垄脨脗
     $scope.items = [];
     var base = 0;
     $scope.load_more = function(){

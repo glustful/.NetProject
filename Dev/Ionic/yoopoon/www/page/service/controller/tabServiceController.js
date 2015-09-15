@@ -1,4 +1,4 @@
-app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeout) {
+app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeout,$rootScope) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -62,6 +62,7 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeou
 // 遮罩层
     $scope.closetips=function()
     {
+        $rootScope.hideTabs = false;
         tip1.style.display = "none";
         tip2.style.display = "none";
         writeCookie('tipcookie',1000,'999999');
