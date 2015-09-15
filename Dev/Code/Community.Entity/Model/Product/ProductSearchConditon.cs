@@ -107,6 +107,8 @@ namespace Community.Entity.Model.Product
 
 		OrderByAddtime,
 
+        OrderByOwner
+
 	}
 
 }

@@ -202,7 +202,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
     })
     .state('page.product-detail', {
-        url: '/shopping/product-detail',
+        url: '/shopping/product-detail?id',
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/product-detail.html',
