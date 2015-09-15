@@ -86,16 +86,13 @@ public class RequestTask implements Runnable {
 		mHttpContext = new BasicHttpContext();
 		mId = UUID.randomUUID().toString();
 	}
-
 	public String getId() {
 		return mId;
 	}
-
 	public void cancel() {
 		this.mStopRunning = true;
 		mHttpClient.getConnectionManager().shutdown();
 	}
-
 	@Override
 	public void run() {
 		if (mRequestData == null || mStopRunning) {
@@ -169,17 +166,15 @@ public class RequestTask implements Runnable {
 			uploadImage(urlString);
 		}
 	}
-
 	/**
 	 * @Title: uploadImage
 	 * @Description: TODO
 	 * @param urlString
 	 */
 	private void uploadImage(String urlString) {
-
 	}
-
 	private void RequestGetMethod(String urlString) {
+		Log.e("Request", urlString);
 		IdentityHashMap<String, String> params = mRequestData.getParams();
 		if ((null != params) && (params.size() > 0)) {
 			urlString += "?";
@@ -251,8 +246,8 @@ public class RequestTask implements Runnable {
 			sendResponseMessage(msg);
 		}
 	}
-
 	private void RequestDeleteMethod(String urlString) {
+		Log.e("Request", urlString);
 		IdentityHashMap<String, String> params = mRequestData.getParams();
 		if ((null != params) && (params.size() > 0)) {
 			urlString += "?";
@@ -323,8 +318,8 @@ public class RequestTask implements Runnable {
 			sendResponseMessage(msg);
 		}
 	}
-
 	private void RequestPutMethod(String urlString) throws UnsupportedEncodingException {
+		Log.e("Request", urlString);
 		IdentityHashMap<String, String> params = mRequestData.getParams();
 		HttpPut httpPut = new HttpPut(urlString);
 		httpPut.setHeader("x-requested-with", "XMLHttpRequest");
@@ -353,7 +348,6 @@ public class RequestTask implements Runnable {
 				httpPut.setEntity(new StringEntity(mRequestData.getJSON(), "UTF-8"));
 			}
 			HttpResponse httpResponse = mHttpClient.execute(httpPut);
-
 			int responseCode = httpResponse.getStatusLine().getStatusCode();
 			if ((responseCode > 199) && (responseCode < 400)) {
 				if (!mStopRunning && mRequestData.getSaveSession()) {
@@ -409,8 +403,8 @@ public class RequestTask implements Runnable {
 			sendResponseMessage(msg);
 		}
 	}
-
 	private void RequestPostMethod(String urlString) throws UnsupportedEncodingException {
+		Log.e("Request", urlString);
 		IdentityHashMap<String, String> params = mRequestData.getParams();
 		HttpPost httpPost = new HttpPost(urlString);
 		httpPost.setHeader("x-requested-with", "XMLHttpRequest");
@@ -439,7 +433,6 @@ public class RequestTask implements Runnable {
 				httpPost.setEntity(new StringEntity(mRequestData.getJSON(), "UTF-8"));
 			}
 			HttpResponse httpResponse = mHttpClient.execute(httpPost);
-
 			int responseCode = httpResponse.getStatusLine().getStatusCode();
 			if ((responseCode > 199) && (responseCode < 400)) {
 				if (!mStopRunning && mRequestData.getSaveSession()) {
@@ -495,13 +488,10 @@ public class RequestTask implements Runnable {
 			sendResponseMessage(msg);
 		}
 	}
-
 	private void upLoadRequestPostMethod(String urlString) {
 		HttpEntity entityWhole;
 		org.apache.http.entity.mime.MultipartEntity mpEntity = null;
-
 		mpEntity = new org.apache.http.entity.mime.MultipartEntity();
-
 		HttpPost httpPost = new HttpPost(urlString);
 		httpPost.setHeader("x-requested-with", "XMLHttpRequest");
 		httpPost.setHeader("Content-Type", "multipart/form-data");
@@ -510,7 +500,6 @@ public class RequestTask implements Runnable {
 		httpPost.setHeader("User-Agent",
 				"Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36");
 		httpPost.setHeader("Access-Control-Allow-Credentials", "true");
-
 		try {
 			if (mRequestData.getmAttPath() != null && !"".equals(mRequestData.getmAttPath().trim())
 					&& mRequestData.getmBitmap() == null) {
@@ -522,12 +511,9 @@ public class RequestTask implements Runnable {
 				 * e.printStackTrace(); } } }
 				 */
 				FileBody file = new FileBody(new File(mRequestData.getmAttPath()), "image/jpeg", "utf8");
-
 				// FormBodyPart body = new FormBodyPart("fileToUpload", file);
 				mpEntity.addPart("file", file);
-
 				httpPost.setEntity(mpEntity);
-
 			} else if (mRequestData.getmAttPath() == null && mRequestData.getmBitmap() != null) {
 				Bitmap bitmap = mRequestData.getmBitmap();
 				ByteArrayOutputStream bao = new ByteArrayOutputStream();
@@ -583,7 +569,6 @@ public class RequestTask implements Runnable {
 			sendResponseMessage(msg);
 		}
 	}
-
 	private void downloadFile(InputStream is, int responseCode) {
 		int fileSize = 0;
 		try {
@@ -649,7 +634,6 @@ public class RequestTask implements Runnable {
 		msg.setData(null);
 		sendResponseMessage(msg);
 	}
-
 	private void sendProgressMessage(ProgressMessage msg) {
 		Message hadnelMsg = mRevedHander.obtainMessage();
 		Bundle bund = new Bundle();
@@ -658,7 +642,6 @@ public class RequestTask implements Runnable {
 		hadnelMsg.setData(bund);
 		hadnelMsg.sendToTarget();
 	}
-
 	private void sendResponseMessage(ResponseMessage msg) {
 		Message hadnelMsg = mRevedHander.obtainMessage();
 		Bundle bund = new Bundle();
@@ -667,7 +650,6 @@ public class RequestTask implements Runnable {
 		hadnelMsg.setData(bund);
 		hadnelMsg.sendToTarget();
 	}
-
 	private DefaultHttpClient getHttpClient(RequestAdapter data) {
 		try {
 			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -702,12 +684,10 @@ public class RequestTask implements Runnable {
 				public java.security.cert.X509Certificate[] getAcceptedIssuers() {
 					return null;
 				}
-
 				@Override
 				public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType)
 						throws java.security.cert.CertificateException {
 				}
-
 				@Override
 				public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType)
 						throws java.security.cert.CertificateException {
@@ -715,13 +695,11 @@ public class RequestTask implements Runnable {
 			};
 			sslContext.init(null, new TrustManager[] { tm }, null);
 		}
-
 		@Override
 		public Socket createSocket(Socket socket, String host, int port, boolean autoClose) throws IOException,
 				UnknownHostException {
 			return sslContext.getSocketFactory().createSocket(socket, host, port, autoClose);
 		}
-
 		@Override
 		public Socket createSocket() throws IOException {
 			return sslContext.getSocketFactory().createSocket();
@@ -758,7 +736,6 @@ public class RequestTask implements Runnable {
 		}
 		mCookieStore = cookie;
 	}
-
 	public static void setmCookieStore(CookieStore mCookieStore) {
 		RequestTask.mCookieStore = mCookieStore;
 	}

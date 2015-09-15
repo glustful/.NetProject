@@ -81,7 +81,7 @@ public class ProductGridViewAdapter extends BaseAdapter {
 		//判断图片链接是否存在，不存在的时候使用默认图片
 		String url;
 		if (datas.get(position).optString("MainImg") == null || datas.get(position).optString("MainImg").equals("null")) {
-			url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
+			url = "http://iyookee.cn/modules/Index/static/image/index/activity4_c37e838.png";
 		} else {
 			url = datas.get(position).optString("MainImg");
 		}
@@ -96,7 +96,7 @@ public class ProductGridViewAdapter extends BaseAdapter {
 		productityViewHandler.productityBeforePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 		//加载图片
 		productityViewHandler.productityPhotoImageView.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+				LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 		productityViewHandler.productityPhotoImageView.setTag(url);
 		ImageLoader.getInstance().displayImage(url, productityViewHandler.productityPhotoImageView,
 				MyApplication.getOptions(), MyApplication.getLoadingListener());

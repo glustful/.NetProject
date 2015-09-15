@@ -64,10 +64,11 @@ public class ProductListViewAdapter extends BaseAdapter {
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.item_product_list, null);
 			productViewHandler.initViewHandler(convertView);
 			//###############################################################################
-			//                      如下的代码完成对视图和数据的绑定
+			//                      如下的代码完成对视图和数据的绑定,图片API暂时不可用
 			//###############################################################################
-			String url = datas.get(position).optString("MainImg",
-					"http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg");
+			/*String url = datas.get(position).optString("MainImg",
+					"http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg");*/
+			String url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
 			productViewHandler.productPhotoImageView.setTag(url);
 			ImageLoader.getInstance().displayImage(url, productViewHandler.productPhotoImageView,
 					MyApplication.getOptions(), MyApplication.getLoadingListener());

@@ -152,8 +152,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="10sp" />
         </RelativeLayout>
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
 
         <com.yoopoon.market.view.NoScrollGridView
             android:id="@+id/gridview_commodity"
@@ -166,8 +164,7 @@
             android:horizontalSpacing="5dp"
             android:numColumns="2"
             android:padding="5dp"
-            android:verticalSpacing="5dp" >
-        </com.yoopoon.market.view.NoScrollGridView>
+            android:verticalSpacing="5dp" />
     </LinearLayout>
 
 </ScrollView>

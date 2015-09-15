@@ -44,6 +44,7 @@ import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.ResponseData.ResultState;
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
+import com.yoopoon.market.view.ExpandableHeightGridView;
 import com.yoopoon.market.view.NoScrollGridView;
 import com.yoopoon.view.adapter.ProductGridViewAdapter;
 
