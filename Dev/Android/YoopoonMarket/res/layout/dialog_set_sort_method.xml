@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#145895"
+        android:gravity="center"
+        android:text="选择排序方式"
+        android:textColor="@color/white"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/btn_sort_by_price_form_lower"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="按照低价到高价排序"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#dddddd" />
+
+    <Button
+        android:id="@+id/btn_sort_by_price_from_higher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="按照高价到低价排序"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#dddddd" />
+
+    <Button
+        android:id="@+id/btn_sort_by_sales_volume_from_lower"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="按照最低到最高销量排序"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#dddddd" />
+
+    <Button
+        android:id="@+id/btn_sort_by_sales_volume_from_higher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="按照最高到最低销量排序"
+        android:textSize="15sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#E7E7E7"
+        android:gravity="center_vertical" >
+
+        <Button
+            android:id="@+id/btn_reset_sort_method"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/rounded_orange_background"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="重置排序"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_cancel_sort_method"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounded_grey_background"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="取消"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+</LinearLayout>

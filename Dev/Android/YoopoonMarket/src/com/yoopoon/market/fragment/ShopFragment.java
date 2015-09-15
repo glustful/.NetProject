@@ -26,7 +26,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,6 +41,7 @@ import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.ResponseData.ResultState;
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
+import com.yoopoon.market.view.NoScrollGridView;
 import com.yoopoon.view.adapter.ProductGridViewAdapter;
 
 public class ShopFragment extends Fragment {
@@ -50,7 +50,7 @@ public class ShopFragment extends Fragment {
 	private YoopoonServiceController serviceController;
 	private View rootView;
 	private ArrayList<String> imgs; // 存储顶端的广告图片地址
-	private GridView commodityGridView;
+	private NoScrollGridView commodityGridView;
 	private ProductGridViewAdapter mProductGridViewAdapter;
 	private TextView beforePriceTextView; // 折扣前价格
 	private TextView burstPackageTextView;
@@ -81,7 +81,10 @@ public class ShopFragment extends Fragment {
 			burstPackageImageView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					Bundle bundle = new Bundle();
+					bundle.putString("productId", "1");
 					Intent intent = new Intent(mContext, ProductDetailActivity_.class);
+					intent.putExtras(bundle);
 					mContext.startActivity(intent);
 				}
 			});
@@ -109,7 +112,7 @@ public class ShopFragment extends Fragment {
 			// ###############################################################################
 			mADController = new ADController(mContext);
 			serviceController = new YoopoonServiceController(mContext);
-			commodityGridView = (GridView) rootView.findViewById(R.id.gridview_commodity);
+			commodityGridView = (NoScrollGridView) rootView.findViewById(R.id.gridview_commodity);
 			// 测试用数据
 			ArrayList<JSONObject> arrayList = new ArrayList<JSONObject>();
 			for (int i = 0; i < 10; i++) {
@@ -123,6 +126,10 @@ public class ShopFragment extends Fragment {
 					e.printStackTrace();
 				}
 			}
+			/*
+			 * mProductGridViewAdapter = new ProductGridViewAdapter(mContext, arrayList);
+			 * commodityGridView.setAdapter(mProductGridViewAdapter);
+			 */// 对Fragment_shop中的视图控件初始化和设置
 			/*
 			 * mProductGridViewAdapter = new ProductGridViewAdapter(mContext, arrayList);
 			 * commodityGridView.setAdapter(mProductGridViewAdapter);
@@ -205,6 +212,7 @@ public class ShopFragment extends Fragment {
 
 	private void requestProduct() {
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONArray jsonArray;

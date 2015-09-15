@@ -33,7 +33,7 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.MyApplication;
-import com.yoopoon.market.ProductDetailActivity;
+
 import com.yoopoon.market.ProductDetailActivity_;
 import com.yoopoon.market.R;
 
