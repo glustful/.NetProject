@@ -24,7 +24,7 @@ app.controller('addchildmenulistCtr', ['$scope', '$http', '$state', 'list',
 				name: name,
 				key: value,
 				edittype: 'add',
-				fatherid:list,
+				fatherid:list
 			};
 			$http.post(apiurl + 'Menu/EditChildMenu', $scope.add).success(function(data) {
 				var msg = data.msg;

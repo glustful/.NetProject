@@ -1,3 +1,4 @@
+
 <link rel="stylesheet" href="page/service/css/service.css">
 
 <div class=" header bar" style="height:44px">
@@ -19,22 +20,28 @@
     <!-- 主页-->
   <ion-content class="scroll-content" no-header="true" style="top:44px">
        <ion-refresher pulling-text="下拉刷新" on-refresh="vm.doRefresh()"></ion-refresher>
-       <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" >
-  <ion-slide>
-    <div class="box">
-      <img src="http://img.iyookee.cn/20150619/20150619_100607_883_670.png">
-    </div>
-  </ion-slide>
-  <ion-slide>
-    <div class="box">
-      <img src="http://img.iyookee.cn/20150619/20150619_100607_883_670.png">
-    </div>
-  </ion-slide>
-  <ion-slide>
-    <div class="box">
-      <img src="http://img.iyookee.cn/20150714/20150714_172952_955_22.jpg">
-    </div>
-  </ion-slide>
+       <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" ng-if="content">
+           <ion-slide ng-repeat="item in content">
+               <div class="box">
+               <img ng-if="item" ng-src="http://img.iyookee.cn/{{item.TitleImg}}" class="img-full" >
+                   <!--{{slide.TitleImg}}-->
+               </div>
+           </ion-slide>
+  <!--<ion-slide>-->
+    <!--<div class="box">-->
+      <!--<img src="http://img.iyookee.cn/20150619/20150619_100607_883_670.png">-->
+    <!--</div>-->
+  <!--</ion-slide>-->
+  <!--<ion-slide>-->
+    <!--<div class="box">-->
+      <!--<img src="http://img.iyookee.cn/20150619/20150619_100607_883_670.png">-->
+    <!--</div>-->
+  <!--</ion-slide>-->
+  <!--<ion-slide>-->
+    <!--<div class="box">-->
+      <!--<img src="http://img.iyookee.cn/20150714/20150714_172952_955_22.jpg">-->
+    <!--</div>-->
+  <!--</ion-slide>-->
 </ion-slide-box>
     <!-- ion-infinite-scroll 上拉加载数据指令 distance默认1% nf-if的值为false时，就禁止执行on-infinite  -->
     <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="1%" ></ion-infinite-scroll>
@@ -63,70 +70,74 @@
                  <h4 class="title p-red font-12"><strong>| 爆款套餐</strong>&nbsp;| 省到不行</h4>
              </div>
              <div class="item item-image">
-                <img src="img/product1.png" class="f-show" ng-click="go('index.html#/page/shopping/product-detail')">
+                <img ng-src="http://img.iyookee.cn/{{list.MainImg}}" class="f-show" ng-click="go('index.html#/page/shopping/product-detail')">
                  <div class="p-location">
-                     <div class="p-invisible">5281人已抢购</div>
+                     <div class="p-invisible">{{list.Owner}}人已抢购</div>
                  </div>
                  <div class="activity padding text-left" >
-                     <div class="color-white">电视狗套餐</div>
-                     <p><span class="p-price">RMB 68</span>/<del class="color-white">折扣前128</del></p>
+                     <div class="color-white">{{list.Name}}</div>
+                     <p><span class="p-price" style="font-size: 0.5em">RMB{{list.NewPrice}}</span>/<del style="font-size: 2px;" class="color-white">折扣前{{list.Price}}</del></p>
                      <i class="icon icon-gouwuche shop-cart" ng-click="go('index.html#/page/car')"></i><br>
                      <button class=" energized-bg none-border button-size" ng-click="go('index.html#/page/car/order')">立即购买</button>
 
                  </div>
              </div>
-             <div class="row">
-                 <div class="col p-relative" >
-                     <img src="img/product2.png" ng-click="go('index.html#/page/shopping/product-detail')">
-                     <div class="s-location">
-                         <p class="p-invisible">5281人已抢购</p>
+             <ul>
+                 <li style="width:50%;float:left" ng-repeat="row in items">
+                     <div class="col p-relative" >
+                         <img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}" ng-click="go('index.html#/page/shopping/product-detail')">
+                         <div class="s-location">
+                             <p class="p-invisible">{{row.Owner}}人已抢购</p>
+                         </div>
+                         <div class="padding">
+                             <p>{{row.Name}}</p>
+                             <p><span class="p-price" style="font-size: 0.5em">RMB{{row.NewPrice}}</span>/<del style="font-size: 2px;">折扣前{{row.Price}}</del></p>
+                             <p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>
+                         </div>
                      </div>
-                     <div class="padding">
-                         <p>夜饿魔套餐</p>
-                         <p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>
-                         <p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>
-                     </div>
+                 </li>
+                 <!--<li style="width:50%;float:left" >-->
+                     <!--<div class="col p-relative">-->
+                         <!--<img src="img/product3.png">-->
+                         <!--<div class="s-location">-->
+                             <!--<p class="p-invisible">5281人已抢购</p>-->
+                         <!--</div>-->
+                         <!--<div class="padding">-->
+                             <!--<p>夜饿魔套餐</p>-->
+                             <!--<p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>-->
+                             <!--<p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>-->
+                         <!--</div>-->
+                     <!--</div>-->
+                 <!--</li>-->
+             </ul>
 
-                 </div>
-                 <div class="col p-relative">
-                     <img src="img/product3.png">
-                     <div class="s-location">
-                         <p class="p-invisible">5281人已抢购</p>
-                     </div>
-                     <div class="padding">
-                         <p>夜饿魔套餐</p>
-                         <p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>
-                         <p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>
-                     </div>
-                 </div>
-             </div>
-             <div class="row">
-                 <div class="col p-relative" >
-                     <img src="img/product2.png" ng-click="go('index.html#/page/shopping/product-detail')">
-                     <div class="s-location">
-                         <p class="p-invisible">5281人已抢购</p>
-                     </div>
-                     <div class="padding">
-                         <p>夜饿魔套餐</p>
-                         <p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>
-                         <p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>
-                     </div>
+             <!--<div class="row">-->
+                 <!--<div class="col p-relative" >-->
+                     <!--<img src="img/product2.png" ng-click="go('index.html#/page/shopping/product-detail')">-->
+                     <!--<div class="s-location">-->
+                         <!--<p class="p-invisible">5281人已抢购</p>-->
+                     <!--</div>-->
+                     <!--<div class="padding">-->
+                         <!--<p>夜饿魔套餐</p>-->
+                         <!--<p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>-->
+                         <!--<p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>-->
+                     <!--</div>-->
 
-                 </div>
-                 <div class="col p-relative">
-                     <img src="img/product3.png">
-                     <div class="s-location">
-                         <p class="p-invisible">5281人已抢购</p>
-                     </div>
-                     <div class="padding">
-                         <p>夜饿魔套餐</p>
-                         <p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>
-                         <p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>
-                     </div>
-                 </div>
-             </div>
+                 <!--</div>-->
+                 <!--<div class="col p-relative">-->
+                     <!--<img src="img/product3.png">-->
+                     <!--<div class="s-location">-->
+                         <!--<p class="p-invisible">5281人已抢购</p>-->
+                     <!--</div>-->
+                     <!--<div class="padding">-->
+                         <!--<p>夜饿魔套餐</p>-->
+                         <!--<p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>-->
+                         <!--<p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>-->
+                     <!--</div>-->
+                 <!--</div>-->
+             <!--</div>-->
          </div>
-      <ion-infinite-scroll on-infinite="load_more();">
+      <ion-infinite-scroll ng-if="!over" on-infinite="load_more();">
       </ion-infinite-scroll>
   </ion-content>
 

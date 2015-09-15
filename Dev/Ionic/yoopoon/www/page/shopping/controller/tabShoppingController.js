@@ -1,23 +1,87 @@
 /**
  * Created by Administrator on 2015/9/7.
  */
-app.controller('TabShoppingCtrl',['$http','$scope',function($http,$scope){
-    //Ò³ÃæÌø×ª
+
+app.controller('TabShoppingCtrl',['$http','$scope','$timeout',function($http,$scope,$timeout){
+    //Ò³ï¿½ï¿½ï¿½ï¿½×ª
     $scope.go=function(state){
         window.location.href=state;
     }
 
-//ÏòÏÂ¹ö¶¯Ë¢ÐÂ
+//ï¿½ï¿½ï¿½Â¹ï¿½ï¿½ï¿½Ë¢ï¿½ï¿½
+
+    $scope.Condition = {
+        IsDescending:true,
+        OrderBy:'OrderById',
+        IsRecommend:'1'
+        //ProductId:''
+    };
+    var getProductList=function() {
+        $http.get('http://localhost:50597/api/CommunityProduct/Get', {
+            params: $scope.Condition,
+            'withCredentials': true
+        }).success(function (data1) {
+            $scope.list = data1.List[0];
+        })
+    }
+    getProductList();
+    $scope.getList=getProductList;
+
+
+
+
     $scope.items = [];
-    var base = 0;
+    $scope.searchCondition = {
+        IsDescending:true,
+        OrderBy:'OrderByAddtime',
+        Page:1,
+        PageCount:6
+        //ProductId:''
+    };
+    var getList=function() {
+        $http.get('http://localhost:50597/api/CommunityProduct/Get', {
+            params: $scope.searchCondition,
+            'withCredentials': true
+        }).success(function (data) {
+           // $scope.product = data.List;
+          //  items = data.List;
+            if(data.List!="") {
+                $scope.items = data.List;
+            }
+        })
+    }
+    getList();
+
+
+//    æ»šåŠ¨åˆ·æ–°
     $scope.load_more = function(){
         $timeout(function(){
-            for(var i=0;i<10;i++,base++)
-                $scope.items.push(["item ",base].join(""));
+            $scope.searchCondition.Page+=1;
+            $http.get('http://localhost:50597/api/CommunityProduct/Get', {
+                params: $scope.searchCondition,
+                'withCredentials': true
+            }).success(function (data) {
+                // $scope.product = data.List;
+                //  items = data.List;
+                if(data.List!="") {
+                    for (var i = 0; i < data.List.length; i++) {
+                        $scope.items.push(data.List[i]);
+
+                    }
+                    if($scope.items.length==data.TotalCount){
+                        $scope.$broadcast("scroll.infiniteScrollComplete");
+                    }
+                }
+            })
             $scope.$broadcast("scroll.infiniteScrollComplete");
-        },500);
+        },1000);
     };
 
+
+    $scope.channelName='banner';
+    $http.get('http://localhost:50597/api/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
+        $scope.content=data;
+    });
 
 }]);
 

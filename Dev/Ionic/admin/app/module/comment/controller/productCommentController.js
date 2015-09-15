@@ -5,9 +5,7 @@ angular.module("app").controller('productCommentController',['$http','$scope','$
     $scope.searchCondition = {
         Page: 1,
         PageCount:'10'
-
         //ProductId:''
-
     };
     //查询所有
     var getCommentList=function() {
