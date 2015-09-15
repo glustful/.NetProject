@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Community.Entity.Model.Category;
 using Community.Entity.Model.Product;
 using Community.Entity.Model.ProductDetail;
 using Community.Service.Category;
@@ -100,8 +101,33 @@ namespace Zerg.Controllers.Community
         /// <param name="condition">查询条件</param>
         /// <returns>商品列表</returns>
         public HttpResponseMessage Get([FromUri]ProductSearchCondition condition)
-		{
-			var model = _productService.GetProductsByCondition(condition).Select(c=>new ProductModel
+        {
+            var con = new ProductSearchCondition
+            {
+                Page = condition.Page,
+                PageCount = condition.PageCount,
+               
+            };
+            if (condition.CategoryId!=0 && condition.CategoryId!=null)
+            {
+                var category = _categoryService.GetCategoryById(Convert.ToInt32(condition.CategoryId));
+                if (category.Father.Father == null)
+                {
+                    var firstOrDefault = _categoryService.GetCategorysBySuperFather(category.Id).FirstOrDefault();
+                    if (firstOrDefault != null)
+                        con.CategoryId = firstOrDefault.Id;
+                }
+                else
+                {
+                    con.CategoryId = condition.CategoryId;
+                }
+             //condition.CategoryId 这里传得是一个二级分类 取他下面的子类的默认第一个
+            //var category = _categoryService.GetCategorysBySuperFather(Convert.ToInt32(condition.CategoryId)).FirstOrDefault();
+                
+            //con.CategoryId = category.Id;
+            }
+                
+            var model = _productService.GetProductsByCondition(con).Select(c => new ProductModel
 			{
 				Id = c.Id,
 				CategoryId = c.Category.Id,
@@ -124,8 +150,8 @@ namespace Zerg.Controllers.Community
 //				Comments = c.Comments,
 //				Parameters = c.Parameters,
 			}).ToList();
-            var totalCount = _productService.GetProductCount(condition);
-            return PageHelper.toJson(new { List = model, Condition = condition, TotalCount = totalCount });
+            var totalCount = _productService.GetProductCount(con);
+            return PageHelper.toJson(new { List = model, Condition = con, TotalCount = totalCount });
 		}
         /// <summary>
         /// 添加商品

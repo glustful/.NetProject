@@ -1,0 +1,24 @@
+﻿<div><h1>编辑信息</h1></div>
+<div class="div-body" ng-controller="AreaEditCtr">
+    <div style="padding:50px 50px 10px;">
+        <form class="form-horizontal" role="form" name="form" enctype="multipart/form-data">
+                <div class="input-group-sm">
+                    <span class="input-group-addon">城市编码</span>
+                    <input type="text" class="form-control" ng-model="list.Codeid" id="Codeid" name="Codeid" />
+                </div>
+                <div class="input-group-sm">
+                    <span class="input-group-addon">城市名称</span>
+                    <input type="text" class="form-control" ng-model="list.Name" id="Name" name="Name"  />
+                </div>
+                <div class="input-group-sm">
+                    <span class="input-group-addon">城市父级编号</span>
+                    <input type="text" class="form-control" ng-model="list.Parent.Id" id="Parent.Id" name="Parent.Id" />
+                </div>
+
+            <br />
+            <div class="text-center">
+                <button id="btn_ok" type="submit" class="btn btn-primary" ng-click="Create()">保存</button>
+            </div>
+        </form>
+    </div>
+</div>
