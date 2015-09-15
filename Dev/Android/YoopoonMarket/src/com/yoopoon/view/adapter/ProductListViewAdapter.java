@@ -64,30 +64,29 @@ public class ProductListViewAdapter extends BaseAdapter {
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.item_product_list, null);
 			productViewHandler.initViewHandler(convertView);
 			//###############################################################################
-			//                      如下的代码只做API出来前的测试用途
+			//                      如下的代码完成对视图和数据的绑定
 			//###############################################################################
-			String url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
+			String url = datas.get(position).optString("MainImg",
+					"http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg");
 			productViewHandler.productPhotoImageView.setTag(url);
 			ImageLoader.getInstance().displayImage(url, productViewHandler.productPhotoImageView,
 					MyApplication.getOptions(), MyApplication.getLoadingListener());
-			productViewHandler.productTitleTextView.setText(datas.get(position).optString("productTitle", ""));
-			productViewHandler.productSubtitleTextView.setText(datas.get(position).optString("productSubtitle", ""));
-			productViewHandler.productAdvertisemenTextView.setText(datas.get(position).optString(
-					"productAdvertisement", ""));
-			productViewHandler.productPricTextView.setText(datas.get(position).optString("productPrict", ""));
-			productViewHandler.productSalesValuemtTextView.setText(datas.get(position).optString("productSalesValuem",
-					""));
+			productViewHandler.productTitleTextView.setText(datas.get(position).optString("Name", ""));
+			productViewHandler.productSubtitleTextView.setText(datas.get(position).optString("Subtitte", ""));
+			productViewHandler.productAdvertisemenTextView.setText(datas.get(position).optString("Ad1", ""));
+			productViewHandler.productPricTextView.setText(datas.get(position).optString("Price", ""));
+			productViewHandler.productSalesValuemtTextView.setText(datas.get(position).optString("Owner", ""));
 			convertView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					//跳转到产品详情
-					Intent intent = new Intent(mContext, ProductDetailActivity_.class);
-					mContext.startActivity(intent);
+					/*Intent intent = new Intent(mContext, ProductDetailActivity_.class);
+					mContext.startActivity(intent);*/
 					Toast.makeText(mContext, "Testing" + position, Toast.LENGTH_SHORT).show();
 				}
 			});
 			//###############################################################################
-			//                      如上的代码只做API出来前的测试用途
+			//                      如上的代码完成对视图和数据的绑定
 			//###############################################################################
 			convertView.setTag(productViewHandler);
 		}

@@ -13,21 +13,32 @@
 package com.yoopoon.market;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -37,6 +48,7 @@ import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
+import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
 import com.yoopoon.view.adapter.ProductListViewAdapter;
 
 /**
@@ -46,15 +58,26 @@ import com.yoopoon.view.adapter.ProductListViewAdapter;
  * @date: 2015年9月10日 下午2:16:15
  */
 @EActivity(R.layout.acitvity_product_list)
-public class ProductList extends MainActionBarActivity {
+public class ProductList extends MainActionBarActivity implements OnClickListener {
+	private Dialog screenPriceDialog, sortDialog;
 	private Context mContext;
 	private ListView productListView;
 	private ProductListViewAdapter mProductListViewAdapter;
-	private ArrayList<JSONObject> jsonArrayList;
+	private Button confirmButton, cancelButton, resetPriceButton;
+	private EditText productBeginPriceEditText, productEndPriceEditText;
+	private Button resetSortButton, cancelSortButton;
+	//存储传送到服务器的参数
+	//配置排序的四个按钮
+	private Button sortByPriceFromLowerButton, sortByPriceFromHigherButton, sortBySalesVolumeFromLowerButton,
+			sortBySalesVolumeFromHigherButton;
 	@ViewById
 	LinearLayout linearLayout_product_list;
 	@ViewById
 	PullToRefreshListView ptr_listview_product_list;
+	@ViewById(R.id.btn_screen_product_list)
+	Button screenProductButton;
+	@ViewById(R.id.btn_setting_sort_method)
+	Button settingSortMethodButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +91,7 @@ public class ProductList extends MainActionBarActivity {
 		backButton.setVisibility(View.VISIBLE);
 		Bundle bundle = getIntent().getExtras();
 		String titleString = bundle.getString("productClassification");
+		String productClassificationId = bundle.getString("classification");
 		titleButton.setText(titleString);
 		backButton.setText("后退");
 		//测试使用
@@ -81,24 +105,55 @@ public class ProductList extends MainActionBarActivity {
 		ptr_listview_product_list.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
 		ptr_listview_product_list.setOnRefreshListener(new RefreshListener());
 		productListView = ptr_listview_product_list.getRefreshableView();
-		jsonArrayList = new ArrayList<JSONObject>();
-		for (int i = 0; i < 20; i++) {
-			JSONObject jsonObject = new JSONObject();
-			try {
-				jsonObject.put("productTitle", "米糕" + i);
-				jsonObject.put("productSubtitle", "云南雪糕" + i);
-				jsonObject.put("productAdvertisement", "30免运费" + i);
-				jsonObject.put("productPrict", "￥80.0" + i);
-				jsonObject.put("productSalesValuem", "100" + i);
-			} catch (JSONException e) {
-				e.printStackTrace();
+		//筛选按钮和事件设置
+		screenProductButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+				View screenPriceView = View.inflate(mContext, R.layout.dialog_set_price, null);
+				confirmButton = (Button) screenPriceView.findViewById(R.id.btn_confirm);
+				cancelButton = (Button) screenPriceView.findViewById(R.id.btn_cancel);
+				resetPriceButton = (Button) screenPriceView.findViewById(R.id.btn_reset_price_setting);
+				productBeginPriceEditText = (EditText) screenPriceView.findViewById(R.id.et_price_begin);
+				productEndPriceEditText = (EditText) screenPriceView.findViewById(R.id.et_price_end);
+				confirmButton.setOnClickListener(ProductList.this);
+				cancelButton.setOnClickListener(ProductList.this);
+				resetPriceButton.setOnClickListener(ProductList.this);
+				builder.setView(screenPriceView);
+				screenPriceDialog = builder.show();
 			}
-			jsonArrayList.add(jsonObject);
-		}
-		 
+		});
+		//设置综合排序方式和重置排序
+		settingSortMethodButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+				View sortProductView = View.inflate(mContext, R.layout.dialog_set_sort_method, null);
+				/*private Button resetSortButton, cancelSortButton;
+				private TextView sortByPriceTextView, sortBySalesVolumeTextView;*/
+				//视图控件获取和初始化
+				resetSortButton = (Button) sortProductView.findViewById(R.id.btn_reset_sort_method);
+				cancelSortButton = (Button) sortProductView.findViewById(R.id.btn_cancel_sort_method);
+				//初始化排序控件
+				sortByPriceFromLowerButton = (Button) sortProductView.findViewById(R.id.btn_sort_by_price_form_lower);
+				sortByPriceFromHigherButton = (Button) sortProductView.findViewById(R.id.btn_sort_by_price_from_higher);
+				sortBySalesVolumeFromLowerButton = (Button) sortProductView
+						.findViewById(R.id.btn_sort_by_sales_volume_from_lower);
+				sortBySalesVolumeFromHigherButton = (Button) sortProductView
+						.findViewById(R.id.btn_sort_by_sales_volume_from_higher);
+				//添加点击事件
+				resetSortButton.setOnClickListener(ProductList.this);
+				cancelSortButton.setOnClickListener(ProductList.this);
+				//设置排序四种方法事件
+				sortByPriceFromLowerButton.setOnClickListener(ProductList.this);
+				sortByPriceFromHigherButton.setOnClickListener(ProductList.this);
+				sortBySalesVolumeFromLowerButton.setOnClickListener(ProductList.this);
+				sortBySalesVolumeFromHigherButton.setOnClickListener(ProductList.this);
+				builder.setView(sortProductView);
+				sortDialog = builder.show();
+			}
+		});
 		requsetProductList();
-		mProductListViewAdapter = new ProductListViewAdapter(mContext, jsonArrayList);
-		productListView.setAdapter(mProductListViewAdapter);
 	}
 
 	/**
@@ -134,17 +189,86 @@ public class ProductList extends MainActionBarActivity {
 	}
 	/**
 	 * @Title: requsetProductList
-	 * @Description: 获取商品列表
+	 * @Description: 请求网络数据，当Activity启动的时候加载产品
 	 */
 	private void requsetProductList() {
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
-				Log.e("111111", data.toString());
+				if (data.getMRootData() != null) {
+					JSONArray array = data.getMRootData().optJSONArray("List");
+					mProductListViewAdapter = new ProductListViewAdapter(mContext,
+							JSONArrayConvertToArrayList.convertToArrayList(array));
+					Log.e("2222222222222", JSONArrayConvertToArrayList.convertToArrayList(array).toString());
+					productListView.setAdapter(mProductListViewAdapter);
+				}
 			}
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).setRequestMethod(RequestMethod.eGet).notifyRequest();
+	}
+	/**
+	 * @Title: requsetProductList
+	 * @Description:设置参数，链接网络，货物商品列表
+	 * @param hashMap
+	 */
+	private void requsetProductList(HashMap<String, String> hashMap) {
+		new RequestAdapter() {
+			@Override
+			public void onReponse(ResponseData data) {
+				if (data.getMRootData() != null) {
+				}
+			}
+			@Override
+			public void onProgress(ProgressMessage msg) {
+			}
+		}.setUrl(getString(R.string.url_get_communityproduct)).setRequestMethod(RequestMethod.eGet).addParam(hashMap)
+				.notifyRequest();
+	}
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.btn_confirm:
+				if ((!TextUtils.isEmpty(productBeginPriceEditText.getText()))
+						&& (!TextUtils.isEmpty(productEndPriceEditText.getText()))) {
+					screenProductButton.setText(productBeginPriceEditText.getText() + "元 - "
+							+ productEndPriceEditText.getText() + "元");
+				}
+				screenPriceDialog.dismiss();
+				break;
+			case R.id.btn_cancel:
+				screenPriceDialog.dismiss();
+				break;
+			case R.id.btn_reset_price_setting:
+				screenProductButton.setText("筛选");
+				screenPriceDialog.dismiss();
+				break;
+			case R.id.btn_reset_sort_method:
+				settingSortMethodButton.setText("综合排序");
+				sortDialog.dismiss();
+				break;
+			case R.id.btn_cancel_sort_method:
+				sortDialog.dismiss();
+				break;
+			case R.id.btn_sort_by_price_form_lower://低价到高价
+				settingSortMethodButton.setText("低价到高价");
+				sortDialog.dismiss();
+				break;
+			case R.id.btn_sort_by_price_from_higher://高价到低价
+				settingSortMethodButton.setText("高价到低价");
+				sortDialog.dismiss();
+				break;
+			case R.id.btn_sort_by_sales_volume_from_lower://低销量到高销量
+				settingSortMethodButton.setText("低销量到高销量");
+				sortDialog.dismiss();
+				break;
+			case R.id.btn_sort_by_sales_volume_from_higher://高销量到低销量
+				settingSortMethodButton.setText("高销量到低销量");
+				sortDialog.dismiss();
+				break;
+			default:
+				break;
+		}
 	}
 }

@@ -35,13 +35,14 @@
             android:gravity="center" >
 
             <Button
-                android:id="@+id/sort_product_list"
+                android:id="@+id/btn_setting_sort_method"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:drawablePadding="0dp"
                 android:drawableRight="@drawable/black_down_arrow"
-                android:text="综合排序" />
+                android:text="综合排序"
+                android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -51,12 +52,13 @@
             android:gravity="center" >
 
             <Button
-                android:id="@+id/screen_product_list"
+                android:id="@+id/btn_screen_product_list"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:drawableRight="@drawable/black_down_arrow"
-                android:text="筛选" />
+                android:text="筛选"
+                android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -72,6 +74,5 @@
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"
         ptr:ptrAnimationStyle="flip" />
-
 
 </LinearLayout>

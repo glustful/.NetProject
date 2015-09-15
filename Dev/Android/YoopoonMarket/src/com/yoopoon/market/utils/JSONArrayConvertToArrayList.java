@@ -6,9 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class JSONArrayConvertToArrayList {
-	private static ArrayList<JSONObject> jsonObjects = new ArrayList<JSONObject>();
-
 	public static ArrayList<JSONObject> convertToArrayList(JSONArray array) {
+		ArrayList<JSONObject> jsonObjects = new ArrayList<JSONObject>();
 		if (array == null) {
 			return null;
 		}
