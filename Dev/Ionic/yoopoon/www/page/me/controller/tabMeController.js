@@ -31,5 +31,21 @@ app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate) {
     comment.style.display="";
   }
 
+
+  //ÎÒµÄ¶©µ¥
+  $scope.tabIndex=1;
+  $scope.getOrderList1=function(){
+    $scope.tabIndex=1
+  }
+  $scope.getOrderList2=function(){
+    $scope.tabIndex=2
+  }
+  $scope.getOrderList3=function(){
+    $scope.tabIndex=3
+  }
+  $scope.getOrderList4=function(){
+    $scope.tabIndex=4
+  }
+
                });
 
