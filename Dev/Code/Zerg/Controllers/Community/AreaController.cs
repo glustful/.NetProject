@@ -73,8 +73,10 @@ namespace Zerg.Controllers.Community
                 Codeid = c.CodeId,
                 Adddate = c.AddDate,
                 Name = c.Name,
+                ParentName = c.Parent.Name,
             }).ToList();
-            return PageHelper.toJson(models);
+            var totalCount = _areaService.GetAreaCount(condition);
+            return PageHelper.toJson(new { List = models, Condition = condition, TotalCount = totalCount });
         }
         /// <summary>
         /// ÃÌº”–≈œ¢
