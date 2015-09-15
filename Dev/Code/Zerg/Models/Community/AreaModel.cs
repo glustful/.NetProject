@@ -30,7 +30,10 @@ namespace Zerg.Models.Community
         /// </summary>
         public AreaModel Parent { get; set; }
 
-
+        /// <summary>
+        /// 父级名称
+        /// </summary>
+        public string ParentName { get; set; }
 
         /// <summary>
         /// 区位名
