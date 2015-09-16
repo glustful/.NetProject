@@ -245,7 +245,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/product-list.html',
-                controller: 'ShoppongListCtrl'
+                controller: 'ShoppingListCtrl'
             }
         }
     })
