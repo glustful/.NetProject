@@ -51,13 +51,13 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeou
     //    页面跳转
     $scope.go=function(state){
         window.location.href=state;
-    }
+    };
 
 //    页面跳转到页脚导航
     $scope.goes=function(state) {
         $ionicHistory.clearHistory();
         window.location.href = state;
-
+    }
 //    搜索功能
         $scope.showSelect = false;
         $scope.isShow = false;
@@ -84,13 +84,13 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeou
 
 //    滚动刷新
         $scope.items = [];
-        var base = 0;
-        $scope.load_more = function () {
-            $timeout(function () {
-                for (var i = 0; i < 10; i++, base++)
-                    $scope.items.push(["item ", base].join(""));
-                $scope.$broadcast("scroll.infiniteScrollComplete");
-            }, 500);
+            var base = 0;
+            $scope.load_more = function () {
+                $timeout(function () {
+                    for (var i = 0; i < 10; i++, base++)
+                        $scope.items.push(["item ", base].join(""));
+                    $scope.$broadcast("scroll.infiniteScrollComplete");
+                }, 500);
         };
 
 //    选择清洗服务
@@ -138,5 +138,5 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeou
                     break;
             }
         }
-    }
-    });
+
+})

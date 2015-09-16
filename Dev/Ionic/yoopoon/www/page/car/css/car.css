@@ -51,6 +51,11 @@
     padding-left:  50px;
 }
 
+label{
+    background-color: #fff;
+    padding-bottom: 20px;
+    padding-right: 15px;
+}
 
 .submit{
     width: 100%;
@@ -59,7 +64,9 @@
     text-align: center;
     border-top: 1px solid #cecece;
     position: fixed;
-    bottom:0
+    bottom:0;
+    z-index: 100;
+    background-color: #fff;
 
 }
 .submit button{
