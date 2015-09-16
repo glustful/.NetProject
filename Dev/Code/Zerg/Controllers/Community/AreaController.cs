@@ -42,6 +42,8 @@ namespace Zerg.Controllers.Community
                         Codeid = entity.CodeId,
                         Adddate = entity.AddDate,
                         Name = entity.Name,
+                        //ParentName = entity.Parent.Name,
+                        Parent = entity.Parent == null ? null: new AreaModel { Id = entity.Parent.Id, Adddate = entity.Parent.AddDate, Name = entity.Parent.Name },
                     };
                     if (model.Parent != null)
                     {
@@ -67,13 +69,14 @@ namespace Zerg.Controllers.Community
         [HttpGet]
         public HttpResponseMessage Get([FromUri]AreaSearchCondition condition)
         {
-            var models = _areaService.GetAreasByCondition(condition).Select(c => new AreaModel
+            var models = _areaService.GetAreasByCondition(condition).ToList().Select(c => new AreaModel
             {
                 Id = c.Id,
                 Codeid = c.CodeId,
                 Adddate = c.AddDate,
                 Name = c.Name,
-                ParentName = c.Parent.Name,
+                //ParentName = c.Parent.Name,
+                Parent = c.Parent==null?null:new AreaModel { Id=c.Parent.Id,Adddate=c.Parent.AddDate,Name = c.Parent.Name }
             }).ToList();
             var totalCount = _areaService.GetAreaCount(condition);
             return PageHelper.toJson(new { List = models, Condition = condition, TotalCount = totalCount });
@@ -127,7 +130,8 @@ namespace Zerg.Controllers.Community
 
             entity.CodeId = model.Codeid;
             entity.AddDate = DateTime.Now;
-            //entity.Parent = ;
+            //var father = _areaService.GetAreasByCondition(new AreaSearchCondition { Name = model.ParentName }).FirstOrDefault();
+            //entity.Parent = father;
             entity.Name = model.Name;
             if (_areaService.Update(entity) != null)
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "ÐÞ¸Ä³É¹¦£¡")); ;
