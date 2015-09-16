@@ -28,7 +28,7 @@ $scope.test = function(){
     //region鍟嗗搧澶у浘鑾峰彇
     $scope.Condition = {
         IsDescending:true,
-        OrderBy:'OrderById',
+        OrderBy:'OrderByOwner',
         IsRecommend:'1'
         //ProductId:''
     };
@@ -50,7 +50,7 @@ $scope.test = function(){
         IsDescending:true,
         OrderBy:'OrderByAddtime',
         Page:1,
-        PageCount:10
+        PageCount:5
         //ProductId:''
     };
     var getList=function() {
@@ -91,8 +91,9 @@ $scope.test = function(){
                         $scope.items.push(data.List[i]);
                     }
                 }
-            })
-            $scope.$broadcast("scroll.infiniteScrollComplete");
+                $scope.$broadcast("scroll.infiniteScrollComplete");
+            });
+
         },1000)
     };
     //endregion
@@ -125,26 +126,11 @@ $scope.test = function(){
  //   });
     }]);
 app.controller('ShoppingListCtrl',['$http','$scope',function($http,$scope){
-    $scope.load_detail = function(){
- //for(var i=0;i<10;i++,base++)
-            //    $scope.items.push(["item ",base].join(""));
-           // alert("aaaaaaaaaa");
-            $http.get(SETTING.ApiUrl+"/ProductDetail/Get?id="+$stateParams.id,{
-                'withCredentials': true
-            }).success(function(data){
-                $scope.productDetail=data;
-            });
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-        },500);
- };
-
-
-
     //
     //region 获取商品列表
     $scope.sech={
         Page:1,
-        PageCount:10,
+        PageCount:5,
         IsDescending:true,
         OrderBy:'OrderByAddtime',
         CategoryId:3,
