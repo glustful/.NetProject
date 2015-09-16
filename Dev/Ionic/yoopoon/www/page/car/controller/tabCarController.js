@@ -96,6 +96,9 @@ app.controller('TabCarCtrl', function($scope, $ionicSlideBoxDelegate) {
     };
                });
 
+
+
+
 app.controller('CarDetailCtrl', function($scope, $stateParams) {
   
   $scope.chat = {
