@@ -5,10 +5,10 @@
 <ion-view hide-tabs="true">
     <div class="tabs-striped tabs-top tabs-background-light ">
         <div class="tabs" style="border-bottom:1px solid #eee;">
-            <span class="tab-item font-title" ng-class="{'active': tabIndex==1}" ng-click="getOrderList1()">待付款 <em ng-show="unpaidCount">{{ unpaidCount }}</em></span>
-            <span class="tab-item font-title" ng-class="{'active': tabIndex==2}" ng-click="getOrderList2()">待发货</span>
-            <span class="tab-item font-title" ng-class="{'active': tabIndex==3}" ng-click="getOrderList3()">待收货</span>
-            <span class="tab-item font-title" ng-class="{'active': tabIndex==4}" ng-click="getOrderList4()">待评价</span>
+            <span class="tab-item font-title" ng-class="{'active': tabIndex==1}" ng-click="getOrderList(1)">待付款 <em ng-show="unpaidCount">{{ unpaidCount }}</em></span>
+            <span class="tab-item font-title" ng-class="{'active': tabIndex==2}" ng-click="getOrderList(2)">待发货</span>
+            <span class="tab-item font-title" ng-class="{'active': tabIndex==3}" ng-click="getOrderList(3)">待收货</span>
+            <span class="tab-item font-title" ng-class="{'active': tabIndex==4}" ng-click="getOrderList(4)">待评价</span>
         </div>
     </div>
     <!-- 待发货-->

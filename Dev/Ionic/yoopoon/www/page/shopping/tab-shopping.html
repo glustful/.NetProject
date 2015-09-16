@@ -15,7 +15,7 @@
 </div>
 
 
-<ion-view view-title="优·购物" hide-tabs="false" hide-nav-bar="true">
+<ion-view view-title="优·购物" hide-tabs="true" hide-nav-bar="true">
     <!-- 主页-->
     <ion-content class="scroll-content" no-header="true" style="top:44px">
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefrsh()"></ion-refresher>
@@ -178,7 +178,7 @@
     <!--</ion-content>-->
 
 </ion-view>
-<ion-footer-bar>
+<ion-footer-bar ng-hide="true">
 <button class="button" ng-click="wxPay()">微信支付测试</button>
 <button class="button" ng-click="alipay()">支付宝支付测试</button>
 </ion-footer-bar>

@@ -11,12 +11,14 @@
                 <input type="text" class="form-control" ng-model="area.Name" id="Name" name="Name" placeholder="填入城市名称" />
             </div>
             <div class="input-group-sm">
-                <span class="input-group-addon">城市父级编号</span>
-                <input type="text" class="form-control" ng-model="area.Parentid" id="Parent_id" name="Parent_id" placeholder="填入城市父级编号" />
+                <span class="input-group-addon">父级城市</span>
+                <select class="form-control" name="province" ng-change="text_change()" ng-change="false" ng-model="data.province" ng-options="x.Id as x.Name for x in cities | filter:{Parent:null}"></select>                <select class="form-control" name="area" ng-change="show3()" ng-show="data.province&&isShow2"  ng-model="data.area" ng-options="x.Id as x.Name for x in cities | filter:{Parent:data.province}"></select>
+                <select class="form-control"  name="city" ng-show="data.area&&isShow3"  ng-model="data.city" ng-options="x.Id as x.Name for x in cities | filter:{Parent:data.area}"></select>
             </div>
             <br />
             <div class="text-center">
                 <button id="btn_ok" type="submit" class="btn btn-primary">添加</button>
+                <label>{{state}}</label>
             </div>
         </form>
     </div>
