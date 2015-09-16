@@ -1,11 +1,13 @@
 /**
  * Created by Administrator on 2015/9/7.
  */
-app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout',function($http,$scope,$stateParams,$timeout){
-
+app.controller('TabShoppingCtrl',['$http','$scope','$timeout',function($http,$scope,$timeout){
+$scope.test = function(){
+    alert(55);
+};
     $scope.go=function(state){
         window.location.href=state;
-    }
+    };
 
     //region商品大图获取
     $scope.Condition = {
@@ -20,8 +22,8 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout',fun
             'withCredentials': true
         }).success(function (data1) {
             $scope.list = data1.List[0];
-        })
-    }
+        });;
+    };
     getProductList();
     $scope.getList=getProductList;
 //endregion
@@ -40,17 +42,26 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout',fun
             params: $scope.searchCondition,
             'withCredentials': true
         }).success(function (data) {
-           // $scope.product = data.List;
-          //  items = data.List;
             if(data.List!="") {
                 $scope.items = data.List;
             }
-        })
-    }
+        });
+    };
     getList();
 //endregion
 
     //region    滚动刷新
+    //$scope.items = [];
+    //var base = 0;
+    //$scope.load_more = function(){
+    //    $timeout(function(){
+    //        for(var i=0;i<10;i++)
+    //            $scope.items.push(["item ",base].join(""));
+    //        $scope.$broadcast("scroll.infiniteScrollComplete");
+    //    },500);
+    //};
+
+
     $scope.load_more = function(){
         $timeout(function(){
             $scope.searchCondition.Page+=1;
@@ -58,8 +69,6 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout',fun
                 params: $scope.searchCondition,
                 'withCredentials': true
             }).success(function (data) {
-                // $scope.product = data.List;
-                //  items = data.List;
                 if(data.List!="") {
                     for (var i = 0; i < data.List.length; i++) {
                         $scope.items.push(data.List[i]);
@@ -67,8 +76,8 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout',fun
                 }
             })
             $scope.$broadcast("scroll.infiniteScrollComplete");
-        },1000);
- };
+        },1000)
+    };
     //endregion
 
     //region 轮播图片
