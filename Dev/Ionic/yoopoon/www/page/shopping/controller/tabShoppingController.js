@@ -12,6 +12,9 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
         });
     };
     $scope.alipay = function(){
+        var myDate = new Date();
+
+        var tradeNo = myDate.getTime();   
         var alipay = navigator.alipay;
   
         alipay.pay({
@@ -19,7 +22,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
             "subject" : "测试支付", //商品名称
             "body" : "测试支付宝支付", //商品详情
             "price" : "0.01", //金额，单位为RMB
-            "tradeNo" : "11111111111", //唯一订单号
+            "tradeNo" : tradeNo, //唯一订单号
             "timeout" : "30m", //超时设置
             "notifyUrl" : "http://www.baidu.com"
             }, function(result) {
@@ -27,13 +30,13 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
                     $ionicLoading.show({
                        template: "支付宝返回结果="+result,
                         noBackdrop: true,
-                        duration: 3000
+                        duration: 5000
                     });
             }, function(message) {
                  $ionicLoading.show({
                   template: "支付宝支付失败="+message,
                    noBackdrop: true,
-                  duration: 3000
+                  duration: 5000
                 });
                
             });
