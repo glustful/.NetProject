@@ -10,7 +10,7 @@
             'withCredentials': true  //跨域'
         }).success(function (data) {
             $scope.list = data.List;
-            $scope.sech.Page = data.Condition.PageCount;
+            $scope.sech = data.Condition;
             $scope.totalCount = data.TotalCount;
         });
     }
