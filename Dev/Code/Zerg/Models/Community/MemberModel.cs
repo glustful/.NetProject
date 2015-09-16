@@ -108,7 +108,33 @@ namespace Zerg.Models.Community
         /// </summary>
 		public DateTime UpdTime {get;set;}
 
+        public string UserId { get; set; }
+        /// <summary>
+        /// UC用户
+        /// </summary>
+        public string UserName { get; set; }
+        /// <summary>
+        /// UC密码
+        /// </summary>
+        public string Password { get; set; }
+        /// <summary>
+        /// 密码
+        /// </summary>
+        public string SecondPassword { get; set; }
+        /// <summary>
+        /// 注册时间
+        /// </summary>
+        public virtual DateTime Regtime { get; set; }
 
-
+        public bool ValidateModel(out string msg)
+        {
+            msg = "";
+            if (string.IsNullOrEmpty(UserName)) return false;
+            if (string.IsNullOrEmpty(Password)) return false;
+            if (string.IsNullOrEmpty(SecondPassword)) return false;
+            if (string.IsNullOrEmpty(Phone)) return false;
+         
+            return true;
+        }
 	}
 }

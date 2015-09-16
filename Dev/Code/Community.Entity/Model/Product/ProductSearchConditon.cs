@@ -27,7 +27,7 @@ namespace Community.Entity.Model.Product
 
 
 
-		public CategoryEntity[] Categorys { get; set; }
+		public CategoryEntity Categorys { get; set; }
         public int? CategoryId { get; set; }
 
 
@@ -106,6 +106,8 @@ namespace Community.Entity.Model.Product
 		OrderBySort,
 
 		OrderByAddtime,
+
+        OrderByOwner
 
 	}
 
