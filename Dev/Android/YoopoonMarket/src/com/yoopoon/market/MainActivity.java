@@ -76,12 +76,25 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	View searchLayout;
 	@ViewById(R.id.btn_select)
 	Button btn_select;
-	@ViewById(R.id.tv_firstserve)
-	TextView tv_first;
 	@ViewById(R.id.rightBtn)
 	Button btn_category;
 	@ViewById(R.id.ll_loading)
 	LinearLayout ll_loading;
+	// @ViewById(R.id.tv_shadow1)
+	// TextView tv_shadow1;
+	// @ViewById(R.id.rl_shadow2)
+	// View rl_shadow2;
+
+	// @Click(R.id.iv_iknow)
+	// void iKnow() {
+	// SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference),
+	// MODE_PRIVATE);
+	// Editor editor = sp.edit();
+	// editor.putBoolean("isFirst", false);
+	// editor.commit();
+	// tv_shadow1.setVisibility(View.GONE);
+	// rl_shadow2.setVisibility(View.GONE);
+	// }
 	List<Fragment> fragments = new ArrayList<Fragment>();
 	List<LinearLayout> lls = new ArrayList<LinearLayout>();
 	int checkedItem = 0;
@@ -107,6 +120,30 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		vp.setOnPageChangeListener(new MyPagerChangeListener());
 		requestArea();
 	}
+
+	// protected void onCreate(android.os.Bundle arg0) {
+	// super.onCreate(arg0);
+	// registerBroadcast();
+	// };
+	//
+	// void registerBroadcast() {
+	// IntentFilter shadowFilter = new IntentFilter("com.yoopoon.market.show_shadow");
+	// shadowFilter.addCategory(Intent.CATEGORY_DEFAULT);
+	// registerReceiver(receiver, shadowFilter);
+	// }
+	//
+	// BroadcastReceiver receiver = new BroadcastReceiver() {
+	//
+	//
+	// @Override
+	// public void onReceive(Context context, Intent intent) {
+	// String action = intent.getAction();
+	// if (action.equals("com.yoopoon.market.show_shadow")) {
+	// tv_shadow1.setVisibility(View.VISIBLE);
+	// rl_shadow2.setVisibility(View.VISIBLE);
+	// }
+	// }
+	// };
 
 	void requestArea() {
 		ll_loading.setVisibility(View.VISIBLE);
@@ -249,6 +286,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private class MyPagerChangeListener implements OnPageChangeListener {
+
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 			// TODO Auto-generated method stub
@@ -263,7 +301,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		public void onPageSelected(int arg0) {
 			onClick(lls.get(arg0));
 			searchLayout.setVisibility((arg0 > 1) ? View.GONE : View.VISIBLE);
-			tv_first.setVisibility((arg0 == 0) ? View.GONE : View.VISIBLE);
+			// if (arg0 != 1) {
+			// tv_shadow1.setVisibility(View.GONE);
+			// rl_shadow2.setVisibility(View.GONE);
+			// }
 		}
 	}
 
@@ -287,11 +328,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 	public void toServe(View v) {
 		vp.setCurrentItem(1);
-		showFirstTv(false);
-	}
-
-	public void showFirstTv(boolean shown) {
-		tv_first.setVisibility(shown ? View.VISIBLE : View.GONE);
 	}
 
 	@Override

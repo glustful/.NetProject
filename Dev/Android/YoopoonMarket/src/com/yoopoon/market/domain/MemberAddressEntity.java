@@ -1,25 +1,15 @@
-/**   
- * Copyright ? 2015 yoopoon. All rights reserved.
- * 
- * @Title: MemberAddressEntity.java 
- * @Project: YoopoonMarket
- * @Package: com.yoopoon.market.domain 
- * @Description: TODO
- * @author: guojunjun  
- * @updater: guojunjun 
- * @date: 2015-9-12 下午6:39:23 
- * @version: V1.0   
- */
 package com.yoopoon.market.domain;
 
-/**
- * @ClassName: MemberAddressEntity
- * @Description: TODO
- * @author: guojunjun
- * @date: 2015-9-12 下午6:39:23
- */
-public class MemberAddressEntity {
+import java.io.Serializable;
 
+public class MemberAddressEntity implements Serializable {
+
+	/**
+	 * @fieldName: serialVersionUID
+	 * @fieldType: long
+	 * @Description: TODO
+	 */
+	private static final long serialVersionUID = 1L;
 	public int Id;
 	public int Member;
 	public String Address;

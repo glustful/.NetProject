@@ -32,11 +32,5 @@
         android:horizontalSpacing="2dp"
         android:numColumns="3"
         android:verticalSpacing="2dp" />
-    <include 
-        android:visibility="gone"
-        android:id="@+id/rl_first"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/layout_first_service"/>
 
 </RelativeLayout>

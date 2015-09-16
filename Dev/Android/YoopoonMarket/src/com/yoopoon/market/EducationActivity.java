@@ -2,30 +2,20 @@ package com.yoopoon.market;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
-import android.graphics.Paint;
+import android.graphics.Color;
 import android.view.View;
-import android.widget.TextView;
 
-@EActivity(R.layout.activity_me_order_comment)
-public class MeOrderCommentActivity extends MainActionBarActivity {
-	@ViewById(R.id.tv_btn)
-	TextView tv_btn;
-	@ViewById(R.id.tv_desc)
-	TextView tv_desc;
-	@ViewById(R.id.tv_price_previous)
-	TextView tv_price_previous;
+@EActivity(R.layout.activity_education)
+public class EducationActivity extends MainActionBarActivity {
 
 	@AfterViews
 	void initUI() {
-		backButton.setVisibility(View.VISIBLE);
+		backWhiteButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		rightButton.setVisibility(View.GONE);
-		titleButton.setText("评论");
-
-		tv_btn.setVisibility(View.GONE);
-		tv_desc.setVisibility(View.GONE);
-		tv_price_previous.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+		titleButton.setText("教育");
+		headView.setBackgroundColor(Color.RED);
+		titleButton.setTextColor(Color.WHITE);
 	}
 
 	@Override

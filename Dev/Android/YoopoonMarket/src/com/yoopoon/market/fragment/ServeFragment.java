@@ -18,8 +18,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,13 +30,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -45,10 +43,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.AssuranceActivity_;
+import com.yoopoon.market.ChargeActivity_;
 import com.yoopoon.market.CleanServeActivity_;
-import com.yoopoon.market.MainActivity;
+import com.yoopoon.market.DeliveryActivity_;
+import com.yoopoon.market.EducationActivity_;
+import com.yoopoon.market.FinancialActivity_;
 import com.yoopoon.market.MyApplication;
+import com.yoopoon.market.PoliticsActivity_;
 import com.yoopoon.market.R;
+import com.yoopoon.market.TaxiActivity_;
+import com.yoopoon.market.TravelActivity_;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
@@ -75,8 +79,6 @@ public class ServeFragment extends Fragment {
 	LinearLayout ll_points;
 	boolean loopped = false;
 	boolean isFirst = true;
-	View view_first;
-	Button btn_iknow;
 	// hanlder用来处理ViewPager图片的轮播
 	Handler handler = new Handler() {
 
@@ -97,26 +99,11 @@ public class ServeFragment extends Fragment {
 		return rootView;
 	}
 
-	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
-		if (isVisibleToUser) {
-			SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.share_preference),
-					Context.MODE_PRIVATE);
-			MainActivity activity = (MainActivity) getActivity();
-			boolean shown = sp.getBoolean("isServeFirst", true);
-			activity.showFirstTv(shown);
-			view_first.setVisibility(shown ? View.VISIBLE : View.GONE);
-		}
-	}
-
 	// 初始化
 	private void init() {
 		gv = (GridView) rootView.findViewById(R.id.gv);
 		vp = (ViewPager) rootView.findViewById(R.id.vp);
 		ll_points = (LinearLayout) rootView.findViewById(R.id.ll_points);
-		view_first = rootView.findViewById(R.id.rl_first);
-		btn_iknow = (Button) rootView.findViewById(R.id.btn_iknow);
 
 		gv.setAdapter(new MyGridViewAdapter());
 		gv.setOnItemClickListener(new MyGridViewItemClickListener());
@@ -132,22 +119,21 @@ public class ServeFragment extends Fragment {
 			vp.addOnPageChangeListener(new MyPageChangeListener());
 		}
 
-		btn_iknow.setOnClickListener(new OnClickListener() {
+	}
 
-			@Override
-			public void onClick(View v) {
-				SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.share_preference),
-						Context.MODE_PRIVATE);
-				Editor editor = sp.edit();
-				editor.putBoolean("isServeFirst", false);
-				editor.commit();
-
-				MainActivity activity = (MainActivity) getActivity();
-				activity.showFirstTv(false);
-				view_first.setVisibility(View.GONE);
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if (isVisibleToUser) {
+			SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.share_preference),
+					Context.MODE_PRIVATE);
+			boolean isFirst = sp.getBoolean("isFirst", true);
+			if (isFirst) {
+				Intent intent = new Intent("com.yoopoon.market.show_shadow");
+				intent.addCategory(Intent.CATEGORY_DEFAULT);
+				getActivity().sendBroadcast(intent);
 			}
-		});
-
+		}
 	}
 
 	private void requestData() {
@@ -198,11 +184,29 @@ public class ServeFragment extends Fragment {
 				case 0:
 					AssuranceActivity_.intent(getActivity()).start();
 					break;
+				case 1:
+					FinancialActivity_.intent(getActivity()).start();
+					break;
+				case 2:
+					TravelActivity_.intent(getActivity()).start();
+					break;
+				case 3:
+					TaxiActivity_.intent(getActivity()).start();
+					break;
+				case 4:
+					PoliticsActivity_.intent(getActivity()).start();
+					break;
 				case 5:
 					CleanServeActivity_.intent(getActivity()).start();
 					break;
-
-				default:
+				case 6:
+					EducationActivity_.intent(getActivity()).start();
+					break;
+				case 7:
+					ChargeActivity_.intent(getActivity()).start();
+					break;
+				case 8:
+					DeliveryActivity_.intent(getActivity()).start();
 					break;
 			}
 

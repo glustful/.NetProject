@@ -4,11 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <include
-        android:id="@+id/search_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/top_search_height"
-        layout="@layout/search_layout" />
+    
+
+        <include
+            android:id="@+id/search_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/top_search_height"
+            layout="@layout/search_layout" />
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,22 +24,25 @@
             android:layout_height="match_parent" />
 
         <include
-            android:visibility="gone"
             android:id="@+id/ll_loading"
-            android:layout_centerInParent="true"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            layout="@layout/loading" />
+            android:layout_centerInParent="true"
+            layout="@layout/loading"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_above="@+id/bottom"
         android:background="@drawable/line" />
 
     <include
+        android:id="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_navigation_height"
+        android:layout_alignParentBottom="true"
         layout="@layout/bottom_navigation" />
 
 </LinearLayout>

@@ -13,6 +13,8 @@
 package com.yoopoon.market;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
@@ -25,6 +27,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -55,7 +58,10 @@ public class AddressManageActivity extends MainActionBarActivity {
 	TextView tv;
 	@ViewById(R.id.lv)
 	PullToRefreshListView lv;
-	MemberAddressEntity addressEntity = null;
+	@ViewById(R.id.ll_loading)
+	View ll_loading;
+	List<MemberAddressEntity> addressList = new ArrayList<MemberAddressEntity>();
+	MyListViewAdapter adapter;
 
 	@AfterViews
 	void initUI() {
@@ -66,11 +72,10 @@ public class AddressManageActivity extends MainActionBarActivity {
 		titleButton.setTextColor(Color.WHITE);
 		backWhiteButton.setVisibility(View.VISIBLE);
 		headView.setBackgroundColor(Color.RED);
-		// requestData();
-		lv.setAdapter(new MyListViewAdapter());
 	}
 
 	static class ViewHolder {
+
 		TextView tv_name;
 		TextView tv_phone;
 		TextView tv_address;
@@ -82,8 +87,7 @@ public class AddressManageActivity extends MainActionBarActivity {
 
 		@Override
 		public int getCount() {
-
-			return 3;
+			return addressList.size() + 1;
 		}
 
 		@Override
@@ -100,7 +104,7 @@ public class AddressManageActivity extends MainActionBarActivity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if (position == 2) {
+			if (position == addressList.size()) {
 				TextView tv = new TextView(AddressManageActivity.this);
 				tv.setPadding(20, 20, 20, 20);
 				tv.setGravity(Gravity.CENTER_VERTICAL);
@@ -119,22 +123,55 @@ public class AddressManageActivity extends MainActionBarActivity {
 				});
 				return tv;
 			}
-			if (convertView == null)
+			final MemberAddressEntity entity = addressList.get(position);
+			if (convertView == null || !(convertView instanceof LinearLayout))
 				convertView = View.inflate(AddressManageActivity.this, R.layout.item_address, null);
+			ViewHolder holder = (ViewHolder) convertView.getTag();
+			if (holder == null) {
+				holder = new ViewHolder();
+				holder.tv_address = (TextView) convertView.findViewById(R.id.tv_address);
+				holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+				holder.tv_phone = (TextView) convertView.findViewById(R.id.tv_phone);
+				holder.tv_delete = (TextView) convertView.findViewById(R.id.tv_delete);
+				holder.tv_modify = (TextView) convertView.findViewById(R.id.tv_modify);
+				convertView.setTag(holder);
+			}
+			holder.tv_address.setText(entity.Address);
+			holder.tv_name.setText(entity.Linkman);
+			holder.tv_phone.setText(entity.Tel);
+			holder.tv_delete.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+			holder.tv_modify.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					AddressModifyActivity_.intent(AddressManageActivity.this).addressEntity(entity).start();
+
+				}
+			});
 			return convertView;
 		}
 
 	}
 
 	void requestData() {
+		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
+					Log.i(TAG, object.toString());
 					parseToEntity(object.toString());
 				} else {
+					ll_loading.setVisibility(View.GONE);
 					Toast.makeText(AddressManageActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -144,7 +181,7 @@ public class AddressManageActivity extends MainActionBarActivity {
 				// TODO Auto-generated method stub
 
 			}
-		}.setUrl(getString(R.string.url_get_address_byid)).setRequestMethod(RequestMethod.eGet).addParam("id", "11")
+		}.setUrl(getString(R.string.url_get_address_byid)).setRequestMethod(RequestMethod.eGet).addParam("id", "13")
 				.notifyRequest();
 	}
 
@@ -154,6 +191,7 @@ public class AddressManageActivity extends MainActionBarActivity {
 			@Override
 			public Object onParse() {
 				ObjectMapper om = new ObjectMapper();
+				MemberAddressEntity addressEntity = null;
 				try {
 					addressEntity = om.readValue(json, MemberAddressEntity.class);
 				} catch (JsonParseException e) {
@@ -169,56 +207,27 @@ public class AddressManageActivity extends MainActionBarActivity {
 			@Override
 			public void onComplete(Object parseResult) {
 				if (parseResult != null) {
-					tv.setText(parseResult.toString());
+					MemberAddressEntity entity = (MemberAddressEntity) parseResult;
+					addressList.removeAll(addressList);
+					addressList.add(entity);
+					Log.i(TAG, parseResult.toString());
+					fillData();
 				}
 			}
 		}).execute();
 	}
 
-	void modify() {
-		new SerializerJSON(new SerializeListener() {
-
-			@Override
-			public String onSerialize() {
-				ObjectMapper om = new ObjectMapper();
-				try {
-					addressEntity.Tel = "22222";
-					String json = om.writeValueAsString(addressEntity);
-					return json;
-				} catch (JsonProcessingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return null;
-			}
-
-			@Override
-			public void onComplete(String serializeResult) {
-				Log.i(TAG, serializeResult);
-				requestModify(serializeResult);
-			}
-		}).execute();
+	void fillData() {
+		ll_loading.setVisibility(View.GONE);
+		if (adapter == null) {
+			adapter = new MyListViewAdapter();
+			lv.setAdapter(adapter);
+		} else {
+			adapter.notifyDataSetChanged();
+		}
 	}
 
-	void requestModify(String json) {
-		new RequestAdapter() {
-
-			@Override
-			public void onReponse(ResponseData data) {
-				Log.i(TAG, data.toString());
-				Toast.makeText(AddressManageActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
-			}
-
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
-
-			}
-		}.setUrl(getString(R.string.url_modify_address)).setRequestMethod(RequestMethod.ePut).SetJSON(json)
-				.notifyRequest();
-	}
-
-	void add() {
+	void add(final MemberAddressEntity addressEntity) {
 		new SerializerJSON(new SerializeListener() {
 
 			@Override
@@ -241,7 +250,6 @@ public class AddressManageActivity extends MainActionBarActivity {
 	}
 
 	void requestAdd(String json) {
-		Log.i(TAG, json);
 		new RequestAdapter() {
 
 			@Override
@@ -274,6 +282,12 @@ public class AddressManageActivity extends MainActionBarActivity {
 			}
 		}.setUrl(getString(R.string.url_delete_address)).setRequestMethod(RequestMethod.eDelete).addParam("id", "11")
 				.notifyRequest();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		requestData();
 	}
 
 	@Override

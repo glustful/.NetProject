@@ -1,7 +1,20 @@
 <resources>
 
     <string name="app_name">YoopoonMarket</string>
-	<string name="clean_serve_text">在此，我们只收取预付金，所生产的具体费用请与服务提供商结算</string>
-	<string name="share_preference">config</string>
-    
+    <string name="clean_serve_text">在此，我们只收取预付金，所生产的具体费用请与服务提供商结算</string>
+    <string name="share_preference">config</string>
+    <string name="private_key">MIICXgIBAAKBgQC9C/KpDFQdRCNbwzA1bpyeq0PdQlcRmoK+/0RXC0m8/2gPgqCI
+jKuNRT5bAH3Qq5rrcniJcxu9WJKDkpaOZO1Y/0/u2mR66qpjPAnxdo/oeI8QI82I
+sHVWsvV6EIpndcHov/jRtgKvF/Mg3v14Pw/TEyjlnpiTyZeu53KLxwYRCQIDAQAB
+AoGBAKFmnwHHPdVSxGFmzzT/QAaTsDgqmI21/iS1ahJq18TdxmlfnFGY0Cqn0Kn/
+TGuo53ZXYCPxu+A3y7c7owDlmGEojbN9rJsyDLj3Uzld3hxgsam6YPxHn7xKask6
+GwmVd+amQPyfZd3jdg/EcXllqBtst0o5GnPnsi5VtOj38CHRAkEA5BMigjxvL2W8
+3TLq75WGkxLyWSLRGPgtmrtJA1dzFGwJDmAYHSY0+AZ3NKaUEB8YUvxZZL9vtneX
+sBsBbycERQJBANQxgG4GmL0AqCCNJmlxSIqKwodR+hAjf9dNzFrfRj0VV/s95Isc
+PcL96RS0Q59z+teDhh2+aq8kQQjerVE6P/UCQQDdA33pXs8PyzMd13269dcXJsEa
+h5bA756h1uOGDXRDUf3kpFI5zRB/WSSjLNlGVhuoL0ohSzHiTDn+Oe1F3TVRAkAQ
+nOuMMbIFoiaHneVy/e6LAkAmrhFg8BaTOcEVIEP0hlZEEl1xUr23JX/5If/lXQQ3
+mVGHxJ+/pJv+4Mg7As99AkEA4czAjWg3xokvyOkEOMZs+4KZMt9MwcKk3525+JdR
+KTkLfnqEaOMRoeYls2V48Ycp8FLXMwMaWXsmhzNTCcIjXg==</string>
+
 </resources>

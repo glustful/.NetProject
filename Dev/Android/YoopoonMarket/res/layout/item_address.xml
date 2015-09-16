@@ -16,22 +16,20 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="董少明"
             android:textSize="16sp"/>
         
         <TextView 
             android:id="@+id/tv_phone"
-            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/tv_name"
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="18687827733"
             android:textSize="16sp"/>
         <TextView 
             android:id="@+id/tv_address"
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="[默认]云南省昆明市五华区丰宁街道学府路西段 馨悦尚居8栋1单元1211室"
             android:layout_below="@id/tv_name"/>
         
         

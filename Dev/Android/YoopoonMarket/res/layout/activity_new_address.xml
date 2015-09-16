@@ -10,30 +10,37 @@
         android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/tv1"
             style="@style/TextView_New_Address"
-            android:text="请选择所在地区" />
+            android:text="请选在所在地区" />
 
         <TextView
+            android:id="@+id/tv2"
             style="@style/TextView_New_Address"
             android:text="请选择街道" />
 
         <TextView
+            android:id="@+id/tv3"
             style="@style/TextView_New_Address"
             android:text="请输入详细地址" />
 
         <TextView
+            android:id="@+id/tv4"
             style="@style/TextView_New_Address"
             android:text="请输入收货人姓名" />
 
         <TextView
+            android:id="@+id/tv5"
             style="@style/TextView_New_Address"
             android:text="请收货人联系电话" />
 
         <TextView
+            android:id="@+id/tv6"
             style="@style/TextView_New_Address"
             android:text="请输入邮编" />
 
         <Button
+            android:id="@+id/btn_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
