@@ -13,6 +13,7 @@ namespace Community.Service.Member
 		MemberEntity Update (MemberEntity entity);
 
 		MemberEntity GetMemberById (int id);
+        MemberEntity GetMemberByUserId(int userId);
 
 		IQueryable<MemberEntity> GetMembersByCondition(MemberSearchCondition condition);
 
