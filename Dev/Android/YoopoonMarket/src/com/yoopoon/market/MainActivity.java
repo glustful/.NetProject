@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
@@ -23,9 +24,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -80,21 +85,20 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	Button btn_category;
 	@ViewById(R.id.ll_loading)
 	LinearLayout ll_loading;
-	// @ViewById(R.id.tv_shadow1)
-	// TextView tv_shadow1;
-	// @ViewById(R.id.rl_shadow2)
-	// View rl_shadow2;
+	@ViewById(R.id.tv_shadow1)
+	TextView tv_shadow1;
+	@ViewById(R.id.rl_shadow2)
+	View rl_shadow2;
 
-	// @Click(R.id.iv_iknow)
-	// void iKnow() {
-	// SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference),
-	// MODE_PRIVATE);
-	// Editor editor = sp.edit();
-	// editor.putBoolean("isFirst", false);
-	// editor.commit();
-	// tv_shadow1.setVisibility(View.GONE);
-	// rl_shadow2.setVisibility(View.GONE);
-	// }
+	@Click(R.id.iv_iknow)
+	void iKnow() {
+		SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference), MODE_PRIVATE);
+		Editor editor = sp.edit();
+		editor.putBoolean("isFirst", false);
+		editor.commit();
+		tv_shadow1.setVisibility(View.GONE);
+		rl_shadow2.setVisibility(View.GONE);
+	}
 	List<Fragment> fragments = new ArrayList<Fragment>();
 	List<LinearLayout> lls = new ArrayList<LinearLayout>();
 	int checkedItem = 0;
@@ -121,29 +125,28 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		requestArea();
 	}
 
-	// protected void onCreate(android.os.Bundle arg0) {
-	// super.onCreate(arg0);
-	// registerBroadcast();
-	// };
-	//
-	// void registerBroadcast() {
-	// IntentFilter shadowFilter = new IntentFilter("com.yoopoon.market.show_shadow");
-	// shadowFilter.addCategory(Intent.CATEGORY_DEFAULT);
-	// registerReceiver(receiver, shadowFilter);
-	// }
-	//
-	// BroadcastReceiver receiver = new BroadcastReceiver() {
-	//
-	//
-	// @Override
-	// public void onReceive(Context context, Intent intent) {
-	// String action = intent.getAction();
-	// if (action.equals("com.yoopoon.market.show_shadow")) {
-	// tv_shadow1.setVisibility(View.VISIBLE);
-	// rl_shadow2.setVisibility(View.VISIBLE);
-	// }
-	// }
-	// };
+	protected void onCreate(android.os.Bundle arg0) {
+		super.onCreate(arg0);
+		registerBroadcast();
+	};
+
+	void registerBroadcast() {
+		IntentFilter shadowFilter = new IntentFilter("com.yoopoon.market.show_shadow");
+		shadowFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		registerReceiver(receiver, shadowFilter);
+	}
+
+	BroadcastReceiver receiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (action.equals("com.yoopoon.market.show_shadow")) {
+				tv_shadow1.setVisibility(View.VISIBLE);
+				rl_shadow2.setVisibility(View.VISIBLE);
+			}
+		}
+	};
 
 	void requestArea() {
 		ll_loading.setVisibility(View.VISIBLE);
@@ -261,7 +264,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					builder.show();
 					break;
 				case R.id.rightBtn:
-					ProductClassifyActivity_.intent(MainActivity.this).start();
+					CategoryActivity_.intent(MainActivity.this).start();
 					break;
 				default:
 					break;
@@ -270,6 +273,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private class MyPageAdapter extends FragmentPagerAdapter {
+
 		public MyPageAdapter(FragmentManager fm) {
 			super(fm);
 		}
@@ -301,10 +305,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		public void onPageSelected(int arg0) {
 			onClick(lls.get(arg0));
 			searchLayout.setVisibility((arg0 > 1) ? View.GONE : View.VISIBLE);
-			// if (arg0 != 1) {
-			// tv_shadow1.setVisibility(View.GONE);
-			// rl_shadow2.setVisibility(View.GONE);
-			// }
+			if (arg0 != 1) {
+				tv_shadow1.setVisibility(View.GONE);
+				rl_shadow2.setVisibility(View.GONE);
+			}
 		}
 	}
 
