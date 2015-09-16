@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Community.Entity.Model.MemberAddress;
 using YooPoon.Core.Data;
 
+
 namespace Community.Entity.Model.Member
 {
 	public class MemberEntity : IBaseEntity

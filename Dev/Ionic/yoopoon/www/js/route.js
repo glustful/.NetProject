@@ -180,7 +180,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 }
             })
             .state('page.selectCity', {
-                url: '/me/:chatId',
+                url: '/me/',
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/selectCity.html',
