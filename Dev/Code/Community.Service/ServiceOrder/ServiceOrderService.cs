@@ -105,10 +105,10 @@ namespace Community.Service.ServiceOrder
                 {
                     query = query.Where(q => q.OrderNo == condition.OrderNo);
                 }
-				if (!string.IsNullOrEmpty(condition.Address))
-                {
-                    query = query.Where(q => q.Address.Contains(condition.Address));
-                }
+//				if (!string.IsNullOrEmpty(condition.Address))
+//                {
+//                    query = query.Where(q => q.Address.Contains(condition.Address));
+//                }
 				if (!string.IsNullOrEmpty(condition.Remark))
                 {
                     query = query.Where(q => q.Remark.Contains(condition.Remark));
@@ -185,10 +185,10 @@ namespace Community.Service.ServiceOrder
                 {
                     query = query.Where(q => q.OrderNo == condition.OrderNo);
                 }
-				if (!string.IsNullOrEmpty(condition.Address))
-                {
-                    query = query.Where(q => q.Address.Contains(condition.Address));
-                }
+//				if (!string.IsNullOrEmpty(condition.Address))
+//                {
+//                    query = query.Where(q => q.Address.Contains(condition.Address));
+//                }
 				if (!string.IsNullOrEmpty(condition.Remark))
                 {
                     query = query.Where(q => q.Remark.Contains(condition.Remark));

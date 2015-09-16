@@ -271,7 +271,46 @@ angular.module('app')
                             return uiLoad.load(['app/module/order/controller/serviceOrderController.js']);
                         }]
                     }
-                });
+                })
+
+          //地区管理
+                 .state('app.area',{
+                 url: '/area',
+                    template: '<div ui-view class="fade-in-up"></div>',
+                 })
+
+                 .state('app.area.show',{
+                     url:'/show',
+                     templateUrl:'app/module/Area/view/showArea.html',
+                     resolve: {
+                         deps: ['$ocLazyLoad',
+                             function( $ocLazyLoad ){
+                                 return $ocLazyLoad.load(['app/module/Area/controller/showArea.js']);
+                             }]
+                     },
+                     data : { title: '地区列表' }
+                 })
+
+          .state('app.area.createarea',{
+              url:'/createarea',
+              templateUrl:'app/module/Area/view/createArea.html',
+              resolve: {
+                  deps: ['$ocLazyLoad',
+                      function( $ocLazyLoad ){
+                          return $ocLazyLoad.load(['app/module/Area/controller/createArea.js']);
+                      }]
+              }
+          })
+                .state('app.area.editArea',{
+                    url:'/editArea?id',
+                    templateUrl:'app/module/Area/view/editArea.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/Area/controller/editArea.js']);
+                            }]
+                    }
+                })
         }
     ]
 );

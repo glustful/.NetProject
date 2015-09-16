@@ -21,11 +21,11 @@ app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,
     //alert($scope.model.activeIndex);
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
-//    È°µÈù¢Ë∑≥ËΩ¨
+//    “≥√ÊÃ¯◊™
     $scope.go=function(state){
         window.location.href=state;
     }
-//    Êñ∞Â¢ûÂú∞ÂùÄ
+//    –¬‘ˆµÿ÷∑
 
 
 //    $ionicModal.fromTemplateUrl("my-modal.html", {
@@ -60,13 +60,13 @@ app.controller('selectAddress', function($scope, $stateParams) {
     $scope.chats = [
         {
         id: 0,
-        name: 'Âåó‰∫¨Â∏Ç',
+        name: '±±æ© –',
         lastText: 'You on your way?',
         face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
     },
         {
             id: 1,
-            name: 'Â§©Ê¥•Â∏Ç',
+            name: 'ÃÏΩÚ –',
             lastText: 'You on your way?',
             face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
         }
@@ -78,4 +78,54 @@ app.controller('selectAddress', function($scope, $stateParams) {
     };
 
 
-});
+});app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate) {
+  // With the new view caching in Ionic, Controllers are only called
+  // when they are recreated or on app start, instead of every page change.
+  // To listen for when this page is active (for example, to refresh data),
+  // listen for the $ionicView.enter event:
+  //
+  //$scope.$on('$ionicView.enter', function(e) {
+  //});
+  $scope.model = {
+    activeIndex:0
+  };
+  
+  $scope.pageClick = function(index){
+    //alert(index);
+    //alert($scope.delegateHandler.currentIndex());
+    $scope.model.activeIndex = 2;
+  };
+
+  $scope.slideHasChanged = function($index){
+    //alert($index);
+    //alert($scope.model.activeIndex);
+  };
+  $scope.delegateHandler = $ionicSlideBoxDelegate;
+
+
+
+
+//¥Úø™∆¿¬€
+  var comment=document.getElementById("userComment");
+  $scope.open=function(){
+    comment.style.display="";
+  }
+
+
+  //Œ“µƒ∂©µ•
+  $scope.tabIndex=1;
+  $scope.getOrderList1=function(){
+    $scope.tabIndex=1
+  }
+  $scope.getOrderList2=function(){
+    $scope.tabIndex=2
+  }
+  $scope.getOrderList3=function(){
+    $scope.tabIndex=3
+  }
+  $scope.getOrderList4=function(){
+    $scope.tabIndex=4
+  }
+
+               });
+

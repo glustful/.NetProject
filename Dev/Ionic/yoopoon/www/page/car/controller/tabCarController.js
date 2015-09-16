@@ -113,5 +113,19 @@ app.controller('CarDetailCtrl', function($scope, $stateParams) {
     window.history.go(-1);
   };
 
-  
+//    我的订单
+    $scope.tabIndex=1;
+    $scope.getOrderList1=function(){
+        $scope.tabIndex=1;
+    };
+    $scope.getOrderList2=function(){
+        $scope.tabIndex=2;
+    };
+    $scope.getOrderList3=function(){
+        $scope.tabIndex=3;
+    };
+    $scope.getOrderList4=function(){
+        $scope.tabIndex=4;
+    };
+
 });

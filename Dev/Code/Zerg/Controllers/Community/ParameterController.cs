@@ -4,17 +4,30 @@ using System.Web.Http;
 using Community.Entity.Model.Parameter;
 using Community.Service.Parameter;
 using Zerg.Models.Community;
-
+using System;
+using System.Net.Http;
+using Zerg.Common;
+using System.EnterpriseServices;
+using System.Text.RegularExpressions;
+using System.Web.Http.Cors;
+using Community.Service.Category;
 namespace Zerg.Controllers.Community
 {
+    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
 	public class ParameterController : ApiController
 	{
 		private readonly IParameterService _parameterService;
+        private readonly ICategoryService _categoryService;
 
-		public ParameterController(IParameterService parameterService)
+        public ParameterController(IParameterService parameterService, ICategoryService categoryService)
 		{
 			_parameterService = parameterService;
+            _categoryService = categoryService;
 		}
+
+
+        
 
 		public ParameterModel Get(int id)
 		{
@@ -33,39 +46,61 @@ namespace Zerg.Controllers.Community
 			return model;
 		}
 
-		public List<ParameterModel> Get(ParameterSearchCondition condition)
-		{
-			var model = _parameterService.GetParametersByCondition(condition).Select(c=>new ParameterModel
+        public HttpResponseMessage Get(string CategoryId)
+        {
+            var condition = new ParameterSearchCondition
+            {
+                Category = _categoryService.GetCategoryById(Convert.ToInt32(CategoryId))
+            };
+            var model = _parameterService.GetParametersByCondition(condition).Select(c => new
+            {
+                Id = c.Id,
+                CategoryName = c.Category.Name,
+                Name = c.Name,
+                Sort = c.Sort,
+                AddTime = c.AddTime
+            }).ToList();
+            return PageHelper.toJson(model);
+        }
+
+        public HttpResponseMessage Get(ParameterSearchCondition condition)
+		{      
+			var model = _parameterService.GetParametersByCondition(condition).Select(c=>new
 			{
 				Id = c.Id,
-//				Category = c.Category,
+				CategoryName = c.Category.Name,
 				Name = c.Name,
-				Sort = c.Sort,
-				AddUser = c.AddUser,
-				AddTime = c.AddTime,
-				UpdUser = c.UpdUser,
-				UpdTime = c.UpdTime,
+				Sort = c.Sort,			
+				AddTime = c.AddTime				
 			}).ToList();
-			return model;
+            return PageHelper.toJson(model);
 		}
 
-		public bool Post(ParameterModel model)
+        /// <summary>
+        /// 添加参数
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+		public HttpResponseMessage Post(ParameterModel model)
 		{
+            if(String.IsNullOrEmpty(model.Name) || model.Id==0)
+            {
+               return PageHelper.toJson(PageHelper.ReturnValue(false, "数据异常！")); 
+            }
+            
 			var entity = new ParameterEntity
 			{
-//				Category = model.Category,
+                Category = _categoryService.GetCategoryById(model.Id),//添加时候 这里的Id传的是分类ID         
 				Name = model.Name,
-				Sort = model.Sort,
-				AddUser = model.AddUser,
-				AddTime = model.AddTime,
-				UpdUser = model.UpdUser,
-				UpdTime = model.UpdTime,
+				Sort = model.Sort,				
+				AddTime =DateTime.Now,
+                UpdTime =DateTime.Now,
 			};
 			if(_parameterService.Create(entity).Id > 0)
 			{
-				return true;
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功！"));
 			}
-			return false;
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败！")); 
 		}
 
 		public bool Put(ParameterModel model)
