@@ -21,11 +21,11 @@ app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,
     //alert($scope.model.activeIndex);
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
-//    Ò³ÃæÌø×ª
+//    é¡µé¢è·³è½¬
     $scope.go=function(state){
         window.location.href=state;
     }
-//    ĞÂÔöµØÖ·
+//    æ–°å¢åœ°å€
 
 
 //    $ionicModal.fromTemplateUrl("my-modal.html", {
@@ -60,13 +60,13 @@ app.controller('selectAddress', function($scope, $stateParams) {
     $scope.chats = [
         {
         id: 0,
-        name: '±±¾©ÊĞ',
+        name: 'åŒ—äº¬å¸‚',
         lastText: 'You on your way?',
         face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
     },
         {
             id: 1,
-            name: 'Ìì½òÊĞ',
+            name: 'å¤©æ´¥å¸‚',
             lastText: 'You on your way?',
             face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
         }
@@ -103,14 +103,14 @@ app.controller('selectAddress', function($scope, $stateParams) {
   $scope.delegateHandler = $ionicSlideBoxDelegate;
 
 
-//´ò¿ªÆÀÂÛ
+//æ‰“å¼€è¯„è®º
   var comment=document.getElementById("userComment");
   $scope.open=function(){
     comment.style.display="";
   }
 
 
-  //ÎÒµÄ¶©µ¥
+  //æˆ‘çš„è®¢å•
   $scope.tabIndex=1;
   $scope.getOrderList1=function(){
     $scope.tabIndex=1
@@ -125,12 +125,12 @@ app.controller('selectAddress', function($scope, $stateParams) {
     $scope.tabIndex=4
   }
 
-               });
+               
 
 
 });
 
-/////////////////////////////Í·ÏñĞŞ¸Ä////////////////////////////
+/////////////////////////////å¤´åƒä¿®æ”¹////////////////////////////
 function previewImage(file)
 {
   var MAXWIDTH  = 128;
@@ -144,22 +144,22 @@ function previewImage(file)
     img.onload = function(){
       img.width  =  128;
       img.height =  128;
-      //Òş²ØÄ¬ÈÏÍ·Ïñ
+      //éšè—é»˜è®¤å¤´åƒ
       var defaultHeadImg = document.getElementById("preview");
       defaultHeadImg.style.background = 'white';
     }
     var reader = new FileReader();
     reader.onload = function(evt){
-      //base64±àÂë
+      //base64ç¼–ç 
       img.src = evt.target.result;
-      //À©Õ¹Ãû
+      //æ‰©å±•å
       var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
-      // gifÔÚieä¯ÀÀÆ÷²»ÏÔÊ¾
+      // gifåœ¨ieæµè§ˆå™¨ä¸æ˜¾ç¤º
       if(ext!='png'&&ext!='jpg'&&ext!='jpeg'&&ext!='gif'){
-        alert("Ö»Ö§³ÖJPG,PNG,JPEG¸ñÊ½µÄÍ¼Æ¬");
+        alert("åªæ”¯æŒJPG,PNG,JPEGæ ¼å¼çš„å›¾ç‰‡");
         return;
       }
-      //·¢ËÍÇëÇó
+      //å‘é€è¯·æ±‚
       var xmlhttp=new XMLHttpRequest();
       xmlhttp.onreadystatechange = callback;
       var fd = new FormData();
@@ -168,18 +168,18 @@ function previewImage(file)
       xmlhttp.withCredentials = true;
       xmlhttp.send(fd);
       var headtext = document.getElementById("Uptext");
-      headtext.innerHTML = 'ÕıÔÚÉÏ´«..';
+      headtext.innerHTML = 'æ­£åœ¨ä¸Šä¼ ..';
       headtext.style.color ='#40AD32'
-      //»Øµ÷º¯Êı
+      //å›è°ƒå‡½æ•°
       function callback () {
-        //½«responseÌáÈ¡³öÀ´·Ö¸î³öÎÄ¼şÃû
+        //å°†responseæå–å‡ºæ¥åˆ†å‰²å‡ºæ–‡ä»¶å
         httpimguri =  xmlhttp.response;
         var g1=httpimguri.split(':"');
         var g2= httpimguri.split(',')[1].split(':"')[1];
-        //½«·Ö¸îºÃµÄÎÄ¼şÃû¸³Óè¸øimgÈ«¾Ö±äÁ¿
+        //å°†åˆ†å‰²å¥½çš„æ–‡ä»¶åèµ‹äºˆç»™imgå…¨å±€å˜é‡
         httpimguri=g2.substring(0,g2.length-1);
-        //Í¼Æ¬ÉÏ´«³É¹¦×ÖÑùÑùÊ½
-        headtext.innerHTML = 'ÉÏ´«³É¹¦!';
+        //å›¾ç‰‡ä¸Šä¼ æˆåŠŸå­—æ ·æ ·å¼
+        headtext.innerHTML = 'ä¸Šä¼ æˆåŠŸ!';
         headtext.style.color ='red';
       }
     }
@@ -187,4 +187,4 @@ function previewImage(file)
   }
 }
 
-///////////////////////////Í·ÏñĞŞ¸Ä//////////////////////////////////
+///////////////////////////å¤´åƒä¿®æ”¹//////////////////////////////////
