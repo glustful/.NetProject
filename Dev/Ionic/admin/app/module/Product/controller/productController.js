@@ -55,10 +55,10 @@ app.controller('productCtr', ['$scope', '$http','$modal', function($scope, $http
     }
 }]);
 app.controller('editProductCtr',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
-    $http.get(SETTING.ZergWcApiUrl+"/Category/Get",{
-        'withCredentials':true
+    $http.get(SETTING.ZergWcApiUrl + "/Category/GetChildByFatherId?id="+0, {
+        'withCredentials': true
     }).success(function (data) {
-        $scope.CategoryList=data;
+        $scope.CategoryList = data;
     })
     $http.get(SETTING.ZergWcApiUrl+"/CommunityProduct/Get?id="+$stateParams.id,{
             'withCredentials':true  //跨域

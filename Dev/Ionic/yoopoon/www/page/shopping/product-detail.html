@@ -10,33 +10,41 @@
 <ion-view hide-tabs="false" hide-nav-bar="true">
     <ion-content class="detail-position">
         <!-- 滚动图-->
-            <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" >
-                <ion-slide>
-                    <div class="detail-img">
-                        <img src="page/shopping/img/p0.jpg">
-                    </div>
-                </ion-slide>
-                <ion-slide>
-                    <div class="detail-img">
-                        <img src="page/shopping/img/p0.jpg">
-                    </div>
-                </ion-slide>
-                <ion-slide>
-                    <div class="detail-img">
-                        <img src="page/shopping/img/p0.jpg">
-                    </div>
-                </ion-slide>
-                <ion-slide>
-                    <div class="detail-img">
-                        <img src="page/shopping/img/p0.jpg">
-                    </div>
-                </ion-slide>
-                <ion-slide>
-                    <div class="detail-img">
-                        <img src="page/shopping/img/p0.jpg">
-                    </div>
-                </ion-slide>
-            </ion-slide-box>
+            <!--<ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" >-->
+                <!--<ion-slide>-->
+                    <!--<div class="detail-img">-->
+                        <!--<img src="page/shopping/img/p0.jpg">-->
+                    <!--</div>-->
+                <!--</ion-slide>-->
+                <!--<ion-slide>-->
+                    <!--<div class="detail-img">-->
+                        <!--<img src="page/shopping/img/p0.jpg">-->
+                    <!--</div>-->
+                <!--</ion-slide>-->
+                <!--<ion-slide>-->
+                    <!--<div class="detail-img">-->
+                        <!--<img src="page/shopping/img/p0.jpg">-->
+                    <!--</div>-->
+                <!--</ion-slide>-->
+                <!--<ion-slide>-->
+                    <!--<div class="detail-img">-->
+                        <!--<img src="page/shopping/img/p0.jpg">-->
+                    <!--</div>-->
+                <!--</ion-slide>-->
+                <!--<ion-slide>-->
+                    <!--<div class="detail-img">-->
+                        <!--<img src="page/shopping/img/p0.jpg">-->
+                    <!--</div>-->
+                <!--</ion-slide>-->
+            <!--</ion-slide-box>-->
+        <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" ng-if="content">
+            <ion-slide ng-repeat="item in content">
+                <div class="box">
+                    <img ng-if="item" ng-src="http://img.iyookee.cn/{{item.TitleImg}}" class="img-full" >
+                    <!--{{slide.TitleImg}}-->
+                </div>
+            </ion-slide>
+        </ion-slide-box>
      <!-- 文字详情-->
         <div class="padding ">
         <p class="font-30">{{product.Name}}</p>
@@ -68,9 +76,10 @@
         </div>
         </div>
         <div class="div-null"></div>
-        <ion-infinite-scroll on-infinite="load_detail();">
-        </ion-infinite-scroll>
         <div >{{productDetail.Name}}</div>
+        <ion-infinite-scroll on-infinite="moreDataCanBeLoaded();" distance="10%">
+        </ion-infinite-scroll>
+
         <!--<div class="padding ">-->
            <!--<p class="font-30">我是花吃  玫瑰鲜花饼10盒礼盒装 云南特产 中秋月饼 零食糕点400g</p>-->
             <!--<p class="color-Red">独有3000亩玫瑰基地放心食材，新鲜采摘，新鲜烤制</p>-->
@@ -108,8 +117,8 @@
         <!--<div class="div-null"></div>-->
 
     </ion-content>
-    <!--<div class=" row detail-padding button-position">-->
-        <!--<button class="col button-large assertive-bg none-border p-button" ng-click="go('index.html#/page/car')">立即购买</button>-->
-        <!--<button class="col button-large  energized-bg none-border p-button" ng-click="go('index.html#/page/car/order')">加入购物车</button>-->
-    <!--</div>-->
+    <div class=" row detail-padding button-position">
+        <button class="col button-large assertive-bg none-border p-button" ng-click="go('index.html#/page/car')">立即购买</button>
+        <button class="col button-large  energized-bg none-border p-button" ng-click="go('index.html#/page/car/order')">加入购物车</button>
+    </div>
 </ion-view>

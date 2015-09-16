@@ -1,6 +1,7 @@
 
 <link rel="stylesheet" href="page/service/css/service.css">
-
+<link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
+<script src="lib/ionic/js/ionic.bundle.min.js"></script>
 <div class=" header bar" style="height:44px">
     <a class="button  button-icon icon icon-fuwuanniu" ng-click="go('index.html#/page/shopping/Product-Catagory')"></a>
     <label class=" item-select select-header" ng-hide="showSelect">
@@ -19,7 +20,7 @@
 <ion-view view-title="优·购物" hide-tabs="false" hide-nav-bar="true">
     <!-- 主页-->
   <ion-content class="scroll-content" no-header="true" style="top:44px">
-       <ion-refresher pulling-text="下拉刷新" on-refresh="vm.doRefresh()"></ion-refresher>
+       <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
        <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" ng-if="content">
            <ion-slide ng-repeat="item in content">
                <div class="box">
@@ -27,6 +28,8 @@
                    <!--{{slide.TitleImg}}-->
                </div>
            </ion-slide>
+    </ion-slide-box>
+
   <!--<ion-slide>-->
     <!--<div class="box">-->
       <!--<img src="http://img.iyookee.cn/20150619/20150619_100607_883_670.png">-->
@@ -42,9 +45,9 @@
       <!--<img src="http://img.iyookee.cn/20150714/20150714_172952_955_22.jpg">-->
     <!--</div>-->
   <!--</ion-slide>-->
-</ion-slide-box>
+
     <!-- ion-infinite-scroll 上拉加载数据指令 distance默认1% nf-if的值为false时，就禁止执行on-infinite  -->
-    <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="1%" ></ion-infinite-scroll>
+    <ion-infinite-scroll ng-if="moredata" on-infinite="load_more()" distance="1%" ></ion-infinite-scroll>
       <a class="button-service" ng-click="go('index.html#/page/service/safe')" style="">优服务</a>
       <ion-scroll zooming="true" direction="x" class="scroll-home">
           <div class="row bg-yellow">
@@ -148,7 +151,7 @@
                  <!--</div>-->
              <!--</div>-->
          </div>
-      <ion-infinite-scroll ng-if="!over" on-infinite="load_more();">
+      <ion-infinite-scroll  on-infinite="load_more();">
       </ion-infinite-scroll>
   </ion-content>
 
@@ -196,6 +199,7 @@
 <button class="button" ng-click="wxPay()">微信支付测试</button>
 <button class="button" ng-click="alipay()">支付宝支付测试</button>
 </ion-footer-bar>
+
 
 
 <!--1.　on-refresh 下拉触发的函数 函数执行结束之前必须广播下该事件结束 $scope.$broadcast(‘scroll.refreshComplete‘);-->
