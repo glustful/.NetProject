@@ -73,8 +73,11 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 	private static int sortStatusCode = 0;
 	//存储传送到服务器的参数
 	//配置排序的四个按钮
+	private Button changedCodlorButton;
 	private Button sortByPriceFromLowerButton, sortByPriceFromHigherButton, sortBySalesVolumeFromLowerButton,
 			sortBySalesVolumeFromHigherButton;
+	//存储分类状态信息
+	private String classificationStatusCode="";
 	@ViewById
 	LinearLayout linearLayout_product_list;
 	@ViewById
@@ -99,13 +102,6 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 		classificationId = bundle.getString("classificationId");
 		titleButton.setText(titleString);
 		backButton.setText("后退");
-		//测试使用
-		for (int i = 0; i < 10; i++) {
-			Button button = new Button(mContext);
-			button.setText("button" + i);
-			button.setBackgroundColor(Color.TRANSPARENT);
-			linearLayout_product_list.addView(button);
-		}
 		//房屋列表
 		ptr_listview_product_list.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
 		ptr_listview_product_list.setOnRefreshListener(new RefreshListener());
@@ -156,7 +152,53 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 				sortDialog = builder.show();
 			}
 		});
+		requestClassification();
 		requsetProductList();
+	}
+	//######################################################################################################
+	//                               此处的id=1只做测试使用
+	//######################################################################################################
+	/**
+	 * @Title: requestClassification
+	 * @Description: 根据父类参数获取3级分类信息
+	 */
+	private void requestClassification() {
+		new RequestAdapter() {
+			@Override
+			public void onReponse(ResponseData data) {
+				if (data.getMRootData() != null) {
+					JSONArray jsonArray = data.getMRootData().optJSONArray("Object");
+					addClassificationButton(JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
+				}
+			}
+			@Override
+			public void onProgress(ProgressMessage msg) {
+			}
+		}.setUrl(getString(R.string.url_category_get)).addParam("id", "2").setRequestMethod(RequestMethod.eGet)
+				.notifyRequest();
+	}
+	private void addClassificationButton(ArrayList<JSONObject> arrayList) {
+		changedCodlorButton = new Button(mContext);
+		for (final JSONObject jsonObject : arrayList) {
+			Button button = new Button(mContext);
+			button.setText(jsonObject.optString("Name"));
+			button.setBackgroundColor(Color.TRANSPARENT);
+			button.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					//点击效果背景色设置
+					changedCodlorButton.setTextColor(Color.BLACK);
+					Toast.makeText(mContext, jsonObject.optString("Name").toString(), Toast.LENGTH_SHORT).show();
+					Button button1 = (Button) v;
+					//点击效果背景色设置
+					button1.setTextColor(Color.rgb(255, 34, 30));
+					changedCodlorButton = button1;
+					classificationStatusCode=jsonObject.optString("Id");
+					screenPrice();
+				}
+			});
+			linearLayout_product_list.addView(button);
+		}
 	}
 
 	/**
@@ -315,6 +357,9 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 			hashMap.put("OrderBy", "OrderByPrice");
 		}
 		//获取分类参数（等待API完成）
+		if(!classificationStatusCode.equals("")){
+			hashMap.put("CategoryId", classificationStatusCode);
+		}
 		//获取价格参数
 		if (priceBegain != 0) {
 			hashMap.put("PriceBegin", priceBegain + "");
