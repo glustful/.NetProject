@@ -126,21 +126,6 @@ $scope.test = function(){
  //   });
     }]);
 app.controller('ShoppingListCtrl',['$http','$scope',function($http,$scope){
-    $scope.load_detail = function(){
- //for(var i=0;i<10;i++,base++)
-            //    $scope.items.push(["item ",base].join(""));
-           // alert("aaaaaaaaaa");
-            $http.get(SETTING.ApiUrl+"/ProductDetail/Get?id="+$stateParams.id,{
-                'withCredentials': true
-            }).success(function(data){
-                $scope.productDetail=data;
-            });
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-        },500);
- };
-
-
-
     //
     //region 获取商品列表
     $scope.sech={
