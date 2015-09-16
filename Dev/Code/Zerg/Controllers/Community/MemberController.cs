@@ -12,6 +12,7 @@ using YooPoon.WebFramework.User;
 using YooPoon.WebFramework.User.Entity;
 using YooPoon.WebFramework.User.Services;
 using YooPoon.WebFramework.Authentication.Entity;
+using YooPoon.Core.Site;
 using CRM.Service.Level;
 using CRM.Entity.Model;
 
@@ -25,6 +26,7 @@ namespace Zerg.Controllers.Community
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
         private readonly ILevelService _levelService;
+        private readonly IWorkContext _workContext;
         public MemberController(IMemberService memberService, IUserService userService, IRoleService roleService, ILevelService levelService)
 		{
 			_memberService = memberService;
@@ -106,6 +108,7 @@ namespace Zerg.Controllers.Community
             return PageHelper.toJson(model);
 
         }
+
         public HttpResponseMessage Post(MemberModel model)
 		{
             if (model != null) 
@@ -136,9 +139,25 @@ namespace Zerg.Controllers.Community
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "post  失败")); 
 		}
+         /// <summary>
+         /// 根据用户ID获取会员信息
+         /// </summary>
+         /// <param name="userId"></param>
+         /// <returns></returns>
+         [HttpGet]
+        public HttpResponseMessage GetMemberByUserId(int userId) 
+        {
+            if (userId == 0) 
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "获取会员信息失败"));
+            }
+            var member = _memberService.GetMemberByUserId(userId);
+            return PageHelper.toJson(member);
+        }
         /// <summary>
         /// 新用户注册
         /// </summary>
+        [HttpPost]
         public HttpResponseMessage SignUp(MemberModel model)
         {
             var user = _userService.GetUserByName(model.UserName);
