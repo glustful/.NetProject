@@ -21,11 +21,11 @@ app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,
     //alert($scope.model.activeIndex);
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
-//    ҳ����ת
+//    页面跳转
     $scope.go=function(state){
         window.location.href=state;
     }
-//    ������ַ
+//    新增地址
 
 
 //    $ionicModal.fromTemplateUrl("my-modal.html", {
@@ -60,13 +60,13 @@ app.controller('selectAddress', function($scope, $stateParams) {
     $scope.chats = [
         {
         id: 0,
-        name: '������',
+        name: '北京市',
         lastText: 'You on your way?',
         face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
     },
         {
             id: 1,
-            name: '�����',
+            name: '天津市',
             lastText: 'You on your way?',
             face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
         }
@@ -103,14 +103,14 @@ app.controller('selectAddress', function($scope, $stateParams) {
   $scope.delegateHandler = $ionicSlideBoxDelegate;
 
 
-//������
+//打开评论
   var comment=document.getElementById("userComment");
   $scope.open=function(){
     comment.style.display="";
   }
 
 
-  //�ҵĶ���
+  //我的订单
   $scope.tabIndex=1;
   $scope.getOrderList1=function(){
     $scope.tabIndex=1
@@ -125,12 +125,12 @@ app.controller('selectAddress', function($scope, $stateParams) {
     $scope.tabIndex=4
   }
 
-              
+               
 
 
 });
 
-/////////////////////////////ͷ���޸�////////////////////////////
+/////////////////////////////头像修改////////////////////////////
 function previewImage(file)
 {
   var MAXWIDTH  = 128;
@@ -144,22 +144,22 @@ function previewImage(file)
     img.onload = function(){
       img.width  =  128;
       img.height =  128;
-      //����Ĭ��ͷ��
+      //隐藏默认头像
       var defaultHeadImg = document.getElementById("preview");
       defaultHeadImg.style.background = 'white';
     }
     var reader = new FileReader();
     reader.onload = function(evt){
-      //base64����
+      //base64编码
       img.src = evt.target.result;
-      //��չ��
+      //扩展名
       var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
-      // gif��ie���������ʾ
+      // gif在ie浏览器不显示
       if(ext!='png'&&ext!='jpg'&&ext!='jpeg'&&ext!='gif'){
-        alert("ֻ֧��JPG,PNG,JPEG��ʽ��ͼƬ");
+        alert("只支持JPG,PNG,JPEG格式的图片");
         return;
       }
-      //��������
+      //发送请求
       var xmlhttp=new XMLHttpRequest();
       xmlhttp.onreadystatechange = callback;
       var fd = new FormData();
@@ -168,18 +168,18 @@ function previewImage(file)
       xmlhttp.withCredentials = true;
       xmlhttp.send(fd);
       var headtext = document.getElementById("Uptext");
-      headtext.innerHTML = '�����ϴ�..';
+      headtext.innerHTML = '正在上传..';
       headtext.style.color ='#40AD32'
-      //�ص�����
+      //回调函数
       function callback () {
-        //��response��ȡ�����ָ���ļ���
+        //将response提取出来分割出文件名
         httpimguri =  xmlhttp.response;
         var g1=httpimguri.split(':"');
         var g2= httpimguri.split(',')[1].split(':"')[1];
-        //���ָ�õ��ļ��������imgȫ�ֱ���
+        //将分割好的文件名赋予给img全局变量
         httpimguri=g2.substring(0,g2.length-1);
-        //ͼƬ�ϴ��ɹ�������ʽ
-        headtext.innerHTML = '�ϴ��ɹ�!';
+        //图片上传成功字样样式
+        headtext.innerHTML = '上传成功!';
         headtext.style.color ='red';
       }
     }
@@ -187,4 +187,4 @@ function previewImage(file)
   }
 }
 
-///////////////////////////ͷ���޸�//////////////////////////////////
+///////////////////////////头像修改//////////////////////////////////
