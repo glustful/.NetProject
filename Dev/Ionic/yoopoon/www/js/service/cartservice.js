@@ -1,7 +1,7 @@
 app.service("cartservice", ['$rootScope',
 
 	function($rootScope) {
-		$rootScope.cartProductCount = selectcount();
+		//$rootScope.cartProductCount = selectcount();
 		utils = {
 			setParam: function(name, value) {
 				localStorage.setItem(name, value)

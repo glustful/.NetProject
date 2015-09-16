@@ -136,8 +136,6 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate, $timeo
 				}
 				$scope.selected5 = false;
 				break;
-				$scope.selected1 = false;
-				break;
 		}
 	}
 });
