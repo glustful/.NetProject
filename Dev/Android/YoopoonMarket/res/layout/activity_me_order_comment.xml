@@ -68,9 +68,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="添加照片"
-            android:background="@drawable/et_circle_gray_border"/>
+            android:background="@drawable/et_circle_gray_border"
+            android:clickable="true"/>
         
         <TextView
+            android:clickable="true"
             android:layout_alignParentRight="true"
             android:padding="10dp" 
             android:layout_below="@id/et"
@@ -78,7 +80,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:text="发表评论"
-            android:background="@color/red"/>
+            android:background="@drawable/red_bg"/>
         
     </RelativeLayout>
 

@@ -25,11 +25,11 @@ public class PayDemoActivity extends FragmentActivity {
 	// 商户PID
 	public static final String PARTNER = "2088311414553838";
 	// 商户收款账号
-	public static final String SELLER = "2088311414553838";
-	// 商户私钥，pkcs8格式
-	public static String RSA_PRIVATE = "";
+	public static final String SELLER = "yunjoy@yunjoy.cn";
 	// 支付宝公钥
 	public static String RSA_PUBLIC = "";
+	// 商户私钥，pkcs8格式
+	public static String RSA_PRIVATE = "MIICXAIBAAKBgQDAHO8ZkqVlpJUyq8vEO+mLEBRPbU18EMk4YqcRjvDuxX1flFRWYOGHd4xvruChPctdp37+VGG2r6kJfyiJ3pBqTF5A6cT85cV1BQl89wJ+4yzsggGqxJIeIuPWMS7E6dDOivx3s9fhrpuGcXv7jjVOJPhQpKiyoeCq7/s2ftQyBwIDAQABAoGBAJZz0njnlOqWS1Yknu8usIb877sIcd9Q0hV7hTXGCUAloDtDUg1X0CgkYvJwNXFxkJvm+hi6AtBsn2hVkmzuxY9ukfGuvsmKS4x1WGRiP0Op3z33BACdaWE7Gqqv0HPR0bOuG6NCJYBLXUOiogstVrykZohpghKZlToc9/HOPkNBAkEA4oHDbD6QFASSrTYmOlZ1eA7u86h2GAE+QkOUXMtbjXaEsg7GYLsiCGU8CGPx3lTnz5lY4VIQgR22gle8PHFAZwJBANkgtRdVDd7pL96MIQepI6nmO35ZAhIQKmDNt5rNn8Q9z3yv5Y7nDCsKPPvbcRUqKiy238gI1nOzLgliEDtz/WECPzCpsFKRHmMumFSeTZg6+wHQM4Ylqzl9CuMxoa5OAl1iGSAoDHa7vZQQK9Who1Ug6KyxRWcjOmiC+bMHJmnV6wJBAK6O7QflCVG8hw+T+Ln/8PwWbJ4XUOLUvD03JfT+ewN57eWARD2u4sl3Ya/ZrAAn9eAc5awb7sz1sH06qXIivgECQHGC7aShRShKp8fVmSNc8x9qRJRI+hOAj8Lmn6qvZ1R0XpOZTSg7Src0syayZSfC1etKGBRtQ9vYAP73HyA94is=";
 
 	private static final int SDK_PAY_FLAG = 1;
 
@@ -86,9 +86,6 @@ public class PayDemoActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// setContentView(R.layout.pay_main);
-		// RSA_PRIVATE = getString(R.string.private_key);
-		// RSA_PUBLIC = getString(R.string.public_key);
 	}
 
 	/**
@@ -117,6 +114,7 @@ public class PayDemoActivity extends FragmentActivity {
 				// 构造PayTask 对象
 				PayTask alipay = new PayTask(PayDemoActivity.this);
 				// 调用支付接口，获取支付结果
+				Log.i(TAG, payInfo);
 				String result = alipay.pay(payInfo);
 				Log.i(TAG, result);
 
@@ -239,7 +237,7 @@ public class PayDemoActivity extends FragmentActivity {
 	 * @param content 待签名订单信息
 	 */
 	public String sign(String content) {
-
+		Log.i("PayDemo", RSA_PRIVATE);
 		return SignUtils.sign(content, RSA_PRIVATE);
 	}
 

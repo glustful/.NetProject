@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/rl" 
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:background="@color/background_gray">
 
     <Button
         android:layout_marginLeft="15dp"

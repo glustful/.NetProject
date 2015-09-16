@@ -19,6 +19,9 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
 import android.graphics.Color;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -46,21 +49,73 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 	private static final String TAG = "PersonalInfoActivity";
 	@ViewById(R.id.tv)
 	TextView tv;
+	@ViewById(R.id.lv)
+	ListView lv;
+	@ViewById(R.id.ll_loading)
+	View ll_loading;
 	Member member = null;
+	MyListViewAdapter adapter;
+	String[] contents;
+	String[] settings;
 
 	@AfterViews
 	void initUI() {
 		backButton.setVisibility(View.GONE);
 		backWhiteButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
+		rightButton.setVisibility(View.GONE);
 
 		headView.setBackgroundColor(Color.RED);
 		titleButton.setText("个人资料");
 		titleButton.setTextColor(Color.WHITE);
-		// requestData();
+		requestData();
+	}
+
+	static class ViewHolder {
+		TextView tv_setting;
+		TextView tv_content;
+	}
+
+	class MyListViewAdapter extends BaseAdapter {
+
+		@Override
+		public int getCount() {
+			return settings.length;
+		}
+
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			if (convertView == null)
+				convertView = View.inflate(PersonalInfoActivity.this, R.layout.item_personnal_info, null);
+			ViewHolder holder = (ViewHolder) convertView.getTag();
+			if (holder == null) {
+				holder = new ViewHolder();
+				holder.tv_setting = (TextView) convertView.findViewById(R.id.tv_setting);
+				holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
+				convertView.setTag(holder);
+			}
+			holder.tv_setting.setText(settings[position]);
+			holder.tv_content.setText(contents[position]);
+
+			return convertView;
+		}
+
 	}
 
 	public void requestData() {
+		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
@@ -70,6 +125,7 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 					parseToMember(object.toString());
 
 				} else {
+					ll_loading.setVisibility(View.GONE);
 					Toast.makeText(PersonalInfoActivity.this, data.toString(), Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -104,10 +160,34 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 			@Override
 			public void onComplete(Object parseResult) {
 				if (parseResult != null) {
-					tv.setText(parseResult.toString());
+					settings = new String[] { "真实姓名", "身份证号", "性别", "联系电话", "Icq", "邮政编码", "ThumbNail", "账户余额", "积分",
+							"级别" };
+					contents = new String[settings.length];
+					contents[0] = member.RealName;
+					contents[1] = member.IdentityNo;
+					contents[2] = member.GenderString;
+					contents[3] = member.Phone;
+					contents[4] = member.Icq;
+					contents[5] = member.PostNo;
+					contents[6] = member.Thumbnail;
+					contents[7] = member.AccountNumber + "";
+					contents[8] = member.Points + "";
+					contents[9] = member.Level + "";
+					fillData();
 				}
 			}
 		}).execute();
+	}
+
+	void fillData() {
+		ll_loading.setVisibility(View.GONE);
+		if (adapter == null) {
+			adapter = new MyListViewAdapter();
+			lv.setAdapter(adapter);
+		} else {
+			adapter.notifyDataSetChanged();
+		}
+
 	}
 
 	void modify() {

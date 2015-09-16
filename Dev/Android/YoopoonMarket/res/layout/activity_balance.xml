@@ -72,6 +72,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -112,6 +113,8 @@
                 android:layout_below="@id/line"
                 android:text="付款后，预计30分钟到达" />
         </RelativeLayout>
+        
+        
 
         
     </RelativeLayout>

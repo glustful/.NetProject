@@ -49,16 +49,5 @@
             android:drawableLeft="@drawable/category" />
     </LinearLayout>
     
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/tv_firstserve"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/top_search_height"
-        android:layout_marginLeft="50dp"
-        android:background="#66000000"
-        android:gravity="center_vertical"
-        android:paddingLeft="5dp"
-        android:layout_centerVertical="true"
-        android:textColor="@color/white" />
 
 </RelativeLayout>
