@@ -7,64 +7,115 @@
         <i class="icon-gouwuche color-white"></i>
     </div>
 
-<ion-view hide-tabs="true" hide-nav-bar="true">
+<ion-view hide-tabs="false" hide-nav-bar="true">
     <ion-content class="detail-position">
         <!-- 滚动图-->
-            <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" >
-                <ion-slide>
-                    <div class="detail-img">
-                        <img src="page/shopping/img/p0.jpg">
-                    </div>
-                </ion-slide>
-                <ion-slide>
-                    <div class="detail-img">
-                        <img src="page/shopping/img/p0.jpg">
-                    </div>
-                </ion-slide>
-                <ion-slide>
-                    <div class="detail-img">
-                        <img src="page/shopping/img/p0.jpg">
-                    </div>
-                </ion-slide>
-            </ion-slide-box>
+            <!--<ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" >-->
+                <!--<ion-slide>-->
+                    <!--<div class="detail-img">-->
+                        <!--<img src="page/shopping/img/p0.jpg">-->
+                    <!--</div>-->
+                <!--</ion-slide>-->
+                <!--<ion-slide>-->
+                    <!--<div class="detail-img">-->
+                        <!--<img src="page/shopping/img/p0.jpg">-->
+                    <!--</div>-->
+                <!--</ion-slide>-->
+                <!--<ion-slide>-->
+                    <!--<div class="detail-img">-->
+                        <!--<img src="page/shopping/img/p0.jpg">-->
+                    <!--</div>-->
+                <!--</ion-slide>-->
+                <!--<ion-slide>-->
+                    <!--<div class="detail-img">-->
+                        <!--<img src="page/shopping/img/p0.jpg">-->
+                    <!--</div>-->
+                <!--</ion-slide>-->
+                <!--<ion-slide>-->
+                    <!--<div class="detail-img">-->
+                        <!--<img src="page/shopping/img/p0.jpg">-->
+                    <!--</div>-->
+                <!--</ion-slide>-->
+            <!--</ion-slide-box>-->
+        <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" ng-if="content">
+            <ion-slide ng-repeat="item in content">
+                <div class="box">
+                    <img ng-if="item" ng-src="http://img.iyookee.cn/{{item.TitleImg}}" class="img-full" >
+                    <!--{{slide.TitleImg}}-->
+                </div>
+            </ion-slide>
+        </ion-slide-box>
      <!-- 文字详情-->
         <div class="padding ">
-           <p class="font-30">我是花吃  玫瑰鲜花饼10盒礼盒装 云南特产 中秋月饼 零食糕点400g</p>
-            <p class="color-Red">独有3000亩玫瑰基地放心食材，新鲜采摘，新鲜烤制</p>
-            <p class="font-24"><span>售价：</span><span class="detail-price ">￥58</span>&nbsp;<del class="color-silver">原价：68</del></p>
+        <p class="font-30">{{product.Name}}</p>
+        <p class="color-Red">{{product.Subtitte}}</p>
+        <p class="font-24"><span>售价：</span><span class="detail-price ">￥{{product.NewPrice}}</span>&nbsp;<del class="color-silver">原价：{{product.Price}}</del></p>
 
         </div>
         <p class="item stable-bg">
-                <span>
-                    <i class="icon-daishouhuo font-16 balanced"></i>&nbsp;满30元免配送费
-                </span>
-                <span class="float-right">
-                    <i class="icon-daishouhuo font-16 color-Red"></i>&nbsp;已有8888人抢购
-                </span>
+        <span>
+        <i class="icon-daishouhuo font-16 balanced"></i>&nbsp;{{product.Ad2}}
+        </span>
+        <span class="float-right">
+        <i class="icon-daishouhuo font-16 color-Red"></i>&nbsp;已有{{product.Owner}}人抢购
+        </span>
         </p>
         <div class="list padding">
-            <h4 class="font-title">商品评价（188）</h4>
-            <div class="item item-avatar none-border">
-                <img src="page/shopping/img/tt.jpg">
-                <h2>hy****777</h2>
-                <p style="white-space: normal">我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！</p>
-            </div>
-            <div class="item item-avatar none-border">
-                <img src="page/shopping/img/tt.jpg">
-                <h2>hy****777</h2>
-                <p style="white-space: normal">我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！</p>
-            </div>
-
-            <div class="button button-full  text-center light-bg bottom-border " >
-                <p class="font-title" >查看更多评论</p>
-            </div>
-            <div class="padding stable-bg text-center">
-                <p><span class="font-title"> 继续拖动，查看图文详情</span></p>
-            </div>
+        <h4 class="font-title">商品评价（{{Count}}）</h4>
+        <div class="item item-avatar none-border" ng-repeat="item in CommentList">
+        <img src="page/shopping/img/tt.jpg">
+        <h2>hy****777</h2>
+        <p style="white-space: normal">{{item.Content}}</p>
         </div>
-        <!--<div class="div-null"></div>-->
-        <ion-infinite-scroll on-infinite="load_more();">
+        <button class="button button-full  text-center light-bg bottom-border " ng-click="more()">
+            {{tipp}}
+        </button>
+
+        <div class="padding stable-bg text-center">
+        <p><span class="font-title"> 继续拖动，查看图文详情</span></p>
+        </div>
+        </div>
+        <div class="div-null"></div>
+        <div >{{productDetail.Name}}</div>
+        <ion-infinite-scroll on-infinite="moreDataCanBeLoaded();" distance="10%">
         </ion-infinite-scroll>
+
+        <!--<div class="padding ">-->
+           <!--<p class="font-30">我是花吃  玫瑰鲜花饼10盒礼盒装 云南特产 中秋月饼 零食糕点400g</p>-->
+            <!--<p class="color-Red">独有3000亩玫瑰基地放心食材，新鲜采摘，新鲜烤制</p>-->
+            <!--<p class="font-24"><span>售价：</span><span class="detail-price ">￥58</span>&nbsp;<del class="color-silver">原价：68</del></p>-->
+
+        <!--</div>-->
+        <!--<p class="item stable-bg">-->
+                <!--<span>-->
+                    <!--<i class="icon-daishouhuo font-16 balanced"></i>&nbsp;满30元免配送费-->
+                <!--</span>-->
+                <!--<span class="float-right">-->
+                    <!--<i class="icon-daishouhuo font-16 color-Red"></i>&nbsp;已有8888人抢购-->
+                <!--</span>-->
+        <!--</p>-->
+        <!--<div class="list padding">-->
+            <!--<h4 class="font-title">商品评价（188）</h4>-->
+            <!--<div class="item item-avatar none-border">-->
+                <!--<img src="page/shopping/img/tt.jpg">-->
+                <!--<h2>hy****777</h2>-->
+                <!--<p style="white-space: normal">我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！</p>-->
+            <!--</div>-->
+            <!--<div class="item item-avatar none-border">-->
+                <!--<img src="page/shopping/img/tt.jpg">-->
+                <!--<h2>hy****777</h2>-->
+                <!--<p style="white-space: normal">我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！我们周末去爬山吧！</p>-->
+            <!--</div>-->
+
+            <!--<div class="button button-full  text-center light-bg bottom-border " >-->
+                <!--<p class="font-title" >查看更多评论</p>-->
+            <!--</div>-->
+            <!--<div class="padding stable-bg text-center">-->
+                <!--<p><span class="font-title"> 继续拖动，查看图文详情</span></p>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="div-null"></div>-->
+
     </ion-content>
     <div class=" row detail-padding button-position">
         <button class="col button-large assertive-bg none-border p-button" ng-click="go('index.html#/page/car')">立即购买</button>

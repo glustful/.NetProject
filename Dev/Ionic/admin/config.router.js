@@ -52,7 +52,7 @@ angular.module('app')
                     templateUrl: 'app/module/test/view/test.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/test/controller/testController.js']);
                             }]
                     }
@@ -62,7 +62,7 @@ angular.module('app')
                     templateUrl: 'app/module/home/view/home.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/home/controller/homeController.js']);
                             }]
                     }
@@ -80,6 +80,14 @@ angular.module('app')
                             function($ocLazyLoad){
                                 return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
                             }]
+                .state('app.autoRes.focusRes', {
+                    url: '/focusRes',
+                    templateUrl: 'app/module/autoRes/view/focusRes.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function ($ocLazyLoad) {
+                                return $ocLazyLoad.load(['app/module/autoRes/controller/focusResController.js']);
+                            }]
                     }
                 })
                 .state('app.member.memlist',{
@@ -92,6 +100,16 @@ angular.module('app')
                         }]
                     }
                 })
+                .state('app.autoRes.keyRes', {
+                    url: '/keyRes',
+                    templateUrl: 'app/module/autoRes/view/keyRes.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function ($ocLazyLoad) {
+                                return $ocLazyLoad.load(['app/module/autoRes/controller/keyResController.js']);
+                            }]
+                    }
+                })
                 .state('app.member.detail',{
                     url:'detail?id',
                     templateUrl:'app/module/member/view/detail.html',
@@ -99,6 +117,14 @@ angular.module('app')
                         deps:['$ocLazyLoad',
                             function($ocLazyLoad){
                                 return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
+
+                .state('app.autoRes.createKeyRes', {
+                    url: '/createKeyRes',
+                    templateUrl: 'app/module/autoRes/view/createKeyRes.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function ($ocLazyLoad) {
+                                return $ocLazyLoad.load(['app/module/autoRes/controller/keyResController.js']);
                             }]
                     }
                 })
@@ -112,7 +138,7 @@ angular.module('app')
                     templateUrl: 'app/module/comment/view/productComment.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/comment/controller/productCommentController.js']);
                             }]
                     }
@@ -156,7 +182,7 @@ angular.module('app')
                   templateUrl: 'app/module/category/view/index.html',
                   resolve: {
                       deps: ['$ocLazyLoad',
-                          function( $ocLazyLoad ){
+                          function ($ocLazyLoad) {
                               return $ocLazyLoad.load(['app/module/category/controller/indexController.js',
                                   'app/common/scripts/controllers/vectormap.js']);
                           }]
@@ -179,7 +205,7 @@ angular.module('app')
                     template: '<div ui-view class="fade-in-up"></div>',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/Parameter/controller/parameter.js']);
                             }]
                     }
@@ -214,7 +240,7 @@ angular.module('app')
                     templateUrl:'app/module/Product/view/Index.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
                             }]
                     },
@@ -225,7 +251,7 @@ angular.module('app')
                     templateUrl:'app/module/Product/view/Create.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['angularFileUpload','app/module/Product/controller/productController.js']);
                             }]
                     }
@@ -235,7 +261,7 @@ angular.module('app')
                     templateUrl:'app/module/Product/view/Edit.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
                             }]
                     }
@@ -245,7 +271,7 @@ angular.module('app')
                     templateUrl:'app/module/Product/view/Property.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/Product/controller/parameterController.js']);
                             }]
                     }
@@ -271,7 +297,46 @@ angular.module('app')
                             return uiLoad.load(['app/module/order/controller/serviceOrderController.js']);
                         }]
                     }
-                });
+                })
+
+          //地区管理
+                 .state('app.area',{
+                 url: '/area',
+                    template: '<div ui-view class="fade-in-up"></div>',
+                 })
+
+                 .state('app.area.show',{
+                     url:'/show',
+                     templateUrl:'app/module/Area/view/showArea.html',
+                     resolve: {
+                         deps: ['$ocLazyLoad',
+                             function( $ocLazyLoad ){
+                                 return $ocLazyLoad.load(['app/module/Area/controller/showArea.js']);
+                             }]
+                     },
+                     data : { title: '地区列表' }
+                 })
+
+          .state('app.area.createarea',{
+              url:'/createarea',
+              templateUrl:'app/module/Area/view/createArea.html',
+              resolve: {
+                  deps: ['$ocLazyLoad',
+                      function( $ocLazyLoad ){
+                          return $ocLazyLoad.load(['app/module/Area/controller/createArea.js']);
+                      }]
+              }
+          })
+                .state('app.area.editArea',{
+                    url:'/editArea?id',
+                    templateUrl:'app/module/Area/view/editArea.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/Area/controller/editArea.js']);
+                            }]
+                    }
+                })
         }
     ]
 );

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -82,7 +83,18 @@ namespace Zerg.Controllers.Community
             var totalCount = _memberService.GetMemberCount(condition);
             return PageHelper.toJson(new { List = model,TotalCount = totalCount});
 		}
+         //根据userId 获取会员信息
+        public HttpResponseMessage Get(string userId) 
+        {
+            if (string.IsNullOrEmpty(userId) || PageHelper.ValidateNumber(userId)) 
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
+            }
+            var model = _memberService.GetMemberByUserId(Convert.ToInt32(userId));
+            if (model == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "不存在数据"));
+            return PageHelper.toJson(model);
 
+        }
         public HttpResponseMessage Post(MemberModel model)
 		{
             if (model != null) 

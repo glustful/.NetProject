@@ -170,6 +170,33 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     }
                 }
             })
+            .state('page.selectProvince', {
+                url: '/me/selectProvince',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/selectProvince.html',
+                        controller: 'selectAddress'
+                    }
+                }
+            })
+            .state('page.selectCity', {
+                url: '/me/:chatId',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/selectCity.html',
+                        controller: 'TabMeCtrl'
+                    }
+                }
+            })
+            .state('page.newAddress', {
+                url: '/me/newAddress',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/newAddress.html',
+                        controller: 'TabMeCtrl'
+                    }
+                }
+            })
             .state('page.myOrder', {
                 url: '/me/myOrder',
                 views: {
@@ -218,16 +245,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/product-list.html',
-                controller: 'TabShoppingCtrl'
+                controller: 'ShoppongListCtrl'
             }
         }
     })
     .state('page.product-detail', {
-        url: '/shopping/product-detail',
+        url: '/shopping/product-detail?id',
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/product-detail.html',
-                controller: 'TabShoppingCtrl'
+                controller: 'ProductDetail'
             }
         }
     });
