@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Community.Entity.Model.Category;
 using Community.Entity.Model.Product;
 using Community.Entity.Model.ProductDetail;
 using Community.Service.Category;
@@ -106,7 +105,11 @@ namespace Zerg.Controllers.Community
             {
                 Page = condition.Page,
                 PageCount = condition.PageCount,
-               Name = condition.Name
+               Name = condition.Name,
+               IsDescending = condition.IsDescending,
+               OrderBy = condition.OrderBy,
+               PriceBegin = condition.PriceBegin,
+               PriceEnd = condition.PriceEnd
             };
             if (condition.CategoryId!=0 && condition.CategoryId!=null)
             {
