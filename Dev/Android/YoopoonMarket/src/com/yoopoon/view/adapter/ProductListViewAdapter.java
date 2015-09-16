@@ -18,6 +18,8 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,34 +65,29 @@ public class ProductListViewAdapter extends BaseAdapter {
 			productViewHandler = new ProductViewHandler();
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.item_product_list, null);
 			productViewHandler.initViewHandler(convertView);
-			//###############################################################################
-			//                      如下的代码完成对视图和数据的绑定,图片API暂时不可用
-			//###############################################################################
-			/*String url = datas.get(position).optString("MainImg",
-					"http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg");*/
-			String url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
-			productViewHandler.productPhotoImageView.setTag(url);
-			ImageLoader.getInstance().displayImage(url, productViewHandler.productPhotoImageView,
-					MyApplication.getOptions(), MyApplication.getLoadingListener());
-			productViewHandler.productTitleTextView.setText(datas.get(position).optString("Name", ""));
-			productViewHandler.productSubtitleTextView.setText(datas.get(position).optString("Subtitte", ""));
-			productViewHandler.productAdvertisemenTextView.setText(datas.get(position).optString("Ad1", ""));
-			productViewHandler.productPricTextView.setText(datas.get(position).optString("Price", ""));
-			productViewHandler.productSalesValuemtTextView.setText(datas.get(position).optString("Owner", ""));
-			convertView.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					//跳转到产品详情
-					/*Intent intent = new Intent(mContext, ProductDetailActivity_.class);
-					mContext.startActivity(intent);*/
-					Toast.makeText(mContext, "Testing" + position, Toast.LENGTH_SHORT).show();
-				}
-			});
-			//###############################################################################
-			//                      如上的代码完成对视图和数据的绑定
-			//###############################################################################
 			convertView.setTag(productViewHandler);
 		}
+		String url = mContext.getString(R.string.url_image) + datas.get(position).optString("MainImg");
+		productViewHandler.productPhotoImageView.setTag(url);
+		if (!datas.get(position).optString("MainImg").equals("null")) {
+			ImageLoader.getInstance().displayImage(url, productViewHandler.productPhotoImageView,
+					MyApplication.getOptions(), MyApplication.getLoadingListener());
+		}
+		productViewHandler.productTitleTextView.setText(datas.get(position).optString("Name", ""));
+		productViewHandler.productSubtitleTextView.setText(datas.get(position).optString("Subtitte", ""));
+		productViewHandler.productAdvertisemenTextView.setText(datas.get(position).optString("Ad1", ""));
+		productViewHandler.productPricTextView.setText(datas.get(position).optString("Price", ""));
+		productViewHandler.productSalesValuemtTextView.setText(datas.get(position).optString("Owner", ""));
+		convertView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Bundle bundle = new Bundle();
+				bundle.putString("productId", datas.get(position).optString("Id"));
+				Intent intent = new Intent(mContext, ProductDetailActivity_.class);
+				intent.putExtras(bundle);
+				mContext.startActivity(intent);
+			}
+		});
 		return convertView;
 	}
 	/**

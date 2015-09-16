@@ -33,6 +33,12 @@ import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.utils.Utils;
 import com.yoopoon.market.view.FixGridLayout;
 
+/**
+ * @ClassName: ProductClassifyActivity
+ * @Description: 产品分类activity
+ * @author: 徐阳会
+ * @date: 2015年9月16日 上午9:09:25
+ */
 @EActivity(R.layout.activity_category)
 public class ProductClassifyActivity extends MainActionBarActivity {
 	@ViewById(R.id.et_search_product)
@@ -72,11 +78,9 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 		});
 		requestData();
 	}
-
 	void requestData() {
 		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
@@ -104,14 +108,12 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 					ll_loading.setVisibility(View.GONE);
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
 			}
-		}.setUrl(getString(R.string.url_category_get)).setRequestMethod(RequestMethod.eGet).notifyRequest();
+		}.setUrl(getString(R.string.url_category_get)).addParam("id", "0").setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
-
 	void calcCount() {
 		int sort = categoryList.get(0).sort;
 		int count = 0;
@@ -127,11 +129,9 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 		for (Integer i : counts)
 			i = i / 4 + 1;
 	}
-
 	void initList() {
 		WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
 		int width = wm.getDefaultDisplay().getWidth() / 5;
-
 		Collections.sort(categoryList, comparator);
 		calcCount();
 		int sort = -1;
@@ -167,7 +167,8 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 				count += 2;
 			}
 			TextView tv = new TextView(ProductClassifyActivity.this);
-			LayoutParams params = new LayoutParams(200, LayoutParams.WRAP_CONTENT);;
+			LayoutParams params = new LayoutParams(200, LayoutParams.WRAP_CONTENT);
+			;
 			params.setMargins(5, 10, 10, 5);
 			tv.setLayoutParams(params);
 			tv.setTextSize(14);
@@ -176,23 +177,28 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 			tv.setClickable(true);
 			tv.setTextColor(Color.GRAY);
 			tv.setText(entity.name);
+			tv.setTag(entity.id);
 			FixGridLayout ll = (FixGridLayout) ll_category.getChildAt(count - 1);
 			ll.addView(tv, params);
 			tv.setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					TextView tv = (TextView) v;
 					String text = tv.getText().toString().trim();
-					Toast.makeText(ProductClassifyActivity.this, text, Toast.LENGTH_SHORT).show();
+					// Toast.makeText(ProductClassifyActivity.this, text, Toast.LENGTH_SHORT).show();*/
+					Bundle bundle = new Bundle();
+					bundle.putString("classificationName", text);
+					bundle.putString("classificationId", tv.getTag().toString());
+					Intent intent = new Intent(ProductClassifyActivity.this, ProductList_.class);
+					intent.putExtras(bundle);
+					startActivity(intent);
 				}
 			});
 		}
 		ll_category.removeViewAt(ll_category.getChildCount() - 1);
-
 		ll_loading.setVisibility(View.GONE);
-
 	}
+
 	Comparator<CategoryEntity> comparator = new Comparator<CategoryEntity>() {
 		@Override
 		public int compare(CategoryEntity lhs, CategoryEntity rhs) {
@@ -206,15 +212,12 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 	public void backButtonClick(View v) {
 		finish();
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
 	}
-
 	@Override
 	public Boolean showHeadView() {
 		return true;

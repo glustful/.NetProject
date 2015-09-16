@@ -13,9 +13,11 @@
 package com.yoopoon.market.fragment;
 
 import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -26,10 +28,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.advertisement.ADController;
 import com.yoopoon.component.YoopoonServiceController;
 import com.yoopoon.market.ProductDetailActivity_;
@@ -42,6 +47,7 @@ import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.ResponseData.ResultState;
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
 import com.yoopoon.market.view.ExpandableHeightGridView;
+import com.yoopoon.market.view.MyGridView;
 import com.yoopoon.market.view.NoScrollGridView;
 import com.yoopoon.view.adapter.ProductGridViewAdapter;
 
@@ -51,12 +57,17 @@ public class ShopFragment extends Fragment {
 	private YoopoonServiceController serviceController;
 	private View rootView;
 	private ArrayList<String> imgs; // 存储顶端的广告图片地址
-	private NoScrollGridView commodityGridView;
+	private MyGridView commodityGridView;
 	private ProductGridViewAdapter mProductGridViewAdapter;
-	private TextView beforePriceTextView; // 折扣前价格
 	private TextView burstPackageTextView;
-	private ImageView burstPackageImageView;
 	private static final String TAG = "ShopFragment";
+	private ArrayList<JSONArray> servicesArrayList;
+	//首页推荐商品控件
+	private ImageView burstPackageImageView;//套餐图片
+	private TextView beforePriceTextView; // 折扣前价格
+	private TextView currentPriceTextView;//当前价格
+	private TextView burstPackageNameTextView; //套餐名称
+	private Button salesVolumeButton;
 
 	@Override
 	@Nullable
@@ -73,6 +84,9 @@ public class ShopFragment extends Fragment {
 			rootView = inflater.inflate(R.layout.fragment_shop, null);
 			// 获取套餐折扣价后加上划线
 			beforePriceTextView = (TextView) rootView.findViewById(R.id.tv_fragment_before_price);
+			currentPriceTextView = (TextView) rootView.findViewById(R.id.current_price_textview);
+			burstPackageNameTextView = (TextView) rootView.findViewById(R.id.package_name_textview);
+			salesVolumeButton = (Button) rootView.findViewById(R.id.has_buy_button);
 			beforePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 			// 爆款套餐和省到不行加粗样式设置
 			burstPackageTextView = (TextView) rootView.findViewById(R.id.btn_burstpackage);
@@ -89,57 +103,13 @@ public class ShopFragment extends Fragment {
 					mContext.startActivity(intent);
 				}
 			});
-			// ###############################################################################
-			// 如下的代码只做API出来前的测试用途
-			// ###############################################################################
-			/*
-			 * burstPackageTextView.setOnClickListener(new OnClickListener() {
-			 * @Override public void onClick(View v) { Intent intent = new Intent(mContext,
-			 * ProductClassifyActivity_.class); startActivity(intent); } });
-			 */
-			TextView saveMoneyTextView = (TextView) rootView.findViewById(R.id.btn_save_money);
-			saveMoneyTextView.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(mContext, ProductList_.class);
-					Bundle bundle = new Bundle();
-					bundle.putString("productClassification", "云南特产");
-					intent.putExtras(bundle);
-					startActivity(intent);
-				}
-			});
-			// ###############################################################################
-			// 如上的代码只做API出来前的测试用途
-			// ###############################################################################
 			mADController = new ADController(mContext);
 			serviceController = new YoopoonServiceController(mContext);
-			commodityGridView = (NoScrollGridView) rootView.findViewById(R.id.gridview_commodity);
-			// 测试用数据
-			ArrayList<JSONObject> arrayList = new ArrayList<JSONObject>();
-			for (int i = 0; i < 10; i++) {
-				JSONObject jsonObject = new JSONObject();
-				try {
-					jsonObject.put("productName", "方便面" + i);
-					jsonObject.put("currentPrice", "80" + i);
-					jsonObject.put("beforePrice", "180" + i);
-					arrayList.add(jsonObject);
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-			/*
-			 * mProductGridViewAdapter = new ProductGridViewAdapter(mContext, arrayList);
-			 * commodityGridView.setAdapter(mProductGridViewAdapter);
-			 */// 对Fragment_shop中的视图控件初始化和设置
-			/*
-			 * mProductGridViewAdapter = new ProductGridViewAdapter(mContext, arrayList);
-			 * commodityGridView.setAdapter(mProductGridViewAdapter);
-			 */// 对Fragment_shop中的视图控件初始化和设置
+			commodityGridView = (MyGridView) rootView.findViewById(R.id.gridview_commodity);
 			initShopFragment();
 		}
 		return rootView;
 	}
-
 	/**
 	 * @Title: initShopFragment
 	 * @Description: 初始化和设置视图控件
@@ -150,9 +120,20 @@ public class ShopFragment extends Fragment {
 		requestProduct();
 		LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.linearlayout_fragment_shop);
 		linearLayout.addView(mADController.getRootView(), 0);
-		linearLayout.addView(serviceController.getRootView(), 1);
+		//linearLayout.addView(serviceController.getRootView(), 1);
 	}
-
+	private void initRecommendProduct(JSONObject jsonObject) {
+		burstPackageNameTextView.setText(jsonObject.optString("Name", ""));
+		currentPriceTextView.setText("RMB" + jsonObject.optString("Price", ""));
+		beforePriceTextView.setText("折扣前" + jsonObject.optString("NewPrice", ""));
+		salesVolumeButton.setText("已有" + jsonObject.optString("Owner", "0") + "人抢购");
+		String urlString = jsonObject.optString("MainImg", "");
+		ImageLoader.getInstance().displayImage(urlString, burstPackageImageView);
+	}
+	/**
+	 * @Title: requestAdvertisements
+	 * @Description: 获取广告信息
+	 */
 	private void requestAdvertisements() {
 		if (imgs == null)
 			new RequestAdapter() {
@@ -172,16 +153,12 @@ public class ShopFragment extends Fragment {
 						}
 					}
 				}
-
 				@Override
 				public void onProgress(ProgressMessage msg) {
 				}
 			}.setUrl("/api/Channel/GetTitleImg").setRequestMethod(RequestMethod.eGet).addParam("channelName", "banner")
 					.notifyRequest();
 	}
-
-	private ArrayList<JSONArray> servicesArrayList;
-
 	/**
 	 * @Title: requestServices
 	 * @Description: 获取首页优服务
@@ -202,7 +179,6 @@ public class ShopFragment extends Fragment {
 						}
 					}
 				}
-
 				@Override
 				public void onProgress(ProgressMessage msg) {
 				}
@@ -210,10 +186,8 @@ public class ShopFragment extends Fragment {
 					.addParam("ChannelName", "活动").notifyRequest();
 		}
 	}
-
 	private void requestProduct() {
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONArray jsonArray;
@@ -223,6 +197,8 @@ public class ShopFragment extends Fragment {
 						mProductGridViewAdapter = new ProductGridViewAdapter(mContext,
 								JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
 						commodityGridView.setAdapter(mProductGridViewAdapter);
+						//加载推荐套餐内容
+						initRecommendProduct(JSONArrayConvertToArrayList.convertToArrayList(jsonArray).get(0));
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -230,7 +206,6 @@ public class ShopFragment extends Fragment {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}

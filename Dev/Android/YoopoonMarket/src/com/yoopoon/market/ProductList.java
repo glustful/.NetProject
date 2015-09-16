@@ -67,7 +67,9 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 	private EditText productBeginPriceEditText, productEndPriceEditText;
 	private Button resetSortButton, cancelSortButton;
 	private static int priceBegain = 0, priceEnd = 0;
-	//排序状态码 0对应空，1对应低价到高级，2对应高价到低价，3对应低销量到高销量，4对应高销量到低销量
+	private String classificationId; //从其他activity过来的分类id
+	private String titleString;
+	//排序状态码 0对应空，1对应低价到高，2对应高价到低价，3对应低销量到高销量，4对应高销量到低销量
 	private static int sortStatusCode = 0;
 	//存储传送到服务器的参数
 	//配置排序的四个按钮
@@ -93,8 +95,8 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 		titleButton.setVisibility(View.VISIBLE);
 		backButton.setVisibility(View.VISIBLE);
 		Bundle bundle = getIntent().getExtras();
-		String titleString = bundle.getString("productClassification");
-		String productClassificationId = bundle.getString("classification");
+		titleString = bundle.getString("classificationName");
+		classificationId = bundle.getString("classificationId");
 		titleButton.setText(titleString);
 		backButton.setText("后退");
 		//测试使用
@@ -132,8 +134,6 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 			public void onClick(View v) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 				View sortProductView = View.inflate(mContext, R.layout.dialog_set_sort_method, null);
-				/*private Button resetSortButton, cancelSortButton;
-				private TextView sortByPriceTextView, sortBySalesVolumeTextView;*/
 				//视图控件获取和初始化
 				resetSortButton = (Button) sortProductView.findViewById(R.id.btn_reset_sort_method);
 				cancelSortButton = (Button) sortProductView.findViewById(R.id.btn_cancel_sort_method);
@@ -253,6 +253,7 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 				screenPriceDialog.dismiss();
 				break;
 			case R.id.btn_reset_sort_method:
+				sortStatusCode = 0;
 				settingSortMethodButton.setText("综合排序");
 				sortDialog.dismiss();
 				break;
@@ -263,64 +264,55 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 				//设置排序状态码
 				sortStatusCode = 1;
 				settingSortMethodButton.setText("低价到高价");
+				screenPrice();
 				sortDialog.dismiss();
 				break;
 			case R.id.btn_sort_by_price_from_higher://高价到低价
 				//设置排序状态码
 				sortStatusCode = 2;
 				settingSortMethodButton.setText("高价到低价");
+				screenPrice();
 				sortDialog.dismiss();
 				break;
 			case R.id.btn_sort_by_sales_volume_from_lower://低销量到高销量
 				//设置排序状态码
 				sortStatusCode = 3;
 				settingSortMethodButton.setText("低销量到高销量");
+				screenPrice();
 				sortDialog.dismiss();
 				break;
 			case R.id.btn_sort_by_sales_volume_from_higher://高销量到低销量
 				//设置排序状态码
 				sortStatusCode = 4;
 				settingSortMethodButton.setText("高销量到低销量");
+				screenPrice();
 				sortDialog.dismiss();
 				break;
 			default:
 				break;
 		}
 	}
+	//###################################################################################################
+	//                                     注意：API只提供了价格排序，销量排序为提供
+	//###################################################################################################
 	private void screenPrice() {
 		HashMap<String, String> hashMap = new HashMap<String, String>();
 		//获取排序参数,同时设置参数到Map中
-		/*if (settingSortMethodButton.getText().equals("综合排序")) {
-			hashMap.put("IsDescending", "");
-			hashMap.put("OrderBy", "");
-		} else if ((settingSortMethodButton.getText().equals("按照低价到高价排序"))) {
-			hashMap.put("IsDescending", "true");
-			hashMap.put("OrderBy", "OrderByPrice");
-		} else if (settingSortMethodButton.getText().equals("按照高价到低价排序")) {
-			hashMap.put("IsDescending", "false");
-			hashMap.put("OrderBy", "");
-		} else if (settingSortMethodButton.getText().equals("按照最低到最高销量排序")) {
-			hashMap.put("IsDescending", "true");
-			hashMap.put("OrderBy", "");
-		} else if (settingSortMethodButton.getText().equals("按照最高到最低销量排序")) {
-			hashMap.put("IsDescending", "false");
-			hashMap.put("OrderBy", "");
-		}*/
 		if (sortStatusCode == 0) {
 			hashMap.put("IsDescending", "");
 			hashMap.put("OrderBy", "");
 		} else if (sortStatusCode == 1) {
-			hashMap.put("IsDescending", "true");
+			hashMap.put("IsDescending", "false");
 			hashMap.put("OrderBy", "OrderByPrice");
 		} else if (sortStatusCode == 2) {
-			hashMap.put("IsDescending", "false");
-			hashMap.put("OrderBy", "");
-		} else if (sortStatusCode == 3) {
 			hashMap.put("IsDescending", "true");
-			hashMap.put("OrderBy", "");
-		} else if (sortStatusCode == 4) {
+			hashMap.put("OrderBy", "OrderByPrice");
+		} else if (sortStatusCode == 3) {
 			hashMap.put("IsDescending", "false");
-			hashMap.put("OrderBy", "");
+			hashMap.put("OrderBy", "OrderByPrice");
+		} else if (sortStatusCode == 4) {
+			hashMap.put("IsDescending", "true");
+			hashMap.put("OrderBy", "OrderByPrice");
 		}
 		//获取分类参数（等待API完成）
 		//获取价格参数
@@ -332,6 +324,9 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 		}
 		requsetProductList(hashMap);
 	}
+	//###################################################################################################
+	//                                     注意：API只提供了价格排序，销量排序为提供
+	//###################################################################################################
 	@Override
 	public void backButtonClick(View v) {
 		finish();

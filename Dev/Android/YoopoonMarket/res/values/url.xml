@@ -23,7 +23,7 @@
     <string name="url_delete_address">/api/memberaddress/delete</string>
 
     <!-- 分类 -->
-    <string name="url_category_get">/api/category/get</string>
+    <string name="url_category_get">/api/category/getchildbyfatherid</string>
 
     
     <!-- 地区 -->
