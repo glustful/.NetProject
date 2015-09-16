@@ -16,17 +16,18 @@
 </div>
 <div class="bar" style="top:100px">
     <label class="col text-center">
-        <select  class="none-border lable-size font-12">
-            <option>综合排序</option>
-            <option selected="orderByPrice()">价格</option>
-            <option ng-click="">销量</option>
+        <select  class="none-border lable-size font-12" ng-change="change(select)" ng-model="select">
+            <option value="0" ng-selected>综合排序</option>
+            <option value="1">价格</option>
+            <option value="2">销量</option>
         </select>
     </label>
     <label class="col text-center">
-        <select class="none-border lable-size font-12">
-            <option>HTML</option>
-            <option selected>筛选</option>
-            <option>JavaScript</option>
+        <select class="none-border lable-size font-12" ng-change="selectPrice(selected)" ng-model="selected">
+            <!--<option>HTML</option>-->
+            <option value="0">筛选</option>
+            <option value="1">价格</option>
+            <!--<option>JavaScript</option>-->
         </select>
     </label>
 </div>
@@ -38,9 +39,11 @@
     <!--&lt;!&ndash;<div class="col-20 stable-bg col-offset padding-top8">特产品类</div>&ndash;&gt;-->
 <!--</div>-->
 
-<ion-view hide-tabs="true" hide-nav-bar="true">
-<ion-content class="content  " style="top: 138px" >
-    <ion-list>
+<ion-view hide-tabs="true" hide-nav-bar="true" >
+
+<ion-content class="content " style="top: 138px;" ng-show="productShow">
+
+    <ion-list >
         <ion-item ng-repeat="item in list"  class="row" ui-sref="page.product-detail({id:item.Id})">
             <div class="product col col-25">
                 <img src="http://img.iyookee.cn/{{item.MainImg}}" alt="" />
@@ -112,4 +115,8 @@
 
     </ion-list>
 </ion-content>
+    <ion-content class="selectPrice content" ng-show="productPrice"  ng-class="{'price':productPrice}" style="top: 138px" id="price">
+        <div style="padding-top:50px;font-size:18px;">价钱:<input style="height: 30px" ng-model="sech.PriceBegin">—<input style="height: 30px" ng-model="sech.PriceEnd"></div>
+        <button class="button button-full light submit-btn" ng-click="submit()" >确认</button>
+    </ion-content>
 </ion-view>

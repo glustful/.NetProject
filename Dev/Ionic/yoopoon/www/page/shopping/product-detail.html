@@ -70,14 +70,13 @@
         <button class="button button-full  text-center light-bg bottom-border " ng-click="more()">
             {{tipp}}
         </button>
-
+            <div >{{productDetail.Name}}</div>
         <div class="padding stable-bg text-center">
         <p><span class="font-title"> 继续拖动，查看图文详情</span></p>
         </div>
         </div>
         <div class="div-null"></div>
-        <div >{{productDetail.Name}}</div>
-        <ion-infinite-scroll on-infinite="moreDataCanBeLoaded();" distance="10%">
+        <ion-infinite-scroll ng-if="moreDataCanBeLoaded" on-infinite="load_detail();" distance="10%">
         </ion-infinite-scroll>
 
         <!--<div class="padding ">-->

@@ -251,3 +251,22 @@
     height: 40px;
     color: red;
 }
+
+.selectPrice{
+    background-color: #eeeeee;
+    height: 0;
+    width: 100%;
+    -webkit-transition: all,1.5s;
+   top:138px;
+}
+.price{
+    height:1000px;
+}
+.submit-btn{
+    background-color: #ff3000;
+    font-size:24px;
+    top:100px;
+    left:0;
+
+
+}
