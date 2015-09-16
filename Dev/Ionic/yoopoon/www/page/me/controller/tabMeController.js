@@ -79,6 +79,7 @@ app.controller('selectAddress', function($scope, $stateParams) {
 
 
 });
+var httpimguri='';
 app.controller('TabMeCtrl', function($scope,$http, $ionicSlideBoxDelegate) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -143,7 +144,6 @@ app.controller('TabMeCtrl', function($scope,$http, $ionicSlideBoxDelegate) {
         UpdUser:'1',
         UpdTime:'2015-08-09'
     };
-    var httpimguri='';
     $scope.save = function() {
         if (document.getElementById("Uptext").innerText == '正在上传..') {
             alert("头像正在上传,请稍等!");
