@@ -105,7 +105,11 @@ namespace Zerg.Controllers.Community
             {
                 Page = condition.Page,
                 PageCount = condition.PageCount,
-               Name = condition.Name
+               Name = condition.Name,
+               IsDescending = condition.IsDescending,
+               OrderBy = condition.OrderBy,
+               PriceBegin = condition.PriceBegin,
+               PriceEnd = condition.PriceEnd
             };
             if (condition.CategoryId!=0 && condition.CategoryId!=null)
             {

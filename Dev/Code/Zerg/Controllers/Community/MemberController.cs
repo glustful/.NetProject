@@ -8,6 +8,12 @@ using Zerg.Models.Community;
 using System.Net.Http;
 using Zerg.Common;
 using System.Web.Http.Cors;
+using YooPoon.WebFramework.User;
+using YooPoon.WebFramework.User.Entity;
+using YooPoon.WebFramework.User.Services;
+using YooPoon.WebFramework.Authentication.Entity;
+using CRM.Service.Level;
+using CRM.Entity.Model;
 
 namespace Zerg.Controllers.Community
 {
@@ -16,11 +22,16 @@ namespace Zerg.Controllers.Community
 	public class MemberController : ApiController
 	{
 		private readonly IMemberService _memberService;
-
-		public MemberController(IMemberService memberService)
+        private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
+        private readonly ILevelService _levelService;
+        public MemberController(IMemberService memberService, IUserService userService, IRoleService roleService, ILevelService levelService)
 		{
 			_memberService = memberService;
-		}
+            _userService = userService;
+            _roleService = roleService;
+            _levelService = levelService;
+        }
 
         public HttpResponseMessage Get(int id)
 		{
@@ -99,6 +110,8 @@ namespace Zerg.Controllers.Community
 		{
             if (model != null) 
             {
+                //if (!PageHelper.IsMobilePhone(model.Phone)) { return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号码或电话号码不合法")); }
+               
                 var entity = new MemberEntity
                 {
                     RealName = model.RealName,
@@ -123,7 +136,112 @@ namespace Zerg.Controllers.Community
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "post  失败")); 
 		}
+        /// <summary>
+        /// 新用户注册
+        /// </summary>
+        public HttpResponseMessage SignUp(MemberModel model)
+        {
+            var user = _userService.GetUserByName(model.UserName);
+            if (user != null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
+            }
+            var newUser = new UserBase
+            {
+                UserName = model.UserName,
+                Password = model.Password,
+                RegTime = DateTime.Now,
+                NormalizedName = model.UserName.ToLower(),
+                Status = 0
+            };
+            PasswordHelper.SetPasswordHashed(newUser, model.Password);
+            if (_userService.InsertUser(newUser).Id <= 0)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "注册用户失败，请重试"));
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
+          
+        }
+        /// <summary>
+        /// 前端添加新用户
+        /// </summary>
+        /// <param name="memberModel">经纪人参数</param>
+        /// <returns>添加经纪人结果</returns>
+        [HttpPost]
+        public HttpResponseMessage AddMember([FromBody]MemberModel memberModel)
+        {
+            var validMsg = "";
+            if (!memberModel.ValidateModel(out validMsg))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误，请重新输入"));
+            }
 
+            if (memberModel.Password != memberModel.SecondPassword)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "两次密码输入不一致"));
+            }
+
+            var user = _userService.GetUserByName(memberModel.UserName);
+            if (user != null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
+            }
+            var condition = new MemberSearchCondition
+            {
+                OrderBy = EnumMemberSearchOrderBy.OrderById,
+                Phone = memberModel.Phone
+            };
+
+            //判断user表和Broker表中是否存在用户名
+            int user2 = _memberService.GetMemberCount(condition);
+            if (user2 != 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号已经存在"));
+
+            var memRole = _roleService.GetRoleByName("user");
+
+            //User权限缺少时自动添加
+            if (memRole == null)
+            {
+                memRole = new Role
+                {
+                    RoleName = "user",
+                    RolePermissions = null,
+                    Status = RoleStatus.Normal,
+                    Description = "刚注册的用户默认归为普通用户user"
+                };
+            }
+
+            var newUser = new UserBase
+            {
+                UserName = memberModel.UserName,
+                Password = memberModel.Password,
+                RegTime = DateTime.Now,
+                NormalizedName = memberModel.UserName.ToLower(),
+                //注册用户添加权限
+                UserRoles = new List<UserRole>(){new UserRole()
+                {
+                    Role = memRole
+                }},
+                Status = 0
+            };
+
+            PasswordHelper.SetPasswordHashed(newUser, memberModel.Password);
+
+            var model = new MemberEntity();
+            model.UserId = _userService.InsertUser(newUser).Id;
+            model.RealName = memberModel.UserName;
+            model.Phone = memberModel.Phone;
+            model.Points=0;
+            model.IdentityNo="";
+            model.Icq="";
+            model.PostNo="";
+            model.AccountNumber=0;
+            model.AddTime=DateTime.Now;
+            model.Gender=EnumGender.Male;
+            model.UpdTime =DateTime.Now;
+            model.UpdUser=0;
+            var newMember = _memberService.Create(model);
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
+        }
 		public HttpResponseMessage Put(MemberModel model)
 		{
             if (model != null)
