@@ -245,7 +245,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/product-list.html',
-                controller: 'TabShoppingCtrl'
+                controller: 'ShoppongListCtrl'
             }
         }
     })
@@ -254,7 +254,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/product-detail.html',
-                controller: 'TabShoppingCtrl'
+                controller: 'ProductDetail'
             }
         }
     });

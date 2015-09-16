@@ -59,7 +59,7 @@ namespace Zerg.Controllers.Community
 				Updtime = c.Updtime,
 			}).ToList();
             var totalCount = _memberAddressService.GetMemberAddressCount(condition);
-            return PageHelper.toJson(new { List = model, TotalCount = totalCount });
+            return PageHelper.toJson(new { List = model, Condition = condition, toTalCount = totalCount });
 		}
 
         public HttpResponseMessage Post([FromBody]MemberAddressModel model)

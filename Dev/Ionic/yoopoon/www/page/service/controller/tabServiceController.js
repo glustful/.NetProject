@@ -136,10 +136,40 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeou
                         $scope.selected5 = false;
                         break;
                 }
-
-            };
-
-        })
-
-
-
+                    $scope.selected1=false;
+                break;
+            case 2:
+                if($scope.selected2==false)
+                {
+                    $scope.selected2 = true;
+                    return;
+                }
+                    $scope.selected2=false;
+                break;
+            case 3:
+                if($scope.selected3==false)
+                {
+                    $scope.selected3 = true;
+                    return;
+                }
+                $scope.selected3=false;
+                break;
+            case 4:
+                if($scope.selected4==false)
+                {
+                    $scope.selected4 = true;
+                    return;
+                }
+                $scope.selected4=false;
+                break;
+            case 5:
+                if($scope.selected5==false)
+                {
+                    $scope.selected5 = true;
+                    return;
+                }
+                $scope.selected5=false;
+                break;
+        }
+    }
+    }});
