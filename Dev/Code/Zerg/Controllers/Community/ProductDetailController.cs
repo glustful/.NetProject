@@ -1,12 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Community.Entity.Model.ProductDetail;
 using Community.Service.ProductDetail;
+using Zerg.Common;
 using Zerg.Models.Community;
 
 namespace Zerg.Controllers.Community
 {
+    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
 	public class ProductDetailController : ApiController
 	{
 		private readonly IProductDetailService _productDetailService;
@@ -16,9 +21,9 @@ namespace Zerg.Controllers.Community
 			_productDetailService = productDetailService;
 		}
 
-		public ProductDetailModel Get(int id)
+		public HttpResponseMessage Get(int id)
 		{
-			var entity =_productDetailService.GetProductDetailById(id);
+			var entity =_productDetailService.GetProductDetailById(id);		  
 			var model = new ProductDetailModel
 			{
 				Id = entity.Id,		
@@ -36,9 +41,9 @@ namespace Zerg.Controllers.Community
                 UpdTime = entity.UpdTime,			
                 Ad1 = entity.Ad1,		
                 Ad2 = entity.Ad2,			
-                Ad3 = entity.Ad3,		
+                Ad3 = entity.Ad3		
             };
-			return model;
+			return PageHelper.toJson(model);
 		}
 
 		public List<ProductDetailModel> Get(ProductDetailSearchCondition condition)
