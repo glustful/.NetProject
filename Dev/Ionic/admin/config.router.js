@@ -227,7 +227,7 @@ angular.module('app')
                 //商品管理页
                 .state('app.product',{
                     url: '/product',
-                    template: '<div ui-view class="fade-in-up"></div>',
+                    template: '<div ui-view class="fade-in-up"></div>'
                     //resolve: {
                     //    deps: ['$ocLazyLoad',
                     //        function( $ocLazyLoad ){
@@ -302,7 +302,7 @@ angular.module('app')
           //地区管理
                  .state('app.area',{
                  url: '/area',
-                    template: '<div ui-view class="fade-in-up"></div>',
+                    template: '<div ui-view class="fade-in-up"></div>'
                  })
 
                  .state('app.area.show',{
