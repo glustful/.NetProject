@@ -55,7 +55,7 @@
 //               });
 
 
-app.controller('selectAddress', function($scope, $stateParams) {
+app.controller('selectAddress', function($scope, $routeParams) {
 
     $scope.chats = [
         {
@@ -78,9 +78,7 @@ app.controller('selectAddress', function($scope, $stateParams) {
     };
 
 
-});
-var httpimguri='';
-app.controller('TabMeCtrl', function($scope,$http, $ionicSlideBoxDelegate) {
+});app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$stateParams) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -114,18 +112,24 @@ app.controller('TabMeCtrl', function($scope,$http, $ionicSlideBoxDelegate) {
 
   //我的订单
   $scope.tabIndex=1;
-  $scope.getOrderList1=function(){
-    $scope.tabIndex=1
-  }
-  $scope.getOrderList2=function(){
-    $scope.tabIndex=2
-  }
-  $scope.getOrderList3=function(){
-    $scope.tabIndex=3
-  }
-  $scope.getOrderList4=function(){
-    $scope.tabIndex=4
-  }
+  $scope.getOrderList=function(tabIndex){
+    $scope.tabIndex=tabIndex;
+  };
+ function tab(){
+     if($stateParams.tabIndex==1){
+         $scope.tabIndex=1;
+     }
+     if($stateParams.tabIndex==2){
+         $scope.tabIndex=2;
+     }
+     if($stateParams.tabIndex==3){
+         $scope.tabIndex=3;
+     }
+     if($stateParams.tabIndex==4){
+         $scope.tabIndex=4;
+     }
+ }
+    tab();
 
     //个人资料修改
     $scope.imgUrl=SETTING.ImgUrl;
@@ -144,6 +148,7 @@ app.controller('TabMeCtrl', function($scope,$http, $ionicSlideBoxDelegate) {
         UpdUser:'1',
         UpdTime:'2015-08-09'
     };
+    var httpimguri='';
     $scope.save = function() {
         if (document.getElementById("Uptext").innerText == '正在上传..') {
             alert("头像正在上传,请稍等!");
