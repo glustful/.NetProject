@@ -98,9 +98,9 @@ app.controller('TabMeCtrl', function($http,$scope,$state,$AuthService, $ionicSli
 
     //获取当前通用户信息
     $scope.currentuser= AuthService.CurrentUser();
-    $http.get(SETTING.ApiUrl+'/BrokerInfo/GetBrokerByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
+    $http.get(SETTING.ApiUrl+'/Member/GetMemberByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
         .success(function(response) {
-            $scope.olduser=response;
+            $scope.oldMem=response;
             if(response.IsInvite==1)
             {
 

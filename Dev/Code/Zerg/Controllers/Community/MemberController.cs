@@ -152,6 +152,10 @@ namespace Zerg.Controllers.Community
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "获取会员信息失败"));
             }
             var member = _memberService.GetMemberByUserId(userId);
+            if (member == null) 
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "你还不是会员"));
+            }
             return PageHelper.toJson(member);
         }
         /// <summary>
