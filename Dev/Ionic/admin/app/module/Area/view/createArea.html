@@ -1,0 +1,23 @@
+﻿<div><h1>添加信息</h1></div>
+<div class="div-body" ng-controller="AreaCreateCtr">
+    <div style="padding:50px 50px 10px;">
+        <form class="form-horizontal" role="form" name="form"enctype="multipart/form-data" ng-submit="save()">
+            <div class="input-group-sm">
+                <span class="input-group-addon">城市编码</span>
+                <input type="text" class="form-control" ng-model="area.Codeid" id="Codeid" name="Codeid" placeholder="填入城市编码" />
+            </div>
+            <div class="input-group-sm">
+                <span class="input-group-addon">城市名称</span>
+                <input type="text" class="form-control" ng-model="area.Name" id="Name" name="Name" placeholder="填入城市名称" />
+            </div>
+            <div class="input-group-sm">
+                <span class="input-group-addon">城市父级编号</span>
+                <input type="text" class="form-control" ng-model="area.Parentid" id="Parent_id" name="Parent_id" placeholder="填入城市父级编号" />
+            </div>
+            <br />
+            <div class="text-center">
+                <button id="btn_ok" type="submit" class="btn btn-primary">添加</button>
+            </div>
+        </form>
+    </div>
+</div>

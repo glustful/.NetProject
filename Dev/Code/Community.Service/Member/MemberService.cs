@@ -72,6 +72,20 @@ namespace Community.Service.Member
             }
 		}
 
+        public MemberEntity GetMemberByUserId(int userId)
+        {
+            try
+            {
+                return _memberRepository.Table.FirstOrDefault(p => p.UserId == userId);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
+
+
 		public IQueryable<MemberEntity> GetMembersByCondition(MemberSearchCondition condition)
 		{
 			var query = _memberRepository.Table;

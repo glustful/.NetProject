@@ -20,6 +20,7 @@ namespace Zerg.Models.Community
         /// 商品ID
         /// </summary>
         public int ProductId { get; set; }
+        public string ProductName { get; set; }
 
 	    /// <summary>
         /// AddUser

@@ -1,41 +1,52 @@
-<div class="bar bar-header header ">
-    <a href="#/page/service" class="button button-clear icon ion-chevron-left button-light"></a>
-    <h2 class="title light">保险</h2>
-    <a href="" class="button button-clear icon ion-navicon-round button-light"></a>
-</div>
-<ion-view>
-    <ion-content class="scroll-content has-header">
-            <ul class="list safe-list">
-                <li class="item item-thumbnail-left item-borderless">
-                    <img src="page/service/img/bx.png" alt=""/>
-                    <h2><b>【太平洋保险】</b>畅游境内短期旅游保险 国内自由行/意外险/度假</h2>
-                    <p>联系电话：400 105 0101</p>
-                </li>
-                 <li class="item item-thumbnail-left item-borderless">
-                    <img src="page/service/img/bx.png" alt=""/>
-                     <h2><b>【太平洋保险】</b>畅游境内短期旅游保险 国内自由行/意外险/度假</h2>
-                    <p>联系电话：400 105 0101</p>
-                 </li>
-                 <li class="item item-thumbnail-left item-borderless">
-                     </q><img src="page/service/img/bx.png" alt=""/>
-                     <h2><b>【太平洋保险】</b>畅游境内短期旅游保险 国内自由行/意外险/度假</h2>
-                     <p>联系电话：400 105 0101</p>
-                  </li>
-                 <li class="item item-thumbnail-left item-borderless">
-                     <img src="page/service/img/bx.png" alt=""/>
-                     <h2><b>【太平洋保险】</b>畅游境内短期旅游保险 国内自由行/意外险/度假</h2>
-                     <p>联系电话：400 105 0101</p>
-                 </li>
-                 <li class="item item-thumbnail-left item-borderless">
-                     <img src="page/service/img/bx.png" alt=""/>
-                     <h2><b>【太平洋保险】</b>畅游境内短期旅游保险 国内自由行/意外险/度假</h2>
-                     <p>联系电话：400 105 0101</p>
-                 </li>
-                 <li class="item item-thumbnail-left item-borderless">
-                     <img src="page/service/img/bx.png" alt=""/>
-                     <h2><b>【太平洋保险】</b>畅游境内短期旅游保险 国内自由行/意外险/度假</h2>
-                     <p>联系电话：400 105 0101</p>
-                 </li>
-            </ul>
+<link rel="stylesheet" href="page/service/css/service.css">
+<ion-side-menus>
+        <ion-side-menu-content>
+            <div class="bar header" style="height: 44px">
+                <a href="#/page/service" class="button button-clear icon ion-chevron-left button-light"></a>
+                <h2 class="title light">保险</h2>
+                <a menu-toggle="right"  class="button button-clear icon ion-navicon-round button-light"></a>
+            </div>
+            <ion-view hide-nav-bar="true" hide-tabs="false">
+            <ion-content   no-header="true" style="top:44px;">
+                    <ul class="list safe-list">
+                        <li class="item item-thumbnail-left item-borderless" ng-click="go('index.html#/page/service/safe-detail')">
+                            <img src="page/service/img/bx.png" alt=""/>
+                            <h2><b>【太平洋保险】</b>畅游境内短期旅游保险 国内自由行/意外险/度假</h2>
+                            <p>联系电话：400 105 0101</p>
+                        </li>
+                        <li class="item item-thumbnail-left item-borderless">
+                            <img src="page/service/img/bx.png" alt=""/>
+                            <h2><b>【太平洋保险】</b>畅游境内短期旅游保险 国内自由行/意外险/度假</h2>
+                            <p>联系电话：400 105 0101</p>
+                        </li>
+                        <li class="item item-thumbnail-left item-borderless">
+                            </q><img src="page/service/img/bx.png" alt=""/>
+                            <h2><b>【太平洋保险】</b>畅游境内短期旅游保险 国内自由行/意外险/度假</h2>
+                            <p>联系电话：400 105 0101</p>
+                        </li>
+                        <li class="item item-thumbnail-left item-borderless">
+                            <img src="page/service/img/bx.png" alt=""/>
+                            <h2><b>【太平洋保险】</b>畅游境内短期旅游保险 国内自由行/意外险/度假</h2>
+                            <p>联系电话：400 105 0101</p>
+                        </li>
+                        <li class="item item-thumbnail-left item-borderless">
+                            <img src="page/service/img/bx.png" alt=""/>
+                            <h2><b>【太平洋保险】</b>畅游境内短期旅游保险 国内自由行/意外险/度假</h2>
+                            <p>联系电话：400 105 0101</p>
+                        </li>
+                        <li class="item item-thumbnail-left item-borderless">
+                            <img src="page/service/img/bx.png" alt=""/>
+                            <h2><b>【太平洋保险】</b>畅游境内短期旅游保险 国内自由行/意外险/度假</h2>
+                            <p>联系电话：400 105 0101</p>
+                        </li>
+                    </ul>
+                <ion-infinite-scroll on-infinite="load_more();">
+                </ion-infinite-scroll>
+            </ion-content>
+        </ion-side-menu-content>
+    <ion-side-menu side="right" width="150">
+    <ion-content class="dark-bg">
     </ion-content>
-</ion-view>
+        </ion-view>
+    </ion-side-menu>
+</ion-side-menus>

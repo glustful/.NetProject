@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using Community.Entity.Model.Product;
-using Community.Entity.Model.ProductComment;
 
 namespace Zerg.Models.Community
 {
@@ -48,7 +45,7 @@ namespace Zerg.Models.Community
 		/// <summary>
         /// 商品状态
         /// </summary>
-		public bool Status {get;set;}
+		public EnumProductStatus Status {get;set;}
 
 
 		/// <summary>
@@ -60,7 +57,7 @@ namespace Zerg.Models.Community
 		/// <summary>
         /// 商家推荐标识
         /// </summary>
-		public bool IsRecommend {get;set;}
+		public int IsRecommend {get;set;}      
 
 
 		/// <summary>
@@ -134,14 +131,30 @@ namespace Zerg.Models.Community
                 }
             }
         }
+        public string StatusString
+        {
+            get
+            {
+                switch (Status)
+                {
 
+                    case EnumProductStatus.Normal:
+                        return "正常";
+
+                    case EnumProductStatus.Delete:
+                        return "删除";
+
+                    default:
+                        return "";
+                }
+            }
+        }
 
 		/// <summary>
         /// 商品明细
         /// </summary>
-//		public ProductDetailEntity Detail {get;set;}
-
-
+		//public ProductDetailEntity Detail {get;set;}
+        
 		/// <summary>
         /// 商品评论
         /// </summary>
@@ -152,8 +165,8 @@ namespace Zerg.Models.Community
         /// 商品属性
         /// </summary>
 //		public List<ProductParameterEntity> Parameters {get;set;}
-        public decimal NewPrice { get; set; }
-        public int Owner { get; set; }
+        public decimal? NewPrice { get; set; }
+        public int? Owner { get; set; }
         public int CategoryId { get; set; }
         public string Detail { get; set; }
         public string Img { get; set; }
@@ -167,5 +180,6 @@ namespace Zerg.Models.Community
         public string Ad2 { get; set; }
         public string Ad3 { get; set; }
 
+        public ProductParameterValueModel[] ParameterValue { get;set; }
 	}
 }

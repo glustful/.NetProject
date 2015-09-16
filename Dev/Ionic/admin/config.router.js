@@ -67,12 +67,19 @@ angular.module('app')
                             }]
                     }
                 })
-
-                //--------------公众号基本设置
-                .state('app.autoRes', {
-                    url: '/autoRes',
+                //--------------会员信息管理
+                .state('app.member', {
+                    url: '/member',
                     template: '<div ui-view class="fade-in-up"></div>'
                 })
+                .state('app.member.edit',{
+                    url:'edit?id',
+                    templateUrl:'app/module/member/view/edit.html',
+                    resolve:{
+                        deps:['$ocLazyLoad',
+                            function($ocLazyLoad){
+                                return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
+                            }]
                 .state('app.autoRes.focusRes', {
                     url: '/focusRes',
                     templateUrl: 'app/module/autoRes/view/focusRes.html',
@@ -81,6 +88,16 @@ angular.module('app')
                             function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/autoRes/controller/focusResController.js']);
                             }]
+                    }
+                })
+                .state('app.member.memlist',{
+                    url:'memlist',
+                    templateUrl:'app/module/member/view/memlist.html',
+                    resolve:{
+                        deps:['$ocLazyLoad',
+                        function($ocLazyLoad){
+                            return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
+                        }]
                     }
                 })
                 .state('app.autoRes.keyRes', {
@@ -93,6 +110,13 @@ angular.module('app')
                             }]
                     }
                 })
+                .state('app.member.detail',{
+                    url:'detail?id',
+                    templateUrl:'app/module/member/view/detail.html',
+                    resolve:{
+                        deps:['$ocLazyLoad',
+                            function($ocLazyLoad){
+                                return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
 
                 .state('app.autoRes.createKeyRes', {
                     url: '/createKeyRes',
@@ -105,144 +129,20 @@ angular.module('app')
                     }
                 })
 
-                .state('app.autoRes.editKeyRes', {
-                    url: '/editKeyRes?id',
-                    templateUrl: 'app/module/autoRes/view/editKeyRes.html',
-                    resolve: {
-                        deps: ['$ocLazyLoad',
-                            function ($ocLazyLoad) {
-                                return $ocLazyLoad.load(['app/module/autoRes/controller/keyResController.js']);
-                            }]
-                    }
-                })
-
-                //--------------基础数据管理
-                .state('app.contact', {
+                .state('app.comment', {
                     url: '/contact',
                     template: '<div ui-view class="fade-in-up"></div>'
                 })
-                .state('app.contact.contactList', {
-                    url: '/contactList',
-                    templateUrl: 'app/module/contact/view/contactList.html',
+                .state('app.comment.productComment', {
+                    url: '/productComment',
+                    templateUrl: 'app/module/comment/view/productComment.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
                             function ($ocLazyLoad) {
-                                return $ocLazyLoad.load(['app/module/contact/controller/contactController.js']);
+                                return $ocLazyLoad.load(['app/module/comment/controller/productCommentController.js']);
                             }]
                     }
                 })
-                //------------自定义菜单
-              .state('app.menu', {
-                  url: '/menu',
-                  template: '<div ui-view class="fade-in-up"></div>'
-              })
-              .state('app.menu.menulist', {
-                  url: '/menulist',
-                  templateUrl: 'app/module/menu/view/menulist.html',
-                  resolve: {
-                      deps: ['$ocLazyLoad',
-                          function ($ocLazyLoad) {
-                              return $ocLazyLoad.load(['app/module/menu/controller/menulistCtr.js']);
-                          }]
-                  }
-              })
-              .state('app.menu.childmenulist', {
-                  url: '/childmenulist',
-                  templateUrl: 'app/module/menu/view/childmenulist.html',
-                  resolve: {
-                      deps: ['$ocLazyLoad',
-                          function ($ocLazyLoad) {
-                              return $ocLazyLoad.load(['app/module/menu/controller/childmenulistCtr.js']);
-                          }]
-                  }
-              })
-              .state('app.menu.updatemenu', {
-                  url: '/updatemenu',
-                  templateUrl: 'app/module/menu/view/updatemenu.html',
-                  resolve: {
-                      deps: ['$ocLazyLoad',
-                          function ($ocLazyLoad) {
-                              return $ocLazyLoad.load(['app/module/menu/controller/updatemenuCtr.js']);
-                          }]
-                  }
-              })
-
-
-//=====================================event page=======================================//
-                .state('event', {
-                    url: '/event',
-                    templateUrl: 'app/common/layout/app.html'
-                })
-
-                //--------------红包模板
-                .state('event.redModel', {
-                    url: '/redModel',
-                    template: '<div ui-view class="fade-in-up"></div>'
-                })
-
-                .state('event.redModel.redMain', {
-                    url: '/redMain',
-                    templateUrl: 'app/module/event/redModel/view/redMain.html',
-                    resolve: {
-                        deps: ['$ocLazyLoad',
-                            function ($ocLazyLoad) {
-                                return $ocLazyLoad.load(['app/module/event/redModel/controller/redMainController.js']);
-                            }]
-                    }
-                })
-
-
-
-//=====================================deploy page=======================================//
-                .state('deploy', {
-                    url: '/deploy',
-                    templateUrl: 'app/common/layout/app.html'
-                })
-
-                .state('deploy.deploy', {
-                    url: '/deploy',
-                    templateUrl: 'app/module/baseSetting/view/deploy.html',
-                    resolve: {
-                        deps: ['$ocLazyLoad',
-                            function ($ocLazyLoad) {
-                                return $ocLazyLoad.load(['app/module/baseSetting/controller/deployController.js']);
-                            }]
-                    }
-                })
-
-                .state('deploy.baseSetting', {
-                    url: '/baseSetting',
-                    templateUrl: 'app/module/baseSetting/view/baseSetting.html',
-                    resolve: {
-                        deps: ['$ocLazyLoad',
-                            function ($ocLazyLoad) {
-                                return $ocLazyLoad.load(['app/module/baseSetting/controller/baseSettingController.js']);
-                            }]
-                    }
-                })
-                .state('deploy.createSetting', {
-                    url: '/createSetting',
-                    templateUrl: 'app/module/baseSetting/view/createSetting.html',
-                    resolve: {
-                        deps: ['$ocLazyLoad',
-                            function ($ocLazyLoad) {
-                                return $ocLazyLoad.load(['app/module/baseSetting/controller/baseSettingController.js']);
-                            }]
-                    }
-                })
-                .state('deploy.editSetting', {
-                    url: '/editSetting?id',
-                    templateUrl: 'app/module/baseSetting/view/editSetting.html',
-                    resolve: {
-                        deps: ['$ocLazyLoad',
-                            function ($ocLazyLoad) {
-                                return $ocLazyLoad.load(['app/module/baseSetting/controller/baseSettingController.js']);
-                            }]
-                    }
-                })
-
-
-
 //=====================================access page======================================//
                 .state('access', {
                     url: '/access',
@@ -267,52 +167,176 @@ angular.module('app')
                     templateUrl: 'app/module/signin/view/signin.html',
                     resolve: {
                         deps: ['uiLoad',
-                            function (uiLoad) {
-                                return uiLoad.load(['app/module/signin/controller/signinController.js']);
+                            function( uiLoad ){
+                                return uiLoad.load( ['app/module/signin/controller/signinController.js'] );
                             }]
                     }
                 })
-
+//商品分类
+              .state('app.category', {
+                  url: '/category',
+                  template: '<div ui-view class="fade-in-up"></div>'
+              })
+              .state('app.category.index', {
+                  url: '/index',
+                  templateUrl: 'app/module/category/view/index.html',
+                  resolve: {
+                      deps: ['$ocLazyLoad',
+                          function ($ocLazyLoad) {
+                              return $ocLazyLoad.load(['app/module/category/controller/indexController.js',
+                                  'app/common/scripts/controllers/vectormap.js']);
+                          }]
+                  }
+              })
                 //注册页
                 .state('access.signup', {
                     url: '/signup',
                     templateUrl: 'app/module/page_signup.html',
                     resolve: {
                         deps: ['uiLoad',
-                            function (uiLoad) {
-                                return uiLoad.load(['js/controllers/signup.js']);
+                            function( uiLoad ){
+                                return uiLoad.load( ['js/controllers/signup.js'] );
                             }]
                     }
                 })
-                //地址
+                //商品属性管理 app.parameter.parameterList
+                .state('app.parameter',{
+                    url: '/parameter',
+                    template: '<div ui-view class="fade-in-up"></div>',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function ($ocLazyLoad) {
+                                return $ocLazyLoad.load(['app/module/Parameter/controller/parameter.js']);
+                            }]
+                    }
+                })
+                .state('app.parameter.parameterList',{
+                    url:'/parameterList',
+                    templateUrl:'app/module/Parameter/view/Index.html'
 
-                 .state('app.memberAddress', {
-                     url: '/memberAddress',
-                     template: '<div ui-view class="fade-in-up"></div>'
+                })
+                .state('app.parameter.createParameter',{
+                    url:'/createParameter',
+                    templateUrl:'app/module/Parameter/view/Create.html'
+                })
+                .state('app.parameter.editParameter',{
+                    url:'/editParameter?id',
+                    templateUrl:'app/module/Parameter/view/Edit.html'
+                })
+
+                //商品管理页
+                .state('app.product',{
+                    url: '/product',
+                    template: '<div ui-view class="fade-in-up"></div>',
+                    //resolve: {
+                    //    deps: ['$ocLazyLoad',
+                    //        function( $ocLazyLoad ){
+                    //            return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
+                    //        }]
+                    //}
+                })
+                .state('app.product.productList',{
+                    url:'/productList',
+                    templateUrl:'app/module/Product/view/Index.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function ($ocLazyLoad) {
+                                return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
+                            }]
+                    },
+                    data : { title: '商品列表' }
+                })
+                .state('app.product.createProduct',{
+                    url:'/createProct',
+                    templateUrl:'app/module/Product/view/Create.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function ($ocLazyLoad) {
+                                return $ocLazyLoad.load(['angularFileUpload','app/module/Product/controller/productController.js']);
+                            }]
+                    }
+                })
+                .state('app.product.editProduct',{
+                    url:'/editProduct?id',
+                    templateUrl:'app/module/Product/view/Edit.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function ($ocLazyLoad) {
+                                return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
+                            }]
+                    }
+                })
+                .state('app.product.productProperty',{
+                    url:'/productProperty?CategoryId&productId',
+                    templateUrl:'app/module/Product/view/Property.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function ($ocLazyLoad) {
+                                return $ocLazyLoad.load(['app/module/Product/controller/parameterController.js']);
+                            }]
+                    }
+                })
+                .state('order',{
+                    url:'/order',
+                    templateUrl: 'app/common/layout/app.html'
+                })
+                .state('order.list',{
+                    url:'/list',
+                    templateUrl:'app/module/order/view/list.html',
+                    resolve:{
+                        deps:['uiLoad',function(uiLoad){
+                            return uiLoad.load(['app/module/order/controller/orderController.js']);
+                        }]
+                    }
+                })
+                .state('order.serviceList',{
+                    url:'/serviceList',
+                    templateUrl:'app/module/order/view/serviceList.html',
+                    resolve:{
+                        deps:['uiLoad',function(uiLoad){
+                            return uiLoad.load(['app/module/order/controller/serviceOrderController.js']);
+                        }]
+                    }
+                })
+
+          //地区管理
+                 .state('app.area',{
+                 url: '/area',
+                    template: '<div ui-view class="fade-in-up"></div>',
                  })
-              .state('app.memberAddress.Address', {
-                  url: '/Address',
-                  templateUrl: 'app/module/memberAddress/view/Address.html',
-                  resolve: {
-                      deps: ['$ocLazyLoad',
-                          function ($ocLazyLoad) {
-                              return $ocLazyLoad.load(['app/module/memberAddress/controller/Address.js']);
-                          }]
-                  }
-              })
-          .state('app.memberAddress.editAddress', {
-              url: '/editAddress?id',
-              templateUrl: 'app/module/memberAddress/view/editAddress.html',
+
+                 .state('app.area.show',{
+                     url:'/show',
+                     templateUrl:'app/module/Area/view/showArea.html',
+                     resolve: {
+                         deps: ['$ocLazyLoad',
+                             function( $ocLazyLoad ){
+                                 return $ocLazyLoad.load(['app/module/Area/controller/showArea.js']);
+                             }]
+                     },
+                     data : { title: '地区列表' }
+                 })
+
+          .state('app.area.createarea',{
+              url:'/createarea',
+              templateUrl:'app/module/Area/view/createArea.html',
               resolve: {
                   deps: ['$ocLazyLoad',
-                      function ($ocLazyLoad) {
-                          return $ocLazyLoad.load(['app/module/memberAddress/controller/editAddress.js']);
+                      function( $ocLazyLoad ){
+                          return $ocLazyLoad.load(['app/module/Area/controller/createArea.js']);
                       }]
               }
-          });
-
-         
-
+          })
+                .state('app.area.editArea',{
+                    url:'/editArea?id',
+                    templateUrl:'app/module/Area/view/editArea.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/Area/controller/editArea.js']);
+                            }]
+                    }
+                })
         }
     ]
 );

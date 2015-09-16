@@ -1,0 +1,239 @@
+<div class="padding-out" ng-app="App"  ng-controller="ParameterController">
+
+    <br>
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+    <div class="box">
+        <div class="col-md-3 col-sm-6">
+            <div class="p-md">
+
+
+
+                <div lazy-load="angularBootstrapNavTree">
+                    <ul style="list-style-type:none" ng-include="'recursion'"></ul>
+                    <abn-tree
+                            tree-data="my_data"
+                            tree-control="my_tree"
+                            on-select="selectEvent(branch)"
+                            expand-level="2"
+                            initial-selection="Granny Smith"
+                            icon-leaf="fa fa-file-o"
+                            icon-expand="fa fa-angle-right"
+                            icon-collapse="fa fa-angle-down"
+                            >
+                    </abn-tree>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 col-sm-6 bg-light b-l bg-auto">
+            <div class="p-md">
+                <div class="alert alert-info">{{output}}</div>
+                <button id="btnok" onclick="AddParameterWindowShow()" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加参数
+                </button>
+                <div class="line b-b m-v-md"></div>
+                <div class="panel panel-default" align="center">
+                    <table st-table="rowCollectionPage" class="table table-striped" align="center">
+                        <thead>
+                        <tr>
+                            <th align="center">ID</th>
+                            <th align="center">参数名称</th>
+
+                            <th align="center">添加时间</th>
+                            <th align="center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="row in list">
+                            <td>{{row.Id }}</td>
+                            <td>{{row.Name }}</td>
+
+                            <td>{{row.AddTime| dateFilter }}</td>
+                            <td>
+                                <button class="btn btn-info btn-sm"  ng-click="getParameterValue(row.Id)" onclick="ParameterValueWindowShow()"><i class="fa fa-fw m-r-xs fa-edit"></i>参数值管理
+                                </button>
+                                <button ng-click='delParameter(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
+                                </button>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7" class="no-margin"></div>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--弹出层开始  -->
+    <div id="modal-form-addparameter" class="modal in" tabindex="-1" aria-hidden="false" style="display:none;">
+        <div class="modal-dialog" style="padding-top:100px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="AddParameterWindowClose()" class="close" data-dismiss="modal">×</button>
+                    <h4 id="eidt-msg">请填写编辑信息</h4>
+                </div>
+                <form name="form" ng-submit="addParameter()">
+                    <div class="modal-body overflow-visible">
+                        <div class="row">
+                            <div class="col-xs-12 ">
+                                <div class="space-4"></div>
+                                <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+                                <div class="form-group" style="text-align:center">
+                                    <label for="parameterName">参数名称</label>
+                                    <input class="input-large" type="text" ng-model="Parameter.Name" name="parameterName" id="parameterName"
+                                           placeholder="" value="" required ng-maxlength="20">
+                                    <span ng-show="form.parameterName.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                                    <label for="parameterName">序号</label>
+                                    <input class="input-large" type="number" ng-model="Parameter.Sort" name="parameterName" id="parameterSort"
+                                           placeholder="" value="" required ng-maxlength="20">
+                                    <span ng-show="form.parameterName.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                                    <span ng-show="form.parameterName.$error.maxlength" style="font-size:20px;color: #ff0000">*输入字符在20以内</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-info btn-sm" type="submit" ng-disabled="form.$invalid" aria-disabled="true" disabled="disabled">
+                            <i class="fa fa-fw m-r-xs fa-plus"></i>
+                            添 加
+                        </button>
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="AddParameterWindowClose()" type="button">
+                            <i class="icon-remove"></i>
+                            取 消
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--弹出层结束-->
+
+    <!--弹出层开始  -->
+    <div id="modal-form-parametervalue" class="modal in" tabindex="-1" aria-hidden="false" style="display:none;">
+        <div class="modal-dialog" style="padding-top:100px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="ParameterValueWindowClose()" class="close" data-dismiss="modal">×</button>
+                    <h4 id="pamametermsg">分类参数值</h4>
+                </div>
+                <div class="modal-body overflow-visible" style="overflow-Y:scroll;height:300px;">
+                    <table st-table="rowCollectionPage" class="table table-striped" align="center">
+                        <thead>
+                        <tr>
+                            <th align="center">参数名</th>
+                            <th align="center">参数ID</th>
+                            <th align="center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="row in rowParameterValue">
+                            <td>{{row.Parametervalue }}</td>
+                            <td>{{row.Id }}</td>
+                            <td>
+                                <button ng-click='delParameterValue(row.Id)' class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-minus"></i> 删除
+                                </button></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7" class="no-margin"></div>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info btn-sm" onclick=" AddValueWindowShow()">
+                        <i class="fa fa-fw m-r-xs fa-plus"></i>
+                        添 加
+                    </button>
+                    <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="ParameterValueWindowClose()" type="button">
+                        <i class="icon-remove"></i>
+                        取 消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--弹出层结束  -->
+
+    <!--弹出层开始  -->
+    <div id="modal-form-addvalue" class="modal in" tabindex="-1" aria-hidden="false" style="display:none;">
+        <div class="modal-dialog" style="padding-top:100px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="AddValueWindowClose()" class="close" data-dismiss="modal">×</button>
+                    <h4 id="addmsg">添加分类参数值</h4>
+                </div>
+                <form name="form1" ng-submit="addParameterValue()">
+                    <div class="modal-body overflow-visible">
+                        <div class="row">
+                            <div class="col-xs-12 ">
+                                <div class="space-4"></div>
+                                <div class="form-group" style="text-align:center">
+                                    <label for="ClassifyParameterValue">参数值</label>
+                                    <input class="input-large" type="text" ng-model="ClassifyParameterValue" name="ClassifyParameterValue"
+                                           id="ClassifyParameterValue" placeholder="" value="" required ng-maxlength="20">
+                                    <span ng-show="form1.ClassifyParameterValue.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                                    <span ng-show="form1.ClassifyParameterValue.$error.maxlength" style="font-size:20px;color: #ff0000">*输入字符在20以内</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-info btn-sm" type="submit" ng-disabled="form1.$invalid" aria-disabled="true" disabled="disabled">
+                            <i class="fa fa-fw m-r-xs fa-plus"></i>
+                            添 加
+                        </button>
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="AddValueWindowClose()" type="button">
+                            <i class="icon-remove"></i>
+                            取 消
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--弹出层结束  -->
+
+    <script>
+        function AddParameterWindowClose() {
+            $("#modal-form-addparameter").hide();
+        }
+        function AddParameterWindowShow() {
+            $("#modal-form-addparameter").show();
+
+        }
+        function ParameterValueWindowClose() {
+            $("#modal-form-parametervalue").hide();
+        }
+        function ParameterValueWindowShow() {
+            $("#modal-form-parametervalue").show();
+
+        }
+        function AddValueWindowClose() {
+            $("#modal-form-addvalue").hide();
+        }
+        function AddValueWindowShow() {
+            $("#modal-form-addvalue").show();
+
+        }
+    </script>
+</div>
+
+<script type="text/ng-template" id="myModalContent.html">
+    <div ng-include="'views/partials/modal.html'"></div>
+</script>
+<script id="recursion" type="text/ng-template">
+    <li    ng-repeat="item in my_data">
+        <span ng-click="selectEvent(item)"><span ng-if="item.children.length">-</span>
+            {{item.label}}</span>
+        <ul  style="list-style-type:none;" ng-if="item.children.length" ng-include="'recursion'"  ng-init="my_data=item.children"></ul>
+    </li>
+</script>

@@ -1,0 +1,36 @@
+<div ng-controller="orderListController" class="panel panel-default">
+    <div class="bg-light lter b-b wrapper-md">
+        <div class="row">
+            <div class="col-sm-6 col-xs-12">
+                <h1 class="m-n font-thin h3 text-black">产品订单列表</h1>
+                <!--<small class="text-muted">部署设置，用于平台首次部署配置</small>-->
+            </div>
+        </div>
+    </div>
+    <div class="row wrapper">
+
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped b-t b-light">
+            <tr>
+                <th>订单编号</th>
+                <th>下单人</th>
+                <th>下单时间</th>
+                <th>订单总价（实价）</th>
+                <th>订单状态</th>
+                <th>操作</th>
+            </tr>
+            <tr ng-repeat="item in list">
+                <td>{{item.OrderNo}}</td>
+                <td>{{item.UserName}}</td>
+                <td>{{item.Adddate}}</td>
+                <td>{{item.Totalprice|currency:'￥'}}({{item.Actualprice|currency:'￥'}})</td>
+                <td>{{item.StatusString}}</td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <footer class="panel-footer">
+        <pagination boundary-links="true" total-items="totalPages" items-per-page="condition.PageCount" ng-model="condition.Page" ng-change="getList()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+    </footer>
+</div>

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Community.Entity.Model.Member;
+using Community.Entity.Model.MemberAddress;
 using Community.Entity.Model.OrderDetail;
 using YooPoon.Core.Data;
 
@@ -55,5 +57,15 @@ namespace Community.Entity.Model.Order
 		/// 订单明细
 		/// </summary>
 		public virtual List<OrderDetailEntity> Details { get; set; }
+
+        /// <summary>
+        /// 下单人实体
+        /// </summary>
+        public virtual MemberEntity AddMember { get; set; }
+
+        /// <summary>
+        /// 收获地址
+        /// </summary>
+        public virtual MemberAddressEntity Address { get; set; }
 	}
 }

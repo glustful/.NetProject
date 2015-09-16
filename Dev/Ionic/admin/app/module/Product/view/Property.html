@@ -1,0 +1,81 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">属性设置</h1>
+</div>
+<div class="wrapper-md" ng-controller="getParameter">
+    <div class="panel panel-default">
+
+        <div>
+            <table class="table m-b-none"  data-filter="#filter" data-page-size="5">
+                <thead>
+                <tr>
+                    <th>
+                        &nbsp;
+                    </th>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        参数
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                    <th data-hide="phone,tablet">
+                        参数值
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr ng-repeat="item in list">
+                    <td>&nbsp;</td>
+                    <td>{{item.Id}}</td>
+                    <td><a href>{{item.ParameterName}}</a></td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <div  ng-repeat="v in item.ParameterValues" style="float: left">
+                            <input type="radio" class="ace" name={{item.Id}} value={{v.id}} ng-model="item.value" ng-checked="hasValue(product.ParameterValue,v.name)?'checked':''" required/>
+                            <span class="lbl">{{v.name}}</span>
+                        </div>
+                    </td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+    <div class="clearfix form-actions">
+        <div class="col-md-offset-3 col-md-9">
+            <!--<button class="btn btn-info" ng-click="addProduct()">-->
+            <!--<i class="icon-ok bigger-110"></i>-->
+            <!--提交-->
+            <!--</button>-->
+            <button id="btn_ok" class="btn btn-info" type="button" ng-click="save()">
+                <i class="icon-ok bigger-110"></i>
+                提交
+            </button>
+        </div>
+    </div>
+</div>

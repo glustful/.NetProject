@@ -109,9 +109,9 @@ namespace Community.Service.Parameter
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-				if (condition.Categorys != null && condition.Categorys.Any())
+				if (condition.Category != null)
                 {
-                    query = query.Where(q => condition.Categorys.Contains(q.Category));
+                    query = query.Where(q =>q.Category.Id==condition.Category.Id);
                 }
 				if(condition.OrderBy.HasValue)
 				{
@@ -184,6 +184,10 @@ namespace Community.Service.Parameter
 				if (condition.Categorys != null && condition.Categorys.Any())
                 {
                     query = query.Where(q => condition.Categorys.Contains(q.Category));
+                }
+                if (condition.Category != null)
+                {
+                    query = query.Where(q => q.Category.Id == condition.Category.Id);
                 }
 				return query.Count();
 			}

@@ -92,6 +92,10 @@ namespace Zerg.Models.Community
         }
 
 
-        public List<ServiceOrderDetailModel> Details { get; set; } 
+        public List<ServiceOrderDetailModel> Details { get; set; }
+
+        public string UserName { get; set; }
+
+        public int MemberAddressId { get; set; }
 	}
 }

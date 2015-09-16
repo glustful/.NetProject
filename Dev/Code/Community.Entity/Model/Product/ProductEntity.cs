@@ -37,7 +37,7 @@ namespace Community.Entity.Model.Product
 		/// <summary>
 		/// 商品状态
 		/// </summary>
-		public virtual bool Status { get; set; }
+		public virtual EnumProductStatus Status { get; set; }
 		/// <summary>
 		/// 商品主图
 		/// </summary>
@@ -45,7 +45,7 @@ namespace Community.Entity.Model.Product
 		/// <summary>
 		/// 商家推荐标识
 		/// </summary>
-		public virtual bool IsRecommend { get; set; }
+		public virtual int IsRecommend { get; set; }
 		/// <summary>
 		/// 分类排序
 		/// </summary>
@@ -97,10 +97,10 @@ namespace Community.Entity.Model.Product
         /// <summary>
         /// 折后价
         /// </summary>
-        public virtual decimal NewPrice { get; set; }
+        public virtual decimal? NewPrice { get; set; }
         /// <summary>
         /// 有多少人抢购
         /// </summary>
-        public virtual int Owner { get; set; }
+        public virtual int? Owner { get; set; }
 	}
 }

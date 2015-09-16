@@ -25,9 +25,9 @@ namespace Community.Entity.Model.ProductComment
 
 
 
+	    public int ?Stars { get; set; }
 
-
-		public ProductEntity[] Products { get; set; }
+	    public ProductEntity[] Products { get; set; }
 
 	    public int? ProductId { get; set; }
 

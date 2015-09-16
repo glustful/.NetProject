@@ -13,4 +13,16 @@ namespace Community.Entity.Model.Product
 		/// </summary>
 		Service,
 	}
+
+    public enum EnumProductStatus
+    {   
+        /// <summary>
+        /// 正常状态
+        /// </summary>
+        Normal,
+        /// <summary>
+        /// 删除状态
+        /// </summary>
+        Delete
+    }
 }

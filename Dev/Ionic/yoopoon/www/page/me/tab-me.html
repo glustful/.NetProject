@@ -1,10 +1,11 @@
 <link href="page/me/css/me.css" rel="stylesheet" />
-<ion-content>
+<ioc-view hide-nav-bar="true" hide-tabs="false">
+<ion-content no-header="true" style="top:44px;">
     <div class="headimg">
-        <img src="page/me/img.jpg" />
+        <img src="{{imgUrl}}" />
     </div>
-    <div class="top">
-        <img src="page/me/img.jpg" class="headpic" />
+    <div class="top" id="previvew">
+        <img src="{{imgUrl+olduser.Headphoto}}@174w_174h_70Q" class="headpic" />
         <p class="username">张三</p>
     </div>
     <div class="list">
@@ -24,16 +25,16 @@
             <div class="row mysever">
                 <div class="col"><i class="ion-card"><p>待接件</p></i></div>
                 <div class="col"><i class="ion-ios-box-outline"><p>办理中</p></i></div>
-                <div class="col"><i class="ion-android-checkbox-outline"><p>待评价</p></i></div>
+
             </div>
         </div>
         <div class="item item-icon-left" style="top: 40px;">
             <i class="icon ion-ios-person-outline" id="myinfo"></i>
-            <h2>个人资料<a>查看我的资料  >  </a></h2>
+            <h2>个人资料<a href="#/page/me/personalData">查看我的资料  >  </a></h2>
         </div>
         <div class="item item-icon-left" style="top: 60px;">
             <i class="icon ion-android-wifi" id="myaddress"></i>
-            <h2>地址管理<a>查看我的地址  >  </a></h2>
+            <h2>地址管理<a href="#/page/me/addressAdm">查看我的地址  >  </a></h2>
         </div>
         <div class="item item-icon-left" style="top: 80px">
             <i class="icon ion-social-vimeo" id="U"></i>
@@ -41,3 +42,4 @@
         </div>
     </div>
 </ion-content>
+        </ioc-view>

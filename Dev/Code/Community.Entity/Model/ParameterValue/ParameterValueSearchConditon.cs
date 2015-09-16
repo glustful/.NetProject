@@ -27,7 +27,7 @@ namespace Community.Entity.Model.ParameterValue
 
 
 
-		public ParameterEntity[] Parameters { get; set; }
+		public ParameterEntity Parameters { get; set; }
 
 
 
@@ -56,7 +56,6 @@ namespace Community.Entity.Model.ParameterValue
 		public DateTime? UpdTimeBegin { get; set; }
 
 		public DateTime? UpdTimeEnd { get; set; }
-
 
 
 

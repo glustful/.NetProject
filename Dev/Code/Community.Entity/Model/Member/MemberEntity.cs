@@ -70,6 +70,11 @@ namespace Community.Entity.Model.Member
         /// <summary>
         /// 收获地址
         /// </summary>
-        public virtual List<MemberAddressEntity> Address { get; set; } 
+        public virtual List<MemberAddressEntity> Address { get; set; }
+
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public virtual string UserName { get; set; }
 	}
 }

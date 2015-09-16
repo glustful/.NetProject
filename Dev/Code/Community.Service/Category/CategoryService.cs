@@ -71,7 +71,28 @@ namespace Community.Service.Category
                 return null;
             }
 		}
-
+      
+        public IQueryable<CategoryEntity> GetCategorysBySuperFather(int father)
+        {
+            var query = _categoryRepository.Table;
+            try
+            {
+                if(father==0)
+                {
+                    query = query.Where(q => q.Father.Id == null);
+                }
+                else 
+                { 
+                query = query.Where(q => q.Father.Id == father);
+                }
+                return query.OrderBy(q => q.Id);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+        }
 		public IQueryable<CategoryEntity> GetCategorysByCondition(CategorySearchCondition condition)
 		{
 			var query = _categoryRepository.Table;
@@ -113,6 +134,7 @@ namespace Community.Service.Category
                 {
                     query = query.Where(q => condition.Sorts.Contains(q.Sort));
                 }
+
 				if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)

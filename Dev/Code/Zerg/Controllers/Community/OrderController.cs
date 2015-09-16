@@ -1,29 +1,34 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
 using Community.Entity.Model.Order;
 using Community.Entity.Model.OrderDetail;
 using Community.Entity.Model.Product;
 using Community.Entity.Model.ServiceOrderDetail;
+using Community.Service.MemberAddress;
 using Community.Service.Order;
 using Community.Service.Product;
 using YooPoon.Core.Site;
+using Zerg.Common;
 using Zerg.Models.Community;
 
 namespace Zerg.Controllers.Community
 {
-	public class OrderController : ApiController
+	public class CommunityOrderController : ApiController
 	{
 		private readonly IOrderService _orderService;
 	    private readonly IProductService _productService;
 	    private readonly IWorkContext _workContext;
+	    private readonly IMemberAddressService _memberAddressService;
 
-	    public OrderController(IOrderService orderService,IProductService productService,IWorkContext workContext)
+	    public CommunityOrderController(IOrderService orderService, IProductService productService, IWorkContext workContext,IMemberAddressService memberAddressService)
 	    {
 	        _orderService = orderService;
 	        _productService = productService;
 	        _workContext = workContext;
+	        _memberAddressService = memberAddressService;
 	    }
 
 	    public OrderModel Get(int id)
@@ -56,12 +61,13 @@ namespace Zerg.Controllers.Community
                     Remark = c.Remark,
                     Snapshoturl = c.Snapshoturl,
                     Totalprice = c.Totalprice,
-                }).ToList(),		
+                }).ToList(),
+		        UserName = entity.AddMember.UserName
             };
 			return model;
 		}
 
-		public List<OrderModel> Get(OrderSearchCondition condition)
+		public HttpResponseMessage Get(OrderSearchCondition condition)
 		{
 			var model = _orderService.GetOrdersByCondition(condition).Select(c=>new OrderModel
 			{
@@ -77,11 +83,13 @@ namespace Zerg.Controllers.Community
 				Totalprice = c.Totalprice,
 				Actualprice = c.Actualprice,
 //				Details = c.Details,
+                UserName = c.AddMember.UserName
 			}).ToList();
-			return model;
+		    var totalCount = _orderService.GetOrdersByCondition(condition);
+			return PageHelper.toJson(new {List = model,Condition = condition,TotalCount=totalCount});
 		}
 
-		public bool Post(OrderModel model)
+		public bool Post([FromBody]OrderModel model)
 		{
             //获取订单明细对应的商品
             var products = _productService.GetProductsByCondition(new ProductSearchCondition
@@ -120,6 +128,7 @@ namespace Zerg.Controllers.Community
                 Totalprice = products.Sum(c => (c.Count * c.UnitPrice)),
                 Actualprice = products.Sum(c => (c.Count * c.UnitPrice)),
 				Details = products,
+                Address = _memberAddressService.GetMemberAddressById(model.MemberAddressId)
 			};
 			if(_orderService.Create(entity).Id > 0)
 			{

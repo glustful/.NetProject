@@ -13,6 +13,10 @@ namespace Community.Entity.Model.Category
 		/// 父分类
 		/// </summary>
 		public virtual CategoryEntity Father { get; set; }
+        /// <summary>
+        /// 父分类ID 
+        /// </summary>
+      //  public virtual int FatherId { get; set; }
 		/// <summary>
 		/// 分类名称
 		/// </summary>

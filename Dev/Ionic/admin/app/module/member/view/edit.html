@@ -1,0 +1,86 @@
+<div class="panel panel-default">
+    <div class="panel-heading font-bold">
+       会员信息
+    </div>
+    <div class="panel-body" ng-controller="memController">
+        <form class="form-horizontal" name="form" method="PUT">
+
+                    <input type="hidden"  ng-model="memModels.Id" class="form-control" placeholder="ID">
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">姓名</label>
+                <div class="col-sm-4">
+                    <input type="text"  ng-model="memModels.RealName" class="form-control" placeholder="姓名">
+                </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">身份证号</label>
+                <div class="col-sm-4">
+                    <input type="text" ng-model="memModels.IdentityNo" class="form-control" placeholder="身份证号">
+                </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">电话</label>
+                <div class="col-sm-4">
+                    <input type="text"  name="Phone" id="Phone"  ng-pattern="/^1[3|4|5|7|8][0-9]\d{8}$/"  ng-model="memModels.Phone" class="form-control" placeholder="电话">
+                    <span ng-show="form.Phone.$error.required" class="tipshowcl" aria-hidden="false">*必填项</span>
+                    <div style="font-size: 15px;color: #FC3B4F" ng-show="form.Phone.$invalid&&form.Phone.$dirty">请正确输入手机号码</div>
+                </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">QQ</label>
+                <div class="col-sm-4">
+                    <input type="text" ng-model="memModels.Icq" class="form-control" placeholder="QQ">
+                </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">邮编</label>
+                <div class="col-sm-4">
+                    <input type="text"  ng-model="memModels.PostNo" class="form-control" placeholder="邮编">
+                </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">账户余额</label>
+                <div class="col-sm-4">
+                    <input type="text" ng-model="memModels.AccountNumber" class="form-control" placeholder="账户余额">
+                </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">积分</label>
+                <div class="col-sm-4">
+                    <input type="text"  ng-model="memModels.Points" class="form-control" placeholder="积分">
+                </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">等级</label>
+                <div class="col-sm-4">
+                    <input type="text" ng-model="memModels.Level" class="form-control" placeholder="等级">
+                </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-2">
+                    <button ng-click="updateMem()" type="submit" class="btn btn-primary">保存</button>
+                    <button type="submit" ui-sref="app.member.memlist" class="btn btn-default">取消</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

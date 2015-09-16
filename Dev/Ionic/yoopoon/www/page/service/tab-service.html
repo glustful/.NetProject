@@ -1,21 +1,24 @@
+<link rel="stylesheet" href="page/service/css/service.css">
 
-<div class="bar bar-header header">
-    <button class="button  button-icon icon icon-fuwuanniu"></button>
-
-    <div class="title " >
-
-        <!--<input type="text" placeholder="">-->
+<div class="bar header" style="height: 44px">
+    <a class="button  button-icon icon icon-fuwuanniu" ng-click="closetips()"></a>
+    <label class=" item-select select-header" ng-hide="showSelect">
         <select>
             <option>金尚俊园A座</option>
             <option >CSS</option>
             <option>JavaScript</option>
         </select>
-    </div>
-    <button class="button button-icon icon icon-search"></button>
+    </label>
+  <a class="button button-icon icon icon-search search" ng-click="showInput()"></a>
+    <input class="header-input" ng-class="{'header-input-show':isShow}" type="text" placeholder="" style="border: 1px solid #fff; height: 70%;z-index: 0;padding-left: 10px;color: #fff">
 </div>
-<ion-view view-title="优·服务" ng-controller="TabServiceCtrl">
 
-  <ion-content>
+<!--头部遮罩-->
+<div class="bar p-head" style="height: 44px" id="tiphidden1">
+    <img src="page/shopping/img/head.png">
+</div>
+<ion-view hide-nav-bar="true" hide-tabs="true">
+  <ion-content no-header="true" style="top:44px;">
   <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true">
   <ion-slide>
     <div class="box">
@@ -35,7 +38,7 @@
 </ion-slide-box>
     <div style="background-color: #e8e8e8;">
     <div class="row service">
-        <div class="col jgg1" href="#/page/car" ng-click="go('index.html#/page/service/safe')"><i class="icon icon-baoxian" style="color: #6bcd76"></i><p>保险</p></div>
+        <div class="col jgg1" href="#/page/car" ng-click="goes('index.html#/page/service/safe')"><i class="icon icon-baoxian" style="color: #6bcd76"></i><p>保险</p></div>
         <div class="col jgg2"><i class="icon icon-jinronglicai" style="color: #f6c108"></i><p>金融理财</p></div>
         <div class="col jgg3"><i class="icon icon-luyou" style="color: #52a8f7"></i><p>旅游</p></div>
     </div>
@@ -54,4 +57,14 @@
       <h4 style="text-align: center; color:#b0b0b0 ">······更多精彩，敬请期待！</h4>
 
   </ion-content>
+
+    <!--底部-->
+    <div id="tiphidden2">
+        <div class="row dark-bg hidden-pg" style="position: fixed;bottom: 0;" >
+            <img src="page/shopping/img/foot.png">
+        </div>
+        <div class="button-location" ng-click="closetips()" >
+            <img src="page/shopping/img/button.png" >
+        </div>
+    </div>
 </ion-view>

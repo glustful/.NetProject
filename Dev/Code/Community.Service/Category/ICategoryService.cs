@@ -17,5 +17,6 @@ namespace Community.Service.Category
 		IQueryable<CategoryEntity> GetCategorysByCondition(CategorySearchCondition condition);
 
 		int GetCategoryCount (CategorySearchCondition condition);
+        IQueryable<CategoryEntity> GetCategorysBySuperFather(int father);
 	}
 }
