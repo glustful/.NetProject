@@ -12,7 +12,7 @@ $scope.test = function(){
     //region商品大图获取
     $scope.Condition = {
         IsDescending:true,
-        OrderBy:'OrderById',
+        OrderBy:'OrderByOwner',
         IsRecommend:'1'
         //ProductId:''
     };
@@ -34,7 +34,7 @@ $scope.test = function(){
         IsDescending:true,
         OrderBy:'OrderByAddtime',
         Page:1,
-        PageCount:10
+        PageCount:5
         //ProductId:''
     };
     var getList=function() {
@@ -74,8 +74,9 @@ $scope.test = function(){
                         $scope.items.push(data.List[i]);
                     }
                 }
-            })
-            $scope.$broadcast("scroll.infiniteScrollComplete");
+                $scope.$broadcast("scroll.infiniteScrollComplete");
+            });
+
         },1000)
     };
     //endregion
@@ -90,7 +91,7 @@ app.controller('ShoppongListCtrl',['$http','$scope',function($http,$scope){
     //region 获取商品列表
     $scope.sech={
         Page:1,
-        PageCount:10,
+        PageCount:5,
         IsDescending:true,
         OrderBy:'OrderByAddtime',
         CategoryId:3
