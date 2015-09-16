@@ -23,8 +23,8 @@
     height: 80px;
     border-radius: 50%;
     position: absolute;
-    top:20%;
-    right: 15%;
+    top:0;
+    right: 0;
 }
 .head-name{
     position: relative;
@@ -42,16 +42,40 @@
 }
 .save-setting{
     position:fixed;
-    bottom: 0;
+    bottom:-100%;
     left: 0;
     width: 100%;
-    height: 44px;
-    line-height: 44px;
     background-color: #fff;
+    z-index: 10000;
 }
-.save-setting a{
-    width: 100%;
+.save-setting button{
+
     background-color: #ff3000;
     border: none;
     font-size: 16px;
+
+}
+/*#img {*/
+    /*border-radius: 500px;*/
+    /*border-top-left-radius: 500px;*/
+    /*border-top-right-radius: 500px;*/
+    /*border-bottom-right-radius: 500px;*/
+    /*border-bottom-left-radius: 500px;*/
+/*}*/
+.touxiang{
+
+    width: 80px;
+    height: 80px;
+    background-image: url("../img/head.png")
+    -webkit-border-radius : 40 px;
+    border-radius: 40px;;
+    position: absolute;
+    top:20%;
+    right: 15%;
+    overflow: hidden;
+}
+.errorTip{
+    color: #fc3b00;
+    font-size: 20px;
+    font-family: 'microsoft yahei';
 }

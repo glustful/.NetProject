@@ -141,13 +141,13 @@ namespace Community.Service.Product
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-                if (condition.Categorys != null && condition.Categorys.Any())
+                if (condition.Categorys != null )//传进来的是二级 查他下面的三级所有商品
                 {
-                    query = query.Where(q => condition.Categorys.Contains(q.Category));
+                    query = query.Where(q =>q.Category.Father.Id==condition.Categorys.Id);
                 }
 
 
-                if (condition.CategoryId.HasValue && condition.CategoryId!=0)
+                if (condition.CategoryId.HasValue && condition.CategoryId!=0)// 传进来的是3级
                 {                    
                     query = query.Where(q => q.Category.Id == condition.CategoryId);
                 }
@@ -262,14 +262,17 @@ namespace Community.Service.Product
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
-                if (condition.Categorys != null && condition.Categorys.Any())
+                if (condition.Categorys != null)//传进来的是二级 查他下面的三级所有商品
                 {
-                    query = query.Where(q => condition.Categorys.Contains(q.Category));
+                    query = query.Where(q => q.Category.Father.Id == condition.Categorys.Id);
                 }
-                if (condition.CategoryId.HasValue)
+
+
+                if (condition.CategoryId.HasValue && condition.CategoryId != 0)// 传进来的是3级
                 {
                     query = query.Where(q => q.Category.Id == condition.CategoryId);
                 }
+               
                 return query.Count();
             }
             catch (Exception e)

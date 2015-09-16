@@ -106,25 +106,26 @@ namespace Zerg.Controllers.Community
             {
                 Page = condition.Page,
                 PageCount = condition.PageCount,
-               
+               Name = condition.Name,
+               IsDescending = condition.IsDescending,
+               OrderBy = condition.OrderBy,
+               PriceBegin = condition.PriceBegin,
+               PriceEnd = condition.PriceEnd
             };
             if (condition.CategoryId!=0 && condition.CategoryId!=null)
             {
                 var category = _categoryService.GetCategoryById(Convert.ToInt32(condition.CategoryId));
-                if (category.Father.Father == null)
+                if (category.Father.Father == null)//判断是否是二级
                 {
-                    var firstOrDefault = _categoryService.GetCategorysBySuperFather(category.Id).FirstOrDefault();
-                    if (firstOrDefault != null)
-                        con.CategoryId = firstOrDefault.Id;
+                    //var firstOrDefault = _categoryService.GetCategorysBySuperFather(category.Id).FirstOrDefault();
+                    //if (firstOrDefault != null)
+                    //    con.CategoryId = firstOrDefault.Id;
+                    con.Categorys = category;//_categoryService.GetCategorysBySuperFather(category.Id).ToArray();
                 }
-                else
+                else//3级
                 {
                     con.CategoryId = condition.CategoryId;
                 }
-             //condition.CategoryId 这里传得是一个二级分类 取他下面的子类的默认第一个
-            //var category = _categoryService.GetCategorysBySuperFather(Convert.ToInt32(condition.CategoryId)).FirstOrDefault();
-                
-            //con.CategoryId = category.Id;
             }
                 
             var model = _productService.GetProductsByCondition(con).Select(c => new ProductModel
@@ -143,8 +144,8 @@ namespace Zerg.Controllers.Community
 				Subtitte = c.Subtitte,
 				Contactphone = c.Contactphone,
 				Type = c.Type,
-                NewPrice = c.NewPrice.Value,
-                Owner =c.Owner.Value,
+                NewPrice = c.NewPrice,
+                Owner =c.Owner,
                 Addtime = c.AddTime,
 				Detail = c.Detail.Detail
 //				Comments = c.Comments,

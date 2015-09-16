@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="page/service/css/service.css">
 
 <div class=" header bar" style="height:44px">
@@ -16,180 +15,167 @@
 </div>
 
 
-<ion-view view-title="优·购物" hide-tabs="false" hide-nav-bar="true">
+<ion-view view-title="优·购物" hide-tabs="true" hide-nav-bar="true">
     <!-- 主页-->
-  <ion-content class="scroll-content" no-header="true" style="top:44px">
-       <ion-refresher pulling-text="下拉刷新" on-refresh="vm.doRefresh()"></ion-refresher>
-       <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" ng-if="content">
-           <ion-slide ng-repeat="item in content">
-               <div class="box">
-               <img ng-if="item" ng-src="http://img.iyookee.cn/{{item.TitleImg}}" class="img-full" >
-                   <!--{{slide.TitleImg}}-->
-               </div>
-           </ion-slide>
-  <!--<ion-slide>-->
-    <!--<div class="box">-->
-      <!--<img src="http://img.iyookee.cn/20150619/20150619_100607_883_670.png">-->
-    <!--</div>-->
-  <!--</ion-slide>-->
-  <!--<ion-slide>-->
-    <!--<div class="box">-->
-      <!--<img src="http://img.iyookee.cn/20150619/20150619_100607_883_670.png">-->
-    <!--</div>-->
-  <!--</ion-slide>-->
-  <!--<ion-slide>-->
-    <!--<div class="box">-->
-      <!--<img src="http://img.iyookee.cn/20150714/20150714_172952_955_22.jpg">-->
-    <!--</div>-->
-  <!--</ion-slide>-->
-</ion-slide-box>
-    <!-- ion-infinite-scroll 上拉加载数据指令 distance默认1% nf-if的值为false时，就禁止执行on-infinite  -->
-    <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="1%" ></ion-infinite-scroll>
-      <a class="button-service" ng-click="go('index.html#/page/service/safe')" style="">优服务</a>
-      <ion-scroll zooming="true" direction="x" class="scroll-home">
-          <div class="row bg-yellow">
+    <ion-content class="scroll-content" no-header="true" style="top:44px">
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefrsh()"></ion-refresher>
+        <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" ng-if="content">
+            <ion-slide ng-repeat="item in content">
+                <div class="box">
+                    <img ng-if="item" ng-src="http://img.iyookee.cn/{{item.TitleImg}}" class="img-full" >
+                    <!--{{slide.TitleImg}}-->
+                </div>
+            </ion-slide>
+            <img src="http://img.iyookee.cn/20150619/20150619_100607_883_670.png">
 
-              <a class="col-20 tab-item">
-                  <i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">家政服务</p>
-              </a>
-              <a class="col-20 tab-item">
-                  <i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">衣物清洗</p>
-              </a>
-              <a class="col-20 tab-item">
-                  <i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">快递代收</p>
-              </a>
-              <a class="col-20 tab-item">
-                  <i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">月嫂</p>
-              </a>
-              <a class="col-20 tab-item">
-                  <i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">家政服务</p>
-              </a>
-              <a class="col-20 tab-item">
-                  <i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">衣物清洗</p>
-              </a>
-              <a class="col-20 tab-item">
-                  <i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">快递代收</p>
-              </a>
-              <a class="col-20 tab-item">
-                  <i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">月嫂</p>
-              </a>
+            <!--</ion-slide>-->
+            <!--<ion-slide>-->
+            <!--<div class="box">-->
+            <!--<img src="http://img.iyookee.cn/20150619/20150619_100607_883_670.png">-->
+            <!--</div>-->
+            <!--</ion-slide>-->
+            <!--<ion-slide>-->
+            <!--<div class="box">-->
+            <!--<img src="http://img.iyookee.cn/20150714/20150714_172952_955_22.jpg">-->
+            <!--</div>-->
+            <!--</ion-slide>-->
+        </ion-slide-box>
+        <!-- ion-infinite-scroll 上拉加载数据指令 distance默认1% nf-if的值为false时，就禁止执行on-infinite  -->
+        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="1%" ></ion-infinite-scroll>
 
-          </div>
-       </ion-scroll>
-         <div class="padding stable-bg">
-             <div class="  bar-light  ">
-                 <h4 class="title p-red font-12"><strong>| 爆款套餐</strong>&nbsp;| 省到不行</h4>
-             </div>
-             <div class="item item-image">
+        <div class="row bg-yellow">
+            <a class="button-service" ng-click="go('index.html#/page/service/safe')">优服务</a>
+            <a class="col tab-item">
+                <i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">家政服务</p>
+            </a>
+            <a class="col tab-item">
+                <i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">衣物清洗</p>
+            </a>
+            <a class="col tab-item">
+                <i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">快递代收</p>
+            </a>
+            <a class="col tab-item">
+                <i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">月嫂</p>
+            </a>
+            <a class=" col tab-item">
+                <i class="icon icon-jiazhenfuwu circle assertive" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">更多</p>
+            </a>
+        </div>
+
+        <div class="padding stable-bg">
+            <div class="  bar-light  ">
+                <h4 class="title p-red font-12"><strong>| 爆款套餐</strong>&nbsp;| 省到不行</h4>
+            </div>
+            <div class="item item-image">
                 <img ng-src="http://img.iyookee.cn/{{list.MainImg}}" class="f-show" ng-click="go('index.html#/page/shopping/product-detail')">
-                 <div class="p-location">
-                     <div class="p-invisible">{{list.Owner}}人已抢购</div>
-                 </div>
-                 <div class="activity padding text-left" >
-                     <div class="color-white">{{list.Name}}</div>
-                     <p><span class="p-price" style="font-size: 0.5em">RMB{{list.NewPrice}}</span>/<del style="font-size: 2px;" class="color-white">折扣前{{list.Price}}</del></p>
-                     <i class="icon icon-gouwuche shop-cart" ng-click="go('index.html#/page/car')"></i><br>
-                     <button class=" energized-bg none-border button-size" ng-click="go('index.html#/page/car/order')">立即购买</button>
+                <div class="p-location">
+                    <div class="p-invisible">{{list.Owner}}人已抢购</div>
+                </div>
+                <div class="activity padding text-left" >
+                    <div class="color-white">{{list.Name}}</div>
+                    <p><span class="p-price" style="font-size: 0.5em">RMB{{list.NewPrice}}</span>/<del style="font-size: 2px;" class="color-white">折扣前{{list.Price}}</del></p>
+                    <i class="icon icon-gouwuche shop-cart" ng-click="go('index.html#/page/car')"></i><br>
+                    <button class=" energized-bg none-border button-size" ng-click="go('index.html#/page/car/order')">立即购买</button>
 
-                 </div>
-             </div>
-             <ul>
-                 <li style="width:50%;float:left" ng-repeat="row in items">
-                     <div class="col p-relative" >
-                         <img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}" ng-click="go('index.html#/page/shopping/product-detail')">
-                         <div class="s-location">
-                             <p class="p-invisible">{{row.Owner}}人已抢购</p>
-                         </div>
-                         <div class="padding">
-                             <p>{{row.Name}}</p>
-                             <p><span class="p-price" style="font-size: 0.5em">RMB{{row.NewPrice}}</span>/<del style="font-size: 2px;">折扣前{{row.Price}}</del></p>
-                             <p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>
-                         </div>
-                     </div>
-                 </li>
-                 <!--<li style="width:50%;float:left" >-->
-                     <!--<div class="col p-relative">-->
-                         <!--<img src="img/product3.png">-->
-                         <!--<div class="s-location">-->
-                             <!--<p class="p-invisible">5281人已抢购</p>-->
-                         <!--</div>-->
-                         <!--<div class="padding">-->
-                             <!--<p>夜饿魔套餐</p>-->
-                             <!--<p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>-->
-                             <!--<p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>-->
-                         <!--</div>-->
-                     <!--</div>-->
-                 <!--</li>-->
-             </ul>
+                </div>
+            </div>
+            <ul>
+                <li style="width:50%;float:left" ng-repeat="row in items">
+                    <div class="col p-relative" >
+                        <img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}" ng-click="go('index.html#/page/shopping/product-detail')">
+                        <div class="s-location">
+                            <p class="p-invisible">{{row.Owner}}人已抢购</p>
+                        </div>
+                        <div class="padding">
+                            <p>{{row.Name}}</p>
+                            <p><span class="p-price" style="font-size: 0.5em">RMB{{row.NewPrice}}</span>/<del style="font-size: 2px;">折扣前{{row.Price}}</del></p>
+                            <p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>
+                        </div>
+                    </div>
+                </li>
+                <!--<li style="width:50%;float:left" >-->
+                <!--<div class="col p-relative">-->
+                <!--<img src="img/product3.png">-->
+                <!--<div class="s-location">-->
+                <!--<p class="p-invisible">5281人已抢购</p>-->
+                <!--</div>-->
+                <!--<div class="padding">-->
+                <!--<p>夜饿魔套餐</p>-->
+                <!--<p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>-->
+                <!--<p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</li>-->
+            </ul>
 
-             <!--<div class="row">-->
-                 <!--<div class="col p-relative" >-->
-                     <!--<img src="img/product2.png" ng-click="go('index.html#/page/shopping/product-detail')">-->
-                     <!--<div class="s-location">-->
-                         <!--<p class="p-invisible">5281人已抢购</p>-->
-                     <!--</div>-->
-                     <!--<div class="padding">-->
-                         <!--<p>夜饿魔套餐</p>-->
-                         <!--<p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>-->
-                         <!--<p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>-->
-                     <!--</div>-->
+            <!--<div class="row">-->
+            <!--<div class="col p-relative" >-->
+            <!--<img src="img/product2.png" ng-click="go('index.html#/page/shopping/product-detail')">-->
+            <!--<div class="s-location">-->
+            <!--<p class="p-invisible">5281人已抢购</p>-->
+            <!--</div>-->
+            <!--<div class="padding">-->
+            <!--<p>夜饿魔套餐</p>-->
+            <!--<p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>-->
+            <!--<p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>-->
+            <!--</div>-->
 
-                 <!--</div>-->
-                 <!--<div class="col p-relative">-->
-                     <!--<img src="img/product3.png">-->
-                     <!--<div class="s-location">-->
-                         <!--<p class="p-invisible">5281人已抢购</p>-->
-                     <!--</div>-->
-                     <!--<div class="padding">-->
-                         <!--<p>夜饿魔套餐</p>-->
-                         <!--<p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>-->
-                         <!--<p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>-->
-                     <!--</div>-->
-                 <!--</div>-->
-             <!--</div>-->
-         </div>
-      <ion-infinite-scroll ng-if="!over" on-infinite="load_more();">
-      </ion-infinite-scroll>
-  </ion-content>
+            <!--</div>-->
+            <!--<div class="col p-relative">-->
+            <!--<img src="img/product3.png">-->
+            <!--<div class="s-location">-->
+            <!--<p class="p-invisible">5281人已抢购</p>-->
+            <!--</div>-->
+            <!--<div class="padding">-->
+            <!--<p>夜饿魔套餐</p>-->
+            <!--<p><span class="p-price">RMB 68</span>/<del>折扣前128</del></p>-->
+            <!--<p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+        </div>
+        <ion-infinite-scroll on-infinite="load_more();">
+        </ion-infinite-scroll>
+    </ion-content>
 
 
     <!--头部遮罩-->
     <!--<div class="bar bar-header  p-head">-->
-        <!--<img src="page/shopping/img/head.png">-->
+    <!--<img src="page/shopping/img/head.png">-->
     <!--</div>-->
     <!--主体遮罩-->
-<!--<ion-content>-->
+    <!--<ion-content>-->
     <!--<div style="background-color: #e8e8e8;">-->
-        <!--<div class="row service">-->
-            <!--<div class="col jgg1" href="#/page/car" ng-click="go('index.html#/page/service/safe')"><i class="icon icon-baoxian" style="color: #6bcd76"></i><p>保险</p></div>-->
-            <!--<div class="col jgg2"><i class="icon icon-jinronglicai" style="color: #f6c108"></i><p>金融理财</p></div>-->
-            <!--<div class="col jgg3"><i class="icon icon-luyou" style="color: #52a8f7"></i><p>旅游</p></div>-->
-        <!--</div>-->
-        <!--<div class="row service">-->
-            <!--<div class="col jgg1"><i class="icon icon-qicheleifuwu" style="color: #d5140a"></i><p>汽车类服务</p></div>-->
-            <!--<div class="col jgg2"><i class="icon icon-uniE60B" style="color: #f09902"></i><p>家政</p></div>-->
-            <!--<div class="col jgg3" ng-click="go('index.html#/page/service/clear')"><i class="icon icon-uniE60F" style="color: #48ccfd"></i><p>清洗服务</p></div>-->
-        <!--</div>-->
-        <!--<div class="row service">-->
-            <!--<div class="col jgg4"><i class="icon icon-jiaoyu" style="color: #52a8f7"></i><p>教育</p></div>-->
-            <!--<div class="col jgg5"><i class="icon icon-shenghuojiaofei" style="color: #48ccfd"></i><p>生活缴费</p></div>-->
-            <!--<div class="col jgg6"><i class="icon icon-uniE60C" style="color: #fac545"></i><p>快递代收</p></div>-->
-        <!--</div>-->
+    <!--<div class="row service">-->
+    <!--<div class="col jgg1" href="#/page/car" ng-click="go('index.html#/page/service/safe')"><i class="icon icon-baoxian" style="color: #6bcd76"></i><p>保险</p></div>-->
+    <!--<div class="col jgg2"><i class="icon icon-jinronglicai" style="color: #f6c108"></i><p>金融理财</p></div>-->
+    <!--<div class="col jgg3"><i class="icon icon-luyou" style="color: #52a8f7"></i><p>旅游</p></div>-->
+    <!--</div>-->
+    <!--<div class="row service">-->
+    <!--<div class="col jgg1"><i class="icon icon-qicheleifuwu" style="color: #d5140a"></i><p>汽车类服务</p></div>-->
+    <!--<div class="col jgg2"><i class="icon icon-uniE60B" style="color: #f09902"></i><p>家政</p></div>-->
+    <!--<div class="col jgg3" ng-click="go('index.html#/page/service/clear')"><i class="icon icon-uniE60F" style="color: #48ccfd"></i><p>清洗服务</p></div>-->
+    <!--</div>-->
+    <!--<div class="row service">-->
+    <!--<div class="col jgg4"><i class="icon icon-jiaoyu" style="color: #52a8f7"></i><p>教育</p></div>-->
+    <!--<div class="col jgg5"><i class="icon icon-shenghuojiaofei" style="color: #48ccfd"></i><p>生活缴费</p></div>-->
+    <!--<div class="col jgg6"><i class="icon icon-uniE60C" style="color: #fac545"></i><p>快递代收</p></div>-->
+    <!--</div>-->
     <!--</div>-->
 
-        <!--<div class="row ">-->
-            <!--<h4  class="col" style="text-align: center; color:#b0b0b0 ">······更多精彩，敬请期待！</h4>-->
-        <!--</div>-->
-    <!--<!--<div class="div-null1"></div>-->-->
-        <!--<!--底部-->-->
-        <!--<div class="row dark-bg " >-->
-            <!--<img src="page/shopping/img/foot.png">-->
-        <!--</div>-->
-        <!--<div class="button-location">-->
-            <!--<img src="page/shopping/img/button.png" >-->
-        <!--</div>-->
+    <!--<div class="row ">-->
+    <!--<h4  class="col" style="text-align: center; color:#b0b0b0 ">······更多精彩，敬请期待！</h4>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<div class="div-null1"></div>&ndash;&gt;-->
+    <!--&lt;!&ndash;底部&ndash;&gt;-->
+    <!--<div class="row dark-bg " >-->
+    <!--<img src="page/shopping/img/foot.png">-->
+    <!--</div>-->
+    <!--<div class="button-location">-->
+    <!--<img src="page/shopping/img/button.png" >-->
+    <!--</div>-->
 
-<!--</ion-content>-->
+    <!--</ion-content>-->
 
 </ion-view>
 

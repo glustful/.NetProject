@@ -4,8 +4,8 @@
         PageCount: 10
     }
 
-    var getAreaList = function () {
-        $http.get(SETTING.ZergWcApiUrl + "/CommunityArea/Get", {
+    var getAddressList = function () {
+        $http.get(SETTING.ZergWcApiUrl + "/MemberAddress/Get", {
             params: $scope.sech,
             'withCredentials': true  //跨域'
         }).success(function (data) {
@@ -14,8 +14,19 @@
             $scope.totalCount = data.TotalCount;
         });
     }
-    getAreaList();
-    $scope.getlist = getAreaList;
+
+    $scope.seach = function () {
+        $http.get(SETTING.ZergWcApiUrl + "/MemberAddress/Get?UserName=" + $scope.Condition, {
+            params: $scope.sech,
+            'withCredentials': true  //跨域'
+        }).success(function (data) {
+            $scope.list = data.List;
+            $scope.sech = data.Condition;
+            $scope.totalCount = data.TotalCount;
+        });
+    }
+    getAddressList();
+    $scope.getlist = getAddressList;
     $scope.del = function (id) {
         $scope.selectedId = id;
         var modalInstance = $modal.open({
@@ -26,7 +37,7 @@
             }
         });
         modalInstance.result.then(function () {
-            $http.delete(SETTING.ZergWcApiUrl + '/CommunityArea/Delete', {
+            $http.delete(SETTING.ZergWcApiUrl + '/MemberAddress/Delete', {
                 params: {
                     id: $scope.selectedId
                 },
@@ -34,7 +45,7 @@
             }
             ).success(function (data) {
                 if (data.Status) {
-                    getAreaList();
+                    getAddressList();
                 }
                 else {
                     //$scope.Message=data.Msg;
@@ -46,5 +57,5 @@
             $scope.alerts.splice(index, 1);
         };
     }
-}
-]);
+    }
+    ]);

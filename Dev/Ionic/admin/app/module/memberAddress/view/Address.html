@@ -1,26 +1,36 @@
 ﻿<div class=" panel-default panel panel-card ng-scope" align="center">
     <div class="div-body" ng-controller="ShowInfo">
         <div>
+            <h1>地址</h1>
+            <div class="input-group-sm">
+                <input ng-model="Condition" type="text" class="form-control"/><input type="submit" class="btn btn-info " ng-click="seach()" name="name" value="搜索" />
+            </div>
             <table class="table table-hover">
-                <caption><h1>地区信息显示</h1><button type="button" class="btn btn-info" ui-sref="app.area.createarea()">添加</button></caption>
+                
+
                 <thead>
                     <tr>
-                        <th>城市编号</th>
+                        <th>地址</th>
+                        <th>邮编</th>
+                        <th>联系人</th>
+                        <th>联系电话</th>
                         <th>添加时间</th>
-                        <th>城市名称</th>
-                        <th>隶属于</th>
+                        <th>修改时间</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="item in list">
-                        <td>{{item.Codeid}}</td>
-                        <td>{{item.AdddateString}}</td>
-                        <td>{{item.Name}}</td>
-                        <td>{{item.Parent.Name}}</td>
+                        <td>{{item.Address}}</td>
+                        <td>{{item.Zip}}</td>
+                        <td>{{item.Linkman}}</td>
+                        <td>{{item.Tel}}</td>
+                        <td>{{item.AddTimeString}}</td>
+                        <td>{{item.Updtime}}</td>
                         <!--<td><button type="button" class="btn btn-primary btn-xs" ui-href="({id:Info.Id})">修改</button></td>
                         <td><button type="button" class="btn btn-primary btn-xs">删除</button></td>-->
                         <td>
-                            <a ui-sref="app.area.editArea({id:item.Id})" class="btn btn-info">修改</a>
+                            <a ui-sref="app.memberAddress.editAddress({id:item.Id})" class="btn btn-info">修改</a>
                             <button ng-click="del(item.Id)" class="btn btn-info ">删除</button>
                         </td>
                     </tr>
@@ -38,4 +48,4 @@
     <script type="text/ng-template" id="myModalContent.html">
         <div ng-include="'app/module/modal.html'"></div>
     </script>
-    </div>
+</div>
