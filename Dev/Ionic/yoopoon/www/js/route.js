@@ -154,7 +154,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/addressAdm.html',
-                        controller: 'TabMeCtrl'
+                        controller: 'addressAdm'
                     }
                 }
             })
@@ -172,7 +172,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/Product-Catagory.html',
-                controller: 'TabShoppingCtrl'
+                controller: 'CategoryController'
             }
         }
     })

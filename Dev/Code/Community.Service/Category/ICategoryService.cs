@@ -13,6 +13,7 @@ namespace Community.Service.Category
 		CategoryEntity Update (CategoryEntity entity);
 
 		CategoryEntity GetCategoryById (int id);
+        CategoryEntity GetCategoryByFatherId(int id);
 
 		IQueryable<CategoryEntity> GetCategorysByCondition(CategorySearchCondition condition);
 

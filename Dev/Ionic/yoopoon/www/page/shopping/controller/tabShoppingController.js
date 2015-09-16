@@ -2,12 +2,12 @@
  * Created by Administrator on 2015/9/7.
  */
 app.controller('TabShoppingCtrl',['$http','$scope',function($http,$scope){
-    //Ò³ÃæÌø×ª
+    //Ò³ï¿½ï¿½ï¿½ï¿½×ª
     $scope.go=function(state){
         window.location.href=state;
     }
 
-//ÏòÏÂ¹ö¶¯Ë¢ĞÂ
+//ï¿½ï¿½ï¿½Â¹ï¿½ï¿½ï¿½Ë¢ï¿½ï¿½
     $scope.items = [];
     var base = 0;
     $scope.load_more = function(){
@@ -26,7 +26,7 @@ app.controller('TabShoppingCtrl',['$http','$scope',function($http,$scope){
     };
         $http.get(SETTING.ApiUrl+"/CommunityProduct/Get",{
             params: $scope.sech,
-            'withCredentials':true  //¿çÓò
+            'withCredentials':true  //ï¿½ï¿½ï¿½ï¿½
         }).success(function(data){
             $scope.list=data.List;
             $scope.sech.Page=data.Condition.Page;
@@ -34,6 +34,25 @@ app.controller('TabShoppingCtrl',['$http','$scope',function($http,$scope){
             $scope.totalCount = data.TotalCount;
         });
 }]);
+//start----------------------------å•†å“åˆ†ç±» huangxiuyu2015.09.15-------------------------
+app.controller('CategoryController',['$scope','$http',function($scope,$http){
+
+    $scope.searchCondition={
+        ifid:0
+    }
+    $scope.selectCategory=function(ifid){
+        $scope.searchCondition.ifid=ifid;
+        $http.get(SETTING.ApiUrl+'/Category/GetAllTree/',{params:$scope.searchCondition,'withCredentials': true}).
+            success(function(data){
+                $scope.list=data;
+                console.log(data);
+            })
+    };
+    $scope.selectCategory(1);
+
+
+}]);
+//end----------------------------å•†å“åˆ†ç±» huangxiuyu2015.09.15-------------------------
 
 
 

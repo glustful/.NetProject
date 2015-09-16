@@ -5,23 +5,23 @@
 </div>
 <ion-view hide-nav-bar="true" hide-tabs="true">
     <ion-content no-header="true" style="top:44px;" class="stable-bg">
-        <ion-list>
+        <ion-list ng-repeat="item in list">
             <ion-item style="margin-top: 15px;">
                 <div style="width: 70%;">
-                <h2>董少明 <num style="float: right">18687827733</num></h2>
-                <p style="white-space: normal;color: #000816"><span class="red">[默认]</span>云南省昆明市五华区丰宁街道学府路西段 馨悦尚居8栋1单元1211</p>
+                <h2>{{item.Adduser}}<num style="float: right">{{item.Tel}}</num></h2>
+                <p style="white-space: normal;color: #000816"><span class="red">[默认]</span>{{item.Address}}</p>
                  </div>
                 <a href="" class="button button-clear edit" style="color:#0068b7;">修改</a>
-                <a href="" class="button button-clear remove" style="color: #e60012;">删除</a>
+                <a href=""ng-click="delAddress(item.Id)" class="button button-clear remove" style="color: #e60012;">删除</a>
             </ion-item>
-            <ion-item >
-                <div style="width: 70%;">
-                    <h2>李梅<num style="float: right">18687827733</num></h2>
-                    <p style="white-space: normal;color: #000816"><span class="red">[默认]</span>云南省昆明市五华区丰宁街道学府路西段 馨悦尚居8栋1单元1211</p>
-                </div>
-                <a href="" class="button button-clear edit" style="color:#0068b7;">修改</a>
-                <a href="" class="button button-clear remove" style="color: #e60012;">删除</a>
-            </ion-item>
+            <!--<ion-item >-->
+                <!--<div style="width: 70%;">-->
+                    <!--<h2>李梅<num style="float: right">18687827733</num></h2>-->
+                    <!--<p style="white-space: normal;color: #000816"><span class="red">[默认]</span>云南省昆明市五华区丰宁街道学府路西段 馨悦尚居8栋1单元1211</p>-->
+                <!--</div>-->
+                <!--<a href="" class="button button-clear edit" style="color:#0068b7;">修改</a>-->
+                <!--<a href="" class="button button-clear remove" style="color: #e60012;">删除</a>-->
+            <!--</ion-item>-->
 
 
         </ion-list>
