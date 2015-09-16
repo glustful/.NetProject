@@ -2,13 +2,12 @@
  * Created by Administrator on 2015/9/7.
  */
 app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout',function($http,$scope,$stateParams,$timeout){
-    //ҳ����ת
+
     $scope.go=function(state){
         window.location.href=state;
     }
 
-//���¹���ˢ��
-
+    //region商品大图获取
     $scope.Condition = {
         IsDescending:true,
         OrderBy:'OrderById',
@@ -25,16 +24,15 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout',fun
     }
     getProductList();
     $scope.getList=getProductList;
+//endregion
 
-
-
-
+    //region 商品获取
     $scope.items = [];
     $scope.searchCondition = {
         IsDescending:true,
         OrderBy:'OrderByAddtime',
         Page:1,
-        PageCount:6
+        PageCount:10
         //ProductId:''
     };
     var getList=function() {
@@ -50,12 +48,12 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout',fun
         })
     }
     getList();
+//endregion
 
-
-//    滚动刷新
+    //region    滚动刷新
     $scope.load_more = function(){
         $timeout(function(){
-             $scope.searchCondition.Page+=1;
+            $scope.searchCondition.Page+=1;
             $http.get('http://localhost:50597/api/CommunityProduct/Get', {
                 params: $scope.searchCondition,
                 'withCredentials': true
@@ -65,16 +63,15 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout',fun
                 if(data.List!="") {
                     for (var i = 0; i < data.List.length; i++) {
                         $scope.items.push(data.List[i]);
-
-                    }
-                    if($scope.items.length==data.TotalCount){
-                        $scope.$broadcast("scroll.infiniteScrollComplete");
                     }
                 }
             })
             $scope.$broadcast("scroll.infiniteScrollComplete");
         },1000);
  };
+    //endregion
+
+    //region 轮播图片
     $scope.channelName='banner';
     $http.get('http://localhost:50597/api/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
         $scope.content=data;
