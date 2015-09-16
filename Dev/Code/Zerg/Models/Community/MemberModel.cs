@@ -95,7 +95,10 @@ namespace Zerg.Models.Community
         /// 注册时间
         /// </summary>
 		public DateTime AddTime {get;set;}
-
+        public string AddTimeString
+        {
+            get { return AddTime.ToString("yyyy-MM-dd HH:mm:ss"); }
+        }
 
 		/// <summary>
         /// 修改人

@@ -62,7 +62,7 @@ namespace Community.Entity.Model.MemberAddress
 
 		public DateTime? UpdtimeEnd { get; set; }
 
-
+        public string UserName { get; set; }
 
 
 		public EnumMemberAddressSearchOrderBy? OrderBy { get; set; }

@@ -1,8 +1,13 @@
 ﻿<div class=" panel-default panel panel-card ng-scope" align="center">
     <div class="div-body" ng-controller="ShowInfo">
         <div>
+            <h1>地址</h1>
+            <div class="input-group-sm">
+                <input ng-model="Condition" type="text" class="form-control"/><input type="submit" class="btn btn-info " ng-click="seach()" name="name" value="搜索" />
+            </div>
             <table class="table table-hover">
-                <caption><h1>地址</h1></caption>
+                
+
                 <thead>
                     <tr>
                         <th>地址</th>
@@ -20,12 +25,12 @@
                         <td>{{item.Zip}}</td>
                         <td>{{item.Linkman}}</td>
                         <td>{{item.Tel}}</td>
-                        <td>{{item.Addtime}}</td>
+                        <td>{{item.AddTimeString}}</td>
                         <td>{{item.Updtime}}</td>
                         <!--<td><button type="button" class="btn btn-primary btn-xs" ui-href="({id:Info.Id})">修改</button></td>
                         <td><button type="button" class="btn btn-primary btn-xs">删除</button></td>-->
                         <td>
-                            <a ui-sref="app.area.editArea({id:item.Id})" class="btn btn-info">修改</a>
+                            <a ui-sref="app.memberAddress.editAddress({id:item.Id})" class="btn btn-info">修改</a>
                             <button ng-click="del(item.Id)" class="btn btn-info ">删除</button>
                         </td>
                     </tr>
