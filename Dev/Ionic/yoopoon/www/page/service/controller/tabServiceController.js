@@ -29,13 +29,16 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeou
     //    页面跳转
     $scope.go=function(state){
         window.location.href=state;
-    }
+    };
 
 //    页面跳转到页脚导航
     $scope.goes=function(state) {
         $ionicHistory.clearHistory();
         window.location.href = state;
     }
+
+
+
 
 //    搜索功能
         $scope.showSelect = false;
@@ -45,6 +48,7 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeou
             $scope.isShow = true;
         };
 // 遮罩层
+
         var tip1 = document.getElementById("tiphidden1");
         var tip2 = document.getElementById("tiphidden2");
 
@@ -72,55 +76,70 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeou
                     $scope.items.push(["item ", base].join(""));
                 $scope.$broadcast("scroll.infiniteScrollComplete");
             }, 500);
-        };
+
+        }
+
+
+//    滚动刷新
+            $scope.items = [];
+            var base = 0;
+            $scope.load_more = function () {
+                $timeout(function () {
+                    for (var i = 0; i < 10; i++, base++)
+                        $scope.items.push(["item ", base].join(""));
+                    $scope.$broadcast("scroll.infiniteScrollComplete");
+                }, 500);
+
+            };
 
 //    选择清洗服务
-        $scope.selected1 = false;
-        $scope.selected2 = false;
-        $scope.selected3 = false;
-        $scope.selected4 = false;
-        $scope.selected5 = false;
-        $scope.selectService = function (sel) {
-            switch (sel) {
-                case 1:
-                    if ($scope.selected1 == false) {
-                        $scope.selected1 = true;
-                        return;
-                    }
-                    $scope.selected1 = false;
-                    break;
-                case 2:
-                    if ($scope.selected2 == false) {
-                        $scope.selected2 = true;
-                        return;
-                    }
-                    $scope.selected2 = false;
-                    break;
-                case 3:
-                    if ($scope.selected3 == false) {
-                        $scope.selected3 = true;
-                        return;
-                    }
-                    $scope.selected3 = false;
-                    break;
-                case 4:
-                    if ($scope.selected4 == false) {
-                        $scope.selected4 = true;
-                        return;
-                    }
-                    $scope.selected4 = false;
-                    break;
-                case 5:
-                    if ($scope.selected5 == false) {
-                        $scope.selected5 = true;
-                        return;
-                    }
-                    $scope.selected5 = false;
-                    break;
-            }
-        };
-    $scope.aaa=function(){
-        console.log("111");
-        alert("2222");
-    }
-    });
+            $scope.selected1 = false;
+            $scope.selected2 = false;
+            $scope.selected3 = false;
+            $scope.selected4 = false;
+            $scope.selected5 = false;
+            $scope.selectService = function (sel) {
+                switch (sel) {
+                    case 1:
+                        if ($scope.selected1 == false) {
+                            $scope.selected1 = true;
+                            return;
+                        }
+                        $scope.selected1 = false;
+                        break;
+                    case 2:
+                        if ($scope.selected2 == false) {
+                            $scope.selected2 = true;
+                            return;
+                        }
+                        $scope.selected2 = false;
+                        break;
+                    case 3:
+                        if ($scope.selected3 == false) {
+                            $scope.selected3 = true;
+                            return;
+                        }
+                        $scope.selected3 = false;
+                        break;
+                    case 4:
+                        if ($scope.selected4 == false) {
+                            $scope.selected4 = true;
+                            return;
+                        }
+                        $scope.selected4 = false;
+                        break;
+                    case 5:
+                        if ($scope.selected5 == false) {
+                            $scope.selected5 = true;
+                            return;
+                        }
+                        $scope.selected5 = false;
+                        break;
+                }
+
+            };
+
+        })
+
+
+

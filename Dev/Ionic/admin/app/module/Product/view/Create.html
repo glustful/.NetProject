@@ -14,9 +14,20 @@
                 <label class="col-sm-3 control-label no-padding-right"> 商品分类 </label>
 
                 <div class="col-sm-9">
-                    <div>
+                    <div style="float: left;margin-right: 20px">
+                        <select class="form-control" style="width: 100px" ng-model="oneId"
+                                ng-options="o.Id as o.Name for o in CategoryOneList" ng-change="selectTwoChange()" required>
+                        </select>
+                    </div>
+                    <div style="float: left;margin-right: 20px">
+                        <select class="form-control" style="width: 100px" ng-model="twoId"
+                                ng-options="o.Id as o.Name for o in CategoryTwoList" ng-change="selectThreeChange()" required>
+                        </select>
+                    </div>
+                    &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+                    <div style="float: left">
                         <select class="form-control" style="width: 100px" ng-model="product.CategoryId" id="CategoryId"
-                                ng-options="o.Id as o.Name for o in CategoryList" required>
+                                ng-options="o.Id as o.Name for o in CategoryThreeList" required>
                         </select>
                     </div>
                 </div>

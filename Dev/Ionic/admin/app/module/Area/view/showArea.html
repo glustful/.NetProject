@@ -1,0 +1,41 @@
+﻿<div class=" panel-default panel panel-card ng-scope" align="center">
+    <div class="div-body" ng-controller="ShowInfo">
+        <div>
+            <table class="table table-hover">
+                <caption><h1>地区信息显示</h1><button type="button" class="btn btn-info">添加</button></caption>
+                <thead>
+                    <tr>
+                        <th>城市编号（CodeId）</th>
+                        <th>添加时间（AddDate）</th>
+                        <th>城市名称（Name）</th>
+                        <th>父级ID（Parent_Id）</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in list">
+                        <td>{{item.Codeid}}</td>
+                        <td>{{item.Adddate}}</td>
+                        <td>{{item.Name}}</td>
+                        <td>{{item.ParentName}}</td>
+                        <!--<td><button type="button" class="btn btn-primary btn-xs" ui-href="({id:Info.Id})">修改</button></td>
+                        <td><button type="button" class="btn btn-primary btn-xs">删除</button></td>-->
+                        <td>
+                            <a ui-sref="app.area.editArea({id:item.Id})" class="btn btn-info">修改</a>
+                            <button ng-click="del(item.Id)" class="btn btn-info ">删除</button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot class="hide-if-no-paging">
+                    <tr>
+                        <td colspan="10" class="text-center">
+                            <pagination boundary-links="true" total-items="totalCount" items-per-page="sech.PageCount" ng-model="sech.Page" ng-change="getlist()" class="m-t-none m-b" previous-text="‹" next-text="›" first-text="«" last-text="»"></pagination>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <script type="text/ng-template" id="myModalContent.html">
+        <div ng-include="'app/module/modal.html'"></div>
+    </script>
+    </div>
