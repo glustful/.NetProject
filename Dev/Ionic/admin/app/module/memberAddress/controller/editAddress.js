@@ -10,7 +10,7 @@
             'withCredentials': true
         }).success(function (data) {
             if (data.Status) {
-                $state.go("app.area.show");
+                $state.go("app.memberAddress.Address");
             }
         })
     }

@@ -198,7 +198,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 }
             })
             .state('page.myOrder', {
-                url: '/me/myOrder',
+                url: '/me/myOrder?tabIndex',
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/myOrder.html',

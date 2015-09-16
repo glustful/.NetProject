@@ -4,18 +4,29 @@
         PageCount: 10
     }
 
-    var getAreaList = function () {
+    var getAddressList = function () {
         $http.get(SETTING.ZergWcApiUrl + "/MemberAddress/Get", {
             params: $scope.sech,
             'withCredentials': true  //跨域'
         }).success(function (data) {
             $scope.list = data.List;
-            $scope.sech.Page = data.Condition.PageCount;
+            $scope.sech = data.Condition;
             $scope.totalCount = data.TotalCount;
         });
     }
-    getAreaList();
-    $scope.getlist = getAreaList;
+
+    $scope.seach = function () {
+        $http.get(SETTING.ZergWcApiUrl + "/MemberAddress/Get?UserName=" + $scope.Condition, {
+            params: $scope.sech,
+            'withCredentials': true  //跨域'
+        }).success(function (data) {
+            $scope.list = data.List;
+            $scope.sech = data.Condition;
+            $scope.totalCount = data.TotalCount;
+        });
+    }
+    getAddressList();
+    $scope.getlist = getAddressList;
     $scope.del = function (id) {
         $scope.selectedId = id;
         var modalInstance = $modal.open({
@@ -34,7 +45,7 @@
             }
             ).success(function (data) {
                 if (data.Status) {
-                    getAreaList();
+                    getAddressList();
                 }
                 else {
                     //$scope.Message=data.Msg;

@@ -6,8 +6,10 @@
     <div class="icon-size detail-car " ng-click="go('index.html#/page/car')">
         <i class="icon-gouwuche color-white"></i>
     </div>
-
-<ion-view hide-tabs="false" hide-nav-bar="true">
+    <div class="icon-size gwc-car " id="gwcaction">
+        <i class="icon-gouwuche color-white"></i>
+    </div>
+<ion-view hide-tabs="true" hide-nav-bar="true">
     <ion-content class="detail-position">
         <!-- 滚动图-->
             <!--<ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" >-->
@@ -116,8 +118,9 @@
         <!--<div class="div-null"></div>-->
 
     </ion-content>
+
     <div class=" row detail-padding button-position">
         <button class="col button-large assertive-bg none-border p-button" ng-click="go('index.html#/page/car')">立即购买</button>
-        <button class="col button-large  energized-bg none-border p-button" ng-click="go('index.html#/page/car/order')">加入购物车</button>
+        <button class="col button-large  energized-bg none-border p-button" ng-click="AddGWCAction()">加入购物车</button>
     </div>
 </ion-view>
