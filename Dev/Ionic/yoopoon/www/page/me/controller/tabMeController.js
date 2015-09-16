@@ -1,30 +1,30 @@
-app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,$stateParams) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-  $scope.model = {
-    activeIndex:0
-  };
-
-  $scope.pageClick = function(index){
-    //alert(index);
-    //alert($scope.delegateHandler.currentIndex());
-    $scope.model.activeIndex = 2;
-  };
-
-  $scope.slideHasChanged = function($index){
-    //alert($index);
-    //alert($scope.model.activeIndex);
-  };
-  $scope.delegateHandler = $ionicSlideBoxDelegate;
-//    页面跳转
-    $scope.go=function(state){
-        window.location.href=state;
-    }
+//app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,$stateParams) {
+//  // With the new view caching in Ionic, Controllers are only called
+//  // when they are recreated or on app start, instead of every page change.
+//  // To listen for when this page is active (for example, to refresh data),
+//  // listen for the $ionicView.enter event:
+//  //
+//  //$scope.$on('$ionicView.enter', function(e) {
+//  //});
+//  $scope.model = {
+//    activeIndex:0
+//  };
+//
+//  $scope.pageClick = function(index){
+//    //alert(index);
+//    //alert($scope.delegateHandler.currentIndex());
+//    $scope.model.activeIndex = 2;
+//  };
+//
+//  $scope.slideHasChanged = function($index){
+//    //alert($index);
+//    //alert($scope.model.activeIndex);
+//  };
+//  $scope.delegateHandler = $ionicSlideBoxDelegate;
+////    页面跳转
+//    $scope.go=function(state){
+//        window.location.href=state;
+//    }
 //    新增地址
 
 
@@ -52,7 +52,7 @@ app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,
 //    $scope.$on("modal.removed", function() {
 //        // Execute action
 //    });
-               });
+//               });
 
 
 app.controller('selectAddress', function($scope, $routeParams) {
@@ -131,8 +131,52 @@ app.controller('selectAddress', function($scope, $routeParams) {
  }
     tab();
 
+    //个人资料修改
+    $scope.imgUrl=SETTING.ImgUrl;
+    $scope.oldMem={
+        Realname:'',
+        Gender:'1',
+        IdentityNo:'4564',
+        Icq:'454',
+        Phone:'18388026186',
+        Thumbnail:'',
+        PostNo:'456',
+        AccountNumber:'4444',
+        Points:'5',
+        Level:'4',
+        AddTime:'2015-08-09',
+        UpdUser:'1',
+        UpdTime:'2015-08-09'
+    };
+    var httpimguri='';
+    $scope.save = function() {
+        if (document.getElementById("Uptext").innerText == '正在上传..') {
+            alert("头像正在上传,请稍等!");
+            return;
+        }
+        if (httpimguri.length > 0) {
+            $scope.oldMem.Thumbnail = httpimguri;
+            //如果服务器返回了用户的头像地址,操作IMG标签的SRC为angularjs绑定
+            var img = document.getElementById('imghead');
+            img.src = "{{oldMem.Thumbnail}}";
+            //有图片就显示
+            img.style.display = 'block';
+        } else {
+            httpimguri = '';
+        }
+        $http.post(SETTING.ApiUrl + '/Member/Post', $scope.oldMem,{'withCredentials':true})
+            .success(function (data) {
+                if (data.Status) {
+                    var img = document.getElementById('imghead');
+                    img.src = $scope.oldMem.Thumbnail;
+                    $scope.tips = "资料更新成功！";
+                    location.reload([true]);
+                    //$state.go("app.personal");
 
-               
+                }
+
+            });
+    }
 
 
 });
@@ -140,8 +184,8 @@ app.controller('selectAddress', function($scope, $routeParams) {
 /////////////////////////////头像修改////////////////////////////
 function previewImage(file)
 {
-  var MAXWIDTH  = 128;
-  var MAXHEIGHT = 128;
+  var MAXWIDTH  = 80;
+  var MAXHEIGHT = 80;
   var div = document.getElementById('preview');
   files = file.files[0];
   if (file.files && files)
@@ -149,8 +193,8 @@ function previewImage(file)
     div.innerHTML ='<img id=imghead>';
     var img = document.getElementById('imghead');
     img.onload = function(){
-      img.width  =  128;
-      img.height =  128;
+      img.width  =  80;
+      img.height =  80;
       //隐藏默认头像
       var defaultHeadImg = document.getElementById("preview");
       defaultHeadImg.style.background = 'white';
