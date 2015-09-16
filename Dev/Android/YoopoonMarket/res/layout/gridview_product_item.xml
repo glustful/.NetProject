@@ -19,9 +19,8 @@
             <ImageView
                 android:id="@+id/img_product_photo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="@drawable/commodity_testing" />
+                android:layout_height="200dp"
+                android:scaleType="fitXY" />
 
             <TextView
                 android:id="@+id/tv_product_name"

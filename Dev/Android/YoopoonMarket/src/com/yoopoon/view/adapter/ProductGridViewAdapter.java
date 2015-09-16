@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,12 +29,12 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.MyApplication;
-
 import com.yoopoon.market.ProductDetailActivity_;
 import com.yoopoon.market.R;
 
@@ -49,10 +50,15 @@ public class ProductGridViewAdapter extends BaseAdapter {
 
 	public ProductGridViewAdapter(Context context, ArrayList<JSONObject> arrayList) {
 		mContext = context;
+		//业务要求首页横向显示的商品为第一项
+		arrayList.remove(0);
+		if (datas != null)
+			datas.removeAll(datas);
 		datas = arrayList;
 	}
 	@Override
 	public int getCount() {
+		Log.e("Product", datas.size() + "");
 		return datas.size();
 	}
 	@Override
@@ -65,26 +71,22 @@ public class ProductGridViewAdapter extends BaseAdapter {
 	}
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
+	 
 		ProductViewHandler productityViewHandler = null;
 		if (convertView != null) {
 			productityViewHandler = (ProductViewHandler) convertView.getTag();
 		} else {
 			productityViewHandler = new ProductViewHandler();
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.gridview_product_item, null);
-			convertView.setTag(productityViewHandler);
+			
 			productityViewHandler.initViewHandler(convertView);
+			convertView.setTag(productityViewHandler);
 		}
-		//具体获取的key等API完成修改
-		//int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
-		//url等待后台API确定
-		//String url = mContext.getString(R.string.url_image);
-		//判断图片链接是否存在，不存在的时候使用默认图片
-		String url;
-		if (datas.get(position).optString("MainImg") == null || datas.get(position).optString("MainImg").equals("null")) {
-			url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
-		} else {
-			url = datas.get(position).optString("MainImg");
-		}
+		 		 
+		 	  		//判断图片链接是否存在，不存在的时候使用默认图片
+		String url = "http://img.yoopoon.com/"+datas.get(position).optString("MainImg");
+	
+		//String url = "http://iyookee.cn/modules/Index/static/image/index/activity4_c37e838.png";
 		//产品名称
 		productityViewHandler.productityNameTextView.setText(datas.get(position).optString("Name", ""));
 		//产品当前价格
@@ -94,10 +96,14 @@ public class ProductGridViewAdapter extends BaseAdapter {
 		productityViewHandler.productityBeforePriceTextView.setText(" /折扣前"
 				+ datas.get(position).optString("NewPrice", "0.00"));
 		productityViewHandler.productityBeforePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+		//加载销量
+		productityViewHandler.salesVolumeButton.setText(("已有" + datas.get(position).optString("Owner", "0") + "人抢购"));
 		//加载图片
 		productityViewHandler.productityPhotoImageView.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+				LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 		productityViewHandler.productityPhotoImageView.setTag(url);
+		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 400);
+		productityViewHandler.productityPhotoImageView.setLayoutParams(params);
 		ImageLoader.getInstance().displayImage(url, productityViewHandler.productityPhotoImageView,
 				MyApplication.getOptions(), MyApplication.getLoadingListener());
 		//立即购买按钮点击事件
@@ -125,17 +131,18 @@ public class ProductGridViewAdapter extends BaseAdapter {
 				mContext.startActivity(intent);
 			}
 		});
+		//convertView = LayoutInflater.from(mContext).inflate(R.layout.gridview_product_item, null);
 		return convertView;
 	}
-	public void refresh(ArrayList<JSONObject> mJsonObjects) {
+
+	/*public void refresh(ArrayList<JSONObject> mJsonObjects) {
 		datas.clear();
 		if (mJsonObjects != null) {
 			datas.addAll(mJsonObjects);
 		}
 		// this.notifyDataSetInvalidated();
-		this.notifyDataSetChanged();
-	}
-
+		this.notifyDataSetChanged(); 
+	}*/
 	/**
 	 * @ClassName: ProductViewHandler
 	 * @Description: 产品对应的ViewHandler
@@ -148,7 +155,7 @@ public class ProductGridViewAdapter extends BaseAdapter {
 		private TextView productityBeforePriceTextView;
 		private TextView productityNameTextView;
 		private Button purchaseButton;
-		private Button hasPurchaseButton;
+		private Button salesVolumeButton;
 		private ImageView cartImageView;
 
 		void initViewHandler(View view) {
@@ -157,7 +164,7 @@ public class ProductGridViewAdapter extends BaseAdapter {
 			productityBeforePriceTextView = (TextView) view.findViewById(R.id.tv_before_price);
 			productityNameTextView = (TextView) view.findViewById(R.id.tv_product_name);
 			purchaseButton = (Button) view.findViewById(R.id.btn_purchase);
-			hasPurchaseButton = (Button) view.findViewById(R.id.has_buy_button);
+			salesVolumeButton = (Button) view.findViewById(R.id.has_buy_button);
 			cartImageView = (ImageView) view.findViewById(R.id.img_cart);
 		}
 	}
