@@ -52,7 +52,7 @@ angular.module('app')
                     templateUrl: 'app/module/test/view/test.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/test/controller/testController.js']);
                             }]
                     }
@@ -62,7 +62,7 @@ angular.module('app')
                     templateUrl: 'app/module/home/view/home.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/home/controller/homeController.js']);
                             }]
                     }
@@ -78,7 +78,7 @@ angular.module('app')
                     templateUrl: 'app/module/autoRes/view/focusRes.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/autoRes/controller/focusResController.js']);
                             }]
                     }
@@ -88,7 +88,7 @@ angular.module('app')
                     templateUrl: 'app/module/autoRes/view/keyRes.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/autoRes/controller/keyResController.js']);
                             }]
                     }
@@ -99,7 +99,7 @@ angular.module('app')
                     templateUrl: 'app/module/autoRes/view/createKeyRes.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/autoRes/controller/keyResController.js']);
                             }]
                     }
@@ -110,7 +110,7 @@ angular.module('app')
                     templateUrl: 'app/module/autoRes/view/editKeyRes.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/autoRes/controller/keyResController.js']);
                             }]
                     }
@@ -126,7 +126,7 @@ angular.module('app')
                     templateUrl: 'app/module/contact/view/contactList.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/contact/controller/contactController.js']);
                             }]
                     }
@@ -141,7 +141,7 @@ angular.module('app')
                   templateUrl: 'app/module/menu/view/menulist.html',
                   resolve: {
                       deps: ['$ocLazyLoad',
-                          function( $ocLazyLoad ){
+                          function ($ocLazyLoad) {
                               return $ocLazyLoad.load(['app/module/menu/controller/menulistCtr.js']);
                           }]
                   }
@@ -151,7 +151,7 @@ angular.module('app')
                   templateUrl: 'app/module/menu/view/childmenulist.html',
                   resolve: {
                       deps: ['$ocLazyLoad',
-                          function( $ocLazyLoad ){
+                          function ($ocLazyLoad) {
                               return $ocLazyLoad.load(['app/module/menu/controller/childmenulistCtr.js']);
                           }]
                   }
@@ -161,7 +161,7 @@ angular.module('app')
                   templateUrl: 'app/module/menu/view/updatemenu.html',
                   resolve: {
                       deps: ['$ocLazyLoad',
-                          function( $ocLazyLoad ){
+                          function ($ocLazyLoad) {
                               return $ocLazyLoad.load(['app/module/menu/controller/updatemenuCtr.js']);
                           }]
                   }
@@ -185,7 +185,7 @@ angular.module('app')
                     templateUrl: 'app/module/event/redModel/view/redMain.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/event/redModel/controller/redMainController.js']);
                             }]
                     }
@@ -204,7 +204,7 @@ angular.module('app')
                     templateUrl: 'app/module/baseSetting/view/deploy.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/baseSetting/controller/deployController.js']);
                             }]
                     }
@@ -215,7 +215,7 @@ angular.module('app')
                     templateUrl: 'app/module/baseSetting/view/baseSetting.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/baseSetting/controller/baseSettingController.js']);
                             }]
                     }
@@ -225,7 +225,7 @@ angular.module('app')
                     templateUrl: 'app/module/baseSetting/view/createSetting.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/baseSetting/controller/baseSettingController.js']);
                             }]
                     }
@@ -235,7 +235,7 @@ angular.module('app')
                     templateUrl: 'app/module/baseSetting/view/editSetting.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
+                            function ($ocLazyLoad) {
                                 return $ocLazyLoad.load(['app/module/baseSetting/controller/baseSettingController.js']);
                             }]
                     }
@@ -267,8 +267,8 @@ angular.module('app')
                     templateUrl: 'app/module/signin/view/signin.html',
                     resolve: {
                         deps: ['uiLoad',
-                            function( uiLoad ){
-                                return uiLoad.load( ['app/module/signin/controller/signinController.js'] );
+                            function (uiLoad) {
+                                return uiLoad.load(['app/module/signin/controller/signinController.js']);
                             }]
                     }
                 })
@@ -279,11 +279,40 @@ angular.module('app')
                     templateUrl: 'app/module/page_signup.html',
                     resolve: {
                         deps: ['uiLoad',
-                            function( uiLoad ){
-                                return uiLoad.load( ['js/controllers/signup.js'] );
+                            function (uiLoad) {
+                                return uiLoad.load(['js/controllers/signup.js']);
                             }]
                     }
-                });
+                })
+                //地址
+
+                 .state('app.memberAddress', {
+                     url: '/memberAddress',
+                     template: '<div ui-view class="fade-in-up"></div>'
+                 })
+              .state('app.memberAddress.Address', {
+                  url: '/Address',
+                  templateUrl: 'app/module/memberAddress/view/Address.html',
+                  resolve: {
+                      deps: ['$ocLazyLoad',
+                          function ($ocLazyLoad) {
+                              return $ocLazyLoad.load(['app/module/memberAddress/controller/Address.js']);
+                          }]
+                  }
+              })
+          .state('app.memberAddress.editAddress', {
+              url: '/editAddress?id',
+              templateUrl: 'app/module/memberAddress/view/editAddress.html',
+              resolve: {
+                  deps: ['$ocLazyLoad',
+                      function ($ocLazyLoad) {
+                          return $ocLazyLoad.load(['app/module/memberAddress/controller/editAddress.js']);
+                      }]
+              }
+          });
+
+         
+
         }
     ]
 );

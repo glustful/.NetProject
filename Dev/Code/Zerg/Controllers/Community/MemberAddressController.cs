@@ -5,6 +5,8 @@ using Community.Entity.Model.MemberAddress;
 using Community.Service.MemberAddress;
 using Zerg.Models.Community;
 using Community.Entity.Model.Member;
+using System.Net.Http;
+using Zerg.Common;
 
 namespace Zerg.Controllers.Community
 {
@@ -39,7 +41,7 @@ namespace Zerg.Controllers.Community
 			return model;
 		}
 
-		public List<MemberAddressModel> Get(MemberAddressSearchCondition condition)
+        public HttpResponseMessage Get(MemberAddressSearchCondition condition)
 		{
 			var model = _memberAddressService.GetMemberAddresssByCondition(condition).Select(c=>new MemberAddressModel
 			{
@@ -54,7 +56,8 @@ namespace Zerg.Controllers.Community
 				Upduser = c.Upduser,
 				Updtime = c.Updtime,
 			}).ToList();
-			return model;
+            var totalCount = _memberAddressService.GetMemberAddressCount(condition);
+            return PageHelper.toJson(new { List = model, Condition = condition, toTalCount = totalCount });
 		}
 
 		public bool Post([FromBody]MemberAddressModel model)

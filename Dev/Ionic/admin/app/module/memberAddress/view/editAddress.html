@@ -1,0 +1,28 @@
+﻿<div><h1>编辑信息</h1></div>
+<div class="div-body" ng-controller="AddressEditCtr">
+    <div style="padding:50px 50px 10px;">
+        <form class="form-horizontal" role="form" name="form" enctype="multipart/form-data">
+            <div class="input-group-sm">
+                <span class="input-group-addon">地址</span>
+                <input type="text" class="form-control" ng-model="list.Address" id="Address" name="Address" />
+            </div>
+            <div class="input-group-sm">
+                <span class="input-group-addon">邮编</span>
+                <input type="text" class="form-control" ng-model="list.Zip" id="Zip" name="Zip" />
+            </div>
+            <div class="input-group-sm">
+                <span class="input-group-addon">联系人</span>
+                <input type="text" class="form-control" ng-model="list.Linkman" id="Linkman" name="Linkman" />
+            </div>
+            <div class="input-group-sm">
+                <span class="input-group-addon">联系电话</span>
+                <input type="text" class="form-control" ng-model="list.Tel" id="Tel" name="Tel" />
+            </div>
+
+            <br />
+            <div class="text-center">
+                <button id="btn_ok" type="submit" class="btn btn-primary" ng-click="Create()">保存</button>
+            </div>
+        </form>
+    </div>
+</div>
