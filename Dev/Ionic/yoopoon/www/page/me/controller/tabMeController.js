@@ -101,19 +101,9 @@ app.controller('TabMeCtrl', function($http,$scope,$state,$AuthService, $ionicSli
     $http.get(SETTING.ApiUrl+'/Member/GetMemberByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
         .success(function(response) {
             $scope.oldMem=response;
-            if(response.IsInvite==1)
-            {
-
-
-            }
-            else if(response.IsInvite==0)
-            {
-                var invited=document.getElementById('InvitedCode')
-                invited.style.display='none';
-            }
 
             //添加判断,如果用户没有头像,隐藏IMG标签
-            if($scope.olduser.Headphoto.length<15){
+            if($scope.oldMem.Thumbnail.length<15){
                 //操作IMG标签的SRC为空
                 var img = document.getElementById('imghead');
                 //没图片隐藏
