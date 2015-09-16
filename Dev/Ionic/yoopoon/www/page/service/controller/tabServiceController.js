@@ -1,8 +1,6 @@
-<<<<<<< HEAD
-app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeout,$rootScope) {
-=======
+
 app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeout,$ionicHistory) {
->>>>>>> 8376f5b305e9d80b6f87f5bbf87777f6a8a7767f
+
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -152,4 +150,4 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeou
                 break;
         }
     }
-               });
+});

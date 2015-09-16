@@ -105,7 +105,7 @@ $scope.searchCondition.Page+=1;
                         $scope.$broadcast("scroll.infiniteScrollComplete");
                     }
                 }
-            })
+            });
             $scope.$broadcast("scroll.infiniteScrollComplete");
         },1000);
  };
