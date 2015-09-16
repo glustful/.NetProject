@@ -1,7 +1,6 @@
 
 <link rel="stylesheet" href="page/service/css/service.css">
-<link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
-<script src="lib/ionic/js/ionic.bundle.min.js"></script>
+
 <div class=" header bar" style="height:44px">
     <a class="button  button-icon icon icon-fuwuanniu" ng-click="go('index.html#/page/shopping/Product-Catagory')"></a>
     <label class=" item-select select-header" ng-hide="showSelect">
@@ -17,7 +16,7 @@
 </div>
 
 
-<ion-view view-title="优·购物" hide-tabs="false" hide-nav-bar="true">
+<ion-view view-title="优·购物" hide-tabs="true" hide-nav-bar="true">
     <!-- 主页-->
   <ion-content class="scroll-content" no-header="true" style="top:44px">
        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
@@ -47,7 +46,7 @@
   <!--</ion-slide>-->
 
     <!-- ion-infinite-scroll 上拉加载数据指令 distance默认1% nf-if的值为false时，就禁止执行on-infinite  -->
-    <ion-infinite-scroll ng-if="moredata" on-infinite="load_more()" distance="1%" ></ion-infinite-scroll>
+
       <a class="button-service" ng-click="go('index.html#/page/service/safe')" style="">优服务</a>
       <ion-scroll zooming="true" direction="x" class="scroll-home">
           <div class="row bg-yellow">
@@ -151,8 +150,7 @@
                  <!--</div>-->
              <!--</div>-->
          </div>
-      <ion-infinite-scroll  on-infinite="load_more();">
-      </ion-infinite-scroll>
+      <ion-infinite-scroll ng-if="" on-infinite="load_more()" distance="" ></ion-infinite-scroll>
   </ion-content>
 
 
