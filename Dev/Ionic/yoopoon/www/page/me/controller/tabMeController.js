@@ -21,11 +21,11 @@ app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,
     //alert($scope.model.activeIndex);
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
-//    Ò³ÃæÌø×ª
+//    Ò³ï¿½ï¿½ï¿½ï¿½×ª
     $scope.go=function(state){
         window.location.href=state;
     }
-//    ÐÂÔöµØÖ·
+//    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·
 
 
 //    $ionicModal.fromTemplateUrl("my-modal.html", {
@@ -60,13 +60,13 @@ app.controller('selectAddress', function($scope, $stateParams) {
     $scope.chats = [
         {
         id: 0,
-        name: '±±¾©ÊÐ',
+        name: 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
         lastText: 'You on your way?',
         face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
     },
         {
             id: 1,
-            name: 'Ìì½òÊÐ',
+            name: 'ï¿½ï¿½ï¿½ï¿½ï¿½',
             lastText: 'You on your way?',
             face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
         }
@@ -103,14 +103,14 @@ app.controller('selectAddress', function($scope, $stateParams) {
   $scope.delegateHandler = $ionicSlideBoxDelegate;
 
 
-//´ò¿ªÆÀÂÛ
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
   var comment=document.getElementById("userComment");
   $scope.open=function(){
     comment.style.display="";
   }
 
 
-  //ÎÒµÄ¶©µ¥
+  //ï¿½ÒµÄ¶ï¿½ï¿½ï¿½
   $scope.tabIndex=1;
   $scope.getOrderList1=function(){
     $scope.tabIndex=1
@@ -125,12 +125,12 @@ app.controller('selectAddress', function($scope, $stateParams) {
     $scope.tabIndex=4
   }
 
-               });
+              
 
 
 });
 
-/////////////////////////////Í·ÏñÐÞ¸Ä////////////////////////////
+/////////////////////////////Í·ï¿½ï¿½ï¿½Þ¸ï¿½////////////////////////////
 function previewImage(file)
 {
   var MAXWIDTH  = 128;
@@ -144,22 +144,22 @@ function previewImage(file)
     img.onload = function(){
       img.width  =  128;
       img.height =  128;
-      //Òþ²ØÄ¬ÈÏÍ·Ïñ
+      //ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Í·ï¿½ï¿½
       var defaultHeadImg = document.getElementById("preview");
       defaultHeadImg.style.background = 'white';
     }
     var reader = new FileReader();
     reader.onload = function(evt){
-      //base64±àÂë
+      //base64ï¿½ï¿½ï¿½ï¿½
       img.src = evt.target.result;
-      //À©Õ¹Ãû
+      //ï¿½ï¿½Õ¹ï¿½ï¿½
       var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
-      // gifÔÚieä¯ÀÀÆ÷²»ÏÔÊ¾
+      // gifï¿½ï¿½ieï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
       if(ext!='png'&&ext!='jpg'&&ext!='jpeg'&&ext!='gif'){
-        alert("Ö»Ö§³ÖJPG,PNG,JPEG¸ñÊ½µÄÍ¼Æ¬");
+        alert("Ö»Ö§ï¿½ï¿½JPG,PNG,JPEGï¿½ï¿½Ê½ï¿½ï¿½Í¼Æ¬");
         return;
       }
-      //·¢ËÍÇëÇó
+      //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
       var xmlhttp=new XMLHttpRequest();
       xmlhttp.onreadystatechange = callback;
       var fd = new FormData();
@@ -168,18 +168,18 @@ function previewImage(file)
       xmlhttp.withCredentials = true;
       xmlhttp.send(fd);
       var headtext = document.getElementById("Uptext");
-      headtext.innerHTML = 'ÕýÔÚÉÏ´«..';
+      headtext.innerHTML = 'ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½..';
       headtext.style.color ='#40AD32'
-      //»Øµ÷º¯Êý
+      //ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
       function callback () {
-        //½«responseÌáÈ¡³öÀ´·Ö¸î³öÎÄ¼þÃû
+        //ï¿½ï¿½responseï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
         httpimguri =  xmlhttp.response;
         var g1=httpimguri.split(':"');
         var g2= httpimguri.split(',')[1].split(':"')[1];
-        //½«·Ö¸îºÃµÄÎÄ¼þÃû¸³Óè¸øimgÈ«¾Ö±äÁ¿
+        //ï¿½ï¿½ï¿½Ö¸ï¿½Ãµï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½imgÈ«ï¿½Ö±ï¿½ï¿½ï¿½
         httpimguri=g2.substring(0,g2.length-1);
-        //Í¼Æ¬ÉÏ´«³É¹¦×ÖÑùÑùÊ½
-        headtext.innerHTML = 'ÉÏ´«³É¹¦!';
+        //Í¼Æ¬ï¿½Ï´ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
+        headtext.innerHTML = 'ï¿½Ï´ï¿½ï¿½É¹ï¿½!';
         headtext.style.color ='red';
       }
     }
@@ -187,4 +187,4 @@ function previewImage(file)
   }
 }
 
-///////////////////////////Í·ÏñÐÞ¸Ä//////////////////////////////////
+///////////////////////////Í·ï¿½ï¿½ï¿½Þ¸ï¿½//////////////////////////////////
