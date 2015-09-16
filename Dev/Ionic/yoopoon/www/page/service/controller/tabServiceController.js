@@ -147,4 +147,4 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate,$timeou
                 break;
         }
     }
-               });
+    }});
