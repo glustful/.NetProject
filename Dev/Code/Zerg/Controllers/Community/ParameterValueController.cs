@@ -6,15 +6,24 @@ using Community.Service.ParameterValue;
 using Zerg.Models.Community;
 using System.Net.Http;
 
+using System;
+using Community.Service.Parameter;
+using Zerg.Common;
+using System.Web.Http.Cors;
+
 namespace Zerg.Controllers.Community
 {
+    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
 	public class ParameterValueController : ApiController
 	{
 		private readonly IParameterValueService _parameterValueService;
+        private readonly IParameterService _parameterService;
 
-		public ParameterValueController(IParameterValueService parameterValueService)
+        public ParameterValueController(IParameterValueService parameterValueService, IParameterService parameterService)
 		{
 			_parameterValueService = parameterValueService;
+            _parameterService = parameterService;
 		}
 
 		public ParameterValueModel Get(int id)
@@ -34,39 +43,50 @@ namespace Zerg.Controllers.Community
 			return model;
 		}
 
-		public List<ParameterValueModel> Get(ParameterValueSearchCondition condition)
-		{
-			var model = _parameterValueService.GetParameterValuesByCondition(condition).Select(c=>new ParameterValueModel
-			{
-				Id = c.Id,
-//				Parameter = c.Parameter,
-//				ParameterValue = c.ParameterValue,
-				Sort = c.Sort,
-				AddUser = c.AddUser,
-				AddTime = c.AddTime,
-				UpdUser = c.UpdUser,
-				UpdTime = c.UpdTime,
-			}).ToList();
-			return model;
-		}
+        public HttpResponseMessage Get(string ParameterId)
+        {
+            var condition = new ParameterValueSearchCondition
+            {
+                Parameters = _parameterService.GetParameterById(Convert.ToInt32(ParameterId))
+            };
+            var model = _parameterValueService.GetParameterValuesByCondition(condition).Select(c => new
+            {
+                Id = c.Id,                
+                ParameterName = c.Parameter.Name,
+                Value = c.Value,
+                Sort = c.Sort,
+                AddTime = c.AddTime
+            }).ToList();
+            return PageHelper.toJson(model);
+        } 
 
-		public bool Post(ParameterValueModel model)
+
+	
+
+		public  HttpResponseMessage Post(ParameterValueModel model)
 		{
-			var entity = new ParameterValueEntity
+
+              if(String.IsNullOrEmpty(model.ParameterValue) || model.Id==0)
+            {
+               return PageHelper.toJson(PageHelper.ReturnValue(false, "数据异常！")); 
+            }
+
+              var entity = new ParameterValueEntity
 			{
-//				Parameter = model.Parameter,
-//				ParameterValue = model.ParameterValue,
-				Sort = model.Sort,
-				AddUser = model.AddUser,
-				AddTime = model.AddTime,
-				UpdUser = model.UpdUser,
-				UpdTime = model.UpdTime,
+                Parameter =_parameterService.GetParameterById(model.Id),//添加时候 这里的Id传的是参数ID         
+                Value = model.ParameterValue,
+				Sort = model.Sort,				
+				AddTime =DateTime.Now,
+                UpdTime =DateTime.Now,
 			};
-			if(_parameterValueService.Create(entity).Id > 0)
+              if (_parameterValueService.Create(entity).Id > 0)
 			{
-				return true;
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功！"));
 			}
-			return false;
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败！")); 
+
+
+		
 		}
 
 		public bool Put(ParameterValueModel model)
@@ -86,14 +106,15 @@ namespace Zerg.Controllers.Community
 			return false;
 		}
 
-		public bool Delete(int id)
+        [HttpGet]
+        public HttpResponseMessage Delete(int id)
 		{
 			var entity = _parameterValueService.GetParameterValueById(id);
 			if(entity == null)
-				return false;
+		    return PageHelper.toJson(PageHelper.ReturnValue(false, "删除失败！"));
 			if(_parameterValueService.Delete(entity))
-				return true;
-			return false;
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "删除失败！"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "删除失败！"));
 		}
 
 
