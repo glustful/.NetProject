@@ -189,14 +189,12 @@ angular.module('app')
                     templateUrl:'app/module/Parameter/view/Index.html'
 
                 })
-                .state('app.parameter.createParameter',{
-                    url:'/createParameter',
-                    templateUrl:'app/module/Parameter/view/Create.html'
+                .state('app.parameter.parameterValueIndex',{
+                    url:'/parameterValueIndex?parameterId&name',
+                    templateUrl:'app/module/Parameter/view/parametervalueIndex.html'
                 })
-                .state('app.parameter.editParameter',{
-                    url:'/editParameter?id',
-                    templateUrl:'app/module/Parameter/view/Edit.html'
-                })
+
+
 
                 //商品管理页
                 .state('app.product',{

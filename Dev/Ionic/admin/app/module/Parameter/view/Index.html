@@ -48,9 +48,10 @@
 
                             <td>{{row.AddTime| dateFilter }}</td>
                             <td>
-                                <button class="btn btn-info btn-sm"  ng-click="getParameterValue(row.Id)" onclick="ParameterValueWindowShow()"><i class="fa fa-fw m-r-xs fa-edit"></i>参数值管理
-                                </button>
-                                <button ng-click='delParameter(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
+                                <a ui-sref="app.parameter.parameterValueIndex({parameterId:row.Id,name:row.Name})" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-edit"></i> 参数值管理
+                                </a>
+
+                                <button ng-click='del(row.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
                                 </button>
                             </td>
 
@@ -227,13 +228,14 @@
     </script>
 </div>
 
-<script type="text/ng-template" id="myModalContent.html">
-    <div ng-include="'views/partials/modal.html'"></div>
-</script>
+
 <script id="recursion" type="text/ng-template">
     <li    ng-repeat="item in my_data">
         <span ng-click="selectEvent(item)"><span ng-if="item.children.length">-</span>
             {{item.label}}</span>
         <ul  style="list-style-type:none;" ng-if="item.children.length" ng-include="'recursion'"  ng-init="my_data=item.children"></ul>
     </li>
+</script>
+<script type="text/ng-template" id="myModalContent.html">
+    <div ng-include="'app/module/modal.html'"></div>
 </script>
