@@ -1,7 +1,8 @@
-<link rel="stylesheet" href="page/service/css/service.css">
+
+<link href="page/shopping/shopping.css" type="text/css" rel="stylesheet">
 
 <div class=" header bar" style="height:44px">
-    <a class="button  button-icon icon icon-fuwuanniu" ng-click="go('index.html#/page/shopping/Product-Catagory')"></a>
+    <a class="button  button-icon icon icon-fuwuanniu"ng-click="go('page.Product-Catagory')" ui-sref="page.Product-Catagory" ></a>
     <label class=" item-select select-header" ng-hide="showSelect">
         <select>
             <option>金尚俊园A座</option>
@@ -11,6 +12,7 @@
 
     </label>
     <a class="button button-icon icon icon-search search" ng-click="showInput()"></a>
+    <a class="button button-icon icon ion-navicon-round round" ng-click="showInput()"></a>
     <input class="header-input" ng-class="{'header-input-show':isShow}" type="text" placeholder="" style="border: 1px solid #fff; height: 70%;z-index: 0;padding-left: 10px;color: #fff">
 </div>
 
@@ -74,7 +76,7 @@
                 <div class="activity padding text-left" >
                     <div class="color-white">{{list.Name}}</div>
                     <p><span class="p-price" style="font-size: 0.5em">RMB{{list.NewPrice}}</span>/<del style="font-size: 2px;" class="color-white">折扣前{{list.Price}}</del></p>
-                    <i class="icon icon-gouwuche shop-cart" ng-click="go('index.html#/page/car')"></i><br>
+                    <i class="icon icon-gouwuche shop-cart" ng-click=""></i><br>
                     <button class=" energized-bg none-border button-size" ng-click="go('index.html#/page/car/order')">立即购买</button>
 
                 </div>

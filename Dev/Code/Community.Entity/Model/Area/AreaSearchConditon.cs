@@ -24,7 +24,7 @@ namespace Community.Entity.Model.Area
 
         public string Parent_Id { get; set; }
 
-
+        public int fatherid { get; set; }
 
         public string Codeid { get; set; }
 
@@ -39,7 +39,7 @@ namespace Community.Entity.Model.Area
 		public string Name { get; set; }
 
 
-
+        public bool father { get; set; }
 
 		public EnumAreaSearchOrderBy? OrderBy { get; set; }
 

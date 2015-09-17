@@ -95,10 +95,10 @@ namespace Community.Service.ProductComment
                     query = query.Where(q => q.Stars < condition.StarsEnd.Value);
                 }
 			   
-			    if (condition.AddUser.HasValue)
-                {
-                    query = query.Where(q => q.AddUser==condition.AddUser.Value);
-                }
+                //if (condition.AddUser.HasValue)
+                //{
+                //    query = query.Where(q => q.AddUser==condition.AddUser.Value);
+                //}
 				if (!string.IsNullOrEmpty(condition.Content))
                 {
                     query = query.Where(q => q.Content.Contains(condition.Content));
@@ -175,10 +175,10 @@ namespace Community.Service.ProductComment
                 {
                     query = query.Where(q => q.Stars < condition.StarsEnd.Value);
                 }
-				if (condition.AddUser.HasValue)
-                {
-                    query = query.Where(q => q.AddUser==condition.AddUser.Value);
-                }
+                //if (condition.AddUser.HasValue)
+                //{
+                //    query = query.Where(q => q.AddUser==condition.AddUser.Value);
+                //}
 				if (!string.IsNullOrEmpty(condition.Content))
                 {
                     query = query.Where(q => q.Content.Contains(condition.Content));

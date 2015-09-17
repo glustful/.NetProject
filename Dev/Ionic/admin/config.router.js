@@ -3,10 +3,7 @@
 /**
  * Config for the router
  */
-angular.module('app')
-
-    .run(
-    ['$rootScope', '$state', '$stateParams', 'AuthService',
+angular.module('app').run(['$rootScope', '$state', '$stateParams', 'AuthService',
         function ($rootScope, $state, $stateParams, AuthService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
@@ -30,17 +27,12 @@ angular.module('app')
                 }
             });
         }
-    ]
-)
+    ])
 
-    .config(
-    ['$stateProvider', '$urlRouterProvider',
-      function ($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-          $urlRouterProvider
-              .otherwise('/app/home');                              //程序启动默认界面
-          $stateProvider
-              .state('app', {
+          $urlRouterProvider.otherwise('/app/home');                              //程序启动默认界面
+          $stateProvider.state('app', {
                   abstract: true,
                   url: '/app',
                   templateUrl: 'app/common/layout/app.html'
@@ -82,26 +74,7 @@ angular.module('app')
                           }]
                   }
               })
-              .state('app.member.memlist', {
-                  url: 'memlist',
-                  templateUrl: 'app/module/member/view/memlist.html',
-                  resolve: {
-                      deps: ['$ocLazyLoad',
-                      function ($ocLazyLoad) {
-                          return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
-                      }]
-                  }
-              })
-              .state('app.member.detail', {
-                  url: 'detail?id',
-                  templateUrl: 'app/module/member/view/detail.html',
-                  resolve: {
-                      deps: ['$ocLazyLoad',
-                          function ($ocLazyLoad) {
-                              return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
-                          }]
-                  }
-              })
+
 
               //--------------公众号基本设置
               .state('app.autoRes', {
@@ -181,21 +154,22 @@ angular.module('app')
                   }
               })
               //------------自定义菜单
-            .state('app.menu', {
+             .state('app.menu', {
                 url: '/menu',
                 template: '<div ui-view class="fade-in-up"></div>'
             })
-            .state('app.menu.menulist', {
+             .state('app.menu.menulist', {
                 url: '/menulist',
                 templateUrl: 'app/module/menu/view/menulist.html',
                 resolve: {
                     deps: ['$ocLazyLoad',
                         function ($ocLazyLoad) {
                             return $ocLazyLoad.load(['app/module/menu/controller/menulistCtr.js']);
+
                         }]
                 }
             })
-            .state('app.menu.childmenulist', {
+             .state('app.menu.childmenulist', {
                 url: '/childmenulist',
                 templateUrl: 'app/module/menu/view/childmenulist.html',
                 resolve: {
@@ -205,7 +179,7 @@ angular.module('app')
                         }]
                 }
             })
-            .state('app.menu.updatemenu', {
+             .state('app.menu.updatemenu', {
                 url: '/updatemenu',
                 templateUrl: 'app/module/menu/view/updatemenu.html',
                 resolve: {
@@ -349,6 +323,7 @@ angular.module('app')
                           }]
                   }
               })
+
               //商品属性管理 app.parameter.parameterList
               .state('app.parameter', {
                   url: '/parameter',
@@ -467,7 +442,7 @@ angular.module('app')
                    data: { title: '地区列表' }
                })
 
-        .state('app.area.createarea', {
+              .state('app.area.createarea', {
             url: '/createarea',
             templateUrl: 'app/module/Area/view/createArea.html',
             resolve: {
@@ -490,7 +465,7 @@ angular.module('app')
           //地址管理
                .state('app.memberAddress', {
                    url: '/memberAddress',
-                   template: '<div ui-view class="fade-in-up"></div>',
+                   template: '<div ui-view class="fade-in-up"></div>'
                })
 
                .state('app.memberAddress.Address', {
@@ -515,6 +490,5 @@ angular.module('app')
                           }]
                   }
               })
-      }
-    ]
-);
+
+      }])

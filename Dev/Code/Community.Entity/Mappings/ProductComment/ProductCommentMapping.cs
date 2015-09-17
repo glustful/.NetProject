@@ -12,7 +12,7 @@ namespace Community.Entity.Mappings.ProductComment
 			HasKey(c => c.Id);
 			
 			HasRequired(c =>c.Product);
-			Property(c => c.AddUser).HasColumnType("int").IsOptional();
+			HasRequired(c=>c.Member);
 			Property(c => c.AddTime).HasColumnType("datetime").IsOptional();
 			Property(c => c.Content).HasColumnType("text").IsOptional();
 			Property(c => c.Stars).HasColumnType("int").IsOptional();

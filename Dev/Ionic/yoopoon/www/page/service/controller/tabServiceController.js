@@ -6,8 +6,8 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate, $timeo
 	//
 	//$scope.$on('$ionicView.enter', function(e) {
 	//});
-	
 
+    
 
 	$scope.model = {
 		activeIndex: 0

@@ -17,5 +17,7 @@ namespace Community.Service.Area
 		IQueryable<AreaEntity> GetAreasByCondition(AreaSearchCondition condition);
 
 		int GetAreaCount (AreaSearchCondition condition);
+        //IQueryable<AreaEntity> GetsuperArea(int father);
+       
 	}
 }
