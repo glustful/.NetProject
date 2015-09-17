@@ -87,7 +87,6 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
             actionDOM.style.visibility = "hidden";
         }
 
-    }
     //region商品大图获取
 
     $scope.Condition = {
@@ -355,6 +354,32 @@ app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($htt
     }).success(function(data){
         $scope.productList=data.List
     })
+
+  //加入购物车动画
+    $scope.AddGWCAction = function()
+    {
+        //显示图标
+        var actionDOM = document.getElementById("gwcaction");
+        actionDOM.style.visibility = "visible";
+        //执行动画
+        var abc = actionDOM.className;
+        actionDOM.className = abc+"Gwcactive";
+        function hasClass( actionDOM,Gwcactive ){
+            return !!actionDOM.className.match( new RegExp( "(\\s|^)" + Gwcactive + "(\\s|$)") );
+        };
+        function addClass( actionDOM,Gwcactive ){
+            if( !hasClass( actionDOM,Gwcactive ) ){
+                actionDOM.className += " " + Gwcactive;
+            };
+        };
+        function removeClass( actionDOM,Gwcactive ){
+            if( hasClass( actionDOM,Gwcactive ) ){
+                actionDOM.className = actionDOM.className.replace( new RegExp( "(\\s|^)" + Gwcactive + "(\\s|$)" ), " " );
+            };
+        };
+
+    }
+
 }])
 
 
