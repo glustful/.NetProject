@@ -64,8 +64,6 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
         window.location.href=state;
     };
 
-//向下滚动刷新
-//���¹���ˢ��
 
     //    搜索功能
     $scope.showSelect = false;
@@ -111,12 +109,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
 //endregion
 
     //region 商品获取
-    $scope.items = [];
-    var base = 0;
-    $scope.load_more = function(){
-        $timeout(function(){
-            for(var i=0;i<10;i++,base++)
-                $scope.items.push(["item ",base].join(""));
+
     $scope.searchCondition = {
         IsDescending:true,
         OrderBy:'OrderByAddtime',
@@ -167,22 +160,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
     $http.get('http://localhost:50597/api/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
         $scope.content=data;
     });
-    $scope.load_detail = function(){
- //for(var i=0;i<10;i++,base++)
-            //    $scope.items.push(["item ",base].join(""));
-           // alert("aaaaaaaaaa");
-            $http.get(SETTING.ApiUrl+"/ProductDetail/Get?id="+$stateParams.id,{
-                'withCredentials': true
-            }).success(function(data){
-                $scope.productDetail=data;
-            });
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-        },500;
-    }]);
-
-
-
-    //endregion
+   //endregion
     }]);
 app.controller('ShoppingListCtrl',['$http','$scope',function($http,$scope){
 
@@ -302,34 +280,6 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
     //    ,pages=2;                      //判断是否正在读取内容的变量
     $scope.CommentList = [];//保存从服务器查来的任务，可累加
 
-    var pushContent= function() {                    //核心是这个函数，向$scope.posts
-        //添加内容
-        if (!loading && $scope.comcon.Page < pages) {                         //如果页面没有正在读取
-            loading = true;                     //告知正在读取
-            $http.get(SETTING.ApiUrl + "/ProductComment/Get", {
-                params: $scope.comcon,
-                'withCredebtials': true
-            }).success(function(data) {
-
-
-
-
-
-
-
-
-
-
-
-var pages =Math.ceil(data.TotalCount /$scope.comcon.PageCount);
-                for (var i = 0; i <= data.Model.length - 1; i++) {
-                    $scope.CommentList.push(data.Model[i]);
-                }
-                loading = false;            //告知读取结束
-                if ($scope.CommentList.length == data.TotalCount) {//如果所有数据已查出来
-                    $scope.tipp = "已经是最后一页了";
-                }
-                $scope.Count=data.TotalCount;
 
     //var pushContent= function() {                    //核心是这个函数，向$scope.posts
     //    if (!loading && $scope.comcon.Page < pages) {                         //如果页面没有正在读取
@@ -394,7 +344,7 @@ var pages =Math.ceil(data.TotalCount /$scope.comcon.PageCount);
             });
         },1000);
     };
-}]));
+}]);
 app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
     $scope.search={
         Name:$stateParams.name
