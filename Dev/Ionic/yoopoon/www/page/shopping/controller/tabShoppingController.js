@@ -13,6 +13,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
             duration:3000
         });
     };
+    //cartservice.deletethis(1234567);
     //商品信息
     $scope.cartinfo={
         id:null,
