@@ -48,13 +48,13 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
                         duration: 5000
                     });
             }, function(message) {
-                 $ionicLoading.show({
-                  template: "支付宝支付失败="+message,
-                   noBackdrop: true,
-                  duration: 5000
+            $ionicLoading.show({
+                template: "支付宝支付失败=" + message,
+                noBackdrop: true,
+                duration: 5000
                 });
-               
-            });
+            }
+        );
     };
 
 
@@ -100,7 +100,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
             'withCredentials': true
         }).success(function (data1) {
             $scope.list = data1.List[0];
-        });;
+        });
     };
     getProductList();
     $scope.getList=getProductList;
@@ -208,20 +208,29 @@ app.controller('ShoppingListCtrl',['$http','$scope',function($http,$scope){
             $scope.orderByOwner();
         }
     }
-    $scope.productShow=true;
-    $scope.productPrice=false;
-    $scope.selectPrice=function(){
 
+    $scope.productPrice=false;
+    $scope.productShow=true;
+    $scope.selectPrice=function(){
+        $scope.productPrice=!$scope.productPrice;
+        if($scope.productPrice==true){
 //            document.getElementById("list").style.display="none";
-            $scope.productShow=false;
-            $scope.productPrice=true;
+               $scope.productShow=false;
+        }else{
+               $scope.productShow=true;
         }
+    }
 
     $scope.submit=function(){
-        document.getElementById("price").setAttribute("class","");
+//        document.getElementById("price").setAttribute("class","");
         $scope.productPrice=false;
         $scope.productShow=true;
         getProduct();
+    }
+//    综合排序
+    $scope.reorder=false;
+    $scope.reorderAll=function(){
+        $scope.reorder=!$scope.reorder;
     }
     //endregion
     //endregion
