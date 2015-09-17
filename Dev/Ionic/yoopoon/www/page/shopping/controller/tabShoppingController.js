@@ -9,22 +9,7 @@ $scope.test = function(){
         window.location.href=state;
     };
 
-    $scope.AddGWCAction = function()
-    {
-        //显示图标
-        var actionDOM = document.getElementById("gwcaction");
-        actionDOM.style.visibility = "visible";
-        //执行动画
-        var abc = actionDOM.className;
-        actionDOM.className = abc+"Gwcactive";
-        //执行完毕动画后，隐藏图标
-        $timeout(show,1000);
-        function show()
-        {
-            actionDOM.style.visibility = "hidden";
-        }
 
-    }
     //region鍟嗗搧澶у浘鑾峰彇
     $scope.Condition = {
         IsDescending:true,
@@ -235,6 +220,32 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout','$ion
         return $scope.hasmore=true;
         load_detail()
     }
+
+  //加入购物车动画
+    $scope.AddGWCAction = function()
+    {
+        //显示图标
+        var actionDOM = document.getElementById("gwcaction");
+        actionDOM.style.visibility = "visible";
+        //执行动画
+        var abc = actionDOM.className;
+        actionDOM.className = abc+"Gwcactive";
+        function hasClass( actionDOM,Gwcactive ){
+            return !!actionDOM.className.match( new RegExp( "(\\s|^)" + Gwcactive + "(\\s|$)") );
+        };
+        function addClass( actionDOM,Gwcactive ){
+            if( !hasClass( actionDOM,Gwcactive ) ){
+                actionDOM.className += " " + Gwcactive;
+            };
+        };
+        function removeClass( actionDOM,Gwcactive ){
+            if( hasClass( actionDOM,Gwcactive ) ){
+                actionDOM.className = actionDOM.className.replace( new RegExp( "(\\s|^)" + Gwcactive + "(\\s|$)" ), " " );
+            };
+        };
+
+    }
+
 }])
 
 

@@ -219,7 +219,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 url: '/user/register',
                 views: {
                     'page-me': {
-                        templateUrl: 'page/user/register.html'
+                        templateUrl: 'page/user/register.html',
+                        controller:'register'
                     }
                 }
             })
