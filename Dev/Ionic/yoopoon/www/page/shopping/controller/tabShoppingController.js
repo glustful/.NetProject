@@ -28,9 +28,9 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     $scope.alipay = function () {
         var myDate = new Date();
 
-        var tradeNo = myDate.getTime();
+        var tradeNo = myDate.getTime();   
         var alipay = navigator.alipay;
-
+  
         alipay.pay({
             "seller": "yunjoy@yunjoy.cn", //卖家支付宝账号或对应的支付宝唯一用户号
             "subject": "测试支付", //商品名称
@@ -40,20 +40,20 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
             "timeout": "30m", //超时设置
             "notifyUrl": "http://www.baidu.com"
         }, function (result) {
-
-            $ionicLoading.show({
+                
+                    $ionicLoading.show({
                 template: "支付宝返回结果=" + result,
-                noBackdrop: true,
-                duration: 5000
-            });
+                        noBackdrop: true,
+                        duration: 5000
+                    });
         }, function (message) {
-            $ionicLoading.show({
+                 $ionicLoading.show({
                 template: "支付宝支付失败=" + message,
-                noBackdrop: true,
-                duration: 5000
+                   noBackdrop: true,
+                  duration: 5000
+                });
+               
             });
-
-        });
     };
 
 
@@ -68,20 +68,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         $scope.showSelect = true;
         $scope.isShow = true;
     };
-    $scope.AddGWCAction = function () {
-        //显示图标
-        var actionDOM = document.getElementById("gwcaction");
-        actionDOM.style.visibility = "visible";
-        //执行动画
-        var abc = actionDOM.className;
-        actionDOM.className = abc + "Gwcactive";
-        //执行完毕动画后，隐藏图标
-        $timeout(show, 1000);
-        function show() {
-            actionDOM.style.visibility = "hidden";
-        }
 
-    }
     //region商品大图获取
 
     $scope.Condition = {
@@ -165,7 +152,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     //document.getElementById('search').onblur = function () {
     //    $state.go("page.search_product", {productName: $scope.searchname});
     //};
-}]);
+    }]);
 app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout', function ($http, $scope, $timeout) {
 
     //
@@ -176,7 +163,7 @@ app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout', function ($ht
         IsDescending: true,
         OrderBy: 'OrderByAddtime',
         CategoryId: 3,
-        // Name:'',
+       // Name:'',
         PriceBegin: '',
         PriceEnd: ''
     };
@@ -228,8 +215,8 @@ app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout', function ($ht
     $scope.selected = '0';
     $scope.change = function (x) {
         if (x == 1) {
-            $scope.orderByPrice();
-        }
+           $scope.orderByPrice();
+       }
         else if (x == 2) {
             $scope.orderByOwner();
         }
@@ -241,7 +228,7 @@ app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout', function ($ht
 //            document.getElementById("list").style.display="none";
         $scope.productShow = false;
         $scope.productPrice = true;
-    }
+        }
 
     $scope.submit = function () {
         document.getElementById("price").setAttribute("class", "");
@@ -267,30 +254,30 @@ app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout', function ($ht
 }])
 app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout',
     function ($http, $scope, $stateParams, $timeout) {
-        //region 轮播图
+    //region 轮播图
         $scope.channelName = 'banner';
         $http.get('http://localhost:50597/api/Channel/GetTitleImg', {
             params: {ChannelName: $scope.channelName},
             'withCredentials': true
         }).success(function (data) {
             $scope.content = data;
-        });
-        //endregion
-        //region 获取商品详情
+    });
+    //endregion
+    //region 获取商品详情
         $http.get(SETTING.ApiUrl + "/CommunityProduct/Get?id=" + $stateParams.id, {
             'withCredentials': true
         }).success(function (data) {
             $scope.product = data.ProductModel;
-        })
-        //endregion
-        //region 获取评论
+    })
+    //endregion
+    //region 获取评论
         $scope.comcon = {
             Page: 0,
             PageCount: 2,
             ProductId: $stateParams.id
-        }
-        $scope.tipp = "查看更多评论";
-        $scope.CommentList = [];//保存从服务器查来的任务，可累加
+    }
+    $scope.tipp = "查看更多评论";
+    $scope.CommentList = [];//保存从服务器查来的任务，可累加
         var morecomment = function () {
             $timeout(function () {
                 $scope.comcon.Page += 1;
@@ -310,23 +297,41 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout',
         morecomment();
         $scope.more = morecomment;
 
-        //endregion
-        //region 加载图文详情
+    //endregion
+     //region 加载图文详情
         $scope.hasmore = true;
         $scope.load_detail = function () {
             $timeout(function () {
                 if (!$scope.hasmore) {
-                    $scope.$broadcast('scroll.infiniteScrollComplete');
-                }
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            }
                 $http.get(SETTING.ApiUrl + "/ProductDetail/Get?id=" + $stateParams.id, {
-                    'withCredentials': true
+                'withCredentials': true
                 }).success(function (data) {
                     $scope.productDetail = data;
                     $scope.hasmore = false
-                });
+            });
             }, 1000);
-        };
-    }])
+    };
+        $scope.AddGWCAction = function()
+        {
+            //显示图标
+            var actionDOM = document.getElementById("gwcaction");
+            actionDOM.style.visibility = "visible";
+            //执行动画
+            var abc = actionDOM.className;
+            actionDOM.className = abc+"Gwcactive";
+
+            //执行完毕动画后，隐藏图标
+            $timeout(show,1000);
+            function show()
+            {
+                actionDOM.className = abc;
+                actionDOM.style.visibility = "hidden";
+            }
+
+        }
+}])
 app.controller('SearchProductCtr', ['$http', '$scope', '$stateParams', function ($http, $scope, $stateParams) {
     $scope.search = {
         Name: $stateParams.productName
