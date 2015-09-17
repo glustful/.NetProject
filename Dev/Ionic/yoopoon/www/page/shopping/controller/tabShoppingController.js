@@ -29,9 +29,9 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
     $scope.alipay = function(){
         var myDate = new Date();
 
-        var tradeNo = myDate.getTime();
+        var tradeNo = myDate.getTime();   
         var alipay = navigator.alipay;
-
+  
         alipay.pay({
             "seller" : "yunjoy@yunjoy.cn", //卖家支付宝账号或对应的支付宝唯一用户号
             "subject" : "测试支付", //商品名称
@@ -40,21 +40,21 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
             "tradeNo" : tradeNo, //唯一订单号
             "timeout" : "30m", //超时设置
             "notifyUrl" : "http://www.baidu.com"
-        }, function(result) {
-
-            $ionicLoading.show({
-                template: "支付宝返回结果="+result,
-                noBackdrop: true,
-                duration: 5000
+            }, function(result) {
+                
+                    $ionicLoading.show({
+                       template: "支付宝返回结果="+result,
+                        noBackdrop: true,
+                        duration: 5000
+                    });
+            }, function(message) {
+                 $ionicLoading.show({
+                  template: "支付宝支付失败="+message,
+                   noBackdrop: true,
+                  duration: 5000
+                });
+               
             });
-        }, function(message) {
-            $ionicLoading.show({
-                template: "支付宝支付失败="+message,
-                noBackdrop: true,
-                duration: 5000
-            });
-
-        });
     };
 
 
@@ -165,7 +165,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
     document.getElementById('search').onblur= function(){
         $state.go("page.search_product",{productName:$scope.searchname});
     };
-}]);
+    }]);
 app.controller('ShoppingListCtrl',['$http','$scope','$timeout',function($http,$scope,$timeout){
 
     //
@@ -176,7 +176,7 @@ app.controller('ShoppingListCtrl',['$http','$scope','$timeout',function($http,$s
         IsDescending:true,
         OrderBy:'OrderByAddtime',
         CategoryId:3,
-        // Name:'',
+       // Name:'',
         PriceBegin:'',
         PriceEnd:''
     };
@@ -194,10 +194,7 @@ app.controller('ShoppingListCtrl',['$http','$scope','$timeout',function($http,$s
             params: $scope.sech,
             'withCredentials': true  //跨域
         }).success(function (data) {
-            //$scope.list = data.List;
-            for (var i = 0; i < data.List.length; i++) {
-                $scope.list.push(data.List[i]);
-            }
+            $scope.list = data.List;
             if($scope.list.length<data.TotalCount)
             {
                 setTimeout(function(){$scope.hasmore=true},500)
@@ -206,7 +203,7 @@ app.controller('ShoppingListCtrl',['$http','$scope','$timeout',function($http,$s
     }
     getProduct();
     //region 加载更多
-    $scope.hasmore=false;
+    $scope.hasmore=false
     $scope.load_more = function(){
         $timeout(function(){
 
@@ -217,12 +214,11 @@ app.controller('ShoppingListCtrl',['$http','$scope','$timeout',function($http,$s
             }).success(function (data) {
                 for (var i = 0; i < data.List.length; i++) {
                     $scope.list.push(data.List[i]);
-                    if($scope.list.length==data.TotalCount)
-                    {
-                        $scope.hasmore=false;
-                    }
                 }
-
+                if($scope.list.length==data.TotalCount)
+                {
+                    $scope.hasmore=false
+                }
             });
         },1000)
     };
@@ -231,39 +227,29 @@ app.controller('ShoppingListCtrl',['$http','$scope','$timeout',function($http,$s
     $scope.select='0';
     $scope.selected='0';
     $scope.change = function(x){
-        if(x==1)
-        {
-            $scope.orderByPrice();
-        }
-        else if(x==2)
+       if(x==1)
+       {
+           $scope.orderByPrice();
+       }
+       else if(x==2)
         {
             $scope.orderByOwner();
         }
     }
-
-    $scope.productPrice=false;
     $scope.productShow=true;
+    $scope.productPrice=false;
     $scope.selectPrice=function(){
-        $scope.productPrice=!$scope.productPrice;
-        if($scope.productPrice==true){
+
 //            document.getElementById("list").style.display="none";
             $scope.productShow=false;
+            $scope.productPrice=true;
         }
-        else{
-            $scope.productShow=true;
-        }
-    }
 
     $scope.submit=function(){
-//        document.getElementById("price").setAttribute("class","");
+        document.getElementById("price").setAttribute("class","");
         $scope.productPrice=false;
         $scope.productShow=true;
         getProduct();
-    }
-//    综合排序
-    $scope.reorder=false;
-    $scope.reorderAll=function(){
-        $scope.reorder=!$scope.reorder;
     }
     //endregion
     //endregion
@@ -283,27 +269,27 @@ app.controller('ShoppingListCtrl',['$http','$scope','$timeout',function($http,$s
 }])
 app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
     function($http,$scope,$stateParams,$timeout){
-        //region 轮播图
-        $scope.channelName='banner';
-        $http.get('http://localhost:50597/api/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
-            $scope.content=data;
-        });
-        //endregion
-        //region 获取商品详情
-        $http.get(SETTING.ApiUrl+"/CommunityProduct/Get?id="+$stateParams.id,{
-            'withCredentials':true
-        }).success(function(data){
-            $scope.product=data.ProductModel;
-        })
-        //endregion
-        //region 获取评论
-        $scope.comcon={
-            Page:0,
-            PageCount:2,
-            ProductId:$stateParams.id
-        }
-        $scope.tipp = "查看更多评论";
-        $scope.CommentList = [];//保存从服务器查来的任务，可累加
+    //region 轮播图
+    $scope.channelName='banner';
+    $http.get('http://localhost:50597/api/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
+        $scope.content=data;
+    });
+    //endregion
+    //region 获取商品详情
+    $http.get(SETTING.ApiUrl+"/CommunityProduct/Get?id="+$stateParams.id,{
+        'withCredentials':true
+    }).success(function(data){
+        $scope.product=data.ProductModel;
+    })
+    //endregion
+    //region 获取评论
+    $scope.comcon={
+        Page:0,
+        PageCount:2,
+        ProductId:$stateParams.id
+    }
+    $scope.tipp = "查看更多评论";
+    $scope.CommentList = [];//保存从服务器查来的任务，可累加
         var morecomment = function(){
             $timeout(function(){
                 $scope.comcon.Page+=1;
@@ -323,23 +309,23 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
         morecomment();
         $scope.more=morecomment;
 
-        //endregion
-        //region 加载图文详情
-        $scope.hasmore =true;
-        $scope.load_detail = function(){
-            $timeout(function(){
-                if(!$scope.hasmore){
-                    $scope.$broadcast('scroll.infiniteScrollComplete');
-                }
-                $http.get(SETTING.ApiUrl+"/ProductDetail/Get?id="+$stateParams.id,{
-                    'withCredentials': true
-                }).success(function(data){
-                    $scope.productDetail=data;
-                    $scope.hasmore=false
-                });
-            },1000);
-        };
-    }])
+    //endregion
+     //region 加载图文详情
+    $scope.hasmore =true;
+    $scope.load_detail = function(){
+        $timeout(function(){
+            if(!$scope.hasmore){
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            }
+            $http.get(SETTING.ApiUrl+"/ProductDetail/Get?id="+$stateParams.id,{
+                'withCredentials': true
+            }).success(function(data){
+                $scope.productDetail=data;
+                $scope.hasmore=false
+            });
+        },1000);
+    };
+}])
 app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
     $scope.search={
         Name:$stateParams.productName
@@ -351,12 +337,6 @@ app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($htt
         $scope.productList=data.List
     })
 }])
-
-
-
-
-
-
 
 
 
