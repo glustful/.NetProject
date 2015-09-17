@@ -77,7 +77,11 @@ namespace Community.Service.Area
 			var query = _areaRepository.Table;
 			try
 			{
-				if (condition.AdddateBegin.HasValue)
+                if (!string.IsNullOrEmpty(condition.Parent_Id))
+                {
+                    query = query.Where(q => q.Parent.Id.ToString() == condition.Parent_Id);
+                }
+                if (condition.AdddateBegin.HasValue)
                 {
                     query = query.Where(q => q.AddDate>= condition.AdddateBegin.Value);
                 }

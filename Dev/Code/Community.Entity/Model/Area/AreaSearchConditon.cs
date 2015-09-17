@@ -22,11 +22,11 @@ namespace Community.Entity.Model.Area
 
 		public int[] Ids { get; set; }
 
+        public string Parent_Id { get; set; }
 
         public int fatherid { get; set; }
 
-
-		public string Codeid { get; set; }
+        public string Codeid { get; set; }
 
 
 
