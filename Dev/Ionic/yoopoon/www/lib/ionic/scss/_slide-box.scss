@@ -43,13 +43,14 @@
     display: inline-block;
     margin: 0px 3px;
     width: 15px;
-    color: #000;
+    color: #ffffff;
     text-decoration: none;
 
-    opacity: 0.3;
+    opacity: 1;
 
     &.active {
       @include transition(opacity 0.4s ease-in);
+      color:#ff3000;
       opacity: 1;
     }
   }

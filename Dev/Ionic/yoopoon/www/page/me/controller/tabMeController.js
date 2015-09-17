@@ -23,7 +23,7 @@ app.controller('selectAddress', function($scope, $routeParams) {
 
 
 });
-app.controller('TabMeCtrl', function($http,$scope,$state, $ionicSlideBoxDelegate,$stateParams) {
+app.controller('TabMeCtrl', function($http,$scope,$state,$AuthService, $ionicSlideBoxDelegate,$stateParams) {
 
   $scope.model = {
     activeIndex:0
@@ -96,6 +96,26 @@ app.controller('TabMeCtrl', function($http,$scope,$state, $ionicSlideBoxDelegate
         UpdTime:'2015-08-09'
     };
 
+    //获取当前通用户信息
+    $scope.currentuser= AuthService.CurrentUser();
+    $http.get(SETTING.ApiUrl+'/Member/GetMemberByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
+        .success(function(response) {
+            $scope.oldMem=response;
+
+            //添加判断,如果用户没有头像,隐藏IMG标签
+            if($scope.oldMem.Thumbnail.length<15){
+                //操作IMG标签的SRC为空
+                var img = document.getElementById('imghead');
+                //没图片隐藏
+                img.style.display = 'none';
+                img.src = "";
+            }else{
+                //隐藏默认头像
+                var defaultHeadImg = document.getElementById("preview");
+                defaultHeadImg.style.background = 'white';
+            }
+        });
+
     $scope.save = function() {
         if (document.getElementById("Uptext").innerText == '正在上传..') {
             alert("头像正在上传,请稍等!");
@@ -116,11 +136,9 @@ app.controller('TabMeCtrl', function($http,$scope,$state, $ionicSlideBoxDelegate
                 if (data.Status) {
                     var img = document.getElementById('imghead');
                     img.src = $scope.oldMem.Thumbnail;
-                    $scope.tips = "资料更新成功！";
                     location.reload([true]);
                     $state.go("app.me");
                 }
-
             });
     }
 });
