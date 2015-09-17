@@ -65,7 +65,7 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
     
     //初始化请求参数
     private func initParam(){
-        var filter = HouseConditionFilter.share
+        let filter = HouseConditionFilter.share
         parameter.updateValue(filter.areaName, forKey: "AreaName")
         parameter.updateValue("true", forKey: "IsDescending")
         parameter.updateValue("OrderByAddtime", forKey: "OrderBy")
@@ -95,7 +95,7 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
                 }
                 
                 },
-                faild: {error in println("\(error!.description)")})
+                faild: {error in print("\(error!.description)")})
     }
     
     private func showDataSource(json:JSON){
@@ -110,7 +110,7 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
             HouseConditionFilter.share.page++
         }
         for i in 0..<json.count{
-            var entity = ProductEntity()
+            let entity = ProductEntity()
             entity.generateSelf(json[i])
             productList.append(entity)
         }
@@ -139,7 +139,7 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
                 self.mTableView.tableHeaderView = adView
                 
                 },
-                faild: {error in println("\(error!.description)")})
+                faild: {error in print("\(error!.description)")})
     }
     
     /**
@@ -157,10 +157,10 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
     /**
     设置tableviewcell的个数
     
-    :param: tableView <#tableView description#>
-    :param: section   <#section description#>
+    - parameter tableView: <#tableView description#>
+    - parameter section:   <#section description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return self.productList.count + 1
@@ -170,10 +170,10 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
     /**
     返回tableviewcell
     
-    :param: tableView <#tableView description#>
-    :param: indexPath <#indexPath description#>
+    - parameter tableView: <#tableView description#>
+    - parameter indexPath: <#indexPath description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         let identify = "tableviewcell"
@@ -203,7 +203,7 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
         if !isBroker{
             cell!.mFooterView.hidden = true
             
-            for constraint in cell!.contentView.constraints(){
+            for constraint in cell!.contentView.constraints{
                 if constraint is TopWithSuerViewBottomMargin{
                     if let cons = constraint as? TopWithSuerViewBottomMargin{
                         cons.priority = 1000
@@ -226,10 +226,10 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
     /**
     设置tableviewcell的高度
     
-    :param: tableView <#tableView description#>
-    :param: indexPath <#indexPath description#>
+    - parameter tableView: <#tableView description#>
+    - parameter indexPath: <#indexPath description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
         if indexPath.row == 0{
@@ -244,7 +244,7 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
     // Called after the user changes the selection.
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         if indexPath.row > 0{
-            var storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             if let controller = storyBoard.instantiateViewControllerWithIdentifier(ControllerIdentifier.productDetailIdentifier) as? ProductDetailViewController{
                 if let id = self.productList[indexPath.row-1].id{
                 controller.productId = "\(id)"
@@ -255,7 +255,7 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
     }
     
     //MARK: DELEGATE方法
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController!, traitCollection: UITraitCollection!) -> UIModalPresentationStyle {
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.None
     }
     
@@ -271,7 +271,7 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
                 dealWithPopover(segue, filterType: .PRICE)
             case "productDetail":
                 if let controller = segue.destinationViewController as? ProductDetailViewController{
-                    controller.productId = "\(self.productList[self.mTableView.indexPathForSelectedRow()!.row-1].id)"
+                    controller.productId = "\(self.productList[self.mTableView.indexPathForSelectedRow!.row-1].id)"
                 }
             default:
                 break
@@ -314,7 +314,7 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
             self.uiPriceButton.setTitle(price, forState: UIControlState.Normal)
         }
         if let id = cell.id{
-            var filter = HouseConditionFilter.share
+            let filter = HouseConditionFilter.share
             switch id{
             case "0":
                 filter.priceBegin = "0"

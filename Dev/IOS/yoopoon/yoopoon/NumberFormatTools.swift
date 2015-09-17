@@ -15,8 +15,8 @@ class NumberFormatTools: NSObject {
         var str: String = "\(source)"
         if str.componentsSeparatedByString(".").count == 2{
             while true{
-                var end = str.endIndex
-                var ch = str.removeAtIndex(advance(end, -1))
+                let end = str.endIndex
+                let ch = str.removeAtIndex(end.advancedBy(-1))
                 
                 if ch == "0"{
                     continue

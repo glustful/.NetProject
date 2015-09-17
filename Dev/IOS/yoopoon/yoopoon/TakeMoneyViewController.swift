@@ -65,12 +65,12 @@ class TakeMoneyViewController: SuperViewController,UIAlertViewDelegate {
     /**
     添加银行卡布局
     
-    :param: json  <#json description#>
-    :param: index <#index description#>
+    - parameter json:  <#json description#>
+    - parameter index: <#index description#>
     */
     private func addSubView(json: JSON, index: Int){
         
-        var view = NSBundle.mainBundle().loadNibNamed("BankCardView", owner: nil, options: nil).last as? BankCardView
+        let view = NSBundle.mainBundle().loadNibNamed("BankCardView", owner: nil, options: nil).last as? BankCardView
         
         view!.frame = CGRectMake(0, CGFloat((125) * index), self.uiMiddleContent.frame.size.width, 120)
         
@@ -84,11 +84,11 @@ class TakeMoneyViewController: SuperViewController,UIAlertViewDelegate {
     /**
     删除指定银行卡
     
-    :param: json <#json description#>
+    - parameter json: <#json description#>
     */
     private func deleteCard(json: JSON){
         self.currentClickItem = json
-        var alert = UIAlertView(title: "提示", message: "确认要删除该银行卡吗？", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
+        let alert = UIAlertView(title: "提示", message: "确认要删除该银行卡吗？", delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "确定")
         
         alert.show()
         
@@ -101,7 +101,7 @@ class TakeMoneyViewController: SuperViewController,UIAlertViewDelegate {
         if self.currentClickItem == nil{
             return
         }
-        var id = self.currentClickItem!["Id"].int ?? 0
+        let id = self.currentClickItem!["Id"].int ?? 0
         
         RequestAdapter()
             .deleteBankCardById(id, callBack: {(result,data) in

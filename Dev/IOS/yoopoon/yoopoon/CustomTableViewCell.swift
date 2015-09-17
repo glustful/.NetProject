@@ -54,8 +54,8 @@ class CustomTableViewCell: UITableViewCell {
         uiTitle.text = "\(entity.strType!) \(entity.clientName!)"
         uiSubTitle.text = "\(entity.houseType!) \(entity.houses!)"
         reset()
-        var image = UIImage(named: "redCycle")
-        var appRedBackground = UIColor.redColor()//UIColor(red: 241/255, green: 56/255, blue: 0, alpha: 1)
+        let image = UIImage(named: "redCycle")
+        let appRedBackground = UIColor.redColor()//UIColor(red: 241/255, green: 56/255, blue: 0, alpha: 1)
         if let status = entity.status{
         switch status{
         case CustomProgressStatus.first,CustomProgressStatus.first_copy:

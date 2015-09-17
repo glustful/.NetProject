@@ -44,13 +44,13 @@ class HouseRecommendViewController: SuperViewController {
                 self.showDataSource(json["List"])
                 
                 },
-                faild: {error in println("\(error!.description)")})
+                faild: {error in print("\(error!.description)")})
     }
     
     /**
     uitableview加载数据源
     
-    :param: json <#json description#>
+    - parameter json: <#json description#>
     */
     private func showDataSource(json:JSON){
         self.mTableView.footerEndRefreshing()
@@ -59,9 +59,9 @@ class HouseRecommendViewController: SuperViewController {
             return
         }
         
-        paramter.updateValue(String(paramter["page"]!.toInt()!+1), forKey: "page")
+        paramter.updateValue(String(Int(paramter["page"]!)!+1), forKey: "page")
         for i in 0..<json.count{
-            var entity = BrandEntity()
+            let entity = BrandEntity()
             entity.generateSelf(json[i])
             brandList.append(entity)
         }
@@ -83,10 +83,10 @@ class HouseRecommendViewController: SuperViewController {
     /**
     设置tableviewcell的个数
     
-    :param: tableView <#tableView description#>
-    :param: section   <#section description#>
+    - parameter tableView: <#tableView description#>
+    - parameter section:   <#section description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return self.brandList.count
@@ -96,10 +96,10 @@ class HouseRecommendViewController: SuperViewController {
     /**
     返回tableviewcell
     
-    :param: tableView <#tableView description#>
-    :param: indexPath <#indexPath description#>
+    - parameter tableView: <#tableView description#>
+    - parameter indexPath: <#indexPath description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         let identify = "tableviewcell"
@@ -122,14 +122,14 @@ class HouseRecommendViewController: SuperViewController {
     /**
     设置tableviewcell的高度
     
-    :param: tableView <#tableView description#>
-    :param: indexPath <#indexPath description#>
+    - parameter tableView: <#tableView description#>
+    - parameter indexPath: <#indexPath description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
         
-        var height = screenBounds.width/(729/390)
+        let height = screenBounds.width/(729/390)
         
         return height + 15
     }
@@ -141,8 +141,8 @@ class HouseRecommendViewController: SuperViewController {
     
     
     private func dealWithBrandDetailSegue(indexPath: NSIndexPath){
-        var segue = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var controller = segue.instantiateViewControllerWithIdentifier(ControllerIdentifier.brandDetailIdentifier) as! BrandDetialController
+        let segue = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let controller = segue.instantiateViewControllerWithIdentifier(ControllerIdentifier.brandDetailIdentifier) as! BrandDetialController
         controller.brandId = String(self.brandList[indexPath.row].id)
         controller.brandEntity = self.brandList[indexPath.row]
         self.navigationController!.pushViewController(controller, animated: true)

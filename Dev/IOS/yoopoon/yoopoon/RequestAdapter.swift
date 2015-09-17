@@ -147,8 +147,8 @@ class RequestAdapter:NSObject, NSURLConnectionDataDelegate{
     func deleteBankCardById(id:Int,callBack: (sucess: Bool,result: NSData?)->()){
         uploadHeadPhotoCallback = callBack
         
-        var request = NSMutableURLRequest(URL: NSURL(string: apiHost + urlBankCardDeleteCard)!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 10)
-                var content = "application/json; charset=utf-8"
+        let request = NSMutableURLRequest(URL: NSURL(string: apiHost + urlBankCardDeleteCard)!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 10)
+                let content = "application/json; charset=utf-8"
         request.setValue(content, forHTTPHeaderField: "Content-Type")
         request.setValue(self.cookie, forHTTPHeaderField: "Cookie")
         request.HTTPBody = "\(id)".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
@@ -162,7 +162,7 @@ class RequestAdapter:NSObject, NSURLConnectionDataDelegate{
     func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse){
         
         if uploadHeadPhotoCallback != nil{
-            var rsp = response as! NSHTTPURLResponse
+            let rsp = response as! NSHTTPURLResponse
             if rsp.statusCode>=200 && rsp.statusCode<400{
                 return
             }
