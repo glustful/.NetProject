@@ -27,6 +27,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
         cartservice.add(cartinfo);
     }
     $scope.alipay = function(){
+
         var myDate = new Date();
 
         var tradeNo = myDate.getTime();   
