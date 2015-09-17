@@ -1,7 +1,7 @@
 /**
  * Created by gaofengming on 2015/9/15.
  */
-app.controller('login',['$scope','$state',function($scope,$state){
+app.controller('login',['$scope','$state','AuthService',function($scope,$state,AuthService){
     console.log("121212");
     $scope.user={
         userName:'',
