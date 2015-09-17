@@ -36,7 +36,7 @@ app.service("cartservice", [//'$rootScope',
 					}]
 				};
 				utils.setParam("ShoppingCart", "'" + JSON.stringify(jsonstr));
-				$rootScope.cartProductCount += 1;
+				//$rootScope.cartProductCount += 1;
 			} else {
 				var jsonstr = JSON.parse(storage.substr(1, storage.length));
 				var productlist = jsonstr.productlist;
@@ -65,7 +65,6 @@ app.service("cartservice", [//'$rootScope',
 			var storage = utils.getParam("ShoppingCart");
 			var jsonstr = JSON.parse(storage.substr(1, storage.length));
 			var productlist = jsonstr.productlist;
-			var list = [];
 			for (var i in productlist) {
 				if (productlist[i].id == id) {
 					//商品数量为0时候,删除这件商品
@@ -73,16 +72,47 @@ app.service("cartservice", [//'$rootScope',
 					{
 						//删除这个商品json
 						productlist.splice(i,1)
+						if(productlist.length==0){
+							localStorage.removeItem("ShoppingCart");
+							return;	
+						}
 						jsonstr.productlist = productlist;
 						utils.setParam("ShoppingCart", "'" + JSON.stringify(jsonstr));
 						//总数+1
-						$rootScope.cartProductCount -= 1;
+						//$rootScope.cartProductCount -= 1;
 						return;
 					}
 					productlist[i].count = parseInt(productlist[i].count) - 1;
 					//jsonstr.totalAmount = parseFloat(jsonstr.totalAmount) - parseInt(productlist[i].num) * parseFloat(productlist[i].price);
 				} else {
-					//list.push(productlist[i]);
+					console.log("删除失败,没有这个商品的ID");
+					
+				}
+			}
+			jsonstr.productlist = productlist;
+			utils.setParam("ShoppingCart", "'" + JSON.stringify(jsonstr));
+		};
+		//直接删除这件商品(无视商品个数)
+		this.deletethis = function  (id) {
+			var storage = utils.getParam("ShoppingCart");
+			var jsonstr = JSON.parse(storage.substr(1, storage.length));
+			var productlist = jsonstr.productlist;
+			for (var i in productlist) {
+				if (productlist[i].id == id) {
+						//删除这个商品json
+						productlist.splice(i,1)
+						jsonstr.productlist = productlist;
+						if(productlist.length==0){
+							localStorage.removeItem("ShoppingCart");
+							return;	
+						}
+						utils.setParam("ShoppingCart", "'" + JSON.stringify(jsonstr));
+						//总数+1
+						//$rootScope.cartProductCount -= 1;
+						return;
+					productlist[i].count = parseInt(productlist[i].count) - 1;
+					//jsonstr.totalAmount = parseFloat(jsonstr.totalAmount) - parseInt(productlist[i].num) * parseFloat(productlist[i].price);
+				} else {
 					console.log("删除失败,没有这个商品的ID");
 					
 				}
@@ -94,7 +124,7 @@ app.service("cartservice", [//'$rootScope',
 		this.deleteall = function () {
 			localStorage.removeItem("ShoppingCart");
 		};
-        //获取总数的servci
+        //获取总数的service
         this.GetAllcart= function()
         {
             var a =  selectcount();
