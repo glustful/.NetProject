@@ -14,18 +14,18 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
         });
     };
     //商品信息
-    $scope.cartinfo={
-        id:null,
-        name:null,
-        count:null
-    };
+    //$scope.cartinfo={
+    //    id:null,
+    //    name:null,
+    //    count:null
+    //};
     //添加商品
-    $scope.AddCart = function()
-    {
-        //赋值
-
-        cartservice.add(cartinfo);
-    }
+    //$scope.AddCart = function()
+    //{
+    //    //赋值
+    //
+    //    cartservice.add(cartinfo);
+    //}
     $scope.alipay = function(){
         var myDate = new Date();
 
@@ -90,8 +90,8 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
 
     $scope.Condition = {
         IsDescending:true,
-        OrderBy:'OrderByOwner',
-        IsRecommend:'1'
+        OrderBy:'OrderByOwner'
+
         //ProductId:''
     };
     var getProductList=function() {
