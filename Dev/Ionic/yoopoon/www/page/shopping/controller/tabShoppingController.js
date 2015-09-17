@@ -52,7 +52,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
         $scope.isShow = true;
     };
 
-    }
+
     //region商品大图获取
 
     $scope.Condition = {
@@ -62,7 +62,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
         //ProductId:''
     };
     var getProductList=function() {
-        $http.get('http://localhost:50597/api/CommunityProduct/Get', {
+        $http.get(SETTING.ApiUrl+'/CommunityProduct/Get', {
             params: $scope.Condition,
             'withCredentials': true
         }).success(function (data1) {
@@ -84,7 +84,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
     };
 
     var getList=function() {
-        $http.get('http://localhost:50597/api/CommunityProduct/Get', {
+        $http.get(SETTING.ApiUrl+'/CommunityProduct/Get', {
             params: $scope.searchCondition,
             'withCredentials': true
         }).success(function (data) {
@@ -100,7 +100,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
     $scope.load_more = function(){
         $timeout(function(){
             $scope.searchCondition.Page+=1;
-            $http.get('http://localhost:50597/api/CommunityProduct/Get', {
+            $http.get(SETTING.ApiUrl+'/CommunityProduct/Get', {
                 params: $scope.searchCondition,
                 'withCredentials': true
             }).success(function (data) {
@@ -150,7 +150,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
     //endregion
 
 
-}]);
+
     //endregion
 
 
