@@ -25,12 +25,12 @@ class ProductDetailViewController: SuperViewController {
     @IBOutlet weak var uiCallPhone: UIButton!
     @IBOutlet weak var uiFooterView: UIView!
     @IBAction func skipHouseAction(sender: UIButton) {
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.myWantFormIdentifier) as! MyWantFormViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.myWantFormIdentifier) as! MyWantFormViewController
         
         controller.houseName = productName ?? ""
         controller.houseType = houseType ?? ""
-        var id = productId ?? ""
+        let id = productId ?? ""
         controller.projectId = id
         controller.projectName = productName ?? ""
         
@@ -100,7 +100,7 @@ class ProductDetailViewController: SuperViewController {
             self.uiCallPhone.setTitle("咨询热线：\(phone)", forState: UIControlState.Normal)
         }
         
-        var price = NumberFormatTools.clipEndZeros(json["Price"].double ?? 0)
+        let price = NumberFormatTools.clipEndZeros(json["Price"].double ?? 0)
         self.uiPrice.text = "均价\(price)\(unitMeter)起"
         if let SubTitle = json["SubTitle"].string{
             self.uiAdTitle.text = SubTitle
@@ -133,8 +133,8 @@ class ProductDetailViewController: SuperViewController {
         
         if let content = json["Content"].string{
             //uilabel加载html
-            var data = content.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)
-            var html = NSAttributedString(data: data!, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType], documentAttributes: nil, error: nil)
+            let data = content.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)
+            let html = try? NSAttributedString(data: data!, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType], documentAttributes: nil)
             self.uiLabelStatic.sizeToFit()
             
             self.uiLabelStatic.attributedText = html

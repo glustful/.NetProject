@@ -19,9 +19,9 @@ class AgentHouseTableViewCell: UITableViewCell {
     @IBOutlet weak var uiText: UILabel!
     
     @IBAction func bringCustomAction(sender: UIButton) {
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.myWantFormIdentifier) as! MyWantFormViewController
-        println(entity?.brandName)
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.myWantFormIdentifier) as! MyWantFormViewController
+        print(entity?.brandName)
         controller.houseName = entity?.brandName
         controller.houseType = entity?.houseType
         controller.projectId = entity?.productId
@@ -31,8 +31,8 @@ class AgentHouseTableViewCell: UITableViewCell {
     }
     
     @IBAction func recommendAction(sender: UIButton) {
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.myWantFormIdentifier) as! MyWantFormViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.myWantFormIdentifier) as! MyWantFormViewController
         controller.houseName = entity?.brandName
         controller.houseType = entity?.houseType
         controller.projectId = entity?.productId
@@ -42,23 +42,23 @@ class AgentHouseTableViewCell: UITableViewCell {
     }
     
     @IBAction func GrabRedEnvelopeAction(sender: UIButton) {
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.grabRedEnvelopeIdentifier) as! GrabRedEnvelopeViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.grabRedEnvelopeIdentifier) as! GrabRedEnvelopeViewController
                CommentTools.getCurrentController()?.navigationController?.pushViewController(controller, animated: true)
     }
     
     @IBAction func takeIntegrationAction(sender: UIButton) {
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.takeIntegrationIdentifier) as! TakeIntegrationViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.takeIntegrationIdentifier) as! TakeIntegrationViewController
         CommentTools.getCurrentController()?.navigationController?.pushViewController(controller, animated: true)
     }
     
     /**
     数据模型初始化布局
     
-    :param: json <#json description#>
+    - parameter json: <#json description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func initLayout(brand: BrandAgentEntity){
         self.entity = brand

@@ -28,8 +28,8 @@ class User: NSObject {
     
     override init() {
         super.init()
-        var db = NSUserDefaults()
-        var userId = db.objectForKey("userId") as? Int
+        let db = NSUserDefaults()
+        let userId = db.objectForKey("userId") as? Int
         if userId == nil{
             return
         }
@@ -59,13 +59,13 @@ class User: NSObject {
     /**
     登陆成功保存信息到本地
     
-    :param: json       <#json description#>
-    :param: password   <#password description#>
-    :param: isRemember <#isRemember description#>
+    - parameter json:       <#json description#>
+    - parameter password:   <#password description#>
+    - parameter isRemember: <#isRemember description#>
     */
     func store(json: JSON,phone: String,password: String,isRemember: Bool){
         var object = json["Object"]
-        var userDb = NSUserDefaults()
+        let userDb = NSUserDefaults()
         if let id = object["Id"].int{
             userDb.setValue(id, forKey: "userId")
             self.id = id
@@ -106,15 +106,15 @@ class User: NSObject {
     判断是否自动登陆
     */
     func autoLogin(){
-        var db = NSUserDefaults()
-        var userId = db.objectForKey("userId") as? Int
+        let db = NSUserDefaults()
+        let userId = db.objectForKey("userId") as? Int
         if userId == nil{
             return
         }
-        var isRemember = db.objectForKey("isRemeber") as? Bool
+        let isRemember = db.objectForKey("isRemeber") as? Bool
         if (isRemember != nil && isRemember == true){
-            var phone = db.objectForKey("phone") as? String
-            var passwd = db.objectForKey("userPassword") as? String
+            let phone = db.objectForKey("phone") as? String
+            let passwd = db.objectForKey("userPassword") as? String
             loginWithPhone(phone ?? "", password: passwd ?? "")
         }
     }
@@ -122,8 +122,8 @@ class User: NSObject {
     /**
     用户登陆
     
-    :param: phone  手机号码
-    :param: passwd 密码
+    - parameter phone:  手机号码
+    - parameter passwd: 密码
     */
      private func loginWithPhone(phone:String,password passwd: String){
         RequestAdapter()
@@ -141,7 +141,7 @@ class User: NSObject {
                     }
                 }
                 }, faild: {error in
-                    println("登陆失败\(error!.description)")
+                    print("登陆失败\(error!.description)")
                     //TipTools().showToast("登陆失败", message: "\(error?.description)", duration: 2)
             })
     }
@@ -157,7 +157,7 @@ class User: NSObject {
         isRemember = false
         isBroker = false
         isLogin = false
-        var userDB = NSUserDefaults()
+        let userDB = NSUserDefaults()
        
         userDB.removePersistentDomainForName(NSBundle.mainBundle().bundleIdentifier!)
         

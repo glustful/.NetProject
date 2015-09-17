@@ -50,8 +50,8 @@ class BrandDetialController: SuperViewController,UIWebViewDelegate {
     
     private func initBrand(){
         //uilabel加载html
-        var data = brandEntity?.content?.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)
-        var html = NSAttributedString(data: data!, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType], documentAttributes: nil, error: nil)
+        let data = brandEntity?.content?.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)
+        var html = try? NSAttributedString(data: data!, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType], documentAttributes: nil)
         //self.uiDescript.sizeToFit()
         
         // self.uiDescript.attributedText = html
@@ -59,7 +59,7 @@ class BrandDetialController: SuperViewController,UIWebViewDelegate {
             uiWebContent.loadHTMLString(content, baseURL: nil)
         }
         
-        var imgUrl = brandEntity?.productParamater?["图片banner"]
+        let imgUrl = brandEntity?.productParamater?["图片banner"]
         
         self.uiImageView.loadImageFromURLString(imgHost + (imgUrl ?? ""), placeholderImage: UIImage(named: placeHoder))
         self.uiLabelTitle.text = brandEntity!.Bname
@@ -92,14 +92,14 @@ class BrandDetialController: SuperViewController,UIWebViewDelegate {
     }
     
     func webViewDidFinishLoad(webView: UIWebView){
-        var size = webView.sizeThatFits(CGSizeZero)
+        let size = webView.sizeThatFits(CGSizeZero)
        //webView.frame.size.height = size.height
         constraintBottomViewHeight.constant = size.height
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.destinationViewController is BrandOfProductListController{
-            var controller = segue.destinationViewController as! BrandOfProductListController
+            let controller = segue.destinationViewController as! BrandOfProductListController
             controller.brandId = self.brandId
             controller.brandEntity = self.brandEntity
         }

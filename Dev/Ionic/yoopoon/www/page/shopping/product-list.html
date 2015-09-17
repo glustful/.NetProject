@@ -1,54 +1,63 @@
 <link href="page/shopping/shopping.css" type="text/css" rel="stylesheet">
 <div class="bar" style="height: 44px;background-color: #ff3000">
-    <button class="button  button-icon icon icon-fuwuanniu light" ></button>
-        <h1 class="title font-title color-white">云南特产</h1>
-        <button class="button button-icon icon icon-search light"></button>
+    <button class="button  button-icon icon icon-fuwuanniu light"></button>
+    <h1 class="title font-title color-white">云南特产</h1>
+    <button class="button button-icon icon icon-search light"></button>
 </div>
 <div class="bar bar-subheader bar-stable" style="top:44px;">
     <ul>
-        <li style="float:left;width: 20%;height: 30px;margin-right: 5px;" ng-repeat="item in cateList" ng-click="getList(item.Id)">{{item.Name}}</li>
+        <li style="float:left;width: 20%;height: 30px;margin-right: 5px;" ng-repeat="item in cateList"
+            ng-click="getList(item.Id)">{{item.Name}}
+        </li>
     </ul>
-    <div class=" row" >
+    <div class=" row">
         <!--<label class="col text-center">-->
-            <!--<select  class="none-border lable-size font-12" ng-change="change(select)" ng-model="select" style="border: none">-->
-                <!--<option value="0" ng-selected>综合排序</option>-->
-                <!--<option value="1">价格</option>-->
-                <!--<option value="2">销量</option>-->
-                <!--</select>-->
+        <!--<select  class="none-border lable-size font-12" ng-change="change(select)" ng-model="select" style="border: none">-->
+        <!--<option value="0" ng-selected>综合排序</option>-->
+        <!--<option value="1">价格</option>-->
+        <!--<option value="2">销量</option>-->
+        <!--</select>-->
         <!--</label>-->
-        <button class="button button-clear col-50"ng-click="reorderAll()">综合排序</button>
+        <button class="button button-clear col-50" ng-click="reorderAll()">综合排序</button>
         <button class="button col-50 button-clear" ng-click="selectPrice()">价钱</button>
     </div>
     <ion-list ng-show="reorder" ng-click="reorderAll()">
-        <ion-item>价格</ion-item>
-        <ion-item>销量</ion-item>
+        <ion-item ng-click="orderByPrice()">价格</ion-item>
+        <ion-item ng-click="orderByOwner()">销量</ion-item>
     </ion-list>
 </div>
 <ion-view hide-tabs="false" hide-nav-bar="true" id="list" ng-show="productShow">
     <ion-content class="scroll-content" no-header="true" style="top: 138px">
         <ion-list>
-            <ion-item  class="row" ng-repeat="item in list" ui-sref="page.product-detail({id:item.Id})">
+            <ion-item class="row" ng-repeat="item in list" ui-sref="page.product-detail({id:item.Id})">
                 <div class="product col col-25">
-                    <img src="http://img.iyookee.cn/{{item.MainImg}}" alt="" />
+                    <img src="http://img.iyookee.cn/{{item.MainImg}}" alt=""/>
                 </div>
                 <div class="col col-75">
                     <h2 style="white-space: normal" class="font-title">{{item.Name}}</h2>
+
                     <p style="white-space: normal;color: #DE6C2C">{{item.Subtitte}}</p>
-                    <p >{{item.Ad1}}</p>
-                    <p><span class="p-price">￥{{item.Price}}</span><span style="float: right">已有{{item.Owner}}人抢购</span></p>
+
+                    <p>{{item.Ad1}}</p>
+
+                    <p><span class="p-price">￥{{item.Price}}</span><span style="float: right">已有{{item.Owner}}人抢购</span>
+                    </p>
                 </div>
-            </ion-item >
+            </ion-item>
         </ion-list>
-        <ion-infinite-scroll on-infinite="loadProduct()" distance="1%" ng-if="hasmore">
+        <ion-infinite-scroll on-infinite="loadProduct();" ng-if="hasmore">
         </ion-infinite-scroll>
     </ion-content>
 
 </ion-view>
 
-<!--<ion-view hide-tabs="true" hide-nav-bar="true" ng-show="productPrice"  ng-class="{'price':productPrice}" class="selectPrice">-->
-    <!--<ion-content>-->
-        <!--<div style="padding-top:50px;font-size:18px;">价钱:<input style="height: 30px;width: 40%;" ng-model="sech.PriceBegin" />—<input style="height: 30px;width:40%;" ng-model="sech.PriceEnd" /></div>-->
-        <!--<button class="button button-full light submit-btn" ng-click="submit()" >确认</button>-->
-    <!--</ion-content>-->
-<!--</ion-view>-->
+<ion-view hide-tabs="true" hide-nav-bar="true" ng-show="productPrice" ng-class="{'price':productPrice}"
+          class="selectPrice">
+    <ion-content>
+        <div style="padding-top:50px;font-size:18px;">价钱:<input style="height: 30px;width: 40%;"
+                                                                ng-model="sech.PriceBegin"/>—<input
+                style="height: 30px;width:40%;" ng-model="sech.PriceEnd"/></div>
+        <button class="button button-full light submit-btn" ng-click="submit()">确认</button>
+    </ion-content>
+</ion-view>
 

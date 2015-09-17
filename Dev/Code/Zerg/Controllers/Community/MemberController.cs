@@ -283,9 +283,9 @@ namespace Zerg.Controllers.Community
                     entity.AccountNumber = model.AccountNumber;
                     entity.Points = model.Points;
                     entity.Level = model.Level;
-                    entity.AddTime = model.AddTime;
+                    entity.AddTime = DateTime.Now;
                     entity.UpdUser = model.UpdUser;
-                    entity.UpdTime = model.UpdTime;
+                    entity.UpdTime = DateTime.Now;
                     if (_memberService.Update(entity) != null)
                     {
                         return PageHelper.toJson(PageHelper.ReturnValue(true, "ÐÞ¸Ä³É¹¦"));

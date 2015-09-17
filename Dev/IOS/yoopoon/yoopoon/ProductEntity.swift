@@ -28,9 +28,9 @@ class ProductEntity: NSObject {
     /**
     解析json为自身对象
     
-    :param: json <#json description#>
+    - parameter json: <#json description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func generateSelf(json: JSON)->Self{
         self._productImg = json["Productimg"].string
