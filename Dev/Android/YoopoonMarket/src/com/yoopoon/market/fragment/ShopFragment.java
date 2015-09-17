@@ -18,8 +18,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -104,9 +106,10 @@ public class ShopFragment extends Fragment {
 				}
 			});
 			mADController = new ADController(mContext);
-			serviceController = new YoopoonServiceController(mContext);
+			//serviceController = new YoopoonServiceController(mContext);
 			commodityGridView = (MyGridView) rootView.findViewById(R.id.gridview_commodity);
 			initShopFragment();
+			loadRefreshByAddress();
 		}
 		return rootView;
 	}
@@ -116,11 +119,11 @@ public class ShopFragment extends Fragment {
 	 */
 	private void initShopFragment() {
 		requestAdvertisements();
-		requestServices();
+		//requestServices();
 		requestProduct();
 		LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.linearlayout_fragment_shop);
+		//添加广告
 		linearLayout.addView(mADController.getRootView(), 0);
-		//linearLayout.addView(serviceController.getRootView(), 1);
 	}
 	private void initRecommendProduct(JSONObject jsonObject) {
 		burstPackageNameTextView.setText(jsonObject.optString("Name", ""));
@@ -128,7 +131,9 @@ public class ShopFragment extends Fragment {
 		beforePriceTextView.setText("折扣前" + jsonObject.optString("NewPrice", ""));
 		salesVolumeButton.setText("已有" + jsonObject.optString("Owner", "0") + "人抢购");
 		String urlString = jsonObject.optString("MainImg", "");
-		ImageLoader.getInstance().displayImage(urlString, burstPackageImageView);
+		if (!urlString.equals("")) {
+			ImageLoader.getInstance().displayImage(urlString, burstPackageImageView);
+		}
 	}
 	/**
 	 * @Title: requestAdvertisements
@@ -148,7 +153,7 @@ public class ShopFragment extends Fragment {
 							for (int i = 0; i < list.length(); i++) {
 								imgs.add(list.optJSONObject(i).optString("TitleImg"));
 							}
-							// 添加广告
+							// 加载广告
 							mADController.show(imgs);
 						}
 					}
@@ -159,33 +164,10 @@ public class ShopFragment extends Fragment {
 			}.setUrl("/api/Channel/GetTitleImg").setRequestMethod(RequestMethod.eGet).addParam("channelName", "banner")
 					.notifyRequest();
 	}
-	/**
-	 * @Title: requestServices
-	 * @Description: 获取首页优服务
+	/** 
+	 * @Title: requestProduct 
+	 * @Description: 获取商品列表，同时加载到Adapter中
 	 */
-	private void requestServices() {
-		if (servicesArrayList == null) {
-			new RequestAdapter() {
-				@Override
-				public void onReponse(ResponseData data) {
-					if (data.getResultState() == ResultState.eSuccess) {
-						if (servicesArrayList == null) {
-							servicesArrayList = new ArrayList<JSONArray>();
-							JSONArray list = data.getJsonArray();
-							if (list == null || list.length() < 1)
-								return;
-							servicesArrayList.add(list);
-							serviceController.show(servicesArrayList);
-						}
-					}
-				}
-				@Override
-				public void onProgress(ProgressMessage msg) {
-				}
-			}.setUrl("/api/channel/GetActiveTitleImg").setRequestMethod(RequestMethod.eGet)
-					.addParam("ChannelName", "活动").notifyRequest();
-		}
-	}
 	private void requestProduct() {
 		new RequestAdapter() {
 			@Override
@@ -210,5 +192,28 @@ public class ShopFragment extends Fragment {
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).setRequestMethod(RequestMethod.eGet).notifyRequest();
+	}
+	
+	/** 
+	 * @ClassName: ProductRefreshByAddressReceiver 
+	 * @Description: 创建监听地址改变的接收器
+	 * @author: 徐阳会
+	 * @date: 2015年9月17日 上午11:02:12  
+	 */
+	private class ProductRefreshByAddressReceiver extends BroadcastReceiver{
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			 Toast.makeText(mContext, "111111", Toast.LENGTH_SHORT).show();
+			
+		}
+		
+	}
+	
+	private void loadRefreshByAddress(){
+		IntentFilter intentFilter=new IntentFilter("com.yoopoon.market.productRefresh.Address");
+		ProductRefreshByAddressReceiver addressReceiver=new ProductRefreshByAddressReceiver();
+		mContext.registerReceiver(addressReceiver, intentFilter);
+		
 	}
 }

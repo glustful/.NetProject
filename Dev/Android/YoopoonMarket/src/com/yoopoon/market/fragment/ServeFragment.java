@@ -264,8 +264,8 @@ public class ServeFragment extends Fragment {
 			imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 			imageView.setScaleType(ScaleType.FIT_XY);
 			imageView.setTag(urls[i]);
-			ImageLoader.getInstance().displayImage(urls[i], imageView, MyApplication.getOptions(),
-					MyApplication.getLoadingListener());
+			/*ImageLoader.getInstance().displayImage(urls[i], imageView, MyApplication.getOptions(),
+					MyApplication.getLoadingListener());*/
 			mImageViews[i] = imageView;
 		}
 

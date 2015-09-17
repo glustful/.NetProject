@@ -170,8 +170,8 @@ public class YoopoonServiceController extends GridViewController {
 			holder.img.setTag(mContext.getString(R.string.url_image) + item.optString("TitleImg"));
 			holder.title.setText(item.optString("Title"));
 			holder.adTitle.setText(item.optString("AdSubTitle"));
-			ImageLoader.getInstance().displayImage(mContext.getString(R.string.url_image) + item.optString("TitleImg"),
-					holder.img, MyApplication.getOptions(), MyApplication.getLoadingListener());
+			/*ImageLoader.getInstance().displayImage(mContext.getString(R.string.url_image) + item.optString("TitleImg"),
+					holder.img, MyApplication.getOptions(), MyApplication.getLoadingListener());*/
 			return convertView;
 		}
 	}

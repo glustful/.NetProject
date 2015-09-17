@@ -18,9 +18,9 @@
             android:orientation="horizontal" >
 
             <LinearLayout
-                android:layout_marginLeft="0dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
                 android:layout_weight="0.5" >
 
                 <ImageView
@@ -41,6 +41,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@drawable/round_white_background"
+                    android:padding="6dp"
                     android:src="@drawable/political" />
 
                 <TextView
@@ -65,6 +66,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@drawable/round_white_background"
+                    android:padding="6dp"
                     android:src="@drawable/wash_machine" />
 
                 <TextView
@@ -89,6 +91,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@drawable/round_white_background"
+                    android:padding="6dp"
                     android:src="@drawable/delivery" />
 
                 <TextView
@@ -108,11 +111,22 @@
                 android:gravity="center"
                 android:orientation="vertical" >
 
-                <ImageView
+                <!--
+                     <ImageView
                     android:id="@+id/img_maternity_matron"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@drawable/round_white_background"
+                    android:padding="6dp"
+                    android:src="@drawable/maternity_matron" />
+                -->
+
+                <ImageView
+                    android:id="@+id/img_take_in_1express"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="6dp"
+                    android:scaleType="fitXY"
                     android:src="@drawable/maternity_matron" />
 
                 <TextView
@@ -137,6 +151,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@drawable/round_white_background"
+                    android:padding="6dp"
                     android:src="@drawable/more" />
 
                 <TextView
@@ -257,7 +272,7 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/cart_red" />
+                    android:src="@drawable/yello_cart" />
 
                 <View
                     android:layout_width="match_parent"
