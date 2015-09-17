@@ -49,8 +49,8 @@
         </div>
         </div>
         <div class="div-null"></div>
-        <ion-infinite-scroll ng-if="hasmore" on-infinite="load_detail();" distance="10%">
-        </ion-infinite-scroll>
+        <!--<ion-infinite-scroll ng-if="hasmore" on-infinite="load_detail();" distance="10%">-->
+        <!--</ion-infinite-scroll>-->
 
         <!--<div class="padding ">-->
            <!--<p class="font-30">我是花吃  玫瑰鲜花饼10盒礼盒装 云南特产 中秋月饼 零食糕点400g</p>-->
@@ -92,6 +92,6 @@
 
     <div class=" row detail-padding button-position">
         <button class="col button-large assertive-bg none-border p-button" ng-click="go('index.html#/page/car')">立即购买</button>
-        <button class="col button-large  energized-bg none-border p-button" ng-click="AddGWCAction()">加入购物车</button>
+        <button class="col button-large  energized-bg none-border p-button" ng-click="AddCart(this)">加入购物车</button>
     </div>
 </ion-view>
