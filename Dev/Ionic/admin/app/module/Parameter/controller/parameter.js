@@ -51,47 +51,6 @@ app.controller('ParameterController', ['$scope', '$http', '$state','$modal', fun
 
     }
 
-    //删除参数
-    $scope.delParameter = function (parameterId) {
-        var modalInstance = $modal.open({
-            templateUrl: 'myModalContent.html',
-            controller: 'ModalInstanceCtrl',
-            resolve: {
-                msg: function () {
-                    return "你确定要删除吗？";
-                }
-            }
-        });
-        modalInstance.result.then(function () {
-            $http.get(SETTING.ApiUrl + '/Classify/DelParameter?parameterId=' + parameterId, {
-                'withCredentials': true
-            }).success(function (data) {
-                if (data.Status) {
-                    var selectedBranch = tree.get_selected_branch();
-                    $scope.selectEvent(selectedBranch);
-//            $http.get(SETTING.ApiUrl + '/Classify/GetParameterByClassify?classifyId=' + selectedBranch.Id,{'withCredentials':true}).success(function (data) {
-//                $scope.rowParameter = data;
-//            });
-                    //$scope.output = data;
-                }
-                else {
-                    $scope.alerts = [ {type: 'danger', msg: data.Msg} ];
-                }
-            });
-        });
-        $scope.closeAlert = function (index) {
-            $scope.alerts.splice(index, 1);
-        };
-//        $http.get(SETTING.ApiUrl + '/Classify/DelParameter?parameterId=' + parameterId,{'withCredentials':true}).success(function (data) {
-//            var selectedBranch = tree.get_selected_branch();
-//            $http.get(SETTING.ApiUrl + '/Classify/GetParameterByClassify?classifyId=' + selectedBranch.Id,{'withCredentials':true}).success(function (data) {
-//                $scope.rowParameter = data;
-//            });
-//            $scope.output = data;
-//        });
-    }
-
-
     //选中事件；
     $scope.selectEvent = function (branch) {
         $scope.output = '您选择了分类：" ' + branch.label + '", ID为："' + branch.Id+'"';;
@@ -114,60 +73,8 @@ app.controller('ParameterController', ['$scope', '$http', '$state','$modal', fun
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    //获取所有参数值；
-    $scope.rowParameterValue = [];
-    $scope.selectParameterId = 0;
-    $scope.getParameterValue = function (parameterId) {
-        $scope.selectParameterId = parameterId;
-        $http.get(SETTING.ApiUrl + '/Classify/GetParameterValueByParameter?parameterId=' + parameterId,{'withCredentials':true}).success(function (data) {
-            $scope.rowParameterValue = data;
-        });
-    }
-
-    //添加参数值
-    $scope.ClassifyParameterValue = "";
-    $scope.addParameterValue = function () {
-        var parValue = {
-            ParameterId: $scope.selectParameterId,
-            Parametervalue: $scope.ClassifyParameterValue
-            //Adduser: 'jiadou',
-            // Upduser: 'jiadou'
-        };
-        var parValueJson = JSON.stringify(parValue);
-        $http.post(SETTING.ApiUrl + '/Classify/AddParameterValue', parValueJson, {
-            'withCredentials': true
-        }).success(function (data) {
-            if(data.Status)
-            {
-                AddValueWindowClose();
-                $http.get(SETTING.ApiUrl + '/Classify/GetParameterValueByParameter?parameterId=' + $scope.selectParameterId,{'withCredentials':true}).success(function (data) {
-                    $scope.rowParameterValue = data;
-                });
-//                $scope.output = data;
-            }
-            else{
-                $scope.alerts = [ {type: 'danger', msg: data.Msg} ];
-            }
-        });
-        $scope.closeAlert = function (index) {
-            $scope.alerts.splice(index, 1);
-        };
-    }
-
     //删除参数值
-    $scope.delParameterValue=function(parameterValueId){
+    $scope.del = function (parameterId) {
         var modalInstance = $modal.open({
             templateUrl: 'myModalContent.html',
             controller: 'ModalInstanceCtrl',
@@ -178,20 +85,108 @@ app.controller('ParameterController', ['$scope', '$http', '$state','$modal', fun
             }
         });
         modalInstance.result.then(function () {
-            $http.get(SETTING.ApiUrl + '/Classify/DelParameterValue?parameterValueId=' + parameterValueId,
-                {'withCredentials': true}).success(function (data) {
-                    if(data.Status)
-                    {
-                        $scope.getParameterValue($scope.selectParameterId);
-//                         $http.get(SETTING.ApiUrl + '/Classify/GetParameterValueByParameter?parameterId=' + $scope.selectParameterId, {'withCredentials': true}).success(function (data) {
-//                            $scope.rowParameterValue = data;
-//                        });
-//                    $scope.output = data;
-                    }
-
-                });
+            $http.get(SETTING.ZergWcApiUrl + '/Parameter/Delete', {
+                params:{
+                    id:parameterId
+                },
+                'withCredentials': true
+            }).success(function (data) {
+                if (data.Status) {
+                    $scope.getList();
+                }
+                else {
+                    $scope.alerts = [ {type: 'danger', msg: data.Msg} ];
+                }
+            });
         });
-    };
+        $scope.closeAlert = function (index) {
+            $scope.alerts.splice(index, 1);
+        };
+//        $http.get(SETTING.ApiUrl + '/Classify/DelParameter?parameterId=' + parameterId,{'withCredentials':true}).success(function (data) {
+//            var selectedBranch = tree.get_selected_branch();
+//            $http.get(SETTING.ApiUrl + '/Classify/GetParameterByClassify?classifyId=' + selectedBranch.Id,{'withCredentials':true}).success(function (data) {
+//                $scope.rowParameter = data;
+//            });
+//            $scope.output = data;
+//        });
+    }
+
 }]);
 
 
+app.controller('parametervalueIndex',['$http','$scope','$state','$modal','$stateParams',function($http,$scope,$state,$modal,$stateParams){
+
+    if($stateParams.parameterId==undefined ||$stateParams.parameterId=="" )
+    {
+       // alert($stateParams.name);
+        $state.go("app.parameter.parameterList");
+    }
+    $scope.parName=$stateParams.name;
+    $scope.getParametervalueList=function() {
+        $http.get(SETTING.ZergWcApiUrl + "/ParameterValue/Get?ParameterId=" + $stateParams.parameterId, {
+            'withCredentials': true  //跨域
+        }).success(function (data) {
+            $scope.parameterValueList = data;
+        })
+    };
+    $scope.getParametervalueList();
+    $scope.ParameterValue = {
+        Id: $stateParams.parameterId,
+        ParameterValue:'',
+        Sort:''
+
+    };
+
+    $scope.addParameter = function () {
+
+            $http.post(SETTING.ZergWcApiUrl + '/ParameterValue/Post',   $scope.ParameterValue, {
+                'withCredentials': true
+            }).success(function (data) {
+                if(data.Status)
+                {
+                    AddParameterWindowClose();
+                    $scope.getParametervalueList();
+                }
+            });
+
+
+    }
+
+    $scope.del = function (parameterId) {
+        var modalInstance = $modal.open({
+            templateUrl: 'myModalContent.html',
+            controller: 'ModalInstanceCtrl',
+            resolve: {
+                msg: function () {
+                    return "你确定要删除吗？";
+                }
+            }
+        });
+        modalInstance.result.then(function () {
+            $http.get(SETTING.ZergWcApiUrl + '/ParameterValue/Delete', {
+                params:{
+                    id:parameterId
+                },
+                'withCredentials': true
+            }).success(function (data) {
+                if (data.Status) {
+                    $scope.getParametervalueList();
+                }
+                else {
+                    $scope.alerts = [ {type: 'danger', msg: data.Msg} ];
+                }
+            });
+        });
+        $scope.closeAlert = function (index) {
+            $scope.alerts.splice(index, 1);
+        };
+//        $http.get(SETTING.ApiUrl + '/Classify/DelParameter?parameterId=' + parameterId,{'withCredentials':true}).success(function (data) {
+//            var selectedBranch = tree.get_selected_branch();
+//            $http.get(SETTING.ApiUrl + '/Classify/GetParameterByClassify?classifyId=' + selectedBranch.Id,{'withCredentials':true}).success(function (data) {
+//                $scope.rowParameter = data;
+//            });
+//            $scope.output = data;
+//        });
+    }
+
+}])
