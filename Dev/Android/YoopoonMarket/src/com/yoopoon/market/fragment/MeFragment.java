@@ -96,6 +96,9 @@ public class MeFragment extends Fragment implements OnClickListener {
 			case R.id.rl4:
 				MeOrderActivity_.intent(getActivity()).item(3).start();
 				break;
+			case R.id.rl6:
+
+				break;
 
 		}
 	}

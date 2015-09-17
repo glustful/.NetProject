@@ -22,18 +22,36 @@
             android:background="@drawable/smile_face"
             android:onClick="toServe" />
 
-        <Button
-            android:id="@+id/btn_select"
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/search_et_border"
-            android:text="请选择地区"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:layout_weight="1" >
 
-        <Button
+            <Button
+                android:id="@+id/btn_select"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/search_et_border"
+                android:text="请选择地区"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <EditText
+                android:visibility="gone"
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/search_white_bg"
+                android:hint="请输入搜索内容"
+                android:gravity="center"
+                android:textColor="@color/text_gray"
+                
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <Button  
             android:id="@+id/btn_search"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -48,6 +66,5 @@
             android:background="@android:color/transparent"
             android:drawableLeft="@drawable/category" />
     </LinearLayout>
-    
 
 </RelativeLayout>

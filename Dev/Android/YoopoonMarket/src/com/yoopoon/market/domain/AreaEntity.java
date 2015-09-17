@@ -7,11 +7,12 @@ public class AreaEntity {
 	public String Adddate;
 	public String Parent;
 	public String Name;
+	public String ParentName;
 
 	@Override
 	public String toString() {
 		return "AreaEntity [Id=" + Id + ", Codeid=" + Codeid + ", Adddate=" + Adddate + ", Parent=" + Parent
-				+ ", Name=" + Name + "]";
+				+ ", Name=" + Name + ", ParentName=" + ParentName + "]";
 	}
 
 }

@@ -40,7 +40,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -75,8 +79,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	ViewPager vp;
 	@ViewById(R.id.rg)
 	RadioGroup rg;
-	@ViewById(R.id.rightBtn)
-	Button rightBtn;
 	@ViewById(R.id.search_layout)
 	View searchLayout;
 	@ViewById(R.id.btn_select)
@@ -89,6 +91,42 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	TextView tv_shadow1;
 	@ViewById(R.id.rl_shadow2)
 	View rl_shadow2;
+	@ViewById(R.id.et_search)
+	EditText et_search;
+
+	@Click(R.id.btn_search)
+	void search() {
+		if (et_search.getVisibility() == View.GONE) {
+			Animation animation = AnimationUtils.loadAnimation(this, R.anim.push_right_in);
+			animation.setFillAfter(true);
+			et_search.setVisibility(View.VISIBLE);
+			et_search.startAnimation(animation);
+		} else {
+			Animation animation = AnimationUtils.loadAnimation(this, R.anim.back_right_out);
+			animation.setAnimationListener(new AnimationListener() {
+
+				@Override
+				public void onAnimationStart(Animation animation) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					// animation.setFillAfter(true);
+					et_search.setVisibility(View.GONE);
+				}
+			});
+
+			et_search.startAnimation(animation);
+		}
+	}
 
 	@Click(R.id.iv_iknow)
 	void iKnow() {
@@ -156,11 +194,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					boolean status = object.optBoolean("Status", false);
-					if (status) {
-						JSONArray array = object.optJSONArray("Object");
+					JSONArray array = object.optJSONArray("List");
+					if (array != null) {
 						parseToObject(array);
-
 					} else {
 						Toast.makeText(MainActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 						ll_loading.setVisibility(View.GONE);
@@ -217,13 +253,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				ll_loading.setVisibility(View.GONE);
 			}
 		}).execute();
-		rightBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(mContext, ProductClassifyActivity_.class);
-				startActivity(intent);
-			}
-		});
+
 	}
 
 	private class SearchViewClickListener implements OnClickListener {

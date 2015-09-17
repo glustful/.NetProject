@@ -121,6 +121,7 @@ public class CategoryActivity extends MainActionBarActivity {
 	boolean start = true;
 
 	class MyRequestContentThread implements Runnable {
+
 		private CategoryEntity name;
 		private Integer index;
 		private Object prev;
@@ -141,7 +142,7 @@ public class CategoryActivity extends MainActionBarActivity {
 						requestContents(name, name.id + "", index);
 						count--;
 						try {
-							Thread.sleep(1);
+							Thread.sleep(10);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
