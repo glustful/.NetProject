@@ -257,6 +257,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 controller: 'ProductDetail'
             }
         }
+    })
+    .state('page.search_product', {
+        url: '/search_product',
+        views: {
+            'page-shopping': {
+                templateUrl: 'page/shopping/searchProduct.html',
+                controller: 'SearchProductCtr'
+            }
+        }
     });
         
         // if none of the above states are matched, use this as the fallback
