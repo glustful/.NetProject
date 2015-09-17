@@ -4,13 +4,28 @@
 
 
 
-app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$ionicLoading',function($http,$scope,$stateParams,$timeout,$ionicLoading){
+app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$ionicLoading','cartservice',function($http,$scope,$stateParams,$timeout,$ionicLoading,cartservice){
+
+    //console.log(cartservice.GetAllcart());
     $scope.wxPay = function(){
         $ionicLoading.show({
             template:"微信支付未开通",
             duration:3000
         });
     };
+    //商品信息
+    $scope.cartinfo={
+        id:null,
+        name:null,
+        count:null
+    };
+    //添加商品
+    $scope.AddCart = function()
+    {
+        //赋值
+
+        cartservice.add(cartinfo);
+    }
     $scope.alipay = function(){
         var myDate = new Date();
 
@@ -277,7 +292,6 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
     //};
     //pushContent();
     //$scope.more=pushContent;
-        $scope.member=[]
         var morecomment = function(){
             $timeout(function(){
                 $scope.comcon.Page+=1;
