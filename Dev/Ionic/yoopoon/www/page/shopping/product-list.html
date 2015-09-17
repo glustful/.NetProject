@@ -7,25 +7,28 @@
     <ul>
         <li style="float:left;width: 20%;height: 30px;margin-right: 5px;" ng-repeat="item in cateList" ng-click="getList(item.Id)">{{item.Name}}</li>
     </ul>
-</div>
-<div class="bar" style="top:100px">
-    <label class="col text-center">
+
+<div class="row" >
+    <label class="col ">
         <select  class="none-border lable-size font-12" ng-change="change(select)" ng-model="select">
             <option value="0" ng-selected>综合排序</option>
             <option value="1">价格</option>
             <option value="2">销量</option>
         </select>
     </label>
-    <label class="col text-center">
-        <select class="none-border lable-size font-12" ng-change="selectPrice(selected)" ng-model="selected">
-            <option value="0">筛选</option>
-            <option value="1">价格</option>
-        </select>
-    </label>
+    <!--<label class="col text-center">-->
+        <!--<select class="none-border lable-size font-12" ng-change="selectPrice(selected)" ng-model="selected">-->
+            <!--&lt;!&ndash;<option>HTML</option>&ndash;&gt;-->
+            <!--<option value="0">筛选</option>-->
+            <!--<option value="1">价格</option>-->
+            <!--&lt;!&ndash;<option>JavaScript</option>&ndash;&gt;-->
+        <!--</select>-->
+    <!--</label>-->
+    <button class="button col button-clear" ng-click="selectPrice()">价钱</button>
 </div>
-<ion-view hide-tabs="true" hide-nav-bar="true" >
+<ion-view hide-tabs="true" hide-nav-bar="true"  ng-show="productShow">
 
-<ion-content class="content " style="top: 138px;" ng-show="productShow">
+<ion-content style="top: 88px;padding: 0">
 
     <ion-list >
         <ion-item ng-repeat="item in list"  class="row" ui-sref="page.product-detail({id:item.Id})">
