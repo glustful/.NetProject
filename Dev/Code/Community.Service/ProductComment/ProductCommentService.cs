@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Community.Entity.Model.Product;
 using Community.Entity.Model.ProductComment;
 using YooPoon.Core.Logging;
 using Zerg.Common.Data;
