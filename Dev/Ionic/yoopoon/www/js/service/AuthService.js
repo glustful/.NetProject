@@ -2,7 +2,7 @@
  * Created by Yunjoy on 2015/5/6.
  * 用户验证登陆service
  */
-angular.module("zergApp").service("AuthService",["$http",'$sessionStorage',function($http,$sessionStorage){
+app.service("AuthService",["$http",'$sessionStorage',function($http,$sessionStorage){
     var _isAuthenticated = false;
     var _currentUser;
 
