@@ -12,7 +12,7 @@ class TextFieldViewController: SuperViewController {
     var currentField: UITextField?
     override func viewDidLoad() {
         super.viewDidLoad()
-        var tap = UITapGestureRecognizer(target: self, action: "hidenKeyBoard")
+        let tap = UITapGestureRecognizer(target: self, action: "hidenKeyBoard")
         tap.numberOfTouchesRequired = 1
         self.view.addGestureRecognizer(tap)
     }
@@ -32,10 +32,10 @@ class TextFieldViewController: SuperViewController {
     func textFieldDidBeginEditing(textField: UITextField) {
         self.currentField = textField
         //var frame = textField.frame
-        var frame = textField.convertRect(textField.bounds, toView: nil)
+        let frame = textField.convertRect(textField.bounds, toView: nil)
         
         var offset = frame.origin.y  + 40 - (self.view.frame.size.height - keyboardHeight)//键盘高度258
-        var animationDuration: NSTimeInterval = 0.30
+        let animationDuration: NSTimeInterval = 0.30
         UIView.beginAnimations("ResizeForKeyboard", context: nil)
         
         UIView.setAnimationDuration(animationDuration)

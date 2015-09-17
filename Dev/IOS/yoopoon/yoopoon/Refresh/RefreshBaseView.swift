@@ -96,7 +96,7 @@ class RefreshBaseView: UIView {
         self.addSubview(statusLabel)
         //箭头图片
         arrowImage = UIImageView(image: UIImage(named: "arrow.png"))
-        arrowImage.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin |  UIViewAutoresizing.FlexibleRightMargin
+        arrowImage.autoresizingMask = [UIViewAutoresizing.FlexibleLeftMargin, UIViewAutoresizing.FlexibleRightMargin]
         self.addSubview(arrowImage)
         //状态标签
         activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
@@ -110,7 +110,7 @@ class RefreshBaseView: UIView {
         self.State = RefreshState.Normal;
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -181,7 +181,7 @@ class RefreshBaseView: UIView {
     //结束刷新
     func endRefreshing(){
         let delayInSeconds:Double = 0.3
-        var popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds));
+        let popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds));
         
         dispatch_after(popTime, dispatch_get_main_queue(), {
             self.State = RefreshState.Normal;

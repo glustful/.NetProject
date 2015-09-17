@@ -72,7 +72,7 @@ class MyWantFormViewController: TextFieldViewController,UIPopoverPresentationCon
         .setParameters(self.postEntity)
         .setIsShowIndicator(true, currentView: self.view)
         .request({json in
-            println(json)
+            print(json)
             if let status = json["Status"].bool{
                 if status{
                     self.navigationController!.popViewControllerAnimated(true)
@@ -81,7 +81,7 @@ class MyWantFormViewController: TextFieldViewController,UIPopoverPresentationCon
             }
             TipTools().showToast("提示", message: "请求失败,请重试", duration: 3)
             }, faild: {error in
-                println("\(error!.description)")
+                print("\(error!.description)")
                 TipTools().showToast("提示", message: "请求失败,请重试", duration: 3)
         })
     }
@@ -109,9 +109,9 @@ class MyWantFormViewController: TextFieldViewController,UIPopoverPresentationCon
     }
     
     func dateChange(date: NSDate) {
-        var format = NSDateFormatter()
+        let format = NSDateFormatter()
         format.dateFormat = "yyyy/MM/dd"
-        var result = format.stringFromDate(date)
+        let result = format.stringFromDate(date)
         self.uiPreDate.text = result
     }
 
@@ -129,8 +129,8 @@ class MyWantFormViewController: TextFieldViewController,UIPopoverPresentationCon
     }
     
     private func initLeadClient(){
-        var userId = User.share.id ?? 0
-        println("id=\(User.share.id)")
+        let userId = User.share.id ?? 0
+        print("id=\(User.share.id)")
         self.postEntity.updateValue("\(userId)", forKey: "AddUser")
         self.postEntity.updateValue("\(userId)", forKey: "Broker")
         self.postEntity.updateValue(self.projectName ?? "", forKey: "Projectname")
@@ -148,7 +148,7 @@ class MyWantFormViewController: TextFieldViewController,UIPopoverPresentationCon
     
 
     private func initRECClient(){
-        var userId = User.share.id ?? 0
+        let userId = User.share.id ?? 0
         self.postEntity.updateValue("\(userId)", forKey: "AddUser")
         self.postEntity.updateValue("\(userId)", forKey: "Broker")
         self.postEntity.updateValue(self.projectName ?? "", forKey: "Projectname")

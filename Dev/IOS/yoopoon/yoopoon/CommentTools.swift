@@ -36,9 +36,9 @@ class CommentTools: NSObject {
     //根据传入的字符串，字体大小，显示宽度计算实际大小
     class func computerContentSize(content: String,fontSize: CGFloat,widgetWidth:CGFloat=screenBounds.width)->CGSize{
         
-        var tmpContent: NSString = content
+        let tmpContent: NSString = content
         
-        var titleSize = tmpContent.boundingRectWithSize(CGSizeMake(widgetWidth, CGFloat(MAXFLOAT)), options: NSStringDrawingOptions.UsesLineFragmentOrigin |  NSStringDrawingOptions.UsesFontLeading, attributes: [NSFontAttributeName: UIFont.systemFontOfSize(fontSize)], context: nil).size
+        let titleSize = tmpContent.boundingRectWithSize(CGSizeMake(widgetWidth, CGFloat(MAXFLOAT)), options: [NSStringDrawingOptions.UsesLineFragmentOrigin, NSStringDrawingOptions.UsesFontLeading], attributes: [NSFontAttributeName: UIFont.systemFontOfSize(fontSize)], context: nil).size
         return titleSize
         
     }
@@ -53,7 +53,7 @@ class CommentTools: NSObject {
     //JSON 到字典的转换
     class func jsonToDic(json: JSON)->[String:AnyObject]{
         var dic = [String:AnyObject]()
-        for (key: String, subJson: JSON) in json {
+        for (key, subJson): (String, JSON) in json {
             
             dic.updateValue(subJson.stringValue, forKey: key)
         }

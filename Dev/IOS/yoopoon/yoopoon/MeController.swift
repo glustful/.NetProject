@@ -31,7 +31,7 @@ class MeController: UIViewController {
         self.constraintTopViewWidth.constant = screenBounds.width
         self.constraintTopViewHeight.constant = 150
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "notifyLoginOut:", name: "loginOut", object: nil)
-        var img = UIImage(named: "b1")
+        let img = UIImage(named: "b1")
         
         constraintMiddleViewHeight.constant = img!.size.height*2 + 30 + 40
         
@@ -70,7 +70,7 @@ class MeController: UIViewController {
     /**
     初始化ui
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     private func initUI(){
         mTopView = NSBundle.mainBundle().loadNibNamed("MeTopView", owner: nil, options: nil).last as? MeTopView
