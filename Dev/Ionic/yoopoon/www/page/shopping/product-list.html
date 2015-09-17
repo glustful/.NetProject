@@ -20,8 +20,8 @@
         <button class="button col-50 button-clear" ng-click="selectPrice()">价钱</button>
     </div>
     <ion-list ng-show="reorder" ng-click="reorderAll()">
-        <ion-item>价格</ion-item>
-        <ion-item>销量</ion-item>
+        <ion-item ng-click="orderByPrice()">价格</ion-item>
+        <ion-item ng-click="orderByOwner()">销量</ion-item>
     </ion-list>
 </div>
 <ion-view hide-tabs="true" hide-nav-bar="true" id="list" ng-show="productShow">
@@ -39,7 +39,7 @@
                 </div>
             </ion-item >
         </ion-list>
-        <ion-infinite-scroll on-infinite="loadProduct();" distance="1%" ng-if="hasmore">
+        <ion-infinite-scroll on-infinite="loadProduct();" ng-if="hasmore">
         </ion-infinite-scroll>
     </ion-content>
 
