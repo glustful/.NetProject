@@ -1,6 +1,6 @@
-app.service("cartservice", ['$rootScope',
+app.service("cartservice", [//'$rootScope',
 
-	function($rootScope) {
+	function() {
 		//$rootScope.cartProductCount = selectcount();
 		utils = {
 			setParam: function(name, value) {
@@ -52,7 +52,7 @@ app.service("cartservice", ['$rootScope',
 					productlist.push({
 						"id": cartinfo.id,
 						"name": cartinfo.name,
-						"count": cartinfo.count,
+						"count": cartinfo.count
 					});
 				}
 				//保存购物车  
@@ -60,7 +60,7 @@ app.service("cartservice", ['$rootScope',
 
 			}
 		};
-		//单独删除商品id
+		//商品减少数量，默认是减少1件，减少到为0时候这件商品就删除
 		this.delete = function(id) {
 			var storage = utils.getParam("ShoppingCart");
 			var jsonstr = JSON.parse(storage.substr(1, storage.length));
@@ -94,6 +94,12 @@ app.service("cartservice", ['$rootScope',
 		this.deleteall = function () {
 			localStorage.removeItem("ShoppingCart");
 		};
+        //获取总数的servci
+        this.GetAllcart= function()
+        {
+            var a =  selectcount();
+            return a;
+        }
 		//查询购物车商品个数(请用变量接收)
 		function selectcount ()
 		{
