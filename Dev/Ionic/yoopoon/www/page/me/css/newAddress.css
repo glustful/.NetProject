@@ -1,0 +1,12 @@
+.item h2,.item i{
+    color: #b4b4b4;
+}
+.saveAll{
+    margin-top: 80px;
+    margin-right: 20px;
+    float: right;
+}
+.button{
+    padding:0 30px;
+    background-color: #ff3000;
+}

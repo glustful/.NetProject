@@ -1,11 +1,11 @@
 <link href="page/me/css/me.css" rel="stylesheet" />
-<ion-view hide-nav-bar="true" hide-tabs="false">
+<ioc-view hide-nav-bar="true" hide-tabs="false">
 <ion-content no-header="true" style="top:44px;">
     <div class="headimg">
-        <img src="page/me/img.jpg" />
+        <img src="{{imgUrl}}" />
     </div>
-    <div class="top">
-        <img src="page/me/img.jpg" class="headpic" />
+    <div class="top" id="previvew">
+        <img src="{{imgUrl+olduser.Headphoto}}@174w_174h_70Q" class="headpic" />
         <p class="username">张三</p>
     </div>
     <div class="list">
@@ -25,7 +25,7 @@
             <div class="row mysever">
                 <div class="col"><i class="ion-card"><p>待接件</p></i></div>
                 <div class="col"><i class="ion-ios-box-outline"><p>办理中</p></i></div>
-                <div class="col"><i class="ion-android-checkbox-outline"><p>待评价</p></i></div>
+
             </div>
         </div>
         <div class="item item-icon-left" style="top: 40px;">

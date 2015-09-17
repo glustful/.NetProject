@@ -1,0 +1,20 @@
+<div class="bar header" style="height:44px;background-color: #f8f8f8">
+    <a href="#/page/me/selectAddress" class="button button-clear icon ion-chevron-left button-light"></a>
+    <h2 class="title light" style="color: #000;">管理收货地址</h2>
+</div>
+<ion-view hide-nav-bar="true" hide-tabs="true" >
+    <ion-content no-header="true" style="top:44px;padding:0;background-color: #d9d9d9" class="stable-bg">
+        <ion-list>
+            <ion-item ng-repeat="chat in list" type="item-text-wrap"ui-sref="page.selectCity({id:chat.Id,name:chat.Name})" >
+                {{chat.Name}}
+            </ion-item>
+
+        </ion-list>
+    </ion-content>
+</ion-view>
+
+<!--<ion-item class="item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/page/car/{{chat.id}}">-->
+<!--<img ng-src="{{chat.face}}">-->
+<!--<h2>{{chat.name}}</h2>-->
+<!--<p>{{chat.lastText}}</p>-->
+<!--<i class="icon ion-chevron-right icon-accessory"></i>-->

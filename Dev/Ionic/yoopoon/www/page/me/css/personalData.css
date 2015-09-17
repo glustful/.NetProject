@@ -14,7 +14,7 @@
     position: absolute;
     top:5%;
     right: 8%;
-    font-size: 24px;
+    font-size: 36px;
     color: #aaaaaa;
     font-weight: normal;
 }
@@ -49,9 +49,16 @@
     line-height: 44px;
     background-color: #fff;
 }
-.save-setting button{
+.save-setting a{
     width: 100%;
     background-color: #ff3000;
     border: none;
     font-size: 16px;
+}
+#img {
+    border-radius: 500px;
+    border-top-left-radius: 500px;
+    border-top-right-radius: 500px;
+    border-bottom-right-radius: 500px;
+    border-bottom-left-radius: 500px;
 }

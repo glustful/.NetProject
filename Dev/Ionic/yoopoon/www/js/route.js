@@ -68,7 +68,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
                }
                }
                })
-        
+
+
+
+
         .state('page.service', {
                url: '/service',
                views: {
@@ -167,6 +170,76 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     }
                 }
             })
+            .state('page.selectProvince', {
+                url: '/me/selectProvince',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/selectProvince.html',
+                        controller: 'selProvice'
+                    }
+                }
+            })
+            .state('page.selectCity', {
+                url: '/me?id&name',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/selectCity.html',
+                        controller: 'selectCity'
+                    }
+                }
+            })
+            .state('page.selectCounty',{
+                url:'/me?id&name',
+                views:{
+                    'page-me':{
+                        templateUrl:'page/me/selectCounty.html',
+                        controller:'selectCounty'
+                    }
+                }
+            })
+            .state('page.newAddress', {
+                url: '/me/newAddress',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/newAddress.html',
+                        controller: 'TabMeCtrl'
+                    }
+                }
+            })
+            .state('page.myOrder', {
+                url: '/me/myOrder',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/myOrder.html',
+                        controller: 'TabMeCtrl'
+                    }
+                }
+            })
+            .state('page.comment', {
+                url: '/me/comment',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/comment.html',
+                        controller: 'TabMeCtrl'
+                    }
+                }
+            })
+            .state('page.register', {
+                url: '/user/register',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/user/register.html'
+                    }
+                }
+            })
+            .state('page.login', {
+                url: '/user/login',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/user/login.html'
+                    }
+                }
+            })
     .state('page.Product-Catagory', {
         url: '/shopping/Product-Catagory',
         views: {
@@ -186,7 +259,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
     })
     .state('page.product-detail', {
-        url: '/shopping/product-detail',
+        url: '/shopping/product-detail?id',
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/product-detail.html',

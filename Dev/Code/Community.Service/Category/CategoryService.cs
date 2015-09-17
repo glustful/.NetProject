@@ -6,7 +6,7 @@ using Zerg.Common.Data;
 
 namespace Community.Service.Category
 {
-	public class CategoryService : ICategoryService
+    public class CategoryService : ICategoryService
 	{
 		private readonly ICommunityRepository<CategoryEntity> _categoryRepository;
 		private readonly ILog _log;

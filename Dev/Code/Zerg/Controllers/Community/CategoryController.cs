@@ -29,10 +29,22 @@ namespace Zerg.Controllers.Community
 		}
         #region 商品分类管理 2015.9.9 黄秀宇
 
-        //public JsonResult Get()
+        //public System.Web.Mvc.JsonResult Get()
         //{
-        //    _categoryService.GetCategorysByCondition()
-        //    return Json(sb.ToString(), JsonRequestBehavior.AllowGet);
+        //     CategorySearchCondition  csc = new CategorySearchCondition()
+        //    {
+        //        OrderBy = EnumCategorySearchOrderBy.OrderById,                
+        //    };
+        //    List<CategoryEntity> listCategofyOne = _categoryService.GetCategorysByCondition(csc).Where(o=>o.Father==null).ToList();
+        //    foreach (var p in listCategofyOne)
+        //    {
+        //        if (p.Father == null)
+        //        {
+        //           //查找第一级；
+        //        }
+        //    }
+
+        //    return System.Web.Mvc.Json("", System.Web.Mvc.JsonRequestBehavior.AllowGet);
         //}
 
 
@@ -97,7 +109,7 @@ namespace Zerg.Controllers.Community
         /// <param name="condition">Name商品类别名称，Sorts排序类型</param>
         /// <returns></returns>
         [Description("根据条件查找商品类别")]
-      public HttpResponseMessage Get([FromUri]CategorySearchCondition condition)
+      public HttpResponseMessage Get(CategorySearchCondition condition)
 		{
             //验证是否有非法字符
             Regex reg = new Regex(@"^[^ %@#!*~&',;=?$\x22]+$");
