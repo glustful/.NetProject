@@ -34,6 +34,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -91,7 +92,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	Button btn_category;
 	@ViewById(R.id.ll_loading)
 	LinearLayout ll_loading;
- 
 	// @ViewById(R.id.tv_shadow1)
 	// TextView tv_shadow1;
 	// @ViewById(R.id.rl_shadow2)
@@ -106,7 +106,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	// tv_shadow1.setVisibility(View.GONE);
 	// rl_shadow2.setVisibility(View.GONE);
 	// }
- 
 	@ViewById(R.id.tv_shadow1)
 	TextView tv_shadow1;
 	@ViewById(R.id.rl_shadow2)
@@ -124,30 +123,30 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		} else {
 			Animation animation = AnimationUtils.loadAnimation(this, R.anim.back_right_out);
 			animation.setAnimationListener(new AnimationListener() {
-
 				@Override
 				public void onAnimationStart(Animation animation) {
 					// TODO Auto-generated method stub
-
 				}
-
 				@Override
 				public void onAnimationRepeat(Animation animation) {
 					// TODO Auto-generated method stub
-
 				}
-
 				@Override
 				public void onAnimationEnd(Animation animation) {
 					// animation.setFillAfter(true);
+					//#################################################徐阳会 2015年9月17日添加  添加搜索广播#####################STAR
+					Intent intent = new Intent("com.yoopoon.market.search.byKeyword");
+					Bundle bundle = new Bundle();
+					intent.putExtra("keyword", et_search.getText().toString());
+					sendBroadcast(intent);
+					et_search.setText("");
+					//#################################################徐阳会 2015年9月17日添加  添加搜索广播#####################END
 					et_search.setVisibility(View.GONE);
 				}
 			});
-
 			et_search.startAnimation(animation);
 		}
 	}
-
 	@Click(R.id.iv_iknow)
 	void iKnow() {
 		SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference), MODE_PRIVATE);
@@ -157,7 +156,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		tv_shadow1.setVisibility(View.GONE);
 		rl_shadow2.setVisibility(View.GONE);
 	}
- 
+
 	List<Fragment> fragments = new ArrayList<Fragment>();
 	List<LinearLayout> lls = new ArrayList<LinearLayout>();
 	int checkedItem = 0;
@@ -182,16 +181,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		btn_category.setOnClickListener(new SearchViewClickListener());
 		vp.setOnPageChangeListener(new MyPagerChangeListener());
 		requestArea();
+		et_search.setSingleLine();
 	}
- 
-	
- 
-
 	protected void onCreate(android.os.Bundle arg0) {
 		super.onCreate(arg0);
 		registerBroadcast();
+		registerMoreService();
 	};
-
 	void registerBroadcast() {
 		IntentFilter shadowFilter = new IntentFilter("com.yoopoon.market.show_shadow");
 		shadowFilter.addCategory(Intent.CATEGORY_DEFAULT);
@@ -199,7 +195,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	BroadcastReceiver receiver = new BroadcastReceiver() {
-
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
@@ -210,7 +205,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		}
 	};
 
- 
 	void requestArea() {
 		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
@@ -271,7 +265,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				ll_loading.setVisibility(View.GONE);
 			}
 		}).execute();
-
 	}
 
 	private class SearchViewClickListener implements OnClickListener {
@@ -285,7 +278,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 						public void onClick(DialogInterface dialog, int which) {
 							checkedItem = which;
 							btn_select.setText(areaItems[checkedItem]);
-							//#############################################################################
+							/*//#############################################################################
 							//  添加广播，选择地址后Fragment_Shop能更新商品  徐阳会 2015年9月17日添加      Start
 							//#############################################################################
 							Intent refreshProductIntent = new Intent("com.yoopoon.market.productRefresh.Address");
@@ -295,7 +288,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 							//#############################################################################
 							//  添加广播，选择地址后Fragment_Shop能更新商品  徐阳会 2015年9月17日添加       End
 							//#############################################################################
-							dialog.dismiss();
+							*/dialog.dismiss();
 						}
 					});
 					builder.setTitle("请选择地区");
@@ -326,7 +319,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private class MyPageAdapter extends FragmentPagerAdapter {
-
 		public MyPageAdapter(FragmentManager fm) {
 			super(fm);
 		}
@@ -407,5 +399,18 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				vp.setCurrentItem(3);
 				break;
 		}
+	}
+
+	private class MoreServiceReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			vp.setCurrentItem(1);
+		}
+	}
+
+	private void registerMoreService() {
+		IntentFilter filter = new IntentFilter("com.yoopoon.market.service.moreservice");
+		MoreServiceReceiver moreServiceReceiver = new MoreServiceReceiver();
+		registerReceiver(moreServiceReceiver, filter);
 	}
 }

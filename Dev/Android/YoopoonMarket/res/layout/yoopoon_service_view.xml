@@ -5,7 +5,7 @@
     android:animateLayoutChanges="true"
     android:orientation="vertical" >
 
-    <com.yoopoon.base.ui.MyViewPager
+    <com.yoopoon.market.view.MyViewPager
         android:id="@+id/vPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

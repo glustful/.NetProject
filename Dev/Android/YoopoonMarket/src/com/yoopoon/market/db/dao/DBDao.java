@@ -1,4 +1,4 @@
-package com.yoopoon.market.db.dao;
+/*package com.yoopoon.market.db.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -21,4 +21,4 @@ public class DBDao {
 		return result;
 	}
 
-}
+}*/

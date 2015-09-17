@@ -20,9 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.yoopoon.base.ui.MyGridView;
 import com.yoopoon.market.MyApplication;
 import com.yoopoon.market.R;
+import com.yoopoon.market.view.MyGridView;
 
 public class YoopoonServiceController extends GridViewController {
 	public YoopoonServiceController(Context context) {

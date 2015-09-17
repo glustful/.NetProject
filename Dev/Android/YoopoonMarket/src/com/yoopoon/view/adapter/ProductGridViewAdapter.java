@@ -135,14 +135,14 @@ public class ProductGridViewAdapter extends BaseAdapter {
 		return convertView;
 	}
 
-	/*public void refresh(ArrayList<JSONObject> mJsonObjects) {
+	 public void refresh(ArrayList<JSONObject> mJsonObjects) {
 		datas.clear();
 		if (mJsonObjects != null) {
 			datas.addAll(mJsonObjects);
 		}
 		// this.notifyDataSetInvalidated();
 		this.notifyDataSetChanged(); 
-	}*/
+	} 
 	/**
 	 * @ClassName: ProductViewHandler
 	 * @Description: 产品对应的ViewHandler

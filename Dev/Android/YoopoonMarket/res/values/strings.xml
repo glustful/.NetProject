@@ -15,5 +15,6 @@ h5bA756h1uOGDXRDUf3kpFI5zRB/WSSjLNlGVhuoL0ohSzHiTDn+Oe1F3TVRAkAQ
 nOuMMbIFoiaHneVy/e6LAkAmrhFg8BaTOcEVIEP0hlZEEl1xUr23JX/5If/lXQQ3
 mVGHxJ+/pJv+4Mg7As99AkEA4czAjWg3xokvyOkEOMZs+4KZMt9MwcKk3525+JdR
 KTkLfnqEaOMRoeYls2V48Ycp8FLXMwMaWXsmhzNTCcIjXg==</string> 
+<string name="pay_result_callback_msg" formatted="false">微信支付结果：%s</string>
 
 </resources>
