@@ -89,6 +89,9 @@ public class AddressModifyActivity extends MainActionBarActivity {
 		textViews.get(5).setText(addressEntity.Zip + "\n修改邮编");
 
 		Utils.spanTextSize(textViews.get(2), "修", true, new int[] { 16, 12 });
+		Utils.spanTextSize(textViews.get(3), "修", true, new int[] { 16, 12 });
+		Utils.spanTextSize(textViews.get(4), "修", true, new int[] { 16, 12 });
+		Utils.spanTextSize(textViews.get(5), "修", true, new int[] { 16, 12 });
 
 	}
 
