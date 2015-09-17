@@ -53,36 +53,9 @@ app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,
 //    $scope.$on("modal.removed", function() {
 //        // Execute action
 //    });
-               });
 
 
-app.controller('selectAddress', function($scope, $stateParams) {
 
-var httpimguri='';
-
-    $scope.chats = [
-        {
-        id: 0,
-        name: '北京市',
-        lastText: 'You on your way?',
-        face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
-    },
-        {
-            id: 1,
-            name: '天津市',
-            lastText: 'You on your way?',
-            face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
-        }
-    ];
-    alert($scope.chats.name);
-
-    $scope.goBack = function(){
-        window.history.go(-1);
-    };
-
-
-});
-app.controller('TabMeCtrl', function($http,$scope,$state,$AuthService, $ionicSlideBoxDelegate,$stateParams) {
 
   $scope.model = {
     activeIndex:0
@@ -214,8 +187,8 @@ app.controller('TabMeCtrl', function($http,$scope,$state,$AuthService, $ionicSli
                     $state.go("app.me");
                 }
             });
-    }}
-);
+    }
+
 
 /////////////////////////////头像修改////////////////////////////
 
@@ -297,7 +270,8 @@ function previewImage(file)
     }
     reader.readAsDataURL(files);
   }
-};
+}
+}
 
 ///////////////////////////ͷ���޸�//////////////////////////////////
 app.controller('TabMeCtrl',['$http','$scope', function($http,$scope, $ionicSlideBoxDelegate) {

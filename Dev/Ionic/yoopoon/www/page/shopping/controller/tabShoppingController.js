@@ -57,7 +57,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
             });
     };
 
-
+//页面跳转
 
     $scope.go=function(state){
         window.location.href=state;
@@ -66,7 +66,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
     //    搜索功能
     $scope.showSelect = false;
     $scope.isShow = false;
-    $scope.showInput = function () {
+    $scope.showInput = function() {
         $scope.showSelect = true;
         $scope.isShow = true;
     };
@@ -241,15 +241,24 @@ app.controller('ShoppingListCtrl',['$http','$scope','$timeout',function($http,$s
     $scope.selectPrice=function(){
 
 //            document.getElementById("list").style.display="none";
+            $scope.productPrice=!$scope.productPrice;
+        if($scope.productPrice==true){
             $scope.productShow=false;
             $scope.productPrice=true;
+        }else{
+            $scope.productShow=true;
+        }
         }
 
     $scope.submit=function(){
-        document.getElementById("price").setAttribute("class","");
         $scope.productPrice=false;
         $scope.productShow=true;
         getProduct();
+    }
+//    综合排序
+    $scope.reorder=false;
+    $scope.reorderAll=function(){
+        $scope.reorder=!$scope.reorder;
     }
     //endregion
     //endregion
