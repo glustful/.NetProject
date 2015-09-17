@@ -35,10 +35,11 @@
             ).success(function (data) {
                 if (data.Status) {
                     getAreaList();
+                    $scope.state = "数据删除成功！";
                 }
                 else {
                     //$scope.Message=data.Msg;
-                    $scope.alerts = [{ type: 'danger', msg: data.Msg }];
+                    $scope.state = "数据删除失败！";
                 }
             });
         });

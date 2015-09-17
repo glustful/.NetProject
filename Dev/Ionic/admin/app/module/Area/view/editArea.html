@@ -3,21 +3,25 @@
     <div style="padding:50px 50px 10px;">
         <form class="form-horizontal" role="form" name="form" enctype="multipart/form-data">
                 <div class="input-group-sm">
-                    <span class="input-group-addon">城市编码</span>
+                    <span class="input-group-addon">区域编码</span>
                     <input type="text" class="form-control" ng-model="list.Codeid" id="Codeid" name="Codeid" />
                 </div>
                 <div class="input-group-sm">
-                    <span class="input-group-addon">城市名称</span>
+                    <span class="input-group-addon">区域名称</span>
                     <input type="text" class="form-control" ng-model="list.Name" id="Name" name="Name"  />
                 </div>
                 <div class="input-group-sm">
-                    <span class="input-group-addon">城市父级名称</span>
-                    <input type="text" class="form-control" ng-model="list.Parent.Name" id="ParentName" name="ParentName" />
+                    <span class="input-group-addon">父级区域(当前：{{list.Parent.Name}}）【注：不修改则默认当前】</span>
+                    <!--<input type="text" class="form-control" ng-model="list.Parent.Name" id="ParentName" name="ParentName" />-->
+                    <select class="form-control" name="province" ng-change="text_change_province()" ng-change="false" ng-model="selectId1" ng-options="x.Id as x.Name for x in province | filter:{Parent:null}"></select>
+                    <select class="form-control" name="area" id="area" ng-change="text_change_area()" ng-show="selectId1 > 0&&isShow2==true" ng-model="selectId2" ng-options="x.Id as x.Name for x in area"></select>
+                    <select class="form-control" name="city" id="city" ng-show="selectId2 > 0&&isShow3==true" ng-model="selectId3" ng-options="x.Id as x.Name for x in city "></select>
                 </div>
 
             <br />
             <div class="text-center">
                 <button id="btn_ok" type="submit" class="btn btn-primary" ng-click="Create()">保存</button>
+                <div><label ng-model="state">{{state}}</label></div>
             </div>
         </form>
     </div>

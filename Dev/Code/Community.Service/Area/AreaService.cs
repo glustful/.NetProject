@@ -77,7 +77,11 @@ namespace Community.Service.Area
 			var query = _areaRepository.Table;
 			try
 			{
-				if (condition.AdddateBegin.HasValue)
+                if (!string.IsNullOrEmpty(condition.Parent_Id))
+                {
+                    query = query.Where(q => q.Parent.Id.ToString() == condition.Parent_Id);
+                }
+                if (condition.AdddateBegin.HasValue)
                 {
                     query = query.Where(q => q.AddDate>= condition.AdddateBegin.Value);
                 }
@@ -93,9 +97,18 @@ namespace Community.Service.Area
                 {
                     query = query.Where(q => q.Name.Contains(condition.Name));
                 }
-				if (condition.Ids != null && condition.Ids.Any())
+                if (condition.Ids != null && condition.Ids.Any())
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
+                }
+
+                if (condition.father == true)
+                {
+                    query = query.Where(q => q.Parent.Id == null);
+                }
+                if (condition.father == false && condition.fatherid>0)
+                {
+                    query = query.Where(q => q.Parent.Id == condition .fatherid);
                 }
 				if(condition.OrderBy.HasValue)
 				{
@@ -158,5 +171,6 @@ namespace Community.Service.Area
                 return -1;
 			}
 		}
+      
 	}
 }
