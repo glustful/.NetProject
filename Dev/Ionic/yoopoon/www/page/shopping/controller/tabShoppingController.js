@@ -14,18 +14,18 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
         });
     };
     //商品信息
-    //$scope.cartinfo={
-    //    id:null,
-    //    name:null,
-    //    count:null
-    //};
+    $scope.cartinfo={
+        id:null,
+        name:null,
+        count:null
+    };
     //添加商品
-    //$scope.AddCart = function()
-    //{
-    //    //赋值
-    //
-    //    cartservice.add(cartinfo);
-    //}
+    $scope.AddCart = function()
+    {
+        //赋值
+
+        cartservice.add(cartinfo);
+    }
     $scope.alipay = function(){
         var myDate = new Date();
 
@@ -48,13 +48,13 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
                         duration: 5000
                     });
             }, function(message) {
-            $ionicLoading.show({
-                template: "支付宝支付失败=" + message,
-                noBackdrop: true,
-                duration: 5000
+                 $ionicLoading.show({
+                  template: "支付宝支付失败="+message,
+                   noBackdrop: true,
+                  duration: 5000
                 });
-            }
-        );
+               
+            });
     };
 
 
@@ -63,10 +63,6 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
         window.location.href=state;
     };
 
-<<<<<<< HEAD
-=======
-
->>>>>>> d3477e4c9d87a895939c01ec0d32def6e5699bb3
     //    搜索功能
     $scope.showSelect = false;
     $scope.isShow = false;
@@ -89,12 +85,13 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
             actionDOM.style.visibility = "hidden";
         }
 
+    }
     //region商品大图获取
 
     $scope.Condition = {
         IsDescending:true,
-        OrderBy:'OrderByOwner'
-
+        OrderBy:'OrderByOwner',
+        IsRecommend:'1'
         //ProductId:''
     };
     var getProductList=function() {
@@ -103,18 +100,14 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
             'withCredentials': true
         }).success(function (data1) {
             $scope.list = data1.List[0];
-        });
+        });;
     };
     getProductList();
     $scope.getList=getProductList;
 //endregion
 
     //region 商品获取
-<<<<<<< HEAD
     $scope.items = [];
-=======
-
->>>>>>> d3477e4c9d87a895939c01ec0d32def6e5699bb3
     $scope.searchCondition = {
         IsDescending:true,
         OrderBy:'OrderByAddtime',
@@ -165,7 +158,6 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
     $http.get('http://localhost:50597/api/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
         $scope.content=data;
     });
-<<<<<<< HEAD
     //endregion
 
 
@@ -173,9 +165,6 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
     document.getElementById('search').onblur= function(){
         $state.go("page.search_product",{productName:$scope.searchname});
     };
-=======
-   //endregion
->>>>>>> d3477e4c9d87a895939c01ec0d32def6e5699bb3
     }]);
 app.controller('ShoppingListCtrl',['$http','$scope','$timeout',function($http,$scope,$timeout){
 
@@ -247,29 +236,20 @@ app.controller('ShoppingListCtrl',['$http','$scope','$timeout',function($http,$s
             $scope.orderByOwner();
         }
     }
-
-    $scope.productPrice=false;
     $scope.productShow=true;
+    $scope.productPrice=false;
     $scope.selectPrice=function(){
-        $scope.productPrice=!$scope.productPrice;
-        if($scope.productPrice==true){
+
 //            document.getElementById("list").style.display="none";
-               $scope.productShow=false;
-        }else{
-               $scope.productShow=true;
+            $scope.productShow=false;
+            $scope.productPrice=true;
         }
-    }
 
     $scope.submit=function(){
-//        document.getElementById("price").setAttribute("class","");
+        document.getElementById("price").setAttribute("class","");
         $scope.productPrice=false;
         $scope.productShow=true;
         getProduct();
-    }
-//    综合排序
-    $scope.reorder=false;
-    $scope.reorderAll=function(){
-        $scope.reorder=!$scope.reorder;
     }
     //endregion
     //endregion
@@ -310,39 +290,6 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
     }
     $scope.tipp = "查看更多评论";
     $scope.CommentList = [];//保存从服务器查来的任务，可累加
-<<<<<<< HEAD
-=======
-
-
-    //var pushContent= function() {                    //核心是这个函数，向$scope.posts
-    //    if (!loading && $scope.comcon.Page < pages) {                         //如果页面没有正在读取
-    //        loading = true;                     //告知正在读取
-    //        $http.get(SETTING.ApiUrl + "/ProductComment/Get", {
-    //            params: $scope.comcon,
-    //            'withCredentials': true
-    //        }).success(function(data) {
-    //            pages =Math.ceil(data.TotalCount /$scope.comcon.PageCount);
-    //            for (var i = 0; i <= data.Model.length - 1; i++) {
-    //                $scope.CommentList.push(data.Model[i]);
-    //                $http.get(SETTING.ApiUrl+"Member/GetMemberByUserId?userId="+data.Model[i].AddUser,{
-    //                    'withCredentials':true
-    //                }).success(function(data){
-    //                    $scope.member=data;
-    //                })
-    //            }
-    //            loading = false;            //告知读取结束
-    //            if ($scope.CommentList.length == data.TotalCount) {//如果所有数据已查出来
-    //                $scope.tipp = "已经是最后一页了";
-    //            }
-    //            $scope.Count=data.TotalCount;
-    //            console.log(data.Model);
-    //        });
-    //        $scope.comcon.Page++;                             //翻页
-    //    }
-    //};
-    //pushContent();
-    //$scope.more=pushContent;
->>>>>>> d3477e4c9d87a895939c01ec0d32def6e5699bb3
         var morecomment = function(){
             $timeout(function(){
                 $scope.comcon.Page+=1;
@@ -378,11 +325,7 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
             });
         },1000);
     };
-<<<<<<< HEAD
 }])
-=======
-}]);
->>>>>>> d3477e4c9d87a895939c01ec0d32def6e5699bb3
 app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
     $scope.search={
         Name:$stateParams.productName
@@ -393,32 +336,6 @@ app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($htt
     }).success(function(data){
         $scope.productList=data.List
     })
-
-  //加入购物车动画
-    $scope.AddGWCAction = function()
-    {
-        //显示图标
-        var actionDOM = document.getElementById("gwcaction");
-        actionDOM.style.visibility = "visible";
-        //执行动画
-        var abc = actionDOM.className;
-        actionDOM.className = abc+"Gwcactive";
-        function hasClass( actionDOM,Gwcactive ){
-            return !!actionDOM.className.match( new RegExp( "(\\s|^)" + Gwcactive + "(\\s|$)") );
-        };
-        function addClass( actionDOM,Gwcactive ){
-            if( !hasClass( actionDOM,Gwcactive ) ){
-                actionDOM.className += " " + Gwcactive;
-            };
-        };
-        function removeClass( actionDOM,Gwcactive ){
-            if( hasClass( actionDOM,Gwcactive ) ){
-                actionDOM.className = actionDOM.className.replace( new RegExp( "(\\s|^)" + Gwcactive + "(\\s|$)" ), " " );
-            };
-        };
-
-    }
-
 }])
 
 
