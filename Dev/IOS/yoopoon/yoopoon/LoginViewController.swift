@@ -34,8 +34,8 @@ class LoginViewController: SuperViewController {
     /**
     用户登陆
     
-    :param: phone  手机号码
-    :param: passwd 密码
+    - parameter phone:  手机号码
+    - parameter passwd: 密码
     */
     private func loginWithPhone(phone:String,password passwd: String){
         RequestAdapter()
@@ -73,10 +73,10 @@ class LoginViewController: SuperViewController {
     /**
     初始化用户名和密码
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func initData(){
-        var user = User.share
+        let user = User.share
         self.uiPhone.text = user.phone
         self.uiPassword.text = user.password
         self.uiRememberMe.selected = user.isRemember

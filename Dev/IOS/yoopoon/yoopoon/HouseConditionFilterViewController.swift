@@ -48,7 +48,7 @@ class HouseConditionFilterViewController: UIViewController{
             
         case 1:
             for data in self.cityOrType!.city{
-                if data.id == parentId.toInt(){
+                if data.id == Int(parentId){
                     if data.children != nil{
                         self.reloadDataOfLevelOne(parentId)
                         return
@@ -62,7 +62,7 @@ class HouseConditionFilterViewController: UIViewController{
             for data in self.cityOrType!.city{
                 if data.children != nil{
                     for child in data.children!{
-                        if child.id == parentId.toInt(){
+                        if child.id == Int(parentId){
                             if child.children != nil{
                                 self.reloadDataOfLevelTwo(parentId)
                                 return
@@ -100,7 +100,7 @@ class HouseConditionFilterViewController: UIViewController{
                     }
                 }
                 }, faild: {error in
-                    println("error=\(error!.description)")
+                    print("error=\(error!.description)")
             })
         
     }
@@ -108,7 +108,7 @@ class HouseConditionFilterViewController: UIViewController{
     /**
     根据filterType初始化界面
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     private func initLayout(){
         if let type = filterType{
@@ -143,7 +143,7 @@ class HouseConditionFilterViewController: UIViewController{
                     self.constraintLeftHeight.constant = CGFloat(self.cityOrType!.city.count * 40)
                     leftHeight = self.constraintLeftHeight.constant
                     for i in 0..<self.cityOrType!.city.count{
-                        var cell = self.addSubView(self.uiLeftTableView,title: self.cityOrType!.city[i].name ?? "", index: i,id: "\(self.cityOrType!.city[i].id ?? -1)",type: .CITY,level: 1)
+                        let cell = self.addSubView(self.uiLeftTableView,title: self.cityOrType!.city[i].name ?? "", index: i,id: "\(self.cityOrType!.city[i].id ?? -1)",type: .CITY,level: 1)
                         if cell != nil{
                             cell!.requestFunction = requestData
                         }
@@ -156,7 +156,7 @@ class HouseConditionFilterViewController: UIViewController{
                         self.constraintLeftHeight.constant = CGFloat(type.count * 40)
                         
                         for i in 0..<type.count{
-                            var cell = self.addSubView(self.uiLeftTableView,title: type[i]["name"] ?? "", index: i,id: type[i]["id"] ?? "", type: .TYPE)
+                            let cell = self.addSubView(self.uiLeftTableView,title: type[i]["name"] ?? "", index: i,id: type[i]["id"] ?? "", type: .TYPE)
                             if cell != nil{
                                 cell!.funcDealWithResult = dealWithTypeSelected
                             }
@@ -182,12 +182,12 @@ class HouseConditionFilterViewController: UIViewController{
             self.constraintLeftToMiddleSpace.constant = 20
             self.uiScroll.setContentOffset(CGPointMake(self.preferredContentSize.width, 0), animated: true)
             for data in self.cityOrType!.city{
-                if data.id == parentId.toInt(){
+                if data.id == Int(parentId){
                     if data.children != nil{
                         middleHeight = CGFloat(data.children!.count * 40)
                         constraintLeftHeight.constant = max(leftHeight,middleHeight)
                         for i in 0..<data.children!.count{
-                            var cell = self.addSubView(self.uiMiddleTableView,title: data.children?[i].name ?? "", index: i,id: "\(data.children?[i].id ?? -1)",type: .CITY,level: 2)
+                            let cell = self.addSubView(self.uiMiddleTableView,title: data.children?[i].name ?? "", index: i,id: "\(data.children?[i].id ?? -1)",type: .CITY,level: 2)
                             if cell != nil{
                                 cell!.requestFunction = requestData
                             }
@@ -209,12 +209,12 @@ class HouseConditionFilterViewController: UIViewController{
                 self.uiScroll.setContentOffset(CGPointMake(self.preferredContentSize.width * 2, 0), animated: true)
                 if data.children != nil{
                     for child in data.children!{
-                        if child.id == parentId.toInt(){
+                        if child.id == Int(parentId){
                             if child.children != nil{
                                 rightHeight = CGFloat(child.children!.count * 40)
                                 constraintLeftHeight.constant = max(leftHeight,middleHeight,rightHeight)
                                 for i in 0..<child.children!.count{
-                                    var cell = self.addSubView(self.uiRightTableView,title: child.children![i].name ?? "", index: i,id: "\(child.children![i].id ?? -1)",type: .CITY,level: 3)
+                                    let cell = self.addSubView(self.uiRightTableView,title: child.children![i].name ?? "", index: i,id: "\(child.children![i].id ?? -1)",type: .CITY,level: 3)
                                     if cell != nil{
                                         cell!.requestFunction = requestData
                                         cell!.funcDealWithResult = dealWithCitySelected
@@ -239,7 +239,7 @@ class HouseConditionFilterViewController: UIViewController{
             if self.priceArray != nil{
                 self.constraintLeftHeight.constant = CGFloat(self.priceArray!.count * 40)
                 for i in 0..<self.priceArray!.count{
-                    var cell = self.addSubView(self.uiLeftTableView,title: self.priceArray?["\(i)"] ?? "", index: i,id: "\(i)",type: .PRICE)
+                    let cell = self.addSubView(self.uiLeftTableView,title: self.priceArray?["\(i)"] ?? "", index: i,id: "\(i)",type: .PRICE)
                     if cell != nil{
                     cell!.funcDealWithResult = dealWithPriceSelected
                     }

@@ -12,7 +12,7 @@ class UIVerticalButton: UIButton {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        var secHeight = self.frame.size.height/8
+        let secHeight = self.frame.size.height/8
         // Center image
         var imgFrame = self.imageView!.frame
         imgFrame.origin.x = (self.frame.width - 3 * secHeight) / 2

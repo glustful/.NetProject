@@ -28,7 +28,7 @@ class MeMiddleView: UIView {
     //@IBOutlet weak var uiLabel5: UILabel!
     
     @IBAction func settingAction(sender: UIVerticalButton) {
-        var storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
+        let storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
         if let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.settingIdentifier) as? SettingViewController{
             if let nav = CommentTools.getCurrentController()?.navigationController{
                 nav.pushViewController(controller, animated: true)
@@ -41,13 +41,13 @@ class MeMiddleView: UIView {
         if let flag = self.isBroker{
             if !flag {
                 if sender.tag == 0{
-                    var storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
-                    var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.personSettingIdentifier) as! UIViewController
+                    let storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
+                    let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.personSettingIdentifier) 
                     CommentTools.getCurrentController()?.navigationController!.pushViewController(controller, animated: true)
                 }
                 return
             }
-            var storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
+            let storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
           
             switch sender.tag{
             case 0:
@@ -58,16 +58,16 @@ class MeMiddleView: UIView {
                 return
             case 1:
                 
-                var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.addAgentInentifier) as! AddAgentViewController
+                let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.addAgentInentifier) as! AddAgentViewController
                 controller.type = 0
                 CommentTools.getCurrentController()?.navigationController!.pushViewController(controller, animated: true)
             case 2:
-                var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.addAgentInentifier) as! AddAgentViewController
+                let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.addAgentInentifier) as! AddAgentViewController
                 controller.type = 1
                 CommentTools.getCurrentController()?.navigationController!.pushViewController(controller, animated: true)
             case 3:
                 
-                var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.customListIdentifier) as! UIViewController
+                let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.customListIdentifier) 
                 CommentTools.getCurrentController()?.navigationController!.pushViewController(controller, animated: true)
 //            case 4:
 //                identify = ControllerIdentifier.personSettingIdentifier
