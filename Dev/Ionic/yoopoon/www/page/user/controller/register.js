@@ -1,25 +1,32 @@
-
-
+/**
+ * Created by Yunjoy on 2015/9/15.
+ */
+//注册
 app.controller('register',['$http','$scope',function($http,$scope){
-
+    console.log("1111");
     $scope.signer ={
+        Phone:'',
         UserName:'',
         Password:'',
         SecondPassword:''
     }
     $scope.sign = function(){
-        $http.post(SETTING.ApiUrl +'/Member/AddMember',$scope.signer,{'withCredentials':true}).success(function(data){
-                if(data.Status==false){
-                    $scope.tip=data.Msg;
-                }
+        $scope.signer.UserName=$scope.signer.Phone;
+        console.log($scope.signer);
+        $http.post(SETTING.ApiUrl+'/Member/AddMember',$scope.signer,{'withCredentials':true}).success(function(data){
+            if(data.Status==false){
+                console.log(data.Msg);
+            }
             else{
-                    console.log("注册成功")
-                }
+                //AuthService.doLogin($scope.signer.userName,$scope.FPassword,function(){
+                //    $state.go('user.index');
+                //})
+                console.log(data.Msg);
+            }
             console.log(data);
         })
-    };
-
-}]);
+    }
+}])
 
 //两次密码输入验证
 function check()
