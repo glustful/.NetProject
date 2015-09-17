@@ -4,13 +4,13 @@
 //start--------------------------地址管理 huangxiuyu 2015.09.15--------------------------
 app.controller('addressAdm',['$http','$scope',function($http,$scope, $ionicSlideBoxDelegate) {
     $scope.searchCondition={
-        Adduser:12
+        Adduser:1
     }
-    $scope.listRe;
     $scope.getAddress=function(){
         $http.get(SETTING.ApiUrl+'/MemberAddress/Get/',{params:$scope.searchCondition,'withCredentials':true}).
             success(function(data){
-                $scope.listRe= $scope.list=data.List;
+
+                $scope.list=data.List;
                 console.log(data);
             })};
     $scope.getAddress();
@@ -54,14 +54,10 @@ app.controller('selProvice',['$http','$scope',function($http,$scope){
     $scope.selProvice=function(){
         $http.get(SETTING.ApiUrl +"/CommunityArea/Get/",{params:$scope.searchCondition,withCredentials:true}).
             success(function(data){
-                $scope.list=data.List;
+                $scope.listPro=data.List;
             });
     };
     $scope.selProvice();
-   $scope.setproId=function(id)
-   {
-       fId=id;
-   }
 
 }]);
 

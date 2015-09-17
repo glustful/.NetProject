@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using Community.Entity.Model.Product;
 
 namespace Zerg.Models.Community
@@ -45,7 +46,8 @@ namespace Zerg.Models.Community
         /// </summary>
 		public int Stars {get;set;}
 
-
+        public string UserName { get; set; }
+        public string UserImg { get; set; }
 
 	}
 }
