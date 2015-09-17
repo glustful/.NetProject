@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width,target-densitydpi=device-dpi">
+    <meta name="viewport"
+          content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width,target-densitydpi=device-dpi">
     <title>优.购物</title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
 
 
-      <link href="css/style.css" rel="stylesheet">
-      <link rel="stylesheet" type="text/css" href="css/adScroller.css">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/adScroller.css">
     <link rel="stylesheet" type="text/css" href="page/shopping/css/shopping.css">
 
 
-
-    
     <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
-    
+
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
@@ -30,6 +29,8 @@
     <!-- cordova script (this will be a 404 during development) -->
     <script type="text/javascript" src="lib/ngCordova/dist/ng-cordova.js"></script>
     <script src="cordova.js"></script>
+
+    <script src="lib/ngstorage/ngStorage.js"></script>
 
     <!-- your app's js -->
     <script src="js/route.js"></script>
@@ -47,29 +48,29 @@
     <script src="page/me/controller/AdressController.js"></script>
     <script src="page/me/controller/myOrder.js"></script>
     <!--service服务-->
-		<script src="js/service/cartservice.js"></script>
-         <script src="js/service/AuthService.js"></script>
+    <script src="js/service/cartservice.js"></script>
+    <script src="js/service/AuthService.js"></script>
 
-  </head>
-  
-  <body ng-app="starter">
-    <!--
-      The nav bar that will be updated as we navigate between views.
-    -->
-    
-    <ion-nav-bar class="bar-stable" ng-hide="true">
-      <ion-nav-back-button class="button-clear">
-          <i class="ion-arrow-left-c"></i> Back
-      </ion-nav-back-button>
+</head>
 
-    </ion-nav-bar>
+<body ng-app="starter">
+<!--
+  The nav bar that will be updated as we navigate between views.
+-->
 
-    <!--
-      The views will be rendered in the <ion-nav-view> directive below
-      Templates are in the /templates folder (but you could also
-      have templates inline in this html file if you'd like).
-    -->
-    <ion-nav-view></ion-nav-view>
-   
-  </body>
+<ion-nav-bar class="bar-stable" ng-hide="true">
+    <ion-nav-back-button class="button-clear">
+        <i class="ion-arrow-left-c"></i> Back
+    </ion-nav-back-button>
+
+</ion-nav-bar>
+
+<!--
+  The views will be rendered in the <ion-nav-view> directive below
+  Templates are in the /templates folder (but you could also
+  have templates inline in this html file if you'd like).
+-->
+<ion-nav-view></ion-nav-view>
+
+</body>
 </html>

@@ -24,8 +24,8 @@
         <ion-item>销量</ion-item>
     </ion-list>
 </div>
-<ion-view hide-tabs="true" hide-nav-bar="true" id="list" ng-show="productShow">
-    <ion-content class="content  " style="top: 138px">
+<ion-view hide-tabs="false" hide-nav-bar="true" id="list" ng-show="productShow">
+    <ion-content class="scroll-content" no-header="true" style="top: 138px">
         <ion-list>
             <ion-item  class="row" ng-repeat="item in list" ui-sref="page.product-detail({id:item.Id})">
                 <div class="product col col-25">
@@ -39,16 +39,16 @@
                 </div>
             </ion-item >
         </ion-list>
-        <ion-infinite-scroll on-infinite="loadProduct();" distance="1%" ng-if="hasmore">
+        <ion-infinite-scroll on-infinite="loadProduct()" distance="1%" ng-if="hasmore">
         </ion-infinite-scroll>
     </ion-content>
 
 </ion-view>
 
-<ion-view hide-tabs="true" hide-nav-bar="true" ng-show="productPrice"  ng-class="{'price':productPrice}" class="selectPrice">
-    <ion-content>
-        <div style="padding-top:50px;font-size:18px;">价钱:<input style="height: 30px;width: 40%;" ng-model="sech.PriceBegin" />—<input style="height: 30px;width:40%;" ng-model="sech.PriceEnd" /></div>
-        <button class="button button-full light submit-btn" ng-click="submit()" >确认</button>
-    </ion-content>
-</ion-view>
+<!--<ion-view hide-tabs="true" hide-nav-bar="true" ng-show="productPrice"  ng-class="{'price':productPrice}" class="selectPrice">-->
+    <!--<ion-content>-->
+        <!--<div style="padding-top:50px;font-size:18px;">价钱:<input style="height: 30px;width: 40%;" ng-model="sech.PriceBegin" />—<input style="height: 30px;width:40%;" ng-model="sech.PriceEnd" /></div>-->
+        <!--<button class="button button-full light submit-btn" ng-click="submit()" >确认</button>-->
+    <!--</ion-content>-->
+<!--</ion-view>-->
 
