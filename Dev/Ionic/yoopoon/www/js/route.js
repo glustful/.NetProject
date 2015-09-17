@@ -211,7 +211,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/myOrder.html',
-                        controller: 'TabMeCtrl'
+                        controller: 'myorder'
                     }
                 }
             })
@@ -228,7 +228,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 url: '/user/register',
                 views: {
                     'page-me': {
-                        templateUrl: 'page/user/register.html'
+                        templateUrl: 'page/user/register.html',
+                        controller:'register'
                     }
                 }
             })

@@ -4,7 +4,7 @@
 
 
 
-app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$ionicLoading','cartservice',function($http,$scope,$stateParams,$timeout,$ionicLoading,cartservice){
+app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$timeout','$ionicLoading','cartservice',function($http,$scope,$stateParams,$state,$timeout,$ionicLoading,cartservice){
 
     //console.log(cartservice.GetAllcart());
     $scope.wxPay = function(){
@@ -13,20 +13,19 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
             duration:3000
         });
     };
-    //cartservice.deletethis(1234567);
     //商品信息
-    //$scope.cartinfo={
-    //    id:null,
-    //    name:null,
-    //    count:null
-    //};
+    $scope.cartinfo={
+        id:null,
+        name:null,
+        count:null
+    };
     //添加商品
-    //$scope.AddCart = function()
-    //{
-    //    //赋值
-    //
-    //    cartservice.add(cartinfo);
-    //}
+    $scope.AddCart = function()
+    {
+        //赋值
+
+        cartservice.add(cartinfo);
+    }
     $scope.alipay = function(){
         var myDate = new Date();
 
@@ -64,9 +63,6 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
         window.location.href=state;
     };
 
-//向下滚动刷新
-//���¹���ˢ��
-
     //    搜索功能
     $scope.showSelect = false;
     $scope.isShow = false;
@@ -94,8 +90,8 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
 
     $scope.Condition = {
         IsDescending:true,
-        OrderBy:'OrderByOwner'
-
+        OrderBy:'OrderByOwner',
+        IsRecommend:'1'
         //ProductId:''
     };
     var getProductList=function() {
@@ -112,11 +108,6 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
 
     //region 商品获取
     $scope.items = [];
-    var base = 0;
-    $scope.load_more = function(){
-        $timeout(function(){
-            for(var i=0;i<10;i++,base++)
-                $scope.items.push(["item ",base].join(""));
     $scope.searchCondition = {
         IsDescending:true,
         OrderBy:'OrderByAddtime',
@@ -167,50 +158,28 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
     $http.get('http://localhost:50597/api/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
         $scope.content=data;
     });
-    $scope.load_detail = function(){
- //for(var i=0;i<10;i++,base++)
-            //    $scope.items.push(["item ",base].join(""));
-           // alert("aaaaaaaaaa");
-            $http.get(SETTING.ApiUrl+"/ProductDetail/Get?id="+$stateParams.id,{
-                'withCredentials': true
-            }).success(function(data){
-                $scope.productDetail=data;
-            });
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-        },500;
-    }]);
-
-
-
     //endregion
-    }]);
-app.controller('ShoppingListCtrl',['$http','$scope',function($http,$scope){
 
+
+    $scope.searchname=''
+    document.getElementById('search').onblur= function(){
+        $state.go("page.search_product",{productName:$scope.searchname});
+    };
+    }]);
+app.controller('ShoppingListCtrl',['$http','$scope','$timeout',function($http,$scope,$timeout){
 
     //
     //region 获取商品列表
     $scope.sech={
         Page:1,
-       // PageCount:5,
+        PageCount:5,
         IsDescending:true,
         OrderBy:'OrderByAddtime',
-        CategoryId:1,
-
         CategoryId:3,
        // Name:'',
         PriceBegin:'',
         PriceEnd:''
     };
-        $http.get(SETTING.ApiUrl+"/CommunityProduct/Get",{
-            params: $scope.sech,
-            'withCredentials':true  //跨域
-        }).success(function(data){
-            $scope.list=data.List;
-            $scope.sech.Page=data.Condition.Page;
-            $scope.sech.PageCount=data.Condition.PageCount;
-            $scope.totalCount = data.TotalCount;
-        });
-
     $scope.orderByPrice=function(){
         $scope.sech.OrderBy='OrderByPrice';
         getProduct();
@@ -219,19 +188,41 @@ app.controller('ShoppingListCtrl',['$http','$scope',function($http,$scope){
         $scope.sech.OrderBy='OrderByOwner';
         getProduct();
     }
-
+    $scope.list=[]
     var getProduct=function() {
         $http.get(SETTING.ApiUrl + "/CommunityProduct/Get", {
             params: $scope.sech,
             'withCredentials': true  //跨域
         }).success(function (data) {
             $scope.list = data.List;
-            //$scope.sech.Page = data.Condition.Page;
-            //$scope.sech.PageCount = data.Condition.PageCount;
-            //$scope.totalCount = data.TotalCount;
+            if($scope.list.length<data.TotalCount)
+            {
+                setTimeout(function(){$scope.hasmore=true},500)
+            }
         });
     }
     getProduct();
+    //region 加载更多
+    $scope.hasmore=false
+    $scope.load_more = function(){
+        $timeout(function(){
+
+            $scope.sech.Page+=1;
+            $http.get(SETTING.ApiUrl + "/CommunityProduct/Get", {
+                params: $scope.sech,
+                'withCredentials': true  //跨域
+            }).success(function (data) {
+                for (var i = 0; i < data.List.length; i++) {
+                    $scope.list.push(data.List[i]);
+                }
+                if($scope.list.length==data.TotalCount)
+                {
+                    $scope.hasmore=false
+                }
+            });
+        },1000)
+    };
+    //endregion
     //region 条件排序
     $scope.select='0';
     $scope.selected='0';
@@ -298,67 +289,7 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
         ProductId:$stateParams.id
     }
     $scope.tipp = "查看更多评论";
-    //var loading = false
-    //    ,pages=2;                      //判断是否正在读取内容的变量
     $scope.CommentList = [];//保存从服务器查来的任务，可累加
-
-    var pushContent= function() {                    //核心是这个函数，向$scope.posts
-        //添加内容
-        if (!loading && $scope.comcon.Page < pages) {                         //如果页面没有正在读取
-            loading = true;                     //告知正在读取
-            $http.get(SETTING.ApiUrl + "/ProductComment/Get", {
-                params: $scope.comcon,
-                'withCredebtials': true
-            }).success(function(data) {
-
-
-
-
-
-
-
-
-
-
-
-var pages =Math.ceil(data.TotalCount /$scope.comcon.PageCount);
-                for (var i = 0; i <= data.Model.length - 1; i++) {
-                    $scope.CommentList.push(data.Model[i]);
-                }
-                loading = false;            //告知读取结束
-                if ($scope.CommentList.length == data.TotalCount) {//如果所有数据已查出来
-                    $scope.tipp = "已经是最后一页了";
-                }
-                $scope.Count=data.TotalCount;
-
-    //var pushContent= function() {                    //核心是这个函数，向$scope.posts
-    //    if (!loading && $scope.comcon.Page < pages) {                         //如果页面没有正在读取
-    //        loading = true;                     //告知正在读取
-    //        $http.get(SETTING.ApiUrl + "/ProductComment/Get", {
-    //            params: $scope.comcon,
-    //            'withCredentials': true
-    //        }).success(function(data) {
-    //            pages =Math.ceil(data.TotalCount /$scope.comcon.PageCount);
-    //            for (var i = 0; i <= data.Model.length - 1; i++) {
-    //                $scope.CommentList.push(data.Model[i]);
-    //                $http.get(SETTING.ApiUrl+"Member/GetMemberByUserId?userId="+data.Model[i].AddUser,{
-    //                    'withCredentials':true
-    //                }).success(function(data){
-    //                    $scope.member=data;
-    //                })
-    //            }
-    //            loading = false;            //告知读取结束
-    //            if ($scope.CommentList.length == data.TotalCount) {//如果所有数据已查出来
-    //                $scope.tipp = "已经是最后一页了";
-    //            }
-    //            $scope.Count=data.TotalCount;
-    //            console.log(data.Model);
-    //        });
-    //        $scope.comcon.Page++;                             //翻页
-    //    }
-    //};
-    //pushContent();
-    //$scope.more=pushContent;
         var morecomment = function(){
             $timeout(function(){
                 $scope.comcon.Page+=1;
@@ -390,14 +321,14 @@ var pages =Math.ceil(data.TotalCount /$scope.comcon.PageCount);
                 'withCredentials': true
             }).success(function(data){
                 $scope.productDetail=data;
-                $scope.hasmore=false;
+                $scope.hasmore=false
             });
         },1000);
     };
-}]));
+}])
 app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
     $scope.search={
-        Name:$stateParams.name
+        Name:$stateParams.productName
     }
     $http.get(SETTING.ApiUrl+"/CommunityProduct/Get",{
         params:$scope.search,
@@ -406,70 +337,6 @@ app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($htt
         $scope.productList=data.List
     })
 }])
-
-
-
-
-
-
-/**
- * Created by Administrator on 2015/9/7.
- */
-    //页面跳转
-app.controller('TabShoppingCtrl',['$http','$scope',function($http,$scope){
-    //ҳ����ת
-    $scope.go=function(state){
-        window.location.href=state;
-    }
-
-//向下滚动刷新
-//���¹���ˢ��
-    $scope.items = [];
-    var base = 0;
-    $scope.load_more = function(){
-        $timeout(function(){
-            for(var i=0;i<10;i++,base++)
-                $scope.items.push(["item ",base].join(""));
-            $scope.$broadcast("scroll.infiniteScrollComplete");
-        },500);
-    };
-    $scope.sech={
-        Page:1,
-        PageCount:10,
-        IsDescending:true,
-        OrderBy:'OrderByAddtime',
-        CategoryId:1
-    };
-        $http.get(SETTING.ApiUrl+"/CommunityProduct/Get",{
-            params: $scope.sech,
-            'withCredentials':true  //跨域
-        }).success(function(data){
-            $scope.list=data.List;
-            $scope.sech.Page=data.Condition.Page;
-            $scope.sech.PageCount=data.Condition.PageCount;
-            $scope.totalCount = data.TotalCount;
-        });
-}]);
-
-//start----------------------------商品分类 huangxiuyu2015.09.15-------------------------
-app.controller('CategoryController',['$scope','$http',function($scope,$http){
-
-    $scope.searchCondition={
-        ifid:0
-    }
-    $scope.selectCategory=function(ifid){
-        $scope.searchCondition.ifid=ifid;
-        $http.get(SETTING.ApiUrl+'/Category/GetAllTree/',{params:$scope.searchCondition,'withCredentials': true}).
-            success(function(data){
-                $scope.list=data;
-                console.log(data);
-            })
-    };
-    $scope.selectCategory(1);
-
-
-}]);
-//end----------------------------商品分类 huangxiuyu2015.09.15-------------------------
 
 
 
