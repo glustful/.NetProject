@@ -1,87 +1,416 @@
 <!-- list -->
 <ul class="nav">
-  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-    <span translate="订单管理"></span>
-  </li>
-  <li>
-    <a href class="auto">
-      <span class="pull-right text-muted">
-        <i class="fa fa-fw fa-angle-right text"></i>
-        <i class="fa fa-fw fa-angle-down text-active"></i>
-      </span>
-      <i class="glyphicon glyphicon-edit"></i>
-      <span translate="">订单列表</span>
-    </a>
-    <ul class="nav nav-sub dk">
-      <li class="nav-sub-header">
-        <a href>
-          <span translate="订单列表"></span>
-        </a>
-      </li>
+    <!---------------------------------------公众号基本配置------------------------------------->
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="公众号基本配置"></span>
+    </li>
 
-      <li ui-sref-active="active">
-        <a ui-sref="order.list">
-          <span>商品订单列表</span>
+    <li>
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="glyphicon glyphicon-edit"></i>
+            <span translate="">自动回复</span>
         </a>
-      </li>
-      <li ui-sref-active="active">
-        <a ui-sref="order.serviceList">
-          <span>服务订单列表</span>
-        </a>
-      </li>
+        <ul class="nav nav-sub dk">
+            <li class="nav-sub-header">
+                <a href>
+                    <span translate="">自动回复</span>
+                </a>
+            </li>
 
-    </ul>
-  </li>
-  <!---------------------------------------系统部署------------------------------------->
-  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-    <span translate="商品管理"></span>
-  </li>
-  <li>
-    <a ui-sref="app.product.productList">
-      <i class="glyphicon glyphicon-edit"></i>
-      <span>商品管理</span>
-    </a>
-  </li>
-  <li>
-    <a ui-sref="app.parameter.parameterList">
-      <i class="glyphicon glyphicon-edit"></i>
-      <span>商品属性管理</span>
-    </a>
-  </li>
-<!--------------------------------用户评论------------------------------------------------>
-  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-    <span translate="用户评论"></span>
-  </li>
-  <li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.autoRes.focusRes">
+                    <span>关注回复</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="app.autoRes.keyRes">
+                    <span>关键字回复</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="app.focusRes">
+                    <span>自动客服</span>
+                </a>
+            </li>
+
+        </ul>
+    </li>
+
+    <li>
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="glyphicon glyphicon-edit"></i>
+            <span translate="">自定义菜单</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.menu.menulist">
+                    <span>菜单管理</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="app.menu.updatemenu">
+                    <span>更新菜单</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li>
+        <a ui-sref="access.404">
+            <i class="glyphicon glyphicon-edit"></i>
+            <b class="label bg-info pull-right">N</b>
+            <span>群发功能</span>
+        </a>
+    </li>
+
+    <!---------------------------------------基础数据管理------------------------------------->
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="基础数据管理"></span>
+    </li>
+
+    <li>
+        <a ui-sref="app.contact.contactList">
+            <i class="glyphicon glyphicon-edit"></i>
+            <b class="label bg-info pull-right">N</b>
+            <span>关注者管理</span>
+        </a>
+    </li>
+
+    <li>
+        <a ui-sref="access.404">
+            <i class="glyphicon glyphicon-edit"></i>
+            <b class="label bg-info pull-right">N</b>
+            <span>会员管理</span>
+        </a>
+    </li>
+
+    <li>
+        <a ui-sref="access.404">
+            <i class="glyphicon glyphicon-edit"></i>
+            <b class="label bg-info pull-right">N</b>
+            <span>文章管理</span>
+        </a>
+    </li>
+
+    <li>
+        <a ui-sref="access.404">
+            <i class="glyphicon glyphicon-edit"></i>
+            <b class="label bg-info pull-right">N</b>
+            <span>消息管理</span>
+        </a>
+    </li>
+
+    <li>
+        <a ui-sref="access.404">
+            <i class="glyphicon glyphicon-edit"></i>
+            <b class="label bg-info pull-right">N</b>
+            <span>素材管理</span>
+        </a>
+    </li>
+
+    <!---------------------------------------数据统计------------------------------------->
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="数据统计"></span>
+    </li>
+
+    <li>
+        <a ui-sref="access.404">
+            <i class="glyphicon glyphicon-edit"></i>
+            <b class="label bg-info pull-right">N</b>
+            <span>用户分析</span>
+        </a>
+    </li>
+
+    <li>
+        <a ui-sref="access.404">
+            <i class="glyphicon glyphicon-edit"></i>
+            <b class="label bg-info pull-right">N</b>
+            <span>图文分析</span>
+        </a>
+    </li>
+
+    <li>
+        <a ui-sref="access.404">
+            <i class="glyphicon glyphicon-edit"></i>
+            <b class="label bg-info pull-right">N</b>
+            <span>消息分析</span>
+        </a>
+    </li>
+
+    <li>
+        <a ui-sref="access.404">
+            <i class="glyphicon glyphicon-edit"></i>
+            <b class="label bg-info pull-right">N</b>
+            <span>接口分析</span>
+        </a>
+    </li>
+
+    <li>
+        <a ui-sref="access.404">
+            <i class="glyphicon glyphicon-edit"></i>
+            <b class="label bg-info pull-right">N</b>
+            <span>统计报表</span>
+        </a>
+    </li>
+
+    <!---------------------------------------微官网------------------------------------->
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="微官网"></span>
+    </li>
+
+    <li>
+        <a ui-sref="access.404">
+            <i class="glyphicon glyphicon-edit"></i>
+            <b class="label bg-info pull-right">N</b>
+            <span>商城系统</span>
+        </a>
+    </li>
+
+    <li>
+        <a ui-sref="access.404">
+            <i class="glyphicon glyphicon-edit"></i>
+            <b class="label bg-info pull-right">N</b>
+            <span>积分系统</span>
+        </a>
+    </li>
+
+    <!---------------------------------------营销活动------------------------------------->
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="营销活动"></span>
+    </li>
+
+    <li>
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="glyphicon glyphicon-edit"></i>
+            <span translate="">活动模板</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li class="nav-sub-header">
+                <a href>
+                    <span translate="">活动模板</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="event.redModel.redMain">
+                    <span>红包模板</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="app.form.validation">
+                    <span>众筹模板</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="app.form.validation">
+                    <span>助力模板</span>
+                </a>
+            </li>
+
+        </ul>
+    </li>
+
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="订单管理"></span>
+    </li>
+    <li>
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="glyphicon glyphicon-edit"></i>
+            <span translate="">订单列表</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li class="nav-sub-header">
+                <a href>
+                    <span translate="订单列表"></span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="order.list">
+                    <span>商品订单列表</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="order.serviceList">
+                    <span>服务订单列表</span>
+                </a>
+            </li>
+
+        </ul>
+    </li>
+    <!---------------------------------------系统部署------------------------------------->
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="系统部署"></span>
+    </li>
+
+    <li>
+        <a ui-sref="deploy.deploy">
+            <i class="glyphicon glyphicon-edit"></i>
+            <span>平台部署设置</span>
+        </a>
+    </li>
+
+    <div ng-controller="AppCtrl" ng-show="portalShow">
+        <li>
+            <a ui-sref="deploy.baseSetting">
+                <i class="glyphicon glyphicon-edit"></i>
+                <span>服务号基础设置</span>
+            </a>
+        </li>
+    </div>
+
+    <li>
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="glyphicon glyphicon-edit"></i>
+            <span translate="">对外接口设置</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li class="nav-sub-header">
+                <a href>
+                    <span translate="">对外接口设置</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="app.form.elements">
+                    <span>权限管理</span>
+                </a>
+            </li>
+
+        </ul>
+    </li>
+    <li>
+        <a href class="auto">
+            <a ui-sref="app.product.productList">
+                <i class="glyphicon glyphicon-edit"></i>
+                <span>商品管理</span>
+            </a>
+    </li>
+    <li>
+        <a ui-sref="app.parameter.parameterList">
+            <i class="glyphicon glyphicon-edit"></i>
+            <span>商品属性管理</span>
+        </a>
+    </li>
+    <!--------------------------------用户评论------------------------------------------------>
+    <li>
         <a ui-sref="app.comment.productComment">
             <i class="glyphicon glyphicon-edit"></i>
             <b class="label bg-info pull-right">N</b>
             <span>用户评论</span>
         </a>
     </li>
-
-  <!--------------------------------------------商品分类管理------------------------------------------------------>
-  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-    <span translate="商品分类管理"></span>
-  </li>
-  <li>
-  <li>
-    <a ui-sref="app.category.index">
-      <i class="glyphicon glyphicon-edit"></i>
-      <span>分类列表</span>
-    </a>
-  </li>
     <!--------------------------------------------会员信息管理------------------------------------------------------>
-  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-    <span translate="会员信息管理"></span>
-  </li>
-      <li ui-sref-active="active">
-        <a ui-sref="app.member.memlist">
-          <i class="glyphicon glyphicon-edit"></i>
-          <span>会员列表</span>
-        </a>
-      </li>
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span translate="会员信息管理"></span>
+    </li>
+    <!--------------------------------------------商品分类管理------------------------------------------------------>
 
+    <li>
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+
+            <i class="glyphicon glyphicon-edit"></i>
+            <span translate="">商品分类管理</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.category.index">
+                    <span>商品列表</span>
+                </a>
+            </li>
+
+        </ul>
+
+        <i class="glyphicon glyphicon-edit"></i>
+        <span translate="">会员信息管理</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li class="nav-sub-header">
+                <a href>
+                    <span translate="">会员信息管理</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="app.member.memlist">
+                    <span>会员列表</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li>
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+
+            <i class="glyphicon glyphicon-edit"></i>
+            <span translate="">地区管理</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.area.show">
+                    <span>位置列表</span>
+                </a>
+            </li>
+            <li>
+                <a ui-sref="app.area.createarea">
+                    <span>添加位置</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+
+    <li>
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+
+            <i class="glyphicon glyphicon-edit"></i>
+            <span translate="">地址管理</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.memberAddress.Address">
+                    <span>位置列表</span>
+                </a>
+            </li>
+        </ul>
+    </li>
 </ul>
 
 

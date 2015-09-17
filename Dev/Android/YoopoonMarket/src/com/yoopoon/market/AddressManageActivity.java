@@ -18,6 +18,8 @@ import java.util.List;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -31,7 +33,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -42,8 +43,6 @@ import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.utils.ParserJSON;
 import com.yoopoon.market.utils.ParserJSON.ParseListener;
-import com.yoopoon.market.utils.SerializerJSON;
-import com.yoopoon.market.utils.SerializerJSON.SerializeListener;
 
 /**
  * @ClassName: PersonalInfoActivity
@@ -143,8 +142,7 @@ public class AddressManageActivity extends MainActionBarActivity {
 
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
-
+					delete(entity);
 				}
 			});
 			holder.tv_modify.setOnClickListener(new OnClickListener() {
@@ -168,8 +166,9 @@ public class AddressManageActivity extends MainActionBarActivity {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					Log.i(TAG, object.toString());
-					parseToEntity(object.toString());
+					addressList.clear();
+					JSONArray array = object.optJSONArray("List");
+					parseToEntityList(array);
 				} else {
 					ll_loading.setVisibility(View.GONE);
 					Toast.makeText(AddressManageActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
@@ -181,35 +180,38 @@ public class AddressManageActivity extends MainActionBarActivity {
 				// TODO Auto-generated method stub
 
 			}
-		}.setUrl(getString(R.string.url_get_address_byid)).setRequestMethod(RequestMethod.eGet).addParam("id", "13")
-				.notifyRequest();
+		}.setUrl(getString(R.string.url_get_address_byid)).setRequestMethod(RequestMethod.eGet)
+				.addParam("username", "452144788").notifyRequest();
 	}
 
-	void parseToEntity(final String json) {
+	void parseToEntityList(final JSONArray array) {
 		new ParserJSON(new ParseListener() {
 
 			@Override
 			public Object onParse() {
 				ObjectMapper om = new ObjectMapper();
-				MemberAddressEntity addressEntity = null;
-				try {
-					addressEntity = om.readValue(json, MemberAddressEntity.class);
-				} catch (JsonParseException e) {
-					e.printStackTrace();
-				} catch (JsonMappingException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
+				for (int i = 0; i < array.length(); i++) {
+					MemberAddressEntity addressEntity = null;
+					try {
+						JSONObject object = array.getJSONObject(i);
+						addressEntity = om.readValue(object.toString(), MemberAddressEntity.class);
+					} catch (JsonParseException e) {
+						e.printStackTrace();
+					} catch (JsonMappingException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					addressList.add(addressEntity);
 				}
-				return addressEntity;
+				return addressList;
 			}
 
 			@Override
 			public void onComplete(Object parseResult) {
 				if (parseResult != null) {
-					MemberAddressEntity entity = (MemberAddressEntity) parseResult;
-					addressList.removeAll(addressList);
-					addressList.add(entity);
 					Log.i(TAG, parseResult.toString());
 					fillData();
 				}
@@ -227,35 +229,20 @@ public class AddressManageActivity extends MainActionBarActivity {
 		}
 	}
 
-	void add(final MemberAddressEntity addressEntity) {
-		new SerializerJSON(new SerializeListener() {
-
-			@Override
-			public String onSerialize() {
-				addressEntity.Address = "大理白族自治州";
-				ObjectMapper om = new ObjectMapper();
-				try {
-					return om.writeValueAsString(addressEntity);
-				} catch (JsonProcessingException e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
-
-			@Override
-			public void onComplete(String serializeResult) {
-				requestAdd(serializeResult);
-			}
-		}).execute();
-	}
-
-	void requestAdd(String json) {
+	public void delete(final MemberAddressEntity entity) {
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
 				Log.i(TAG, data.toString());
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					boolean status = object.optBoolean("Status");
+					if (status)
+						requestData();
+				}
 				Toast.makeText(AddressManageActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+
 			}
 
 			@Override
@@ -263,25 +250,8 @@ public class AddressManageActivity extends MainActionBarActivity {
 				// TODO Auto-generated method stub
 
 			}
-		}.setUrl(getString(R.string.url_add_address)).setRequestMethod(RequestMethod.ePost).SetJSON(json)
-				.notifyRequest();
-	}
-
-	public void delete(View v) {
-		new RequestAdapter() {
-
-			@Override
-			public void onReponse(ResponseData data) {
-				Toast.makeText(AddressManageActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
-			}
-
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
-
-			}
-		}.setUrl(getString(R.string.url_delete_address)).setRequestMethod(RequestMethod.eDelete).addParam("id", "11")
-				.notifyRequest();
+		}.setUrl(getString(R.string.url_delete_address)).setRequestMethod(RequestMethod.eDelete)
+				.addParam("id", entity.Id + "").notifyRequest();
 	}
 
 	@Override

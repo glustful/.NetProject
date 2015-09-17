@@ -1,7 +1,6 @@
 package com.yoopoon.market;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import org.androidannotations.annotations.AfterViews;
@@ -14,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextPaint;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -51,6 +51,7 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 	List<CategoryEntity> categoryList = new ArrayList<CategoryEntity>();
 	int[] colors = { Color.rgb(236, 109, 23), Color.rgb(40, 174, 62), Color.rgb(39, 127, 194), Color.rgb(175, 97, 163) };
 	List<Integer> counts = new ArrayList<Integer>();
+	int fatherId = 0;
 
 	@AfterViews
 	void initProductClassification() {
@@ -78,6 +79,7 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 		});
 		requestData();
 	}
+
 	void requestData() {
 		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
@@ -89,35 +91,39 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 					for (int i = 0; i < categoryArray.length(); i++) {
 						try {
 							JSONObject categoryObject = categoryArray.getJSONObject(i);
+							Log.i(TAG, categoryObject.toString());
 							int id = categoryObject.optInt("Id", 0);
 							int sort = categoryObject.optInt("Sort", 0);
 							String name = categoryObject.optString("Name", "");
+							int fatherid = categoryObject.optInt("FatherId", 0);
 							StringBuilder builder = new StringBuilder(name);
-							for (int j = builder.length() - 1; j < 4; j++)
-								builder.append("        ");
-							categoryList.add(new CategoryEntity(id, builder.toString(), sort));
-							builder.append(categoryObject.toString() + "\n");
+							categoryList.add(new CategoryEntity(id, builder.toString(), sort, fatherid));
 						} catch (JSONException e) {
 							e.printStackTrace();
 							ll_loading.setVisibility(View.GONE);
 						}
 					}
 					initList();
+
 				} else {
 					Toast.makeText(ProductClassifyActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 					ll_loading.setVisibility(View.GONE);
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
 			}
-		}.setUrl(getString(R.string.url_category_get)).addParam("id", "0").setRequestMethod(RequestMethod.eGet).notifyRequest();
+		}.setUrl(getString(R.string.url_category_get)).addParam("id", "1").setRequestMethod(RequestMethod.eGet)
+				.notifyRequest();
 	}
+
 	void calcCount() {
 		int sort = categoryList.get(0).sort;
 		int count = 0;
 		for (CategoryEntity entity : categoryList) {
+			Log.i(TAG, entity.toString());
 			if (entity.sort != sort) {
 				sort = entity.sort;
 				counts.add(count);
@@ -125,23 +131,31 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 			}
 			count++;
 		}
-		counts.add(2);
-		for (Integer i : counts)
+		for (Integer i : counts) {
 			i = i / 4 + 1;
+		}
 	}
+
 	void initList() {
 		WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
 		int width = wm.getDefaultDisplay().getWidth() / 5;
-		Collections.sort(categoryList, comparator);
+		for (CategoryEntity entity : categoryList)
+			Log.i(TAG, entity.toString());
+		// Collections.sort(categoryList, comparator);
+		for (CategoryEntity entity : categoryList)
+			Log.i(TAG, entity.toString());
 		calcCount();
 		int sort = -1;
 		int count = -1;
+		int index = -1;
 		for (int i = 0; i < categoryList.size(); i++) {
 			CategoryEntity entity = categoryList.get(i);
+			Log.i(TAG, entity.toString());
 			if (sort != entity.sort) {
+				index++;
 				sort = entity.sort;
 				TextView tv = new TextView(ProductClassifyActivity.this);
-				tv.setText("Sort:" + sort);
+				tv.setText(entity.name);
 				tv.setPadding(0, 10, 0, 0);
 				tv.setTextColor(colors[sort % 4]);
 				TextPaint paint = tv.getPaint();
@@ -151,7 +165,7 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 				ll.setmCellWidth(width);
 				int px = Utils.dp2px(ProductClassifyActivity.this, 20);
 				ll.setmCellHeight(px);
-				int columns = ((counts.get(sort) % 4) == 0) ? counts.get(sort) / 4 : counts.get(sort) / 4 + 1;
+				int columns = ((counts.get(index) % 4) == 0) ? counts.get(index) / 4 : counts.get(index) / 4 + 1;
 				int px2 = Utils.dp2px(ProductClassifyActivity.this, 10);
 				ll_category.addView(ll, new LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, px * columns
 						+ px2));
@@ -165,10 +179,10 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 					count++;
 				}
 				count += 2;
+				continue;
 			}
 			TextView tv = new TextView(ProductClassifyActivity.this);
-			LayoutParams params = new LayoutParams(200, LayoutParams.WRAP_CONTENT);
-			;
+			LayoutParams params = new LayoutParams(200, LayoutParams.WRAP_CONTENT);;
 			params.setMargins(5, 10, 10, 5);
 			tv.setLayoutParams(params);
 			tv.setTextSize(14);
@@ -185,7 +199,8 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 				public void onClick(View v) {
 					TextView tv = (TextView) v;
 					String text = tv.getText().toString().trim();
-					// Toast.makeText(ProductClassifyActivity.this, text, Toast.LENGTH_SHORT).show();*/
+					// Toast.makeText(ProductClassifyActivity.this, text,
+					// Toast.LENGTH_SHORT).show();*/
 					Bundle bundle = new Bundle();
 					bundle.putString("classificationName", text);
 					bundle.putString("classificationId", tv.getTag().toString());
@@ -212,12 +227,15 @@ public class ProductClassifyActivity extends MainActionBarActivity {
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		return true;
