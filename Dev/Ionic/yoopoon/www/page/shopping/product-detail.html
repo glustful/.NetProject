@@ -11,34 +11,6 @@
     </div>
 <ion-view hide-tabs="true" hide-nav-bar="true">
     <ion-content class="detail-position">
-        <!-- 滚动图-->
-            <!--<ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" >-->
-                <!--<ion-slide>-->
-                    <!--<div class="detail-img">-->
-                        <!--<img src="page/shopping/img/p0.jpg">-->
-                    <!--</div>-->
-                <!--</ion-slide>-->
-                <!--<ion-slide>-->
-                    <!--<div class="detail-img">-->
-                        <!--<img src="page/shopping/img/p0.jpg">-->
-                    <!--</div>-->
-                <!--</ion-slide>-->
-                <!--<ion-slide>-->
-                    <!--<div class="detail-img">-->
-                        <!--<img src="page/shopping/img/p0.jpg">-->
-                    <!--</div>-->
-                <!--</ion-slide>-->
-                <!--<ion-slide>-->
-                    <!--<div class="detail-img">-->
-                        <!--<img src="page/shopping/img/p0.jpg">-->
-                    <!--</div>-->
-                <!--</ion-slide>-->
-                <!--<ion-slide>-->
-                    <!--<div class="detail-img">-->
-                        <!--<img src="page/shopping/img/p0.jpg">-->
-                    <!--</div>-->
-                <!--</ion-slide>-->
-            <!--</ion-slide-box>-->
         <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" ng-if="content">
             <ion-slide ng-repeat="item in content">
                 <div class="box">
@@ -65,20 +37,20 @@
         <div class="list padding">
         <h4 class="font-title">商品评价（{{Count}}）</h4>
         <div class="item item-avatar none-border" ng-repeat="item in CommentList">
-        <img src="page/shopping/img/tt.jpg">
-        <h2>hy****777</h2>
+        <img src="http://img.iyookee.cn/{{item.UserImg}}">
+        <h2>{{item.UserName}}</h2>
         <p style="white-space: normal">{{item.Content}}</p>
         </div>
         <button class="button button-full  text-center light-bg bottom-border " ng-click="more()">
             {{tipp}}
         </button>
-            <div >{{productDetail.Name}}</div>
+            <div >{{productDetail.Name}}</div> <div>{{productDetail.Detail}}</div>
         <div class="padding stable-bg text-center">
         <p><span class="font-title"> 继续拖动，查看图文详情</span></p>
         </div>
         </div>
         <div class="div-null"></div>
-        <ion-infinite-scroll ng-if="moreDataCanBeLoaded" on-infinite="load_detail();" distance="10%">
+        <ion-infinite-scroll ng-if="hasmore" on-infinite="load_detail();" distance="10%">
         </ion-infinite-scroll>
 
         <!--<div class="padding ">-->

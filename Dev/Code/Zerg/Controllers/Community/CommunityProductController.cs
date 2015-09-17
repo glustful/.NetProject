@@ -53,7 +53,7 @@ namespace Zerg.Controllers.Community
                             Id = c.Id,
                             Content = c.Content,
                             AddTime = c.AddTime,
-                            AddUser = c.AddUser
+                            //AddUser = c.AddUser
                         }).ToList();
             }
 			var model = new ProductModel
