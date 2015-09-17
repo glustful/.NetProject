@@ -55,6 +55,7 @@ namespace Zerg.Controllers.Community
 			var model = _productCommentService.GetProductCommentsByCondition(condition).Select(c=>new ProductCommentModel
 			{
 				Id = c.Id,
+                ProductId = c.Product.Id,
                 ProductName = c.Product.Name,
 				//AddUser = c.AddUser,
 				AddTime = c.AddTime,

@@ -178,6 +178,10 @@
     <!--</ion-content>-->
 
 </ion-view>
+<ion-footer-bar ng-hide="true">
+<button class="button" ng-click="wxPay()">微信支付测试</button>
+<button class="button" ng-click="alipay()">支付宝支付测试</button>
+</ion-footer-bar>
 
 
 <!--1.　on-refresh 下拉触发的函数 函数执行结束之前必须广播下该事件结束 $scope.$broadcast(‘scroll.refreshComplete‘);-->

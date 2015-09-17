@@ -1,7 +1,49 @@
 /**
  * Created by Administrator on 2015/9/7.
  */
-app.controller('TabShoppingCtrl',['$http','$scope','$timeout',function($http,$scope,$timeout){
+
+
+
+app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$ionicLoading',function($http,$scope,$stateParams,$timeout,$ionicLoading){
+    $scope.wxPay = function(){
+        $ionicLoading.show({
+            template:"微信支付未开通",
+            duration:3000
+        });
+    };
+    $scope.alipay = function(){
+        var myDate = new Date();
+
+        var tradeNo = myDate.getTime();   
+        var alipay = navigator.alipay;
+  
+        alipay.pay({
+            "seller" : "yunjoy@yunjoy.cn", //卖家支付宝账号或对应的支付宝唯一用户号
+            "subject" : "测试支付", //商品名称
+            "body" : "测试支付宝支付", //商品详情
+            "price" : "0.01", //金额，单位为RMB
+            "tradeNo" : tradeNo, //唯一订单号
+            "timeout" : "30m", //超时设置
+            "notifyUrl" : "http://www.baidu.com"
+            }, function(result) {
+                
+                    $ionicLoading.show({
+                       template: "支付宝返回结果="+result,
+                        noBackdrop: true,
+                        duration: 5000
+                    });
+            }, function(message) {
+                 $ionicLoading.show({
+                  template: "支付宝支付失败="+message,
+                   noBackdrop: true,
+                  duration: 5000
+                });
+               
+            });
+    };
+
+
+
     $scope.go=function(state){
         window.location.href=state;
     };
@@ -22,7 +64,8 @@ app.controller('TabShoppingCtrl',['$http','$scope','$timeout',function($http,$sc
         }
 
     }
-    //region鍟嗗搧澶у浘鑾峰彇
+    //region商品大图获取
+
     $scope.Condition = {
         IsDescending:true,
         OrderBy:'OrderByOwner',
@@ -41,7 +84,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$timeout',function($http,$sc
     $scope.getList=getProductList;
 //endregion
 
-    //region 鍟嗗搧鑾峰彇
+    //region 商品获取
     $scope.items = [];
     $scope.searchCondition = {
         IsDescending:true,
@@ -50,6 +93,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$timeout',function($http,$sc
         PageCount:5
         //ProductId:''
     };
+
     var getList=function() {
         $http.get('http://localhost:50597/api/CommunityProduct/Get', {
             params: $scope.searchCondition,
@@ -62,6 +106,9 @@ app.controller('TabShoppingCtrl',['$http','$scope','$timeout',function($http,$sc
     };
     getList();
 //endregion
+
+
+    //region 商品加载
     $scope.load_more = function(){
         $timeout(function(){
             $scope.searchCondition.Page+=1;
@@ -74,12 +121,16 @@ app.controller('TabShoppingCtrl',['$http','$scope','$timeout',function($http,$sc
                         $scope.items.push(data.List[i]);
                     }
                 }
+
                 $scope.$broadcast("scroll.infiniteScrollComplete");
             });
+
 
         },1000)
     };
     //endregion
+
+
     //region 图片轮播
     $scope.channelName='banner';
     $http.get('http://localhost:50597/api/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
@@ -88,6 +139,9 @@ app.controller('TabShoppingCtrl',['$http','$scope','$timeout',function($http,$sc
     //endregion
     }]);
 app.controller('ShoppingListCtrl',['$http','$scope',function($http,$scope){
+
+
+
     //
     //region 获取商品列表
     $scope.sech={
@@ -237,6 +291,7 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
         };
         morecomment();
         $scope.more=morecomment;
+
     //endregion
      //region 加载图文详情
     $scope.hasmore =true;
@@ -265,6 +320,7 @@ app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($htt
         $scope.productList=data.List
     })
 }])
+
 
 
 
