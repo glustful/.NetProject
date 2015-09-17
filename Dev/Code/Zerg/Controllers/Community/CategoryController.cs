@@ -10,6 +10,7 @@ using Zerg.Common;
 using System.EnterpriseServices;
 using System.Text.RegularExpressions;
 using System.Web.Http.Cors;
+using YooPoon.Core.Site;
 
 
 namespace Zerg.Controllers.Community
@@ -19,10 +20,12 @@ namespace Zerg.Controllers.Community
 	public class CategoryController : ApiController
 	{
 		private readonly ICategoryService _categoryService;
+        private readonly IWorkContext _workContent;
 
-		public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService, IWorkContext workContent)
 		{
 			_categoryService = categoryService;
+            _workContent = workContent;
 		}
         #region 商品分类管理 2015.9.9 黄秀宇
 
@@ -46,11 +49,11 @@ namespace Zerg.Controllers.Community
 
 
         /// <summary>
-        /// 根据id查找商品分类
+        /// 根据id查找商品分类信息
         /// </summary>
         /// <param name="id">商品分类id</param>
         /// <returns></returns>
-        [Description("根据id查找商品分类")]
+        [Description("根据id查找商品分类信息")]
         public HttpResponseMessage Get(int id)
 		{
 			var entity =_categoryService.GetCategoryById(id);
@@ -74,12 +77,12 @@ namespace Zerg.Controllers.Community
 		}
 
         /// <summary>
-        /// 根据父级商品分类id查找子商品分类，传递0时获取一级分类
+        /// 根据父级商品分类id查找子商品分类，传递0时或不传值是获取一级分类
         /// </summary>
         /// <param name="id">商品分类id</param>
         /// <returns></returns>
         [Description("根据父级商品分类id查找子商品分类")]
-        public HttpResponseMessage GetChildByFatherId(int id)
+        public HttpResponseMessage GetChildByFatherId(int id=0)
         {
             var entity = _categoryService.GetCategorysBySuperFather(id);
             if (entity != null)
@@ -174,13 +177,11 @@ namespace Zerg.Controllers.Community
                 Name = model.Name,
                 Sort = sort,
                 AddTime = DateTime.Now,
-                // Adduser = classify.Adduser,
-                //AddUser = _workContext.CurrentUser.Id.ToString(),
-                AddUser =1,
+               // AddUser = _workContent.CurrentUser.Id,
+               AddUser =1,
                 UpdTime = DateTime.Now,
-                //UpdUser = _workContext.CurrentUser.Id.ToString()
-                  UpdUser = 1
-                //Upduser = classify.Upduser
+               // UpdUser = _workContent.CurrentUser.Id
+               UpdUser =1
 
             };
             try
@@ -204,12 +205,10 @@ namespace Zerg.Controllers.Community
 			var entity = _categoryService.GetCategoryById(model.Id);
 			if(entity == null)
 				return PageHelper .toJson (PageHelper .ReturnValue(false ,"不存在该数据！修改失败"));
-//			entity.Father = model.Father;
 			entity.Name = model.Name;
 			entity.Sort = model.Sort;
-			entity.AddUser = model.AddUser;
-			//entity.AddTime = model.AddTime;
-			entity.UpdUser = model.UpdUser;
+            //entity.UpdUser = _workContent.CurrentUser.Id;
+            entity.UpdUser = 1;
 			entity.UpdTime = DateTime.Now;
             if (_categoryService.Update(entity) != null)
             { return PageHelper.toJson(PageHelper.ReturnValue(true, "修改成功")); }
@@ -223,12 +222,6 @@ namespace Zerg.Controllers.Community
         [Description("根据id删除商品分类")]
 		public HttpResponseMessage Delete(int id)
 		{
-            //var entity = _categoryService.GetCategoryById(id);
-            //if(entity == null)
-            //    return PageHelper .toJson (PageHelper .ReturnValue (false ,"删除失败"));
-            //if(_categoryService.Delete(entity))
-            //    return PageHelper.toJson(PageHelper.ReturnValue(true, "删除成功"));
-            //return PageHelper.toJson(PageHelper.ReturnValue(false, "删除失败"));
             try
             {
                 if (_categoryService.Delete(_categoryService.GetCategoryById(id)))
@@ -281,7 +274,7 @@ namespace Zerg.Controllers.Community
         /// </summary>
         /// <returns>树状根节点列表</returns>
         [Description("自上而下获取树状根节点列表")]
-        public List<TreeJsonModel> GetAllTree()
+        public List<TreeJsonModel> GetAllTree(int ifid=0)
         {
             CategorySearchCondition  csc = new CategorySearchCondition()
             {
@@ -305,7 +298,14 @@ namespace Zerg.Controllers.Community
                     Id = ce.Id
                 };
                 treeJsonModelBuffer.Add(TJM);
+                if(ifid==0)//如果ifid为0，那么直到查找到最后一级子类，否则只查到下一级
+                {
                 TJM.children = GetJsonFromTreeModel(TJM.Id);
+                }
+                else
+                {
+                    TJM.children = GetJsonFromTreeModel(TJM.Id,1);
+                }
             }
             return treeJsonModelBuffer;
         }
@@ -316,7 +316,7 @@ namespace Zerg.Controllers.Community
         /// <param name="nodeId">节点ID</param>
         /// <returns>所有树子节点</returns>
         [Description("自迭代获取所有树子节点；")]
-        public List<TreeJsonModel> GetJsonFromTreeModel(int nodeId)
+        public List<TreeJsonModel> GetJsonFromTreeModel(int nodeId,int ifid=0)
         {
             CategorySearchCondition csc = new CategorySearchCondition()
             {
@@ -332,6 +332,7 @@ namespace Zerg.Controllers.Community
                     Id = ce.Id
                 };
                 datalist.Add(TJM);
+                if(ifid==0)
                 TJM.children = GetJsonFromTreeModel(TJM.Id);//自迭代;
 
             }

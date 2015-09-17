@@ -13,19 +13,20 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
             duration:3000
         });
     };
+    //cartservice.deletethis(1234567);
     //商品信息
-    $scope.cartinfo={
-        id:null,
-        name:null,
-        count:null
-    };
+    //$scope.cartinfo={
+    //    id:null,
+    //    name:null,
+    //    count:null
+    //};
     //添加商品
-    $scope.AddCart = function()
-    {
-        //赋值
-
-        cartservice.add(cartinfo);
-    }
+    //$scope.AddCart = function()
+    //{
+    //    //赋值
+    //
+    //    cartservice.add(cartinfo);
+    //}
     $scope.alipay = function(){
 
         var myDate = new Date();
@@ -64,6 +65,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
         window.location.href=state;
     };
 
+
     //    搜索功能
     $scope.showSelect = false;
     $scope.isShow = false;
@@ -86,13 +88,12 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
             actionDOM.style.visibility = "hidden";
         }
 
-    }
     //region商品大图获取
 
     $scope.Condition = {
         IsDescending:true,
-        OrderBy:'OrderByOwner',
-        IsRecommend:'1'
+        OrderBy:'OrderByOwner'
+
         //ProductId:''
     };
     var getProductList=function() {
@@ -108,7 +109,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
 //endregion
 
     //region 商品获取
-    $scope.items = [];
+
     $scope.searchCondition = {
         IsDescending:true,
         OrderBy:'OrderByAddtime',
@@ -159,9 +160,10 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
     $http.get('http://localhost:50597/api/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
         $scope.content=data;
     });
-    //endregion
+   //endregion
     }]);
 app.controller('ShoppingListCtrl',['$http','$scope',function($http,$scope){
+
 
     //
     //region 获取商品列表
@@ -170,11 +172,23 @@ app.controller('ShoppingListCtrl',['$http','$scope',function($http,$scope){
        // PageCount:5,
         IsDescending:true,
         OrderBy:'OrderByAddtime',
+        CategoryId:1,
+
         CategoryId:3,
        // Name:'',
         PriceBegin:'',
         PriceEnd:''
     };
+        $http.get(SETTING.ApiUrl+"/CommunityProduct/Get",{
+            params: $scope.sech,
+            'withCredentials':true  //跨域
+        }).success(function(data){
+            $scope.list=data.List;
+            $scope.sech.Page=data.Condition.Page;
+            $scope.sech.PageCount=data.Condition.PageCount;
+            $scope.totalCount = data.TotalCount;
+        });
+
     $scope.orderByPrice=function(){
         $scope.sech.OrderBy='OrderByPrice';
         getProduct();
@@ -265,6 +279,8 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
     //var loading = false
     //    ,pages=2;                      //判断是否正在读取内容的变量
     $scope.CommentList = [];//保存从服务器查来的任务，可累加
+
+
     //var pushContent= function() {                    //核心是这个函数，向$scope.posts
     //    if (!loading && $scope.comcon.Page < pages) {                         //如果页面没有正在读取
     //        loading = true;                     //告知正在读取
@@ -324,11 +340,11 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
                 'withCredentials': true
             }).success(function(data){
                 $scope.productDetail=data;
-                $scope.hasmore=false
+                $scope.hasmore=false;
             });
         },1000);
     };
-}])
+}]);
 app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
     $scope.search={
         Name:$stateParams.name
@@ -339,7 +355,97 @@ app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($htt
     }).success(function(data){
         $scope.productList=data.List
     })
+
+  //加入购物车动画
+    $scope.AddGWCAction = function()
+    {
+        //显示图标
+        var actionDOM = document.getElementById("gwcaction");
+        actionDOM.style.visibility = "visible";
+        //执行动画
+        var abc = actionDOM.className;
+        actionDOM.className = abc+"Gwcactive";
+        function hasClass( actionDOM,Gwcactive ){
+            return !!actionDOM.className.match( new RegExp( "(\\s|^)" + Gwcactive + "(\\s|$)") );
+        };
+        function addClass( actionDOM,Gwcactive ){
+            if( !hasClass( actionDOM,Gwcactive ) ){
+                actionDOM.className += " " + Gwcactive;
+            };
+        };
+        function removeClass( actionDOM,Gwcactive ){
+            if( hasClass( actionDOM,Gwcactive ) ){
+                actionDOM.className = actionDOM.className.replace( new RegExp( "(\\s|^)" + Gwcactive + "(\\s|$)" ), " " );
+            };
+        };
+
+    }
+
 }])
+
+
+
+
+
+
+/**
+ * Created by Administrator on 2015/9/7.
+ */
+    //页面跳转
+app.controller('TabShoppingCtrl',['$http','$scope',function($http,$scope){
+    //ҳ����ת
+    $scope.go=function(state){
+        window.location.href=state;
+    }
+
+//向下滚动刷新
+//���¹���ˢ��
+    $scope.items = [];
+    var base = 0;
+    $scope.load_more = function(){
+        $timeout(function(){
+            for(var i=0;i<10;i++,base++)
+                $scope.items.push(["item ",base].join(""));
+            $scope.$broadcast("scroll.infiniteScrollComplete");
+        },500);
+    };
+    $scope.sech={
+        Page:1,
+        PageCount:10,
+        IsDescending:true,
+        OrderBy:'OrderByAddtime',
+        CategoryId:1
+    };
+        $http.get(SETTING.ApiUrl+"/CommunityProduct/Get",{
+            params: $scope.sech,
+            'withCredentials':true  //跨域
+        }).success(function(data){
+            $scope.list=data.List;
+            $scope.sech.Page=data.Condition.Page;
+            $scope.sech.PageCount=data.Condition.PageCount;
+            $scope.totalCount = data.TotalCount;
+        });
+}]);
+
+//start----------------------------商品分类 huangxiuyu2015.09.15-------------------------
+app.controller('CategoryController',['$scope','$http',function($scope,$http){
+
+    $scope.searchCondition={
+        ifid:0
+    }
+    $scope.selectCategory=function(ifid){
+        $scope.searchCondition.ifid=ifid;
+        $http.get(SETTING.ApiUrl+'/Category/GetAllTree/',{params:$scope.searchCondition,'withCredentials': true}).
+            success(function(data){
+                $scope.list=data;
+                console.log(data);
+            })
+    };
+    $scope.selectCategory(1);
+
+
+}]);
+//end----------------------------商品分类 huangxiuyu2015.09.15-------------------------
 
 
 
