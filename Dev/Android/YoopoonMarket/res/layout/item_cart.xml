@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/white_bg"
     android:gravity="center_vertical"
-    android:paddingBottom="5dp"
-    android:paddingTop="5dp" >
+    android:padding="5dp" >
 
     <RelativeLayout
         android:id="@+id/rl"
@@ -35,7 +34,8 @@
         android:layout_marginRight="10dp"
         android:layout_toRightOf="@id/rl"
         android:paddingLeft="5dp"
-        android:scaleType="fitXY"
+        android:background="@drawable/stright_border"
+        android:scaleType="center"
         android:src="@drawable/default_img" />
 
     <TextView

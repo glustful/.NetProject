@@ -15,7 +15,6 @@ package com.yoopoon.market;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -23,7 +22,6 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.BroadcastReceiver;
@@ -40,7 +38,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -53,7 +50,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -91,22 +87,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	Button btn_category;
 	@ViewById(R.id.ll_loading)
 	LinearLayout ll_loading;
- 
-	// @ViewById(R.id.tv_shadow1)
-	// TextView tv_shadow1;
-	// @ViewById(R.id.rl_shadow2)
-	// View rl_shadow2;
-	// @Click(R.id.iv_iknow)
-	// void iKnow() {
-	// SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference),
-	// MODE_PRIVATE);
-	// Editor editor = sp.edit();
-	// editor.putBoolean("isFirst", false);
-	// editor.commit();
-	// tv_shadow1.setVisibility(View.GONE);
-	// rl_shadow2.setVisibility(View.GONE);
-	// }
- 
+
 	@ViewById(R.id.tv_shadow1)
 	TextView tv_shadow1;
 	@ViewById(R.id.rl_shadow2)
@@ -157,7 +138,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		tv_shadow1.setVisibility(View.GONE);
 		rl_shadow2.setVisibility(View.GONE);
 	}
- 
+
 	List<Fragment> fragments = new ArrayList<Fragment>();
 	List<LinearLayout> lls = new ArrayList<LinearLayout>();
 	int checkedItem = 0;
@@ -183,9 +164,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		vp.setOnPageChangeListener(new MyPagerChangeListener());
 		requestArea();
 	}
- 
-	
- 
 
 	protected void onCreate(android.os.Bundle arg0) {
 		super.onCreate(arg0);
@@ -210,7 +188,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		}
 	};
 
- 
 	void requestArea() {
 		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
@@ -230,11 +207,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					ll_loading.setVisibility(View.GONE);
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_area_get)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
+
 	void parseToObject(final JSONArray array) {
 		new ParserJSON(new ParseListener() {
 			@Override
@@ -261,6 +240,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				}
 				return areaList;
 			}
+
 			@Override
 			public void onComplete(Object parseResult) {
 				areaItems = new String[areaList.size()];
@@ -285,16 +265,16 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 						public void onClick(DialogInterface dialog, int which) {
 							checkedItem = which;
 							btn_select.setText(areaItems[checkedItem]);
-							//#############################################################################
-							//  添加广播，选择地址后Fragment_Shop能更新商品  徐阳会 2015年9月17日添加      Start
-							//#############################################################################
+							// #############################################################################
+							// 添加广播，选择地址后Fragment_Shop能更新商品 徐阳会 2015年9月17日添加 Start
+							// #############################################################################
 							Intent refreshProductIntent = new Intent("com.yoopoon.market.productRefresh.Address");
 							refreshProductIntent.putExtra("addressName", areaItems[checkedItem]);
 							refreshProductIntent.putExtra("addressId", areaList.get(checkedItem).Codeid);
 							sendBroadcast(refreshProductIntent);
-							//#############################################################################
-							//  添加广播，选择地址后Fragment_Shop能更新商品  徐阳会 2015年9月17日添加       End
-							//#############################################################################
+							// #############################################################################
+							// 添加广播，选择地址后Fragment_Shop能更新商品 徐阳会 2015年9月17日添加 End
+							// #############################################################################
 							dialog.dismiss();
 						}
 					});
@@ -330,10 +310,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		public MyPageAdapter(FragmentManager fm) {
 			super(fm);
 		}
+
 		@Override
 		public Fragment getItem(int arg0) {
 			return fragments.get(arg0);
 		}
+
 		@Override
 		public int getCount() {
 			return fragments.size();
@@ -345,10 +327,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		public void onPageScrollStateChanged(int arg0) {
 			// TODO Auto-generated method stub
 		}
+
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 			// TODO Auto-generated method stub
 		}
+
 		@Override
 		public void onPageSelected(int arg0) {
 			onClick(lls.get(arg0));
@@ -377,9 +361,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			System.exit(0);
 		}
 	}
+
 	public void toServe(View v) {
 		vp.setCurrentItem(1);
 	}
+
 	@Override
 	public void onClick(View v) {
 		for (LinearLayout ll : lls) {
