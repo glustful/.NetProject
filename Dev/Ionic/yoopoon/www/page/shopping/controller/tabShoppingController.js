@@ -9,6 +9,13 @@ $scope.test = function(){
         window.location.href=state;
     };
 
+    //    搜索功能
+    $scope.showSelect = false;
+    $scope.isShow = false;
+    $scope.showInput = function () {
+        $scope.showSelect = true;
+        $scope.isShow = true;
+    };
     $scope.AddGWCAction = function()
     {
         //显示图标
@@ -125,20 +132,6 @@ $scope.test = function(){
  //   });
     }]);
 app.controller('ShoppingListCtrl',['$http','$scope',function($http,$scope){
-    $scope.load_detail = function(){
- //for(var i=0;i<10;i++,base++)
-            //    $scope.items.push(["item ",base].join(""));
-           // alert("aaaaaaaaaa");
-            $http.get(SETTING.ApiUrl+"/ProductDetail/Get?id="+$stateParams.id,{
-                'withCredentials': true
-            }).success(function(data){
-                $scope.productDetail=data;
-            });
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-        },500);
- };
-
-
 
     //
     //region 获取商品列表
@@ -188,13 +181,13 @@ app.controller('ShoppingListCtrl',['$http','$scope',function($http,$scope){
     }
     $scope.productShow=true;
     $scope.productPrice=false;
-    $scope.selectPrice=function(i){
-        if(i==1)
-        {
+    $scope.selectPrice=function(){
+
+//            document.getElementById("list").style.display="none";
             $scope.productShow=false;
             $scope.productPrice=true;
         }
-    }
+
     $scope.submit=function(){
         document.getElementById("price").setAttribute("class","");
         $scope.productPrice=false;
