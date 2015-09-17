@@ -27,7 +27,7 @@
 <ion-view hide-tabs="true" hide-nav-bar="true" id="list" ng-show="productShow">
     <ion-content class="content  " style="top: 138px">
         <ion-list>
-            <ion-item  class="row" ng-repeat="item in list" ng-click="go('index.html#/page/shopping/product-detail')">
+            <ion-item  class="row" ng-repeat="item in list" ui-sref="page.product-detail({id:item.Id})">
                 <div class="product col col-25">
                     <img src="http://img.iyookee.cn/{{item.MainImg}}" alt="" />
                 </div>
@@ -39,7 +39,10 @@
                 </div>
             </ion-item >
         </ion-list>
+        <ion-infinite-scroll on-infinite="loadProduct();" distance="80%" ng-if="hasmore">
+        </ion-infinite-scroll>
     </ion-content>
+
 </ion-view>
 
 <ion-view hide-tabs="true" hide-nav-bar="true" ng-show="productPrice"  ng-class="{'price':productPrice}" class="selectPrice">

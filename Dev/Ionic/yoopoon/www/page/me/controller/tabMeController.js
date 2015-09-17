@@ -56,6 +56,7 @@ app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,
 
 
 
+app.controller('selectAddress', function($scope, $routeParams) {
 
   $scope.model = {
     activeIndex:0
@@ -70,26 +71,11 @@ app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
 
+//打开评论
   var comment=document.getElementById("userComment");
   $scope.open=function(){
     comment.style.display="";
   }
-
-  $scope.tabIndex=1;
-  $scope.getOrderList1=function(){
-    $scope.tabIndex=1
-  }
-  $scope.getOrderList2=function(){
-    $scope.tabIndex=2
-  }
-  $scope.getOrderList3=function(){
-    $scope.tabIndex=3
-  }
-  $scope.getOrderList4=function(){
-    $scope.tabIndex=4
-  }
-
-               });
 
   //我的订单
   $scope.tabIndex=1;
@@ -97,25 +83,45 @@ app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,
     $scope.tabIndex=tabIndex;
   };
  function tab(){
-     $scope.serchCondition={
-         PageSize:'',
-         PageCount:'',
-         Status:''
-     }
+
      //待付款
      if($stateParams.tabIndex==1){
          $scope.tabIndex=1;
+         //$scope.serchCondition={
+         //    Page:'',
+         //    PageCount:'',
+         //    Status:'1'
+         //}
+         //$scope.myOrder = orderService.getOrderList($scope.searchCondition)
+         //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
+         //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
+         //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
      }
      //待发货
      if($stateParams.tabIndex==2){
          $scope.tabIndex=2;
-         //$scope.getWaitRecv=function(){
-         //       $http.get(SETTING.ApiUrl+'Oder/Get',$scope.searchCondition,{'withCredentials':true})
+         //$scope.serchCondition={
+         //    Page:'',
+         //    PageCount:'',
+         //    Status:'2'
          //}
+         //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
+         //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
+         //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
+         //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
      }
      //待收货
      if($stateParams.tabIndex==3){
          $scope.tabIndex=3;
+         //$scope.serchCondition={
+         //    Page:'',
+         //    PageCount:'',
+         //    Status:'3'
+         //}
+         //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
+         //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
+         //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
+         //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
      }
      //待评价
      if($stateParams.tabIndex==4){
@@ -125,7 +131,6 @@ app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,
     tab();
 
     //个人资料修改
-
     $scope.imgUrl=SETTING.ImgUrl;
     $scope.oldMem={
         Realname:'',
@@ -143,31 +148,31 @@ app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,
         UpdTime:'2015-08-09'
     };
 
-    //获取当前通用户信息
-    $scope.currentuser= AuthService.CurrentUser();
-    $http.get(SETTING.ApiUrl+'/Member/GetMemberByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
-        .success(function(response) {
-            $scope.oldMem=response;
-
-            //添加判断,如果用户没有头像,隐藏IMG标签
-            if($scope.oldMem.Thumbnail.length<15){
-                //操作IMG标签的SRC为空
-                var img = document.getElementById('imghead');
-                //没图片隐藏
-                img.style.display = 'none';
-                img.src = "";
-            }else{
-                //隐藏默认头像
-                var defaultHeadImg = document.getElementById("preview");
-                defaultHeadImg.style.background = 'white';
-            }
-        });
+    ////获取当前通用户信息
+    //$scope.currentuser= AuthService.CurrentUser();
+    //$http.get(SETTING.ApiUrl+'/Member/GetMemberByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
+    //    .success(function(response) {
+    //        $scope.oldMem=response;
+    //
+    //        //添加判断,如果用户没有头像,隐藏IMG标签
+    //        if($scope.oldMem.Thumbnail.length<15){
+    //            //操作IMG标签的SRC为空
+    //            var img = document.getElementById('imghead');
+    //            //没图片隐藏
+    //            img.style.display = 'none';
+    //            img.src = "";
+    //        }else{
+    //            //隐藏默认头像
+    //            var defaultHeadImg = document.getElementById("preview");
+    //            defaultHeadImg.style.background = 'white';
+    //        }
+    //    });
 
     $scope.save = function() {
-        if (document.getElementById("Uptext").innerText == '正在上传..') {
-            alert("头像正在上传,请稍等!");
-            return;
-        }
+        //if (document.getElementById("Uptext").innerText == '正在上传..') {
+        //    alert("头像正在上传,请稍等!");
+        //    return;
+        //}
         if (httpimguri.length > 0) {
             $scope.oldMem.Thumbnail = httpimguri;
             //如果服务器返回了用户的头像地址,操作IMG标签的SRC为angularjs绑定
@@ -191,7 +196,6 @@ app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,
 
 
 /////////////////////////////头像修改////////////////////////////
-
 function previewImage(file)
 {
   var MAXWIDTH  = 80;
@@ -203,23 +207,14 @@ function previewImage(file)
     div.innerHTML ='<img id=imghead>';
     var img = document.getElementById('imghead');
     img.onload = function(){
-      img.width  =  128;
-      img.height =  128;
+      img.width  =  80;
+      img.height =  80;
       //隐藏默认头像
       var defaultHeadImg = document.getElementById("preview");
       defaultHeadImg.style.background = 'white';
     }
     var reader = new FileReader();
     reader.onload = function(evt){
-      img.src = evt.target.result;
-      //��չ��
-      var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
-      // gif��ie���������ʾ
-      if(ext!='png'&&ext!='jpg'&&ext!='jpeg'&&ext!='gif'){
-        alert("ֻ֧��JPG,PNG,JPEG��ʽ��ͼƬ");
-        return;
-      }
-
       //base64编码
       img.src = evt.target.result;
       //扩展名
@@ -239,20 +234,9 @@ function previewImage(file)
       fd.append("fileToUpload",files);
       xmlhttp.withCredentials = true;
       xmlhttp.send(fd);
-      var headtext = document.getElementById("Uptext");
-      headtext.innerHTML = '�����ϴ�..';
-      headtext.style.color ='#40AD32';
-      function callback () {
-        //��response��ȡ�����ָ���ļ���
-        httpimguri =  xmlhttp.response;
-        var g1=httpimguri.split(':"');
-        var g2= httpimguri.split(',')[1].split(':"')[1];
-        //���ָ�õ��ļ������imgȫ�ֱ���
-        httpimguri=g2.substring(0,g2.length-1);
-        //ͼƬ�ϴ��ɹ�������ʽ
-        headtext.innerHTML = '�ϴ��ɹ�!';
-      headtext.innerHTML = '正在上传..';
-      headtext.style.color ='#40AD32'
+      //var headtext = document.getElementById("Uptext");
+      //headtext.innerHTML = '正在上传..';
+      //headtext.style.color ='#40AD32'
       //回调函数
       function callback () {
           if (xmlhttp.readyState == 4) {
@@ -263,8 +247,8 @@ function previewImage(file)
         //将分割好的文件名赋予给img全局变量
         httpimguri=g2.substring(0,g2.length-1);
         //图片上传成功字样样式
-        headtext.innerHTML = '上传成功!';
-        headtext.style.color ='red';
+        //headtext.innerHTML = '上传成功!';
+        //headtext.style.color ='red';
       }
       }
     }
