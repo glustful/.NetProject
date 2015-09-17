@@ -1,10 +1,49 @@
 /**
  * Created by Administrator on 2015/9/7.
  */
-app.controller('TabShoppingCtrl',['$http','$scope','$timeout',function($http,$scope,$timeout){
-$scope.test = function(){
-    alert(55);
-};
+
+
+
+app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$ionicLoading',function($http,$scope,$stateParams,$timeout,$ionicLoading){
+    $scope.wxPay = function(){
+        $ionicLoading.show({
+            template:"微信支付未开通",
+            duration:3000
+        });
+    };
+    $scope.alipay = function(){
+        var myDate = new Date();
+
+        var tradeNo = myDate.getTime();   
+        var alipay = navigator.alipay;
+  
+        alipay.pay({
+            "seller" : "yunjoy@yunjoy.cn", //卖家支付宝账号或对应的支付宝唯一用户号
+            "subject" : "测试支付", //商品名称
+            "body" : "测试支付宝支付", //商品详情
+            "price" : "0.01", //金额，单位为RMB
+            "tradeNo" : tradeNo, //唯一订单号
+            "timeout" : "30m", //超时设置
+            "notifyUrl" : "http://www.baidu.com"
+            }, function(result) {
+                
+                    $ionicLoading.show({
+                       template: "支付宝返回结果="+result,
+                        noBackdrop: true,
+                        duration: 5000
+                    });
+            }, function(message) {
+                 $ionicLoading.show({
+                  template: "支付宝支付失败="+message,
+                   noBackdrop: true,
+                  duration: 5000
+                });
+               
+            });
+    };
+
+
+
     $scope.go=function(state){
         window.location.href=state;
     };
@@ -32,10 +71,11 @@ $scope.test = function(){
         }
 
     }
-    //region鍟嗗搧澶у浘鑾峰彇
+    //region商品大图获取
+
     $scope.Condition = {
         IsDescending:true,
-        OrderBy:'OrderById',
+        OrderBy:'OrderByOwner',
         IsRecommend:'1'
         //ProductId:''
     };
@@ -51,15 +91,16 @@ $scope.test = function(){
     $scope.getList=getProductList;
 //endregion
 
-    //region 鍟嗗搧鑾峰彇
+    //region 商品获取
     $scope.items = [];
     $scope.searchCondition = {
         IsDescending:true,
         OrderBy:'OrderByAddtime',
         Page:1,
-        PageCount:10
+        PageCount:5
         //ProductId:''
     };
+
     var getList=function() {
         $http.get('http://localhost:50597/api/CommunityProduct/Get', {
             params: $scope.searchCondition,
@@ -73,19 +114,8 @@ $scope.test = function(){
     getList();
 //endregion
 
-    $scope.items = [];
-    var base = 0;
-    //$scope.items = [];
-    //var base = 0;
-    //$scope.load_more = function(){
-    //    $timeout(function(){
-    //        for(var i=0;i<10;i++)
-    //            $scope.items.push(["item ",base].join(""));
-    //        $scope.$broadcast("scroll.infiniteScrollComplete");
-    //    },500);
-    //};
 
-
+    //region 商品加载
     $scope.load_more = function(){
         $timeout(function(){
             $scope.searchCondition.Page+=1;
@@ -98,38 +128,22 @@ $scope.test = function(){
                         $scope.items.push(data.List[i]);
                     }
                 }
-            })
-            $scope.$broadcast("scroll.infiniteScrollComplete");
+
+                $scope.$broadcast("scroll.infiniteScrollComplete");
+            });
+
+
         },1000)
     };
     //endregion
 
-    //region    婊氬姩鍒锋柊
- //   $scope.load_more = function(){
- //       $timeout(function(){
- //           $scope.searchCondition.Page+=1;
- //           $http.get('http://localhost:50597/api/CommunityProduct/Get', {
- //               params: $scope.searchCondition,
- //               'withCredentials': true
- //           }).success(function (data) {
- //               // $scope.product = data.List;
- //               //  items = data.List;
- //               if(data.List!="") {
- //                   for (var i = 0; i < data.List.length; i++) {
- //                       $scope.items.push(data.List[i]);
- //                   }
- //               }
- //           })
- //           $scope.$broadcast("scroll.infiniteScrollComplete");
- //       },1000);
- //};
- //   //endregion
- //
- //   //region 杞挱鍥剧墖
- //   $scope.channelName='banner';
- //   $http.get('http://localhost:50597/api/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
- //       $scope.content=data;
- //   });
+
+    //region 图片轮播
+    $scope.channelName='banner';
+    $http.get('http://localhost:50597/api/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
+        $scope.content=data;
+    });
+    //endregion
     }]);
 app.controller('ShoppingListCtrl',['$http','$scope',function($http,$scope){
 
@@ -137,7 +151,7 @@ app.controller('ShoppingListCtrl',['$http','$scope',function($http,$scope){
     //region 获取商品列表
     $scope.sech={
         Page:1,
-        PageCount:10,
+        PageCount:5,
         IsDescending:true,
         OrderBy:'OrderByAddtime',
         CategoryId:3,
@@ -256,8 +270,10 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
             $scope.comcon.Page++;                             //翻页
         }
     };
+
     pushContent();
     $scope.more=pushContent;
+
     //endregion
      //region 加载图文详情
     $scope.hasmore = false;
@@ -279,6 +295,7 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
     //}
         //endregion
 }])
+
 
 
 
