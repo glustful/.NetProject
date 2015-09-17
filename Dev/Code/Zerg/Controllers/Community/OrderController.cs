@@ -1,16 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using Community.Entity.Model.Order;
 using Community.Entity.Model.OrderDetail;
 using Community.Entity.Model.Product;
-using Community.Entity.Model.ServiceOrderDetail;
 using Community.Service.MemberAddress;
 using Community.Service.Order;
 using Community.Service.Product;
 using YooPoon.Core.Site;
+using YooPoon.WebFramework.User.Entity;
 using Zerg.Common;
 using Zerg.Models.Community;
 
@@ -137,27 +136,34 @@ namespace Zerg.Controllers.Community
 			return false;
 		}
 
-		public bool Put(OrderModel model)
+		public HttpResponseMessage Put(OrderModel model)
 		{
+		    var allowEditRoles = new[]
+		    {
+                "superAdmin",
+		        "admin"
+		    };
 			var entity = _orderService.GetOrderById(model.Id);
 			if(entity == null)
-				return false;
+				return PageHelper.toJson(PageHelper.ReturnValue(false,string.Format("无法获取到Id为{0}的订单",model.Id)));
+		    if (_workContext.CurrentUser.Id != entity.AddUser &&
+		        !((UserBase) _workContext.CurrentUser).UserRoles.Select(c => c.Role.RoleName)
+		            .ToList()
+		            .Intersect(allowEditRoles)
+		            .Any())
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "当前用户没有权限修改此订单"));
 			entity.Status = model.Status;
 			entity.UpdUser = _workContext.CurrentUser.Id;
 			entity.UpdDate = DateTime.Now;
-			if(_orderService.Update(entity) != null)
-				return true;
-			return false;
+		    return PageHelper.toJson(_orderService.Update(entity) != null ? PageHelper.ReturnValue(true, "操作成功") : PageHelper.ReturnValue(false, "操作失败，请查看日志"));
 		}
 
-		public bool Delete(int id)
+        public HttpResponseMessage Delete(int id)
 		{
 			var entity = _orderService.GetOrderById(id);
 			if(entity == null)
-				return false;
-			if(_orderService.Delete(entity))
-				return true;
-			return false;
+                return PageHelper.toJson(PageHelper.ReturnValue(false, string.Format("无法获取到Id为{0}的订单", id)));
+            return PageHelper.toJson(_orderService.Delete(entity) ? PageHelper.ReturnValue(true, "操作成功") : PageHelper.ReturnValue(false, "操作失败，请查看日志"));
 		}
 	}
 }

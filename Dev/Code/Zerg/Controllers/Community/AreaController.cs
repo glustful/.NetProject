@@ -8,10 +8,12 @@ using System;
 using System.ComponentModel;
 using Zerg.Common;
 using System.Net.Http;
+using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.Community
 {
     [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class CommunityAreaController : ApiController
     {
         private readonly IAreaService _areaService;
@@ -25,6 +27,7 @@ namespace Zerg.Controllers.Community
         /// </summary>
         /// <param name="id">ID参数</param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage Get(int id)
         {
             AreaModel model=null;
@@ -39,6 +42,8 @@ namespace Zerg.Controllers.Community
                         Codeid = entity.CodeId,
                         Adddate = entity.AddDate,
                         Name = entity.Name,
+                        //ParentName = entity.Parent.Name,
+                        Parent = entity.Parent == null ? null: new AreaModel { Id = entity.Parent.Id, Adddate = entity.Parent.AddDate, Name = entity.Parent.Name },
                     };
                     if (model.Parent != null)
                     {
@@ -61,22 +66,27 @@ namespace Zerg.Controllers.Community
         /// </summary>
         /// <param name="condition">条件</param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage Get([FromUri]AreaSearchCondition condition)
         {
-            var models = _areaService.GetAreasByCondition(condition).Select(c => new AreaModel
+            var models = _areaService.GetAreasByCondition(condition).ToList().Select(c => new AreaModel
             {
                 Id = c.Id,
                 Codeid = c.CodeId,
                 Adddate = c.AddDate,
                 Name = c.Name,
+                //ParentName = c.Parent.Name,
+                Parent = c.Parent==null?null:new AreaModel { Id=c.Parent.Id,Adddate=c.Parent.AddDate,Name = c.Parent.Name }
             }).ToList();
-            return PageHelper.toJson(models);
+            var totalCount = _areaService.GetAreaCount(condition);
+            return PageHelper.toJson(new { List = models, Condition = condition, TotalCount = totalCount });
         }
         /// <summary>
         /// 添加信息
         /// </summary>
         /// <param name="model">信息参数</param>
         /// <returns></returns>
+        [HttpPost]
         public HttpResponseMessage Post([FromBody]AreaModel model)
         {
             AreaEntity father = null;
@@ -105,6 +115,7 @@ namespace Zerg.Controllers.Community
         /// </summary>
         /// <param name="model">修改参数</param>
         /// <returns></returns>
+        [HttpPut]
         public HttpResponseMessage Put(AreaModel model)
         {
             AreaEntity entity = _areaService.GetAreaById(model.Id);
@@ -113,12 +124,13 @@ namespace Zerg.Controllers.Community
 
             if (model.Parent != null && model.Parent.Id != entity.Parent.Id)
             {
-                var father = _areaService.GetAreaById(model.Parent.Id);
+                var father = _areaService.GetAreaById(Convert.ToInt32( model.Parent.Id));
                 entity.Parent = father;
             }
 
             entity.CodeId = model.Codeid;
             entity.AddDate = DateTime.Now;
+            //var father = _areaService.GetAreasByCondition(new AreaSearchCondition { Name = model.ParentName }).FirstOrDefault();
             //entity.Parent = father;
             entity.Name = model.Name;
             if (_areaService.Update(entity) != null)
@@ -146,6 +158,7 @@ namespace Zerg.Controllers.Community
         /// </summary>
         /// <param name="id">ID参数</param>
         /// <returns></returns>
+        [HttpDelete]
         public HttpResponseMessage Delete(int id)
         {
             AreaEntity entity = _areaService.GetAreaById(id);

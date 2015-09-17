@@ -53,7 +53,7 @@ namespace Zerg.Controllers.Community
                             Id = c.Id,
                             Content = c.Content,
                             AddTime = c.AddTime,
-                            AddUser = c.AddUser
+                            //AddUser = c.AddUser
                         }).ToList();
             }
 			var model = new ProductModel
@@ -100,8 +100,34 @@ namespace Zerg.Controllers.Community
         /// <param name="condition">查询条件</param>
         /// <returns>商品列表</returns>
         public HttpResponseMessage Get([FromUri]ProductSearchCondition condition)
-		{
-			var model = _productService.GetProductsByCondition(condition).Select(c=>new ProductModel
+        {
+            var con = new ProductSearchCondition
+            {
+                Page = condition.Page,
+                PageCount = condition.PageCount,
+               Name = condition.Name,
+               IsDescending = condition.IsDescending,
+               OrderBy = condition.OrderBy,
+               PriceBegin = condition.PriceBegin,
+               PriceEnd = condition.PriceEnd
+            };
+            if (condition.CategoryId!=0 && condition.CategoryId!=null)
+            {
+                var category = _categoryService.GetCategoryById(Convert.ToInt32(condition.CategoryId));
+                if (category.Father.Father == null)//判断是否是二级
+                {
+                    //var firstOrDefault = _categoryService.GetCategorysBySuperFather(category.Id).FirstOrDefault();
+                    //if (firstOrDefault != null)
+                    //    con.CategoryId = firstOrDefault.Id;
+                    con.Categorys = category;//_categoryService.GetCategorysBySuperFather(category.Id).ToArray();
+                }
+                else//3级
+                {
+                    con.CategoryId = condition.CategoryId;
+                }
+            }
+                
+            var model = _productService.GetProductsByCondition(con).Select(c => new ProductModel
 			{
 				Id = c.Id,
 				CategoryId = c.Category.Id,
@@ -117,15 +143,15 @@ namespace Zerg.Controllers.Community
 				Subtitte = c.Subtitte,
 				Contactphone = c.Contactphone,
 				Type = c.Type,
-                NewPrice = c.NewPrice.Value,
-                Owner =c.Owner.Value,
+                NewPrice = c.NewPrice,
+                Owner =c.Owner,
                 Addtime = c.AddTime,
 				Detail = c.Detail.Detail
 //				Comments = c.Comments,
 //				Parameters = c.Parameters,
 			}).ToList();
-            var totalCount = _productService.GetProductCount(condition);
-            return PageHelper.toJson(new { List = model, Condition = condition, TotalCount = totalCount });
+            var totalCount = _productService.GetProductCount(con);
+            return PageHelper.toJson(new { List = model, Condition = con, TotalCount = totalCount });
 		}
         /// <summary>
         /// 添加商品

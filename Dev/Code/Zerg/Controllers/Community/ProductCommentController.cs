@@ -36,7 +36,7 @@ namespace Zerg.Controllers.Community
 			{
 				Id = entity.Id,	
                 ProductId = entity.Product.Id,	
-                AddUser = entity.AddUser,		
+                //AddUser = entity.AddUser,		
                 AddTime = entity.AddTime,		
                 Content = entity.Content,		
                 Stars = entity.Stars,			
@@ -55,11 +55,14 @@ namespace Zerg.Controllers.Community
 			var model = _productCommentService.GetProductCommentsByCondition(condition).Select(c=>new ProductCommentModel
 			{
 				Id = c.Id,
-				ProductName = c.Product.Name,
-				AddUser = c.AddUser,
+                ProductId = c.Product.Id,
+                ProductName = c.Product.Name,
+				//AddUser = c.AddUser,
 				AddTime = c.AddTime,
 				Content = c.Content,
 				Stars = c.Stars,
+                UserName = c.Member.UserName,
+                UserImg = c.Member.Thumbnail
 			}).ToList();
             var totalCount = _productCommentService.GetProductCommentCount(condition);
             
@@ -81,7 +84,7 @@ namespace Zerg.Controllers.Community
 			var entity = new ProductCommentEntity
 			{
 				Product =_productService.GetProductById(model.ProductId),
-                AddUser = model.AddUser,
+                //AddUser = model.AddUser,
 				AddTime =DateTime.Now,
 				Content = model.Content,
 				Stars = model.Stars
@@ -105,7 +108,7 @@ namespace Zerg.Controllers.Community
 			if(entity == null)
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "没有该评论！"));
 			entity.Product = _productService.GetProductById(model.Id);
-			entity.AddUser = model.AddUser;
+			//entity.AddUser = model.AddUser;
 			entity.AddTime = model.AddTime;
 			entity.Content = model.Content;
 			entity.Stars = model.Stars;

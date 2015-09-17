@@ -8,7 +8,7 @@
 var app = angular.module('starter', ['ionic','ngCordova']);
 var SETTING = {
 BaseUrl:'http://www.iyookee.cn/',
-ApiUrl:'http://localhost:50597/api',
+ApiUrl:'http://192.168.1.199:9010/api',
 ImgUrl:'http://img.iyookee.cn/',
 eventApiUrl:'http://www.iyookee.cn/API'
 };
@@ -68,7 +68,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
                }
                }
                })
-        
+
+
+
+
         .state('page.service', {
                url: '/service',
                views: {
@@ -167,11 +170,39 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     }
                 }
             })
-            .state('page.myOrder', {
-                url: '/me/myOrder',
+            .state('page.selectProvince', {
+                url: '/me/selectProvince',
                 views: {
                     'page-me': {
-                        templateUrl: 'page/me/myOrder.html'
+                        templateUrl: 'page/me/selectProvince.html',
+                        controller: 'selectAddress'
+                    }
+                }
+            })
+            .state('page.selectCity', {
+                url: '/me/',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/selectCity.html',
+                        controller: 'TabMeCtrl'
+                    }
+                }
+            })
+            .state('page.newAddress', {
+                url: '/me/newAddress',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/newAddress.html',
+                        controller: 'TabMeCtrl'
+                    }
+                }
+            })
+            .state('page.myOrder', {
+                url: '/me/myOrder?tabIndex',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/me/myOrder.html',
+                        controller: 'TabMeCtrl'
                     }
                 }
             })
@@ -181,6 +212,22 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     'page-me': {
                         templateUrl: 'page/me/comment.html',
                         controller: 'TabMeCtrl'
+                    }
+                }
+            })
+            .state('page.register', {
+                url: '/user/register',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/user/register.html'
+                    }
+                }
+            })
+            .state('page.login', {
+                url: '/user/login',
+                views: {
+                    'page-me': {
+                        templateUrl: 'page/user/login.html'
                     }
                 }
             })
@@ -198,16 +245,25 @@ app.config(function($stateProvider, $urlRouterProvider) {
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/product-list.html',
-                controller: 'TabShoppingCtrl'
+                controller: 'ShoppingListCtrl'
             }
         }
     })
     .state('page.product-detail', {
-        url: '/shopping/product-detail',
+        url: '/shopping/product-detail?id',
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/product-detail.html',
-                controller: 'TabShoppingCtrl'
+                controller: 'ProductDetail'
+            }
+        }
+    })
+    .state('page.search_product', {
+        url: '/search_product',
+        views: {
+            'page-shopping': {
+                templateUrl: 'page/shopping/searchProduct.html',
+                controller: 'SearchProductCtr'
             }
         }
     });
