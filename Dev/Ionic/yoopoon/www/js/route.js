@@ -8,7 +8,7 @@
 var app = angular.module('starter', ['ionic','ngCordova']);
 var SETTING = {
 BaseUrl:'http://www.iyookee.cn/',
-ApiUrl:'http://localhost:50597/api',
+ApiUrl:'http://192.168.1.199:9010/api',
 ImgUrl:'http://img.iyookee.cn/',
 eventApiUrl:'http://www.iyookee.cn/API'
 };
@@ -211,7 +211,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/myOrder.html',
-                        controller: 'TabMeCtrl'
+                        controller: 'myorder'
                     }
                 }
             })
@@ -237,7 +237,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 url: '/user/login',
                 views: {
                     'page-me': {
-                        templateUrl: 'page/user/login.html'
+                        templateUrl: 'page/user/login.html',
+                        controller:'login'
                     }
                 }
             })
@@ -269,7 +270,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
     })
     .state('page.search_product', {
-        url: '/search_product',
+        url: '/search_product?productName',
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/searchProduct.html',

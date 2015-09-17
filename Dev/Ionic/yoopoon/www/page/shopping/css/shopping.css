@@ -341,7 +341,7 @@
 
 
 }
-/*���ﳵ������ʼ*/
+/*动画开始*/
 .Gwcactive{
     -webkit-animation-fill-mode:forwards;
     -webkit-animation-name: Gwc-one;
@@ -419,4 +419,5 @@
     }
 
 }
-/*���ﳵ��������
+
+/*动画结束*/

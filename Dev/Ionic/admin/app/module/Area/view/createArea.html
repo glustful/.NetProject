@@ -3,22 +3,23 @@
     <div style="padding:50px 50px 10px;">
         <form class="form-horizontal" role="form" name="form"enctype="multipart/form-data" ng-submit="save()">
             <div class="input-group-sm">
-                <span class="input-group-addon">城市编码</span>
-                <input type="text" class="form-control" ng-model="area.Codeid" id="Codeid" name="Codeid" placeholder="填入城市编码" />
+                <span class="input-group-addon">区域编码</span>
+                <input type="text" class="form-control" ng-model="submit.Codeid" id="Codeid" name="Codeid" placeholder="填入区域编码" />
             </div>
             <div class="input-group-sm">
-                <span class="input-group-addon">城市名称</span>
-                <input type="text" class="form-control" ng-model="area.Name" id="Name" name="Name" placeholder="填入城市名称" />
+                <span class="input-group-addon">区域名称</span>
+                <input type="text" class="form-control" ng-model="submit.Name" id="Name" name="Name" placeholder="填入区域名称" />
             </div>
             <div class="input-group-sm">
-                <span class="input-group-addon">父级城市</span>
-                <select class="form-control" name="province" ng-change="text_change()" ng-change="false" ng-model="data.province" ng-options="x.Id as x.Name for x in cities | filter:{Parent:null}"></select>                <select class="form-control" name="area" ng-change="show3()" ng-show="data.province&&isShow2"  ng-model="data.area" ng-options="x.Id as x.Name for x in cities | filter:{Parent:data.province}"></select>
-                <select class="form-control"  name="city" ng-show="data.area&&isShow3"  ng-model="data.city" ng-options="x.Id as x.Name for x in cities | filter:{Parent:data.area}"></select>
+                <span class="input-group-addon">父级区域</span>
+                <select class="form-control" name="province" ng-change="text_change_province()" ng-change="false" ng-model="selectId1" ng-options="x.Id as x.Name for x in province | filter:{Parent:null}"></select>                <select class="form-control" name="area" id="area" ng-change="text_change_area()" ng-show="selectId1 > 0&&isShow2==true"  ng-model="selectId2" ng-options="x.Id as x.Name for x in area"></select>
+                <select class="form-control"  name="city" id="city" ng-show="selectId2 > 0&&isShow3==true"  ng-model="selectId3" ng-options="x.Id as x.Name for x in city "></select>
             </div>
             <br />
             <div class="text-center">
                 <button id="btn_ok" type="submit" class="btn btn-primary">添加</button>
-                <label>{{state}}</label>
+                
+                <div><label ng-model="state">{{state}}</label></div>
             </div>
         </form>
     </div>
