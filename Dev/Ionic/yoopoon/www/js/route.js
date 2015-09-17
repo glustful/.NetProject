@@ -8,7 +8,7 @@
 var app = angular.module('starter', ['ionic','ngCordova']);
 var SETTING = {
 BaseUrl:'http://www.iyookee.cn/',
-ApiUrl:'http://192.168.1.199:9010/api',
+ApiUrl:'http://localhost:50597/api',
 ImgUrl:'http://img.iyookee.cn/',
 eventApiUrl:'http://www.iyookee.cn/API'
 };
@@ -219,7 +219,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 url: '/user/register',
                 views: {
                     'page-me': {
-                        templateUrl: 'page/user/register.html'
+                        templateUrl: 'page/user/register.html',
+                        controller:'register'
                     }
                 }
             })

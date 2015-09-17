@@ -5,7 +5,7 @@
 <ion-view hide-tabs="true">
     <div class="tabs-striped tabs-top tabs-background-light ">
         <div class="tabs" style="border-bottom:1px solid #eee;">
-            <span class="tab-item font-title" ng-class="{'active': tabIndex==1}" ng-click="getOrderList(1)">待付款 <em ng-show="unpaidCount">{{ unpaidCount }}</em></span>
+            <span class="tab-item font-title" ng-class="{'active': tabIndex==1}" ng-click="getOrderList(1)">待付款 </span>
             <span class="tab-item font-title" ng-class="{'active': tabIndex==2}" ng-click="getOrderList(2)">待发货</span>
             <span class="tab-item font-title" ng-class="{'active': tabIndex==3}" ng-click="getOrderList(3)">待收货</span>
             <span class="tab-item font-title" ng-class="{'active': tabIndex==4}" ng-click="getOrderList(4)">待评价</span>
@@ -16,11 +16,11 @@
         <ion-list can-swipe="tabIndex==1">
             <div>
                 <div class="item row bar padding">
-                    <p>订单号：201502061115</p>
+                    <p>订单号：{{myOrder.No}}</p>
                 </div>
                 <ion-item class="item-thumbnail-left ">
                     <img src="page/car/img/car.png" alt=""/>
-                    <h2 style="white-space: normal" class="font-title">我是花吃 云南特产零食糕点 玫瑰鲜花饼</h2>
+                    <h2 style="white-space: normal" class="font-title">{{myOrder.Remark}}</h2>
                     <p>口味：甜味</p>
                     <div ><span>X1</span><span class="float-right"><span class="p-price">￥69.9</span><del >￥87</del></span></div>
                 </ion-item >
