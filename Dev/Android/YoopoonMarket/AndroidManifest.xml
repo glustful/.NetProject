@@ -7,12 +7,13 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="22" />
 
+    
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />   
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name="com.yoopoon.market.MyApplication_"
@@ -85,7 +86,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name="com.yoopoon.market.PayResultActivity_"
+        <activity
+            android:name="com.yoopoon.market.PayResultActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
         <activity
@@ -95,37 +97,48 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
-        <activity android:name="com.yoopoon.market.PayDemoActivity_"
+        <activity
+            android:name="com.yoopoon.market.PayDemoActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
-        <activity android:name="com.yoopoon.market.NewAddressActivity_"
+        <activity
+            android:name="com.yoopoon.market.NewAddressActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
-        <activity android:name="com.yoopoon.market.AddressModifyActivity_"
+        <activity
+            android:name="com.yoopoon.market.AddressModifyActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
-        <activity android:name="com.yoopoon.market.ChooseAddressActivity_"
+        <activity
+            android:name="com.yoopoon.market.ChooseAddressActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
-        <activity android:name="com.yoopoon.market.DeliveryActivity_"
+        <activity
+            android:name="com.yoopoon.market.DeliveryActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
-        <activity android:name="com.yoopoon.market.FinancialActivity_"
+        <activity
+            android:name="com.yoopoon.market.FinancialActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
-        <activity android:name="com.yoopoon.market.TravelActivity_"
+        <activity
+            android:name="com.yoopoon.market.TravelActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
-        <activity android:name="com.yoopoon.market.TaxiActivity_"
+        <activity
+            android:name="com.yoopoon.market.TaxiActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
-        <activity android:name="com.yoopoon.market.PoliticsActivity_"
+        <activity
+            android:name="com.yoopoon.market.PoliticsActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
-        <activity android:name="com.yoopoon.market.EducationActivity_"
+        <activity
+            android:name="com.yoopoon.market.EducationActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
-        <activity android:name="com.yoopoon.market.ChargeActivity_"
+        <activity
+            android:name="com.yoopoon.market.ChargeActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
     </application>

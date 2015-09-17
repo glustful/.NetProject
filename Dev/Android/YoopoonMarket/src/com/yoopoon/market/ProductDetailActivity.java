@@ -65,7 +65,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		linearLayout = (LinearLayout) findViewById(R.id.linearlayout_product_detail);
 		mADController = new ADController(mContext);
 		//获取广告信息
-		//requestAdvertisements();
 		//添加广告
 		linearLayout.addView(mADController.getRootView(), 0);
 		//初始化商品详细信息视图
@@ -195,35 +194,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		return null;
 	}
 	/**
-	 * @Title: requestAdvertisements
-	 * @Description: 获取和添加广告
-	 */
-	private void requestAdvertisements() {
-		if (imgs == null)
-			new RequestAdapter() {
-				@Override
-				public void onReponse(ResponseData data) {
-					if (data.getResultState() == ResultState.eSuccess) {
-						if (imgs == null) {
-							imgs = new ArrayList<String>();
-							JSONArray list = data.getJsonArray();
-							if (list == null || list.length() < 1)
-								return;
-							for (int i = 0; i < list.length(); i++) {
-								imgs.add(list.optJSONObject(i).optString("TitleImg"));
-							}
-							// 添加广告
-							mADController.show(imgs);
-						}
-					}
-				}
-				@Override
-				public void onProgress(ProgressMessage msg) {
-				}
-			}.setUrl("/api/Channel/GetTitleImg").setRequestMethod(RequestMethod.eGet).addParam("channelName", "banner")
-					.notifyRequest();
-	}
-	/**
 	 * @Title: requestProductDetail
 	 * @Description: 获取商品详细信息，包括商品评价,同时刷新界面
 	 */
@@ -266,11 +236,25 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		String image2 = jsonObject.optString("Img2", "");
 		String image3 = jsonObject.optString("Img3", "");
 		String image4 = jsonObject.optString("Img4", "");
-		arrayList.add(image0);
-		arrayList.add(image1);
-		arrayList.add(image2);
-		arrayList.add(image3);
-		arrayList.add(image4);
+		/*if (!image0.equals("null")) {
+			arrayList.add("http://img.iyookee.cn/20150629/20150629_224642_944_279.jpg");
+		}
+		if (!image1.equals("null")) {
+			arrayList.add("http://img.iyookee.cn/20150629/20150629_224642_944_279.jpg");
+		}
+		if (!image2.equals("null")) {
+			arrayList.add("http://img.iyookee.cn/20150629/20150629_224642_944_279.jpg");
+		}
+		if (!image3.equals("null")) {
+			arrayList.add(image3);
+		}
+		if (!image4.equals("null")) {
+			arrayList.add(image4);
+		}*/
+		//如下广告做测试用途
+		for (int i = 0; i < 3; i++) {
+			arrayList.add("20150629/20150629_224642_944_279.jpg");
+		}
 		mADController.show(arrayList);
 	}
 }

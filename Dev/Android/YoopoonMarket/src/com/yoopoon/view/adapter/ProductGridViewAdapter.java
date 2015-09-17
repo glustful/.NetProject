@@ -71,21 +71,21 @@ public class ProductGridViewAdapter extends BaseAdapter {
 	}
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-	 
 		ProductViewHandler productityViewHandler = null;
 		if (convertView != null) {
 			productityViewHandler = (ProductViewHandler) convertView.getTag();
 		} else {
 			productityViewHandler = new ProductViewHandler();
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.gridview_product_item, null);
-			
 			productityViewHandler.initViewHandler(convertView);
 			convertView.setTag(productityViewHandler);
 		}
-		 		 
-		 	  		//判断图片链接是否存在，不存在的时候使用默认图片
-		String url = "http://img.yoopoon.com/"+datas.get(position).optString("MainImg");
-	
+		//判断图片链接是否存在，不存在的时候使用默认图片
+		String mainImgsString = datas.get(position).optString("MainImg");
+		String url = "http://iyookee.cn/modules/Index/static/image/index/activity4_c37e838.png";
+		if ((!mainImgsString.equals("")) && (!mainImgsString.equals("null"))) {
+			url = mContext.getString(R.string.url_image) + datas.get(position).optString("MainImg");
+		}
 		//String url = "http://iyookee.cn/modules/Index/static/image/index/activity4_c37e838.png";
 		//产品名称
 		productityViewHandler.productityNameTextView.setText(datas.get(position).optString("Name", ""));

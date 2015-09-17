@@ -69,7 +69,8 @@ public class ProductListViewAdapter extends BaseAdapter {
 		}
 		String url = mContext.getString(R.string.url_image) + datas.get(position).optString("MainImg");
 		productViewHandler.productPhotoImageView.setTag(url);
-		if (!datas.get(position).optString("MainImg").equals("null")) {
+		if ((!datas.get(position).optString("MainImg").equals("null"))
+				&& (!datas.get(position).optString("MainImg").equals(""))) {
 			ImageLoader.getInstance().displayImage(url, productViewHandler.productPhotoImageView,
 					MyApplication.getOptions(), MyApplication.getLoadingListener());
 		}
