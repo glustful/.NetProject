@@ -95,7 +95,10 @@ namespace Zerg.Models.Community
         /// 注册时间
         /// </summary>
 		public DateTime AddTime {get;set;}
-
+        public string AddTimeString
+        {
+            get { return AddTime.ToString("yyyy-MM-dd HH:mm:ss"); }
+        }
 
 		/// <summary>
         /// 修改人
@@ -133,8 +136,9 @@ namespace Zerg.Models.Community
             if (string.IsNullOrEmpty(Password)) return false;
             if (string.IsNullOrEmpty(SecondPassword)) return false;
             if (string.IsNullOrEmpty(Phone)) return false;
-         
+
             return true;
         }
+
 	}
 }

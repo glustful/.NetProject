@@ -11,7 +11,7 @@
             <a id="Uptext">头像设置</a>
             <!--<span class="input-file">-->
             <div id="preview"  class="touxiang">
-                <img  ng-src="{{imgUrl+oldMem.Thumbnail}}@174w_174h_70Q" alt="" class="head"/>
+                <img  ng-src="http://img.iyookee.cn/{{oldMem.Thumbnail}}" alt="" class="head"/>
             </div>
             <input name="fileToUpload" type="file" onchange="previewImage(this)"  style="position:  absolute; right:15%;top:20%;opacity: 0; width: 80px;height: 80px;border-radius: 50%;"/>
             <!--</span>-->
@@ -46,7 +46,7 @@
                 </label>
 
             </div>
-            <p class="errorTip">{{tips}}</p>
+            <!--<p class="errorTip">{{tips}}</p>-->
             <div class="save-setting bar ">
                 <button class="light button-full" type="submit">保存设置</button>
             </div>

@@ -29,7 +29,7 @@ namespace Community.Entity.Model.ParameterValue
 
 		public ParameterEntity Parameters { get; set; }
 
-
+        public string ParameterId { get; set; }
 
 		public string ParameterValue { get; set; }
 

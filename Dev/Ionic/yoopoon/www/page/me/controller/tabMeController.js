@@ -1,31 +1,32 @@
-//app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,$stateParams) {
-//  // With the new view caching in Ionic, Controllers are only called
-//  // when they are recreated or on app start, instead of every page change.
-//  // To listen for when this page is active (for example, to refresh data),
-//  // listen for the $ionicView.enter event:
-//  //
-//  //$scope.$on('$ionicView.enter', function(e) {
-//  //});
-//  $scope.model = {
-//    activeIndex:0
-//  };
-//
-//  $scope.pageClick = function(index){
-//    //alert(index);
-//    //alert($scope.delegateHandler.currentIndex());
-//    $scope.model.activeIndex = 2;
-//  };
-//
-//  $scope.slideHasChanged = function($index){
-//    //alert($index);
-//    //alert($scope.model.activeIndex);
-//  };
-//  $scope.delegateHandler = $ionicSlideBoxDelegate;
-////    页面跳转
-//    $scope.go=function(state){
-//        window.location.href=state;
-//    }
-//    新增地址
+
+app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,$stateParams) {
+  // With the new view caching in Ionic, Controllers are only called
+  // when they are recreated or on app start, instead of every page change.
+  // To listen for when this page is active (for example, to refresh data),
+  // listen for the $ionicView.enter event:
+  //
+  //$scope.$on('$ionicView.enter', function(e) {
+  //});
+  $scope.model = {
+    activeIndex:0
+  };
+
+  $scope.pageClick = function(index){
+    //alert(index);
+    //alert($scope.delegateHandler.currentIndex());
+    $scope.model.activeIndex = 2;
+  };
+
+  $scope.slideHasChanged = function($index){
+    //alert($index);
+    //alert($scope.model.activeIndex);
+  };
+  $scope.delegateHandler = $ionicSlideBoxDelegate;
+//    ҳ����ת
+    $scope.go=function(state){
+        window.location.href=state;
+    }
+//    ������ַ
 
 
 //    $ionicModal.fromTemplateUrl("my-modal.html", {
@@ -52,10 +53,12 @@
 //    $scope.$on("modal.removed", function() {
 //        // Execute action
 //    });
-//               });
+               });
 
 
-app.controller('selectAddress', function($scope, $routeParams) {
+app.controller('selectAddress', function($scope, $stateParams) {
+
+var httpimguri='';
 
     $scope.chats = [
         {
@@ -78,37 +81,42 @@ app.controller('selectAddress', function($scope, $routeParams) {
     };
 
 
-});app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$stateParams) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+});
+app.controller('TabMeCtrl', function($http,$scope,$state,$AuthService, $ionicSlideBoxDelegate,$stateParams) {
+
   $scope.model = {
     activeIndex:0
   };
 
   $scope.pageClick = function(index){
-    //alert(index);
-    //alert($scope.delegateHandler.currentIndex());
     $scope.model.activeIndex = 2;
   };
 
   $scope.slideHasChanged = function($index){
-    //alert($index);
-    //alert($scope.model.activeIndex);
+
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
 
-
-//打开评论
   var comment=document.getElementById("userComment");
   $scope.open=function(){
     comment.style.display="";
   }
 
+  $scope.tabIndex=1;
+  $scope.getOrderList1=function(){
+    $scope.tabIndex=1
+  }
+  $scope.getOrderList2=function(){
+    $scope.tabIndex=2
+  }
+  $scope.getOrderList3=function(){
+    $scope.tabIndex=3
+  }
+  $scope.getOrderList4=function(){
+    $scope.tabIndex=4
+  }
+
+               });
 
   //我的订单
   $scope.tabIndex=1;
@@ -116,15 +124,27 @@ app.controller('selectAddress', function($scope, $routeParams) {
     $scope.tabIndex=tabIndex;
   };
  function tab(){
+     $scope.serchCondition={
+         PageSize:'',
+         PageCount:'',
+         Status:''
+     }
+     //待付款
      if($stateParams.tabIndex==1){
          $scope.tabIndex=1;
      }
+     //待发货
      if($stateParams.tabIndex==2){
          $scope.tabIndex=2;
+         //$scope.getWaitRecv=function(){
+         //       $http.get(SETTING.ApiUrl+'Oder/Get',$scope.searchCondition,{'withCredentials':true})
+         //}
      }
+     //待收货
      if($stateParams.tabIndex==3){
          $scope.tabIndex=3;
      }
+     //待评价
      if($stateParams.tabIndex==4){
          $scope.tabIndex=4;
      }
@@ -132,6 +152,7 @@ app.controller('selectAddress', function($scope, $routeParams) {
     tab();
 
     //个人资料修改
+
     $scope.imgUrl=SETTING.ImgUrl;
     $scope.oldMem={
         Realname:'',
@@ -148,7 +169,27 @@ app.controller('selectAddress', function($scope, $routeParams) {
         UpdUser:'1',
         UpdTime:'2015-08-09'
     };
-    var httpimguri='';
+
+    //获取当前通用户信息
+    $scope.currentuser= AuthService.CurrentUser();
+    $http.get(SETTING.ApiUrl+'/Member/GetMemberByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
+        .success(function(response) {
+            $scope.oldMem=response;
+
+            //添加判断,如果用户没有头像,隐藏IMG标签
+            if($scope.oldMem.Thumbnail.length<15){
+                //操作IMG标签的SRC为空
+                var img = document.getElementById('imghead');
+                //没图片隐藏
+                img.style.display = 'none';
+                img.src = "";
+            }else{
+                //隐藏默认头像
+                var defaultHeadImg = document.getElementById("preview");
+                defaultHeadImg.style.background = 'white';
+            }
+        });
+
     $scope.save = function() {
         if (document.getElementById("Uptext").innerText == '正在上传..') {
             alert("头像正在上传,请稍等!");
@@ -169,19 +210,15 @@ app.controller('selectAddress', function($scope, $routeParams) {
                 if (data.Status) {
                     var img = document.getElementById('imghead');
                     img.src = $scope.oldMem.Thumbnail;
-                    $scope.tips = "资料更新成功！";
                     location.reload([true]);
-                    //$state.go("app.personal");
-
+                    $state.go("app.me");
                 }
-
             });
-    }
-
-
-});
+    }}
+);
 
 /////////////////////////////头像修改////////////////////////////
+
 function previewImage(file)
 {
   var MAXWIDTH  = 80;
@@ -193,14 +230,23 @@ function previewImage(file)
     div.innerHTML ='<img id=imghead>';
     var img = document.getElementById('imghead');
     img.onload = function(){
-      img.width  =  80;
-      img.height =  80;
+      img.width  =  128;
+      img.height =  128;
       //隐藏默认头像
       var defaultHeadImg = document.getElementById("preview");
       defaultHeadImg.style.background = 'white';
     }
     var reader = new FileReader();
     reader.onload = function(evt){
+      img.src = evt.target.result;
+      //��չ��
+      var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
+      // gif��ie���������ʾ
+      if(ext!='png'&&ext!='jpg'&&ext!='jpeg'&&ext!='gif'){
+        alert("ֻ֧��JPG,PNG,JPEG��ʽ��ͼƬ");
+        return;
+      }
+
       //base64编码
       img.src = evt.target.result;
       //扩展名
@@ -213,17 +259,31 @@ function previewImage(file)
       //发送请求
       var xmlhttp=new XMLHttpRequest();
       xmlhttp.onreadystatechange = callback;
+
+
       var fd = new FormData();
       xmlhttp.open("POST",SETTING.ApiUrl+'/Resource/Upload');
       fd.append("fileToUpload",files);
       xmlhttp.withCredentials = true;
       xmlhttp.send(fd);
       var headtext = document.getElementById("Uptext");
+      headtext.innerHTML = '�����ϴ�..';
+      headtext.style.color ='#40AD32';
+      function callback () {
+        //��response��ȡ�����ָ���ļ���
+        httpimguri =  xmlhttp.response;
+        var g1=httpimguri.split(':"');
+        var g2= httpimguri.split(',')[1].split(':"')[1];
+        //���ָ�õ��ļ������imgȫ�ֱ���
+        httpimguri=g2.substring(0,g2.length-1);
+        //ͼƬ�ϴ��ɹ�������ʽ
+        headtext.innerHTML = '�ϴ��ɹ�!';
       headtext.innerHTML = '正在上传..';
       headtext.style.color ='#40AD32'
       //回调函数
       function callback () {
-        //将response提取出来分割出文件名
+          if (xmlhttp.readyState == 4) {
+              //将response提取出来分割出文件名
         httpimguri =  xmlhttp.response;
         var g1=httpimguri.split(':"');
         var g2= httpimguri.split(',')[1].split(':"')[1];
@@ -233,9 +293,37 @@ function previewImage(file)
         headtext.innerHTML = '上传成功!';
         headtext.style.color ='red';
       }
+      }
     }
     reader.readAsDataURL(files);
   }
-}
+};
+
+///////////////////////////ͷ���޸�//////////////////////////////////
+app.controller('TabMeCtrl',['$http','$scope', function($http,$scope, $ionicSlideBoxDelegate) {
+  // With the new view caching in Ionic, Controllers are only called
+  // when they are recreated or on app start, instead of every page change.
+  // To listen for when this page is active (for example, to refresh data),
+  // listen for the $ionicView.enter event:
+  //
+  //$scope.$on('$ionicView.enter', function(e) {
+  //});
+  $scope.model = {
+    activeIndex:0
+  };
+  
+  $scope.pageClick = function(index){
+    //alert(index);
+    //alert($scope.delegateHandler.currentIndex());
+    $scope.model.activeIndex = 2;
+  };
+
+  $scope.slideHasChanged = function($index){
+    //alert($index);
+    //alert($scope.model.activeIndex);
+  };
+  $scope.delegateHandler = $ionicSlideBoxDelegate;
+
+                }]);
 
 ///////////////////////////头像修改//////////////////////////////////

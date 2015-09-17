@@ -5,7 +5,7 @@
         $scope.list = data;
     })
 
-    $scope.Create=function(){
+    $scope.Create = function () {
         $http.put(SETTING.ZergWcApiUrl + '/CommunityArea/Put', $scope.list, {
             'withCredentials': true
         }).success(function (data) {

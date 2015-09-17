@@ -157,7 +157,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/addressAdm.html',
-                        controller: 'TabMeCtrl'
+                        controller: 'addressAdm'
                     }
                 }
             })
@@ -175,16 +175,25 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/selectProvince.html',
-                        controller: 'selectAddress'
+                        controller: 'selProvice'
                     }
                 }
             })
             .state('page.selectCity', {
-                url: '/me/',
+                url: '/me?id&name',
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/selectCity.html',
-                        controller: 'TabMeCtrl'
+                        controller: 'selectCity'
+                    }
+                }
+            })
+            .state('page.selectCounty',{
+                url:'/me?id&name',
+                views:{
+                    'page-me':{
+                        templateUrl:'page/me/selectCounty.html',
+                        controller:'selectCounty'
                     }
                 }
             })
@@ -237,7 +246,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/Product-Catagory.html',
-                controller: 'TabShoppingCtrl'
+                controller: 'CategoryController'
             }
         }
     })
@@ -246,7 +255,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/product-list.html',
-                controller: 'ShoppongListCtrl'
+                controller: 'ShoppingListCtrl'
             }
         }
     })
@@ -256,6 +265,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
             'page-shopping': {
                 templateUrl: 'page/shopping/product-detail.html',
                 controller: 'ProductDetail'
+            }
+        }
+    })
+    .state('page.search_product', {
+        url: '/search_product',
+        views: {
+            'page-shopping': {
+                templateUrl: 'page/shopping/searchProduct.html',
+                controller: 'SearchProductCtr'
             }
         }
     });
