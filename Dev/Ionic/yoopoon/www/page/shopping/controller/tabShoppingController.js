@@ -58,7 +58,7 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
             });
     };
 
-
+//页面跳转
 
     $scope.go=function(state){
         window.location.href=state;
@@ -67,26 +67,11 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$state','$tim
     //    搜索功能
     $scope.showSelect = false;
     $scope.isShow = false;
-    $scope.showInput = function () {
+    $scope.showInput = function() {
         $scope.showSelect = true;
         $scope.isShow = true;
     };
-    $scope.AddGWCAction = function()
-    {
-        //显示图标
-        var actionDOM = document.getElementById("gwcaction");
-        actionDOM.style.visibility = "visible";
-        //执行动画
-        var abc = actionDOM.className;
-        actionDOM.className = abc+"Gwcactive";
-        //执行完毕动画后，隐藏图标
-        $timeout(show,1000);
-        function show()
-        {
-            actionDOM.style.visibility = "hidden";
-        }
 
-    }
     //region商品大图获取
 
     $scope.Condition = {
@@ -205,23 +190,23 @@ app.controller('ShoppingListCtrl',['$http','$scope','$timeout',function($http,$s
     getProduct();
     //region 加载更多
     $scope.hasmore=false
-    $scope.load_more = function(){
-        $timeout(function(){
-
-            $scope.sech.Page+=1;
-            $http.get(SETTING.ApiUrl + "/CommunityProduct/Get", {
-                params: $scope.sech,
-                'withCredentials': true  //跨域
-            }).success(function (data) {
-                for (var i = 0; i < data.List.length; i++) {
-                    $scope.list.push(data.List[i]);
-                }
+    $scope.loadProduct = function(){
+        //$timeout(function(){
+        //
+        //},1000)
+        $scope.sech.Page+=1;
+        $http.get(SETTING.ApiUrl + "/CommunityProduct/Get", {
+            params: $scope.sech,
+            'withCredentials': true  //跨域
+        }).success(function (data) {
+            for (var i = 0; i < data.List.length; i++) {
+                $scope.list.push(data.List[i]);
                 if($scope.list.length==data.TotalCount)
                 {
-                    $scope.hasmore=false
+                    $scope.hasmore=false;
                 }
-            });
-        },1000)
+            }
+        });
     };
     //endregion
     //region 条件排序
@@ -242,15 +227,24 @@ app.controller('ShoppingListCtrl',['$http','$scope','$timeout',function($http,$s
     $scope.selectPrice=function(){
 
 //            document.getElementById("list").style.display="none";
+            $scope.productPrice=!$scope.productPrice;
+        if($scope.productPrice==true){
             $scope.productShow=false;
             $scope.productPrice=true;
+        }else{
+            $scope.productShow=true;
+        }
         }
 
     $scope.submit=function(){
-        document.getElementById("price").setAttribute("class","");
         $scope.productPrice=false;
         $scope.productShow=true;
         getProduct();
+    }
+//    综合排序
+    $scope.reorder=false;
+    $scope.reorderAll=function(){
+        $scope.reorder=!$scope.reorder;
     }
     //endregion
     //endregion
@@ -326,6 +320,39 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
             });
         },1000);
     };
+        //region 加入购物车
+        $scope.cartinfo={
+            id:null,
+            name:null,
+            count:null
+        };
+        // 添加商品
+        $scope.AddCart = function()
+        {
+            $scope.cartinfo.id=$scope.product.Id;
+            $scope.cartinfo.name=$scope.product.Name;
+            $scope.cartinfo.count=1;
+            cartservice.add($scope.cartinfo);
+        }
+        //endregion
+        $scope.AddGWCAction = function()
+        {
+            //显示图标
+            var actionDOM = document.getElementById("gwcaction");
+            actionDOM.style.visibility = "visible";
+            //执行动画
+            var abc = actionDOM.className;
+            actionDOM.className = abc+"Gwcactive";
+
+            //执行完毕动画后，隐藏图标
+            $timeout(show,1000);
+            function show()
+            {
+                actionDOM.className = abc;
+                actionDOM.style.visibility = "hidden";
+            }
+
+        }
 }])
 app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
     $scope.search={
