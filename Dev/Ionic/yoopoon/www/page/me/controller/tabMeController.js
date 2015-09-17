@@ -23,7 +23,7 @@ app.controller('selectAddress', function($scope, $routeParams) {
 
 
 });
-app.controller('TabMeCtrl', function($http,$scope,$state,$AuthService, $ionicSlideBoxDelegate,$stateParams) {
+app.controller('TabMeCtrl', function($http,$scope,$state, $ionicSlideBoxDelegate,$stateParams) {
 
   $scope.model = {
     activeIndex:0
@@ -50,11 +50,11 @@ app.controller('TabMeCtrl', function($http,$scope,$state,$AuthService, $ionicSli
     $scope.tabIndex=tabIndex;
   };
  function tab(){
-     $scope.serchCondition={
-         PageSize:'',
-         PageCount:'',
-         Status:''
-     }
+     //$scope.serchCondition={
+     //    PageSize:'',
+     //    PageCount:'',
+     //    Status:''
+     //}
      //待付款
      if($stateParams.tabIndex==1){
          $scope.tabIndex=1;
@@ -78,7 +78,6 @@ app.controller('TabMeCtrl', function($http,$scope,$state,$AuthService, $ionicSli
     tab();
 
     //个人资料修改
-
     $scope.imgUrl=SETTING.ImgUrl;
     $scope.oldMem={
         Realname:'',
@@ -96,25 +95,25 @@ app.controller('TabMeCtrl', function($http,$scope,$state,$AuthService, $ionicSli
         UpdTime:'2015-08-09'
     };
 
-    //获取当前通用户信息
-    $scope.currentuser= AuthService.CurrentUser();
-    $http.get(SETTING.ApiUrl+'/Member/GetMemberByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
-        .success(function(response) {
-            $scope.oldMem=response;
-
-            //添加判断,如果用户没有头像,隐藏IMG标签
-            if($scope.oldMem.Thumbnail.length<15){
-                //操作IMG标签的SRC为空
-                var img = document.getElementById('imghead');
-                //没图片隐藏
-                img.style.display = 'none';
-                img.src = "";
-            }else{
-                //隐藏默认头像
-                var defaultHeadImg = document.getElementById("preview");
-                defaultHeadImg.style.background = 'white';
-            }
-        });
+    ////获取当前通用户信息
+    //$scope.currentuser= AuthService.CurrentUser();
+    //$http.get(SETTING.ApiUrl+'/Member/GetMemberByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
+    //    .success(function(response) {
+    //        $scope.oldMem=response;
+    //
+    //        //添加判断,如果用户没有头像,隐藏IMG标签
+    //        if($scope.oldMem.Thumbnail.length<15){
+    //            //操作IMG标签的SRC为空
+    //            var img = document.getElementById('imghead');
+    //            //没图片隐藏
+    //            img.style.display = 'none';
+    //            img.src = "";
+    //        }else{
+    //            //隐藏默认头像
+    //            var defaultHeadImg = document.getElementById("preview");
+    //            defaultHeadImg.style.background = 'white';
+    //        }
+    //    });
 
     $scope.save = function() {
         if (document.getElementById("Uptext").innerText == '正在上传..') {
@@ -139,8 +138,8 @@ app.controller('TabMeCtrl', function($http,$scope,$state,$AuthService, $ionicSli
                     location.reload([true]);
                     $state.go("app.me");
                 }
-            });
-    }
+            });}
+    //根据
 });
 
 /////////////////////////////头像修改////////////////////////////

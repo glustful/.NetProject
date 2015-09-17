@@ -16,18 +16,17 @@
 </div>
 <div class="bar" style="top:100px">
     <label class="col text-center">
-        <select  class="none-border lable-size font-12" ng-change="change(select)" ng-model="select">
-            <option value="0" ng-selected>综合排序</option>
-            <option value="1">价格</option>
-            <option value="2">销量</option>
+        <select  class="none-border lable-size font-12">
+            <option>综合排序</option>
+            <option selected="orderByPrice()">价格</option>
+            <option ng-click="">销量</option>
         </select>
     </label>
     <label class="col text-center">
-        <select class="none-border lable-size font-12" ng-change="selectPrice(selected)" ng-model="selected">
-            <!--<option>HTML</option>-->
-            <option value="0">筛选</option>
-            <option value="1">价格</option>
-            <!--<option>JavaScript</option>-->
+        <select class="none-border lable-size font-12">
+            <option>HTML</option>
+            <option selected>筛选</option>
+            <option>JavaScript</option>
         </select>
     </label>
 </div>
@@ -39,11 +38,9 @@
     <!--&lt;!&ndash;<div class="col-20 stable-bg col-offset padding-top8">特产品类</div>&ndash;&gt;-->
 <!--</div>-->
 
-<ion-view hide-tabs="true" hide-nav-bar="true" >
-
-<ion-content class="content " style="top: 138px;" ng-show="productShow">
-
-    <ion-list >
+<ion-view hide-tabs="true" hide-nav-bar="true">
+<ion-content class="content  " style="top: 138px" >
+    <ion-list>
         <ion-item ng-repeat="item in list"  class="row" ui-sref="page.product-detail({id:item.Id})">
             <div class="product col col-25">
                 <img src="http://img.iyookee.cn/{{item.MainImg}}" alt="" />
@@ -115,127 +112,4 @@
 
     </ion-list>
 </ion-content>
-    <ion-content class="selectPrice content" ng-show="productPrice"  ng-class="{'price':productPrice}" style="top: 138px" id="price">
-        <div style="padding-top:50px;font-size:18px;">价钱:<input style="height: 30px" ng-model="sech.PriceBegin">—<input style="height: 30px" ng-model="sech.PriceEnd"></div>
-        <button class="button button-full light submit-btn" ng-click="submit()" >确认</button>
-    </ion-content>
-</ion-view><div class="bar  assertive-bg" style="height: 44px">
-    <button class="button  button-icon icon ion-chevron-left color-white"></button>
-    <h1 class="title font-title color-white">云南特产</h1>
-    <button class="button button-icon icon icon-search color-white" ng-click="showPopup();"></button>
-</div>
-<div class="bar bar-subheader bar-stable" style="top:44px;height: auto">
-    <ul>
-        <li style="float:left;width: 20%;height: 30px;margin-right: 5px;" ng-repeat="item in cateList" ng-click="getList(item.Id)">{{item.Name}}</li>
-        <!--<li style="float:left;width: 20%;height: 30px;margin-right: 5px;">适用季节</li>-->
-        <!--<li style="float:left;width: 20%;height: 30px;margin-right: 5px;">适用季节</li>-->
-        <!--<li style="float:left;width: 20%;height: 30px;margin-right: 5px;">适用季节</li>-->
-        <!--<li style="float:left;width: 20%;height: 30px;margin-right: 5px;">适用季节</li>-->
-        <!--<li style="float:left;width: 20%;height: 30px;margin-right: 5px;">适用季节</li>-->
-        <!--<li style="float:left;width: 20%;height: 30px;margin-right: 5px;">适用季节</li>-->
-    </ul>
-</div>
-<div class="bar" style="top:100px">
-    <label class="col text-center">
-        <select  class="none-border lable-size font-12">
-            <option>综合排序</option>
-            <option selected="orderByPrice()">价格</option>
-            <option ng-click="">销量</option>
-        </select>
-    </label>
-    <label class="col text-center">
-        <select class="none-border lable-size font-12">
-            <option>HTML</option>
-            <option selected>筛选</option>
-            <option>JavaScript</option>
-        </select>
-    </label>
-</div>
-<!--<div class="bar row padding text-center " style="top: 98px">-->
-    <!--<div class="col-20 stable-bg padding-top8" ng-repeat="item in cateList">{{item.Name}}</div>-->
-    <!--&lt;!&ndash;<div class="col-20 stable-bg padding-top8" >品牌</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="col-20 stable-bg col-offset padding-top8">适用季节</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="col-20 stable-bg col-offset padding-top8">选购热点</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="col-20 stable-bg col-offset padding-top8">特产品类</div>&ndash;&gt;-->
-<!--</div>-->
-
-<ion-view hide-tabs="true" hide-nav-bar="true">
-<ion-content class="content  " style="top: 138px;display: none" >
-    <ion-list>
-        <ion-item ng-repeat="item in list"  class="row" ui-sref="page.product-detail({id:item.Id})">
-            <div class="product col col-25">
-                <img src="http://img.iyookee.cn/{{item.MainImg}}" alt="" />
-            </div>
-             <div class="col col-75">
-                 <h2 style="white-space: normal" class="font-title">{{item.Name}}</h2>
-                 <p style="white-space: normal;color: #DE6C2C">{{item.Subtitte}}</p>
-                 <p >{{item.Ad1}}</p>
-                 <p><span class="p-price">￥{{item.Price}}</span><span class="float-right">已有{{item.Owner}}人抢购</span></p>
-             </div>
-        </ion-item >
-        <ion-item  class="row" ng-click="go('index.html#/page/shopping/product-detail')">
-            <div class="product col col-25">
-                <img src="page/shopping/img/p2.jpg" alt="" />
-            </div>
-            <div class="col col-75">
-                <h2 style="white-space: normal" class="font-title">我是花吃 云南特产零食糕点 玫瑰鲜花饼6枚*2盒 包邮 包邮 神犬小七同款</h2>
-                <p style="white-space: normal;color: #DE6C2C">2014年度 新花上市  买3送1 5送2 全新包装</p>
-                <p >满30元免费配送</p>
-                <p><span class="p-price">￥69.90</span><span class="float-right">已有9999人抢购</span></p>
-            </div>
-        </ion-item >
-        <ion-item  class="row" ng-click="go('index.html#/page/shopping/product-detail')">
-            <div class="product col col-25">
-                <img src="page/shopping/img/p3.jpg" alt=""/>
-            </div>
-            <div class="col col-75">
-                <h2 style="white-space: normal" class="font-title">我是花吃 云南特产零食糕点 玫瑰鲜花饼6枚*2盒 包邮 包邮 神犬小七同款</h2>
-                <p style="white-space: normal;color: #DE6C2C">2014年度 新花上市  买3送1 5送2 全新包装</p>
-                <p >满30元免费配送</p>
-                <p><span class="p-price">￥69.90</span><span class="float-right">已有9999人抢购</span></p>
-            </div>
-        </ion-item >
-        <ion-item  class="row" ng-click="go('index.html#/page/shopping/product-detail')">
-            <div class="product col col-25">
-                <img src="page/shopping/img/p3.jpg" alt="" />
-            </div>
-            <div class="col col-75">
-                <h2 style="white-space: normal" class="font-title">我是花吃 云南特产零食糕点 玫瑰鲜花饼6枚*2盒 包邮 包邮 神犬小七同款</h2>
-                <p style="white-space: normal;color: #DE6C2C">2014年度 新花上市  买3送1 5送2 全新包装</p>
-                <p >满30元免费配送</p>
-                <p><span class="p-price">￥69.90</span><span class="float-right">已有9999人抢购</span></p>
-            </div>
-        </ion-item >
-        <ion-item  class="row" ng-click="go('index.html#/page/shopping/product-detail')">
-            <div class="product col col-25">
-                <img src="page/shopping/img/p3.jpg" alt="" />
-            </div>
-            <div class="col col-75">
-                <h2 style="white-space: normal" class="font-title">我是花吃 云南特产零食糕点 玫瑰鲜花饼6枚*2盒 包邮 包邮 神犬小七同款</h2>
-                <p style="white-space: normal;color: #DE6C2C">2014年度 新花上市  买3送1 5送2 全新包装</p>
-                <p >满30元免费配送</p>
-                <p><span class="p-price">￥69.90</span><span class="float-right">已有9999人抢购</span></p>
-            </div>
-        </ion-item >
-        <ion-item  class="row" ng-click="go('index.html#/page/shopping/product-detail')">
-            <div class="product col col-25">
-                <img src="page/shopping/img/p3.jpg" alt="" />
-            </div>
-            <div class="col col-75">
-                <h2 style="white-space: normal" class="font-title">我是花吃 云南特产零食糕点 玫瑰鲜花饼6枚*2盒 包邮 包邮 神犬小七同款</h2>
-                <p style="white-space: normal;color: #DE6C2C">2014年度 新花上市  买3送1 5送2 全新包装</p>
-                <p >满30元免费配送</p>
-                <p><span class="p-price">￥69.90</span><span class="float-right">已有9999人抢购</span></p>
-            </div>
-        </ion-item >
-    </ion-list>
-</ion-content>
-    <ion-content style="top:138px;">
-        <h1>niaho</h1>
-    </ion-content>
-
 </ion-view>
-
-
-
-
