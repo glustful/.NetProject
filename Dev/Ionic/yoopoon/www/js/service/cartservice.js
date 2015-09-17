@@ -1,21 +1,21 @@
-app.service("cartservice", [//'$rootScope',
+app.service("cartservice", ['$rootScope',
 
-	function() {
-		//$rootScope.cartProductCount = selectcount();
-		utils = {
-			setParam: function(name, value) {
-				localStorage.setItem(name, value)
-			},
-			getParam: function(name) {
-				return localStorage.getItem(name)
-			}
-		}
+	function($rootScope) { 
+		$rootScope.cartProductCount = selectcount();
+//	    utils = {
+//			setParam: function(name, value) {
+//				localStorage.setItem(name, value)
+//			},
+//			getParam: function(name) {
+//				return localStorage.getItem(name)
+//			}
+//		};
 
 		cartinfo = {
 			id: null,
 			name: null,
 			count: null
-		}
+		};
 
 		///添加商品和更改已有的商品sevice
 		//data.id(商品id)
@@ -25,7 +25,7 @@ app.service("cartservice", [//'$rootScope',
 			cartinfo.id = data.id;
 			cartinfo.name = data.name;
 			cartinfo.count = data.count;
-			var storage = utils.getParam("ShoppingCart");
+			var storage = localStorage.getItem("ShoppingCart");
 			//第一次加入商品 
 			if (storage == null || storage == "") {
 				var jsonstr = {
@@ -35,8 +35,8 @@ app.service("cartservice", [//'$rootScope',
 						"count": cartinfo.count
 					}]
 				};
-				utils.setParam("ShoppingCart", "'" + JSON.stringify(jsonstr));
-				//$rootScope.cartProductCount += 1;
+				localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
+				$rootScope.cartProductCount += 1;
 			} else {
 				var jsonstr = JSON.parse(storage.substr(1, storage.length));
 				var productlist = jsonstr.productlist;
@@ -55,14 +55,15 @@ app.service("cartservice", [//'$rootScope',
 						"count": cartinfo.count
 					});
 				}
+				$rootScope.cartProductCount += 1;
 				//保存购物车  
-				utils.setParam("ShoppingCart", "'" + JSON.stringify(jsonstr));
+				localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
 
 			}
 		};
 		//商品减少数量，默认是减少1件，减少到为0时候这件商品就删除
 		this.delete = function(id) {
-			var storage = utils.getParam("ShoppingCart");
+			var storage = localStorage.getItem("ShoppingCart");
 			var jsonstr = JSON.parse(storage.substr(1, storage.length));
 			var productlist = jsonstr.productlist;
 			for (var i in productlist) {
@@ -77,9 +78,9 @@ app.service("cartservice", [//'$rootScope',
 							return;	
 						}
 						jsonstr.productlist = productlist;
-						utils.setParam("ShoppingCart", "'" + JSON.stringify(jsonstr));
+						localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
 						//总数+1
-						//$rootScope.cartProductCount -= 1;
+						$rootScope.cartProductCount -= 1;
 						return;
 					}
 					productlist[i].count = parseInt(productlist[i].count) - 1;
@@ -90,11 +91,11 @@ app.service("cartservice", [//'$rootScope',
 				}
 			}
 			jsonstr.productlist = productlist;
-			utils.setParam("ShoppingCart", "'" + JSON.stringify(jsonstr));
+			localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
 		};
 		//直接删除这件商品(无视商品个数)
 		this.deletethis = function  (id) {
-			var storage = utils.getParam("ShoppingCart");
+			var storage = localStorage.getItem("ShoppingCart");
 			var jsonstr = JSON.parse(storage.substr(1, storage.length));
 			var productlist = jsonstr.productlist;
 			for (var i in productlist) {
@@ -104,11 +105,12 @@ app.service("cartservice", [//'$rootScope',
 						jsonstr.productlist = productlist;
 						if(productlist.length==0){
 							localStorage.removeItem("ShoppingCart");
+							$rootScope.cartProductCount = 0;
 							return;	
 						}
-						utils.setParam("ShoppingCart", "'" + JSON.stringify(jsonstr));
+						localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
 						//总数+1
-						//$rootScope.cartProductCount -= 1;
+						$rootScope.cartProductCount -= 1;
 						return;
 					productlist[i].count = parseInt(productlist[i].count) - 1;
 					//jsonstr.totalAmount = parseFloat(jsonstr.totalAmount) - parseInt(productlist[i].num) * parseFloat(productlist[i].price);
@@ -118,27 +120,31 @@ app.service("cartservice", [//'$rootScope',
 				}
 			}
 			jsonstr.productlist = productlist;
-			utils.setParam("ShoppingCart", "'" + JSON.stringify(jsonstr));
+			localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
 		};
 		//清空购物车
 		this.deleteall = function () {
 			localStorage.removeItem("ShoppingCart");
+			$rootScope.cartProductCount = 0;
 		};
         //获取总数的service
         this.GetAllcart= function()
         {
             var a =  selectcount();
+            $rootScope.cartProductCount = a;
             return a;
         }
 		//查询购物车商品个数(请用变量接收)
 		function selectcount ()
 		{
-			var storage = utils.getParam("ShoppingCart");
+			var storage = localStorage.getItem("ShoppingCart");
 			if (storage == null || storage == "") {
+				$rootScope.cartProductCount = 0;
 				return 0;
 			}
 			var jsonstr =  JSON.parse(storage.substr(1, storage.length));
 			var count = jsonstr.productlist.length;
+			$rootScope.cartProductCount = count;
 			return count;
 		}
 

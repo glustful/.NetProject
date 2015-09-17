@@ -56,12 +56,14 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate, $timeo
 		tip1.style.display = "none";
 		tip2.style.display = "none";
 		localStorage.x1 = "none";
+		$scope.hide=false;
 	};
-
+    $scope.hide=true;
 	function save() {
 		if (localStorage.x1) {
 			tip1.style.display = "none";
 			tip2.style.display = "none";
+			$scope.hide=false;
 		}
 	}
 	save();

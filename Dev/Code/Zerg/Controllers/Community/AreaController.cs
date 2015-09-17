@@ -64,7 +64,7 @@ namespace Zerg.Controllers.Community
         /// <summary>
         /// 根据不同条件查询信息
         /// </summary>
-        /// <param name="condition">条件</param>
+        /// <param name="condition">条件,father 传true 获取一级地区，father传false跟fatherid的值大于0获取下级地区</param>
         /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage Get([FromUri]AreaSearchCondition condition)
@@ -80,6 +80,11 @@ namespace Zerg.Controllers.Community
             }).ToList();
             var totalCount = _areaService.GetAreaCount(condition);
             return PageHelper.toJson(new { List = models, Condition = condition, TotalCount = totalCount });
+        }
+        public  HttpResponseMessage getAreaByFatherId(int id)
+        {
+
+            return null;
         }
         /// <summary>
         /// 添加信息

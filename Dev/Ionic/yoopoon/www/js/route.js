@@ -157,7 +157,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/addressAdm.html',
-                        controller: 'TabMeCtrl'
+                        controller: 'addressAdm'
                     }
                 }
             })
@@ -175,16 +175,25 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/selectProvince.html',
-                        controller: 'selectAddress'
+                        controller: 'selProvice'
                     }
                 }
             })
             .state('page.selectCity', {
-                url: '/me/',
+                url: '/me?id&name',
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/selectCity.html',
-                        controller: 'TabMeCtrl'
+                        controller: 'selectCity'
+                    }
+                }
+            })
+            .state('page.selectCounty',{
+                url:'/me?id&name',
+                views:{
+                    'page-me':{
+                        templateUrl:'page/me/selectCounty.html',
+                        controller:'selectCounty'
                     }
                 }
             })
@@ -202,7 +211,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/myOrder.html',
-                        controller: 'TabMeCtrl'
+                        controller: 'myorder'
                     }
                 }
             })
@@ -228,7 +237,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 url: '/user/login',
                 views: {
                     'page-me': {
-                        templateUrl: 'page/user/login.html'
+                        templateUrl: 'page/user/login.html',
+                        controller:'login'
                     }
                 }
             })
@@ -237,7 +247,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/Product-Catagory.html',
-                controller: 'TabShoppingCtrl'
+                controller: 'CategoryController'
             }
         }
     })

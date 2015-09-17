@@ -115,25 +115,25 @@ app.controller('TabMeCtrl', function($http,$scope,$state,$ionicSlideBoxDelegate,
         UpdTime:'2015-08-09'
     };
 
-    //获取当前通用户信息
-    $scope.currentuser= AuthService.CurrentUser();
-    $http.get(SETTING.ApiUrl+'/Member/GetMemberByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
-        .success(function(response) {
-            $scope.oldMem=response;
-
-            //添加判断,如果用户没有头像,隐藏IMG标签
-            if($scope.oldMem.Thumbnail.length<15){
-                //操作IMG标签的SRC为空
-                var img = document.getElementById('imghead');
-                //没图片隐藏
-                img.style.display = 'none';
-                img.src = "";
-            }else{
-                //隐藏默认头像
-                var defaultHeadImg = document.getElementById("preview");
-                defaultHeadImg.style.background = 'white';
-            }
-        });
+    ////获取当前通用户信息
+    //$scope.currentuser= AuthService.CurrentUser();
+    //$http.get(SETTING.ApiUrl+'/Member/GetMemberByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
+    //    .success(function(response) {
+    //        $scope.oldMem=response;
+    //
+    //        //添加判断,如果用户没有头像,隐藏IMG标签
+    //        if($scope.oldMem.Thumbnail.length<15){
+    //            //操作IMG标签的SRC为空
+    //            var img = document.getElementById('imghead');
+    //            //没图片隐藏
+    //            img.style.display = 'none';
+    //            img.src = "";
+    //        }else{
+    //            //隐藏默认头像
+    //            var defaultHeadImg = document.getElementById("preview");
+    //            defaultHeadImg.style.background = 'white';
+    //        }
+    //    });
 
     $scope.save = function() {
         //if (document.getElementById("Uptext").innerText == '正在上传..') {
