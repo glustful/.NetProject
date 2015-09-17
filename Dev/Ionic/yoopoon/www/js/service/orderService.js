@@ -12,7 +12,7 @@ app.service("orderService",function(repository){
 
     this.submitOrderFromCart =function(){
        //TODO:实现这里
-    } ;
+    };
 
     this.updateOrder = function(id,status){
         var param = {Id:id,Status:status};

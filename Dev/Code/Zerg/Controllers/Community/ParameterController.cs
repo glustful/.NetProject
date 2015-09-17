@@ -120,14 +120,18 @@ namespace Zerg.Controllers.Community
 			return false;
 		}
 
-		public bool Delete(int id)
-		{
-			var entity = _parameterService.GetParameterById(id);
-			if(entity == null)
-				return false;
-			if(_parameterService.Delete(entity))
-				return true;
-			return false;
-		}
+		
+
+        [HttpGet]
+        public HttpResponseMessage Delete(int id)
+        {
+            var entity = _parameterService.GetParameterById(id);
+            if (entity == null)
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "É¾³ýÊ§°Ü£¡"));
+            if (_parameterService.Delete(entity))
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "É¾³ýÊ§°Ü£¡"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "É¾³ýÊ§°Ü£¡"));
+        }
+        
 	}
 }
