@@ -272,7 +272,6 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
     //};
     //pushContent();
     //$scope.more=pushContent;
-        $scope.member=[]
         var morecomment = function(){
             $timeout(function(){
                 $scope.comcon.Page+=1;

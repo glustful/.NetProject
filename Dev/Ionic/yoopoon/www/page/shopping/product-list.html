@@ -29,10 +29,10 @@
 
     <ion-list >
         <ion-item ng-repeat="item in list"  class="row" ui-sref="page.product-detail({id:item.Id})">
-            <div class="product col col-25">
+            <div class="product col col-25" style="display: block">
                 <img src="http://img.iyookee.cn/{{item.MainImg}}" alt="" />
             </div>
-             <div class="col col-75">
+             <div class="col col-75" style="display: block">
                  <h2 style="white-space: normal" class="font-title">{{item.Name}}</h2>
                  <p style="white-space: normal;color: #DE6C2C">{{item.Subtitte}}</p>
                  <p >{{item.Ad1}}</p>
