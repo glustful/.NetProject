@@ -57,14 +57,9 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
                
             });
     };
-
-
-
     $scope.go=function(state){
         window.location.href=state;
     };
-
-
     //    搜索功能
     $scope.showSelect = false;
     $scope.isShow = false;
@@ -72,21 +67,19 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
         $scope.showSelect = true;
         $scope.isShow = true;
     };
-    $scope.AddGWCAction = function()
-    {
+    $scope.AddGWCAction = function() {
         //显示图标
         var actionDOM = document.getElementById("gwcaction");
         actionDOM.style.visibility = "visible";
         //执行动画
         var abc = actionDOM.className;
-        actionDOM.className = abc+"Gwcactive";
+        actionDOM.className = abc + "Gwcactive";
         //执行完毕动画后，隐藏图标
-        $timeout(show,1000);
-        function show()
-        {
+        $timeout(show, 1000);
+        function show() {
             actionDOM.style.visibility = "hidden";
         }
-
+    }
     //region商品大图获取
 
     $scope.Condition = {
@@ -129,7 +122,6 @@ app.controller('TabShoppingCtrl',['$http','$scope','$stateParams','$timeout','$i
     };
     getList();
 //endregion
-
 
     //region 商品加载
     $scope.load_more = function(){
