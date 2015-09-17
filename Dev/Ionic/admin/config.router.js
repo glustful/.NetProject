@@ -3,10 +3,7 @@
 /**
  * Config for the router
  */
-angular.module('app')
-
-    .run(
-    ['$rootScope', '$state', '$stateParams', 'AuthService',
+angular.module('app').run(['$rootScope', '$state', '$stateParams', 'AuthService',
         function ($rootScope, $state, $stateParams, AuthService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
@@ -30,17 +27,12 @@ angular.module('app')
                 }
             });
         }
-    ]
-)
+    ])
 
-    .config(
-    ['$stateProvider', '$urlRouterProvider',
-      function ($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-          $urlRouterProvider
-              .otherwise('/app/home');                              //程序启动默认界面
-          $stateProvider
-              .state('app', {
+          $urlRouterProvider.otherwise('/app/home');                              //程序启动默认界面
+          $stateProvider.state('app', {
                   abstract: true,
                   url: '/app',
                   templateUrl: 'app/common/layout/app.html'
@@ -83,123 +75,6 @@ angular.module('app')
                   }
               })
 
-                //注册页
-                .state('access.signup', {
-                    url: '/signup',
-                    templateUrl: 'app/module/page_signup.html',
-                    resolve: {
-                        deps: ['uiLoad',
-                            function( uiLoad ){
-                                return uiLoad.load( ['js/controllers/signup.js'] );
-                            }]
-                    }
-                })
-                //商品属性管理 app.parameter.parameterList
-                .state('app.parameter',{
-                    url: '/parameter',
-                    template: '<div ui-view class="fade-in-up"></div>',
-                    resolve: {
-                        deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
-                                return $ocLazyLoad.load(['app/module/Parameter/controller/parameter.js']);
-                            }]
-                    }
-                })
-                .state('app.parameter.parameterList',{
-                    url:'/parameterList',
-                    templateUrl:'app/module/Parameter/view/Index.html'
-
-                })
-                .state('app.parameter.parameterValueIndex',{
-                    url:'/parameterValueIndex?parameterId&name',
-                    templateUrl:'app/module/Parameter/view/parametervalueIndex.html'
-                })
-
-
-
-                //商品管理页
-                .state('app.product',{
-                    url: '/product',
-                    template: '<div ui-view class="fade-in-up"></div>',
-                    //resolve: {
-                    //    deps: ['$ocLazyLoad',
-                    //        function( $ocLazyLoad ){
-                    //            return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
-                    //        }]
-                    //}
-                })
-                .state('app.product.productList',{
-                    url:'/productList',
-                    templateUrl:'app/module/Product/view/Index.html',
-                    resolve: {
-                        deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
-                                return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
-                            }]
-                    },
-                    data : { title: '商品列表' }
-                })
-                .state('app.product.createProduct',{
-                    url:'/createProct',
-                    templateUrl:'app/module/Product/view/Create.html',
-                    resolve: {
-                        deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
-                                return $ocLazyLoad.load(['angularFileUpload','app/module/Product/controller/productController.js']);
-                            }]
-                    }
-                })
-                .state('app.product.editProduct',{
-                    url:'/editProduct?id',
-                    templateUrl:'app/module/Product/view/Edit.html',
-                    resolve: {
-                        deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
-                                return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
-                            }]
-                    }
-                })
-                .state('app.product.productProperty',{
-                    url:'/productProperty?CategoryId&productId',
-                    templateUrl:'app/module/Product/view/Property.html',
-                    resolve: {
-                        deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
-                                return $ocLazyLoad.load(['app/module/Product/controller/parameterController.js']);
-                            }]
-                    }
-                })
-                .state('order',{
-                    url:'/order',
-                    templateUrl: 'app/common/layout/app.html'
-                })
-                .state('order.list',{
-                    url:'/list',
-                    templateUrl:'app/module/order/view/list.html',
-                    resolve:{
-                        deps:['uiLoad',function(uiLoad){
-                            return uiLoad.load(['app/module/order/controller/orderController.js']);
-
-              .state('app.member.memlist', {
-                  url: 'memlist',
-                  templateUrl: 'app/module/member/view/memlist.html',
-                  resolve: {
-                      deps: ['$ocLazyLoad',
-                      function ($ocLazyLoad) {
-                          return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
-                      }]
-                  }
-              })
-              .state('app.member.detail', {
-                  url: 'detail?id',
-                  templateUrl: 'app/module/member/view/detail.html',
-                  resolve: {
-                      deps: ['$ocLazyLoad',
-                          function ($ocLazyLoad) {
-                              return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
-                          }]
-                  }
-              })
 
               //--------------公众号基本设置
               .state('app.autoRes', {
@@ -279,11 +154,11 @@ angular.module('app')
                   }
               })
               //------------自定义菜单
-            .state('app.menu', {
+             .state('app.menu', {
                 url: '/menu',
                 template: '<div ui-view class="fade-in-up"></div>'
             })
-            .state('app.menu.menulist', {
+             .state('app.menu.menulist', {
                 url: '/menulist',
                 templateUrl: 'app/module/menu/view/menulist.html',
                 resolve: {
@@ -294,7 +169,7 @@ angular.module('app')
                         }]
                 }
             })
-            .state('app.menu.childmenulist', {
+             .state('app.menu.childmenulist', {
                 url: '/childmenulist',
                 templateUrl: 'app/module/menu/view/childmenulist.html',
                 resolve: {
@@ -304,7 +179,7 @@ angular.module('app')
                         }]
                 }
             })
-            .state('app.menu.updatemenu', {
+             .state('app.menu.updatemenu', {
                 url: '/updatemenu',
                 templateUrl: 'app/module/menu/view/updatemenu.html',
                 resolve: {
@@ -448,6 +323,7 @@ angular.module('app')
                           }]
                   }
               })
+
               //商品属性管理 app.parameter.parameterList
               .state('app.parameter', {
                   url: '/parameter',
@@ -566,7 +442,7 @@ angular.module('app')
                    data: { title: '地区列表' }
                })
 
-        .state('app.area.createarea', {
+              .state('app.area.createarea', {
             url: '/createarea',
             templateUrl: 'app/module/Area/view/createArea.html',
             resolve: {
@@ -589,7 +465,7 @@ angular.module('app')
           //地址管理
                .state('app.memberAddress', {
                    url: '/memberAddress',
-                   template: '<div ui-view class="fade-in-up"></div>',
+                   template: '<div ui-view class="fade-in-up"></div>'
                })
 
                .state('app.memberAddress.Address', {
@@ -614,6 +490,5 @@ angular.module('app')
                           }]
                   }
               })
-      }
-    ]
-);
+
+      }])
