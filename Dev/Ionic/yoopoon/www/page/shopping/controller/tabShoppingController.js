@@ -189,23 +189,23 @@ app.controller('ShoppingListCtrl',['$http','$scope','$timeout',function($http,$s
     getProduct();
     //region 加载更多
     $scope.hasmore=false
-    $scope.load_more = function(){
-        $timeout(function(){
-
-            $scope.sech.Page+=1;
-            $http.get(SETTING.ApiUrl + "/CommunityProduct/Get", {
-                params: $scope.sech,
-                'withCredentials': true  //跨域
-            }).success(function (data) {
-                for (var i = 0; i < data.List.length; i++) {
-                    $scope.list.push(data.List[i]);
-                }
+    $scope.loadProduct = function(){
+        //$timeout(function(){
+        //
+        //},1000)
+        $scope.sech.Page+=1;
+        $http.get(SETTING.ApiUrl + "/CommunityProduct/Get", {
+            params: $scope.sech,
+            'withCredentials': true  //跨域
+        }).success(function (data) {
+            for (var i = 0; i < data.List.length; i++) {
+                $scope.list.push(data.List[i]);
                 if($scope.list.length==data.TotalCount)
                 {
-                    $scope.hasmore=false
+                    $scope.hasmore=false;
                 }
-            });
-        },1000)
+            }
+        });
     };
     //endregion
     //region 条件排序
@@ -319,6 +319,21 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
             });
         },1000);
     };
+        //region 加入购物车
+        $scope.cartinfo={
+            id:null,
+            name:null,
+            count:null
+        };
+        // 添加商品
+        $scope.AddCart = function()
+        {
+            $scope.cartinfo.id=$scope.product.Id;
+            $scope.cartinfo.name=$scope.product.Name;
+            $scope.cartinfo.count=1;
+            cartservice.add($scope.cartinfo);
+        }
+        //endregion
         $scope.AddGWCAction = function()
         {
             //显示图标
