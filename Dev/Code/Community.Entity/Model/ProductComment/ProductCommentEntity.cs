@@ -1,4 +1,5 @@
 using System;
+using Community.Entity.Model.Member;
 using Community.Entity.Model.Product;
 using YooPoon.Core.Data;
 
@@ -14,10 +15,11 @@ namespace Community.Entity.Model.ProductComment
 		/// 商品ID
 		/// </summary>
 		public virtual ProductEntity Product { get; set; }
+        public virtual MemberEntity Member { get; set; }
 		/// <summary>
 		/// AddUser
 		/// </summary>
-		public virtual int AddUser { get; set; }
+		//public virtual int AddUser { get; set; }
 		/// <summary>
 		/// AddTime
 		/// </summary>
