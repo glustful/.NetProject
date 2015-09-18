@@ -328,7 +328,21 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
             }
 
         }
-}])
+
+
+
+
+
+
+
+
+
+}]);
+
+
+
+
+
 app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
     $scope.search={
         Name:$stateParams.productName
@@ -340,6 +354,10 @@ app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($htt
         $scope.productList=data.List
     })
 }])
+
+
+
+
 
 
 

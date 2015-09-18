@@ -1,6 +1,6 @@
 
 
-app.controller('register',['$http','$scope',function($http,$scope){
+app.controller('register',['$http','$scope','$state',function($http,$scope,$state){
 
     $scope.signer ={
         UserName:'',
@@ -11,11 +11,11 @@ app.controller('register',['$http','$scope',function($http,$scope){
         $http.post(SETTING.ApiUrl +'/Member/AddMember',$scope.signer,{'withCredentials':true}).success(function(data){
                 if(data.Status==false){
                     $scope.tip=data.Msg;
+                    return;
                 }
             else{
-                    console.log("×¢²á³É¹¦")
+                    $state.go('page.login');
                 }
-            console.log(data);
         })
     };
 
