@@ -171,3 +171,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
 
 
 
+
+
+
+

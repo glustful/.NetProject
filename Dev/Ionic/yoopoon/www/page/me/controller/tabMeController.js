@@ -1,4 +1,4 @@
-
+var httpimguri="";
 app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicModal,$stateParams) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -22,13 +22,62 @@ app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicM
         //alert($scope.model.activeIndex);
     };
     $scope.delegateHandler = $ionicSlideBoxDelegate;
-//    ҳ����ת
+
     $scope.go = function (state) {
         window.location.href = state;
     }
-//    ������ַ
 
-
+    //我的订单
+    $scope.tabIndex = 1;
+    $scope.getOrderList = function (tabIndex) {
+        $scope.tabIndex = tabIndex;
+    };
+    function tab() {
+        //待付款
+        if ($stateParams.tabIndex == 1) {
+            $scope.tabIndex = 1;
+            //$scope.serchCondition={
+            //    Page:'',
+            //    PageCount:'',
+            //    Status:'1'
+            //}
+            //$scope.myOrder = orderService.getOrderList($scope.searchCondition)
+            //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
+            //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
+            //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
+        }
+        //待发货
+        if ($stateParams.tabIndex == 2) {
+            $scope.tabIndex = 2;
+            //$scope.serchCondition={
+            //    Page:'',
+            //    PageCount:'',
+            //    Status:'2'
+            //}
+            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
+            //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
+            //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
+            //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
+        }
+        //待收货
+        if ($stateParams.tabIndex == 3) {
+            $scope.tabIndex = 3;
+            //$scope.serchCondition={
+            //    Page:'',
+            //    PageCount:'',
+            //    Status:'3'
+            //}
+            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
+            //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
+            //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
+            //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
+        }
+        //待评价
+        if ($stateParams.tabIndex == 4) {
+            $scope.tabIndex = 4;
+        }
+    }
+    tab();
 //    $ionicModal.fromTemplateUrl("my-modal.html", {
 //        scope: $scope,
 //        animation: "slide-in-up"
@@ -72,7 +121,7 @@ app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicM
         UpdTime: '2015-08-09'
     };
 
-    ////获取当前通用户信息
+    ////获取当前用户信息
     //$scope.currentuser= AuthService.CurrentUser();
     //$http.get(SETTING.ApiUrl+'/Member/GetMemberByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
     //    .success(function(response) {
@@ -119,7 +168,7 @@ app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicM
     }
 
 })
-app.controller('selectAddress', function($scope, $routeParams) {
+app.controller('selectAddress', function($scope,$routeParams) {
 
     $scope.model = {
         activeIndex: 0
@@ -139,59 +188,6 @@ app.controller('selectAddress', function($scope, $routeParams) {
     $scope.open = function () {
         comment.style.display = "";
     }
-
-    //我的订单
-    $scope.tabIndex = 1;
-    $scope.getOrderList = function (tabIndex) {
-        $scope.tabIndex = tabIndex;
-    };
-    function tab() {
-
-        //待付款
-        if ($stateParams.tabIndex == 1) {
-            $scope.tabIndex = 1;
-            //$scope.serchCondition={
-            //    Page:'',
-            //    PageCount:'',
-            //    Status:'1'
-            //}
-            //$scope.myOrder = orderService.getOrderList($scope.searchCondition)
-            //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
-            //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
-            //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
-        }
-        //待发货
-        if ($stateParams.tabIndex == 2) {
-            $scope.tabIndex = 2;
-            //$scope.serchCondition={
-            //    Page:'',
-            //    PageCount:'',
-            //    Status:'2'
-            //}
-            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
-            //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
-            //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
-            //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
-        }
-        //待收货
-        if ($stateParams.tabIndex == 3) {
-            $scope.tabIndex = 3;
-            //$scope.serchCondition={
-            //    Page:'',
-            //    PageCount:'',
-            //    Status:'3'
-            //}
-            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
-            //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
-            //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
-            //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
-        }
-        //待评价
-        if ($stateParams.tabIndex == 4) {
-            $scope.tabIndex = 4;
-        }
-    }
-    tab();
 
 })
 
