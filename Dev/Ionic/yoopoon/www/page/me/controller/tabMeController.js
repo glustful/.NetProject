@@ -1,4 +1,4 @@
-
+var httpimguri="";
 app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicModal,$stateParams) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -22,7 +22,7 @@ app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicM
         //alert($scope.model.activeIndex);
     };
     $scope.delegateHandler = $ionicSlideBoxDelegate;
-//    ҳ����ת
+
     $scope.go = function (state) {
         window.location.href = state;
     }
@@ -78,8 +78,6 @@ app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicM
         }
     }
     tab();
-
-
 //    $ionicModal.fromTemplateUrl("my-modal.html", {
 //        scope: $scope,
 //        animation: "slide-in-up"
@@ -123,7 +121,7 @@ app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicM
         UpdTime: '2015-08-09'
     };
 
-    ////获取当前通用户信息
+    ////获取当前用户信息
     //$scope.currentuser= AuthService.CurrentUser();
     //$http.get(SETTING.ApiUrl+'/Member/GetMemberByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
     //    .success(function(response) {

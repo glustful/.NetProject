@@ -2,16 +2,15 @@
  * Created by gaofengming on 2015/9/15.
  */
 app.controller('login',['$scope','$state','AuthService','$ionicLoading','$timeout',function($scope,$state,AuthService,$ionicLoading,$timeout){
-    console.log("121212");
     $scope.user={
         userName:'',
         password:''
     };
     $scope.login = function(){
-        //ç™»å½•æˆåŠŸï¼Œè·³è½¬ä¸ªäººä¸­å¿ƒ
+        //µÇÂ¼³É¹¦£¬Ìø×ª¸öÈËÖĞĞÄ
         AuthService.doLogin($scope.user.userName,$scope.user.password,function(data){
             $ionicLoading.show({
-                template:"ç™»å½•ä¸­ï¼Œè¯·ç¨å..."
+                template:"µÇÂ¼ÖĞ£¬ÇëÉÔºó..."
             });
             $timeout(function(){
                 $ionicLoading.hide();
@@ -20,7 +19,7 @@ app.controller('login',['$scope','$state','AuthService','$ionicLoading','$timeou
 
 
         },
-            //ç™»å½•å¤±è´¥
+            //µÇÂ¼Ê§°Ü
             function(data){
             $ionicLoading.show({
                 template:data.Msg,

@@ -1,7 +1,7 @@
 /**
  * Created by Yunjoy on 2015/9/15.
  */
-//æ³¨å†Œ
+//×¢²á
 app.controller('register',['$http','$scope','$state','AuthService','$ionicLoading','$timeout',function($http,$scope,$state,AuthService,$ionicLoading,$timeout){
     $scope.signer ={
         Phone:'',
@@ -25,7 +25,7 @@ app.controller('register',['$http','$scope','$state','AuthService','$ionicLoadin
             else{
                 AuthService.doLogin($scope.signer.UserName,$scope.signer.Password,function(){
                     $ionicLoading.show({
-                        template:"æ³¨å†ŒæˆåŠŸï¼Œç™»å½•ing..."
+                        template:"×¢²á³É¹¦£¬µÇÂ¼ing..."
                     });
                     $timeout(function(){
                         $state.go("page.me");
@@ -37,8 +37,7 @@ app.controller('register',['$http','$scope','$state','AuthService','$ionicLoadin
         })
     }
 }])
-
-//ä¸¤æ¬¡å¯†ç è¾“å…¥éªŒè¯
+//Á½´ÎÃÜÂëÊäÈëÑéÖ¤
 function check()
 {
     var pass1 = document.getElementById("FPassword");
@@ -46,12 +45,12 @@ function check()
     var tips= document.getElementById("errorTip");
     if(pass1.value!=pass2.value)
     {
-        tips.innerHTML="ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸ä¸€è‡´ï¼Œè¯·é‡æ–°è¾“å…¥ï¼";
+        tips.innerHTML="Á½´ÎÃÜÂëÊäÈë²»Ò»ÖÂ£¬ÇëÖØĞÂÊäÈë£¡";
     }else{
         tips.innerHTML="";
     }
     if(pass1.value==""||pass2.value=="")
     {
-        tips.innerHTML="è¯·è¾“å…¥å¯†ç ";
+        tips.innerHTML="ÇëÊäÈëÃÜÂë";
     }
 }
