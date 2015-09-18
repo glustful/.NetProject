@@ -211,7 +211,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/myOrder.html',
-                        controller: 'myorder'
+                        controller: 'TabMeCtrl'
                     }
                 }
             })

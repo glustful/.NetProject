@@ -99,7 +99,7 @@ namespace Zerg.Controllers.Community
          //根据userId 获取会员信息
         public HttpResponseMessage Get(string userId) 
         {
-            if (string.IsNullOrEmpty(userId) || PageHelper.ValidateNumber(userId)) 
+            if (string.IsNullOrEmpty(userId) || !PageHelper.ValidateNumber(userId)) 
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
             }
