@@ -22,7 +22,7 @@ class AddAgentDetailViewController: UIViewController {
             TipTools().showToast("格式不符", message: "电话号码格式不对，重新输入", duration: 2)
             return
         }
-        println("phone=\(uiPhone.text)")
+        print("phone=\(uiPhone.text)")
         sender.enabled = false
         if type == 0{
         requestAddPartner()
@@ -35,7 +35,7 @@ class AddAgentDetailViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        var gap = UITapGestureRecognizer(target: self, action: "hiddenKeyBoard")
+        let gap = UITapGestureRecognizer(target: self, action: "hiddenKeyBoard")
         gap.numberOfTapsRequired = 1
         self.view.addGestureRecognizer(gap)
         

@@ -31,7 +31,7 @@ class BrandOfProductListController: SuperViewController,UITableViewDataSource,UI
     }
     @IBAction func leadClientAction(sender: UIButton) {
         User.share.fromType = HouseFromType.leadOrRec
-        var tab = self.navigationController!.viewControllers.first as! TabBarViewController
+        let tab = self.navigationController!.viewControllers.first as! TabBarViewController
         tab.selectedIndex = 1
         
         self.navigationController!.popToViewController(tab, animated: true)
@@ -83,7 +83,7 @@ class BrandOfProductListController: SuperViewController,UITableViewDataSource,UI
     }
     
     private func initBrand(){
-        var imgUrl = brandEntity?.productParamater?["图片banner"]
+        let imgUrl = brandEntity?.productParamater?["图片banner"]
         
         self.uiImageView.load(imgHost + (imgUrl ?? ""), placeholder: UIImage(named: placeHoder))
         self.uiLabelTitle.text = brandEntity!.Bname
@@ -111,7 +111,7 @@ class BrandOfProductListController: SuperViewController,UITableViewDataSource,UI
     
     private func showDataSource(json: JSON){
         for i in 0..<json.count{
-            var entity = ProductEntity()
+            let entity = ProductEntity()
             entity.generateSelf(json[i])
             self.productList.append(entity)
         }
@@ -152,13 +152,13 @@ class BrandOfProductListController: SuperViewController,UITableViewDataSource,UI
         }else{
             row = indexPath.row * 2 + 1
         }
-        var entity = self.productList[row]
-        var nameSize = CommentTools.computerContentSize(entity.productName ?? "", fontSize: 17, widgetWidth: tableView.frame.size.width - 10)
-        var subTitleSize = CommentTools.computerContentSize(entity.subTitle ?? "", fontSize: 14, widgetWidth: tableView.frame.size.width - 10)
-        var priceSize = CommentTools.computerContentSize("均价\(entity.price ?? 0)\(unitMeter)起", fontSize: 15, widgetWidth: tableView.frame.size.width-10)
-        var totalHeight = nameSize.height + subTitleSize.height + priceSize.height
+        let entity = self.productList[row]
+        let nameSize = CommentTools.computerContentSize(entity.productName ?? "", fontSize: 17, widgetWidth: tableView.frame.size.width - 10)
+        let subTitleSize = CommentTools.computerContentSize(entity.subTitle ?? "", fontSize: 14, widgetWidth: tableView.frame.size.width - 10)
+        let priceSize = CommentTools.computerContentSize("均价\(entity.price ?? 0)\(unitMeter)起", fontSize: 15, widgetWidth: tableView.frame.size.width-10)
+        let totalHeight = nameSize.height + subTitleSize.height + priceSize.height
         
-        var height = (tableView.frame.size.width - 10 - 38) / (353/546)
+        let height = (tableView.frame.size.width - 10 - 38) / (353/546)
        
         return 40 + height  + totalHeight + 22
     }
@@ -168,7 +168,7 @@ class BrandOfProductListController: SuperViewController,UITableViewDataSource,UI
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        var identifier = segue.identifier ?? ""
+        let identifier = segue.identifier ?? ""
         switch identifier{
         case "productDetail":
             if sender is UITableView{
@@ -180,10 +180,10 @@ class BrandOfProductListController: SuperViewController,UITableViewDataSource,UI
     }
     
     private func dealWithProductDetailSegue(segue: UIStoryboardSegue,sender: AnyObject?){
-        var tableView = sender as! UITableView
-        var row = tableView.indexPathForSelectedRow()!.row ?? 0
+        let tableView = sender as! UITableView
+        let row = tableView.indexPathForSelectedRow!.row ?? 0
         if segue.destinationViewController is ProductDetailViewController{
-            var controller = segue.destinationViewController as! ProductDetailViewController
+            let controller = segue.destinationViewController as! ProductDetailViewController
             if tableView === self.uiLeftTableView{
                 controller.productId = "\(self.productList[row * 2].id ?? 0)"
             }else{
@@ -196,20 +196,20 @@ class BrandOfProductListController: SuperViewController,UITableViewDataSource,UI
     /**
     计算滚动控件的高度
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     private func computerContentHeight()->CGFloat{
 
-        var height = (self.uiLeftTableView.frame.size.width - 10 - 38) / (353/546)
+        let height = (self.uiLeftTableView.frame.size.width - 10 - 38) / (353/546)
       
         var leftHeight: CGFloat = 0
         var rightHeight: CGFloat = 0
         for i in 0..<self.productList.count{
-            var entity = self.productList[i]
-            var nameSize = CommentTools.computerContentSize(entity.productName ?? "", fontSize: 17, widgetWidth: self.uiLeftTableView.frame.size.width-10)
-            var subTitleSize = CommentTools.computerContentSize(entity.subTitle ?? "", fontSize: 14, widgetWidth: self.uiLeftTableView.frame.size.width-10)
-            var priceSize = CommentTools.computerContentSize("均价\(entity.price ?? 0)\(unitMeter)起", fontSize: 15, widgetWidth: self.uiLeftTableView.frame.size.width-10)
-            var totalHeight = nameSize.height + subTitleSize.height + priceSize.height
+            let entity = self.productList[i]
+            let nameSize = CommentTools.computerContentSize(entity.productName ?? "", fontSize: 17, widgetWidth: self.uiLeftTableView.frame.size.width-10)
+            let subTitleSize = CommentTools.computerContentSize(entity.subTitle ?? "", fontSize: 14, widgetWidth: self.uiLeftTableView.frame.size.width-10)
+            let priceSize = CommentTools.computerContentSize("均价\(entity.price ?? 0)\(unitMeter)起", fontSize: 15, widgetWidth: self.uiLeftTableView.frame.size.width-10)
+            let totalHeight = nameSize.height + subTitleSize.height + priceSize.height
             if i % 2 == 0{
                 leftHeight += totalHeight
               
@@ -217,7 +217,7 @@ class BrandOfProductListController: SuperViewController,UITableViewDataSource,UI
                 rightHeight += totalHeight
             }
         }
-        var count = self.productList.count % 2 == 0 ? self.productList.count / 2 : self.productList.count / 2 + 1
+        let count = self.productList.count % 2 == 0 ? self.productList.count / 2 : self.productList.count / 2 + 1
         return max(leftHeight,rightHeight) + (height + 62) * CGFloat(count)
     }
 }

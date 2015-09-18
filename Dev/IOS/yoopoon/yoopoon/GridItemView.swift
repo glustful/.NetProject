@@ -49,14 +49,14 @@ class GridItemView: UIView{
         labelDescript!.adjustsFontSizeToFitWidth = true
         self.addSubview(labelDescript!)
         
-        var width = min(frame.width-8, frame.height-41)
+        let width = min(frame.width-8, frame.height-41)
         var marginTop = max(41, frame.height-width)
         marginTop -= (marginTop-41)/2
         imageView = CycleImageView(frame: CGRectMake((frame.width-width)/2, marginTop, width, width))
         self.addSubview(imageView!)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

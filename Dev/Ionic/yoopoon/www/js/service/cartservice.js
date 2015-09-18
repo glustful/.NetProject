@@ -145,7 +145,7 @@ app.service("cartservice", ['$rootScope',
             var a =  selectcount();
             $rootScope.cartProductCount = a;
             return a;
-        }
+        };
 		//查询购物车商品个数(请用变量接收)
 		function selectcount ()
 		{
@@ -158,6 +158,15 @@ app.service("cartservice", ['$rootScope',
 			var count = jsonstr.productlist.length;
 			$rootScope.cartProductCount = count;
 			return count;
+		};
+		//获取购物车内所有的商品(返回的是json)
+		this.GetAllcartToJson = function () {
+			var storage = localStorage.getItem("ShoppingCart");
+			if (storage == null || storage == "") {
+				return '购物车为空!';
+			}
+			var jsonstr =  JSON.parse(storage.substr(1, storage.length));
+			return jsonstr.productlist;
 		}
 
 	}
