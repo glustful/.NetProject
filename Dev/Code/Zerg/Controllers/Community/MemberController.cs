@@ -139,25 +139,25 @@ namespace Zerg.Controllers.Community
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "post  失败")); 
 		}
-         /// <summary>
-         /// 根据用户ID获取会员信息
-         /// </summary>
-         /// <param name="userId"></param>
-         /// <returns></returns>
-         [HttpGet]
-        public HttpResponseMessage GetMemberByUserId(int userId) 
-        {
-            if (userId == 0) 
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "获取会员信息失败"));
-            }
-            var member = _memberService.GetMemberByUserId(userId);
-            if (member == null) 
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "你还不是会员"));
-            }
-            return PageHelper.toJson(member);
-        }
+        // /// <summary>
+        // /// 根据用户ID获取会员信息
+        // /// </summary>
+        // /// <param name="userId"></param>
+        // /// <returns></returns>
+        // [HttpGet]
+        //public HttpResponseMessage GetMemberByUserId(int userId) 
+        //{
+        //    if (userId == 0) 
+        //    {
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "获取会员信息失败"));
+        //    }
+        //    var member = _memberService.GetMemberByUserId(userId);
+        //    if (member == null) 
+        //    {
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "你还不是会员"));
+        //    }
+        //    return PageHelper.toJson(member);
+        //}
         /// <summary>
         /// 新用户注册
         /// </summary>
@@ -215,7 +215,7 @@ namespace Zerg.Controllers.Community
                 Phone = memberModel.Phone
             };
 
-            //判断user表和Broker表中是否存在用户名
+            //判断user表和member表中是否存在用户名
             int user2 = _memberService.GetMemberCount(condition);
             if (user2 != 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号已经存在"));
 
@@ -252,6 +252,7 @@ namespace Zerg.Controllers.Community
             var model = new MemberEntity();
             model.UserId = _userService.InsertUser(newUser).Id;
             model.RealName = memberModel.UserName;
+            model.UserName = memberModel.UserName;
             model.Phone = memberModel.Phone;
             model.Points=0;
             model.IdentityNo="";

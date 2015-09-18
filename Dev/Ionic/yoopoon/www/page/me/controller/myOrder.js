@@ -3,5 +3,5 @@
  */
 app.controller('myorder',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
 $scope.Index=$stateParams.tabIndex;
-    alert($scope.Index);
+    //alert($scope.Index);
 }]);
