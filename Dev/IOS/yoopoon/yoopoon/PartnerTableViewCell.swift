@@ -40,10 +40,10 @@ class PartnerTableViewCell: UITableViewCell {
     /**
     初始化数据
     
-    :param: json <#json description#>
-    :param: type 0为合伙人，1为我接收到的邀请，2我的推荐
+    - parameter json: <#json description#>
+    - parameter type: 0为合伙人，1为我接收到的邀请，2我的推荐
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func initData(json: JSON,type:Int){
         self.type = type

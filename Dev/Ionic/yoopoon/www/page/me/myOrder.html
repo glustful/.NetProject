@@ -26,10 +26,10 @@
                 </ion-item >
                 <div class="item  bar padding">
                     <div>
-                        <span ng-show="tabIndex==1">买家未付款</span>
-                        <span ng-show="tabIndex==2">买家已付款</span>
-                        <span ng-show="tabIndex==3">商品已送达</span>
-                        <span ng-show="tabIndex==4">买家已签收</span>
+                        <span ng-show="tabIndex==0">买家未付款</span>
+                        <span ng-show="tabIndex==1">买家已付款</span>
+                        <span ng-show="tabIndex==2">商品已送达</span>
+                        <span ng-show="tabIndex==3">买家已签收</span>
                         <button class="float-right font-11"ng-click="upOrderStatus(1,item.orderId)" ng-show="tabIndex==0" style="background-color: #ff5000;color: white;width: 60px;height: 25px;border: none;border-radius: 5px" >付 款</button>
                         <span class="float-right font-11 color-silver" ng-show="tabIndex==1">待发货</span>
                         <button class="float-right font-11"ng-click="upOrderStatus(3,item.orderId)" ng-show="tabIndex==2" style="background-color: #ff5000;color: white;width: 80px;height: 25px;border: none;border-radius: 5px">确认收货</button>

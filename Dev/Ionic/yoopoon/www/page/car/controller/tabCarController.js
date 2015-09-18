@@ -4,6 +4,13 @@ app.controller('TabCarCtrl', function($scope, $ionicSlideBoxDelegate) {
   // To listen for when this page is active (for example, to refresh data),
   // listen for the $ionicView.enter event:
   //
+    var storage=window.localStorage.ShoppingCart;
+    var jsonstr = JSON.parse(storage.substr(1, storage.length));
+    $scope.productlist = jsonstr.productlist;
+
+
+
+
   $scope.chats = [{
     id: 0,
     name: 'Ben Sparrow',

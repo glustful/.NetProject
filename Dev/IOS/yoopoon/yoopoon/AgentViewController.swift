@@ -41,12 +41,12 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
             }
             self.isGoLogin = true
             
-            var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.loginIdentifier) as! LoginViewController
+            let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.loginIdentifier) as! LoginViewController
             self.navigationController!.pushViewController(controller, animated: true)
             return
         }else if !(User.share.isBroker ?? false){
-            println(self.tabBarController!.selectedIndex)
+            print(self.tabBarController!.selectedIndex)
             self.tabBarController!.selectedIndex = 3
             TipTools().showToast("提示", message: "你还没有成为经纪人，完善资料成为经纪人", duration: 2)
             //return
@@ -83,7 +83,7 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
                 self.mTableView.reloadData()
                 
                 },
-                faild: {error in println("\(error!.description)")})
+                faild: {error in print("\(error!.description)")})
     }
     
     /**
@@ -108,7 +108,7 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
                 
                 
                 },
-                faild: {error in println("\(error!.description)")})
+                faild: {error in print("\(error!.description)")})
     }
     
     /**
@@ -129,7 +129,7 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
                 
                 
                 },
-                faild: {error in println("\(error!.description)")})
+                faild: {error in print("\(error!.description)")})
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -208,10 +208,10 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
     /**
     设置tableviewcell的高度
     
-    :param: tableView <#tableView description#>
-    :param: indexPath <#indexPath description#>
+    - parameter tableView: <#tableView description#>
+    - parameter indexPath: <#indexPath description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
         if indexPath.row == 0{
@@ -234,7 +234,7 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
         else if indexPath.row == 4{
             return 40
         }
-        var height = screenBounds.width/(727/280)
+        let height = screenBounds.width/(727/280)
         return height + 10
     }
     

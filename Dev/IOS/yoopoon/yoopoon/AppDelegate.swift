@@ -52,10 +52,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     */
     func hiddenNavigationBar(){
        // (window!.rootViewController as! UINavigationController).navigationBar.hidden = true
-        var navi = (window!.rootViewController as! UINavigationController)
+        let navi = (window!.rootViewController as! UINavigationController)
         
-        var searchFrame = CGRectMake(0, UIApplication.sharedApplication().statusBarFrame.height, UIScreen.mainScreen().bounds.width, navi.navigationBar.frame.height)
-       var searchView =
+        let searchFrame = CGRectMake(0, UIApplication.sharedApplication().statusBarFrame.height, UIScreen.mainScreen().bounds.width, navi.navigationBar.frame.height)
+       let searchView =
        NSBundle.mainBundle().loadNibNamed("SearchProductView", owner: nil, options: nil).last as! SearchProductView
        // var searchViewController = SearchProductController(nibName: "SearchProductView", bundle: nil)
         searchView.frame = searchFrame
@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /**
     自定义uitabbar样式
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func initTabBar(){
         

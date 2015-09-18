@@ -26,7 +26,7 @@ class ChooseDateViewController: UIViewController {
         super.viewDidLoad()
         uiSure.layer.cornerRadius = 10
         uiCancel.layer.cornerRadius = 10
-        var locale = NSLocale(localeIdentifier: "zh_CN")
+        let locale = NSLocale(localeIdentifier: "zh_CN")
         uiDatePicker.locale = locale
         uiDatePicker.timeZone = NSTimeZone(name: "GMT+0800")
         uiDatePicker.date = NSDate()

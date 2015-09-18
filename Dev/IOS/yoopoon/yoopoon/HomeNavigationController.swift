@@ -26,7 +26,7 @@ class HomeNavigationController: UINavigationController {
         return true
     }
     
-    override func supportedInterfaceOrientations() -> Int {
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.Portrait.rawValue.hashValue | UIInterfaceOrientationMask.PortraitUpsideDown.rawValue.hashValue
     }
 }

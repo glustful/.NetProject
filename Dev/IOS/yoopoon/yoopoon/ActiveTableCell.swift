@@ -37,14 +37,14 @@ class ActiveTableCell: UITableViewCell{
     /**
     使用model填充view
     
-    :param: brand 产品实体类
+    - parameter brand: 产品实体类
     //        cell!.textTitle = brandList[indexPath.row].Bname
     //        var phone = brandList[indexPath.row].productParamater?["来电咨询"]
     //        cell!.textPhone = "来电咨询：\(phone!)"
     //        var preferential = brandList[indexPath.row].productParamater?["最高优惠"]
     //        cell!.textPreferential = "最高优惠：\(preferential!)"
     //        cell!.imageUrl = brandList[indexPath.row].Bimg
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func initLayout(brand:BrandEntity){
       
@@ -58,8 +58,8 @@ class ActiveTableCell: UITableViewCell{
         //uilabel加载html
         if let adTitle = brand.adTitle{
            
-        var data = adTitle.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)
-            var html = NSAttributedString(data: data!, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType,NSFontAttributeName:UIColor.whiteColor()], documentAttributes: nil, error: nil)
+        let data = adTitle.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)
+            let html = try? NSAttributedString(data: data!, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType,NSFontAttributeName:UIColor.whiteColor()], documentAttributes: nil)
        mAdContent.textColor = UIColor.whiteColor()
         mAdContent.attributedText = html
         }

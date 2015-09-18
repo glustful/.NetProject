@@ -76,7 +76,7 @@ class ADScrollerView: UIView,UIScrollViewDelegate {
                 return
             }
             //上面的灰色遮罩
-            var vv = UIView(frame: CGRectMake(0, kADHeight!-30, kADWidth!, 30))//UIView(frame: cgre0, kADHeight! - 30, kADWidth!, 30)
+            let vv = UIView(frame: CGRectMake(0, kADHeight!-30, kADWidth!, 30))//UIView(frame: cgre0, kADHeight! - 30, kADWidth!, 30)
             
             vv.backgroundColor = UIColor.blackColor()
             vv.alpha = 0.3;
@@ -166,7 +166,7 @@ class ADScrollerView: UIView,UIScrollViewDelegate {
     var kADWidth:CGFloat?;
     var kADHeight:CGFloat?;
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     override init(frame: CGRect) {
@@ -214,7 +214,7 @@ class ADScrollerView: UIView,UIScrollViewDelegate {
     /**
     定时器到时间后滚动图片，
     
-    :param: timer <#timer description#>
+    - parameter timer: <#timer description#>
     */
     func animalMoveImage(timer: NSTimer){
         
@@ -229,7 +229,7 @@ class ADScrollerView: UIView,UIScrollViewDelegate {
         if imageLinkUrl.count==0{
             return nil
         }
-        var adView = ADScrollerView(frame: frame)
+        let adView = ADScrollerView(frame: frame)
       
         adView.imageLinkURL = imageLinkUrl
         
@@ -242,7 +242,7 @@ class ADScrollerView: UIView,UIScrollViewDelegate {
         if imageLinkUrl.count==0{
             return nil
         }
-        var adView = adScrollViewWithFrame(frame, imageLinkUrl: imageLinkUrl, pageControlShowStyle: pageControlShowStyle)
+        let adView = adScrollViewWithFrame(frame, imageLinkUrl: imageLinkUrl, pageControlShowStyle: pageControlShowStyle)
         adView!.placeHoldImage = UIImage(named: placeHoderImageName)
         
         return adView
@@ -259,14 +259,14 @@ class ADScrollerView: UIView,UIScrollViewDelegate {
 //            var filePath = NSBundle.mainBundle().pathForResource(path, ofType: "jpg")
 //            NSURL.fileURLWithPath(filePath!)
 //        }
-        var adView = adScrollViewWithFrame(frame, imageLinkUrl: imageLinkUrl, pageControlShowStyle: pageControlShowStyle)
+        let adView = adScrollViewWithFrame(frame, imageLinkUrl: imageLinkUrl, pageControlShowStyle: pageControlShowStyle)
         return adView
     }
     
     /**
     图片停止时，调用该函数使得滚动视图复用
     
-    :param: scrollView <#scrollView description#>
+    - parameter scrollView: <#scrollView description#>
     */
      func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         
@@ -340,7 +340,7 @@ class ADScrollerView: UIView,UIScrollViewDelegate {
     /**
     子视图添加到父视图或者离开父视图时调用
     
-    :param: newSuperview <#newSuperview description#>
+    - parameter newSuperview: <#newSuperview description#>
     */
    override func willMoveToSuperview(newSuperview: UIView?) {
         //if (newSuperview != nil){

@@ -50,7 +50,7 @@ class ADView: UIView,UIScrollViewDelegate {
             adScrollView!.contentSize = CGSizeMake(kADWidth!*CGFloat(self.imageLinkURL!.count+2), kADHeight!)
             var index:CGFloat = 1.0
             for url in self.imageLinkURL!{
-                var imageView = UIImageView(frame: CGRectMake(kADWidth!*index, 0, kADWidth!, kADHeight!))
+                let imageView = UIImageView(frame: CGRectMake(kADWidth!*index, 0, kADWidth!, kADHeight!))
                 index = index + CGFloat(1)
                 imageView.loadImageFromURLString(url,placeholderImage:placeHoldImage)
                 adScrollView!.addSubview(imageView)
@@ -127,7 +127,7 @@ class ADView: UIView,UIScrollViewDelegate {
     var kADWidth:CGFloat?;
     var kADHeight:CGFloat?;
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     override init(frame: CGRect) {
@@ -165,7 +165,7 @@ class ADView: UIView,UIScrollViewDelegate {
     /**
     定时器到时间后滚动图片，
     
-    :param: timer <#timer description#>
+    - parameter timer: <#timer description#>
     */
     func animalMoveImage(timer: NSTimer){
 
@@ -181,7 +181,7 @@ class ADView: UIView,UIScrollViewDelegate {
         if imageLinkUrl.count==0{
             return nil
         }
-        var adView = ADView(frame: frame)
+        let adView = ADView(frame: frame)
         
          adView.placeHoldImage = UIImage(named: placeHoderImageName)
         adView.imageLinkURL = imageLinkUrl
@@ -193,11 +193,11 @@ class ADView: UIView,UIScrollViewDelegate {
     /**
     图片停止时，调用该函数使得滚动视图复用
     
-    :param: scrollView <#scrollView description#>
+    - parameter scrollView: <#scrollView description#>
     */
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         
-        var number: NSNumber = NSNumber(float: Float(adScrollView!.contentOffset.x / kADWidth!))
+        let number: NSNumber = NSNumber(float: Float(adScrollView!.contentOffset.x / kADWidth!))
        
         if adScrollView!.contentOffset.x == 0{
             pageControl!.currentPage = self.imageLinkURL!.count-1
@@ -228,7 +228,7 @@ class ADView: UIView,UIScrollViewDelegate {
     /**
     子视图添加到父视图或者离开父视图时调用
     
-    :param: newSuperview <#newSuperview description#>
+    - parameter newSuperview: <#newSuperview description#>
     */
     override func willMoveToSuperview(newSuperview: UIView?) {
         

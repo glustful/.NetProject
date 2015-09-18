@@ -43,9 +43,9 @@ class PartnerDetailViewController: SuperViewController {
     /**
     初始化数据
     
-    :param: json <#json description#>
+    - parameter json: <#json description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     private func initData(json: JSON){
         if let name = json["Brokername"].string{

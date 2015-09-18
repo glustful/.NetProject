@@ -14,7 +14,7 @@ class SuperViewController: UIViewController {
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false;
         if let navBackItem = self.navigationController?.navigationBar.topItem{
-            var backItem = UIBarButtonItem()
+            let backItem = UIBarButtonItem()
             backItem.title = "返回"
             
             navBackItem.backBarButtonItem = backItem
