@@ -1,8 +1,8 @@
 /**
  * Created by Yunjoy on 2015/9/15.
  */
-//×¢²á
-app.controller('register',['$http','$scope','$state','AuthService',function($http,$scope,$state,AuthService){
+//æ³¨å†Œ
+app.controller('register',['$http','$scope','$state','AuthService','$ionicLoading','$timeout',function($http,$scope,$state,AuthService,$ionicLoading,$timeout){
     $scope.signer ={
         Phone:'',
         UserName:'',
@@ -14,12 +14,23 @@ app.controller('register',['$http','$scope','$state','AuthService',function($htt
         console.log($scope.signer);
         $http.post(SETTING.ApiUrl+'/Member/AddMember',$scope.signer,{'withCredentials':true}).success(function(data){
             if(data.Status==false){
-                console.log(data.Msg);
-                $scope.tip=data.Msg;
+                $ionicLoading.show({
+                    template:data.Msg,
+                    noBackdrop:true
+                });
+                $timeout(function(){
+                    $ionicLoading.hide();
+                },3000);
             }
             else{
                 AuthService.doLogin($scope.signer.UserName,$scope.signer.Password,function(){
-                    $state.go('page.me');
+                    $ionicLoading.show({
+                        template:"æ³¨å†ŒæˆåŠŸï¼Œç™»å½•ing..."
+                    });
+                    $timeout(function(){
+                        $state.go("page.me");
+                        $ionicLoading.hide();
+                    },1000);
                 })
                 console.log(data.Msg);
             }
@@ -27,7 +38,7 @@ app.controller('register',['$http','$scope','$state','AuthService',function($htt
     }
 }])
 
-//Á½´ÎÃÜÂëÊäÈëÑéÖ¤
+//ä¸¤æ¬¡å¯†ç è¾“å…¥éªŒè¯
 function check()
 {
     var pass1 = document.getElementById("FPassword");
@@ -35,12 +46,12 @@ function check()
     var tips= document.getElementById("errorTip");
     if(pass1.value!=pass2.value)
     {
-        tips.innerHTML="Á½´ÎÃÜÂëÊäÈë²»Ò»ÖÂ£¬ÇëÖØĞÂÊäÈë£¡";
+        tips.innerHTML="ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸ä¸€è‡´ï¼Œè¯·é‡æ–°è¾“å…¥ï¼";
     }else{
         tips.innerHTML="";
     }
     if(pass1.value==""||pass2.value=="")
     {
-        tips.innerHTML="ÇëÊäÈëÃÜÂë";
+        tips.innerHTML="è¯·è¾“å…¥å¯†ç ";
     }
 }
