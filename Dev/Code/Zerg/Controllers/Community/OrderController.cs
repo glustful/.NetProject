@@ -13,10 +13,11 @@ using YooPoon.Core.Site;
 using YooPoon.WebFramework.User.Entity;
 using Zerg.Common;
 using Zerg.Models.Community;
+using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.Community
 {
-    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
 	public class CommunityOrderController : ApiController
 	{
 		private readonly IOrderService _orderService;
@@ -34,9 +35,13 @@ namespace Zerg.Controllers.Community
             _memberService = memberService;
 	    }
 
-	    public OrderModel Get(int id)
+        public HttpResponseMessage Get(int id)
 		{
-			var entity =_orderService.GetOrderById(id);
+            var entity = _orderService.GetOrderById(id);
+            if (entity == null)
+            {
+                return null;
+            }
 			var model = new OrderModel
 			{
 				Id = entity.Id,	
@@ -50,7 +55,7 @@ namespace Zerg.Controllers.Community
                 Upddate = entity.UpdDate,	
                 Totalprice = entity.Totalprice,	
                 Actualprice = entity.Actualprice,	
-                Details = entity.Details.Select(c=>new OrderDetailModel
+                Details = entity.Details.Select(c => new OrderDetailModel
                 {
                     Count = c.Count,
                     Id = c.Id,
@@ -67,13 +72,21 @@ namespace Zerg.Controllers.Community
                 }).ToList(),
 		        UserName = entity.AddMember.UserName
             };
-			return model;
+
+            return PageHelper.toJson(new { List = model });
 		}
 
-		public HttpResponseMessage Get(OrderSearchCondition condition)
+        public class Aerers
 		{
-			var model = _orderService.GetOrdersByCondition(condition).Select(c=>new OrderModel
+            public string CustomerName { get; set; }
+            public string Status { get; set; }
+        }
+
+        [HttpGet]
+        public HttpResponseMessage Get([FromUri] OrderSearchCondition condition)
 			{
+            var model = _orderService.GetOrdersByCondition(condition).Select(c => new OrderModel
+            {
 				Id = c.Id,
 				No = c.No,
 				Status = c.Status,
@@ -89,7 +102,7 @@ namespace Zerg.Controllers.Community
                 UserName = c.AddMember.UserName
 			}).ToList();
 		    var totalCount = _orderService.GetOrdersByCondition(condition);
-			return PageHelper.toJson(new {List = model,Condition = condition,TotalCount=totalCount});
+            return PageHelper.toJson(new { List = model});
 		}
 
 		public HttpResponseMessage Post([FromBody]OrderModel model)
@@ -136,7 +149,7 @@ namespace Zerg.Controllers.Community
                 Address = _memberAddressService.GetMemberAddressById(model.MemberAddressId),
                 AddMember = _memberService.GetMemberByUserId( _workContext.CurrentUser.Id)
 			};
-			if(_orderService.Create(entity).Id > 0)
+            if (_orderService.Create(entity).Id > 0)
 			{
                 //TODO:回掉接口写到Msg里，完成回掉方法
 				return PageHelper.toJson(PageHelper.ReturnValue(true,"null",new OrderModel
@@ -151,7 +164,8 @@ namespace Zerg.Controllers.Community
 			return PageHelper.toJson(PageHelper.ReturnValue(false,"生成订单出错，请联系管理员"));
 		}
 
-		public HttpResponseMessage Put(OrderModel model)
+       
+        public HttpResponseMessage Put([FromBody] OrderModel model)
 		{
 		    var allowEditRoles = new[]
 		    {
@@ -159,16 +173,16 @@ namespace Zerg.Controllers.Community
 		        "admin"
 		    };
 			var entity = _orderService.GetOrderById(model.Id);
-			if(entity == null)
-				return PageHelper.toJson(PageHelper.ReturnValue(false,string.Format("无法获取到Id为{0}的订单",model.Id)));
-		    if (_workContext.CurrentUser.Id != entity.AddUser &&
-		        !((UserBase) _workContext.CurrentUser).UserRoles.Select(c => c.Role.RoleName)
-		            .ToList()
-		            .Intersect(allowEditRoles)
-		            .Any())
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "当前用户没有权限修改此订单"));
+            if (entity == null)
+                return PageHelper.toJson(PageHelper.ReturnValue(false, string.Format("无法获取到Id为{0}的订单", model.Id)));
+            //if (_workContext.CurrentUser.Id != entity.AddUser &&
+            //    !((UserBase)_workContext.CurrentUser).UserRoles.Select(c => c.Role.RoleName)
+            //        .ToList()
+            //        .Intersect(allowEditRoles)
+            //        .Any())
+            //    return PageHelper.toJson(PageHelper.ReturnValue(false, "当前用户没有权限修改此订单"));
 			entity.Status = model.Status;
-			entity.UpdUser = _workContext.CurrentUser.Id;
+            //entity.UpdUser = _workContext.CurrentUser.Id;
 			entity.UpdDate = DateTime.Now;
 		    return PageHelper.toJson(_orderService.Update(entity) != null ? PageHelper.ReturnValue(true, "操作成功") : PageHelper.ReturnValue(false, "操作失败，请查看日志"));
 		}
@@ -176,9 +190,11 @@ namespace Zerg.Controllers.Community
         public HttpResponseMessage Delete(int id)
 		{
 			var entity = _orderService.GetOrderById(id);
-			if(entity == null)
+            if (entity == null)
                 return PageHelper.toJson(PageHelper.ReturnValue(false, string.Format("无法获取到Id为{0}的订单", id)));
             return PageHelper.toJson(_orderService.Delete(entity) ? PageHelper.ReturnValue(true, "操作成功") : PageHelper.ReturnValue(false, "操作失败，请查看日志"));
 		}
+
+      
 	}
 }
