@@ -2,7 +2,7 @@
  * Created by Yunjoy on 2015/9/15.
  */
 //×¢²á
-app.controller('register',['$http','$scope','$state','AuthService',function($http,$scope,$state,AuthService){
+app.controller('register',['$http','$scope','$state','AuthService','$ionicLoading','$timeout',function($http,$scope,$state,AuthService,$ionicLoading,$timeout){
     $scope.signer ={
         Phone:'',
         UserName:'',
@@ -14,12 +14,23 @@ app.controller('register',['$http','$scope','$state','AuthService',function($htt
         console.log($scope.signer);
         $http.post(SETTING.ApiUrl+'/Member/AddMember',$scope.signer,{'withCredentials':true}).success(function(data){
             if(data.Status==false){
-                console.log(data.Msg);
-                $scope.tip=data.Msg;
+                $ionicLoading.show({
+                    template:data.Msg,
+                    noBackdrop:true
+                });
+                $timeout(function(){
+                    $ionicLoading.hide();
+                },3000);
             }
             else{
                 AuthService.doLogin($scope.signer.UserName,$scope.signer.Password,function(){
-                    $state.go('page.me');
+                    $ionicLoading.show({
+                        template:"×¢²á³É¹¦£¬µÇÂ¼ing..."
+                    });
+                    $timeout(function(){
+                        $state.go("page.me");
+                        $ionicLoading.hide();
+                    },1000);
                 })
                 console.log(data.Msg);
             }
