@@ -7,22 +7,22 @@ namespace Community.Entity.Model.Order
 		/// <summary>
 		/// 新建
 		/// </summary>
-		Created,
+		Created=0,
 		/// <summary>
 		/// 已付款
 		/// </summary>
-		Payed,
+		Payed=1,
 		/// <summary>
 		/// 配送中
 		/// </summary>
-		Delivering,
+		Delivering=2,
 		/// <summary>
 		/// 订单完成
 		/// </summary>
-		Successed,
+		Successed=3,
 		/// <summary>
 		/// 订单关闭
 		/// </summary>
-		Canceled,
+		Canceled=4,
 	}
 }
