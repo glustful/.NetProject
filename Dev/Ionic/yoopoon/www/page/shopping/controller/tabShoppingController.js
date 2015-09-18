@@ -129,7 +129,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
 
     //region 图片轮播
     $scope.channelName = 'banner';
-    $http.get('http://localhost:50597/api/Channel/GetTitleImg', {
+    $http.get(SETTING.ApiUrl+'/Channel/GetTitleImg', {
         params: {ChannelName: $scope.channelName},
         'withCredentials': true
     }).success(function (data) {
