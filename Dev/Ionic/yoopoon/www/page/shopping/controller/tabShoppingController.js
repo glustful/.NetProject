@@ -390,3 +390,7 @@ app.controller('SearchProductCtr', ['$http', '$scope', '$stateParams', function 
 
 
 
+
+
+
+

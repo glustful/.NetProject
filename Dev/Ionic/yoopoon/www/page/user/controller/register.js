@@ -23,7 +23,6 @@ app.controller('register',['$http','$scope','$state','AuthService',function($htt
                 })
                 console.log(data.Msg);
             }
-            console.log(data);
         })
     }
 }])
