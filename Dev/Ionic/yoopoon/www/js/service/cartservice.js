@@ -150,8 +150,11 @@ app.service("cartservice", ['$rootScope',
 		//获取购物车内所有的商品(返回的是json)
 		this.GetAllcartToJson = function () {
 			var storage = localStorage.getItem("ShoppingCart");
+			if (storage == null || storage == "") {
+				return '购物车为空!';
+			}
 			var jsonstr =  JSON.parse(storage.substr(1, storage.length));
-			return jsonstr;
+			return jsonstr.productlist;
 		}
 
 	}
