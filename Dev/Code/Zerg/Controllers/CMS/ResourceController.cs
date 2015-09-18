@@ -130,9 +130,9 @@ namespace Zerg.Controllers.CMS
                         Name = fileNewName,
                         Length = fileLength,
                         Type = info.Extension.Substring(1).ToLower(),
-                        Adduser = ((UserBase)_workContent.CurrentUser).Id,
+                      //  Adduser = ((UserBase)_workContent.CurrentUser).Id,
                         Addtime = DateTime.Now,
-                        UpdUser = _workContent.CurrentUser.Id,
+                      //  UpdUser = _workContent.CurrentUser.Id,
                         UpdTime = DateTime.Now,
                     };
                     if (_resourceService.Create(resource).Id > 0)

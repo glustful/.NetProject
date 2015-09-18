@@ -82,6 +82,104 @@ angular.module('app')
                           }]
                   }
               })
+
+                //注册页
+                .state('access.signup', {
+                    url: '/signup',
+                    templateUrl: 'app/module/page_signup.html',
+                    resolve: {
+                        deps: ['uiLoad',
+                            function( uiLoad ){
+                                return uiLoad.load( ['js/controllers/signup.js'] );
+                            }]
+                    }
+                })
+                //商品属性管理 app.parameter.parameterList
+                .state('app.parameter',{
+                    url: '/parameter',
+                    template: '<div ui-view class="fade-in-up"></div>',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/Parameter/controller/parameter.js']);
+                            }]
+                    }
+                })
+                .state('app.parameter.parameterList',{
+                    url:'/parameterList',
+                    templateUrl:'app/module/Parameter/view/Index.html'
+
+                })
+                .state('app.parameter.parameterValueIndex',{
+                    url:'/parameterValueIndex?parameterId&name',
+                    templateUrl:'app/module/Parameter/view/parametervalueIndex.html'
+                })
+
+
+
+                //商品管理页
+                .state('app.product',{
+                    url: '/product',
+                    template: '<div ui-view class="fade-in-up"></div>',
+                    //resolve: {
+                    //    deps: ['$ocLazyLoad',
+                    //        function( $ocLazyLoad ){
+                    //            return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
+                    //        }]
+                    //}
+                })
+                .state('app.product.productList',{
+                    url:'/productList',
+                    templateUrl:'app/module/Product/view/Index.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
+                            }]
+                    },
+                    data : { title: '商品列表' }
+                })
+                .state('app.product.createProduct',{
+                    url:'/createProct',
+                    templateUrl:'app/module/Product/view/Create.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['angularFileUpload','app/module/Product/controller/productController.js']);
+                            }]
+                    }
+                })
+                .state('app.product.editProduct',{
+                    url:'/editProduct?id',
+                    templateUrl:'app/module/Product/view/Edit.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/Product/controller/productController.js']);
+                            }]
+                    }
+                })
+                .state('app.product.productProperty',{
+                    url:'/productProperty?CategoryId&productId',
+                    templateUrl:'app/module/Product/view/Property.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad',
+                            function( $ocLazyLoad ){
+                                return $ocLazyLoad.load(['app/module/Product/controller/parameterController.js']);
+                            }]
+                    }
+                })
+                .state('order',{
+                    url:'/order',
+                    templateUrl: 'app/common/layout/app.html'
+                })
+                .state('order.list',{
+                    url:'/list',
+                    templateUrl:'app/module/order/view/list.html',
+                    resolve:{
+                        deps:['uiLoad',function(uiLoad){
+                            return uiLoad.load(['app/module/order/controller/orderController.js']);
+
               .state('app.member.memlist', {
                   url: 'memlist',
                   templateUrl: 'app/module/member/view/memlist.html',
@@ -192,6 +290,7 @@ angular.module('app')
                     deps: ['$ocLazyLoad',
                         function ($ocLazyLoad) {
                             return $ocLazyLoad.load(['app/module/menu/controller/menulistCtr.js']);
+
                         }]
                 }
             })

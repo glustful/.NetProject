@@ -114,6 +114,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 		if (offset == 0)
 			ll_loading.setVisibility(View.VISIBLE);
 		new Thread() {
+
 			public void run() {
 				DBDao dao = new DBDao(getActivity());
 				List<Staff> list = dao.findPart(offset, limit);
@@ -122,8 +123,10 @@ public class CartFragment extends Fragment implements OnClickListener {
 
 						@Override
 						public void run() {
-							Toast.makeText(getActivity(), "已经没有更多数据啦", Toast.LENGTH_SHORT).show();
-							lv.onRefreshComplete();
+							if (offset != 0) {
+								Toast.makeText(getActivity(), "已经没有更多数据啦", Toast.LENGTH_SHORT).show();
+								lv.onRefreshComplete();
+							}
 							ll_loading.setVisibility(View.GONE);
 						}
 					});

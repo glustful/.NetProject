@@ -51,6 +51,13 @@ namespace Zerg.Models.Community
         /// AddTime
         /// </summary>
 		public DateTime Addtime {get;set;}
+        public string AddtimeString
+        {
+            get
+            {
+                return Addtime.ToString("yyyy-MM-dd HH:mm:ss");
+            }
+        }
 
 
 		/// <summary>
@@ -63,8 +70,10 @@ namespace Zerg.Models.Community
         /// UpdTime
         /// </summary>
 		public DateTime Updtime {get;set;}
-
-
+        public string UpdtimeString
+        {
+            get { return Updtime.ToString("yyyy-MM-dd HH:mm:ss"); }
+        }
 
 	}
 }

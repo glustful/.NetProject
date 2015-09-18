@@ -78,6 +78,11 @@
             android:theme="@style/Theme_Activity_Animation" >
         </activity>
         <activity
+            android:name="com.yoopoon.market.ProductList"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_Activity_Animation" >
+        </activity>
+        <activity
             android:name="com.yoopoon.market.MeOrderActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
@@ -142,6 +147,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
         <activity android:name="com.yoopoon.market.CategoryActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_Activity_Animation" />
+        <activity android:name="com.yoopoon.market.SearchActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
     </application>

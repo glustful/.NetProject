@@ -22,11 +22,8 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -38,17 +35,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -102,6 +102,19 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			animation.setFillAfter(true);
 			et_search.setVisibility(View.VISIBLE);
 			et_search.startAnimation(animation);
+			et_search.setImeActionLabel("搜索", EditorInfo.IME_ACTION_SEARCH);
+			et_search.setSingleLine();
+			et_search.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+			et_search.setOnEditorActionListener(new OnEditorActionListener() {
+
+				@Override
+				public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+					if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+						return true;
+					}
+					return false;
+				}
+			});
 		} else {
 			Animation animation = AnimationUtils.loadAnimation(this, R.anim.back_right_out);
 			animation.setAnimationListener(new AnimationListener() {
@@ -126,6 +139,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			});
 
 			et_search.startAnimation(animation);
+
 		}
 	}
 
@@ -191,6 +205,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	void requestArea() {
 		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
@@ -216,6 +231,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 	void parseToObject(final JSONArray array) {
 		new ParserJSON(new ParseListener() {
+
 			@Override
 			public Object onParse() {
 				ObjectMapper om = new ObjectMapper();
@@ -255,46 +271,55 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private class SearchViewClickListener implements OnClickListener {
+
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
 				case R.id.btn_select:
-					AlertDialog.Builder builder = new Builder(MainActivity.this);
-					builder.setSingleChoiceItems(areaItems, checkedItem, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							checkedItem = which;
-							btn_select.setText(areaItems[checkedItem]);
-							// #############################################################################
-							// 添加广播，选择地址后Fragment_Shop能更新商品 徐阳会 2015年9月17日添加 Start
-							// #############################################################################
-							Intent refreshProductIntent = new Intent("com.yoopoon.market.productRefresh.Address");
-							refreshProductIntent.putExtra("addressName", areaItems[checkedItem]);
-							refreshProductIntent.putExtra("addressId", areaList.get(checkedItem).Codeid);
-							sendBroadcast(refreshProductIntent);
-							// #############################################################################
-							// 添加广播，选择地址后Fragment_Shop能更新商品 徐阳会 2015年9月17日添加 End
-							// #############################################################################
-							dialog.dismiss();
-						}
-					});
-					builder.setTitle("请选择地区");
-					builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							btn_select.setText(areaItems[checkedItem]);
-							dialog.dismiss();
-						}
-					});
-					builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// checkedItem = which;
-							btn_select.setText(areaItems[checkedItem]);
-							dialog.dismiss();
-						}
-					});
-					builder.show();
+					// AlertDialog.Builder builder = new Builder(MainActivity.this);
+					// builder.setSingleChoiceItems(areaItems, checkedItem, new
+					// DialogInterface.OnClickListener() {
+					// @Override
+					// public void onClick(DialogInterface dialog, int which) {
+					// checkedItem = which;
+					// btn_select.setText(areaItems[checkedItem]);
+					// //
+					// #############################################################################
+					// // 添加广播，选择地址后Fragment_Shop能更新商品 徐阳会 2015年9月17日添加 Start
+					// //
+					// #############################################################################
+					// Intent refreshProductIntent = new
+					// Intent("com.yoopoon.market.productRefresh.Address");
+					// refreshProductIntent.putExtra("addressName", areaItems[checkedItem]);
+					// refreshProductIntent.putExtra("addressId", areaList.get(checkedItem).Codeid);
+					// sendBroadcast(refreshProductIntent);
+					// //
+					// #############################################################################
+					// // 添加广播，选择地址后Fragment_Shop能更新商品 徐阳会 2015年9月17日添加 End
+					// //
+					// #############################################################################
+					// dialog.dismiss();
+					// }
+					// });
+					// builder.setTitle("请选择地区");
+					// builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					// @Override
+					// public void onClick(DialogInterface dialog, int which) {
+					// btn_select.setText(areaItems[checkedItem]);
+					// dialog.dismiss();
+					// }
+					// });
+					// builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+					// @Override
+					// public void onClick(DialogInterface dialog, int which) {
+					// // checkedItem = which;
+					// btn_select.setText(areaItems[checkedItem]);
+					// dialog.dismiss();
+					// }
+					// });
+					// builder.show();
+
+					SearchActivity_.intent(MainActivity.this).start();
 					break;
 				case R.id.rightBtn:
 					CategoryActivity_.intent(MainActivity.this).start();

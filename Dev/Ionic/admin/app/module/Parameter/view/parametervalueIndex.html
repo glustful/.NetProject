@@ -1,0 +1,119 @@
+
+<div class="p-md" ng-controller="parametervalueIndex">
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">参数： {{parName}}</h1>
+
+    </div>
+    <div>
+        <br>
+        <button id="btnok" onclick="AddParameterWindowShow()" class="btn btn-info btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i>添加
+        </button>
+        <a ui-sref="app.parameter.parameterList" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-edit"></i> 返  回
+        </a>
+
+    </div>
+    <br>
+    <div class=" panel-default panel panel-card ng-scope" align="center">
+
+        <table class="table table-striped m-b-none default footable-loaded footable" ui-jp="footable" data-filter="#filter" align="center">
+            <thead>
+            <tr>
+                <th align="center">Id</th>
+                <th align="center" data-hide="phone,tablet" class="footable-visible footable-sortable">参数名</th>
+                <th align="center">值</th>
+                <th align="center" data-hide="phone,tablet" class="footable-visible footable-sortable">排序</th>
+                <th align="center" data-hide="phone,tablet" class="footable-visible footable-sortable">添加时间 </th>
+                <th align="center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in parameterValueList">
+
+                <td>{{item.Id }}</td>
+                <td>{{item.ParameterName }}</td>
+                <td>{{item.Value }}</td>
+                <td>{{item.Sort }}</td>
+                <td>{{item.AddTime | dateFilter}}</td>
+                <td>
+                    <a ui-sref="app.product.editProduct({id:item.Id})" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-edit"></i> 编辑
+                    </a>
+                    <button ng-click='del(item.Id)' class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-minus"></i> 删除
+                    </button>
+
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <!--弹出层开始  -->
+    <div id="modal-form-addparameter" class="modal in" tabindex="-1" aria-hidden="false" style="display:none;">
+        <div class="modal-dialog" style="padding-top:100px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="AddParameterWindowClose()" class="close" data-dismiss="modal">×</button>
+                    <h4 id="eidt-msg">请填写编辑信息</h4>
+                </div>
+                <form name="form" ng-submit="addParameter()">
+                    <div class="modal-body overflow-visible">
+                        <div class="row">
+                            <div class="col-xs-12 ">
+                                <div class="space-4"></div>
+                                <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+                                <div class="form-group" style="text-align:center">
+                                    <label for="parameterName">参数值</label>
+                                    <input class="input-large" type="text" ng-model="ParameterValue.ParameterValue" name="parameterName" id="parameterName"
+                                           placeholder="" value="" required ng-maxlength="20">
+                                    <span ng-show="form.parameterName.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                                    <label for="parameterName">序号</label>
+                                    <input class="input-large" type="number" ng-model="ParameterValue.Sort" name="parameterName" id="parameterSort"
+                                           placeholder="" value="" required ng-maxlength="20">
+                                    <span ng-show="form.parameterName.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>
+                                    <span ng-show="form.parameterName.$error.maxlength" style="font-size:20px;color: #ff0000">*输入字符在20以内</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-info btn-sm" type="submit" ng-disabled="form.$invalid" aria-disabled="true" disabled="disabled">
+                            <i class="fa fa-fw m-r-xs fa-plus"></i>
+                            添 加
+                        </button>
+                        <button class="btn btn-info btn-sm" data-dismiss="modal" onclick="AddParameterWindowClose()" type="button">
+                            <i class="icon-remove"></i>
+                            取 消
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--弹出层结束-->
+    <script>
+        function AddParameterWindowClose() {
+            $("#modal-form-addparameter").hide();
+        }
+        function AddParameterWindowShow() {
+            $("#modal-form-addparameter").show();
+
+        }
+        function ParameterValueWindowClose() {
+            $("#modal-form-parametervalue").hide();
+        }
+        function ParameterValueWindowShow() {
+            $("#modal-form-parametervalue").show();
+
+        }
+        function AddValueWindowClose() {
+            $("#modal-form-addvalue").hide();
+        }
+        function AddValueWindowShow() {
+            $("#modal-form-addvalue").show();
+
+        }
+    </script>
+    <script type="text/ng-template" id="myModalContent.html">
+        <div ng-include="'app/module/modal.html'"></div>
+    </script>
+</div>

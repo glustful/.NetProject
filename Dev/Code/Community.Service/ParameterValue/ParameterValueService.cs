@@ -111,7 +111,7 @@ namespace Community.Service.ParameterValue
                 }
 				if (condition.Parameters != null)
                 {
-                    query = query.Where(q => condition.Parameters==(q.Parameter));
+                    query = query.Where(q => (q.Parameter.Id)==condition.Parameters.Id);
                 }
 				if (condition.Sorts != null && condition.Sorts.Any())
                 {
