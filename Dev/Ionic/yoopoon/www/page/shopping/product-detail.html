@@ -50,16 +50,16 @@
         <div class="div-null"></div>
         <ion-infinite-scroll ng-if="hasload" on-infinite="load_detail();" distance="1%">
         </ion-infinite-scroll>
-        <div style="float: left;margin-right: 20px"> <img src="http://img.iyookee.cn/{{productDetail.Img}}" style="width: 100px;height: 100px"/></div>
-        <div style="float: left;margin-right: 20px"> <img src="http://img.iyookee.cn/{{productDetail.Img1}}" style="width: 100px;height: 100px"/></div>
-        <div style="float: left;margin-right: 20px"> <img src="http://img.iyookee.cn/{{productDetail.Img2}}" style="width: 100px;height: 100px"/></div>
+        <div style="float: left;margin-right: 20px;margin-bottom: 10px;margin-left: 20px"> <img src="http://img.iyookee.cn/{{productDetail.Img}}" style="width: 100px;height: 100px"/></div>
+        <div style="float: left;margin-right: 20px;margin-bottom: 10px"> <img src="http://img.iyookee.cn/{{productDetail.Img1}}" style="width: 100px;height: 100px"/></div>
+        <div style="float: left;margin-right: 20px;margin-left: 20px"> <img src="http://img.iyookee.cn/{{productDetail.Img2}}" style="width: 100px;height: 100px"/></div>
         <div style="float: left"> <img src="http://img.iyookee.cn/{{productDetail.Img3}}" style="width: 100px;height: 100px"/></div>
-        <div>{{productDetail.Detail}}</div>
+        <div style="margin-bottom: auto"><span>{{productDetail.Detail}}</span></div>
 
     </ion-content>
 
     <div class=" row detail-padding button-position">
-        <button class="col button-large assertive-bg none-border p-button" ng-click="go('index.html#/page/car')">立即购买</button>
+        <button class="col button-large assertive-bg none-border p-button" ui-sref="page.order({productid:product.Id})">立即购买</button>
         <button class="col button-large  energized-bg none-border p-button" ng-click="AddGWCAction(this)">加入购物车</button>
     </div>
 </ion-view>

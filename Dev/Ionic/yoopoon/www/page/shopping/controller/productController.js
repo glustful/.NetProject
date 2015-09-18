@@ -146,7 +146,9 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
             $scope.product = data.ProductModel;
             if(data!=null)
             {
-                setTimeout(function(){$scope.hasload=true},5000)
+                setTimeout(function(){
+                    $scope.hasload=true
+                },5000)
             }
         })
         //endregion
@@ -179,7 +181,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
 
         //endregion
         //region 加载图文详情
-        $scope.hasload=false;
+       // $scope.hasload=false;
         $scope.load_detail = function () {
             $timeout(function () {
                 $http.get(SETTING.ApiUrl + "/ProductDetail/Get?id=" + $stateParams.id, {
@@ -191,19 +193,21 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
                         $scope.hasload=false;
                     }
                 });
-                $scope.$broadcast("scroll.infiniteScrollComplete");
+               $scope.$broadcast("scroll.infiniteScrollComplete");
             }, 1000);
         };
         //region 加入购物车
         $scope.cartinfo = {
             id: null,
             name: null,
-            count: null
+            count: null,
+            mainimg:null
         };
 
         $scope.AddGWCAction = function () {
             $scope.cartinfo.id = $scope.product.Id;
             $scope.cartinfo.name = $scope.product.Name;
+            $scope.cartinfo.mainimg=$scope.product.MainImg;
             $scope.cartinfo.count = 1;
             cartservice.add($scope.cartinfo);
             //显示图标
