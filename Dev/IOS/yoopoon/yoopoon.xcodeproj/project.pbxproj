@@ -877,6 +877,8 @@
 		FAF26B2A1B4F5A9E004F3B3B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = yunjoy;
 				TargetAttributes = {

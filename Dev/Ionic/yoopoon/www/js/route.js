@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('starter', ['ionic','ngCordova']);
+var app = angular.module('starter', ['ionic','ngCordova','ngStorage']);
 var SETTING = {
 BaseUrl:'http://www.iyookee.cn/',
 ApiUrl:'http://localhost:50597/api',
@@ -270,7 +270,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
     })
     .state('page.search_product', {
-        url: '/search_product',
+        url: '/search_product?productName',
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/searchProduct.html',

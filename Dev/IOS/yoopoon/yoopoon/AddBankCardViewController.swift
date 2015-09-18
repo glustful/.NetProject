@@ -63,7 +63,7 @@ class AddBankCardViewController: TextFieldViewController,UIPopoverPresentationCo
             return false
         }
         
-            if ( count(self.uiCardNo.text) < 16 ||  count(self.uiCardNo.text) > 19) {
+            if ( self.uiCardNo.text.characters.count < 16 ||  self.uiCardNo.text.characters.count > 19) {
                 TipTools().showToast("提示", message: "银行卡号长度必须在16到19之间", duration: 2)
                 
                 return false
@@ -119,7 +119,7 @@ class AddBankCardViewController: TextFieldViewController,UIPopoverPresentationCo
         .setParameters(self.postEntity)
         .setIsShowIndicator(true, currentView: self.view)
         .request({json in
-            println(json)
+            print(json)
             if let status = json["Status"].bool{
                 if status{
                     self.navigationController!.popViewControllerAnimated(true)

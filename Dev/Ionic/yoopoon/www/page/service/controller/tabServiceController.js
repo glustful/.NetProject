@@ -7,7 +7,9 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate, $timeo
 	//$scope.$on('$ionicView.enter', function(e) {
 	//});
 
-    
+    $scope.$on('$ionicView.enter',function(){
+        $ionicSlideBoxDelegate.start();
+    });
 
 	$scope.model = {
 		activeIndex: 0
@@ -51,7 +53,7 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate, $timeo
 
 	var tip1 = document.getElementById("tiphidden1");
 	var tip2 = document.getElementById("tiphidden2");
-
+    $scope.hide=true;
 	$scope.closetips = function() {
 		tip1.style.display = "none";
 		tip2.style.display = "none";

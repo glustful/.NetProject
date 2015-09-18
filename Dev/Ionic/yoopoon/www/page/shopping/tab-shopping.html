@@ -1,30 +1,33 @@
-
+<!--<link href="page/shopping/css/shopping.css" type="text/css" rel="stylesheet">-->
 
 
 <div class=" header bar" style="height:44px">
-    <a class="button  button-icon icon icon-fuwuanniu"ng-click="go('page.Product-Catagory')" ui-sref="page.Product-Catagory" ></a>
+    <a class="button  button-icon icon icon-fuwuanniu" ng-click="go('page.Product-Catagory')"
+       ui-sref="page.Product-Catagory"></a>
     <label class=" item-select select-header" ng-hide="showSelect">
         <select>
             <option>金尚俊园A座</option>
-            <option >CSS</option>
+            <option>CSS</option>
             <option>JavaScript</option>
         </select>
 
     </label>
     <a class="button button-icon icon icon-search search" ng-click="showInput()"></a>
-    <a class="button button-icon icon ion-navicon-round round" ng-click="showInput()"></a>
-    <input class="header-input" ng-class="{'header-input-show':isShow}" type="text" placeholder="" style="border: 1px solid #fff; height: 70%;z-index: 0;padding-left: 10px;color: #fff">
+    <a class="button button-icon icon ion-navicon-round round"
+       ng-click="go('index.html#/page/shopping/Product-Catagory')"></a>
+    <input class="header-input" ng-model="searchname" ng-class="{'header-input-show':isShow}" id="search" type="text"
+           placeholder="" style="border: 1px solid #fff; height: 70%;z-index: 0;padding-left: 10px;color: #fff">
 </div>
 
 
-<ion-view view-title="优·购物" hide-tabs="true" hide-nav-bar="true">
+<ion-view view-title="优·购物" hide-tabs="false" hide-nav-bar="true">
     <!-- 主页-->
     <ion-content class="scroll-content" no-header="true" style="top:44px">
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefrsh()"></ion-refresher>
         <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" ng-if="content">
             <ion-slide ng-repeat="item in content">
                 <div class="box">
-                    <img ng-if="item" ng-src="http://img.iyookee.cn/{{item.TitleImg}}" class="img-full" >
+                    <img ng-if="item" ng-src="http://img.iyookee.cn/{{item.TitleImg}}" class="img-full">
                     <!--{{slide.TitleImg}}-->
                 </div>
             </ion-slide>
@@ -43,24 +46,34 @@
             <!--</ion-slide>-->
         </ion-slide-box>
         <!-- ion-infinite-scroll 上拉加载数据指令 distance默认1% nf-if的值为false时，就禁止执行on-infinite  -->
-        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="1%" ></ion-infinite-scroll>
+        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="1%"></ion-infinite-scroll>
 
         <div class="row bg-yellow">
             <a class="button-service" ng-click="go('index.html#/page/service/safe')">优服务</a>
             <a class="col tab-item">
-                <i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">家政服务</p>
+                <i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i>
+
+                <p class="font-8">家政服务</p>
             </a>
             <a class="col tab-item">
-                <i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">衣物清洗</p>
+                <i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i>
+
+                <p class="font-8">衣物清洗</p>
             </a>
             <a class="col tab-item">
-                <i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">快递代收</p>
+                <i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i>
+
+                <p class="font-8">快递代收</p>
             </a>
             <a class="col tab-item">
-                <i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">月嫂</p>
+                <i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i>
+
+                <p class="font-8">月嫂</p>
             </a>
             <a class=" col tab-item">
-                <i class="icon icon-jiazhenfuwu circle assertive" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">更多</p>
+                <i class="icon icon-jiazhenfuwu circle assertive" style="font-size: 1.6em;margin-top: 10px"></i>
+
+                <p class="font-8">更多</p>
             </a>
         </div>
 
@@ -69,29 +82,45 @@
                 <h4 class="title p-red font-12"><strong>| 爆款套餐</strong>&nbsp;| 省到不行</h4>
             </div>
             <div class="item item-image">
-                <img ng-src="http://img.iyookee.cn/{{list.MainImg}}" class="f-show" ng-click="go('index.html#/page/shopping/product-detail')">
+                <img ng-src="http://img.iyookee.cn/{{list.MainImg}}" class="f-show"
+                     ng-click="go('index.html#/page/shopping/product-detail')">
+
                 <div class="p-location">
                     <div class="p-invisible">{{list.Owner}}人已抢购</div>
                 </div>
-                <div class="activity padding text-left" >
+                <div class="activity padding text-left">
                     <div class="color-white">{{list.Name}}</div>
-                    <p><span class="p-price" style="font-size: 0.5em">RMB{{list.NewPrice}}</span>/<del style="font-size: 2px;" class="color-white">折扣前{{list.Price}}</del></p>
-                    <i class="icon icon-gouwuche shop-cart" ng-click=""></i><br>
-                    <button class=" energized-bg none-border button-size" ng-click="go('index.html#/page/car/order')">立即购买</button>
+                    <p><span class="p-price" style="font-size: 0.5em">RMB{{list.NewPrice}}</span>/
+                        <del style="font-size: 2px;" class="color-white">折扣前{{list.Price}}</del>
+                    </p>
+                    <i class="icon icon-gouwuche shop-cart" ng-click="AddCart1(this)"></i><br>
+                    <button class=" energized-bg none-border button-size" ng-click="go('index.html#/page/car/order')">
+                        立即购买
+                    </button>
 
                 </div>
             </div>
             <ul>
                 <li style="width:50%;float:left" ng-repeat="row in items">
-                    <div class="col p-relative" >
-                        <img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}" ng-click="go('index.html#/page/shopping/product-detail')">
+                    <div class="col p-relative">
+                        <img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}"
+                             ng-click="go('index.html#/page/shopping/product-detail')">
+
                         <div class="s-location">
                             <p class="p-invisible">{{row.Owner}}人已抢购</p>
                         </div>
                         <div class="padding">
                             <p>{{row.Name}}</p>
-                            <p><span class="p-price" style="font-size: 0.5em">RMB{{row.NewPrice}}</span>/<del style="font-size: 2px;">折扣前{{row.Price}}</del></p>
-                            <p><button class="button  button-small   button-energized" ng-click="go('index.html#/page/car/order')">立即购买</button> <i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="go('index.html#/page/car')"></i></p>
+
+                            <p><span class="p-price" style="font-size: 0.5em">RMB{{row.NewPrice}}</span>/
+                                <del style="font-size: 2px;">折扣前{{row.Price}}</del>
+                            </p>
+                            <p>
+                                <button class="button  button-small   button-energized"
+                                        ng-click="go('index.html#/page/car/order')">立即购买
+                                </button>
+                                <i class="icon icon-gouwuche " style="float: right;font-size: 30px"
+                                   ng-click="AddCart(this)"></i></p>
                         </div>
                     </div>
                 </li>
@@ -180,9 +209,9 @@
     <!--</ion-content>-->
 
 </ion-view>
-<ion-footer-bar ng-hide="true">
-<button class="button" ng-click="wxPay()">微信支付测试</button>
-<button class="button" ng-click="alipay()">支付宝支付测试</button>
+<ion-footer-bar>
+    <button class="button" ng-click="wxPay()">微信支付测试</button>
+    <button class="button" ng-click="alipay()">支付宝支付测试</button>
 </ion-footer-bar>
 
 

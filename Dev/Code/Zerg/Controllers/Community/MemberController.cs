@@ -215,7 +215,7 @@ namespace Zerg.Controllers.Community
                 Phone = memberModel.Phone
             };
 
-            //判断user表和Broker表中是否存在用户名
+            //判断user表和member表中是否存在用户名
             int user2 = _memberService.GetMemberCount(condition);
             if (user2 != 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号已经存在"));
 
@@ -283,9 +283,9 @@ namespace Zerg.Controllers.Community
                     entity.AccountNumber = model.AccountNumber;
                     entity.Points = model.Points;
                     entity.Level = model.Level;
-                    entity.AddTime = model.AddTime;
+                    entity.AddTime = DateTime.Now;
                     entity.UpdUser = model.UpdUser;
-                    entity.UpdTime = model.UpdTime;
+                    entity.UpdTime = DateTime.Now;
                     if (_memberService.Update(entity) != null)
                     {
                         return PageHelper.toJson(PageHelper.ReturnValue(true, "修改成功"));
