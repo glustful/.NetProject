@@ -99,7 +99,7 @@ namespace Zerg.Controllers.Community
          //根据userId 获取会员信息
         public HttpResponseMessage Get(string userId) 
         {
-            if (string.IsNullOrEmpty(userId) || PageHelper.ValidateNumber(userId)) 
+            if (string.IsNullOrEmpty(userId) || !PageHelper.ValidateNumber(userId)) 
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
             }
@@ -139,25 +139,25 @@ namespace Zerg.Controllers.Community
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "post  失败")); 
 		}
-         /// <summary>
-         /// 根据用户ID获取会员信息
-         /// </summary>
-         /// <param name="userId"></param>
-         /// <returns></returns>
-         [HttpGet]
-        public HttpResponseMessage GetMemberByUserId(int userId) 
-        {
-            if (userId == 0) 
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "获取会员信息失败"));
-            }
-            var member = _memberService.GetMemberByUserId(userId);
-            if (member == null) 
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "你还不是会员"));
-            }
-            return PageHelper.toJson(member);
-        }
+        // /// <summary>
+        // /// 根据用户ID获取会员信息
+        // /// </summary>
+        // /// <param name="userId"></param>
+        // /// <returns></returns>
+        // [HttpGet]
+        //public HttpResponseMessage GetMemberByUserId(int userId) 
+        //{
+        //    if (userId == 0) 
+        //    {
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "获取会员信息失败"));
+        //    }
+        //    var member = _memberService.GetMemberByUserId(userId);
+        //    if (member == null) 
+        //    {
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "你还不是会员"));
+        //    }
+        //    return PageHelper.toJson(member);
+        //}
         /// <summary>
         /// 新用户注册
         /// </summary>

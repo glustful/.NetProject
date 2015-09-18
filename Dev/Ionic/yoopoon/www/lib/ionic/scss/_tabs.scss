@@ -88,12 +88,6 @@
   @include tab-badge-style($tabs-dark-text, $tabs-dark-bg);
 }
 
-.tabs-appbg > .tabs,
-.tabs.tabs-appbg {
-@include tab-style($tabs-app-bg, $tabs-dark-border, $tabs-dark-text);
-@include tab-badge-style($tabs-dark-text, $tabs-dark-bg);
-}
-
 @mixin tabs-striped($style, $color, $background) {
   &.#{$style} {
     .tabs{

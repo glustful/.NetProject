@@ -1,12 +1,6 @@
 var httpimguri="";
-app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicModal,$stateParams) {
-    // With the new view caching in Ionic, Controllers are only called
-    // when they are recreated or on app start, instead of every page change.
-    // To listen for when this page is active (for example, to refresh data),
-    // listen for the $ionicView.enter event:
-    //
-    //$scope.$on('$ionicView.enter', function(e) {
-    //});
+app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderService,$ionicSlideBoxDelegate,$ionicModal,$stateParams) {
+
     $scope.model = {
         activeIndex: 0
     };
@@ -27,6 +21,10 @@ app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicM
         window.location.href = state;
     }
 
+
+
+    //获取当前用户信息
+    $scope.currentuser= AuthService.CurrentUser();
     //我的订单
     $scope.tabIndex = 1;
     $scope.getOrderList = function (tabIndex) {
@@ -36,41 +34,29 @@ app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicM
         //待付款
         if ($stateParams.tabIndex == 1) {
             $scope.tabIndex = 1;
-            //$scope.serchCondition={
-            //    Page:'',
-            //    PageCount:'',
-            //    Status:'1'
-            //}
-            //$scope.myOrder = orderService.getOrderList($scope.searchCondition)
-            //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
-            //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
-            //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
+            $scope.serchCondition={
+                Status:'1',
+                CustomerName: $scope.currentuser.UserName
+            }
+            $scope.myOrder = orderService.getOrderList($scope.searchCondition)
         }
         //待发货
         if ($stateParams.tabIndex == 2) {
             $scope.tabIndex = 2;
-            //$scope.serchCondition={
-            //    Page:'',
-            //    PageCount:'',
-            //    Status:'2'
-            //}
-            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
-            //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
-            //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
-            //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
+            $scope.serchCondition={
+                CustomerName: $scope.currentuser.UserName,
+                Status:'2'
+            }
+            $scope.myOrder = orderService.getOrderList($scope.searchCondition);
         }
         //待收货
         if ($stateParams.tabIndex == 3) {
             $scope.tabIndex = 3;
-            //$scope.serchCondition={
-            //    Page:'',
-            //    PageCount:'',
-            //    Status:'3'
-            //}
-            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
-            //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
-            //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
-            //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
+            $scope.serchCondition={
+                CustomerName: $scope.currentuser.UserName,
+                Status:'3'
+            }
+            $scope.myOrder = orderService.getOrderList($scope.searchCondition);
         }
         //待评价
         if ($stateParams.tabIndex == 4) {
@@ -78,35 +64,11 @@ app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicM
         }
     }
     tab();
-//    $ionicModal.fromTemplateUrl("my-modal.html", {
-//        scope: $scope,
-//        animation: "slide-in-up"
-//    }).then(function(modal) {
-//        $scope.modal = modal;
-//    });
-//    $scope.openModal = function() {
-//        $scope.modal.show();
-//    };
-//    $scope.closeModal = function() {
-//        $scope.modal.hide();
-//    };
-//    //Cleanup the modal when we are done with it!
-//    $scope.$on("$destroy", function() {
-//        $scope.modal.remove();
-//    });
-//    // Execute action on hide modal
-//    $scope.$on("modal.hidden", function() {
-//        // Execute action
-//    });
-//    // Execute action on remove modal
-//    $scope.$on("modal.removed", function() {
-//        // Execute action
-//    });
-
     //个人资料修改
     $scope.imgUrl = SETTING.ImgUrl;
     $scope.oldMem = {
         Realname: '',
+        UserName:'',
         Gender: '1',
         IdentityNo: '4564',
         Icq: '454',
@@ -121,31 +83,26 @@ app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicM
         UpdTime: '2015-08-09'
     };
 
-    ////获取当前用户信息
-    //$scope.currentuser= AuthService.CurrentUser();
-    //$http.get(SETTING.ApiUrl+'/Member/GetMemberByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
-    //    .success(function(response) {
-    //        $scope.oldMem=response;
-    //
-    //        //添加判断,如果用户没有头像,隐藏IMG标签
-    //        if($scope.oldMem.Thumbnail.length<15){
-    //            //操作IMG标签的SRC为空
-    //            var img = document.getElementById('imghead');
-    //            //没图片隐藏
-    //            img.style.display = 'none';
-    //            img.src = "";
-    //        }else{
-    //            //隐藏默认头像
-    //            var defaultHeadImg = document.getElementById("preview");
-    //            defaultHeadImg.style.background = 'white';
-    //        }
-    //    });
+    $http.get(SETTING.ApiUrl+'/Member/Get?userId='+$scope.currentuser.UserId,{'withCredentials':true})
+        .success(function(response) {
+            $scope.oldMem=response;
+            console.log($scope.oldMem);
+            //添加判断,如果用户没有头像,隐藏IMG标签
+            if($scope.oldMem.Thumbnail.length<15){
+                //操作IMG标签的SRC为空
+                var img = document.getElementById('imghead');
+                //没图片隐藏
+                img.style.display = 'none';
+                img.src = "";
+            }else{
+                //隐藏默认头像
+                var defaultHeadImg = document.getElementById("preview");
+                defaultHeadImg.style.background = 'white';
+            }
+        });
 
     $scope.save = function () {
-        //if (document.getElementById("Uptext").innerText == '正在上传..') {
-        //    alert("头像正在上传,请稍等!");
-        //    return;
-        //}
+
         if (httpimguri.length > 0) {
             $scope.oldMem.Thumbnail = httpimguri;
             //如果服务器返回了用户的头像地址,操作IMG标签的SRC为angularjs绑定
@@ -253,32 +210,3 @@ function previewImage(file)
     }
 }
 ///////////////////////////头像修改//////////////////////////////////
-
-///////////////////////////ͷ���޸�//////////////////////////////////
-//app.controller('TabMeCtrl',['$http','$scope', function($http,$scope, $ionicSlideBoxDelegate) {
-// With the new view caching in Ionic, Controllers are only called
-// when they are recreated or on app start, instead of every page change.
-// To listen for when this page is active (for example, to refresh data),
-// listen for the $ionicView.enter event:
-//
-//$scope.$on('$ionicView.enter', function(e) {
-//});
-//  $scope.model = {
-//    activeIndex:0
-//  };
-//
-//  $scope.pageClick = function(index){
-//    //alert(index);
-//    //alert($scope.delegateHandler.currentIndex());
-//    $scope.model.activeIndex = 2;
-//  };
-//
-//  $scope.slideHasChanged = function($index){
-//    //alert($index);
-//    //alert($scope.model.activeIndex);
-//  };
-//  $scope.delegateHandler = $ionicSlideBoxDelegate;
-
-//                }]);
-
-
