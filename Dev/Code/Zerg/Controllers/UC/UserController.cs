@@ -149,23 +149,15 @@ namespace Zerg.Controllers.UC
         [EnableCors("*", "*", "*", SupportsCredentials = true)]
         public HttpResponseMessage LoginEntry([FromBody]UserModel model)
         {
-            //BrokerSearchCondition brokerSearchcon = new BrokerSearchCondition
-            //{
-            //    State = 1,
-            //    Phone = model.UserName
-            //};
             MemberSearchCondition serch = new MemberSearchCondition
             {
                 Phone = model.UserName
             };
             MemberEntity member = _memService.GetMembersByCondition(serch).FirstOrDefault();
-            //BrokerEntity broker = _brokerService.GetBrokersByCondition(brokerSearchcon).FirstOrDefault();
             if (member == null)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号或密码错误"));
             }
-            // var user = _userService.GetUserByName(model.UserName);
-
             var user = _userService.FindUser(member.UserId);
             if (user == null)
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名或密码错误"));
