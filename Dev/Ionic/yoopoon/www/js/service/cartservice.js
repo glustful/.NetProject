@@ -14,7 +14,10 @@ app.service("cartservice", ['$rootScope',
 		cartinfo = {
 			id: null,
 			name: null,
-			count: null
+			count: null,
+            mainimg:null,
+            price:null,
+            newprice:null
 		};
 
 		///添加商品和更改已有的商品sevice
@@ -25,6 +28,9 @@ app.service("cartservice", ['$rootScope',
 			cartinfo.id = data.id;
 			cartinfo.name = data.name;
 			cartinfo.count = data.count;
+            cartinfo.mainimg=data.mainimg;
+            cartinfo.price=data.price;
+            cartinfo.newprice=data.newprice;
 			var storage = localStorage.getItem("ShoppingCart");
 			//第一次加入商品 
 			if (storage == null || storage == "") {
@@ -32,7 +38,10 @@ app.service("cartservice", ['$rootScope',
 					"productlist": [{
 						"id": cartinfo.id,
 						"name": cartinfo.name,
-						"count": cartinfo.count
+						"count": cartinfo.count,
+                        "mainimg":cartinfo.mainimg,
+                        "price":cartinfo.price,
+                        "newprice":cartinfo.newprice
 					}]
 				};
 				localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
@@ -52,7 +61,10 @@ app.service("cartservice", ['$rootScope',
 					productlist.push({
 						"id": cartinfo.id,
 						"name": cartinfo.name,
-						"count": cartinfo.count
+						"count": cartinfo.count,
+                        "mainimg":cartinfo.mainimg,
+                        "price":cartinfo.price,
+                        "newprice":cartinfo.newprice
 					});
 				}
 				$rootScope.cartProductCount += 1;

@@ -4,10 +4,8 @@
 <div class=" header bar" style="height:44px">
     <a class="button  button-icon icon icon-fuwuanniu"ng-click="go('page.Product-Catagory')" ui-sref="page.Product-Catagory" ></a>
     <label class=" item-select select-header" ng-hide="showSelect">
-        <select>
-            <option>金尚俊园A座</option>
-            <option >CSS</option>
-            <option>JavaScript</option>
+        <select ng-model="1" id="ParentId"  ng-options="o.Id as o.Name for o in addrss"  required>
+
         </select>
 
     </label>
@@ -17,7 +15,7 @@
 </div>
 
 
-<ion-view view-title="优·购物" hide-tabs="true" hide-nav-bar="true">
+<ion-view view-title="优·购物" hide-tabs="false" hide-nav-bar="true">
     <!-- 主页-->
     <ion-content class="scroll-content" no-header="true" style="top:44px">
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefrsh()"></ion-refresher>
@@ -136,7 +134,7 @@
             <!--</div>-->
             <!--</div>-->
         </div>
-        <ion-infinite-scroll on-infinite="load_more();">
+        <ion-infinite-scroll  ng-if="loadmore" on-infinite="load_more();">
         </ion-infinite-scroll>
     </ion-content>
 
