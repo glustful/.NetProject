@@ -5,6 +5,7 @@ using System.Web.Http;
 using Community.Entity.Model.Order;
 using Community.Entity.Model.OrderDetail;
 using Community.Entity.Model.Product;
+using Community.Service.Member;
 using Community.Service.MemberAddress;
 using Community.Service.Order;
 using Community.Service.Product;
@@ -15,19 +16,22 @@ using Zerg.Models.Community;
 
 namespace Zerg.Controllers.Community
 {
+    [AllowAnonymous]
 	public class CommunityOrderController : ApiController
 	{
 		private readonly IOrderService _orderService;
 	    private readonly IProductService _productService;
 	    private readonly IWorkContext _workContext;
 	    private readonly IMemberAddressService _memberAddressService;
+        private readonly IMemberService _memberService;
 
-	    public CommunityOrderController(IOrderService orderService, IProductService productService, IWorkContext workContext,IMemberAddressService memberAddressService)
+        public CommunityOrderController(IOrderService orderService, IProductService productService, IWorkContext workContext,IMemberAddressService memberAddressService,IMemberService memberService)
 	    {
 	        _orderService = orderService;
 	        _productService = productService;
 	        _workContext = workContext;
 	        _memberAddressService = memberAddressService;
+            _memberService = memberService;
 	    }
 
 	    public OrderModel Get(int id)
@@ -88,13 +92,13 @@ namespace Zerg.Controllers.Community
 			return PageHelper.toJson(new {List = model,Condition = condition,TotalCount=totalCount});
 		}
 
-		public bool Post([FromBody]OrderModel model)
+		public HttpResponseMessage Post([FromBody]OrderModel model)
 		{
             //获取订单明细对应的商品
             var products = _productService.GetProductsByCondition(new ProductSearchCondition
             {
                 Ids = model.Details.Select(c => c.Product.Id).ToArray(),
-                Type = EnumProductType.Service
+                Type = EnumProductType.Product
             }).ToList().Select(p => new OrderDetailEntity
             {
                 Count = model.Details.First(d => d.Product.Id == p.Id).Count,
@@ -105,10 +109,12 @@ namespace Zerg.Controllers.Community
                 ProductName = p.Name,
                 Remark = "",
                 Snapshoturl = "",
-                Totalprice = model.Details.First(d => d.Product.Id == p.Id).Count * p.Price
+                Totalprice = model.Details.First(d => d.Product.Id == p.Id).Count * p.Price,
+                Upddate = DateTime.Now,
+                Upduser = _workContext.CurrentUser.Id
             }).ToList();
             if (products.Count < 1)
-                return false;
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"没有找到商品信息"));
 
             //订单编号
             Random rd = new Random();
@@ -127,13 +133,22 @@ namespace Zerg.Controllers.Community
                 Totalprice = products.Sum(c => (c.Count * c.UnitPrice)),
                 Actualprice = products.Sum(c => (c.Count * c.UnitPrice)),
 				Details = products,
-                Address = _memberAddressService.GetMemberAddressById(model.MemberAddressId)
+                Address = _memberAddressService.GetMemberAddressById(model.MemberAddressId),
+                AddMember = _memberService.GetMemberByUserId( _workContext.CurrentUser.Id)
 			};
 			if(_orderService.Create(entity).Id > 0)
 			{
-				return true;
+                //TODO:回掉接口写到Msg里，完成回掉方法
+				return PageHelper.toJson(PageHelper.ReturnValue(true,"null",new OrderModel
+				{
+				    Id = entity.Id,
+                    No = entity.No,
+                    Actualprice = entity.Actualprice,
+                    Adddate = entity.AddDate,
+                    CustomerName = entity.CustomerName
+				}));
 			}
-			return false;
+			return PageHelper.toJson(PageHelper.ReturnValue(false,"生成订单出错，请联系管理员"));
 		}
 
 		public HttpResponseMessage Put(OrderModel model)
