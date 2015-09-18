@@ -27,7 +27,6 @@ app.controller('register',['$http','$scope','$state','AuthService',function($htt
         })
     }
 }])
-
 //两次密码输入验证
 function check()
 {

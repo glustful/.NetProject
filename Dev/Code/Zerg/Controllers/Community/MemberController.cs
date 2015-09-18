@@ -252,6 +252,7 @@ namespace Zerg.Controllers.Community
             var model = new MemberEntity();
             model.UserId = _userService.InsertUser(newUser).Id;
             model.RealName = memberModel.UserName;
+            model.UserName = memberModel.UserName;
             model.Phone = memberModel.Phone;
             model.Points=0;
             model.IdentityNo="";
