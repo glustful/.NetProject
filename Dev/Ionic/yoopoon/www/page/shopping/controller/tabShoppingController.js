@@ -61,6 +61,34 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     };
 
 
+
+    //region地址获取
+    $scope.Condition = {
+        Page: 1,
+        father:true
+    };
+    $scope.pare=[];
+
+    var getAddress=function(){
+        $http.get(SETTING.ApiUrl+'/CommunityArea/Get',{
+            params: $scope.Condition,
+            'withCredentials': true
+        }).success(function (data3) {
+            if (data3.List != "") {
+                $scope.addrss = data3.List;
+                //for( i=0;i<data3.List.length;i++){
+                //    if(data3.List[i].Parent=null)
+                //    {
+                //        $scope.pare.push (data3.List[i].Parent);
+                //    }}
+                //alert($scope.pare);
+            }
+        });
+    }
+    getAddress();
+    $scope.getList=getAddress;
+    //endregion
+
     //region商品大图获取
 
     $scope.Condition = {
@@ -104,8 +132,8 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     };
     getList();
 //endregion
-
     //region 商品加载
+    $scope.loadmore=true;
     $scope.load_more = function () {
         $timeout(function () {
             $scope.searchCondition.Page += 1;
@@ -117,14 +145,17 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
                     for (var i = 0; i < data.List.length; i++) {
                         $scope.items.push(data.List[i]);
                     }
+                    if($scope.items.length==data.TotalCount)
+                    {
+                        $scope.loadmore=false;
+                    }
                 }
-
                 $scope.$broadcast("scroll.infiniteScrollComplete");
             });
-
-
         }, 1000)
     };
+
+
     //endregion
 
     //region 图片轮播
@@ -145,16 +176,24 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         count: null
     };
     // 添加商品
-    $scope.AddCart = function (data) {
-        $scope.cartinfo.id = data.row.Id;
-        $scope.cartinfo.name = data.row.Name;
-        $scope.cartinfo.count = 1;
+    $scope.AddCart = function(data)
+    {
+        $scope.cartinfo.id=data.row.Id;
+        $scope.cartinfo.name=data.row.Name;
+        $scope.cartinfo.mainimg=data.row.MainImg;
+        $scope.cartinfo.price=data.row.Price;
+        $scope.cartinfo.newprice=data.row.NewPrice;
+        $scope.cartinfo.count=1;
         cartservice.add($scope.cartinfo);
-    };
-    $scope.AddCart1 = function (list) {
-        $scope.cartinfo.id = $scope.list.Id;
-        $scope.cartinfo.name = $scope.list.Name;
-        $scope.cartinfo.count = 1;
+    }
+    $scope.AddCart1 = function(list)
+    {
+        $scope.cartinfo.id=$scope.list.Id;
+        $scope.cartinfo.name=$scope.list.Name;
+        $scope.cartinfo.mainimg=$scope.list.MainImg;
+        $scope.cartinfo.price=$scope.list.Price;
+        $scope.cartinfo.newprice=$scope.list.NewPrice;
+        $scope.cartinfo.count=1;
         cartservice.add($scope.cartinfo);
     };
     //endregion
