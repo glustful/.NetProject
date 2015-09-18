@@ -2,8 +2,7 @@
  * Created by Yunjoy on 2015/9/15.
  */
 //зЂВс
-app.controller('register',['$http','$scope',function($http,$scope){
-    console.log("1111");
+app.controller('register',['$http','$scope','$state','AuthService',function($http,$scope,$state,AuthService){
     $scope.signer ={
         Phone:'',
         UserName:'',
@@ -16,11 +15,12 @@ app.controller('register',['$http','$scope',function($http,$scope){
         $http.post(SETTING.ApiUrl+'/Member/AddMember',$scope.signer,{'withCredentials':true}).success(function(data){
             if(data.Status==false){
                 console.log(data.Msg);
+                $scope.tip=data.Msg;
             }
             else{
-                //AuthService.doLogin($scope.signer.userName,$scope.FPassword,function(){
-                //    $state.go('user.index');
-                //})
+                AuthService.doLogin($scope.signer.UserName,$scope.signer.Password,function(){
+                    $state.go('page.me');
+                })
                 console.log(data.Msg);
             }
             console.log(data);
