@@ -1,5 +1,5 @@
 var httpimguri="";
-app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicModal,$stateParams) {
+app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,$ionicSlideBoxDelegate,$ionicModal,$stateParams) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -107,6 +107,7 @@ app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicM
     $scope.imgUrl = SETTING.ImgUrl;
     $scope.oldMem = {
         Realname: '',
+        UserName:'',
         Gender: '1',
         IdentityNo: '4564',
         Icq: '454',
@@ -121,25 +122,25 @@ app.controller('TabMeCtrl', function($scope,$http,$ionicSlideBoxDelegate,$ionicM
         UpdTime: '2015-08-09'
     };
 
-    ////获取当前用户信息
-    //$scope.currentuser= AuthService.CurrentUser();
-    //$http.get(SETTING.ApiUrl+'/Member/GetMemberByUserId?userId='+$scope.currentuser.UserId,{'withCredentials':true})
-    //    .success(function(response) {
-    //        $scope.oldMem=response;
-    //
-    //        //添加判断,如果用户没有头像,隐藏IMG标签
-    //        if($scope.oldMem.Thumbnail.length<15){
-    //            //操作IMG标签的SRC为空
-    //            var img = document.getElementById('imghead');
-    //            //没图片隐藏
-    //            img.style.display = 'none';
-    //            img.src = "";
-    //        }else{
-    //            //隐藏默认头像
-    //            var defaultHeadImg = document.getElementById("preview");
-    //            defaultHeadImg.style.background = 'white';
-    //        }
-    //    });
+    //获取当前用户信息
+    $scope.currentuser= AuthService.CurrentUser();
+    $http.get(SETTING.ApiUrl+'/Member/Get?userId='+$scope.currentuser.UserId,{'withCredentials':true})
+        .success(function(response) {
+            $scope.oldMem=response;
+
+            //添加判断,如果用户没有头像,隐藏IMG标签
+            if($scope.oldMem.Thumbnail.length<15){
+                //操作IMG标签的SRC为空
+                var img = document.getElementById('imghead');
+                //没图片隐藏
+                img.style.display = 'none';
+                img.src = "";
+            }else{
+                //隐藏默认头像
+                var defaultHeadImg = document.getElementById("preview");
+                defaultHeadImg.style.background = 'white';
+            }
+        });
 
     $scope.save = function () {
         //if (document.getElementById("Uptext").innerText == '正在上传..') {
