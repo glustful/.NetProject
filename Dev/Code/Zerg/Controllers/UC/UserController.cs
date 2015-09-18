@@ -22,6 +22,8 @@ using YooPoon.Common.Encryption;
 using CRM.Service.MessageDetail;
 using CRM.Service.RecommendAgent;
 using System.ComponentModel;
+using Community.Entity.Model.Member;
+using Community.Service.Member;
 
 namespace Zerg.Controllers.UC
 {
@@ -38,7 +40,7 @@ namespace Zerg.Controllers.UC
         private readonly ILevelService _levelService;
         private readonly IMessageDetailService _MessageService;
         private readonly IRecommendAgentService _recommendagentService;
-
+        private readonly IMemberService _memService;
 
         public UserController(IUserService userService,
             IAuthenticationService authenticationService,
@@ -47,7 +49,8 @@ namespace Zerg.Controllers.UC
             IRoleService roleService,
             ILevelService levelService,
             IMessageDetailService MessageService,
-            IRecommendAgentService recommendagentService
+            IRecommendAgentService recommendagentService,
+            IMemberService memService
             )
         {
             _userService = userService;
@@ -58,6 +61,7 @@ namespace Zerg.Controllers.UC
             _levelService = levelService;
             _MessageService = MessageService;
             _recommendagentService = recommendagentService;
+            _memService = memService;
         }
 
         /// <summary>
@@ -135,7 +139,46 @@ namespace Zerg.Controllers.UC
             }));
         }
 
+        /// <summary>
+        /// 优购物前台登陆
+        /// </summary>
+        /// <param name="model">登陆参数</param>
+        /// <returns>登陆结果</returns>
+        [Description("登陆")]
+        [HttpPost]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        public HttpResponseMessage LoginEntry([FromBody]UserModel model)
+        {
+            //BrokerSearchCondition brokerSearchcon = new BrokerSearchCondition
+            //{
+            //    State = 1,
+            //    Phone = model.UserName
+            //};
+            MemberSearchCondition serch = new MemberSearchCondition
+            {
+                Phone = model.UserName
+            };
+            MemberEntity member = _memService.GetMembersByCondition(serch).FirstOrDefault();
+            //BrokerEntity broker = _brokerService.GetBrokersByCondition(brokerSearchcon).FirstOrDefault();
+            if (member == null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号或密码错误"));
+            }
+            // var user = _userService.GetUserByName(model.UserName);
 
+            var user = _userService.FindUser(member.UserId);
+            if (user == null)
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名或密码错误"));
+            if (!PasswordHelper.ValidatePasswordHashed(user, model.Password))
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名或密码错误"));
+            _authenticationService.SignIn(user, model.Remember);
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "登陆成功", new
+            {
+                user.Id,
+                Roles = user.UserRoles.Select(r => new { r.Role.RoleName }).ToArray(),
+                user.UserName
+            }));
+        }
 
         /// <summary>
         /// 外接  注册登录逻辑 （先判断手机号是否存在 存在就进行登录  不存在就进行注册 并返回成功） 用于外接 ：众凑 游戏等  by lhl 2015-6-30
