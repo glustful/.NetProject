@@ -1,3 +1,4 @@
+using Community.Entity.Model.Order;
 using System;
 
 namespace Community.Entity.Model.OrderDetail
@@ -18,7 +19,10 @@ namespace Community.Entity.Model.OrderDetail
 		/// 是否降序
 		/// </summary>
 		public bool IsDescending { get; set; }
-
+        /// <summary>
+        /// 订单状态
+        /// </summary>
+        public EnumOrderStatus? Status { get; set; }
 
 		public int[] Ids { get; set; }
 
