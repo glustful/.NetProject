@@ -95,7 +95,7 @@ app.controller('selectCounty',['$http','$scope','$stateParams',function($http,$s
 
 app.controller('newAddress',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
 
-   if( $stateParams.name==undefined ||  $stateParams.name1=="" ||  $stateParams.id==undefined ||  $stateParams.id=="" )
+   if( $stateParams.name==undefined ||  $stateParams.name=="" ||  $stateParams.id==undefined ||  $stateParams.id=="" )
    {
        $scope.go("page.addressAdm");
    }
@@ -108,7 +108,7 @@ app.controller('newAddress',['$http','$scope','$stateParams',function($http,$sco
         Tel:''
     };
 
-    $scope.save = function () {
+    $scope.saves = function () {
 
         $http.post(SETTING.ApiUrl + '/MemberAddress/Post', $scope.Address, {'withCredentials': true})
             .success(function (data) {
