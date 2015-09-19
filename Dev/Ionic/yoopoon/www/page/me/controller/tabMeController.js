@@ -1,6 +1,5 @@
 var httpimguri="";
 app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderService,$ionicSlideBoxDelegate,$ionicModal,$stateParams) {
-
     $scope.model = {
         activeIndex: 0
     };

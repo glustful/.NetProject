@@ -99,6 +99,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     }
                 }
             })
+            .state('page.myService', {
+                url: '/service/myService',
+                views: {
+                    'page-service': {
+                        templateUrl: 'page/service/myService.html'
+
+                    }
+                }
+            })
             .state('page.safe-detail', {
                 url: '/service/safe-detail',
                 views: {
