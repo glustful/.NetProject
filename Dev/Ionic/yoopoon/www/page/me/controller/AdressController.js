@@ -92,3 +92,31 @@ app.controller('selectCounty',['$http','$scope','$stateParams',function($http,$s
         $scope.listCounty=data.List;
     });
 }]);
+
+app.controller('newAddress',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+
+   if( $stateParams.name==undefined ||  $stateParams.name1=="" ||  $stateParams.id==undefined ||  $stateParams.id=="" )
+   {
+       $scope.go("page.addressAdm");
+   }
+    $scope.Address={
+        AreaName:$stateParams.name,
+        AreaId: $stateParams.id,
+        Address:'',
+        Zip :'',
+        Linkman :'',
+        Tel:''
+    };
+
+    $scope.save = function () {
+
+        $http.post(SETTING.ApiUrl + '/MemberAddress/Post', $scope.Address, {'withCredentials': true})
+            .success(function (data) {
+                if (data.Status) {
+
+                    $state.go("page.addressAdm");
+                }
+            });
+    }
+
+}]);

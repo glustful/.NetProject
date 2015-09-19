@@ -91,7 +91,7 @@ namespace YooPoon.WebFramework.API
                 if (isAllowed)
                     break;
             }
-            return IsAllowed;
+            return isAllowed;
         }
     }
 }

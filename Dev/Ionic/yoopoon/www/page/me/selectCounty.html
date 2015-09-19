@@ -5,7 +5,7 @@
 <ion-view hide-nav-bar="true" hide-tabs="true" >
     <ion-content no-header="true" style="top:44px;padding:0;background-color: #d9d9d9" class="stable-bg">
         <ion-list>
-            <ion-item ng-repeat="chat in listCounty" type="item-text-wrap" ui-sref="page.selectCity({id:chat.Id,name:name+chat.Name})">
+            <ion-item ng-repeat="chat in listCounty" type="item-text-wrap" ui-sref="page.newAddress({id:chat.Id,name:name+chat.Name})">
                 {{chat.Name}}
             </ion-item>
 
