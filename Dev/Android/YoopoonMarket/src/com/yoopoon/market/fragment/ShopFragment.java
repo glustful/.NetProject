@@ -13,11 +13,9 @@
 package com.yoopoon.market.fragment;
 
 import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -35,12 +33,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.advertisement.ADController;
 import com.yoopoon.component.YoopoonServiceController;
 import com.yoopoon.market.ProductDetailActivity_;
-import com.yoopoon.market.ProductList_;
 import com.yoopoon.market.R;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
@@ -48,9 +44,7 @@ import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.ResponseData.ResultState;
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
-import com.yoopoon.market.view.ExpandableHeightGridView;
 import com.yoopoon.market.view.MyGridView;
-import com.yoopoon.market.view.NoScrollGridView;
 import com.yoopoon.view.adapter.ProductGridViewAdapter;
 
 public class ShopFragment extends Fragment {
@@ -64,11 +58,11 @@ public class ShopFragment extends Fragment {
 	private TextView burstPackageTextView;
 	private static final String TAG = "ShopFragment";
 	private ArrayList<JSONArray> servicesArrayList;
-	//首页推荐商品控件
-	private ImageView burstPackageImageView;//套餐图片
+	// 首页推荐商品控件
+	private ImageView burstPackageImageView;// 套餐图片
 	private TextView beforePriceTextView; // 折扣前价格
-	private TextView currentPriceTextView;//当前价格
-	private TextView burstPackageNameTextView; //套餐名称
+	private TextView currentPriceTextView;// 当前价格
+	private TextView burstPackageNameTextView; // 套餐名称
 	private Button salesVolumeButton;
 
 	@Override
@@ -106,25 +100,27 @@ public class ShopFragment extends Fragment {
 				}
 			});
 			mADController = new ADController(mContext);
-			//serviceController = new YoopoonServiceController(mContext);
+			// serviceController = new YoopoonServiceController(mContext);
 			commodityGridView = (MyGridView) rootView.findViewById(R.id.gridview_commodity);
 			initShopFragment();
 			loadRefreshByAddress();
 		}
 		return rootView;
 	}
+
 	/**
 	 * @Title: initShopFragment
 	 * @Description: 初始化和设置视图控件
 	 */
 	private void initShopFragment() {
 		requestAdvertisements();
-		//requestServices();
+		// requestServices();
 		requestProduct();
 		LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.linearlayout_fragment_shop);
-		//添加广告
+		// 添加广告
 		linearLayout.addView(mADController.getRootView(), 0);
 	}
+
 	private void initRecommendProduct(JSONObject jsonObject) {
 		burstPackageNameTextView.setText(jsonObject.optString("Name", ""));
 		currentPriceTextView.setText("RMB" + jsonObject.optString("Price", ""));
@@ -135,6 +131,7 @@ public class ShopFragment extends Fragment {
 			ImageLoader.getInstance().displayImage(urlString, burstPackageImageView);
 		}
 	}
+
 	/**
 	 * @Title: requestAdvertisements
 	 * @Description: 获取广告信息
@@ -158,18 +155,21 @@ public class ShopFragment extends Fragment {
 						}
 					}
 				}
+
 				@Override
 				public void onProgress(ProgressMessage msg) {
 				}
 			}.setUrl("/api/Channel/GetTitleImg").setRequestMethod(RequestMethod.eGet).addParam("channelName", "banner")
 					.notifyRequest();
 	}
-	/** 
-	 * @Title: requestProduct 
+
+	/**
+	 * @Title: requestProduct
 	 * @Description: 获取商品列表，同时加载到Adapter中
 	 */
 	private void requestProduct() {
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONArray jsonArray;
@@ -179,7 +179,7 @@ public class ShopFragment extends Fragment {
 						mProductGridViewAdapter = new ProductGridViewAdapter(mContext,
 								JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
 						commodityGridView.setAdapter(mProductGridViewAdapter);
-						//加载推荐套餐内容
+						// 加载推荐套餐内容
 						initRecommendProduct(JSONArrayConvertToArrayList.convertToArrayList(jsonArray).get(0));
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -188,32 +188,33 @@ public class ShopFragment extends Fragment {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
-	
-	/** 
-	 * @ClassName: ProductRefreshByAddressReceiver 
+
+	/**
+	 * @ClassName: ProductRefreshByAddressReceiver
 	 * @Description: 创建监听地址改变的接收器
 	 * @author: 徐阳会
-	 * @date: 2015年9月17日 上午11:02:12  
+	 * @date: 2015年9月17日 上午11:02:12
 	 */
-	private class ProductRefreshByAddressReceiver extends BroadcastReceiver{
+	private class ProductRefreshByAddressReceiver extends BroadcastReceiver {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			 Toast.makeText(mContext, "111111", Toast.LENGTH_SHORT).show();
-			
+			Toast.makeText(mContext, "111111", Toast.LENGTH_SHORT).show();
+
 		}
-		
+
 	}
-	
-	private void loadRefreshByAddress(){
-		IntentFilter intentFilter=new IntentFilter("com.yoopoon.market.productRefresh.Address");
-		ProductRefreshByAddressReceiver addressReceiver=new ProductRefreshByAddressReceiver();
+
+	private void loadRefreshByAddress() {
+		IntentFilter intentFilter = new IntentFilter("com.yoopoon.market.productRefresh.Address");
+		ProductRefreshByAddressReceiver addressReceiver = new ProductRefreshByAddressReceiver();
 		mContext.registerReceiver(addressReceiver, intentFilter);
-		
+
 	}
 }

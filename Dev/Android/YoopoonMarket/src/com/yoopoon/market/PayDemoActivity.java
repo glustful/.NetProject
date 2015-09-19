@@ -5,11 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +19,7 @@ import com.yoopoon.market.alipay.PayResult;
 import com.yoopoon.market.alipay.SignUtils;
 
 @EActivity(R.layout.pay_main)
-public class PayDemoActivity extends FragmentActivity {
+public class PayDemoActivity extends MainActionBarActivity {
 	private static final String TAG = "PayDemoActivity";
 
 	// 商户PID
@@ -86,6 +86,14 @@ public class PayDemoActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+	}
+
+	@AfterViews
+	void initUI() {
+		backButton.setVisibility(View.VISIBLE);
+		titleButton.setVisibility(View.VISIBLE);
+		rightButton.setVisibility(View.GONE);
+		titleButton.setText("支付宝");
 	}
 
 	/**
@@ -246,6 +254,27 @@ public class PayDemoActivity extends FragmentActivity {
 	 */
 	public String getSignType() {
 		return "sign_type=\"RSA\"";
+	}
+
+	@Override
+	public void backButtonClick(View v) {
+		finish();
+	}
+
+	@Override
+	public void titleButtonClick(View v) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void rightButtonClick(View v) {
+
+	}
+
+	@Override
+	public Boolean showHeadView() {
+		return true;
 	}
 
 }

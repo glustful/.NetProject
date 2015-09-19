@@ -19,6 +19,19 @@ public class Staff implements Serializable {
 	public float price_counted;
 	public float price_previous;
 	public boolean chosen = false;
+	public int productId;
+
+	public Staff(String title, String category, String image, int count, float price_counted, float price_previous,
+			int productId) {
+		super();
+		this.title = title;
+		this.category = category;
+		this.image = image;
+		this.count = count;
+		this.price_counted = price_counted;
+		this.price_previous = price_previous;
+		this.productId = productId;
+	}
 
 	public Staff(String title, String category, String image, int count, float price_counted, float price_previous) {
 		super();
@@ -34,7 +47,7 @@ public class Staff implements Serializable {
 	public String toString() {
 		return "Staff [id=" + id + ", title=" + title + ", category=" + category + ", image=" + image + ", count="
 				+ count + ", price_counted=" + price_counted + ", price_previous=" + price_previous + ", chosen="
-				+ chosen + "]";
+				+ chosen + ", productId=" + productId + "]";
 	}
 
 }

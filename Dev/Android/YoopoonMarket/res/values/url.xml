@@ -26,7 +26,17 @@
     <string name="url_category_get">/api/category/getchildbyfatherid</string>
 
     
-    <!-- 地区 -->
+    <!-- 地区 --> 
     <string name="url_area_get">/api/CommunityArea/get</string>
+    
+    <string name="url_login">/api/user/Login</string>
+    
+    <!-- 订单 -->
+    <string name="url_order_post">/api/CommunityOrder/post</string>
+    
+    
+    
+    
+    
     
 </resources>

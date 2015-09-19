@@ -25,6 +25,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,8 +33,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -75,6 +74,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 	LinearLayout ll_balance;
 	int limit = 5;
 	int offset = 0;
+	int[] checkedIds;
 
 	@Override
 	@Nullable
@@ -103,11 +103,26 @@ public class CartFragment extends Fragment implements OnClickListener {
 		btn_edit.setOnClickListener(this);
 		lv.setOnRefreshListener(new HowWillIrefresh());
 
-		if (staffList.size() == 0)
-			requestData(offset);
-		else
-			fillData();
+	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		staffList.clear();
+		offset = 0;
+		requestData(offset);
+		requestCount();
+	}
+
+	void requestCount() {
+		new Thread() {
+			@Override
+			public void run() {
+				DBDao dao = new DBDao(getActivity());
+				int count = dao.getAllCounts();
+				tv_title_count.setText("购物车(" + count + ")");
+			}
+		}.start();
 	}
 
 	private void requestData(final int offset) {
@@ -151,6 +166,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 	}
 
 	void fillData() {
+		Log.i(TAG, "fillData()");
 		adapter.notifyDataSetChanged();
 		calcTotalPrice();
 		ll_loading.setVisibility(View.GONE);
@@ -260,13 +276,13 @@ public class CartFragment extends Fragment implements OnClickListener {
 			holder.iv.setScaleType(ScaleType.FIT_XY);
 			Utils.spanTextSize(holder.tv_price_counted, "\\.", true, new int[] { 16, 12 });
 
-			holder.cb.setChecked(staff.chosen ? true : false);
-			holder.cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			holder.cb.setChecked(staff.chosen);
+			holder.cb.setOnClickListener(new OnClickListener() {
 
 				@Override
-				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					staff.chosen = isChecked;
-					if (!isChecked)
+				public void onClick(View v) {
+					staff.chosen = !staff.chosen;
+					if (!staff.chosen)
 						cb_selectall.setChecked(false);
 					calcTotalPrice();
 				}
@@ -358,18 +374,29 @@ public class CartFragment extends Fragment implements OnClickListener {
 				sumCount += staff.count;
 			}
 		}
+
 		DecimalFormat df = new DecimalFormat("#.00");
 		tv_price_total.setText("合计：￥" + df.format(sumPrice));
 		Utils.spanTextStyle(tv_price_total, getActivity());
 		btn_balance.setText("结算(" + sumCount + ")");
-		tv_title_count.setText("购物车(" + sumCount + ")");
+		btn_balance.setTag(sumCount);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.btn_balance:
-				BalanceActivity_.intent(getActivity()).start();
+				int count = (Integer) btn_balance.getTag();
+				if (count == 0) {
+					Toast.makeText(getActivity(), "亲，你还没有选择任何商品呢!", Toast.LENGTH_SHORT).show();
+				} else {
+					List<Staff> chosenList = new ArrayList<Staff>();
+					for (Staff staff : staffList) {
+						if (staff.chosen)
+							chosenList.add(staff);
+					}
+					BalanceActivity_.intent(getActivity()).staffList(chosenList).start();
+				}
 				break;
 			case R.id.cb_chooseall:
 				for (Staff staff : staffList)

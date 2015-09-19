@@ -34,6 +34,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.MyApplication;
 import com.yoopoon.market.ProductDetailActivity_;
 import com.yoopoon.market.R;
+import com.yoopoon.market.db.dao.DBDao;
+import com.yoopoon.market.domain.Staff;
 
 /**
  * @ClassName: productityListViewAdapter
@@ -84,18 +86,21 @@ public class ProductGridViewAdapter extends BaseAdapter {
 		}
 		Log.i(TAG, datas.get(position).toString());
 		// 判断图片链接是否存在，不存在的时候使用默认图片
-		String mainImgsString = datas.get(position).optString("MainImg");
+		final String mainImgsString = datas.get(position).optString("MainImg");
 		String url = "http://iyookee.cn/modules/Index/static/image/index/activity4_c37e838.png";
 		if ((!mainImgsString.equals("")) && (!mainImgsString.equals("null"))) {
 			url = mContext.getString(R.string.url_image) + datas.get(position).optString("MainImg");
 		}
 		// String url = "http://iyookee.cn/modules/Index/static/image/index/activity4_c37e838.png";
 		// 产品名称
-		productityViewHandler.productityNameTextView.setText(datas.get(position).optString("Name", ""));
+		final String name = datas.get(position).optString("Name", "");
+		productityViewHandler.productityNameTextView.setText(name);
 		// 产品当前价格
+		final float price_previous = Float.parseFloat(datas.get(position).optString("Price", ""));
 		productityViewHandler.productityCurrentPriceTextView.setText("RMB "
 				+ datas.get(position).optString("Price", "0.00"));
 		// 产品未打折前价格
+		final float price_counted = Float.parseFloat(datas.get(position).optString("NewPrice", ""));
 		productityViewHandler.productityBeforePriceTextView.setText(" /折扣前"
 				+ datas.get(position).optString("NewPrice", "0.00"));
 		productityViewHandler.productityBeforePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -117,11 +122,33 @@ public class ProductGridViewAdapter extends BaseAdapter {
 			}
 		});
 		// 点击购物车按钮，跳转到购物车
+		final int id = datas.get(position).optInt("Id", 0);
+		final String subtitle = datas.get(position).optString("Subtitte");
 		productityViewHandler.cartImageView.setOnClickListener(new OnClickListener() {
+
 			@Override
-			public void onClick(View v) {
-				Toast.makeText(mContext, "即将跳转到购物车", Toast.LENGTH_SHORT).show();
+			public void onClick(final View v) {
+				new Thread() {
+
+					public void run() {
+						DBDao dao = new DBDao(mContext);
+						if (dao.isExist(id)) {
+							int count = dao.isExistCount(id);
+							dao.updateCount(id, count + 1);
+						} else {
+							String url = mContext.getString(R.string.url_image) + mainImgsString;
+							dao.add(new Staff(subtitle, name, url, 1, price_counted, price_previous, id));
+						}
+						int[] start_location = new int[2];// 一个整型数组，用来存储按钮的在屏幕的X、Y坐标
+						v.getLocationInWindow(start_location);// 这是获取购买按钮的在屏幕的X、Y坐标（这也是动画开始的坐标）
+						Intent intent = new Intent("com.yoopoon.market.add_to_cart");
+						intent.addCategory(Intent.CATEGORY_DEFAULT);
+						intent.putExtra("start_location", start_location);
+						mContext.sendBroadcast(intent);
+					};
+				}.start();
 			}
+
 		});
 		// 点击product GridView项跳转到产品详细信息Activity
 		convertView.setOnClickListener(new OnClickListener() {

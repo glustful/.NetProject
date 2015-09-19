@@ -12,15 +12,43 @@
  */
 package com.yoopoon.market;
 
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.List;
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONObject;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView.LayoutParams;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yoopoon.market.domain.CommunityOrderEntity;
+import com.yoopoon.market.domain.MemberAddressEntity;
 import com.yoopoon.market.domain.Staff;
+import com.yoopoon.market.net.ProgressMessage;
+import com.yoopoon.market.net.RequestAdapter;
+import com.yoopoon.market.net.RequestAdapter.RequestMethod;
+import com.yoopoon.market.net.ResponseData;
+import com.yoopoon.market.utils.ParserJSON;
+import com.yoopoon.market.utils.ParserJSON.ParseListener;
+import com.yoopoon.market.utils.SerializerJSON;
+import com.yoopoon.market.utils.SerializerJSON.SerializeListener;
+import com.yoopoon.market.utils.Utils;
 
 /**
  * @ClassName: PersonalInfoActivity
@@ -30,10 +58,99 @@ import com.yoopoon.market.domain.Staff;
  */
 @EActivity(R.layout.activity_balance)
 public class BalanceActivity extends MainActionBarActivity {
+	private static final String TAG = "BalanceActivity";
 	@ViewById(R.id.lv)
 	ListView lv;
 	@Extra
-	Staff staff;
+	List<Staff> staffList;
+	@Extra
+	MemberAddressEntity checkedAddress;
+	@ViewById(R.id.tv_name)
+	TextView tv_linkman;
+	@ViewById(R.id.tv_phone)
+	TextView tv_phone;
+	@ViewById(R.id.tv_address)
+	TextView tv_address;
+	@ViewById(R.id.ll_loading)
+	View loading;
+	@ViewById(R.id.tv_price_total)
+	TextView tv_price_total;
+	MemberAddressEntity addressEntity;
+
+	@Click(R.id.btn_ok)
+	void confirmOrder() {
+		requestLogin();
+		// PayWayActivity_.intent(BalanceActivity.this).start();
+	}
+
+	void requestLogin() {
+		String json = "{\"Username\":\"admin\",\"password\":\"123456\"}";
+		Log.i(TAG, json);
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				Log.i(TAG, data.toString());
+				serializeOrder();
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+			}
+		}.setUrl(MyApplication.getInstance().getString(R.string.url_login)).SetJSON(json).setSaveSession(true)
+				.notifyRequest();
+	}
+
+	void serializeOrder() {
+		new SerializerJSON(new SerializeListener() {
+
+			@Override
+			public String onSerialize() {
+				ObjectMapper om = new ObjectMapper();
+				String json = null;
+				try {
+					json = om.writeValueAsString(new CommunityOrderEntity());
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				}
+				return json;
+			}
+
+			@Override
+			public void onComplete(String serializeResult) {
+				if (!TextUtils.isEmpty(serializeResult)) {
+					Log.i(TAG, serializeResult);
+					requestAddOrder(serializeResult);
+				}
+			}
+		}).execute();
+	}
+
+	void requestAddOrder(String serial) {
+		serial = "{\"Id\":1,\"No\":\"00212654646512\",\"Status\":0,\"StatusString\":\"新建\",\"CustomerName\":\"客户姓名\",\"Remark\":\"test\",\"Adddate\":\"\\/Date(1442572933790)\\/\",\"Adduser\":1,\"Upduser\":1,\"Upddate\":\"\\/Date(1442572933790)\\/\",\"Totalprice\":100.00,\"Actualprice\":100.00,\"Details\":[{\"Id\":1,\"No\":null,\"ProductName\":\"鲜花饼\",\"UnitPrice\":500.00,\"Price\":0,\"Count\":1.00,\"Snapshoturl\":\"\",\"Remark\":\"\",\"Adduser\":0,\"Adddate\":\"\\/Date(-62135596800000)\\/\",\"Upduser\":0,\"Upddate\":\"\\/Date(-62135596800000)\\/\",\"Totalprice\":100.00,\"Product\":{\"Id\":1,\"BussnessId\":0,\"BussnessName\":null,\"Price\":0,\"Name\":\"鲜花饼\",\"Status\":0,\"MainImg\":null,\"IsRecommend\":0,\"Sort\":0,\"Stock\":0,\"Adduser\":0,\"Addtime\":\"\\/Date(-62135596800000)\\/\",\"UpdUser\":0,\"UpdTime\":\"\\/Date(-62135596800000)\\/\",\"Subtitte\":null,\"Contactphone\":null,\"Type\":0,\"TypeString\":\"实物商品\",\"StatusString\":\"正常\",\"NewPrice\":null,\"Owner\":null,\"CategoryId\":0,\"Detail\":null,\"Img\":null,\"Img1\":null,\"Img2\":null,\"Img3\":null,\"Img4\":null,\"SericeInstruction\":null,\"Ad1\":null,\"Ad2\":null,\"Ad3\":null,\"ParameterValue\":null}}],\"UserName\":\"admin\",\"MemberAddressId\":15}";
+		Log.i(TAG, serial);
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				Log.i(TAG, data.toString());
+
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_order_post)).setRequestMethod(RequestMethod.ePost).SetJSON(serial)
+				.notifyRequest();
+	}
+
+	@Click(R.id.rl_address)
+	void chooseAddress() {
+		ChooseAddressActivity_.intent(BalanceActivity.this).staffList(staffList).start();
+	}
 
 	@AfterViews
 	void initUI() {
@@ -42,14 +159,114 @@ public class BalanceActivity extends MainActionBarActivity {
 		rightButton.setVisibility(View.GONE);
 		titleButton.setText("确认订单");
 
+		calcPrice();
 		lv.setAdapter(new MyListViewAdapter());
+		requestAddress();
+
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (checkedAddress != null) {
+			addressEntity = checkedAddress;
+			setAddress();
+		}
+	}
+
+	void calcPrice() {
+		float total_price = 0;
+		for (Staff staff : staffList) {
+			total_price += staff.price_counted * staff.count;
+		}
+		DecimalFormat df = new DecimalFormat("#.00");
+		tv_price_total.setText("合计：￥" + df.format(total_price));
+		Utils.spanTextStyle(tv_price_total, BalanceActivity.this);
+	}
+
+	void requestAddress() {
+		loading.setVisibility(View.VISIBLE);
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				Log.i(TAG, data.toString());
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					// JSONArray array = object.optJSONArray("List");
+					// try {
+					// JSONObject address = array.getJSONObject(0);
+					// parseToEntity(address);
+					// } catch (JSONException e) {
+					// loading.setVisibility(View.GONE);
+					// e.printStackTrace();
+					// }
+					parseToEntity(object);
+				} else {
+					loading.setVisibility(View.GONE);
+					Toast.makeText(BalanceActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_get_address_byid)).setRequestMethod(RequestMethod.eGet).addParam("id", "15")
+				.notifyRequest();
+	}
+
+	void parseToEntity(final JSONObject object) {
+		new ParserJSON(new ParseListener() {
+
+			@Override
+			public Object onParse() {
+				ObjectMapper om = new ObjectMapper();
+				try {
+					addressEntity = om.readValue(object.toString(), MemberAddressEntity.class);
+				} catch (JsonParseException e) {
+					e.printStackTrace();
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				return addressEntity;
+			}
+
+			@Override
+			public void onComplete(Object parseResult) {
+				if (parseResult != null) {
+					Log.i(TAG, parseResult.toString());
+					setAddress();
+				}
+			}
+		}).execute();
+	}
+
+	void setAddress() {
+		loading.setVisibility(View.GONE);
+		tv_linkman.setText("收货人：" + addressEntity.Linkman);
+		tv_phone.setText(addressEntity.Tel);
+		tv_address.setText(addressEntity.Address);
+	}
+
+	static class ViewHolder {
+		ImageView iv;
+		TextView tv_name;
+		TextView tv_category;
+		TextView tv_price_counted;
+		TextView tv_price_previous;
+		TextView tv_count;
 	}
 
 	class MyListViewAdapter extends BaseAdapter {
 
 		@Override
 		public int getCount() {
-			return 5;
+			return staffList.size() + 1;
 		}
 
 		@Override
@@ -66,12 +283,38 @@ public class BalanceActivity extends MainActionBarActivity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null)
+			if (position == staffList.size()) {
+				View v = View.inflate(BalanceActivity.this, R.layout.item_remark, null);
+				int px = Utils.dp2px(BalanceActivity.this, 200);
+				LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, px);
+				v.setLayoutParams(params);
+				return v;
+			}
+			if (convertView == null || !(convertView instanceof RelativeLayout))
 				convertView = View.inflate(BalanceActivity.this, R.layout.item_cart2, null);
+			ViewHolder holder = (ViewHolder) convertView.getTag();
+			if (holder == null) {
+				holder = new ViewHolder();
+				holder.iv = (ImageView) convertView.findViewById(R.id.iv);
+				holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+				holder.tv_category = (TextView) convertView.findViewById(R.id.tv_category);
+				holder.tv_price_counted = (TextView) convertView.findViewById(R.id.tv_price_counted);
+				holder.tv_price_previous = (TextView) convertView.findViewById(R.id.tv_price_previous);
+				holder.tv_count = (TextView) convertView.findViewById(R.id.tv_count);
+				convertView.setTag(holder);
+			}
+			Staff staff = staffList.get(position);
+			holder.iv.setTag(staff.image);
+			ImageLoader.getInstance().displayImage(staff.image, holder.iv, MyApplication.getOptions(),
+					MyApplication.getLoadingListener());
+			holder.tv_name.setText(staff.title);
+			holder.tv_category.setText(staff.category);
+			holder.tv_price_counted.setText("￥" + staff.price_counted + "");
+			holder.tv_price_previous.setText(staff.price_previous + "");
+			holder.tv_count.setText("x" + staff.count);
 
 			return convertView;
 		}
-
 	}
 
 	@Override
@@ -81,13 +324,11 @@ public class BalanceActivity extends MainActionBarActivity {
 
 	@Override
 	public void titleButtonClick(View v) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void rightButtonClick(View v) {
-		// TODO Auto-generated method stub
 
 	}
 

@@ -33,17 +33,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -53,6 +58,7 @@ import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yoopoon.market.db.dao.DBDao;
 import com.yoopoon.market.domain.AreaEntity;
 import com.yoopoon.market.fragment.CartFragment;
 import com.yoopoon.market.fragment.MeFragment;
@@ -64,6 +70,8 @@ import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.utils.ParserJSON;
 import com.yoopoon.market.utils.ParserJSON.ParseListener;
+import com.yoopoon.market.view.LazyViewPager;
+import com.yoopoon.market.view.LazyViewPager.OnPageChangeListener;
 
 /**
  * @ClassName: MainActivity
@@ -76,7 +84,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	private static final String TAG = "MainActivity";
 	private Context mContext;
 	@ViewById(R.id.vp)
-	ViewPager vp;
+	LazyViewPager vp;
 	@ViewById(R.id.rg)
 	RadioGroup rg;
 	@ViewById(R.id.search_layout)
@@ -87,13 +95,17 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	Button btn_category;
 	@ViewById(R.id.ll_loading)
 	LinearLayout ll_loading;
-
+	@ViewById(R.id.tv_counts)
+	TextView tv_counts;
 	@ViewById(R.id.tv_shadow1)
 	TextView tv_shadow1;
 	@ViewById(R.id.rl_shadow2)
 	View rl_shadow2;
 	@ViewById(R.id.et_search)
 	EditText et_search;
+	int cartCount = 0;
+	ImageView buyImg;
+	ViewGroup anim_mask_layout;// 动画层
 
 	@Click(R.id.btn_search)
 	void search() {
@@ -176,7 +188,26 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		btn_select.setOnClickListener(new SearchViewClickListener());
 		btn_category.setOnClickListener(new SearchViewClickListener());
 		vp.setOnPageChangeListener(new MyPagerChangeListener());
-		requestArea();
+		// requestArea();
+		new Thread() {
+			public void run() {
+				DBDao dao = new DBDao(mContext);
+				cartCount = dao.getAllCounts();
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						if (cartCount > 0) {
+							tv_counts.setVisibility(View.VISIBLE);
+							tv_counts.setText(cartCount + "");
+						} else {
+							tv_counts.setVisibility(View.GONE);
+						}
+
+					}
+				});
+			};
+		}.start();
 	}
 
 	protected void onCreate(android.os.Bundle arg0) {
@@ -188,6 +219,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		IntentFilter shadowFilter = new IntentFilter("com.yoopoon.market.show_shadow");
 		shadowFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, shadowFilter);
+
+		IntentFilter cartFilter = new IntentFilter("com.yoopoon.market.add_to_cart");
+		cartFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		registerReceiver(receiver, cartFilter);
 	}
 
 	BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -198,9 +233,100 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			if (action.equals("com.yoopoon.market.show_shadow")) {
 				tv_shadow1.setVisibility(View.VISIBLE);
 				rl_shadow2.setVisibility(View.VISIBLE);
+			} else if (action.equals("com.yoopoon.market.add_to_cart")) {
+				int[] start_loction = (int[]) intent.getExtras().get("start_location");
+				ScaleAnimation sa = new ScaleAnimation(0.1f, 1.0f, 0.1f, 1f, Animation.RELATIVE_TO_SELF, 0.5f,
+						Animation.RELATIVE_TO_SELF, 0.5f);
+				sa.setDuration(300);
+				LinearLayout ll = lls.get(2);
+				sa.setFillAfter(false);
+				ll.startAnimation(sa);
+
+				play(start_loction);
 			}
 		}
 	};
+
+	void play(int[] start_location) {
+		buyImg = new ImageView(mContext);// buyImg是动画的图片，我的是一个小球（R.drawable.sign）
+		buyImg.setImageResource(R.drawable.sign);// 设置buyImg的图片
+		setAnim(buyImg, start_location);// 开始执行动画
+	}
+
+	private View addViewToAnimLayout(final ViewGroup vg, final View view, int[] location) {
+		int x = location[0];
+		int y = location[1];
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
+		lp.leftMargin = x;
+		lp.topMargin = y;
+		view.setLayoutParams(lp);
+		return view;
+	}
+
+	private ViewGroup createAnimLayout() {
+		ViewGroup rootView = (ViewGroup) this.getWindow().getDecorView();
+		LinearLayout animLayout = new LinearLayout(this);
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT);
+		animLayout.setLayoutParams(lp);
+		animLayout.setId(Integer.MAX_VALUE);
+		animLayout.setBackgroundResource(android.R.color.transparent);
+		rootView.addView(animLayout);
+		return animLayout;
+	}
+
+	private void setAnim(final View v, int[] start_location) {
+		anim_mask_layout = null;
+		anim_mask_layout = createAnimLayout();
+		anim_mask_layout.addView(v);// 把动画小球添加到动画层
+		final View view = addViewToAnimLayout(anim_mask_layout, v, start_location);
+		int[] end_location = new int[2];// 这是用来存储动画结束位置的X、Y坐标
+		lls.get(2).getLocationInWindow(end_location);// shopCart是那个购物车
+
+		// 计算位移
+		int endX = end_location[0] - start_location[0] + 30;// 动画位移的X坐标
+		int endY = end_location[1] - start_location[1];// 动画位移的y坐标
+		TranslateAnimation translateAnimationX = new TranslateAnimation(0, endX, 0, 0);
+		translateAnimationX.setInterpolator(new LinearInterpolator());
+		translateAnimationX.setRepeatCount(0);// 动画重复执行的次数
+		translateAnimationX.setFillAfter(true);
+
+		TranslateAnimation translateAnimationY = new TranslateAnimation(0, 0, 0, endY);
+		translateAnimationY.setInterpolator(new AccelerateInterpolator());
+		translateAnimationY.setRepeatCount(0);// 动画重复执行的次数
+		translateAnimationX.setFillAfter(true);
+
+		AnimationSet set = new AnimationSet(false);
+		set.setFillAfter(false);
+		set.addAnimation(translateAnimationY);
+		set.addAnimation(translateAnimationX);
+		set.setDuration(800);// 动画的执行时间
+		view.startAnimation(set);
+		// 动画监听事件
+		set.setAnimationListener(new AnimationListener() {
+
+			// 动画的开始
+			@Override
+			public void onAnimationStart(Animation animation) {
+				v.setVisibility(View.VISIBLE);
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+			}
+
+			// 动画的结束
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				v.setVisibility(View.GONE);
+				tv_counts.setVisibility(View.VISIBLE);
+				tv_counts.setText((++cartCount) + "");
+			}
+		});
+
+	}
 
 	void requestArea() {
 		ll_loading.setVisibility(View.VISIBLE);
@@ -276,48 +402,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		public void onClick(View v) {
 			switch (v.getId()) {
 				case R.id.btn_select:
-					// AlertDialog.Builder builder = new Builder(MainActivity.this);
-					// builder.setSingleChoiceItems(areaItems, checkedItem, new
-					// DialogInterface.OnClickListener() {
-					// @Override
-					// public void onClick(DialogInterface dialog, int which) {
-					// checkedItem = which;
-					// btn_select.setText(areaItems[checkedItem]);
-					// //
-					// #############################################################################
-					// // 添加广播，选择地址后Fragment_Shop能更新商品 徐阳会 2015年9月17日添加 Start
-					// //
-					// #############################################################################
-					// Intent refreshProductIntent = new
-					// Intent("com.yoopoon.market.productRefresh.Address");
-					// refreshProductIntent.putExtra("addressName", areaItems[checkedItem]);
-					// refreshProductIntent.putExtra("addressId", areaList.get(checkedItem).Codeid);
-					// sendBroadcast(refreshProductIntent);
-					// //
-					// #############################################################################
-					// // 添加广播，选择地址后Fragment_Shop能更新商品 徐阳会 2015年9月17日添加 End
-					// //
-					// #############################################################################
-					// dialog.dismiss();
-					// }
-					// });
-					// builder.setTitle("请选择地区");
-					// builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-					// @Override
-					// public void onClick(DialogInterface dialog, int which) {
-					// btn_select.setText(areaItems[checkedItem]);
-					// dialog.dismiss();
-					// }
-					// });
-					// builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-					// @Override
-					// public void onClick(DialogInterface dialog, int which) {
-					// // checkedItem = which;
-					// btn_select.setText(areaItems[checkedItem]);
-					// dialog.dismiss();
-					// }
-					// });
-					// builder.show();
 
 					SearchActivity_.intent(MainActivity.this).start();
 					break;
@@ -348,6 +432,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private class MyPagerChangeListener implements OnPageChangeListener {
+
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 			// TODO Auto-generated method stub
@@ -366,6 +451,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				tv_shadow1.setVisibility(View.GONE);
 				rl_shadow2.setVisibility(View.GONE);
 			}
+			if (arg0 == 1)
+				btn_category.setVisibility(View.GONE);
 		}
 	}
 

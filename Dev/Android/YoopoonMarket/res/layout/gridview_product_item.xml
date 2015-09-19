@@ -72,6 +72,7 @@
                     android:textSize="15sp" />
 
                 <ImageView
+                    android:clickable="true"
                     android:id="@+id/img_cart"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

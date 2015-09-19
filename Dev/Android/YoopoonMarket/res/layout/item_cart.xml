@@ -34,8 +34,7 @@
         android:layout_marginRight="10dp"
         android:layout_toRightOf="@id/rl"
         android:paddingLeft="5dp"
-        android:background="@drawable/stright_border"
-        android:scaleType="center"
+        android:scaleType="fitXY"
         android:src="@drawable/default_img" />
 
     <TextView
