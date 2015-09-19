@@ -223,6 +223,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		IntentFilter cartFilter = new IntentFilter("com.yoopoon.market.add_to_cart");
 		cartFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, cartFilter);
+
+		IntentFilter shopFilter = new IntentFilter("com.yoopoon.market.showshop");
+		shopFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		registerReceiver(receiver, shopFilter);
 	}
 
 	BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -243,6 +247,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				ll.startAnimation(sa);
 
 				play(start_loction);
+			} else if (action.equals("com.yoopoon.market.showshop")) {
+				vp.setCurrentItem(0);
 			}
 		}
 	};
