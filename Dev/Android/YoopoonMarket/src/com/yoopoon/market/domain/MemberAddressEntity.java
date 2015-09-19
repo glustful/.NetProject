@@ -11,7 +11,7 @@ public class MemberAddressEntity implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	public int Id;
-	public int Member;
+	public int UserId = 3092;
 	public String Address;
 	public String Zip;
 	public String Linkman;
@@ -22,13 +22,14 @@ public class MemberAddressEntity implements Serializable {
 	public String Updtime;
 	public String AddtimeString;
 	public String UpdtimeString;
+	public int AreaId = 123;
 
 	@Override
 	public String toString() {
-		return "MemberAddressEntity [Id=" + Id + ", Member=" + Member + ", Address=" + Address + ", Zip=" + Zip
+		return "MemberAddressEntity [Id=" + Id + ", Member=" + UserId + ", Address=" + Address + ", Zip=" + Zip
 				+ ", Linkman=" + Linkman + ", Tel=" + Tel + ", Adduser=" + Adduser + ", Addtime=" + Addtime
 				+ ", Upduser=" + Upduser + ", Updtime=" + Updtime + ", AddtimeString=" + AddtimeString
-				+ ", UpdtimeString=" + UpdtimeString + "]";
+				+ ", UpdtimeString=" + UpdtimeString + ", AreaId=" + AreaId + "]";
 	}
 
 }

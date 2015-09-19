@@ -14,6 +14,7 @@ package com.yoopoon.market;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -21,12 +22,14 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -39,7 +42,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.domain.CommunityOrderEntity;
 import com.yoopoon.market.domain.MemberAddressEntity;
+import com.yoopoon.market.domain.OrderDetailEntity;
+import com.yoopoon.market.domain.ProductEntity;
 import com.yoopoon.market.domain.Staff;
+import com.yoopoon.market.domain.User;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
@@ -75,34 +81,48 @@ public class BalanceActivity extends MainActionBarActivity {
 	View loading;
 	@ViewById(R.id.tv_price_total)
 	TextView tv_price_total;
+
+	EditText et_remark;
 	MemberAddressEntity addressEntity;
+	List<OrderDetailEntity> details = new ArrayList<OrderDetailEntity>();
 
 	@Click(R.id.btn_ok)
 	void confirmOrder() {
-		requestLogin();
+
+		if (User.isLogin(this)) {
+
+			for (Staff staff : staffList) {
+				ProductEntity product = new ProductEntity();
+				product.Name = staff.category;
+				product.Subtitte = staff.title;
+				product.Id = staff.productId;
+				product.Price = staff.price_counted;
+				OrderDetailEntity detail = new OrderDetailEntity();
+				detail.Product = product;
+				detail.Remark = et_remark.getText().toString();
+				detail.Totalprice = product.Price * staff.count;
+				detail.ProductName = product.Name;
+				detail.Count = staff.count;
+				detail.Price = product.Price;
+				detail.UnitPrice = product.Price;
+				details.add(detail);
+			}
+			CommunityOrderEntity orderEntity = new CommunityOrderEntity();
+			orderEntity.Totalprice = total_price;
+			orderEntity.MemberAddressId = 38;
+			orderEntity.Details = details;
+			orderEntity.Remark = et_remark.getText().toString();
+			orderEntity.UserName = getSharedPreferences(getString(R.string.share_preference), MODE_PRIVATE).getString(
+					"UserName", "");
+			orderEntity.Actualprice = orderEntity.Totalprice;
+			serializeOrder(orderEntity);
+		} else {
+			LoginActivity_.intent(this).start();
+		}
 		// PayWayActivity_.intent(BalanceActivity.this).start();
 	}
 
-	void requestLogin() {
-		String json = "{\"Username\":\"admin\",\"password\":\"123456\"}";
-		Log.i(TAG, json);
-		new RequestAdapter() {
-
-			@Override
-			public void onReponse(ResponseData data) {
-				Log.i(TAG, data.toString());
-				serializeOrder();
-			}
-
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
-			}
-		}.setUrl(MyApplication.getInstance().getString(R.string.url_login)).SetJSON(json).setSaveSession(true)
-				.notifyRequest();
-	}
-
-	void serializeOrder() {
+	void serializeOrder(final CommunityOrderEntity orderEntity) {
 		new SerializerJSON(new SerializeListener() {
 
 			@Override
@@ -110,7 +130,7 @@ public class BalanceActivity extends MainActionBarActivity {
 				ObjectMapper om = new ObjectMapper();
 				String json = null;
 				try {
-					json = om.writeValueAsString(new CommunityOrderEntity());
+					json = om.writeValueAsString(orderEntity);
 				} catch (JsonProcessingException e) {
 					e.printStackTrace();
 				}
@@ -128,13 +148,33 @@ public class BalanceActivity extends MainActionBarActivity {
 	}
 
 	void requestAddOrder(String serial) {
-		serial = "{\"Id\":1,\"No\":\"00212654646512\",\"Status\":0,\"StatusString\":\"新建\",\"CustomerName\":\"客户姓名\",\"Remark\":\"test\",\"Adddate\":\"\\/Date(1442572933790)\\/\",\"Adduser\":1,\"Upduser\":1,\"Upddate\":\"\\/Date(1442572933790)\\/\",\"Totalprice\":100.00,\"Actualprice\":100.00,\"Details\":[{\"Id\":1,\"No\":null,\"ProductName\":\"鲜花饼\",\"UnitPrice\":500.00,\"Price\":0,\"Count\":1.00,\"Snapshoturl\":\"\",\"Remark\":\"\",\"Adduser\":0,\"Adddate\":\"\\/Date(-62135596800000)\\/\",\"Upduser\":0,\"Upddate\":\"\\/Date(-62135596800000)\\/\",\"Totalprice\":100.00,\"Product\":{\"Id\":1,\"BussnessId\":0,\"BussnessName\":null,\"Price\":0,\"Name\":\"鲜花饼\",\"Status\":0,\"MainImg\":null,\"IsRecommend\":0,\"Sort\":0,\"Stock\":0,\"Adduser\":0,\"Addtime\":\"\\/Date(-62135596800000)\\/\",\"UpdUser\":0,\"UpdTime\":\"\\/Date(-62135596800000)\\/\",\"Subtitte\":null,\"Contactphone\":null,\"Type\":0,\"TypeString\":\"实物商品\",\"StatusString\":\"正常\",\"NewPrice\":null,\"Owner\":null,\"CategoryId\":0,\"Detail\":null,\"Img\":null,\"Img1\":null,\"Img2\":null,\"Img3\":null,\"Img4\":null,\"SericeInstruction\":null,\"Ad1\":null,\"Ad2\":null,\"Ad3\":null,\"ParameterValue\":null}}],\"UserName\":\"admin\",\"MemberAddressId\":15}";
+		// serial =
+		// "{\"Id\":1,\"No\":\"00212654646512\",\"Status\":0,\"StatusString\":\"新建\",\"CustomerName\":\"客户姓名\",\"Remark\":\"test\",\"Adddate\":\"\\/Date(1442572933790)\\/\",\"Adduser\":1,\"Upduser\":1,\"Upddate\":\"\\/Date(1442572933790)\\/\",\"Totalprice\":100.00,\"Actualprice\":100.00,\"Details\":[{\"Id\":1,\"No\":null,\"ProductName\":\"鲜花饼\",\"UnitPrice\":500.00,\"Price\":0,\"Count\":1.00,\"Snapshoturl\":\"\",\"Remark\":\"\",\"Adduser\":0,\"Adddate\":\"\\/Date(-62135596800000)\\/\",\"Upduser\":0,\"Upddate\":\"\\/Date(-62135596800000)\\/\",\"Totalprice\":100.00,\"Product\":{\"Id\":1,\"BussnessId\":0,\"BussnessName\":null,\"Price\":0,\"Name\":\"鲜花饼\",\"Status\":0,\"MainImg\":null,\"IsRecommend\":0,\"Sort\":0,\"Stock\":0,\"Adduser\":0,\"Addtime\":\"\\/Date(-62135596800000)\\/\",\"UpdUser\":0,\"UpdTime\":\"\\/Date(-62135596800000)\\/\",\"Subtitte\":null,\"Contactphone\":null,\"Type\":0,\"TypeString\":\"实物商品\",\"StatusString\":\"正常\",\"NewPrice\":null,\"Owner\":null,\"CategoryId\":0,\"Detail\":null,\"Img\":null,\"Img1\":null,\"Img2\":null,\"Img3\":null,\"Img4\":null,\"SericeInstruction\":null,\"Ad1\":null,\"Ad2\":null,\"Ad3\":null,\"ParameterValue\":null}}],\"UserName\":\"admin\",\"MemberAddressId\":15}";
 		Log.i(TAG, serial);
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
-				Log.i(TAG, data.toString());
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					Log.i(TAG, object.toString());
+					boolean status = object.optBoolean("Status", false);
+					if (status) {
+						JSONObject orderEntity = object.optJSONObject("Object");
+						float price = Float.parseFloat(orderEntity.optString("Actualprice", ""));
+						String No = orderEntity.optString("No", "");
+						String msg = object.optString("Msg", "");
+
+						Bundle bundle = new Bundle();
+						bundle.putFloat("Price", price);
+						bundle.putString("No", No);
+						bundle.putString("Msg", msg);
+
+						PayDemoActivity_.intent(BalanceActivity.this).orderBundle(bundle).start();
+					}
+				} else {
+
+				}
 
 			}
 
@@ -174,8 +214,9 @@ public class BalanceActivity extends MainActionBarActivity {
 		}
 	}
 
+	float total_price = 0;
+
 	void calcPrice() {
-		float total_price = 0;
 		for (Staff staff : staffList) {
 			total_price += staff.price_counted * staff.count;
 		}
@@ -213,7 +254,7 @@ public class BalanceActivity extends MainActionBarActivity {
 				// TODO Auto-generated method stub
 
 			}
-		}.setUrl(getString(R.string.url_get_address_byid)).setRequestMethod(RequestMethod.eGet).addParam("id", "15")
+		}.setUrl(getString(R.string.url_get_address_byid)).setRequestMethod(RequestMethod.eGet).addParam("id", "38")
 				.notifyRequest();
 	}
 
@@ -288,6 +329,7 @@ public class BalanceActivity extends MainActionBarActivity {
 				int px = Utils.dp2px(BalanceActivity.this, 200);
 				LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, px);
 				v.setLayoutParams(params);
+				et_remark = (EditText) v.findViewById(R.id.et_remark);
 				return v;
 			}
 			if (convertView == null || !(convertView instanceof RelativeLayout))

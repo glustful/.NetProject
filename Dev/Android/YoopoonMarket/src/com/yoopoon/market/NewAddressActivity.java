@@ -50,6 +50,7 @@ public class NewAddressActivity extends MainActionBarActivity {
 
 	void add(final MemberAddressEntity addressEntity) {
 		new SerializerJSON(new SerializeListener() {
+
 			@Override
 			public String onSerialize() {
 				addressEntity.Address = "大理白族自治州";
@@ -70,6 +71,7 @@ public class NewAddressActivity extends MainActionBarActivity {
 	}
 
 	void requestAdd(String json) {
+		Log.i(TAG, json);
 		new RequestAdapter() {
 
 			@Override

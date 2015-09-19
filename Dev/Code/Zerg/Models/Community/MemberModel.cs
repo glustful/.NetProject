@@ -111,9 +111,6 @@ namespace Zerg.Models.Community
         /// </summary>
 		public DateTime UpdTime {get;set;}
 
-<<<<<<< HEAD
-
-=======
         public string UserId { get; set; }
         /// <summary>
         /// UC用户
@@ -142,7 +139,5 @@ namespace Zerg.Models.Community
 
             return true;
         }
->>>>>>> d3477e4c9d87a895939c01ec0d32def6e5699bb3
 
-	}
 }

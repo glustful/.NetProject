@@ -10,6 +10,6 @@ public class User {
 	public static boolean isLogin(Context context) {
 		SharedPreferences sp = context.getSharedPreferences(context.getString(R.string.share_preference),
 				Context.MODE_PRIVATE);
-		return !(TextUtils.isEmpty(sp.getString("User", "")));
+		return !(TextUtils.isEmpty(sp.getString("UserName", ""))) && !(TextUtils.isEmpty(sp.getString("Password", "")));
 	}
 }

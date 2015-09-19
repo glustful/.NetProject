@@ -49,7 +49,7 @@ public class MyApplication extends Application {
 		initImageLoader();
 		// 通过单利模式，获得异常处理类
 		// CrashHandler handler = CrashHandler.getInstance();
-		// // 初始化
+		// 初始化
 		// handler.init(getApplicationContext());
 		super.onCreate();
 	}

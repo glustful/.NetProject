@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:text="登录密码"/>
         <EditText 
+            android:inputType="textPassword"
             android:layout_alignBottom="@id/tv_password"
             android:layout_marginLeft="10dp"
             android:id="@+id/et_password"
@@ -57,7 +58,7 @@
     </RelativeLayout>
     
     <Button 
-        android:layout_below="@id/rl_login"
+        android:layout_below="@+id/tv_findPsw"
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_margin="10dp"
@@ -67,17 +68,20 @@
         android:background="@drawable/orange_cycle_selector"/>
 
     <TextView 
+        android:visibility="gone"
         android:id="@+id/tv_findPsw"
         android:clickable="true"
         android:layout_marginRight="10dp"
         android:text="找回密码"
-        android:layout_below="@id/btn_login"
+        android:layout_below="@id/rl_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:textColor="@color/text_gray"/>
     
     <TextView 
+        android:padding="10dp"
+        android:layout_centerHorizontal="true"
         android:id="@+id/tv_register"
         android:clickable="true"
         android:layout_marginLeft="10dp"
@@ -85,8 +89,8 @@
         android:layout_below="@id/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:textColor="@color/text_gray"/>
+        android:textColor="@color/red"
+        android:background="@drawable/red_border_selector"/>
     
     
     

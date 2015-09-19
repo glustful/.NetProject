@@ -186,7 +186,7 @@ public class CategoryActivity extends MainActionBarActivity {
 	void initList() {
 		WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
 		int width = wm.getDefaultDisplay().getWidth() / 5;
-		int height = Utils.px2dp(CategoryActivity.this, 60);
+		int height = Utils.dp2px(CategoryActivity.this, 40);
 		// int px2 = Utils.px2dp(context, px)
 
 		loading.setVisibility(View.GONE);
@@ -208,7 +208,10 @@ public class CategoryActivity extends MainActionBarActivity {
 			FixGridLayout ll = new FixGridLayout(CategoryActivity.this);
 			ll.setmCellWidth(width);
 			ll.setmCellHeight(height);
-			ll_category.addView(ll);
+			int columns = (list.childcount % 4 == 0) ? list.childcount / 4 : list.childcount / 4 + 1;
+			android.view.ViewGroup.LayoutParams ll_params = new android.view.ViewGroup.LayoutParams(-1, height
+					* columns);
+			ll_category.addView(ll, ll_params);
 			tv.setTag(ll);
 			View v = new View(CategoryActivity.this);
 			v.setBackgroundResource(R.drawable.line);

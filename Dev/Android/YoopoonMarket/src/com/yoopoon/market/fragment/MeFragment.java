@@ -14,15 +14,18 @@ package com.yoopoon.market.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONObject;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import com.yoopoon.market.AddressManageActivity_;
 import com.yoopoon.market.LoginActivity_;
 import com.yoopoon.market.MeOrderActivity_;
@@ -30,6 +33,10 @@ import com.yoopoon.market.PayDemoActivity_;
 import com.yoopoon.market.PersonalInfoActivity_;
 import com.yoopoon.market.R;
 import com.yoopoon.market.domain.User;
+import com.yoopoon.market.net.ProgressMessage;
+import com.yoopoon.market.net.RequestAdapter;
+import com.yoopoon.market.net.RequestAdapter.RequestMethod;
+import com.yoopoon.market.net.ResponseData;
 
 /**
  * @ClassName: ShopFragment
@@ -38,9 +45,11 @@ import com.yoopoon.market.domain.User;
  * @date: 2015-9-7 下午4:50:59
  */
 public class MeFragment extends Fragment implements OnClickListener {
+	private static final String TAG = "MeFragment";
 	View rootView;
 	Button btn_order;
 	List<RelativeLayout> rls = new ArrayList<RelativeLayout>();
+	boolean isUserVisiable = false;
 
 	@Override
 	@Nullable
@@ -51,17 +60,37 @@ public class MeFragment extends Fragment implements OnClickListener {
 	}
 
 	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
-		if (isVisibleToUser) {
-
-			if (!User.isLogin(getActivity())) {
-				// 未登录
-				LoginActivity_.intent(getContext()).start();
-			} else {
-				// 若已经登录，需要请求数据
-			}
+	public void onResume() {
+		super.onResume();
+		if (!User.isLogin(getActivity())) {
+			// 未登录
+			LoginActivity_.intent(getContext()).start();
+		} else {
+			// 若已经登录，需要请求数据
+			// requestOrder();
 		}
+	}
+
+	void requestOrder() {
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					Log.i(TAG, object.toString());
+				} else {
+					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_order_get)).setRequestMethod(RequestMethod.eGet).addParam("id", "1")
+				.notifyRequest();
 	}
 
 	private void init() {

@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.Random;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,6 +21,8 @@ import com.yoopoon.market.alipay.SignUtils;
 
 @EActivity(R.layout.pay_main)
 public class PayDemoActivity extends MainActionBarActivity {
+	@Extra
+	Bundle orderBundle;
 	private static final String TAG = "PayDemoActivity";
 
 	// 商户PID
@@ -101,7 +104,13 @@ public class PayDemoActivity extends MainActionBarActivity {
 	 */
 	public void pay(View v) {
 		// 订单
-		String orderInfo = getOrderInfo("测试的商品", "该测试商品的详细描述", "0.01");
+		String price = orderBundle.getFloat("Price") + "";
+		String No = orderBundle.getString("No");
+		String notifyUrl = orderBundle.getString("Msg");
+		Log.i(TAG, price);
+		Log.i(TAG, No);
+		Log.i(TAG, notifyUrl);
+		String orderInfo = getOrderInfo("优朋社区", "优朋数字社区商品支付", "0.01", notifyUrl, No);
 
 		// 对订单做RSA 签名
 		String sign = sign(orderInfo);
@@ -176,7 +185,7 @@ public class PayDemoActivity extends MainActionBarActivity {
 	/**
 	 * create the order info. 创建订单信息
 	 */
-	public String getOrderInfo(String subject, String body, String price) {
+	public String getOrderInfo(String subject, String body, String price, String notifyUrl, String No) {
 		// 签约合作者身份ID
 		String orderInfo = "partner=" + "\"" + PARTNER + "\"";
 
@@ -184,7 +193,7 @@ public class PayDemoActivity extends MainActionBarActivity {
 		orderInfo += "&seller_id=" + "\"" + SELLER + "\"";
 
 		// 商户网站唯一订单号
-		orderInfo += "&out_trade_no=" + "\"" + getOutTradeNo() + "\"";
+		orderInfo += "&out_trade_no=" + "\"" + No + "\"";
 
 		// 商品名称
 		orderInfo += "&subject=" + "\"" + subject + "\"";
@@ -196,8 +205,11 @@ public class PayDemoActivity extends MainActionBarActivity {
 		orderInfo += "&total_fee=" + "\"" + price + "\"";
 
 		// 服务器异步通知页面路径
-		orderInfo += "&notify_url=" + "\"" + "http://notify.msp.hk/notify.htm" + "\"";
-
+		if (TextUtils.isEmpty(notifyUrl))
+			orderInfo += "&notify_url=" + "\"" + "http://notify.msp.hk/notify.htm" + "\"";
+		else {
+			orderInfo += "&notify_url=" + "\"" + notifyUrl + "\"";
+		}
 		// 服务接口名称， 固定值
 		orderInfo += "&service=\"mobile.securitypay.pay\"";
 

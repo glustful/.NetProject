@@ -1,5 +1,7 @@
 package com.yoopoon.market.domain;
 
+import java.util.List;
+
 public class CommunityOrderEntity {
 	public int Id = 1;
 	public String No = "00212654646512";
@@ -13,7 +15,8 @@ public class CommunityOrderEntity {
 	public String Upddate = "\\/Date(1442572933790)\\/";
 	public float Totalprice = 100.0f;
 	public float Actualprice = 100.0f;
-	public String Details = null;
+	public List<OrderDetailEntity> Details;
 	public String UserName = "admin";
 	public int MemberAddressId = 0;
+
 }

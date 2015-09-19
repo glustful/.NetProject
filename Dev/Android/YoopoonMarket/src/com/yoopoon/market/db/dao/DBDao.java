@@ -7,7 +7,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.yoopoon.market.db.DBOpenHelper;
-import com.yoopoon.market.domain.ProductEntity;
 import com.yoopoon.market.domain.Staff;
 
 public class DBDao {
@@ -32,9 +31,6 @@ public class DBDao {
 		db.close();
 		return result;
 	}
-
-
-
 
 	public List<Staff> findAll() {
 		List<Staff> list = new ArrayList<Staff>();
@@ -87,16 +83,16 @@ public class DBDao {
 		return result == -1 ? false : true;
 	}
 
-	public int modify(ProductEntity entity) {
+	public int modify(Staff entity) {
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
 		values.put("title", entity.title);
 		values.put("category", entity.category);
-		values.put("imgurl", entity.imgUrl);
+		values.put("imgurl", entity.image);
 		values.put("price_counted", entity.price_counted);
 		values.put("price_previous", entity.price_previous);
-		values.put("amount", entity.amount);
+		values.put("amount", entity.count);
 		int result = db.update(TABLE_NAME, values, "id=?", new String[] { entity.id + "" });
 		db.close();
 		return result;
@@ -147,4 +143,3 @@ public class DBDao {
 		return sum;
 	}
 }
- 

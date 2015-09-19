@@ -96,20 +96,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	Button btn_category;
 	@ViewById(R.id.ll_loading)
 	LinearLayout ll_loading;
-	// @ViewById(R.id.tv_shadow1)
-	// TextView tv_shadow1;
-	// @ViewById(R.id.rl_shadow2)
-	// View rl_shadow2;
-	// @Click(R.id.iv_iknow)
-	// void iKnow() {
-	// SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference),
-	// MODE_PRIVATE);
-	// Editor editor = sp.edit();
-	// editor.putBoolean("isFirst", false);
-	// editor.commit();
-	// tv_shadow1.setVisibility(View.GONE);
-	// rl_shadow2.setVisibility(View.GONE);
-	// }
 	@ViewById(R.id.tv_counts)
 	TextView tv_counts;
 	@ViewById(R.id.tv_shadow1)
@@ -225,6 +211,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 	protected void onCreate(android.os.Bundle arg0) {
 		super.onCreate(arg0);
+		// 清除密码
+		SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference), MODE_PRIVATE);
+		Editor editor = sp.edit();
+		editor.putString("Password", "");
+		editor.commit();
+
 		registerBroadcast();
 		registerMoreService();
 	};

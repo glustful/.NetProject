@@ -12,6 +12,7 @@
         android:text="备注"/>
     
     <EditText 
+        android:id="@+id/et_remark"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
