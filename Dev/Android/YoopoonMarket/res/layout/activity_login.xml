@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:background="@drawable/login_border"
         android:layout_margin="10dp"
-        android:padding="5dp">
+        android:padding="15dp">
         
         <TextView 
             android:id="@+id/tv_account"
@@ -21,8 +21,8 @@
             android:text="账户"/>
         
         <View 
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_below="@id/tv_account"
             android:id="@+id/line"
             android:layout_width="match_parent"
