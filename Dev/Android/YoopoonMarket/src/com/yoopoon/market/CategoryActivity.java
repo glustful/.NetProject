@@ -15,15 +15,16 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import com.yoopoon.market.domain.CategoryEntity;
+import com.yoopoon.market.domain.CategoryList;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
@@ -38,7 +39,11 @@ public class CategoryActivity extends MainActionBarActivity {
 	EditText searchProductEditText;
 	@ViewById(R.id.ll_category)
 	LinearLayout ll_category;
-	List<CategoryEntity> categoryList = new ArrayList<CategoryEntity>();
+	@ViewById(R.id.ll_loading)
+	View loading;
+	List<CategoryList> lists = new ArrayList<CategoryList>();
+	int childList = 0;
+
 	int[] counts;
 	int[] colors = { Color.rgb(236, 109, 23), Color.rgb(40, 174, 62), Color.rgb(39, 127, 194), Color.rgb(175, 97, 163) };
 
@@ -53,6 +58,7 @@ public class CategoryActivity extends MainActionBarActivity {
 		searchProductEditText.setSingleLine();
 		searchProductEditText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
 		searchProductEditText.setOnEditorActionListener(new OnEditorActionListener() {
+
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -70,6 +76,7 @@ public class CategoryActivity extends MainActionBarActivity {
 	}
 
 	void requestTitle() {
+		loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
@@ -83,28 +90,25 @@ public class CategoryActivity extends MainActionBarActivity {
 						for (int i = 0; i < array.length(); i++) {
 							try {
 								JSONObject categoryObject = array.getJSONObject(i);
-								String name = categoryObject.optString("Name", "")
-										+ "                                        ";
+								String name = categoryObject.optString("Name", "");
 								int id = categoryObject.optInt("Id", 0);
 								int sort = categoryObject.optInt("Sort", 0);
 								int fatherId = categoryObject.optInt("FatherId", 0);
 								CategoryEntity entity = new CategoryEntity(id, name, sort, fatherId);
+								CategoryList list = new CategoryList();
+								list.father = entity;
+								lists.add(list);
 
-								new Thread(new MyRequestContentThread(entity, i, new Object(), new Object())).start();
-								try {
-									Thread.sleep(10);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
+								// requestContents(lists.get(i), i);
 							} catch (JSONException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
+						requestContents();
 
 					}
 				} else {
+					loading.setVisibility(View.GONE);
 					Toast.makeText(CategoryActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -118,49 +122,15 @@ public class CategoryActivity extends MainActionBarActivity {
 				.notifyRequest();
 	}
 
-	boolean start = true;
-
-	class MyRequestContentThread implements Runnable {
-
-		private CategoryEntity name;
-		private Integer index;
-		private Object prev;
-		private Object self;
-
-		private MyRequestContentThread(CategoryEntity name, Integer index, Object prev, Object self) {
-			this.name = name;
-			this.index = index;
-			this.prev = prev;
-			this.self = self;
-		}
-
-		public void run() {
-			int count = 1;
-			while (count > 0) {
-				synchronized (prev) {
-					synchronized (self) {
-						requestContents(name, name.id + "", index);
-						count--;
-						try {
-							Thread.sleep(10);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-
-						self.notify();
-					}
-					try {
-						prev.wait();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-
-			}
+	void requestContents() {
+		for (int i = 0; i < lists.size(); i++) {
+			requestContent(lists.get(i), i);
 		}
 	}
 
-	void requestContents(final CategoryEntity titleEntity, String id, final int index) {
+	void requestContent(final CategoryList list, final int index) {
+		String id = list.father.id + "";
+		Log.i(TAG, "fatherId = " + id);
 
 		new RequestAdapter() {
 
@@ -171,35 +141,34 @@ public class CategoryActivity extends MainActionBarActivity {
 					boolean status = object.optBoolean("Status", false);
 					if (status) {
 						JSONArray array = object.optJSONArray("Object");
-						categoryList.add(titleEntity);
+						List<CategoryEntity> entities = new ArrayList<CategoryEntity>();
 						counts[index] = array.length();
+						list.childcount = array.length();
 						for (int i = 0; i < array.length(); i++) {
 							try {
 								JSONObject categoryObject = array.getJSONObject(i);
-								String name = categoryObject.optString("Name", "")
-										+ "                                        ";
+								Log.i(TAG, categoryObject.toString());
+								String name = categoryObject.optString("Name", "");
 								int id = categoryObject.optInt("Id", 0);
 								int sort = categoryObject.optInt("Sort", 0);
 								int fatherId = categoryObject.optInt("FatherId", 0);
 								CategoryEntity entity = new CategoryEntity(id, name, sort, fatherId);
-								categoryList.add(entity);
+								entities.add(entity);
+								lists.get(index).children = entities;
 							} catch (JSONException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
-						start = true;
-						if (index == counts.length - 1) {
-
-							Log.i(TAG, "for循环完成啦！");
-							for (CategoryEntity entity : categoryList)
-								Log.i(TAG, entity.toString());
-							for (int j = 0; j < counts.length; j++)
-								Log.i(TAG, "count = " + counts[j]);
+						childList++;
+						if (childList == lists.size()) {
+							for (CategoryList list : lists)
+								Log.i(TAG, list.toString());
 							initList();
 						}
+
 					}
 				} else {
+					loading.setVisibility(View.GONE);
 					Toast.makeText(CategoryActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -217,57 +186,57 @@ public class CategoryActivity extends MainActionBarActivity {
 	void initList() {
 		WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
 		int width = wm.getDefaultDisplay().getWidth() / 5;
-		int kind = -1;
-		boolean flag = true;
-		int childCount = 0;
-		for (int i = 0; i < categoryList.size(); i++) {
-			CategoryEntity entity = categoryList.get(i);
-			if (flag) {
-				kind++;
-				TextView tv = new TextView(CategoryActivity.this);
-				tv.setTextColor(colors[kind % 4]);
-				tv.getPaint().setFakeBoldText(true);
-				tv.setPadding(0, 10, 0, 0);
-				tv.setText(entity.name);
-				ll_category.addView(tv);
-				FixGridLayout ll = new FixGridLayout(CategoryActivity.this);
-				int px = Utils.px2dp(CategoryActivity.this, 50);
-				int px2 = Utils.px2dp(CategoryActivity.this, 10);
-				ll.setmCellWidth(width);
-				ll.setmCellHeight(px);
-				int columns = ((counts[kind] % 4) == 0) ? counts[kind] / 4 : (counts[kind] / 4 + 1);
+		int height = Utils.px2dp(CategoryActivity.this, 60);
+		// int px2 = Utils.px2dp(context, px)
 
-				ll_category.addView(ll, new LayoutParams(LayoutParams.MATCH_PARENT, (columns * px) + px2));
-				View v = new View(CategoryActivity.this);
-				v.setBackgroundResource(R.drawable.line);
-				ll_category.addView(v);
-				flag = false;
-				childCount = 0;
-				continue;
-			}
-			childCount++;
-			FixGridLayout ll = (FixGridLayout) ll_category.getChildAt(ll_category.getChildCount() - 2);
-			TextView tv = new TextView(CategoryActivity.this);
-			tv.setText(entity.name);
+		loading.setVisibility(View.GONE);
+		for (int i = 0; i < lists.size(); i++) {
+			Log.i(TAG, "i" + i);
+			CategoryList list = lists.get(i);
+			final TextView tv = new TextView(CategoryActivity.this);
+			tv.setText(list.father.name);
+			tv.setTextColor(colors[i % colors.length]);
 			tv.setBackgroundResource(R.drawable.white_bg);
+			tv.setPadding(0, 10, 0, 0);
+			tv.setTextSize(20);
 			tv.setClickable(true);
-			tv.setPadding(5, 5, 5, 5);
-			ll.addView(tv);
-			tv.setOnClickListener(new OnClickListener() {
 
-				@Override
-				public void onClick(View v) {
-					String text = ((TextView) v).getText().toString().trim();
-					Toast.makeText(CategoryActivity.this, text, Toast.LENGTH_SHORT).show();
-				}
-			});
+			LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+			params.setMargins(0, 0, 0, 1);
 
-			if (childCount == counts[kind] || counts[kind] == 0) {
-				flag = true;
+			ll_category.addView(tv, params);
+			FixGridLayout ll = new FixGridLayout(CategoryActivity.this);
+			ll.setmCellWidth(width);
+			ll.setmCellHeight(height);
+			ll_category.addView(ll);
+			tv.setTag(ll);
+			View v = new View(CategoryActivity.this);
+			v.setBackgroundResource(R.drawable.line);
+			ll_category.addView(v);
+			for (int j = 0; j < list.children.size(); j++) {
+				final CategoryEntity entity = list.children.get(j);
+				TextView childTv = new TextView(CategoryActivity.this);
+				childTv.setText(entity.name + "                           ");
+				childTv.setBackgroundResource(R.drawable.white_bg);
+				childTv.setPadding(10, 10, 10, 10);
+				childTv.setTextSize(16);
+				ll.addView(childTv);
+				childTv.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						TextView childTextView = (TextView) v;
+						String text = childTextView.getText().toString().trim();
+						Toast.makeText(CategoryActivity.this, text, Toast.LENGTH_SHORT).show();
+						Intent intent = new Intent(CategoryActivity.this, ProductList.class);
+						Bundle bundle = new Bundle();
+						bundle.putString("classificationId", entity.id + "");
+						bundle.putString("classificationName", entity.name);
+
+					}
+				});
 			}
-
 		}
-		ll_category.removeViewAt(ll_category.getChildCount() - 1);
 	}
 
 	@Override

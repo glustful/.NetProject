@@ -183,6 +183,7 @@ public class IClientActivity extends MainActionBarActivity {
 	}
 
 	private class MyClientListAdapter extends BaseAdapter {
+
 		/*
 		 * (non Javadoc)
 		 * @Title: getCount
@@ -258,6 +259,7 @@ public class IClientActivity extends MainActionBarActivity {
 			tv_style.setText(info.getHouseType() + "   " + info.getHouses());
 			tv_phone.setText(info.getPhone());
 			tv_showprogress.setOnClickListener(new OnClickListener() {
+
 				@Override
 				public void onClick(View v) {
 					if (last_shown_progress != null && last_shown_progress.getTag() != progress.getTag()) {

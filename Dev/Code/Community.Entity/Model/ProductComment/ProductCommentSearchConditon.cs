@@ -1,4 +1,5 @@
 using System;
+using Community.Entity.Model.Member;
 using Community.Entity.Model.Product;
 
 namespace Community.Entity.Model.ProductComment
@@ -33,9 +34,10 @@ namespace Community.Entity.Model.ProductComment
 
 	    public int? AddUser { get; set; }
 
+	    public MemberEntity[] Member { get; set; }
 
 
-		public DateTime? AddTimeBegin { get; set; }
+	    public DateTime? AddTimeBegin { get; set; }
 
 		public DateTime? AddTimeEnd { get; set; }
 

@@ -13,6 +13,7 @@
 package com.yoopoon.market.fragment;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 
 import javax.security.auth.PrivateCredentialPermission;
@@ -20,7 +21,6 @@ import javax.security.auth.PrivateCredentialPermission;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -53,6 +53,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.advertisement.ADController;
 import com.yoopoon.component.YoopoonServiceController;
@@ -62,7 +63,6 @@ import com.yoopoon.market.MaternityMatronActivity;
 import com.yoopoon.market.MaternityMatronActivity_;
 import com.yoopoon.market.PoliticsActivity_;
 import com.yoopoon.market.ProductDetailActivity_;
-import com.yoopoon.market.ProductList_;
 import com.yoopoon.market.R;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
@@ -70,9 +70,13 @@ import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.ResponseData.ResultState;
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
+
 import com.yoopoon.market.utils.Utils;
 import com.yoopoon.market.view.ExpandableHeightGridView;
 import com.yoopoon.market.view.NoScrollGridView;
+
+import com.yoopoon.market.view.MyGridView;
+
 import com.yoopoon.view.adapter.ProductGridViewAdapter;
 import com.yoopoon.view.adapter.ProductListAdapter;
 
@@ -91,7 +95,6 @@ public class ShopFragment extends Fragment {
 	private TextView recommondProductCurrentPriceTextView;//当前价格
 	private TextView recommondProductNameTextView; //套餐名称
 	private Button recommondProductByButton;//立即购买
-	private Button salesVolumeButton;//销量
 	private ImageView recommondProductCartImageView;//添加到购物车
 	//搜索框对应的receiver
 	//	private ProductRefreshByKeyWordReceiver byKeyWordReceiver;
@@ -100,6 +103,12 @@ public class ShopFragment extends Fragment {
 	private ListView productListView;
 	//首页推荐商品视图
 	View shopFragmentHeadView;
+	// 首页推荐商品控件
+	private ImageView burstPackageImageView;// 套餐图片
+	private TextView beforePriceTextView; // 折扣前价格
+	private TextView currentPriceTextView;// 当前价格
+	private TextView burstPackageNameTextView; // 套餐名称
+	private Button salesVolumeButton;
 
 	@Override
 	@Nullable
@@ -186,6 +195,7 @@ public class ShopFragment extends Fragment {
 				Toast.makeText(mContext, "立即购买", Toast.LENGTH_SHORT).show();
 			}
 		});
+		requestProduct();
 	}
 	private void initRecommendProduct(JSONObject jsonObject) {
 		recommondProductNameTextView.setText(jsonObject.optString("Name", ""));
@@ -422,5 +432,21 @@ public class ShopFragment extends Fragment {
 		if (rootView != null && !isVisibleToUser) {
 			requestProduct();
 		}
+		/*private class ProductRefreshByAddressReceiver extends BroadcastReceiver {
+
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				Toast.makeText(mContext, "111111", Toast.LENGTH_SHORT).show();
+
+			}
+
+		}*/
+		/*	private void loadRefreshByAddress() {
+				IntentFilter intentFilter = new IntentFilter("com.yoopoon.market.productRefresh.Address");
+				ProductRefreshByAddressReceiver addressReceiver = new ProductRefreshByAddressReceiver();
+				mContext.registerReceiver(addressReceiver, intentFilter);
+
+		 
+			}*/
 	}
 }

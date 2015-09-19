@@ -15,7 +15,6 @@ package com.yoopoon.market;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -23,12 +22,8 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -39,25 +34,32 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yoopoon.market.db.dao.DBDao;
 import com.yoopoon.market.domain.AreaEntity;
 import com.yoopoon.market.fragment.CartFragment;
 import com.yoopoon.market.fragment.MeFragment;
@@ -69,6 +71,8 @@ import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.utils.ParserJSON;
 import com.yoopoon.market.utils.ParserJSON.ParseListener;
+import com.yoopoon.market.view.LazyViewPager;
+import com.yoopoon.market.view.LazyViewPager.OnPageChangeListener;
 
 /**
  * @ClassName: MainActivity
@@ -81,7 +85,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	private static final String TAG = "MainActivity";
 	private Context mContext;
 	@ViewById(R.id.vp)
-	ViewPager vp;
+	LazyViewPager vp;
 	@ViewById(R.id.rg)
 	RadioGroup rg;
 	@ViewById(R.id.search_layout)
@@ -92,6 +96,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	Button btn_category;
 	@ViewById(R.id.ll_loading)
 	LinearLayout ll_loading;
+ 
 	// @ViewById(R.id.tv_shadow1)
 	// TextView tv_shadow1;
 	// @ViewById(R.id.rl_shadow2)
@@ -106,12 +111,19 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	// tv_shadow1.setVisibility(View.GONE);
 	// rl_shadow2.setVisibility(View.GONE);
 	// }
+ 
+	@ViewById(R.id.tv_counts)
+	TextView tv_counts;
+ 
 	@ViewById(R.id.tv_shadow1)
 	TextView tv_shadow1;
 	@ViewById(R.id.rl_shadow2)
 	View rl_shadow2;
 	@ViewById(R.id.et_search)
 	EditText et_search;
+	int cartCount = 0;
+	ImageView buyImg;
+	ViewGroup anim_mask_layout;// 动画层
 
 	@Click(R.id.btn_search)
 	void search() {
@@ -120,6 +132,19 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			animation.setFillAfter(true);
 			et_search.setVisibility(View.VISIBLE);
 			et_search.startAnimation(animation);
+			et_search.setImeActionLabel("搜索", EditorInfo.IME_ACTION_SEARCH);
+			et_search.setSingleLine();
+			et_search.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+			et_search.setOnEditorActionListener(new OnEditorActionListener() {
+
+				@Override
+				public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+					if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+						return true;
+					}
+					return false;
+				}
+			});
 		} else {
 			Animation animation = AnimationUtils.loadAnimation(this, R.anim.back_right_out);
 			animation.setAnimationListener(new AnimationListener() {
@@ -145,6 +170,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				}
 			});
 			et_search.startAnimation(animation);
+
 		}
 	}
 	@Click(R.id.iv_iknow)
@@ -180,9 +206,34 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		btn_select.setOnClickListener(new SearchViewClickListener());
 		btn_category.setOnClickListener(new SearchViewClickListener());
 		vp.setOnPageChangeListener(new MyPagerChangeListener());
+<<<<<<< HEAD
 		requestArea();
 		et_search.setSingleLine();
 	}
+=======
+		// requestArea();
+		new Thread() {
+			public void run() {
+				DBDao dao = new DBDao(mContext);
+				cartCount = dao.getAllCounts();
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						if (cartCount > 0) {
+							tv_counts.setVisibility(View.VISIBLE);
+							tv_counts.setText(cartCount + "");
+						} else {
+							tv_counts.setVisibility(View.GONE);
+						}
+
+					}
+				});
+			};
+		}.start();
+	}
+
+>>>>>>> 4ccfb9e0c9fde94c78f7b640056b53d364ca2a01
 	protected void onCreate(android.os.Bundle arg0) {
 		super.onCreate(arg0);
 		registerBroadcast();
@@ -192,6 +243,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		IntentFilter shadowFilter = new IntentFilter("com.yoopoon.market.show_shadow");
 		shadowFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, shadowFilter);
+
+		IntentFilter cartFilter = new IntentFilter("com.yoopoon.market.add_to_cart");
+		cartFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		registerReceiver(receiver, cartFilter);
 	}
 
 	BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -201,13 +256,108 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			if (action.equals("com.yoopoon.market.show_shadow")) {
 				tv_shadow1.setVisibility(View.VISIBLE);
 				rl_shadow2.setVisibility(View.VISIBLE);
+			} else if (action.equals("com.yoopoon.market.add_to_cart")) {
+				int[] start_loction = (int[]) intent.getExtras().get("start_location");
+				ScaleAnimation sa = new ScaleAnimation(0.1f, 1.0f, 0.1f, 1f, Animation.RELATIVE_TO_SELF, 0.5f,
+						Animation.RELATIVE_TO_SELF, 0.5f);
+				sa.setDuration(300);
+				LinearLayout ll = lls.get(2);
+				sa.setFillAfter(false);
+				ll.startAnimation(sa);
+
+				play(start_loction);
 			}
 		}
 	};
 
+<<<<<<< HEAD
+=======
+	void play(int[] start_location) {
+		buyImg = new ImageView(mContext);// buyImg是动画的图片，我的是一个小球（R.drawable.sign）
+		buyImg.setImageResource(R.drawable.sign);// 设置buyImg的图片
+		setAnim(buyImg, start_location);// 开始执行动画
+	}
+
+	private View addViewToAnimLayout(final ViewGroup vg, final View view, int[] location) {
+		int x = location[0];
+		int y = location[1];
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
+		lp.leftMargin = x;
+		lp.topMargin = y;
+		view.setLayoutParams(lp);
+		return view;
+	}
+
+	private ViewGroup createAnimLayout() {
+		ViewGroup rootView = (ViewGroup) this.getWindow().getDecorView();
+		LinearLayout animLayout = new LinearLayout(this);
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT);
+		animLayout.setLayoutParams(lp);
+		animLayout.setId(Integer.MAX_VALUE);
+		animLayout.setBackgroundResource(android.R.color.transparent);
+		rootView.addView(animLayout);
+		return animLayout;
+	}
+
+	private void setAnim(final View v, int[] start_location) {
+		anim_mask_layout = null;
+		anim_mask_layout = createAnimLayout();
+		anim_mask_layout.addView(v);// 把动画小球添加到动画层
+		final View view = addViewToAnimLayout(anim_mask_layout, v, start_location);
+		int[] end_location = new int[2];// 这是用来存储动画结束位置的X、Y坐标
+		lls.get(2).getLocationInWindow(end_location);// shopCart是那个购物车
+
+		// 计算位移
+		int endX = end_location[0] - start_location[0] + 30;// 动画位移的X坐标
+		int endY = end_location[1] - start_location[1];// 动画位移的y坐标
+		TranslateAnimation translateAnimationX = new TranslateAnimation(0, endX, 0, 0);
+		translateAnimationX.setInterpolator(new LinearInterpolator());
+		translateAnimationX.setRepeatCount(0);// 动画重复执行的次数
+		translateAnimationX.setFillAfter(true);
+
+		TranslateAnimation translateAnimationY = new TranslateAnimation(0, 0, 0, endY);
+		translateAnimationY.setInterpolator(new AccelerateInterpolator());
+		translateAnimationY.setRepeatCount(0);// 动画重复执行的次数
+		translateAnimationX.setFillAfter(true);
+
+		AnimationSet set = new AnimationSet(false);
+		set.setFillAfter(false);
+		set.addAnimation(translateAnimationY);
+		set.addAnimation(translateAnimationX);
+		set.setDuration(800);// 动画的执行时间
+		view.startAnimation(set);
+		// 动画监听事件
+		set.setAnimationListener(new AnimationListener() {
+
+			// 动画的开始
+			@Override
+			public void onAnimationStart(Animation animation) {
+				v.setVisibility(View.VISIBLE);
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+			}
+
+			// 动画的结束
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				v.setVisibility(View.GONE);
+				tv_counts.setVisibility(View.VISIBLE);
+				tv_counts.setText((++cartCount) + "");
+			}
+		});
+
+	}
+
+>>>>>>> 4ccfb9e0c9fde94c78f7b640056b53d364ca2a01
 	void requestArea() {
 		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
@@ -224,13 +374,16 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					ll_loading.setVisibility(View.GONE);
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_area_get)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
+
 	void parseToObject(final JSONArray array) {
 		new ParserJSON(new ParseListener() {
+
 			@Override
 			public Object onParse() {
 				ObjectMapper om = new ObjectMapper();
@@ -255,6 +408,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				}
 				return areaList;
 			}
+
 			@Override
 			public void onComplete(Object parseResult) {
 				areaItems = new String[areaList.size()];
@@ -268,10 +422,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private class SearchViewClickListener implements OnClickListener {
+
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
 				case R.id.btn_select:
+<<<<<<< HEAD
 					AlertDialog.Builder builder = new Builder(MainActivity.this);
 					builder.setSingleChoiceItems(areaItems, checkedItem, new DialogInterface.OnClickListener() {
 						@Override
@@ -308,6 +464,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 						}
 					});
 					builder.show();
+=======
+
+					SearchActivity_.intent(MainActivity.this).start();
+>>>>>>> 4ccfb9e0c9fde94c78f7b640056b53d364ca2a01
 					break;
 				case R.id.rightBtn:
 					CategoryActivity_.intent(MainActivity.this).start();
@@ -322,10 +482,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		public MyPageAdapter(FragmentManager fm) {
 			super(fm);
 		}
+
 		@Override
 		public Fragment getItem(int arg0) {
 			return fragments.get(arg0);
 		}
+
 		@Override
 		public int getCount() {
 			return fragments.size();
@@ -333,14 +495,17 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private class MyPagerChangeListener implements OnPageChangeListener {
+
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 			// TODO Auto-generated method stub
 		}
+
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 			// TODO Auto-generated method stub
 		}
+
 		@Override
 		public void onPageSelected(int arg0) {
 			onClick(lls.get(arg0));
@@ -349,6 +514,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				tv_shadow1.setVisibility(View.GONE);
 				rl_shadow2.setVisibility(View.GONE);
 			}
+			if (arg0 == 1)
+				btn_category.setVisibility(View.GONE);
 		}
 	}
 
@@ -369,9 +536,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			System.exit(0);
 		}
 	}
+
 	public void toServe(View v) {
 		vp.setCurrentItem(1);
 	}
+
 	@Override
 	public void onClick(View v) {
 		for (LinearLayout ll : lls) {

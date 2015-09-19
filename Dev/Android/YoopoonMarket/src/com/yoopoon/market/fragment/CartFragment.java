@@ -15,9 +15,6 @@ package com.yoopoon.market.fragment;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -28,6 +25,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,8 +33,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -51,11 +47,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.BalanceActivity_;
 import com.yoopoon.market.MyApplication;
 import com.yoopoon.market.R;
+import com.yoopoon.market.db.dao.DBDao;
 import com.yoopoon.market.domain.Staff;
-import com.yoopoon.market.net.ProgressMessage;
-import com.yoopoon.market.net.RequestAdapter;
-import com.yoopoon.market.net.RequestAdapter.RequestMethod;
-import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.utils.Utils;
 
 /**
@@ -79,6 +72,9 @@ public class CartFragment extends Fragment implements OnClickListener {
 	Button btn_edit;
 	boolean editable = false;
 	LinearLayout ll_balance;
+	int limit = 5;
+	int offset = 0;
+	int[] checkedIds;
 
 	@Override
 	@Nullable
@@ -107,58 +103,70 @@ public class CartFragment extends Fragment implements OnClickListener {
 		btn_edit.setOnClickListener(this);
 		lv.setOnRefreshListener(new HowWillIrefresh());
 
-		if (staffList.size() == 0)
-			requestData();
-		else
-			fillData();
-
 	}
 
-	private void requestData() {
-		ll_loading.setVisibility(View.VISIBLE);
-		new RequestAdapter() {
+	@Override
+	public void onResume() {
+		super.onResume();
+		staffList.clear();
+		offset = 0;
+		requestData(offset);
+		requestCount();
+	}
 
+	void requestCount() {
+		new Thread() {
 			@Override
-			public void onReponse(ResponseData data) {
-				JSONObject object = data.getMRootData();
-				if (object != null) {
-					boolean status = object.optBoolean("Status", false);
-					if (status) {
-						try {
-							JSONArray array = object.getJSONArray("Object");
-							for (int i = 0; i < array.length(); i++) {
-								JSONObject staffObject = array.getJSONObject(i);
-								int price = staffObject.optInt("Id", 0);
-								String title = staffObject.optString("Title", "");
-								String img = getString(R.string.url_image) + staffObject.optString("TitleImg", "");
-								String category = staffObject.optString("AdSubTitle", "");
-								staffList.add(new Staff(title, category, img, i, price + 0.9, price + 20.9));
-							}
-							fillData();
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
+			public void run() {
+				DBDao dao = new DBDao(getActivity());
+				int count = dao.getAllCounts();
+				tv_title_count.setText("购物车(" + count + ")");
+			}
+		}.start();
+	}
 
-					} else {
-						Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
-						ll_loading.setVisibility(View.GONE);
-					}
-				} else {
-					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
-					ll_loading.setVisibility(View.GONE);
+	private void requestData(final int offset) {
+		if (offset == 0)
+			ll_loading.setVisibility(View.VISIBLE);
+		new Thread() {
+
+			public void run() {
+				DBDao dao = new DBDao(getActivity());
+				List<Staff> list = dao.findPart(offset, limit);
+				if (list.size() == 0) {
+					getActivity().runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							if (offset != 0) {
+								Toast.makeText(getActivity(), "已经没有更多数据啦", Toast.LENGTH_SHORT).show();
+								lv.onRefreshComplete();
+							}
+							ll_loading.setVisibility(View.GONE);
+						}
+					});
 				}
 
-			}
+				else {
+					for (Staff staff : list) {
+						staffList.add(staff);
+					}
+					getActivity().runOnUiThread(new Runnable() {
 
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
+						@Override
+						public void run() {
+							fillData();
+							lv.onRefreshComplete();
+						}
+					});
+				}
+			};
+		}.start();
 
-			}
-		}.setUrl(getString(R.string.url_test)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
 
 	void fillData() {
+		Log.i(TAG, "fillData()");
 		adapter.notifyDataSetChanged();
 		calcTotalPrice();
 		ll_loading.setVisibility(View.GONE);
@@ -186,7 +194,9 @@ public class CartFragment extends Fragment implements OnClickListener {
 
 				@Override
 				public void run() {
-					lv.onRefreshComplete();
+					offset += 5;
+					requestData(offset);
+
 				}
 			}, 1000);
 		}
@@ -263,16 +273,16 @@ public class CartFragment extends Fragment implements OnClickListener {
 			holder.iv.setTag(staff.image);
 			ImageLoader.getInstance().displayImage(staff.image, holder.iv, MyApplication.getOptions(),
 					MyApplication.getLoadingListener());
-			holder.iv.setScaleType(ScaleType.CENTER_CROP);
+			holder.iv.setScaleType(ScaleType.FIT_XY);
 			Utils.spanTextSize(holder.tv_price_counted, "\\.", true, new int[] { 16, 12 });
 
-			holder.cb.setChecked(staff.chosen ? true : false);
-			holder.cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			holder.cb.setChecked(staff.chosen);
+			holder.cb.setOnClickListener(new OnClickListener() {
 
 				@Override
-				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					staff.chosen = isChecked;
-					if (!isChecked)
+				public void onClick(View v) {
+					staff.chosen = !staff.chosen;
+					if (!staff.chosen)
 						cb_selectall.setChecked(false);
 					calcTotalPrice();
 				}
@@ -343,6 +353,12 @@ public class CartFragment extends Fragment implements OnClickListener {
 				public void onClick(View v) {
 					staffList.remove(staff);
 					fillData();
+					new Thread() {
+						public void run() {
+							DBDao dao = new DBDao(getActivity());
+							dao.delete(staff.id);
+						};
+					}.start();
 				}
 			});
 			return convertView;
@@ -358,18 +374,29 @@ public class CartFragment extends Fragment implements OnClickListener {
 				sumCount += staff.count;
 			}
 		}
+
 		DecimalFormat df = new DecimalFormat("#.00");
 		tv_price_total.setText("合计：￥" + df.format(sumPrice));
 		Utils.spanTextStyle(tv_price_total, getActivity());
 		btn_balance.setText("结算(" + sumCount + ")");
-		tv_title_count.setText("购物车(" + sumCount + ")");
+		btn_balance.setTag(sumCount);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.btn_balance:
-				BalanceActivity_.intent(getActivity()).start();
+				int count = (Integer) btn_balance.getTag();
+				if (count == 0) {
+					Toast.makeText(getActivity(), "亲，你还没有选择任何商品呢!", Toast.LENGTH_SHORT).show();
+				} else {
+					List<Staff> chosenList = new ArrayList<Staff>();
+					for (Staff staff : staffList) {
+						if (staff.chosen)
+							chosenList.add(staff);
+					}
+					BalanceActivity_.intent(getActivity()).staffList(chosenList).start();
+				}
 				break;
 			case R.id.cb_chooseall:
 				for (Staff staff : staffList)

@@ -5,9 +5,10 @@
 <ion-view hide-nav-bar="true" hide-tabs="true" >
     <ion-content no-header="true" style="top:44px;padding:0;background-color: #d9d9d9" class="stable-bg">
         <ion-list>
-            <ion-item>
-                {{chats.id}}
+            <ion-item ng-repeat="chat in listCity" type="item-text-wrap" ui-sref="page.selectCounty({id:chat.Id,name:name+chat.Name})">
+                {{chat.Name}}
             </ion-item>
+
         </ion-list>
     </ion-content>
 </ion-view>

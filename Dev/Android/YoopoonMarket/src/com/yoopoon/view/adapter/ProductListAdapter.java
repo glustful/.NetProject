@@ -9,6 +9,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.MyApplication;
 import com.yoopoon.market.ProductDetailActivity_;
 import com.yoopoon.market.R;
+import com.yoopoon.market.db.dao.DBDao;
+import com.yoopoon.market.domain.Staff;
 import com.yoopoon.view.adapter.ProductGridViewAdapter.ProductViewHandler;
 
 import android.content.Context;
@@ -129,6 +131,37 @@ public class ProductListAdapter extends BaseAdapter {
 					mContext.startActivity(intent);
 				}
 			});
+			//购物车动画效果
+			final int id1 = datas.get(position).optInt("Id", 0);
+			final String subtitle1 = datas.get(position).optString("Subtitte");
+			productityViewHandler.cartImageView1.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					new Thread() {
+						public void run() {
+							DBDao dao = new DBDao(mContext);
+							if (dao.isExist(id1)) {
+								int count = dao.isExistCount(id1);
+								dao.updateCount(id1, count + 1);
+							} else {
+								String mainImageString = datas.get(position * 2).optString("MainImg", "");
+								String url = mContext.getString(R.string.url_image) + mainImageString;
+								String name = datas.get(position * 2).optString("Name", "");
+								float price_counted = Float.parseFloat(datas.get(position * 2).optString("Price", ""));
+								float price_previous = Float.parseFloat(datas.get(position * 2).optString("NewPrice",
+										""));
+								dao.add(new Staff(subtitle1, name, url, 1, price_counted, price_previous, id1));
+							}
+							int[] start_location = new int[2];// 一个整型数组，用来存储按钮的在屏幕的X、Y坐标
+							v.getLocationInWindow(start_location);// 这是获取购买按钮的在屏幕的X、Y坐标（这也是动画开始的坐标）
+							Intent intent = new Intent("com.yoopoon.market.add_to_cart");
+							intent.addCategory(Intent.CATEGORY_DEFAULT);
+							intent.putExtra("start_location", start_location);
+							mContext.sendBroadcast(intent);
+						};
+					}.start();
+				}
+			});
 			//##############################################################################################
 			//                   第一件商品数据绑定
 			//##############################################################################################
@@ -188,6 +221,36 @@ public class ProductListAdapter extends BaseAdapter {
 					}
 				});
 			}
+			final int id2 = datas.get(position).optInt("Id", 0);
+			final String subtitle2 = datas.get(position).optString("Subtitte");
+			productityViewHandler.cartImageView2.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					new Thread() {
+						public void run() {
+							DBDao dao = new DBDao(mContext);
+							if (dao.isExist(id2)) {
+								int count = dao.isExistCount(id2);
+								dao.updateCount(id2, count + 1);
+							} else {
+								String mainImageString = datas.get(position * 2).optString("MainImg", "");
+								String url = mContext.getString(R.string.url_image) + mainImageString;
+								String name = datas.get(position * 2).optString("Name", "");
+								float price_counted = Float.parseFloat(datas.get(position * 2).optString("Price", ""));
+								float price_previous = Float.parseFloat(datas.get(position * 2).optString("NewPrice",
+										""));
+								dao.add(new Staff(subtitle2, name, url, 1, price_counted, price_previous, id2));
+							}
+							int[] start_location = new int[2];// 一个整型数组，用来存储按钮的在屏幕的X、Y坐标
+							v.getLocationInWindow(start_location);// 这是获取购买按钮的在屏幕的X、Y坐标（这也是动画开始的坐标）
+							Intent intent = new Intent("com.yoopoon.market.add_to_cart");
+							intent.addCategory(Intent.CATEGORY_DEFAULT);
+							intent.putExtra("start_location", start_location);
+							mContext.sendBroadcast(intent);
+						};
+					}.start();
+				}
+			});
 			//##############################################################################################
 			//                   第二件商品数据绑定
 			//##############################################################################################

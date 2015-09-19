@@ -2,16 +2,13 @@ package com.yoopoon.home.data.user;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.util.Log;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -46,9 +43,9 @@ public class User {
 	public String realName;
 	private String email;
 	private String headUrl;
-	//微信号码
+	// 微信号码
 	private String weiXin;
-	//邀请码
+	// 邀请码
 	private String invitationCode;
 	public boolean remember;
 	public String phone;
@@ -56,97 +53,127 @@ public class User {
 	public ArrayList<Role> roles;
 	@JsonIgnore
 	public static User mUser;
-	
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getUserName() {
 		return userName;
 	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public boolean isRemember() {
 		return remember;
 	}
+
 	public void setRemember(boolean remember) {
 		this.remember = remember;
 	}
+
 	public String getPhone() {
 		return phone;
 	}
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
 	public int getStatus() {
 		return status;
 	}
+
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
 	public ArrayList<Role> getRoles() {
 		return roles;
 	}
+
 	public void setRoles(ArrayList<Role> roles) {
 		this.roles = roles;
 	}
+
 	public String getNickName() {
 		return nickName;
 	}
+
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
 	}
+
 	public String getSex() {
 		return sex;
 	}
+
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+
 	public String getIdCard() {
 		return idCard;
 	}
+
 	public void setIdCard(String idCard) {
 		this.idCard = idCard;
 	}
+
 	public String getRealName() {
 		return realName;
 	}
+
 	public void setRealName(String realName) {
 		this.realName = realName;
 	}
+
 	public String getHeadUrl() {
 		return headUrl;
 	}
+
 	public void setHeadUrl(String headUrl) {
 		this.headUrl = headUrl;
 	}
+
 	public String getWeiXin() {
 		return weiXin;
 	}
+
 	public void setWeiXin(String weiXin) {
 		this.weiXin = weiXin;
 	}
+
 	public String getInvitationCode() {
 		return invitationCode;
 	}
+
 	public void setInvitationCode(String invitationCode) {
 		this.invitationCode = invitationCode;
 	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", nickName=" + nickName
@@ -154,6 +181,7 @@ public class User {
 				+ ", realName=" + realName + ", email=" + email + ", headUrl=" + headUrl + ", remember=" + remember
 				+ ", phone=" + phone + ", status=" + status + ", roles=" + roles + "]";
 	}
+
 	@SuppressLint("DefaultLocale")
 	public boolean isBroker() {
 		if (this.roles == null || this.roles.size() < 1)
@@ -165,6 +193,7 @@ public class User {
 		}
 		return false;
 	}
+
 	public static User lastLoginUser(Context context) {
 		SharedPreferences spf = PreferenceManager.getDefaultSharedPreferences(context);
 		String user = spf.getString("user", null);
@@ -182,6 +211,7 @@ public class User {
 		}
 		return null;
 	}
+
 	public void login(final LoginListener listener) {
 		new SerializerJSON(new SerializeListener() {
 			@Override
@@ -195,6 +225,7 @@ public class User {
 				}
 				return null;
 			}
+
 			@Override
 			public void onComplete(String serializeResult) {
 				if (serializeResult == null || serializeResult.equals("")) {
@@ -204,6 +235,7 @@ public class User {
 			}
 		}).execute();
 	}
+
 	public void modifyPsw(final ModifyPswListener lis) {
 		new SerializerJSON(new SerializeListener() {
 			@Override
@@ -216,6 +248,7 @@ public class User {
 				}
 				return null;
 			}
+
 			@Override
 			public void onComplete(String serializeResult) {
 				if (serializeResult == null || serializeResult.equals("")) {
@@ -225,6 +258,7 @@ public class User {
 			}
 		}).execute();
 	}
+
 	public void getUserInfo(final UserInfoListener listener) {
 		new SerializerJSON(new SerializeListener() {
 			@Override
@@ -238,6 +272,7 @@ public class User {
 				}
 				return null;
 			}
+
 			@Override
 			public void onComplete(String serializeResult) {
 				if (serializeResult == null || serializeResult.equals("")) {
@@ -247,6 +282,7 @@ public class User {
 			}
 		}).execute();
 	}
+
 	public void parseToBroker(final String json) {
 		new ParserJSON(new ParseListener() {
 			@Override
@@ -265,6 +301,7 @@ public class User {
 				}
 				return entity;
 			}
+
 			@Override
 			public void onComplete(Object parseResult) {
 				if (parseResult != null)
@@ -272,6 +309,7 @@ public class User {
 			}
 		}).execute();
 	}
+
 	// Broker: ""
 	// BrokerId: 0
 	// Id: 0
@@ -294,6 +332,7 @@ public class User {
 				}
 				return null;
 			}
+
 			@Override
 			public void onComplete(String serializeResult) {
 				if (serializeResult == null || serializeResult.equals("")) {
@@ -303,6 +342,7 @@ public class User {
 			}
 		}).execute();
 	}
+
 	protected void requestModifyPsw(String serializeResult, final ModifyPswListener lis) {
 		new RequestAdapter() {
 			@Override
@@ -318,12 +358,14 @@ public class User {
 					lis.fail(data.getMsg());
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
 			}
 		}.setUrl(MyApplication.getInstance().getString(R.string.url_login)).SetJSON(serializeResult).notifyRequest();
 	}
+
 	protected void requestInvite(String serializeResult, final InvitePartnerListener lis) {
 		new RequestAdapter() {
 			@Override
@@ -337,14 +379,17 @@ public class User {
 				else
 					lis.failed("请求失败，请检查网络");
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(MyApplication.getInstance().getString(R.string.url_invite_partner)).SetJSON(serializeResult)
 				.notifyRequest();
 	}
+
 	protected void requestLogin(String serializeResult, final LoginListener lis) {
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				Log.i(TAG, data.toString());
@@ -369,6 +414,7 @@ public class User {
 				}
 				lis.faild(data.getMsg());
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
@@ -376,6 +422,7 @@ public class User {
 		}.setUrl(MyApplication.getInstance().getString(R.string.url_login)).SetJSON(serializeResult)
 				.setSaveSession(true).notifyRequest();
 	}
+
 	protected void requestUserInfo(String serializeResult, final UserInfoListener lis) {
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MyApplication.getInstance());
 		String userId = sp.getString("userId", "0");
@@ -418,6 +465,7 @@ public class User {
 					lis.failed(data.getMsg());
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
@@ -425,24 +473,28 @@ public class User {
 		}.setUrl(MyApplication.getInstance().getString(R.string.url_brokeInfo_getBrokeInfoById) + userId)
 				.setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
-	
+
 	public interface LoginListener {
 		void success(User user);
+
 		void faild(String msg);
 	}
-	
+
 	public interface UserInfoListener {
 		void success(User user);
+
 		void failed(String msg);
 	}
-	
+
 	public interface InvitePartnerListener {
 		void success(String msg);
+
 		void failed(String msg);
 	}
-	
+
 	public interface ModifyPswListener {
 		void success(String msg);
+
 		void fail(String msg);
 	}
 }
