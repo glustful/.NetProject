@@ -92,3 +92,23 @@ app.controller('selectCounty',['$http','$scope','$stateParams',function($http,$s
         $scope.listCounty=data.List;
     });
 }]);
+
+app.controller('newAddress',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+
+    $scope.searchCondition={
+        father:false,
+        fatherid:0
+    };
+    $scope.selCity=function(){
+        console.log($stateParams);
+        $scope.name= $.trim($stateParams.name);
+        $scope.searchCondition.fatherid=$stateParams.id;
+        $http.get(SETTING.ApiUrl +"/CommunityArea/Get/",{params:$scope.searchCondition,withCredentials:true}).
+            success(function(data){
+
+                $scope.listCity=data.List;
+                console.log($scope.listCity);
+            });
+    }
+    $scope.selCity();
+}]);
