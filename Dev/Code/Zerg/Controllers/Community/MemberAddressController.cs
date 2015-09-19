@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -7,6 +8,9 @@ using Zerg.Models.Community;
 using Community.Entity.Model.Member;
 using System.Web.Http.Cors;
 using System.Net.Http;
+using Community.Service.Area;
+using Community.Service.Member;
+using YooPoon.Core.Site;
 using Zerg.Common;
 
 namespace Zerg.Controllers.Community
@@ -16,11 +20,17 @@ namespace Zerg.Controllers.Community
 	public class MemberAddressController : ApiController
 	{
 		private readonly IMemberAddressService _memberAddressService;
+        private readonly IWorkContext _workContext;
+        private readonly IMemberService _memberService;
+        private readonly IAreaService _areaService;
 
-		public MemberAddressController(IMemberAddressService memberAddressService)
-		{
-			_memberAddressService = memberAddressService;
-		}
+        public MemberAddressController(IMemberAddressService memberAddressService,IWorkContext workContext,IMemberService memberService,IAreaService areaService)
+        {
+            _memberAddressService = memberAddressService;
+            _workContext = workContext;
+            _memberService = memberService;
+            _areaService = areaService;
+        }
 
         public HttpResponseMessage Get(int id)
 		{
@@ -66,15 +76,16 @@ namespace Zerg.Controllers.Community
 		{
 			var entity = new MemberAddressEntity
 			{
-				//Member = model.Member,
+				Member = _memberService.GetMemberByUserId(model.UserId),
 				Address = model.Address,
 				Zip = model.Zip,
 				Linkman = model.Linkman,
 				Tel = model.Tel,
-				Adduser = model.Adduser,
-				Addtime = model.Addtime,
-				Upduser = model.Upduser,
-				Updtime = model.Updtime,
+				Adduser = _workContext.CurrentUser.Id,
+				Addtime = DateTime.Now,
+				Upduser = _workContext.CurrentUser.Id,
+				Updtime = DateTime.Now,
+                Area = _areaService.GetAreaById(model.AreaId)
 			};
 			if(_memberAddressService.Create(entity).Id > 0)
 			{
