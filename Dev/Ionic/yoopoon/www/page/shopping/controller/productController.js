@@ -148,7 +148,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
             {
                 setTimeout(function(){
                     $scope.hasload=true
-                },5000)
+                },2000)
             }
         })
         //endregion
@@ -191,6 +191,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
                     if(data!=null)
                     {
                         $scope.hasload=false;
+                        $scope.isDetail=true;
                     }
                 });
                $scope.$broadcast("scroll.infiniteScrollComplete");
@@ -201,13 +202,19 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
             id: null,
             name: null,
             count: null,
-            mainimg:null
+            mainimg:null,
+            price:null,
+            newprice:null,
+            parameterValue:[]
         };
 
         $scope.AddGWCAction = function () {
             $scope.cartinfo.id = $scope.product.Id;
             $scope.cartinfo.name = $scope.product.Name;
             $scope.cartinfo.mainimg=$scope.product.MainImg;
+            $scope.cartinfo.price=$scope.product.Price;
+            $scope.cartinfo.newprice=$scope.product.NewPrice;
+            $scope.cartinfo.parameterValue=$scope.product.ParameterValue;
             $scope.cartinfo.count = 1;
             cartservice.add($scope.cartinfo);
             //显示图标
@@ -225,6 +232,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
             }
         }
         //endregion
+        $scope.isDetail=false;
     }])
 app.controller('SearchProductCtr', ['$http', '$scope', '$stateParams','$timeout',
     function ($http, $scope, $stateParams,$timeout) {

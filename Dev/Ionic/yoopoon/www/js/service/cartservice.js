@@ -17,7 +17,8 @@ app.service("cartservice", ['$rootScope',
 			count: null,
             mainimg:null,
             price:null,
-            newprice:null
+            newprice:null,
+		    parameterValue:[]
 		};
 
 		///添加商品和更改已有的商品sevice
@@ -31,6 +32,7 @@ app.service("cartservice", ['$rootScope',
             cartinfo.mainimg=data.mainimg;
             cartinfo.price=data.price;
             cartinfo.newprice=data.newprice;
+			cartinfo.parameterValue=data.parameterValue
 			var storage = localStorage.getItem("ShoppingCart");
 			//第一次加入商品 
 			if (storage == null || storage == "") {
@@ -41,7 +43,8 @@ app.service("cartservice", ['$rootScope',
 						"count": cartinfo.count,
                         "mainimg":cartinfo.mainimg,
                         "price":cartinfo.price,
-                        "newprice":cartinfo.newprice
+                        "newprice":cartinfo.newprice,
+						"parameterValue":cartinfo.parameterValue
 					}]
 				};
 				localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
@@ -64,7 +67,8 @@ app.service("cartservice", ['$rootScope',
 						"count": cartinfo.count,
                         "mainimg":cartinfo.mainimg,
                         "price":cartinfo.price,
-                        "newprice":cartinfo.newprice
+                        "newprice":cartinfo.newprice,
+						"parameterValue":cartinfo.parameterValue
 					});
 				}
 				$rootScope.cartProductCount += 1;
