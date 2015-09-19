@@ -100,10 +100,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 }
             })
             .state('page.myService', {
-                url: '/service/myService',
+                url: '/service/myService?tabIndex',
                 views: {
                     'page-service': {
-                        templateUrl: 'page/service/myService.html'
+                        templateUrl: 'page/service/myService.html',
+                        controller: 'TabServiceCtrl'
 
                     }
                 }
