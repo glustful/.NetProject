@@ -15,6 +15,7 @@ package com.yoopoon.market;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -22,6 +23,7 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -56,6 +58,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -96,7 +99,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	Button btn_category;
 	@ViewById(R.id.ll_loading)
 	LinearLayout ll_loading;
- 
 	// @ViewById(R.id.tv_shadow1)
 	// TextView tv_shadow1;
 	// @ViewById(R.id.rl_shadow2)
@@ -111,10 +113,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	// tv_shadow1.setVisibility(View.GONE);
 	// rl_shadow2.setVisibility(View.GONE);
 	// }
- 
 	@ViewById(R.id.tv_counts)
 	TextView tv_counts;
- 
 	@ViewById(R.id.tv_shadow1)
 	TextView tv_shadow1;
 	@ViewById(R.id.rl_shadow2)
@@ -136,7 +136,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			et_search.setSingleLine();
 			et_search.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
 			et_search.setOnEditorActionListener(new OnEditorActionListener() {
-
 				@Override
 				public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 					if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -158,8 +157,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				}
 				@Override
 				public void onAnimationEnd(Animation animation) {
-					// animation.setFillAfter(true);
-					//#################################################徐阳会 2015年9月17日添加  添加搜索广播#####################STAR
 					Intent intent = new Intent("com.yoopoon.market.search.byKeyword");
 					Bundle bundle = new Bundle();
 					intent.putExtra("keyword", et_search.getText().toString());
@@ -170,7 +167,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				}
 			});
 			et_search.startAnimation(animation);
-
 		}
 	}
 	@Click(R.id.iv_iknow)
@@ -206,18 +202,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		btn_select.setOnClickListener(new SearchViewClickListener());
 		btn_category.setOnClickListener(new SearchViewClickListener());
 		vp.setOnPageChangeListener(new MyPagerChangeListener());
-<<<<<<< HEAD
-		requestArea();
-		et_search.setSingleLine();
-	}
-=======
 		// requestArea();
 		new Thread() {
 			public void run() {
 				DBDao dao = new DBDao(mContext);
 				cartCount = dao.getAllCounts();
 				runOnUiThread(new Runnable() {
-
 					@Override
 					public void run() {
 						if (cartCount > 0) {
@@ -226,14 +216,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 						} else {
 							tv_counts.setVisibility(View.GONE);
 						}
-
 					}
 				});
 			};
 		}.start();
 	}
-
->>>>>>> 4ccfb9e0c9fde94c78f7b640056b53d364ca2a01
 	protected void onCreate(android.os.Bundle arg0) {
 		super.onCreate(arg0);
 		registerBroadcast();
@@ -243,7 +230,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		IntentFilter shadowFilter = new IntentFilter("com.yoopoon.market.show_shadow");
 		shadowFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, shadowFilter);
-
 		IntentFilter cartFilter = new IntentFilter("com.yoopoon.market.add_to_cart");
 		cartFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, cartFilter);
@@ -264,20 +250,16 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				LinearLayout ll = lls.get(2);
 				sa.setFillAfter(false);
 				ll.startAnimation(sa);
-
 				play(start_loction);
 			}
 		}
 	};
 
-<<<<<<< HEAD
-=======
 	void play(int[] start_location) {
 		buyImg = new ImageView(mContext);// buyImg是动画的图片，我的是一个小球（R.drawable.sign）
 		buyImg.setImageResource(R.drawable.sign);// 设置buyImg的图片
 		setAnim(buyImg, start_location);// 开始执行动画
 	}
-
 	private View addViewToAnimLayout(final ViewGroup vg, final View view, int[] location) {
 		int x = location[0];
 		int y = location[1];
@@ -288,7 +270,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		view.setLayoutParams(lp);
 		return view;
 	}
-
 	private ViewGroup createAnimLayout() {
 		ViewGroup rootView = (ViewGroup) this.getWindow().getDecorView();
 		LinearLayout animLayout = new LinearLayout(this);
@@ -300,7 +281,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		rootView.addView(animLayout);
 		return animLayout;
 	}
-
 	private void setAnim(final View v, int[] start_location) {
 		anim_mask_layout = null;
 		anim_mask_layout = createAnimLayout();
@@ -308,7 +288,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		final View view = addViewToAnimLayout(anim_mask_layout, v, start_location);
 		int[] end_location = new int[2];// 这是用来存储动画结束位置的X、Y坐标
 		lls.get(2).getLocationInWindow(end_location);// shopCart是那个购物车
-
 		// 计算位移
 		int endX = end_location[0] - start_location[0] + 30;// 动画位移的X坐标
 		int endY = end_location[1] - start_location[1];// 动画位移的y坐标
@@ -316,12 +295,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		translateAnimationX.setInterpolator(new LinearInterpolator());
 		translateAnimationX.setRepeatCount(0);// 动画重复执行的次数
 		translateAnimationX.setFillAfter(true);
-
 		TranslateAnimation translateAnimationY = new TranslateAnimation(0, 0, 0, endY);
 		translateAnimationY.setInterpolator(new AccelerateInterpolator());
 		translateAnimationY.setRepeatCount(0);// 动画重复执行的次数
 		translateAnimationX.setFillAfter(true);
-
 		AnimationSet set = new AnimationSet(false);
 		set.setFillAfter(false);
 		set.addAnimation(translateAnimationY);
@@ -330,18 +307,15 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		view.startAnimation(set);
 		// 动画监听事件
 		set.setAnimationListener(new AnimationListener() {
-
 			// 动画的开始
 			@Override
 			public void onAnimationStart(Animation animation) {
 				v.setVisibility(View.VISIBLE);
 			}
-
 			@Override
 			public void onAnimationRepeat(Animation animation) {
 				// TODO Auto-generated method stub
 			}
-
 			// 动画的结束
 			@Override
 			public void onAnimationEnd(Animation animation) {
@@ -350,14 +324,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				tv_counts.setText((++cartCount) + "");
 			}
 		});
-
 	}
-
->>>>>>> 4ccfb9e0c9fde94c78f7b640056b53d364ca2a01
 	void requestArea() {
 		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
@@ -374,16 +344,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					ll_loading.setVisibility(View.GONE);
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_area_get)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
-
 	void parseToObject(final JSONArray array) {
 		new ParserJSON(new ParseListener() {
-
 			@Override
 			public Object onParse() {
 				ObjectMapper om = new ObjectMapper();
@@ -408,7 +375,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				}
 				return areaList;
 			}
-
 			@Override
 			public void onComplete(Object parseResult) {
 				areaItems = new String[areaList.size()];
@@ -422,52 +388,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private class SearchViewClickListener implements OnClickListener {
-
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
 				case R.id.btn_select:
-<<<<<<< HEAD
-					AlertDialog.Builder builder = new Builder(MainActivity.this);
-					builder.setSingleChoiceItems(areaItems, checkedItem, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							checkedItem = which;
-							btn_select.setText(areaItems[checkedItem]);
-							/*//#############################################################################
-							//  添加广播，选择地址后Fragment_Shop能更新商品  徐阳会 2015年9月17日添加      Start
-							//#############################################################################
-							Intent refreshProductIntent = new Intent("com.yoopoon.market.productRefresh.Address");
-							refreshProductIntent.putExtra("addressName", areaItems[checkedItem]);
-							refreshProductIntent.putExtra("addressId", areaList.get(checkedItem).Codeid);
-							sendBroadcast(refreshProductIntent);
-							//#############################################################################
-							//  添加广播，选择地址后Fragment_Shop能更新商品  徐阳会 2015年9月17日添加       End
-							//#############################################################################
-							*/dialog.dismiss();
-						}
-					});
-					builder.setTitle("请选择地区");
-					builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							btn_select.setText(areaItems[checkedItem]);
-							dialog.dismiss();
-						}
-					});
-					builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// checkedItem = which;
-							btn_select.setText(areaItems[checkedItem]);
-							dialog.dismiss();
-						}
-					});
-					builder.show();
-=======
-
 					SearchActivity_.intent(MainActivity.this).start();
->>>>>>> 4ccfb9e0c9fde94c78f7b640056b53d364ca2a01
 					break;
 				case R.id.rightBtn:
 					CategoryActivity_.intent(MainActivity.this).start();
@@ -482,12 +407,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		public MyPageAdapter(FragmentManager fm) {
 			super(fm);
 		}
-
 		@Override
 		public Fragment getItem(int arg0) {
 			return fragments.get(arg0);
 		}
-
 		@Override
 		public int getCount() {
 			return fragments.size();
@@ -495,17 +418,14 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private class MyPagerChangeListener implements OnPageChangeListener {
-
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 			// TODO Auto-generated method stub
 		}
-
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 			// TODO Auto-generated method stub
 		}
-
 		@Override
 		public void onPageSelected(int arg0) {
 			onClick(lls.get(arg0));
@@ -536,11 +456,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			System.exit(0);
 		}
 	}
-
 	public void toServe(View v) {
 		vp.setCurrentItem(1);
 	}
-
 	@Override
 	public void onClick(View v) {
 		for (LinearLayout ll : lls) {
