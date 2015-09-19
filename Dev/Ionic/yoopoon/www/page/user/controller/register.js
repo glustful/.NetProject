@@ -1,7 +1,7 @@
 /**
  * Created by Yunjoy on 2015/9/15.
  */
-//注册
+
 app.controller('register',['$http','$scope','$state','AuthService','$ionicLoading','$timeout',function($http,$scope,$state,AuthService,$ionicLoading,$timeout){
     $scope.signer ={
         Phone:'',
@@ -25,7 +25,7 @@ app.controller('register',['$http','$scope','$state','AuthService','$ionicLoadin
             else{
                 AuthService.doLogin($scope.signer.UserName,$scope.signer.Password,function(){
                     $ionicLoading.show({
-                        template:"注册成功，登录ing..."
+                        template:"娉ㄥ唽鎴愬姛锛岀櫥褰昳ng..."
                     });
                     $timeout(function(){
                         $state.go("page.me");
@@ -37,20 +37,3 @@ app.controller('register',['$http','$scope','$state','AuthService','$ionicLoadin
         })
     }
 }])
-//两次密码输入验证
-function check()
-{
-    var pass1 = document.getElementById("FPassword");
-    var pass2 = document.getElementById("SPassword");
-    var tips= document.getElementById("errorTip");
-    if(pass1.value!=pass2.value)
-    {
-        tips.innerHTML="两次密码输入不一致，请重新输入！";
-    }else{
-        tips.innerHTML="";
-    }
-    if(pass1.value==""||pass2.value=="")
-    {
-        tips.innerHTML="请输入密码";
-    }
-}

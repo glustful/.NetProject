@@ -6,10 +6,14 @@ namespace Zerg.Models.Community
 	{
 
 		/// <summary>
-        /// 行政区划ID
+        /// ID
         /// </summary>
 		public int Id {get;set;}
 
+        /// <summary>
+        /// 行政区划ID
+        /// </summary>
+        public string AreaId { get; set; }
 
 		/// <summary>
         /// 地址ID

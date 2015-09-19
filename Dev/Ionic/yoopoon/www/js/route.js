@@ -99,6 +99,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     }
                 }
             })
+            .state('page.myService', {
+                url: '/service/myService',
+                views: {
+                    'page-service': {
+                        templateUrl: 'page/service/myService.html'
+
+                    }
+                }
+            })
             .state('page.safe-detail', {
                 url: '/service/safe-detail',
                 views: {
@@ -198,11 +207,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 }
             })
             .state('page.newAddress', {
-                url: '/me/newAddress',
+                url: '/me/newAddress?id&name',
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/newAddress.html',
-                        controller: 'TabMeCtrl'
+                        controller: 'newAddress'
                     }
                 }
             })
