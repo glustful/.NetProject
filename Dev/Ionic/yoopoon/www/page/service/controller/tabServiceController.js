@@ -1,4 +1,4 @@
-app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate, $timeout, $ionicHistory, cartservice) {
+app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate, $timeout, $ionicHistory, cartservice,$stateParams) {
 	// With the new view caching in Ionic, Controllers are only called
 	// when they are recreated or on app start, instead of every page change.
 	// To listen for when this page is active (for example, to refresh data),
@@ -39,7 +39,22 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate, $timeo
 		window.location.href = state;
 	}
 
-
+	//我的服务
+	$scope.tabIndex = 5;
+	$scope.getServiceList = function (tabIndex) {
+		$scope.tabIndex = tabIndex;
+	};
+	function tab() {
+		//待接件
+		if ($stateParams.tabIndex == 5) {
+			$scope.tabIndex = 5;
+		}
+		//办理中
+		if ($stateParams.tabIndex == 6) {
+			$scope.tabIndex = 6;
+		}
+	}
+	tab();
 
 
 	//    搜索功能

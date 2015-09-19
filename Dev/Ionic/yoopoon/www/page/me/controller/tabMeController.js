@@ -1,9 +1,13 @@
 var httpimguri="";
 app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderService,$ionicSlideBoxDelegate,$ionicModal,$stateParams) {
-
     $scope.model = {
         activeIndex: 0
     };
+    //打开评论
+    var comment = document.getElementById("userComment");
+    $scope.open = function () {
+        comment.style.display = "";
+    }
 
     $scope.pageClick = function (index) {
         //alert(index);
@@ -133,11 +137,6 @@ app.controller('selectAddress', function($scope,$routeParams) {
     };
     $scope.delegateHandler = $ionicSlideBoxDelegate;
 
-//打开评论
-    var comment = document.getElementById("userComment");
-    $scope.open = function () {
-        comment.style.display = "";
-    }
 
 })
 
