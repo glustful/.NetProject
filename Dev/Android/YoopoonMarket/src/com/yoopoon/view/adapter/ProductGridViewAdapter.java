@@ -56,23 +56,19 @@ public class ProductGridViewAdapter extends BaseAdapter {
 			datas.removeAll(datas);
 		datas = arrayList;
 	}
-
 	@Override
 	public int getCount() {
 		Log.e("Product", datas.size() + "");
 		return datas.size();
 	}
-
 	@Override
 	public Object getItem(int position) {
 		return datas.get(position);
 	}
-
 	@Override
 	public long getItemId(int position) {
 		return position;
 	}
-
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ProductViewHandler productityViewHandler = null;
@@ -122,7 +118,7 @@ public class ProductGridViewAdapter extends BaseAdapter {
 			}
 		});
 		// 点击购物车按钮，跳转到购物车
-		final int id = datas.get(position).optInt("Id", 0);
+		/*final int id = datas.get(position).optInt("Id", 0);
 		final String subtitle = datas.get(position).optString("Subtitte");
 		productityViewHandler.cartImageView.setOnClickListener(new OnClickListener() {
 
@@ -149,7 +145,7 @@ public class ProductGridViewAdapter extends BaseAdapter {
 				}.start();
 			}
 
-		});
+		});*/
 		// 点击product GridView项跳转到产品详细信息Activity
 		convertView.setOnClickListener(new OnClickListener() {
 			@Override
@@ -165,12 +161,15 @@ public class ProductGridViewAdapter extends BaseAdapter {
 		// null);
 		return convertView;
 	}
+	public void refresh(ArrayList<JSONObject> mJsonObjects) {
+		datas.clear();
+		if (mJsonObjects != null) {
+			datas.addAll(mJsonObjects);
+		}
+		// this.notifyDataSetInvalidated();
+		this.notifyDataSetChanged();
+	}
 
-	/*
-	 * public void refresh(ArrayList<JSONObject> mJsonObjects) { datas.clear(); if (mJsonObjects !=
-	 * null) { datas.addAll(mJsonObjects); } // this.notifyDataSetInvalidated();
-	 * this.notifyDataSetChanged(); }
-	 */
 	/**
 	 * @ClassName: ProductViewHandler
 	 * @Description: 产品对应的ViewHandler

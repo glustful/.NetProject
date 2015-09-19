@@ -33,6 +33,9 @@ public class DBDao {
 		return result;
 	}
 
+
+
+
 	public List<Staff> findAll() {
 		List<Staff> list = new ArrayList<Staff>();
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
@@ -144,3 +147,4 @@ public class DBDao {
 		return sum;
 	}
 }
+ 

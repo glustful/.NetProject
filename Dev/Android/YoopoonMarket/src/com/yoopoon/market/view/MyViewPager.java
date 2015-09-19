@@ -1,4 +1,4 @@
-package com.yoopoon.base.ui;
+package com.yoopoon.market.view;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

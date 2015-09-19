@@ -27,41 +27,52 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.yoopoon.market.MyApplication;
 import com.yoopoon.market.R;
+ 
+ 
 
 public class ADController {
-	View					rootView;
-	Context					mContext;
-	LayoutInflater			inflater;
-	private ViewPager		adViewPager;
-	private LinearLayout	pagerLayout;
-	private List<View>		pageViews;
-	private ImageView[]		imageViews;
-	private ImageView		imageView;
-	private AdPageAdapter	adapter;
-	private AtomicInteger	atomicInteger	= new AtomicInteger(0);
-	private boolean			isContinue		= true;
-	private List<String>	urls;
-	private int				adCount;
-	
+
+	View rootView;
+
+	Context mContext;
+
+	LayoutInflater inflater;
+
+	private ViewPager adViewPager;
+	private LinearLayout pagerLayout;
+	private List<View> pageViews;
+	private ImageView[] imageViews;
+	private ImageView imageView;
+	private AdPageAdapter adapter;
+	private AtomicInteger atomicInteger = new AtomicInteger(0);
+	private boolean isContinue = true;
+	private List<String> urls;
+	private int adCount;
+
 	public View getRootView() {
 		if (rootView == null) {
 			initViewPager();
 		}
 		return rootView;
 	}
+
 	public ADController(Context context) {
 		mContext = context;
 		inflater = LayoutInflater.from(mContext);
 	}
+
 	public void show(List<String> urls) {
 		this.adCount = urls.size();
 		this.urls = urls;
 		if (rootView == null)
 			return;
 		initPageAdapter();
+
 		initCirclePoint();
+
 		adViewPager.setAdapter(adapter);
 		new Thread(new Runnable() {
+
 			@Override
 			public void run() {
 				while (true) {
@@ -73,24 +84,34 @@ public class ADController {
 			}
 		}).start();
 	}
+
 	public boolean isEmpty() {
 		return !(adCount > 0);
 	}
+
 	private void initViewPager() {
+
 		rootView = inflater.inflate(R.layout.advertisement_page_view, null);
+
 		// 从布局文件中获取ViewPager父容器
 		pagerLayout = (LinearLayout) rootView.findViewById(R.id.view_pager_content);
 		// 创建ViewPager
 		adViewPager = new ViewPager(mContext);
+
 		// 获取屏幕像素相关信息
 		DisplayMetrics dm = new DisplayMetrics();
 		((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(dm);
+
 		// 根据屏幕信息设置ViewPager广告容器的宽高
 		adViewPager.setLayoutParams(new LayoutParams(dm.widthPixels, dm.heightPixels * 1 / 5));
+
 		// 将ViewPager容器设置到布局文件父容器中
 		pagerLayout.addView(adViewPager);
+
 		adViewPager.setOnPageChangeListener(new AdPageChangeListener());
+
 	}
+
 	private void atomicOption() {
 		atomicInteger.incrementAndGet();
 		// if (atomicInteger.get() > imageViews.length - 1) {
@@ -99,32 +120,37 @@ public class ADController {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
+
 		}
 	}
-	
+
 	/*
 	 * 每隔固定时间切换广告栏图片
 	 */
-	private final Handler	viewHandler	= new Handler() {
-											@Override
-											public void handleMessage(Message msg) {
-												adViewPager.setCurrentItem(msg.what);
-												super.handleMessage(msg);
-											}
-										};
-	
+	private final Handler viewHandler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			adViewPager.setCurrentItem(msg.what);
+			super.handleMessage(msg);
+		}
+
+	};
+
 	private void initPageAdapter() {
 		pageViews = new ArrayList<View>();
 		if (urls != null)
 			for (int i = 0; i < urls.size(); i++) {
 				ImageView img = new ImageView(mContext);
-				//设置图片获取URL
+
 				img.setTag(mContext.getString(R.string.url_image) + urls.get(i));
+
 				img.setScaleType(ScaleType.FIT_XY);
 				pageViews.add(img);
 			}
 		adapter = new AdPageAdapter(pageViews);
 	}
+
 	private void initCirclePoint() {
 		ViewGroup group = (ViewGroup) rootView.findViewById(R.id.viewGroup);
 		group.removeAllViews();
@@ -133,11 +159,14 @@ public class ADController {
 		for (int i = 0; i < pageViews.size(); i++) {
 			// 创建一个ImageView, 并设置宽高. 将该对象放入到数组中
 			imageView = new ImageView(mContext);
+
 			MarginLayoutParams lp = new MarginLayoutParams(MarginLayoutParams.WRAP_CONTENT,
 					MarginLayoutParams.WRAP_CONTENT);
 			lp.rightMargin = 50;
 			// imageView.setLayoutParams(lp);
+
 			imageViews[i] = imageView;
+
 			// 初始值, 默认第0个选中
 			if (i == 0) {
 				imageViews[i].setBackgroundResource(R.drawable.black_point);
@@ -148,23 +177,26 @@ public class ADController {
 			group.addView(imageViews[i], lp);
 		}
 	}
-	
+
 	/**
 	 * ViewPager 页面改变监听器
 	 */
 	private final class AdPageChangeListener implements OnPageChangeListener {
+
 		/**
 		 * 页面滚动状态发生改变的时候触发
 		 */
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 		}
+
 		/**
 		 * 页面滚动的时候触发
 		 */
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 		}
+
 		/**
 		 * 页面选中的时候触发
 		 */
@@ -181,16 +213,18 @@ public class ADController {
 			}
 		}
 	}
-	
+
 	private final class AdPageAdapter extends PagerAdapter {
-		private List<View>	views	= null;
-		
+
+		private List<View> views = null;
+
 		/**
 		 * 初始化数据源, 即View数组
 		 */
 		public AdPageAdapter(List<View> views) {
 			this.views = views;
 		}
+
 		/**
 		 * 从ViewPager中删除集合中对应索引的View对象
 		 */
@@ -198,6 +232,7 @@ public class ADController {
 		public void destroyItem(View container, int position, Object object) {
 			((ViewPager) container).removeView(views.get(position % views.size()));
 		}
+
 		/**
 		 * 获取ViewPager的个数
 		 */
@@ -205,31 +240,42 @@ public class ADController {
 		public int getCount() {
 			return Integer.MAX_VALUE;
 		}
+
 		/**
 		 * 从View集合中获取对应索引的元素, 并添加到ViewPager中
 		 */
 		@Override
 		public Object instantiateItem(View container, int position) {
+
 			ImageView imageView = (ImageView) views.get(position % views.size());
 			ImageLoader.getInstance().displayImage(imageView.getTag().toString(), imageView,
 					MyApplication.getOptions(), new ImageLoadingListener() {
+
 						@Override
 						public void onLoadingStarted(String imageUri, View view) {
 							// TODO Auto-generated method stub
+
 						}
+
 						@Override
 						public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
 							// TODO Auto-generated method stub
+
 						}
+
 						@Override
 						public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
 							if (imageUri.equals(view.getTag().toString())) {
 								((ImageView) view).setImageBitmap(loadedImage);
+
 							}
+
 						}
+
 						@Override
 						public void onLoadingCancelled(String imageUri, View view) {
 							// TODO Auto-generated method stub
+
 						}
 					});
 			if (imageView.getParent() != null) {
@@ -237,8 +283,10 @@ public class ADController {
 			}
 			((ViewPager) container).addView(imageView, new LayoutParams(LayoutParams.MATCH_PARENT,
 					LayoutParams.MATCH_PARENT));
+
 			return imageView;
 		}
+
 		/**
 		 * 是否将显示的ViewPager页面与instantiateItem返回的对象进行关联 这个方法是必须实现的
 		 */

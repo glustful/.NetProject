@@ -7,7 +7,6 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="22" />
 
-    
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -146,7 +145,12 @@
             android:name="com.yoopoon.market.ChargeActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
-        <activity android:name="com.yoopoon.market.CategoryActivity_"
+        <activity
+            android:name="com.yoopoon.market.CategoryActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_Activity_Animation" />
+        <activity
+            android:name="com.yoopoon.market.MaternityMatronActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
         <activity android:name="com.yoopoon.market.SearchActivity_"
