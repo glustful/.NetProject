@@ -125,6 +125,14 @@ namespace Community.Service.MemberAddress
                 {
                     query = query.Where(q => q.Member.UserName == condition.UserName);
                 }
+			    if (condition.MemberId.HasValue)
+			    {
+			        query = query.Where(q => q.Member.Id == condition.MemberId);
+			    }
+			    if (condition.UserId.HasValue)
+			    {
+			        query = query.Where(q => q.Member.UserId == condition.UserId);
+			    }
 				if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
@@ -208,6 +216,14 @@ namespace Community.Service.MemberAddress
                 if (!string.IsNullOrEmpty(condition.UserName))
                 {
                     query = query.Where(q => q.Member.UserName == condition.UserName);
+                }
+                if (condition.MemberId.HasValue)
+                {
+                    query = query.Where(q => q.Member.Id == condition.MemberId);
+                }
+                if (condition.UserId.HasValue)
+                {
+                    query = query.Where(q => q.Member.UserId == condition.UserId);
                 }
 				return query.Count();
 			}
