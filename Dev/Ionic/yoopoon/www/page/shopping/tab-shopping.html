@@ -5,10 +5,9 @@
     <a class="button  button-icon icon icon-fuwuanniu" ng-click="go('page.Product-Catagory')"
        ui-sref="page.Product-Catagory"></a>
     <label class=" item-select select-header" ng-hide="showSelect">
-        <select>
-            <option>金尚俊园A座</option>
-            <option>CSS</option>
-            <option>JavaScript</option>
+      
+        <select ng-model="1" id="ParentId"  ng-options="o.Id as o.Name for o in addrss"  required>
+
         </select>
 
     </label>
@@ -165,7 +164,7 @@
             <!--</div>-->
             <!--</div>-->
         </div>
-        <ion-infinite-scroll on-infinite="load_more();">
+        <ion-infinite-scroll  ng-if="loadmore" on-infinite="load_more();">
         </ion-infinite-scroll>
     </ion-content>
 
