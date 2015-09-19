@@ -3,16 +3,13 @@
     <a href="#/page/me/addressAdm " class="button button-clear icon ion-chevron-left button-light"></a>
     <h2 class="title light">添加新地址</h2>
 </div>
-<ion-view hide-nav-bar="true" hide-tabs="true" ng-controller="newAddress" >
-    <from>
+<ion-view hide-nav-bar="true" hide-tabs="true"  >
+
     <ion-content no-header="true" style="top:44px;" class="stable-bg ">
         <ion-list >
-            <ion-item class="item-icon-right" ng-click="openModal();">
-                <h2>请选择所在地区</h2>
-                <i class="icon ion-ios-arrow-right"></i>
-            </ion-item>
+
             <ion-item class="item-icon-right">
-                <h2>{{Address.AreaName}}</h2>
+                <h2  >{{Address.AreaName}}</h2>
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>
             <ion-item class="item-icon-right">
@@ -32,7 +29,8 @@
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>
         </ion-list>
-        <a class=" button saveAll light"  ng-click="save()" href="">保存</a>
+        <button class=" button saveAll light" ng-click="saves()">保存</button>
+
     </ion-content>
-    </from>
+
 </ion-view>
