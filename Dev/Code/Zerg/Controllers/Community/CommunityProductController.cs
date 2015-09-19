@@ -85,7 +85,13 @@ namespace Zerg.Controllers.Community
                 Ad2 = entity.Detail.Ad2,
                 Ad3 = entity.Detail.Ad3,
                 //Comments = entity.Comments,		
-                ParameterValue =entity.Parameters.Select(c => new ProductParameterValueModel { ParameterId = c.Parameter.Id, ParameterString = c.Parameter.Name, ValueId = c.ParameterValue.Id, Value = c.ParameterValue.Value}).ToArray(),
+                ParameterValue =entity.Parameters.Select(c => new ProductParameterValueModel
+                {
+                    ParameterId = c.Parameter.Id,
+                    ParameterString = c.Parameter.Name,
+                    ValueId = c.ParameterValue.Id,
+                    Value = c.ParameterValue.Value
+                }).ToList()
             };
             var product=new ProductComment
             {
@@ -126,7 +132,7 @@ namespace Zerg.Controllers.Community
                     con.CategoryId = condition.CategoryId;
                 }
             }
-                
+
             var model = _productService.GetProductsByCondition(con).Select(c => new ProductModel
 			{
 				Id = c.Id,
@@ -146,9 +152,16 @@ namespace Zerg.Controllers.Community
                 NewPrice = c.NewPrice,
                 Owner =c.Owner,
                 Addtime = c.AddTime,
-				Detail = c.Detail.Detail
+				Detail = c.Detail.Detail,
 //				Comments = c.Comments,
 //				Parameters = c.Parameters,
+                //ParameterValue =c.Parameters.Select(p => new ProductParameterValueModel
+                //{
+                //    ParameterId = p.Parameter.Id,
+                //    ParameterString = p.Parameter.Name,
+                //    ValueId = p.ParameterValue.Id,
+                //    Value = p.ParameterValue.Value
+                //}).ToList()
 			}).ToList();
             var totalCount = _productService.GetProductCount(con);
             return PageHelper.toJson(new { List = model, Condition = con, TotalCount = totalCount });
