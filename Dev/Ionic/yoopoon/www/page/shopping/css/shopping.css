@@ -422,4 +422,10 @@
 
 }
 
+.detail{
+    display: block;
+}
+.nodetail{
+    display: none;
+}
 /*动画结束*/
