@@ -15,7 +15,7 @@
                 <div ng-repeat="item in list">
                 <div class=" row color-orange list-title">{{item.label}}</div>
                 <div class="row color-silver font-12 "  >
-                      <span ng-repeat="item1 in item.children" class="col"ui-sref="page.product-list({id:item1.Id})">{{item1.label}}</span>
+                      <span ng-repeat="item1 in item.children" class="col" ui-sref="page.product-list({id:item1.Id,name:item1.label})">{{item1.label}}</span>
                       </div>
                 <!--<div class="row color-silver font-12">-->
                     <!--<span class="col" ng-click="go('index.html#/page/shopping/product-list')">粮油酱醋</span>-->

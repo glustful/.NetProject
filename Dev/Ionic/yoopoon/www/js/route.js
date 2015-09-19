@@ -117,7 +117,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                }
                })
             .state('page.order', {
-                url: '/car/order',
+                url: '/car/order?productid',
                 views: {
                     'page-car': {
                         templateUrl: 'page/car/order.html',
@@ -252,7 +252,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
     })
     .state('page.product-list', {
-        url: '/shopping/product-list',
+        url: '/shopping/product-list?id&name',
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/product-list.html',

@@ -1,4 +1,5 @@
 <ion-view>
+    <ion-content class="scroll-content" no-header="false" style="top:0px">
 <ion-list>
     <ion-item ng-repeat="item in productList"  class="row" ui-sref="page.product-detail({id:item.Id})">
         <div class="product col col-25">
@@ -12,4 +13,7 @@
         </div>
     </ion-item >
 </ion-list>
+        <ion-infinite-scroll on-infinite="loadProduct();" ng-if="hasmore">
+        </ion-infinite-scroll>
+    </ion-content>
 </ion-view>
