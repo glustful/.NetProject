@@ -8,17 +8,17 @@
         <div class="list list-inset">
             <label class="item item-input">
                 <span class="input-label font-weight">账户</span>
-                <input type="text" placeholder="手机号/会员名/邮箱" class="font-12">
+                <input type="text" placeholder="手机号/会员名/邮箱" class="font-12" ng-model="user.userName">
             </label>
             <label class="item item-input">
                 <span class="input-label font-weight" >登录密码</span>
-                <input type="password" placeholder="请输入密码" class="font-12">
+                <input type="password" placeholder="请输入密码" class="font-12" ng-model="user.password">
             </label>
         </div>
         <!--<a class=" float-right font-11 padding-bottom font-weight">找回密码</a>-->
         <button class="button button-block button-assertive font-title" ng-click="login()">登&nbsp;&nbsp;&nbsp;录</button>
         <div class="text-center">
-            <button class="button-register  light-bg font-11 font-weight">免费注册</button>
+            <button class="button-register  light-bg font-11 font-weight" ui-sref="page.register">免费注册</button>
         </div>
     </ion-content>
 </ion-view>

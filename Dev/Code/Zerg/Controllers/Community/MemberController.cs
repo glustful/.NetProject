@@ -16,6 +16,7 @@ using YooPoon.Core.Site;
 using CRM.Service.Level;
 using CRM.Entity.Model;
 
+
 namespace Zerg.Controllers.Community
 {
      [AllowAnonymous]
@@ -99,7 +100,7 @@ namespace Zerg.Controllers.Community
          //根据userId 获取会员信息
         public HttpResponseMessage Get(string userId) 
         {
-            if (string.IsNullOrEmpty(userId) || PageHelper.ValidateNumber(userId)) 
+            if (string.IsNullOrEmpty(userId) || !PageHelper.ValidateNumber(userId)) 
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
             }
@@ -139,52 +140,52 @@ namespace Zerg.Controllers.Community
             }
             return PageHelper.toJson(PageHelper.ReturnValue(false, "post  失败")); 
 		}
-         /// <summary>
-         /// 根据用户ID获取会员信息
-         /// </summary>
-         /// <param name="userId"></param>
-         /// <returns></returns>
-         [HttpGet]
-        public HttpResponseMessage GetMemberByUserId(int userId) 
-        {
-            if (userId == 0) 
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "获取会员信息失败"));
-            }
-            var member = _memberService.GetMemberByUserId(userId);
-            if (member == null) 
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "你还不是会员"));
-            }
-            return PageHelper.toJson(member);
-        }
+        // /// <summary>
+        // /// 根据用户ID获取会员信息
+        // /// </summary>
+        // /// <param name="userId"></param>
+        // /// <returns></returns>
+        // [HttpGet]
+        //public HttpResponseMessage GetMemberByUserId(int userId) 
+        //{
+        //    if (userId == 0) 
+        //    {
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "获取会员信息失败"));
+        //    }
+        //    var member = _memberService.GetMemberByUserId(userId);
+        //    if (member == null) 
+        //    {
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "你还不是会员"));
+        //    }
+        //    return PageHelper.toJson(member);
+        //}
         /// <summary>
         /// 新用户注册
         /// </summary>
-        [HttpPost]
-        public HttpResponseMessage SignUp(MemberModel model)
-        {
-            var user = _userService.GetUserByName(model.UserName);
-            if (user != null)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
-            }
-            var newUser = new UserBase
-            {
-                UserName = model.UserName,
-                Password = model.Password,
-                RegTime = DateTime.Now,
-                NormalizedName = model.UserName.ToLower(),
-                Status = 0
-            };
-            PasswordHelper.SetPasswordHashed(newUser, model.Password);
-            if (_userService.InsertUser(newUser).Id <= 0)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "注册用户失败，请重试"));
-            }
-            return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
+        //[HttpPost]
+        //public HttpResponseMessage SignUp(MemberModel model)
+        //{
+        //    var user = _userService.GetUserByName(model.UserName);
+        //    if (user != null)
+        //    {
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
+        //    }
+        //    var newUser = new UserBase
+        //    {
+        //        UserName = model.UserName,
+        //        Password = model.Password,
+        //        RegTime = DateTime.Now,
+        //        NormalizedName = model.UserName.ToLower(),
+        //        Status = 0
+        //    };
+        //    PasswordHelper.SetPasswordHashed(newUser, model.Password);
+        //    if (_userService.InsertUser(newUser).Id <= 0)
+        //    {
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "注册用户失败，请重试"));
+        //    }
+        //    return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
           
-        }
+        //}
         /// <summary>
         /// 前端添加新用户
         /// </summary>
@@ -215,7 +216,7 @@ namespace Zerg.Controllers.Community
                 Phone = memberModel.Phone
             };
 
-            //判断user表和Broker表中是否存在用户名
+            //判断user表和member表中是否存在用户名
             int user2 = _memberService.GetMemberCount(condition);
             if (user2 != 0) return PageHelper.toJson(PageHelper.ReturnValue(false, "手机号已经存在"));
 
@@ -246,12 +247,13 @@ namespace Zerg.Controllers.Community
                 }},
                 Status = 0
             };
-
+            
             PasswordHelper.SetPasswordHashed(newUser, memberModel.Password);
 
             var model = new MemberEntity();
             model.UserId = _userService.InsertUser(newUser).Id;
             model.RealName = memberModel.UserName;
+            model.UserName = memberModel.UserName;
             model.Phone = memberModel.Phone;
             model.Points=0;
             model.IdentityNo="";
@@ -283,9 +285,9 @@ namespace Zerg.Controllers.Community
                     entity.AccountNumber = model.AccountNumber;
                     entity.Points = model.Points;
                     entity.Level = model.Level;
-                    entity.AddTime = model.AddTime;
+                    entity.AddTime = DateTime.Now;
                     entity.UpdUser = model.UpdUser;
-                    entity.UpdTime = model.UpdTime;
+                    entity.UpdTime = DateTime.Now;
                     if (_memberService.Update(entity) != null)
                     {
                         return PageHelper.toJson(PageHelper.ReturnValue(true, "修改成功"));

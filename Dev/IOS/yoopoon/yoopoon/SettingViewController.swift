@@ -14,7 +14,7 @@ class SettingViewController: SuperViewController {
     @IBOutlet weak var uiSecuret: UIButton!
     @IBAction func loginOutAction(sender: AnyObject) {
         User.share.loginOut()
-        var notifyCenter = NSNotificationCenter.defaultCenter()
+        let notifyCenter = NSNotificationCenter.defaultCenter()
         notifyCenter.postNotificationName("loginOut", object: nil)
         self.navigationController!.popViewControllerAnimated(true)
     }

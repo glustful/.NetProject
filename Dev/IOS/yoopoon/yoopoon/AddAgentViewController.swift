@@ -128,14 +128,14 @@ class AddAgentViewController: SuperViewController,UIPopoverPresentationControlle
             return nil
         }
         if section == 1{
-            var title = UIInsetLabel()
+            let title = UIInsetLabel()
             
             title.text = "收到的邀请"
             title.textColor = appRedBackground
             
             return title
         }
-        var title = UIInsetLabel()
+        let title = UIInsetLabel()
         title.frame = CGRectMake(0, 0, tableView.frame.size.width, 50)
         title.text = "合伙人"
         title.textColor = appRedBackground
@@ -183,7 +183,7 @@ class AddAgentViewController: SuperViewController,UIPopoverPresentationControlle
 
 
     //MARK: DELEGATE方法
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController!, traitCollection: UITraitCollection!) -> UIModalPresentationStyle {
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.None
     }
     

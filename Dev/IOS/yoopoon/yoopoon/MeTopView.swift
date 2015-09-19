@@ -25,34 +25,34 @@ class MeTopView: UIView {
     @IBOutlet weak var uiCommentUserName: UILabel!
     
     @IBAction func headPhotoAction(sender: UIButton) {
-        var storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
-        var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.personSettingIdentifier) as! PersonSettingViewController
+        let storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
+        let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.personSettingIdentifier) as! PersonSettingViewController
         CommentTools.getCurrentController()?.navigationController!.pushViewController(controller, animated: true)
     }
     @IBAction func partnetAction(sender: AnyObject) {
-        var storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
-        var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.addAgentInentifier) as! AddAgentViewController
+        let storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
+        let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.addAgentInentifier) as! AddAgentViewController
         controller.type = 0
         CommentTools.getCurrentController()?.navigationController!.pushViewController(controller, animated: true)
         
        
     }
     @IBAction func referAction(sender: UIButton) {
-        var storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
+        let storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
         
-        var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.addAgentInentifier) as! AddAgentViewController
+        let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.addAgentInentifier) as! AddAgentViewController
         controller.type = 1
         CommentTools.getCurrentController()?.navigationController!.pushViewController(controller, animated: true)
     }
     @IBAction func coutomAction(sender: UIButton) {
-        var storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
-               var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.customListIdentifier) as! UIViewController
+        let storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
+               let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.customListIdentifier) 
         CommentTools.getCurrentController()?.navigationController!.pushViewController(controller, animated: true)
     }
    
     @IBAction func takeMoneyAction(sender: UIButton) {
-        var storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
-        var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.takeMoneyIdentifier) as! UIViewController
+        let storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
+        let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.takeMoneyIdentifier) 
         CommentTools.getCurrentController()?.navigationController!.pushViewController(controller, animated: true)
     }
     
