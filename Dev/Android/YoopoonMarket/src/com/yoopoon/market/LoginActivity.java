@@ -20,7 +20,10 @@ public class LoginActivity extends MainActionBarActivity {
 	@Override
 	public void backButtonClick(View v) {
 		// 点击返回，一定是没有登陆成功，返回首页
-		Intent intent = new Intent("com.yoopoon.market.shopfragment");
+		Intent intent = new Intent("com.yoopoon.market.showshop");
+		intent.addCategory(Intent.CATEGORY_DEFAULT);
+		this.sendBroadcast(intent);
+		MainActivity_.intent(this).start();
 	}
 
 	@Override
