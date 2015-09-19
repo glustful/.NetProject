@@ -456,8 +456,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				tv_shadow1.setVisibility(View.GONE);
 				rl_shadow2.setVisibility(View.GONE);
 			}
-			if (arg0 == 1)
-				btn_category.setVisibility(View.GONE);
+
+			btn_category.setVisibility(arg0 == 1 ? View.GONE : View.VISIBLE);
 		}
 	}
 
