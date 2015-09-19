@@ -7,6 +7,7 @@ app.controller('CategoryController',['$scope','$http',function($scope,$http){
         ifid:0
     }
     $scope.selectCategory=function(ifid){
+        alert("fds");
         $scope.searchCondition.ifid=ifid;
         $http.get(SETTING.ApiUrl+'/Category/GetAllTree/',{params:$scope.searchCondition,'withCredentials':
             true}).

@@ -142,9 +142,10 @@ app.controller('selectAddress', function($scope,$routeParams) {
 
 //打开评论
     var comment = document.getElementById("userComment");
-    $scope.open = function () {
+    $scope.ope = function () {
         comment.style.display = "";
     }
+
 
 })
 

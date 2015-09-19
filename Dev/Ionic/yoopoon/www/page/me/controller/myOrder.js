@@ -8,6 +8,7 @@ $scope.tabIndex=$stateParams.tabIndex;
         statusId:1,
         Status:1
     }
+    //根据订单状态查找订单
    $scope.getOrderStatus=function()
    {
        $scope.searchCondition.Status=$scope.tabIndex;
