@@ -7,10 +7,10 @@ app.controller('login',['$scope','$state','AuthService','$ionicLoading','$timeou
         password:''
     };
     $scope.login = function(){
-        //µÇÂ¼³É¹¦£¬Ìø×ª¸öÈËÖĞĞÄ
+        //ç™»å½•æˆåŠŸ
         AuthService.doLogin($scope.user.userName,$scope.user.password,function(data){
             $ionicLoading.show({
-                template:"µÇÂ¼ÖĞ£¬ÇëÉÔºó..."
+                template:"ç™»å½•ä¸­ï¼Œè¯·ç¨å..."
             });
             $timeout(function(){
                 $ionicLoading.hide();
@@ -19,7 +19,7 @@ app.controller('login',['$scope','$state','AuthService','$ionicLoading','$timeou
 
 
         },
-            //µÇÂ¼Ê§°Ü
+            //ç™»å½•å¤±è´¥
             function(data){
             $ionicLoading.show({
                 template:data.Msg,
