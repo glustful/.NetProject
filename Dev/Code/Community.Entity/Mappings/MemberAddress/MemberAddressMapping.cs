@@ -10,8 +10,9 @@ namespace Community.Entity.Mappings.MemberAddress
 		{
 			ToTable("MemberAddress");
 			HasKey(c => c.Id);
-			HasRequired(c =>c.Member);
-            HasRequired(c => c.Area);
+			HasRequired(c =>c.Member).WithMany(c=>c.Address);
+            HasOptional(c => c.Area);
+            //todo:在正式版本后改为required
 			Property(c => c.Address).HasColumnType("varchar").HasMaxLength(30).IsOptional();
 			Property(c => c.Zip).HasColumnType("varchar").HasMaxLength(10).IsOptional();
 			Property(c => c.Linkman).HasColumnType("varchar").HasMaxLength(30).IsOptional();

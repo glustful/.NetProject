@@ -98,7 +98,18 @@ namespace Zerg.Controllers.Community
 				Upddate = c.UpdDate,
 				Totalprice = c.Totalprice,
 				Actualprice = c.Actualprice,
-//				Details = c.Details,
+				Details = c.Details.Select(d=>new OrderDetailModel
+				{
+				    Count = d.Count,
+                    UnitPrice = d.UnitPrice,
+                    Product = new ProductModel()
+                    {
+                        Id = d.Product.Id,
+                        MainImg = d.Product.MainImg,
+                        Name = d.Product.Name
+                    },
+                    ProductName = d.ProductName
+				}).ToList(),
                 UserName = c.AddMember.UserName
 			}).ToList();
 		    var totalCount = _orderService.GetOrdersByCondition(condition);

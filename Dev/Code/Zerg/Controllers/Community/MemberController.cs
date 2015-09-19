@@ -16,6 +16,7 @@ using YooPoon.Core.Site;
 using CRM.Service.Level;
 using CRM.Entity.Model;
 
+
 namespace Zerg.Controllers.Community
 {
      [AllowAnonymous]
@@ -161,30 +162,30 @@ namespace Zerg.Controllers.Community
         /// <summary>
         /// 新用户注册
         /// </summary>
-        [HttpPost]
-        public HttpResponseMessage SignUp(MemberModel model)
-        {
-            var user = _userService.GetUserByName(model.UserName);
-            if (user != null)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
-            }
-            var newUser = new UserBase
-            {
-                UserName = model.UserName,
-                Password = model.Password,
-                RegTime = DateTime.Now,
-                NormalizedName = model.UserName.ToLower(),
-                Status = 0
-            };
-            PasswordHelper.SetPasswordHashed(newUser, model.Password);
-            if (_userService.InsertUser(newUser).Id <= 0)
-            {
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "注册用户失败，请重试"));
-            }
-            return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
+        //[HttpPost]
+        //public HttpResponseMessage SignUp(MemberModel model)
+        //{
+        //    var user = _userService.GetUserByName(model.UserName);
+        //    if (user != null)
+        //    {
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "用户名已经存在"));
+        //    }
+        //    var newUser = new UserBase
+        //    {
+        //        UserName = model.UserName,
+        //        Password = model.Password,
+        //        RegTime = DateTime.Now,
+        //        NormalizedName = model.UserName.ToLower(),
+        //        Status = 0
+        //    };
+        //    PasswordHelper.SetPasswordHashed(newUser, model.Password);
+        //    if (_userService.InsertUser(newUser).Id <= 0)
+        //    {
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "注册用户失败，请重试"));
+        //    }
+        //    return PageHelper.toJson(PageHelper.ReturnValue(true, "注册成功"));
           
-        }
+        //}
         /// <summary>
         /// 前端添加新用户
         /// </summary>
@@ -246,7 +247,7 @@ namespace Zerg.Controllers.Community
                 }},
                 Status = 0
             };
-
+            
             PasswordHelper.SetPasswordHashed(newUser, memberModel.Password);
 
             var model = new MemberEntity();
