@@ -17,6 +17,9 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.content.BroadcastReceiver;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -51,6 +54,14 @@ import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.ResponseData.ResultState;
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
+
+import com.yoopoon.market.utils.SplitStringWithDot;
+import com.yoopoon.market.utils.Utils;
+import com.yoopoon.market.view.ExpandableHeightGridView;
+import com.yoopoon.market.view.NoScrollGridView;
+import com.yoopoon.market.view.MyGridView;
+import com.yoopoon.view.adapter.ProductGridViewAdapter;
+
 import com.yoopoon.view.adapter.ProductListAdapter;
 
 public class ShopFragment extends Fragment {
@@ -82,6 +93,9 @@ public class ShopFragment extends Fragment {
 	private TextView currentPriceTextView;// 当前价格
 	private TextView burstPackageNameTextView; // 套餐名称
 	private Button salesVolumeButton;
+	//分页获取商品状态码
+	private int productPageCount = 1;
+	private ArrayList<JSONObject> productJsonArrayList;
 
 	@Override
 	@Nullable
@@ -97,13 +111,15 @@ public class ShopFragment extends Fragment {
 			mADController = new ADController(mContext);
 			rootView = inflater.inflate(R.layout.fragment_shop, null);
 			settingPullToRefreshListView();
+			productJsonArrayList = new ArrayList<JSONObject>();
+			//获取商品
+			//视图加载以及位置调整
 			// 获取商品
 			// 视图加载以及位置调整
 			initUI();
 		}
 		return rootView;
 	}
-
 	/**
 	 * @Title: initShopFragment
 	 * @Description: 初始化和设置视图控件
@@ -119,7 +135,6 @@ public class ShopFragment extends Fragment {
 		productListView.addHeaderView(shopFragmentHeadView);
 		requestProduct();
 	}
-
 	/**
 	 * @Title: settingPullToRefreshListView
 	 * @Description: 设置PullToRefresh刷新配置参数
@@ -132,7 +147,6 @@ public class ShopFragment extends Fragment {
 		productListView.setFadingEdgeLength(0);
 		productListView.setFastScrollEnabled(false);
 	}
-
 	/**
 	 * @Title: settingRecommondProduct
 	 * @Description: 加载推荐套餐下的控件
@@ -140,7 +154,6 @@ public class ShopFragment extends Fragment {
 	private void settingRecommondProduct() {
 		recommondProductImageView = (ImageView) shopFragmentHeadView.findViewById(R.id.img_product);
 		recommondProductBeforePriceTextView = (TextView) shopFragmentHeadView.findViewById(R.id.tv_prime_price);
-		recommondProductBeforePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 		recommondProductCurrentPriceTextView = (TextView) shopFragmentHeadView.findViewById(R.id.tv_sales_price);
 		recommondProductNameTextView = (TextView) shopFragmentHeadView.findViewById(R.id.tv_product_name);
 		recommondProductByButton = (Button) shopFragmentHeadView.findViewById(R.id.purchase_immediately_button);
@@ -173,14 +186,22 @@ public class ShopFragment extends Fragment {
 		});
 		requestProduct();
 	}
-
+	/**
+	 * @Title: initRecommendProduct
+	 * @Description: 初始化推荐套餐商品信息
+	 * @param jsonObject
+	 */
 	private void initRecommendProduct(JSONObject jsonObject) {
 		recommondProductNameTextView.setText(jsonObject.optString("Name", ""));
-		recommondProductCurrentPriceTextView.setText("RMB" + jsonObject.optString("Price", ""));
+		recommondProductCurrentPriceTextView.setText("RMB"
+				+ SplitStringWithDot.split(jsonObject.optString("Price", "0")));
 		if (jsonObject.optString("NewPrice", "").equals("null")) {
 			recommondProductBeforePriceTextView.setText("折扣前0");
+			recommondProductBeforePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 		} else {
-			recommondProductBeforePriceTextView.setText("折扣前" + jsonObject.optString("NewPrice", ""));
+			recommondProductBeforePriceTextView.setText("折扣前"
+					+ SplitStringWithDot.split(jsonObject.optString("NewPrice", "0")));
+			recommondProductBeforePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 		}
 		if (jsonObject.optString("Owner", "0").equals("null")) {
 			salesVolumeButton.setText("已有0人抢购");
@@ -192,7 +213,6 @@ public class ShopFragment extends Fragment {
 			ImageLoader.getInstance().displayImage(urlString, recommondProductImageView);
 		}
 	}
-
 	/**
 	 * @Title: requestAdvertisements
 	 * @Description: 获取广告信息
@@ -216,14 +236,12 @@ public class ShopFragment extends Fragment {
 						}
 					}
 				}
-
 				@Override
 				public void onProgress(ProgressMessage msg) {
 				}
 			}.setUrl("/api/Channel/GetTitleImg").setRequestMethod(RequestMethod.eGet).addParam("channelName", "banner")
 					.notifyRequest();
 	}
-
 	/**
 	 * @Title: requestProduct
 	 * @Description: 获取商品列表，同时加载到Adapter中
@@ -239,6 +257,15 @@ public class ShopFragment extends Fragment {
 				if (data.getMRootData() != null) {
 					try {
 						jsonArray = data.getMRootData().getJSONArray("List");
+						if (productJsonArrayList != null && productJsonArrayList.size() >= 1) {
+							productListAdapter.refresh(productJsonArrayList);
+						} else {
+							productListAdapter = new ProductListAdapter(mContext,
+									JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
+							productListView.setAdapter(productListAdapter);
+							productJsonArrayList = JSONArrayConvertToArrayList.convertToArrayList(jsonArray);
+						}
+						//加载推荐套餐内容
 						productListAdapter = new ProductListAdapter(mContext,
 								JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
 						productListView.setAdapter(productListAdapter);
@@ -252,32 +279,35 @@ public class ShopFragment extends Fragment {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(map).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
-
 	/**
 	 * @Title: requestProduct
 	 * @Description: 传入参数，获取商品信息
 	 * @param hashMap
 	 */
 	private void requestProduct(HashMap<String, String> hashMap) {
+		/*HashMap<String, String> map1 = new HashMap<String, String>();
+		map1.put("Page", 5 + "");
+		map1.put("PageCount", "10");*/
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
+				mPullToRefreshListView.onRefreshComplete();
 				JSONArray jsonArray;
 				if (data.getMRootData() != null) {
 					try {
 						jsonArray = data.getMRootData().getJSONArray("List");
-						productListAdapter = new ProductListAdapter(mContext,
-								JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
-						productListView.setAdapter(productListAdapter);
-						initRecommendProduct(JSONArrayConvertToArrayList.convertToArrayList(jsonArray).get(0));
-						mPullToRefreshListView.onRefreshComplete();
+						if (jsonArray.length() == 0) {
+							Toast.makeText(mContext, "商品已经全部加载", Toast.LENGTH_SHORT).show();
+							productPageCount = productPageCount - 1;
+							return;
+						}
+						productListAdapter.addRefresh(JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -285,14 +315,12 @@ public class ShopFragment extends Fragment {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(hashMap).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
-
 	/**
 	 * @ClassName: ProductRefreshByAddressReceiver
 	 * @Description: 创建监听地址改变的接收器
@@ -379,12 +407,10 @@ public class ShopFragment extends Fragment {
 			}
 		});
 	}
-
 	@Override
 	public void onStart() {
 		super.onStart();
 	}
-
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
@@ -394,12 +420,17 @@ public class ShopFragment extends Fragment {
 	private class RefreshListener implements OnRefreshListener2<ListView> {
 		@Override
 		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+			productJsonArrayList.clear();
+			productPageCount = 1;
+			Toast.makeText(mContext, "正在刷新数据，请稍后", Toast.LENGTH_SHORT).show();
 			requestProduct();
 		}
-
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-			Toast.makeText(mContext, "上啦", Toast.LENGTH_SHORT).show();
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("Page", ++productPageCount + "");
+			map.put("PageCount", "10");
+			requestProduct(map);
 		}
 	}
 

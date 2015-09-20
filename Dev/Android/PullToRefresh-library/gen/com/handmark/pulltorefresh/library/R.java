@@ -194,7 +194,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int pull_to_refresh_from_bottom_pull_label=0x7f070003;
         public static int pull_to_refresh_from_bottom_refreshing_label=0x7f070005;
         public static int pull_to_refresh_from_bottom_release_label=0x7f070004;
-        /**  <string name="pull_to_refresh_pull_label">下拉刷新…</string> 
+        /**  <string name="pull_to_refresh_pull_label">拉动刷新…</string> 
          */
         public static int pull_to_refresh_pull_label=0x7f070000;
         public static int pull_to_refresh_refreshing_label=0x7f070002;

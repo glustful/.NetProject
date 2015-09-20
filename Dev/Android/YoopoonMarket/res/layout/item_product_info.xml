@@ -116,6 +116,7 @@
         android:background="#DDDDDD" />
 
     <RelativeLayout
+        android:id="@+id/relativelayout_right_product"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" >
