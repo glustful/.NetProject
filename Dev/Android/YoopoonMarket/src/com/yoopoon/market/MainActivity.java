@@ -215,6 +215,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference), MODE_PRIVATE);
 		Editor editor = sp.edit();
 		editor.putString("Password", "");
+		editor.putInt("UserId", 0);
 		editor.commit();
 
 		registerBroadcast();
@@ -222,19 +223,30 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	};
 
 	void registerBroadcast() {
+		// 展示第一次打开优服务的蒙层
 		IntentFilter shadowFilter = new IntentFilter("com.yoopoon.market.show_shadow");
 		shadowFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, shadowFilter);
+
+		// 添加商品到购物车
 		IntentFilter cartFilter = new IntentFilter("com.yoopoon.market.add_to_cart");
 		cartFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, cartFilter);
 
+		// 打开首页
 		IntentFilter shopFilter = new IntentFilter("com.yoopoon.market.showshop");
 		shopFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, shopFilter);
+
+		// 打开购物车
+		IntentFilter cartFilter2 = new IntentFilter("com.yoopoon.market.showcart");
+		shopFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		registerReceiver(receiver, cartFilter2);
+
 	}
 
 	BroadcastReceiver receiver = new BroadcastReceiver() {
+
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
@@ -252,6 +264,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				play(start_loction);
 			} else if (action.equals("com.yoopoon.market.showshop")) {
 				vp.setCurrentItem(0);
+			} else if (action.equals("com.yoopoon.market.showcart")) {
+				vp.setCurrentItem(2);
 			}
 		}
 	};
@@ -398,6 +412,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private class SearchViewClickListener implements OnClickListener {
+
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {

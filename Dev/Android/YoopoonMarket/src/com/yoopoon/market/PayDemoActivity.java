@@ -8,21 +8,32 @@ import java.util.Random;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.ViewById;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.alipay.sdk.app.PayTask;
 import com.yoopoon.market.alipay.PayResult;
 import com.yoopoon.market.alipay.SignUtils;
+import com.yoopoon.market.db.dao.DBDao;
 
 @EActivity(R.layout.pay_main)
 public class PayDemoActivity extends MainActionBarActivity {
 	@Extra
 	Bundle orderBundle;
+
+	@ViewById(R.id.product_subject)
+	TextView tv_name;
+	@ViewById(R.id.product_price)
+	TextView tv_price;
+	@ViewById(R.id.tv_desc)
+	TextView tv_desc;
 	private static final String TAG = "PayDemoActivity";
 
 	// 商户PID
@@ -58,6 +69,26 @@ public class PayDemoActivity extends MainActionBarActivity {
 					// 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
 					if (TextUtils.equals(resultStatus, "9000")) {
 						Toast.makeText(PayDemoActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+						// 支付成功后，购物车应删除相应商品。然后返回购物车
+						final int[] ids = orderBundle.getIntArray("StaffIds");
+						new Thread() {
+
+							@Override
+							public void run() {
+
+								DBDao dao = new DBDao(PayDemoActivity.this);
+								for (int i = 0; i < ids.length; i++) {
+									int id = ids[i];
+									dao.delete(id);
+								}
+							}
+						}.start();
+						// 发送广播打开购物车
+						MainActivity_.intent(PayDemoActivity.this).start();
+						Intent intent = new Intent("com.yoopoon.market.showcart");
+						intent.addCategory(Intent.CATEGORY_DEFAULT);
+						PayDemoActivity.this.sendBroadcast(intent);
+
 					} else {
 						// 判断resultStatus 为非“9000”则代表可能支付失败
 						// “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
@@ -97,6 +128,11 @@ public class PayDemoActivity extends MainActionBarActivity {
 		titleButton.setVisibility(View.VISIBLE);
 		rightButton.setVisibility(View.GONE);
 		titleButton.setText("支付宝");
+
+		String price = orderBundle.getFloat("Price") + "";
+		tv_price.setText(price);
+		tv_desc.setText("优朋数字社区商品支付");
+		tv_name.setText("优朋社区");
 	}
 
 	/**
@@ -257,7 +293,6 @@ public class PayDemoActivity extends MainActionBarActivity {
 	 * @param content 待签名订单信息
 	 */
 	public String sign(String content) {
-		Log.i("PayDemo", RSA_PRIVATE);
 		return SignUtils.sign(content, RSA_PRIVATE);
 	}
 

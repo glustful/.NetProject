@@ -21,6 +21,8 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -112,14 +114,12 @@ public class BalanceActivity extends MainActionBarActivity {
 			orderEntity.MemberAddressId = 38;
 			orderEntity.Details = details;
 			orderEntity.Remark = et_remark.getText().toString();
-			orderEntity.UserName = getSharedPreferences(getString(R.string.share_preference), MODE_PRIVATE).getString(
-					"UserName", "");
+			orderEntity.UserName = User.getUserName(BalanceActivity.this);
 			orderEntity.Actualprice = orderEntity.Totalprice;
 			serializeOrder(orderEntity);
 		} else {
 			LoginActivity_.intent(this).start();
 		}
-		// PayWayActivity_.intent(BalanceActivity.this).start();
 	}
 
 	void serializeOrder(final CommunityOrderEntity orderEntity) {
@@ -148,8 +148,6 @@ public class BalanceActivity extends MainActionBarActivity {
 	}
 
 	void requestAddOrder(String serial) {
-		// serial =
-		// "{\"Id\":1,\"No\":\"00212654646512\",\"Status\":0,\"StatusString\":\"新建\",\"CustomerName\":\"客户姓名\",\"Remark\":\"test\",\"Adddate\":\"\\/Date(1442572933790)\\/\",\"Adduser\":1,\"Upduser\":1,\"Upddate\":\"\\/Date(1442572933790)\\/\",\"Totalprice\":100.00,\"Actualprice\":100.00,\"Details\":[{\"Id\":1,\"No\":null,\"ProductName\":\"鲜花饼\",\"UnitPrice\":500.00,\"Price\":0,\"Count\":1.00,\"Snapshoturl\":\"\",\"Remark\":\"\",\"Adduser\":0,\"Adddate\":\"\\/Date(-62135596800000)\\/\",\"Upduser\":0,\"Upddate\":\"\\/Date(-62135596800000)\\/\",\"Totalprice\":100.00,\"Product\":{\"Id\":1,\"BussnessId\":0,\"BussnessName\":null,\"Price\":0,\"Name\":\"鲜花饼\",\"Status\":0,\"MainImg\":null,\"IsRecommend\":0,\"Sort\":0,\"Stock\":0,\"Adduser\":0,\"Addtime\":\"\\/Date(-62135596800000)\\/\",\"UpdUser\":0,\"UpdTime\":\"\\/Date(-62135596800000)\\/\",\"Subtitte\":null,\"Contactphone\":null,\"Type\":0,\"TypeString\":\"实物商品\",\"StatusString\":\"正常\",\"NewPrice\":null,\"Owner\":null,\"CategoryId\":0,\"Detail\":null,\"Img\":null,\"Img1\":null,\"Img2\":null,\"Img3\":null,\"Img4\":null,\"SericeInstruction\":null,\"Ad1\":null,\"Ad2\":null,\"Ad3\":null,\"ParameterValue\":null}}],\"UserName\":\"admin\",\"MemberAddressId\":15}";
 		Log.i(TAG, serial);
 		new RequestAdapter() {
 
@@ -169,11 +167,16 @@ public class BalanceActivity extends MainActionBarActivity {
 						bundle.putFloat("Price", price);
 						bundle.putString("No", No);
 						bundle.putString("Msg", msg);
+						int[] staffId = new int[staffList.size()];
+						for (int i = 0; i < staffList.size(); i++) {
+							staffId[i] = staffList.get(i).id;
+						}
+						bundle.putIntArray("StaffIds", staffId);
 
 						PayDemoActivity_.intent(BalanceActivity.this).orderBundle(bundle).start();
 					}
 				} else {
-
+					Toast.makeText(BalanceActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 
 			}
@@ -201,16 +204,20 @@ public class BalanceActivity extends MainActionBarActivity {
 
 		calcPrice();
 		lv.setAdapter(new MyListViewAdapter());
-		requestAddress();
 
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+
+		Log.i(TAG, "onResume()");
 		if (checkedAddress != null) {
+			Log.i(TAG, checkedAddress.toString());
 			addressEntity = checkedAddress;
 			setAddress();
+		} else {
+			requestAddress();
 		}
 	}
 
@@ -226,6 +233,7 @@ public class BalanceActivity extends MainActionBarActivity {
 	}
 
 	void requestAddress() {
+		String userid = User.getUserId(BalanceActivity.this);
 		loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
@@ -234,15 +242,13 @@ public class BalanceActivity extends MainActionBarActivity {
 				Log.i(TAG, data.toString());
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					// JSONArray array = object.optJSONArray("List");
-					// try {
-					// JSONObject address = array.getJSONObject(0);
-					// parseToEntity(address);
-					// } catch (JSONException e) {
-					// loading.setVisibility(View.GONE);
-					// e.printStackTrace();
-					// }
-					parseToEntity(object);
+					JSONArray array = object.optJSONArray("List");
+					try {
+						JSONObject addressObject = array.getJSONObject(0);
+						parseToEntity(addressObject);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
 				} else {
 					loading.setVisibility(View.GONE);
 					Toast.makeText(BalanceActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
@@ -254,8 +260,8 @@ public class BalanceActivity extends MainActionBarActivity {
 				// TODO Auto-generated method stub
 
 			}
-		}.setUrl(getString(R.string.url_get_address_byid)).setRequestMethod(RequestMethod.eGet).addParam("id", "38")
-				.notifyRequest();
+		}.setUrl(getString(R.string.url_get_address_byid)).setRequestMethod(RequestMethod.eGet)
+				.addParam("userid", userid).notifyRequest();
 	}
 
 	void parseToEntity(final JSONObject object) {

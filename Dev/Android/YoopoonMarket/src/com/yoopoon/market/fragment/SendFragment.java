@@ -1,5 +1,6 @@
 package com.yoopoon.market.fragment;
 
+import java.util.List;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -17,11 +18,14 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yoopoon.market.MeOrderActivity;
 import com.yoopoon.market.R;
+import com.yoopoon.market.domain.CommunityOrderEntity;
 
 public class SendFragment extends Fragment {
 	PullToRefreshListView lv;
 	View rootView;
+	List<CommunityOrderEntity> orders;
 
 	@Override
 	@Nullable
@@ -32,6 +36,10 @@ public class SendFragment extends Fragment {
 	}
 
 	void init() {
+		MeOrderActivity meOrderActivity = (MeOrderActivity) getActivity();
+		orders = meOrderActivity.getOrderList(1);
+		TextView tv = (TextView) rootView.findViewById(R.id.tv_empty);
+		tv.setVisibility(orders.size() > 0 ? View.GONE : View.VISIBLE);
 		lv = (PullToRefreshListView) rootView.findViewById(R.id.lv);
 		lv.setAdapter(new MyListViewAdapter());
 
@@ -40,6 +48,7 @@ public class SendFragment extends Fragment {
 	}
 
 	static class ViewHolder {
+
 		TextView tv_order_num;
 		ImageView iv;
 		TextView tv_name;
@@ -55,8 +64,7 @@ public class SendFragment extends Fragment {
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
-			return 5;
+			return orders.size();
 		}
 
 		@Override
@@ -89,6 +97,12 @@ public class SendFragment extends Fragment {
 				holder.tv_price_previous = (TextView) convertView.findViewById(R.id.tv_price_previous);
 				convertView.setTag(holder);
 			}
+			CommunityOrderEntity order = orders.get(position);
+			holder.tv_order_num.setText("订单号：" + order.No);
+			// holder.tv_name.setText(order.Details.)
+			holder.tv_price_counted.setText("￥" + order.Actualprice);
+			holder.tv_price_previous.setText("￥" + order.Totalprice);
+
 			holder.tv_price_previous.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 			holder.tv_btn.setBackgroundResource(R.drawable.white_tv_bg);
 			holder.tv_btn.setText("待发货");

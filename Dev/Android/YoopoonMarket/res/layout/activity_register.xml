@@ -28,7 +28,7 @@
             android:layout_toRightOf="@id/tv_username"
             android:background="@color/white" />
 
-        <View
+        <!-- <View
             android:id="@+id/line1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/et_username"
-            android:background="@color/white"/>
+            android:background="@color/white"/> -->
         
     </RelativeLayout>
 

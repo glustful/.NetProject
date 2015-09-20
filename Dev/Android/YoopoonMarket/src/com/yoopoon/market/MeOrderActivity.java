@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+import com.yoopoon.market.domain.CommunityOrderEntity;
 import com.yoopoon.market.fragment.CommentFragment;
 import com.yoopoon.market.fragment.PayFragment;
 import com.yoopoon.market.fragment.ReceiveFragment;
@@ -27,6 +28,12 @@ public class MeOrderActivity extends MainActionBarActivity implements OnClickLis
 	ViewPager vp;
 	@Extra
 	int item;
+	@Extra
+	List<CommunityOrderEntity> orders;
+	List<CommunityOrderEntity> createdOrders = new ArrayList<CommunityOrderEntity>(); // 待付款
+	List<CommunityOrderEntity> payedOrders = new ArrayList<CommunityOrderEntity>();// 待发货
+	List<CommunityOrderEntity> deliveringOrders = new ArrayList<CommunityOrderEntity>();// 待收货
+	List<CommunityOrderEntity> finishedOrders = new ArrayList<CommunityOrderEntity>();// 待评价
 	List<Fragment> fragments = new ArrayList<Fragment>();
 	List<TextView> textViews = new ArrayList<TextView>();
 
@@ -54,6 +61,46 @@ public class MeOrderActivity extends MainActionBarActivity implements OnClickLis
 		for (TextView tv : textViews)
 			tv.setOnClickListener(this);
 		vp.setCurrentItem(item);
+
+		initList();
+	}
+
+	void initList() {
+		for (CommunityOrderEntity order : orders) {
+			switch (order.Status) {
+				case 0:
+					createdOrders.add(order);
+					break;
+				case 1:
+					payedOrders.add(order);
+					break;
+				case 2:
+					deliveringOrders.add(order);
+					break;
+				case 3:
+					finishedOrders.add(order);
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
+	public List<CommunityOrderEntity> getOrderList(int item) {
+		switch (item) {
+			case 0:
+				return createdOrders;
+			case 1:
+				return payedOrders;
+			case 2:
+				return deliveringOrders;
+			case 3:
+				return finishedOrders;
+
+			default:
+				break;
+		}
+		return null;
 	}
 
 	class MyPageChangeListener implements OnPageChangeListener {

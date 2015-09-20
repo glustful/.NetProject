@@ -1,6 +1,14 @@
 package com.yoopoon.market.domain;
 
-public class ProductEntity {
+import java.io.Serializable;
+
+public class ProductEntity implements Serializable {
+	/**
+	 * @fieldName: serialVersionUID
+	 * @fieldType: long
+	 * @Description: TODO
+	 */
+	private static final long serialVersionUID = 1L;
 	public int Id = 1;
 	public int BussnessId = 0;
 	public String BussnessName = null;
@@ -12,7 +20,7 @@ public class ProductEntity {
 	public int Sort = 0;
 	public int Stock = 0;
 	public int Adduser = 0;
-	public int Addtime;
+	public String Addtime;
 	public int UpdUser = 0;
 	public String UpdTime;
 	public String Subtitte = null;

@@ -11,8 +11,8 @@ public class MemberModel {
 	public String PostNo;
 	public String Thumbnail;
 	public float AccountNumber = 0;
-	public float Pointspublic = 0;
-	public int Levelpublic = 1;
+	public float Points = 0;
+	public int Level = 1;
 	public String AddTime;
 	public String AddTimeString;
 	public int UpdUser;
@@ -27,9 +27,9 @@ public class MemberModel {
 	public String toString() {
 		return "MemberModel [Id=" + Id + ", RealName=" + RealName + ", IdentityNo=" + IdentityNo + ", Gender=" + Gender
 				+ ", GenderString=" + GenderString + ", Phone=" + Phone + ", Icq=" + Icq + ", PostNo=" + PostNo
-				+ ", Thumbnail=" + Thumbnail + ", AccountNumber=" + AccountNumber + ", Pointspublic=" + Pointspublic
-				+ ", Levelpublic=" + Levelpublic + ", AddTime=" + AddTime + ", AddTimeString=" + AddTimeString
-				+ ", UpdUser=" + UpdUser + ", UpdTime=" + UpdTime + ", UserId=" + UserId + ", UserName=" + UserName
-				+ ", Password=" + Password + ", SecondPassword=" + SecondPassword + ", Regtime=" + Regtime + "]";
+				+ ", Thumbnail=" + Thumbnail + ", AccountNumber=" + AccountNumber + ", Pointspublic=" + Points
+				+ ", Levelpublic=" + Level + ", AddTime=" + AddTime + ", AddTimeString=" + AddTimeString + ", UpdUser="
+				+ UpdUser + ", UpdTime=" + UpdTime + ", UserId=" + UserId + ", UserName=" + UserName + ", Password="
+				+ Password + ", SecondPassword=" + SecondPassword + ", Regtime=" + Regtime + "]";
 	}
 }

@@ -116,6 +116,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 
 	void requestCount() {
 		new Thread() {
+
 			@Override
 			public void run() {
 				DBDao dao = new DBDao(getActivity());

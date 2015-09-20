@@ -8,10 +8,12 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.yoopoon.market.domain.User;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.ResponseData;
@@ -39,11 +41,14 @@ public class LoginActivity extends MainActionBarActivity {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					boolean status = object.optBoolean("Status", false);
-					if (status) {
+					JSONObject userObject = object.optJSONObject("Object");
+					if (status && userObject != null) {
+						Log.i(TAG, userObject.toString());
 						SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference), MODE_PRIVATE);
 						Editor editor = sp.edit();
 						editor.putString("UserName", account);
 						editor.putString("Password", psw);
+						editor.putInt("UserId", userObject.optInt("Id", 0));
 						editor.commit();
 						finish();// 登录成功，关闭界面
 					}
@@ -72,6 +77,10 @@ public class LoginActivity extends MainActionBarActivity {
 		rightButton.setVisibility(View.GONE);
 		backWhiteButton.setVisibility(View.GONE);
 		titleButton.setText("账户登录");
+
+		String userName = User.getUserName(this);
+		if (!TextUtils.isEmpty(userName))
+			et_account.setText(userName);
 	}
 
 	@Override

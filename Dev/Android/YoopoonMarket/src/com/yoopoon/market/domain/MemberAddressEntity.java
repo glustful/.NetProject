@@ -11,7 +11,8 @@ public class MemberAddressEntity implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	public int Id;
-	public int UserId = 3092;
+	public int UserId;
+	public int Member;
 	public String Address;
 	public String Zip;
 	public String Linkman;

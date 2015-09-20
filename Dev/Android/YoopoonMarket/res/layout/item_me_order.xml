@@ -33,11 +33,11 @@
                 android:text="待付款" />
 
             <TextView
+                android:id="@+id/tv_created"
                 android:layout_alignRight="@id/tv1"
                 style="@style/TextView_Circle"
                 android:background="@drawable/circle"
-                android:gravity="center"
-                android:text="1" />
+                android:gravity="center" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -55,12 +55,12 @@
                 android:text="待發貨" />
 
             <TextView
+                android:id="@+id/tv_payed"
                 android:layout_alignRight="@id/tv2"
                 style="@style/TextView_Circle"
                 android:background="@drawable/circle"
                 android:gravity="center"
-                android:text="1"
-                android:visibility="visible" />
+                android:text="1" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -78,6 +78,7 @@
                 android:text="待收货" />
 
             <TextView
+                android:id="@+id/tv_delivering"
                 android:layout_alignRight="@id/tv3"
                 style="@style/TextView_Circle"
                 android:background="@drawable/circle"
@@ -100,6 +101,7 @@
                 android:text="待评价" />
 
             <TextView
+                android:id="@+id/tv_finished"
                 android:layout_alignRight="@id/tv4"
                 style="@style/TextView_Circle"
                 android:background="@drawable/circle"
