@@ -138,6 +138,7 @@ app.controller('createProductCtr',['$http','$scope','$state','FileUploader',func
             SericeInstruction:'',
             Type:'',
             NewProce:'',
+            Owner:0,
             Img:'',
             Img1:'',
             Img2:'',
@@ -148,6 +149,11 @@ app.controller('createProductCtr',['$http','$scope','$state','FileUploader',func
             Ad3:''
         }
     $scope.save=function(){
+        if($scope.product.CategoryId=="")
+        {
+            $scope.product.CategoryId=$scope.twoId;
+        }
+        $scope.product.CategoryId=$scope.product.CategoryId;
         $http.post(SETTING.ZergWcApiUrl+"/CommunityProduct/Post",$scope.product,{
             'withCredentials':true
         }).success(function(data){

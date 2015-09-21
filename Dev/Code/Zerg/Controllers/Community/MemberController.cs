@@ -105,8 +105,31 @@ namespace Zerg.Controllers.Community
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "数据验证错误！"));
             }
             var model = _memberService.GetMemberByUserId(Convert.ToInt32(userId));
-            if (model == null) return PageHelper.toJson(PageHelper.ReturnValue(false, "不存在数据"));
-            return PageHelper.toJson(model);
+            if (model != null)
+            {
+                var member = new MemberModel
+                {
+                    Id = model.Id,
+                    RealName = model.RealName,
+                    IdentityNo = model.IdentityNo,
+                    Gender = model.Gender,
+                    Phone = model.Phone,
+                    Icq = model.Icq,
+                    PostNo = model.PostNo,
+                    Thumbnail = model.Thumbnail,
+                    AccountNumber = model.AccountNumber,
+                    Points = model.Points,
+                    Level = model.Level,
+                    AddTime = model.AddTime,
+                    UpdUser = model.UpdUser,
+                    UpdTime = model.UpdTime,
+                };
+                return PageHelper.toJson(member);
+            }
+            else 
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "不存在数据"));
+            }
 
         }
 
