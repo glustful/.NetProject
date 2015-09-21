@@ -148,7 +148,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					sendBroadcast(intent);
 					et_search.setText("");
 					// #################################################徐阳会 2015年9月17日添加
-					// 添加搜索广播#####################END
+
 					et_search.setVisibility(View.GONE);
 				}
 			});
@@ -425,7 +425,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					SearchActivity_.intent(MainActivity.this).start();
 					break;
 				case R.id.rightBtn:
-					CategoryActivity_.intent(MainActivity.this).start();
+					TreeCategoryActivity_.intent(MainActivity.this).start();
 					break;
 				default:
 					break;

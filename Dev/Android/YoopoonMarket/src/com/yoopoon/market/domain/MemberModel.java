@@ -1,6 +1,14 @@
 package com.yoopoon.market.domain;
 
-public class MemberModel {
+import java.io.Serializable;
+
+public class MemberModel implements Serializable {
+	/**
+	 * @fieldName: serialVersionUID
+	 * @fieldType: long
+	 * @Description: TODO
+	 */
+	private static final long serialVersionUID = 1L;
 	public int Id;
 	public String RealName;
 	public String IdentityNo;

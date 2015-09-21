@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,6 +62,7 @@ public class PayFragment extends Fragment {
 		TextView tv_order_num;
 		TextView tv_btn;
 		LinearLayout ll_products;
+		TextView tv_price;
 	}
 
 	class MyListViewAdapter extends BaseAdapter {
@@ -94,13 +94,15 @@ public class PayFragment extends Fragment {
 				holder.tv_btn = (TextView) convertView.findViewById(R.id.tv_btn);
 				holder.tv_order_num = (TextView) convertView.findViewById(R.id.tv_order_num);
 				holder.ll_products = (LinearLayout) convertView.findViewById(R.id.ll_products);
+				holder.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
 				convertView.setTag(holder);
 			}
 			CommunityOrderEntity order = orders.get(position);
 			holder.tv_order_num.setText("订单号：" + order.No);
+			holder.tv_price.setText("￥" + order.Totalprice);
 
 			List<OrderDetailEntity> details = order.Details;
-			Log.i(TAG, "details = " + details.size());
+			// Log.i(TAG, order.to);
 			for (OrderDetailEntity detail : details) {
 				ProductEntity product = detail.Product;
 				View productView = View.inflate(getActivity(), R.layout.item_product, null);
@@ -111,11 +113,11 @@ public class PayFragment extends Fragment {
 				TextView tv_name = (TextView) productView.findViewById(R.id.tv_name);
 				ImageView iv = (ImageView) productView.findViewById(R.id.iv);
 
-				String imageUrl = getActivity().getString(R.string.url_image) + product.Img;
+				String imageUrl = getActivity().getString(R.string.url_image) + product.MainImg;
 				iv.setTag(imageUrl);
 				ImageLoader.getInstance().displayImage(imageUrl, iv, MyApplication.getOptions(),
 						MyApplication.getLoadingListener());
-				tv_price_counted.setText("￥" + product.NewPrice);
+				tv_price_counted.setText("￥" + detail.UnitPrice);
 				tv_price_previous.setText("￥" + product.Price);
 				tv_price_previous.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 				tv_category.setText(product.Subtitte);
@@ -123,8 +125,12 @@ public class PayFragment extends Fragment {
 				tv_count.setText("x" + detail.Count);
 
 				holder.ll_products.addView(productView);
-
+				View v = new View(getActivity());
+				v.setBackgroundResource(R.drawable.line);
+				holder.ll_products.addView(v);
 			}
+
+			holder.ll_products.removeViewAt(holder.ll_products.getChildCount() - 1);
 
 			holder.tv_btn.setOnClickListener(new OnClickListener() {
 

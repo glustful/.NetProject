@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,13 +36,16 @@ import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.makeramen.RoundedImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yoopoon.market.AboutUActivity_;
 import com.yoopoon.market.AddressManageActivity_;
 import com.yoopoon.market.LoginActivity_;
 import com.yoopoon.market.MeOrderActivity_;
-import com.yoopoon.market.PayDemoActivity_;
 import com.yoopoon.market.PersonalInfoActivity_;
 import com.yoopoon.market.R;
 import com.yoopoon.market.domain.CommunityOrderEntity;
+import com.yoopoon.market.domain.MemberModel;
 import com.yoopoon.market.domain.User;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
@@ -64,6 +68,8 @@ public class MeFragment extends Fragment implements OnClickListener {
 	List<CommunityOrderEntity> orders = new ArrayList<CommunityOrderEntity>();
 	List<TextView> orderStatus = new ArrayList<TextView>();
 	View ll_loading;
+	RoundedImageView imageView1;
+	MemberModel member;
 
 	@Override
 	@Nullable
@@ -73,6 +79,64 @@ public class MeFragment extends Fragment implements OnClickListener {
 			init();
 		}
 		return rootView;
+	}
+
+	public void requestData() {
+		ll_loading.setVisibility(View.VISIBLE);
+		imageView1 = (RoundedImageView) rootView.findViewById(R.id.imageView1);
+		imageView1.setOnClickListener(this);
+		String userid = User.getUserId(getActivity());
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					parseToMember(object.toString());
+				} else {
+					ll_loading.setVisibility(View.GONE);
+					Toast.makeText(getActivity(), data.toString(), Toast.LENGTH_SHORT).show();
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_getmemeber_byid)).setRequestMethod(RequestMethod.eGet)
+				.addParam("userid", userid).notifyRequest();
+	}
+
+	void parseToMember(final String json) {
+		new ParserJSON(new ParseListener() {
+
+			@Override
+			public Object onParse() {
+				ObjectMapper om = new ObjectMapper();
+				try {
+					member = om.readValue(json, MemberModel.class);
+				} catch (JsonParseException e) {
+					e.printStackTrace();
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return member;
+			}
+
+			@Override
+			public void onComplete(Object parseResult) {
+				if (parseResult != null) {
+					ll_loading.setVisibility(View.GONE);
+					if (!TextUtils.isEmpty(member.Thumbnail)) {
+						String imageUrl = getString(R.string.url_image) + member.Thumbnail;
+						ImageLoader.getInstance().displayImage(imageUrl, imageView1);
+					}
+				}
+			}
+		}).execute();
 	}
 
 	void requestOrder(String userId) {
@@ -135,7 +199,6 @@ public class MeFragment extends Fragment implements OnClickListener {
 			@Override
 			public void onComplete(Object parseResult) {
 				if (parseResult != null) {
-					Log.i(TAG, parseResult.toString());
 					setOrderStatus();
 				}
 
@@ -147,7 +210,6 @@ public class MeFragment extends Fragment implements OnClickListener {
 		ll_loading.setVisibility(View.GONE);
 		int[] status = new int[4];
 		for (CommunityOrderEntity entity : orders) {
-			Log.i(TAG, entity.toString());
 			switch (entity.Status) {
 				case 0:
 					status[0]++;
@@ -165,7 +227,6 @@ public class MeFragment extends Fragment implements OnClickListener {
 		}
 
 		for (int i = 0; i < orderStatus.size(); i++) {
-			Log.i(TAG, status[i] + "");
 			TextView tv = orderStatus.get(i);
 			tv.setText(String.valueOf(status[i]));
 			tv.setVisibility(status[i] == 0 ? View.GONE : View.VISIBLE);
@@ -212,7 +273,6 @@ public class MeFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.i(TAG, "onResume");
 		if (!User.isLogin(getActivity())) {
 			// 未登录
 			LoginActivity_.intent(getContext()).start();
@@ -222,6 +282,7 @@ public class MeFragment extends Fragment implements OnClickListener {
 				SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.share_preference),
 						Context.MODE_PRIVATE);
 				requestOrder(String.valueOf(sp.getInt("UserId", 0)));
+				requestData();
 			} else {
 				setOrderStatus();
 			}
@@ -232,13 +293,14 @@ public class MeFragment extends Fragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.btn_info:
-				PersonalInfoActivity_.intent(getActivity()).start();
+			case R.id.imageView1:
+				PersonalInfoActivity_.intent(getActivity()).member(member).start();
 				break;
 			case R.id.btn_address:
 				AddressManageActivity_.intent(getActivity()).start();
 				break;
 			case R.id.btn_about:
-				PayDemoActivity_.intent(getActivity()).start();
+				AboutUActivity_.intent(getActivity()).start();
 				break;
 			case R.id.btn_order:
 			case R.id.rl1:
