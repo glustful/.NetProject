@@ -1,3 +1,4 @@
+using Community.Entity.Model.Order;
 using System;
 
 namespace Zerg.Models.Community
@@ -46,7 +47,7 @@ namespace Zerg.Models.Community
         /// </summary>
 		public string Snapshoturl {get;set;}
 
-
+        public string Status{get;set;}
 		/// <summary>
         /// 商品备注
         /// </summary>
@@ -82,7 +83,7 @@ namespace Zerg.Models.Community
         /// </summary>
 		public decimal Totalprice {get;set;}
 
-
+       
 		/// <summary>
         /// 订单主体
         /// </summary>

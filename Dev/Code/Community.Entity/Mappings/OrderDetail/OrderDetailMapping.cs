@@ -22,6 +22,7 @@ namespace Community.Entity.Mappings.OrderDetail
 			Property(c => c.Upduser).HasColumnType("int").IsOptional();
 			Property(c => c.Upddate).HasColumnType("datetime").IsOptional();
 			Property(c => c.Totalprice).HasColumnType("decimal").IsOptional();
+            Property(c => c.Status).HasColumnType("int").IsOptional();
 			HasRequired(c =>c.Order);
 		}
 	}
