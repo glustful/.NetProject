@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
     <ScrollView
         android:id="@+id/scrollview_product_detail"
@@ -135,16 +134,56 @@
                     android:textSize="15sp" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/linearlayout_product_comment"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:id="@+id/linearlayout_product_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dp"
+                    android:orientation="vertical" >
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_add_more_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@android:color/transparent"
+                    android:text="点击加载更多评论"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linearlayout_slider_add_more"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:background="#E4E4E4"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="40dp"
+                    android:layout_height="1dp"
+                    android:background="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="继续拖动，查看图文详情" />
+
+                <View
+                    android:layout_width="40dp"
+                    android:layout_height="1dp"
+                    android:background="@color/black" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/linearlayout_shopping"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
@@ -172,12 +211,26 @@
             android:textColor="@android:color/white" />
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/imgbutton_product_detail_return"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+    <ImageView
+        android:id="@+id/img_product_detail_return"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:scaleType="fitXY"
         android:src="@drawable/back_arrow" />
+
+    <ImageView
+        android:id="@+id/img_cart"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:src="@drawable/cart_grey_background" />
 
 </RelativeLayout>

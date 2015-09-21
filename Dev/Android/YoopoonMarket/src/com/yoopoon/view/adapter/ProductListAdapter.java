@@ -61,9 +61,7 @@ public class ProductListAdapter extends BaseAdapter {
 	}
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		if (position == 5) {
-			Log.e("111111111", position + "");
-		}
+		 
 		if ((datas.size() - position * 2) >= 1) {
 			ProductViewHandler productityViewHandler = null;
 			if (convertView != null) {
@@ -236,12 +234,12 @@ public class ProductListAdapter extends BaseAdapter {
 										int count = dao.isExistCount(id2);
 										dao.updateCount(id2, count + 1);
 									} else {
-										String mainImageString = datas.get(position * 2).optString("MainImg", "");
+										String mainImageString = datas.get(position * 2+1).optString("MainImg", "");
 										String url = mContext.getString(R.string.url_image) + mainImageString;
-										String name = datas.get(position * 2).optString("Name", "");
-										float price_counted = Float.parseFloat(datas.get(position * 2).optString(
+										String name = datas.get(position * 2+1).optString("Name", "");
+										float price_counted = Float.parseFloat(datas.get(position * 2+1).optString(
 												"Price", ""));
-										float price_previous = Float.parseFloat(datas.get(position * 2).optString(
+										float price_previous = Float.parseFloat(datas.get(position * 2+1).optString(
 												"NewPrice", ""));
 										dao.add(new Staff(subtitle2, name, url, 1, price_counted, price_previous, id2));
 									}
