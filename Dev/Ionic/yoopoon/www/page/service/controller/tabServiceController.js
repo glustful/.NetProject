@@ -84,7 +84,6 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 	}
 	tab();
 
-
 	//    搜索功能
 	$scope.showSelect = false;
 	$scope.isShow = false;
