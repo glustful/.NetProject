@@ -317,7 +317,7 @@ app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderServic
         } else {
             httpimguri = '';
         }
-        $http.post(SETTING.ApiUrl + '/Member/Post', $scope.oldMem, {'withCredentials': true})
+        $http.put(SETTING.ApiUrl + '/Member/Put', $scope.oldMem, {'withCredentials': true})
             .success(function (data) {
                 if (data.Status) {
                     var img = document.getElementById('imghead');
