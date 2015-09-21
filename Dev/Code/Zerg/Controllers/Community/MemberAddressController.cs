@@ -72,27 +72,27 @@ namespace Zerg.Controllers.Community
             return PageHelper.toJson(new { List = model, Condition = condition, toTalCount = totalCount });
 		}
 
-        public HttpResponseMessage Post([FromBody]MemberAddressModel model)
-		{
-			var entity = new MemberAddressEntity
-			{
-				Member = _memberService.GetMemberByUserId(model.UserId),
-				Address = model.Address,
-				Zip = model.Zip,
-				Linkman = model.Linkman,
-				Tel = model.Tel,
-				Adduser = _workContext.CurrentUser.Id,
-				Addtime = DateTime.Now,
-				Upduser = _workContext.CurrentUser.Id,
-				Updtime = DateTime.Now,
-                Area = _areaService.GetAreaById(model.AreaId)
-			};
-			if(_memberAddressService.Create(entity).Id > 0)
-			{
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "post 成功"));
-			}
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "post  失败")); 
-		}
+        //public HttpResponseMessage Post([FromBody]MemberAddressModel model)
+        //{
+        //    var entity = new MemberAddressEntity
+        //    {
+        //        Member = _memberService.GetMemberByUserId(model.UserId),
+        //        Address = model.Address,
+        //        Zip = model.Zip,
+        //        Linkman = model.Linkman,
+        //        Tel = model.Tel,
+        //        Adduser = _workContext.CurrentUser.Id,
+        //        Addtime = DateTime.Now,
+        //        Upduser = _workContext.CurrentUser.Id,
+        //        Updtime = DateTime.Now,
+        //        Area = _areaService.GetAreaById(model.AreaId)
+        //    };
+        //    if(_memberAddressService.Create(entity).Id > 0)
+        //    {
+        //        return PageHelper.toJson(PageHelper.ReturnValue(true, "post 成功"));
+        //    }
+        //    return PageHelper.toJson(PageHelper.ReturnValue(false, "post  失败")); 
+        //}
 
         public HttpResponseMessage Put([FromBody]MemberAddressModel model)
 		{
