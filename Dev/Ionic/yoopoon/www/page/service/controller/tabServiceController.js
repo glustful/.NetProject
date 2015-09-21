@@ -61,9 +61,10 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 	}
 
 	//我的服务
-	$scope.tabIndex = 5;
+	//$scope.tabIndex = 5;
 	$scope.getServiceList = function (tabIndex) {
 		$scope.tabIndex = tabIndex;
+
 	};
 	function tab() {
 		//获取当前用户信息
@@ -81,7 +82,6 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 					$scope.list = data.List;
 				});
 			};
-			console.log($scope.condition);
 			getList();
 		}
 		//办理中
@@ -91,13 +91,13 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 				Status: '5',
 				Addusers: $scope.currentuser.UserId
 			};
-			var getList = function () {
+			var getList1 = function () {
 				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
 					.success(function(data) {
 						$scope.list = data.List;
 					});
 			};
-			getList();
+			getList1();
 		}
 	}
 	tab();
