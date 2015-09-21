@@ -4,40 +4,42 @@ import java.util.ArrayList;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
-import org.json.JSONException;
+ 
 import org.json.JSONObject;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.yoopoon.advertisement.ADController;
-import com.yoopoon.market.R.string;
+ 
+import com.yoopoon.advertisement.ProductAdvertisement;
+ 
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
-import com.yoopoon.market.net.ResponseData.ResultState;
+ 
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
+import com.yoopoon.market.utils.SplitStringWithDot;
 
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
-import android.content.Intent;
-import android.database.DataSetObservable;
+ 
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 @EActivity(R.layout.activity_product_detail)
 public class ProductDetailActivity extends MainActionBarActivity {
-	private ADController mADController;
+	private ProductAdvertisement productAdvertisement;
 	private ArrayList<String> imgs;
 	private LinearLayout linearLayout;
 	private Context mContext;
@@ -46,13 +48,15 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	private LinearLayout commentLinearlayout;
 	//添加更多评论对应的布局
 	private static int count = 2;
-	private ArrayList<JSONObject> jsonObjects;
+	private ArrayList<JSONObject> commentJsonObjects;
 	//商品详细信息对应的布局视图
 	private TextView productTitleTextView;
 	private TextView productSubtitleTextView;
 	private TextView productPrictTextView;
 	private TextView productPrimePriceTextView;
 	private TextView productSalesVolumeTextView;
+	@ViewById(R.id.scrollview_product_detail)
+	ScrollView productDetailScrollView;
 
 	/**
 	 * @Title: initProductComment
@@ -63,10 +67,10 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		//获取从首页过来的id
 		productId = getIntent().getExtras().getString("productId");
 		linearLayout = (LinearLayout) findViewById(R.id.linearlayout_product_detail);
-		mADController = new ADController(mContext);
+		productAdvertisement = new ProductAdvertisement(mContext);
 		//获取广告信息
 		//添加广告
-		linearLayout.addView(mADController.getRootView(), 0);
+		linearLayout.addView(productAdvertisement.getRootView(), 0);
 		//初始化商品详细信息视图
 		productTitleTextView = (TextView) findViewById(R.id.tv_product_title);
 		productSubtitleTextView = (TextView) findViewById(R.id.tv_product_subtitle);
@@ -78,17 +82,16 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		//货物评论对应LinearLayout
 		commentLinearlayout = (LinearLayout) findViewById(R.id.linearlayout_product_comment);
 		requestProductDetail();
+		requestComment();
 	}
 	/**
 	 * @Title: loadComment
 	 * @Description: 循环加载产品评论
 	 * @param jsonObjects
 	 */
-	private void loadComment(ArrayList<JSONObject> jsonObjects, Boolean commentNullStatus) {
+	private void loadComment(ArrayList<JSONObject> jsonObjects) {
+		commentLinearlayout.removeAllViews();
 		//判断商品是否有评论，如果没有commentNullStatus为true
-		if (commentNullStatus) {
-			count = 1;
-		}
 		for (int i = 0; i < count; i++) {
 			JSONObject jsonObject = jsonObjects.get(i);
 			LinearLayout commentItemLinearLayout = (LinearLayout) LayoutInflater.from(mContext).inflate(
@@ -98,12 +101,18 @@ public class ProductDetailActivity extends MainActionBarActivity {
 			TextView userNickNameTextView = (TextView) commentItemLinearLayout
 					.findViewById(R.id.tv_comment_user_nickname);
 			TextView commentContentTextView = (TextView) commentItemLinearLayout.findViewById(R.id.tv_comment_content);
+			/*String url = "";
+			if (jsonObject.optString("UserImg").equals("null") || jsonObject.optString("UserName").equals("")) {
+				url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
+			} else {
+				url = mContext.getString(R.string.url_image) + jsonObject.optString("UserImg");
+			}*/
 			String url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
 			userPhotoImageView.setTag(url);
 			ImageLoader.getInstance().displayImage(url, userPhotoImageView, MyApplication.getOptions(),
 					MyApplication.getLoadingListener());
-			userNickNameTextView.setText(jsonObject.optString("nickName"));
-			commentContentTextView.setText(jsonObject.optString("comment"));
+			userNickNameTextView.setText(jsonObject.optString("UserName"));
+			commentContentTextView.setText(jsonObject.optString("Content"));
 			commentLinearlayout.addView(commentItemLinearLayout, i);
 		}
 		Button addMoreCommentButton = new Button(mContext);
@@ -112,13 +121,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		addMoreCommentButton.setLayoutParams(params);
 		addMoreCommentButton.setText("点击加载更多评论");
 		addMoreCommentButton.setBackgroundColor(Color.TRANSPARENT);
-		//如果只有默认评论的话隐藏加载更多
-		if (commentNullStatus) {
-			addMoreCommentButton.setVisibility(View.GONE);
-		}
-		if (commentNullStatus) {
-			addMoreCommentButton.setVisibility(View.VISIBLE);
-		}
 		addMoreCommentButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -126,7 +128,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 				loadMoreComment();
 			}
 		});
-		//添加滑动获取更多图文详情
+		/*//添加滑动获取更多图文详情
 		int sceenWidth = this.getWindowManager().getDefaultDisplay().getWidth();
 		LinearLayout linearLayout = new LinearLayout(mContext);
 		android.view.ViewGroup.LayoutParams linearLayoutLayoutParams = new android.view.ViewGroup.LayoutParams(
@@ -157,18 +159,28 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		view2.setBackgroundColor(Color.BLACK);
 		linearLayout.addView(view2);
 		linearLayout.setGravity(Gravity.CENTER);
-		linearLayout.setBackgroundColor(Color.rgb(228, 228, 228));
+		linearLayout.setBackgroundColor(Color.rgb(228, 228, 228));*/
 		commentLinearlayout.addView(addMoreCommentButton, count);
-		commentLinearlayout.addView(linearLayout, count + 1);
+		new Thread() {
+			public void run() {
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						productDetailScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+					}
+				});
+			};
+		}.start();
+		//commentLinearlayout.addView(linearLayout, count + 2);
 	}
 	/**
 	 * @Title: loadMoreComment
 	 * @Description: 每次增加2，控制需要显示的广告数量
 	 */
 	public void loadMoreComment() {
-		Log.e("product", count + "");
+		
 		count += 2;
-		loadComment(jsonObjects, true);
+		requestComment();
 	}
 	@Override
 	protected void onPause() {
@@ -201,11 +213,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
-				JSONArray array = data.getMRootData().optJSONArray("Comments");
 				JSONObject productJsonObject = data.getMRootData().optJSONObject("ProductModel");
-				if (array != null && array.length() >= 1) {
-					loadComment(JSONArrayConvertToArrayList.convertToArrayList(array), true);
-				}
 				//设置商品详细信息
 				initProductDetailInfo(productJsonObject);
 				//设置广告,同事加载广告
@@ -225,9 +233,13 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	private void initProductDetailInfo(JSONObject jsonObject) {
 		productTitleTextView.setText(jsonObject.optString("Name", ""));
 		productSubtitleTextView.setText(jsonObject.optString("Subtitte", ""));
-		productPrictTextView.setText("￥" + jsonObject.optString("Price", "0.00"));
-		productPrimePriceTextView.setText("原价：" + jsonObject.optString("NewPrice", "0.00"));
-		productSalesVolumeTextView.setText("已有" + jsonObject.optString("Owner", "0") + "人抢购");
+		productPrictTextView.setText("￥" + SplitStringWithDot.split(jsonObject.optString("Price", "0")));
+		productPrimePriceTextView.setText("原价：" + SplitStringWithDot.split(jsonObject.optString("NewPrice", "0")));
+		if (jsonObject.optString("Owner", "0").equals("null")) {
+			productSalesVolumeTextView.setText("已有0人抢购");
+		} else {
+			productSalesVolumeTextView.setText("已有" + jsonObject.optString("Owner", "0") + "人抢购");
+		}
 	}
 	private void loadProductAdvertisements(JSONObject jsonObject) {
 		ArrayList<String> arrayList = new ArrayList<String>();
@@ -255,6 +267,28 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		for (int i = 0; i < 3; i++) {
 			arrayList.add("20150629/20150629_224642_944_279.jpg");
 		}
-		mADController.show(arrayList);
+		productAdvertisement.show(arrayList);
+	}
+	/**
+	 * @Title: requestComment
+	 * @Description: 获取评论
+	 */
+	private void requestComment() {
+		new RequestAdapter() {
+			@Override
+			public void onReponse(ResponseData data) {
+				if (data.getMRootData() != null) {
+					JSONArray jsonArray = data.getMRootData().optJSONArray("Model");
+					ArrayList<JSONObject> arrayList = JSONArrayConvertToArrayList.convertToArrayList(jsonArray);
+					if (jsonArray.length() >= 1) {
+						loadComment(arrayList);
+					}
+				}
+			}
+			@Override
+			public void onProgress(ProgressMessage msg) {
+			}
+		}.setUrl(getString(R.string.url_comment)).addParam("ProductId", productId).setRequestMethod(RequestMethod.eGet)
+				.notifyRequest();
 	}
 }

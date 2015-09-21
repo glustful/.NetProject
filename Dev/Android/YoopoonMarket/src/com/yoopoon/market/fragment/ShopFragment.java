@@ -14,14 +14,15 @@ package com.yoopoon.market.fragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.BroadcastReceiver;
-
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,11 +33,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -54,14 +57,12 @@ import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.ResponseData.ResultState;
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
-
 import com.yoopoon.market.utils.SplitStringWithDot;
 import com.yoopoon.market.utils.Utils;
 import com.yoopoon.market.view.ExpandableHeightGridView;
 import com.yoopoon.market.view.NoScrollGridView;
 import com.yoopoon.market.view.MyGridView;
 import com.yoopoon.view.adapter.ProductGridViewAdapter;
-
 import com.yoopoon.view.adapter.ProductListAdapter;
 
 public class ShopFragment extends Fragment {
@@ -81,7 +82,7 @@ public class ShopFragment extends Fragment {
 	private Button recommondProductByButton;// 立即购买
 	private ImageView recommondProductCartImageView;// 添加到购物车
 	// 搜索框对应的receiver
-	// private ProductRefreshByKeyWordReceiver byKeyWordReceiver;
+	private ProductRefreshByKeyWordReceiver byKeyWordReceiver;
 	// 首页展示商品的PTRGridView组件
 	private PullToRefreshListView mPullToRefreshListView;
 	private ListView productListView;
@@ -96,6 +97,8 @@ public class ShopFragment extends Fragment {
 	//分页获取商品状态码
 	private int productPageCount = 1;
 	private ArrayList<JSONObject> productJsonArrayList;
+	//搜索关键字
+	private String keywordSearch = "";
 
 	@Override
 	@Nullable
@@ -112,6 +115,7 @@ public class ShopFragment extends Fragment {
 			rootView = inflater.inflate(R.layout.fragment_shop, null);
 			settingPullToRefreshListView();
 			productJsonArrayList = new ArrayList<JSONObject>();
+			loadRefreshByKeyword();
 			//获取商品
 			//视图加载以及位置调整
 			// 获取商品
@@ -287,10 +291,38 @@ public class ShopFragment extends Fragment {
 	}
 	/**
 	 * @Title: requestProduct
-	 * @Description: 传入参数，获取商品信息
+	 * @Description: 传入参数，刷新商品信息
 	 * @param hashMap
 	 */
 	private void requestProduct(HashMap<String, String> hashMap) {
+		new RequestAdapter() {
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONArray jsonArray;
+				if (data.getMRootData() != null) {
+					try {
+						jsonArray = data.getMRootData().getJSONArray("List");
+						productListAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
+						initRecommendProduct(JSONArrayConvertToArrayList.convertToArrayList(jsonArray).get(0));
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
+				}
+			}
+			@Override
+			public void onProgress(ProgressMessage msg) {
+			}
+		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(hashMap).setRequestMethod(RequestMethod.eGet)
+				.notifyRequest();
+	}
+	/**
+	 * @Title: refreshProduct
+	 * @Description: 传入参数，获取商品信息
+	 * @param hashMap
+	 */
+	private void refreshProduct(HashMap<String, String> hashMap) {
 		/*HashMap<String, String> map1 = new HashMap<String, String>();
 		map1.put("Page", 5 + "");
 		map1.put("PageCount", "10");*/
@@ -321,29 +353,41 @@ public class ShopFragment extends Fragment {
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(hashMap).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
+
 	/**
 	 * @ClassName: ProductRefreshByAddressReceiver
 	 * @Description: 创建监听地址改变的接收器
 	 * @author: 徐阳会
 	 * @date: 2015年9月17日 上午11:02:12
 	 */
-	/*
-	 * private class ProductRefreshByAddressReceiver extends BroadcastReceiver {
-	 * @Override public void onReceive(Context context, Intent intent) { } }
-	 */
+	/*	private class ProductRefreshByAddressReceiver extends BroadcastReceiver {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+			}
+		}*/
 	/**
 	 * @ClassName: ProductRefreshByKeyWordReceiver
 	 * @Description: 创建顶端搜索框输入的字段进行搜索
 	 * @author: 徐阳会
 	 * @date: 2015年9月17日 下午5:22:43
 	 */
-	/*
-	 * private class ProductRefreshByKeyWordReceiver extends BroadcastReceiver {
-	 * @Override public void onReceive(Context context, Intent intent) { String keywordString =
-	 * intent.getStringExtra("keyword"); if (keywordString != null && (!keywordString.equals(""))) {
-	 * HashMap<String, String> hashMap = new HashMap<String, String>(); hashMap.put("Name",
-	 * keywordString); requestProduct(hashMap); } } }
-	 */
+	private class ProductRefreshByKeyWordReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			//隐藏输入法
+			InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+			String keywordString = intent.getStringExtra("keyword");
+			if (keywordString != null && (!keywordString.equals(""))) {
+				HashMap<String, String> hashMap = new HashMap<String, String>();
+				hashMap.put("Name", keywordString);
+				keywordSearch = keywordString;
+				productPageCount = 1;
+				requestProduct(hashMap);
+			}
+		}
+	}
+
 	/**
 	 * @Title: loadRefreshByAddress
 	 * @Description: 截获地址广播
@@ -354,11 +398,11 @@ public class ShopFragment extends Fragment {
 	 * addressReceiver = new ProductRefreshByAddressReceiver();
 	 * mContext.registerReceiver(addressReceiver, intentFilter); }
 	 */
-	/*
-	 * private void loadRefreshByKeyword() { IntentFilter filter = new
-	 * IntentFilter("com.yoopoon.market.search.byKeyword"); byKeyWordReceiver = new
-	 * ProductRefreshByKeyWordReceiver(); mContext.registerReceiver(byKeyWordReceiver, filter); }
-	 */
+	private void loadRefreshByKeyword() {
+		IntentFilter filter = new IntentFilter("com.yoopoon.market.search.byKeyword");
+		byKeyWordReceiver = new ProductRefreshByKeyWordReceiver();
+		mContext.registerReceiver(byKeyWordReceiver, filter);
+	}
 	private void loadServiceEvent(View view) {
 		ImageView houseKeepingImageView = (ImageView) view.findViewById(R.id.img_house_keeping);
 		ImageView washingImageView = (ImageView) view.findViewById(R.id.img_washing_clothes);
@@ -414,7 +458,7 @@ public class ShopFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		// mContext.unregisterReceiver(byKeyWordReceiver);
+		mContext.unregisterReceiver(byKeyWordReceiver);
 	}
 
 	private class RefreshListener implements OnRefreshListener2<ListView> {
@@ -422,6 +466,7 @@ public class ShopFragment extends Fragment {
 		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 			productJsonArrayList.clear();
 			productPageCount = 1;
+			keywordSearch = "";
 			Toast.makeText(mContext, "正在刷新数据，请稍后", Toast.LENGTH_SHORT).show();
 			requestProduct();
 		}
@@ -430,7 +475,8 @@ public class ShopFragment extends Fragment {
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("Page", ++productPageCount + "");
 			map.put("PageCount", "10");
-			requestProduct(map);
+			map.put("Name", keywordSearch);
+			refreshProduct(map);
 		}
 	}
 
@@ -446,16 +492,7 @@ public class ShopFragment extends Fragment {
 		if (rootView != null && !isVisibleToUser) {
 			requestProduct();
 		}
-		/*
-		 * private class ProductRefreshByAddressReceiver extends BroadcastReceiver {
-		 * @Override public void onReceive(Context context, Intent intent) {
-		 * Toast.makeText(mContext, "111111", Toast.LENGTH_SHORT).show(); } }
-		 */
-		/*
-		 * private void loadRefreshByAddress() { IntentFilter intentFilter = new
-		 * IntentFilter("com.yoopoon.market.productRefresh.Address");
-		 * ProductRefreshByAddressReceiver addressReceiver = new ProductRefreshByAddressReceiver();
-		 * mContext.registerReceiver(addressReceiver, intentFilter); }
-		 */
+		keywordSearch = "";
+		productPageCount = 1;
 	}
 }

@@ -34,6 +34,9 @@
     <!-- 订单 -->
     <string name="url_order_post">/api/CommunityOrder/post</string>
     
+    <!-- 评论 -->
+    <string name="url_comment">/api/productcomment/get</string>
+    
     
     
     

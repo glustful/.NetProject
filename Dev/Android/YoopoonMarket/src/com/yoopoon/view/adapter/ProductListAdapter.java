@@ -40,7 +40,7 @@ public class ProductListAdapter extends BaseAdapter {
 
 	public ProductListAdapter(Context context, ArrayList<JSONObject> arrayList) {
 		mContext = context;
-		//arrayList.remove(0);
+		arrayList.remove(0);
 		datas = arrayList;
 	}
 	@Override
@@ -119,15 +119,15 @@ public class ProductListAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 					Bundle bundle = new Bundle();
-					bundle.putString("productId", datas.get(position).optString("Id"));
+					bundle.putString("productId", datas.get(position*2).optString("Id"));
 					Intent intent = new Intent(mContext, ProductDetailActivity_.class);
 					intent.putExtras(bundle);
 					mContext.startActivity(intent);
 				}
 			});
 			//购物车动画效果
-			final int id1 = datas.get(position).optInt("Id", 0);
-			final String subtitle1 = datas.get(position).optString("Subtitte");
+			final int id1 = datas.get(position*2).optInt("Id", 0);
+			final String subtitle1 = datas.get(position*2).optString("Subtitte");
 			productityViewHandler.cartImageView1.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
@@ -218,14 +218,14 @@ public class ProductListAdapter extends BaseAdapter {
 						@Override
 						public void onClick(View v) {
 							Bundle bundle = new Bundle();
-							bundle.putString("productId", datas.get(position).optString("Id"));
+							bundle.putString("productId", datas.get(position*2+1).optString("Id"));
 							Intent intent = new Intent(mContext, ProductDetailActivity_.class);
 							intent.putExtras(bundle);
 							mContext.startActivity(intent);
 						}
 					});
-					final int id2 = datas.get(position).optInt("Id", 0);
-					final String subtitle2 = datas.get(position).optString("Subtitte");
+					final int id2 = datas.get(position*2+1).optInt("Id", 0);
+					final String subtitle2 = datas.get(position*2+1).optString("Subtitte");
 					productityViewHandler.cartImageView2.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(final View v) {
