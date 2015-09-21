@@ -23,6 +23,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -37,6 +40,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yoopoon.market.domain.MemberAddressEntity;
+import com.yoopoon.market.domain.User;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
@@ -135,9 +139,14 @@ public class AddressManageActivity extends MainActionBarActivity {
 				holder.tv_modify = (TextView) convertView.findViewById(R.id.tv_modify);
 				convertView.setTag(holder);
 			}
+
 			holder.tv_address.setText(entity.Address);
 			holder.tv_name.setText(entity.Linkman);
 			holder.tv_phone.setText(entity.Tel);
+			if (position == 0) {
+				holder.tv_address.setText("[默认]" + entity.Address);
+				changeTextColor(holder.tv_address);
+			}
 			holder.tv_delete.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -158,30 +167,49 @@ public class AddressManageActivity extends MainActionBarActivity {
 
 	}
 
+	void changeTextColor(TextView textView) {
+		String text = textView.getText().toString();
+		SpannableStringBuilder builder = new SpannableStringBuilder(text);
+
+		// ForegroundColorSpan 为文字前景色，BackgroundColorSpan为文字背景色
+		ForegroundColorSpan redSpan = new ForegroundColorSpan(Color.RED);
+		ForegroundColorSpan blackSpan = new ForegroundColorSpan(Color.BLACK);
+
+		builder.setSpan(redSpan, 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		builder.setSpan(blackSpan, 4, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+		textView.setText(builder);
+	}
+
 	void requestData() {
 		ll_loading.setVisibility(View.VISIBLE);
-		new RequestAdapter() {
+		String userId = User.getUserId(AddressManageActivity.this);
+		if (userId.equals("0"))
+			LoginActivity_.intent(this).start();
+		else {
+			new RequestAdapter() {
 
-			@Override
-			public void onReponse(ResponseData data) {
-				JSONObject object = data.getMRootData();
-				if (object != null) {
-					addressList.clear();
-					JSONArray array = object.optJSONArray("List");
-					parseToEntityList(array);
-				} else {
-					ll_loading.setVisibility(View.GONE);
-					Toast.makeText(AddressManageActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+				@Override
+				public void onReponse(ResponseData data) {
+					JSONObject object = data.getMRootData();
+					if (object != null) {
+						addressList.clear();
+						JSONArray array = object.optJSONArray("List");
+						parseToEntityList(array);
+					} else {
+						ll_loading.setVisibility(View.GONE);
+						Toast.makeText(AddressManageActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+					}
 				}
-			}
 
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
+				@Override
+				public void onProgress(ProgressMessage msg) {
+					// TODO Auto-generated method stub
 
-			}
-		}.setUrl(getString(R.string.url_get_address_byid)).setRequestMethod(RequestMethod.eGet)
-				.addParam("username", "452144788").notifyRequest();
+				}
+			}.setUrl(getString(R.string.url_get_address_byid)).setRequestMethod(RequestMethod.eGet)
+					.addParam("userid", userId).notifyRequest();
+		}
 	}
 
 	void parseToEntityList(final JSONArray array) {

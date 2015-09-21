@@ -17,8 +17,8 @@ class AgentCommentFunctionViewTableViewCell: UITableViewCell {
         }
     }
     @IBAction func myPackageAction(sender: UIVerticalButton) {
-        var storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
-        var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.takeMoneyIdentifier) as! UIViewController
+        let storyboard = UIStoryboard(name: "Me", bundle: NSBundle.mainBundle())
+        let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.takeMoneyIdentifier) 
         CommentTools.getCurrentController()?.navigationController!.pushViewController(controller, animated: true)
     }
     @IBAction func newBabyCourseAction(sender: UIVerticalButton) {

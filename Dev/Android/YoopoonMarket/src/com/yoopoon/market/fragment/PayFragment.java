@@ -1,5 +1,7 @@
 package com.yoopoon.market.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,12 +19,18 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yoopoon.market.MeOrderActivity;
 import com.yoopoon.market.PayResultActivity_;
 import com.yoopoon.market.R;
+import com.yoopoon.market.domain.CommunityOrderEntity;
+import com.yoopoon.market.domain.OrderDetailEntity;
 
 public class PayFragment extends Fragment {
+	private static final String TAG = "PayFragment";
 	View rootView;
 	PullToRefreshListView lv;
+	TextView tv_empty;
+	List<CommunityOrderEntity> orders = new ArrayList<CommunityOrderEntity>();
 
 	@Override
 	@Nullable
@@ -33,11 +41,16 @@ public class PayFragment extends Fragment {
 	}
 
 	void init() {
+		tv_empty = (TextView) rootView.findViewById(R.id.tv_empty);
+		MeOrderActivity meOrderActivity = (MeOrderActivity) getActivity();
+		orders = meOrderActivity.getOrderList(0);
+		tv_empty.setVisibility(orders.size() > 0 ? View.GONE : View.GONE);
 		lv = (PullToRefreshListView) rootView.findViewById(R.id.lv);
 		lv.setAdapter(new MyListViewAdapter());
 
 		lv.setMode(Mode.PULL_FROM_END);
 		lv.setOnRefreshListener(new HowWillIrefresh());
+
 	}
 
 	static class ViewHolder {
@@ -56,8 +69,7 @@ public class PayFragment extends Fragment {
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
-			return 5;
+			return orders.size();
 		}
 
 		@Override
@@ -90,6 +102,14 @@ public class PayFragment extends Fragment {
 				holder.tv_price_previous = (TextView) convertView.findViewById(R.id.tv_price_previous);
 				convertView.setTag(holder);
 			}
+			CommunityOrderEntity order = orders.get(position);
+			holder.tv_order_num.setText("订单号：" + order.No);
+			// holder.tv_name.setText(order.Details.)
+			holder.tv_price_counted.setText("￥" + order.Actualprice);
+			holder.tv_price_previous.setText("￥" + order.Totalprice);
+
+			List<OrderDetailEntity> details = order.Details;
+
 			holder.tv_price_previous.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 			holder.tv_btn.setOnClickListener(new OnClickListener() {
 

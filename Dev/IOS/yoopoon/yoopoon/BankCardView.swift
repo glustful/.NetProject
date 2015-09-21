@@ -22,7 +22,7 @@ class BankCardView: UIView {
     func initData(json: JSON){
         self.json = json
         uiBankName.text = json["bankName"].stringValue
-        var num = json["Num"].stringValue
+        let num = json["Num"].stringValue
         uiBankNo.text = "**** **** **** \(num)"
     }
 }

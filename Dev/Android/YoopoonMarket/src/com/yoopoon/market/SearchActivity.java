@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,25 +18,24 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.yoopoon.market.anim.ExpandAnimation;
-import com.yoopoon.market.domain.CategoryEntity;
-import com.yoopoon.market.domain.CategoryList;
+import com.yoopoon.market.domain.SimpleAreaEntity;
+import com.yoopoon.market.domain.SimpleAreaList;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
+import com.yoopoon.market.utils.Utils;
 
 @EActivity(R.layout.activity_select)
 public class SearchActivity extends MainActionBarActivity {
 	private static final String TAG = "SearchActivity";
-	private static final int INITLIST = 1;
 	@ViewById(R.id.ll_areas)
 	LinearLayout ll_areas;
 	@ViewById(R.id.ll_loading)
 	View loading;
-	List<CategoryEntity> categoryList = new ArrayList<CategoryEntity>();
 	int[] counts;
 	int[] colors = { Color.rgb(236, 109, 23), Color.rgb(40, 174, 62), Color.rgb(39, 127, 194), Color.rgb(175, 97, 163) };
-	List<CategoryList> lists = new ArrayList<CategoryList>();
+	List<SimpleAreaList> lists = new ArrayList<SimpleAreaList>();
 	int childList = 0;
 
 	@AfterViews
@@ -54,31 +54,28 @@ public class SearchActivity extends MainActionBarActivity {
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
+				Log.i(TAG, object.toString());
 				if (object != null) {
-					boolean status = object.optBoolean("Status", false);
-					if (status) {
-						JSONArray array = object.optJSONArray("Object");
-						counts = new int[array.length()];
-						for (int i = 0; i < array.length(); i++) {
-							try {
-								JSONObject categoryObject = array.getJSONObject(i);
-								String name = categoryObject.optString("Name", "");
-								int id = categoryObject.optInt("Id", 0);
-								int sort = categoryObject.optInt("Sort", 0);
-								int fatherId = categoryObject.optInt("FatherId", 0);
-								CategoryEntity entity = new CategoryEntity(id, name, sort, fatherId);
-								CategoryList list = new CategoryList();
-								list.father = entity;
-								lists.add(list);
+					JSONArray array = object.optJSONArray("List");
+					counts = new int[array.length()];
+					for (int i = 0; i < array.length(); i++) {
+						try {
+							JSONObject categoryObject = array.getJSONObject(i);
+							String name = categoryObject.optString("Name", "");
+							int id = categoryObject.optInt("Id", 0);
+							SimpleAreaEntity entity = new SimpleAreaEntity();
+							entity.FatherId = id;
+							entity.Name = name;
+							SimpleAreaList list = new SimpleAreaList();
+							list.father = entity;
+							lists.add(list);
 
-								// requestContents(lists.get(i), i);
-							} catch (JSONException e) {
-								e.printStackTrace();
-							}
+						} catch (JSONException e) {
+							e.printStackTrace();
 						}
-						requestContents();
-
 					}
+					requestContents();
+
 				} else {
 					loading.setVisibility(View.GONE);
 					Toast.makeText(SearchActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
@@ -90,7 +87,7 @@ public class SearchActivity extends MainActionBarActivity {
 				// TODO Auto-generated method stub
 
 			}
-		}.setUrl(getString(R.string.url_category_get)).setRequestMethod(RequestMethod.eGet).addParam("id", "0")
+		}.setUrl(getString(R.string.url_area_get)).setRequestMethod(RequestMethod.eGet).addParam("father", "true")
 				.notifyRequest();
 	}
 
@@ -100,8 +97,8 @@ public class SearchActivity extends MainActionBarActivity {
 		}
 	}
 
-	void requestContent(final CategoryList list, final int index) {
-		String id = list.father.id + "";
+	void requestContent(final SimpleAreaList list, final int index) {
+		String id = list.father.FatherId + "";
 		Log.i(TAG, "fatherId = " + id);
 
 		new RequestAdapter() {
@@ -110,33 +107,30 @@ public class SearchActivity extends MainActionBarActivity {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					boolean status = object.optBoolean("Status", false);
-					if (status) {
-						JSONArray array = object.optJSONArray("Object");
-						List<CategoryEntity> entities = new ArrayList<CategoryEntity>();
-						counts[index] = array.length();
-						list.childcount = array.length();
-						for (int i = 0; i < array.length(); i++) {
-							try {
-								JSONObject categoryObject = array.getJSONObject(i);
-								Log.i(TAG, categoryObject.toString());
-								String name = categoryObject.optString("Name", "");
-								int id = categoryObject.optInt("Id", 0);
-								int sort = categoryObject.optInt("Sort", 0);
-								int fatherId = categoryObject.optInt("FatherId", 0);
-								CategoryEntity entity = new CategoryEntity(id, name, sort, fatherId);
-								entities.add(entity);
-								lists.get(index).children = entities;
-							} catch (JSONException e) {
-								e.printStackTrace();
-							}
+					JSONArray array = object.optJSONArray("List");
+					List<SimpleAreaEntity> entities = new ArrayList<SimpleAreaEntity>();
+					counts[index] = array.length();
+					list.childCount = array.length();
+					for (int i = 0; i < array.length(); i++) {
+						try {
+							JSONObject categoryObject = array.getJSONObject(i);
+							Log.i(TAG, categoryObject.toString());
+							String name = categoryObject.optString("Name", "");
+							int id = categoryObject.optInt("Id", 0);
+							SimpleAreaEntity entity = new SimpleAreaEntity();
+							entity.FatherId = id;
+							entity.Name = name;
+							entities.add(entity);
+							lists.get(index).children = entities;
+						} catch (JSONException e) {
+							e.printStackTrace();
 						}
-						childList++;
-						if (childList == lists.size()) {
-							for (CategoryList list : lists)
-								Log.i(TAG, list.toString());
-							initList();
-						}
+					}
+					childList++;
+					if (childList == lists.size()) {
+						for (SimpleAreaList list : lists)
+							Log.i(TAG, list.toString());
+						initList();
 
 					}
 				} else {
@@ -150,8 +144,8 @@ public class SearchActivity extends MainActionBarActivity {
 				// TODO Auto-generated method stub
 
 			}
-		}.setUrl(getString(R.string.url_category_get)).setRequestMethod(RequestMethod.eGet).addParam("id", id)
-				.notifyRequest();
+		}.setUrl(getString(R.string.url_area_get)).setRequestMethod(RequestMethod.eGet).addParam("father", "false")
+				.addParam("fatherid", id).notifyRequest();
 
 	}
 
@@ -160,14 +154,19 @@ public class SearchActivity extends MainActionBarActivity {
 		loading.setVisibility(View.GONE);
 		for (int i = 0; i < lists.size(); i++) {
 			Log.i(TAG, "i" + i);
-			CategoryList list = lists.get(i);
+			SimpleAreaList list = lists.get(i);
 			final TextView tv = new TextView(SearchActivity.this);
-			tv.setText(list.father.name);
+			tv.setText(list.father.Name);
 			tv.setTextColor(colors[i % colors.length]);
 			tv.setBackgroundResource(R.drawable.white_bg);
 			tv.setPadding(10, 10, 10, 10);
 			tv.setTextSize(20);
 			tv.setClickable(true);
+
+			Drawable drawable = getResources().getDrawable(R.drawable.right_next_icon);
+			int drawableDp = Utils.dp2px(SearchActivity.this, 10);
+			drawable.setBounds(1, 1, drawableDp, drawableDp);
+			tv.setCompoundDrawables(null, null, drawable, null);
 
 			LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 			params.setMargins(0, 0, 0, 1);
@@ -193,7 +192,6 @@ public class SearchActivity extends MainActionBarActivity {
 						if (!toggle)
 							tag_areas.startAnimation(ea);
 					}
-					Log.i(TAG, "animation:toggle = " + animation.toggle());
 					if (animation.toggle())
 						ll_areas.setTag(areas);
 					else
@@ -201,13 +199,15 @@ public class SearchActivity extends MainActionBarActivity {
 				}
 			});
 			for (int j = 0; j < list.children.size(); j++) {
-				CategoryEntity entity = list.children.get(j);
+				SimpleAreaEntity entity = list.children.get(j);
 				TextView childTv = new TextView(SearchActivity.this);
-				childTv.setText(entity.name);
-				childTv.setBackgroundColor(Color.GRAY);
-				childTv.setPadding(10, 10, 10, 10);
+				childTv.setText(entity.Name);
+				childTv.setBackgroundResource(R.drawable.white_bg);
+				childTv.setPadding(30, 10, 10, 10);
 				childTv.setTextSize(16);
-				areas.addView(childTv);
+				LayoutParams childParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+				childParams.setMargins(0, 0, 0, 1);
+				areas.addView(childTv, childParams);
 				childTv.setOnClickListener(new OnClickListener() {
 
 					@Override

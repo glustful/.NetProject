@@ -67,7 +67,7 @@ class CustomListViewController: SuperViewController,UITableViewDataSource,UITabl
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
-        var identifier = "customCell"
+        let identifier = "customCell"
         var cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? CustomTableViewCell
         if (cell == nil) {
             cell = NSBundle.mainBundle().loadNibNamed("CustomTableViewCell", owner: nil, options: nil).last as? CustomTableViewCell

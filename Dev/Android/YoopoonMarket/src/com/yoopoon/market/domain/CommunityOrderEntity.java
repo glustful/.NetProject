@@ -1,19 +1,38 @@
 package com.yoopoon.market.domain;
 
-public class CommunityOrderEntity {
-	public int Id = 1;
-	public String No = "00212654646512";
-	public int Status = 0;
-	public String StatusString = "新建";
-	public String CustomerName = "客户姓名";
-	public String Remark = "test";
-	public String Adddate = "\\/Date(1442572933790)\\/";
+import java.io.Serializable;
+import java.util.List;
+
+public class CommunityOrderEntity implements Serializable {
+	/**
+	 * @fieldName: serialVersionUID
+	 * @fieldType: long
+	 * @Description: TODO
+	 */
+	private static final long serialVersionUID = 1L;
+	public int Id;
+	public String No;
+	public int Status;
+	public String StatusString;
+	public String CustomerName;;
+	public String Remark;
+	public String Adddate;
 	public int Adduser = 1;
 	public int Upduser = 1;
-	public String Upddate = "\\/Date(1442572933790)\\/";
-	public float Totalprice = 100.0f;
-	public float Actualprice = 100.0f;
-	public String Details = null;
-	public String UserName = "admin";
-	public int MemberAddressId = 0;
+	public String Upddate;
+	public float Totalprice;
+	public float Actualprice;
+	public List<OrderDetailEntity> Details;
+	public String UserName;
+	public int MemberAddressId;
+
+	@Override
+	public String toString() {
+		return "CommunityOrderEntity [Id=" + Id + ", No=" + No + ", Status=" + Status + ", StatusString="
+				+ StatusString + ", CustomerName=" + CustomerName + ", Remark=" + Remark + ", Adddate=" + Adddate
+				+ ", Adduser=" + Adduser + ", Upduser=" + Upduser + ", Upddate=" + Upddate + ", Totalprice="
+				+ Totalprice + ", Actualprice=" + Actualprice + ", Details=" + Details + ", UserName=" + UserName
+				+ ", MemberAddressId=" + MemberAddressId + "]";
+	}
+
 }

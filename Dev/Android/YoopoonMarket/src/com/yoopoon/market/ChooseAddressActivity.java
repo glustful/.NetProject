@@ -17,11 +17,10 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +29,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.market.domain.MemberAddressEntity;
 import com.yoopoon.market.domain.Staff;
+import com.yoopoon.market.domain.User;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
@@ -66,6 +66,7 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 
 	void requestAddress() {
 		loading.setVisibility(View.VISIBLE);
+		String userid = User.getUserId(ChooseAddressActivity.this);
 		new RequestAdapter() {
 
 			@Override
@@ -87,7 +88,7 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 
 			}
 		}.setUrl(getString(R.string.url_get_address_byid)).setRequestMethod(RequestMethod.eGet)
-				.addParam("username", "452144788").notifyRequest();
+				.addParam("userid", userid).notifyRequest();
 	}
 
 	void parseToEntityList(final JSONArray array) {
@@ -162,7 +163,7 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			if (convertView == null)
 				convertView = View.inflate(ChooseAddressActivity.this, R.layout.item_choose_addres, null);
 			ViewHolder holder = (ViewHolder) convertView.getTag();
@@ -178,21 +179,34 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 			holder.tv_address.setText(entity.Address);
 			holder.tv_name.setText(entity.Linkman);
 			holder.tv_phone.setText(entity.Tel);
+
+			holder.cb.setChecked(position == selectedPosition);
+
 			if (position == 0) {
 				holder.tv_address.setText("[默认]" + entity.Address);
 				changeTextColor(holder.tv_address);
 			}
-			holder.cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			final CheckBox cb = holder.cb;
+			convertView.setOnClickListener(new OnClickListener() {
 
 				@Override
-				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					checkedAddress = entity;
+				public void onClick(View v) {
+					cb.setChecked(!cb.isChecked());
+					if (cb.isChecked()) {
+						checkedAddress = entity;
+						selectedPosition = position;
+						adapter.notifyDataSetChanged();
+					}
+
 				}
 			});
 			return convertView;
 		}
 
 	}
+
+	int selectedPosition = -1;
 
 	void changeTextColor(TextView textView) {
 		String text = textView.getText().toString();
@@ -211,6 +225,7 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 	@Override
 	public void backButtonClick(View v) {
 		// 选择地址的前面是确认订单页面，需要传入选择的地址，不能只是简单地finish()掉
+		Log.i(TAG, checkedAddress.toString());
 		BalanceActivity_.intent(ChooseAddressActivity.this).checkedAddress(checkedAddress).staffList(staffList).start();
 		finish();
 	}

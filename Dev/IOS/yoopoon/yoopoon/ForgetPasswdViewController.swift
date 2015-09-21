@@ -84,7 +84,7 @@ class ForgetPasswdViewController: TextFieldViewController {
             .setIsShowIndicator(true, currentView: self.view)
             .setParameters(brokerEntity)
             .request({json in
-                println(json)
+                print(json)
                 if let status = json["Status"].bool{
                     if status{
                         

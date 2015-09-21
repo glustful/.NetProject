@@ -14,8 +14,8 @@ extension UITextField{
     /**
     uitextfield左右摆动提示出错
     
-    :param: times 摆动次数
-    :param: delta 摆动的距离
+    - parameter times: 摆动次数
+    - parameter delta: 摆动的距离
     */
     func shake(var times: Int,var delta: CGFloat){
         

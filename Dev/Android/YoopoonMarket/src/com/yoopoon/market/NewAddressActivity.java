@@ -3,9 +3,12 @@ package com.yoopoon.market;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+import org.json.JSONObject;
+import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,19 +23,31 @@ import com.yoopoon.market.utils.SerializerJSON.SerializeListener;
 @EActivity(R.layout.activity_new_address)
 public class NewAddressActivity extends MainActionBarActivity {
 	private static final String TAG = "NewAddressActivity";
+	@ViewById(R.id.et_address)
+	EditText et_address;
+	@ViewById(R.id.et_phone)
+	EditText et_phone;
+	@ViewById(R.id.et_linkman)
+	EditText et_linkman;
+	@ViewById(R.id.et_postno)
+	EditText et_postno;
 
 	@Click(R.id.btn_save)
 	void newAddress() {
-		MemberAddressEntity entity = new MemberAddressEntity();
-		entity.Address = "sdsad";
-		entity.Zip = "10011";
-		entity.Linkman = "张三";
-		entity.Tel = "100595236";
-		entity.Adduser = "12";
-		entity.Addtime = "\\/Date(1442387652967)\\/";
-		entity.Upduser = 12;
-		entity.Updtime = "\\/Date(1442387652967)\\/";
-		add(entity);
+		SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference), MODE_PRIVATE);
+		int userid = sp.getInt("UserId", 0);
+		if (userid != 0) {
+			MemberAddressEntity entity = new MemberAddressEntity();
+			entity.UserId = userid;
+			entity.Address = et_address.getText().toString();
+			entity.Zip = et_postno.getText().toString();
+			entity.Linkman = et_linkman.getText().toString();
+			entity.Tel = et_phone.getText().toString();
+			add(entity);
+		} else {
+			// 未登录
+			LoginActivity_.intent(this).start();
+		}
 	}
 
 	@AfterViews
@@ -50,9 +65,9 @@ public class NewAddressActivity extends MainActionBarActivity {
 
 	void add(final MemberAddressEntity addressEntity) {
 		new SerializerJSON(new SerializeListener() {
+
 			@Override
 			public String onSerialize() {
-				addressEntity.Address = "大理白族自治州";
 				ObjectMapper om = new ObjectMapper();
 				try {
 					return om.writeValueAsString(addressEntity);
@@ -74,7 +89,13 @@ public class NewAddressActivity extends MainActionBarActivity {
 
 			@Override
 			public void onReponse(ResponseData data) {
-				Log.i(TAG, data.toString());
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					boolean status = object.optBoolean("Status", false);
+					if (status)
+						finish();// 添加成功，关闭界面
+				}
+
 				Toast.makeText(NewAddressActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 			}
 

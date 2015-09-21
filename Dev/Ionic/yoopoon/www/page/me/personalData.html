@@ -11,7 +11,7 @@
             <a id="Uptext">头像设置</a>
             <!--<span class="input-file">-->
             <div id="preview"  class="touxiang">
-                <img  ng-src="http://img.iyookee.cn/{{oldMem.Thumbnail}}" alt="" class="head"/>
+                <img  ng-src="{{imgUrl+oldMem.Thumbnail}}" alt="" class="head"/>
             </div>
             <input name="fileToUpload" type="file" onchange="previewImage(this)"  style="position:  absolute; right:15%;top:20%;opacity: 0; width: 80px;height: 80px;border-radius: 50%;"/>
             <!--</span>-->
@@ -19,30 +19,46 @@
 
         </div>
 
-        <form method="post" ng-submit="save()">
-
-
+        <form method="post" ng-submit="save()" name="form">
         <!--<div class="head-name" >-->
             <!--<p>设置昵称</p>-->
             <!--<p class="name">老雷斯</p>-->
             <!--<i class="icon ion-chevron-right"></i>-->
         <!--</div>-->
-
             <div class="list">
-
                 <!--<label class="item item-input item-stacked-label">-->
                     <!--<span class="input-label">昵称</span>-->
                     <!--<input type="text" ng-model="oldMem." placeholder="昵称">-->
                 <!--</label>-->
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">昵称</span>
+                    <input type="text" ng-model="oldMem.UserName" name="username" placeholder="昵称">
+                    <!--<span ng-show="form.username.$error.required" style="font-size:20px;color: #ff0000">*必填项</span>-->
+                </label>
 
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">姓名</span>
-                    <input type="text" ng-model="oldMem.Realname" placeholder="姓名">
+                    <input type="text" ng-model="oldMem.RealName" placeholder="姓名">
                 </label>
 
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">电话</span>
                     <input type="text" ng-model="oldMem.Phone" placeholder="电话">
+                </label>
+
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">身份证号</span>
+                    <input type="text" ng-model="oldMem.IdentityNo" placeholder="身份证号">
+                </label>
+
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">QQ</span>
+                    <input type="text" ng-model="oldMem.Icq" placeholder="QQ">
+                </label>
+
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">邮编</span>
+                    <input type="text" ng-model="oldMem.PostNo" placeholder="邮编">
                 </label>
 
             </div>

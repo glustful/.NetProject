@@ -96,20 +96,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	Button btn_category;
 	@ViewById(R.id.ll_loading)
 	LinearLayout ll_loading;
-	// @ViewById(R.id.tv_shadow1)
-	// TextView tv_shadow1;
-	// @ViewById(R.id.rl_shadow2)
-	// View rl_shadow2;
-	// @Click(R.id.iv_iknow)
-	// void iKnow() {
-	// SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference),
-	// MODE_PRIVATE);
-	// Editor editor = sp.edit();
-	// editor.putBoolean("isFirst", false);
-	// editor.commit();
-	// tv_shadow1.setVisibility(View.GONE);
-	// rl_shadow2.setVisibility(View.GONE);
-	// }
 	@ViewById(R.id.tv_counts)
 	TextView tv_counts;
 	@ViewById(R.id.tv_shadow1)
@@ -225,24 +211,42 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 	protected void onCreate(android.os.Bundle arg0) {
 		super.onCreate(arg0);
+		// 清除密码
+		SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference), MODE_PRIVATE);
+		Editor editor = sp.edit();
+		editor.putString("Password", "");
+		editor.putInt("UserId", 0);
+		editor.commit();
+
 		registerBroadcast();
 		registerMoreService();
 	};
 
 	void registerBroadcast() {
+		// 展示第一次打开优服务的蒙层
 		IntentFilter shadowFilter = new IntentFilter("com.yoopoon.market.show_shadow");
 		shadowFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, shadowFilter);
+
+		// 添加商品到购物车
 		IntentFilter cartFilter = new IntentFilter("com.yoopoon.market.add_to_cart");
 		cartFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, cartFilter);
 
+		// 打开首页
 		IntentFilter shopFilter = new IntentFilter("com.yoopoon.market.showshop");
 		shopFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, shopFilter);
+
+		// 打开购物车
+		IntentFilter cartFilter2 = new IntentFilter("com.yoopoon.market.showcart");
+		shopFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		registerReceiver(receiver, cartFilter2);
+
 	}
 
 	BroadcastReceiver receiver = new BroadcastReceiver() {
+
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
@@ -260,6 +264,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				play(start_loction);
 			} else if (action.equals("com.yoopoon.market.showshop")) {
 				vp.setCurrentItem(0);
+			} else if (action.equals("com.yoopoon.market.showcart")) {
+				vp.setCurrentItem(2);
 			}
 		}
 	};
@@ -406,6 +412,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private class SearchViewClickListener implements OnClickListener {
+
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {

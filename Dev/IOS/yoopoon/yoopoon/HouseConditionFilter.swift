@@ -37,9 +37,9 @@ class HouseConditionFilter: NSObject {
     /**
     初始化列表
     
-    :param: json <#json description#>
+    - parameter json: <#json description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func initData(json: JSON)->[HouseConditionDataSource]{
         var city = [HouseConditionDataSource]()
@@ -48,7 +48,7 @@ class HouseConditionFilter: NSObject {
             for i in 0..<type.count{
                 var dic = [String:String]()
                 dic.updateValue(type[i]["TypeName"].string ?? "", forKey: "name")
-                var id = type[i]["TypeId"].int ?? -1
+                let id = type[i]["TypeId"].int ?? -1
                 dic.updateValue("\(id)", forKey: "id")
                 typeList.append(dic)
             }
@@ -56,7 +56,7 @@ class HouseConditionFilter: NSObject {
         city.removeAll(keepCapacity: false)
         if let area = json["AreaList"].array{
             for i in 0..<area.count{
-                var entity = HouseConditionDataSource()
+                let entity = HouseConditionDataSource()
                 entity.id = area[i]["Id"].int
                 entity.name = area[i]["AreaName"].string
                 entity.typeList = typeList

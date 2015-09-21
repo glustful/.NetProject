@@ -22,9 +22,9 @@ class BrandAgentEntity: NSObject {
     /**
     初始化数据模型
     
-    :param: json <#json description#>
+    - parameter json: <#json description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func initData(json: JSON){
         self.brandId = json["BrandId"].string
