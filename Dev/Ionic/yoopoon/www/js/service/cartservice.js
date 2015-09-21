@@ -101,14 +101,43 @@ app.service("cartservice", ['$rootScope',
 					}
 					productlist[i].count = parseInt(productlist[i].count) - 1;
 					//jsonstr.totalAmount = parseFloat(jsonstr.totalAmount) - parseInt(productlist[i].num) * parseFloat(productlist[i].price);
-				} else {
-					console.log("删除失败,没有这个商品的ID");
-					
 				}
+                //else {
+				//	console.log("删除失败,没有这个商品的ID");
+				//
+				//}
 			}
 			jsonstr.productlist = productlist;
 			localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
 		};
+
+        //商品添加数量，默认是减少1件，减少到为0时候这件商品就删除
+        this.addone = function(id) {
+            var storage = localStorage.getItem("ShoppingCart");
+            var jsonstr = JSON.parse(storage.substr(1, storage.length));
+            var productlist = jsonstr.productlist;
+            for (var i in productlist) {
+                if (productlist[i].id == id) {
+                    if(productlist[i].count==1)
+                    {
+                           //总数+1
+                        $rootScope.cartProductCount += 1;
+                        return;
+                    }
+                    productlist[i].count = parseInt(productlist[i].count) + 1;
+                    //jsonstr.totalAmount = parseFloat(jsonstr.totalAmount) - parseInt(productlist[i].num) * parseFloat(productlist[i].price);
+                }
+                //else {
+                //	console.log("删除失败,没有这个商品的ID");
+                //
+                //}
+            }
+            jsonstr.productlist = productlist;
+            localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
+        };
+
+
+
 		//直接删除这件商品(无视商品个数)
 		this.deletethis = function  (id) {
 			var storage = localStorage.getItem("ShoppingCart");

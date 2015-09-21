@@ -1,14 +1,29 @@
-app.controller('TabCarCtrl', function($scope, $ionicSlideBoxDelegate) {
+app.controller('TabCarCtrl', function($scope, $ionicSlideBoxDelegate,cartservice) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
   // listen for the $ionicView.enter event:
   //
-    var storage=window.localStorage.ShoppingCart;
-    var jsonstr = JSON.parse(storage.substr(1, storage.length));
-    $scope.productlist = jsonstr.productlist;
+  //  window.onload=function(){
+  //
+  //  }
+    $scope.$on('$viewContentLoaded', function() {
+        getcar();
+    });
 
 
+
+    var getcar =function (){
+        var storage=window.localStorage.ShoppingCart;
+        if(storage!=undefined)
+        {
+            var jsonstr = JSON.parse(storage.substr(1, storage.length));
+            $scope.productlist = jsonstr.productlist;
+        }
+
+    };
+
+    getcar();
 
 
   $scope.chats = [{
@@ -56,6 +71,12 @@ app.controller('TabCarCtrl', function($scope, $ionicSlideBoxDelegate) {
   $scope.delegateHandler = $ionicSlideBoxDelegate;
 
     ////全选按钮功能
+    if($scope.start=true){
+
+    }
+
+
+
     $scope.start=false;
     $scope.allButton=false;
     $scope.all=function(){
@@ -63,39 +84,53 @@ app.controller('TabCarCtrl', function($scope, $ionicSlideBoxDelegate) {
 
         if($scope.allButton==false){
             $scope.start=false;
+            $scope.dprice=0;
 //            alert("nihao")
         }if($scope.allButton==true){
             $scope.start=true;
+            //总计
+            allprice();
+
 //            alert($scope.start)
+
         }
     }
 ///数量增加减
-    $scope.number=0;
-    $scope.adding=function(){
 
-        if($scope.number>=0){
-            $scope.number=$scope.number+1;
-//            alert($scope.number)
+    $scope.adding=function(id){
+        cartservice.addone(id);
+        getcar();
+        allprice();
         }
-        else{
-            $scope.number=0;
-        }
-    }
-    $scope.decrease=function(){
-        if($scope.number>=0){
-            $scope.number=$scope.number-1;
-//            alert($scope.number)
-        }
-        else{
-            $scope.number=0;
-        }
+
+
+    $scope.decrease=function(id){
+        cartservice.delete(id);
+        getcar();
+        allprice();
 }
+//总计
+    $scope.dprice=0;
+
+   var allprice=function(){
+        var prices=0;
+
+        for(i=0;i<$scope.productlist.length;i++){
+          prices+=  $scope.productlist[i].newprice * $scope.productlist[i].count;
+        }
+        $scope.dprice=prices;
+    }
+//allprice();
+
+
+
 //编辑
     $scope.flag={showDelete:false,showReorder:false};
     $scope.items=["Chinese","English","German","Italian","Janapese","Sweden","Koeran","Russian","French"];
     $scope.delete_item=function(item){
         var idx = $scope.items.indexOf(item);
         $scope.items.splice(idx,1);
+
     };
     $scope.move_item = function(item, fromIndex, toIndex) {
         $scope.items.splice(fromIndex, 1);
