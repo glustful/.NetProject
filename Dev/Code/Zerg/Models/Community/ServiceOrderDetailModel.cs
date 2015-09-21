@@ -34,5 +34,11 @@ namespace Zerg.Models.Community
 
 
 
-	}
+
+        public string ProductName { get; set; }
+
+        public string MainImg { get; set; }
+
+        public string OrderNo { get; set; }
+    }
 }
