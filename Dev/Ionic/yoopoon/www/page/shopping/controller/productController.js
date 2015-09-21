@@ -219,8 +219,8 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
             $scope.cartinfo.id = $scope.product.Id;
             $scope.cartinfo.name = $scope.product.Name;
             $scope.cartinfo.mainimg=$scope.product.MainImg;
-            $scope.cartinfo.price=$scope.product.Price;
-            $scope.cartinfo.newprice=$scope.product.NewPrice;
+            $scope.cartinfo.price=$scope.product.OldPrice;
+            $scope.cartinfo.newprice=$scope.product.Price;
             $scope.cartinfo.parameterValue=$scope.product.ParameterValue;
             $scope.cartinfo.count = 1;
             cartservice.add($scope.cartinfo);

@@ -101,7 +101,7 @@ namespace Zerg.Controllers.Community
             if (product == null)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "商品不存在"));
-            }                       
+            }           
             var parameterValue = _parameterValueService.GetParameterValuesByCondition(new ParameterValueSearchCondition { Ids = model.ValueIds }).ToList().Select(pv => new ProductParameterEntity
             {
                 Product = product,
