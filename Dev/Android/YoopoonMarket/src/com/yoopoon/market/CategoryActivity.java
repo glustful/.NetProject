@@ -83,6 +83,7 @@ public class CategoryActivity extends MainActionBarActivity {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
+					Log.i(TAG, object.toString());
 					boolean status = object.optBoolean("Status", false);
 					if (status) {
 						JSONArray array = object.optJSONArray("Object");
@@ -118,8 +119,7 @@ public class CategoryActivity extends MainActionBarActivity {
 				// TODO Auto-generated method stub
 
 			}
-		}.setUrl(getString(R.string.url_category_get)).setRequestMethod(RequestMethod.eGet).addParam("id", "0")
-				.notifyRequest();
+		}.setUrl(getString(R.string.url_category_get)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
 
 	void requestContents() {
@@ -185,7 +185,8 @@ public class CategoryActivity extends MainActionBarActivity {
 
 	void initList() {
 		WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-		int width = wm.getDefaultDisplay().getWidth() / 5;
+		int width = Utils.dp2px(CategoryActivity.this, wm.getDefaultDisplay().getWidth() / 4);
+
 		int height = Utils.dp2px(CategoryActivity.this, 40);
 		// int px2 = Utils.px2dp(context, px)
 
@@ -240,6 +241,7 @@ public class CategoryActivity extends MainActionBarActivity {
 				});
 			}
 		}
+		ll_category.removeViewAt(ll_category.getChildCount() - 1);
 	}
 
 	@Override

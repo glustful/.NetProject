@@ -219,7 +219,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		editor.commit();
 
 		registerBroadcast();
-		registerMoreService();
 	};
 
 	void registerBroadcast() {
@@ -242,6 +241,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		IntentFilter cartFilter2 = new IntentFilter("com.yoopoon.market.showcart");
 		shopFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, cartFilter2);
+
+		IntentFilter seviceFilter = new IntentFilter("com.yoopoon.market.service.moreservice");
+		seviceFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		registerReceiver(receiver, seviceFilter);
 
 	}
 
@@ -266,6 +269,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				vp.setCurrentItem(0);
 			} else if (action.equals("com.yoopoon.market.showcart")) {
 				vp.setCurrentItem(2);
+			} else if (action.equals("com.yoopoon.market.service.moreservice")) {
+				vp.setCurrentItem(1);
 			}
 		}
 	};
@@ -519,16 +524,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		}
 	}
 
-	private class MoreServiceReceiver extends BroadcastReceiver {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			vp.setCurrentItem(1);
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (receiver != null) {
+			this.unregisterReceiver(receiver);
 		}
 	}
 
-	private void registerMoreService() {
-		IntentFilter filter = new IntentFilter("com.yoopoon.market.service.moreservice");
-		MoreServiceReceiver moreServiceReceiver = new MoreServiceReceiver();
-		registerReceiver(moreServiceReceiver, filter);
-	}
 }

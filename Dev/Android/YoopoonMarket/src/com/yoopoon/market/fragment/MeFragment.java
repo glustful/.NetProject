@@ -83,6 +83,7 @@ public class MeFragment extends Fragment implements OnClickListener {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
+					Log.i(TAG, object.toString());
 					JSONArray array = object.optJSONArray("List");
 					if (array != null) {
 
