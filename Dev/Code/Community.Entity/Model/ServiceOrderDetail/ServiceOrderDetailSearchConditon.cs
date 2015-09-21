@@ -22,9 +22,8 @@ namespace Community.Entity.Model.ServiceOrderDetail
 
 
 		public int[] Ids { get; set; }
-
-
-
+        public EnumServiceOrderStatus? Status { get; set; }
+        public string Addusers { get; set; }
 
 
 		public ServiceOrderEntity[] ServiceOrders { get; set; }
