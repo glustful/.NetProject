@@ -44,12 +44,12 @@
             {{tipp}}
         </button>
         <div class="padding stable-bg text-center">
-        <p><span class="font-title"> 继续拖动，查看图文详情</span></p>
+        <p><span class="font-title" ng-click="getDetail()">点击查看图文详情</span></p>
         </div>
         </div>
-        <div class="div-null"></div>
-        <ion-infinite-scroll ng-if="hasload" on-infinite="load_detail();" distance="1%">
-        </ion-infinite-scroll>
+        <!--<div class="div-null"></div>-->
+        <!--<ion-infinite-scroll ng-if="hasload" on-infinite="load_detail();" distance="1%">-->
+        <!--</ion-infinite-scroll>-->
         <div ng-class="{true: 'detail', false: 'nodetail'}[isDetail]">
             <div>
                   <div style="float: left;margin-right: 20px;margin-bottom: 10px;margin-left: 20px">
