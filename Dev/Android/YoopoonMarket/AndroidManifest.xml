@@ -173,6 +173,10 @@
             android:name="com.yoopoon.market.AreaActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
+         <activity
+            android:name="com.yoopoon.market.ProductCommentActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_Activity_Animation" />
     </application>
 
 </manifest>

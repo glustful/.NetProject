@@ -6,31 +6,29 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
- 
 import org.json.JSONObject;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
- 
 import com.yoopoon.advertisement.ProductAdvertisement;
- 
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
- 
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
 import com.yoopoon.market.utils.SplitStringWithDot;
 
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
- 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,6 +55,18 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	private TextView productSalesVolumeTextView;
 	@ViewById(R.id.scrollview_product_detail)
 	ScrollView productDetailScrollView;
+	@ViewById(R.id.img_product_detail_return)
+	ImageView returnToShopImageView;//返回按钮
+	@ViewById(R.id.img_cart)
+	ImageView cartImageView;//购物车
+	@ViewById(R.id.btn_add_more_comment)
+	Button addMoreCommentButton;
+	@ViewById(R.id.tv_product_comment_amount)
+	TextView productCommentAmount;
+	@ViewById(R.id.linearlayout_slider_add_more)
+	LinearLayout sliderAddMoreLinearLayout;
+	@ViewById(R.id.linearlayout_shopping)
+	LinearLayout shoppingLinearLayout;
 
 	/**
 	 * @Title: initProductComment
@@ -83,102 +93,83 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		commentLinearlayout = (LinearLayout) findViewById(R.id.linearlayout_product_comment);
 		requestProductDetail();
 		requestComment();
+		returnToShopImageView.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				Intent intent = new Intent(ProductDetailActivity.this, MainActivity_.class);
+				startActivity(intent);
+				return false;
+			}
+		});
+		addMoreCommentButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				 Intent intent=new Intent(ProductDetailActivity.this,ProductCommentActivity_.class);
+				 Bundle bundle=new Bundle();
+				 bundle.putString("productId", productId);
+				 bundle.putString("commentAmount", commentJsonObjects.size()+"");
+				 intent.putExtras(bundle);
+				 startActivity(intent);
+			}
+		});
 	}
 	/**
 	 * @Title: loadComment
 	 * @Description: 循环加载产品评论
 	 * @param jsonObjects
 	 */
-	private void loadComment(ArrayList<JSONObject> jsonObjects) {
-		commentLinearlayout.removeAllViews();
-		//判断商品是否有评论，如果没有commentNullStatus为true
-		for (int i = 0; i < count; i++) {
-			JSONObject jsonObject = jsonObjects.get(i);
-			LinearLayout commentItemLinearLayout = (LinearLayout) LayoutInflater.from(mContext).inflate(
-					R.layout.item_product_comment, null);
-			ImageView userPhotoImageView = (ImageView) commentItemLinearLayout
-					.findViewById(R.id.img_comment_user_photo);
-			TextView userNickNameTextView = (TextView) commentItemLinearLayout
-					.findViewById(R.id.tv_comment_user_nickname);
-			TextView commentContentTextView = (TextView) commentItemLinearLayout.findViewById(R.id.tv_comment_content);
-			/*String url = "";
-			if (jsonObject.optString("UserImg").equals("null") || jsonObject.optString("UserName").equals("")) {
-				url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
-			} else {
-				url = mContext.getString(R.string.url_image) + jsonObject.optString("UserImg");
-			}*/
-			String url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
-			userPhotoImageView.setTag(url);
-			ImageLoader.getInstance().displayImage(url, userPhotoImageView, MyApplication.getOptions(),
-					MyApplication.getLoadingListener());
-			userNickNameTextView.setText(jsonObject.optString("UserName"));
-			commentContentTextView.setText(jsonObject.optString("Content"));
-			commentLinearlayout.addView(commentItemLinearLayout, i);
-		}
-		Button addMoreCommentButton = new Button(mContext);
-		android.view.ViewGroup.LayoutParams params = new LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-				LayoutParams.WRAP_CONTENT);
-		addMoreCommentButton.setLayoutParams(params);
-		addMoreCommentButton.setText("点击加载更多评论");
-		addMoreCommentButton.setBackgroundColor(Color.TRANSPARENT);
-		addMoreCommentButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				commentLinearlayout.removeAllViews();
-				loadMoreComment();
+	private void loadComment(ArrayList<JSONObject> jsonObjects, int number) {
+		int childCount = commentLinearlayout.getChildCount();
+		if (jsonObjects.size() == childCount) {
+			return;
+		} else {
+			for (int i = 0; i < number; i++) {
+				JSONObject jsonObject = jsonObjects.get(childCount + i);
+				LinearLayout commentItemLinearLayout = (LinearLayout) LayoutInflater.from(mContext).inflate(
+						R.layout.item_product_comment, null);
+				ImageView userPhotoImageView = (ImageView) commentItemLinearLayout
+						.findViewById(R.id.img_comment_user_photo);
+				TextView userNickNameTextView = (TextView) commentItemLinearLayout
+						.findViewById(R.id.tv_comment_user_nickname);
+				TextView commentContentTextView = (TextView) commentItemLinearLayout
+						.findViewById(R.id.tv_comment_content);
+				/*String url = "";
+				if (jsonObject.optString("UserImg").equals("null") || jsonObject.optString("UserName").equals("")) {
+					url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
+				} else {
+					url = mContext.getString(R.string.url_image) + jsonObject.optString("UserImg");
+				}*/
+				String url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
+				userPhotoImageView.setTag(url);
+				ImageLoader.getInstance().displayImage(url, userPhotoImageView, MyApplication.getOptions(),
+						MyApplication.getLoadingListener());
+				userNickNameTextView.setText(jsonObject.optString("UserName"));
+				commentContentTextView.setText(jsonObject.optString("Content"));
+				if (childCount == 0) {
+					commentLinearlayout.addView(commentItemLinearLayout, i);
+				} else {
+					commentLinearlayout.addView(commentItemLinearLayout, i + childCount);
+				}
 			}
-		});
-		/*//添加滑动获取更多图文详情
-		int sceenWidth = this.getWindowManager().getDefaultDisplay().getWidth();
-		LinearLayout linearLayout = new LinearLayout(mContext);
-		android.view.ViewGroup.LayoutParams linearLayoutLayoutParams = new android.view.ViewGroup.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT, 150);
-		linearLayout.setLayoutParams(linearLayoutLayoutParams);
-		linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-		//
-		View view = new View(mContext);
-		android.view.ViewGroup.LayoutParams viewLayoutParams = new android.view.ViewGroup.LayoutParams(
-				Integer.parseInt(sceenWidth / 4 + ""), 2);
-		view.setLayoutParams(viewLayoutParams);
-		view.setBackgroundColor(Color.BLACK);
-		linearLayout.addView(view, 0);
-		//
-		TextView addMoreTextView = new TextView(mContext);
-		addMoreTextView.setBackgroundColor(Color.TRANSPARENT);
-		addMoreTextView.setText("继续拖动，查看图文详情");
-		android.view.ViewGroup.LayoutParams buttonLayoutParams = new android.view.ViewGroup.LayoutParams(
-				android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
-		addMoreTextView.setLayoutParams(buttonLayoutParams);
-		addMoreTextView.setGravity(Gravity.CENTER_VERTICAL);
-		linearLayout.addView(addMoreTextView, 1);
-		//
-		View view2 = new View(mContext);
-		android.view.ViewGroup.LayoutParams view2Params = new android.view.ViewGroup.LayoutParams(
-				Integer.parseInt(sceenWidth / 4 + ""), 2);
-		view2.setLayoutParams(view2Params);
-		view2.setBackgroundColor(Color.BLACK);
-		linearLayout.addView(view2);
-		linearLayout.setGravity(Gravity.CENTER);
-		linearLayout.setBackgroundColor(Color.rgb(228, 228, 228));*/
-		commentLinearlayout.addView(addMoreCommentButton, count);
-		new Thread() {
-			public void run() {
-				runOnUiThread(new Runnable() {
-					@Override
+			if (childCount >= 2) {
+				new Thread() {
 					public void run() {
-						productDetailScrollView.fullScroll(ScrollView.FOCUS_DOWN);
-					}
-				});
-			};
-		}.start();
-		//commentLinearlayout.addView(linearLayout, count + 2);
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								productDetailScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+							}
+						});
+					};
+				}.start();
+			}
+		}
 	}
 	/**
 	 * @Title: loadMoreComment
 	 * @Description: 每次增加2，控制需要显示的广告数量
 	 */
 	public void loadMoreComment() {
-		
 		count += 2;
 		requestComment();
 	}
@@ -280,8 +271,22 @@ public class ProductDetailActivity extends MainActionBarActivity {
 				if (data.getMRootData() != null) {
 					JSONArray jsonArray = data.getMRootData().optJSONArray("Model");
 					ArrayList<JSONObject> arrayList = JSONArrayConvertToArrayList.convertToArrayList(jsonArray);
+					commentJsonObjects = arrayList;
+					productCommentAmount.setText(commentJsonObjects.size() + "");
+					/*	if (jsonArray.length() >= 2) {
+							addMoreCommentButton.setVisibility(View.VISIBLE);
+							loadComment(arrayList, 2);
+						} else if (jsonArray.length() == 1) {
+							addMoreCommentButton.setVisibility(View.VISIBLE);
+							loadComment(arrayList, 1);
+						} else {
+							return;
+						}*/
 					if (jsonArray.length() >= 1) {
-						loadComment(arrayList);
+						addMoreCommentButton.setVisibility(View.VISIBLE);
+						loadComment(arrayList, 1);
+					} else {
+						return;
 					}
 				}
 			}

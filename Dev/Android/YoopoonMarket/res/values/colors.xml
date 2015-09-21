@@ -15,5 +15,6 @@
     <color name="blue">#880000ff</color>
     <color name="orange">#ec6d17</color>
     <color name="second_orange">#88ec6d17</color>
+    <color name="grey">#888B92</color>
 
 </resources>
