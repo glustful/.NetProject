@@ -130,7 +130,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
             }
         });
     };
-    getList();
+  getList();
 //endregion
     //region 商品加载
     $scope.loadmore=true;
@@ -141,6 +141,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
                 params: $scope.searchCondition,
                 'withCredentials': true
             }).success(function (data) {
+
                 if (data.List != "") {
                     for (var i = 0; i < data.List.length; i++) {
                         $scope.items.push(data.List[i]);
@@ -169,7 +170,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     //endregion
 
     //region 购物车
-    //商品信息
+
     $scope.cartinfo = {
         id: null,
         name: null,

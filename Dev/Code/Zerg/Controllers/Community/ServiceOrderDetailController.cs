@@ -4,9 +4,15 @@ using System.Web.Http;
 using Community.Entity.Model.ServiceOrderDetail;
 using Community.Service.ServiceOrderDetail;
 using Zerg.Models.Community;
+using Zerg.Common;
+using Community.Entity.Model.ProductParameter;
+using System.Web.Http.Cors;
+using System.Net.Http;
 
 namespace Zerg.Controllers.Community
 {
+    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
 	public class ServiceOrderDetailController : ApiController
 	{
 		private readonly IServiceOrderDetailService _serviceOrderDetailService;
@@ -30,17 +36,23 @@ namespace Zerg.Controllers.Community
 //			return model;
 //		}
 
-		public List<ServiceOrderDetailModel> Get([FromUri]ServiceOrderDetailSearchCondition condition)
+        public HttpResponseMessage Get([FromUri]ServiceOrderDetailSearchCondition condition)
 		{
-			var model = _serviceOrderDetailService.GetServiceOrderDetailsByCondition(condition).Select(c=>new ServiceOrderDetailModel
+			var model = _serviceOrderDetailService.GetServiceOrderDetailsByCondition(condition).Select(c=>new 
 			{
 				Id = c.Id,
 //				ServiceOrder = c.ServiceOrder,
-//				Product = c.Product,
+                //Product = c.Product,
+                ProductName = c.Product.Name,
+                MainImg =c.Product.MainImg,
 				Count = c.Count,
 				Price = c.Price,
+                OrderNo = c.ServiceOrder.OrderNo,
+                proparameter = c.Product.Parameters.Select(o => o.Parameter.Name).FirstOrDefault(),
+                propValue = c.Product.Parameters.Select(o => o.ParameterValue.Value).FirstOrDefault(),
+               
 			}).ToList();
-			return model;
+            return PageHelper.toJson(new { List = model });
 		}
 
 //		public bool Post(ServiceOrderDetailModel model)
