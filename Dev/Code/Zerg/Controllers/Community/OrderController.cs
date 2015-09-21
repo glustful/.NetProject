@@ -61,8 +61,11 @@ namespace Zerg.Controllers.Community
                     Id = c.Id,
                     Product = new ProductModel
                     {
+                        Id = c.Product.Id,
+                        MainImg = c.Product.MainImg,
                         Name = c.Product.Name,
-                        Id = c.Product.Id
+                        Price = c.Product.Price,
+                        OldPrice = c.Product.OldPrice
                     },
                     ProductName = c.ProductName,
                     UnitPrice = c.UnitPrice,
@@ -106,9 +109,12 @@ namespace Zerg.Controllers.Community
                     {
                         Id = d.Product.Id,
                         MainImg = d.Product.MainImg,
-                        Name = d.Product.Name
+                        Name = d.Product.Name,
+                        Price = d.Product.Price,
+                        OldPrice = d.Product.OldPrice
                     },
-                    ProductName = d.ProductName
+                    ProductName = d.ProductName,
+                    Totalprice = d.Totalprice
 				}).ToList(),
                 UserName = c.AddMember.UserName
 			}).ToList();

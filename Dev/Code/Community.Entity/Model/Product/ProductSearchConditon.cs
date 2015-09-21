@@ -28,8 +28,10 @@ namespace Community.Entity.Model.Product
 
 
 		public CategoryEntity Categorys { get; set; }
+        //分类ID
         public int? CategoryId { get; set; }
-
+        //分类名称
+        public string CategoryName { get; set; }
 
 
 		public decimal? PriceBegin { get; set; }
