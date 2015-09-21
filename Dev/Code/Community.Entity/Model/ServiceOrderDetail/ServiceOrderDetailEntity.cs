@@ -31,7 +31,7 @@ namespace Community.Entity.Model.ServiceOrderDetail
         /// </summary>
         public virtual string OrderNo { get; set; }
 		/// <summary>
-		/// Count
+		/// Count 
 		/// </summary>
 		public virtual decimal Count { get; set; }
 		/// <summary>

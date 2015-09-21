@@ -118,7 +118,7 @@ namespace Zerg.Controllers.Community
                 Servicetime = model.Servicetime,
                 Remark = model.Remark,
                 Details = products,
-                Status = EnumOrderStatus.Created,
+                Status = EnumServiceOrderStatus.Created,
                 UpdUser = _workContext.CurrentUser.Id,
                 UpdTime = DateTime.Now
             };

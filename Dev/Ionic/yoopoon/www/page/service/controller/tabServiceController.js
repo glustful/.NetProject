@@ -1,4 +1,4 @@
-app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, $timeout,AuthService, $ionicHistory, cartservice,$stateParams) {
+app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, $timeout,AuthService, $ionicHistory,$stateParams) {
 	// With the new view caching in Ionic, Controllers are only called
 	// when they are recreated or on app start, instead of every page change.
 	// To listen for when this page is active (for example, to refresh data),
@@ -51,30 +51,27 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 		if ($stateParams.tabIndex == 5) {
 			$scope.tabIndex = 5;
 			$scope.condition = {
-				//Page: 1,
-				//PageCount: 10,
 				Status: '4',
 				Addusers: $scope.currentuser.UserId
 			};
 			var getList = function () {
-				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',$scope.condition,{'withCredentials':true})
+				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
 					.success(function(data) {
 					$scope.list = data.List;
 				});
 			};
+			console.log($scope.condition);
 			getList();
 		}
 		//办理中
 		if ($stateParams.tabIndex == 6) {
 			$scope.tabIndex = 6;
 			$scope.condition = {
-				//Page: 1,
-				//PageCount: 10,
 				Status: '4',
 				Addusers: $scope.currentuser.UserId
 			};
 			var getList = function () {
-				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',$scope.condition,{'withCredentials':true})
+				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
 					.success(function(data) {
 						$scope.list = data.List;
 					});
