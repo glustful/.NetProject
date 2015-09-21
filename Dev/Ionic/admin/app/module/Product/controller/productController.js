@@ -55,16 +55,50 @@ app.controller('productCtr', ['$scope', '$http','$modal', function($scope, $http
     }
 }]);
 app.controller('editProductCtr',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
-    $http.get(SETTING.ZergWcApiUrl + "/Category/GetChildByFatherId?id="+0, {
-        'withCredentials': true
-    }).success(function (data) {
-        $scope.CategoryList = data;
-    })
     $http.get(SETTING.ZergWcApiUrl+"/CommunityProduct/Get?id="+$stateParams.id,{
             'withCredentials':true  //跨域
         }).success(function(data){
              $scope.product=data.ProductModel;
+          $http.get(SETTING.ZergWcApiUrl + "/Category/Get?id="+$scope.product.CategoryId, {
+            'withCredentials': true
+          }).success(function (data) {
+              $scope.Category=data;
+             //获取三级分类
+              $http.get(SETTING.ZergWcApiUrl+"/Category/GetChildByFatherId?id="+$scope.Category.Father.Id,{
+                      'withCredentials':true
+                  }).success(function(data){
+                      $scope.ThreeCategory=data;
+                 // 获取二级分类
+                  $http.get(SETTING.ZergWcApiUrl+"/Category/GetChildByFatherId?id="+$scope.Category.Father.Father.Id,{
+                      'withCredentials':true
+                  }).success(function(data){
+                      $scope.TwoCategory=data;
+                      $http.get(SETTING.ZergWcApiUrl+"/Category/GetChildByFatherId?id="+0,{
+                          'withCredentials':true
+                      }).success(function(data)
+                      {
+                          $scope.OneCategory=data;
+                      })
+                  })
+              })
+          })
+        });
+    $scope.selectTwoChange=function()
+    {
+        $http.get(SETTING.ZergWcApiUrl + "/Category/GetChildByFatherId?id="+$scope.Category.Father.Father.Id, {
+            'withCredentials': true
+        }).success(function (data) {
+            $scope.TwoCategory = data;
         })
+    }
+    $scope.selectThreeChange=function()
+    {
+        $http.get(SETTING.ZergWcApiUrl + "/Category/GetChildByFatherId?id="+$scope.Category.Father.Id, {
+            'withCredentials': true
+        }).success(function (data) {
+            $scope.ThreeCategory = data;
+        })
+    }
     $scope.update= function () {
         if(mainImg.length>0)
         {

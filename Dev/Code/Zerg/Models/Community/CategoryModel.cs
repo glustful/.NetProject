@@ -1,4 +1,5 @@
 using System;
+using Community.Entity.Model.Category;
 
 namespace Zerg.Models.Community
 {
@@ -17,7 +18,7 @@ namespace Zerg.Models.Community
 		/// <summary>
         /// 父分类
         /// </summary>
-//		public Category Father {get;set;}
+    	public CategoryEntity Father {get;set;}
 
 
 		/// <summary>
