@@ -14,16 +14,20 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.MeOrderActivity;
+import com.yoopoon.market.MyApplication;
 import com.yoopoon.market.PayResultActivity_;
 import com.yoopoon.market.R;
 import com.yoopoon.market.domain.CommunityOrderEntity;
 import com.yoopoon.market.domain.OrderDetailEntity;
+import com.yoopoon.market.domain.ProductEntity;
 
 public class PayFragment extends Fragment {
 	private static final String TAG = "PayFragment";
@@ -54,15 +58,11 @@ public class PayFragment extends Fragment {
 	}
 
 	static class ViewHolder {
+
 		TextView tv_order_num;
-		ImageView iv;
-		TextView tv_name;
-		TextView tv_category;
-		TextView tv_count;
-		TextView tv_price_counted;
-		TextView tv_price_previous;
 		TextView tv_btn;
-		TextView tv_desc;
+		LinearLayout ll_products;
+		TextView tv_price;
 	}
 
 	class MyListViewAdapter extends BaseAdapter {
@@ -93,24 +93,45 @@ public class PayFragment extends Fragment {
 				holder = new ViewHolder();
 				holder.tv_btn = (TextView) convertView.findViewById(R.id.tv_btn);
 				holder.tv_order_num = (TextView) convertView.findViewById(R.id.tv_order_num);
-				holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
-				holder.tv_category = (TextView) convertView.findViewById(R.id.tv_category);
-				holder.tv_count = (TextView) convertView.findViewById(R.id.tv_count);
-				holder.tv_price_counted = (TextView) convertView.findViewById(R.id.tv_price_counted);
-				holder.iv = (ImageView) convertView.findViewById(R.id.iv);
-				holder.tv_desc = (TextView) convertView.findViewById(R.id.tv_desc);
-				holder.tv_price_previous = (TextView) convertView.findViewById(R.id.tv_price_previous);
+				holder.ll_products = (LinearLayout) convertView.findViewById(R.id.ll_products);
+				holder.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
 				convertView.setTag(holder);
 			}
 			CommunityOrderEntity order = orders.get(position);
 			holder.tv_order_num.setText("订单号：" + order.No);
-			// holder.tv_name.setText(order.Details.)
-			holder.tv_price_counted.setText("￥" + order.Actualprice);
-			holder.tv_price_previous.setText("￥" + order.Totalprice);
+			holder.tv_price.setText("￥" + order.Totalprice);
 
 			List<OrderDetailEntity> details = order.Details;
+			// Log.i(TAG, order.to);
+			for (OrderDetailEntity detail : details) {
+				ProductEntity product = detail.Product;
+				View productView = View.inflate(getActivity(), R.layout.item_product, null);
+				TextView tv_price_counted = (TextView) productView.findViewById(R.id.tv_price_counted);
+				TextView tv_price_previous = (TextView) productView.findViewById(R.id.tv_price_previous);
+				TextView tv_category = (TextView) productView.findViewById(R.id.tv_category);
+				TextView tv_count = (TextView) productView.findViewById(R.id.tv_count);
+				TextView tv_name = (TextView) productView.findViewById(R.id.tv_name);
+				ImageView iv = (ImageView) productView.findViewById(R.id.iv);
 
-			holder.tv_price_previous.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+				String imageUrl = getActivity().getString(R.string.url_image) + product.MainImg;
+				iv.setTag(imageUrl);
+				ImageLoader.getInstance().displayImage(imageUrl, iv, MyApplication.getOptions(),
+						MyApplication.getLoadingListener());
+				tv_price_counted.setText("￥" + detail.UnitPrice);
+				tv_price_previous.setText("￥" + product.Price);
+				tv_price_previous.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+				tv_category.setText(product.Subtitte);
+				tv_name.setText(product.Name);
+				tv_count.setText("x" + detail.Count);
+
+				holder.ll_products.addView(productView);
+				View v = new View(getActivity());
+				v.setBackgroundResource(R.drawable.line);
+				holder.ll_products.addView(v);
+			}
+
+			holder.ll_products.removeViewAt(holder.ll_products.getChildCount() - 1);
+
 			holder.tv_btn.setOnClickListener(new OnClickListener() {
 
 				@Override

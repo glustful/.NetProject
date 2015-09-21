@@ -70,9 +70,10 @@ public class ServeFragment extends Fragment {
 	GridView gv;
 	ViewPager vp;
 	// 9大功能
-	String[] functions = { "保险", "金融理财", "旅游", "汽车类服务", "家政", "清洗服务", "教育", "生活缴费", "快递代收" };
+	String[] functions = { "保险", "金融理财", "旅游", "汽车类服务", "家政", "清洗服务", "教育", "生活缴费", "快递代收", "社区互动信息展示", "社区众筹信息展示" };
 	int[] icons = { R.drawable.inssurance, R.drawable.wash_machine, R.drawable.travel, R.drawable.uber,
-			R.drawable.political, R.drawable.wash_machine, R.drawable.education, R.drawable.charge, R.drawable.delivery };
+			R.drawable.political, R.drawable.wash_machine, R.drawable.education, R.drawable.charge,
+			R.drawable.delivery, R.drawable.travel, R.drawable.uber };
 	int[] imgIdArray;
 	ImageView[] tips;
 	ImageView[] mImageViews;
@@ -310,7 +311,7 @@ public class ServeFragment extends Fragment {
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return 9;
+			return functions.length;
 		}
 
 		@Override

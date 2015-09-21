@@ -30,8 +30,9 @@
                     android:layout_height="100dp"
                     android:layout_alignParentBottom="true"
                     android:padding="10dip"
-                    android:scaleType="center"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/me_avater"
+                    android:clickable="true"
                     makeramen:corner_radius="100dp" />
 
                 <TextView

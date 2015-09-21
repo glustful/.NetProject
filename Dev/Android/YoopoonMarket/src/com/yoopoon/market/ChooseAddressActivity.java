@@ -53,7 +53,6 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 	}
 	List<MemberAddressEntity> addressList = new ArrayList<MemberAddressEntity>();
 	MyListViewAdapter adapter;
-	MemberAddressEntity checkedAddress;
 
 	@AfterViews
 	void initUI() {
@@ -61,6 +60,11 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 		titleButton.setVisibility(View.VISIBLE);
 		rightButton.setVisibility(View.GONE);
 		titleButton.setText("选择收货地址");
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 		requestAddress();
 	}
 
@@ -194,7 +198,6 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 				public void onClick(View v) {
 					cb.setChecked(!cb.isChecked());
 					if (cb.isChecked()) {
-						checkedAddress = entity;
 						selectedPosition = position;
 						adapter.notifyDataSetChanged();
 					}
@@ -206,7 +209,7 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 
 	}
 
-	int selectedPosition = -1;
+	int selectedPosition = 0;
 
 	void changeTextColor(TextView textView) {
 		String text = textView.getText().toString();
@@ -225,8 +228,8 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 	@Override
 	public void backButtonClick(View v) {
 		// 选择地址的前面是确认订单页面，需要传入选择的地址，不能只是简单地finish()掉
-		Log.i(TAG, checkedAddress.toString());
-		BalanceActivity_.intent(ChooseAddressActivity.this).checkedAddress(checkedAddress).staffList(staffList).start();
+		BalanceActivity_.intent(ChooseAddressActivity.this).checkedAddress(addressList.get(selectedPosition))
+				.staffList(staffList).start();
 		finish();
 	}
 

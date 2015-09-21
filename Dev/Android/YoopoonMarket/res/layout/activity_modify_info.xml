@@ -16,14 +16,19 @@
 
             <com.makeramen.RoundedImageView
                 android:id="@+id/imageView1"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_alignParentBottom="true"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_gravity="center_horizontal"
                 android:padding="10dip"
-                android:scaleType="center"
+                android:scaleType="centerCrop"
                 android:src="@drawable/me_avater"
+                android:clickable="true"
                 makeramen:corner_radius="100dp" />
+            <TextView 
+                android:id="@+id/tv_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"/>
 
             <TextView
                 android:textColor="@color/text_gray"
@@ -110,6 +115,7 @@
     </ScrollView>
 
     <include
+        android:visibility="gone"
         android:id="@+id/ll_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

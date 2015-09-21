@@ -54,8 +54,8 @@ public class SearchActivity extends MainActionBarActivity {
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
-				Log.i(TAG, object.toString());
 				if (object != null) {
+					Log.i(TAG, object.toString());
 					JSONArray array = object.optJSONArray("List");
 					counts = new int[array.length()];
 					for (int i = 0; i < array.length(); i++) {
@@ -107,6 +107,7 @@ public class SearchActivity extends MainActionBarActivity {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
+					Log.i(TAG, object.toString());
 					JSONArray array = object.optJSONArray("List");
 					List<SimpleAreaEntity> entities = new ArrayList<SimpleAreaEntity>();
 					counts[index] = array.length();
@@ -114,7 +115,6 @@ public class SearchActivity extends MainActionBarActivity {
 					for (int i = 0; i < array.length(); i++) {
 						try {
 							JSONObject categoryObject = array.getJSONObject(i);
-							Log.i(TAG, categoryObject.toString());
 							String name = categoryObject.optString("Name", "");
 							int id = categoryObject.optInt("Id", 0);
 							SimpleAreaEntity entity = new SimpleAreaEntity();
@@ -128,8 +128,8 @@ public class SearchActivity extends MainActionBarActivity {
 					}
 					childList++;
 					if (childList == lists.size()) {
-						for (SimpleAreaList list : lists)
-							Log.i(TAG, list.toString());
+						// for (SimpleAreaList list : lists)
+						// Log.i(TAG, list.toString());
 						initList();
 
 					}
@@ -153,7 +153,7 @@ public class SearchActivity extends MainActionBarActivity {
 
 		loading.setVisibility(View.GONE);
 		for (int i = 0; i < lists.size(); i++) {
-			Log.i(TAG, "i" + i);
+			// Log.i(TAG, "i" + i);
 			SimpleAreaList list = lists.get(i);
 			final TextView tv = new TextView(SearchActivity.this);
 			tv.setText(list.father.Name);
@@ -199,7 +199,7 @@ public class SearchActivity extends MainActionBarActivity {
 				}
 			});
 			for (int j = 0; j < list.children.size(); j++) {
-				SimpleAreaEntity entity = list.children.get(j);
+				final SimpleAreaEntity entity = list.children.get(j);
 				TextView childTv = new TextView(SearchActivity.this);
 				childTv.setText(entity.Name);
 				childTv.setBackgroundResource(R.drawable.white_bg);
@@ -215,10 +215,56 @@ public class SearchActivity extends MainActionBarActivity {
 						TextView childTextView = (TextView) v;
 						String text = childTextView.getText().toString().trim();
 						Toast.makeText(SearchActivity.this, text, Toast.LENGTH_SHORT).show();
+						String fatherid = String.valueOf(entity.FatherId);
+						requestData(fatherid);
 					}
 				});
 			}
 		}
+	}
+
+	void requestData(String fatherid) {
+		final List<SimpleAreaEntity> areas = new ArrayList<SimpleAreaEntity>();
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				Log.i(TAG, data.toString());
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					Log.i(TAG, object.toString());
+					JSONArray array = object.optJSONArray("List");
+					if (array.length() > 0) {
+						for (int i = 0; i < array.length(); i++) {
+							try {
+								JSONObject categoryObject = array.getJSONObject(i);
+								String name = categoryObject.optString("Name", "");
+								int id = categoryObject.optInt("Id", 0);
+								SimpleAreaEntity entity = new SimpleAreaEntity();
+								entity.FatherId = id;
+								entity.Name = name;
+								areas.add(entity);
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+						}
+						SearchActivity3_.intent(SearchActivity.this).areas(areas).start();
+					} else {
+						// 地区选择完毕，返回
+						finish();
+					}
+				} else {
+					Toast.makeText(SearchActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_area_get)).setRequestMethod(RequestMethod.eGet).addParam("father", "false")
+				.addParam("fatherid", fatherid).notifyRequest();
 	}
 
 	@Override
