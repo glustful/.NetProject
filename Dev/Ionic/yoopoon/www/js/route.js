@@ -127,7 +127,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                }
                })
             .state('page.order', {
-                url: '/car/order?productid',
+                url: '/car/order?productId&count',
                 views: {
                     'page-car': {
                         templateUrl: 'page/car/order.html',
