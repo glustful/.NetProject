@@ -16,6 +16,27 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 	};
 
 
+	// 遮罩层
+    //
+	//var tip1 = document.getElementById("tiphidden1");
+	//var tip2 = document.getElementById("tiphidden2");
+	//$scope.hide=true;
+	//$scope.closetips = function() {
+	//	tip1.style.display = "none";
+	//	tip2.style.display = "none";
+	//	localStorage.x1 = "none";
+	//	$scope.hide=false;
+	//};
+	//$scope.hide=true;
+	//function save() {
+	//	if (localStorage.x1) {
+	//		tip1.style.display = "none";
+	//		tip2.style.display = "none";
+	//		$scope.hide=false;
+	//	}
+	//}
+	//save();
+
 	$scope.pageClick = function(index) {
 		//alert(index);
 		//alert($scope.delegateHandler.currentIndex());
@@ -67,7 +88,7 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 		if ($stateParams.tabIndex == 6) {
 			$scope.tabIndex = 6;
 			$scope.condition = {
-				Status: '4',
+				Status: '5',
 				Addusers: $scope.currentuser.UserId
 			};
 			var getList = function () {
@@ -88,26 +109,7 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 		$scope.showSelect = true;
 		$scope.isShow = true;
 	};
-	// 遮罩层
 
-	var tip1 = document.getElementById("tiphidden1");
-	var tip2 = document.getElementById("tiphidden2");
-    $scope.hide=true;
-	$scope.closetips = function() {
-		tip1.style.display = "none";
-		tip2.style.display = "none";
-		localStorage.x1 = "none";
-		$scope.hide=false;
-	};
-    $scope.hide=true;
-	function save() {
-		if (localStorage.x1) {
-			tip1.style.display = "none";
-			tip2.style.display = "none";
-			$scope.hide=false;
-		}
-	}
-	save();
 
 
 
