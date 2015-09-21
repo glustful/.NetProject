@@ -32,18 +32,18 @@
 
                 <div class="col-sm-9">
                     <div style="float: left;margin-right: 20px">
-                        <select class="form-control" style="width: 100px" ng-model="Category.Father.Father.Id"
+                        <select class="form-control" style="width: 100px" ng-model="oneId"
                                 ng-options="o.Id as o.Name for o in OneCategory" ng-change="selectTwoChange()" required>
                         </select>
                     </div>
                     <div style="float: left;margin-right: 20px">
-                        <select class="form-control" style="width: 100px" ng-model="Category.Father.Id"
+                        <select class="form-control" style="width: 100px" ng-model="twoId"
                                 ng-options="o.Id as o.Name for o in TwoCategory" ng-change="selectThreeChange()" required>
                         </select>
                     </div>
                     &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
                     <div style="float: left">
-                        <select class="form-control" style="width: 100px" ng-model="product.CategoryId" id="CategoryId"
+                        <select class="form-control" style="width: 100px" ng-model="threeId" id="CategoryId"
                                 ng-options="o.Id as o.Name for o in ThreeCategory" required>
                         </select>
                     </div>
