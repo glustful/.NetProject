@@ -45,7 +45,7 @@ namespace Zerg.Controllers.Community
 
         public HttpResponseMessage Get([FromUri]MemberAddressSearchCondition condition)
 		{
-			var model = _memberAddressService.GetMemberAddresssByCondition(condition).Select(c=>new MemberAddressModel
+			var model =_memberAddressService.GetMemberAddresssByCondition(condition).Select(o=>o.Id).Count()>0? _memberAddressService.GetMemberAddresssByCondition(condition).Select(c=>new MemberAddressModel
 			{
 				Id = c.Id,
 				Member = c.Member.Id,
@@ -57,7 +57,7 @@ namespace Zerg.Controllers.Community
 				Addtime = c.Addtime,
 				Upduser = c.Upduser,
 				Updtime = c.Updtime,
-			}).ToList();
+			}).ToList():null;
             var totalCount = _memberAddressService.GetMemberAddressCount(condition);
             return PageHelper.toJson(new { List = model, Condition = condition, toTalCount = totalCount });
 		}
