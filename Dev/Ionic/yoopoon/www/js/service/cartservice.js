@@ -159,10 +159,11 @@ app.service("cartservice", ['$rootScope',
 						return;
 					productlist[i].count = parseInt(productlist[i].count) - 1;
 					//jsonstr.totalAmount = parseFloat(jsonstr.totalAmount) - parseInt(productlist[i].num) * parseFloat(productlist[i].price);
-				} else {
-					console.log("删除失败,没有这个商品的ID");
-					
 				}
+                //else {
+				//	console.log("删除失败,没有这个商品的ID");
+				//
+				//}
 			}
 			jsonstr.productlist = productlist;
 			localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
