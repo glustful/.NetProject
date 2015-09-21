@@ -18,6 +18,18 @@ namespace Community.Entity.Model.ServiceOrderDetail
 		/// Product_Id
 		/// </summary>
 		public virtual ProductEntity Product { get; set; }
+        /// <summary>
+        /// 商品名称
+        /// </summary>
+        public virtual string ProductName { get; set; }
+        /// <summary>
+        /// 商品主图
+        /// </summary>
+        public virtual string MainImg { get; set; }
+        /// <summary>
+        /// 订单号
+        /// </summary>
+        public virtual string OrderNo { get; set; }
 		/// <summary>
 		/// Count
 		/// </summary>
