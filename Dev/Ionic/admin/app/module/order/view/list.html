@@ -21,12 +21,17 @@
                 <th>操作</th>
             </tr>
             <tr ng-repeat="item in list">
-                <td>{{item.OrderNo}}</td>
-                <td>{{item.UserName}}</td>
-                <td>{{item.Adddate}}</td>
+                <td>{{item.No}}</td>
+                <td>{{item.CustomerName}}</td>
+                <td>{{item.strAdddate}}</td>
                 <td>{{item.Totalprice|currency:'￥'}}({{item.Actualprice|currency:'￥'}})</td>
                 <td>{{item.StatusString}}</td>
-                <td></td>
+                <td><select class="form-control">
+                        <option>{{item.StatusString}}</option>
+                        <option>配送中</option>
+                        <option>订单完成</option>
+                    </select></td>
+                <td><button type="button" class="btn btn-info">提交</button></td>
             </tr>
         </table>
     </div>

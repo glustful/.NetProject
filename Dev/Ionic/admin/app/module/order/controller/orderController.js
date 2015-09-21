@@ -24,10 +24,10 @@ app.controller('orderListController', ['$scope', 'repository', function ($scope,
     };
 
     var getList = function () {
-        repository.get("communityOrder", $scope.condition).success(function (data) {
+        repository.get("communityOrder", $scope.condition).then(function (data) {
             $scope.list = data.List;
             $scope.condition = data.Condition;
-            $scope.totalPages = data.TotalPages;
+            $scope.totalPages = data.TotalCount;
         });
     };
 
