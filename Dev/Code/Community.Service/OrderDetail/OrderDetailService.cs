@@ -111,7 +111,7 @@ namespace Community.Service.OrderDetail
                 }
                 if (condition.Status.HasValue)
                 {
-                    query = query.Where(q => q.Order .Status  == condition.Status.Value);
+                    query = query.Where(q => q.Status  == condition.Status.Value);
                 }
 				if(condition.OrderBy.HasValue)
 				{
@@ -180,7 +180,7 @@ namespace Community.Service.OrderDetail
                 }
                 if (condition.Status.HasValue)
                 {
-                    query = query.Where(q => q.Order.Status == condition.Status.Value);
+                    query = query.Where(q => q.Status == condition.Status.Value);
                 }
 				return query.Count();
 			}

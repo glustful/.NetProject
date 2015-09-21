@@ -17,6 +17,7 @@ using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.Community
 {
+    [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
 	public class CommunityOrderController : ApiController
 	{
@@ -61,14 +62,17 @@ namespace Zerg.Controllers.Community
                     Id = c.Id,
                     Product = new ProductModel
                     {
+                        Id = c.Product.Id,
+                        MainImg = c.Product.MainImg,
                         Name = c.Product.Name,
-                        Id = c.Product.Id
+                        Price = c.Product.Price 
                     },
                     ProductName = c.ProductName,
                     UnitPrice = c.UnitPrice,
                     Remark = c.Remark,
                     Snapshoturl = c.Snapshoturl,
                     Totalprice = c.Totalprice,
+                    Status = c.Status.Value==0?"Î´ÆÀ¼Û":"ÒÑÆÀ¼Û" 
                 }).ToList(),
 		        UserName = entity.AddMember.UserName
             };
@@ -106,7 +110,8 @@ namespace Zerg.Controllers.Community
                     {
                         Id = d.Product.Id,
                         MainImg = d.Product.MainImg,
-                        Name = d.Product.Name
+                        Name = d.Product.Name,
+                        Price =d.Product .Price 
                     },
                     ProductName = d.ProductName
 				}).ToList(),
