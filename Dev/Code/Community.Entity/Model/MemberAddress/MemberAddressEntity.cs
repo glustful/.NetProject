@@ -53,5 +53,10 @@ namespace Community.Entity.Model.MemberAddress
 		/// UpdTime
 		/// </summary>
 		public virtual DateTime Updtime { get; set; }
+
+        /// <summary>
+        /// 是否默认
+        /// </summary>
+        public virtual bool IsDefault { get; set; }
 	}
 }

@@ -233,5 +233,18 @@ namespace Community.Service.MemberAddress
                 return -1;
 			}
 		}
+
+	    public MemberAddressEntity GetDefaultAddress(int userId)
+	    {
+	        try
+	        {
+	           return _memberaddressRepository.Table.FirstOrDefault(c => c.Adduser == userId && c.IsDefault);
+	        }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+	    }
 	}
 }

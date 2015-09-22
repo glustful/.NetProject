@@ -55,16 +55,78 @@ app.controller('productCtr', ['$scope', '$http','$modal', function($scope, $http
     }
 }]);
 app.controller('editProductCtr',['$http','$scope','$state','$stateParams',function($http,$scope,$state,$stateParams){
-    $http.get(SETTING.ZergWcApiUrl + "/Category/GetChildByFatherId?id="+0, {
-        'withCredentials': true
-    }).success(function (data) {
-        $scope.CategoryList = data;
-    })
     $http.get(SETTING.ZergWcApiUrl+"/CommunityProduct/Get?id="+$stateParams.id,{
             'withCredentials':true  //跨域
         }).success(function(data){
              $scope.product=data.ProductModel;
+        if($scope.product.Type==0) {
+            $http.get(SETTING.ZergWcApiUrl + "/Category/Get?id=" + $scope.product.CategoryId, {
+                'withCredentials': true
+            }).success(function (data) {
+                $scope.Category = data;
+                $scope.threeId=$scope.Category.Id;
+                //获取三级分类
+                $http.get(SETTING.ZergWcApiUrl + "/Category/GetChildByFatherId?id=" + $scope.Category.Father.Id, {
+                    'withCredentials': true
+                }).success(function (data) {
+                    $scope.ThreeCategory = data;
+                    // 获取二级分类
+                    $scope.twoId=$scope.Category.Father.Id;
+                    $http.get(SETTING.ZergWcApiUrl + "/Category/GetChildByFatherId?id=" + $scope.Category.Father.Father.Id, {
+                        'withCredentials': true
+                    }).success(function (data) {
+
+                        $scope.TwoCategory = data;
+                        $scope.oneId=$scope.Category.Father.Father.Id
+                        //获取一级分类
+                        $http.get(SETTING.ZergWcApiUrl + "/Category/GetChildByFatherId?id=" + 0, {
+                            'withCredentials': true
+                        }).success(function (data) {
+
+                            $scope.OneCategory = data;
+                        })
+                    })
+                })
+            })
+        }
+        else {
+            $http.get(SETTING.ZergWcApiUrl + "/Category/Get?id=" + $scope.product.CategoryId, {
+                'withCredentials': true
+            }).success(function (data) {
+                $scope.Category = data;
+                $scope.twoId=$scope.Category.Id;
+                //获取二级分类
+                $http.get(SETTING.ZergWcApiUrl + "/Category/GetChildByFatherId?id=" + $scope.Category.Father.Id, {
+                    'withCredentials': true
+                }).success(function (data) {
+                    $scope.TwoCategory = data;
+                    $scope.oneId=$scope.Category.Father.Id
+                    //获取一级分类
+                    $http.get(SETTING.ZergWcApiUrl + "/Category/GetChildByFatherId?id=" + 0, {
+                        'withCredentials': true
+                    }).success(function (data) {
+                        $scope.OneCategory = data;
+                    })
+                })
+            })
+        }
+        });
+    $scope.selectTwoChange=function()
+    {
+        $http.get(SETTING.ZergWcApiUrl + "/Category/GetChildByFatherId?id="+$scope.oneId, {
+            'withCredentials': true
+        }).success(function (data) {
+            $scope.TwoCategory = data;
         })
+    }
+    $scope.selectThreeChange=function()
+    {
+        $http.get(SETTING.ZergWcApiUrl + "/Category/GetChildByFatherId?id="+$scope.twoId, {
+            'withCredentials': true
+        }).success(function (data) {
+            $scope.ThreeCategory = data;
+        })
+    }
     $scope.update= function () {
         if(mainImg.length>0)
         {
@@ -89,6 +151,13 @@ app.controller('editProductCtr',['$http','$scope','$state','$stateParams',functi
         if(Img4.length>0)
         {
             $scope.product.Img4=Img4;
+        }
+        if($scope.threeId==undefined)
+        {
+            $scope.product.CategoryId=$scope.twoId;
+        }
+        else{
+            $scope.product.CategoryId=$scope.threeId;
         }
         $http.put(SETTING.ZergWcApiUrl+'/CommunityProduct/Put',$scope.product,{
             'withCredentials':true
