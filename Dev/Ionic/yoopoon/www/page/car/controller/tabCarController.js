@@ -71,7 +71,23 @@ var carlistcount=0;
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
 
+    ////全选按钮功能
+//    $scope.start=false;
+//    $scope.allButton=false;
+//    $scope.all=function(){
+//        if($scope.allButton==false){
+//            $scope.start=false;
+//        }if($scope.allButton==true){
+//            $scope.start=true;
+//        }
+//    }
 
+    var el=document.getElementsByTagName("input");
+   var a=el.length;
+    console.log(a);
+    var len=el.length;
+    $scope.allButton=function(){
+        for(var i=0;i<len;i++){
 
     //region 全选 单选
     $scope.start=false;//默认未选中

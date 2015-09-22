@@ -82,20 +82,20 @@ app.config(function($stateProvider, $urlRouterProvider) {
                }
                })
             .state('page.clear', {
-                url: '/service/clear',
+                url: '/service/clear?name',
                 views: {
                     'page-service': {
                         templateUrl: 'page/service/clear.html',
-                        controller: 'TabServiceCtrl'
+                        controller: 'clearservice'
                     }
                 }
             })
             .state('page.safe', {
-                url: '/service/safe',
+                url: '/service/safe?name',
                 views: {
                     'page-service': {
                         templateUrl: 'page/service/safe.html',
-                        controller: 'TabServiceCtrl'
+                        controller: 'safeservice'
                     }
                 }
             })
@@ -110,10 +110,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 }
             })
             .state('page.safe-detail', {
-                url: '/service/safe-detail',
+                url: '/service/safe-detail?id&name',
                 views: {
                     'page-service': {
-                        templateUrl: 'page/service/safe-detail.html'
+                        templateUrl: 'page/service/safe-detail.html',
+                        controller:'safedetailservice'
                     }
                 }
             })
