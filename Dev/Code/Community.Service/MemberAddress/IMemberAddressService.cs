@@ -19,5 +19,7 @@ namespace Community.Service.MemberAddress
 		int GetMemberAddressCount (MemberAddressSearchCondition condition);
 
 	    MemberAddressEntity GetDefaultAddress(int userId);
+
+	    MemberAddressEntity GetDefaultAddress(string memberId);
 	}
 }
