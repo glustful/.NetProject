@@ -32,27 +32,27 @@ namespace Zerg.Controllers.Community
             _areaService = areaService;
         }
 
-        public HttpResponseMessage Get()
-        {
-            var user = _workContext.CurrentUser;
-            if (user == null)
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "无法获取当前的用户信息"));
-            var entity = _memberAddressService.GetDefaultAddress(user.Id);
-            var model = new MemberAddressModel
-            {
-                Id = entity.Id,
-                Member = entity.Member.Id,
-                Address = entity.Address,
-                Zip = entity.Zip,
-                Linkman = entity.Linkman,
-                Tel = entity.Tel,
-                Adduser = entity.Adduser,
-                Addtime = entity.Addtime,
-                Upduser = entity.Upduser,
-                Updtime = entity.Updtime
-            };
-            return PageHelper.toJson(model);
-        }
+        //public HttpResponseMessage Get()
+        //{
+        //    var user = _workContext.CurrentUser;
+        //    if (user == null)
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "无法获取当前的用户信息"));
+        //    var entity = _memberAddressService.GetDefaultAddress(user.Id);
+        //    var model = new MemberAddressModel
+        //    {
+        //        Id = entity.Id,
+        //        Member = entity.Member.Id,
+        //        Address = entity.Address,
+        //        Zip = entity.Zip,
+        //        Linkman = entity.Linkman,
+        //        Tel = entity.Tel,
+        //        Adduser = entity.Adduser,
+        //        Addtime = entity.Addtime,
+        //        Upduser = entity.Upduser,
+        //        Updtime = entity.Updtime
+        //    };
+        //    return PageHelper.toJson(model);
+        //}
 
         public HttpResponseMessage Get(int id)
 		{

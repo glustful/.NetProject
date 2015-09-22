@@ -1,7 +1,7 @@
 /**
  * Created by Yunjoy on 2015/9/10.
  */
-app.controller('serviceOrderListController', ['$scope', 'repository', function ($scope, repository) {
+app.controller('serviceOrderListController', ['$http','$scope', 'repository', function ($http,$scope, repository) {
     $scope.condition = {
         Page:1,
         PageCount:10,
@@ -25,8 +25,14 @@ app.controller('serviceOrderListController', ['$scope', 'repository', function (
             $scope.condition = data.Condition;
             $scope.totalPages = data.TotalPages;
         });
-    };
-
+    }
     getList();
     $scope.getList = getList;
+    $scope.Create = function (item) {
+        $http.put(SETTING.ZergWcApiUrl + '/ServiceOrder/Put', item, {
+            'withCredentials': true
+        }).success(function (data) {
+            getList();
+        })
+    }
 }]);

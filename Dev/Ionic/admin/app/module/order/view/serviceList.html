@@ -18,6 +18,7 @@
                 <th>下单时间</th>
                 <th>订单总价</th>
                 <th>订单状态</th>
+                <th>订单修改</th>
                 <th>操作</th>
             </tr>
             <tr ng-repeat="item in list">
@@ -26,7 +27,15 @@
                 <td>{{item.Adddate}}</td>
                 <td>{{item.Flee|currency:'￥'}}</td>
                 <td>{{item.StatusString}}</td>
-                <td></td>
+                <td>
+                    <select ng-model="item.Status">
+                        <option value="0">新建</option>
+                        <option value="1">已付款</option>
+                        <option value="2">订单完成</option>
+                        <option value="3">订单关闭</option>
+                    </select>
+                </td>
+                <td><button id="btn_ok" type="button" class="btn btn-primary" ng-click="Create(item)">提交</button></td>
             </tr>
         </table>
     </div>
