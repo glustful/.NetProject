@@ -64,14 +64,9 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 	//$scope.tabIndex = 5;
 	$scope.getServiceList = function (tabIndex) {
 		$scope.tabIndex = tabIndex;
-
-	};
-	function tab() {
 		//获取当前用户信息
 		$scope.currentuser= AuthService.CurrentUser();
-		//待接件
-		if ($stateParams.tabIndex == 5) {
-			$scope.tabIndex = 5;
+		if(	$scope.tabIndex == 5){
 			$scope.condition = {
 				Status: '4',
 				Addusers: $scope.currentuser.UserId
@@ -83,10 +78,9 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 				});
 			};
 			getList();
+
 		}
-		//办理中
-		if ($stateParams.tabIndex == 6) {
-			$scope.tabIndex = 6;
+		if($scope.tabIndex == 6){
 			$scope.condition = {
 				Status: '5',
 				Addusers: $scope.currentuser.UserId
@@ -98,6 +92,19 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 					});
 			};
 			getList1();
+		}
+
+	};
+	function tab() {
+		//待接件
+		if ($stateParams.tabIndex == 5) {
+			$scope.tabIndex = 5;
+
+		}
+		//办理中
+		if ($stateParams.tabIndex == 6) {
+			$scope.tabIndex = 6;
+
 		}
 	}
 	tab();

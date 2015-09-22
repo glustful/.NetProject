@@ -238,29 +238,29 @@ app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderServic
         //待付款
         if ($stateParams.tabIndex == 1) {
             $scope.tabIndex = 1;
-            $scope.serchCondition={
-                Status:'1',
-                CustomerName: $scope.currentuser.UserName
-            }
-            $scope.myOrder = orderService.getOrderList($scope.searchCondition)
+            //$scope.serchCondition={
+            //    Status:'1',
+            //    CustomerName: $scope.currentuser.UserName
+            //}
+            //$scope.myOrder = orderService.getOrderList($scope.searchCondition)
         }
         //待发货
         if ($stateParams.tabIndex == 2) {
             $scope.tabIndex = 2;
-            $scope.serchCondition={
-                CustomerName: $scope.currentuser.UserName,
-                Status:'2'
-            }
-            $scope.myOrder = orderService.getOrderList($scope.searchCondition);
+            //$scope.serchCondition={
+            //    CustomerName: $scope.currentuser.UserName,
+            //    Status:'2'
+            //}
+            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
         }
         //待收货
         if ($stateParams.tabIndex == 3) {
             $scope.tabIndex = 3;
-            $scope.serchCondition={
-                CustomerName: $scope.currentuser.UserName,
-                Status:'3'
-            }
-            $scope.myOrder = orderService.getOrderList($scope.searchCondition);
+            //$scope.serchCondition={
+            //    CustomerName: $scope.currentuser.UserName,
+            //    Status:'3'
+            //}
+            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
         }
         //待评价
         if ($stateParams.tabIndex == 4) {
