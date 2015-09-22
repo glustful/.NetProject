@@ -1,4 +1,4 @@
-app.controller('TabCarCtrl', function($scope, $ionicSlideBoxDelegate,cartservice) {
+app.controller('TabCarCtrl', function($scope,$state, $ionicSlideBoxDelegate,cartservice) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -71,57 +71,50 @@ var carlistcount=0;
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
 
+    ////全选按钮功能
+//    $scope.start=false;
+//    $scope.allButton=false;
+//    $scope.all=function(){
+//        if($scope.allButton==false){
+//            $scope.start=false;
+//        }if($scope.allButton==true){
+//            $scope.start=true;
+//        }
+//    }
 
+    var el=document.getElementsByTagName("input");
+   var a=el.length;
+    console.log(a);
+    var len=el.length;
+    $scope.allButton=function(){
+        for(var i=0;i<len;i++){
 
-
-
+    //region 全选 单选
     $scope.start=false;//默认未选中
     $scope.allButton=false;//全选
     $scope.choseArr=[];//定义数组用于存放前端显示
     $scope.all=function(c,v){
 
         if(c==true){
+            cleanchoseArr();
             for( i=0;i<$scope.productlist.length;i++)
             {
                 $("#check"+$scope.productlist[i].id).find(":checkbox")[0].checked=true;
+                $scope.choseArr.push($scope.productlist[i].id);
             }
-            var valuss=v;
-            $scope.choseArr=valuss;
+           // var valuss=v;
+           // $scope.choseArr=valuss;
         }else{
             for( i=0;i<$scope.productlist.length;i++)
             {
-                $("#check"+$scope.productlist[i].id).find(":checkbox")[0].checked=false;
+                $("#check"+$scope.productlist[i].id).find(":checkbox").eq(0).prop('checked', false);
             }
             $scope.choseArr=[""];
             cleanchoseArr();
         }
-
-
-        //for(i=0;i<$scope.productlist.length;i++){
-        //    if($scope.start[i]=false)
-        //    {
-        //        $scope.allButton==false
-        //    }
-        //    if( $scope.allButton==true){$scope.start=true;}
-        //    if( $scope.allButton==false){$scope.start=false;}
-        //}
-//        if($scope.allButton==false){
-//            $scope.start=false;
-//            $scope.dprice=0;
-////            alert("nihao")
-//        }
-//          if($scope.allButton==true){
-//            $scope.start=true;
-//            //总计
-//            allprice();
-//
-////            alert($scope.start)
-//
-//        }
-
+        allprice();
     }
-    var cleanchoseArr=function()
-    {
+    var cleanchoseArr=function() {
         for(i=0;i<$scope.choseArr.length;i++)
         {
             if($scope.choseArr[i]=="")
@@ -134,146 +127,130 @@ var carlistcount=0;
         // 修改折扣后触发事件
         var node = t.item;//当前值
         var isExit=false;//是否存在 默认不存在
-        // if(t.start==true)//选中状态
-
-        if($("#check"+node.id).find(":checkbox")[0].checked)
+        cleanchoseArr();
+        if($("#check"+node.id).find(":checkbox")[0].checked)//如果当前这个值选中
         {
+            //判断当前Id是否在choseArr存在
             for(i=0;i<$scope.choseArr.length;i++) {
-                if($scope.choseArr[i].id==node.id)
+                if($scope.choseArr[i]==node.id)
                 {
                     isExit=true;//列表中存在
                 }
             }
             if(!isExit)//列表中不存在当前值
             {
-                $scope.choseArr.push(node);
+                $scope.choseArr.push(node.id);
             }
             //判断当前这些在值 和列表中值是否一样
             cleanchoseArr();
 
-            //再次遍历所有checkbox是否有选中
+            //再次遍历所有checkbox是否都选中
+            $scope.allButton=true;
         for(i=0;i<$scope.productlist.length;i++)
         {
-           if( $("#check"+$scope.productlist[i].id).find(":checkbox")[0].checked)
+           if( !$("#check"+$scope.productlist[i].id).find(":checkbox")[0].checked)//判断是否选中
            {
-               var novalue=false;
-               for(j=0;j<$scope.choseArr.length;j++) {
-                   //循环遍历 当前选中的值是否在 choseArr中存在
-                   if($scope.productlist[i].id==$scope.choseArr[j].id)
-                   {
-                       novalue=true;//存在
-                   }
-               }
-               if(!novalue)
-               {
-                   var vss=$scope.productlist[i];
-                   $scope.choseArr.push(vss);
-               }
+
+               $scope.allButton=false;
            }
         }
-
-            if($scope.choseArr.length==$scope.productlist.length)
-            {
-                $scope.allButton=true;
-            }else{
-                $scope.allButton=false;
-            }
-
-
-
         }else{
             $scope.allButton=false;
             $("#check"+node.id).find(":checkbox")[0].checked=false;
             cleanchoseArr();
 
-            //$scope.choseArr.forEach(function(element, index, array){
-            //    if(element.id ===node.id){
-            //        $scope.choseArr.remove(index);
-            //    }
-            //});
-
             for(i=0;i<$scope.choseArr.length;i++) {
 
-                if($scope.choseArr[i].id==node.id)
+                if($scope.choseArr[i]==node.id)
                 {
                     //$scope.choseArr.remove(i);
                    $scope.choseArr.splice(i,1);
                 }
             }
-            //if($scope.productList.length<=0 || carlistcount!=$scope.productList.length || $scope.productList==undefined || $scope.productList=="")
-            //if( $scope.productList==undefined )
-            //{
-            //    getcar();
-            //}else{
-            //    if($scope.productList.length<=0 || carlistcount!=$scope.productList.length)
-            //    {
-            //        getcar();
-            //    }
-            //}
         }
+        allprice();
     }
+    //endregion
 
-
-
-
-    //$scope.$watch('$scope.productlist',aa,false);
-    //function aa(){
-    //    for(i=0;i<$scope.productlist.length;i++){
-    //        if($scope.start[i]=false)
-    //        {
-    //            $scope.allButton==false
-    //        }
-    //        if( $scope.allButton==true){$scope.start=true;}
-    //        if( $scope.allButton==false){$scope.start=false;}
-    //    }
-    //}
-//
-
-
-
-///数量增加减
+    //region 数量增加减
 
     $scope.adding=function(id){
         cartservice.addone(id);
-        getcar();
+        for(j=0;j<$scope.productlist.length;j++){
+            if($scope.productlist[j].id==id){
+                $scope.productlist[j].count=  $scope.productlist[j].count+1;
+            }
+        }
         allprice();
+
+
         }
 
 
     $scope.decrease=function(id){
         cartservice.delete(id);
-        getcar();
+
+        for(j=0;j<$scope.productlist.length;j++){
+            if($scope.productlist[j].id==id){
+                $scope.productlist[j].count=  $scope.productlist[j].count-1;
+            }
+        }
         allprice();
+
 }
-//总计
+
+    //endregion
+
+    //region 计算总价
     $scope.dprice=0;
 
    var allprice=function(){
         var prices=0;
 
-        for(i=0;i<$scope.productlist.length;i++){
-            if($scope.start==true){
-                prices+= $scope.productlist[i].newprice * $scope.productlist[i].count;
+       for(i=0;i< $scope.choseArr.length;i++)
+       {
+           for(j=0;j<$scope.productlist.length;j++){
+               if($scope.choseArr[i]==$scope.productlist[j].id){
+                   prices+= parseInt($scope.productlist[j].price * $scope.productlist[j].count);
                }
-        }
+           }
+       }
         $scope.dprice=prices;
     }
-//allprice();
+    //endregion
 
+    //region 编辑
 
-
-//编辑
     $scope.flag={showDelete:false,showReorder:false};
     $scope.items=["Chinese","English","German","Italian","Janapese","Sweden","Koeran","Russian","French"];
     $scope.delete_item=function(id){
        cartservice.deletethis(id)
         getcar();
+
     };
     $scope.move_item = function(item, fromIndex, toIndex) {
         $scope.items.splice(fromIndex, 1);
         $scope.items.splice(toIndex, 0, item);
     };
-               });
+    //endregion
+
+    //region 结算
+    $scope.jiesuan=function(){
+        $scope.productcount=[];
+        for(i=0;i< $scope.choseArr.length;i++)
+        {
+            for(j=0;j<$scope.productlist.length;j++){
+                if($scope.choseArr[i]==$scope.productlist[j].id){
+                   $scope.productcount.push($scope.productlist[j])
+                }
+            }
+        }
+       $state.go("page.order",{productcount:$scope.productcount,pricecount:$scope.dprice})
+    }
+
+    //endregion
+
+});
 
 
 

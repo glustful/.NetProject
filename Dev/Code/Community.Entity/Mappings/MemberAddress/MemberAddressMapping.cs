@@ -21,6 +21,7 @@ namespace Community.Entity.Mappings.MemberAddress
 			Property(c => c.Addtime).HasColumnType("datetime").IsOptional();
 			Property(c => c.Upduser).HasColumnType("int").IsOptional();
 			Property(c => c.Updtime).HasColumnType("datetime").IsOptional();
+		    Property(c => c.IsDefault).HasColumnType("bit").IsOptional();
 		}
 	}
 }
