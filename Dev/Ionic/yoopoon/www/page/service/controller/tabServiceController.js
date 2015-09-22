@@ -186,3 +186,124 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate, $timeo
 		}
 	}
 });
+
+app.controller('clearservice',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+// money
+	if( $stateParams.name==undefined ||  $stateParams.name=="" )
+	{
+		$scope.go("page.service");
+	}
+	$scope.Address={
+		AreaName:$stateParams.name,
+		AreaId: $stateParams.id,
+		Address:'',
+		Zip :'',
+		Linkman :'',
+		Tel:''
+	};
+
+	$scope.saves = function () {
+
+		$http.post(SETTING.ApiUrl + '/MemberAddress/Post', $scope.Address, {'withCredentials': true})
+			.success(function (data) {
+				if (data.Status) {
+
+					$state.go("page.addressAdm");
+				}
+			});
+	}
+
+}]);
+
+app.controller('safeservice',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+// no money
+
+	if( $stateParams.name==undefined ||  $stateParams.name=="" )
+	{
+		$scope.go("page.service");
+	}
+
+	alert($stateParams.name);
+    $scope.Name=$stateParams.name;
+	$scope.items = [];
+	$scope.searchCondition = {
+
+		IsDescending: true,
+		OrderBy: 'OrderByAddtime',
+		Page: 1,
+		PageCount: 10
+		//ProductId:''
+	};
+
+	var getList = function () {
+		$http.get(SETTING.ApiUrl + '/CommunityProduct/Get', {
+			params: $scope.searchCondition,
+			'withCredentials': true
+		}).success(function (data) {
+			if (data.List != "") {
+				$scope.items = data.List;
+			}
+		});
+	};
+	getList();
+//endregion
+	//region 商品加载
+	$scope.loadmore=true;
+	$scope.load_more = function () {
+		$timeout(function () {
+			$scope.searchCondition.Page += 1;
+			$http.get(SETTING.ApiUrl + '/CommunityProduct/Get', {
+				params: $scope.searchCondition,
+				'withCredentials': true
+			}).success(function (data) {
+
+				if (data.List != "") {
+					for (var i = 0; i < data.List.length; i++) {
+						$scope.items.push(data.List[i]);
+					}
+					if($scope.items.length==data.TotalCount)
+					{
+						$scope.loadmore=false;
+					}
+				}
+				$scope.$broadcast("scroll.infiniteScrollComplete");
+			});
+		}, 1000)
+	};
+
+}]);
+
+app.controller('safedetailservice',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+// no money
+
+	if( $stateParams.name==undefined ||  $stateParams.name=="" )
+	{
+		$scope.go("page.service");
+	}
+
+	alert($stateParams.name);
+	$scope.Name=$stateParams.name;
+	$scope.items = [];
+	$scope.searchCondition = {
+
+		IsDescending: true,
+		OrderBy: 'OrderByAddtime',
+		Page: 1,
+		PageCount: 10
+		//ProductId:''
+	};
+
+	var getList = function () {
+		$http.get(SETTING.ApiUrl + '/CommunityProduct/Get', {
+			params: $scope.searchCondition,
+			'withCredentials': true
+		}).success(function (data) {
+			if (data.List != "") {
+				$scope.items = data.List;
+			}
+		});
+	};
+	getList();
+
+
+}]);
