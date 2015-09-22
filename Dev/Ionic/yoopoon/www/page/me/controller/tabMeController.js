@@ -26,6 +26,31 @@ app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderServic
     }
 
 
+    $scope.save = function () {
+        //if (document.getElementById("Uptext").innerText == '正在上传..') {
+        //    alert("头像正在上传,请稍等!");
+        //    return;
+        //}
+        if (httpimguri.length > 0) {
+            $scope.oldMem.Thumbnail = httpimguri;
+            //如果服务器返回了用户的头像地址,操作IMG标签的SRC为angularjs绑定
+            var img = document.getElementById('imghead');
+            img.src = "{{oldMem.Thumbnail}}";
+            //有图片就显示
+            img.style.display = 'block';
+        } else {
+            httpimguri = '';
+        }
+        $http.post(SETTING.ApiUrl + '/Member/Post', $scope.oldMem, {'withCredentials': true})
+            .success(function (data) {
+                if (data.Status) {
+                    var img = document.getElementById('imghead');
+                    img.src = $scope.oldMem.Thumbnail;
+                    location.reload([true]);
+                    $state.go("app.me");
+                }
+            });
+    }
 
     //获取当前用户信息
     $scope.currentuser= AuthService.CurrentUser();

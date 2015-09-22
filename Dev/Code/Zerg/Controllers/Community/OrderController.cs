@@ -17,6 +17,7 @@ using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.Community
 {
+    [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
 	public class CommunityOrderController : ApiController
 	{
@@ -26,7 +27,7 @@ namespace Zerg.Controllers.Community
 	    private readonly IMemberAddressService _memberAddressService;
         private readonly IMemberService _memberService;
 
-        public CommunityOrderController(IOrderService orderService, IProductService productService, IWorkContext workContext,IMemberAddressService memberAddressService,IMemberService memberService)
+        public CommunityOrderController(IOrderService orderService, IProductService productService, IWorkContext workContext, IMemberAddressService memberAddressService, IMemberService memberService)
 	    {
 	        _orderService = orderService;
 	        _productService = productService;
@@ -101,7 +102,7 @@ namespace Zerg.Controllers.Community
 				Upddate = c.UpdDate,
 				Totalprice = c.Totalprice,
 				Actualprice = c.Actualprice,
-				Details = c.Details.Select(d=>new OrderDetailModel
+                Details = c.Details.Select(d => new OrderDetailModel
 				{
 				    Count = d.Count,
                     UnitPrice = d.UnitPrice,
@@ -118,8 +119,8 @@ namespace Zerg.Controllers.Community
 				}).ToList(),
                 UserName = c.AddMember.UserName
 			}).ToList();
-		    var totalCount = _orderService.GetOrdersByCondition(condition);
-            return PageHelper.toJson(new { List = model});
+            var totalCount = _orderService.GetOrderCount(condition);
+            return PageHelper.toJson(new { List = model, Condition = condition, TotalCount = totalCount });
 		}
 
 		public HttpResponseMessage Post([FromBody]OrderModel model)
@@ -144,7 +145,7 @@ namespace Zerg.Controllers.Community
                 Upduser = _workContext.CurrentUser.Id
             }).ToList();
             if (products.Count < 1)
-                return PageHelper.toJson(PageHelper.ReturnValue(false,"没有找到商品信息"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "没有找到商品信息"));
 
             //订单编号
             Random rd = new Random();
@@ -164,12 +165,12 @@ namespace Zerg.Controllers.Community
                 Actualprice = products.Sum(c => (c.Count * c.UnitPrice)),
 				Details = products,
                 Address = _memberAddressService.GetMemberAddressById(model.MemberAddressId),
-                AddMember = _memberService.GetMemberByUserId( _workContext.CurrentUser.Id)
+                AddMember = _memberService.GetMemberByUserId(_workContext.CurrentUser.Id)
 			};
             if (_orderService.Create(entity).Id > 0)
 			{
                 //TODO:回掉接口写到Msg里，完成回掉方法
-				return PageHelper.toJson(PageHelper.ReturnValue(true,"null",new OrderModel
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "null", new OrderModel
 				{
 				    Id = entity.Id,
                     No = entity.No,
@@ -178,7 +179,7 @@ namespace Zerg.Controllers.Community
                     CustomerName = entity.CustomerName
 				}));
 			}
-			return PageHelper.toJson(PageHelper.ReturnValue(false,"生成订单出错，请联系管理员"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "生成订单出错，请联系管理员"));
 		}
 
        
