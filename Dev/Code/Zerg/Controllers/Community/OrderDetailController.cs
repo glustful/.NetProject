@@ -8,6 +8,7 @@ using System.Web.Http.Cors;
 using System.Net.Http;
 using Zerg.Common;
 using Community.Entity.Model.ProductParameter;
+using Community.Entity.Model.Order;
 
 namespace Zerg.Controllers.Community
 {
@@ -94,26 +95,27 @@ namespace Zerg.Controllers.Community
 //			return false;
 //		}
 
-        public bool Put(OrderDetailModel model)
+        public HttpResponseMessage  Put(OrderDetailModel model)
         {
             var entity = _orderDetailService.GetOrderDetailById(model.Id);
             if (entity == null)
-                return false;
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "评价失败"));
             //			entity.Product = model.Product;
-            entity.ProductName = model.ProductName;
-            entity.UnitPrice = model.UnitPrice;
-            entity.Count = model.Count;
-            entity.Snapshoturl = model.Snapshoturl;
-            entity.Remark = model.Remark;
-            entity.Adduser = model.Adduser;
-            entity.Adddate = model.Adddate;
-            entity.Upduser = model.Upduser;
-            entity.Upddate = model.Upddate;
-            entity.Totalprice = model.Totalprice;
+            //entity.ProductName = model.ProductName;
+            //entity.UnitPrice = model.UnitPrice;
+            //entity.Count = model.Count;
+            //entity.Snapshoturl = model.Snapshoturl;
+            //entity.Remark = model.Remark;
+            //entity.Adduser = model.Adduser;
+            //entity.Adddate = model.Adddate;
+            //entity.Upduser = model.Upduser;
+            //entity.Upddate = model.Upddate;
+            //entity.Totalprice = model.Totalprice;
             //			entity.Order = model.Order;
+            entity.Status = EnumOrderDetailStatus.已评价;
             if (_orderDetailService.Update(entity) != null)
-                return true;
-            return false;
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "评价成功"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false , "评价失败"));
         }
 //
 //		public bool Delete(int id)

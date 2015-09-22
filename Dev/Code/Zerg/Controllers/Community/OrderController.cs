@@ -17,6 +17,7 @@ using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.Community
 {
+    [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
 	public class CommunityOrderController : ApiController
 	{
@@ -72,12 +73,64 @@ namespace Zerg.Controllers.Community
                     Remark = c.Remark,
                     Snapshoturl = c.Snapshoturl,
                     Totalprice = c.Totalprice,
+                    Status =c.Status ==0?"未评价":"已评价"
                 }).ToList(),
 		        UserName = entity.AddMember.UserName
             };
 
             return PageHelper.toJson(new { List = model });
 		}
+        /// <summary>
+        /// 更新订单状态为订单完成
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        
+        [HttpGet]
+        public HttpResponseMessage upOrderStatus(int id)
+        {
+            var entity = _orderService.GetOrderById(id);
+            if (entity == null)
+            {
+                return null;
+            }
+            var model = new OrderModel
+            {
+             
+                Details = entity.Details.Select(c => new OrderDetailModel
+                {
+                  
+                    Status = c.Status == 0 ? "未评价" : "已评价"
+                }).ToList()
+            };
+            string sta="已评价";
+            foreach (var item in model.Details)
+            {
+                if(item.Status =="未评价")
+                {
+                    sta = "未评价";
+                }
+            }
+            if(sta=="已评价")
+            {
+                var entity1 = _orderService.GetOrderById(id);
+                if (entity1 == null)
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, string.Format("无法获取到Id为{0}的订单", id)));
+                //if (_workContext.CurrentUser.Id != entity.AddUser &&
+                //    !((UserBase)_workContext.CurrentUser).UserRoles.Select(c => c.Role.RoleName)
+                //        .ToList()
+                //        .Intersect(allowEditRoles)
+                //        .Any())
+                //    return PageHelper.toJson(PageHelper.ReturnValue(false, "当前用户没有权限修改此订单"));
+               
+                entity1.Status = EnumOrderStatus .Canceled ;
+                //entity.UpdUser = _workContext.CurrentUser.Id;
+                entity1.UpdDate = DateTime.Now;
+                return PageHelper.toJson(_orderService.Update(entity1) != null ? PageHelper.ReturnValue(true, "该订单全部商品已评价完毕") : PageHelper.ReturnValue(false, "操作失败，请查看日志"));
+            }
+
+            return PageHelper.toJson(new { List = model });
+        }
 
         public class Aerers
 		{
