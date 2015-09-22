@@ -129,8 +129,8 @@ app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout','$stateParams'
     });
     //endregion
 }])
-app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','$ionicSlideBoxDelegate', 'cartservice',
-    function ($http, $scope, $stateParams, $timeout, $ionicSlideBoxDelegate,cartservice) {
+app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$timeout','$ionicSlideBoxDelegate', 'cartservice',
+    function ($http, $scope, $state,$stateParams, $timeout, $ionicSlideBoxDelegate,cartservice) {
         //region 轮播图
         $scope.$on('$ionicView.enter', function () {
             $ionicSlideBoxDelegate.start();
@@ -200,6 +200,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
                $scope.$broadcast("scroll.infiniteScrollComplete");
             }, 1000);
         };
+        $scope.isDetail=false;
         $scope.getDetail=function(){
             load_detail();
             $scope.isDetail=true;
@@ -227,7 +228,8 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
             cartservice.add($scope.cartinfo);
             $scope.changIng=true;
         }
-//       立即购买
+        //endregion
+        //region  立即购买
         $scope.buyHide=true;
         $scope.mask=false;
         $scope.innerAfter=false;
@@ -258,6 +260,28 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
                 $scope.numbers=1;
             }
         }
+        //$scope.productcount={
+        //    id: $stateParams.id,
+        //    name: $scope.product.Name,
+        //    count: $scope.numbers,
+        //    mainimg:$scope.product.MainImg,
+        //    price:$scope.product.Price,
+        //    oldprice:$scope.product.OldPrice,
+        //    parameterValue:$scope.product.ParameterValue
+        //};
+
+        $scope.buy=function(){
+            $scope.cartinfo.id = $scope.product.Id;
+            $scope.cartinfo.name = $scope.product.Name;
+            $scope.cartinfo.mainimg=$scope.product.MainImg;
+            $scope.cartinfo.price=$scope.product.Price;
+            $scope.cartinfo.oldprice=$scope.product.OldPrice;
+            $scope.cartinfo.parameterValue=$scope.product.ParameterValue;
+            $scope.cartinfo.count = $scope.numbers;
+            $scope.price=$scope.product.Price*$scope.numbers
+            $state.go("page.order",{productcount: $scope.cartinfo,pricecount:$scope.price})
+        }
+        //endregion
         //$scope.AddGWCAction = function () {
         //    //显示图标
         //    var actionDOM = document.getElementById("gwcaction");
@@ -273,8 +297,6 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
         //        actionDOM.style.visibility = "hidden";
         //    }
         //}
-        //endregion
-        $scope.isDetail=false;
     }])
 app.controller('SearchProductCtr', ['$http', '$scope', '$stateParams','$timeout',
     function ($http, $scope, $stateParams,$timeout) {
