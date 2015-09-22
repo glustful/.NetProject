@@ -57,6 +57,6 @@ namespace Community.Entity.Model.MemberAddress
         /// <summary>
         /// 是否默认
         /// </summary>
-        public virtual bool IsDefault { get; set; }
+        public virtual bool? IsDefault { get; set; }
 	}
 }
