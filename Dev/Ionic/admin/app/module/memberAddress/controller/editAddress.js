@@ -8,7 +8,7 @@
     $scope.Create = function () {
         $http.put(SETTING.ZergWcApiUrl + '/MemberAddress/Put', $scope.list, {
             'withCredentials': true
-        }).success(function (data) {
+        }).success(function (data) {    
             if (data.Status) {
                 $state.go("app.memberAddress.Address");
             }
