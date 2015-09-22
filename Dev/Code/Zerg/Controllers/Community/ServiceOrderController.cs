@@ -84,7 +84,23 @@ namespace Zerg.Controllers.Community
                 Status = c.Status,
                 UpdUser = c.UpdUser,
                 UpdTime = c.UpdTime,
-                UserName = c.AddMember.UserName
+                UserName = c.AddMember.UserName,
+                Details = c.Details.Select(d=>new ServiceOrderDetailModel
+                {
+                    Count = d.Count,
+                    Id = d.Id,
+                    MainImg = d.MainImg,
+                    Price = d.Price,
+                    ProductName = d.ProductName,
+                    Product = new ProductModel
+                    {
+                        Id = d.Product.Id,
+                        MainImg = d.Product.MainImg,
+                        Name = d.Product.Name,
+                        Price = d.Product.Price,
+                        OldPrice = d.Product.OldPrice
+                    },
+                }).ToList()
             }).ToList();
             var totalPages = _serviceOrderService.GetServiceOrderCount(condition);
             return PageHelper.toJson(new { List = model, Condition = condition, TotalPages = totalPages });
