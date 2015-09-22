@@ -71,29 +71,29 @@ var carlistcount=0;
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
 
+    ////全选按钮功能
+//    $scope.start=false;
+//    $scope.allButton=false;
+//    $scope.all=function(){
+//        if($scope.allButton==false){
+//            $scope.start=false;
+//        }if($scope.allButton==true){
+//            $scope.start=true;
+//        }
+//    }
 
+    var el=document.getElementsByTagName("input");
+   var a=el.length;
+    console.log(a);
+    var len=el.length;
+    $scope.allButton=function(){
+        for(var i=0;i<len;i++){
 
-
-
-    $scope.start=false;//默认未选中
-    $scope.allButton=false;//全选
-    $scope.choseArr=[];//定义数组用于存放前端显示
-    $scope.all=function(c,v){
-
-        if(c==true){
-            for( i=0;i<$scope.productlist.length;i++)
-            {
-                $("#check"+$scope.productlist[i].id).find(":checkbox")[0].checked=true;
+            if(el[len-1].checked==true) {
+                el[i].checked = true;
+            }else{
+                el[i].checked=false;
             }
-            var valuss=v;
-            $scope.choseArr=valuss;
-        }else{
-            for( i=0;i<$scope.productlist.length;i++)
-            {
-                $("#check"+$scope.productlist[i].id).find(":checkbox")[0].checked=false;
-            }
-            $scope.choseArr=[""];
-            cleanchoseArr();
         }
 
 

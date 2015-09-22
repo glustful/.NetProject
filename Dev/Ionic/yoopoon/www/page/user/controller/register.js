@@ -32,7 +32,7 @@ app.controller('register',['$http','$scope','$state','AuthService','$ionicLoadin
                         $ionicLoading.hide();
                     },1000);
                 })
-                console.log(data.Msg);
+                //console.log(data.Msg);
             }
         })
     }

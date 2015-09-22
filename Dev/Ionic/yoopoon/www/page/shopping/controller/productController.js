@@ -211,7 +211,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
             count: null,
             mainimg:null,
             price:null,
-            newprice:null,
+            oldprice:null,
             parameterValue:[]
         };
 
@@ -219,8 +219,8 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
             $scope.cartinfo.id = $scope.product.Id;
             $scope.cartinfo.name = $scope.product.Name;
             $scope.cartinfo.mainimg=$scope.product.MainImg;
-            $scope.cartinfo.price=$scope.product.OldPrice;
-            $scope.cartinfo.newprice=$scope.product.Price;
+            $scope.cartinfo.price=$scope.product.Price;
+            $scope.cartinfo.oldprice=$scope.product.OldPrice;
             $scope.cartinfo.parameterValue=$scope.product.ParameterValue;
             $scope.cartinfo.count = 1;
             cartservice.add($scope.cartinfo);
@@ -263,6 +263,10 @@ app.controller('SearchProductCtr', ['$http', '$scope', '$stateParams','$timeout'
                 params: $scope.search,
                 'withCredentials': true  //跨域
             }).success(function (data) {
+                if(data.List.length==0)
+                {
+                    $scope.hasmore = false;
+                }
                 for (var i = 0; i < data.List.length; i++) {
                     $scope.productList.push(data.List[i]);
                     if ($scope.productList.length == data.TotalCount) {
