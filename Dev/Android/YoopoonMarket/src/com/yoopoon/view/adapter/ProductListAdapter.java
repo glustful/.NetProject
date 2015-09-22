@@ -61,7 +61,6 @@ public class ProductListAdapter extends BaseAdapter {
 	}
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		 
 		if ((datas.size() - position * 2) >= 1) {
 			ProductViewHandler productityViewHandler = null;
 			if (convertView != null) {
@@ -117,15 +116,15 @@ public class ProductListAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 					Bundle bundle = new Bundle();
-					bundle.putString("productId", datas.get(position*2).optString("Id"));
+					bundle.putString("productId", datas.get(position * 2).optString("Id"));
 					Intent intent = new Intent(mContext, ProductDetailActivity_.class);
 					intent.putExtras(bundle);
 					mContext.startActivity(intent);
 				}
 			});
 			//购物车动画效果
-			final int id1 = datas.get(position*2).optInt("Id", 0);
-			final String subtitle1 = datas.get(position*2).optString("Subtitte");
+			final int id1 = datas.get(position * 2).optInt("Id", 0);
+			final String subtitle1 = datas.get(position * 2).optString("Subtitte");
 			productityViewHandler.cartImageView1.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
@@ -139,9 +138,15 @@ public class ProductListAdapter extends BaseAdapter {
 								String mainImageString = datas.get(position * 2).optString("MainImg", "");
 								String url = mContext.getString(R.string.url_image) + mainImageString;
 								String name = datas.get(position * 2).optString("Name", "");
-								float price_counted = Float.parseFloat(datas.get(position * 2).optString("Price", ""));
-								float price_previous = Float.parseFloat(datas.get(position * 2).optString("OldPrice",
-										""));
+								float price_counted = 0;
+								if (!datas.get(position * 2).optString("Price", "0").equals("null")) {
+									price_counted = Float.parseFloat(datas.get(position * 2).optString("Price", "0"));
+								}
+								float price_previous = 0;
+								if (!datas.get(position * 2).optString("OldPrice").equals("null")) {
+									price_previous = Float.parseFloat(datas.get(position * 2)
+											.optString("OldPrice", "0"));
+								}
 								dao.add(new Staff(subtitle1, name, url, 1, price_counted, price_previous, id1));
 							}
 							int[] start_location = new int[2];// 一个整型数组，用来存储按钮的在屏幕的X、Y坐标
@@ -171,7 +176,7 @@ public class ProductListAdapter extends BaseAdapter {
 				productityViewHandler.salesVolumeButton2.setVisibility(View.GONE);
 				productityViewHandler.purchaseButton2.setVisibility(View.GONE);
 				productityViewHandler.cartImageView2.setVisibility(View.GONE);*/
-			/*	productityViewHandler.rightProductRelativeLayout.setVisibility(View.GONE);*/
+				/*	productityViewHandler.rightProductRelativeLayout.setVisibility(View.GONE);*/
 			} else {
 				{
 					String url2 = "http://iyookee.cn/modules/Index/static/image/index/activity4_c37e838.png";
@@ -216,14 +221,14 @@ public class ProductListAdapter extends BaseAdapter {
 						@Override
 						public void onClick(View v) {
 							Bundle bundle = new Bundle();
-							bundle.putString("productId", datas.get(position*2+1).optString("Id"));
+							bundle.putString("productId", datas.get(position * 2 + 1).optString("Id"));
 							Intent intent = new Intent(mContext, ProductDetailActivity_.class);
 							intent.putExtras(bundle);
 							mContext.startActivity(intent);
 						}
 					});
-					final int id2 = datas.get(position*2+1).optInt("Id", 0);
-					final String subtitle2 = datas.get(position*2+1).optString("Subtitte");
+					final int id2 = datas.get(position * 2 + 1).optInt("Id", 0);
+					final String subtitle2 = datas.get(position * 2 + 1).optString("Subtitte");
 					productityViewHandler.cartImageView2.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(final View v) {
@@ -234,13 +239,19 @@ public class ProductListAdapter extends BaseAdapter {
 										int count = dao.isExistCount(id2);
 										dao.updateCount(id2, count + 1);
 									} else {
-										String mainImageString = datas.get(position * 2+1).optString("MainImg", "");
+										String mainImageString = datas.get(position * 2 + 1).optString("MainImg", "");
 										String url = mContext.getString(R.string.url_image) + mainImageString;
-										String name = datas.get(position * 2+1).optString("Name", "");
-										float price_counted = Float.parseFloat(datas.get(position * 2+1).optString(
-												"Price", ""));
-										float price_previous = Float.parseFloat(datas.get(position * 2+1).optString(
-												"OldPrice", ""));
+										String name = datas.get(position * 2 + 1).optString("Name", "");
+										float price_counted = 0;
+										if (!datas.get(position * 2 + 1).optString("Price", "0").equals("null")) {
+											price_counted = Float.parseFloat(datas.get(position * 2 + 1).optString(
+													"Price", "0"));
+										}
+										float price_previous = 0;
+										if (!datas.get(position * 2 + 1).optString("OldPrice").equals("null")) {
+											price_previous = Float.parseFloat(datas.get(position * 2 + 1).optString(
+													"OldPrice", "0"));
+										}
 										dao.add(new Staff(subtitle2, name, url, 1, price_counted, price_previous, id2));
 									}
 									int[] start_location = new int[2];// 一个整型数组，用来存储按钮的在屏幕的X、Y坐标

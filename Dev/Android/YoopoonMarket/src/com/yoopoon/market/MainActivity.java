@@ -160,20 +160,16 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			animation.setAnimationListener(new AnimationListener() {
 				@Override
 				public void onAnimationStart(Animation animation) {
-					// TODO Auto-generated method stub
 				}
 				@Override
 				public void onAnimationRepeat(Animation animation) {
-					// TODO Auto-generated method stub
 				}
 				@Override
 				public void onAnimationEnd(Animation animation) {
-					Intent intent = new Intent("com.yoopoon.market.search.byKeyword");
-					Bundle bundle = new Bundle();
-					intent.putExtra("keyword", et_search.getText().toString());
-					sendBroadcast(intent);
 					et_search.setText("");
 					et_search.setVisibility(View.GONE);
+					clearSearchImageView.setVisibility(View.GONE);
+					Utils.hiddenSoftBorad(mContext);
 				}
 			});
 			et_search.startAnimation(animation);
@@ -545,9 +541,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		switch (v.getId()) {
 			case R.id.ll1:
 				vp.setCurrentItem(0);
+				mShopFragment.settingClearSearch();
 				break;
 			case R.id.ll2:
 				vp.setCurrentItem(1);
+				clearSearchSetting();
 				break;
 			case R.id.ll3:
 				vp.setCurrentItem(2);
@@ -562,6 +560,32 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		super.onDestroy();
 		if (receiver != null) {
 			this.unregisterReceiver(receiver);
+		}
+	}
+	/**
+	 * @Title: clearSearchSetting
+	 * @Description: 清除搜索框中内容设置
+	 */
+	private void clearSearchSetting() {
+		if (et_search.getVisibility() == View.VISIBLE) {
+			Animation animation = AnimationUtils.loadAnimation(this, R.anim.back_right_out);
+			animation.setAnimationListener(new AnimationListener() {
+				@Override
+				public void onAnimationStart(Animation animation) {
+				}
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+				}
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					et_search.setText("");
+					et_search.setVisibility(View.GONE);
+				}
+			});
+			et_search.startAnimation(animation);
+			et_search.setText("");
+			clearSearchImageView.setVisibility(View.GONE);
+			et_search.setVisibility(View.GONE);
 		}
 	}
 }

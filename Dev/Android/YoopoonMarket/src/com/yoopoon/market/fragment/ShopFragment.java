@@ -77,8 +77,6 @@ public class ShopFragment extends Fragment {
 	private TextView recommondProductNameTextView; // 套餐名称
 	private Button recommondProductByButton;// 立即购买
 	private ImageView recommondProductCartImageView;// 添加到购物车
-	// 搜索框对应的receiver
-	private ProductRefreshByKeyWordReceiver byKeyWordReceiver;
 	// 首页展示商品的PTRGridView组件
 	private PullToRefreshListView mPullToRefreshListView;
 	private PullToRefreshListView searchPullToRefreshListView;
@@ -90,6 +88,8 @@ public class ShopFragment extends Fragment {
 	private Button salesVolumeButton;
 	// 分页获取商品状态码
 	private int productPageCount = 1;
+	//搜索商品分页状态码
+	private int searchPageCount = 1;
 	private ArrayList<JSONObject> productJsonArrayList;
 	//搜索关键字
 	private String keywordSearch = "";
@@ -113,7 +113,6 @@ public class ShopFragment extends Fragment {
 			productListFrameLayout = (FrameLayout) rootView.findViewById(R.id.framelayout_product_list);
 			settingPullToRefreshListView();
 			productJsonArrayList = new ArrayList<JSONObject>();
-			loadRefreshByKeyword();
 			initUI();
 		}
 		return rootView;
@@ -359,56 +358,12 @@ public class ShopFragment extends Fragment {
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(hashMap).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
-
 	/**
 	 * @ClassName: ProductRefreshByAddressReceiver
 	 * @Description: 创建监听地址改变的接收器
 	 * @author: 徐阳会
 	 * @date: 2015年9月17日 上午11:02:12
 	 */
-	/*	private class ProductRefreshByAddressReceiver extends BroadcastReceiver {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-			}
-		}*/
-	/**
-	 * @ClassName: ProductRefreshByKeyWordReceiver
-	 * @Description: 创建顶端搜索框输入的字段进行搜索
-	 * @author: 徐阳会
-	 * @date: 2015年9月17日 下午5:22:43
-	 */
-	private class ProductRefreshByKeyWordReceiver extends BroadcastReceiver {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			//隐藏输入法
-			InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-			String keywordString = intent.getStringExtra("keyword");
-			if (keywordString != null && (!keywordString.equals(""))) {
-				HashMap<String, String> hashMap = new HashMap<String, String>();
-				hashMap.put("Name", keywordString);
-				keywordSearch = keywordString;
-				productPageCount = 1;
-				requestProduct(hashMap);
-			}
-		}
-	}
-
-	/**
-	 * @Title: loadRefreshByAddress
-	 * @Description: 截获地址广播
-	 */
-	/*
-	 * private void loadRefreshByAddress() { IntentFilter intentFilter = new
-	 * IntentFilter("com.yoopoon.market.productRefresh.Address"); ProductRefreshByAddressReceiver
-	 * addressReceiver = new ProductRefreshByAddressReceiver();
-	 * mContext.registerReceiver(addressReceiver, intentFilter); }
-	 */
-	private void loadRefreshByKeyword() {
-		IntentFilter filter = new IntentFilter("com.yoopoon.market.search.byKeyword");
-		byKeyWordReceiver = new ProductRefreshByKeyWordReceiver();
-		mContext.registerReceiver(byKeyWordReceiver, filter);
-	}
 	private void loadServiceEvent(View view) {
 		ImageView houseKeepingImageView = (ImageView) view.findViewById(R.id.img_house_keeping);
 		ImageView washingImageView = (ImageView) view.findViewById(R.id.img_washing_clothes);
@@ -465,7 +420,6 @@ public class ShopFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		mContext.unregisterReceiver(byKeyWordReceiver);
 	}
 
 	private class RefreshListener implements OnRefreshListener2<ListView> {
@@ -473,7 +427,6 @@ public class ShopFragment extends Fragment {
 		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 			productJsonArrayList.clear();
 			productPageCount = 1;
-			keywordSearch = "";
 			Toast.makeText(mContext, "正在刷新数据，请稍后", Toast.LENGTH_SHORT).show();
 			requestProduct();
 		}
@@ -482,7 +435,6 @@ public class ShopFragment extends Fragment {
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("Page", ++productPageCount + "");
 			map.put("PageCount", "10");
-			map.put("Name", keywordSearch);
 			refreshProduct(map);
 		}
 	}
@@ -493,6 +445,11 @@ public class ShopFragment extends Fragment {
 		}
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+			HashMap<String, String> hashMap = new HashMap<String, String>();
+			hashMap.put("Name", keywordSearch);
+			hashMap.put("PageCount", "10");
+			hashMap.put("Page", (++searchPageCount) + "");
+			requestSearchProduct(hashMap);
 		}
 	}
 
@@ -508,8 +465,8 @@ public class ShopFragment extends Fragment {
 		if (rootView != null && !isVisibleToUser) {
 			requestProduct();
 		}
-		keywordSearch = "";
 		productPageCount = 1;
+		searchPageCount = 1;
 	}
 	/**
 	 * @Title: searchProduct
@@ -518,8 +475,11 @@ public class ShopFragment extends Fragment {
 	public void searchProduct(String searchString) {
 		searchProductFrameLayout.setVisibility(View.VISIBLE);
 		productListFrameLayout.setVisibility(View.GONE);
+		keywordSearch = searchString;
 		HashMap<String, String> hashMap = new HashMap<String, String>();
 		hashMap.put("Name", searchString);
+		hashMap.put("PageCount", "10");
+		hashMap.put("Page", "1");
 		requestSearchProduct(hashMap);
 	}
 	/**
@@ -531,14 +491,20 @@ public class ShopFragment extends Fragment {
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
+				searchPullToRefreshListView.onRefreshComplete();
 				JSONArray jsonArray;
 				if (data.getMRootData() != null) {
 					try {
 						jsonArray = data.getMRootData().getJSONArray("List");
 						if (jsonArray.length() >= 1) {
-							searchProductAdapter = new ProductListAdapter(mContext,
-									JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
-							searchListView.setAdapter(searchProductAdapter);
+							if (searchPageCount > 1) {
+								searchProductAdapter.addRefresh(JSONArrayConvertToArrayList
+										.convertToArrayList(jsonArray));
+							} else if (searchPageCount == 1) {
+								searchProductAdapter = new ProductListAdapter(mContext,
+										JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
+								searchListView.setAdapter(searchProductAdapter);
+							}
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -553,11 +519,11 @@ public class ShopFragment extends Fragment {
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(hashMap).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
-	/** 
-	 * @Title: settingClearSearch 
+	/**
+	 * @Title: settingClearSearch
 	 * @Description: 通过MainActivity中的调用设置搜索界面和商品列表界面的显示和隐藏
 	 */
-	public void settingClearSearch(){
+	public void settingClearSearch() {
 		searchProductFrameLayout.setVisibility(View.GONE);
 		productListFrameLayout.setVisibility(View.VISIBLE);
 	}
