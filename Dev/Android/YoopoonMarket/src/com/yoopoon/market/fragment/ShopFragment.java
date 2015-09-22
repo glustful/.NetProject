@@ -37,6 +37,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,7 +60,6 @@ import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.ResponseData.ResultState;
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
 import com.yoopoon.market.utils.SplitStringWithDot;
-
 import com.yoopoon.view.adapter.ProductListAdapter;
 
 public class ShopFragment extends Fragment {
@@ -95,6 +95,8 @@ public class ShopFragment extends Fragment {
 	private String keywordSearch = "";
 	private FrameLayout searchProductFrameLayout;
 	private FrameLayout productListFrameLayout;
+	//进度条对应的linearlayout
+	private LinearLayout progressbarLinearlayout;
 
 	@Override
 	@Nullable
@@ -111,6 +113,7 @@ public class ShopFragment extends Fragment {
 			rootView = inflater.inflate(R.layout.fragment_shop, null);
 			searchProductFrameLayout = (FrameLayout) rootView.findViewById(R.id.framelayout_search_product_list);
 			productListFrameLayout = (FrameLayout) rootView.findViewById(R.id.framelayout_product_list);
+			progressbarLinearlayout = (LinearLayout) rootView.findViewById(R.id.linearlayout_progressbar);
 			settingPullToRefreshListView();
 			productJsonArrayList = new ArrayList<JSONObject>();
 			initUI();
@@ -252,12 +255,14 @@ public class ShopFragment extends Fragment {
 	 * @Description: 获取商品列表，同时加载到Adapter中
 	 */
 	private void requestProduct() {
+		progressbarLinearlayout.setVisibility(View.VISIBLE);
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("Page", "1");
 		map.put("PageCount", "10");
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
+				progressbarLinearlayout.setVisibility(View.GONE);
 				JSONArray jsonArray;
 				if (data.getMRootData() != null) {
 					try {
@@ -296,9 +301,11 @@ public class ShopFragment extends Fragment {
 	 * @param hashMap
 	 */
 	private void requestProduct(HashMap<String, String> hashMap) {
+		progressbarLinearlayout.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
+				progressbarLinearlayout.setVisibility(View.GONE);
 				JSONArray jsonArray;
 				if (data.getMRootData() != null) {
 					try {
@@ -427,7 +434,6 @@ public class ShopFragment extends Fragment {
 		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 			productJsonArrayList.clear();
 			productPageCount = 1;
-			Toast.makeText(mContext, "正在刷新数据，请稍后", Toast.LENGTH_SHORT).show();
 			requestProduct();
 		}
 		@Override
@@ -488,9 +494,11 @@ public class ShopFragment extends Fragment {
 	 * @param searchString
 	 */
 	private void requestSearchProduct(HashMap<String, String> hashMap) {
+		progressbarLinearlayout.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
+				progressbarLinearlayout.setVisibility(View.GONE);
 				searchPullToRefreshListView.onRefreshComplete();
 				JSONArray jsonArray;
 				if (data.getMRootData() != null) {

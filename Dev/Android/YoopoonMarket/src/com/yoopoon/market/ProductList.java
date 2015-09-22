@@ -90,6 +90,8 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 	Button screenProductButton;
 	@ViewById(R.id.btn_setting_sort_method)
 	Button settingSortMethodButton;
+	@ViewById(R.id.linearlayout_progressbar)
+	LinearLayout progressbarLinearLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -170,9 +172,11 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 	 * @Description: 根据父类参数获取3级分类信息
 	 */
 	private void requestClassification() {
+		progressbarLinearLayout.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
+				progressbarLinearLayout.setVisibility(View.GONE);
 				if (data.getMRootData() != null) {
 					JSONArray jsonArray = data.getMRootData().optJSONArray("Object");
 					addClassificationButton(JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
@@ -236,6 +240,7 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 	 * @Description: 请求网络数据，当Activity启动的时候加载产品
 	 */
 	private void requsetProductList() {
+		progressbarLinearLayout.setVisibility(View.VISIBLE);
 		HashMap<String, String> hashMap = new HashMap<String, String>();
 		hashMap.put("CategoryId", classificationId);
 		hashMap.put("Page", "1");
@@ -243,6 +248,7 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
+				progressbarLinearLayout.setVisibility(View.GONE);
 				if (data.getMRootData() != null) {
 					JSONArray array = data.getMRootData().optJSONArray("List");
 					mProductListViewAdapter = new ProductListViewAdapter(mContext,
@@ -262,9 +268,11 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 	 * @param hashMap
 	 */
 	private void requsetProductList(HashMap<String, String> hashMap) {
+		progressbarLinearLayout.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
+				progressbarLinearLayout.setVisibility(View.GONE);
 				if (data.getMRootData() != null) {
 					JSONArray array = data.getMRootData().optJSONArray("List");
 					mProductListViewAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(array));

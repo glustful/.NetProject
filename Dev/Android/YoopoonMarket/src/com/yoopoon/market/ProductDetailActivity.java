@@ -234,7 +234,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		productTitleTextView.setText(jsonObject.optString("Name", ""));
 		productSubtitleTextView.setText(jsonObject.optString("Subtitte", ""));
 		productPrictTextView.setText("￥" + SplitStringWithDot.split(jsonObject.optString("Price", "0")));
-		productPrimePriceTextView.setText("原价：" + SplitStringWithDot.split(jsonObject.optString("NewPrice", "0")));
+		productPrimePriceTextView.setText("原价：" + SplitStringWithDot.split(jsonObject.optString("OldPrice", "0")));
 		if (jsonObject.optString("Owner", "0").equals("null")) {
 			productSalesVolumeTextView.setText("已有0人抢购");
 		} else {
