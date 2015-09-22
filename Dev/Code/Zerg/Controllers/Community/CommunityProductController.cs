@@ -78,7 +78,7 @@ namespace Zerg.Controllers.Community
                 Contactphone = entity.Contactphone,
                 SericeInstruction = entity.Detail.SericeInstruction,
                 Type = entity.Type,
-			    NewPrice = entity.NewPrice,
+			    OldPrice = entity.OldPrice,
                 Owner = entity.Owner,
                 Detail = entity.Detail.Detail,
 		        Ad1 = entity.Detail.Ad1,
@@ -149,7 +149,7 @@ namespace Zerg.Controllers.Community
 				Subtitte = c.Subtitte,
 				Contactphone = c.Contactphone,
 				Type = c.Type,
-                NewPrice = c.NewPrice,
+                OldPrice = c.OldPrice,
                 Owner =c.Owner,
                 Addtime = c.AddTime,
 				Detail = c.Detail.Detail,
@@ -193,7 +193,7 @@ namespace Zerg.Controllers.Community
 				Subtitte = model.Subtitte,
 				Contactphone = model.Contactphone,
 				Type =model.Type,
-                NewPrice =model.NewPrice,
+                OldPrice =model.OldPrice,
                 Owner = model.Owner
 			   // Detail = model.Detail,
 				//Comments = model.Comments,
@@ -255,7 +255,7 @@ namespace Zerg.Controllers.Community
 			entity.Subtitte = model.Subtitte;
 			entity.Contactphone = model.Contactphone;
 			entity.Type = model.Type;
-            entity.NewPrice = model.NewPrice;
+            entity.OldPrice = model.OldPrice;
             entity.Owner = model.Owner;
 //			entity.Detail = model.Detail;
 			//entity.Comments = model.Comments;

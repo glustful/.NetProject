@@ -56,7 +56,7 @@ namespace Community.Entity.Model.ServiceOrder
         /// <summary>
         /// 状态
         /// </summary>
-        public virtual EnumOrderStatus Status { get; set; }
+        public virtual EnumServiceOrderStatus Status { get; set; }
 
         /// <summary>
         /// 订单明细

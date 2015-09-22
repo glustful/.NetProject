@@ -151,7 +151,10 @@ namespace Community.Service.Product
                 {                    
                     query = query.Where(q => q.Category.Id == condition.CategoryId);
                 }
-
+                if (!string.IsNullOrEmpty(condition.CategoryName))// 传进来的是分类名称
+                {
+                    query = query.Where(q => q.Category.Name==condition.CategoryName);
+                }
 
                 if (condition.OrderBy.HasValue)
                 {
@@ -271,6 +274,10 @@ namespace Community.Service.Product
                 if (condition.CategoryId.HasValue && condition.CategoryId != 0)// 传进来的是3级
                 {
                     query = query.Where(q => q.Category.Id == condition.CategoryId);
+                }
+                if (!string.IsNullOrEmpty(condition.CategoryName))// 传进来的是分类名称
+                {
+                    query = query.Where(q=>q.Category.Name  ==condition.CategoryName);
                 }
                
                 return query.Count();

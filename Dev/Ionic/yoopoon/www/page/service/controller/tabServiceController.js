@@ -1,4 +1,4 @@
-app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate, $timeout,repository,AuthService, $ionicHistory, cartservice,$stateParams) {
+app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, $timeout,AuthService, $ionicHistory, cartservice,$stateParams) {
 	// With the new view caching in Ionic, Controllers are only called
 	// when they are recreated or on app start, instead of every page change.
 	// To listen for when this page is active (for example, to refresh data),
@@ -51,39 +51,38 @@ app.controller('TabServiceCtrl', function($scope, $ionicSlideBoxDelegate, $timeo
 		if ($stateParams.tabIndex == 5) {
 			$scope.tabIndex = 5;
 			$scope.condition = {
-				Page: 1,
-				PageCount: 10,
+				//Page: 1,
+				//PageCount: 10,
 				Status: '4',
 				Addusers: $scope.currentuser.UserId
 			};
-
-			//var getList = function () {
-			//	repository.get("OrderDetail", $scope.condition).success(function (data) {
-			//		$scope.list = data.List;
-			//	});
-			//};
-            //
-			//getList();
+			var getList = function () {
+				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',$scope.condition,{'withCredentials':true})
+					.success(function(data) {
+					$scope.list = data.List;
+				});
+			};
+			getList();
 		}
 		//办理中
 		if ($stateParams.tabIndex == 6) {
 			$scope.tabIndex = 6;
 			$scope.condition = {
-				Page: 1,
-				PageCount: 10,
+				//Page: 1,
+				//PageCount: 10,
 				Status: '4',
 				Addusers: $scope.currentuser.UserId
 			};
-			//var getList = function () {
-			//	repository.get("OrderDetail", $scope.condition).success(function (data) {
-			//		$scope.list = data.List;
-			//	});
-			//};
-			//getList();
+			var getList = function () {
+				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',$scope.condition,{'withCredentials':true})
+					.success(function(data) {
+						$scope.list = data.List;
+					});
+			};
+			getList();
 		}
 	}
 	tab();
-
 
 	//    搜索功能
 	$scope.showSelect = false;

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Community.Entity.Model.ServiceOrderDetail;
+using Community.Entity.Model.ServiceOrder;
 using YooPoon.Core.Logging;
 using Zerg.Common.Data;
 
@@ -92,6 +93,10 @@ namespace Community.Service.ServiceOrderDetail
                 if (condition.PriceEnd.HasValue)
                 {
                     query = query.Where(q => q.Price < condition.PriceEnd.Value);
+                }
+                if (condition.Status.HasValue)
+                {
+                    query = query.Where(q => q.ServiceOrder.Status == condition.Status.Value);
                 }
 				if (condition.Ids != null && condition.Ids.Any())
                 {
