@@ -3,10 +3,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Community.Entity.Model.Order;
 using Community.Entity.Model.Product;
 using Community.Entity.Model.ServiceOrder;
 using Community.Entity.Model.ServiceOrderDetail;
+using Community.Service.Member;
 using Community.Service.MemberAddress;
 using Community.Service.Product;
 using Community.Service.ServiceOrder;
@@ -24,13 +24,15 @@ namespace Zerg.Controllers.Community
         private readonly IProductService _productService;
         private readonly IWorkContext _workContext;
         private readonly IMemberAddressService _memberAddressService;
+        private readonly IMemberService _memberService;
 
-        public ServiceOrderController(IServiceOrderService serviceOrderService, IProductService productService, IWorkContext workContext,IMemberAddressService memberAddressService)
+        public ServiceOrderController(IServiceOrderService serviceOrderService, IProductService productService, IWorkContext workContext,IMemberAddressService memberAddressService,IMemberService memberService)
         {
             _serviceOrderService = serviceOrderService;
             _productService = productService;
             _workContext = workContext;
             _memberAddressService = memberAddressService;
+            _memberService = memberService;
         }
 
         public ServiceOrderModel Get(int id)
@@ -89,7 +91,7 @@ namespace Zerg.Controllers.Community
             return PageHelper.toJson(new { List = model, Condition = condition, TotalPages = totalPages });
         }
 
-        public bool Post([FromBody]ServiceOrderModel model)
+        public HttpResponseMessage Post([FromBody]ServiceOrderModel model)
         {
             //获取订单明细对应的商品
             var products = _productService.GetProductsByCondition(new ProductSearchCondition
@@ -103,7 +105,7 @@ namespace Zerg.Controllers.Community
                 Price = p.Price
             }).ToList();
             if (products.Count < 1)
-                return false;
+                return PageHelper.toJson(PageHelper.ReturnValue(false,"生成订单失败，无法找到服务商品"));
             //订单编号
             Random rd = new Random();
             var orderNumber = "S" + DateTime.Now.ToString("yyyyMMddHHmmssffff") + rd.Next(100, 999);
@@ -121,15 +123,23 @@ namespace Zerg.Controllers.Community
                 Details = products,
                 Status = EnumServiceOrderStatus.Created,
                 UpdUser = _workContext.CurrentUser.Id,
-                UpdTime = DateTime.Now
+                UpdTime = DateTime.Now,
+                AddMember = _memberService.GetMemberByUserId(_workContext.CurrentUser.Id)
             };
 
             //保存
             if (_serviceOrderService.Create(entity).Id > 0)
             {
-                return true;
+                //TODO:回掉接口写到Msg里，完成回掉方法
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "null", new ServiceOrderModel()
+                {
+                    Id = entity.Id,
+                    OrderNo = entity.OrderNo,
+                    Flee = entity.Flee,
+                    Addtime = entity.AddTime
+                }));
             }
-            return false;
+            return PageHelper.toJson(PageHelper.ReturnValue(false,"生成服务订单失败"));
         }
 
         public bool Put([FromBody]ServiceOrderModel model)

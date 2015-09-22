@@ -238,7 +238,7 @@ namespace Community.Service.MemberAddress
 	    {
 	        try
 	        {
-	           return _memberaddressRepository.Table.FirstOrDefault(c => c.Adduser == userId && c.IsDefault);
+	           return _memberaddressRepository.Table.FirstOrDefault(c => c.Adduser == userId && c.IsDefault.Value);
 	        }
             catch (Exception e)
             {
