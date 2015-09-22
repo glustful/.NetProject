@@ -298,18 +298,18 @@ app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderServic
     $scope.oldMem = {
         Realname: '',
         UserName:'',
-        Gender: '1',
-        IdentityNo: '4564',
-        Icq: '454',
-        Phone: '18388026186',
+        Gender: '',
+        IdentityNo: '',
+        Icq: '',
+        Phone: '',
         Thumbnail: '',
-        PostNo: '456',
-        AccountNumber: '4444',
-        Points: '5',
-        Level: '4',
-        AddTime: '2015-08-09',
-        UpdUser: '1',
-        UpdTime: '2015-08-09'
+        PostNo: '',
+        AccountNumber: '',
+        Points: '',
+        Level: '',
+        AddTime: '',
+        UpdUser: '',
+        UpdTime: ''
     };
 
     $http.get(SETTING.ApiUrl+'/Member/Get?userId='+$scope.currentuser.UserId,{'withCredentials':true})
