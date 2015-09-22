@@ -49,19 +49,32 @@ app.controller('TabCarCtrl', function($scope, $ionicSlideBoxDelegate) {
   $scope.delegateHandler = $ionicSlideBoxDelegate;
 
     ////全选按钮功能
-    $scope.start=false;
-    $scope.allButton=false;
-    $scope.all=function(){
-//alert($scope.start)
+//    $scope.start=false;
+//    $scope.allButton=false;
+//    $scope.all=function(){
+//        if($scope.allButton==false){
+//            $scope.start=false;
+//        }if($scope.allButton==true){
+//            $scope.start=true;
+//        }
+//    }
 
-        if($scope.allButton==false){
-            $scope.start=false;
-//            alert("nihao")
-        }if($scope.allButton==true){
-            $scope.start=true;
-//            alert($scope.start)
+    var el=document.getElementsByTagName("input");
+   var a=el.length;
+    console.log(a);
+    var len=el.length;
+    $scope.allButton=function(){
+        for(var i=0;i<len;i++){
+
+            if(el[len-1].checked==true) {
+                el[i].checked = true;
+            }else{
+                el[i].checked=false;
+            }
         }
+
     }
+
 ///数量增加减
     $scope.number=0;
     $scope.adding=function(){
