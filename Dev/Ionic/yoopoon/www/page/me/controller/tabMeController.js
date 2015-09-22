@@ -1,30 +1,30 @@
 
 app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,$stateParams) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-  $scope.model = {
-    activeIndex:0
-  };
+    // With the new view caching in Ionic, Controllers are only called
+    // when they are recreated or on app start, instead of every page change.
+    // To listen for when this page is active (for example, to refresh data),
+    // listen for the $ionicView.enter event:
+    //
+    //$scope.$on('$ionicView.enter', function(e) {
+    //});
+    $scope.model = {
+        activeIndex: 0
+    };
 
-  $scope.pageClick = function(index){
-    //alert(index);
-    //alert($scope.delegateHandler.currentIndex());
-    $scope.model.activeIndex = 2;
-  };
+    $scope.pageClick = function (index) {
+        //alert(index);
+        //alert($scope.delegateHandler.currentIndex());
+        $scope.model.activeIndex = 2;
+    };
 
-  $scope.slideHasChanged = function($index){
-    //alert($index);
-    //alert($scope.model.activeIndex);
-  };
-  $scope.delegateHandler = $ionicSlideBoxDelegate;
+    $scope.slideHasChanged = function ($index) {
+        //alert($index);
+        //alert($scope.model.activeIndex);
+    };
+    $scope.delegateHandler = $ionicSlideBoxDelegate;
 //    ҳ����ת
-    $scope.go=function(state){
-        window.location.href=state;
+    $scope.go = function (state) {
+        window.location.href = state;
     }
 //    ������ַ
 
@@ -53,99 +53,124 @@ app.controller('TabMeCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal,
 //    $scope.$on("modal.removed", function() {
 //        // Execute action
 //    });
+    $scope.save = function () {
+        //if (document.getElementById("Uptext").innerText == '正在上传..') {
+        //    alert("头像正在上传,请稍等!");
+        //    return;
+        //}
+        if (httpimguri.length > 0) {
+            $scope.oldMem.Thumbnail = httpimguri;
+            //如果服务器返回了用户的头像地址,操作IMG标签的SRC为angularjs绑定
+            var img = document.getElementById('imghead');
+            img.src = "{{oldMem.Thumbnail}}";
+            //有图片就显示
+            img.style.display = 'block';
+        } else {
+            httpimguri = '';
+        }
+        $http.post(SETTING.ApiUrl + '/Member/Post', $scope.oldMem, {'withCredentials': true})
+            .success(function (data) {
+                if (data.Status) {
+                    var img = document.getElementById('imghead');
+                    img.src = $scope.oldMem.Thumbnail;
+                    location.reload([true]);
+                    $state.go("app.me");
+                }
+            });
+    }
 
-
-
+})
 app.controller('selectAddress', function($scope, $routeParams) {
 
-  $scope.model = {
-    activeIndex:0
-  };
+    $scope.model = {
+        activeIndex: 0
+    };
 
-  $scope.pageClick = function(index){
-    $scope.model.activeIndex = 2;
-  };
+    $scope.pageClick = function (index) {
+        $scope.model.activeIndex = 2;
+    };
 
-  $scope.slideHasChanged = function($index){
+    $scope.slideHasChanged = function ($index) {
 
-  };
-  $scope.delegateHandler = $ionicSlideBoxDelegate;
+    };
+    $scope.delegateHandler = $ionicSlideBoxDelegate;
 
 //打开评论
-  var comment=document.getElementById("userComment");
-  $scope.open=function(){
-    comment.style.display="";
-  }
+    var comment = document.getElementById("userComment");
+    $scope.open = function () {
+        comment.style.display = "";
+    }
 
-  //我的订单
-  $scope.tabIndex=1;
-  $scope.getOrderList=function(tabIndex){
-    $scope.tabIndex=tabIndex;
-  };
- function tab(){
+    //我的订单
+    $scope.tabIndex = 1;
+    $scope.getOrderList = function (tabIndex) {
+        $scope.tabIndex = tabIndex;
+    };
+    function tab() {
 
-     //待付款
-     if($stateParams.tabIndex==1){
-         $scope.tabIndex=1;
-         //$scope.serchCondition={
-         //    Page:'',
-         //    PageCount:'',
-         //    Status:'1'
-         //}
-         //$scope.myOrder = orderService.getOrderList($scope.searchCondition)
-         //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
-         //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
-         //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
-     }
-     //待发货
-     if($stateParams.tabIndex==2){
-         $scope.tabIndex=2;
-         //$scope.serchCondition={
-         //    Page:'',
-         //    PageCount:'',
-         //    Status:'2'
-         //}
-         //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
-         //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
-         //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
-         //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
-     }
-     //待收货
-     if($stateParams.tabIndex==3){
-         $scope.tabIndex=3;
-         //$scope.serchCondition={
-         //    Page:'',
-         //    PageCount:'',
-         //    Status:'3'
-         //}
-         //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
-         //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
-         //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
-         //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
-     }
-     //待评价
-     if($stateParams.tabIndex==4){
-         $scope.tabIndex=4;
-     }
- }
+        //待付款
+        if ($stateParams.tabIndex == 1) {
+            $scope.tabIndex = 1;
+            //$scope.serchCondition={
+            //    Page:'',
+            //    PageCount:'',
+            //    Status:'1'
+            //}
+            //$scope.myOrder = orderService.getOrderList($scope.searchCondition)
+            //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
+            //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
+            //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
+        }
+        //待发货
+        if ($stateParams.tabIndex == 2) {
+            $scope.tabIndex = 2;
+            //$scope.serchCondition={
+            //    Page:'',
+            //    PageCount:'',
+            //    Status:'2'
+            //}
+            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
+            //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
+            //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
+            //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
+        }
+        //待收货
+        if ($stateParams.tabIndex == 3) {
+            $scope.tabIndex = 3;
+            //$scope.serchCondition={
+            //    Page:'',
+            //    PageCount:'',
+            //    Status:'3'
+            //}
+            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
+            //$scope.serchCondition.Page = $scope.myOrder.Condition.Page;
+            //$scope.serchCondition.PageCount = $scope.myOrder.Condition.PageCount;
+            //$scope.searchCondition.totalCount=$scope.myOrder.Condition.TotalCount;
+        }
+        //待评价
+        if ($stateParams.tabIndex == 4) {
+            $scope.tabIndex = 4;
+        }
+    }
+
     tab();
 
     //个人资料修改
-    $scope.imgUrl=SETTING.ImgUrl;
-    $scope.oldMem={
-        Realname:'',
-        Gender:'1',
-        IdentityNo:'4564',
-        Icq:'454',
-        Phone:'18388026186',
-        Thumbnail:'',
-        PostNo:'456',
-        AccountNumber:'4444',
-        Points:'5',
-        Level:'4',
-        AddTime:'2015-08-09',
-        UpdUser:'1',
-        UpdTime:'2015-08-09'
+    $scope.imgUrl = SETTING.ImgUrl;
+    $scope.oldMem = {
+        Realname: '',
+        Gender: '1',
+        IdentityNo: '4564',
+        Icq: '454',
+        Phone: '18388026186',
+        Thumbnail: '',
+        PostNo: '456',
+        AccountNumber: '4444',
+        Points: '5',
+        Level: '4',
+        AddTime: '2015-08-09',
+        UpdUser: '1',
+        UpdTime: '2015-08-09'
     };
 
     ////获取当前通用户信息
@@ -168,31 +193,7 @@ app.controller('selectAddress', function($scope, $routeParams) {
     //        }
     //    });
 
-    $scope.save = function() {
-        //if (document.getElementById("Uptext").innerText == '正在上传..') {
-        //    alert("头像正在上传,请稍等!");
-        //    return;
-        //}
-        if (httpimguri.length > 0) {
-            $scope.oldMem.Thumbnail = httpimguri;
-            //如果服务器返回了用户的头像地址,操作IMG标签的SRC为angularjs绑定
-            var img = document.getElementById('imghead');
-            img.src = "{{oldMem.Thumbnail}}";
-            //有图片就显示
-            img.style.display = 'block';
-        } else {
-            httpimguri = '';
-        }
-        $http.post(SETTING.ApiUrl + '/Member/Post', $scope.oldMem,{'withCredentials':true})
-            .success(function (data) {
-                if (data.Status) {
-                    var img = document.getElementById('imghead');
-                    img.src = $scope.oldMem.Thumbnail;
-                    location.reload([true]);
-                    $state.go("app.me");
-                }
-            });
-    }
+})
 
 
 /////////////////////////////头像修改////////////////////////////
@@ -255,10 +256,10 @@ function previewImage(file)
     reader.readAsDataURL(files);
   }
 }
-}
+
 
 ///////////////////////////ͷ���޸�//////////////////////////////////
-app.controller('TabMeCtrl',['$http','$scope', function($http,$scope, $ionicSlideBoxDelegate) {
+//app.controller('TabMeCtrl',['$http','$scope', function($http,$scope, $ionicSlideBoxDelegate) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -266,22 +267,22 @@ app.controller('TabMeCtrl',['$http','$scope', function($http,$scope, $ionicSlide
   //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
-  $scope.model = {
-    activeIndex:0
-  };
-  
-  $scope.pageClick = function(index){
-    //alert(index);
-    //alert($scope.delegateHandler.currentIndex());
-    $scope.model.activeIndex = 2;
-  };
+//  $scope.model = {
+//    activeIndex:0
+//  };
+//
+//  $scope.pageClick = function(index){
+//    //alert(index);
+//    //alert($scope.delegateHandler.currentIndex());
+//    $scope.model.activeIndex = 2;
+//  };
+//
+//  $scope.slideHasChanged = function($index){
+//    //alert($index);
+//    //alert($scope.model.activeIndex);
+//  };
+//  $scope.delegateHandler = $ionicSlideBoxDelegate;
 
-  $scope.slideHasChanged = function($index){
-    //alert($index);
-    //alert($scope.model.activeIndex);
-  };
-  $scope.delegateHandler = $ionicSlideBoxDelegate;
-
-                }]);
+//                }]);
 
 ///////////////////////////头像修改//////////////////////////////////

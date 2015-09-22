@@ -268,6 +268,9 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
     $http.get('http://localhost:50597/api/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
         $scope.content=data;
     });
+        $scope.go=function(state){
+            window.location.href=state;
+        };
     //endregion
     //region 获取商品详情
     $http.get(SETTING.ApiUrl+"/CommunityProduct/Get?id="+$stateParams.id,{
@@ -351,6 +354,42 @@ app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
                 actionDOM.style.visibility = "hidden";
             }
 
+        }
+//        加入购物车
+        $scope.changIng=false;
+        $scope.AddCart=function(){
+            $scope.changIng=true;
+        }
+//       立即购买
+        $scope.buyHide=true;
+        $scope.mask=false;
+        $scope.innerAfter=false;
+        $scope.buyNew=function(){
+            $scope.mask=true;
+            $scope.buyHide=false;
+//            var t=setTimeout("$scope.innerAfter=true",1000)
+            $scope.innerAfter=true
+        }
+         //关闭
+        $scope.close=function(){
+            $scope.mask=!$scope.mask;
+            $scope.buyHide=! $scope.buyHide;
+        }
+//        数量
+        $scope.numbers=1;
+        $scope.addNumbers=function(){
+//            if($scope.numbers>=1)
+            $scope.numbers=$scope.numbers+1;
+//            else{
+//                $scope.numbers=1;
+//            }
+        }
+        $scope.deNumbers=function(){
+            if($scope.numbers>=2)
+            $scope.numbers-=1;
+            else{
+                $scope.numbers=1;
+            }
         }
 }])
 app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
