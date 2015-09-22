@@ -99,12 +99,32 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 		//待接件
 		if ($stateParams.tabIndex == 5) {
 			$scope.tabIndex = 5;
-
+			$scope.condition = {
+				Status: '4',
+				Addusers: $scope.currentuser.UserId
+			};
+			var getList = function () {
+				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
+					.success(function(data) {
+						$scope.list = data.List;
+					});
+			};
+			getList();
 		}
 		//办理中
 		if ($stateParams.tabIndex == 6) {
 			$scope.tabIndex = 6;
-
+			$scope.condition = {
+				Status: '5',
+				Addusers: $scope.currentuser.UserId
+			};
+			var getList1 = function () {
+				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
+					.success(function(data) {
+						$scope.list = data.List;
+					});
+			};
+			getList1();
 		}
 	}
 	tab();

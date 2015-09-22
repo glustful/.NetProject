@@ -1,7 +1,7 @@
-/**
+﻿/**
  * Created by Yunjoy on 2015/9/10.
  */
-app.controller('orderListController', ['$scope', 'repository', function ($scope, repository) {
+app.controller('orderListController', ['$http','$scope', 'repository', function ($http,$scope, repository) {
     $scope.condition = {
         Page: 1,
         PageCount: 10,
@@ -33,9 +33,12 @@ app.controller('orderListController', ['$scope', 'repository', function ($scope,
 
     getList();
     $scope.getList = getList;
-
     
-    $scope.EditStates = function () {
-        alert($scope.states);
+    $scope.EditStates = function (item) {
+        $http.put(SETTING.ZergWcApiUrl + '/CommunityOrder/Put', item, {
+            'withcredentials': true,
+        }).success(function (data) {
+            getList();
+        })
     }
 }]);
