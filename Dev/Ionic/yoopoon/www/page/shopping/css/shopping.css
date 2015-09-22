@@ -231,21 +231,21 @@
     position: absolute;
     left: 85%;
     top: 2%;
-    z-index: 99;
+    z-index: 2;
 }
-.gwc-car{
-    width: 40px;
-    height: 40px;
-    background-color: #898d93;
-    border-radius: 50%;
-    text-align: center;
-    padding: 6px;
-    position: absolute;
-    left: 55%;
-    bottom: 8%;
-    z-index: 99;
-    visibility: hidden;
-}
+/*.gwc-car{*/
+    /*width: 40px;*/
+    /*height: 40px;*/
+    /*background-color: #898d93;*/
+    /*border-radius: 50%;*/
+    /*text-align: center;*/
+    /*padding: 6px;*/
+    /*position: absolute;*/
+    /*left: 55%;*/
+    /*bottom: 8%;*/
+    /*z-index: 99;*/
+    /*visibility: hidden;*/
+/*}*/
 
 
 .detail-img{
@@ -337,95 +337,106 @@
     font-size:24px;
     position: absolute;
     top:320px;
-
-
-
-
-
 }
 /*动画开始*/
-.Gwcactive{
-    -webkit-animation-fill-mode:forwards;
+.gwc-car{
+    width: 40px;
+    height: 40px;
+    background-color: #898d93;
+    border-radius: 50%;
+    text-align: center;
+    padding: 6px;
+    position: absolute;
+    left: 55%;
+    bottom: 8%;
+    z-index: 99;
+    opacity: 0;
+}
+.changeAfter{
     -webkit-animation-name: Gwc-one;
-    -webkit-animation-duration: 0.6s;
+    -webkit-animation-duration: 1s;
     -webkit-animation-timing-function: linear;
     -webkit-animation-delay: 0s;
-    -webkit-animation-iteration-count: 1;
-    bottom: 90%;
-    -webkit-transform: translateX(280%);
-    opacity: 0;
 }
 @-webkit-keyframes Gwc-one {
     0% {
-        bottom: 7%;
-        -webkit-transform: translateX(20%);
+
         opacity: 1;
     }
-    8% {
-        bottom: 14%;
-        -webkit-transform: translateX(40%);
-    }
-    16% {
-        bottom: 21%;
-        -webkit-transform: translateX(60%);
-    }
-    22% {
-        bottom: 28%;
-        -webkit-transform: translateX(80%);
-    }
-    28% {
-        bottom: 34%;
-        -webkit-transform: translateX(100%);
-    }
-    34% {
-        bottom: 40%;
-        -webkit-transform: translateX(120%);
-    }
-    40% {
-        bottom: 46%;
-        -webkit-transform: translateX(140%);
-    }
-    48% {
-        bottom: 52%;
-        -webkit-transform: translateX(160%);
-    }
-    56% {
-        bottom: 58%;
-        -webkit-transform: translateX(180%);
-    }
-   62% {
-        bottom: 64%;
-        -webkit-transform: translateX(200%);
-    }
-    68% {
-        bottom: 70%;
-        -webkit-transform: translateX(220%);
-    }
-    76% {
-        bottom: 76%;
-        -webkit-transform: translateX(240%);
-    }
-    84% {
+
+    80%{
+        -webkit-transform:rotate(-360deg);
         bottom: 82%;
-        -webkit-transform: translateX(260%);
+        left: 80%;
+        opacity: 0.7;
     }
-    90% {
-        bottom: 90%;
-        -webkit-transform: translateX(280%);
-        opacity: 0;
+    90%{
+        -webkit-transform:scale(0.5,0.5);
+
+        opacity: 0.5;
+        bottom: 88%;
+        left: 82%;
     }
     100%{
-        bottom: 90%;
-        -webkit-transform: translateX(280%);
-        opacity: 0;
+        -webkit-transform:scale(0.3,0.3);
+        opacity: 1;
+        bottom:90%;
+        left: 85%;
     }
-
-}
-
-.detail{
-    display: block;
-}
-.nodetail{
-    display: none;
-}
+   }
 /*动画结束*/
+.buyNew{
+    position: absolute;
+    top:0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 100000000;
+
+}
+.innerMask{
+   background-color: #fff;
+    width: 100%;
+    height: 50%;
+    position: absolute;
+    bottom:-1500px;
+    -webkit-transition: all,0.5s;
+}
+.innerMaskAfter{
+    bottom: 0;
+}
+.up{
+    border-bottom: 1px solid #eeeeee;
+}
+.innerMask button{
+    position: absolute;
+    bottom:0;
+    background-color: #ff3000;
+    padding:5px 0;
+    width: 100%;
+    color:#fff;
+    font-size: 24px;
+}
+.buyNum{
+    border: 1px solid #eeeeee;
+    width: 200px;
+    display: inline-block
+}
+.buyNum span{
+    display: inline-block;
+    width: 50%;
+    padding:5px 0 5px 40px;
+    border-right: 1px solid #eeeeee;
+}
+.buyNew .addNum{
+    display: inline-block;
+    width: 25%;
+    text-align: center;
+    border-right: 1px solid #eeeeee;
+    padding:5px 0;
+}
+.buyNew .deNum{
+    display: inline-block;
+    width: 25%;
+    padding:5px 0 5px 15px
+}
