@@ -69,6 +69,10 @@ namespace Zerg.Models.Community
         /// 开单时间
         /// </summary>
 		public DateTime Adddate {get;set;}
+        public string strAdddate
+        {
+            get { return Adddate.ToString("yyy-MM-dd HH:mm:ss"); }
+        }
 
 
 		/// <summary>

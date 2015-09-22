@@ -65,7 +65,8 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     //region地址获取
     $scope.Condition = {
         Page: 1,
-        father:true
+        father:true,
+        Parent_Id:''
     };
     $scope.pare=[];
 
@@ -76,6 +77,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         }).success(function (data3) {
             if (data3.List != "") {
                 $scope.addrss = data3.List;
+                $scope.selected=data3.List[0].Id;//如果想要第一个值
                 //for( i=0;i<data3.List.length;i++){
                 //    if(data3.List[i].Parent=null)
                 //    {
@@ -86,7 +88,21 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         });
     }
     getAddress();
-    $scope.getList=getAddress;
+
+    $scope.SCondition = {
+
+        Parent_Id:''
+    };
+    $scope.click=function(){
+        $scope.SCondition.Parent_Id=$scope.selected
+        $http.get(SETTING.ApiUrl+'/CommunityArea/Get',{
+          params:$scope.SCondition,
+            'withCredentials': true
+        }).success(function(data){
+            $scope.zilei=data.List;
+        })
+
+    }
     //endregion
 
     //region商品大图获取
@@ -204,10 +220,111 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     document.getElementById('search').onblur = function () {
         $state.go("page.search_product", {productName: $scope.searchname});
     };
-}]);
+    //endregion
+    //region 获取第三级分类
+    $http.get(SETTING.ApiUrl+"/Category/GetChildByFatherId?id="+$scope.sech.CategoryId,{
+        'withCredentials':true
+    }).success(function (data) {
+        $scope.cateList=data;
+    })
+    //endregion
+}])
+app.controller('ProductDetail',['$http','$scope','$stateParams','$timeout',
+    function($http,$scope,$stateParams,$timeout){
+    //region 轮播图
+    $scope.channelName='banner';
+    $http.get('http://localhost:50597/api/Channel/GetTitleImg',{params:{ChannelName:$scope.channelName},'withCredentials':true}).success(function(data){
+        $scope.content=data;
+    });
+        $scope.go=function(state){
+            window.location.href=state;
+        };
+    //endregion
+    //region 获取商品详情
+    $http.get(SETTING.ApiUrl+"/CommunityProduct/Get?id="+$stateParams.id,{
+        'withCredentials':true
+    }).success(function(data){
+        $scope.product=data.ProductModel;
+    })
+    //endregion
+    //region 获取评论
+    $scope.comcon={
+        Page:0,
+        PageCount:2,
+        ProductId:$stateParams.id
+    }
+    $scope.tipp = "查看更多评论";
+    $scope.CommentList = [];//保存从服务器查来的任务，可累加
+        var morecomment = function(){
+            $timeout(function(){
+                $scope.comcon.Page+=1;
+                $http.get(SETTING.ApiUrl + "/ProductComment/Get", {
+                    params: $scope.comcon,
+                    'withCredentials': true
+                }).success(function (data) {
+                    if(data.Model!="") {
+                        for (var i = 0; i < data.Model.length; i++) {
+                            $scope.CommentList.push(data.Model[i]);
+                        }
+                    }
+                    $scope.Count=data.TotalCount;
+                });
+            },1000)
+        };
+        morecomment();
+        $scope.more=morecomment;
 
 
 
+        }
+//        加入购物车
+        $scope.changIng=false;
+        $scope.AddCart=function(){
+            $scope.changIng=true;
+        }
+//       立即购买
+        $scope.buyHide=true;
+        $scope.mask=false;
+        $scope.innerAfter=false;
+        $scope.buyNew=function(){
+            $scope.mask=true;
+            $scope.buyHide=false;
+//            var t=setTimeout("$scope.innerAfter=true",1000)
+            $scope.innerAfter=true
+        }
+         //关闭
+        $scope.close=function(){
+            $scope.mask=!$scope.mask;
+            $scope.buyHide=! $scope.buyHide;
+        }
+//        数量
+        $scope.numbers=1;
+        $scope.addNumbers=function(){
+//            if($scope.numbers>=1)
+            $scope.numbers=$scope.numbers+1;
+//            else{
+//                $scope.numbers=1;
+//            }
+        }
+        $scope.deNumbers=function(){
+            if($scope.numbers>=2)
+            $scope.numbers-=1;
+            else{
+                $scope.numbers=1;
+            }
+        }
+}])
+app.controller('SearchProductCtr',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+    $scope.search={
+        Name:$stateParams.productName
+    }
+    $http.get(SETTING.ApiUrl+"/CommunityProduct/Get",{
+        params:$scope.search,
+        'withCredentials':true
+    }).success(function(data){
+        $scope.productList=data.List
+    })
+}])
 
 
 

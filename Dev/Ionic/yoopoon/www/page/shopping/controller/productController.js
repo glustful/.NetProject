@@ -55,6 +55,10 @@ app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout','$stateParams'
                 params: $scope.sech,
                 'withCredentials': true  //跨域
             }).success(function (data) {
+                if(data.List.length==0)
+                {
+                    $scope.hasmore = false;
+                }
                 for (var i = 0; i < data.List.length; i++) {
                     $scope.list.push(data.List[i]);
                     if ($scope.list.length == data.TotalCount) {
@@ -182,7 +186,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
         //endregion
         //region 加载图文详情
        // $scope.hasload=false;
-        $scope.load_detail = function () {
+        var load_detail = function () {
             $timeout(function () {
                 $http.get(SETTING.ApiUrl + "/ProductDetail/Get?id=" + $stateParams.id, {
                     'withCredentials': true
@@ -191,12 +195,15 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
                     if(data!=null)
                     {
                         $scope.hasload=false;
-                        $scope.isDetail=true;
                     }
                 });
                $scope.$broadcast("scroll.infiniteScrollComplete");
             }, 1000);
         };
+        $scope.getDetail=function(){
+            load_detail();
+            $scope.isDetail=true;
+        }
         //region 加入购物车
         $scope.cartinfo = {
             id: null,
@@ -204,7 +211,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
             count: null,
             mainimg:null,
             price:null,
-            newprice:null,
+            oldprice:null,
             parameterValue:[]
         };
 
@@ -213,7 +220,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
             $scope.cartinfo.name = $scope.product.Name;
             $scope.cartinfo.mainimg=$scope.product.MainImg;
             $scope.cartinfo.price=$scope.product.Price;
-            $scope.cartinfo.newprice=$scope.product.NewPrice;
+            $scope.cartinfo.oldprice=$scope.product.OldPrice;
             $scope.cartinfo.parameterValue=$scope.product.ParameterValue;
             $scope.cartinfo.count = 1;
             cartservice.add($scope.cartinfo);
@@ -256,6 +263,10 @@ app.controller('SearchProductCtr', ['$http', '$scope', '$stateParams','$timeout'
                 params: $scope.search,
                 'withCredentials': true  //跨域
             }).success(function (data) {
+                if(data.List.length==0)
+                {
+                    $scope.hasmore = false;
+                }
                 for (var i = 0; i < data.List.length; i++) {
                     $scope.productList.push(data.List[i]);
                     if ($scope.productList.length == data.TotalCount) {

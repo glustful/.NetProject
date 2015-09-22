@@ -77,7 +77,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                views: {
                'page-service': {
                templateUrl: 'page/service/tab-service.html',
-               controller: 'TabServiceCtrl'
+               controller: 'serviceIndex'
                }
                }
                })
@@ -128,7 +128,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                }
                })
             .state('page.order', {
-                url: '/car/order?productid',
+                url: '/car/order?productId&count',
                 views: {
                     'page-car': {
                         templateUrl: 'page/car/order.html',

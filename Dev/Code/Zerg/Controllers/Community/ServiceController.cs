@@ -61,7 +61,7 @@ namespace Zerg.Controllers.Community
                 Subtitte = entity.Subtitte,
                 Contactphone = entity.Contactphone,
                 SericeInstruction = entity.Detail.SericeInstruction,
-                Type = entity.Type             
+                Type = entity.Type               
             };
             var product = new ProductComment
             {

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Community.Entity.Model.Order;
+using Community.Entity.Model.ServiceOrder;
 
 namespace Zerg.Models.Community
 {
@@ -61,7 +61,7 @@ namespace Zerg.Models.Community
         /// <summary>
         /// 状态
         /// </summary>
-        public EnumOrderStatus Status { get; set; }
+        public EnumServiceOrderStatus Status { get; set; }
 
         public string StatusString
         {
@@ -70,19 +70,19 @@ namespace Zerg.Models.Community
                 switch (Status)
                 {
 
-                    case EnumOrderStatus.Created:
+                    case EnumServiceOrderStatus.Created:
                         return "新建";
 
-                    case EnumOrderStatus.Payed:
+                    case EnumServiceOrderStatus.Payed:
                         return "已付款";
 
-                    case EnumOrderStatus.Delivering:
-                        return "配送中";
+                    //case EnumOrderStatus.Delivering:
+                    //    return "配送中";
 
-                    case EnumOrderStatus.Successed:
+                    case EnumServiceOrderStatus.Successed:
                         return "订单完成";
 
-                    case EnumOrderStatus.Canceled:
+                    case EnumServiceOrderStatus.Canceled:
                         return "订单关闭";
 
                     default:

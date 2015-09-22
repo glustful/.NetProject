@@ -22,7 +22,7 @@ namespace Community.Entity.Model.OrderDetail
         /// <summary>
         /// 订单状态
         /// </summary>
-        public EnumOrderStatus? Status { get; set; }
+        public EnumOrderDetailStatus? Status { get; set; }
 
 		public int[] Ids { get; set; }
 
