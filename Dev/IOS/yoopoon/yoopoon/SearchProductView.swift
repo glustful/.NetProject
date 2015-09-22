@@ -18,8 +18,8 @@ class SearchProductView: UIView ,UITableViewDataSource,UITableViewDelegate{
     @IBAction func searchAction(sender: UIButton) {
         uiSearchText.resignFirstResponder()
         if let controller = CommentTools.getCurrentController() as? TabBarViewController{
-            var y = controller.navigationController!.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.height
-            var height = controller.view.frame.height - controller.tabBar.frame.size.height - y
+            let y = controller.navigationController!.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.height
+            let height = controller.view.frame.height - controller.tabBar.frame.size.height - y
             mTableView = UITableView(frame: CGRectMake(0, y, controller.view.frame.size.width, height))
            
             mTableView.backgroundColor = appBackground
@@ -63,13 +63,13 @@ class SearchProductView: UIView ,UITableViewDataSource,UITableViewDelegate{
                 self.showDataSource(json["List"])
                 
                 },
-                faild: {error in println("\(error!.description)")})
+                faild: {error in print("\(error!.description)")})
     }
     
     /**
     uitableview加载数据源
     
-    :param: json <#json description#>
+    - parameter json: <#json description#>
     */
     private func showDataSource(json:JSON){
         self.mTableView.footerEndRefreshing()
@@ -78,9 +78,9 @@ class SearchProductView: UIView ,UITableViewDataSource,UITableViewDelegate{
             return
         }
         
-        paramter.updateValue(String(paramter["page"]!.toInt()!+1), forKey: "page")
+        paramter.updateValue(String(Int(paramter["page"]!)!+1), forKey: "page")
         for i in 0..<json.count{
-            var entity = BrandEntity()
+            let entity = BrandEntity()
             entity.generateSelf(json[i])
             brandList.append(entity)
         }
@@ -102,10 +102,10 @@ class SearchProductView: UIView ,UITableViewDataSource,UITableViewDelegate{
     /**
     设置tableviewcell的个数
     
-    :param: tableView <#tableView description#>
-    :param: section   <#section description#>
+    - parameter tableView: <#tableView description#>
+    - parameter section:   <#section description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return self.brandList.count
@@ -115,10 +115,10 @@ class SearchProductView: UIView ,UITableViewDataSource,UITableViewDelegate{
     /**
     返回tableviewcell
     
-    :param: tableView <#tableView description#>
-    :param: indexPath <#indexPath description#>
+    - parameter tableView: <#tableView description#>
+    - parameter indexPath: <#indexPath description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         let identify = "tableviewcell"
@@ -141,13 +141,13 @@ class SearchProductView: UIView ,UITableViewDataSource,UITableViewDelegate{
     /**
     设置tableviewcell的高度
     
-    :param: tableView <#tableView description#>
-    :param: indexPath <#indexPath description#>
+    - parameter tableView: <#tableView description#>
+    - parameter indexPath: <#indexPath description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
-        var height = screenBounds.width/(729/390)
+        let height = screenBounds.width/(729/390)
         
         return height + 15
     }
@@ -159,8 +159,8 @@ class SearchProductView: UIView ,UITableViewDataSource,UITableViewDelegate{
     
     
     private func dealWithBrandDetailSegue(indexPath: NSIndexPath){
-        var segue = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var controller = segue.instantiateViewControllerWithIdentifier(ControllerIdentifier.brandDetailIdentifier) as! BrandDetialController
+        let segue = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let controller = segue.instantiateViewControllerWithIdentifier(ControllerIdentifier.brandDetailIdentifier) as! BrandDetialController
         controller.brandId = String(self.brandList[indexPath.row].id)
         controller.brandEntity = self.brandList[indexPath.row]
         CommentTools.getCurrentController()!.navigationController!.pushViewController(controller, animated: true)

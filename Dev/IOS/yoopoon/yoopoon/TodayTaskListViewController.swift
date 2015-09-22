@@ -56,7 +56,7 @@ class TodayTaskListViewController: SuperViewController,UITableViewDataSource,UIT
         }
         page++
         for i in 0..<json.count{
-            var entity = TaskEntity()
+            let entity = TaskEntity()
             entity.generateSelf(json[i])
             self.mTaskList.append(entity)
            
@@ -75,8 +75,8 @@ class TodayTaskListViewController: SuperViewController,UITableViewDataSource,UIT
             cell!.selectionStyle = UITableViewCellSelectionStyle.None
         }
         cell!.taskName = self.mTaskList[indexPath.row].taskName
-        var name = self.mTaskList[indexPath.row].awardName ?? ""
-        var value = self.mTaskList[indexPath.row].awardValue ?? ""
+        let name = self.mTaskList[indexPath.row].awardName ?? ""
+        let value = self.mTaskList[indexPath.row].awardValue ?? ""
         cell!.awardMsg = "\(name):\(value)"
         return cell!
     }

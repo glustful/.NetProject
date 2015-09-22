@@ -12,6 +12,7 @@ namespace Community.Entity.Mappings.ServiceOrder
 			HasKey(c => c.Id);
 			
 			Property(c => c.OrderNo).HasColumnType("varchar").HasMaxLength(30).IsOptional();
+            Property(c => c.Status).HasColumnType("int").IsOptional();
 			Property(c =>c.AddTime).HasColumnType("datetime").IsRequired();
 			Property(c => c.AddUser).HasColumnType("int").IsRequired();
 			Property(c => c.Flee).HasColumnType("decimal").IsOptional();

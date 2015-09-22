@@ -6,10 +6,14 @@ namespace Zerg.Models.Community
 	{
 
 		/// <summary>
-        /// 行政区划ID
+        /// ID
         /// </summary>
 		public int Id {get;set;}
 
+        /// <summary>
+        /// 行政区划ID
+        /// </summary>
+        public int AreaId { get; set; }
 
 		/// <summary>
         /// 地址ID
@@ -75,5 +79,6 @@ namespace Zerg.Models.Community
             get { return Updtime.ToString("yyyy-MM-dd HH:mm:ss"); }
         }
 
+        public int UserId { get; set; }
 	}
 }

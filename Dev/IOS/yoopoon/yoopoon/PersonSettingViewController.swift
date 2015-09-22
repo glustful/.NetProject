@@ -29,7 +29,7 @@ class PersonSettingViewController: SuperViewController,UITextFieldDelegate,UINav
     @IBOutlet weak var uiStore: UIButton!
     
     @IBAction func pickHeadPhotoAction(sender: UIButton) {
-        var picker = UIImagePickerController()
+        let picker = UIImagePickerController()
         picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         picker.allowsEditing = false
         picker.delegate = self
@@ -48,7 +48,7 @@ class PersonSettingViewController: SuperViewController,UITextFieldDelegate,UINav
         self.uiHeadPhoto.layer.cornerRadius = self.uiHeadPhoto.frame.width/2
         constraintWidth.constant = screenBounds.width
         constraintHeight.constant = 17 * 40 + 100 + 40 + 60
-        var tap = UITapGestureRecognizer(target: self, action: "hidenKeyBoard")
+        let tap = UITapGestureRecognizer(target: self, action: "hidenKeyBoard")
         tap.numberOfTouchesRequired = 1
         self.view.addGestureRecognizer(tap)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "dealWithKeyboardHeight:", name: UIKeyboardWillShowNotification, object: nil)
@@ -76,7 +76,7 @@ class PersonSettingViewController: SuperViewController,UITextFieldDelegate,UINav
     /**
     初始化数据
     
-    :param: json <#json description#>
+    - parameter json: <#json description#>
     */
     private func showBrokerInfo(json: JSON){
         if let value = json["Nickname"].string{
@@ -113,7 +113,7 @@ class PersonSettingViewController: SuperViewController,UITextFieldDelegate,UINav
     /**
     验证表单数据
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     private func validate()->Bool{
         if !RegexHelper(brokerNickNameRegex).match(self.uiAliase.text){
@@ -183,7 +183,7 @@ class PersonSettingViewController: SuperViewController,UITextFieldDelegate,UINav
             }
             TipTools().showToast("提示", message: "保存失败", duration: 2)
                 }, faild: {error in
-                    println("\(error!.description)")
+                    print("\(error!.description)")
                 TipTools().showToast("提示", message: "保存失败", duration: 2)
             })
     }
@@ -202,20 +202,20 @@ class PersonSettingViewController: SuperViewController,UITextFieldDelegate,UINav
     /**
     获取软键盘的高度
     
-    :param: notify <#notify description#>
+    - parameter notify: <#notify description#>
     */
     func dealWithKeyboardHeight(notify: NSNotification){
         //获取键盘的高度
         var userInfo = notify.userInfo
-        var value = userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue
+        let value = userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue
         
-        var keyboardRect = value!.CGRectValue()
+        let keyboardRect = value!.CGRectValue()
         keyboardHeight = keyboardRect.size.height
        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     //MARK: -图片选择代理方法
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]){
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
         //获得原始的图片
         if let image = info["UIImagePickerControllerOriginalImage"] as? UIImage{
             var progress = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
@@ -252,9 +252,9 @@ class PersonSettingViewController: SuperViewController,UITextFieldDelegate,UINav
     //MARK: -UITEXTFIELD代理方法
     func textFieldDidBeginEditing(textField: UITextField) {
         self.currentField = textField
-        var frame = textField.frame
+        let frame = textField.frame
         var offset = frame.origin.y + self.uiFormView.frame.origin.y + 40 - self.uiScrollForm.contentOffset.y - (self.view.frame.size.height - keyboardHeight)//键盘高度258
-        var animationDuration: NSTimeInterval = 0.30
+        let animationDuration: NSTimeInterval = 0.30
         UIView.beginAnimations("ResizeForKeyboard", context: nil)
         
         UIView.setAnimationDuration(animationDuration)

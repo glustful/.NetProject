@@ -75,7 +75,7 @@ app.service("AuthService",["$http",'$sessionStorage',function($http,$sessionStor
      * @param faildCallback
      */
     this.doLogin = function(userName,password,callback,faildCallback){
-        $http.post(SETTING.ApiUrl+"/user/IndexLogin",
+        $http.post(SETTING.ApiUrl+"/user/LoginEntry",
             {
                 UserName:userName,
                 Password:password

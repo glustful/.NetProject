@@ -1,6 +1,7 @@
 using System;
 using Community.Entity.Model.Member;
 using YooPoon.Core.Data;
+using Community.Entity.Model.Area;
 
 namespace Community.Entity.Model.MemberAddress
 {
@@ -14,6 +15,12 @@ namespace Community.Entity.Model.MemberAddress
 		/// 地址ID
 		/// </summary>
 		public virtual MemberEntity Member { get; set; }
+
+
+        /// <summary>
+        /// 行政区域
+        /// </summary>
+        public virtual AreaEntity Area { get; set; }
 		/// <summary>
 		/// 地址
 		/// </summary>
@@ -46,5 +53,10 @@ namespace Community.Entity.Model.MemberAddress
 		/// UpdTime
 		/// </summary>
 		public virtual DateTime Updtime { get; set; }
+
+        /// <summary>
+        /// 是否默认
+        /// </summary>
+        public virtual bool? IsDefault { get; set; }
 	}
 }

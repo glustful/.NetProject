@@ -20,12 +20,12 @@ class HouseTableViewCell: UITableViewCell {
     @IBOutlet weak var uiRecommendButton: UIButton!
     @IBOutlet weak var uiRedButton: UIButton!
     @IBAction func bringCustomAction(sender: UIButton) {
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.myWantFormIdentifier) as! MyWantFormViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.myWantFormIdentifier) as! MyWantFormViewController
         
         controller.houseName = entity?.productName
         controller.houseType = entity?.type
-        var id = entity?.id ?? 0
+        let id = entity?.id ?? 0
         controller.projectId = "\(id)"
         controller.projectName = entity?.productName
         controller.type = 0 //带客
@@ -33,11 +33,11 @@ class HouseTableViewCell: UITableViewCell {
     }
     
     @IBAction func recommendAction(sender: UIButton) {
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.myWantFormIdentifier) as! MyWantFormViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.myWantFormIdentifier) as! MyWantFormViewController
         controller.houseName = entity?.productName
         controller.houseType = entity?.type
-        var id = entity?.id ?? 0
+        let id = entity?.id ?? 0
         controller.projectId = "\(id)"
         controller.projectName = entity?.productName
         controller.type = 1 //推荐
@@ -45,21 +45,21 @@ class HouseTableViewCell: UITableViewCell {
     }
     
     @IBAction func GrabRedEnvelopeAction(sender: UIButton) {
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.grabRedEnvelopeIdentifier) as! GrabRedEnvelopeViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.grabRedEnvelopeIdentifier) as! GrabRedEnvelopeViewController
         CommentTools.getCurrentController()?.navigationController?.pushViewController(controller, animated: true)
     }
     
     @IBAction func takeIntegrationAction(sender: UIButton) {
-        var storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        var controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.takeIntegrationIdentifier) as! TakeIntegrationViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.takeIntegrationIdentifier) as! TakeIntegrationViewController
         CommentTools.getCurrentController()?.navigationController?.pushViewController(controller, animated: true)
     }
     
     /**
     使用实体类初始化布局
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func initLayout(product: ProductEntity){
         initButton()
@@ -74,11 +74,11 @@ class HouseTableViewCell: UITableViewCell {
     /**
     初始化底部条
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     private func initButton(){
-        var redColor = UIColor(red: 1, green: 48/255, blue: 0, alpha: 1)
-        var grayColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
+        let redColor = UIColor(red: 1, green: 48/255, blue: 0, alpha: 1)
+        let grayColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
         if User.share.fromType == HouseFromType.leadOrRec{
             uiRecommendButton.layer.cornerRadius = 5
             uiLeadClientButton.layer.cornerRadius = 5

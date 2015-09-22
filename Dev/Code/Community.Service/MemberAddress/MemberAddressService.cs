@@ -125,6 +125,14 @@ namespace Community.Service.MemberAddress
                 {
                     query = query.Where(q => q.Member.UserName == condition.UserName);
                 }
+			    if (condition.MemberId.HasValue)
+			    {
+			        query = query.Where(q => q.Member.Id == condition.MemberId);
+			    }
+			    if (condition.UserId.HasValue)
+			    {
+			        query = query.Where(q => q.Member.UserId == condition.UserId);
+			    }
 				if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
@@ -209,6 +217,14 @@ namespace Community.Service.MemberAddress
                 {
                     query = query.Where(q => q.Member.UserName == condition.UserName);
                 }
+                if (condition.MemberId.HasValue)
+                {
+                    query = query.Where(q => q.Member.Id == condition.MemberId);
+                }
+                if (condition.UserId.HasValue)
+                {
+                    query = query.Where(q => q.Member.UserId == condition.UserId);
+                }
 				return query.Count();
 			}
 			catch(Exception e)
@@ -217,5 +233,18 @@ namespace Community.Service.MemberAddress
                 return -1;
 			}
 		}
+
+	    public MemberAddressEntity GetDefaultAddress(int userId)
+	    {
+	        try
+	        {
+	           return _memberaddressRepository.Table.FirstOrDefault(c => c.Adduser == userId && c.IsDefault.Value);
+	        }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+	    }
 	}
 }

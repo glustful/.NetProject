@@ -9,14 +9,42 @@
                     <input class="form-control" style="width: 200px" type="text" ng-model="product.Name" name="ProductName" required ng-maxlength="20"/>
                 </div>
             </div>
+            <!--<div class="form-group">-->
+                <!--&lt;!&ndash;分类&ndash;&gt;-->
+                <!--<label class="col-sm-3 control-label no-padding-right"> 商品分类 </label>-->
+
+                <!--<div class="col-sm-9" style="float: left;margin-right: 20px">-->
+                    <!--<div>-->
+                        <!--<select class="form-control" style="width: 100px" ng-model="Category.Father.Id" id="twoId"  ng-options="o.Id as o.Name for o in TwoCategory" required>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-sm-9" style="float: left">-->
+                    <!--<div>-->
+                        <!--<select class="form-control" style="width: 100px" ng-model="product.CategoryId" id="CategoryId"  ng-options="o.Id as o.Name for o in ThreeCategory" required>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="form-group">
                 <!--分类-->
                 <label class="col-sm-3 control-label no-padding-right"> 商品分类 </label>
 
                 <div class="col-sm-9">
-                    <div>
-                        <select class="form-control" style="width: 100px" ng-model="product.CategoryId" id="CategoryId"
-                                ng-options="o.Id as o.Name for o in CategoryList" required>
+                    <div style="float: left;margin-right: 20px">
+                        <select class="form-control" style="width: 100px" ng-model="oneId"
+                                ng-options="o.Id as o.Name for o in OneCategory" ng-change="selectTwoChange()" required>
+                        </select>
+                    </div>
+                    <div style="float: left;margin-right: 20px">
+                        <select class="form-control" style="width: 100px" ng-model="twoId"
+                                ng-options="o.Id as o.Name for o in TwoCategory" ng-change="selectThreeChange()" required>
+                        </select>
+                    </div>
+                    &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+                    <div style="float: left">
+                        <select class="form-control" style="width: 100px" ng-model="threeId" id="CategoryId"
+                                ng-options="o.Id as o.Name for o in ThreeCategory" required>
                         </select>
                     </div>
                 </div>
@@ -123,14 +151,14 @@
                 <label class="col-sm-3 control-label no-padding-right"> 商品单价/元 </label>
 
                 <div class="col-sm-9">
-                    <input class="form-control" style="width: 100px" type="number" ng-model="product.Price" step="0.1" ng-min="1" name="price" required>
+                    <input class="form-control" style="width: 100px" type="number" ng-model="product.OldPrice" step="0.1" ng-min="1" name="price" required>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> 折后价/元 </label>
 
                 <div class="col-sm-9">
-                    <input class="form-control" style="width: 100px" type="number" ng-model="product.NewPrice" step="0.1" ng-min="1" name="price" required>
+                    <input class="form-control" style="width: 100px" type="number" ng-model="product.Price" step="0.1" ng-min="1" name="price" required>
                 </div>
             </div>
             <div class="form-group">

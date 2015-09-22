@@ -4,9 +4,15 @@ using System.Web.Http;
 using Community.Entity.Model.OrderDetail;
 using Community.Service.OrderDetail;
 using Zerg.Models.Community;
+using System.Web.Http.Cors;
+using System.Net.Http;
+using Zerg.Common;
+using Community.Entity.Model.ProductParameter;
 
 namespace Zerg.Controllers.Community
 {
+    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
 	public class OrderDetailController : ApiController
 	{
 		private readonly IOrderDetailService _orderDetailService;
@@ -38,25 +44,30 @@ namespace Zerg.Controllers.Community
 //			return model;
 //		}
 
-		public List<OrderDetailModel> Get(OrderDetailSearchCondition condition)
+        public HttpResponseMessage Get([FromUri]OrderDetailSearchCondition condition)
 		{
-			var model = _orderDetailService.GetOrderDetailsByCondition(condition).Select(c=>new OrderDetailModel
-			{
-				Id = c.Id,
-//				Product = c.Product,
-				ProductName = c.ProductName,
-				UnitPrice = c.UnitPrice,
-				Count = c.Count,
-				Snapshoturl = c.Snapshoturl,
-				Remark = c.Remark,
-				Adduser = c.Adduser,
-				Adddate = c.Adddate,
-				Upduser = c.Upduser,
-				Upddate = c.Upddate,
-				Totalprice = c.Totalprice,
-//				Order = c.Order,
-			}).ToList();
-			return model;
+            var model = _orderDetailService.GetOrderDetailsByCondition(condition).Select(c => new
+            {
+                Id = c.Id,
+                //				Product = c.Product,
+                ProductName = c.ProductName,
+                UnitPrice = c.UnitPrice,
+                Count = c.Count,
+                Snapshoturl = c.Snapshoturl,
+                Remark = c.Remark,
+                Adduser = c.Adduser,
+                Adddate = c.Adddate,
+                Upduser = c.Upduser,
+                Upddate = c.Upddate,
+                Totalprice = c.Totalprice,
+                No = c.Order.No,
+                Price = c.Product.Price,
+                proparameter = c.Product.Parameters.Select(o => o.Parameter.Name).FirstOrDefault(),
+                propValue = c.Product.Parameters.Select(o => o.ParameterValue.Value ).FirstOrDefault (),
+                orderId=c.Order .Id 
+                //				Order = c.Order,
+            }).ToList();
+            return PageHelper.toJson(new { List = model });
 		}
 
 //		public bool Post(OrderDetailModel model)
@@ -83,27 +94,27 @@ namespace Zerg.Controllers.Community
 //			return false;
 //		}
 
-//		public bool Put(OrderDetailModel model)
-//		{
-//			var entity = _orderDetailService.GetOrderDetailById(model.Id);
-//			if(entity == null)
-//				return false;
-////			entity.Product = model.Product;
-//			entity.ProductName = model.ProductName;
-//			entity.UnitPrice = model.UnitPrice;
-//			entity.Count = model.Count;
-//			entity.Snapshoturl = model.Snapshoturl;
-//			entity.Remark = model.Remark;
-//			entity.Adduser = model.Adduser;
-//			entity.Adddate = model.Adddate;
-//			entity.Upduser = model.Upduser;
-//			entity.Upddate = model.Upddate;
-//			entity.Totalprice = model.Totalprice;
-////			entity.Order = model.Order;
-//			if(_orderDetailService.Update(entity) != null)
-//				return true;
-//			return false;
-//		}
+        public bool Put(OrderDetailModel model)
+        {
+            var entity = _orderDetailService.GetOrderDetailById(model.Id);
+            if (entity == null)
+                return false;
+            //			entity.Product = model.Product;
+            entity.ProductName = model.ProductName;
+            entity.UnitPrice = model.UnitPrice;
+            entity.Count = model.Count;
+            entity.Snapshoturl = model.Snapshoturl;
+            entity.Remark = model.Remark;
+            entity.Adduser = model.Adduser;
+            entity.Adddate = model.Adddate;
+            entity.Upduser = model.Upduser;
+            entity.Upddate = model.Upddate;
+            entity.Totalprice = model.Totalprice;
+            //			entity.Order = model.Order;
+            if (_orderDetailService.Update(entity) != null)
+                return true;
+            return false;
+        }
 //
 //		public bool Delete(int id)
 //		{

@@ -109,6 +109,10 @@ namespace Community.Service.OrderDetail
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
                 }
+                if (condition.Status.HasValue)
+                {
+                    query = query.Where(q => q.Status  == condition.Status.Value);
+                }
 				if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
@@ -173,6 +177,10 @@ namespace Community.Service.OrderDetail
 				if (condition.Ids != null && condition.Ids.Any())
                 {
                     query = query.Where(q => condition.Ids.Contains(q.Id));
+                }
+                if (condition.Status.HasValue)
+                {
+                    query = query.Where(q => q.Status == condition.Status.Value);
                 }
 				return query.Count();
 			}

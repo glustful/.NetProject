@@ -78,14 +78,20 @@ namespace Zerg.Controllers.Community
                 Contactphone = entity.Contactphone,
                 SericeInstruction = entity.Detail.SericeInstruction,
                 Type = entity.Type,
-			    NewPrice = entity.NewPrice,
+			    OldPrice = entity.OldPrice,
                 Owner = entity.Owner,
                 Detail = entity.Detail.Detail,
 		        Ad1 = entity.Detail.Ad1,
                 Ad2 = entity.Detail.Ad2,
                 Ad3 = entity.Detail.Ad3,
                 //Comments = entity.Comments,		
-                ParameterValue =entity.Parameters.Select(c => new ProductParameterValueModel { ParameterId = c.Parameter.Id, ParameterString = c.Parameter.Name, ValueId = c.ParameterValue.Id, Value = c.ParameterValue.Value}).ToArray(),
+                ParameterValue =entity.Parameters.Select(c => new ProductParameterValueModel
+                {
+                    ParameterId = c.Parameter.Id,
+                    ParameterString = c.Parameter.Name,
+                    ValueId = c.ParameterValue.Id,
+                    Value = c.ParameterValue.Value
+                }).ToList()
             };
             var product=new ProductComment
             {
@@ -126,7 +132,7 @@ namespace Zerg.Controllers.Community
                     con.CategoryId = condition.CategoryId;
                 }
             }
-                
+
             var model = _productService.GetProductsByCondition(con).Select(c => new ProductModel
 			{
 				Id = c.Id,
@@ -143,12 +149,19 @@ namespace Zerg.Controllers.Community
 				Subtitte = c.Subtitte,
 				Contactphone = c.Contactphone,
 				Type = c.Type,
-                NewPrice = c.NewPrice,
+                OldPrice = c.OldPrice,
                 Owner =c.Owner,
                 Addtime = c.AddTime,
-				Detail = c.Detail.Detail
+				Detail = c.Detail.Detail,
 //				Comments = c.Comments,
 //				Parameters = c.Parameters,
+                //ParameterValue =c.Parameters.Select(p => new ProductParameterValueModel
+                //{
+                //    ParameterId = p.Parameter.Id,
+                //    ParameterString = p.Parameter.Name,
+                //    ValueId = p.ParameterValue.Id,
+                //    Value = p.ParameterValue.Value
+                //}).ToList()
 			}).ToList();
             var totalCount = _productService.GetProductCount(con);
             return PageHelper.toJson(new { List = model, Condition = con, TotalCount = totalCount });
@@ -180,7 +193,7 @@ namespace Zerg.Controllers.Community
 				Subtitte = model.Subtitte,
 				Contactphone = model.Contactphone,
 				Type =model.Type,
-                NewPrice =model.NewPrice,
+                OldPrice =model.OldPrice,
                 Owner = model.Owner
 			   // Detail = model.Detail,
 				//Comments = model.Comments,
@@ -242,7 +255,7 @@ namespace Zerg.Controllers.Community
 			entity.Subtitte = model.Subtitte;
 			entity.Contactphone = model.Contactphone;
 			entity.Type = model.Type;
-            entity.NewPrice = model.NewPrice;
+            entity.OldPrice = model.OldPrice;
             entity.Owner = model.Owner;
 //			entity.Detail = model.Detail;
 			//entity.Comments = model.Comments;

@@ -69,7 +69,7 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
                 
                 
                 },
-                faild: {error in println("\(error!.description)")})
+                faild: {error in print("\(error!.description)")})
     }
     
     /**
@@ -86,13 +86,13 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
                 self.showDataSource(json["List"])
                 
                 },
-                faild: {error in println("\(error!.description)")})
+                faild: {error in print("\(error!.description)")})
     }
     
     /**
     uitableview加载数据源
     
-    :param: json <#json description#>
+    - parameter json: <#json description#>
     */
     private func showDataSource(json:JSON){
         self.mTableView.footerEndRefreshing()
@@ -101,9 +101,9 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
             return
         }
         
-        paramter.updateValue(String(paramter["page"]!.toInt()!+1), forKey: "page")
+        paramter.updateValue(String(Int(paramter["page"]!)!+1), forKey: "page")
         for i in 0..<json.count{
-            var entity = BrandEntity()
+            let entity = BrandEntity()
             entity.generateSelf(json[i])
             brandList.append(entity)
         }
@@ -133,7 +133,7 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
                 self.mTableView.reloadData()
                 
                 },
-                faild: {error in println("\(error!.description)")})
+                faild: {error in print("\(error!.description)")})
     }
     
     /**
@@ -150,10 +150,10 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
     /**
     设置tableviewcell的个数
     
-    :param: tableView <#tableView description#>
-    :param: section   <#section description#>
+    - parameter tableView: <#tableView description#>
+    - parameter section:   <#section description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return self.brandList.count + 2
@@ -163,10 +163,10 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
     /**
     返回tableviewcell
     
-    :param: tableView <#tableView description#>
-    :param: indexPath <#indexPath description#>
+    - parameter tableView: <#tableView description#>
+    - parameter indexPath: <#indexPath description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         let identify = "tableviewcell"
@@ -212,10 +212,10 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
     /**
     设置tableviewcell的高度
     
-    :param: tableView <#tableView description#>
-    :param: indexPath <#indexPath description#>
+    - parameter tableView: <#tableView description#>
+    - parameter indexPath: <#indexPath description#>
     
-    :returns: <#return value description#>
+    - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
         if indexPath.row == 0{
@@ -224,7 +224,7 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
             return activeADView?.bounds.height ?? 0//UIScreen.mainScreen().bounds.height/3
         }
         //729:390
-        var height = screenBounds.width/(729/390)
+        let height = screenBounds.width/(729/390)
         
         return height + 10 + 5
     }
@@ -248,9 +248,9 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
     }
     
     private func dealWithBrandDetailSegue(segue: UIStoryboardSegue){
-        var controller = segue.destinationViewController as! BrandDetialController
-        controller.brandId = String(self.brandList[self.mTableView.indexPathForSelectedRow()!.row-2].id)
-        controller.brandEntity = self.brandList[self.mTableView.indexPathForSelectedRow()!.row-2]
+        let controller = segue.destinationViewController as! BrandDetialController
+        controller.brandId = String(self.brandList[self.mTableView.indexPathForSelectedRow!.row-2].id)
+        controller.brandEntity = self.brandList[self.mTableView.indexPathForSelectedRow!.row-2]
     }
     
 

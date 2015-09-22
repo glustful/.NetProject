@@ -12,10 +12,10 @@ class ActiveADView: UIView {
 
     var json:JSON?{
         didSet{
-            var rows = json!.count%3==0 ? json!.count/3 : json!.count+1
+            let rows = json!.count%3==0 ? json!.count/3 : json!.count+1
             for index in 0..<json!.count{
                
-                var gridView = GridItemView(frame: CGRectMake(CGFloat(index%3)*CGFloat(self.bounds.width/3), CGFloat(index/3) * self.bounds.height/CGFloat(rows), bounds.width/3, bounds.height/CGFloat(rows)))
+                let gridView = GridItemView(frame: CGRectMake(CGFloat(index%3)*CGFloat(self.bounds.width/3), CGFloat(index/3) * self.bounds.height/CGFloat(rows), bounds.width/3, bounds.height/CGFloat(rows)))
                 gridView.initLayout(json![index])
                 gridView.backgroundColor = UIColor.whiteColor()
                 gridView.layer.borderWidth = 0.5

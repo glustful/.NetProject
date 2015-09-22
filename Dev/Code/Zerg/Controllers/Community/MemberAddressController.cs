@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -7,6 +8,9 @@ using Zerg.Models.Community;
 using Community.Entity.Model.Member;
 using System.Web.Http.Cors;
 using System.Net.Http;
+using Community.Service.Area;
+using Community.Service.Member;
+using YooPoon.Core.Site;
 using Zerg.Common;
 
 namespace Zerg.Controllers.Community
@@ -16,11 +20,39 @@ namespace Zerg.Controllers.Community
 	public class MemberAddressController : ApiController
 	{
 		private readonly IMemberAddressService _memberAddressService;
+        private readonly IWorkContext _workContext;
+        private readonly IMemberService _memberService;
+        private readonly IAreaService _areaService;
 
-		public MemberAddressController(IMemberAddressService memberAddressService)
-		{
-			_memberAddressService = memberAddressService;
-		}
+        public MemberAddressController(IMemberAddressService memberAddressService,IWorkContext workContext,IMemberService memberService,IAreaService areaService)
+        {
+            _memberAddressService = memberAddressService;
+            _workContext = workContext;
+            _memberService = memberService;
+            _areaService = areaService;
+        }
+
+        public HttpResponseMessage Get()
+        {
+            var user = _workContext.CurrentUser;
+            if (user == null)
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "无法获取当前的用户信息"));
+            var entity = _memberAddressService.GetDefaultAddress(user.Id);
+            var model = new MemberAddressModel
+            {
+                Id = entity.Id,
+                Member = entity.Member.Id,
+                Address = entity.Address,
+                Zip = entity.Zip,
+                Linkman = entity.Linkman,
+                Tel = entity.Tel,
+                Adduser = entity.Adduser,
+                Addtime = entity.Addtime,
+                Upduser = entity.Upduser,
+                Updtime = entity.Updtime
+            };
+            return PageHelper.toJson(model);
+        }
 
         public HttpResponseMessage Get(int id)
 		{
@@ -45,7 +77,7 @@ namespace Zerg.Controllers.Community
 
         public HttpResponseMessage Get([FromUri]MemberAddressSearchCondition condition)
 		{
-			var model = _memberAddressService.GetMemberAddresssByCondition(condition).Select(c=>new MemberAddressModel
+			var model =_memberAddressService.GetMemberAddresssByCondition(condition).Select(o=>o.Id).Count()>0? _memberAddressService.GetMemberAddresssByCondition(condition).Select(c=>new MemberAddressModel
 			{
 				Id = c.Id,
 				Member = c.Member.Id,
@@ -57,7 +89,7 @@ namespace Zerg.Controllers.Community
 				Addtime = c.Addtime,
 				Upduser = c.Upduser,
 				Updtime = c.Updtime,
-			}).ToList();
+			}).ToList():null;
             var totalCount = _memberAddressService.GetMemberAddressCount(condition);
             return PageHelper.toJson(new { List = model, Condition = condition, toTalCount = totalCount });
 		}
@@ -66,15 +98,16 @@ namespace Zerg.Controllers.Community
 		{
 			var entity = new MemberAddressEntity
 			{
-				//Member = model.Member,
+				Member = _memberService.GetMemberByUserId(model.UserId),
 				Address = model.Address,
 				Zip = model.Zip,
 				Linkman = model.Linkman,
 				Tel = model.Tel,
-				Adduser = model.Adduser,
-				Addtime = model.Addtime,
-				Upduser = model.Upduser,
-				Updtime = model.Updtime,
+				Adduser = _workContext.CurrentUser.Id,
+				Addtime = DateTime.Now,
+				Upduser = _workContext.CurrentUser.Id,
+				Updtime = DateTime.Now,
+                Area = _areaService.GetAreaById(model.AreaId)
 			};
 			if(_memberAddressService.Create(entity).Id > 0)
 			{

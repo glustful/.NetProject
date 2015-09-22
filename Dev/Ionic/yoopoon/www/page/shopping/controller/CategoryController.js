@@ -2,11 +2,12 @@
  * Created by huangxiuyu on 2015/9/15.
  */
 //start----------------------------商品分类 huangxiuyu2015.09.15-------------------------
-app.controller('CategoryController',['$scope','$http',function($scope,$http){
+app.controller('CategoryController',['$scope','$http','$state',function($scope,$http,$state){
     $scope.searchCondition={
         ifid:0
     }
     $scope.selectCategory=function(ifid){
+        //alert("fds");
         $scope.searchCondition.ifid=ifid;
         $http.get(SETTING.ApiUrl+'/Category/GetAllTree/',{params:$scope.searchCondition,'withCredentials':
             true}).
@@ -16,6 +17,9 @@ app.controller('CategoryController',['$scope','$http',function($scope,$http){
             })
     };
     $scope.selectCategory(1);
-
+    $scope.productName = '';
+    document.getElementById('search').onblur = function () {
+        $state.go("page.search_product", {productName: $scope.productName});
+    };
 }]);
 //end----------------------------商品分类 huangxiuyu2015.09.15-------------------------

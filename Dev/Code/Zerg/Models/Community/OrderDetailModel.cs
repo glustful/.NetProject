@@ -1,3 +1,4 @@
+using Community.Entity.Model.Order;
 using System;
 
 namespace Zerg.Models.Community
@@ -9,7 +10,10 @@ namespace Zerg.Models.Community
         /// ID
         /// </summary>
 		public int Id {get;set;}
-
+        /// <summary>
+        /// 商品订单号
+        /// </summary>
+        public string No { get; set; }
 
 		/// <summary>
         /// 商品ID
@@ -24,10 +28,13 @@ namespace Zerg.Models.Community
 
 
 		/// <summary>
-        /// 单价
+        /// 购买价格
         /// </summary>
 		public decimal UnitPrice {get;set;}
-
+        /// <summary>
+        /// 原始价格
+        /// </summary>
+        public decimal Price { get; set; }
 
 		/// <summary>
         /// 数量
@@ -40,7 +47,7 @@ namespace Zerg.Models.Community
         /// </summary>
 		public string Snapshoturl {get;set;}
 
-
+        public string Status{get;set;}
 		/// <summary>
         /// 商品备注
         /// </summary>
@@ -76,7 +83,7 @@ namespace Zerg.Models.Community
         /// </summary>
 		public decimal Totalprice {get;set;}
 
-
+       
 		/// <summary>
         /// 订单主体
         /// </summary>
