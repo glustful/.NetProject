@@ -18,11 +18,11 @@
                 <div class="item row bar padding">
                     <p>{{item.No}}</p>
                 </div>
-                <ion-item class="item-thumbnail-left ">
-                    <img src="page/car/img/car.png" alt=""/>
-                    <h2 style="white-space: normal" class="font-title">{{item.ProductName}}</h2>
-                    <p>{{item.proparameter}}：{{item.propValue}}</p>
-                    <div ><span>X{{item.Count}}</span><span class="float-right"><span class="p-price">￥{{item.UnitPrice}}</span><del >￥{{item.Price}}</del></span></div>
+                <ion-item class="item-thumbnail-left "ng-repeat="i2 in item.Details">
+                    <img src="http://img.iyookee.cn/{{i2.Product.MainImg}}" alt=""/>
+                    <h2 style="white-space: normal" class="font-title">{{i2.ProductName}}</h2>
+                    <!--<p>{{item.proparameter}}：{{item.propValue}}</p>-->
+                    <div ><span>X{{i2.Count}}</span><span class="float-right"><span class="p-price">￥{{i2.UnitPrice}}</span><del >￥{{i2.Product.Price}}</del></span></div>
                 </ion-item >
                 <div class="item  bar padding">
                     <div>
@@ -30,10 +30,10 @@
                         <span ng-show="tabIndex==1">买家已付款</span>
                         <span ng-show="tabIndex==2">商品已送达</span>
                         <span ng-show="tabIndex==3">买家已签收</span>
-                        <button class="float-right font-11"ng-click="upOrderStatus(1,item.orderId)" ng-show="tabIndex==0" style="background-color: #ff5000;color: white;width: 60px;height: 25px;border: none;border-radius: 5px" >付 款</button>
+                        <button class="float-right font-11"ng-click="upOrderStatus(1,item.Id)" ng-show="tabIndex==0" style="background-color: #ff5000;color: white;width: 60px;height: 25px;border: none;border-radius: 5px" >付 款</button>
                         <span class="float-right font-11 color-silver" ng-show="tabIndex==1">待发货</span>
-                        <button class="float-right font-11"ng-click="upOrderStatus(3,item.orderId)" ng-show="tabIndex==2" style="background-color: #ff5000;color: white;width: 80px;height: 25px;border: none;border-radius: 5px">确认收货</button>
-                        <button class="float-right light-bg font-11"ui-sref="page.comment({Id:item.orderId,Status:4})" ng-show="tabIndex==3" style="width: 80px;height: 25px;border: 1px solid #ff5000;border-radius: 5px">评&nbsp;&nbsp;&nbsp;价</button>
+                        <button class="float-right font-11"ng-click="upOrderStatus(3,item.Id)" ng-show="tabIndex==2" style="background-color: #ff5000;color: white;width: 80px;height: 25px;border: none;border-radius: 5px">确认收货</button>
+                        <button class="float-right light-bg font-11"ui-sref="page.comment({Id:item.Id,Status:4})" ng-show="tabIndex==3" style="width: 80px;height: 25px;border: 1px solid #ff5000;border-radius: 5px">评&nbsp;&nbsp;&nbsp;价</button>
                     </div>
                 </div>
             </div>

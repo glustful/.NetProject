@@ -5,8 +5,8 @@
     <a class="button  button-icon icon icon-fuwuanniu" ng-click="go('page.Product-Catagory')"
        ui-sref="page.Product-Catagory"></a>
     <label class=" item-select select-header" ng-hide="showSelect">
-      
-        <select ng-model="1" id="ParentId"  ng-options="o.Id as o.Name for o in addrss"  required>
+
+        <select ng-model="selected" id="ParentId"  ng-options="o.Id as o.Name for o in addrss" ng-change="click()" required>
 
         </select>
 

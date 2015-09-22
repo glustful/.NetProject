@@ -65,7 +65,8 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     //region地址获取
     $scope.Condition = {
         Page: 1,
-        father:true
+        father:true,
+        Parent_Id:''
     };
     $scope.pare=[];
 
@@ -76,6 +77,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         }).success(function (data3) {
             if (data3.List != "") {
                 $scope.addrss = data3.List;
+                $scope.selected=data3.List[0].Id;//如果想要第一个值
                 //for( i=0;i<data3.List.length;i++){
                 //    if(data3.List[i].Parent=null)
                 //    {
@@ -86,7 +88,21 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         });
     }
     getAddress();
-    $scope.getList=getAddress;
+
+    $scope.SCondition = {
+
+        Parent_Id:''
+    };
+    $scope.click=function(){
+        $scope.SCondition.Parent_Id=$scope.selected
+        $http.get(SETTING.ApiUrl+'/CommunityArea/Get',{
+          params:$scope.SCondition,
+            'withCredentials': true
+        }).success(function(data){
+            $scope.zilei=data.List;
+        })
+
+    }
     //endregion
 
     //region商品大图获取
