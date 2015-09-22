@@ -190,7 +190,9 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     $scope.cartinfo = {
         id: null,
         name: null,
-        count: null
+        count: null,
+        price:null,
+        oldprice:null
     };
     // 添加商品
     $scope.AddCart = function(data)
@@ -199,7 +201,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         $scope.cartinfo.name=data.row.Name;
         $scope.cartinfo.mainimg=data.row.MainImg;
         $scope.cartinfo.price=data.row.Price;
-        $scope.cartinfo.newprice=data.row.NewPrice;
+        $scope.cartinfo.oldprice=data.row.OldPrice;
         $scope.cartinfo.count=1;
         cartservice.add($scope.cartinfo);
     }
@@ -209,7 +211,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         $scope.cartinfo.name=$scope.list.Name;
         $scope.cartinfo.mainimg=$scope.list.MainImg;
         $scope.cartinfo.price=$scope.list.Price;
-        $scope.cartinfo.newprice=$scope.list.NewPrice;
+        $scope.cartinfo.oldprice=$scope.list.OldPrice;
         $scope.cartinfo.count=1;
         cartservice.add($scope.cartinfo);
     };
