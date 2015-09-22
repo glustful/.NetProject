@@ -204,6 +204,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
             load_detail();
             $scope.isDetail=true;
         }
+        //endregion
         //region 加入购物车
         $scope.cartinfo = {
             id: null,
@@ -214,8 +215,8 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
             oldprice:null,
             parameterValue:[]
         };
-
-        $scope.AddGWCAction = function () {
+        $scope.changIng=false;
+        $scope.AddCart=function(){
             $scope.cartinfo.id = $scope.product.Id;
             $scope.cartinfo.name = $scope.product.Name;
             $scope.cartinfo.mainimg=$scope.product.MainImg;
@@ -224,20 +225,54 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
             $scope.cartinfo.parameterValue=$scope.product.ParameterValue;
             $scope.cartinfo.count = 1;
             cartservice.add($scope.cartinfo);
-            //显示图标
-            var actionDOM = document.getElementById("gwcaction");
-            actionDOM.style.visibility = "visible";
-            //执行动画
-            var abc = actionDOM.className;
-            actionDOM.className = abc + "Gwcactive";
-
-            //执行完毕动画后，隐藏图标
-            $timeout(show, 1000);
-            function show() {
-                actionDOM.className = abc;
-                actionDOM.style.visibility = "hidden";
+            $scope.changIng=true;
+        }
+//       立即购买
+        $scope.buyHide=true;
+        $scope.mask=false;
+        $scope.innerAfter=false;
+        $scope.buyNew=function(){
+            $scope.mask=true;
+            $scope.buyHide=false;
+//            var t=setTimeout("$scope.innerAfter=true",1000)
+            $scope.innerAfter=true
+        }
+        //关闭
+        $scope.close=function(){
+            $scope.mask=!$scope.mask;
+            $scope.buyHide=! $scope.buyHide;
+        }
+//        数量
+        $scope.numbers=1;
+        $scope.addNumbers=function(){
+//            if($scope.numbers>=1)
+            $scope.numbers=$scope.numbers+1;
+//            else{
+//                $scope.numbers=1;
+//            }
+        }
+        $scope.deNumbers=function(){
+            if($scope.numbers>=2)
+                $scope.numbers-=1;
+            else{
+                $scope.numbers=1;
             }
         }
+        //$scope.AddGWCAction = function () {
+        //    //显示图标
+        //    var actionDOM = document.getElementById("gwcaction");
+        //    actionDOM.style.visibility = "visible";
+        //    //执行动画
+        //    var abc = actionDOM.className;
+        //    actionDOM.className = abc + "Gwcactive";
+        //
+        //    //执行完毕动画后，隐藏图标
+        //    $timeout(show, 1000);
+        //    function show() {
+        //        actionDOM.className = abc;
+        //        actionDOM.style.visibility = "hidden";
+        //    }
+        //}
         //endregion
         $scope.isDetail=false;
     }])
