@@ -16,6 +16,7 @@ using Zerg.Models.Community;
 
 namespace Zerg.Controllers.Community
 {
+    [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class ServiceOrderController : ApiController
     {

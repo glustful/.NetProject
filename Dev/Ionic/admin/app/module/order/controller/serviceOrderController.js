@@ -20,7 +20,7 @@ app.controller('serviceOrderListController', ['$scope', 'repository', function (
     };
 
     var getList = function () {
-        repository.get("serviceOrder", $scope.condition).success(function (data) {
+        repository.get("serviceOrder", $scope.condition).then(function (data) {
             $scope.list = data.List;
             $scope.condition = data.Condition;
             $scope.totalPages = data.TotalPages;
