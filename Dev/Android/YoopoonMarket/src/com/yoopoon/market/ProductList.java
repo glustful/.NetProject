@@ -23,10 +23,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.integer;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -77,7 +79,9 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 	private Button sortByPriceFromLowerButton, sortByPriceFromHigherButton, sortBySalesVolumeFromLowerButton,
 			sortBySalesVolumeFromHigherButton;
 	//存储分类状态信息
-	private String classificationStatusCode="";
+	private String classificationStatusCode = "";
+	//分页显示状态码
+	private int pageCode = 1;
 	@ViewById
 	LinearLayout linearLayout_product_list;
 	@ViewById
@@ -96,13 +100,16 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 	void initProductList() {
 		//设置标题栏
 		titleButton.setVisibility(View.VISIBLE);
-		backButton.setVisibility(View.VISIBLE);
+		backWhiteButton.setVisibility(View.VISIBLE);
 		Bundle bundle = getIntent().getExtras();
 		titleString = bundle.getString("classificationName");
 		classificationId = bundle.getString("classificationId");
 		titleButton.setText(titleString);
-		backButton.setText("后退");
-		//房屋列表
+		titleButton.setTextColor(Color.WHITE);
+		backWhiteButton.setText("后退");
+		headView.setBackgroundColor(Color.RED);
+		rightButton.setVisibility(View.GONE);
+		//商品列表
 		ptr_listview_product_list.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
 		ptr_listview_product_list.setOnRefreshListener(new RefreshListener());
 		productListView = ptr_listview_product_list.getRefreshableView();
@@ -174,55 +181,65 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
-		}.setUrl(getString(R.string.url_category_get)).addParam("id", "2").setRequestMethod(RequestMethod.eGet)
-				.notifyRequest();
+		}.setUrl(getString(R.string.url_category_get)).addParam("id", classificationId)
+				.setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
 	private void addClassificationButton(ArrayList<JSONObject> arrayList) {
 		changedCodlorButton = new Button(mContext);
-		for (final JSONObject jsonObject : arrayList) {
+		if (arrayList.size() == 1) {
+			final JSONObject jsonObject = arrayList.get(0);
 			Button button = new Button(mContext);
 			button.setText(jsonObject.optString("Name"));
 			button.setBackgroundColor(Color.TRANSPARENT);
-			button.setOnClickListener(new OnClickListener() {
+			button.setTextColor(Color.rgb(255, 34, 30));
+			classificationStatusCode = jsonObject.optString("Id");
+			/*button.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					//点击效果背景色设置
 					changedCodlorButton.setTextColor(Color.BLACK);
-					Toast.makeText(mContext, jsonObject.optString("Name").toString(), Toast.LENGTH_SHORT).show();
+					
 					Button button1 = (Button) v;
 					//点击效果背景色设置
-					button1.setTextColor(Color.rgb(255, 34, 30));
+					
 					changedCodlorButton = button1;
-					classificationStatusCode=jsonObject.optString("Id");
+					
 					screenPrice();
 				}
-			});
+			});*/
 			linearLayout_product_list.addView(button);
+		} else {
+			for (final JSONObject jsonObject : arrayList) {
+				Button button = new Button(mContext);
+				button.setText(jsonObject.optString("Name"));
+				button.setBackgroundColor(Color.TRANSPARENT);
+				button.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						//点击效果背景色设置
+						changedCodlorButton.setTextColor(Color.BLACK);
+						Toast.makeText(mContext, jsonObject.optString("Name").toString(), Toast.LENGTH_SHORT).show();
+						Button button1 = (Button) v;
+						//点击效果背景色设置
+						button1.setTextColor(Color.rgb(255, 34, 30));
+						changedCodlorButton = button1;
+						classificationStatusCode = jsonObject.optString("Id");
+						screenPrice();
+					}
+				});
+				linearLayout_product_list.addView(button);
+			}
 		}
 	}
-
-	/**
-	 * @ClassName: RefreshListenerSetting
-	 * @Description: 设置PTR刷新的方式
-	 * @author: 徐阳会
-	 * @date: 2015年9月10日 下午3:44:03
-	 */
-	private class RefreshListener implements OnRefreshListener2<ListView> {
-		@Override
-		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-			Toast.makeText(mContext, "pull down to refresh", Toast.LENGTH_SHORT).show();
-		}
-		@Override
-		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-			Toast.makeText(mContext, "pull up to refresh", Toast.LENGTH_SHORT).show();
-		}
-	}
-
 	/**
 	 * @Title: requsetProductList
 	 * @Description: 请求网络数据，当Activity启动的时候加载产品
 	 */
 	private void requsetProductList() {
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+		hashMap.put("CategoryId", classificationId);
+		hashMap.put("Page", "1");
+		hashMap.put("PageCount", "10");
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
@@ -236,7 +253,8 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
-		}.setUrl(getString(R.string.url_get_communityproduct)).setRequestMethod(RequestMethod.eGet).notifyRequest();
+		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(hashMap).setRequestMethod(RequestMethod.eGet)
+				.notifyRequest();
 	}
 	/**
 	 * @Title: requsetProductList
@@ -250,6 +268,22 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 				if (data.getMRootData() != null) {
 					JSONArray array = data.getMRootData().optJSONArray("List");
 					mProductListViewAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(array));
+				}
+			}
+			@Override
+			public void onProgress(ProgressMessage msg) {
+			}
+		}.setUrl(getString(R.string.url_get_communityproduct)).setRequestMethod(RequestMethod.eGet).addParam(hashMap)
+				.notifyRequest();
+	}
+	private void requsetMoreProductList(HashMap<String, String> hashMap) {
+		new RequestAdapter() {
+			@Override
+			public void onReponse(ResponseData data) {
+				ptr_listview_product_list.onRefreshComplete();
+				if (data.getMRootData() != null) {
+					JSONArray array = data.getMRootData().optJSONArray("List");
+					mProductListViewAdapter.addRefresh(JSONArrayConvertToArrayList.convertToArrayList(array));
 				}
 			}
 			@Override
@@ -357,7 +391,7 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 			hashMap.put("OrderBy", "OrderByPrice");
 		}
 		//获取分类参数（等待API完成）
-		if(!classificationStatusCode.equals("")){
+		if (!classificationStatusCode.equals("")) {
 			hashMap.put("CategoryId", classificationStatusCode);
 		}
 		//获取价格参数
@@ -368,6 +402,43 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 			hashMap.put("PriceEnd", priceEnd + "");
 		}
 		requsetProductList(hashMap);
+	}
+	/**
+	 * @Title: settingStatusCode
+	 * @Description: 设置分页显示的参数
+	 * @param hashMap
+	 * @return
+	 */
+	private HashMap<String, String> settingStatusCode(HashMap<String, String> hashMap) {
+		//获取排序参数,同时设置参数到Map中
+		if (sortStatusCode == 0) {
+			//hashMap.put("IsDescending", "");
+			//hashMap.put("OrderBy", "");
+		} else if (sortStatusCode == 1) {
+			hashMap.put("IsDescending", "false");
+			hashMap.put("OrderBy", "OrderByPrice");
+		} else if (sortStatusCode == 2) {
+			hashMap.put("IsDescending", "true");
+			hashMap.put("OrderBy", "OrderByPrice");
+		} else if (sortStatusCode == 3) {
+			hashMap.put("IsDescending", "false");
+			hashMap.put("OrderBy", "OrderByPrice");
+		} else if (sortStatusCode == 4) {
+			hashMap.put("IsDescending", "true");
+			hashMap.put("OrderBy", "OrderByPrice");
+		}
+		//获取分类参数（等待API完成）
+		if (!classificationStatusCode.equals("")) {
+			hashMap.put("CategoryId", classificationStatusCode);
+		}
+		//获取价格参数
+		if (priceBegain != 0) {
+			hashMap.put("PriceBegin", priceBegain + "");
+		}
+		if (priceEnd != 0) {
+			hashMap.put("PriceEnd", priceEnd + "");
+		}
+		return hashMap;
 	}
 	//###################################################################################################
 	//                                     注意：API只提供了价格排序，销量排序为提供
@@ -385,5 +456,27 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 	@Override
 	public Boolean showHeadView() {
 		return true;
+	}
+
+	/**
+	 * @ClassName: RefreshListenerSetting
+	 * @Description: 设置PTR刷新的方式
+	 * @author: 徐阳会
+	 * @date: 2015年9月10日 下午3:44:03
+	 */
+	private class RefreshListener implements OnRefreshListener2<ListView> {
+		@Override
+		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+			Toast.makeText(mContext, "pull down to refresh", Toast.LENGTH_SHORT).show();
+		}
+		@Override
+		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+			HashMap<String, String> hashMap = new HashMap<String, String>();
+			hashMap = settingStatusCode(hashMap);
+			hashMap.put("CategoryId", classificationId);
+			hashMap.put("Page", (++pageCode) + "");
+			hashMap.put("PageCount", "10");
+			requsetMoreProductList(hashMap);
+		}
 	}
 }

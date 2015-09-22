@@ -103,6 +103,12 @@ public class ProductListViewAdapter extends BaseAdapter {
 		}
 		this.notifyDataSetChanged();
 	}
+	public void addRefresh(ArrayList<JSONObject> arrayList) {
+		if (arrayList != null) {
+			datas.addAll(arrayList);
+		}
+		this.notifyDataSetChanged();
+	}
 
 	class ProductViewHandler {
 		private ImageView productPhotoImageView;

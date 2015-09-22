@@ -190,16 +190,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
-            <LinearLayout
+            <com.yoopoon.market.view.HtmlWebView
+                android:id="@+id/webview_product_description"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="1111111111111111111111111" />
-            </LinearLayout>
+                android:layout_height="match_parent" />
         </ScrollView>
     </com.yoopoon.market.view.ScrollViewContainer>
 

@@ -35,6 +35,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -58,11 +59,7 @@ import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.ResponseData.ResultState;
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
 import com.yoopoon.market.utils.SplitStringWithDot;
-import com.yoopoon.market.utils.Utils;
-import com.yoopoon.market.view.ExpandableHeightGridView;
-import com.yoopoon.market.view.NoScrollGridView;
-import com.yoopoon.market.view.MyGridView;
-import com.yoopoon.view.adapter.ProductGridViewAdapter;
+
 import com.yoopoon.view.adapter.ProductListAdapter;
 
 public class ShopFragment extends Fragment {
@@ -71,9 +68,8 @@ public class ShopFragment extends Fragment {
 	private View rootView;
 	private ArrayList<String> imgs; // 存储顶端的广告图片地址
 	private ProductListAdapter productListAdapter;
-	private TextView burstPackageTextView;
+	private ProductListAdapter searchProductAdapter;
 	private static final String TAG = "ShopFragment";
-	private ArrayList<JSONArray> servicesArrayList;
 	// 首页推荐商品控件
 	private ImageView recommondProductImageView;// 套餐图片
 	private TextView recommondProductBeforePriceTextView; // 折扣前价格
@@ -85,20 +81,20 @@ public class ShopFragment extends Fragment {
 	private ProductRefreshByKeyWordReceiver byKeyWordReceiver;
 	// 首页展示商品的PTRGridView组件
 	private PullToRefreshListView mPullToRefreshListView;
+	private PullToRefreshListView searchPullToRefreshListView;
 	private ListView productListView;
+	private ListView searchListView;
 	// 首页推荐商品视图
 	View shopFragmentHeadView;
 	// 首页推荐商品控件
-	private ImageView burstPackageImageView;// 套餐图片
-	private TextView beforePriceTextView; // 折扣前价格
-	private TextView currentPriceTextView;// 当前价格
-	private TextView burstPackageNameTextView; // 套餐名称
 	private Button salesVolumeButton;
 	// 分页获取商品状态码
 	private int productPageCount = 1;
 	private ArrayList<JSONObject> productJsonArrayList;
 	//搜索关键字
 	private String keywordSearch = "";
+	private FrameLayout searchProductFrameLayout;
+	private FrameLayout productListFrameLayout;
 
 	@Override
 	@Nullable
@@ -113,20 +109,15 @@ public class ShopFragment extends Fragment {
 			mContext = getActivity();
 			mADController = new ADController(mContext);
 			rootView = inflater.inflate(R.layout.fragment_shop, null);
+			searchProductFrameLayout = (FrameLayout) rootView.findViewById(R.id.framelayout_search_product_list);
+			productListFrameLayout = (FrameLayout) rootView.findViewById(R.id.framelayout_product_list);
 			settingPullToRefreshListView();
 			productJsonArrayList = new ArrayList<JSONObject>();
 			loadRefreshByKeyword();
-			//获取商品
-			//视图加载以及位置调整
-			// 获取商品
-			// 视图加载以及位置调整
-			// 获取商品
-			// 视图加载以及位置调整
 			initUI();
 		}
 		return rootView;
 	}
-
 	/**
 	 * @Title: initShopFragment
 	 * @Description: 初始化和设置视图控件
@@ -142,7 +133,6 @@ public class ShopFragment extends Fragment {
 		productListView.addHeaderView(shopFragmentHeadView);
 		requestProduct();
 	}
-
 	/**
 	 * @Title: settingPullToRefreshListView
 	 * @Description: 设置PullToRefresh刷新配置参数
@@ -151,11 +141,18 @@ public class ShopFragment extends Fragment {
 		mPullToRefreshListView = (PullToRefreshListView) rootView.findViewById(R.id.ptr_listview_fragment_shop);
 		mPullToRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
 		mPullToRefreshListView.setOnRefreshListener(new RefreshListener());
+		//搜索PTR
+		searchPullToRefreshListView = (PullToRefreshListView) rootView.findViewById(R.id.ptr_search_product);
+		searchPullToRefreshListView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
+		searchPullToRefreshListView.setOnRefreshListener(new searchRefreshListener());
 		productListView = mPullToRefreshListView.getRefreshableView();
 		productListView.setFadingEdgeLength(0);
 		productListView.setFastScrollEnabled(false);
+		//搜索ListView
+		searchListView = searchPullToRefreshListView.getRefreshableView();
+		searchListView.setFadingEdgeLength(0);
+		searchListView.setFastScrollEnabled(false);
 	}
-
 	/**
 	 * @Title: settingRecommondProduct
 	 * @Description: 加载推荐套餐下的控件
@@ -195,7 +192,6 @@ public class ShopFragment extends Fragment {
 		});
 		requestProduct();
 	}
-
 	/**
 	 * @Title: initRecommendProduct
 	 * @Description: 初始化推荐套餐商品信息
@@ -205,12 +201,12 @@ public class ShopFragment extends Fragment {
 		recommondProductNameTextView.setText(jsonObject.optString("Name", ""));
 		recommondProductCurrentPriceTextView.setText("RMB"
 				+ SplitStringWithDot.split(jsonObject.optString("Price", "0")));
-		if (jsonObject.optString("NewPrice", "").equals("null")) {
+		if (jsonObject.optString("OldPrice", "").equals("null")) {
 			recommondProductBeforePriceTextView.setText("折扣前0");
 			recommondProductBeforePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 		} else {
 			recommondProductBeforePriceTextView.setText("折扣前"
-					+ SplitStringWithDot.split(jsonObject.optString("NewPrice", "0")));
+					+ SplitStringWithDot.split(jsonObject.optString("OldPrice", "0")));
 			recommondProductBeforePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 		}
 		if (jsonObject.optString("Owner", "0").equals("null")) {
@@ -223,7 +219,6 @@ public class ShopFragment extends Fragment {
 			ImageLoader.getInstance().displayImage(urlString, recommondProductImageView);
 		}
 	}
-
 	/**
 	 * @Title: requestAdvertisements
 	 * @Description: 获取广告信息
@@ -247,14 +242,12 @@ public class ShopFragment extends Fragment {
 						}
 					}
 				}
-
 				@Override
 				public void onProgress(ProgressMessage msg) {
 				}
 			}.setUrl("/api/Channel/GetTitleImg").setRequestMethod(RequestMethod.eGet).addParam("channelName", "banner")
 					.notifyRequest();
 	}
-
 	/**
 	 * @Title: requestProduct
 	 * @Description: 获取商品列表，同时加载到Adapter中
@@ -292,14 +285,12 @@ public class ShopFragment extends Fragment {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(map).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
-
 	/**
 	 * @Title: requestProduct
 	 * @Description: 传入参数，刷新商品信息
@@ -313,8 +304,11 @@ public class ShopFragment extends Fragment {
 				if (data.getMRootData() != null) {
 					try {
 						jsonArray = data.getMRootData().getJSONArray("List");
-						productListAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
-						initRecommendProduct(JSONArrayConvertToArrayList.convertToArrayList(jsonArray).get(0));
+						if (searchProductFrameLayout.getVisibility() == View.VISIBLE) {
+						} else {
+							productListAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
+							initRecommendProduct(JSONArrayConvertToArrayList.convertToArrayList(jsonArray).get(0));
+						}
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -359,7 +353,6 @@ public class ShopFragment extends Fragment {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
@@ -465,12 +458,10 @@ public class ShopFragment extends Fragment {
 			}
 		});
 	}
-
 	@Override
 	public void onStart() {
 		super.onStart();
 	}
-
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
@@ -486,7 +477,6 @@ public class ShopFragment extends Fragment {
 			Toast.makeText(mContext, "正在刷新数据，请稍后", Toast.LENGTH_SHORT).show();
 			requestProduct();
 		}
-
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 			HashMap<String, String> map = new HashMap<String, String>();
@@ -494,6 +484,15 @@ public class ShopFragment extends Fragment {
 			map.put("PageCount", "10");
 			map.put("Name", keywordSearch);
 			refreshProduct(map);
+		}
+	}
+
+	private class searchRefreshListener implements OnRefreshListener2<ListView> {
+		@Override
+		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+		}
+		@Override
+		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 		}
 	}
 
@@ -511,5 +510,55 @@ public class ShopFragment extends Fragment {
 		}
 		keywordSearch = "";
 		productPageCount = 1;
+	}
+	/**
+	 * @Title: searchProduct
+	 * @Description: 搜索商品
+	 */
+	public void searchProduct(String searchString) {
+		searchProductFrameLayout.setVisibility(View.VISIBLE);
+		productListFrameLayout.setVisibility(View.GONE);
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+		hashMap.put("Name", searchString);
+		requestSearchProduct(hashMap);
+	}
+	/**
+	 * @Title: requestSearchProduct
+	 * @Description: 获取搜索数据
+	 * @param searchString
+	 */
+	private void requestSearchProduct(HashMap<String, String> hashMap) {
+		new RequestAdapter() {
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONArray jsonArray;
+				if (data.getMRootData() != null) {
+					try {
+						jsonArray = data.getMRootData().getJSONArray("List");
+						if (jsonArray.length() >= 1) {
+							searchProductAdapter = new ProductListAdapter(mContext,
+									JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
+							searchListView.setAdapter(searchProductAdapter);
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
+				}
+			}
+			@Override
+			public void onProgress(ProgressMessage msg) {
+			}
+		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(hashMap).setRequestMethod(RequestMethod.eGet)
+				.notifyRequest();
+	}
+	/** 
+	 * @Title: settingClearSearch 
+	 * @Description: 通过MainActivity中的调用设置搜索界面和商品列表界面的显示和隐藏
+	 */
+	public void settingClearSearch(){
+		searchProductFrameLayout.setVisibility(View.GONE);
+		productListFrameLayout.setVisibility(View.VISIBLE);
 	}
 }

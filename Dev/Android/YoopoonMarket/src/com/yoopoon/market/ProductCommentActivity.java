@@ -41,8 +41,9 @@ public class ProductCommentActivity extends MainActionBarActivity {
 	void initProductComment() {
 		productId = getIntent().getExtras().getString("productId");
 		commentAmount = getIntent().getExtras().getString("commentAmount");
-		backButton.setVisibility(View.VISIBLE);
+		backWhiteButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
+		backWhiteButton.setText("后退");
 		headView.setBackgroundColor(Color.RED);
 		titleButton.setText("评价" + "(" + commentAmount + ")");
 		titleButton.setTextColor(Color.WHITE);

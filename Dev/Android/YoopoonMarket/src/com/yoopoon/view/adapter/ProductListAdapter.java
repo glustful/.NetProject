@@ -89,7 +89,7 @@ public class ProductListAdapter extends BaseAdapter {
 					+ SplitStringWithDot.split(datas.get(position * 2).optString("Price", "0")));
 			//产品未打折前价格
 			productityViewHandler.productityBeforePriceTextView1.setText(" /折扣前"
-					+ SplitStringWithDot.split(datas.get(position * 2).optString("NewPrice", "0")));
+					+ SplitStringWithDot.split(datas.get(position * 2).optString("OldPrice", "0")));
 			productityViewHandler.productityBeforePriceTextView1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 			//加载销量
 			if (datas.get(position * 2).optString("Owner", "0").equals("null")) {
@@ -140,7 +140,7 @@ public class ProductListAdapter extends BaseAdapter {
 								String url = mContext.getString(R.string.url_image) + mainImageString;
 								String name = datas.get(position * 2).optString("Name", "");
 								float price_counted = Float.parseFloat(datas.get(position * 2).optString("Price", ""));
-								float price_previous = Float.parseFloat(datas.get(position * 2).optString("NewPrice",
+								float price_previous = Float.parseFloat(datas.get(position * 2).optString("OldPrice",
 										""));
 								dao.add(new Staff(subtitle1, name, url, 1, price_counted, price_previous, id1));
 							}
@@ -187,7 +187,7 @@ public class ProductListAdapter extends BaseAdapter {
 							+ SplitStringWithDot.split(datas.get(position * 2 + 1).optString("Price", "0")));
 					//产品未打折前价格
 					productityViewHandler.productityBeforePriceTextView2.setText(" /折扣前"
-							+ SplitStringWithDot.split(datas.get(position * 2 + 1).optString("NewPrice", "0")));
+							+ SplitStringWithDot.split(datas.get(position * 2 + 1).optString("OldPrice", "0")));
 					productityViewHandler.productityBeforePriceTextView2.getPaint().setFlags(
 							Paint.STRIKE_THRU_TEXT_FLAG);
 					//加载销量
@@ -240,7 +240,7 @@ public class ProductListAdapter extends BaseAdapter {
 										float price_counted = Float.parseFloat(datas.get(position * 2+1).optString(
 												"Price", ""));
 										float price_previous = Float.parseFloat(datas.get(position * 2+1).optString(
-												"NewPrice", ""));
+												"OldPrice", ""));
 										dao.add(new Staff(subtitle2, name, url, 1, price_counted, price_previous, id2));
 									}
 									int[] start_location = new int[2];// 一个整型数组，用来存储按钮的在屏幕的X、Y坐标
