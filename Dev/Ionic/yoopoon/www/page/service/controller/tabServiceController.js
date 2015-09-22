@@ -64,11 +64,38 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 	//$scope.tabIndex = 5;
 	$scope.getServiceList = function (tabIndex) {
 		$scope.tabIndex = tabIndex;
+		//获取当前用户信息
+		$scope.currentuser= AuthService.CurrentUser();
+		if(	$scope.tabIndex == 5){
+			$scope.condition = {
+				Status: '4',
+				Addusers: $scope.currentuser.UserId
+			};
+			var getList = function () {
+				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
+					.success(function(data) {
+					$scope.list = data.List;
+				});
+			};
+			getList();
+
+		}
+		if($scope.tabIndex == 6){
+			$scope.condition = {
+				Status: '5',
+				Addusers: $scope.currentuser.UserId
+			};
+			var getList1 = function () {
+				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
+					.success(function(data) {
+						$scope.list = data.List;
+					});
+			};
+			getList1();
+		}
 
 	};
 	function tab() {
-		//获取当前用户信息
-		$scope.currentuser= AuthService.CurrentUser();
 		//待接件
 		if ($stateParams.tabIndex == 5) {
 			$scope.tabIndex = 5;
@@ -79,8 +106,8 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 			var getList = function () {
 				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
 					.success(function(data) {
-					$scope.list = data.List;
-				});
+						$scope.list = data.List;
+					});
 			};
 			getList();
 		}

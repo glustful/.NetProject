@@ -263,29 +263,29 @@ app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderServic
         //待付款
         if ($stateParams.tabIndex == 1) {
             $scope.tabIndex = 1;
-            $scope.serchCondition={
-                Status:'1',
-                CustomerName: $scope.currentuser.UserName
-            }
-            $scope.myOrder = orderService.getOrderList($scope.searchCondition)
+            //$scope.serchCondition={
+            //    Status:'1',
+            //    CustomerName: $scope.currentuser.UserName
+            //}
+            //$scope.myOrder = orderService.getOrderList($scope.searchCondition)
         }
         //待发货
         if ($stateParams.tabIndex == 2) {
             $scope.tabIndex = 2;
-            $scope.serchCondition={
-                CustomerName: $scope.currentuser.UserName,
-                Status:'2'
-            }
-            $scope.myOrder = orderService.getOrderList($scope.searchCondition);
+            //$scope.serchCondition={
+            //    CustomerName: $scope.currentuser.UserName,
+            //    Status:'2'
+            //}
+            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
         }
         //待收货
         if ($stateParams.tabIndex == 3) {
             $scope.tabIndex = 3;
-            $scope.serchCondition={
-                CustomerName: $scope.currentuser.UserName,
-                Status:'3'
-            }
-            $scope.myOrder = orderService.getOrderList($scope.searchCondition);
+            //$scope.serchCondition={
+            //    CustomerName: $scope.currentuser.UserName,
+            //    Status:'3'
+            //}
+            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
         }
         //待评价
         if ($stateParams.tabIndex == 4) {
@@ -298,18 +298,18 @@ app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderServic
     $scope.oldMem = {
         Realname: '',
         UserName:'',
-        Gender: '1',
-        IdentityNo: '4564',
-        Icq: '454',
-        Phone: '18388026186',
+        Gender: '',
+        IdentityNo: '',
+        Icq: '',
+        Phone: '',
         Thumbnail: '',
-        PostNo: '456',
-        AccountNumber: '4444',
-        Points: '5',
-        Level: '4',
-        AddTime: '2015-08-09',
-        UpdUser: '1',
-        UpdTime: '2015-08-09'
+        PostNo: '',
+        AccountNumber: '',
+        Points: '',
+        Level: '',
+        AddTime: '',
+        UpdUser: '',
+        UpdTime: ''
     };
 
     $http.get(SETTING.ApiUrl+'/Member/Get?userId='+$scope.currentuser.UserId,{'withCredentials':true})
