@@ -17,5 +17,7 @@ namespace Community.Service.MemberAddress
 		IQueryable<MemberAddressEntity> GetMemberAddresssByCondition(MemberAddressSearchCondition condition);
 
 		int GetMemberAddressCount (MemberAddressSearchCondition condition);
+
+	    MemberAddressEntity GetDefaultAddress(int userId);
 	}
 }
