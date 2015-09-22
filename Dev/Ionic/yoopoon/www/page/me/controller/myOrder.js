@@ -13,7 +13,7 @@ $scope.tabIndex=$stateParams.tabIndex;
    {
        $scope.searchCondition.Status=$scope.tabIndex;
        //alert($scope.searchCondition.CustomerName);
-       $http.get(SETTING.ApiUrl +"/OrderDetail/Get",{
+       $http.get(SETTING.ApiUrl +"/CommunityOrder/Get",{
            params:$scope.searchCondition,
            'withCredentials':true}).
         success(function(data){

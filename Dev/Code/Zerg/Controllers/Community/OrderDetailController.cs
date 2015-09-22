@@ -94,27 +94,27 @@ namespace Zerg.Controllers.Community
 //			return false;
 //		}
 
-//		public bool Put(OrderDetailModel model)
-//		{
-//			var entity = _orderDetailService.GetOrderDetailById(model.Id);
-//			if(entity == null)
-//				return false;
-////			entity.Product = model.Product;
-//			entity.ProductName = model.ProductName;
-//			entity.UnitPrice = model.UnitPrice;
-//			entity.Count = model.Count;
-//			entity.Snapshoturl = model.Snapshoturl;
-//			entity.Remark = model.Remark;
-//			entity.Adduser = model.Adduser;
-//			entity.Adddate = model.Adddate;
-//			entity.Upduser = model.Upduser;
-//			entity.Upddate = model.Upddate;
-//			entity.Totalprice = model.Totalprice;
-////			entity.Order = model.Order;
-//			if(_orderDetailService.Update(entity) != null)
-//				return true;
-//			return false;
-//		}
+        public bool Put(OrderDetailModel model)
+        {
+            var entity = _orderDetailService.GetOrderDetailById(model.Id);
+            if (entity == null)
+                return false;
+            //			entity.Product = model.Product;
+            entity.ProductName = model.ProductName;
+            entity.UnitPrice = model.UnitPrice;
+            entity.Count = model.Count;
+            entity.Snapshoturl = model.Snapshoturl;
+            entity.Remark = model.Remark;
+            entity.Adduser = model.Adduser;
+            entity.Adddate = model.Adddate;
+            entity.Upduser = model.Upduser;
+            entity.Upddate = model.Upddate;
+            entity.Totalprice = model.Totalprice;
+            //			entity.Order = model.Order;
+            if (_orderDetailService.Update(entity) != null)
+                return true;
+            return false;
+        }
 //
 //		public bool Delete(int id)
 //		{
