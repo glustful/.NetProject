@@ -26,12 +26,14 @@
                 <td>{{item.strAdddate}}</td>
                 <td>{{item.Totalprice|currency:'￥'}}({{item.Actualprice|currency:'￥'}})</td>
                 <td>{{item.StatusString}}</td>
-                <td><select class="form-control">
-                        <option>{{item.StatusString}}</option>
-                        <option>配送中</option>
-                        <option>订单完成</option>
-                    </select></td>
-                <td><button type="button" class="btn btn-info">提交</button></td>
+                <td>
+                    <select class="form-control" ng-model="states">
+                        <option value=" ">{{item.StatusString}}</option>
+                        <option value="2">配送中</option>
+                        <option value="3">订单完成</option>
+                    </select>
+                </td>
+                <td><button type="button" class="btn btn-info" ng-click="EditStates()">提交</button></td>
             </tr>
         </table>
     </div>

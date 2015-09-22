@@ -33,4 +33,9 @@ app.controller('orderListController', ['$scope', 'repository', function ($scope,
 
     getList();
     $scope.getList = getList;
+
+    
+    $scope.EditStates = function () {
+        alert($scope.states);
+    }
 }]);
