@@ -30,7 +30,7 @@ namespace Zerg.Controllers.Community
         private readonly IWorkContext _workContext;
 
         public ProductParameterController(IProductParameterService productParameterService, IParameterService parameterService,
-            IParameterValueService parameterValueService, IProductService productService, ICategoryService categoryService,IWorkContext workContext)
+            IParameterValueService parameterValueService, IProductService productService, ICategoryService categoryService, IWorkContext workContext)
         {
             _productParameterService = productParameterService;
             _parameterService = parameterService;
@@ -101,7 +101,7 @@ namespace Zerg.Controllers.Community
             if (product == null)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "商品不存在"));
-            }           
+            }
             var parameterValue = _parameterValueService.GetParameterValuesByCondition(new ParameterValueSearchCondition { Ids = model.ValueIds }).ToList().Select(pv => new ProductParameterEntity
             {
                 Product = product,
@@ -112,9 +112,38 @@ namespace Zerg.Controllers.Community
                 Sort = 0,
                 UpdTime = DateTime.Now,
                 UpdUser = _workContext.CurrentUser.Id
-            }).ToList();            
+            }).ToList();
+            var productParams =
+                _productParameterService.GetProductParametersByCondition(new ProductParameterSearchCondition
+                {
+                    ProductId = product.Id
+                }).ToList();
+            if (productParams.Count > 0)
+            {
+                foreach (var item in productParams)
+                {
+                    _productParameterService.Delete(item);
+                }
+                //var parameterValue =
+                //    _parameterValueService.GetParameterValuesByCondition(new ParameterValueSearchCondition
+                //    {
+                //        Ids = model.ValueIds
+                //    }).ToList().Select(pv => new ProductParameterEntity
+                //    {
+                //        Product = product,
+                //        AddTime = DateTime.Now,
+                //        AddUser = _workContext.CurrentUser.Id,
+                //        Parameter = pv.Parameter,
+                //        ParameterValue = pv,
+                //        Sort = 0,
+                //        UpdTime = DateTime.Now,
+                //        UpdUser = _workContext.CurrentUser.Id
+                //    }).ToList();
+                _productParameterService.BulkCreate(parameterValue);
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功"));
+            }                
             _productParameterService.BulkCreate(parameterValue);
-            return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功"));                             
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功"));
         }
 
         public bool Delete(int id)
