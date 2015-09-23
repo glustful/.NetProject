@@ -53,34 +53,42 @@ namespace Zerg.Controllers.Pay
 
                 //注意：
                 //付款完成后，支付宝系统发送该交易状态通知
-                return "success";
-            }
-            var isVerifyied = await Verify(model.sign, model.notify_id);
-            var orderNo = model.out_trade_no;
-            bool isSuccess = false;
-            if (orderNo.StartsWith("O"))
-            {
-                var order = _orderService.GetOrderByNo(orderNo);
-                order.UpdDate = DateTime.Now;
-                order.UpdUser = 1; //默认1为管理员
-                order.Status = EnumOrderStatus.Payed;
-                if (isVerifyied)
+
+                var isVerifyied =  Verify(model.sign, model.notify_id);
+                var orderNo = model.out_trade_no;
+                bool isSuccess = false;
+                if (orderNo.StartsWith("O"))
                 {
-                    if (_orderService.Update(order) != null)
-                        isSuccess = true;
+                    var order = _orderService.GetOrderByNo(orderNo);
+                    if (order.Status == EnumOrderStatus.Payed)
+                        return "success";
+                    order.UpdDate = DateTime.Now;
+                    order.UpdUser = 1; //默认1为管理员
+                    order.Status = EnumOrderStatus.Payed;
+                    if (await isVerifyied)
+                    {
+                        if (_orderService.Update(order) != null)
+                            isSuccess = true;
+                    }
+
                 }
-                   
+                else
+                {
+                    var order = _serviceOrderService.GetServiceOrderByNo(orderNo);
+                    if (order.Status == EnumServiceOrderStatus.Payed)
+                        return "success";
+                    order.UpdTime = DateTime.Now;
+                    order.UpdUser = 1; //默认1为管理员
+                    order.Status = EnumServiceOrderStatus.Payed;
+                    if (await isVerifyied)
+                    {
+                        if (_serviceOrderService.Update(order) != null)
+                            isSuccess = true;
+                    }
+                }
+                return isSuccess ? "success" : "fail";
             }
-            else
-            {
-                var order = _serviceOrderService.GetServiceOrderByNo(orderNo);
-                order.UpdTime = DateTime.Now;
-                order.UpdUser = 1; //默认1为管理员
-                order.Status = EnumServiceOrderStatus.Payed;
-                if (_serviceOrderService.Update(order) != null)
-                    isSuccess = true;
-            }
-            return isSuccess ? "success" : "fail";
+            return "success";
         }
 
         private async Task<bool> Verify(string sign,string notify_id)
@@ -93,9 +101,9 @@ namespace Zerg.Controllers.Pay
             {
                 var myReq = (HttpWebRequest)WebRequest.Create(veryfyUrl);
                 myReq.Timeout = 3000000;
-                var myStream = await myReq.GetRequestStreamAsync();
+                var response = await myReq.GetResponseAsync();
                 //Stream myStream = HttpWResp.GetResponseStream();
-                var sr = new StreamReader(myStream, Encoding.Default);
+                var sr = new StreamReader(response.GetResponseStream(), Encoding.Default);
                 var strBuilder = new StringBuilder();
                 while (-1 != sr.Peek())
                 {
