@@ -143,7 +143,7 @@ public class AddressManageActivity extends MainActionBarActivity {
 			holder.tv_address.setText(entity.Address);
 			holder.tv_name.setText(entity.Linkman);
 			holder.tv_phone.setText(entity.Tel);
-			if (position == 0) {
+			if (entity.IsDefault != null && entity.IsDefault.equals("true")) {
 				holder.tv_address.setText("[默认]" + entity.Address);
 				changeTextColor(holder.tv_address);
 			}

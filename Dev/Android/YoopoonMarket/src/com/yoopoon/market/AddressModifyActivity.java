@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,8 @@ public class AddressModifyActivity extends MainActionBarActivity {
 	EditText et_linkman;
 	@ViewById(R.id.tv_select)
 	TextView tv_select;
+	@ViewById(R.id.cb)
+	CheckBox cb_isdefault;
 
 	int areaId = 0;
 
@@ -68,6 +71,7 @@ public class AddressModifyActivity extends MainActionBarActivity {
 					addressEntity.Zip = et_postno.getText().toString();
 					addressEntity.Tel = et_phone.getText().toString();
 					addressEntity.AreaId = areaId;
+					addressEntity.IsDefault = cb_isdefault.isChecked() ? "true" : "false";
 					String json = om.writeValueAsString(addressEntity);
 					return json;
 				} catch (JsonProcessingException e) {

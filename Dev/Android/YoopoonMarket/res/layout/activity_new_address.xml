@@ -102,6 +102,12 @@
                 android:textColor="@color/text_gray"
                 android:textSize="14sp"
                 android:layout_marginBottom="15dp" />
+            
+            <CheckBox 
+                android:id="@+id/cb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="设置为默认地址"/>
 
             <Button
                 android:id="@+id/btn_save"

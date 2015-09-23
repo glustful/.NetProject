@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,8 @@ public class NewAddressActivity extends MainActionBarActivity {
 	String areaId = "0";
 	@ViewById(R.id.ll_loading)
 	View loading;
+	@ViewById(R.id.cb)
+	CheckBox cb;
 
 	@Click(R.id.tv1)
 	void selectArea() {
@@ -69,7 +72,7 @@ public class NewAddressActivity extends MainActionBarActivity {
 			entity.Linkman = et_linkman.getText().toString();
 			entity.Tel = et_phone.getText().toString();
 			entity.AreaId = Integer.parseInt(areaId);
-			entity.IsDefault = "false";
+			entity.IsDefault = cb.isChecked() ? "true" : "false";
 
 			add(entity);
 		} else {

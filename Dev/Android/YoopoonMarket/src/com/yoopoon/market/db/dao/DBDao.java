@@ -6,10 +6,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import com.yoopoon.market.db.DBOpenHelper;
 import com.yoopoon.market.domain.Staff;
 
 public class DBDao {
+	private static final String TAG = "DBDao";
 	private static final String TABLE_NAME = "cart";
 	private DBOpenHelper dbOpenHelper;
 
@@ -99,6 +101,7 @@ public class DBDao {
 	}
 
 	public int updateCount(int productid, int count) {
+		Log.i(TAG, "count = " + count);
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put("amount", count);

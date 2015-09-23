@@ -226,6 +226,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				DBDao dao = new DBDao(mContext);
 				cartCount = dao.getAllCounts();
 				runOnUiThread(new Runnable() {
+
 					@Override
 					public void run() {
 						if (cartCount > 0) {
@@ -312,9 +313,14 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		addressFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, addressFilter);
 
+		IntentFilter countFilter = new IntentFilter("com.yoopoon.market.daocount");
+		countFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		registerReceiver(receiver, countFilter);
+
 	}
 
 	BroadcastReceiver receiver = new BroadcastReceiver() {
+
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
@@ -347,6 +353,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				areaName = name;
 				btn_select.setText(areaName);
 				btn_select.setTag(areaId);
+			} else if (action.equals("com.yoopoon.market.daocount")) {
+				int count = intent.getExtras().getInt("Count");
+				tv_counts.setText(count + "");
 			}
 		}
 	};

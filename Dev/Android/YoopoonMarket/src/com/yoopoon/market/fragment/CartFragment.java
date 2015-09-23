@@ -15,6 +15,7 @@ package com.yoopoon.market.fragment;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -75,6 +76,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 	int limit = 5;
 	int offset = 0;
 	int[] checkedIds;
+	int totalcount;
 
 	@Override
 	@Nullable
@@ -174,7 +176,6 @@ public class CartFragment extends Fragment implements OnClickListener {
 	}
 
 	void fillData() {
-		Log.i(TAG, "fillData()");
 		adapter.notifyDataSetChanged();
 		calcTotalPrice();
 		ll_loading.setVisibility(View.GONE);
@@ -290,8 +291,6 @@ public class CartFragment extends Fragment implements OnClickListener {
 				@Override
 				public void onClick(View v) {
 					staff.chosen = !staff.chosen;
-					if (!staff.chosen)
-						cb_selectall.setChecked(false);
 					calcTotalPrice();
 				}
 			});
@@ -305,10 +304,20 @@ public class CartFragment extends Fragment implements OnClickListener {
 
 					if (!TextUtils.isEmpty(text)) {
 						int count = Integer.parseInt(text);
-						if (count > 0) {
+						if (count > 1) {
 							et.setText(String.valueOf(--count));
-							staff.count--;
+							staff.count = count;
+							et.setTag(count);
 							calcTotalPrice();
+							new Thread() {
+								@Override
+								public void run() {
+									DBDao dao = new DBDao(getActivity());
+									dao.updateCount(staff.productId, staff.count);
+									Log.i(TAG, "staff.count = " + staff.count);
+									sendBroadcast(dao.getAllCounts());
+								}
+							}.start();
 						}
 					}
 
@@ -324,9 +333,19 @@ public class CartFragment extends Fragment implements OnClickListener {
 					if (!TextUtils.isEmpty(text)) {
 						int count = Integer.parseInt(text);
 						et.setText(String.valueOf(++count));
-
-						staff.count++;
+						et.setTag(count);
+						staff.count = count;
 						calcTotalPrice();
+						new Thread() {
+
+							@Override
+							public void run() {
+								DBDao dao = new DBDao(getActivity());
+								dao.updateCount(staff.productId, staff.count);
+								Log.i(TAG, "staff.count = " + staff.count);
+								sendBroadcast(dao.getAllCounts());
+							}
+						}.start();
 					}
 
 				}
@@ -362,9 +381,19 @@ public class CartFragment extends Fragment implements OnClickListener {
 					staffList.remove(staff);
 					fillData();
 					new Thread() {
+
 						public void run() {
 							DBDao dao = new DBDao(getActivity());
 							dao.delete(staff.id);
+							totalcount = dao.getAllCounts();
+							getActivity().runOnUiThread(new Runnable() {
+
+								@Override
+								public void run() {
+									tv_title_count.setText("购物车(" + totalcount + ")");
+									sendBroadcast(totalcount);
+								}
+							});
 						};
 					}.start();
 				}
@@ -373,14 +402,23 @@ public class CartFragment extends Fragment implements OnClickListener {
 		}
 	}
 
+	void sendBroadcast(int count) {
+		Intent intent = new Intent("com.yoopoon.market.daocount");
+		intent.addCategory(Intent.CATEGORY_DEFAULT);
+		intent.putExtra("Count", count);
+		getActivity().sendBroadcast(intent);
+	}
+
 	void calcTotalPrice() {
 		double sumPrice = 0;
 		int sumCount = 0;
+		int total = 0;
 		for (Staff staff : staffList) {
 			if (staff.chosen) {
 				sumPrice += staff.price_counted * staff.count;
 				sumCount += staff.count;
 			}
+			total += staff.count;
 		}
 
 		DecimalFormat df = new DecimalFormat("#.00");
@@ -388,6 +426,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 		Utils.spanTextStyle(tv_price_total, getActivity());
 		btn_balance.setText("结算(" + sumCount + ")");
 		btn_balance.setTag(sumCount);
+		tv_title_count.setText("购物车(" + total + ")");
 	}
 
 	@Override
@@ -407,8 +446,13 @@ public class CartFragment extends Fragment implements OnClickListener {
 				}
 				break;
 			case R.id.cb_chooseall:
-				for (Staff staff : staffList)
-					staff.chosen = true;
+				boolean chosen = Boolean.parseBoolean((String) cb_selectall.getTag());
+
+				for (Staff staff : staffList) {
+					staff.chosen = !chosen;
+					cb_selectall.setTag(String.valueOf(!chosen));
+				}
+
 				fillData();
 				break;
 			case R.id.btn_edit:
