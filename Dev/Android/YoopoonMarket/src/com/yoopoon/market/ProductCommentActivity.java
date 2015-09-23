@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -37,6 +38,8 @@ public class ProductCommentActivity extends MainActionBarActivity {
 	@ViewById(R.id.ptr_listview_comment)
 	PullToRefreshListView mPullToRefreshListView;
 	private int commentPage = 1;
+	@ViewById(R.id.linearlayout_progressbar)
+	LinearLayout progressBarLinearLayout;
 
 	@AfterViews
 	void initProductComment() {
@@ -77,6 +80,7 @@ public class ProductCommentActivity extends MainActionBarActivity {
 	 * @Description: 获取评论
 	 */
 	private void requestComment() {
+		progressBarLinearLayout.setVisibility(View.VISIBLE);
 		HashMap<String, String> hashMap = new HashMap<String, String>();
 		hashMap.put("ProductId", productId);
 		hashMap.put("Page", "1");
@@ -84,6 +88,7 @@ public class ProductCommentActivity extends MainActionBarActivity {
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
+				progressBarLinearLayout.setVisibility(View.GONE);
 				if (data.getMRootData() != null) {
 					JSONArray jsonArray = data.getMRootData().optJSONArray("Model");
 					ArrayList<JSONObject> arrayList = JSONArrayConvertToArrayList.convertToArrayList(jsonArray);
@@ -98,9 +103,11 @@ public class ProductCommentActivity extends MainActionBarActivity {
 				.notifyRequest();
 	}
 	private void requestComment(HashMap<String, String> hashMap) {
+		progressBarLinearLayout.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
+				progressBarLinearLayout.setVisibility(View.GONE);
 				mPullToRefreshListView.onRefreshComplete();
 				if (data.getMRootData() != null) {
 					JSONArray jsonArray = data.getMRootData().optJSONArray("Model");
