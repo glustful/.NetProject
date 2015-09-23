@@ -7,6 +7,7 @@
     android:paddingBottom="10dp" >
 
     <Button
+        android:id="@+id/btn_service"
         style="@style/Button_Me"
         android:drawableLeft="@drawable/me_serve"
         android:drawablePadding="5dp"
@@ -32,12 +33,11 @@
                 android:text="待接件" />
 
             <TextView
+                android:id="@+id/tv_service1"
                 style="@style/TextView_Circle"
                 android:layout_alignRight="@id/tv1"
                 android:background="@drawable/circle"  
-                android:gravity="center"
-                android:text="1"
-                android:visibility="visible" />
+                android:gravity="center" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -55,11 +55,11 @@
                 android:text="办理中" />
 
             <TextView
+                android:id="@+id/tv_service2"
                 android:layout_alignRight="@id/tv2"
                 style="@style/TextView_Circle"
                 android:background="@drawable/circle"
-                android:gravity="center"
-                android:text="1" />
+                android:gravity="center"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -77,11 +77,11 @@
                 android:text="待评价" />
 
             <TextView
+                android:id="@+id/tv_service3"
                 android:layout_alignRight="@id/tv3"
                 style="@style/TextView_Circle"
                 android:background="@drawable/circle"
-                android:gravity="center"
-                android:text="1"/>
+                android:gravity="center"/>
         </RelativeLayout>
     </LinearLayout>
 

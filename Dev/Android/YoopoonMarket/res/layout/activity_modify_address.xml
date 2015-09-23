@@ -18,6 +18,8 @@
             android:orientation="vertical" >
 
             <TextView
+                android:id="@+id/tv_select"
+                android:clickable="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="1dp"
@@ -43,7 +45,7 @@
                     android:background="@color/white"
                     android:hint="详细地址" />
 
-                <TextView
+                <TextView  
                     android:id="@+id/tv_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -91,6 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
+                    android:inputType="phone"
                     android:hint="联系电话" />
 
                 <TextView

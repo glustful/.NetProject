@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.yoopoon.market.anim.ExpandAnimation;
+import com.yoopoon.market.domain.MemberAddressEntity;
 import com.yoopoon.market.domain.SimpleAreaEntity;
 import com.yoopoon.market.domain.SimpleAreaList;
 import com.yoopoon.market.net.ProgressMessage;
@@ -33,10 +36,15 @@ public class SearchActivity extends MainActionBarActivity {
 	LinearLayout ll_areas;
 	@ViewById(R.id.ll_loading)
 	View loading;
+	@Extra
+	int which = 0;
+	@Extra
+	MemberAddressEntity addressEntity;
 	int[] counts;
 	int[] colors = { Color.rgb(236, 109, 23), Color.rgb(40, 174, 62), Color.rgb(39, 127, 194), Color.rgb(175, 97, 163) };
 	List<SimpleAreaList> lists = new ArrayList<SimpleAreaList>();
 	int childList = 0;
+	String[] name = new String[3];
 
 	@AfterViews
 	void initUI() {
@@ -192,9 +200,10 @@ public class SearchActivity extends MainActionBarActivity {
 						if (!toggle)
 							tag_areas.startAnimation(ea);
 					}
-					if (animation.toggle())
+					if (animation.toggle()) {
 						ll_areas.setTag(areas);
-					else
+						name[0] = tv.getText().toString().trim();
+					} else
 						ll_areas.setTag(null);
 				}
 			});
@@ -212,10 +221,8 @@ public class SearchActivity extends MainActionBarActivity {
 
 					@Override
 					public void onClick(View v) {
-						TextView childTextView = (TextView) v;
-						String text = childTextView.getText().toString().trim();
-						Toast.makeText(SearchActivity.this, text, Toast.LENGTH_SHORT).show();
 						String fatherid = String.valueOf(entity.FatherId);
+						name[1] = entity.Name;
 						requestData(fatherid);
 					}
 				});
@@ -223,7 +230,7 @@ public class SearchActivity extends MainActionBarActivity {
 		}
 	}
 
-	void requestData(String fatherid) {
+	void requestData(final String fatherid) {
 		final List<SimpleAreaEntity> areas = new ArrayList<SimpleAreaEntity>();
 		new RequestAdapter() {
 
@@ -248,9 +255,15 @@ public class SearchActivity extends MainActionBarActivity {
 								e.printStackTrace();
 							}
 						}
-						SearchActivity3_.intent(SearchActivity.this).areas(areas).start();
+						SearchActivity3_.intent(SearchActivity.this).areas(areas).which(which).name(name)
+								.addressEntity(addressEntity).start();
 					} else {
 						// 地区选择完毕，返回
+						Intent intent = new Intent("com.yoopoon.market.address");
+						intent.addCategory(Intent.CATEGORY_DEFAULT);
+						intent.putExtra("AreaId", fatherid);
+						intent.putExtra("Name", name);
+						SearchActivity.this.sendBroadcast(intent);
 						finish();
 					}
 				} else {

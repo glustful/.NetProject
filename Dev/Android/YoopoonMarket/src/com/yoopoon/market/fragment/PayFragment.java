@@ -2,6 +2,7 @@ package com.yoopoon.market.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,11 +24,12 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.MeOrderActivity;
 import com.yoopoon.market.MyApplication;
-import com.yoopoon.market.PayResultActivity_;
+import com.yoopoon.market.PayDemoActivity_;
 import com.yoopoon.market.R;
 import com.yoopoon.market.domain.CommunityOrderEntity;
 import com.yoopoon.market.domain.OrderDetailEntity;
 import com.yoopoon.market.domain.ProductEntity;
+import com.yoopoon.market.domain.User;
 
 public class PayFragment extends Fragment {
 	private static final String TAG = "PayFragment";
@@ -35,6 +37,7 @@ public class PayFragment extends Fragment {
 	PullToRefreshListView lv;
 	TextView tv_empty;
 	List<CommunityOrderEntity> orders = new ArrayList<CommunityOrderEntity>();
+	MyListViewAdapter adapter;
 
 	@Override
 	@Nullable
@@ -48,13 +51,20 @@ public class PayFragment extends Fragment {
 		tv_empty = (TextView) rootView.findViewById(R.id.tv_empty);
 		MeOrderActivity meOrderActivity = (MeOrderActivity) getActivity();
 		orders = meOrderActivity.getOrderList(0);
-		tv_empty.setVisibility(orders.size() > 0 ? View.GONE : View.GONE);
+		tv_empty.setVisibility(orders.size() > 0 ? View.GONE : View.VISIBLE);
 		lv = (PullToRefreshListView) rootView.findViewById(R.id.lv);
-		lv.setAdapter(new MyListViewAdapter());
+		adapter = new MyListViewAdapter();
+		lv.setAdapter(adapter);
 
 		lv.setMode(Mode.PULL_FROM_END);
 		lv.setOnRefreshListener(new HowWillIrefresh());
 
+	}
+
+	public void update() {
+		MeOrderActivity meOrderActivity = (MeOrderActivity) getActivity();
+		orders = meOrderActivity.getOrderList(0);
+		adapter.notifyDataSetChanged();
 	}
 
 	static class ViewHolder {
@@ -85,7 +95,7 @@ public class PayFragment extends Fragment {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			if (convertView == null)
 				convertView = View.inflate(getActivity(), R.layout.item_order_common, null);
 			ViewHolder holder = (ViewHolder) convertView.getTag();
@@ -97,7 +107,7 @@ public class PayFragment extends Fragment {
 				holder.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
 				convertView.setTag(holder);
 			}
-			CommunityOrderEntity order = orders.get(position);
+			final CommunityOrderEntity order = orders.get(position);
 			holder.tv_order_num.setText("订单号：" + order.No);
 			holder.tv_price.setText("￥" + order.Totalprice);
 
@@ -117,8 +127,8 @@ public class PayFragment extends Fragment {
 				iv.setTag(imageUrl);
 				ImageLoader.getInstance().displayImage(imageUrl, iv, MyApplication.getOptions(),
 						MyApplication.getLoadingListener());
-				tv_price_counted.setText("￥" + detail.UnitPrice);
-				tv_price_previous.setText("￥" + product.Price);
+				tv_price_counted.setText("￥" + detail.Price);
+				tv_price_previous.setText("￥" + product.OldPrice);
 				tv_price_previous.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 				tv_category.setText(product.Subtitte);
 				tv_name.setText(product.Name);
@@ -136,13 +146,33 @@ public class PayFragment extends Fragment {
 
 				@Override
 				public void onClick(View v) {
-					PayResultActivity_.intent(getActivity()).start();
+					// 支付
+					float price = order.Actualprice;
+					String No = order.No;
+					String msg = "";
+
+					Bundle bundle = new Bundle();
+					bundle.putFloat("Price", price);
+					bundle.putString("No", No);
+					bundle.putString("Msg", msg);
+					selectedPostion = position;
+					PayDemoActivity_.intent(getActivity()).orderBundle(bundle).startForResult(0);
+					// PayResultActivity_.intent(getActivity()).start();
 				}
 			});
 			return convertView;
 		}
 
 	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		MeOrderActivity meOrderActivity = (MeOrderActivity) getActivity();
+		meOrderActivity.requestOrder(User.getUserId(getActivity()));
+	}
+
+	int selectedPostion = 0;
 
 	class HowWillIrefresh implements PullToRefreshBase.OnRefreshListener2<ListView> {
 

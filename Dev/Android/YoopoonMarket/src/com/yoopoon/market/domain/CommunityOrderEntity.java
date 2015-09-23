@@ -25,6 +25,7 @@ public class CommunityOrderEntity implements Serializable {
 	public List<OrderDetailEntity> Details;
 	public String UserName;
 	public int MemberAddressId;
+	public String strAdddate;
 
 	@Override
 	public String toString() {

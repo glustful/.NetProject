@@ -14,11 +14,9 @@ package com.yoopoon.market.fragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -39,18 +37,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.advertisement.ADController;
-import com.yoopoon.market.CleanServeActivity_;
-import com.yoopoon.market.DeliveryActivity_;
 import com.yoopoon.market.MaternityMatronActivity_;
-import com.yoopoon.market.PoliticsActivity_;
 import com.yoopoon.market.ProductDetailActivity_;
 import com.yoopoon.market.R;
+import com.yoopoon.market.ServeListActivity2_;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
@@ -58,11 +53,6 @@ import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.ResponseData.ResultState;
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
 import com.yoopoon.market.utils.SplitStringWithDot;
-import com.yoopoon.market.utils.Utils;
-import com.yoopoon.market.view.ExpandableHeightGridView;
-import com.yoopoon.market.view.NoScrollGridView;
-import com.yoopoon.market.view.MyGridView;
-import com.yoopoon.view.adapter.ProductGridViewAdapter;
 import com.yoopoon.view.adapter.ProductListAdapter;
 
 public class ShopFragment extends Fragment {
@@ -97,7 +87,7 @@ public class ShopFragment extends Fragment {
 	// 分页获取商品状态码
 	private int productPageCount = 1;
 	private ArrayList<JSONObject> productJsonArrayList;
-	//搜索关键字
+	// 搜索关键字
 	private String keywordSearch = "";
 
 	@Override
@@ -116,8 +106,8 @@ public class ShopFragment extends Fragment {
 			settingPullToRefreshListView();
 			productJsonArrayList = new ArrayList<JSONObject>();
 			loadRefreshByKeyword();
-			//获取商品
-			//视图加载以及位置调整
+			// 获取商品
+			// 视图加载以及位置调整
 			// 获取商品
 			// 视图加载以及位置调整
 			// 获取商品
@@ -322,12 +312,14 @@ public class ShopFragment extends Fragment {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(hashMap).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
+
 	/**
 	 * @Title: refreshProduct
 	 * @Description: 传入参数，获取商品信息
@@ -373,11 +365,10 @@ public class ShopFragment extends Fragment {
 	 * @author: 徐阳会
 	 * @date: 2015年9月17日 上午11:02:12
 	 */
-	/*	private class ProductRefreshByAddressReceiver extends BroadcastReceiver {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-			}
-		}*/
+	/*
+	 * private class ProductRefreshByAddressReceiver extends BroadcastReceiver {
+	 * @Override public void onReceive(Context context, Intent intent) { } }
+	 */
 	/**
 	 * @ClassName: ProductRefreshByKeyWordReceiver
 	 * @Description: 创建顶端搜索框输入的字段进行搜索
@@ -387,7 +378,7 @@ public class ShopFragment extends Fragment {
 	private class ProductRefreshByKeyWordReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			//隐藏输入法
+			// 隐藏输入法
 			InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 			String keywordString = intent.getStringExtra("keyword");
@@ -416,6 +407,7 @@ public class ShopFragment extends Fragment {
 		byKeyWordReceiver = new ProductRefreshByKeyWordReceiver();
 		mContext.registerReceiver(byKeyWordReceiver, filter);
 	}
+
 	private void loadServiceEvent(View view) {
 		ImageView houseKeepingImageView = (ImageView) view.findViewById(R.id.img_house_keeping);
 		ImageView washingImageView = (ImageView) view.findViewById(R.id.img_washing_clothes);
@@ -424,25 +416,28 @@ public class ShopFragment extends Fragment {
 		ImageView moreServiceImageView = (ImageView) view.findViewById(R.id.img_more_service);
 		// 家政服务
 		houseKeepingImageView.setOnTouchListener(new OnTouchListener() {
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				PoliticsActivity_.intent(getActivity()).start();
+				ServeListActivity2_.intent(getActivity()).contents(new String[] { "家政", "家政" }).start();
 				return false;
 			}
 		});
 		// 清洗服务
 		washingImageView.setOnTouchListener(new OnTouchListener() {
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				CleanServeActivity_.intent(getActivity()).start();
+				ServeListActivity2_.intent(getActivity()).contents(new String[] { "清洗服务", "清洗" }).start();
 				return false;
 			}
 		});
 		// 代收快递服务
 		takeInExpressImageView.setOnTouchListener(new OnTouchListener() {
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				DeliveryActivity_.intent(getActivity()).start();
+				ServeListActivity2_.intent(getActivity()).contents(new String[] { "快递代收", "快递" }).start();
 				return false;
 			}
 		});

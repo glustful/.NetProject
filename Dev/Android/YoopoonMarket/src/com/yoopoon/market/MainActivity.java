@@ -246,6 +246,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		seviceFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, seviceFilter);
 
+		// 选择地区
+		IntentFilter addressFilter = new IntentFilter("com.yoopoon.market.address");
+		addressFilter.addCategory(Intent.CATEGORY_DEFAULT);
+		registerReceiver(receiver, addressFilter);
+
 	}
 
 	BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -271,6 +276,17 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				vp.setCurrentItem(2);
 			} else if (action.equals("com.yoopoon.market.service.moreservice")) {
 				vp.setCurrentItem(1);
+			} else if (action.equals("com.yoopoon.market.address")) {
+				areaId = intent.getExtras().getString("AreaId", "69");
+				String[] names = intent.getStringArrayExtra("Name");
+				String name = "";
+				for (int i = 0; i < names.length; i++) {
+					if (names[i] != null)
+						name = names[i];
+				}
+				areaName = name;
+				btn_select.setText(areaName);
+				btn_select.setTag(areaId);
 			}
 		}
 	};
@@ -422,7 +438,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		public void onClick(View v) {
 			switch (v.getId()) {
 				case R.id.btn_select:
-					SearchActivity_.intent(MainActivity.this).start();
+					SearchActivity_.intent(MainActivity.this).which(0).start();
 					break;
 				case R.id.rightBtn:
 					TreeCategoryActivity_.intent(MainActivity.this).start();
@@ -432,6 +448,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			}
 		}
 	}
+
+	String areaId = "0";
+	String areaName = "";
 
 	private class MyPageAdapter extends FragmentPagerAdapter {
 		public MyPageAdapter(FragmentManager fm) {

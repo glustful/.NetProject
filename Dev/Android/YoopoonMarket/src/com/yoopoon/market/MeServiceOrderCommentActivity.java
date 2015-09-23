@@ -23,8 +23,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.yoopoon.market.domain.OrderDetailEntity;
 import com.yoopoon.market.domain.ProductEntity;
+import com.yoopoon.market.domain.ServiceOrderDetail;
 import com.yoopoon.market.domain.User;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
@@ -32,14 +32,14 @@ import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 
 @EActivity(R.layout.activity_me_order_comment)
-public class MeOrderCommentActivity extends MainActionBarActivity {
+public class MeServiceOrderCommentActivity extends MainActionBarActivity {
 	private static final String TAG = "MeOrderCommentActivity";
 	@ViewById(R.id.tv_price_previous)
 	TextView tv_price_previous;
 	@ViewById(R.id.lv)
 	ListView lv;
 	@Extra
-	List<OrderDetailEntity> details;
+	List<ServiceOrderDetail> details;
 
 	void comment(ProductEntity product) {
 		String comment = et_comment.getText().toString();
@@ -64,7 +64,7 @@ public class MeOrderCommentActivity extends MainActionBarActivity {
 						dialog.dismiss();
 					}
 				}
-				Toast.makeText(MeOrderCommentActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+				Toast.makeText(MeServiceOrderCommentActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 
 			}
 
@@ -93,9 +93,9 @@ public class MeOrderCommentActivity extends MainActionBarActivity {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			Builder builder = new Builder(MeOrderCommentActivity.this);
+			Builder builder = new Builder(MeServiceOrderCommentActivity.this);
 			final ProductEntity product = details.get(position).Product;
-			View v = View.inflate(MeOrderCommentActivity.this, R.layout.item_comment, null);
+			View v = View.inflate(MeServiceOrderCommentActivity.this, R.layout.item_comment, null);
 			builder.setView(v);
 			tv_name = (TextView) v.findViewById(R.id.tv_name);
 			imageView1 = (ImageView) v.findViewById(R.id.imageView1);
@@ -156,7 +156,7 @@ public class MeOrderCommentActivity extends MainActionBarActivity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {
-				convertView = View.inflate(MeOrderCommentActivity.this, R.layout.item_product, null);
+				convertView = View.inflate(MeServiceOrderCommentActivity.this, R.layout.item_product, null);
 			}
 			ViewHolder holder = (ViewHolder) convertView.getTag();
 			if (holder == null) {
@@ -169,7 +169,7 @@ public class MeOrderCommentActivity extends MainActionBarActivity {
 				holder.iv = (ImageView) convertView.findViewById(R.id.iv);
 				convertView.setTag(holder);
 			}
-			OrderDetailEntity detail = details.get(position);
+			ServiceOrderDetail detail = details.get(position);
 			ProductEntity product = detail.Product;
 			holder.tv_category.setText(detail.ProductName);
 			holder.tv_name.setText(product.Subtitte);

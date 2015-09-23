@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:name="com.yoopoon.market.MyApplication_"
@@ -21,6 +22,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
+            android:launchMode="singleTask"
             android:name="com.yoopoon.market.MainActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeNoTitle" >
@@ -47,11 +49,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
         <activity
-            android:name="com.yoopoon.market.CleanServeActivity_"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme_Activity_Animation" />
-        <activity
-            android:name="com.yoopoon.market.AssuranceActivity_"
+            android:name="com.yoopoon.market.ServeListActivity2_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
         <activity
@@ -106,10 +104,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
         <activity
+            android:launchMode="singleTask"
             android:name="com.yoopoon.market.NewAddressActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
         <activity
+            android:launchMode="singleTask"
             android:name="com.yoopoon.market.AddressModifyActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
@@ -118,31 +118,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
         <activity
-            android:name="com.yoopoon.market.DeliveryActivity_"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme_Activity_Animation" />
-        <activity
-            android:name="com.yoopoon.market.FinancialActivity_"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme_Activity_Animation" />
-        <activity
-            android:name="com.yoopoon.market.TravelActivity_"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme_Activity_Animation" />
-        <activity
-            android:name="com.yoopoon.market.TaxiActivity_"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme_Activity_Animation" />
-        <activity
-            android:name="com.yoopoon.market.PoliticsActivity_"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme_Activity_Animation" />
-        <activity
-            android:name="com.yoopoon.market.EducationActivity_"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme_Activity_Animation" />
-        <activity
-            android:name="com.yoopoon.market.ChargeActivity_"
+            android:name="com.yoopoon.market.ServeListActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
         <activity
@@ -183,6 +159,15 @@
             android:name="com.yoopoon.market.ProductCommentActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/Theme_Activity_Animation" />
+         <activity android:name="com.yoopoon.market.MeServiceActivity_"
+             android:screenOrientation="portrait"
+             android:theme="@style/Theme_Activity_Animation" />
+         <activity android:name="com.yoopoon.market.ServiceBalanceActivity_"
+             android:screenOrientation="portrait"
+             android:theme="@style/Theme_Activity_Animation" />
+         <activity android:name="com.yoopoon.market.MeServiceOrderCommentActivity_"
+             android:screenOrientation="portrait"
+             android:theme="@style/Theme_Activity_Animation" />
     </application>
 
 </manifest>

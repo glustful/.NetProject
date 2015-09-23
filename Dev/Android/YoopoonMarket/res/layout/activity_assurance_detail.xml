@@ -9,13 +9,13 @@
         android:orientation="vertical" >
         
         <ImageView 
+            android:id="@+id/iv"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/default_img"/>
+            android:layout_height="200dp"/>
         <TextView 
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="【太平洋保险】畅游境内短期旅游保险 国内自由行/意外险/度假"
             android:padding="15dp"
             android:background="@color/white"/>
         <View 
@@ -23,13 +23,14 @@
             android:layout_height="1dp"
             android:background="@drawable/line"/>
         <TextView
+            android:clickable="true"
+            android:id="@+id/tv_phone"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:text="联系电话：400 105 0101"
             android:textColor="@color/red"
-            android:background="@color/white"
+            android:background="@drawable/white_bg"
             android:drawableRight="@drawable/phone"/>
         
         <TextView 
@@ -55,8 +56,7 @@
                 android:layout_height="match_parent"
                 android:verticalSpacing="10dp"
                 android:horizontalSpacing="10dp"
-                android:numColumns="2"
-                android:background="@color/white"/>
+                android:numColumns="2"/>
             
         </RelativeLayout>
         

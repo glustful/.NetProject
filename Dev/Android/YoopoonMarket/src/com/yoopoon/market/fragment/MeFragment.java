@@ -42,10 +42,12 @@ import com.yoopoon.market.AboutUActivity_;
 import com.yoopoon.market.AddressManageActivity_;
 import com.yoopoon.market.LoginActivity_;
 import com.yoopoon.market.MeOrderActivity_;
+import com.yoopoon.market.MeServiceActivity_;
 import com.yoopoon.market.PersonalInfoActivity_;
 import com.yoopoon.market.R;
 import com.yoopoon.market.domain.CommunityOrderEntity;
 import com.yoopoon.market.domain.MemberModel;
+import com.yoopoon.market.domain.ServiceOrderEntity;
 import com.yoopoon.market.domain.User;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
@@ -64,12 +66,15 @@ public class MeFragment extends Fragment implements OnClickListener {
 	private static final String TAG = "MeFragment";
 	View rootView;
 	Button btn_order;
+	Button btn_service;
 	List<RelativeLayout> rls = new ArrayList<RelativeLayout>();
 	List<CommunityOrderEntity> orders = new ArrayList<CommunityOrderEntity>();
 	List<TextView> orderStatus = new ArrayList<TextView>();
+	List<TextView> serviceStatus = new ArrayList<TextView>();
 	View ll_loading;
 	RoundedImageView imageView1;
 	MemberModel member;
+	List<ServiceOrderEntity> services = new ArrayList<ServiceOrderEntity>();
 
 	@Override
 	@Nullable
@@ -95,7 +100,7 @@ public class MeFragment extends Fragment implements OnClickListener {
 					parseToMember(object.toString());
 				} else {
 					ll_loading.setVisibility(View.GONE);
-					Toast.makeText(getActivity(), data.toString(), Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
 
@@ -133,6 +138,7 @@ public class MeFragment extends Fragment implements OnClickListener {
 					if (!TextUtils.isEmpty(member.Thumbnail)) {
 						String imageUrl = getString(R.string.url_image) + member.Thumbnail;
 						ImageLoader.getInstance().displayImage(imageUrl, imageView1);
+						User.setProperty(getActivity(), "ImageUrl", imageUrl);
 					}
 				}
 			}
@@ -166,6 +172,100 @@ public class MeFragment extends Fragment implements OnClickListener {
 			}
 		}.setUrl(getString(R.string.url_order_get)).setRequestMethod(RequestMethod.eGet).addParam("userid", userId)
 				.notifyRequest();
+	}
+
+	void requestServiceOrder(String userId) {
+		ll_loading.setVisibility(View.VISIBLE);
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					JSONArray array = object.optJSONArray("List");
+					if (array != null) {
+
+						parseToServiceList(array);
+					}
+				} else {
+					ll_loading.setVisibility(View.GONE);
+					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_serviceorder_get)).setRequestMethod(RequestMethod.eGet)
+				.addParam("userid", userId).notifyRequest();
+	}
+
+	void parseToServiceList(final JSONArray array) {
+		new ParserJSON(new ParseListener() {
+
+			@Override
+			public Object onParse() {
+				ObjectMapper om = new ObjectMapper();
+				for (int i = 0; i < array.length(); i++) {
+					try {
+						JSONObject object = array.getJSONObject(i);
+						Log.i(TAG, object.toString());
+						ServiceOrderEntity service = om.readValue(object.toString(), ServiceOrderEntity.class);
+						services.add(service);
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (JsonParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (JsonMappingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				return services;
+			}
+
+			@Override
+			public void onComplete(Object parseResult) {
+				if (parseResult != null) {
+					setServiceStatus();
+				}
+
+			}
+		}).execute();
+	}
+
+	void setServiceStatus() {
+		ll_loading.setVisibility(View.GONE);
+		int[] status = new int[4];
+		for (ServiceOrderEntity entity : services) {
+			Log.i(TAG, "Status:" + entity.Status);
+			switch (entity.Status) {
+				case 1:
+					status[0]++;
+					break;
+				case 2:
+					status[1]++;
+					break;
+				case 3:
+					status[2]++;
+					break;
+				default:
+					break;
+			}
+		}
+
+		for (int i = 0; i < serviceStatus.size(); i++) {
+			TextView tv = serviceStatus.get(i);
+			tv.setText(String.valueOf(status[i]));
+			tv.setVisibility(status[i] == 0 ? View.GONE : View.VISIBLE);
+		}
 	}
 
 	void parseToOrderList(final JSONArray array) {
@@ -219,8 +319,10 @@ public class MeFragment extends Fragment implements OnClickListener {
 					break;
 				case 2:
 					status[2]++;
+					break;
 				case 3:
 					status[3]++;
+					break;
 				default:
 					break;
 			}
@@ -240,6 +342,7 @@ public class MeFragment extends Fragment implements OnClickListener {
 		Button btn_address = (Button) rootView.findViewById(R.id.btn_address);
 		Button btn_about = (Button) rootView.findViewById(R.id.btn_about);
 		btn_order = (Button) rootView.findViewById(R.id.btn_order);
+		btn_service = (Button) rootView.findViewById(R.id.btn_service);
 		if (rls.size() == 0) {
 			rls.add((RelativeLayout) rootView.findViewById(R.id.rl1));
 			rls.add((RelativeLayout) rootView.findViewById(R.id.rl2));
@@ -255,6 +358,12 @@ public class MeFragment extends Fragment implements OnClickListener {
 			orderStatus.add((TextView) rootView.findViewById(R.id.tv_payed));// 待发货
 			orderStatus.add((TextView) rootView.findViewById(R.id.tv_delivering));// 待收货
 			orderStatus.add((TextView) rootView.findViewById(R.id.tv_finished));// 待评价
+		}
+
+		if (serviceStatus.size() == 0) {
+			serviceStatus.add((TextView) rootView.findViewById(R.id.tv_service1));
+			serviceStatus.add((TextView) rootView.findViewById(R.id.tv_service2));
+			serviceStatus.add((TextView) rootView.findViewById(R.id.tv_service3));
 		}
 
 		for (RelativeLayout rl : rls)
@@ -282,9 +391,11 @@ public class MeFragment extends Fragment implements OnClickListener {
 				SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.share_preference),
 						Context.MODE_PRIVATE);
 				requestOrder(String.valueOf(sp.getInt("UserId", 0)));
+				requestServiceOrder(String.valueOf(sp.getInt("UserId", 0)));
 				requestData();
 			} else {
 				setOrderStatus();
+				setServiceStatus();
 			}
 		}
 	}
@@ -315,6 +426,16 @@ public class MeFragment extends Fragment implements OnClickListener {
 				break;
 			case R.id.rl4:
 				MeOrderActivity_.intent(getActivity()).item(3).orders(orders).start();
+				break;
+			case R.id.rl5:
+			case R.id.btn_service:
+				MeServiceActivity_.intent(getActivity()).item(0).services(services).start();
+				break;
+			case R.id.rl6:
+				MeServiceActivity_.intent(getActivity()).item(1).services(services).start();
+				break;
+			case R.id.rl7:
+				MeServiceActivity_.intent(getActivity()).item(2).services(services).start();
 				break;
 
 		}

@@ -164,7 +164,6 @@ public class AddressManageActivity extends MainActionBarActivity {
 			});
 			return convertView;
 		}
-
 	}
 
 	void changeTextColor(TextView textView) {
@@ -194,6 +193,7 @@ public class AddressManageActivity extends MainActionBarActivity {
 					JSONObject object = data.getMRootData();
 					if (object != null) {
 						addressList.clear();
+						Log.i(TAG, object.toString());
 						JSONArray array = object.optJSONArray("List");
 						parseToEntityList(array);
 					} else {

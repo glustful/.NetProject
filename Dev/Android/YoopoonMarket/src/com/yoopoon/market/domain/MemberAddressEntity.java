@@ -24,6 +24,7 @@ public class MemberAddressEntity implements Serializable {
 	public String AddtimeString;
 	public String UpdtimeString;
 	public int AreaId = 123;
+	public String IsDefault;
 
 	@Override
 	public String toString() {

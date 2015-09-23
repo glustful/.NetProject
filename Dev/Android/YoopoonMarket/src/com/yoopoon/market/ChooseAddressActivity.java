@@ -28,6 +28,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.market.domain.MemberAddressEntity;
+import com.yoopoon.market.domain.ProductEntity;
 import com.yoopoon.market.domain.Staff;
 import com.yoopoon.market.domain.User;
 import com.yoopoon.market.net.ProgressMessage;
@@ -46,6 +47,8 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 	View loading;
 	@Extra
 	List<Staff> staffList;
+	@Extra
+	ProductEntity product;
 
 	@Click(R.id.btn_manage)
 	void manageAddress() {
@@ -228,9 +231,21 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 	@Override
 	public void backButtonClick(View v) {
 		// 选择地址的前面是确认订单页面，需要传入选择的地址，不能只是简单地finish()掉
-		BalanceActivity_.intent(ChooseAddressActivity.this).checkedAddress(addressList.get(selectedPosition))
-				.staffList(staffList).start();
-		finish();
+		onBackPressed();
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		if (staffList != null) {
+			BalanceActivity_.intent(ChooseAddressActivity.this).checkedAddress(addressList.get(selectedPosition))
+					.staffList(staffList).start();
+			finish();
+		} else {
+			ServiceBalanceActivity_.intent(ChooseAddressActivity.this)
+					.checkedAddress(addressList.get(selectedPosition)).product(product).start();
+			finish();
+		}
 	}
 
 	@Override
