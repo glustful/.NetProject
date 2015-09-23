@@ -85,13 +85,13 @@ namespace Zerg.Controllers.Community
                 Ad2 = entity.Detail.Ad2,
                 Ad3 = entity.Detail.Ad3,
                 //Comments = entity.Comments,		
-                ParameterValue =entity.Parameters.Select(c => new ProductParameterValueModel
-                {
-                    ParameterId = c.Parameter.Id,
-                    ParameterString = c.Parameter.Name,
-                    ValueId = c.ParameterValue.Id,
-                    Value = c.ParameterValue.Value
-                }).ToList()
+                //ParameterValue =entity.Parameters.Select(c => new ProductParameterValueModel
+                //{
+                //    ParameterId = c.Parameter.Id,
+                //    ParameterString = c.Parameter.Name,
+                //    ValueId = c.ParameterValue.Id,
+                //    Value = c.ParameterValue.Value
+                //}).ToList()
             };
             var product=new ProductComment
             {

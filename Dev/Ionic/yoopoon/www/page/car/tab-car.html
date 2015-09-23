@@ -16,8 +16,8 @@
         <ion-item class="item-thumbnail-left car-list" ng-repeat="item in productlist">
 
             <img ng-src="http://img.iyookee.cn/{{item.mainimg}}" alt="" />
-            <h2>{{item.Name}}</h2>
-            <p>口味：甜味</p>
+            <h2>{{item.name}}</h2>
+            <!--<p>口味：甜味</p>-->
             <div style="margin-left: 30px;">
                 <div style="float:left"><span class="red">￥{{item.price}}</span><del class="del">￥{{item.oldprice}}</del></div>
                 <div style="float:right"><span ng-click="decrease(item.id)" class="ion-android-remove" style="float:left;margin-right: 5px;color: #000;font-size: 20px;"></span>

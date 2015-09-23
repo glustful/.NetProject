@@ -207,7 +207,7 @@ var carlistcount=0;
     }
     //endregion
 
-    //region 编辑
+    //region 删除编辑
 
     $scope.flag={showDelete:false,showReorder:false};
     $scope.items=["Chinese","English","German","Italian","Janapese","Sweden","Koeran","Russian","French"];

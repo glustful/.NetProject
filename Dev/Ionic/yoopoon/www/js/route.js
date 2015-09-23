@@ -212,8 +212,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 url: '/me/newAddress?id&name',
                 views: {
                     'page-me': {
-                        templateUrl: 'page/me/newAddress.html',
-                        controller: 'newAddress'
+                        templateUrl: 'page/me/newAddress.html'
+
                     }
                 }
             })
