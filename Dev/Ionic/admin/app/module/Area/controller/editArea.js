@@ -1,4 +1,4 @@
-﻿app.controller('AreaEditCtr', ['$http', '$scope', '$state', '$stateParams',function ($http, $scope, $state,$stateParams) {
+﻿app.controller('AreaEditCtr', ['$http', '$scope', '$state', '$stateParams','$timeout',function ($http, $scope, $state,$stateParams,$timeout) {
     $http.get(SETTING.ZergWcApiUrl + "/CommunityArea/Get?id=" + $stateParams.id, {
         'withCredentials': true  //跨域
     }).success(function (data) {
@@ -78,12 +78,14 @@
             if (data.Status) {
                 //$scope.state = "成功修改数据！";
                 $scope.state = "成功修改数据！";
-                //window.setInterval(function () {
-                //        $scope.state = "";
-
-                //}, 2000);
+                $timeout(function () {
+                        $scope.state = " ";
+                }, 2000);
             } else {
                 $scope.state = "数据修改失败！";
+                $timeout(function () {
+                    $scope.state = " ";
+                }, 2000);
             }
         })
     }
