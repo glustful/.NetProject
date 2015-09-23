@@ -52,19 +52,17 @@ public class TreeCategoryActivity extends MainActionBarActivity {
 		backWhiteButton.setVisibility(View.GONE);
 		rightButton.setVisibility(View.GONE);
 		titleButton.setText("选择分类");
-
 		// 添加用户输入内容后输入法可以使用键盘上的搜索框搜索
 		searchProductEditText.setImeActionLabel("搜索", EditorInfo.IME_ACTION_SEARCH);
 		searchProductEditText.setSingleLine();
 		searchProductEditText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
 		searchProductEditText.setOnEditorActionListener(new OnEditorActionListener() {
-
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-					Intent intent = new Intent(TreeCategoryActivity.this, ProductList_.class);
+					Intent intent = new Intent(TreeCategoryActivity.this, ProductKeywordList_.class);
 					Bundle bundle = new Bundle();
-					bundle.putString("productClassification", "曲靖特产");
+					bundle.putString("keyword", v.getText().toString());
 					intent.putExtras(bundle);
 					startActivity(intent);
 					return true;
@@ -74,10 +72,8 @@ public class TreeCategoryActivity extends MainActionBarActivity {
 		});
 		requestData();
 	}
-
 	void requestData() {
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
@@ -93,19 +89,15 @@ public class TreeCategoryActivity extends MainActionBarActivity {
 					Toast.makeText(TreeCategoryActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
-
 			}
 		}.setUrl(getString(R.string.url_category_getall)).addParam("ifid", "1").setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
-
 	void parseToList(final JSONArray array) {
 		new ParserJSON(new ParseListener() {
-
 			@Override
 			public Object onParse() {
 				ObjectMapper om = new ObjectMapper();
@@ -115,33 +107,26 @@ public class TreeCategoryActivity extends MainActionBarActivity {
 						TreeCategory category = om.readValue(object.toString(), TreeCategory.class);
 						lists.add(category);
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (JsonParseException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (JsonMappingException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 				return lists;
 			}
-
 			@Override
 			public void onComplete(Object parseResult) {
 				if (parseResult != null) {
 					Log.i(TAG, parseResult.toString());
 					initList();
 				}
-
 			}
 		}).execute();
 	}
-
 	void initList() {
 		for (int i = 0; i < lists.size(); i++) {
 			Log.i(TAG, "i" + i);
@@ -153,10 +138,8 @@ public class TreeCategoryActivity extends MainActionBarActivity {
 			tv.setPadding(0, 10, 0, 0);
 			tv.setTextSize(20);
 			tv.setClickable(true);
-
 			LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 			params.setMargins(0, 0, 0, 1);
-
 			ll_category.addView(tv, params);
 			LabelGroup ll = new LabelGroup(TreeCategoryActivity.this);
 			android.view.ViewGroup.LayoutParams ll_params = new android.view.ViewGroup.LayoutParams(-1, -2);
@@ -174,44 +157,34 @@ public class TreeCategoryActivity extends MainActionBarActivity {
 				childTv.setTextSize(16);
 				ll.addView(childTv);
 				childTv.setOnClickListener(new OnClickListener() {
-
 					@Override
 					public void onClick(View v) {
 						TextView childTextView = (TextView) v;
 						String text = childTextView.getText().toString().trim();
-						 
-						Intent intent = new Intent(TreeCategoryActivity.this, ProductList_.class);
+						Intent intent = new Intent(TreeCategoryActivity.this, ProductClassificationList_.class);
 						Bundle bundle = new Bundle();
 						bundle.putString("classificationId", entity.Id + "");
 						bundle.putString("classificationName", entity.label);
 						intent.putExtras(bundle);
 						startActivity(intent);
-
 					}
 				});
 			}
 		}
 		ll_category.removeViewAt(ll_category.getChildCount() - 1);
 	}
-
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
-
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
-
 	}
-
 	@Override
 	public Boolean showHeadView() {
 		return true;
 	}
-
 }

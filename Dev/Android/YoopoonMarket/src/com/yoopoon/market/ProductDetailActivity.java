@@ -90,6 +90,8 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	private int pictureYPosition;
 	//商品图片位置
 	private String productImageURL;
+	//设置返回状态码，如果是首页跳转返回首页，如果是商品列表页回商品列表页
+	private String comeFromstatusCode;
 
 	/**
 	 * @Title: initProductComment
@@ -98,6 +100,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	@AfterViews
 	void initProductDetail() {
 		//获取从首页过来的id
+		comeFromstatusCode=getIntent().getExtras().getString("comeFromstatusCode");
 		productId = getIntent().getExtras().getString("productId");
 		linearLayout = (LinearLayout) findViewById(R.id.linearlayout_product_detail);
 		productAdvertisement = new ProductAdvertisement(mContext);
@@ -119,8 +122,14 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		returnToShopImageView.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				Intent intent = new Intent(ProductDetailActivity.this, MainActivity_.class);
-				startActivity(intent);
+				if(comeFromstatusCode.equals("shopFragment")){
+					Intent intent = new Intent(ProductDetailActivity.this, MainActivity_.class);
+					startActivity(intent);
+				}else if(comeFromstatusCode.equals("productList")){
+					Intent intent = new Intent(ProductDetailActivity.this, ProductClassificationList_.class);
+					startActivity(intent);
+				}
+				
 				return false;
 			}
 		});

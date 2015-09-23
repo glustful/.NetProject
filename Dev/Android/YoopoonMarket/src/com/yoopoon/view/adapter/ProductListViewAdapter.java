@@ -92,6 +92,7 @@ public class ProductListViewAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				Bundle bundle = new Bundle();
+				bundle.putString("comeFromstatusCode", "productList");
 				bundle.putString("productId", datas.get(position).optString("Id"));
 				Intent intent = new Intent(mContext, ProductDetailActivity_.class);
 				intent.putExtras(bundle);

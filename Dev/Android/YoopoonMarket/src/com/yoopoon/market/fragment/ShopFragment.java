@@ -15,15 +15,18 @@ package com.yoopoon.market.fragment;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,6 +40,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -93,7 +97,7 @@ public class ShopFragment extends Fragment {
 	private FrameLayout productListFrameLayout;
 	// 进度条对应的linearlayout
 	private LinearLayout progressbarLinearlayout;
-
+private int debugStatusCode=0;
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -497,6 +501,7 @@ public class ShopFragment extends Fragment {
 	 * @Description: 搜索商品
 	 */
 	public void searchProduct(String searchString) {
+		++debugStatusCode;
 		searchProductFrameLayout.setVisibility(View.VISIBLE);
 		productListFrameLayout.setVisibility(View.GONE);
 		keywordSearch = searchString;
@@ -516,6 +521,9 @@ public class ShopFragment extends Fragment {
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
+				if(debugStatusCode==2){
+					Log.e("111111111111",debugStatusCode+"");
+				}
 				progressbarLinearlayout.setVisibility(View.GONE);
 				searchPullToRefreshListView.onRefreshComplete();
 				JSONArray jsonArray;
@@ -531,6 +539,8 @@ public class ShopFragment extends Fragment {
 										JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
 								searchListView.setAdapter(searchProductAdapter);
 							}
+						}else{
+							searchProductAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();

@@ -60,12 +60,12 @@ public class CategoryActivity extends MainActionBarActivity {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-					Intent intent = new Intent(CategoryActivity.this, ProductList_.class);
+					/*Intent intent = new Intent(CategoryActivity.this, ProductList_.class);
 					Bundle bundle = new Bundle();
 					bundle.putString("productClassification", "曲靖特产");
 					intent.putExtras(bundle);
 					startActivity(intent);
-					return true;
+					return true;*/
 				}
 				return false;
 			}
@@ -221,7 +221,7 @@ public class CategoryActivity extends MainActionBarActivity {
 						TextView childTextView = (TextView) v;
 						String text = childTextView.getText().toString().trim();
 						Toast.makeText(CategoryActivity.this, text, Toast.LENGTH_SHORT).show();
-						Intent intent = new Intent(CategoryActivity.this, ProductList.class);
+						Intent intent = new Intent(CategoryActivity.this, ProductClassificationList.class);
 						Bundle bundle = new Bundle();
 						bundle.putString("classificationId", entity.id + "");
 						bundle.putString("classificationName", entity.name);
