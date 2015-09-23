@@ -330,9 +330,11 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		final String path = getString(R.string.url_host) + getString(R.string.url_upload);
 		timer = new Timer();
 		task = new TimerTask() {
+
 			@Override
 			public void run() {
 				runOnUiThread(new Runnable() {
+
 					@Override
 					public void run() {
 						if (count == 4)
@@ -345,12 +347,15 @@ public class PersonSettingActivity extends MainActionBarActivity {
 		};
 		timer.scheduleAtFixedRate(task, 0, 300);
 		new Thread() {
+
 			public void run() {
 				new UploadHeadImg().post(path, file, null, new OnCompleteListener() {
+
 					@Override
 					public void onSuccess(final String json) {
 						uploadable = true;
 						runOnUiThread(new Runnable() {
+
 							@Override
 							public void run() {
 								// {"Status":true,"Msg":"20150722/20150722_175858_383_288.jpg","Object":null}
@@ -380,6 +385,7 @@ public class PersonSettingActivity extends MainActionBarActivity {
 					public void onFailed() {
 						uploadable = true;
 						runOnUiThread(new Runnable() {
+
 							@Override
 							public void run() {
 								tv_uploading.setText("上传失败>_<,请重试");

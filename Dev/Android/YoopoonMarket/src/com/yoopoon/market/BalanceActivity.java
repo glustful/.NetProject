@@ -265,7 +265,7 @@ public class BalanceActivity extends MainActionBarActivity {
 
 			}
 		}.setUrl(getString(R.string.url_get_address_byid)).setRequestMethod(RequestMethod.eGet)
-				.addParam("userid", userid).notifyRequest();
+				.addParam("memberid", "").notifyRequest();
 	}
 
 	void parseToEntity(final JSONObject object) {

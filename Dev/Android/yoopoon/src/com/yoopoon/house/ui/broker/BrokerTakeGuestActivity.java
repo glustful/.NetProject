@@ -13,14 +13,12 @@
 package com.yoopoon.house.ui.broker;
 
 import java.util.Calendar;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -38,7 +36,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.common.base.utils.RegxUtils;
@@ -90,7 +87,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 	Context mContext;
 	// 系列化后得到的经纪人带客Json数据
 	String BrokerTakeGuestJson = null;
-	
+
 	// ///////////////////////////////////如上是变量和属性的初始化///////////////////////////////////
 	/**
 	 * @Title: initUI
@@ -116,16 +113,18 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 		phone_numberEditText.addTextChangedListener(deleteGuestPhoneWatcher);
 		detailEditText.addTextChangedListener(deleteDetailWatcher);
 	}
-	
+
 	// 创建监听删除客户姓名的右侧删除小图标监听
 	private TextWatcher deleteGuestNameWatcher = new TextWatcher() {
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
 			deleteGuestNameButton.setVisibility(View.VISIBLE);
 		}
+
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 		}
+
 		@Override
 		public void afterTextChanged(Editable s) {
 			String guestNameString = guest_nameEditText.getText().toString();
@@ -140,9 +139,11 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
 			deleteGuestPhoneImageButton.setVisibility(View.VISIBLE);
 		}
+
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 		}
+
 		@Override
 		public void afterTextChanged(Editable s) {
 			String guestPhoneNumberString = phone_numberEditText.getText().toString();
@@ -157,9 +158,11 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
 			deleteGuestDetail.setVisibility(View.VISIBLE);
 		}
+
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 		}
+
 		@Override
 		public void afterTextChanged(Editable s) {
 			String guestDetailString = detailEditText.getText().toString();
@@ -168,7 +171,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 			}
 		}
 	};
-	
+
 	/**
 	 * @Title: deleteGuestClick
 	 * @Description: 添加编辑顾客姓名右侧的删除小图标点击事件
@@ -178,6 +181,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 	void deleteGuestClick(View view) {
 		guest_nameEditText.setText("");
 	}
+
 	/**
 	 * @Title: deleteGuestPhoneClick
 	 * @Description: 添加编辑顾客手机号码右侧的删除小图标点击事件
@@ -187,6 +191,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 	void deleteGuestPhoneClick(View view) {
 		phone_numberEditText.setText("");
 	}
+
 	/**
 	 * @Title: deleteGuestDetailClick
 	 * @Description: 添加编辑备注右侧的删除小图标点击事件
@@ -196,6 +201,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 	void deleteGuestDetailClick(View view) {
 		detailEditText.setText("");
 	}
+
 	/**
 	 * @Title: initCalendar
 	 * @Description: 初始化日期对话框
@@ -204,6 +210,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 		DialogFragment newFragment = new DatePickerFragment();
 		newFragment.show(getFragmentManager(), "datePicker");
 	}
+
 	private void commitInfo() {
 		new RequestAdapter() {
 			@Override
@@ -219,12 +226,14 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 					}
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_brokerlead_client)).setRequestMethod(RequestMethod.ePost)
 				.SetJSON(BrokerTakeGuestJson).notifyRequest();
 	}
+
 	/**
 	 * @Title: serializationCommitinfo
 	 * @Description: 将传输到服务器的数据进行序列化
@@ -265,20 +274,25 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 			e.printStackTrace();
 		}
 	}
+
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		return true;
 	}
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -295,8 +309,9 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 				break;
 		}
 	}
-	/** 
-	 * @Title: inputRegularVerification 
+
+	/**
+	 * @Title: inputRegularVerification
 	 * @Description: 对客户的姓名和客户的联系电话进行正则验证，保证输入的客户姓名和电话符合规定
 	 * @return 客户姓名和联系电话是否符合要求的正则验证结果
 	 */
@@ -307,7 +322,7 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 				&& guestPhoneString.matches("^1[3|4|5|7|8][0-9]\\d{8}$");
 		return inputStatus;
 	}
-	
+
 	/**
 	 * @ClassName: DatePickerFragment
 	 * @Description: 完成时间对话框的设置
@@ -315,40 +330,43 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 	 * @date: 2015年7月14日 下午6:34:07
 	 */
 	class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
 		final Calendar c = Calendar.getInstance();
 		int year = c.get(Calendar.YEAR);
 		int month = c.get(Calendar.MONTH);
 		int day = c.get(Calendar.DAY_OF_MONTH);
-		
+
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			// Use the current date as the default date in the picker
 			// Create a new instance of DatePickerDialog and return it
 			DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), this, year, month, day);
 			DatePicker datePicker = datePickerDialog.getDatePicker();
-			//设置最小的时间为当天，预约时间不能早于今天
+			// 设置最小的时间为当天，预约时间不能早于今天
 			datePicker.setMinDate(c.getTimeInMillis());
 			return datePickerDialog;
 		}
+
 		public void onDateSet(DatePicker view, int year, int month, int day) {
 			int dataMonth = month + 1;
 			reservation_timeButton.setText(year + "/" + dataMonth + "/" + day + "");
-			/*int tempYear = c.get(Calendar.YEAR);
-			int tempMonth = c.get(Calendar.MONTH);
-			int tempDay = c.get(Calendar.DAY_OF_MONTH);*/
-			/*	int yearGap = year - tempYear;
-				int monthGap = month - tempMonth;
-				int dayGap = day - tempDay;*/
-			/*if ((yearGap < 0) || (yearGap == 0 && monthGap < 0) || (yearGap == 0 && monthGap == 0 && dayGap < 0)) {
-				Toast.makeText(mContext, "请不要输入无效的日期", Toast.LENGTH_SHORT).show();
-				return;
-			} else {
-				reservation_timeButton.setText(year + "/" + dataMonth + "/" + day + "");
-				return;
-			}*/
+			/*
+			 * int tempYear = c.get(Calendar.YEAR); int tempMonth = c.get(Calendar.MONTH); int
+			 * tempDay = c.get(Calendar.DAY_OF_MONTH);
+			 */
+			/*
+			 * int yearGap = year - tempYear; int monthGap = month - tempMonth; int dayGap = day -
+			 * tempDay;
+			 */
+			/*
+			 * if ((yearGap < 0) || (yearGap == 0 && monthGap < 0) || (yearGap == 0 && monthGap == 0
+			 * && dayGap < 0)) { Toast.makeText(mContext, "请不要输入无效的日期", Toast.LENGTH_SHORT).show();
+			 * return; } else { reservation_timeButton.setText(year + "/" + dataMonth + "/" + day +
+			 * ""); return; }
+			 */
 		}
 	}
-	
+
 	/**
 	 * @ClassName: BrokerTakeGuest
 	 * @Description: 传送到服务器的经纪人带客数据类
@@ -369,163 +387,189 @@ public class BrokerTakeGuestActivity extends MainActionBarActivity implements On
 		private String Projectid;
 		private String Projectname;
 		private String Stats;
-		
+
 		/**
 		 * @return the addUser
 		 */
 		public String getAddUser() {
 			return AddUser;
 		}
+
 		/**
 		 * @param addUser the addUser to set
 		 */
 		public void setAddUser(String addUser) {
 			AddUser = addUser;
 		}
+
 		/**
 		 * @return the appointmenttime
 		 */
 		public String getAppointmenttime() {
 			return Appointmenttime;
 		}
+
 		/**
 		 * @param appointmenttime the appointmenttime to set
 		 */
 		public void setAppointmenttime(String appointmenttime) {
 			Appointmenttime = appointmenttime;
 		}
+
 		/**
 		 * @return the broker
 		 */
 		public String getBroker() {
 			return Broker;
 		}
+
 		/**
 		 * @param broker the broker to set
 		 */
 		public void setBroker(String broker) {
 			Broker = broker;
 		}
+
 		/**
 		 * @return the brokername
 		 */
 		public String getBrokername() {
 			return Brokername;
 		}
+
 		/**
 		 * @param brokername the brokername to set
 		 */
 		public void setBrokername(String brokername) {
 			Brokername = brokername;
 		}
+
 		/**
 		 * @return the clientInfo
 		 */
 		public String getClientInfo() {
 			return ClientInfo;
 		}
+
 		/**
 		 * @param clientInfo the clientInfo to set
 		 */
 		public void setClientInfo(String clientInfo) {
 			ClientInfo = clientInfo;
 		}
+
 		/**
 		 * @return the clientname
 		 */
 		public String getClientname() {
 			return Clientname;
 		}
+
 		/**
 		 * @param clientname the clientname to set
 		 */
 		public void setClientname(String clientname) {
 			Clientname = clientname;
 		}
+
 		/**
 		 * @return the houseType
 		 */
 		public String getHouseType() {
 			return HouseType;
 		}
+
 		/**
 		 * @param houseType the houseType to set
 		 */
 		public void setHouseType(String houseType) {
 			HouseType = houseType;
 		}
+
 		/**
 		 * @return the houses
 		 */
 		public String getHouses() {
 			return Houses;
 		}
+
 		/**
 		 * @param houses the houses to set
 		 */
 		public void setHouses(String houses) {
 			Houses = houses;
 		}
+
 		/**
 		 * @return the note
 		 */
 		public String getNote() {
 			return Note;
 		}
+
 		/**
 		 * @param note the note to set
 		 */
 		public void setNote(String note) {
 			Note = note;
 		}
+
 		/**
 		 * @return the phone
 		 */
 		public String getPhone() {
 			return Phone;
 		}
+
 		/**
 		 * @param phone the phone to set
 		 */
 		public void setPhone(String phone) {
 			Phone = phone;
 		}
+
 		/**
 		 * @return the projectid
 		 */
 		public String getProjectid() {
 			return Projectid;
 		}
+
 		/**
 		 * @param projectid the projectid to set
 		 */
 		public void setProjectid(String projectid) {
 			Projectid = projectid;
 		}
+
 		/**
 		 * @return the projectname
 		 */
 		public String getProjectname() {
 			return Projectname;
 		}
+
 		/**
 		 * @param projectname the projectname to set
 		 */
 		public void setProjectname(String projectname) {
 			Projectname = projectname;
 		}
+
 		/**
 		 * @return the stats
 		 */
 		public String getStats() {
 			return Stats;
 		}
+
 		/**
 		 * @param stats the stats to set
 		 */
 		public void setStats(String stats) {
 			Stats = stats;
 		}
+
 		public BrokerTakeGuest(String AddUser, String Appointmenttime, String Clientname, String HouseType,
 				String House, String Note, String Phone, String Projectid) {
 			this.AddUser = AddUser;
