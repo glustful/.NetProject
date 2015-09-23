@@ -66,6 +66,7 @@
         Parent: { Id: 0 }
     }
 
+
     $scope.Create = function () {
         $scope.submit.Id = $scope.list.Id;
         $scope.submit.Codeid = $scope.list.Codeid;
@@ -75,7 +76,12 @@
             'withCredentials': true
         }).success(function (data) {
             if (data.Status) {
+                //$scope.state = "成功修改数据！";
                 $scope.state = "成功修改数据！";
+                //window.setInterval(function () {
+                //        $scope.state = "";
+
+                //}, 2000);
             } else {
                 $scope.state = "数据修改失败！";
             }
