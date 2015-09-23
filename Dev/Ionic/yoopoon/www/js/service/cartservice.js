@@ -17,8 +17,9 @@ app.service("cartservice", ['$rootScope',
 			count: null,
             mainimg:null,
             price:null,
-            newprice:null,
+            oldprice:null,
 		    parameterValue:[]
+
 		};
 
 		///添加商品和更改已有的商品sevice
@@ -31,8 +32,9 @@ app.service("cartservice", ['$rootScope',
 			cartinfo.count = data.count;
             cartinfo.mainimg=data.mainimg;
             cartinfo.price=data.price;
-            cartinfo.newprice=data.newprice;
-			cartinfo.parameterValue=data.parameterValue
+            cartinfo.oldprice=data.oldprice;
+			cartinfo.parameterValue=data.parameterValue;
+
 			var storage = localStorage.getItem("ShoppingCart");
 			//第一次加入商品 
 			if (storage == null || storage == "") {
@@ -43,8 +45,9 @@ app.service("cartservice", ['$rootScope',
 						"count": cartinfo.count,
                         "mainimg":cartinfo.mainimg,
                         "price":cartinfo.price,
-                        "newprice":cartinfo.newprice,
+                        "oldprice":cartinfo.oldprice,
 						"parameterValue":cartinfo.parameterValue
+
 					}]
 				};
 				localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
@@ -67,8 +70,9 @@ app.service("cartservice", ['$rootScope',
 						"count": cartinfo.count,
                         "mainimg":cartinfo.mainimg,
                         "price":cartinfo.price,
-                        "newprice":cartinfo.newprice,
+                        "oldprice":cartinfo.oldprice,
 						"parameterValue":cartinfo.parameterValue
+
 					});
 				}
 				$rootScope.cartProductCount += 1;
@@ -97,40 +101,34 @@ app.service("cartservice", ['$rootScope',
 						localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
 						//总数+1
 						$rootScope.cartProductCount -= 1;
-						return;
+
 					}
 					productlist[i].count = parseInt(productlist[i].count) - 1;
 					//jsonstr.totalAmount = parseFloat(jsonstr.totalAmount) - parseInt(productlist[i].num) * parseFloat(productlist[i].price);
+
 				}
                 //else {
 				//	console.log("删除失败,没有这个商品的ID");
-				//
+                //
 				//}
 			}
 			jsonstr.productlist = productlist;
 			localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
 		};
 
-        //商品添加数量，默认是减少1件，减少到为0时候这件商品就删除
+        //商品添加数量，
         this.addone = function(id) {
             var storage = localStorage.getItem("ShoppingCart");
             var jsonstr = JSON.parse(storage.substr(1, storage.length));
             var productlist = jsonstr.productlist;
             for (var i in productlist) {
                 if (productlist[i].id == id) {
-                    if(productlist[i].count==1)
-                    {
-                           //总数+1
-                        $rootScope.cartProductCount += 1;
-                        return;
-                    }
+
                     productlist[i].count = parseInt(productlist[i].count) + 1;
-                    //jsonstr.totalAmount = parseFloat(jsonstr.totalAmount) - parseInt(productlist[i].num) * parseFloat(productlist[i].price);
+
+
                 }
-                //else {
-                //	console.log("删除失败,没有这个商品的ID");
-                //
-                //}
+
             }
             jsonstr.productlist = productlist;
             localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
@@ -151,7 +149,7 @@ app.service("cartservice", ['$rootScope',
 						if(productlist.length==0){
 							localStorage.removeItem("ShoppingCart");
 							$rootScope.cartProductCount = 0;
-							return;	
+
 						}
 						localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
 						//总数+1

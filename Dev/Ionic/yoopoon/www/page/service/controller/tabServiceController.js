@@ -64,11 +64,38 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 	//$scope.tabIndex = 5;
 	$scope.getServiceList = function (tabIndex) {
 		$scope.tabIndex = tabIndex;
+		//获取当前用户信息
+		$scope.currentuser= AuthService.CurrentUser();
+		if(	$scope.tabIndex == 5){
+			$scope.condition = {
+				Status: '4',
+				Addusers: $scope.currentuser.UserId
+			};
+			var getList = function () {
+				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
+					.success(function(data) {
+					$scope.list = data.List;
+				});
+			};
+			getList();
+
+		}
+		if($scope.tabIndex == 6){
+			$scope.condition = {
+				Status: '5',
+				Addusers: $scope.currentuser.UserId
+			};
+			var getList1 = function () {
+				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
+					.success(function(data) {
+						$scope.list = data.List;
+					});
+			};
+			getList1();
+		}
 
 	};
 	function tab() {
-		//获取当前用户信息
-		$scope.currentuser= AuthService.CurrentUser();
 		//待接件
 		if ($stateParams.tabIndex == 5) {
 			$scope.tabIndex = 5;
@@ -79,8 +106,8 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 			var getList = function () {
 				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
 					.success(function(data) {
-					$scope.list = data.List;
-				});
+						$scope.list = data.List;
+					});
 			};
 			getList();
 		}
@@ -184,3 +211,121 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 		}
 	}
 });
+
+app.controller('clearservice',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+// money
+	if( $stateParams.name==undefined ||  $stateParams.name=="" )
+	{
+		$scope.go("page.service");
+	}
+	$scope.Address={
+		AreaName:$stateParams.name,
+		AreaId: $stateParams.id,
+		Address:'',
+		Zip :'',
+		Linkman :'',
+		Tel:''
+	};
+
+	$scope.saves = function () {
+
+		$http.post(SETTING.ApiUrl + '/MemberAddress/Post', $scope.Address, {'withCredentials': true})
+			.success(function (data) {
+				if (data.Status) {
+
+					$state.go("page.addressAdm");
+				}
+			});
+	}
+
+}]);
+
+app.controller('safeservice',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+// no money
+
+	if( $stateParams.name==undefined ||  $stateParams.name=="" )
+	{
+		$scope.go("page.service");
+	}
+
+	$scope.loadmore=true;
+    $scope.Name=$stateParams.name;
+	$scope.items = [];
+	$scope.searchCondition = {
+
+		CategoryName:$stateParams.name,
+		IsDescending: true,
+		OrderBy: 'OrderByAddtime',
+		Page: 1,
+		PageCount: 10
+		//ProductId:''
+	};
+
+	var getList = function () {
+		$http.get(SETTING.ApiUrl + '/CommunityProduct/Get', {
+			params: $scope.searchCondition,
+			'withCredentials': true
+		}).success(function (data) {
+			if (data.List != "") {
+				$scope.items = data.List;
+				if(((($scope.searchCondition.Page-1)*$scope.searchCondition.PageCount )+data.List.length)==data.TotalCount)
+				{
+					$scope.loadmore=false;
+				}
+			}
+		});
+	};
+	getList();
+//endregion
+	//region 商品加载
+
+	$scope.load_more = function () {
+		$timeout(function () {
+			$scope.searchCondition.Page += 1;
+			$http.get(SETTING.ApiUrl + '/CommunityProduct/Get', {
+				params: $scope.searchCondition,
+				'withCredentials': true
+			}).success(function (data) {
+
+				if (data.List != "") {
+					for (var i = 0; i < data.List.length; i++) {
+						$scope.items.push(data.List[i]);
+					}
+					if($scope.items.length==data.TotalCount)
+					{
+						$scope.loadmore=false;
+					}
+				}
+				$scope.$broadcast("scroll.infiniteScrollComplete");
+			});
+		}, 1000)
+	};
+
+}]);
+
+app.controller('safedetailservice',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+// no money
+
+	if( $stateParams.name==undefined ||  $stateParams.name=="" ||  $stateParams.id==undefined ||  $stateParams.id=="" )
+	{
+		$scope.go("page.service");
+	}
+	$scope.Name=$stateParams.name;
+	$scope.searchCondition = {
+		id:$stateParams.id
+	};
+
+	var getList = function () {
+		$http.get(SETTING.ApiUrl + '/CommunityProduct/Get', {
+			params: $scope.searchCondition,
+			'withCredentials': true
+		}).success(function (data) {
+			if (data.ProductModel != "" && data.ProductModel !=undefined) {
+				$scope.item = data.ProductModel;
+			}
+		});
+	};
+	getList();
+
+
+}]);

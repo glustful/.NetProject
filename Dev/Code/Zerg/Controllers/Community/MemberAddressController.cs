@@ -32,27 +32,27 @@ namespace Zerg.Controllers.Community
             _areaService = areaService;
         }
 
-        public HttpResponseMessage Get()
-        {
-            var user = _workContext.CurrentUser;
-            if (user == null)
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "无法获取当前的用户信息"));
-            var entity = _memberAddressService.GetDefaultAddress(user.Id);
-            var model = new MemberAddressModel
-            {
-                Id = entity.Id,
-                Member = entity.Member.Id,
-                Address = entity.Address,
-                Zip = entity.Zip,
-                Linkman = entity.Linkman,
-                Tel = entity.Tel,
-                Adduser = entity.Adduser,
-                Addtime = entity.Addtime,
-                Upduser = entity.Upduser,
-                Updtime = entity.Updtime
-            };
-            return PageHelper.toJson(model);
-        }
+        //public HttpResponseMessage Get()
+        //{
+        //    var user = _workContext.CurrentUser;
+        //    if (user == null)
+        //        return PageHelper.toJson(PageHelper.ReturnValue(false, "无法获取当前的用户信息"));
+        //    var entity = _memberAddressService.GetDefaultAddress(user.Id);
+        //    var model = new MemberAddressModel
+        //    {
+        //        Id = entity.Id,
+        //        Member = entity.Member.Id,
+        //        Address = entity.Address,
+        //        Zip = entity.Zip,
+        //        Linkman = entity.Linkman,
+        //        Tel = entity.Tel,
+        //        Adduser = entity.Adduser,
+        //        Addtime = entity.Addtime,
+        //        Upduser = entity.Upduser,
+        //        Updtime = entity.Updtime
+        //    };
+        //    return PageHelper.toJson(model);
+        //}
 
         public HttpResponseMessage Get(int id)
 		{
@@ -94,27 +94,27 @@ namespace Zerg.Controllers.Community
             return PageHelper.toJson(new { List = model, Condition = condition, toTalCount = totalCount });
 		}
 
-        public HttpResponseMessage Post([FromBody]MemberAddressModel model)
-		{
-			var entity = new MemberAddressEntity
-			{
-				Member = _memberService.GetMemberByUserId(model.UserId),
-				Address = model.Address,
-				Zip = model.Zip,
-				Linkman = model.Linkman,
-				Tel = model.Tel,
-				Adduser = _workContext.CurrentUser.Id,
-				Addtime = DateTime.Now,
-				Upduser = _workContext.CurrentUser.Id,
-				Updtime = DateTime.Now,
-                Area = _areaService.GetAreaById(model.AreaId)
-			};
-			if(_memberAddressService.Create(entity).Id > 0)
-			{
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "post 成功"));
-			}
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "post  失败")); 
-		}
+        //public HttpResponseMessage Post([FromBody]MemberAddressModel model)
+        //{
+        //    var entity = new MemberAddressEntity
+        //    {
+        //        Member = _memberService.GetMemberByUserId(model.UserId),
+        //        Address = model.Address,
+        //        Zip = model.Zip,
+        //        Linkman = model.Linkman,
+        //        Tel = model.Tel,
+        //        Adduser = _workContext.CurrentUser.Id,
+        //        Addtime = DateTime.Now,
+        //        Upduser = _workContext.CurrentUser.Id,
+        //        Updtime = DateTime.Now,
+        //        Area = _areaService.GetAreaById(model.AreaId)
+        //    };
+        //    if(_memberAddressService.Create(entity).Id > 0)
+        //    {
+        //        return PageHelper.toJson(PageHelper.ReturnValue(true, "post 成功"));
+        //    }
+        //    return PageHelper.toJson(PageHelper.ReturnValue(false, "post  失败")); 
+        //}
 
         public HttpResponseMessage Put([FromBody]MemberAddressModel model)
 		{

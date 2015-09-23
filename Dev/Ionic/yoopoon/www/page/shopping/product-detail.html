@@ -5,9 +5,7 @@
     <div class="icon-size detail-car " ui-sref="page.car">
         <i class="icon-gouwuche color-white"></i>
     </div>
-    <div class="icon-size gwc-car " id="gwcaction">
-        <i class="icon-gouwuche color-white"></i>
-    </div>
+
 <ion-view hide-tabs="true" hide-nav-bar="true">
     <ion-content class="detail-position" style="bottom:63px;">
         <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" ng-if="content">
@@ -68,9 +66,35 @@
         <div style="clear: both;margin-left: 20px"><span>{{productDetail.Detail}}</span></div>
         </div>
     </ion-content>
-
-    <div class=" row detail-padding button-position">
-        <button class="col button-large assertive-bg none-border p-button" ui-sref="page.order({productid:product.Id})">立即购买</button>
-        <button class="col button-large  energized-bg none-border p-button" ng-click="AddGWCAction(this)">加入购物车</button>
+    <div class="icon-size gwc-car " id="gwcaction" ng-class="{'changeAfter':changIng}">
+        <i class="icon-gouwuche color-white"></i>
     </div>
+    <div class=" row detail-padding button-position" ng-show="buyHide">
+        <button class="col button-large assertive-bg none-border p-button" ng-click="buyNew()">立即购买</button>
+        <button class="col button-large  energized-bg none-border p-button" ng-click="AddCart()">加入购物车</button>
+    </div>
+    <div id="buyNew" class="buyNew" ng-show="mask">
+        <div style="width: 100%;height: 50%" ng-click="close()"></div>
+        <div  class="innerMask" ng-class="{'innerMaskAfter':innerAfter}" id="innerMask">
+                <div class=" bar bar-header up">
+                    <h1 class="title">数量</h1>
+                    <a href="" class="button ion-ios-close-outline button-clear" ng-click="close()" style="font-size: 32px;"></a>
+                </div>
+                <ion-content  style="top:44px;">
+                    <ion-list class="list-borderless">
+                        <div class="item ">
+                            <span>购买数量</span>
+                            <span class="buyNum">
+                            <i class="ion-ios-minus-empty addNum" ng-click="deNumbers()"></i>
+                             <span>{{numbers}}</span>
+                            <i class="ion-ios-plus-empty deNum" ng-click="addNumbers()"></i>
+                             </span>
+                        </div>
+                    </ion-list>
+                </ion-content>
+                <button ng-click="buy()">确认</button>
+        </div>
+
+    </div>
+
 </ion-view>
