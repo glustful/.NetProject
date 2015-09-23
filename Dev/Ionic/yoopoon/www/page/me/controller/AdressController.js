@@ -110,7 +110,7 @@ app.controller('newAddress',['$http','$scope','$stateParams',function($http,$sco
 
     $scope.saves = function () {
 
-        $http.post(SETTING.ApiUrl + '/MemberAddress/Post', $scope.Address, {'withCredentials': true})
+        $http.put(SETTING.ApiUrl + '/MemberAddress/Put', $scope.Address, {'withCredentials': true})
             .success(function (data) {
                 if (data.Status) {
 
