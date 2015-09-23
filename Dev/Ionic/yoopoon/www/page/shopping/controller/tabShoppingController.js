@@ -213,6 +213,19 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     };
     //endregion
 
+    //region   立即购买
+    $scope.buysome=function(id){
+
+        $http.get(SETTING.ApiUrl + '/CommunityProduct/Get?id='+id, {
+            'withCredentials': true
+        }).success(function (data) {
+                $scope.item = data.ProductModel;
+            $state.go("page.order",{productcount:$scope.item,pricecount:$scope.item.Price})
+        });
+
+    }
+    //endregion
+
 
     $scope.searchname = '';
     document.getElementById('search').onblur = function () {

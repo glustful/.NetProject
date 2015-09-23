@@ -95,11 +95,11 @@ app.service("cartservice", ['$rootScope',
 						productlist.splice(i,1)
 						if(productlist.length==0){
 							localStorage.removeItem("ShoppingCart");
-							return;	
+
 						}
 						jsonstr.productlist = productlist;
 						localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
-						//总数+1
+						//总数-1
 						$rootScope.cartProductCount -= 1;
 
 					}
