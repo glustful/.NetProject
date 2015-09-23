@@ -93,30 +93,44 @@ app.controller('selectCounty',['$http','$scope','$stateParams',function($http,$s
     });
 }]);
 
-app.controller('newAddress',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
 
-   if( $stateParams.name==undefined ||  $stateParams.name=="" ||  $stateParams.id==undefined ||  $stateParams.id=="" )
-   {
-       $scope.go("page.addressAdm");
-   }
-    $scope.Address={
-        AreaName:$stateParams.name,
+app.controller('newaddress',['$http','$scope','$stateParams','$state','AuthService','$ionicLoading','$timeout',function($http,$scope,$stateParams,$state,AuthService,$ionicLoading,$timeout) {
+    $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
+    if( $scope.currentuser==undefined ||  $scope.currentuser=="")
+    {
+        $state.go("page.login");//调到登录页面
+    }
+  if( $stateParams.name==undefined ||  $stateParams.name=="" ||  $stateParams.id==undefined ||  $stateParams.id=="" )
+  {
+      $state.go("page.addressAdm");
+  }
+    alert($stateParams.name+"|"+$stateParams.id);
+    $scope.AreaName=$stateParams.name,
+
+        $scope.Addre={
         AreaId: $stateParams.id,
-        Address:'',
-        Zip :'',
-        Linkman :'',
-        Tel:''
+        Address:'aa',
+        Zip :'qq',
+        Linkman :'zz',
+        Tel:'ww'
     };
 
-    $scope.saves = function () {
 
-        $http.post(SETTING.ApiUrl + '/MemberAddress/Post', $scope.Address, {'withCredentials': true})
-            .success(function (data) {
+    $scope.saves = function () {
+        if( $scope.signer.Address=="" ||  $scope.signer.Address==undefined ||  $scope.signer.Zip=="" ||  $scope.signer.Zip==undefined ||  $scope.signer.Linkman=="" ||  $scope.signer.Linkman==undefined ||  $scope.signer.Tel=="" ||  $scope.signer.Tel==undefined  )
+        {
+            return;
+        }
+        if( $scope.Addre.Zip.length!=6)
+        {
+            return;
+        }
+        $http.post(SETTING.ApiUrl+ '/MemberAddress/Post', $scope.Addre, {'withCredentials': true}).success(function (data) {
                 if (data.Status) {
 
                     $state.go("page.addressAdm");
                 }
             });
     }
+}])
 
-}]);
