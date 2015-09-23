@@ -440,3 +440,9 @@
     width: 25%;
     padding:5px 0 5px 15px
 }
+.detail{
+    display: block;
+}
+.nodetail{
+    display: none;
+}

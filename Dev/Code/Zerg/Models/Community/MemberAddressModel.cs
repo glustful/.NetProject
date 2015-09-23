@@ -80,5 +80,7 @@ namespace Zerg.Models.Community
         }
 
         public int UserId { get; set; }
+
+        public bool? IsDefault { get; set; }
 	}
 }
