@@ -238,5 +238,18 @@ namespace Community.Service.Order
                 return -1;
 			}
 		}
+
+	    public OrderEntity GetOrderByNo(string orderNo)
+	    {
+	        try
+	        {
+	            return _orderRepository.Get(o => o.No == orderNo);
+	        }
+            catch (Exception e)
+            {
+                _log.Error(e, "数据库操作出错");
+                return null;
+            }
+	    }
 	}
 }
