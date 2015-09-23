@@ -249,11 +249,12 @@ app.controller('safeservice',['$http','$scope','$stateParams',function($http,$sc
 		$scope.go("page.service");
 	}
 
-	alert($stateParams.name);
+	$scope.loadmore=true;
     $scope.Name=$stateParams.name;
 	$scope.items = [];
 	$scope.searchCondition = {
 
+		CategoryName:$stateParams.name,
 		IsDescending: true,
 		OrderBy: 'OrderByAddtime',
 		Page: 1,
@@ -268,13 +269,17 @@ app.controller('safeservice',['$http','$scope','$stateParams',function($http,$sc
 		}).success(function (data) {
 			if (data.List != "") {
 				$scope.items = data.List;
+				if(((($scope.searchCondition.Page-1)*$scope.searchCondition.PageCount )+data.List.length)==data.TotalCount)
+				{
+					$scope.loadmore=false;
+				}
 			}
 		});
 	};
 	getList();
 //endregion
 	//region 商品加载
-	$scope.loadmore=true;
+
 	$scope.load_more = function () {
 		$timeout(function () {
 			$scope.searchCondition.Page += 1;
@@ -302,21 +307,13 @@ app.controller('safeservice',['$http','$scope','$stateParams',function($http,$sc
 app.controller('safedetailservice',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
 // no money
 
-	if( $stateParams.name==undefined ||  $stateParams.name=="" )
+	if( $stateParams.name==undefined ||  $stateParams.name=="" ||  $stateParams.id==undefined ||  $stateParams.id=="" )
 	{
 		$scope.go("page.service");
 	}
-
-	alert($stateParams.name);
 	$scope.Name=$stateParams.name;
-	$scope.items = [];
 	$scope.searchCondition = {
-
-		IsDescending: true,
-		OrderBy: 'OrderByAddtime',
-		Page: 1,
-		PageCount: 10
-		//ProductId:''
+		id:$stateParams.id
 	};
 
 	var getList = function () {
@@ -324,8 +321,8 @@ app.controller('safedetailservice',['$http','$scope','$stateParams',function($ht
 			params: $scope.searchCondition,
 			'withCredentials': true
 		}).success(function (data) {
-			if (data.List != "") {
-				$scope.items = data.List;
+			if (data.ProductModel != "" && data.ProductModel !=undefined) {
+				$scope.item = data.ProductModel;
 			}
 		});
 	};
