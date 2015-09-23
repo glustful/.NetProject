@@ -10,12 +10,14 @@ import org.json.JSONObject;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.advertisement.ProductAdvertisement;
+
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
 import com.yoopoon.market.utils.SplitStringWithDot;
+import com.yoopoon.market.view.HtmlWebView;
 
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
@@ -29,6 +31,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -67,6 +70,10 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	LinearLayout sliderAddMoreLinearLayout;
 	@ViewById(R.id.linearlayout_shopping)
 	LinearLayout shoppingLinearLayout;
+	@ViewById(R.id.webview_product_description)
+	HtmlWebView productDescriptionWebView;
+	String header = "<!doctype html><html><head><meta name = \"viewport\" content = \"width = device-width\"/></head><body>";
+	String tail = "</body></html>";
 
 	/**
 	 * @Title: initProductComment
@@ -104,14 +111,16 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		addMoreCommentButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				 Intent intent=new Intent(ProductDetailActivity.this,ProductCommentActivity_.class);
-				 Bundle bundle=new Bundle();
-				 bundle.putString("productId", productId);
-				 bundle.putString("commentAmount", commentJsonObjects.size()+"");
-				 intent.putExtras(bundle);
-				 startActivity(intent);
+				Intent intent = new Intent(ProductDetailActivity.this, ProductCommentActivity_.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("productId", productId);
+				bundle.putString("commentAmount", commentJsonObjects.size() + "");
+				intent.putExtras(bundle);
+				startActivity(intent);
 			}
 		});
+		//productDescriptionWebView.loadData(header + "HTML代码" + tail, "text/html;charset=utf-8", null);
+		productDescriptionWebView.loadUrl("http:www.baidu.com");
 	}
 	/**
 	 * @Title: loadComment
@@ -225,7 +234,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		productTitleTextView.setText(jsonObject.optString("Name", ""));
 		productSubtitleTextView.setText(jsonObject.optString("Subtitte", ""));
 		productPrictTextView.setText("￥" + SplitStringWithDot.split(jsonObject.optString("Price", "0")));
-		productPrimePriceTextView.setText("原价：" + SplitStringWithDot.split(jsonObject.optString("NewPrice", "0")));
+		productPrimePriceTextView.setText("原价：" + SplitStringWithDot.split(jsonObject.optString("OldPrice", "0")));
 		if (jsonObject.optString("Owner", "0").equals("null")) {
 			productSalesVolumeTextView.setText("已有0人抢购");
 		} else {

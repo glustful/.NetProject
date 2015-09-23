@@ -3,184 +3,199 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ScrollView
-        android:id="@+id/scrollview_product_detail"
+    <com.yoopoon.market.view.ScrollViewContainer
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp" >
+        android:layout_height="match_parent" >
 
-        <LinearLayout
-            android:id="@+id/linearlayout_product_detail"
+        <ScrollView
+            android:id="@+id/scrollview_product_detail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/tv_product_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingTop="20dp"
-                android:text="我是花痴玫瑰花饼这是主标题"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/tv_product_subtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:text="我是花痴玫瑰花饼这是副标题"
-                android:textColor="@color/red"
-                android:textSize="13sp" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp" >
 
             <LinearLayout
+                android:id="@+id/linearlayout_product_detail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp" >
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="售价"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tv_product_selling_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="￥56"
-                    android:textColor="@color/red"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/tv_product_prime_price"
+                    android:id="@+id/tv_product_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=" / 原价：￥86"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="20dp"
+                    android:text="我是花痴玫瑰花饼这是主标题"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_product_subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:text="我是花痴玫瑰花饼这是副标题"
+                    android:textColor="@color/red"
                     android:textSize="13sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="25dp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:background="#F7F7F7"
-                android:paddingLeft="10dp" >
-
-                <TextView
-                    android:id="@+id/tv_product_advertisement"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:drawableLeft="@drawable/car"
-                    android:gravity="center_vertical"
-                    android:text="满30免运费" />
-
-                <TextView
-                    android:id="@+id/tv_product_sales_volume"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_weight="1"
-                    android:drawableLeft="@drawable/sales_volume"
-                    android:gravity="center_vertical"
-                    android:text="已有200人购买" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="#E4E4E4" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="30dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="商品评价"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="("
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tv_product_comment_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="0"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text=")"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
 
                 <LinearLayout
-                    android:id="@+id/linearlayout_product_comment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="40dp"
-                    android:orientation="vertical" >
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="售价"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_product_selling_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="￥56"
+                        android:textColor="@color/red"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tv_product_prime_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=" / 原价：￥86"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_add_more_comment"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:background="#F7F7F7"
+                    android:paddingLeft="10dp" >
+
+                    <TextView
+                        android:id="@+id/tv_product_advertisement"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:drawableLeft="@drawable/car"
+                        android:gravity="center_vertical"
+                        android:text="满30免运费" />
+
+                    <TextView
+                        android:id="@+id/tv_product_sales_volume"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/sales_volume"
+                        android:gravity="center_vertical"
+                        android:text="已有200人购买" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="#E4E4E4" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:background="@android:color/transparent"
-                    android:text="点击加载更多评论"
-                    android:visibility="gone" />
-            </RelativeLayout>
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp" >
 
-            <LinearLayout
-                android:id="@+id/linearlayout_slider_add_more"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:background="#E4E4E4"
-                android:gravity="center"
-                android:orientation="horizontal" >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="商品评价"
+                        android:textSize="15sp" />
 
-                <View
-                    android:layout_width="40dp"
-                    android:layout_height="1dp"
-                    android:background="@color/black" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="("
+                        android:textSize="15sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="继续拖动，查看图文详情" />
+                    <TextView
+                        android:id="@+id/tv_product_comment_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="0"
+                        android:textSize="15sp" />
 
-                <View
-                    android:layout_width="40dp"
-                    android:layout_height="1dp"
-                    android:background="@color/black" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text=")"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <LinearLayout
+                        android:id="@+id/linearlayout_product_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="40dp"
+                        android:orientation="vertical" >
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_add_more_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:background="@android:color/transparent"
+                        android:text="点击加载更多评论"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearlayout_slider_add_more"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:background="#E4E4E4"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <View
+                        android:layout_width="40dp"
+                        android:layout_height="1dp"
+                        android:background="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="继续拖动，查看图文详情" />
+
+                    <View
+                        android:layout_width="40dp"
+                        android:layout_height="1dp"
+                        android:background="@color/black" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <com.yoopoon.market.view.HtmlWebView
+                android:id="@+id/webview_product_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </ScrollView>
+    </com.yoopoon.market.view.ScrollViewContainer>
 
     <LinearLayout
         android:id="@+id/linearlayout_shopping"

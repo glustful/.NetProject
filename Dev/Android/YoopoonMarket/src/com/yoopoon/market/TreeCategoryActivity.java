@@ -179,11 +179,13 @@ public class TreeCategoryActivity extends MainActionBarActivity {
 					public void onClick(View v) {
 						TextView childTextView = (TextView) v;
 						String text = childTextView.getText().toString().trim();
-						Toast.makeText(TreeCategoryActivity.this, text, Toast.LENGTH_SHORT).show();
-						Intent intent = new Intent(TreeCategoryActivity.this, ProductList.class);
+						 
+						Intent intent = new Intent(TreeCategoryActivity.this, ProductList_.class);
 						Bundle bundle = new Bundle();
 						bundle.putString("classificationId", entity.Id + "");
 						bundle.putString("classificationName", entity.label);
+						intent.putExtras(bundle);
+						startActivity(intent);
 
 					}
 				});

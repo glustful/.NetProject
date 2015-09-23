@@ -29,14 +29,17 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
@@ -71,6 +74,7 @@ import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.utils.ParserJSON;
 import com.yoopoon.market.utils.ParserJSON.ParseListener;
+import com.yoopoon.market.utils.Utils;
 import com.yoopoon.market.view.LazyViewPager;
 import com.yoopoon.market.view.LazyViewPager.OnPageChangeListener;
 
@@ -107,6 +111,25 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	int cartCount = 0;
 	ImageView buyImg;
 	ViewGroup anim_mask_layout;// 动画层
+	private ShopFragment mShopFragment;
+	private ImageView clearSearchImageView;// 清除按钮
+	// 创建Watcher监听搜索框中内容的变化，如果变化则设置删除按钮显示以及其他功能
+	private TextWatcher searchEditTextWatcher = new TextWatcher() {
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			if (!s.toString().trim().equals("")) {
+				clearSearchImageView.setVisibility(View.VISIBLE);
+			}
+		}
+	};
 
 	@Click(R.id.btn_search)
 	void search() {
@@ -122,6 +145,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				@Override
 				public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 					if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+						// Toast.makeText(mContext, "搜索" + v.getText().toString(),
+						// Toast.LENGTH_SHORT).show();
+						searchProduct(v.getText().toString());
 						return true;
 					}
 					return false;
@@ -132,24 +158,18 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			animation.setAnimationListener(new AnimationListener() {
 				@Override
 				public void onAnimationStart(Animation animation) {
-					// TODO Auto-generated method stub
 				}
 
 				@Override
 				public void onAnimationRepeat(Animation animation) {
-					// TODO Auto-generated method stub
 				}
 
 				@Override
 				public void onAnimationEnd(Animation animation) {
-					Intent intent = new Intent("com.yoopoon.market.search.byKeyword");
-					Bundle bundle = new Bundle();
-					intent.putExtra("keyword", et_search.getText().toString());
-					sendBroadcast(intent);
 					et_search.setText("");
-					// #################################################徐阳会 2015年9月17日添加
-
 					et_search.setVisibility(View.GONE);
+					clearSearchImageView.setVisibility(View.GONE);
+					Utils.hiddenSoftBorad(mContext);
 				}
 			});
 			et_search.startAnimation(animation);
@@ -174,8 +194,19 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 	@AfterViews
 	void initUI() {
+		// ################################################徐阳会
+		// 2015年9月22日修改#########################Start
+		// 修改shop_fragment,让ShopFragment成全局变量
+		// ################################################徐阳会
+		// 2015年9月22日修改#########################Start
+		mShopFragment = new ShopFragment();
 		mContext = MainActivity.this;
-		fragments.add(new ShopFragment());
+		fragments.add(mShopFragment);
+		// ################################################徐阳会
+		// 2015年9月22日修改#########################Start
+		// 修改shop_fragment,让ShopFragment成全局变量
+		// ################################################徐阳会
+		// 2015年9月22日修改#########################Start
 		fragments.add(new ServeFragment());
 		fragments.add(new CartFragment());
 		fragments.add(new MeFragment());
@@ -207,6 +238,41 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				});
 			};
 		}.start();
+		// ################################################徐阳会
+		// 2015年9月22日修改#########################Start
+		// 添加搜索框中清除搜索功能
+		// ################################################徐阳会
+		// 2015年9月22日修改#########################Start
+		clearSearchImageView = (ImageView) searchLayout.findViewById(R.id.img_clear_search);
+		clearSearchImageView.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				Utils.hiddenSoftBorad(mContext);
+				et_search.setText("");
+				mShopFragment.settingClearSearch();
+				clearSearchImageView.setVisibility(View.GONE);
+				return true;
+			}
+		});
+		et_search.addTextChangedListener(searchEditTextWatcher);
+		// ################################################徐阳会
+		// 2015年9月22日修改#########################Start
+		// 添加搜索框中清除搜索功能
+		// ################################################徐阳会
+		// 2015年9月22日修改#########################Start
+	}
+
+	/**
+	 * @Title: searchProduct
+	 * @Description: 根据关键字搜索商品
+	 */
+	private void searchProduct(String searchString) {
+		Utils.hiddenSoftBorad(mContext);
+		if (searchString == null || searchString.equals("")) {
+			Toast.makeText(mContext, "输入为空，请输入要搜索的商品", Toast.LENGTH_SHORT).show();
+		} else {
+			mShopFragment.searchProduct(searchString);
+		}
 	}
 
 	protected void onCreate(android.os.Bundle arg0) {
@@ -217,7 +283,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		editor.putString("Password", "");
 		editor.putInt("UserId", 0);
 		editor.commit();
-
 		registerBroadcast();
 	};
 
@@ -226,22 +291,18 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		IntentFilter shadowFilter = new IntentFilter("com.yoopoon.market.show_shadow");
 		shadowFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, shadowFilter);
-
 		// 添加商品到购物车
 		IntentFilter cartFilter = new IntentFilter("com.yoopoon.market.add_to_cart");
 		cartFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, cartFilter);
-
 		// 打开首页
 		IntentFilter shopFilter = new IntentFilter("com.yoopoon.market.showshop");
 		shopFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, shopFilter);
-
 		// 打开购物车
 		IntentFilter cartFilter2 = new IntentFilter("com.yoopoon.market.showcart");
 		shopFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, cartFilter2);
-
 		IntentFilter seviceFilter = new IntentFilter("com.yoopoon.market.service.moreservice");
 		seviceFilter.addCategory(Intent.CATEGORY_DEFAULT);
 		registerReceiver(receiver, seviceFilter);
@@ -254,7 +315,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	BroadcastReceiver receiver = new BroadcastReceiver() {
-
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
@@ -433,7 +493,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private class SearchViewClickListener implements OnClickListener {
-
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
@@ -487,7 +546,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				tv_shadow1.setVisibility(View.GONE);
 				rl_shadow2.setVisibility(View.GONE);
 			}
-
 			btn_category.setVisibility(arg0 == 1 ? View.GONE : View.VISIBLE);
 		}
 	}
@@ -530,9 +588,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		switch (v.getId()) {
 			case R.id.ll1:
 				vp.setCurrentItem(0);
+				mShopFragment.settingClearSearch();
 				break;
 			case R.id.ll2:
 				vp.setCurrentItem(1);
+				clearSearchSetting();
 				break;
 			case R.id.ll3:
 				vp.setCurrentItem(2);
@@ -551,4 +611,32 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		}
 	}
 
+	/**
+	 * @Title: clearSearchSetting
+	 * @Description: 清除搜索框中内容设置
+	 */
+	private void clearSearchSetting() {
+		if (et_search.getVisibility() == View.VISIBLE) {
+			Animation animation = AnimationUtils.loadAnimation(this, R.anim.back_right_out);
+			animation.setAnimationListener(new AnimationListener() {
+				@Override
+				public void onAnimationStart(Animation animation) {
+				}
+
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+				}
+
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					et_search.setText("");
+					et_search.setVisibility(View.GONE);
+				}
+			});
+			et_search.startAnimation(animation);
+			et_search.setText("");
+			clearSearchImageView.setVisibility(View.GONE);
+			et_search.setVisibility(View.GONE);
+		}
+	}
 }

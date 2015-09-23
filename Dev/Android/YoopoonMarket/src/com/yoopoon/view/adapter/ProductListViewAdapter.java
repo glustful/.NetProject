@@ -76,9 +76,18 @@ public class ProductListViewAdapter extends BaseAdapter {
 		}
 		productViewHandler.productTitleTextView.setText(datas.get(position).optString("Name", ""));
 		productViewHandler.productSubtitleTextView.setText(datas.get(position).optString("Subtitte", ""));
-		productViewHandler.productAdvertisemenTextView.setText(datas.get(position).optString("Ad1", ""));
-		productViewHandler.productPricTextView.setText(datas.get(position).optString("Price", ""));
-		productViewHandler.productSalesValuemtTextView.setText(datas.get(position).optString("Owner", ""));
+		if (datas.get(position).optString("Ad1", "").equals("null")) {
+			productViewHandler.productAdvertisemenTextView.setText("满30元免费送货");
+		} else {
+			productViewHandler.productAdvertisemenTextView.setText(datas.get(position).optString("Ad1", ""));
+		}
+		productViewHandler.productPricTextView.setText("￥" + datas.get(position).optString("Price", ""));
+		if (datas.get(position).optString("Owner", "").equals("null")) {
+			productViewHandler.productSalesValuemtTextView.setText("已有0人抢购");
+		} else {
+			productViewHandler.productSalesValuemtTextView.setText("已有" + datas.get(position).optString("Owner", "")
+					+ "人抢购");
+		}
 		convertView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -100,6 +109,12 @@ public class ProductListViewAdapter extends BaseAdapter {
 		datas.clear();
 		if (jsonObjects != null) {
 			datas.addAll(jsonObjects);
+		}
+		this.notifyDataSetChanged();
+	}
+	public void addRefresh(ArrayList<JSONObject> arrayList) {
+		if (arrayList != null) {
+			datas.addAll(arrayList);
 		}
 		this.notifyDataSetChanged();
 	}
