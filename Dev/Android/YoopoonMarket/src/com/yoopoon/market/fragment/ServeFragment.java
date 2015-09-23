@@ -152,6 +152,7 @@ public class ServeFragment extends Fragment {
 							for (int i = 0; i < array.length(); i++) {
 								JSONObject jsonObject = array.getJSONObject(i);
 								String url = jsonObject.optString("TitleImg", "");
+								if((!url.equals("null"))&&(url!=null)&&(!url.equals("")))
 								urls[i] = getString(R.string.url_image) + url;
 							}
 							initImages(urls);
@@ -256,8 +257,10 @@ public class ServeFragment extends Fragment {
 			imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 			imageView.setScaleType(ScaleType.FIT_XY);
 			imageView.setTag(urls[i]);
-			ImageLoader.getInstance().displayImage(urls[i], imageView, MyApplication.getOptions(),
-					MyApplication.getLoadingListener());
+			if ((!urls[i].equals("null"))&&(!urls[i].equals(""))&&urls[i]!=null) {
+				ImageLoader.getInstance().displayImage(urls[i], imageView, MyApplication.getOptions(),
+						MyApplication.getLoadingListener());
+			}
 			mImageViews[i] = imageView;
 		}
 		vp.setAdapter(new MyViewPagerAdapter());

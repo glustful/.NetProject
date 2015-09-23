@@ -253,13 +253,12 @@ public class ProductAdvertisement {
 
 						@Override
 						public void onLoadingStarted(String imageUri, View view) {
-							// TODO Auto-generated method stub
-
+							 
 						}
 
 						@Override
 						public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-							// TODO Auto-generated method stub
+						 
 
 						}
 
@@ -274,7 +273,7 @@ public class ProductAdvertisement {
 
 						@Override
 						public void onLoadingCancelled(String imageUri, View view) {
-							// TODO Auto-generated method stub
+						 
 
 						}
 					});

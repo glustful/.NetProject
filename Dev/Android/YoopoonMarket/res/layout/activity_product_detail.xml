@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:gravity="center"
     android:layout_height="match_parent" >
 
     <com.yoopoon.market.view.ScrollViewContainer
@@ -247,5 +248,15 @@
         android:paddingRight="15dp"
         android:paddingTop="10dp"
         android:src="@drawable/cart_grey_background" />
+
+    <ImageView
+        android:id="@+id/img_animation_cart"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/linearlayout_shopping"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/cart_gray"
+        android:scaleType="fitXY"
+        android:visibility="invisible" />
 
 </RelativeLayout>
