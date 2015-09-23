@@ -69,8 +69,9 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 		if(	$scope.tabIndex == 5){
 			$scope.condition = {
 				Status: '4',
-				Addusers: $scope.currentuser.UserId
+				Addusers: ''
 			};
+			$scope.condition.AddUsers =   $scope.currentuser.UserId;
 			var getList = function () {
 				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
 					.success(function(data) {
@@ -128,31 +129,6 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 		}
 	}
 	tab();
-
-	//    搜索功能
-	$scope.showSelect = false;
-	$scope.isShow = false;
-	$scope.showInput = function() {
-		$scope.showSelect = true;
-		$scope.isShow = true;
-	};
-
-
-
-
-	//    滚动刷新
-	$scope.items = [];
-	var base = 0;
-	$scope.load_more = function() {
-		$timeout(function() {
-			for (var i = 0; i < 10; i++, base++)
-				$scope.items.push(["item ", base].join(""));
-			$scope.$broadcast("scroll.infiniteScrollComplete");
-		}, 500);
-
-	}
-
-
 	//    滚动刷新
 	$scope.items = [];
 	var base = 0;
@@ -165,51 +141,7 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 
 	};
 
-	//    选择清洗服务
-	$scope.selected1 = false;
-	$scope.selected2 = false;
-	$scope.selected3 = false;
-	$scope.selected4 = false;
-	$scope.selected5 = false;
-	$scope.selectService = function(sel) {
-		switch (sel) {
-			case 1:
-				if ($scope.selected1 == false) {
-					$scope.selected1 = true;
-					return;
-				}
-				$scope.selected1 = false;
-				break;
-			case 2:
-				if ($scope.selected2 == false) {
-					$scope.selected2 = true;
-					return;
-				}
-				$scope.selected2 = false;
-				break;
-			case 3:
-				if ($scope.selected3 == false) {
-					$scope.selected3 = true;
-					return;
-				}
-				$scope.selected3 = false;
-				break;
-			case 4:
-				if ($scope.selected4 == false) {
-					$scope.selected4 = true;
-					return;
-				}
-				$scope.selected4 = false;
-				break;
-			case 5:
-				if ($scope.selected5 == false) {
-					$scope.selected5 = true;
-					return;
-				}
-				$scope.selected5 = false;
-				break;
-		}
-	}
+
 });
 
 app.controller('clearservice',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
@@ -237,6 +169,52 @@ app.controller('clearservice',['$http','$scope','$stateParams',function($http,$s
 				}
 			});
 	}
+
+    //    选择清洗服务
+    $scope.selected1 = false;
+    $scope.selected2 = false;
+    $scope.selected3 = false;
+    $scope.selected4 = false;
+    $scope.selected5 = false;
+    $scope.selectService = function(sel) {
+        switch (sel) {
+            case 1:
+                if ($scope.selected1 == false) {
+                    $scope.selected1 = true;
+                    return;
+                }
+                $scope.selected1 = false;
+                break;
+            case 2:
+                if ($scope.selected2 == false) {
+                    $scope.selected2 = true;
+                    return;
+                }
+                $scope.selected2 = false;
+                break;
+            case 3:
+                if ($scope.selected3 == false) {
+                    $scope.selected3 = true;
+                    return;
+                }
+                $scope.selected3 = false;
+                break;
+            case 4:
+                if ($scope.selected4 == false) {
+                    $scope.selected4 = true;
+                    return;
+                }
+                $scope.selected4 = false;
+                break;
+            case 5:
+                if ($scope.selected5 == false) {
+                    $scope.selected5 = true;
+                    return;
+                }
+                $scope.selected5 = false;
+                break;
+        }
+    }
 
 }]);
 
