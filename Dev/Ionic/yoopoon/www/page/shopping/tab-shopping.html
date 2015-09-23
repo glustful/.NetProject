@@ -45,41 +45,43 @@
         </ion-slide-box>
         <!-- ion-infinite-scroll 上拉加载数据指令 distance默认1% nf-if的值为false时，就禁止执行on-infinite  -->
         <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="1%"></ion-infinite-scroll>
+        <a class="button-service" ng-click="go('index.html#/page/service/safe')" style="">优服务</a>
+        <ion-scroll zooming="true" direction="x" class="scroll-home">
+            <div class="row bg-yellow">
 
-        <div class="row bg-yellow">
-            <a class="button-service" ng-click="go('index.html#/page/service/safe')">优服务</a>
-            <a class="col tab-item">
-                <i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i>
+                <a class="col-20 tab-item">
+                    <i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">家政服务</p>
+                </a>
+                <a class="col-20 tab-item">
+                    <i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">衣物清洗</p>
+                </a>
+                <a class="col-20 tab-item">
+                    <i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">快递代收</p>
+                </a>
+                <a class="col-20 tab-item">
+                    <i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">月嫂</p>
+                </a>
+                <a class="col-20 tab-item">
+                    <i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">家政服务</p>
+                </a>
+                <a class="col-20 tab-item">
+                    <i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">衣物清洗</p>
+                </a>
+                <a class="col-20 tab-item">
+                    <i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">快递代收</p>
+                </a>
+                <a class="col-20 tab-item">
+                    <i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">月嫂</p>
+                </a>
 
-                <p class="font-8">家政服务</p>
-            </a>
-            <a class="col tab-item">
-                <i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i>
-
-                <p class="font-8">衣物清洗</p>
-            </a>
-            <a class="col tab-item">
-                <i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i>
-
-                <p class="font-8">快递代收</p>
-            </a>
-            <a class="col tab-item">
-                <i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i>
-
-                <p class="font-8">月嫂</p>
-            </a>
-            <a class=" col tab-item">
-                <i class="icon icon-jiazhenfuwu circle assertive" style="font-size: 1.6em;margin-top: 10px"></i>
-
-                <p class="font-8"  ng-click="go('index.html#/page/service')">更多</p>
-            </a>
-        </div>
+            </div>
+        </ion-scroll>
 
         <div class="padding stable-bg">
             <div class="  bar-light  ">
                 <h4 class="title p-red font-12"><strong>| 爆款套餐</strong>&nbsp;| 省到不行</h4>
             </div>
-            <div class="item item-image">
+            <div class="item item-image img-height" >
                 <img ng-src="http://img.iyookee.cn/{{list.MainImg}}" class="f-show"
                      ui-sref="page.product-detail({id:list.Id})">
 
@@ -101,8 +103,11 @@
             <ul>
                 <li style="width:50%;float:left" ng-repeat="row in items">
                     <div class="col p-relative">
-                        <img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}"
-                             ui-sref="page.product-detail({id:row.Id})">
+                        <div class="img-height">
+                            <img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}"
+                                 ng-click="go('index.html#/page/shopping/product-detail')">
+                        </div>
+
 
                         <div class="s-location">
                             <p class="p-invisible">{{row.Owner}}人已抢购</p>
