@@ -115,7 +115,8 @@ namespace Zerg.Controllers.Community
                IsDescending = condition.IsDescending,
                OrderBy = condition.OrderBy,
                PriceBegin = condition.PriceBegin,
-               PriceEnd = condition.PriceEnd
+               PriceEnd = condition.PriceEnd,
+               CategoryName=condition.CategoryName
             };
             if (condition.CategoryId!=0 && condition.CategoryId!=null)
             {
