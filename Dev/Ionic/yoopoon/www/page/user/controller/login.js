@@ -15,7 +15,7 @@ app.controller('login',['$scope','$state','AuthService','$ionicLoading','$timeou
             $timeout(function(){
                 $ionicLoading.hide();
                 $state.go('page.me');
-            },2000);
+            },1000);
 
 
         },

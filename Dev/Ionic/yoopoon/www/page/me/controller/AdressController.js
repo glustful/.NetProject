@@ -104,20 +104,19 @@ app.controller('newaddress',['$http','$scope','$stateParams','$state','AuthServi
   {
       $state.go("page.addressAdm");
   }
-    alert($stateParams.name+"|"+$stateParams.id);
-    $scope.AreaName=$stateParams.name,
 
+    $scope.AreaName=$stateParams.name;
         $scope.Addre={
         AreaId: $stateParams.id,
-        Address:'aa',
-        Zip :'qq',
-        Linkman :'zz',
-        Tel:'ww'
+        Address:'',
+        Zip :'',
+        Linkman :'',
+        Tel:''
     };
 
 
     $scope.saves = function () {
-        if( $scope.signer.Address=="" ||  $scope.signer.Address==undefined ||  $scope.signer.Zip=="" ||  $scope.signer.Zip==undefined ||  $scope.signer.Linkman=="" ||  $scope.signer.Linkman==undefined ||  $scope.signer.Tel=="" ||  $scope.signer.Tel==undefined  )
+        if( $scope.Addre.Address=="" ||  $scope.Addre.Address==undefined ||  $scope.Addre.Zip=="" ||  $scope.Addre.Zip==undefined ||  $scope.Addre.Linkman=="" ||  $scope.Addre.Linkman==undefined ||  $scope.Addre.Tel=="" ||  $scope.Addre.Tel==undefined  )
         {
             return;
         }

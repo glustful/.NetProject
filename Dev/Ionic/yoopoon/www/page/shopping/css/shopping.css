@@ -58,6 +58,7 @@
     padding: 0 ;
     height: 70px;
     margin-left: 20px;
+    background-color: #ffcc00 ;
 }
 .scroll-home{
     width: 100%;
@@ -82,6 +83,7 @@
     padding: 3px;
     font-size: 0.8em;
     z-index: 20;
+    left: 0;
 }
 .font-8{
     font-size: 0.5em;
@@ -159,7 +161,9 @@
     height: 50px;
 }
 
-
+.img-height{
+    height: 120px;
+}
 /*��Ʒ����*/
 .border-input{
     border-radius: 10px;
