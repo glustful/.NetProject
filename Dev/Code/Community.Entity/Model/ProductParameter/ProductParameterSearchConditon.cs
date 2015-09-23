@@ -39,7 +39,7 @@ namespace Community.Entity.Model.ProductParameter
 
 		public ProductEntity Product { get; set; }
 
-
+        public int? ProductId { get; set; }
 
 
 

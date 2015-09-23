@@ -38,11 +38,11 @@ namespace Zerg.Controllers.Community
                 var user = _workContext.CurrentUser;
                 if (user == null)
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "无法获取当前的用户信息"));
-                entity = _memberAddressService.GetDefaultAddress(user.Id);
+                entity = _memberAddressService.GetDefaultAddress(user.Id)??_memberService.GetMemberByUserId(user.Id).Address.FirstOrDefault();
             }
             else
             {
-                entity = _memberAddressService.GetDefaultAddress(memberId);
+                entity = _memberAddressService.GetDefaultAddress(memberId)??_memberService.GetMemberById(int.Parse(memberId)).Address.FirstOrDefault();
             }
             if (entity == null)
                 return PageHelper.toJson(null);

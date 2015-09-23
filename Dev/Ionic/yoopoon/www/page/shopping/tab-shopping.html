@@ -7,7 +7,6 @@
     <label class=" item-select select-header" ng-hide="showSelect">
 
         <select ng-model="selected" id="ParentId"  ng-options="o.Id as o.Name for o in addrss" ng-change="click()" required>
-
         </select>
 
     </label>
@@ -84,7 +83,7 @@
             </div>
             <div class="item item-image img-height" >
                 <img ng-src="http://img.iyookee.cn/{{list.MainImg}}" class="f-show"
-                     ng-click="go('index.html#/page/shopping/product-detail')">
+                     ui-sref="page.product-detail({id:list.Id})">
 
                 <div class="p-location">
                     <div class="p-invisible">{{list.Owner}}人已抢购</div>
@@ -95,7 +94,7 @@
                         <del style="font-size: 2px;" class="color-white">折扣前{{list.Price}}</del>
                     </p>
                     <i class="icon icon-gouwuche shop-cart" ng-click="AddCart1(this)"></i><br>
-                    <button class=" energized-bg none-border button-size" ng-click="go('index.html#/page/car/order')">
+                    <button class=" energized-bg none-border button-size" ng-click="buysome(list.Id)">
                         立即购买
                     </button>
 
@@ -121,7 +120,7 @@
                             </p>
                             <p>
                                 <button class="button  button-small   button-energized"
-                                        ng-click="go('index.html#/page/car/order')">立即购买
+                                        ng-click="buysome(row.Id)">立即购买
                                 </button>
                                 <i class="icon icon-gouwuche " style="float: right;font-size: 30px"
                                    ng-click="AddCart(this)"></i></p>

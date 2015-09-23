@@ -170,7 +170,7 @@ namespace Zerg.Controllers.Community
             if (_orderService.Create(entity).Id > 0)
 			{
                 //TODO:回掉接口写到Msg里，完成回掉方法
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "null", new OrderModel
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "http://chuanyueyun.wicp.net/Zerg/api/Alipay/Success", new OrderModel
 				{
 				    Id = entity.Id,
                     No = entity.No,

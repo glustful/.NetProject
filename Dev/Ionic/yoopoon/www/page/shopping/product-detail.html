@@ -9,10 +9,35 @@
 <ion-view hide-tabs="true" hide-nav-bar="true">
     <ion-content class="detail-position" style="bottom:63px;">
         <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" ng-if="content">
-            <ion-slide ng-repeat="item in content">
-                <div class="box">
-                    <img ng-if="item" ng-src="http://img.iyookee.cn/{{item.TitleImg}}" class="img-full" >
-                    <!--{{slide.TitleImg}}-->
+            <!--<ion-slide ng-repeat="item in content">-->
+                <!--<div class="box">-->
+                    <!--<img ng-if="item" ng-src="http://img.iyookee.cn/{{item.TitleImg}}" class="img-full" >-->
+                    <!--&lt;!&ndash;{{slide.TitleImg}}&ndash;&gt;-->
+                <!--</div>-->
+            <!--</ion-slide>-->
+            <ion-slide>
+                <div class="detail-img">
+                    <img src="http://img.iyookee.cn/{{product.MainImg}}@320w_231h_70q" style="width: 320px;height: 231px">
+                </div>
+            </ion-slide>
+            <ion-slide>
+                <div class="detail-img">
+                    <img src="http://img.iyookee.cn/{{product.Img}}@320w_231h_70q" style="width: 320px;height: 231px">
+                </div>
+            </ion-slide>
+            <ion-slide>
+                <div class="detail-img">
+                    <img src="http://img.iyookee.cn/{{product.Img1}}@320w_231h_70q" style="width: 320px;height: 231px">
+                </div>
+            </ion-slide>
+            <ion-slide>
+                <div class="detail-img">
+                    <img src="http://img.iyookee.cn/{{product.Img2}}@320w_231h_70q" style="width: 320px;height: 231px">
+                </div>
+            </ion-slide>
+            <ion-slide>
+                <div class="detail-img">
+                    <img src="http://img.iyookee.cn/{{product.Img3}}@320w_231h_70q" style="width: 320px;height: 231px">
                 </div>
             </ion-slide>
         </ion-slide-box>
@@ -34,7 +59,7 @@
         <div class="list padding">
         <h4 class="font-title">商品评价（{{Count}}）</h4>
         <div class="item item-avatar none-border" ng-repeat="item in CommentList">
-        <img src="http://img.iyookee.cn/{{item.UserImg}}">
+        <img src="http://img.iyookee.cn/{{item.UserImg}}@40w_40h_70q">
         <h2>{{item.UserName}}</h2>
         <p style="white-space: normal">{{item.Content}}</p>
         </div>
