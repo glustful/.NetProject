@@ -87,7 +87,7 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 	@ViewById
 	PullToRefreshListView ptr_listview_product_list;
 	@ViewById(R.id.btn_screen_product_list)
-	Button screenProductButton;
+	Button priceSettingButton;
 	@ViewById(R.id.btn_setting_sort_method)
 	Button settingSortMethodButton;
 	@ViewById(R.id.linearlayout_progressbar)
@@ -116,7 +116,7 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 		ptr_listview_product_list.setOnRefreshListener(new RefreshListener());
 		productListView = ptr_listview_product_list.getRefreshableView();
 		//筛选按钮和事件设置
-		screenProductButton.setOnClickListener(new OnClickListener() {
+		priceSettingButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -129,7 +129,7 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 				confirmButton.setOnClickListener(ProductClassificationList.this);
 				cancelButton.setOnClickListener(ProductClassificationList.this);
 				resetPriceButton.setOnClickListener(ProductClassificationList.this);
-				if (!screenProductButton.getText().toString().equals("筛选")) {
+				if (!priceSettingButton.getText().toString().equals("筛选")) {
 					productBeginPriceEditText.setText(priceBegain + "");
 					productEndPriceEditText.setText(priceEnd + "");
 				}
@@ -201,20 +201,7 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 			button.setBackgroundColor(Color.TRANSPARENT);
 			button.setTextColor(Color.rgb(255, 34, 30));
 			classificationStatusCode = jsonObject.optString("Id");
-			/*button.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					//点击效果背景色设置
-					changedCodlorButton.setTextColor(Color.BLACK);
-					
-					Button button1 = (Button) v;
-					//点击效果背景色设置
-					
-					changedCodlorButton = button1;
-					
-					screenPrice();
-				}
-			});*/
+			requsetProductList(initParameters());
 			linearLayout_product_list.addView(button);
 		} else {
 			for (final JSONObject jsonObject : arrayList) {
@@ -226,13 +213,13 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 					public void onClick(View v) {
 						//点击效果背景色设置
 						changedCodlorButton.setTextColor(Color.BLACK);
-						Toast.makeText(mContext, jsonObject.optString("Name").toString(), Toast.LENGTH_SHORT).show();
+						
 						Button button1 = (Button) v;
 						//点击效果背景色设置
 						button1.setTextColor(Color.rgb(255, 34, 30));
 						changedCodlorButton = button1;
 						classificationStatusCode = jsonObject.optString("Id");
-						screenPrice();
+						requsetProductList(initParameters());;
 					}
 				});
 				linearLayout_product_list.addView(button);
@@ -278,15 +265,7 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 			public void onReponse(ResponseData data) {
 				progressbarLinearLayout.setVisibility(View.GONE);
 				if (data.getMRootData() != null) {
-					/*if (searchMethod.equals("useClassification")) {
-						requestClassification();
-						requsetProductList();
-					} else if (searchMethod.equals("useKeyword")) {
-						HashMap<String, String> hashMap = new HashMap<String, String>();
-						hashMap.put("Page", "1");
-						hashMap.put("PageCount", "10");
-						hashMap.put("Name", titleString);
-						requsetProductList(hashMap);*/
+					 
 					JSONArray array = data.getMRootData().optJSONArray("List");
 					mProductListViewAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(array));
 				}
@@ -323,35 +302,24 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.btn_confirm:
-				if ((!TextUtils.isEmpty(productBeginPriceEditText.getText()))
-						&& (!TextUtils.isEmpty(productEndPriceEditText.getText()))) {
-					screenProductButton.setText(productBeginPriceEditText.getText() + "元 - "
-							+ productEndPriceEditText.getText() + "元");
-				}
-				//判断输入的价格为空时整理逻辑
-				if (TextUtils.isEmpty(productBeginPriceEditText.getText())) {
-				} else {
-					priceBegain = Integer.parseInt(productBeginPriceEditText.getText().toString());
-				}
-				if (TextUtils.isEmpty(productEndPriceEditText.getText())) {
-				} else {
-					priceEnd = Integer.parseInt(productEndPriceEditText.getText().toString());
-				}
-				screenPrice();
+				judgeSettingPriceStatus();
+				requsetProductList(initParameters());
 				screenPriceDialog.dismiss();
 				break;
 			case R.id.btn_cancel:
 				screenPriceDialog.dismiss();
 				break;
 			case R.id.btn_reset_price_setting:
-				screenProductButton.setText("筛选");
+				priceSettingButton.setText("筛选");
 				priceBegain = 0;
 				priceEnd = 0;
+				requsetProductList(initParameters());
 				screenPriceDialog.dismiss();
 				break;
 			case R.id.btn_reset_sort_method:
 				sortStatusCode = 0;
 				settingSortMethodButton.setText("综合排序");
+				requsetProductList(initParameters());
 				sortDialog.dismiss();
 				break;
 			case R.id.btn_cancel_sort_method:
@@ -361,109 +329,35 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 				//设置排序状态码
 				sortStatusCode = 1;
 				settingSortMethodButton.setText("低价到高价");
-				screenPrice();
+				requsetProductList(initParameters());
 				sortDialog.dismiss();
 				break;
 			case R.id.btn_sort_by_price_from_higher://高价到低价
 				//设置排序状态码
 				sortStatusCode = 2;
 				settingSortMethodButton.setText("高价到低价");
-				screenPrice();
+				requsetProductList(initParameters());
 				sortDialog.dismiss();
 				break;
 			case R.id.btn_sort_by_sales_volume_from_lower://低销量到高销量
 				//设置排序状态码
 				sortStatusCode = 3;
 				settingSortMethodButton.setText("低销量到高销量");
-				screenPrice();
+				requsetProductList(initParameters());
 				sortDialog.dismiss();
 				break;
 			case R.id.btn_sort_by_sales_volume_from_higher://高销量到低销量
 				//设置排序状态码
 				sortStatusCode = 4;
 				settingSortMethodButton.setText("高销量到低销量");
-				screenPrice();
+				requsetProductList(initParameters());
 				sortDialog.dismiss();
 				break;
 			default:
 				break;
 		}
 	}
-	//###################################################################################################
-	//                                     注意：API只提供了价格排序，销量排序为提供
-	//###################################################################################################
-	private void screenPrice() {
-		HashMap<String, String> hashMap = new HashMap<String, String>();
-		//获取排序参数,同时设置参数到Map中
-		if (sortStatusCode == 0) {
-			hashMap.put("IsDescending", "");
-			hashMap.put("OrderBy", "");
-		} else if (sortStatusCode == 1) {
-			hashMap.put("IsDescending", "false");
-			hashMap.put("OrderBy", "OrderByPrice");
-		} else if (sortStatusCode == 2) {
-			hashMap.put("IsDescending", "true");
-			hashMap.put("OrderBy", "OrderByPrice");
-		} else if (sortStatusCode == 3) {
-			hashMap.put("IsDescending", "false");
-			hashMap.put("OrderBy", "OrderByPrice");
-		} else if (sortStatusCode == 4) {
-			hashMap.put("IsDescending", "true");
-			hashMap.put("OrderBy", "OrderByPrice");
-		}
-		//获取分类参数（等待API完成）
-		if (!classificationStatusCode.equals("")) {
-			hashMap.put("CategoryId", classificationStatusCode);
-		}
-		//获取价格参数
-		if (priceBegain != 0) {
-			hashMap.put("PriceBegin", priceBegain + "");
-		}
-		if (priceEnd != 0) {
-			hashMap.put("PriceEnd", priceEnd + "");
-		}
-		requsetProductList(hashMap);
-	}
-	/**
-	 * @Title: settingStatusCode
-	 * @Description: 设置分页显示的参数
-	 * @param hashMap
-	 * @return
-	 */
-	private HashMap<String, String> settingStatusCode(HashMap<String, String> hashMap) {
-		//获取排序参数,同时设置参数到Map中
-		if (sortStatusCode == 0) {
-			//hashMap.put("IsDescending", "");
-			//hashMap.put("OrderBy", "");
-		} else if (sortStatusCode == 1) {
-			hashMap.put("IsDescending", "false");
-			hashMap.put("OrderBy", "OrderByPrice");
-		} else if (sortStatusCode == 2) {
-			hashMap.put("IsDescending", "true");
-			hashMap.put("OrderBy", "OrderByPrice");
-		} else if (sortStatusCode == 3) {
-			hashMap.put("IsDescending", "false");
-			hashMap.put("OrderBy", "OrderByPrice");
-		} else if (sortStatusCode == 4) {
-			hashMap.put("IsDescending", "true");
-			hashMap.put("OrderBy", "OrderByPrice");
-		}
-		//获取分类参数（等待API完成）
-		if (!classificationStatusCode.equals("")) {
-			hashMap.put("CategoryId", classificationStatusCode);
-		}
-		//获取价格参数
-		if (priceBegain != 0) {
-			hashMap.put("PriceBegin", priceBegain + "");
-		}
-		if (priceEnd != 0) {
-			hashMap.put("PriceEnd", priceEnd + "");
-		}
-		return hashMap;
-	}
-	//###################################################################################################
-	//                                     注意：API只提供了价格排序，销量排序为提供
-	//###################################################################################################
+	
 	@Override
 	public void backButtonClick(View v) {
 		finish();
@@ -493,11 +387,67 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 			HashMap<String, String> hashMap = new HashMap<String, String>();
-			hashMap = settingStatusCode(hashMap);
+			hashMap = initParameters();
 			hashMap.put("CategoryId", classificationId);
 			hashMap.put("Page", (++pageCode) + "");
 			hashMap.put("PageCount", "10");
 			requsetMoreProductList(hashMap);
 		}
+	}
+
+	/**
+	 * @Title: judgeSettingPriceStatus
+	 * @Description: 判断和设置价格
+	 */
+	private void judgeSettingPriceStatus() {
+		if ((!TextUtils.isEmpty(productBeginPriceEditText.getText()))
+				&& (!TextUtils.isEmpty(productEndPriceEditText.getText()))) {
+			int priceStart = Integer.parseInt(productBeginPriceEditText.getText().toString().trim());
+			int prictEnd = Integer.parseInt(productEndPriceEditText.getText().toString().trim());
+			if (prictEnd - priceStart > 0) {
+				priceSettingButton.setText(productBeginPriceEditText.getText() + "元 - "
+						+ productEndPriceEditText.getText() + "元");
+			} else {
+				Toast.makeText(mContext, "输入的开始结束价格区间有误，请从新输入", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			priceBegain = Integer.parseInt(productBeginPriceEditText.getText().toString());
+			priceEnd = Integer.parseInt(productEndPriceEditText.getText().toString());
+		}
+	}
+	/**
+	 * @Title: initParameters
+	 * @Description: 初始化参数
+	 * @return
+	 */
+	private HashMap<String, String> initParameters() {
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+		//获取排序参数,同时设置参数到Map中
+		if (sortStatusCode == 1) {
+			hashMap.put("IsDescending", "false");
+			hashMap.put("OrderBy", "OrderByPrice");
+		} else if (sortStatusCode == 2) {
+			hashMap.put("IsDescending", "true");
+			hashMap.put("OrderBy", "OrderByPrice");
+		} else if (sortStatusCode == 3) {
+			hashMap.put("IsDescending", "false");
+			hashMap.put("OrderBy", "OrderByPrice");
+		} else if (sortStatusCode == 4) {
+			hashMap.put("IsDescending", "true");
+			hashMap.put("OrderBy", "OrderByPrice");
+		}
+		//获取处于点击的分类
+		//获取价格参数
+		if (priceBegain != 0) {
+			hashMap.put("PriceBegin", priceBegain + "");
+		}
+		if (priceEnd != 0) {
+			hashMap.put("PriceEnd", priceEnd + "");
+		}
+		if(classificationStatusCode.equals("")){
+			hashMap.put("CategoryId", classificationStatusCode);
+		}
+	
+		return hashMap;
 	}
 }

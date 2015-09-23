@@ -315,12 +315,10 @@ public class ProductKeywordList extends MainActionBarActivity implements OnClick
 			priceBegain = Integer.parseInt(productBeginPriceEditText.getText().toString());
 			priceEnd = Integer.parseInt(productEndPriceEditText.getText().toString());
 		}
-		//判断输入的价格为空时整理逻辑
 	}
 	//###################################################################################################
 	//                                     注意：API只提供了价格排序，销量排序为提供
 	//###################################################################################################
-	
 	/**
 	 * @Title: initParameters
 	 * @Description: 初始化参数
@@ -351,43 +349,6 @@ public class ProductKeywordList extends MainActionBarActivity implements OnClick
 			hashMap.put("PriceEnd", priceEnd + "");
 		}
 		hashMap.put("Name", keyword);
-		return hashMap;
-	}
-	/**
-	 * @Title: settingStatusCode
-	 * @Description: 设置分页显示的参数
-	 * @param hashMap
-	 * @return
-	 */
-	private HashMap<String, String> settingStatusCode(HashMap<String, String> hashMap) {
-		//获取排序参数,同时设置参数到Map中
-		if (sortStatusCode == 0) {
-			//hashMap.put("IsDescending", "");
-			//hashMap.put("OrderBy", "");
-		} else if (sortStatusCode == 1) {
-			hashMap.put("IsDescending", "false");
-			hashMap.put("OrderBy", "OrderByPrice");
-		} else if (sortStatusCode == 2) {
-			hashMap.put("IsDescending", "true");
-			hashMap.put("OrderBy", "OrderByPrice");
-		} else if (sortStatusCode == 3) {
-			hashMap.put("IsDescending", "false");
-			hashMap.put("OrderBy", "OrderByPrice");
-		} else if (sortStatusCode == 4) {
-			hashMap.put("IsDescending", "true");
-			hashMap.put("OrderBy", "OrderByPrice");
-		}
-		//获取分类参数（等待API完成）
-		if (!classificationStatusCode.equals("")) {
-			hashMap.put("CategoryId", classificationStatusCode);
-		}
-		//获取价格参数
-		if (priceBegain != 0) {
-			hashMap.put("PriceBegin", priceBegain + "");
-		}
-		if (priceEnd != 0) {
-			hashMap.put("PriceEnd", priceEnd + "");
-		}
 		return hashMap;
 	}
 	//###################################################################################################
@@ -422,9 +383,7 @@ public class ProductKeywordList extends MainActionBarActivity implements OnClick
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 			HashMap<String, String> hashMap = new HashMap<String, String>();
-			hashMap=initParameters();
-			 
-		 
+			hashMap = initParameters();
 			hashMap.put("Page", (++pageCode) + "");
 			hashMap.put("PageCount", "10");
 			requsetMoreProductList(hashMap);

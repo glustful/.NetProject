@@ -247,6 +247,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
+				Log.e("11111111111111111111111", productId+"");
 				JSONObject productJsonObject = data.getMRootData().optJSONObject("ProductModel");
 				//设置商品详细信息
 				initProductDetailInfo(productJsonObject);
