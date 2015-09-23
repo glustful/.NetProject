@@ -1,29 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
+using Community.Entity.Model.Order;
+using Community.Entity.Model.ServiceOrder;
 using Community.Service.Order;
 using Community.Service.ServiceOrder;
 using Zerg.Models.Pay;
-using System.Threading.Tasks;
-using Community.Entity.Model.Order;
-using Community.Entity.Model.ServiceOrder;
 
 namespace Zerg.Controllers.Pay
 {
+    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class AlipayController : ApiController
     {
         private readonly IOrderService _orderService;
         private readonly IServiceOrderService _serviceOrderService;
 
         private string _partner = "2088311414553838";               //合作身份者ID
-        private string _key = "";                   //商户的私钥
-        private string _input_charset = "";         //编码格式
-        private string _sign_type = "";             //签名方式
+        private string _key = "";                                   //商户的私钥
+        private string _input_charset = "";                         //编码格式
+        private string _sign_type = "";                             //签名方式
         private string Https_veryfy_url = "https://mapi.alipay.com/gateway.do?service=notify_verify&";
 
         public AlipayController(IOrderService orderService,IServiceOrderService serviceOrderService)

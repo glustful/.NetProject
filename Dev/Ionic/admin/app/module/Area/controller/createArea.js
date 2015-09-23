@@ -1,4 +1,4 @@
-﻿app.controller('AreaCreateCtr', ['$http', '$scope', '$state', function ($http, $scope, $state) {
+﻿app.controller('AreaCreateCtr', ['$http', '$scope', '$state', '$timeout', function ($http, $scope, $state,$timeout) {
     //$http.get(SETTING.ZergWcApiUrl + "/CommunityArea/Get?id=" + $scope.id, {
     //    'withCredentials': true
     //}).success(function (data) {
@@ -86,9 +86,15 @@
                 if (data.Status) {
                     //$state.go("app.area.show")
                     $scope.state = "成功添加数据！";
+                    $timeout(function () {
+                        $scope.state = " ";
+                    }, 2000);
                 }else
                 {
                     $scope.state = "数据添加失败！";
+                    $timeout(function () {
+                        $scope.state = " ";
+                    }, 2000);
                 }
             })
         }//else
