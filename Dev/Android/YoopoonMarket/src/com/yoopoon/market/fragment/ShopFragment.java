@@ -112,7 +112,6 @@ public class ShopFragment extends Fragment {
 		}
 		return rootView;
 	}
-
 	/**
 	 * @Title: initShopFragment
 	 * @Description: 初始化和设置视图控件
@@ -128,7 +127,6 @@ public class ShopFragment extends Fragment {
 		productListView.addHeaderView(shopFragmentHeadView);
 		requestProduct();
 	}
-
 	/**
 	 * @Title: settingPullToRefreshListView
 	 * @Description: 设置PullToRefresh刷新配置参数
@@ -149,7 +147,6 @@ public class ShopFragment extends Fragment {
 		searchListView.setFadingEdgeLength(0);
 		searchListView.setFastScrollEnabled(false);
 	}
-
 	/**
 	 * @Title: settingRecommondProduct
 	 * @Description: 加载推荐套餐下的控件
@@ -189,7 +186,6 @@ public class ShopFragment extends Fragment {
 		});
 		requestProduct();
 	}
-
 	/**
 	 * @Title: initRecommendProduct
 	 * @Description: 初始化推荐套餐商品信息
@@ -217,7 +213,6 @@ public class ShopFragment extends Fragment {
 			ImageLoader.getInstance().displayImage(urlString, recommondProductImageView);
 		}
 	}
-
 	/**
 	 * @Title: requestAdvertisements
 	 * @Description: 获取广告信息
@@ -241,14 +236,12 @@ public class ShopFragment extends Fragment {
 						}
 					}
 				}
-
 				@Override
 				public void onProgress(ProgressMessage msg) {
 				}
 			}.setUrl("/api/Channel/GetTitleImg").setRequestMethod(RequestMethod.eGet).addParam("channelName", "banner")
 					.notifyRequest();
 	}
-
 	/**
 	 * @Title: requestProduct
 	 * @Description: 获取商品列表，同时加载到Adapter中
@@ -288,14 +281,12 @@ public class ShopFragment extends Fragment {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(map).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
-
 	/**
 	 * @Title: requestProduct
 	 * @Description: 传入参数，刷新商品信息
@@ -323,14 +314,12 @@ public class ShopFragment extends Fragment {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(hashMap).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
-
 	/**
 	 * @Title: refreshProduct
 	 * @Description: 传入参数，获取商品信息
@@ -362,14 +351,12 @@ public class ShopFragment extends Fragment {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(hashMap).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
-
 	/**
 	 * @ClassName: ProductRefreshByAddressReceiver
 	 * @Description: 创建监听地址改变的接收器
@@ -380,11 +367,9 @@ public class ShopFragment extends Fragment {
 		ImageView houseKeepingImageView = (ImageView) view.findViewById(R.id.img_house_keeping);
 		ImageView washingImageView = (ImageView) view.findViewById(R.id.img_washing_clothes);
 		ImageView takeInExpressImageView = (ImageView) view.findViewById(R.id.img_take_in_express);
-		ImageView maternityMatronImageView = (ImageView) view.findViewById(R.id.img_maternity_matron);
 		ImageView moreServiceImageView = (ImageView) view.findViewById(R.id.img_more_service);
 		// 家政服务
 		houseKeepingImageView.setOnTouchListener(new OnTouchListener() {
-
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				ServeListActivity2_.intent(getActivity()).contents(new String[] { "家政", "家政" }).start();
@@ -393,7 +378,6 @@ public class ShopFragment extends Fragment {
 		});
 		// 清洗服务
 		washingImageView.setOnTouchListener(new OnTouchListener() {
-
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				ServeListActivity2_.intent(getActivity()).contents(new String[] { "清洗服务", "清洗" }).start();
@@ -402,18 +386,9 @@ public class ShopFragment extends Fragment {
 		});
 		// 代收快递服务
 		takeInExpressImageView.setOnTouchListener(new OnTouchListener() {
-
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				ServeListActivity2_.intent(getActivity()).contents(new String[] { "快递代收", "快递" }).start();
-				return false;
-			}
-		});
-		// 月嫂服务
-		maternityMatronImageView.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				MaternityMatronActivity_.intent(getActivity()).start();
 				return false;
 			}
 		});
@@ -428,12 +403,10 @@ public class ShopFragment extends Fragment {
 			}
 		});
 	}
-
 	@Override
 	public void onStart() {
 		super.onStart();
 	}
-
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
@@ -446,7 +419,6 @@ public class ShopFragment extends Fragment {
 			productPageCount = 1;
 			requestProduct();
 		}
-
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 			HashMap<String, String> map = new HashMap<String, String>();
@@ -460,7 +432,6 @@ public class ShopFragment extends Fragment {
 		@Override
 		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 		}
-
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 			HashMap<String, String> hashMap = new HashMap<String, String>();
@@ -486,7 +457,6 @@ public class ShopFragment extends Fragment {
 		productPageCount = 1;
 		searchPageCount = 1;
 	}
-
 	/**
 	 * @Title: searchProduct
 	 * @Description: 搜索商品
@@ -501,7 +471,6 @@ public class ShopFragment extends Fragment {
 		hashMap.put("Page", "1");
 		requestSearchProduct(hashMap);
 	}
-
 	/**
 	 * @Title: requestSearchProduct
 	 * @Description: 获取搜索数据
@@ -535,14 +504,12 @@ public class ShopFragment extends Fragment {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(hashMap).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
-
 	/**
 	 * @Title: settingClearSearch
 	 * @Description: 通过MainActivity中的调用设置搜索界面和商品列表界面的显示和隐藏

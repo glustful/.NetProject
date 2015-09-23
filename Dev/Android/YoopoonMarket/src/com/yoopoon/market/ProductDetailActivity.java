@@ -263,10 +263,9 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		productTitleTextView.setText(jsonObject.optString("Name", ""));
 		productSubtitleTextView.setText(jsonObject.optString("Subtitte", ""));
 		productPrictTextView.setText("￥" + SplitStringWithDot.split(jsonObject.optString("Price", "0")));
-		
-		if(!jsonObject.optString("OldPrice", "0").equals("null")){
+		if (!jsonObject.optString("OldPrice", "0").equals("null")) {
 			productPrimePriceTextView.setText("原价：" + SplitStringWithDot.split(jsonObject.optString("OldPrice", "0")));
-		}else{
+		} else {
 			productPrimePriceTextView.setText("原价0");
 		}
 		if (jsonObject.optString("Owner", "0").equals("null")) {
@@ -282,25 +281,35 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		String image2 = jsonObject.optString("Img2", "");
 		String image3 = jsonObject.optString("Img3", "");
 		String image4 = jsonObject.optString("Img4", "");
-		/*if (!image0.equals("null")) {
-			arrayList.add("http://img.iyookee.cn/20150629/20150629_224642_944_279.jpg");
+		if (!image0.equals("null")) {
+			arrayList.add(image0);
+		} else {
+			arrayList.add("20150629/20150629_224642_944_279.jpg");
 		}
 		if (!image1.equals("null")) {
-			arrayList.add("http://img.iyookee.cn/20150629/20150629_224642_944_279.jpg");
+			arrayList.add(image1);
+		} else {
+			arrayList.add("20150629/20150629_224642_944_279.jpg");
 		}
 		if (!image2.equals("null")) {
-			arrayList.add("http://img.iyookee.cn/20150629/20150629_224642_944_279.jpg");
+			arrayList.add(image2);
+		} else {
+			arrayList.add("20150629/20150629_224642_944_279.jpg");
 		}
 		if (!image3.equals("null")) {
 			arrayList.add(image3);
+		} else {
+			arrayList.add("20150629/20150629_224642_944_279.jpg");
 		}
 		if (!image4.equals("null")) {
 			arrayList.add(image4);
-		}*/
-		//如下广告做测试用途
-		for (int i = 0; i < 3; i++) {
+		} else {
 			arrayList.add("20150629/20150629_224642_944_279.jpg");
 		}
+		/*	//如下广告做测试用途
+			for (int i = 0; i < 5; i++) {
+				arrayList.add("20150629/20150629_224642_944_279.jpg");
+			}*/
 		productAdvertisement.show(arrayList);
 	}
 	/**
@@ -340,7 +349,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 				.notifyRequest();
 	}
 	private void loadProductAnimationPicture() {
-		if (!productImageURL.equals("")) {
+		if ((!productImageURL.equals(""))&&(!productImageURL.equals("null"))) {
 			ImageLoader.getInstance().displayImage(productImageURL, animationCartImageView, MyApplication.getOptions(),
 					MyApplication.getLoadingListener());
 			animationCartImageView.setVisibility(View.VISIBLE);
@@ -363,21 +372,22 @@ public class ProductDetailActivity extends MainActionBarActivity {
 			TranslateAnimation translateAnimationY = new TranslateAnimation(Animation.ABSOLUTE, 0, Animation.ABSOLUTE, 0,
 					Animation.ABSOLUTE, cartYPosition - pictureYPosition, Animation.ABSOLUTE,
 					(cartYPosition - pictureYPosition));*/
-			TranslateAnimation translateAnimationX = new TranslateAnimation(0, (cartXPosition - pictureXPosition - 40),
+			TranslateAnimation translateAnimationX = new TranslateAnimation(0, (cartXPosition - pictureXPosition - 70),
 					0, 0);
-			TranslateAnimation translateAnimationY = new TranslateAnimation(0, 0, 0, (cartYPosition - pictureYPosition));
+			TranslateAnimation translateAnimationY = new TranslateAnimation(0, 0, 0,
+					(cartYPosition - pictureYPosition) - 50);
 			translateAnimationX.setInterpolator(new LinearInterpolator());
 			translateAnimationX.setRepeatCount(0);// 动画重复执行的次数
 			translateAnimationX.setFillAfter(true);
 			translateAnimationY.setInterpolator(new AccelerateInterpolator());
 			translateAnimationY.setRepeatCount(0);// 动画重复执行的次数
 			translateAnimationX.setFillAfter(true);
-			RotateAnimation rotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f,
+			RotateAnimation rotateAnimation = new RotateAnimation(0, 1080, Animation.RELATIVE_TO_SELF, 0.5f,
 					Animation.RELATIVE_TO_SELF, 0.5f);
 			Animation scaleAnimation = new ScaleAnimation(1, 0, 1, 0, Animation.RELATIVE_TO_SELF, 0.5f,
 					Animation.RELATIVE_TO_SELF, 0.5f);
-			Log.e("11111111111111", pictureXPosition + ":::" + pictureYPosition + "---------" + cartXPosition
-					+ "::::::" + cartYPosition);
+			/*Log.e("11111111111111", pictureXPosition + ":::" + pictureYPosition + "---------" + cartXPosition
+					+ "::::::" + cartYPosition);*/
 			translateAnimationX.setDuration(1500);
 			translateAnimationY.setDuration(1000);
 			scaleAnimation.setDuration(1500);
@@ -388,7 +398,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 			animationSet.addAnimation(scaleAnimation);
 			animationSet.addAnimation(translateAnimationX);
 			animationSet.addAnimation(translateAnimationY);
-			
 			/*animationSet.addAnimation(translateAnimation);*/
 			animationCartImageView.startAnimation(animationSet);
 			animationSet.setAnimationListener(new AnimationListener() {

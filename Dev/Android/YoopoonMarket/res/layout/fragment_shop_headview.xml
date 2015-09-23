@@ -99,14 +99,14 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <LinearLayout
+      <!--   <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical" >
 
-            <!--
+            
             <ImageView
                 android:id="@+id/img_maternity_matron"
                 android:layout_width="50dp"
@@ -114,7 +114,7 @@
                 android:padding="6dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/maternity_matron" />
-            -->
+           
 
             <ImageView
                 android:id="@+id/img_maternity_matron"
@@ -132,7 +132,7 @@
                 android:gravity="center"
                 android:text="月嫂"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </LinearLayout> -->
 
         <LinearLayout
             android:layout_width="0dp"
@@ -238,7 +238,7 @@
                 android:layout_height="wrap_content"
                 android:text="电视狗套餐"
                 android:textColor="@color/white"
-                android:textSize="13sp" />
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

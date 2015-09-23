@@ -20,6 +20,7 @@ import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
 import com.yoopoon.view.adapter.ProductCommentAdapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.ListView;
@@ -44,6 +45,7 @@ public class ProductCommentActivity extends MainActionBarActivity {
 		backWhiteButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		backWhiteButton.setText("后退");
+		backWhiteButton.setTextColor(Color.WHITE);
 		headView.setBackgroundColor(Color.RED);
 		titleButton.setText("评价" + "(" + commentAmount + ")");
 		titleButton.setTextColor(Color.WHITE);
