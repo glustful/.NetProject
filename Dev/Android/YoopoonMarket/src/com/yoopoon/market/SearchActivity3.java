@@ -77,6 +77,7 @@ public class SearchActivity3 extends MainActionBarActivity {
 			tv.setBackgroundResource(R.drawable.white_bg);
 			tv.setClickable(true);
 			tv.setTag(area.FatherId);
+			tv.setTextSize(18);
 			tv.setOnClickListener(new OnClickListener() {
 
 				@Override

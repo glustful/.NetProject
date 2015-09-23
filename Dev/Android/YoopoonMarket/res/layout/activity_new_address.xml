@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -35,6 +35,12 @@
             style="@style/TextView_New_Address"
             android:text="请选择街道" />
             -->
+            
+            <TextView 
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="详细地址"/>
 
             <EditText
                 android:id="@+id/et_address"
@@ -44,8 +50,13 @@
                 android:hint="请输入详细地址"
                 android:padding="15dp"
                 android:textColor="@color/text_gray"
-                android:textSize="14sp" 
-                android:layout_marginBottom="5dp"/>
+                android:textSize="14sp" />
+            
+            <TextView 
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="收货人"/>
 
             <EditText
                 android:id="@+id/et_linkman"
@@ -55,21 +66,33 @@
                 android:hint="请输入收货人姓名"
                 android:padding="15dp"
                 android:textColor="@color/text_gray"
-                android:textSize="14sp" 
-                android:layout_marginBottom="5dp"/>
+                android:textSize="14sp" />
+            
+            <TextView 
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="联系电话"/>
 
             <EditText
+                android:inputType="phone"
                 android:id="@+id/et_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:hint="请联系电话"
+                android:hint="请输入联系电话"
                 android:padding="15dp"
                 android:textColor="@color/text_gray"
-                android:textSize="14sp" 
-                android:layout_marginBottom="5dp"/>
+                android:textSize="14sp" />
+            
+            <TextView 
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="邮政编码"/>
 
             <EditText
+                android:inputType="number"
                 android:id="@+id/et_postno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,4 +114,11 @@
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <include 
+        android:visibility="gone"
+        android:id="@+id/ll_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/loading"/>
+    
+</RelativeLayout>

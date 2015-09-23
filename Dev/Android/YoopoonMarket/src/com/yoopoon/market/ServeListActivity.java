@@ -43,7 +43,8 @@ import com.yoopoon.market.utils.ParserJSON.ParseListener;
 @EActivity(R.layout.activity_charge)
 public class ServeListActivity extends MainActionBarActivity {
 	private static final String TAG = "ChargeActivity";
-
+	@ViewById(R.id.ll_loading)
+	View loading;
 	@Extra
 	String[] contents;
 	@ViewById(R.id.lv)
@@ -57,13 +58,14 @@ public class ServeListActivity extends MainActionBarActivity {
 		titleButton.setVisibility(View.VISIBLE);
 		titleButton.setText(contents[0]);
 		titleButton.setTextColor(Color.WHITE);
-		rightButton.setVisibility(View.VISIBLE);
+		rightButton.setVisibility(View.GONE);
 		headView.setBackgroundColor(Color.RED);
 		initData();
 		requestData();
 	}
 
 	void requestData() {
+		loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
@@ -115,6 +117,7 @@ public class ServeListActivity extends MainActionBarActivity {
 			public void onComplete(Object parseResult) {
 				if (parseResult != null) {
 					Log.i(TAG, parseResult.toString());
+					loading.setVisibility(View.GONE);
 					fillData();
 				}
 			}

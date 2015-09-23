@@ -23,9 +23,12 @@ import com.yoopoon.market.utils.SerializerJSON.SerializeListener;
 @EActivity(R.layout.activity_register)
 public class RegisterActivity extends MainActionBarActivity {
 	private static final String TAG = "RegisterActivity";
+	@ViewById(R.id.ll_loading)
+	View loading;
 
 	@Click(R.id.btn_register)
 	void register() {
+		loading.setVisibility(View.VISIBLE);
 		String username = et_username.getText().toString();
 		String psw = et_psw.getText().toString();
 		String confirm = et_confirm.getText().toString();
@@ -89,6 +92,7 @@ public class RegisterActivity extends MainActionBarActivity {
 
 			@Override
 			public void onReponse(ResponseData data) {
+				loading.setVisibility(View.GONE);
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					boolean status = object.optBoolean("Status", false);

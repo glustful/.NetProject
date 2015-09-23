@@ -233,6 +233,10 @@ public class BalanceActivity extends MainActionBarActivity {
 	}
 
 	void requestAddress() {
+		if (!User.isLogin(BalanceActivity.this)) {
+			LoginActivity_.intent(this).start();
+			return;
+		}
 		String userid = User.getUserId(BalanceActivity.this);
 		loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
