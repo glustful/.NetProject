@@ -209,5 +209,18 @@ namespace Community.Service.ServiceOrder
                 return -1;
 			}
 		}
+
+	    public ServiceOrderEntity GetServiceOrderByNo(string orderNo)
+	    {
+	        try
+	        {
+	            return _serviceorderRepository.Get(c => c.OrderNo == orderNo);
+	        }
+	        catch (Exception e)
+	        {
+                _log.Error(e, "数据库操作出错");
+                return null;
+	        }
+	    }
 	}
 }

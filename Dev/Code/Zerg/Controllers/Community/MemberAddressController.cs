@@ -1,17 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http;
-using Community.Entity.Model.MemberAddress;
-using Community.Service.MemberAddress;
-using Zerg.Models.Community;
-using Community.Entity.Model.Member;
-using System.Web.Http.Cors;
 using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Cors;
+using Community.Entity.Model.MemberAddress;
 using Community.Service.Area;
 using Community.Service.Member;
+using Community.Service.MemberAddress;
 using YooPoon.Core.Site;
 using Zerg.Common;
+using Zerg.Models.Community;
 
 namespace Zerg.Controllers.Community
 {
@@ -32,6 +30,38 @@ namespace Zerg.Controllers.Community
             _areaService = areaService;
         }
 
+        public HttpResponseMessage Get(string memberId)
+        {
+            MemberAddressEntity entity;
+            if (string.IsNullOrEmpty(memberId))
+            {
+                var user = _workContext.CurrentUser;
+                if (user == null)
+                    return PageHelper.toJson(PageHelper.ReturnValue(false, "无法获取当前的用户信息"));
+                entity = _memberAddressService.GetDefaultAddress(user.Id);
+            }
+            else
+            {
+                entity = _memberAddressService.GetDefaultAddress(memberId);
+            }
+            if (entity == null)
+                return PageHelper.toJson(null);
+            var model = new MemberAddressModel
+            {
+                Id = entity.Id,
+                Member = entity.Member.Id,
+                Address = entity.Address,
+                Zip = entity.Zip,
+                Linkman = entity.Linkman,
+                Tel = entity.Tel,
+                Adduser = entity.Adduser,
+                Addtime = entity.Addtime,
+                Upduser = entity.Upduser,
+                Updtime = entity.Updtime
+            };
+            return PageHelper.toJson(model);
+        }
+
         public HttpResponseMessage Get(int id)
 		{
 			var entity =_memberAddressService.GetMemberAddressById(id);
@@ -48,14 +78,15 @@ namespace Zerg.Controllers.Community
                 Adduser = entity.Adduser,
                 Addtime = entity.Addtime,
                 Upduser = entity.Upduser,
-                Updtime = entity.Updtime
+                Updtime = entity.Updtime,
+                IsDefault = entity.IsDefault
             };
             return PageHelper.toJson(model);
 		}
 
         public HttpResponseMessage Get([FromUri]MemberAddressSearchCondition condition)
 		{
-			var model = _memberAddressService.GetMemberAddresssByCondition(condition).Select(c=>new MemberAddressModel
+			var model =_memberAddressService.GetMemberAddresssByCondition(condition).Select(o=>o.Id).Any()? _memberAddressService.GetMemberAddresssByCondition(condition).Select(c=>new MemberAddressModel
 			{
 				Id = c.Id,
 				Member = c.Member.Id,
@@ -67,7 +98,8 @@ namespace Zerg.Controllers.Community
 				Addtime = c.Addtime,
 				Upduser = c.Upduser,
 				Updtime = c.Updtime,
-			}).ToList();
+                IsDefault = c.IsDefault
+			}).ToList():null;
             var totalCount = _memberAddressService.GetMemberAddressCount(condition);
             return PageHelper.toJson(new { List = model, Condition = condition, toTalCount = totalCount });
 		}
@@ -85,7 +117,8 @@ namespace Zerg.Controllers.Community
 				Addtime = DateTime.Now,
 				Upduser = _workContext.CurrentUser.Id,
 				Updtime = DateTime.Now,
-                Area = _areaService.GetAreaById(model.AreaId)
+                Area = _areaService.GetAreaById(model.AreaId),
+                IsDefault = model.IsDefault
 			};
 			if(_memberAddressService.Create(entity).Id > 0)
 			{
@@ -108,6 +141,7 @@ namespace Zerg.Controllers.Community
 			entity.Addtime = model.Addtime;
 			entity.Upduser = model.Upduser;
 			entity.Updtime = model.Updtime;
+            entity.IsDefault = model.IsDefault;
 			if(_memberAddressService.Update(entity) != null)
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "修改成功"));
             return PageHelper.toJson(PageHelper.ReturnValue(false, "修改失败"));

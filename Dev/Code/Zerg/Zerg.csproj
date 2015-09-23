@@ -208,6 +208,7 @@
     </Compile>
     <Compile Include="Controllers\CRM\SMSController.cs" />
     <Compile Include="Controllers\CRM\TaskController.cs" />
+    <Compile Include="Controllers\Pay\AlipayController.cs" />
     <Compile Include="Controllers\Trading\Area\AreaController.cs" />
     <Compile Include="Controllers\Trading\CommissionRatio\CommissionRatioController.cs" />
     <Compile Include="Controllers\Trading\Condition\ConditionController.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="Models\CMS\ContentModel.cs" />
     <Compile Include="Models\CMS\TagDetailModel.cs" />
     <Compile Include="Models\CMS\TagModel.cs" />
+    <Compile Include="Models\Pay\AliNotifyModel.cs" />
     <Compile Include="Models\Trading\Area\AreaModel.cs" />
     <Compile Include="Models\Trading\CommissionRatio\CommissionRatio.cs" />
     <Compile Include="Models\Trading\Product\ClassifyModel.cs" />

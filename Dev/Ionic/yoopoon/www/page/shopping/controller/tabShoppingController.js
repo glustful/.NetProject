@@ -61,21 +61,22 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     };
 
 
-
     //region地址获取
     $scope.Condition = {
         Page: 1,
-        father:true
+        father: true,
+        Parent_Id: ''
     };
-    $scope.pare=[];
+    $scope.pare = [];
 
-    var getAddress=function(){
-        $http.get(SETTING.ApiUrl+'/CommunityArea/Get',{
+    var getAddress = function () {
+        $http.get(SETTING.ApiUrl + '/CommunityArea/Get', {
             params: $scope.Condition,
             'withCredentials': true
         }).success(function (data3) {
             if (data3.List != "") {
                 $scope.addrss = data3.List;
+                $scope.selected = data3.List[0].Id;//如果想要第一个值
                 //for( i=0;i<data3.List.length;i++){
                 //    if(data3.List[i].Parent=null)
                 //    {
@@ -86,7 +87,21 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         });
     }
     getAddress();
-    $scope.getList=getAddress;
+
+    $scope.SCondition = {
+
+        Parent_Id: ''
+    };
+    $scope.click = function () {
+        $scope.SCondition.Parent_Id = $scope.selected
+        $http.get(SETTING.ApiUrl + '/CommunityArea/Get', {
+            params: $scope.SCondition,
+            'withCredentials': true
+        }).success(function (data) {
+            $scope.zilei = data.List;
+        })
+
+    }
     //endregion
 
     //region商品大图获取
@@ -133,7 +148,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     getList();
 //endregion
     //region 商品加载
-    $scope.loadmore=true;
+    $scope.loadmore = true;
     $scope.load_more = function () {
         $timeout(function () {
             $scope.searchCondition.Page += 1;
@@ -141,13 +156,13 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
                 params: $scope.searchCondition,
                 'withCredentials': true
             }).success(function (data) {
+
                 if (data.List != "") {
                     for (var i = 0; i < data.List.length; i++) {
                         $scope.items.push(data.List[i]);
                     }
-                    if($scope.items.length==data.TotalCount)
-                    {
-                        $scope.loadmore=false;
+                    if ($scope.items.length == data.TotalCount) {
+                        $scope.loadmore = false;
                     }
                 }
                 $scope.$broadcast("scroll.infiniteScrollComplete");
@@ -169,31 +184,31 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     //endregion
 
     //region 购物车
-    //商品信息
+
     $scope.cartinfo = {
         id: null,
         name: null,
-        count: null
+        count: null,
+        price: null,
+        oldprice: null
     };
     // 添加商品
-    $scope.AddCart = function(data)
-    {
-        $scope.cartinfo.id=data.row.Id;
-        $scope.cartinfo.name=data.row.Name;
-        $scope.cartinfo.mainimg=data.row.MainImg;
-        $scope.cartinfo.price=data.row.Price;
-        $scope.cartinfo.newprice=data.row.NewPrice;
-        $scope.cartinfo.count=1;
+    $scope.AddCart = function (data) {
+        $scope.cartinfo.id = data.row.Id;
+        $scope.cartinfo.name = data.row.Name;
+        $scope.cartinfo.mainimg = data.row.MainImg;
+        $scope.cartinfo.price = data.row.Price;
+        $scope.cartinfo.oldprice = data.row.OldPrice;
+        $scope.cartinfo.count = 1;
         cartservice.add($scope.cartinfo);
     }
-    $scope.AddCart1 = function(list)
-    {
-        $scope.cartinfo.id=$scope.list.Id;
-        $scope.cartinfo.name=$scope.list.Name;
-        $scope.cartinfo.mainimg=$scope.list.MainImg;
-        $scope.cartinfo.price=$scope.list.Price;
-        $scope.cartinfo.newprice=$scope.list.NewPrice;
-        $scope.cartinfo.count=1;
+    $scope.AddCart1 = function (list) {
+        $scope.cartinfo.id = $scope.list.Id;
+        $scope.cartinfo.name = $scope.list.Name;
+        $scope.cartinfo.mainimg = $scope.list.MainImg;
+        $scope.cartinfo.price = $scope.list.Price;
+        $scope.cartinfo.oldprice = $scope.list.OldPrice;
+        $scope.cartinfo.count = 1;
         cartservice.add($scope.cartinfo);
     };
     //endregion
@@ -204,9 +219,6 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         $state.go("page.search_product", {productName: $scope.searchname});
     };
 }]);
-
-
-
 
 
 

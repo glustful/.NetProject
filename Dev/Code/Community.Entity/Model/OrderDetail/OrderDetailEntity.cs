@@ -59,5 +59,9 @@ namespace Community.Entity.Model.OrderDetail
 		/// 订单主体
 		/// </summary>
 		public virtual OrderEntity Order { get; set; }
+        /// <summary>
+        /// 订单状态
+        /// </summary>
+        public virtual  EnumOrderDetailStatus ? Status { get; set; }
 	}
 }

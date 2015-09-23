@@ -5,8 +5,8 @@
     <a class="button  button-icon icon icon-fuwuanniu" ng-click="go('page.Product-Catagory')"
        ui-sref="page.Product-Catagory"></a>
     <label class=" item-select select-header" ng-hide="showSelect">
-      
-        <select ng-model="1" id="ParentId"  ng-options="o.Id as o.Name for o in addrss"  required>
+
+        <select ng-model="selected" id="ParentId"  ng-options="o.Id as o.Name for o in addrss" ng-change="click()" required>
 
         </select>
 
@@ -89,7 +89,7 @@
                 </div>
                 <div class="activity padding text-left">
                     <div class="color-white">{{list.Name}}</div>
-                    <p><span class="p-price" style="font-size: 0.5em">RMB{{list.NewPrice}}</span>/
+                    <p><span class="p-price" style="font-size: 0.5em">RMB{{list.OldPrice}}</span>/
                         <del style="font-size: 2px;" class="color-white">折扣前{{list.Price}}</del>
                     </p>
                     <i class="icon icon-gouwuche shop-cart" ng-click="AddCart1(this)"></i><br>
@@ -111,7 +111,7 @@
                         <div class="padding">
                             <p>{{row.Name}}</p>
 
-                            <p><span class="p-price" style="font-size: 0.5em">RMB{{row.NewPrice}}</span>/
+                            <p><span class="p-price" style="font-size: 0.5em">RMB{{row.OldPrice}}</span>/
                                 <del style="font-size: 2px;">折扣前{{row.Price}}</del>
                             </p>
                             <p>
