@@ -147,10 +147,12 @@ public class BalanceActivity extends MainActionBarActivity {
 
 	void requestAddOrder(String serial) {
 		Log.i(TAG, serial);
+		loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
+				loading.setVisibility(View.GONE);
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					Log.i(TAG, object.toString());

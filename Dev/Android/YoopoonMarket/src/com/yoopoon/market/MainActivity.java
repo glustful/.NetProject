@@ -278,12 +278,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 	protected void onCreate(android.os.Bundle arg0) {
 		super.onCreate(arg0);
-		// 清除密码
-		SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference), MODE_PRIVATE);
-		Editor editor = sp.edit();
-		editor.putString("Password", "");
-		editor.putInt("UserId", 0);
-		editor.commit();
+		LoginActivity_.intent(this).start();
 		registerBroadcast();
 	};
 

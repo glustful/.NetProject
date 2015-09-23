@@ -86,6 +86,7 @@ public class ServiceBalanceActivity extends MainActionBarActivity {
 	}
 
 	void requestAddOrder() {
+		loading.setVisibility(View.VISIBLE);
 		if (tv_time.getTag() == null) {
 			Toast.makeText(ServiceBalanceActivity.this, "请选择服务时间", Toast.LENGTH_LONG).show();
 			return;
@@ -100,6 +101,7 @@ public class ServiceBalanceActivity extends MainActionBarActivity {
 
 			@Override
 			public void onReponse(ResponseData data) {
+				loading.setVisibility(View.GONE);
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					boolean status = object.optBoolean("Status", false);

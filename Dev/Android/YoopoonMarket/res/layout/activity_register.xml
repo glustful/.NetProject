@@ -31,7 +31,7 @@
                 android:layout_toRightOf="@id/tv_username"
                 android:background="@color/white"
                 android:inputType="phone"
-                android:maxLines="11"
+                android:maxLength="11"
                 android:textSize="14sp" />
 
             <!--

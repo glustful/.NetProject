@@ -85,6 +85,12 @@ public class LoginActivity extends MainActionBarActivity {
 		String userName = User.getUserName(this);
 		if (!TextUtils.isEmpty(userName))
 			et_account.setText(userName);
+		String password = User.getProperty(this, "Password");
+		if (!TextUtils.isEmpty(password))
+			et_psw.setText(password);
+		if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(password)) {
+			login();
+		}
 	}
 
 	@Override

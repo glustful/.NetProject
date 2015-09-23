@@ -46,7 +46,7 @@
         <ListView
             android:id="@+id/lv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:cacheColorHint="#00000000"
@@ -56,7 +56,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:background="@color/white" >
 
             <TextView
@@ -78,11 +77,11 @@
         </LinearLayout>
     </LinearLayout>
 
-    <include 
+    <include
         android:id="@+id/ll_loading"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        layout="@layout/loading"/>
-    
+        layout="@layout/loading"
+        android:visibility="gone" />
+
 </RelativeLayout>
