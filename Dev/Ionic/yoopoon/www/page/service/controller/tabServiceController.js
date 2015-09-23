@@ -69,8 +69,9 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 		if(	$scope.tabIndex == 5){
 			$scope.condition = {
 				Status: '4',
-				Addusers: $scope.currentuser.UserId
+				Addusers: ''
 			};
+			$scope.condition.AddUsers =   $scope.currentuser.UserId;
 			var getList = function () {
 				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
 					.success(function(data) {

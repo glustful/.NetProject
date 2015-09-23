@@ -17,5 +17,7 @@ namespace Community.Service.Order
 		IQueryable<OrderEntity> GetOrdersByCondition(OrderSearchCondition condition);
 
 		int GetOrderCount (OrderSearchCondition condition);
+
+	    OrderEntity GetOrderByNo(string orderNo);
 	}
 }
