@@ -213,7 +213,7 @@ public class SearchActivity extends MainActionBarActivity {
 				childTv.setText(entity.Name);
 				childTv.setBackgroundResource(R.drawable.white_bg);
 				childTv.setPadding(30, 10, 10, 10);
-				childTv.setTextSize(16);
+				childTv.setTextSize(18);
 				LayoutParams childParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 				childParams.setMargins(0, 0, 0, 1);
 				areas.addView(childTv, childParams);
@@ -231,11 +231,13 @@ public class SearchActivity extends MainActionBarActivity {
 	}
 
 	void requestData(final String fatherid) {
+		loading.setVisibility(View.VISIBLE);
 		final List<SimpleAreaEntity> areas = new ArrayList<SimpleAreaEntity>();
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
+				loading.setVisibility(View.GONE);
 				Log.i(TAG, data.toString());
 				JSONObject object = data.getMRootData();
 				if (object != null) {

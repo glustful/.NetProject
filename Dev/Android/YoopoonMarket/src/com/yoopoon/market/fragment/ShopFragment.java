@@ -14,6 +14,7 @@ package com.yoopoon.market.fragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,10 +42,13 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.advertisement.ADController;
+import com.yoopoon.market.BalanceActivity_;
 import com.yoopoon.market.MaternityMatronActivity_;
 import com.yoopoon.market.ProductDetailActivity_;
 import com.yoopoon.market.R;
 import com.yoopoon.market.ServeListActivity2_;
+import com.yoopoon.market.db.dao.DBDao;
+import com.yoopoon.market.domain.Staff;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
@@ -174,19 +178,7 @@ public class ShopFragment extends Fragment {
 			}
 		});
 		// 点击小购物车图片事件
-		recommondProductCartImageView.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				Toast.makeText(mContext, "添加到购物车", Toast.LENGTH_SHORT).show();
-				return true;
-			}
-		});
-		recommondProductByButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(mContext, "立即购买", Toast.LENGTH_SHORT).show();
-			}
-		});
+
 		requestProduct();
 	}
 
@@ -196,26 +188,69 @@ public class ShopFragment extends Fragment {
 	 * @param jsonObject
 	 */
 	private void initRecommendProduct(JSONObject jsonObject) {
-		recommondProductNameTextView.setText(jsonObject.optString("Name", ""));
+		final String name = jsonObject.optString("Name", "");
+		recommondProductNameTextView.setText(name);
+		final String price = SplitStringWithDot.split(jsonObject.optString("Price", "0"));
 		recommondProductCurrentPriceTextView.setText("RMB"
 				+ SplitStringWithDot.split(jsonObject.optString("Price", "0")));
+		String old_price;
 		if (jsonObject.optString("OldPrice", "").equals("null")) {
+			old_price = "0";
 			recommondProductBeforePriceTextView.setText("折扣前0");
 			recommondProductBeforePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 		} else {
+			old_price = SplitStringWithDot.split(jsonObject.optString("OldPrice", "0"));
 			recommondProductBeforePriceTextView.setText("折扣前"
 					+ SplitStringWithDot.split(jsonObject.optString("OldPrice", "0")));
 			recommondProductBeforePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 		}
+		final String oldPrice = old_price;
 		if (jsonObject.optString("Owner", "0").equals("null")) {
 			salesVolumeButton.setText("已有0人抢购");
 		} else {
 			salesVolumeButton.setText("已有" + jsonObject.optString("Owner", "0") + "人抢购");
 		}
-		String urlString = jsonObject.optString("MainImg", "");
+		final String urlString = getString(R.string.url_image) + jsonObject.optString("MainImg", "");
 		if (!urlString.equals("")) {
 			ImageLoader.getInstance().displayImage(urlString, recommondProductImageView);
 		}
+		final String title = jsonObject.optString("Subtitte", "");
+		final int id = jsonObject.optInt("Id", 0);
+		recommondProductByButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				List<Staff> staffList = new ArrayList<Staff>();
+				staffList.add(new Staff(title, name, urlString, 1, Float.parseFloat(price), Float.parseFloat(oldPrice)));
+				BalanceActivity_.intent(getActivity()).staffList(staffList).start();
+			}
+		});
+		recommondProductCartImageView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(final View v) {
+				new Thread() {
+
+					public void run() {
+						DBDao dao = new DBDao(mContext);
+						if (dao.isExist(id)) {
+							int count = dao.isExistCount(id);
+							dao.updateCount(id, count + 1);
+						} else {
+
+							dao.add(new Staff(title, name, urlString, 1, Float.parseFloat(price), Float
+									.parseFloat(oldPrice), id));
+						}
+						int[] start_location = new int[2];// 一个整型数组，用来存储按钮的在屏幕的X、Y坐标
+						v.getLocationInWindow(start_location);// 这是获取购买按钮的在屏幕的X、Y坐标（这也是动画开始的坐标）
+						Intent intent = new Intent("com.yoopoon.market.add_to_cart");
+						intent.addCategory(Intent.CATEGORY_DEFAULT);
+						intent.putExtra("start_location", start_location);
+						mContext.sendBroadcast(intent);
+					};
+				}.start();
+
+			}
+		});
 	}
 
 	/**

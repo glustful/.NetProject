@@ -388,7 +388,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		int[] end_location = new int[2];// 这是用来存储动画结束位置的X、Y坐标
 		lls.get(2).getLocationInWindow(end_location);// shopCart是那个购物车
 		// 计算位移
-		int endX = end_location[0] - start_location[0] + 30;// 动画位移的X坐标
+		int endX = end_location[0] - start_location[0] + 40;// 动画位移的X坐标
 		int endY = end_location[1] - start_location[1];// 动画位移的y坐标
 		TranslateAnimation translateAnimationX = new TranslateAnimation(0, endX, 0, 0);
 		translateAnimationX.setInterpolator(new LinearInterpolator());
@@ -406,6 +406,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		view.startAnimation(set);
 		// 动画监听事件
 		set.setAnimationListener(new AnimationListener() {
+
 			// 动画的开始
 			@Override
 			public void onAnimationStart(Animation animation) {

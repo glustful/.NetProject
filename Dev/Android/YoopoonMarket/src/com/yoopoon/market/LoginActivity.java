@@ -21,6 +21,8 @@ import com.yoopoon.market.net.ResponseData;
 @EActivity(R.layout.activity_login)
 public class LoginActivity extends MainActionBarActivity {
 	private static final String TAG = "LoginActivity";
+	@ViewById(R.id.ll_loading)
+	View loading;
 
 	@Click(R.id.tv_register)
 	void register() {
@@ -29,6 +31,7 @@ public class LoginActivity extends MainActionBarActivity {
 
 	@Click(R.id.btn_login)
 	void login() {
+		loading.setVisibility(View.VISIBLE);
 		final String account = et_account.getText().toString();
 		final String psw = et_psw.getText().toString();
 		String json = "{\"Username\":\"" + account + "\",\"password\":\"" + psw + "\"}";
@@ -38,6 +41,7 @@ public class LoginActivity extends MainActionBarActivity {
 			@Override
 			public void onReponse(ResponseData data) {
 				Log.i(TAG, data.toString());
+				loading.setVisibility(View.GONE);
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					boolean status = object.optBoolean("Status", false);
@@ -85,21 +89,15 @@ public class LoginActivity extends MainActionBarActivity {
 
 	@Override
 	public void onBackPressed() {
-		super.onBackPressed();
-		back();
+		Intent intent = new Intent("com.yoopoon.market.showshop");
+		intent.addCategory(Intent.CATEGORY_DEFAULT);
+		this.sendBroadcast(intent);
+		finish();
 	}
 
 	@Override
 	public void backButtonClick(View v) {
-		back();
-	}
-
-	// 点击返回，一定是没有登陆成功，返回首页
-	void back() {
-		Intent intent = new Intent("com.yoopoon.market.showshop");
-		intent.addCategory(Intent.CATEGORY_DEFAULT);
-		this.sendBroadcast(intent);
-		MainActivity_.intent(this).start();
+		onBackPressed();
 	}
 
 	@Override

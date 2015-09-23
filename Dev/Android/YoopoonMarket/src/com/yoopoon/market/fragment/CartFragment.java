@@ -120,8 +120,15 @@ public class CartFragment extends Fragment implements OnClickListener {
 			@Override
 			public void run() {
 				DBDao dao = new DBDao(getActivity());
-				int count = dao.getAllCounts();
-				tv_title_count.setText("购物车(" + count + ")");
+				final int count = dao.getAllCounts();
+				getActivity().runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						tv_title_count.setText("购物车(" + count + ")");
+
+					}
+				});
 			}
 		}.start();
 	}

@@ -38,7 +38,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.yoopoon.market.AboutUActivity_;
 import com.yoopoon.market.AddressManageActivity_;
 import com.yoopoon.market.LoginActivity_;
 import com.yoopoon.market.MeOrderActivity_;
@@ -379,23 +378,35 @@ public class MeFragment extends Fragment implements OnClickListener {
 
 	}
 
+	boolean isVisibleUser;
+
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		isVisibleUser = isVisibleToUser;
+
+	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (!User.isLogin(getActivity())) {
-			// 未登录
-			LoginActivity_.intent(getContext()).start();
-		} else {
-			// 若已经登录，需要请求数据
-			if (orders.size() == 0) {
-				SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.share_preference),
-						Context.MODE_PRIVATE);
-				requestOrder(String.valueOf(sp.getInt("UserId", 0)));
-				requestServiceOrder(String.valueOf(sp.getInt("UserId", 0)));
-				requestData();
+		if (isVisibleUser) {
+			if (!User.isLogin(getActivity())) {
+				// 未登录
+
+				LoginActivity_.intent(getContext()).start();
 			} else {
-				setOrderStatus();
-				setServiceStatus();
+				// 若已经登录，需要请求数据
+				if (orders.size() == 0) {
+					SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.share_preference),
+							Context.MODE_PRIVATE);
+					requestOrder(String.valueOf(sp.getInt("UserId", 0)));
+					requestServiceOrder(String.valueOf(sp.getInt("UserId", 0)));
+					requestData();
+				} else {
+					setOrderStatus();
+					setServiceStatus();
+				}
 			}
 		}
 	}
@@ -411,7 +422,7 @@ public class MeFragment extends Fragment implements OnClickListener {
 				AddressManageActivity_.intent(getActivity()).start();
 				break;
 			case R.id.btn_about:
-				AboutUActivity_.intent(getActivity()).start();
+				LoginActivity_.intent(getActivity()).start();
 				break;
 			case R.id.btn_order:
 			case R.id.rl1:

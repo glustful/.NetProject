@@ -42,6 +42,8 @@ public class NewAddressActivity extends MainActionBarActivity {
 	@ViewById(R.id.tv1)
 	TextView tv_select;
 	String areaId = "0";
+	@ViewById(R.id.ll_loading)
+	View loading;
 
 	@Click(R.id.tv1)
 	void selectArea() {
@@ -54,6 +56,7 @@ public class NewAddressActivity extends MainActionBarActivity {
 		int userid = sp.getInt("UserId", 0);
 
 		if (userid != 0) {
+			loading.setVisibility(View.VISIBLE);
 			if (areaId.equals("0")) {
 				Toast.makeText(NewAddressActivity.this, "请选择地区", Toast.LENGTH_SHORT).show();
 				return;
@@ -66,10 +69,13 @@ public class NewAddressActivity extends MainActionBarActivity {
 			entity.Linkman = et_linkman.getText().toString();
 			entity.Tel = et_phone.getText().toString();
 			entity.AreaId = Integer.parseInt(areaId);
+			entity.IsDefault = "false";
+
 			add(entity);
 		} else {
 			// 未登录
 			LoginActivity_.intent(this).start();
+			return;
 		}
 	}
 
@@ -111,10 +117,13 @@ public class NewAddressActivity extends MainActionBarActivity {
 	}
 
 	void requestAdd(String json) {
+		Log.i(TAG, json);
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
+				Log.i(TAG, data.toString());
+				loading.setVisibility(View.GONE);
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					boolean status = object.optBoolean("Status", false);
