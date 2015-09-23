@@ -55,6 +55,10 @@ app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout','$stateParams'
                 params: $scope.sech,
                 'withCredentials': true  //跨域
             }).success(function (data) {
+                if(data.List.length==0)
+                {
+                    $scope.hasmore = false;
+                }
                 for (var i = 0; i < data.List.length; i++) {
                     $scope.list.push(data.List[i]);
                     if ($scope.list.length == data.TotalCount) {
@@ -125,8 +129,8 @@ app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout','$stateParams'
     });
     //endregion
 }])
-app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','$ionicSlideBoxDelegate', 'cartservice',
-    function ($http, $scope, $stateParams, $timeout, $ionicSlideBoxDelegate,cartservice) {
+app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$timeout','$ionicSlideBoxDelegate', 'cartservice',
+    function ($http, $scope, $state,$stateParams, $timeout, $ionicSlideBoxDelegate,cartservice) {
         //region 轮播图
         $scope.$on('$ionicView.enter', function () {
             $ionicSlideBoxDelegate.start();
@@ -182,7 +186,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
         //endregion
         //region 加载图文详情
        // $scope.hasload=false;
-        $scope.load_detail = function () {
+        var load_detail = function () {
             $timeout(function () {
                 $http.get(SETTING.ApiUrl + "/ProductDetail/Get?id=" + $stateParams.id, {
                     'withCredentials': true
@@ -191,12 +195,17 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
                     if(data!=null)
                     {
                         $scope.hasload=false;
-                        $scope.isDetail=true;
                     }
                 });
                $scope.$broadcast("scroll.infiniteScrollComplete");
             }, 1000);
         };
+        $scope.isDetail=false;
+        $scope.getDetail=function(){
+            load_detail();
+            $scope.isDetail=true;
+        }
+        //endregion
         //region 加入购物车
         $scope.cartinfo = {
             id: null,
@@ -204,35 +213,90 @@ app.controller('ProductDetail', ['$http', '$scope', '$stateParams', '$timeout','
             count: null,
             mainimg:null,
             price:null,
-            newprice:null,
+            oldprice:null,
             parameterValue:[]
         };
-
-        $scope.AddGWCAction = function () {
+        $scope.changIng=false;
+        $scope.AddCart=function(){
             $scope.cartinfo.id = $scope.product.Id;
             $scope.cartinfo.name = $scope.product.Name;
             $scope.cartinfo.mainimg=$scope.product.MainImg;
             $scope.cartinfo.price=$scope.product.Price;
-            $scope.cartinfo.newprice=$scope.product.NewPrice;
+            $scope.cartinfo.oldprice=$scope.product.OldPrice;
             $scope.cartinfo.parameterValue=$scope.product.ParameterValue;
             $scope.cartinfo.count = 1;
             cartservice.add($scope.cartinfo);
-            //显示图标
-            var actionDOM = document.getElementById("gwcaction");
-            actionDOM.style.visibility = "visible";
-            //执行动画
-            var abc = actionDOM.className;
-            actionDOM.className = abc + "Gwcactive";
-
-            //执行完毕动画后，隐藏图标
-            $timeout(show, 1000);
-            function show() {
-                actionDOM.className = abc;
-                actionDOM.style.visibility = "hidden";
-            }
+            $scope.changIng=true;
         }
         //endregion
-        $scope.isDetail=false;
+        //region  立即购买
+        $scope.buyHide=true;
+        $scope.mask=false;
+        $scope.innerAfter=false;
+        $scope.buyNew=function(){
+            $scope.mask=true;
+            $scope.buyHide=false;
+//            var t=setTimeout("$scope.innerAfter=true",1000)
+            $scope.innerAfter=true
+        }
+        //关闭
+        $scope.close=function(){
+            $scope.mask=!$scope.mask;
+            $scope.buyHide=! $scope.buyHide;
+        }
+//        数量
+        $scope.numbers=1;
+        $scope.addNumbers=function(){
+//            if($scope.numbers>=1)
+            $scope.numbers=$scope.numbers+1;
+//            else{
+//                $scope.numbers=1;
+//            }
+        }
+        $scope.deNumbers=function(){
+            if($scope.numbers>=2)
+                $scope.numbers-=1;
+            else{
+                $scope.numbers=1;
+            }
+        }
+        //$scope.productcount={
+        //    id: $stateParams.id,
+        //    name: $scope.product.Name,
+        //    count: $scope.numbers,
+        //    mainimg:$scope.product.MainImg,
+        //    price:$scope.product.Price,
+        //    oldprice:$scope.product.OldPrice,
+        //    parameterValue:$scope.product.ParameterValue
+        //};
+
+        $scope.buy=function(){
+            $scope.cartinfo.id = $scope.product.Id;
+            $scope.cartinfo.name = $scope.product.Name;
+            $scope.cartinfo.mainimg=$scope.product.MainImg;
+            $scope.cartinfo.price=$scope.product.Price;
+            $scope.cartinfo.oldprice=$scope.product.OldPrice;
+            $scope.cartinfo.parameterValue=$scope.product.ParameterValue;
+            $scope.cartinfo.count = $scope.numbers;
+            $scope.price=$scope.product.Price*$scope.numbers
+            $state.go("page.order",{productcount: $scope.cartinfo,pricecount:$scope.price})
+        }
+        //endregion
+        //$scope.AddGWCAction = function () {
+        //    //显示图标
+        //    var actionDOM = document.getElementById("gwcaction");
+        //    actionDOM.style.visibility = "visible";
+        //    //执行动画
+        //    var abc = actionDOM.className;
+        //    actionDOM.className = abc + "Gwcactive";
+        //
+        //    //执行完毕动画后，隐藏图标
+        //    $timeout(show, 1000);
+        //    function show() {
+        //        actionDOM.className = abc;
+        //        actionDOM.style.visibility = "hidden";
+        //    }
+        //}
     }])
 app.controller('SearchProductCtr', ['$http', '$scope', '$stateParams','$timeout',
     function ($http, $scope, $stateParams,$timeout) {
@@ -256,6 +320,10 @@ app.controller('SearchProductCtr', ['$http', '$scope', '$stateParams','$timeout'
                 params: $scope.search,
                 'withCredentials': true  //跨域
             }).success(function (data) {
+                if(data.List.length==0)
+                {
+                    $scope.hasmore = false;
+                }
                 for (var i = 0; i < data.List.length; i++) {
                     $scope.productList.push(data.List[i]);
                     if ($scope.productList.length == data.TotalCount) {

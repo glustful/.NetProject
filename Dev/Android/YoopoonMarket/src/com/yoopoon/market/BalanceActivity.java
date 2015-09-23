@@ -21,8 +21,6 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -149,10 +147,12 @@ public class BalanceActivity extends MainActionBarActivity {
 
 	void requestAddOrder(String serial) {
 		Log.i(TAG, serial);
+		loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
+				loading.setVisibility(View.GONE);
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					Log.i(TAG, object.toString());
@@ -246,13 +246,8 @@ public class BalanceActivity extends MainActionBarActivity {
 				Log.i(TAG, data.toString());
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					JSONArray array = object.optJSONArray("List");
-					try {
-						JSONObject addressObject = array.getJSONObject(0);
-						parseToEntity(addressObject);
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
+					parseToEntity(object);
+
 				} else {
 					loading.setVisibility(View.GONE);
 					Toast.makeText(BalanceActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
@@ -265,7 +260,7 @@ public class BalanceActivity extends MainActionBarActivity {
 
 			}
 		}.setUrl(getString(R.string.url_get_address_byid)).setRequestMethod(RequestMethod.eGet)
-				.addParam("userid", userid).notifyRequest();
+				.addParam("memberid", "").notifyRequest();
 	}
 
 	void parseToEntity(final JSONObject object) {

@@ -8,11 +8,12 @@ $scope.tabIndex=$stateParams.tabIndex;
         statusId:1,
         Status:1
     }
+    //根据订单状态查找订单
    $scope.getOrderStatus=function()
    {
        $scope.searchCondition.Status=$scope.tabIndex;
        //alert($scope.searchCondition.CustomerName);
-       $http.get(SETTING.ApiUrl +"/OrderDetail/Get",{
+       $http.get(SETTING.ApiUrl +"/CommunityOrder/Get",{
            params:$scope.searchCondition,
            'withCredentials':true}).
         success(function(data){

@@ -18,5 +18,7 @@ namespace Community.Service.ServiceOrder
 		IQueryable<ServiceOrderEntity> GetServiceOrdersByCondition(ServiceOrderSearchCondition condition);
 
 		int GetServiceOrderCount (ServiceOrderSearchCondition condition);
+
+	    ServiceOrderEntity GetServiceOrderByNo(string orderNo);
 	}
 }

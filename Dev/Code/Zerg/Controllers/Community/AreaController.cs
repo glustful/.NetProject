@@ -121,12 +121,16 @@ namespace Zerg.Controllers.Community
         {
             AreaEntity entity = _areaService.GetAreaById(model.Id);
             if (entity == null)
-               return PageHelper.toJson(PageHelper.ReturnValue(false, "数据库没有此记录！")); 
-
-            if (model.Parent != null && model.Parent.Id != entity.Parent.Id)
+               return PageHelper.toJson(PageHelper.ReturnValue(false, "数据库没有此记录！"));
+            try {
+                if (model.Parent != null && model.Parent.Id != entity.Parent.Id)
+                {
+                    var father = _areaService.GetAreaById(Convert.ToInt32(model.Parent.Id));
+                    entity.Parent = father;
+                }
+            }catch(Exception ex)
             {
-                var father = _areaService.GetAreaById(Convert.ToInt32( model.Parent.Id));
-                entity.Parent = father;
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "修改失败！"));
             }
 
             entity.CodeId = model.Codeid;

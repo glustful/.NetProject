@@ -130,6 +130,12 @@
                     android:textSize="12sp" />
             </LinearLayout>
             
+            <CheckBox 
+                android:id="@+id/cb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="设置为默认地址"/>
+            
             <Button 
                 android:layout_margin="10dp"
                 android:id="@+id/btn_save"

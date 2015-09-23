@@ -47,6 +47,7 @@
             android:background="@color/white"/>
         
         <EditText 
+            android:maxLength="11"
             android:inputType="phone"
             android:id="@+id/et_account"
             android:layout_toRightOf="@id/tv_account"

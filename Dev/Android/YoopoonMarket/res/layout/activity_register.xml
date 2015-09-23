@@ -31,6 +31,7 @@
                 android:layout_toRightOf="@id/tv_username"
                 android:background="@color/white"
                 android:inputType="phone"
+                android:maxLength="11"
                 android:textSize="14sp" />
 
             <!--
@@ -67,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/et_username"
-            android:background="@color/white"/>
+            android:background="@color/white"/>
             -->
 
         </RelativeLayout>
@@ -135,11 +136,12 @@
             android:text="免费注册"
             android:textColor="@color/white" />
     </LinearLayout>
-    <include 
-        android:visibility="gone"
+
+    <include
         android:id="@+id/ll_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        layout="@layout/loading"/>
+        layout="@layout/loading"
+        android:visibility="gone" />
 
 </RelativeLayout>

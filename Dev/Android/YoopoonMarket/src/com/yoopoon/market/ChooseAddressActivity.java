@@ -189,7 +189,7 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 
 			holder.cb.setChecked(position == selectedPosition);
 
-			if (position == 0) {
+			if (entity.IsDefault != null && entity.IsDefault.equals("true")) {
 				holder.tv_address.setText("[默认]" + entity.Address);
 				changeTextColor(holder.tv_address);
 			}

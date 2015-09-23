@@ -10,8 +10,6 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -88,6 +86,7 @@ public class ServiceBalanceActivity extends MainActionBarActivity {
 	}
 
 	void requestAddOrder() {
+		loading.setVisibility(View.VISIBLE);
 		if (tv_time.getTag() == null) {
 			Toast.makeText(ServiceBalanceActivity.this, "请选择服务时间", Toast.LENGTH_LONG).show();
 			return;
@@ -102,6 +101,7 @@ public class ServiceBalanceActivity extends MainActionBarActivity {
 
 			@Override
 			public void onReponse(ResponseData data) {
+				loading.setVisibility(View.GONE);
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					boolean status = object.optBoolean("Status", false);
@@ -199,7 +199,6 @@ public class ServiceBalanceActivity extends MainActionBarActivity {
 			LoginActivity_.intent(this).start();
 			return;
 		}
-		String userid = User.getUserId(ServiceBalanceActivity.this);
 		loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
@@ -207,16 +206,7 @@ public class ServiceBalanceActivity extends MainActionBarActivity {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					Log.i(TAG, object.toString());
-					JSONArray array = object.optJSONArray("List");
-					try {
-						if (array != null) {
-							JSONObject addressObject = array.getJSONObject(0);
-							parseToEntity(addressObject);
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
+					parseToEntity(object);
 				} else {
 					loading.setVisibility(View.GONE);
 					Toast.makeText(ServiceBalanceActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
@@ -229,7 +219,7 @@ public class ServiceBalanceActivity extends MainActionBarActivity {
 
 			}
 		}.setUrl(getString(R.string.url_get_address_byid)).setRequestMethod(RequestMethod.eGet)
-				.addParam("userid", userid).notifyRequest();
+				.addParam("memberid", "").notifyRequest();
 	}
 
 	void parseToEntity(final JSONObject object) {

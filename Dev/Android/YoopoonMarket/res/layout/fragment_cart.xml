@@ -54,6 +54,7 @@
                 android:id="@+id/cb_chooseall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:tag="false"
                 android:text="全选" />
 
             <TextView

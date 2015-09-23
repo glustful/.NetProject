@@ -31,7 +31,7 @@ namespace Community.Entity.Mappings.Product
 			HasRequired(c =>c.Detail).WithRequiredPrincipal();
 			HasMany(c =>c.Comments).WithRequired(c=>c.Product);
 			HasMany(c =>c.Parameters).WithRequired(c=>c.Product);
-		    Property(c => c.NewPrice).HasColumnType("decimal").IsOptional();
+		    Property(c => c.OldPrice).HasColumnType("decimal").IsOptional();
 		    Property(c => c.Owner).HasColumnType("int").IsOptional();
 		}
 	}

@@ -77,25 +77,25 @@ app.config(function($stateProvider, $urlRouterProvider) {
                views: {
                'page-service': {
                templateUrl: 'page/service/tab-service.html',
-               controller: 'TabServiceCtrl'
+               controller: 'serviceIndex'
                }
                }
                })
             .state('page.clear', {
-                url: '/service/clear',
+                url: '/service/clear?name',
                 views: {
                     'page-service': {
                         templateUrl: 'page/service/clear.html',
-                        controller: 'TabServiceCtrl'
+                        controller: 'clearservice'
                     }
                 }
             })
             .state('page.safe', {
-                url: '/service/safe',
+                url: '/service/safe?name',
                 views: {
                     'page-service': {
                         templateUrl: 'page/service/safe.html',
-                        controller: 'TabServiceCtrl'
+                        controller: 'safeservice'
                     }
                 }
             })
@@ -110,10 +110,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 }
             })
             .state('page.safe-detail', {
-                url: '/service/safe-detail',
+                url: '/service/safe-detail?id&name',
                 views: {
                     'page-service': {
-                        templateUrl: 'page/service/safe-detail.html'
+                        templateUrl: 'page/service/safe-detail.html',
+                        controller:'safedetailservice'
                     }
                 }
             })
@@ -127,7 +128,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                }
                })
             .state('page.order', {
-                url: '/car/order?productid',
+                url: '/car/order?productcount&pricecount',
                 views: {
                     'page-car': {
                         templateUrl: 'page/car/order.html',
@@ -226,11 +227,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 }
             })
             .state('page.comment', {
-                url: '/me/comment',
+                url: '/me/comment?Id&Status',
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/comment.html',
-                        controller: 'TabMeCtrl'
+                        controller: 'comment'
                     }
                 }
             })

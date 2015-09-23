@@ -62,7 +62,7 @@ namespace Zerg.Controllers.Community
 			var model = new CategoryModel
 			{
 				Id = entity.Id,
-//                Father = entity.Father,
+                Father = entity.Father,
                 Name = entity.Name,
                 Sort = entity.Sort,
                 AddUser = entity.AddUser,
@@ -90,7 +90,7 @@ namespace Zerg.Controllers.Community
               var model=  entity.Select(q => new CategoryModel
                 {
                     Id = q.Id,
-                    //                Father = entity.Father,
+                    //Father = entity.Father,
                     Name = q.Name,
                     Sort = q.Sort,
                     AddUser = q.AddUser,
@@ -407,5 +407,6 @@ namespace Zerg.Controllers.Community
         #endregion
 
         #endregion
+
     }
 }

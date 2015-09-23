@@ -8,6 +8,8 @@ using Community.Service.Product;
 using Community.Service.ProductComment;
 using Zerg.Common;
 using Zerg.Models.Community;
+using Community.Service.Member;
+using YooPoon.Core.Site;
 
 namespace Zerg.Controllers.Community
 {
@@ -17,11 +19,15 @@ namespace Zerg.Controllers.Community
 	{
 		private readonly IProductCommentService _productCommentService;
         private readonly IProductService _productService;
+        private readonly IMemberService _memberService;
+        private readonly IWorkContext _workContext;
 
-		public ProductCommentController(IProductCommentService productCommentService,IProductService productService)
+        public ProductCommentController(IProductCommentService productCommentService,IProductService productService,IMemberService memberService,IWorkContext workContext)
 		{
 		    _productCommentService = productCommentService;
             _productService = productService;
+            _memberService = memberService;
+            _workContext = workContext;
 		}
         /// <summary>
         /// 根据评论ID获取该评论
@@ -84,7 +90,7 @@ namespace Zerg.Controllers.Community
 			var entity = new ProductCommentEntity
 			{
 				Product =_productService.GetProductById(model.ProductId),
-                //AddUser = model.AddUser,
+                Member = _memberService.GetMemberByUserId(_workContext.CurrentUser.Id),
 				AddTime =DateTime.Now,
 				Content = model.Content,
 				Stars = model.Stars
