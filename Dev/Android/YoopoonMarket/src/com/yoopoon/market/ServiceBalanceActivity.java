@@ -1,20 +1,9 @@
-/**   
- * Copyright ? 2015 yoopoon. All rights reserved.
- * 
- * @Title: PersonalInfoActivity.java 
- * @Project: YoopoonMarket
- * @Package: com.yoopoon.market 
- * @Description: TODO
- * @author: guojunjun  
- * @updater: guojunjun 
- * @date: 2015-9-8 上午9:32:55 
- * @version: V1.0   
- */
 package com.yoopoon.market;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -24,13 +13,16 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.BaseAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -38,15 +30,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.yoopoon.market.domain.CommunityOrderEntity;
 import com.yoopoon.market.domain.MemberAddressEntity;
 import com.yoopoon.market.domain.OrderDetailEntity;
 import com.yoopoon.market.domain.ProductEntity;
-import com.yoopoon.market.domain.Staff;
 import com.yoopoon.market.domain.User;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
@@ -54,23 +43,15 @@ import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.utils.ParserJSON;
 import com.yoopoon.market.utils.ParserJSON.ParseListener;
-import com.yoopoon.market.utils.SerializerJSON;
-import com.yoopoon.market.utils.SerializerJSON.SerializeListener;
 import com.yoopoon.market.utils.Utils;
 
-/**
- * @ClassName: PersonalInfoActivity
- * @Description: TODO
- * @author: guojunjun
- * @date: 2015-9-8 上午9:32:55
- */
-@EActivity(R.layout.activity_balance)
-public class BalanceActivity extends MainActionBarActivity {
+@EActivity(R.layout.activity_service_balance)
+public class ServiceBalanceActivity extends MainActionBarActivity {
 	private static final String TAG = "BalanceActivity";
 	@ViewById(R.id.lv)
 	ListView lv;
 	@Extra
-	List<Staff> staffList;
+	ProductEntity product;
 	@Extra
 	MemberAddressEntity checkedAddress;
 	@ViewById(R.id.tv_name)
@@ -83,6 +64,14 @@ public class BalanceActivity extends MainActionBarActivity {
 	View loading;
 	@ViewById(R.id.tv_price_total)
 	TextView tv_price_total;
+	@ViewById(R.id.tv_time)
+	TextView tv_time;
+
+	@Click(R.id.tv_time)
+	void pickTime() {
+		DialogFragment newFragment = new DatePickerFragment();
+		newFragment.show(getFragmentManager(), "datePicker");
+	}
 
 	EditText et_remark;
 	MemberAddressEntity addressEntity;
@@ -92,91 +81,47 @@ public class BalanceActivity extends MainActionBarActivity {
 	void confirmOrder() {
 
 		if (User.isLogin(this)) {
-
-			for (Staff staff : staffList) {
-				ProductEntity product = new ProductEntity();
-				product.Name = staff.category;
-				product.Subtitte = staff.title;
-				product.Id = staff.productId;
-				product.Price = staff.price_counted;
-				OrderDetailEntity detail = new OrderDetailEntity();
-				detail.Product = product;
-				detail.Remark = et_remark.getText().toString();
-				detail.Totalprice = product.Price * staff.count;
-				detail.ProductName = product.Name;
-				detail.Count = staff.count;
-				detail.Price = product.Price;
-				detail.UnitPrice = product.Price;
-				details.add(detail);
-			}
-			CommunityOrderEntity orderEntity = new CommunityOrderEntity();
-			orderEntity.Totalprice = total_price;
-			orderEntity.MemberAddressId = addressEntity.Id;
-			orderEntity.Details = details;
-			orderEntity.Remark = et_remark.getText().toString();
-			orderEntity.UserName = User.getUserName(BalanceActivity.this);
-			orderEntity.Actualprice = orderEntity.Totalprice;
-			serializeOrder(orderEntity);
+			requestAddOrder();
 		} else {
 			LoginActivity_.intent(this).start();
 		}
 	}
 
-	void serializeOrder(final CommunityOrderEntity orderEntity) {
-		new SerializerJSON(new SerializeListener() {
-
-			@Override
-			public String onSerialize() {
-				ObjectMapper om = new ObjectMapper();
-				String json = null;
-				try {
-					json = om.writeValueAsString(orderEntity);
-				} catch (JsonProcessingException e) {
-					e.printStackTrace();
-				}
-				return json;
-			}
-
-			@Override
-			public void onComplete(String serializeResult) {
-				if (!TextUtils.isEmpty(serializeResult)) {
-					Log.i(TAG, serializeResult);
-					requestAddOrder(serializeResult);
-				}
-			}
-		}).execute();
-	}
-
-	void requestAddOrder(String serial) {
-		Log.i(TAG, serial);
+	void requestAddOrder() {
+		if (tv_time.getTag() == null) {
+			Toast.makeText(ServiceBalanceActivity.this, "请选择服务时间", Toast.LENGTH_LONG).show();
+			return;
+		}
+		Log.i(TAG, product.toString());
+		String time = tv_time.getText().toString();
+		String remark = et_remark.getText().toString();
+		String json = "{\"MemberAddressId\":" + addressEntity.Id + ",\"Servicetime\":\"" + time + "\",\"Remark\":\""
+				+ remark + "\",\"Details\":[{\"Count\":1,\"Price\":" + product.Price + ",\"Product\":{\"Id\":"
+				+ product.Id + "}}]}";
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					Log.i(TAG, object.toString());
 					boolean status = object.optBoolean("Status", false);
 					if (status) {
-						JSONObject orderEntity = object.optJSONObject("Object");
-						float price = Float.parseFloat(orderEntity.optString("Actualprice", ""));
-						String No = orderEntity.optString("No", "");
-						String msg = object.optString("Msg", "");
+						JSONObject orderObject = object.optJSONObject("Object");
+						if (orderObject != null) {
+							float price = Float.parseFloat(orderObject.optString("Flee", ""));
+							String No = orderObject.optString("OrderNo", "");
+							String msg = object.optString("Msg", "");
 
-						Bundle bundle = new Bundle();
-						bundle.putFloat("Price", price);
-						bundle.putString("No", No);
-						bundle.putString("Msg", msg);
-						int[] staffId = new int[staffList.size()];
-						for (int i = 0; i < staffList.size(); i++) {
-							staffId[i] = staffList.get(i).id;
+							Bundle bundle = new Bundle();
+							bundle.putFloat("Price", price);
+							bundle.putString("No", No);
+							bundle.putString("Msg", msg);
+
+							PayDemoActivity_.intent(ServiceBalanceActivity.this).orderBundle(bundle).start();
 						}
-						bundle.putIntArray("StaffIds", staffId);
-
-						PayDemoActivity_.intent(BalanceActivity.this).orderBundle(bundle).start();
 					}
 				} else {
-					Toast.makeText(BalanceActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+					Toast.makeText(ServiceBalanceActivity.this, "下单失败，请重试", Toast.LENGTH_SHORT).show();
 				}
 
 			}
@@ -186,13 +131,37 @@ public class BalanceActivity extends MainActionBarActivity {
 				// TODO Auto-generated method stub
 
 			}
-		}.setUrl(getString(R.string.url_order_post)).setRequestMethod(RequestMethod.ePost).SetJSON(serial)
+		}.setUrl(getString(R.string.url_serviceorder_post)).setRequestMethod(RequestMethod.ePost).SetJSON(json)
 				.notifyRequest();
+	}
+
+	class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+		final Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
+		int day = c.get(Calendar.DAY_OF_MONTH);
+		int hour = c.get(Calendar.HOUR_OF_DAY);
+
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), this, year, month, day);
+			DatePicker datePicker = datePickerDialog.getDatePicker();
+			datePicker.setMinDate(c.getTimeInMillis());
+			return datePickerDialog;
+		}
+
+		public void onDateSet(DatePicker view, int year, int month, int day) {
+			int dataMonth = month + 1;
+			tv_time.setText(year + "-" + dataMonth + "-" + day + "");
+			tv_time.setTag(true);
+
+		}
 	}
 
 	@Click(R.id.rl_address)
 	void chooseAddress() {
-		ChooseAddressActivity_.intent(BalanceActivity.this).staffList(staffList).start();
+		ChooseAddressActivity_.intent(ServiceBalanceActivity.this).product(product).start();
 	}
 
 	@AfterViews
@@ -211,9 +180,7 @@ public class BalanceActivity extends MainActionBarActivity {
 	protected void onResume() {
 		super.onResume();
 
-		Log.i(TAG, "onResume()");
 		if (checkedAddress != null) {
-			Log.i(TAG, checkedAddress.toString());
 			addressEntity = checkedAddress;
 			setAddress();
 		} else {
@@ -221,37 +188,38 @@ public class BalanceActivity extends MainActionBarActivity {
 		}
 	}
 
-	float total_price = 0;
-
 	void calcPrice() {
-		for (Staff staff : staffList) {
-			total_price += staff.price_counted * staff.count;
-		}
 		DecimalFormat df = new DecimalFormat("#.00");
-		tv_price_total.setText("合计：￥" + df.format(total_price));
-		Utils.spanTextStyle(tv_price_total, BalanceActivity.this);
+		tv_price_total.setText("合计：￥" + df.format(product.Price));
+		Utils.spanTextStyle(tv_price_total, ServiceBalanceActivity.this);
 	}
 
 	void requestAddress() {
-		String userid = User.getUserId(BalanceActivity.this);
+		if (!User.isLogin(this)) {
+			LoginActivity_.intent(this).start();
+			return;
+		}
+		String userid = User.getUserId(ServiceBalanceActivity.this);
 		loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
-				Log.i(TAG, data.toString());
 				JSONObject object = data.getMRootData();
 				if (object != null) {
+					Log.i(TAG, object.toString());
 					JSONArray array = object.optJSONArray("List");
 					try {
-						JSONObject addressObject = array.getJSONObject(0);
-						parseToEntity(addressObject);
+						if (array != null) {
+							JSONObject addressObject = array.getJSONObject(0);
+							parseToEntity(addressObject);
+						}
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
 				} else {
 					loading.setVisibility(View.GONE);
-					Toast.makeText(BalanceActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+					Toast.makeText(ServiceBalanceActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
 
@@ -286,7 +254,6 @@ public class BalanceActivity extends MainActionBarActivity {
 			@Override
 			public void onComplete(Object parseResult) {
 				if (parseResult != null) {
-					Log.i(TAG, parseResult.toString());
 					setAddress();
 				}
 			}
@@ -313,7 +280,7 @@ public class BalanceActivity extends MainActionBarActivity {
 
 		@Override
 		public int getCount() {
-			return staffList.size() + 1;
+			return 2;
 		}
 
 		@Override
@@ -330,16 +297,16 @@ public class BalanceActivity extends MainActionBarActivity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if (position == staffList.size()) {
-				View v = View.inflate(BalanceActivity.this, R.layout.item_remark, null);
-				int px = Utils.dp2px(BalanceActivity.this, 200);
+			if (position == 1) {
+				View v = View.inflate(ServiceBalanceActivity.this, R.layout.item_remark, null);
+				int px = Utils.dp2px(ServiceBalanceActivity.this, 200);
 				LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, px);
 				v.setLayoutParams(params);
 				et_remark = (EditText) v.findViewById(R.id.et_remark);
 				return v;
 			}
 			if (convertView == null || !(convertView instanceof RelativeLayout))
-				convertView = View.inflate(BalanceActivity.this, R.layout.item_cart2, null);
+				convertView = View.inflate(ServiceBalanceActivity.this, R.layout.item_cart2, null);
 			ViewHolder holder = (ViewHolder) convertView.getTag();
 			if (holder == null) {
 				holder = new ViewHolder();
@@ -351,15 +318,15 @@ public class BalanceActivity extends MainActionBarActivity {
 				holder.tv_count = (TextView) convertView.findViewById(R.id.tv_count);
 				convertView.setTag(holder);
 			}
-			Staff staff = staffList.get(position);
-			holder.iv.setTag(staff.image);
-			ImageLoader.getInstance().displayImage(staff.image, holder.iv, MyApplication.getOptions(),
+			String imageUrl = getString(R.string.url_image) + product.MainImg;
+			holder.iv.setTag(imageUrl);
+			ImageLoader.getInstance().displayImage(imageUrl, holder.iv, MyApplication.getOptions(),
 					MyApplication.getLoadingListener());
-			holder.tv_name.setText(staff.title);
-			holder.tv_category.setText(staff.category);
-			holder.tv_price_counted.setText("￥" + staff.price_counted + "");
-			holder.tv_price_previous.setText(staff.price_previous + "");
-			holder.tv_count.setText("x" + staff.count);
+			holder.tv_name.setText(product.Subtitte);
+			holder.tv_category.setText(product.Name);
+			holder.tv_price_counted.setText("￥" + product.Price + "");
+			holder.tv_price_previous.setText(product.OldPrice + "");
+			holder.tv_count.setText("x" + 1);
 
 			return convertView;
 		}
@@ -384,5 +351,4 @@ public class BalanceActivity extends MainActionBarActivity {
 	public Boolean showHeadView() {
 		return true;
 	}
-
 }

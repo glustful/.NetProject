@@ -1,11 +1,15 @@
 package com.yoopoon.market;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -15,17 +19,29 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.market.domain.CommunityOrderEntity;
 import com.yoopoon.market.fragment.CommentFragment;
 import com.yoopoon.market.fragment.PayFragment;
 import com.yoopoon.market.fragment.ReceiveFragment;
 import com.yoopoon.market.fragment.SendFragment;
+import com.yoopoon.market.net.ProgressMessage;
+import com.yoopoon.market.net.RequestAdapter;
+import com.yoopoon.market.net.RequestAdapter.RequestMethod;
+import com.yoopoon.market.net.ResponseData;
+import com.yoopoon.market.utils.ParserJSON;
+import com.yoopoon.market.utils.ParserJSON.ParseListener;
 
 @EActivity(R.layout.activity_me_order)
 public class MeOrderActivity extends MainActionBarActivity implements OnClickListener {
 	private static final String TAG = "MeOrderActivity";
 	@ViewById(R.id.vp)
 	ViewPager vp;
+	@ViewById(R.id.ll_loading)
+	View loading;
 	@Extra
 	int item;
 	@Extra
@@ -39,7 +55,6 @@ public class MeOrderActivity extends MainActionBarActivity implements OnClickLis
 
 	@AfterViews
 	void initUI() {
-		Log.i(TAG, "item = " + item);
 		backButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		rightButton.setVisibility(View.GONE);
@@ -84,6 +99,85 @@ public class MeOrderActivity extends MainActionBarActivity implements OnClickLis
 					break;
 			}
 		}
+	}
+
+	public void requestOrder(String userId) {
+		Log.i(TAG, "requestData(");
+		orders.clear();
+		loading.setVisibility(View.VISIBLE);
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+
+					JSONArray array = object.optJSONArray("List");
+					if (array != null) {
+						parseToOrderList(array);
+					}
+				} else {
+					loading.setVisibility(View.GONE);
+					Toast.makeText(MeOrderActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_order_get)).setRequestMethod(RequestMethod.eGet).addParam("userid", userId)
+				.notifyRequest();
+	}
+
+	void parseToOrderList(final JSONArray array) {
+		new ParserJSON(new ParseListener() {
+
+			@Override
+			public Object onParse() {
+				ObjectMapper om = new ObjectMapper();
+				orders.clear();
+				for (int i = 0; i < array.length(); i++) {
+					try {
+						JSONObject object = array.getJSONObject(i);
+						CommunityOrderEntity order = om.readValue(object.toString(), CommunityOrderEntity.class);
+						orders.add(order);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					} catch (JsonParseException e) {
+						e.printStackTrace();
+					} catch (JsonMappingException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				return orders;
+			}
+
+			@Override
+			public void onComplete(Object parseResult) {
+				if (parseResult != null) {
+					loading.setVisibility(View.GONE);
+					initList();
+					notifyAllFragments();
+				}
+
+			}
+		}).execute();
+	}
+
+	void notifyAllFragments() {
+		PayFragment payFragment = (PayFragment) fragments.get(0);
+		SendFragment sendFragment = (SendFragment) fragments.get(1);
+		ReceiveFragment receiveFragment = (ReceiveFragment) fragments.get(2);
+		CommentFragment commentFragment = (CommentFragment) fragments.get(3);
+
+		payFragment.update();
+		sendFragment.update();
+		receiveFragment.update();
+		commentFragment.update();
 	}
 
 	public List<CommunityOrderEntity> getOrderList(int item) {

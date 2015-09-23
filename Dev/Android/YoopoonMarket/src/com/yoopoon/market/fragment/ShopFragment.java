@@ -14,15 +14,11 @@ package com.yoopoon.market.fragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,7 +29,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -41,18 +36,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.advertisement.ADController;
-import com.yoopoon.market.CleanServeActivity_;
-import com.yoopoon.market.DeliveryActivity_;
 import com.yoopoon.market.MaternityMatronActivity_;
-import com.yoopoon.market.PoliticsActivity_;
 import com.yoopoon.market.ProductDetailActivity_;
 import com.yoopoon.market.R;
+import com.yoopoon.market.ServeListActivity2_;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
@@ -88,14 +80,14 @@ public class ShopFragment extends Fragment {
 	private Button salesVolumeButton;
 	// 分页获取商品状态码
 	private int productPageCount = 1;
-	//搜索商品分页状态码
+	// 搜索商品分页状态码
 	private int searchPageCount = 1;
 	private ArrayList<JSONObject> productJsonArrayList;
-	//搜索关键字
+	// 搜索关键字
 	private String keywordSearch = "";
 	private FrameLayout searchProductFrameLayout;
 	private FrameLayout productListFrameLayout;
-	//进度条对应的linearlayout
+	// 进度条对应的linearlayout
 	private LinearLayout progressbarLinearlayout;
 
 	@Override
@@ -120,6 +112,7 @@ public class ShopFragment extends Fragment {
 		}
 		return rootView;
 	}
+
 	/**
 	 * @Title: initShopFragment
 	 * @Description: 初始化和设置视图控件
@@ -135,6 +128,7 @@ public class ShopFragment extends Fragment {
 		productListView.addHeaderView(shopFragmentHeadView);
 		requestProduct();
 	}
+
 	/**
 	 * @Title: settingPullToRefreshListView
 	 * @Description: 设置PullToRefresh刷新配置参数
@@ -143,18 +137,19 @@ public class ShopFragment extends Fragment {
 		mPullToRefreshListView = (PullToRefreshListView) rootView.findViewById(R.id.ptr_listview_fragment_shop);
 		mPullToRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
 		mPullToRefreshListView.setOnRefreshListener(new RefreshListener());
-		//搜索PTR
+		// 搜索PTR
 		searchPullToRefreshListView = (PullToRefreshListView) rootView.findViewById(R.id.ptr_search_product);
 		searchPullToRefreshListView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
 		searchPullToRefreshListView.setOnRefreshListener(new searchRefreshListener());
 		productListView = mPullToRefreshListView.getRefreshableView();
 		productListView.setFadingEdgeLength(0);
 		productListView.setFastScrollEnabled(false);
-		//搜索ListView
+		// 搜索ListView
 		searchListView = searchPullToRefreshListView.getRefreshableView();
 		searchListView.setFadingEdgeLength(0);
 		searchListView.setFastScrollEnabled(false);
 	}
+
 	/**
 	 * @Title: settingRecommondProduct
 	 * @Description: 加载推荐套餐下的控件
@@ -194,6 +189,7 @@ public class ShopFragment extends Fragment {
 		});
 		requestProduct();
 	}
+
 	/**
 	 * @Title: initRecommendProduct
 	 * @Description: 初始化推荐套餐商品信息
@@ -221,6 +217,7 @@ public class ShopFragment extends Fragment {
 			ImageLoader.getInstance().displayImage(urlString, recommondProductImageView);
 		}
 	}
+
 	/**
 	 * @Title: requestAdvertisements
 	 * @Description: 获取广告信息
@@ -244,12 +241,14 @@ public class ShopFragment extends Fragment {
 						}
 					}
 				}
+
 				@Override
 				public void onProgress(ProgressMessage msg) {
 				}
 			}.setUrl("/api/Channel/GetTitleImg").setRequestMethod(RequestMethod.eGet).addParam("channelName", "banner")
 					.notifyRequest();
 	}
+
 	/**
 	 * @Title: requestProduct
 	 * @Description: 获取商品列表，同时加载到Adapter中
@@ -289,12 +288,14 @@ public class ShopFragment extends Fragment {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(map).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
+
 	/**
 	 * @Title: requestProduct
 	 * @Description: 传入参数，刷新商品信息
@@ -322,12 +323,14 @@ public class ShopFragment extends Fragment {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(hashMap).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
+
 	/**
 	 * @Title: refreshProduct
 	 * @Description: 传入参数，获取商品信息
@@ -359,12 +362,14 @@ public class ShopFragment extends Fragment {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(hashMap).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
+
 	/**
 	 * @ClassName: ProductRefreshByAddressReceiver
 	 * @Description: 创建监听地址改变的接收器
@@ -379,25 +384,28 @@ public class ShopFragment extends Fragment {
 		ImageView moreServiceImageView = (ImageView) view.findViewById(R.id.img_more_service);
 		// 家政服务
 		houseKeepingImageView.setOnTouchListener(new OnTouchListener() {
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				PoliticsActivity_.intent(getActivity()).start();
+				ServeListActivity2_.intent(getActivity()).contents(new String[] { "家政", "家政" }).start();
 				return false;
 			}
 		});
 		// 清洗服务
 		washingImageView.setOnTouchListener(new OnTouchListener() {
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				CleanServeActivity_.intent(getActivity()).start();
+				ServeListActivity2_.intent(getActivity()).contents(new String[] { "清洗服务", "清洗" }).start();
 				return false;
 			}
 		});
 		// 代收快递服务
 		takeInExpressImageView.setOnTouchListener(new OnTouchListener() {
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				DeliveryActivity_.intent(getActivity()).start();
+				ServeListActivity2_.intent(getActivity()).contents(new String[] { "快递代收", "快递" }).start();
 				return false;
 			}
 		});
@@ -420,10 +428,12 @@ public class ShopFragment extends Fragment {
 			}
 		});
 	}
+
 	@Override
 	public void onStart() {
 		super.onStart();
 	}
+
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
@@ -436,6 +446,7 @@ public class ShopFragment extends Fragment {
 			productPageCount = 1;
 			requestProduct();
 		}
+
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 			HashMap<String, String> map = new HashMap<String, String>();
@@ -449,6 +460,7 @@ public class ShopFragment extends Fragment {
 		@Override
 		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 		}
+
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 			HashMap<String, String> hashMap = new HashMap<String, String>();
@@ -474,6 +486,7 @@ public class ShopFragment extends Fragment {
 		productPageCount = 1;
 		searchPageCount = 1;
 	}
+
 	/**
 	 * @Title: searchProduct
 	 * @Description: 搜索商品
@@ -488,6 +501,7 @@ public class ShopFragment extends Fragment {
 		hashMap.put("Page", "1");
 		requestSearchProduct(hashMap);
 	}
+
 	/**
 	 * @Title: requestSearchProduct
 	 * @Description: 获取搜索数据
@@ -521,12 +535,14 @@ public class ShopFragment extends Fragment {
 					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(hashMap).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
+
 	/**
 	 * @Title: settingClearSearch
 	 * @Description: 通过MainActivity中的调用设置搜索界面和商品列表界面的显示和隐藏

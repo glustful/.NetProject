@@ -71,23 +71,32 @@ public class PayDemoActivity extends MainActionBarActivity {
 						Toast.makeText(PayDemoActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
 						// 支付成功后，购物车应删除相应商品。然后返回购物车
 						final int[] ids = orderBundle.getIntArray("StaffIds");
-						new Thread() {
+						if (ids != null) {
+							new Thread() {
 
-							@Override
-							public void run() {
+								@Override
+								public void run() {
 
-								DBDao dao = new DBDao(PayDemoActivity.this);
-								for (int i = 0; i < ids.length; i++) {
-									int id = ids[i];
-									dao.delete(id);
+									DBDao dao = new DBDao(PayDemoActivity.this);
+									for (int i = 0; i < ids.length; i++) {
+										int id = ids[i];
+										dao.delete(id);
+									}
 								}
-							}
-						}.start();
-						// 发送广播打开购物车
-						MainActivity_.intent(PayDemoActivity.this).start();
-						Intent intent = new Intent("com.yoopoon.market.showcart");
-						intent.addCategory(Intent.CATEGORY_DEFAULT);
-						PayDemoActivity.this.sendBroadcast(intent);
+							}.start();
+
+							// 发送广播打开购物车
+							MainActivity_.intent(PayDemoActivity.this).start();
+							Intent intent = new Intent("com.yoopoon.market.showcart");
+							intent.addCategory(Intent.CATEGORY_DEFAULT);
+							PayDemoActivity.this.sendBroadcast(intent);
+						} else {
+
+							Intent intent = new Intent("com.yoopoon.market.pay_succeed");
+							intent.addCategory(Intent.CATEGORY_DEFAULT);
+							PayDemoActivity.this.sendBroadcast(intent);
+							finish();
+						}
 
 					} else {
 						// 判断resultStatus 为非“9000”则代表可能支付失败

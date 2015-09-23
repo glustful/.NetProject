@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:makeramen="http://schemas.android.com/apk/res/com.yoopoon.market"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:padding="10dp" >
+
+    <requestFocus />
+
+    <TextView
+        android:id="@+id/tv_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="评价商品"
+        android:textColor="@color/text_gray" />
+
+    <com.makeramen.RoundedImageView
+        android:id="@+id/imageView1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/tv_desc"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="center"
+        android:src="@drawable/me_avater"
+        makeramen:border_color="@color/background_gray"
+        makeramen:border_width="1dp"
+        makeramen:corner_radius="100dp" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/imageView1"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@id/imageView1"
+        android:text="老雷斯"
+        android:textColor="@color/text_gray" />
+
+    <EditText
+        android:id="@+id/et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView1"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/background_gray"
+        android:gravity="left"
+        android:hint="请发表商品评价"
+        android:minLines="5"
+        android:padding="5dp"
+        android:textColor="@color/text_gray"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et"
+        android:background="@drawable/et_circle_gray_border"
+        android:clickable="true"
+        android:padding="10dp"
+        android:text="添加照片"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/et"
+        android:background="@drawable/red_bg"
+        android:clickable="true"
+        android:padding="10dp"
+        android:text="发表评论"
+        android:textColor="@color/white" />
+
+</RelativeLayout>

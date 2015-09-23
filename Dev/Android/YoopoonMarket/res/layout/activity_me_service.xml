@@ -3,14 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <com.handmark.pulltorefresh.library.PullToRefreshListView 
-        android:id="@+id/lv"
-		android:cacheColorHint="#00000000"
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_search_height"
+        layout="@layout/navigation_service" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"
-        android:dividerHeight="5dp"/>
-    
+        android:layout_marginTop="1dp" />
 
 </LinearLayout>

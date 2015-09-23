@@ -23,6 +23,7 @@ public class OrderDetailEntity implements Serializable {
 	public String Upddate;
 	public float Totalprice;
 	public ProductEntity Product;
+	public String Status;
 
 	@Override
 	public String toString() {

@@ -48,17 +48,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.yoopoon.market.AssuranceActivity_;
-import com.yoopoon.market.ChargeActivity_;
-import com.yoopoon.market.CleanServeActivity_;
-import com.yoopoon.market.DeliveryActivity_;
-import com.yoopoon.market.EducationActivity_;
-import com.yoopoon.market.FinancialActivity_;
 import com.yoopoon.market.MyApplication;
-import com.yoopoon.market.PoliticsActivity_;
 import com.yoopoon.market.R;
-import com.yoopoon.market.TaxiActivity_;
-import com.yoopoon.market.TravelActivity_;
+import com.yoopoon.market.ServeListActivity2_;
+import com.yoopoon.market.ServeListActivity_;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
@@ -79,9 +72,9 @@ public class ServeFragment extends Fragment {
 	private Context mContext;
 	// 9大功能
 	String[] functions = { "保险", "金融理财", "旅游", "汽车类服务", "家政", "清洗服务", "教育", "生活缴费", "快递代收", "社区互动信息展示", "社区众筹信息展示" };
-	int[] icons = { R.drawable.inssurance, R.drawable.wash_machine, R.drawable.travel, R.drawable.uber,
+	int[] icons = { R.drawable.inssurance, R.drawable.financial, R.drawable.travel, R.drawable.uber,
 			R.drawable.political, R.drawable.wash_machine, R.drawable.education, R.drawable.charge,
-			R.drawable.delivery, R.drawable.travel, R.drawable.uber };
+			R.drawable.delivery, R.drawable.interaction, R.drawable.allraise };
 	int[] imgIdArray;
 	ImageView[] tips;
 	ImageView[] mImageViews;
@@ -186,31 +179,37 @@ public class ServeFragment extends Fragment {
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			switch (position) {
 				case 0:
-					AssuranceActivity_.intent(getActivity()).start();
+					ServeListActivity_.intent(getActivity()).contents(new String[] { "保险", "保险" }).start();
 					break;
 				case 1:
-					FinancialActivity_.intent(getActivity()).start();
+					ServeListActivity_.intent(getActivity()).contents(new String[] { "金融理财", "金融理财" }).start();
 					break;
 				case 2:
-					TravelActivity_.intent(getActivity()).start();
+					ServeListActivity_.intent(getActivity()).contents(new String[] { "旅游", "旅游" }).start();
 					break;
 				case 3:
-					TaxiActivity_.intent(getActivity()).start();
+					ServeListActivity_.intent(getActivity()).contents(new String[] { "汽车类服务", "汽车" }).start();
 					break;
 				case 4:
-					PoliticsActivity_.intent(getActivity()).start();
+					ServeListActivity2_.intent(getActivity()).contents(new String[] { "家政", "家政" }).start();
 					break;
 				case 5:
-					CleanServeActivity_.intent(getActivity()).start();
+					ServeListActivity2_.intent(getActivity()).contents(new String[] { "清洗服务", "清洗" }).start();
 					break;
 				case 6:
-					EducationActivity_.intent(getActivity()).start();
+					ServeListActivity_.intent(getActivity()).contents(new String[] { "教育", "教育" }).start();
 					break;
 				case 7:
-					ChargeActivity_.intent(getActivity()).start();
+					ServeListActivity_.intent(getActivity()).contents(new String[] { "生活缴费", "费用" }).start();
 					break;
 				case 8:
-					DeliveryActivity_.intent(getActivity()).start();
+					ServeListActivity2_.intent(getActivity()).contents(new String[] { "快递代收", "快递" }).start();
+					break;
+				case 9:
+					ServeListActivity2_.intent(getActivity()).contents(new String[] { "社区互动信息展示", "互动" }).start();
+					break;
+				case 10:
+					ServeListActivity2_.intent(getActivity()).contents(new String[] { "社区众筹信息展示", "众筹" }).start();
 					break;
 			}
 		}

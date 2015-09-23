@@ -42,6 +42,7 @@ public class ProductEntity implements Serializable {
 	public String Ad2 = null;
 	public String Ad3 = null;
 	public String ParameterValue = null;
+	public String OldPrice = null;
 
 	@Override
 	public String toString() {

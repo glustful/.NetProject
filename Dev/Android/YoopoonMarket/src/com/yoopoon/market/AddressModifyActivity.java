@@ -6,10 +6,17 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
+import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,9 +41,22 @@ public class AddressModifyActivity extends MainActionBarActivity {
 	EditText et_postno;
 	@ViewById(R.id.et_linkman)
 	EditText et_linkman;
+	@ViewById(R.id.tv_select)
+	TextView tv_select;
+
+	int areaId = 0;
+
+	@Click(R.id.tv_select)
+	void choose() {
+		SearchActivity_.intent(this).which(2).addressEntity(addressEntity).start();
+	}
 
 	@Click(R.id.btn_save)
 	void modify() {
+		if (areaId == 0) {
+			Toast.makeText(this, "请选择地区", Toast.LENGTH_SHORT).show();;
+			return;
+		}
 		new SerializerJSON(new SerializeListener() {
 
 			@Override
@@ -47,10 +67,10 @@ public class AddressModifyActivity extends MainActionBarActivity {
 					addressEntity.Linkman = et_address.getText().toString();
 					addressEntity.Zip = et_postno.getText().toString();
 					addressEntity.Tel = et_phone.getText().toString();
+					addressEntity.AreaId = areaId;
 					String json = om.writeValueAsString(addressEntity);
 					return json;
 				} catch (JsonProcessingException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return null;
@@ -63,6 +83,54 @@ public class AddressModifyActivity extends MainActionBarActivity {
 			}
 		}).execute();
 	}
+
+	@Override
+	@SuppressLint("InflateParams")
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Log.i(TAG, "onCreate");
+		if (savedInstanceState != null) {
+			addressEntity = (MemberAddressEntity) savedInstanceState.get("addressEntity");
+		}
+		registerAddressReceiver();
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putSerializable("addressEntity", addressEntity);
+	}
+
+	void registerAddressReceiver() {
+		IntentFilter filter = new IntentFilter("com.yoopoon.market.address");
+		filter.addCategory(Intent.CATEGORY_DEFAULT);
+		this.registerReceiver(receiver, filter);
+	}
+
+	BroadcastReceiver receiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (action.equals("com.yoopoon.market.address")) {
+				areaId = Integer.parseInt(intent.getExtras().getString("AreaId", "69"));
+				String[] names = intent.getStringArrayExtra("Name");
+				StringBuilder sb = new StringBuilder();
+				for (int i = 0; i < names.length; i++) {
+					if (names[i] != null)
+						sb.append(names[i].trim() + " ");
+				}
+				tv_select.setText(sb.toString());
+			}
+		}
+	};
+
+	protected void onDestroy() {
+		super.onDestroy();
+		if (receiver != null) {
+			this.unregisterReceiver(receiver);
+		}
+	};
 
 	@AfterViews
 	void initUI() {

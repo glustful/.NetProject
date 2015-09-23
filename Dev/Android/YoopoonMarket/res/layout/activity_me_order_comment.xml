@@ -1,87 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:makeramen="http://schemas.android.com/apk/res/com.yoopoon.market"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:cacheColorHint="#00000000"
+        android:divider="@null"
+        android:dividerHeight="1dp" />
+
     
-    <include 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/item_order_common"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:padding="10dp" 
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <requestFocus />
-        
-
-        <TextView
-            android:id="@+id/tv_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="评价商品"
-            android:textColor="@color/text_gray" />
-
-        <com.makeramen.RoundedImageView
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/tv_desc"
-            android:id="@+id/imageView1"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="center"
-            android:src="@drawable/me_avater"
-            makeramen:corner_radius="100dp"
-            makeramen:border_width="1dp"
-            makeramen:border_color="@color/background_gray"
-            android:layout_marginRight="10dp" />
-        <TextView 
-            android:layout_toRightOf="@id/imageView1"
-            android:layout_alignTop="@id/imageView1"
-            android:layout_marginTop="20dp"
-            android:text="老雷斯"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_gray"/>
-        <EditText 
-            android:id="@+id/et"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:padding="5dp"
-            android:layout_below="@id/imageView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background_gray"
-            android:gravity="left"
-            android:minLines="5"
-            android:textSize="12sp"
-            android:hint="请发表商品评价"
-            android:textColor="@color/text_gray"/>
-        <TextView
-            android:padding="10dp" 
-            android:layout_below="@id/et"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="添加照片"
-            android:background="@drawable/et_circle_gray_border"
-            android:clickable="true"/>
-        
-        <TextView
-            android:clickable="true"
-            android:layout_alignParentRight="true"
-            android:padding="10dp" 
-            android:layout_below="@id/et"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="发表评论"
-            android:background="@drawable/red_bg"/>
-        
-    </RelativeLayout>
-
-    </RelativeLayout>
+</LinearLayout>

@@ -5,10 +5,18 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
+import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,18 +39,33 @@ public class NewAddressActivity extends MainActionBarActivity {
 	EditText et_linkman;
 	@ViewById(R.id.et_postno)
 	EditText et_postno;
+	@ViewById(R.id.tv1)
+	TextView tv_select;
+	String areaId = "0";
+
+	@Click(R.id.tv1)
+	void selectArea() {
+		SearchActivity_.intent(this).which(1).start();
+	}
 
 	@Click(R.id.btn_save)
 	void newAddress() {
 		SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference), MODE_PRIVATE);
 		int userid = sp.getInt("UserId", 0);
+
 		if (userid != 0) {
+			if (areaId.equals("0")) {
+				Toast.makeText(NewAddressActivity.this, "请选择地区", Toast.LENGTH_SHORT).show();
+				return;
+			}
+
 			MemberAddressEntity entity = new MemberAddressEntity();
 			entity.UserId = userid;
 			entity.Address = et_address.getText().toString();
 			entity.Zip = et_postno.getText().toString();
 			entity.Linkman = et_linkman.getText().toString();
 			entity.Tel = et_phone.getText().toString();
+			entity.AreaId = Integer.parseInt(areaId);
 			add(entity);
 		} else {
 			// 未登录
@@ -79,7 +102,10 @@ public class NewAddressActivity extends MainActionBarActivity {
 
 			@Override
 			public void onComplete(String serializeResult) {
-				requestAdd(serializeResult);
+				if (serializeResult != null) {
+					Log.i(TAG, serializeResult);
+					requestAdd(serializeResult);
+				}
 			}
 		}).execute();
 	}
@@ -109,19 +135,57 @@ public class NewAddressActivity extends MainActionBarActivity {
 	}
 
 	@Override
+	@SuppressLint("InflateParams")
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		registerAddressReceiver();
+	}
+
+	void registerAddressReceiver() {
+		IntentFilter filter = new IntentFilter("com.yoopoon.market.address");
+		filter.addCategory(Intent.CATEGORY_DEFAULT);
+		this.registerReceiver(receiver, filter);
+	}
+
+	BroadcastReceiver receiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (action.equals("com.yoopoon.market.address")) {
+				areaId = intent.getExtras().getString("AreaId", "69");
+				String[] names = intent.getStringArrayExtra("Name");
+				StringBuilder sb = new StringBuilder();
+				for (int i = 0; i < names.length; i++) {
+					if (names[i] != null)
+						sb.append(names[i].trim() + " ");
+				}
+				Toast.makeText(NewAddressActivity.this, sb.toString(), Toast.LENGTH_SHORT).show();
+				tv_select.setText(sb.toString());
+				Log.i(TAG, tv_select.getText().toString());
+			}
+		}
+	};
+
+	protected void onDestroy() {
+		super.onDestroy();
+		if (receiver != null) {
+			this.unregisterReceiver(receiver);
+		}
+	};
+
+	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
 
 	@Override
 	public void titleButtonClick(View v) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void rightButtonClick(View v) {
-		// TODO Auto-generated method stub
 
 	}
 
