@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Community.Entity.Model.Order;
 using Community.Entity.Model.ServiceOrder;
 using Community.Service.Order;
@@ -12,6 +13,8 @@ using Zerg.Models.Pay;
 
 namespace Zerg.Controllers.Pay
 {
+    [AllowAnonymous]
+    [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class AlipayController : ApiController
     {
         private readonly IOrderService _orderService;
