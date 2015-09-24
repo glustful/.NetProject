@@ -21,7 +21,7 @@
                             <img  style="width: 67px;height: 67px" src="http://img.iyookee.cn/{{item.Thumbnail}}" class="w-full circle">
                         </div>
                         <div  class="table-responsive">
-                            <p><span>手机：<small class="small">{{item.Phone}}</small></span><span>姓名：<small>{{item.RealName}}</small></span><span>性别:<small>{{item.Gender}}</small></span></p>
+                            <p><span>手机：<small class="small">{{item.Phone}}</small></span><span>姓名：<small>{{item.RealName}}</small></span><span>性别:<small ng-if="item.Gender==0">男</small><small ng-if="item.Gender==1">女</small></span></p>
                             <p><span>身份证：<small>{{item.IdentityNo}}</small></span><span>余额：<small>{{item.AccountNumber}}</small></span><span>积分：<small>{{item.Points}}</small></span> </p>
                         </div>
                     </td>

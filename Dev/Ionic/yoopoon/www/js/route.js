@@ -8,7 +8,7 @@
 var app = angular.module('starter', ['ionic','ngCordova','ngStorage']);
 var SETTING = {
 BaseUrl:'http://www.iyookee.cn/',
-ApiUrl:'http://localhost:50597/api',
+ApiUrl:'http://192.168.1.199:9010/api',
 ImgUrl:'http://img.iyookee.cn/',
 eventApiUrl:'http://www.iyookee.cn/API'
 };
@@ -49,7 +49,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         // Set up the various states which the app can be in.
         // Each state's controller can be found in controllers.js
         $stateProvider
-        
+
         // setup an abstract state for the tabs directive
         .state('page', {
                url: '/page',
@@ -281,7 +281,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
     })
     .state('page.search_product', {
-        url: '/search_product?productName',
+        url: '/search_product',
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/searchProduct.html',
