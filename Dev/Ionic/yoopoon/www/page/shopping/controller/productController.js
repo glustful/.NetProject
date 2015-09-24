@@ -214,7 +214,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$t
             mainimg:null,
             price:null,
             oldprice:null,
-            parameterValue:[]
+            //parameterValue:[]
         };
         $scope.changIng=false;
         $scope.AddCart=function(){
@@ -223,7 +223,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$t
             $scope.cartinfo.mainimg=$scope.product.MainImg;
             $scope.cartinfo.price=$scope.product.Price;
             $scope.cartinfo.oldprice=$scope.product.OldPrice;
-            $scope.cartinfo.parameterValue=$scope.product.ParameterValue;
+            //$scope.cartinfo.parameterValue=$scope.product.ParameterValue;
             $scope.cartinfo.count = 1;
             cartservice.add($scope.cartinfo);
             $scope.changIng=true;
@@ -271,15 +271,15 @@ app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$t
         //};
 
         $scope.buy=function(){
-            $scope.cartinfo.id = $scope.product.Id;
-            $scope.cartinfo.name = $scope.product.Name;
-            $scope.cartinfo.mainimg=$scope.product.MainImg;
-            $scope.cartinfo.price=$scope.product.Price;
-            $scope.cartinfo.oldprice=$scope.product.OldPrice;
-            $scope.cartinfo.parameterValue=$scope.product.ParameterValue;
-            $scope.cartinfo.count = $scope.numbers;
-            $scope.price=$scope.product.Price*$scope.numbers
-            $state.go("page.order",{productcount: $scope.cartinfo,pricecount:$scope.price})
+            //$scope.cartinfo.id = $scope.product.Id;
+            //$scope.cartinfo.name = $scope.product.Name;
+            //$scope.cartinfo.mainimg=$scope.product.MainImg;
+            //$scope.cartinfo.price=$scope.product.Price;
+            //$scope.cartinfo.oldprice=$scope.product.OldPrice;
+            //$scope.cartinfo.parameterValue=$scope.product.ParameterValue;
+            //$scope.cartinfo.count = $scope.numbers;
+            //$scope.price=$scope.product.Price*$scope.numbers
+            $state.go("page.order",{productId: $scope.product.Id,count:$scope.numbers})
         }
         //endregion
         //$scope.AddGWCAction = function () {

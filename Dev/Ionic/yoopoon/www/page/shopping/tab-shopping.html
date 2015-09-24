@@ -50,39 +50,55 @@
             <div class="row bg-yellow">
 
                 <a class="col-20 tab-item">
-                    <i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">家政服务</p>
+                    <i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i>
+
+                    <p class="font-8">家政服务</p>
                 </a>
                 <a class="col-20 tab-item">
-                    <i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">衣物清洗</p>
+                    <i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i>
+
+                    <p class="font-8">衣物清洗</p>
                 </a>
                 <a class="col-20 tab-item">
-                    <i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">快递代收</p>
+                    <i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i>
+
+                    <p class="font-8">快递代收</p>
                 </a>
                 <a class="col-20 tab-item">
-                    <i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">月嫂</p>
+                    <i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i>
+
+                    <p class="font-8">月嫂</p>
                 </a>
                 <a class="col-20 tab-item">
-                    <i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">家政服务</p>
+                    <i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i>
+
+                    <p class="font-8">家政服务</p>
                 </a>
                 <a class="col-20 tab-item">
-                    <i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">衣物清洗</p>
+                    <i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i>
+
+                    <p class="font-8">衣物清洗</p>
                 </a>
                 <a class="col-20 tab-item">
-                    <i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">快递代收</p>
+                    <i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i>
+
+                    <p class="font-8">快递代收</p>
                 </a>
                 <a class="col-20 tab-item">
-                    <i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i><p class="font-8">月嫂</p>
+                    <i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i>
+
+                    <p class="font-8">月嫂</p>
                 </a>
 
             </div>
         <!--</ion-scroll>-->
 
-        <div class="padding stable-bg">
-            <div class="  bar-light  ">
-                <h4 class="title p-red font-12"><strong>| 爆款套餐</strong>&nbsp;| 省到不行</h4>
+        <div class=" stable-bg padding">
+            <div class="  item item-light item-borderless" style="margin-bottom: 10px">
+                <span class="title assertive font-11"><strong>| 爆款套餐</strong>&nbsp;| 省到不行</span>
             </div>
-            <div class="item item-image img-height" >
-                <img ng-src="http://img.iyookee.cn/{{list.MainImg}}" class="f-show"
+            <div class="item item-image ">
+                <img ng-src="http://img.iyookee.cn/{{list.MainImg}}@400w_140h_70q_2e" class="f-show"
                      ui-sref="page.product-detail({id:list.Id})">
 
                 <div class="p-location">
@@ -94,7 +110,7 @@
                         <del style="font-size: 2px;" class="color-white">折扣前{{list.Price}}</del>
                     </p>
                     <i class="icon icon-gouwuche shop-cart" ng-click="AddCart1(this)"></i><br>
-                    <button class=" energized-bg none-border button-size" ng-click="buysome(list.Id)">
+                    <button class=" energized-bg none-border button-size " ng-click="buysome(list.Id)">
                         立即购买
                     </button>
 
@@ -103,10 +119,10 @@
             <ul>
                 <li style="width:50%;float:left" ng-repeat="row in items">
                     <div class="col p-relative">
-                        <div class="img-height">
-                            <img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}"
+
+                            <img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}@187w_140h_70q_2e"
                                  ui-sref="page.product-detail({id:row.Id})">
-                        </div>
+
 
 
                         <div class="s-location">
@@ -166,7 +182,7 @@
             <!--</div>-->
             <!--</div>-->
         </div>
-        <ion-infinite-scroll  ng-if="loadmore" on-infinite="load_more();">
+        <ion-infinite-scroll ng-if="loadmore" on-infinite="load_more();">
         </ion-infinite-scroll>
     </ion-content>
 
