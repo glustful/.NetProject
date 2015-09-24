@@ -2,9 +2,10 @@
  * Created by huangxiuyu on 2015/9/16.
  */
 //start--------------------------地址管理 huangxiuyu 2015.09.15--------------------------
-app.controller('addressAdm',['$http','$scope',function($http,$scope, $ionicSlideBoxDelegate) {
+app.controller('addressAdm',['$http','$scope','AuthService',function($http,$scope,AuthService, $ionicSlideBoxDelegate) {
+    $scope.currentuser= AuthService.CurrentUser();
     $scope.searchCondition={
-        Adduser:1
+        Adduser:$scope.currentuser.UserId
     }
     $scope.getAddress=function(){
         $http.get(SETTING.ApiUrl+'/MemberAddress/Get/',{params:$scope.searchCondition,'withCredentials':true}).
@@ -93,30 +94,44 @@ app.controller('selectCounty',['$http','$scope','$stateParams',function($http,$s
     });
 }]);
 
-app.controller('newAddress',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
 
-   if( $stateParams.name==undefined ||  $stateParams.name=="" ||  $stateParams.id==undefined ||  $stateParams.id=="" )
-   {
-       $scope.go("page.addressAdm");
-   }
-    $scope.Address={
-        AreaName:$stateParams.name,
+app.controller('newaddress',['$http','$scope','$stateParams','$state','AuthService','$ionicLoading','$timeout',function($http,$scope,$stateParams,$state,AuthService,$ionicLoading,$timeout) {
+    $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
+    if( $scope.currentuser==undefined ||  $scope.currentuser=="")
+    {
+        $state.go("page.login");//调到登录页面
+    }
+  if( $stateParams.name==undefined ||  $stateParams.name=="" ||  $stateParams.id==undefined ||  $stateParams.id=="" )
+  {
+      $state.go("page.addressAdm");
+  }
+
+    $scope.AreaName=$stateParams.name;
+        $scope.Addre={
         AreaId: $stateParams.id,
         Address:'',
         Zip :'',
         Linkman :'',
-        Tel:''
+        Tel:'',
+            UserId:$scope.currentuser.UserId
     };
 
-    $scope.saves = function () {
 
-        $http.post(SETTING.ApiUrl + '/MemberAddress/Post', $scope.Address, {'withCredentials': true})
-            .success(function (data) {
+    $scope.saves = function () {
+        if( $scope.Addre.Address=="" ||  $scope.Addre.Address==undefined ||  $scope.Addre.Zip=="" ||  $scope.Addre.Zip==undefined ||  $scope.Addre.Linkman=="" ||  $scope.Addre.Linkman==undefined ||  $scope.Addre.Tel=="" ||  $scope.Addre.Tel==undefined  )
+        {
+            return;
+        }
+        if( $scope.Addre.Zip.length!=6)
+        {
+            return;
+        }
+        $http.post(SETTING.ApiUrl+ '/MemberAddress/Post', $scope.Addre, {'withCredentials': true}).success(function (data) {
                 if (data.Status) {
 
                     $state.go("page.addressAdm");
                 }
             });
     }
+}])
 
-}]);

@@ -39,6 +39,10 @@ namespace Zerg.Controllers.Community
         public HttpResponseMessage Get(int id)
 		{
 			var entity =_productService.GetProductById(id);
+            if (entity == null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不存在"));
+            }
             var comment = entity.Comments;           
             List<ProductCommentModel> commentList;
             if (comment == null)
@@ -85,13 +89,13 @@ namespace Zerg.Controllers.Community
                 Ad2 = entity.Detail.Ad2,
                 Ad3 = entity.Detail.Ad3,
                 //Comments = entity.Comments,		
-                ParameterValue =entity.Parameters.Select(c => new ProductParameterValueModel
-                {
-                    ParameterId = c.Parameter.Id,
-                    ParameterString = c.Parameter.Name,
-                    ValueId = c.ParameterValue.Id,
-                    Value = c.ParameterValue.Value
-                }).ToList()
+                //ParameterValue =entity.Parameters.Select(c => new ProductParameterValueModel
+                //{
+                //    ParameterId = c.Parameter.Id,
+                //    ParameterString = c.Parameter.Name,
+                //    ValueId = c.ParameterValue.Id,
+                //    Value = c.ParameterValue.Value
+                //}).ToList()
             };
             var product=new ProductComment
             {

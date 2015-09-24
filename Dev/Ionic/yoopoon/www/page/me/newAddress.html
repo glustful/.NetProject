@@ -3,35 +3,35 @@
     <a href="#/page/me/addressAdm " class="button button-clear icon ion-chevron-left button-light"></a>
     <h2 class="title light">添加新地址</h2>
 </div>
-<ion-view hide-nav-bar="true" hide-tabs="true"  >
-
-    <ion-content no-header="true" style="top:44px;" class="stable-bg ">
+<ion-view  hide-tabs="true"  >
+    <form class="form_content" ng-controller="newaddress"  name="login_form"  ng-submit="saves()" novalidate>
+    <ion-content  style="top:44px;" class="stable-bg ">
         <ion-list >
 
 
             <ion-item class="item-icon-right">
-                <h2  >{{Address.AreaName}}</h2>
+                <h2  >{{AreaName}}</h2>
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>
             <ion-item class="item-icon-right">
-                <input type="text" ng-model="{{Address.Address}}" placeholder="请输入详细地址"/>
+                <input type="text" ng-model="Addre.Address" placeholder="请输入详细地址"/>
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>
             <ion-item class="item-icon-right">
-                <input type="text" ng-model="{{Address.Tel}}" placeholder="请输入收货人姓名"/>
+                <input type="text" ng-model="Addre.Linkman" placeholder="请输入收货人姓名"/>
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>
             <ion-item class="item-icon-right">
-                <input type="tel" ng-model="{{Address.Linkman}}" placeholder="请输入收货人联系电话"/>
+                <input type="tel" ng-model="Addre.Tel" placeholder="请输入收货人联系电话"/>
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>
             <ion-item class="item-icon-right">
-                <input type="tel" ng-model="{{Address.Zip}}" placeholder="请输入邮编"/>
+                <input type="tel" ng-model="Addre.Zip" placeholder="请输入邮编"/>
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>
         </ion-list>
-        <button class=" button saveAll light" ng-click="saves()">保存</button>
+        <button class=" button saveAll light" type="submit" >保存</button>
 
     </ion-content>
-
+</form>
 </ion-view>

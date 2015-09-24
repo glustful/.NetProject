@@ -91,6 +91,10 @@ namespace Community.Service.ProductParameter
 			var query = _productparameterRepository.Table;
 			try
 			{
+                if (condition.ProductId.HasValue)
+                {
+                    query = query.Where(q => condition.ProductId == q.Product.Id);
+                }
 				if (condition.AddTimeBegin.HasValue)
                 {
                     query = query.Where(q => q.AddTime>= condition.AddTimeBegin.Value);
@@ -155,6 +159,10 @@ namespace Community.Service.ProductParameter
 			var query = _productparameterRepository.Table;
 			try
 			{
+                if (condition.ProductId.HasValue)
+                {
+                    query = query.Where(q => condition.ProductId == q.Product.Id);
+                }
 				if (condition.AddTimeBegin.HasValue)
                 {
                     query = query.Where(q => q.AddTime>= condition.AddTimeBegin.Value);

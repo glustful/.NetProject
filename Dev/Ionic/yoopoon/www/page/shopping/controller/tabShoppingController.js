@@ -171,6 +171,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     };
     getList();
 //endregion
+    
     //region 商品加载
     $scope.loadmore = true;
     $scope.load_more = function () {
@@ -214,7 +215,8 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         name: null,
         count: null,
         price: null,
-        oldprice: null
+        oldprice: null,
+        parameterValue:[]
     };
     // 添加商品
     $scope.AddCart = function (data) {
@@ -224,11 +226,31 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         $scope.cartinfo.price = data.row.Price;
         $scope.cartinfo.oldprice = data.row.OldPrice;
         $scope.cartinfo.count = 1;
+
+
         cartservice.add($scope.cartinfo);
     }
 
     //endregion
 
+    //region   立即购买
+    $scope.buysome=function(id){
+
+        $http.get(SETTING.ApiUrl + '/CommunityProduct/Get?id='+id, {
+            'withCredentials': true
+        }).success(function (data) {
+                $scope.item = data.ProductModel;
+            $state.go("page.order",{productcount:$scope.item,pricecount:$scope.item.Price})
+        });
+
+    }
+    //endregion
+
+    //region  下拉刷新
+    $scope.doRefresh = function() {
+        window.location.reload();
+    }
+    //endregion
 
     $scope.searchname = '';
     document.getElementById('search').onblur = function () {

@@ -31,7 +31,7 @@
         <ion-list>
             <ion-item class="row" ng-repeat="item in list" >
                 <div class="product col col-25" ui-sref="page.product-detail({id:item.Id})">
-                    <img src="http://img.iyookee.cn/{{item.MainImg}}" alt=""/>
+                    <img ng-src="http://img.iyookee.cn/{{item.MainImg}}@67w_67h_70q" alt=""/>
                 </div>
                 <div class="col col-75">
                     <h2 style="white-space: normal" class="font-title">{{item.Name}}</h2>

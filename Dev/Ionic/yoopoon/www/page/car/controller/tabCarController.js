@@ -71,16 +71,6 @@ var carlistcount=0;
   };
   $scope.delegateHandler = $ionicSlideBoxDelegate;
 
-    ////全选按钮功能
-//    $scope.start=false;
-//    $scope.allButton=false;
-//    $scope.all=function(){
-//        if($scope.allButton==false){
-//            $scope.start=false;
-//        }if($scope.allButton==true){
-//            $scope.start=true;
-//        }
-//    }
 
 
 
@@ -183,12 +173,15 @@ var carlistcount=0;
 
 
     $scope.decrease=function(id){
-        cartservice.delete(id);
 
         for(j=0;j<$scope.productlist.length;j++){
             if($scope.productlist[j].id==id){
-                $scope.productlist[j].count=  $scope.productlist[j].count-1;
+                if(  $scope.productlist[j].count>1){
+                    $scope.productlist[j].count=  $scope.productlist[j].count-1;
+                    cartservice.delete(id);
+                }
             }
+
         }
         allprice();
 
@@ -214,7 +207,7 @@ var carlistcount=0;
     }
     //endregion
 
-    //region 编辑
+    //region 删除编辑
 
     $scope.flag={showDelete:false,showReorder:false};
     $scope.items=["Chinese","English","German","Italian","Janapese","Sweden","Koeran","Russian","French"];
