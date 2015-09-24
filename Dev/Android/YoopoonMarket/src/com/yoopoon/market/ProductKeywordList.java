@@ -28,6 +28,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -51,7 +52,7 @@ import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
-import com.yoopoon.view.adapter.ProductListViewAdapter;
+import com.yoopoon.view.adapter.ProductKeywordListAdapter;
 
 /**
  * @ClassName: ProductList
@@ -60,22 +61,22 @@ import com.yoopoon.view.adapter.ProductListViewAdapter;
  * @date: 2015年9月10日 下午2:16:15
  */
 @EActivity(R.layout.acitvity_product_list)
-public class ProductList extends MainActionBarActivity implements OnClickListener {
+public class ProductKeywordList extends MainActionBarActivity implements OnClickListener {
 	private Dialog screenPriceDialog, sortDialog;
 	private Context mContext;
 	private ListView productListView;
-	private ProductListViewAdapter mProductListViewAdapter;
+	private ProductKeywordListAdapter mProductKeywordListAdapter;
 	private Button confirmButton, cancelButton, resetPriceButton;
 	private EditText productBeginPriceEditText, productEndPriceEditText;
 	private Button resetSortButton, cancelSortButton;
 	private static int priceBegain = 0, priceEnd = 0;
-	private String classificationId; //从其他activity过来的分类id
+	//private String classificationId; //从其他activity过来的分类id
 	private String titleString;
 	//排序状态码 0对应空，1对应低价到高，2对应高价到低价，3对应低销量到高销量，4对应高销量到低销量
 	private static int sortStatusCode = 0;
 	//存储传送到服务器的参数
 	//配置排序的四个按钮
-	private Button changedCodlorButton;
+	//private Button changedCodlorButton;
 	private Button sortByPriceFromLowerButton, sortByPriceFromHigherButton, sortBySalesVolumeFromLowerButton,
 			sortBySalesVolumeFromHigherButton;
 	//存储分类状态信息
@@ -87,16 +88,18 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 	@ViewById
 	PullToRefreshListView ptr_listview_product_list;
 	@ViewById(R.id.btn_screen_product_list)
-	Button screenProductButton;
+	Button priceSettingButton;
 	@ViewById(R.id.btn_setting_sort_method)
 	Button settingSortMethodButton;
 	@ViewById(R.id.linearlayout_progressbar)
 	LinearLayout progressbarLinearLayout;
+	//存储关键字
+	private String keyword = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mContext = ProductList.this;
+		mContext = ProductKeywordList.this;
 	}
 	@AfterViews
 	void initProductList() {
@@ -104,11 +107,14 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 		titleButton.setVisibility(View.VISIBLE);
 		backWhiteButton.setVisibility(View.VISIBLE);
 		Bundle bundle = getIntent().getExtras();
-		titleString = bundle.getString("classificationName");
-		classificationId = bundle.getString("classificationId");
+		if (bundle != null) {
+			keyword = bundle.getString("keyword");
+			titleString = bundle.getString("keyword");
+		}
 		titleButton.setText(titleString);
 		titleButton.setTextColor(Color.WHITE);
 		backWhiteButton.setText("后退");
+		backWhiteButton.setTextColor(Color.WHITE);
 		headView.setBackgroundColor(Color.RED);
 		rightButton.setVisibility(View.GONE);
 		//商品列表
@@ -116,7 +122,7 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 		ptr_listview_product_list.setOnRefreshListener(new RefreshListener());
 		productListView = ptr_listview_product_list.getRefreshableView();
 		//筛选按钮和事件设置
-		screenProductButton.setOnClickListener(new OnClickListener() {
+		priceSettingButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -126,9 +132,13 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 				resetPriceButton = (Button) screenPriceView.findViewById(R.id.btn_reset_price_setting);
 				productBeginPriceEditText = (EditText) screenPriceView.findViewById(R.id.et_price_begin);
 				productEndPriceEditText = (EditText) screenPriceView.findViewById(R.id.et_price_end);
-				confirmButton.setOnClickListener(ProductList.this);
-				cancelButton.setOnClickListener(ProductList.this);
-				resetPriceButton.setOnClickListener(ProductList.this);
+				confirmButton.setOnClickListener(ProductKeywordList.this);
+				cancelButton.setOnClickListener(ProductKeywordList.this);
+				resetPriceButton.setOnClickListener(ProductKeywordList.this);
+				if (!priceSettingButton.getText().toString().equals("筛选")) {
+					productBeginPriceEditText.setText(priceBegain + "");
+					productEndPriceEditText.setText(priceEnd + "");
+				}
 				builder.setView(screenPriceView);
 				screenPriceDialog = builder.show();
 			}
@@ -150,99 +160,24 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 				sortBySalesVolumeFromHigherButton = (Button) sortProductView
 						.findViewById(R.id.btn_sort_by_sales_volume_from_higher);
 				//添加点击事件
-				resetSortButton.setOnClickListener(ProductList.this);
-				cancelSortButton.setOnClickListener(ProductList.this);
+				resetSortButton.setOnClickListener(ProductKeywordList.this);
+				cancelSortButton.setOnClickListener(ProductKeywordList.this);
 				//设置排序四种方法事件
-				sortByPriceFromLowerButton.setOnClickListener(ProductList.this);
-				sortByPriceFromHigherButton.setOnClickListener(ProductList.this);
-				sortBySalesVolumeFromLowerButton.setOnClickListener(ProductList.this);
-				sortBySalesVolumeFromHigherButton.setOnClickListener(ProductList.this);
+				sortByPriceFromLowerButton.setOnClickListener(ProductKeywordList.this);
+				sortByPriceFromHigherButton.setOnClickListener(ProductKeywordList.this);
+				sortBySalesVolumeFromLowerButton.setOnClickListener(ProductKeywordList.this);
+				sortBySalesVolumeFromHigherButton.setOnClickListener(ProductKeywordList.this);
 				builder.setView(sortProductView);
 				sortDialog = builder.show();
 			}
 		});
-		requestClassification();
+		//requestClassification();
 		requsetProductList();
 	}
-	//######################################################################################################
-	//                               此处的id=1只做测试使用
-	//######################################################################################################
-	/**
-	 * @Title: requestClassification
-	 * @Description: 根据父类参数获取3级分类信息
-	 */
-	private void requestClassification() {
-		progressbarLinearLayout.setVisibility(View.VISIBLE);
-		new RequestAdapter() {
-			@Override
-			public void onReponse(ResponseData data) {
-				progressbarLinearLayout.setVisibility(View.GONE);
-				if (data.getMRootData() != null) {
-					JSONArray jsonArray = data.getMRootData().optJSONArray("Object");
-					addClassificationButton(JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
-				}
-			}
-			@Override
-			public void onProgress(ProgressMessage msg) {
-			}
-		}.setUrl(getString(R.string.url_category_get)).addParam("id", classificationId)
-				.setRequestMethod(RequestMethod.eGet).notifyRequest();
-	}
-	private void addClassificationButton(ArrayList<JSONObject> arrayList) {
-		changedCodlorButton = new Button(mContext);
-		if (arrayList.size() == 1) {
-			final JSONObject jsonObject = arrayList.get(0);
-			Button button = new Button(mContext);
-			button.setText(jsonObject.optString("Name"));
-			button.setBackgroundColor(Color.TRANSPARENT);
-			button.setTextColor(Color.rgb(255, 34, 30));
-			classificationStatusCode = jsonObject.optString("Id");
-			/*button.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					//点击效果背景色设置
-					changedCodlorButton.setTextColor(Color.BLACK);
-					
-					Button button1 = (Button) v;
-					//点击效果背景色设置
-					
-					changedCodlorButton = button1;
-					
-					screenPrice();
-				}
-			});*/
-			linearLayout_product_list.addView(button);
-		} else {
-			for (final JSONObject jsonObject : arrayList) {
-				Button button = new Button(mContext);
-				button.setText(jsonObject.optString("Name"));
-				button.setBackgroundColor(Color.TRANSPARENT);
-				button.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						//点击效果背景色设置
-						changedCodlorButton.setTextColor(Color.BLACK);
-						Toast.makeText(mContext, jsonObject.optString("Name").toString(), Toast.LENGTH_SHORT).show();
-						Button button1 = (Button) v;
-						//点击效果背景色设置
-						button1.setTextColor(Color.rgb(255, 34, 30));
-						changedCodlorButton = button1;
-						classificationStatusCode = jsonObject.optString("Id");
-						screenPrice();
-					}
-				});
-				linearLayout_product_list.addView(button);
-			}
-		}
-	}
-	/**
-	 * @Title: requsetProductList
-	 * @Description: 请求网络数据，当Activity启动的时候加载产品
-	 */
 	private void requsetProductList() {
 		progressbarLinearLayout.setVisibility(View.VISIBLE);
 		HashMap<String, String> hashMap = new HashMap<String, String>();
-		hashMap.put("CategoryId", classificationId);
+		hashMap.put("Name", keyword);
 		hashMap.put("Page", "1");
 		hashMap.put("PageCount", "10");
 		new RequestAdapter() {
@@ -251,9 +186,9 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 				progressbarLinearLayout.setVisibility(View.GONE);
 				if (data.getMRootData() != null) {
 					JSONArray array = data.getMRootData().optJSONArray("List");
-					mProductListViewAdapter = new ProductListViewAdapter(mContext,
+					mProductKeywordListAdapter = new ProductKeywordListAdapter(mContext,
 							JSONArrayConvertToArrayList.convertToArrayList(array));
-					productListView.setAdapter(mProductListViewAdapter);
+					productListView.setAdapter(mProductKeywordListAdapter);
 				}
 			}
 			@Override
@@ -275,7 +210,7 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 				progressbarLinearLayout.setVisibility(View.GONE);
 				if (data.getMRootData() != null) {
 					JSONArray array = data.getMRootData().optJSONArray("List");
-					mProductListViewAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(array));
+					mProductKeywordListAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(array));
 				}
 			}
 			@Override
@@ -291,7 +226,7 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 				ptr_listview_product_list.onRefreshComplete();
 				if (data.getMRootData() != null) {
 					JSONArray array = data.getMRootData().optJSONArray("List");
-					mProductListViewAdapter.addRefresh(JSONArrayConvertToArrayList.convertToArrayList(array));
+					mProductKeywordListAdapter.addRefresh(JSONArrayConvertToArrayList.convertToArrayList(array));
 				}
 			}
 			@Override
@@ -310,35 +245,24 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.btn_confirm:
-				if ((!TextUtils.isEmpty(productBeginPriceEditText.getText()))
-						&& (!TextUtils.isEmpty(productEndPriceEditText.getText()))) {
-					screenProductButton.setText(productBeginPriceEditText.getText() + "元 - "
-							+ productEndPriceEditText.getText() + "元");
-				}
-				//判断输入的价格为空时整理逻辑
-				if (TextUtils.isEmpty(productBeginPriceEditText.getText())) {
-				} else {
-					priceBegain = Integer.parseInt(productBeginPriceEditText.getText().toString());
-				}
-				if (TextUtils.isEmpty(productEndPriceEditText.getText())) {
-				} else {
-					priceEnd = Integer.parseInt(productEndPriceEditText.getText().toString());
-				}
-				screenPrice();
+				judgeSettingPriceStatus();
+				requsetProductList(initParameters());
 				screenPriceDialog.dismiss();
 				break;
 			case R.id.btn_cancel:
 				screenPriceDialog.dismiss();
 				break;
 			case R.id.btn_reset_price_setting:
-				screenProductButton.setText("筛选");
+				priceSettingButton.setText("筛选");
 				priceBegain = 0;
 				priceEnd = 0;
+				requsetProductList(initParameters());
 				screenPriceDialog.dismiss();
 				break;
 			case R.id.btn_reset_sort_method:
 				sortStatusCode = 0;
 				settingSortMethodButton.setText("综合排序");
+				requsetProductList(initParameters());
 				sortDialog.dismiss();
 				break;
 			case R.id.btn_cancel_sort_method:
@@ -348,81 +272,66 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 				//设置排序状态码
 				sortStatusCode = 1;
 				settingSortMethodButton.setText("低价到高价");
-				screenPrice();
+				requsetProductList(initParameters());
 				sortDialog.dismiss();
 				break;
 			case R.id.btn_sort_by_price_from_higher://高价到低价
 				//设置排序状态码
 				sortStatusCode = 2;
 				settingSortMethodButton.setText("高价到低价");
-				screenPrice();
+				requsetProductList(initParameters());
 				sortDialog.dismiss();
 				break;
 			case R.id.btn_sort_by_sales_volume_from_lower://低销量到高销量
 				//设置排序状态码
 				sortStatusCode = 3;
 				settingSortMethodButton.setText("低销量到高销量");
-				screenPrice();
+				requsetProductList(initParameters());
 				sortDialog.dismiss();
 				break;
 			case R.id.btn_sort_by_sales_volume_from_higher://高销量到低销量
 				//设置排序状态码
 				sortStatusCode = 4;
 				settingSortMethodButton.setText("高销量到低销量");
-				screenPrice();
+				requsetProductList(initParameters());
 				sortDialog.dismiss();
 				break;
 			default:
 				break;
 		}
 	}
+	/**
+	 * @Title: judgeSettingPriceStatus
+	 * @Description: 判断和设置价格
+	 */
+	private void judgeSettingPriceStatus() {
+		if ((!TextUtils.isEmpty(productBeginPriceEditText.getText()))
+				&& (!TextUtils.isEmpty(productEndPriceEditText.getText()))) {
+			int priceStart = Integer.parseInt(productBeginPriceEditText.getText().toString().trim());
+			int prictEnd = Integer.parseInt(productEndPriceEditText.getText().toString().trim());
+			if (prictEnd - priceStart > 0) {
+				priceSettingButton.setText(productBeginPriceEditText.getText() + "元 - "
+						+ productEndPriceEditText.getText() + "元");
+			} else {
+				Toast.makeText(mContext, "输入的开始结束价格区间有误，请从新输入", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			priceBegain = Integer.parseInt(productBeginPriceEditText.getText().toString());
+			priceEnd = Integer.parseInt(productEndPriceEditText.getText().toString());
+		}
+	}
 	//###################################################################################################
 	//                                     注意：API只提供了价格排序，销量排序为提供
 	//###################################################################################################
-	private void screenPrice() {
-		HashMap<String, String> hashMap = new HashMap<String, String>();
-		//获取排序参数,同时设置参数到Map中
-		if (sortStatusCode == 0) {
-			hashMap.put("IsDescending", "");
-			hashMap.put("OrderBy", "");
-		} else if (sortStatusCode == 1) {
-			hashMap.put("IsDescending", "false");
-			hashMap.put("OrderBy", "OrderByPrice");
-		} else if (sortStatusCode == 2) {
-			hashMap.put("IsDescending", "true");
-			hashMap.put("OrderBy", "OrderByPrice");
-		} else if (sortStatusCode == 3) {
-			hashMap.put("IsDescending", "false");
-			hashMap.put("OrderBy", "OrderByPrice");
-		} else if (sortStatusCode == 4) {
-			hashMap.put("IsDescending", "true");
-			hashMap.put("OrderBy", "OrderByPrice");
-		}
-		//获取分类参数（等待API完成）
-		if (!classificationStatusCode.equals("")) {
-			hashMap.put("CategoryId", classificationStatusCode);
-		}
-		//获取价格参数
-		if (priceBegain != 0) {
-			hashMap.put("PriceBegin", priceBegain + "");
-		}
-		if (priceEnd != 0) {
-			hashMap.put("PriceEnd", priceEnd + "");
-		}
-		requsetProductList(hashMap);
-	}
 	/**
-	 * @Title: settingStatusCode
-	 * @Description: 设置分页显示的参数
-	 * @param hashMap
+	 * @Title: initParameters
+	 * @Description: 初始化参数
 	 * @return
 	 */
-	private HashMap<String, String> settingStatusCode(HashMap<String, String> hashMap) {
+	private HashMap<String, String> initParameters() {
+		HashMap<String, String> hashMap = new HashMap<String, String>();
 		//获取排序参数,同时设置参数到Map中
-		if (sortStatusCode == 0) {
-			//hashMap.put("IsDescending", "");
-			//hashMap.put("OrderBy", "");
-		} else if (sortStatusCode == 1) {
+		if (sortStatusCode == 1) {
 			hashMap.put("IsDescending", "false");
 			hashMap.put("OrderBy", "OrderByPrice");
 		} else if (sortStatusCode == 2) {
@@ -435,10 +344,7 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 			hashMap.put("IsDescending", "true");
 			hashMap.put("OrderBy", "OrderByPrice");
 		}
-		//获取分类参数（等待API完成）
-		if (!classificationStatusCode.equals("")) {
-			hashMap.put("CategoryId", classificationStatusCode);
-		}
+		//获取处于点击的分类
 		//获取价格参数
 		if (priceBegain != 0) {
 			hashMap.put("PriceBegin", priceBegain + "");
@@ -446,6 +352,7 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 		if (priceEnd != 0) {
 			hashMap.put("PriceEnd", priceEnd + "");
 		}
+		hashMap.put("Name", keyword);
 		return hashMap;
 	}
 	//###################################################################################################
@@ -453,6 +360,8 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 	//###################################################################################################
 	@Override
 	public void backButtonClick(View v) {
+		/*Intent intent=new Intent(ProductKeywordList.this,TreeCategoryActivity_.class);
+		startActivity(intent);*/
 		finish();
 	}
 	@Override
@@ -480,8 +389,7 @@ public class ProductList extends MainActionBarActivity implements OnClickListene
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 			HashMap<String, String> hashMap = new HashMap<String, String>();
-			hashMap = settingStatusCode(hashMap);
-			hashMap.put("CategoryId", classificationId);
+			hashMap = initParameters();
 			hashMap.put("Page", (++pageCode) + "");
 			hashMap.put("PageCount", "10");
 			requsetMoreProductList(hashMap);

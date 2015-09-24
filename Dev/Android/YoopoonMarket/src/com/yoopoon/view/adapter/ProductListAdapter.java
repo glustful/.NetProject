@@ -36,7 +36,6 @@ public class ProductListAdapter extends BaseAdapter {
 		arrayList.remove(0);
 		datas = arrayList;
 	}
-
 	@Override
 	public int getCount() {
 		if (datas.size() % 2 == 0) {
@@ -45,17 +44,14 @@ public class ProductListAdapter extends BaseAdapter {
 			return ((datas.size() + 1) / 2);
 		}
 	}
-
 	@Override
 	public Object getItem(int position) {
 		return datas.get(position);
 	}
-
 	@Override
 	public long getItemId(int position) {
 		return position;
 	}
-
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		if ((datas.size() - position * 2) >= 1) {
@@ -106,7 +102,6 @@ public class ProductListAdapter extends BaseAdapter {
 			final String subtitle1 = datas.get(position * 2).optString("Subtitte");
 			// 立即购买按钮点击事件
 			productityViewHandler.purchaseButton1.setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					String mainImageString = datas.get(position * 2).optString("MainImg", "");
@@ -126,10 +121,10 @@ public class ProductListAdapter extends BaseAdapter {
 				}
 			});
 			productityViewHandler.productityPhotoImageView1.setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					Bundle bundle = new Bundle();
+					bundle.putString("comeFromstatusCode", "shopFragment");
 					bundle.putString("productId", datas.get(position * 2).optString("Id"));
 					Intent intent = new Intent(mContext, ProductDetailActivity_.class);
 					intent.putExtras(bundle);
@@ -138,11 +133,9 @@ public class ProductListAdapter extends BaseAdapter {
 			});
 			// 购物车动画效果
 			productityViewHandler.cartImageView1.setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(final View v) {
 					new Thread() {
-
 						public void run() {
 							DBDao dao = new DBDao(mContext);
 							if (dao.isExist(id1)) {
@@ -230,7 +223,6 @@ public class ProductListAdapter extends BaseAdapter {
 					final String subtitle2 = datas.get(position * 2 + 1).optString("Subtitte");
 					// 立即购买按钮点击事件
 					productityViewHandler.purchaseButton2.setOnClickListener(new OnClickListener() {
-
 						@Override
 						public void onClick(View v) {
 							String mainImageString = datas.get(position * 2 + 1).optString("MainImg", "");
@@ -251,10 +243,10 @@ public class ProductListAdapter extends BaseAdapter {
 						}
 					});
 					productityViewHandler.productityPhotoImageView2.setOnClickListener(new OnClickListener() {
-
 						@Override
 						public void onClick(View v) {
 							Bundle bundle = new Bundle();
+							bundle.putString("comeFromstatusCode", "shopFragment");
 							bundle.putString("productId", datas.get(position * 2 + 1).optString("Id"));
 							Intent intent = new Intent(mContext, ProductDetailActivity_.class);
 							intent.putExtras(bundle);
@@ -262,11 +254,9 @@ public class ProductListAdapter extends BaseAdapter {
 						}
 					});
 					productityViewHandler.cartImageView2.setOnClickListener(new OnClickListener() {
-
 						@Override
 						public void onClick(final View v) {
 							new Thread() {
-
 								public void run() {
 									DBDao dao = new DBDao(mContext);
 									if (dao.isExist(id2)) {
@@ -308,7 +298,6 @@ public class ProductListAdapter extends BaseAdapter {
 			return null;
 		}
 	}
-
 	public void refresh(ArrayList<JSONObject> mJsonObjects) {
 		datas.clear();
 		if (mJsonObjects != null) {
@@ -316,7 +305,6 @@ public class ProductListAdapter extends BaseAdapter {
 		}
 		this.notifyDataSetChanged();
 	}
-
 	public void addRefresh(ArrayList<JSONObject> mJsonObjects) {
 		if (mJsonObjects != null) {
 			datas.addAll(mJsonObjects);

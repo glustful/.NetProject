@@ -92,6 +92,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	private int pictureYPosition;
 	// 商品图片位置
 	private String productImageURL;
+
 	Staff staff;
 
 	@Click(R.id.btn_purchase)
@@ -102,6 +103,8 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		staffList.add(staff);
 		BalanceActivity_.intent(this).staffList(staffList).start();
 	}
+	// 设置返回状态码，如果是首页跳转返回首页，如果是商品列表页回商品列表页
+	private String comeFromstatusCode;
 
 	/**
 	 * @Title: initProductComment
@@ -110,6 +113,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	@AfterViews
 	void initProductDetail() {
 		// 获取从首页过来的id
+		comeFromstatusCode = getIntent().getExtras().getString("comeFromstatusCode");
 		productId = getIntent().getExtras().getString("productId");
 		linearLayout = (LinearLayout) findViewById(R.id.linearlayout_product_detail);
 		productAdvertisement = new ProductAdvertisement(mContext);
@@ -131,9 +135,17 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		returnToShopImageView.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				Intent intent = new Intent(ProductDetailActivity.this, MainActivity_.class);
-				startActivity(intent);
-				return false;
+				if (comeFromstatusCode.equals("shopFragment")) {
+					Intent intent = new Intent(ProductDetailActivity.this, MainActivity_.class);
+					startActivity(intent);
+				} else if (comeFromstatusCode.equals("ProductClassificationList")) {
+					Intent intent = new Intent(ProductDetailActivity.this, ProductClassificationList_.class);
+					startActivity(intent);
+				} else if (comeFromstatusCode.equals("productKeywordList")) {
+					Intent intent = new Intent(ProductDetailActivity.this, ProductKeywordList_.class);
+					startActivity(intent);
+				}
+				return true;
 			}
 		});
 		addMoreCommentButton.setOnClickListener(new OnClickListener() {
@@ -173,11 +185,23 @@ public class ProductDetailActivity extends MainActionBarActivity {
 				}.start();
 			}
 		});
+		cartImageView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				Intent intent = new Intent("com.yoopoon.market.showcart");
+				intent.addCategory(Intent.CATEGORY_DEFAULT);
+				/*
+				 * Intent intent = new Intent(ProductDetailActivity.this, MainActivity_.class);
+				 * Bundle bundle = new Bundle(); bundle.putBoolean("productDetailCartClick", true);
+				 * intent.putExtra("productDetailBundle", bundle); mContext.startActivity(intent);
+				 */
+				sendBroadcast(intent);
+				MainActivity_.intent(mContext).start();
+			}
+		});
 	}
 
-	/*
-	 * private void cartAnimation( ){ }
-	 */
 	/**
 	 * @Title: loadComment
 	 * @Description: 循环加载产品评论

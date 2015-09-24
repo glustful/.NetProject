@@ -36,11 +36,11 @@ import com.yoopoon.market.R;
 import com.yoopoon.market.R.id;
 import com.yoopoon.market.R.layout;
 
-public class ProductListViewAdapter extends BaseAdapter {
+public class ProductClassificationListAdapter extends BaseAdapter {
 	private Context mContext;
 	private ArrayList<JSONObject> datas;
 
-	public ProductListViewAdapter(Context context, ArrayList<JSONObject> arrayList) {
+	public ProductClassificationListAdapter(Context context, ArrayList<JSONObject> arrayList) {
 		mContext = context;
 		datas = arrayList;
 	}
@@ -92,6 +92,7 @@ public class ProductListViewAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				Bundle bundle = new Bundle();
+				bundle.putString("comeFromstatusCode", "productClassificationList");
 				bundle.putString("productId", datas.get(position).optString("Id"));
 				Intent intent = new Intent(mContext, ProductDetailActivity_.class);
 				intent.putExtras(bundle);
@@ -118,6 +119,7 @@ public class ProductListViewAdapter extends BaseAdapter {
 		}
 		this.notifyDataSetChanged();
 	}
+	
 
 	class ProductViewHandler {
 		private ImageView productPhotoImageView;
