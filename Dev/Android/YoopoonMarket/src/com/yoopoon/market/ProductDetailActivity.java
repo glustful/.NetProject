@@ -1,24 +1,13 @@
 package com.yoopoon.market;
 
 import java.util.ArrayList;
-
+import java.util.List;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.yoopoon.advertisement.ProductAdvertisement;
-import com.yoopoon.market.net.ProgressMessage;
-import com.yoopoon.market.net.RequestAdapter;
-import com.yoopoon.market.net.ResponseData;
-import com.yoopoon.market.net.RequestAdapter.RequestMethod;
-import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
-import com.yoopoon.market.utils.SplitStringWithDot;
-import com.yoopoon.market.view.HtmlWebView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -29,9 +18,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnimationSet;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -42,21 +31,32 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yoopoon.advertisement.ProductAdvertisement;
+import com.yoopoon.market.db.dao.DBDao;
+import com.yoopoon.market.domain.Staff;
+import com.yoopoon.market.net.ProgressMessage;
+import com.yoopoon.market.net.RequestAdapter;
+import com.yoopoon.market.net.RequestAdapter.RequestMethod;
+import com.yoopoon.market.net.ResponseData;
+import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
+import com.yoopoon.market.utils.SplitStringWithDot;
+import com.yoopoon.market.view.HtmlWebView;
 
 @EActivity(R.layout.activity_product_detail)
 public class ProductDetailActivity extends MainActionBarActivity {
+	private static final String TAG = "ProductDetailActivity";
 	private ProductAdvertisement productAdvertisement;
 	private ArrayList<String> imgs;
 	private LinearLayout linearLayout;
 	private Context mContext;
 	private String productId;
-	//评论对应的布局
+	// 评论对应的布局
 	private LinearLayout commentLinearlayout;
-	//添加更多评论对应的布局
+	// 添加更多评论对应的布局
 	private static int count = 2;
 	private ArrayList<JSONObject> commentJsonObjects;
-	//商品详细信息对应的布局视图
+	// 商品详细信息对应的布局视图
 	private TextView productTitleTextView;
 	private TextView productSubtitleTextView;
 	private TextView productPrictTextView;
@@ -65,9 +65,9 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	@ViewById(R.id.scrollview_product_detail)
 	ScrollView productDetailScrollView;
 	@ViewById(R.id.img_product_detail_return)
-	ImageView returnToShopImageView;//返回按钮
+	ImageView returnToShopImageView;// 返回按钮
 	@ViewById(R.id.img_cart)
-	ImageView cartImageView;//购物车
+	ImageView cartImageView;// 购物车
 	@ViewById(R.id.btn_add_more_comment)
 	Button addMoreCommentButton;
 	@ViewById(R.id.tv_product_comment_amount)
@@ -82,17 +82,28 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	String tail = "</body></html>";
 	@ViewById(R.id.btn_add_cart)
 	Button addToCartButton;
-	//动画对应的商品图片
+	// 动画对应的商品图片
 	@ViewById(R.id.img_animation_cart)
 	ImageView animationCartImageView;
-	//获取购物车和加入购物车按钮位置
+	// 获取购物车和加入购物车按钮位置
 	private int cartXPosition;
 	private int cartYPosition;
 	private int pictureXPosition;
 	private int pictureYPosition;
-	//商品图片位置
+	// 商品图片位置
 	private String productImageURL;
-	//设置返回状态码，如果是首页跳转返回首页，如果是商品列表页回商品列表页
+	Staff staff;
+
+	@Click(R.id.btn_purchase)
+	void purchase() {
+		if (staff == null)
+			return;
+		List<Staff> staffList = new ArrayList<Staff>();
+		staffList.add(staff);
+		BalanceActivity_.intent(this).staffList(staffList).start();
+	}
+
+	// 设置返回状态码，如果是首页跳转返回首页，如果是商品列表页回商品列表页
 	private String comeFromstatusCode;
 
 	/**
@@ -101,23 +112,23 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	 */
 	@AfterViews
 	void initProductDetail() {
-		//获取从首页过来的id
+		// 获取从首页过来的id
 		comeFromstatusCode = getIntent().getExtras().getString("comeFromstatusCode");
 		productId = getIntent().getExtras().getString("productId");
 		linearLayout = (LinearLayout) findViewById(R.id.linearlayout_product_detail);
 		productAdvertisement = new ProductAdvertisement(mContext);
-		//获取广告信息
-		//添加广告
+		// 获取广告信息
+		// 添加广告
 		linearLayout.addView(productAdvertisement.getRootView(), 0);
-		//初始化商品详细信息视图
+		// 初始化商品详细信息视图
 		productTitleTextView = (TextView) findViewById(R.id.tv_product_title);
 		productSubtitleTextView = (TextView) findViewById(R.id.tv_product_subtitle);
 		productPrictTextView = (TextView) findViewById(R.id.tv_product_selling_price);
 		productPrimePriceTextView = (TextView) findViewById(R.id.tv_product_prime_price);
 		productSalesVolumeTextView = (TextView) findViewById(R.id.tv_product_sales_volume);
-		//设置删除线
+		// 设置删除线
 		productPrimePriceTextView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-		//货物评论对应LinearLayout
+		// 货物评论对应LinearLayout
 		commentLinearlayout = (LinearLayout) findViewById(R.id.linearlayout_product_comment);
 		requestProductDetail();
 		requestComment();
@@ -148,12 +159,30 @@ public class ProductDetailActivity extends MainActionBarActivity {
 				startActivity(intent);
 			}
 		});
-		//productDescriptionWebView.loadData(header + "HTML代码" + tail, "text/html;charset=utf-8", null);
-		//productDescriptionWebView.loadUrl("http://www.baidu.com");
+		// productDescriptionWebView.loadData(header + "HTML代码" + tail, "text/html;charset=utf-8",
+		// null);
+		// productDescriptionWebView.loadUrl("http://www.baidu.com");
 		addToCartButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				loadProductAnimationPicture();
+				new Thread() {
+					public void run() {
+						if (staff != null) {
+							Log.i(TAG, staff.toString());
+							int productId = staff.productId;
+							DBDao dao = new DBDao(ProductDetailActivity.this);
+							if (dao.isExist(productId)) {
+								dao.updateCount(productId, dao.isExistCount(productId) + 1);
+							} else
+								dao.add(staff);
+							Intent intent = new Intent("com.yoopoon.market.daocount");
+							intent.putExtra("Count", dao.getAllCounts());
+							intent.addCategory(Intent.CATEGORY_DEFAULT);
+							ProductDetailActivity.this.sendBroadcast(intent);
+						}
+					};
+				}.start();
 			}
 		});
 		cartImageView.setOnClickListener(new OnClickListener() {
@@ -161,11 +190,11 @@ public class ProductDetailActivity extends MainActionBarActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent("com.yoopoon.market.showcart");
 				intent.addCategory(Intent.CATEGORY_DEFAULT);
-				/*Intent intent = new Intent(ProductDetailActivity.this, MainActivity_.class);
-				Bundle bundle = new Bundle();
-				bundle.putBoolean("productDetailCartClick", true);
-				intent.putExtra("productDetailBundle", bundle);
-				mContext.startActivity(intent);*/
+				/*
+				 * Intent intent = new Intent(ProductDetailActivity.this, MainActivity_.class);
+				 * Bundle bundle = new Bundle(); bundle.putBoolean("productDetailCartClick", true);
+				 * intent.putExtra("productDetailBundle", bundle); mContext.startActivity(intent);
+				 */
 				sendBroadcast(intent);
 				MainActivity_.intent(mContext).start();
 			}
@@ -191,12 +220,12 @@ public class ProductDetailActivity extends MainActionBarActivity {
 						.findViewById(R.id.tv_comment_user_nickname);
 				TextView commentContentTextView = (TextView) commentItemLinearLayout
 						.findViewById(R.id.tv_comment_content);
-				/*String url = "";
-				if (jsonObject.optString("UserImg").equals("null") || jsonObject.optString("UserName").equals("")) {
-					url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
-				} else {
-					url = mContext.getString(R.string.url_image) + jsonObject.optString("UserImg");
-				}*/
+				/*
+				 * String url = ""; if (jsonObject.optString("UserImg").equals("null") ||
+				 * jsonObject.optString("UserName").equals("")) { url =
+				 * "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg"; } else { url =
+				 * mContext.getString(R.string.url_image) + jsonObject.optString("UserImg"); }
+				 */
 				String url = "http://img.iyookee.cn/20150825/20150825_105153_938_32.jpg";
 				userPhotoImageView.setTag(url);
 				ImageLoader.getInstance().displayImage(url, userPhotoImageView, MyApplication.getOptions(),
@@ -268,10 +297,20 @@ public class ProductDetailActivity extends MainActionBarActivity {
 					initProductDetailInfo(productJsonObject);
 					//设置广告,同事加载广告
 					loadProductAdvertisements(productJsonObject);
-					if ((!productJsonObject.optString("MainImg").equals("null"))
+					if ((!productJsonObject.optString("MainImg").equals(""))
 							&& (!productJsonObject.optString("MainImg").equals("null"))) {
 						productImageURL = getString(R.string.url_image) + productJsonObject.optString("MainImg");
 					}
+					//JSONObject productJsonObject = data.getMRootData().optJSONObject("ProductModel");
+					// 设置商品详细信息
+					//initProductDetailInfo(productJsonObject);
+					// 设置广告,同事加载广告
+					//loadProductAdvertisements(productJsonObject);
+					/*if ((!productJsonObject.optString("MainImg").equals("null"))
+							&& (!productJsonObject.optString("MainImg").equals("null"))) {
+						productImageURL = getString(R.string.url_image) + productJsonObject.optString("MainImg");
+
+					}*/
 				}
 			}
 			@Override
@@ -286,12 +325,20 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	 * @param jsonObject
 	 */
 	private void initProductDetailInfo(JSONObject jsonObject) {
+		Log.i(TAG, jsonObject.toString());
+		String name = jsonObject.optString("Name", "");
+		String subtitte = jsonObject.optString("Subtitte", "");
+		String price = SplitStringWithDot.split(jsonObject.optString("Price", "0"));
+		String oldPrice;
+		String imageUrl = getString(R.string.url_image) + jsonObject.optString("MainImg");
 		productTitleTextView.setText(jsonObject.optString("Name", ""));
 		productSubtitleTextView.setText(jsonObject.optString("Subtitte", ""));
 		productPrictTextView.setText("￥" + SplitStringWithDot.split(jsonObject.optString("Price", "0")));
 		if (!jsonObject.optString("OldPrice", "0").equals("null")) {
+			oldPrice = SplitStringWithDot.split(jsonObject.optString("OldPrice", "0"));
 			productPrimePriceTextView.setText("原价：" + SplitStringWithDot.split(jsonObject.optString("OldPrice", "0")));
 		} else {
+			oldPrice = "0";
 			productPrimePriceTextView.setText("原价0");
 		}
 		if (jsonObject.optString("Owner", "0").equals("null")) {
@@ -299,6 +346,10 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		} else {
 			productSalesVolumeTextView.setText("已有" + jsonObject.optString("Owner", "0") + "人抢购");
 		}
+		float price_counted = Float.parseFloat(price);
+		float price_previous = Float.parseFloat(oldPrice);
+		int id = Integer.parseInt(productId);
+		staff = new Staff(subtitte, name, imageUrl, 1, price_counted, price_previous, id);
 	}
 	private void loadProductAdvertisements(JSONObject jsonObject) {
 		ArrayList<String> arrayList = new ArrayList<String>();
@@ -332,10 +383,10 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		} else {
 			arrayList.add("20150629/20150629_224642_944_279.jpg");
 		}
-		/*	//如下广告做测试用途
-			for (int i = 0; i < 5; i++) {
-				arrayList.add("20150629/20150629_224642_944_279.jpg");
-			}*/
+		/*
+		 * //如下广告做测试用途 for (int i = 0; i < 5; i++) {
+		 * arrayList.add("20150629/20150629_224642_944_279.jpg"); }
+		 */
 		productAdvertisement.show(arrayList);
 	}
 	/**
@@ -351,15 +402,13 @@ public class ProductDetailActivity extends MainActionBarActivity {
 					ArrayList<JSONObject> arrayList = JSONArrayConvertToArrayList.convertToArrayList(jsonArray);
 					commentJsonObjects = arrayList;
 					productCommentAmount.setText(commentJsonObjects.size() + "");
-					/*	if (jsonArray.length() >= 2) {
-							addMoreCommentButton.setVisibility(View.VISIBLE);
-							loadComment(arrayList, 2);
-						} else if (jsonArray.length() == 1) {
-							addMoreCommentButton.setVisibility(View.VISIBLE);
-							loadComment(arrayList, 1);
-						} else {
-							return;
-						}*/
+					/*
+					 * if (jsonArray.length() >= 2) {
+					 * addMoreCommentButton.setVisibility(View.VISIBLE); loadComment(arrayList, 2);
+					 * } else if (jsonArray.length() == 1) {
+					 * addMoreCommentButton.setVisibility(View.VISIBLE); loadComment(arrayList, 1);
+					 * } else { return; }
+					 */
 					if (jsonArray.length() >= 1) {
 						addMoreCommentButton.setVisibility(View.VISIBLE);
 						loadComment(arrayList, 1);
@@ -374,10 +423,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		}.setUrl(getString(R.string.url_comment)).addParam("ProductId", productId).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
-	/**
-	 * @Title: loadProductAnimationPicture
-	 * @Description: 给购物车添加动画效果
-	 */
 	private void loadProductAnimationPicture() {
 		if ((!productImageURL.equals("")) && (!productImageURL.equals("null"))) {
 			ImageLoader.getInstance().displayImage(productImageURL, animationCartImageView, MyApplication.getOptions(),
@@ -393,15 +438,20 @@ public class ProductDetailActivity extends MainActionBarActivity {
 			pictureYPosition = pictureLocation[1];
 			animationCartImageView.setTag(productImageURL);
 			AnimationSet animationSet = new AnimationSet(true);
-			//animationSet.setDuration(1200);
-			/*Animation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE, 0, Animation.ABSOLUTE,
-					(cartXPosition - pictureXPosition - 40), Animation.ABSOLUTE, 0, Animation.ABSOLUTE,
-					(cartYPosition - pictureYPosition));*/
-			/*TranslateAnimation translateAnimationX = new TranslateAnimation(Animation.ABSOLUTE, 0, Animation.ABSOLUTE,
-					(cartXPosition - pictureXPosition - 40), Animation.ABSOLUTE, 0, Animation.ABSOLUTE, 0);
-			TranslateAnimation translateAnimationY = new TranslateAnimation(Animation.ABSOLUTE, 0, Animation.ABSOLUTE, 0,
-					Animation.ABSOLUTE, cartYPosition - pictureYPosition, Animation.ABSOLUTE,
-					(cartYPosition - pictureYPosition));*/
+			// animationSet.setDuration(1200);
+			/*
+			 * Animation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE, 0,
+			 * Animation.ABSOLUTE, (cartXPosition - pictureXPosition - 40), Animation.ABSOLUTE, 0,
+			 * Animation.ABSOLUTE, (cartYPosition - pictureYPosition));
+			 */
+			/*
+			 * TranslateAnimation translateAnimationX = new TranslateAnimation(Animation.ABSOLUTE,
+			 * 0, Animation.ABSOLUTE, (cartXPosition - pictureXPosition - 40), Animation.ABSOLUTE,
+			 * 0, Animation.ABSOLUTE, 0); TranslateAnimation translateAnimationY = new
+			 * TranslateAnimation(Animation.ABSOLUTE, 0, Animation.ABSOLUTE, 0, Animation.ABSOLUTE,
+			 * cartYPosition - pictureYPosition, Animation.ABSOLUTE, (cartYPosition -
+			 * pictureYPosition));
+			 */
 			TranslateAnimation translateAnimationX = new TranslateAnimation(0, (cartXPosition - pictureXPosition - 70),
 					0, 0);
 			TranslateAnimation translateAnimationY = new TranslateAnimation(0, 0, 0,
@@ -416,19 +466,21 @@ public class ProductDetailActivity extends MainActionBarActivity {
 					Animation.RELATIVE_TO_SELF, 0.5f);
 			Animation scaleAnimation = new ScaleAnimation(1, 0, 1, 0, Animation.RELATIVE_TO_SELF, 0.5f,
 					Animation.RELATIVE_TO_SELF, 0.5f);
-			/*Log.e("11111111111111", pictureXPosition + ":::" + pictureYPosition + "---------" + cartXPosition
-					+ "::::::" + cartYPosition);*/
+			/*
+			 * Log.e("11111111111111", pictureXPosition + ":::" + pictureYPosition + "---------" +
+			 * cartXPosition + "::::::" + cartYPosition);
+			 */
 			translateAnimationX.setDuration(1500);
 			translateAnimationY.setDuration(1000);
 			scaleAnimation.setDuration(1500);
 			rotateAnimation.setDuration(1500);
-			//添加动画
-			//animationSet.setDuration(1500);
+			// 添加动画
+			// animationSet.setDuration(1500);
 			animationSet.addAnimation(rotateAnimation);
 			animationSet.addAnimation(scaleAnimation);
 			animationSet.addAnimation(translateAnimationX);
 			animationSet.addAnimation(translateAnimationY);
-			/*animationSet.addAnimation(translateAnimation);*/
+			/* animationSet.addAnimation(translateAnimation); */
 			animationCartImageView.startAnimation(animationSet);
 			animationSet.setAnimationListener(new AnimationListener() {
 				@Override

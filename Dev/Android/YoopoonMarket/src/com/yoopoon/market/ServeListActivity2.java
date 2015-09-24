@@ -186,7 +186,9 @@ public class ServeListActivity2 extends MainActionBarActivity {
 			ll_bg.setPadding(padding, padding, padding, padding);
 			holder.status = !holder.status;
 
-			Utils.spanTextSize(holder.tv_price, "：", false, new int[] { 18, 13 });
+			int largePx = Utils.dp2px(ServeListActivity2.this, 16);
+			int smallPx = Utils.dp2px(ServeListActivity2.this, 12);
+			Utils.spanTextSize(holder.tv_price, "：", false, new int[] { largePx, smallPx });
 
 			return convertView;
 

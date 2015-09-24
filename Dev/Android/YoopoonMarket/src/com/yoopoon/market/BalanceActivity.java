@@ -88,7 +88,6 @@ public class BalanceActivity extends MainActionBarActivity {
 
 	@Click(R.id.btn_ok)
 	void confirmOrder() {
-
 		if (User.isLogin(this)) {
 
 			for (Staff staff : staffList) {

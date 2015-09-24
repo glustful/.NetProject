@@ -97,12 +97,11 @@
             android:visibility="visible"
             android:layout_alignParentRight="true"
             android:layout_marginRight="25dp"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:background="@drawable/red_circle_border"
             android:textColor="@color/red"
-            android:textSize="10sp"
-            android:padding="2dp"
+            android:textSize="12sp"
             android:gravity="center"
             android:text="1"/>
     </RelativeLayout>

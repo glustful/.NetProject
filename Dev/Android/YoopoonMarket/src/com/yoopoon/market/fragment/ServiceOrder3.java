@@ -108,6 +108,8 @@ public class ServiceOrder3 extends Fragment {
 			final List<ServiceOrderDetail> details = service.Details;
 			// Log.i(TAG, order.to);
 
+			if (holder.ll_products.getChildCount() > 0)
+				holder.ll_products.removeAllViews();
 			if (details != null) {
 				for (ServiceOrderDetail detail : details) {
 					ProductEntity product = detail.Product;
