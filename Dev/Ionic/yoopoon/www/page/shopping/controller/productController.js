@@ -260,25 +260,9 @@ app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$t
                 $scope.numbers=1;
             }
         }
-        //$scope.productcount={
-        //    id: $stateParams.id,
-        //    name: $scope.product.Name,
-        //    count: $scope.numbers,
-        //    mainimg:$scope.product.MainImg,
-        //    price:$scope.product.Price,
-        //    oldprice:$scope.product.OldPrice,
-        //    parameterValue:$scope.product.ParameterValue
-        //};
 
         $scope.buy=function(){
-            //$scope.cartinfo.id = $scope.product.Id;
-            //$scope.cartinfo.name = $scope.product.Name;
-            //$scope.cartinfo.mainimg=$scope.product.MainImg;
-            //$scope.cartinfo.price=$scope.product.Price;
-            //$scope.cartinfo.oldprice=$scope.product.OldPrice;
-            //$scope.cartinfo.parameterValue=$scope.product.ParameterValue;
-            //$scope.cartinfo.count = $scope.numbers;
-            //$scope.price=$scope.product.Price*$scope.numbers
+
             $state.go("page.order",{productId: $scope.product.Id,count:$scope.numbers})
         }
         //endregion
