@@ -350,6 +350,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				btn_select.setTag(areaId);
 			} else if (action.equals("com.yoopoon.market.daocount")) {
 				int count = intent.getExtras().getInt("Count");
+				tv_counts.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 				tv_counts.setText(count + "");
 			}
 		}
@@ -392,7 +393,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		int[] end_location = new int[2];// 这是用来存储动画结束位置的X、Y坐标
 		lls.get(2).getLocationInWindow(end_location);// shopCart是那个购物车
 		// 计算位移
-		int endX = end_location[0] - start_location[0] + 40;// 动画位移的X坐标
+		int px = Utils.dp2px(this, 40);
+		int endX = end_location[0] - start_location[0] + px;// 动画位移的X坐标
 		int endY = end_location[1] - start_location[1];// 动画位移的y坐标
 		TranslateAnimation translateAnimationX = new TranslateAnimation(0, endX, 0, 0);
 		translateAnimationX.setInterpolator(new LinearInterpolator());

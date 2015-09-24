@@ -195,6 +195,7 @@ public class AddressManageActivity extends MainActionBarActivity {
 						addressList.clear();
 						Log.i(TAG, object.toString());
 						JSONArray array = object.optJSONArray("List");
+
 						parseToEntityList(array);
 					} else {
 						ll_loading.setVisibility(View.GONE);
@@ -218,22 +219,23 @@ public class AddressManageActivity extends MainActionBarActivity {
 			@Override
 			public Object onParse() {
 				ObjectMapper om = new ObjectMapper();
-				for (int i = 0; i < array.length(); i++) {
-					MemberAddressEntity addressEntity = null;
-					try {
-						JSONObject object = array.getJSONObject(i);
-						addressEntity = om.readValue(object.toString(), MemberAddressEntity.class);
-					} catch (JsonParseException e) {
-						e.printStackTrace();
-					} catch (JsonMappingException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					} catch (JSONException e) {
-						e.printStackTrace();
+				if (array != null)
+					for (int i = 0; i < array.length(); i++) {
+						MemberAddressEntity addressEntity = null;
+						try {
+							JSONObject object = array.getJSONObject(i);
+							addressEntity = om.readValue(object.toString(), MemberAddressEntity.class);
+						} catch (JsonParseException e) {
+							e.printStackTrace();
+						} catch (JsonMappingException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						addressList.add(addressEntity);
 					}
-					addressList.add(addressEntity);
-				}
 				return addressList;
 			}
 

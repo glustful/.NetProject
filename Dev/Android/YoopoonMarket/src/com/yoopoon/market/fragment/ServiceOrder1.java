@@ -106,7 +106,8 @@ public class ServiceOrder1 extends Fragment {
 			holder.tv_btn.setTextColor(Color.GRAY);
 			holder.tv_desc.setText("买家已付款");
 			List<ServiceOrderDetail> details = service.Details;
-
+			if (holder.ll_products.getChildCount() > 0)
+				holder.ll_products.removeAllViews();
 			if (details != null) {
 				for (ServiceOrderDetail detail : details) {
 					ProductEntity product = detail.Product;

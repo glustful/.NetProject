@@ -77,6 +77,8 @@ public class CartFragment extends Fragment implements OnClickListener {
 	int offset = 0;
 	int[] checkedIds;
 	int totalcount;
+	int largePx;
+	int smallPx;
 
 	@Override
 	@Nullable
@@ -87,6 +89,8 @@ public class CartFragment extends Fragment implements OnClickListener {
 	}
 
 	private void init() {
+		largePx = Utils.dp2px(getActivity(), 14);
+		smallPx = Utils.dp2px(getActivity(), 10);
 		lv = (PullToRefreshListView) rootView.findViewById(R.id.lv);
 		tv_price_total = (TextView) rootView.findViewById(R.id.tv_price_total);
 		btn_balance = (Button) rootView.findViewById(R.id.btn_balance);
@@ -283,7 +287,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 			ImageLoader.getInstance().displayImage(staff.image, holder.iv, MyApplication.getOptions(),
 					MyApplication.getLoadingListener());
 			holder.iv.setScaleType(ScaleType.FIT_XY);
-			Utils.spanTextSize(holder.tv_price_counted, "\\.", true, new int[] { 16, 12 });
+			Utils.spanTextSize(holder.tv_price_counted, "\\.", true, new int[] { largePx, smallPx });
 
 			holder.cb.setChecked(staff.chosen);
 			holder.cb.setOnClickListener(new OnClickListener() {
@@ -433,6 +437,9 @@ public class CartFragment extends Fragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.btn_balance:
+				if (btn_balance.getTag() == null) {
+					return;
+				}
 				int count = (Integer) btn_balance.getTag();
 				if (count == 0) {
 					Toast.makeText(getActivity(), "亲，你还没有选择任何商品呢!", Toast.LENGTH_SHORT).show();

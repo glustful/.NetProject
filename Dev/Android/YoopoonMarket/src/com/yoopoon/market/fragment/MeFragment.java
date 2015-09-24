@@ -145,22 +145,15 @@ public class MeFragment extends Fragment implements OnClickListener {
 	}
 
 	void requestOrder(String userId) {
-		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					Log.i(TAG, object.toString());
-					JSONArray array = object.optJSONArray("List");
-					if (array != null) {
-
-						parseToOrderList(array);
-					}
-				} else {
-					ll_loading.setVisibility(View.GONE);
-					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
+					int count = object.optInt("TotalCount");
+					orderStatus.get(0).setText(count + "");
+					orderStatus.get(0).setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 				}
 			}
 
@@ -170,7 +163,67 @@ public class MeFragment extends Fragment implements OnClickListener {
 
 			}
 		}.setUrl(getString(R.string.url_order_get)).setRequestMethod(RequestMethod.eGet).addParam("userid", userId)
-				.notifyRequest();
+				.addParam("status", "0").notifyRequest();
+
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					int count = object.optInt("TotalCount");
+					orderStatus.get(1).setText(count + "");
+					orderStatus.get(1).setVisibility(count > 0 ? View.VISIBLE : View.GONE);
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_order_get)).setRequestMethod(RequestMethod.eGet).addParam("userid", userId)
+				.addParam("status", "1").notifyRequest();
+
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					int count = object.optInt("TotalCount");
+					orderStatus.get(2).setText(count + "");
+					orderStatus.get(2).setVisibility(count > 0 ? View.VISIBLE : View.GONE);
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_order_get)).setRequestMethod(RequestMethod.eGet).addParam("userid", userId)
+				.addParam("status", "2").notifyRequest();
+
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					int count = object.optInt("TotalCount");
+					orderStatus.get(3).setText(count + "");
+					orderStatus.get(3).setVisibility(count > 0 ? View.VISIBLE : View.GONE);
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_order_get)).setRequestMethod(RequestMethod.eGet).addParam("userid", userId)
+				.addParam("status", "3").notifyRequest();
 	}
 
 	void requestServiceOrder(String userId) {
@@ -183,7 +236,6 @@ public class MeFragment extends Fragment implements OnClickListener {
 				if (object != null) {
 					JSONArray array = object.optJSONArray("List");
 					if (array != null) {
-
 						parseToServiceList(array);
 					}
 				} else {
@@ -267,73 +319,6 @@ public class MeFragment extends Fragment implements OnClickListener {
 		}
 	}
 
-	void parseToOrderList(final JSONArray array) {
-		new ParserJSON(new ParseListener() {
-
-			@Override
-			public Object onParse() {
-				ObjectMapper om = new ObjectMapper();
-				for (int i = 0; i < array.length(); i++) {
-					try {
-						JSONObject object = array.getJSONObject(i);
-						CommunityOrderEntity order = om.readValue(object.toString(), CommunityOrderEntity.class);
-						orders.add(order);
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (JsonParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (JsonMappingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				return orders;
-			}
-
-			@Override
-			public void onComplete(Object parseResult) {
-				if (parseResult != null) {
-					setOrderStatus();
-				}
-
-			}
-		}).execute();
-	}
-
-	void setOrderStatus() {
-		ll_loading.setVisibility(View.GONE);
-		int[] status = new int[4];
-		for (CommunityOrderEntity entity : orders) {
-			switch (entity.Status) {
-				case 0:
-					status[0]++;
-					break;
-				case 1:
-					status[1]++;
-					break;
-				case 2:
-					status[2]++;
-					break;
-				case 3:
-					status[3]++;
-					break;
-				default:
-					break;
-			}
-		}
-
-		for (int i = 0; i < orderStatus.size(); i++) {
-			TextView tv = orderStatus.get(i);
-			tv.setText(String.valueOf(status[i]));
-			tv.setVisibility(status[i] == 0 ? View.GONE : View.VISIBLE);
-		}
-	}
-
 	private void init() {
 
 		ll_loading = rootView.findViewById(R.id.ll_loading);
@@ -404,7 +389,6 @@ public class MeFragment extends Fragment implements OnClickListener {
 					requestServiceOrder(String.valueOf(sp.getInt("UserId", 0)));
 					requestData();
 				} else {
-					setOrderStatus();
 					setServiceStatus();
 				}
 			}
@@ -426,17 +410,17 @@ public class MeFragment extends Fragment implements OnClickListener {
 				break;
 			case R.id.btn_order:
 			case R.id.rl1:
-				MeOrderActivity_.intent(getActivity()).item(0).orders(orders).start();
+				MeOrderActivity_.intent(getActivity()).item(0).start();
 				break;
 
 			case R.id.rl2:
-				MeOrderActivity_.intent(getActivity()).item(1).orders(orders).start();
+				MeOrderActivity_.intent(getActivity()).item(1).start();
 				break;
 			case R.id.rl3:
-				MeOrderActivity_.intent(getActivity()).item(2).orders(orders).start();
+				MeOrderActivity_.intent(getActivity()).item(2).start();
 				break;
 			case R.id.rl4:
-				MeOrderActivity_.intent(getActivity()).item(3).orders(orders).start();
+				MeOrderActivity_.intent(getActivity()).item(3).start();
 				break;
 			case R.id.rl5:
 			case R.id.btn_service:

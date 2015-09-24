@@ -1,6 +1,10 @@
 package com.yoopoon.market.fragment;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -8,7 +12,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,13 +22,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.yoopoon.market.MeOrderActivity;
+import com.yoopoon.market.LoginActivity_;
 import com.yoopoon.market.MyApplication;
 import com.yoopoon.market.R;
 import com.yoopoon.market.domain.CommunityOrderEntity;
@@ -36,16 +40,18 @@ import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
-import com.yoopoon.market.utils.SerializerJSON;
-import com.yoopoon.market.utils.SerializerJSON.SerializeListener;
+import com.yoopoon.market.utils.ParserJSON;
+import com.yoopoon.market.utils.ParserJSON.ParseListener;
 
 public class ReceiveFragment extends Fragment {
 	private static final String TAG = "ReceiveFragment";
 	PullToRefreshListView lv;
 	View rootView;
-	List<CommunityOrderEntity> orders;
+	List<CommunityOrderEntity> orders = new ArrayList<CommunityOrderEntity>();
 	MyListViewAdapter adapter;
 	View loading;
+	int page = 1;
+	int pageCount = 5;
 
 	@Override
 	@Nullable
@@ -57,11 +63,7 @@ public class ReceiveFragment extends Fragment {
 
 	void init() {
 		loading = rootView.findViewById(R.id.ll_loading);
-		MeOrderActivity meOrderActivity = (MeOrderActivity) getActivity();
-		orders = meOrderActivity.getOrderList(2);
-		TextView tv = (TextView) rootView.findViewById(R.id.tv_empty);
 
-		tv.setVisibility(orders.size() > 0 ? View.GONE : View.VISIBLE);
 		lv = (PullToRefreshListView) rootView.findViewById(R.id.lv);
 		adapter = new MyListViewAdapter();
 		lv.setAdapter(adapter);
@@ -70,10 +72,96 @@ public class ReceiveFragment extends Fragment {
 		lv.setOnRefreshListener(new HowWillIrefresh());
 	}
 
-	public void update() {
-		MeOrderActivity meOrderActivity = (MeOrderActivity) getActivity();
-		orders = meOrderActivity.getOrderList(2);
-		adapter.notifyDataSetChanged();
+	boolean isVisibleToUser;
+
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		this.isVisibleToUser = isVisibleToUser;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		page = 1;
+		requestData();
+	}
+
+	void requestData() {
+		if (!User.isLogin(getActivity())) {
+			LoginActivity_.intent(getActivity()).start();
+			return;
+		}
+		String userId = User.getUserId(getActivity());
+
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				lv.onRefreshComplete();
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					JSONArray array = object.optJSONArray("List");
+					if (array.length() == 0 && page > 1) {
+						Toast.makeText(getActivity(), "已经没有更多数据啦", Toast.LENGTH_SHORT).show();
+					}
+					if (array.length() > 0) {
+						parseToOrderList(array);
+					}
+
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_order_get)).setRequestMethod(RequestMethod.eGet).addParam("userid", userId)
+				.addParam("status", "2").addParam("page", String.valueOf(page))
+				.addParam("pagecount", String.valueOf(pageCount)).notifyRequest();
+	}
+
+	void parseToOrderList(final JSONArray array) {
+		new ParserJSON(new ParseListener() {
+
+			@Override
+			public Object onParse() {
+				ObjectMapper om = new ObjectMapper();
+				if (page == 1)
+					orders.clear();
+				for (int i = 0; i < array.length(); i++) {
+					try {
+						JSONObject object = array.getJSONObject(i);
+						CommunityOrderEntity order = om.readValue(object.toString(), CommunityOrderEntity.class);
+						orders.add(order);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					} catch (JsonParseException e) {
+						e.printStackTrace();
+					} catch (JsonMappingException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				return orders;
+			}
+
+			@Override
+			public void onComplete(Object parseResult) {
+				if (parseResult != null) {
+					fillData();
+				}
+
+			}
+		}).execute();
+	}
+
+	void fillData() {
+		TextView tv = (TextView) rootView.findViewById(R.id.tv_empty);
+		tv.setVisibility(orders.size() > 0 ? View.GONE : View.VISIBLE);
+		adapter.notifyDataSetInvalidated();
 	}
 
 	static class ViewHolder {
@@ -122,7 +210,9 @@ public class ReceiveFragment extends Fragment {
 			holder.tv_order_num.setText("订单号：" + order.No);
 
 			List<OrderDetailEntity> details = order.Details;
-			Log.i(TAG, "details = " + details.size());
+
+			if (holder.ll_products.getChildCount() > 0)
+				holder.ll_products.removeAllViews();
 			for (OrderDetailEntity detail : details) {
 				ProductEntity product = detail.Product;
 				View productView = View.inflate(getActivity(), R.layout.item_product, null);
@@ -132,7 +222,6 @@ public class ReceiveFragment extends Fragment {
 				TextView tv_count = (TextView) productView.findViewById(R.id.tv_count);
 				TextView tv_name = (TextView) productView.findViewById(R.id.tv_name);
 				ImageView iv = (ImageView) productView.findViewById(R.id.iv);
-
 				String imageUrl = getActivity().getString(R.string.url_image) + product.MainImg;
 				iv.setTag(imageUrl);
 				ImageLoader.getInstance().displayImage(imageUrl, iv, MyApplication.getOptions(),
@@ -153,64 +242,11 @@ public class ReceiveFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 					order.Status = 3;
-					serilizerJson(order);
 				}
 			});
 			return convertView;
 		}
 
-	}
-
-	void serilizerJson(final CommunityOrderEntity order) {
-		new SerializerJSON(new SerializeListener() {
-
-			@Override
-			public String onSerialize() {
-				ObjectMapper om = new ObjectMapper();
-				String result = null;
-				try {
-					result = om.writeValueAsString(order);
-				} catch (JsonProcessingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return result;
-			}
-
-			@Override
-			public void onComplete(String serializeResult) {
-				if (serializeResult != null) {
-					Log.i(TAG, serializeResult);
-					requestModifyStatus(serializeResult);
-				}
-			}
-		}).execute();
-	}
-
-	void requestModifyStatus(String json) {
-
-		new RequestAdapter() {
-
-			@Override
-			public void onReponse(ResponseData data) {
-				JSONObject object = data.getMRootData();
-				if (object != null) {
-					boolean status = object.optBoolean("Status", false);
-					if (status) {
-						MeOrderActivity meOrderActivity = (MeOrderActivity) getActivity();
-						meOrderActivity.requestOrder(User.getUserId(getActivity()));
-					}
-				}
-				Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
-
-			}
-
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
-
-			}
-		}.setUrl(getString(R.string.url_order_put)).setRequestMethod(RequestMethod.ePut).SetJSON(json).notifyRequest();
 	}
 
 	class HowWillIrefresh implements PullToRefreshBase.OnRefreshListener2<ListView> {
@@ -231,13 +267,8 @@ public class ReceiveFragment extends Fragment {
 
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-			new Handler().postDelayed(new Runnable() {
-
-				@Override
-				public void run() {
-					lv.onRefreshComplete();
-				}
-			}, 1000);
+			page++;
+			requestData();
 		}
 	}
 }
