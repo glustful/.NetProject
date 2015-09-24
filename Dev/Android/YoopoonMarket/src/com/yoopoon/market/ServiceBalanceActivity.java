@@ -23,7 +23,6 @@ import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,12 +41,13 @@ import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.utils.ParserJSON;
 import com.yoopoon.market.utils.ParserJSON.ParseListener;
 import com.yoopoon.market.utils.Utils;
+import com.yoopoon.market.view.MyListView;
 
 @EActivity(R.layout.activity_service_balance)
 public class ServiceBalanceActivity extends MainActionBarActivity {
 	private static final String TAG = "BalanceActivity";
 	@ViewById(R.id.lv)
-	ListView lv;
+	MyListView lv;
 	@Extra
 	ProductEntity product;
 	@Extra

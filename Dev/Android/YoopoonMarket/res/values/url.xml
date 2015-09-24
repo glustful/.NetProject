@@ -33,7 +33,7 @@
     <!-- 地区 --> 
     <string name="url_area_get">/api/CommunityArea/get</string>
     
-    <string name="url_login">/api/user/Login</string>
+    <string name="url_login">/api/user/LoginEntry</string>
     
     <!-- 订单 -->
     <string name="url_order_post">/api/CommunityOrder/post</string>

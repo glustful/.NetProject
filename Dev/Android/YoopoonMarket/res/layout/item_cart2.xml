@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@color/white" >
 
     <ImageView
         android:id="@+id/iv"
@@ -14,10 +14,10 @@
         android:src="@drawable/default_img" />
 
     <TextView
-        android:layout_alignTop="@id/iv"
         android:id="@+id/tv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@id/iv"
         android:layout_toRightOf="@id/iv"
         android:paddingRight="5dp"
         android:text="我是花吃 云南特产零食糕点 玫瑰鲜花饼 6枚*2盒 包邮包邮 神犬小七同款" />
@@ -52,21 +52,21 @@
         android:visibility="gone" />
 
     <TextView
-        android:paddingRight="15dp"
         android:id="@+id/tv_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tv_price_counted"
         android:layout_alignParentRight="true"
+        android:paddingRight="15dp"
         android:text="x2"
         android:textColor="@color/black" />
 
     <RelativeLayout
-        android:layout_marginTop="3dp"
         android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_count"
+        android:layout_marginTop="3dp"
         android:background="@color/white"
         android:padding="10dp" >
 

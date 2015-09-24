@@ -66,7 +66,7 @@ public class AssuranceDetailActivity extends MainActionBarActivity {
 		String name = "【" + product.Name + "】";
 		String subtitle = product.Subtitte;
 		tv_title.setText(name + subtitle);
-		tv_phone.setText("联系电话" + product.Contactphone);
+		tv_phone.setText("联系电话:" + product.Contactphone);
 		tv_phone.setTag(product.Contactphone);
 		String imageUrl = getString(R.string.url_image) + product.MainImg;
 		iv.setTag(imageUrl);
