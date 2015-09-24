@@ -158,6 +158,9 @@ public class SearchActivity extends MainActionBarActivity {
 	}
 
 	void initList() {
+		int dp10 = Utils.dp2px(this, 10);
+		int dp1 = Utils.dp2px(this, 1);
+		int dp30 = Utils.dp2px(this, 30);
 
 		loading.setVisibility(View.GONE);
 		for (int i = 0; i < lists.size(); i++) {
@@ -167,7 +170,7 @@ public class SearchActivity extends MainActionBarActivity {
 			tv.setText(list.father.Name);
 			tv.setTextColor(colors[i % colors.length]);
 			tv.setBackgroundResource(R.drawable.white_bg);
-			tv.setPadding(10, 10, 10, 10);
+			tv.setPadding(dp10, dp10, dp10, dp10);
 			tv.setTextSize(20);
 			tv.setClickable(true);
 
@@ -177,7 +180,7 @@ public class SearchActivity extends MainActionBarActivity {
 			tv.setCompoundDrawables(null, null, drawable, null);
 
 			LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-			params.setMargins(0, 0, 0, 1);
+			params.setMargins(0, 0, 0, dp1);
 
 			ll_areas.addView(tv, params);
 			LinearLayout areas = new LinearLayout(SearchActivity.this);
@@ -212,10 +215,10 @@ public class SearchActivity extends MainActionBarActivity {
 				TextView childTv = new TextView(SearchActivity.this);
 				childTv.setText(entity.Name);
 				childTv.setBackgroundResource(R.drawable.white_bg);
-				childTv.setPadding(30, 10, 10, 10);
+				childTv.setPadding(dp30, dp10, dp10, dp10);
 				childTv.setTextSize(18);
 				LayoutParams childParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-				childParams.setMargins(0, 0, 0, 1);
+				childParams.setMargins(0, 0, 0, dp1);
 				areas.addView(childTv, childParams);
 				childTv.setOnClickListener(new OnClickListener() {
 

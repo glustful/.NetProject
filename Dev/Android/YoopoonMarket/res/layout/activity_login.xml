@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:text="登录密码"/>
         <EditText 
+            android:maxLength="20"
             android:inputType="textPassword"
             android:layout_alignBottom="@id/tv_password"
             android:layout_marginLeft="10dp"

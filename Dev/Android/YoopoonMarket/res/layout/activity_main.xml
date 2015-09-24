@@ -52,7 +52,7 @@
         android:layout_marginLeft="50dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_search_height"
-        android:background="#55000000"
+        android:background="@drawable/top"
         android:visibility="gone" />
     
     <RelativeLayout 
@@ -60,7 +60,7 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="#55000000"
+        android:background="@drawable/bottom"
         android:visibility="gone">
         
         <ImageView 
