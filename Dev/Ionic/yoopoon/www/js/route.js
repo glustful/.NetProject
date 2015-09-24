@@ -248,7 +248,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 url: '/user/login',
                 views: {
                     'page-me': {
-                        templateUrl: 'page/user/login.html'
+                        templateUrl: 'page/user/login.html',
+                        controller:'login'
                     }
                 }
             })
