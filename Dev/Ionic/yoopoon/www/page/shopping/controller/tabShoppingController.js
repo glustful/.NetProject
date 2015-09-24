@@ -171,7 +171,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     };
     getList();
 //endregion
-    
+
     //region 商品加载
     $scope.loadmore = true;
     $scope.load_more = function () {
