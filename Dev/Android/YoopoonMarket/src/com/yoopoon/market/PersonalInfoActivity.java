@@ -83,6 +83,8 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 	TextView tv_upload;
 	boolean uploadable = true;
 	MemberModel member;
+	@ViewById(R.id.ll_loading)
+	View loading;
 
 	@Click(R.id.imageView1)
 	void selectAvater() {
@@ -117,27 +119,30 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 			LoginActivity_.intent(this).start();
 			return;
 		}
-		String userid = User.getUserId(this);
-		new RequestAdapter() {
+		if (member == null) {
+			String userid = User.getUserId(this);
+			loading.setVisibility(View.VISIBLE);
+			new RequestAdapter() {
 
-			@Override
-			public void onReponse(ResponseData data) {
-				JSONObject object = data.getMRootData();
-				if (object != null) {
-					parseToMember(object.toString());
-				} else {
-					// ll_loading.setVisibility(View.GONE);
-					Toast.makeText(PersonalInfoActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+				@Override
+				public void onReponse(ResponseData data) {
+					JSONObject object = data.getMRootData();
+					if (object != null) {
+						parseToMember(object.toString());
+					} else {
+						loading.setVisibility(View.GONE);
+						Toast.makeText(PersonalInfoActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+					}
 				}
-			}
 
-			@Override
-			public void onProgress(ProgressMessage msg) {
-				// TODO Auto-generated method stub
+				@Override
+				public void onProgress(ProgressMessage msg) {
+					// TODO Auto-generated method stub
 
-			}
-		}.setUrl(getString(R.string.url_getmemeber_byid)).setRequestMethod(RequestMethod.eGet)
-				.addParam("userid", userid).notifyRequest();
+				}
+			}.setUrl(getString(R.string.url_getmemeber_byid)).setRequestMethod(RequestMethod.eGet)
+					.addParam("userid", userid).notifyRequest();
+		}
 	}
 
 	void parseToMember(final String json) {
@@ -180,9 +185,11 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 			ImageLoader.getInstance().displayImage(imageUrl, iv, MyApplication.getOptions(),
 					MyApplication.getLoadingListener());
 		}
+		loading.setVisibility(View.GONE);
 	}
 
 	void modify() {
+		loading.setVisibility(View.VISIBLE);
 		new SerializerJSON(new SerializeListener() {
 
 			@Override
@@ -218,6 +225,7 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 
 			@Override
 			public void onReponse(ResponseData data) {
+				loading.setVisibility(View.GONE);
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					boolean status = object.optBoolean("Status", false);
@@ -278,6 +286,7 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 		tv_upload.setText("上传中..");
 		uploadable = false;
 		new Thread() {
+
 			public void run() {
 				new UploadHeadImg().post(path, file, new OnProgressListener() {
 
@@ -290,6 +299,7 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 
 					@Override
 					public void onSuccess(String json) {
+						Log.i(TAG, json);
 						uploadable = true;
 						try {
 							JSONObject object = new JSONObject(json);

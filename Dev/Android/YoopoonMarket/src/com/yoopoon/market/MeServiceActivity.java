@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
-import com.yoopoon.market.domain.ServiceOrderEntity;
 import com.yoopoon.market.fragment.ServiceOrder1;
 import com.yoopoon.market.fragment.ServiceOrder2;
 import com.yoopoon.market.fragment.ServiceOrder3;
@@ -27,11 +26,6 @@ public class MeServiceActivity extends MainActionBarActivity implements OnClickL
 	ViewPager vp;
 	@Extra
 	int item;
-	@Extra
-	List<ServiceOrderEntity> services;
-	List<ServiceOrderEntity> createdOrders = new ArrayList<ServiceOrderEntity>(); // 待付款
-	List<ServiceOrderEntity> payedOrders = new ArrayList<ServiceOrderEntity>();// 待发货
-	List<ServiceOrderEntity> deliveringOrders = new ArrayList<ServiceOrderEntity>();// 待收货
 	List<Fragment> fragments = new ArrayList<Fragment>();
 	List<TextView> textViews = new ArrayList<TextView>();
 
@@ -58,40 +52,6 @@ public class MeServiceActivity extends MainActionBarActivity implements OnClickL
 			tv.setOnClickListener(this);
 		vp.setCurrentItem(item);
 
-		initList();
-	}
-
-	void initList() {
-		for (ServiceOrderEntity service : services) {
-			switch (service.Status) {
-				case 1:
-					createdOrders.add(service);
-					break;
-				case 2:
-					payedOrders.add(service);
-					break;
-				case 3:
-					deliveringOrders.add(service);
-					break;
-				default:
-					break;
-			}
-		}
-	}
-
-	public List<ServiceOrderEntity> getServiceList(int item) {
-		switch (item) {
-			case 0:
-				return createdOrders;
-			case 1:
-				return payedOrders;
-			case 2:
-				return deliveringOrders;
-
-			default:
-				break;
-		}
-		return null;
 	}
 
 	class MyPageChangeListener implements OnPageChangeListener {

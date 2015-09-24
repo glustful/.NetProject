@@ -31,7 +31,6 @@ import android.widget.AbsListView.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +54,7 @@ import com.yoopoon.market.utils.ParserJSON.ParseListener;
 import com.yoopoon.market.utils.SerializerJSON;
 import com.yoopoon.market.utils.SerializerJSON.SerializeListener;
 import com.yoopoon.market.utils.Utils;
+import com.yoopoon.market.view.MyListView;
 
 /**
  * @ClassName: PersonalInfoActivity
@@ -66,7 +66,7 @@ import com.yoopoon.market.utils.Utils;
 public class BalanceActivity extends MainActionBarActivity {
 	private static final String TAG = "BalanceActivity";
 	@ViewById(R.id.lv)
-	ListView lv;
+	MyListView lv;
 	@Extra
 	List<Staff> staffList;
 	@Extra

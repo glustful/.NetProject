@@ -1,7 +1,10 @@
 package com.yoopoon.market.fragment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -17,16 +20,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.yoopoon.market.MeServiceActivity;
+import com.yoopoon.market.LoginActivity_;
 import com.yoopoon.market.MyApplication;
 import com.yoopoon.market.R;
 import com.yoopoon.market.domain.ProductEntity;
 import com.yoopoon.market.domain.ServiceOrderDetail;
 import com.yoopoon.market.domain.ServiceOrderEntity;
+import com.yoopoon.market.domain.User;
+import com.yoopoon.market.net.ProgressMessage;
+import com.yoopoon.market.net.RequestAdapter;
+import com.yoopoon.market.net.RequestAdapter.RequestMethod;
+import com.yoopoon.market.net.ResponseData;
+import com.yoopoon.market.utils.ParserJSON;
+import com.yoopoon.market.utils.ParserJSON.ParseListener;
 
 public class ServiceOrder1 extends Fragment {
 	private static final String TAG = "ServiceOrder1";
@@ -34,6 +48,7 @@ public class ServiceOrder1 extends Fragment {
 	PullToRefreshListView lv;
 	TextView tv_empty;
 	List<ServiceOrderEntity> services = new ArrayList<ServiceOrderEntity>();
+	MyListViewAdapter adapter = new MyListViewAdapter();
 
 	@Override
 	@Nullable
@@ -45,18 +60,99 @@ public class ServiceOrder1 extends Fragment {
 
 	void init() {
 		tv_empty = (TextView) rootView.findViewById(R.id.tv_empty);
-		MeServiceActivity meServiceActivity = (MeServiceActivity) getActivity();
-		services = meServiceActivity.getServiceList(0);
 		tv_empty.setVisibility(services.size() > 0 ? View.GONE : View.VISIBLE);
 		lv = (PullToRefreshListView) rootView.findViewById(R.id.lv);
-		lv.setAdapter(new MyListViewAdapter());
+
+		lv.setAdapter(adapter);
 
 		lv.setMode(Mode.PULL_FROM_END);
 		lv.setOnRefreshListener(new HowWillIrefresh());
+	}
 
+	int page = 1;
+	int pageCount = 5;
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		page = 1;
+		requestData();
+	}
+
+	void requestData() {
+		if (!User.isLogin(getActivity())) {
+			LoginActivity_.intent(getActivity()).start();
+			return;
+		}
+		String userId = User.getUserId(getActivity());
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					lv.onRefreshComplete();
+					JSONArray array = object.optJSONArray("List");
+					if (array != null) {
+						if (array.length() == 0 && page > 1)
+							Toast.makeText(getActivity(), "已经没有更多数据啦", Toast.LENGTH_SHORT).show();
+						if (array.length() > 0)
+							parseToList(array);
+					}
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_serviceorder_get)).setRequestMethod(RequestMethod.eGet)
+				.addParam("userid", userId).addParam("status", "1").addParam("page", String.valueOf(page))
+				.addParam("pagecount", String.valueOf(pageCount)).notifyRequest();
+	}
+
+	void parseToList(final JSONArray array) {
+		new ParserJSON(new ParseListener() {
+
+			@Override
+			public Object onParse() {
+				ObjectMapper om = new ObjectMapper();
+				if (page == 1)
+					services.clear();
+				for (int i = 0; i < array.length(); i++) {
+					JSONObject object = array.optJSONObject(i);
+					try {
+						ServiceOrderEntity service = om.readValue(object.toString(), ServiceOrderEntity.class);
+						services.add(service);
+					} catch (JsonParseException e) {
+						e.printStackTrace();
+					} catch (JsonMappingException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				return services;
+			}
+
+			@Override
+			public void onComplete(Object parseResult) {
+				if (parseResult != null) {
+					fillData();
+				}
+
+			}
+		}).execute();
+	}
+
+	void fillData() {
+		tv_empty.setVisibility(services.size() > 0 ? View.GONE : View.VISIBLE);
+		adapter.notifyDataSetChanged();
 	}
 
 	static class ViewHolder {
+
 		TextView tv_desc;
 		TextView tv_order_num;
 		TextView tv_btn;
@@ -162,13 +258,8 @@ public class ServiceOrder1 extends Fragment {
 
 		@Override
 		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-			new Handler().postDelayed(new Runnable() {
-
-				@Override
-				public void run() {
-					lv.onRefreshComplete();
-				}
-			}, 1000);
+			page++;
+			requestData();
 		}
 	}
 

@@ -15,8 +15,6 @@ package com.yoopoon.market.fragment;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -44,9 +42,7 @@ import com.yoopoon.market.MeOrderActivity_;
 import com.yoopoon.market.MeServiceActivity_;
 import com.yoopoon.market.PersonalInfoActivity_;
 import com.yoopoon.market.R;
-import com.yoopoon.market.domain.CommunityOrderEntity;
 import com.yoopoon.market.domain.MemberModel;
-import com.yoopoon.market.domain.ServiceOrderEntity;
 import com.yoopoon.market.domain.User;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
@@ -67,13 +63,11 @@ public class MeFragment extends Fragment implements OnClickListener {
 	Button btn_order;
 	Button btn_service;
 	List<RelativeLayout> rls = new ArrayList<RelativeLayout>();
-	List<CommunityOrderEntity> orders = new ArrayList<CommunityOrderEntity>();
 	List<TextView> orderStatus = new ArrayList<TextView>();
 	List<TextView> serviceStatus = new ArrayList<TextView>();
 	View ll_loading;
 	RoundedImageView imageView1;
 	MemberModel member;
-	List<ServiceOrderEntity> services = new ArrayList<ServiceOrderEntity>();
 
 	@Override
 	@Nullable
@@ -136,7 +130,6 @@ public class MeFragment extends Fragment implements OnClickListener {
 					ll_loading.setVisibility(View.GONE);
 					if (!TextUtils.isEmpty(member.Thumbnail)) {
 						String imageUrl = getString(R.string.url_image) + member.Thumbnail;
-						Log.i(TAG, imageUrl);
 						ImageLoader.getInstance().displayImage(imageUrl, imageView1);
 						User.setProperty(getActivity(), "ImageUrl", imageUrl);
 					}
@@ -228,20 +221,16 @@ public class MeFragment extends Fragment implements OnClickListener {
 	}
 
 	void requestServiceOrder(String userId) {
-		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					JSONArray array = object.optJSONArray("List");
-					if (array != null) {
-						parseToServiceList(array);
-					}
-				} else {
-					ll_loading.setVisibility(View.GONE);
-					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
+					Log.i(TAG, object.toString());
+					int count = object.optInt("TotalCount");
+					serviceStatus.get(0).setText(count + "");
+					serviceStatus.get(0).setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 				}
 			}
 
@@ -251,71 +240,47 @@ public class MeFragment extends Fragment implements OnClickListener {
 
 			}
 		}.setUrl(getString(R.string.url_serviceorder_get)).setRequestMethod(RequestMethod.eGet)
-				.addParam("userid", userId).notifyRequest();
-	}
+				.addParam("userid", userId).addParam("status", "1").notifyRequest();
 
-	void parseToServiceList(final JSONArray array) {
-		new ParserJSON(new ParseListener() {
+		new RequestAdapter() {
 
 			@Override
-			public Object onParse() {
-				ObjectMapper om = new ObjectMapper();
-				for (int i = 0; i < array.length(); i++) {
-					try {
-						JSONObject object = array.getJSONObject(i);
-						ServiceOrderEntity service = om.readValue(object.toString(), ServiceOrderEntity.class);
-						services.add(service);
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (JsonParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (JsonMappingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+			public void onReponse(ResponseData data) {
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					int count = object.optInt("TotalCount");
+					serviceStatus.get(1).setText(count + "");
+					serviceStatus.get(1).setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 				}
-				return services;
 			}
 
 			@Override
-			public void onComplete(Object parseResult) {
-				if (parseResult != null) {
-					setServiceStatus();
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_serviceorder_get)).setRequestMethod(RequestMethod.eGet)
+				.addParam("userid", userId).addParam("status", "2").notifyRequest();
+
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					int count = object.optInt("TotalCount");
+					serviceStatus.get(2).setText(count + "");
+					serviceStatus.get(2).setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
 
 			}
-		}).execute();
-	}
-
-	void setServiceStatus() {
-		ll_loading.setVisibility(View.GONE);
-		int[] status = new int[4];
-		for (ServiceOrderEntity entity : services) {
-			switch (entity.Status) {
-				case 1:
-					status[0]++;
-					break;
-				case 2:
-					status[1]++;
-					break;
-				case 3:
-					status[2]++;
-					break;
-				default:
-					break;
-			}
-		}
-
-		for (int i = 0; i < serviceStatus.size(); i++) {
-			TextView tv = serviceStatus.get(i);
-			tv.setText(String.valueOf(status[i]));
-			tv.setVisibility(status[i] == 0 ? View.GONE : View.VISIBLE);
-		}
+		}.setUrl(getString(R.string.url_serviceorder_get)).setRequestMethod(RequestMethod.eGet)
+				.addParam("userid", userId).addParam("status", "3").notifyRequest();
 	}
 
 	private void init() {
@@ -377,19 +342,14 @@ public class MeFragment extends Fragment implements OnClickListener {
 
 		if (!User.isLogin(getActivity())) {
 			// 未登录
-
-			// LoginActivity_.intent(getContext()).start();
 		} else {
 			// 若已经登录，需要请求数据
-			if (orders.size() == 0) {
-				SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.share_preference),
-						Context.MODE_PRIVATE);
-				requestOrder(String.valueOf(sp.getInt("UserId", 0)));
-				requestServiceOrder(String.valueOf(sp.getInt("UserId", 0)));
-				requestData();
-			} else {
-				setServiceStatus();
-			}
+			SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.share_preference),
+					Context.MODE_PRIVATE);
+			requestOrder(String.valueOf(sp.getInt("UserId", 0)));
+			requestServiceOrder(String.valueOf(sp.getInt("UserId", 0)));
+			requestData();
+
 		}
 
 	}
@@ -423,13 +383,13 @@ public class MeFragment extends Fragment implements OnClickListener {
 				break;
 			case R.id.rl5:
 			case R.id.btn_service:
-				MeServiceActivity_.intent(getActivity()).item(0).services(services).start();
+				MeServiceActivity_.intent(getActivity()).item(0).start();
 				break;
 			case R.id.rl6:
-				MeServiceActivity_.intent(getActivity()).item(1).services(services).start();
+				MeServiceActivity_.intent(getActivity()).item(1).start();
 				break;
 			case R.id.rl7:
-				MeServiceActivity_.intent(getActivity()).item(2).services(services).start();
+				MeServiceActivity_.intent(getActivity()).item(2).start();
 				break;
 
 		}
