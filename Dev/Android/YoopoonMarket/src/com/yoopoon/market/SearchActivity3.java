@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.yoopoon.market.domain.MemberAddressEntity;
 import com.yoopoon.market.domain.SimpleAreaEntity;
+import com.yoopoon.market.utils.Utils;
 
 @EActivity(R.layout.activity_area3)
 public class SearchActivity3 extends MainActionBarActivity {
@@ -40,6 +41,7 @@ public class SearchActivity3 extends MainActionBarActivity {
 	String[] name;
 	@Extra
 	MemberAddressEntity addressEntity;
+	int dp10;
 
 	@AfterViews
 	void initUI() {
@@ -48,6 +50,7 @@ public class SearchActivity3 extends MainActionBarActivity {
 		rightButton.setVisibility(View.GONE);
 		titleButton.setVisibility(View.GONE);
 		backButton.setText("选择市区");
+		dp10 = Utils.dp2px(this, 10);
 		lv.setAdapter(new MyListViewAdapter());
 	}
 
@@ -73,7 +76,7 @@ public class SearchActivity3 extends MainActionBarActivity {
 			final SimpleAreaEntity area = areas.get(position);
 			TextView tv = new TextView(SearchActivity3.this);
 			tv.setText(area.Name);
-			tv.setPadding(10, 10, 10, 10);
+			tv.setPadding(dp10, dp10, dp10, dp10);
 			tv.setBackgroundResource(R.drawable.white_bg);
 			tv.setClickable(true);
 			tv.setTag(area.FatherId);

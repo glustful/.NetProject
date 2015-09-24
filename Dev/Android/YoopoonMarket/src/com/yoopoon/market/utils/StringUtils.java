@@ -21,13 +21,14 @@ public class StringUtils {
 	}
 
 	public static boolean isPicFile(File file) {
-		String name = file.getName();
-		for (String pic : pics) {
-			if (name.endsWith(pic))
-				return true;
+		if (file != null) {
+			String name = file.getName();
+			for (String pic : pics) {
+				if (name.endsWith(pic))
+					return true;
+			}
 		}
 
 		return false;
 	}
-
 }

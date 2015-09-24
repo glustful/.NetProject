@@ -70,7 +70,6 @@ public class PayFragment extends Fragment {
 		this.isVisibleToUser = isVisibleToUser;
 	}
 
-	@Override
 	public void onResume() {
 		super.onResume();
 		page = 1;

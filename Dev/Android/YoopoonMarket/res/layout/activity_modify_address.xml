@@ -40,7 +40,7 @@
 
                 <EditText
                     android:id="@+id/et_address"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:hint="详细地址" />
@@ -65,7 +65,7 @@
 
                 <EditText
                     android:id="@+id/et_linkman"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:hint="收货人" />
@@ -89,8 +89,9 @@
                 android:padding="10dp" >
 
                 <EditText
+                    android:maxLength="11"
                     android:id="@+id/et_phone"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:inputType="phone"
@@ -115,8 +116,9 @@
                 android:padding="10dp" >
 
                 <EditText
+                    android:maxLength="7"
                     android:id="@+id/et_postno"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:hint="邮编" />

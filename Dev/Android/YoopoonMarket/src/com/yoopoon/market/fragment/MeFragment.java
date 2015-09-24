@@ -38,8 +38,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yoopoon.market.AboutUActivity_;
 import com.yoopoon.market.AddressManageActivity_;
-import com.yoopoon.market.LoginActivity_;
 import com.yoopoon.market.MeOrderActivity_;
 import com.yoopoon.market.MeServiceActivity_;
 import com.yoopoon.market.PersonalInfoActivity_;
@@ -136,6 +136,7 @@ public class MeFragment extends Fragment implements OnClickListener {
 					ll_loading.setVisibility(View.GONE);
 					if (!TextUtils.isEmpty(member.Thumbnail)) {
 						String imageUrl = getString(R.string.url_image) + member.Thumbnail;
+						Log.i(TAG, imageUrl);
 						ImageLoader.getInstance().displayImage(imageUrl, imageView1);
 						User.setProperty(getActivity(), "ImageUrl", imageUrl);
 					}
@@ -262,7 +263,6 @@ public class MeFragment extends Fragment implements OnClickListener {
 				for (int i = 0; i < array.length(); i++) {
 					try {
 						JSONObject object = array.getJSONObject(i);
-						Log.i(TAG, object.toString());
 						ServiceOrderEntity service = om.readValue(object.toString(), ServiceOrderEntity.class);
 						services.add(service);
 					} catch (JSONException e) {
@@ -296,7 +296,6 @@ public class MeFragment extends Fragment implements OnClickListener {
 		ll_loading.setVisibility(View.GONE);
 		int[] status = new int[4];
 		for (ServiceOrderEntity entity : services) {
-			Log.i(TAG, "Status:" + entity.Status);
 			switch (entity.Status) {
 				case 1:
 					status[0]++;
@@ -375,24 +374,24 @@ public class MeFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (isVisibleUser) {
-			if (!User.isLogin(getActivity())) {
-				// 未登录
 
-				LoginActivity_.intent(getContext()).start();
+		if (!User.isLogin(getActivity())) {
+			// 未登录
+
+			// LoginActivity_.intent(getContext()).start();
+		} else {
+			// 若已经登录，需要请求数据
+			if (orders.size() == 0) {
+				SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.share_preference),
+						Context.MODE_PRIVATE);
+				requestOrder(String.valueOf(sp.getInt("UserId", 0)));
+				requestServiceOrder(String.valueOf(sp.getInt("UserId", 0)));
+				requestData();
 			} else {
-				// 若已经登录，需要请求数据
-				if (orders.size() == 0) {
-					SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.share_preference),
-							Context.MODE_PRIVATE);
-					requestOrder(String.valueOf(sp.getInt("UserId", 0)));
-					requestServiceOrder(String.valueOf(sp.getInt("UserId", 0)));
-					requestData();
-				} else {
-					setServiceStatus();
-				}
+				setServiceStatus();
 			}
 		}
+
 	}
 
 	@Override
@@ -400,13 +399,13 @@ public class MeFragment extends Fragment implements OnClickListener {
 		switch (v.getId()) {
 			case R.id.btn_info:
 			case R.id.imageView1:
-				PersonalInfoActivity_.intent(getActivity()).member(member).start();
+				PersonalInfoActivity_.intent(getActivity()).start();
 				break;
 			case R.id.btn_address:
 				AddressManageActivity_.intent(getActivity()).start();
 				break;
 			case R.id.btn_about:
-				LoginActivity_.intent(getActivity()).start();
+				AboutUActivity_.intent(getActivity()).start();
 				break;
 			case R.id.btn_order:
 			case R.id.rl1:

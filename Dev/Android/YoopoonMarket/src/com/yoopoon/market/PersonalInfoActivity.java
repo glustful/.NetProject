@@ -14,10 +14,10 @@ package com.yoopoon.market;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,15 +37,20 @@ import android.widget.ImageView.ScaleType;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.domain.MemberModel;
+import com.yoopoon.market.domain.User;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
+import com.yoopoon.market.utils.ParserJSON;
+import com.yoopoon.market.utils.ParserJSON.ParseListener;
 import com.yoopoon.market.utils.SerializerJSON;
 import com.yoopoon.market.utils.SerializerJSON.SerializeListener;
 import com.yoopoon.market.utils.StringUtils;
@@ -77,7 +82,6 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 	@ViewById(R.id.tv_upload)
 	TextView tv_upload;
 	boolean uploadable = true;
-	@Extra
 	MemberModel member;
 
 	@Click(R.id.imageView1)
@@ -104,11 +108,67 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 		headView.setBackgroundColor(Color.RED);
 		titleButton.setText("个人资料");
 		titleButton.setTextColor(Color.WHITE);
-		fillData();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (!User.isLogin(this)) {
+			LoginActivity_.intent(this).start();
+			return;
+		}
+		String userid = User.getUserId(this);
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					parseToMember(object.toString());
+				} else {
+					// ll_loading.setVisibility(View.GONE);
+					Toast.makeText(PersonalInfoActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_getmemeber_byid)).setRequestMethod(RequestMethod.eGet)
+				.addParam("userid", userid).notifyRequest();
+	}
+
+	void parseToMember(final String json) {
+		new ParserJSON(new ParseListener() {
+
+			@Override
+			public Object onParse() {
+				ObjectMapper om = new ObjectMapper();
+				try {
+					member = om.readValue(json, MemberModel.class);
+				} catch (JsonParseException e) {
+					e.printStackTrace();
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return member;
+			}
+
+			@Override
+			public void onComplete(Object parseResult) {
+				if (parseResult != null) {
+					fillData();
+				}
+			}
+		}).execute();
 	}
 
 	void fillData() {
-		Log.i(TAG, member.toString());
+
 		et_name.setText(member.RealName);
 		et_phone.setText(member.Phone);
 		et_postno.setText(member.PostNo);
@@ -188,6 +248,7 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 						String path = uri.toString().substring(7);
 						file = new File(path);
 					}
+
 					if (StringUtils.isPicFile(file)) {
 						Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
 						/* 将Bitmap设定到ImageView */
@@ -201,6 +262,7 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 					} else {
 						tv_upload.setText("请选择正确的图片文件");
 					}
+
 				} catch (FileNotFoundException e) {
 					Log.e("Exception", e.getMessage(), e);
 				}
