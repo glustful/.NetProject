@@ -218,6 +218,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$t
         };
         $scope.changIng=false;
         $scope.AddCart=function(){
+            $scope.changIng=true;
             $scope.cartinfo.id = $scope.product.Id;
             $scope.cartinfo.name = $scope.product.Name;
             $scope.cartinfo.mainimg=$scope.product.MainImg;
@@ -226,7 +227,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$t
             $scope.cartinfo.parameterValue=$scope.product.ParameterValue;
             $scope.cartinfo.count = 1;
             cartservice.add($scope.cartinfo);
-            $scope.changIng=true;
+
         }
         //endregion
         //region  立即购买

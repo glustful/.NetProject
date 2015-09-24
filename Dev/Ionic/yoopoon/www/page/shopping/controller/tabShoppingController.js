@@ -112,17 +112,41 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         IsRecommend: '1'
         //ProductId:''
     };
+
     var getProductList = function () {
         $http.get(SETTING.ApiUrl + '/CommunityProduct/Get', {
             params: $scope.Condition,
             'withCredentials': true
         }).success(function (data1) {
             $scope.list = data1.List[0];
+            var img=$scope.list.MainImg;
+            var imgfb=document.createElement("img");
+            document.getElementById("father").appendChild(imgfb);
+            imgfb.className="add";
+            imgfb.setAttribute("src","http://img.iyookee.cn/"+img);
         });
-        ;
+
     };
     getProductList();
     $scope.getList = getProductList;
+
+//    增加到购物车动画
+//    var imgfb=document.createElement("img");
+////    var imgfb=img.cloneNode(true);
+//    document.getElementById("father").appendChild(imgfb);
+//    imgfb.className="f-show add";
+//    imgfb.setAttribute("ng-src","http://img.iyookee.cn/"+'$scope.list.MainImg');
+    $scope.AddCart1 = function (list) {
+        $scope.cartinfo.id = $scope.list.Id;
+        $scope.cartinfo.name = $scope.list.Name;
+        $scope.cartinfo.mainimg = $scope.list.MainImg;
+        $scope.cartinfo.price = $scope.list.Price;
+        $scope.cartinfo.oldprice = $scope.list.OldPrice;
+        $scope.cartinfo.count = 1;
+        cartservice.add($scope.cartinfo);
+    };
+
+
 //endregion
 
     //region 商品获取
@@ -202,15 +226,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         $scope.cartinfo.count = 1;
         cartservice.add($scope.cartinfo);
     }
-    $scope.AddCart1 = function (list) {
-        $scope.cartinfo.id = $scope.list.Id;
-        $scope.cartinfo.name = $scope.list.Name;
-        $scope.cartinfo.mainimg = $scope.list.MainImg;
-        $scope.cartinfo.price = $scope.list.Price;
-        $scope.cartinfo.oldprice = $scope.list.OldPrice;
-        $scope.cartinfo.count = 1;
-        cartservice.add($scope.cartinfo);
-    };
+
     //endregion
 
 
