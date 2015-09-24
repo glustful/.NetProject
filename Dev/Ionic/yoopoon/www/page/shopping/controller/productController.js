@@ -3,7 +3,7 @@
  */
 app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout','$stateParams',
     function ($http, $scope, $timeout,$stateParams) {
-
+    $scope.Img=SETTING.ImgUrl;
     $scope.category=$stateParams.name;
     //region 获取商品列表
     $scope.sech = {
@@ -131,17 +131,18 @@ app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout','$stateParams'
 }])
 app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$timeout','$ionicSlideBoxDelegate', 'cartservice',
     function ($http, $scope, $state,$stateParams, $timeout, $ionicSlideBoxDelegate,cartservice) {
+        $scope.Img=SETTING.ImgUrl;
         //region 轮播图
         $scope.$on('$ionicView.enter', function () {
             $ionicSlideBoxDelegate.start();
         });
-        $scope.channelName = 'banner';
-        $http.get('http://localhost:50597/api/Channel/GetTitleImg', {
-            params: {ChannelName: $scope.channelName},
-            'withCredentials': true
-        }).success(function (data) {
-            $scope.content = data;
-        });
+        //$scope.channelName = 'banner';
+        //$http.get('http://localhost:50597/api/Channel/GetTitleImg', {
+        //    params: {ChannelName: $scope.channelName},
+        //    'withCredentials': true
+        //}).success(function (data) {
+        //    $scope.content = data;
+        //});
         //endregion
         //region 获取商品详情
         $http.get(SETTING.ApiUrl + "/CommunityProduct/Get?id=" + $stateParams.id, {
