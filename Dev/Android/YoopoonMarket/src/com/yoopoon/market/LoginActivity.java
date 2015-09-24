@@ -16,6 +16,7 @@ import com.yoopoon.market.domain.User;
 import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.ResponseData;
+import com.yoopoon.market.utils.Utils;
 
 @EActivity(R.layout.activity_login)
 public class LoginActivity extends MainActionBarActivity {
@@ -30,6 +31,7 @@ public class LoginActivity extends MainActionBarActivity {
 
 	@Click(R.id.btn_login)
 	void login() {
+		Utils.hiddenSoftBorad(this);
 		loading.setVisibility(View.VISIBLE);
 		final String account = et_account.getText().toString();
 		final String psw = et_psw.getText().toString();
