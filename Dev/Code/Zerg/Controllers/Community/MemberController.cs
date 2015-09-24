@@ -90,7 +90,7 @@ namespace Zerg.Controllers.Community
 				UpdUser = c.UpdUser,
 				UpdTime = c.UpdTime,
 			}).ToList();
-            if (model == null)
+            if (model.Count <1)
             {
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "不存在数据")); 
             }

@@ -121,6 +121,11 @@ namespace Community.Service.ServiceOrder
                 {
                     query = query.Where(q => condition.AddUsers.Contains(q.AddUser));
                 }
+			    if (condition.Status != null)
+			    {
+			        query = query.Where(c => c.Status == condition.Status);
+			    }
+                
 				if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
