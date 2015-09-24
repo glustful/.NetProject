@@ -67,6 +67,7 @@
         <activity
             android:name="com.yoopoon.market.ProductDetailActivity_"
             android:screenOrientation="portrait"
+            
             android:theme="@style/ThemeNoTitle" >
         </activity>
         <!-- 产品列表通过分类搜索结果Activity -->
