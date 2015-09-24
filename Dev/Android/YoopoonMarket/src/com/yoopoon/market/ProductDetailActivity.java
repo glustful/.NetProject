@@ -159,7 +159,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		cartImageView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				 
 				Intent intent = new Intent("com.yoopoon.market.showcart");
 				intent.addCategory(Intent.CATEGORY_DEFAULT);
 				/*Intent intent = new Intent(ProductDetailActivity.this, MainActivity_.class);
@@ -263,14 +262,16 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
-				JSONObject productJsonObject = data.getMRootData().optJSONObject("ProductModel");
-				//设置商品详细信息
-				initProductDetailInfo(productJsonObject);
-				//设置广告,同事加载广告
-				loadProductAdvertisements(productJsonObject);
-				if ((!productJsonObject.optString("MainImg").equals("null"))
-						&& (!productJsonObject.optString("MainImg").equals("null"))) {
-					productImageURL = getString(R.string.url_image) + productJsonObject.optString("MainImg");
+				if (data.getMRootData() != null) {
+					JSONObject productJsonObject = data.getMRootData().optJSONObject("ProductModel");
+					//设置商品详细信息
+					initProductDetailInfo(productJsonObject);
+					//设置广告,同事加载广告
+					loadProductAdvertisements(productJsonObject);
+					if ((!productJsonObject.optString("MainImg").equals("null"))
+							&& (!productJsonObject.optString("MainImg").equals("null"))) {
+						productImageURL = getString(R.string.url_image) + productJsonObject.optString("MainImg");
+					}
 				}
 			}
 			@Override

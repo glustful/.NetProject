@@ -38,7 +38,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -93,7 +93,6 @@ import com.yoopoon.market.view.LazyViewPager.OnPageChangeListener;
 public class MainActivity extends FragmentActivity implements OnClickListener {
 	private static final String TAG = "MainActivity";
 	private Context mContext;
-	private Bundle productDetailCartBundle;
 	@ViewById(R.id.vp)
 	LazyViewPager vp;
 	@ViewById(R.id.rg)
@@ -149,8 +148,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				@Override
 				public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 					if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-						// Toast.makeText(mContext, "搜索" + v.getText().toString(),
-						// Toast.LENGTH_SHORT).show();
 						searchProduct(v.getText().toString());
 						return true;
 					}
@@ -172,6 +169,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					et_search.setVisibility(View.GONE);
 					clearSearchImageView.setVisibility(View.GONE);
 					Utils.hiddenSoftBorad(mContext);
+					//如果原编辑框中数据不为空，则清除数据同时刷新Fragment
+					mShopFragment.settingClearSearch();
 				}
 			});
 			et_search.startAnimation(animation);
@@ -263,14 +262,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.e("333333333333", "2222222222222");
-		productDetailCartBundle = getIntent().getBundleExtra("productDetailBundle");
-		if (productDetailCartBundle != null) {
-			Log.e("333333333333", productDetailCartBundle.getBoolean("productDetailCartClick") + "");
-			if (productDetailCartBundle.getBoolean("productDetailCartClick")) {
-				vp.setCurrentItem(2);
-			}
-		}
 	}
 	/**
 	 * @Title: searchProduct

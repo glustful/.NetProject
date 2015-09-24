@@ -97,7 +97,8 @@ public class ShopFragment extends Fragment {
 	private FrameLayout productListFrameLayout;
 	// 进度条对应的linearlayout
 	private LinearLayout progressbarLinearlayout;
-private int debugStatusCode=0;
+	private int debugStatusCode = 0;
+
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -179,7 +180,6 @@ private int debugStatusCode=0;
 			}
 		});
 		// 点击小购物车图片事件
-
 		requestProduct();
 	}
 	/**
@@ -225,18 +225,15 @@ private int debugStatusCode=0;
 			}
 		});
 		recommondProductCartImageView.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(final View v) {
 				new Thread() {
-
 					public void run() {
 						DBDao dao = new DBDao(mContext);
 						if (dao.isExist(id)) {
 							int count = dao.isExistCount(id);
 							dao.updateCount(id, count + 1);
 						} else {
-
 							dao.add(new Staff(title, name, urlString, 1, Float.parseFloat(price), Float
 									.parseFloat(oldPrice), id));
 						}
@@ -248,7 +245,6 @@ private int debugStatusCode=0;
 						mContext.sendBroadcast(intent);
 					};
 				}.start();
-
 			}
 		});
 	}
@@ -521,8 +517,7 @@ private int debugStatusCode=0;
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
-				if(debugStatusCode==2){
-					Log.e("111111111111",debugStatusCode+"");
+				if (debugStatusCode == 2) {
 				}
 				progressbarLinearlayout.setVisibility(View.GONE);
 				searchPullToRefreshListView.onRefreshComplete();
@@ -539,7 +534,8 @@ private int debugStatusCode=0;
 										JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
 								searchListView.setAdapter(searchProductAdapter);
 							}
-						}else{
+						} else {
+							Toast.makeText(mContext, "请从新输入搜索关键字", Toast.LENGTH_SHORT).show();
 							searchProductAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
 						}
 					} catch (JSONException e) {
