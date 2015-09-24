@@ -147,6 +147,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     };
     getList();
 //endregion
+    
     //region 商品加载
     $scope.loadmore = true;
     $scope.load_more = function () {
@@ -229,6 +230,11 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     }
     //endregion
 
+    //region  下拉刷新
+    $scope.doRefresh = function() {
+        window.location.reload();
+    }
+    //endregion
 
     $scope.searchname = '';
     document.getElementById('search').onblur = function () {
