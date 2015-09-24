@@ -39,6 +39,10 @@ namespace Zerg.Controllers.Community
         public HttpResponseMessage Get(int id)
 		{
 			var entity =_productService.GetProductById(id);
+            if (entity == null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不存在"));
+            }
             var comment = entity.Comments;           
             List<ProductCommentModel> commentList;
             if (comment == null)
