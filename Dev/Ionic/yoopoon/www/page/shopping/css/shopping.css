@@ -409,9 +409,9 @@
     -webkit-animation-delay: 0s;
 }
 @-webkit-keyframes Gwc-two{
-    0%{opacity:1;
-       -webkit-transform:scale(0.5,0.5);
-        top:100%;
+    /*0%{opacity:1;*/
+       /*-webkit-transform:scale(0.5,0.5);*/
+        /*top:100%;*/
 
     }
 }

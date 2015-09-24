@@ -119,11 +119,11 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
             'withCredentials': true
         }).success(function (data1) {
             $scope.list = data1.List[0];
-            var img=$scope.list.MainImg;
-            var imgfb=document.createElement("img");
-            document.getElementById("father").appendChild(imgfb);
-            imgfb.className="add";
-            imgfb.setAttribute("src","http://img.iyookee.cn/"+img);
+//            var img=$scope.list.MainImg;
+//            var imgfb=document.createElement("img");
+//            document.getElementById("father").appendChild(imgfb);
+//            imgfb.className="add";
+//            imgfb.setAttribute("src","http://img.iyookee.cn/"+img);
         });
 
     };
