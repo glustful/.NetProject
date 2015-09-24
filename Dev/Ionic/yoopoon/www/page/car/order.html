@@ -1,29 +1,80 @@
+<!--<link rel="stylesheet" href="page/car/css/car.css">-->
+    <!--<div class="bar header" style="height=44px">-->
+        <!--<a href="#/page/car" class="button button-clear icon ion-chevron-left button-dark"></a>-->
+        <!--<h2 class="title light" style="color: #000;">确认订单</h2>-->
+    <!--</div>-->
+<!--<ion-view hide-nav-bar="true" hide-tabs="true">-->
+<!--<ion-content no-header="true" style="top:44px;background-color: #eeeeee;">-->
+        <!--<ion-list>-->
+            <!--&lt;!&ndash;<ion-item class=" item-icon-left item-stable bar">&ndash;&gt;-->
+                <!--&lt;!&ndash;<a href="#/page/car" class="button button-clear icon ion-chevron-left button-dark"></a>&ndash;&gt;-->
+                <!--&lt;!&ndash;<h2 class=" title">确认订单</h2>&ndash;&gt;-->
+            <!--&lt;!&ndash;</ion-item >&ndash;&gt;-->
+
+            <!--<ion-item class="item item-icon-left item-icon-right" >-->
+                <!--<i class="icon icon-addressManage" style="color: #3b4043;font-size: 24px;"></i>-->
+                <!--<h2 style="color: #122733">收货人:董少明 <number style="float:right">18687827733</number></h2>-->
+                <!--<p style="white-space: normal;color: #122733">收货地址：云南省昆明市五华区丰宁街道学府路西段馨悦尚居8栋1单元1211室</p>-->
+                <!--<a class="icon ion-ios-arrow-right" href="#/page/me/selectAddress" style="color: #999999;"></a>-->
+            <!--</ion-item>-->
+            <!--<ion-item class="item-thumbnail-left" style="background-color: #f5f5f5">-->
+                <!--<img src="page/car/img/car.png" alt=""/>-->
+                <!--<h2 style="white-space: normal">我是花吃 云南特产零食糕点 玫瑰鲜花饼6枚*2盒 包邮 包邮 神犬小七同款</h2>-->
+                <!--<p>口味：甜味</p>-->
+                <!--<div>-->
+                    <!--<div style="float:left"><span class="red">￥69.9</span></div>-->
+                    <!--<div style="float:right"><span>x2</span></div>-->
+                <!--</div>-->
+            <!--</ion-item>-->
+            <!--<ion-item class="item item-light">-->
+                <!--<h2>配送费 <span style="float:right">免配送费</span></h2>-->
+
+            <!--</ion-item>-->
+            <!--<ion-item class="item item-light" style="border-bottom-width: 20px;">-->
+                <!--<h2>配送时间 <span style="float:right">付款后，预计30分钟送达</span></h2>-->
+
+            <!--</ion-item>-->
+
+        <!--</ion-list>-->
+            <!--<label class="item-input item-textarea item-stacked-label"style="background-color: #fff;padding-bottom: 20px;padding-right: 15px;">-->
+            <!--<span class="input-label" style="color: #000;margin-bottom: 10px;" >备注</span>-->
+            <!--<textarea name="" id="" cols="30" rows="10" placeholder="" style="border: 1px solid #dedede;background-color:#f8f8f8 "></textarea>-->
+            <!--</label>-->
+
+    <!--</ion-content>-->
+    <!--<div class="submit">-->
+        <!--<div style="float:right">-->
+            <!--合计<span class="red">￥387.00</span>-->
+            <!--<button  class="button light">确认</button>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--</ion-view>-->
 <link rel="stylesheet" href="page/car/css/car.css">
-    <div class="bar header" style="height=44px">
-        <a href="#/page/car" class="button button-clear icon ion-chevron-left button-dark"></a>
-        <h2 class="title light" style="color: #000;">确认订单</h2>
-    </div>
-<ion-view hide-nav-bar="true" hide-tabs="true">
-<ion-content no-header="true" style="top:44px;background-color: #eeeeee;">
+<div class="bar header" style="height=44px">
+    <a href="#/page/car" class="button button-clear icon ion-chevron-left button-dark"></a>
+    <h2 class="title light" style="color: #000;">确认订单</h2>
+</div>
+<ion-view hide-nav-bar="true" hide-tabs="true" ng-controller="submitOrderController">
+    <ion-content no-header="true" style="top:44px;background-color: #eeeeee;">
         <ion-list>
             <!--<ion-item class=" item-icon-left item-stable bar">-->
-                <!--<a href="#/page/car" class="button button-clear icon ion-chevron-left button-dark"></a>-->
-                <!--<h2 class=" title">确认订单</h2>-->
+            <!--<a href="#/page/car" class="button button-clear icon ion-chevron-left button-dark"></a>-->
+            <!--<h2 class=" title">确认订单</h2>-->
             <!--</ion-item >-->
 
             <ion-item class="item item-icon-left item-icon-right" >
                 <i class="icon icon-addressManage" style="color: #3b4043;font-size: 24px;"></i>
-                <h2 style="color: #122733">收货人:董少明 <number style="float:right">18687827733</number></h2>
-                <p style="white-space: normal;color: #122733">收货地址：云南省昆明市五华区丰宁街道学府路西段馨悦尚居8栋1单元1211室</p>
+                <h2 style="color: #122733">收货人:{{userinfo.Linkman}} <number style="float:right">{{userinfo.Tel}}</number></h2>
+                <p style="white-space: normal;color: #122733">收货地址：{{userinfo.Address}}</p>
                 <a class="icon ion-ios-arrow-right" href="#/page/me/selectAddress" style="color: #999999;"></a>
             </ion-item>
-            <ion-item class="item-thumbnail-left" style="background-color: #f5f5f5">
-                <img src="page/car/img/car.png" alt=""/>
-                <h2 style="white-space: normal">我是花吃 云南特产零食糕点 玫瑰鲜花饼6枚*2盒 包邮 包邮 神犬小七同款</h2>
+            <ion-item class="item-thumbnail-left" style="background-color: #f5f5f5" ng-repeat="list in model">
+                <img src="http://img.iyookee.cn/{{list.mainimg}}" alt=""/>
+                <h2 style="white-space: normal">{{list.name}}</h2>
                 <p>口味：甜味</p>
                 <div>
-                    <div style="float:left"><span class="red">￥69.9</span></div>
-                    <div style="float:right"><span>x2</span></div>
+                    <div style="float:left"><span class="red">￥{{list.price}}</span></div>
+                    <div style="float:right"><span>x{{list.count}}</span></div>
                 </div>
             </ion-item>
             <ion-item class="item item-light">
@@ -36,16 +87,16 @@
             </ion-item>
 
         </ion-list>
-            <label class="item-input item-textarea item-stacked-label"style="background-color: #fff;padding-bottom: 20px;padding-right: 15px;">
+        <label class="item-input item-textarea item-stacked-label"style="background-color: #fff;padding-bottom: 20px;padding-right: 15px;">
             <span class="input-label" style="color: #000;margin-bottom: 10px;" >备注</span>
-            <textarea name="" id="" cols="30" rows="10" placeholder="" style="border: 1px solid #dedede;background-color:#f8f8f8 "></textarea>
-            </label>
+            <textarea name="" id="" cols="30" rows="10" placeholder="" style="border: 1px solid #dedede;background-color:#f8f8f8 ">{{$scope.textarea}}</textarea>
+        </label>
 
     </ion-content>
     <div class="submit">
         <div style="float:right">
-            合计<span class="red">￥387.00</span>
-            <button  class="button light">确认</button>
+            合计<span class="red">￥{{CountPrice}}</span>
+            <button  class="button light" ng-click="submit">确认</button>
         </div>
     </div>
-    </ion-view>
+</ion-view>

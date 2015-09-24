@@ -2,9 +2,10 @@
  * Created by huangxiuyu on 2015/9/16.
  */
 //start--------------------------地址管理 huangxiuyu 2015.09.15--------------------------
-app.controller('addressAdm',['$http','$scope',function($http,$scope, $ionicSlideBoxDelegate) {
+app.controller('addressAdm',['$http','$scope','AuthService',function($http,$scope,AuthService, $ionicSlideBoxDelegate) {
+    $scope.currentuser= AuthService.CurrentUser();
     $scope.searchCondition={
-        Adduser:1
+        Adduser:$scope.currentuser.UserId
     }
     $scope.getAddress=function(){
         $http.get(SETTING.ApiUrl+'/MemberAddress/Get/',{params:$scope.searchCondition,'withCredentials':true}).
@@ -111,7 +112,8 @@ app.controller('newaddress',['$http','$scope','$stateParams','$state','AuthServi
         Address:'',
         Zip :'',
         Linkman :'',
-        Tel:''
+        Tel:'',
+            UserId:$scope.currentuser.UserId
     };
 
 

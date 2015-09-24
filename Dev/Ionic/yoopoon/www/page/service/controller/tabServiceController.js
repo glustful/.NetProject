@@ -59,19 +59,52 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 		$ionicHistory.clearHistory();
 		window.location.href = state;
 	}
-
+	//获取当前用户信息
+	$scope.currentuser= AuthService.CurrentUser();
 	//我的服务
+	function tab() {
+		//待接件
+		if ($stateParams.tabIndex == 5) {
+			$scope.tabIndex = 5;
+			$scope.condition = {
+				Status: '4',
+				Addusers: $scope.currentuser.UserId
+			};
+			var getRec = function () {
+				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
+					.success(function(data) {
+						//alert("recive ");
+						$scope.list = data.List;
+					});
+			};
+			getRec();
+		}
+		//办理中
+		if ($stateParams.tabIndex == 6) {
+			$scope.tabIndex = 6;
+			$scope.condition = {
+				Status: '5',
+				Addusers: $scope.currentuser.UserId
+			};
+			var getHandle = function () {
+				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
+					.success(function(data) {
+						$scope.list = data.List;
+					});
+			};
+			getHandle();
+		}
+	}
+	tab();
+
 	//$scope.tabIndex = 5;
 	$scope.getServiceList = function (tabIndex) {
 		$scope.tabIndex = tabIndex;
-		//获取当前用户信息
-		$scope.currentuser= AuthService.CurrentUser();
 		if(	$scope.tabIndex == 5){
 			$scope.condition = {
 				Status: '4',
-				Addusers: ''
+				Addusers: $scope.currentuser.UserId
 			};
-			$scope.condition.AddUsers =   $scope.currentuser.UserId;
 			var getList = function () {
 				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
 					.success(function(data) {
@@ -94,41 +127,9 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 			};
 			getList1();
 		}
-
 	};
-	function tab() {
-		//待接件
-		if ($stateParams.tabIndex == 5) {
-			$scope.tabIndex = 5;
-			$scope.condition = {
-				Status: '4',
-				Addusers: $scope.currentuser.UserId
-			};
-			var getList = function () {
-				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
-					.success(function(data) {
-						$scope.list = data.List;
-					});
-			};
-			getList();
-		}
-		//办理中
-		if ($stateParams.tabIndex == 6) {
-			$scope.tabIndex = 6;
-			$scope.condition = {
-				Status: '5',
-				Addusers: $scope.currentuser.UserId
-			};
-			var getList1 = function () {
-				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
-					.success(function(data) {
-						$scope.list = data.List;
-					});
-			};
-			getList1();
-		}
-	}
-	tab();
+
+
 	//    滚动刷新
 	$scope.items = [];
 	var base = 0;
