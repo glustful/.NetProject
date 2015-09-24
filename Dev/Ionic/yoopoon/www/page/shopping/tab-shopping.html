@@ -6,8 +6,7 @@
        ui-sref="page.Product-Catagory"></a>
     <label class=" item-select select-header" ng-hide="showSelect">
 
-        <select ng-model="selected" id="ParentId" ng-options="o.Id as o.Name for o in addrss" ng-change="click()"
-                required>
+        <select ng-model="selected" id="ParentId"  ng-options="o.Id as o.Name for o in addrss" ng-change="click()" required>
         </select>
 
     </label>
@@ -45,9 +44,9 @@
             <!--</ion-slide>-->
         </ion-slide-box>
         <!-- ion-infinite-scroll 上拉加载数据指令 distance默认1% nf-if的值为false时，就禁止执行on-infinite  -->
-        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="1%"></ion-infinite-scroll>
+        <ion-infinite-scroll ng-if="moredata" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
         <a class="button-service" ng-click="go('index.html#/page/service/safe')" style="">优服务</a>
-        <ion-scroll zooming="true" direction="x" class="scroll-home">
+        <!--<ion-scroll zooming="true" direction="x" class="scroll-home">-->
             <div class="row bg-yellow">
 
                 <a class="col-20 tab-item">
@@ -92,7 +91,7 @@
                 </a>
 
             </div>
-        </ion-scroll>
+        <!--</ion-scroll>-->
 
         <div class=" stable-bg padding">
             <div class="  item item-light item-borderless" style="margin-bottom: 10px">
@@ -107,13 +106,16 @@
                 </div>
                 <div class="activity padding text-left">
                     <div class="color-white">{{list.Name}}</div>
+
                     <p><span class="p-price" style="font-size: 0.5em">RMB{{list.OldPrice}}</span>/
+
                         <del style="font-size: 2px;" class="color-white">折扣前{{list.Price}}</del>
                     </p>
                     <i class="icon icon-gouwuche shop-cart" ng-click="AddCart1(this)"></i><br>
                     <button class=" energized-bg none-border button-size " ng-click="buysome(list.Id)">
                         立即购买
                     </button>
+
 
                 </div>
             </div>
@@ -122,7 +124,7 @@
                     <div class="col p-relative">
 
                             <img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}@187w_140h_70q_2e"
-                                 ng-click="go('index.html#/page/shopping/product-detail')">
+                                 ui-sref="page.product-detail({id:row.Id})">
 
 
 
@@ -132,15 +134,16 @@
                         <div class="padding">
                             <p>{{row.Name}}</p>
 
+
                             <p><span class="p-price" style="font-size: 0.5em">RMB{{row.OldPrice}}</span>/
+
                                 <del style="font-size: 2px;">折扣前{{row.Price}}</del>
                             </p>
                             <p>
-                                <button class="button  button-small   button-energized"
-                                        ng-click="buysome(row.Id)">立即购买
-                                </button>
+                                <button class="button  button-small   button-energized"  ng-click="buysome(row.Id)">立即购买</button>
                                 <i class="icon icon-gouwuche " style="float: right;font-size: 30px"
                                    ng-click="AddCart(this)"></i></p>
+
                         </div>
                     </div>
                 </li>

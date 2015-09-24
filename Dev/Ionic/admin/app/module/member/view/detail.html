@@ -16,11 +16,11 @@
         <div class="m-md">
 
             <div class="item-icon-left">
-                <img src="{{memModels.Thumbnail}}@40w_40h_70q" class="w-full circle">
+                <img style="width: 80px;height: 80px" src="http://img.iyookee.cn/{{memModels.Thumbnail}}@80w_80h_70q" class="w-full circle">
             </div>
             <div class="m-md">
                 <div><small>{{memModels.RealName}}</small></div>
-                <div><small>{{memModels.Gender}}</small></div>
+                <div><small ng-if="memModels.Gender==0">男</small><small ng-if="memModels.Gender==1">女</small></div>
                 <div><small>积分总额：{{memModels.Points}}</small><small>账户余额：{{memModels.AccountNumber}}</small></div>
             </div>
         </div>
