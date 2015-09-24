@@ -3,7 +3,7 @@
  */
 app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout','$stateParams',
     function ($http, $scope, $timeout,$stateParams) {
-
+    $scope.Img=SETTING.ImgUrl;
     $scope.category=$stateParams.name;
     //region 获取商品列表
     $scope.sech = {
@@ -131,17 +131,18 @@ app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout','$stateParams'
 }])
 app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$timeout','$ionicSlideBoxDelegate', 'cartservice',
     function ($http, $scope, $state,$stateParams, $timeout, $ionicSlideBoxDelegate,cartservice) {
+        $scope.Img=SETTING.ImgUrl;
         //region 轮播图
         $scope.$on('$ionicView.enter', function () {
             $ionicSlideBoxDelegate.start();
         });
-        $scope.channelName = 'banner';
-        $http.get('http://localhost:50597/api/Channel/GetTitleImg', {
-            params: {ChannelName: $scope.channelName},
-            'withCredentials': true
-        }).success(function (data) {
-            $scope.content = data;
-        });
+        //$scope.channelName = 'banner';
+        //$http.get('http://localhost:50597/api/Channel/GetTitleImg', {
+        //    params: {ChannelName: $scope.channelName},
+        //    'withCredentials': true
+        //}).success(function (data) {
+        //    $scope.content = data;
+        //});
         //endregion
         //region 获取商品详情
         $http.get(SETTING.ApiUrl + "/CommunityProduct/Get?id=" + $stateParams.id, {
@@ -260,25 +261,9 @@ app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$t
                 $scope.numbers=1;
             }
         }
-        //$scope.productcount={
-        //    id: $stateParams.id,
-        //    name: $scope.product.Name,
-        //    count: $scope.numbers,
-        //    mainimg:$scope.product.MainImg,
-        //    price:$scope.product.Price,
-        //    oldprice:$scope.product.OldPrice,
-        //    parameterValue:$scope.product.ParameterValue
-        //};
 
         $scope.buy=function(){
-            //$scope.cartinfo.id = $scope.product.Id;
-            //$scope.cartinfo.name = $scope.product.Name;
-            //$scope.cartinfo.mainimg=$scope.product.MainImg;
-            //$scope.cartinfo.price=$scope.product.Price;
-            //$scope.cartinfo.oldprice=$scope.product.OldPrice;
-            //$scope.cartinfo.parameterValue=$scope.product.ParameterValue;
-            //$scope.cartinfo.count = $scope.numbers;
-            //$scope.price=$scope.product.Price*$scope.numbers
+
             $state.go("page.order",{productId: $scope.product.Id,count:$scope.numbers})
         }
         //endregion

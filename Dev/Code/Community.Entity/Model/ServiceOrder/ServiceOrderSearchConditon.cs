@@ -60,7 +60,7 @@ namespace Community.Entity.Model.ServiceOrder
 
 		public string Remark { get; set; }
 
-
+        public EnumServiceOrderStatus? Status { get; set; }
 
 
 		public EnumServiceOrderSearchOrderBy? OrderBy { get; set; }

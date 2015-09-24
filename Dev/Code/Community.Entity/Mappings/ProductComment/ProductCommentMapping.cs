@@ -16,6 +16,8 @@ namespace Community.Entity.Mappings.ProductComment
 			Property(c => c.AddTime).HasColumnType("datetime").IsOptional();
 			Property(c => c.Content).HasColumnType("text").IsOptional();
 			Property(c => c.Stars).HasColumnType("int").IsOptional();
+		    Property(c => c.AddUser).HasColumnType("int").IsOptional();
+		    HasOptional(c => c.OrderDetail).WithOptionalDependent();
 		}
 	}
 }

@@ -8,7 +8,7 @@
 
 <ion-view hide-tabs="true" hide-nav-bar="true">
     <ion-content class="detail-position" style="bottom:63px;">
-        <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" ng-if="content">
+        <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true">
             <!--<ion-slide ng-repeat="item in content">-->
                 <!--<div class="box">-->
                     <!--<img ng-if="item" ng-src="http://img.iyookee.cn/{{item.TitleImg}}" class="img-full" >-->
@@ -17,27 +17,27 @@
             <!--</ion-slide>-->
             <ion-slide>
                 <div class="detail-img">
-                    <img ng-src="http://img.iyookee.cn/{{product.MainImg}}@320w_231h_70q" style="width: 320px;height: 231px">
+                    <img ng-src="{{Img+product.MainImg}}@320w_231h_70q" style="width: 100%;height: 231px">
                 </div>
             </ion-slide>
             <ion-slide>
                 <div class="detail-img">
-                    <img ng-src="http://img.iyookee.cn/{{product.Img}}@320w_231h_70q" style="width: 320px;height: 231px">
+                    <img ng-src="{{Img+product.Img}}@320w_231h_70q" style="width: 100%;height: 231px">
                 </div>
             </ion-slide>
             <ion-slide>
                 <div class="detail-img">
-                    <img ng-src="http://img.iyookee.cn/{{product.Img1}}@320w_231h_70q" style="width: 320px;height: 231px">
+                    <img ng-src="{{Img+product.Img1}}@320w_231h_70q" style="width: 100%;height: 231px">
                 </div>
             </ion-slide>
             <ion-slide>
                 <div class="detail-img">
-                    <img ng-src="http://img.iyookee.cn/{{product.Img2}}@320w_231h_70q" style="width: 320px;height: 231px">
+                    <img ng-src="{{Img+product.Img2}}@320w_231h_70q" style="width: 100%320px;height: 231px">
                 </div>
             </ion-slide>
             <ion-slide>
                 <div class="detail-img">
-                    <img ng-src="http://img.iyookee.cn/{{product.Img3}}@320w_231h_70q" style="width: 320px;height: 231px">
+                    <img ng-src="{{Img+product.Img3}}@320w_231h_70q" style="width:100%;height: 231px">
                 </div>
             </ion-slide>
         </ion-slide-box>
@@ -76,16 +76,16 @@
         <div ng-class="{true: 'detail', false: 'nodetail'}[isDetail]">
             <div>
                   <div style="float: left;margin-right: 20px;margin-bottom: 10px;margin-left: 20px">
-                      <img src="http://img.iyookee.cn/{{productDetail.Img}}" style="width: 100px;height: 100px"/>
+                      <img ng-src="{{Img+productDetail.Img}}@100w_100h_70q" style="width: 100px;height: 100px"/>
                   </div>
                   <div style="float: left;margin-right: 20px;margin-bottom: 10px">
-                      <img src="http://img.iyookee.cn/{{productDetail.Img1}}" style="width: 100px;height: 100px"/>
+                      <img ng-src="{{Img+productDetail.Img1}}@100w_100h_70q" style="width: 100px;height: 100px"/>
                   </div>
                   <div style="float: left;margin-right: 20px;margin-left: 20px">
-                      <img src="http://img.iyookee.cn/{{productDetail.Img2}}" style="width: 100px;height: 100px"/>
+                      <img ng-src="{{Img+productDetail.Img2}}@100w_100h_70q" style="width: 100px;height: 100px"/>
                   </div>
                   <div style="float: left">
-                      <img src="http://img.iyookee.cn/{{productDetail.Img3}}" style="width: 100px;height: 100px"/>
+                      <img ng-src="{{Img+productDetail.Img3}}@100w_100h_70q" style="width: 100px;height: 100px"/>
                   </div>
             </div>
         <div style="clear: both;margin-left: 20px"><span>{{productDetail.Detail}}</span></div>

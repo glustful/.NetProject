@@ -104,6 +104,7 @@ namespace Zerg.Controllers.Community
 				Actualprice = c.Actualprice,
                 Details = c.Details.Select(d => new OrderDetailModel
 				{
+                    Id = d.Id,
 				    Count = d.Count,
                     UnitPrice = d.UnitPrice,
                     Product = new ProductModel()
