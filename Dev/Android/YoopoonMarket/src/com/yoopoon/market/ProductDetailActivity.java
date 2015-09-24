@@ -92,7 +92,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	private int pictureYPosition;
 	// 商品图片位置
 	private String productImageURL;
-
 	Staff staff;
 
 	@Click(R.id.btn_purchase)
@@ -103,6 +102,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		staffList.add(staff);
 		BalanceActivity_.intent(this).staffList(staffList).start();
 	}
+
 	// 设置返回状态码，如果是首页跳转返回首页，如果是商品列表页回商品列表页
 	private String comeFromstatusCode;
 
@@ -188,7 +188,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		cartImageView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
 				Intent intent = new Intent("com.yoopoon.market.showcart");
 				intent.addCategory(Intent.CATEGORY_DEFAULT);
 				/*
@@ -201,7 +200,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 			}
 		});
 	}
-
 	/**
 	 * @Title: loadComment
 	 * @Description: 循环加载产品评论
@@ -254,7 +252,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 			}
 		}
 	}
-
 	/**
 	 * @Title: loadMoreComment
 	 * @Description: 每次增加2，控制需要显示的广告数量
@@ -263,63 +260,65 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		count += 2;
 		requestComment();
 	}
-
 	@Override
 	protected void onPause() {
 		super.onPause();
 		count = 2;
 	}
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext = this;
 	}
-
 	@Override
 	public void backButtonClick(View v) {
 	}
-
 	@Override
 	public void titleButtonClick(View v) {
 	}
-
 	@Override
 	public void rightButtonClick(View v) {
 	}
-
 	@Override
 	public Boolean showHeadView() {
 		return null;
 	}
-
 	/**
 	 * @Title: requestProductDetail
 	 * @Description: 获取商品详细信息，包括商品评价,同时刷新界面
 	 */
 	private void requestProductDetail() {
 		new RequestAdapter() {
-
 			@Override
 			public void onReponse(ResponseData data) {
-				JSONObject productJsonObject = data.getMRootData().optJSONObject("ProductModel");
-				// 设置商品详细信息
-				initProductDetailInfo(productJsonObject);
-				// 设置广告,同事加载广告
-				loadProductAdvertisements(productJsonObject);
-				if ((!productJsonObject.optString("MainImg").equals("null"))
-						&& (!productJsonObject.optString("MainImg").equals("null"))) {
-					productImageURL = getString(R.string.url_image) + productJsonObject.optString("MainImg");
+				if (data.getMRootData() != null) {
+					JSONObject productJsonObject = data.getMRootData().optJSONObject("ProductModel");
+					//设置商品详细信息
+					initProductDetailInfo(productJsonObject);
+					//设置广告,同事加载广告
+					loadProductAdvertisements(productJsonObject);
+					if ((!productJsonObject.optString("MainImg").equals(""))
+							&& (!productJsonObject.optString("MainImg").equals("null"))) {
+						productImageURL = getString(R.string.url_image) + productJsonObject.optString("MainImg");
+					}
+					//JSONObject productJsonObject = data.getMRootData().optJSONObject("ProductModel");
+					// 设置商品详细信息
+					//initProductDetailInfo(productJsonObject);
+					// 设置广告,同事加载广告
+					//loadProductAdvertisements(productJsonObject);
+					/*if ((!productJsonObject.optString("MainImg").equals("null"))
+							&& (!productJsonObject.optString("MainImg").equals("null"))) {
+						productImageURL = getString(R.string.url_image) + productJsonObject.optString("MainImg");
+
+					}*/
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).setRequestMethod(RequestMethod.eGet)
 				.addParam("id", productId).notifyRequest();
 	}
-
 	/**
 	 * @Title: initProductDetailInfo
 	 * @Description: 根据传入的参数对商品详细信息进行设置
@@ -332,7 +331,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		String price = SplitStringWithDot.split(jsonObject.optString("Price", "0"));
 		String oldPrice;
 		String imageUrl = getString(R.string.url_image) + jsonObject.optString("MainImg");
-
 		productTitleTextView.setText(jsonObject.optString("Name", ""));
 		productSubtitleTextView.setText(jsonObject.optString("Subtitte", ""));
 		productPrictTextView.setText("￥" + SplitStringWithDot.split(jsonObject.optString("Price", "0")));
@@ -351,11 +349,8 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		float price_counted = Float.parseFloat(price);
 		float price_previous = Float.parseFloat(oldPrice);
 		int id = Integer.parseInt(productId);
-
 		staff = new Staff(subtitte, name, imageUrl, 1, price_counted, price_previous, id);
-
 	}
-
 	private void loadProductAdvertisements(JSONObject jsonObject) {
 		ArrayList<String> arrayList = new ArrayList<String>();
 		String image0 = jsonObject.optString("Img", "");
@@ -394,7 +389,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		 */
 		productAdvertisement.show(arrayList);
 	}
-
 	/**
 	 * @Title: requestComment
 	 * @Description: 获取评论
@@ -423,14 +417,12 @@ public class ProductDetailActivity extends MainActionBarActivity {
 					}
 				}
 			}
-
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_comment)).addParam("ProductId", productId).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
-
 	private void loadProductAnimationPicture() {
 		if ((!productImageURL.equals("")) && (!productImageURL.equals("null"))) {
 			ImageLoader.getInstance().displayImage(productImageURL, animationCartImageView, MyApplication.getOptions(),
@@ -494,11 +486,9 @@ public class ProductDetailActivity extends MainActionBarActivity {
 				@Override
 				public void onAnimationStart(Animation animation) {
 				}
-
 				@Override
 				public void onAnimationRepeat(Animation animation) {
 				}
-
 				@Override
 				public void onAnimationEnd(Animation animation) {
 					animationCartImageView.setVisibility(View.GONE);
