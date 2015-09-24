@@ -28,6 +28,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -51,7 +52,7 @@ import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
-import com.yoopoon.view.adapter.ProductListViewAdapter;
+import com.yoopoon.view.adapter.ProductKeywordListAdapter;
 
 /**
  * @ClassName: ProductList
@@ -64,7 +65,7 @@ public class ProductKeywordList extends MainActionBarActivity implements OnClick
 	private Dialog screenPriceDialog, sortDialog;
 	private Context mContext;
 	private ListView productListView;
-	private ProductListViewAdapter mProductListViewAdapter;
+	private ProductKeywordListAdapter mProductKeywordListAdapter;
 	private Button confirmButton, cancelButton, resetPriceButton;
 	private EditText productBeginPriceEditText, productEndPriceEditText;
 	private Button resetSortButton, cancelSortButton;
@@ -106,11 +107,14 @@ public class ProductKeywordList extends MainActionBarActivity implements OnClick
 		titleButton.setVisibility(View.VISIBLE);
 		backWhiteButton.setVisibility(View.VISIBLE);
 		Bundle bundle = getIntent().getExtras();
-		keyword = bundle.getString("keyword");
-		titleString = bundle.getString("keyword");
+		if (bundle != null) {
+			keyword = bundle.getString("keyword");
+			titleString = bundle.getString("keyword");
+		}
 		titleButton.setText(titleString);
 		titleButton.setTextColor(Color.WHITE);
 		backWhiteButton.setText("后退");
+		backWhiteButton.setTextColor(Color.WHITE);
 		headView.setBackgroundColor(Color.RED);
 		rightButton.setVisibility(View.GONE);
 		//商品列表
@@ -182,9 +186,9 @@ public class ProductKeywordList extends MainActionBarActivity implements OnClick
 				progressbarLinearLayout.setVisibility(View.GONE);
 				if (data.getMRootData() != null) {
 					JSONArray array = data.getMRootData().optJSONArray("List");
-					mProductListViewAdapter = new ProductListViewAdapter(mContext,
+					mProductKeywordListAdapter = new ProductKeywordListAdapter(mContext,
 							JSONArrayConvertToArrayList.convertToArrayList(array));
-					productListView.setAdapter(mProductListViewAdapter);
+					productListView.setAdapter(mProductKeywordListAdapter);
 				}
 			}
 			@Override
@@ -206,7 +210,7 @@ public class ProductKeywordList extends MainActionBarActivity implements OnClick
 				progressbarLinearLayout.setVisibility(View.GONE);
 				if (data.getMRootData() != null) {
 					JSONArray array = data.getMRootData().optJSONArray("List");
-					mProductListViewAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(array));
+					mProductKeywordListAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(array));
 				}
 			}
 			@Override
@@ -222,7 +226,7 @@ public class ProductKeywordList extends MainActionBarActivity implements OnClick
 				ptr_listview_product_list.onRefreshComplete();
 				if (data.getMRootData() != null) {
 					JSONArray array = data.getMRootData().optJSONArray("List");
-					mProductListViewAdapter.addRefresh(JSONArrayConvertToArrayList.convertToArrayList(array));
+					mProductKeywordListAdapter.addRefresh(JSONArrayConvertToArrayList.convertToArrayList(array));
 				}
 			}
 			@Override
@@ -356,6 +360,8 @@ public class ProductKeywordList extends MainActionBarActivity implements OnClick
 	//###################################################################################################
 	@Override
 	public void backButtonClick(View v) {
+		/*Intent intent=new Intent(ProductKeywordList.this,TreeCategoryActivity_.class);
+		startActivity(intent);*/
 		finish();
 	}
 	@Override

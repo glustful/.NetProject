@@ -51,7 +51,7 @@ import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.utils.JSONArrayConvertToArrayList;
-import com.yoopoon.view.adapter.ProductListViewAdapter;
+import com.yoopoon.view.adapter.ProductClassificationListAdapter;
 
 /**
  * @ClassName: ProductList
@@ -64,7 +64,7 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 	private Dialog screenPriceDialog, sortDialog;
 	private Context mContext;
 	private ListView productListView;
-	private ProductListViewAdapter mProductListViewAdapter;
+	private ProductClassificationListAdapter mProductListViewAdapter;
 	private Button confirmButton, cancelButton, resetPriceButton;
 	private EditText productBeginPriceEditText, productEndPriceEditText;
 	private Button resetSortButton, cancelSortButton;
@@ -100,7 +100,7 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 	}
 	@AfterViews
 	void initProductList() {
-		//设置标题栏
+		//设置标题栏 
 		titleButton.setVisibility(View.VISIBLE);
 		backWhiteButton.setVisibility(View.VISIBLE);
 		Bundle bundle = getIntent().getExtras();
@@ -109,6 +109,7 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 		titleButton.setText(titleString);
 		titleButton.setTextColor(Color.WHITE);
 		backWhiteButton.setText("后退");
+		backWhiteButton.setTextColor(Color.WHITE);
 		headView.setBackgroundColor(Color.RED);
 		rightButton.setVisibility(View.GONE);
 		//商品列表
@@ -213,13 +214,13 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 					public void onClick(View v) {
 						//点击效果背景色设置
 						changedCodlorButton.setTextColor(Color.BLACK);
-						
 						Button button1 = (Button) v;
 						//点击效果背景色设置
 						button1.setTextColor(Color.rgb(255, 34, 30));
 						changedCodlorButton = button1;
 						classificationStatusCode = jsonObject.optString("Id");
-						requsetProductList(initParameters());;
+						requsetProductList(initParameters());
+						;
 					}
 				});
 				linearLayout_product_list.addView(button);
@@ -242,7 +243,7 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 				progressbarLinearLayout.setVisibility(View.GONE);
 				if (data.getMRootData() != null) {
 					JSONArray array = data.getMRootData().optJSONArray("List");
-					mProductListViewAdapter = new ProductListViewAdapter(mContext,
+					mProductListViewAdapter = new ProductClassificationListAdapter(mContext,
 							JSONArrayConvertToArrayList.convertToArrayList(array));
 					productListView.setAdapter(mProductListViewAdapter);
 				}
@@ -265,7 +266,6 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 			public void onReponse(ResponseData data) {
 				progressbarLinearLayout.setVisibility(View.GONE);
 				if (data.getMRootData() != null) {
-					 
 					JSONArray array = data.getMRootData().optJSONArray("List");
 					mProductListViewAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(array));
 				}
@@ -357,7 +357,6 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 				break;
 		}
 	}
-	
 	@Override
 	public void backButtonClick(View v) {
 		finish();
@@ -444,10 +443,9 @@ public class ProductClassificationList extends MainActionBarActivity implements 
 		if (priceEnd != 0) {
 			hashMap.put("PriceEnd", priceEnd + "");
 		}
-		if(classificationStatusCode.equals("")){
+		if (classificationStatusCode.equals("")) {
 			hashMap.put("CategoryId", classificationStatusCode);
 		}
-	
 		return hashMap;
 	}
 }

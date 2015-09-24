@@ -3,6 +3,7 @@ package com.yoopoon.market;
 import java.util.ArrayList;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
@@ -41,6 +42,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 @EActivity(R.layout.activity_product_detail)
 public class ProductDetailActivity extends MainActionBarActivity {
@@ -100,7 +102,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	@AfterViews
 	void initProductDetail() {
 		//获取从首页过来的id
-		comeFromstatusCode=getIntent().getExtras().getString("comeFromstatusCode");
+		comeFromstatusCode = getIntent().getExtras().getString("comeFromstatusCode");
 		productId = getIntent().getExtras().getString("productId");
 		linearLayout = (LinearLayout) findViewById(R.id.linearlayout_product_detail);
 		productAdvertisement = new ProductAdvertisement(mContext);
@@ -122,15 +124,17 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		returnToShopImageView.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				if(comeFromstatusCode.equals("shopFragment")){
+				if (comeFromstatusCode.equals("shopFragment")) {
 					Intent intent = new Intent(ProductDetailActivity.this, MainActivity_.class);
 					startActivity(intent);
-				}else if(comeFromstatusCode.equals("productList")){
+				} else if (comeFromstatusCode.equals("ProductClassificationList")) {
 					Intent intent = new Intent(ProductDetailActivity.this, ProductClassificationList_.class);
 					startActivity(intent);
+				} else if (comeFromstatusCode.equals("productKeywordList")) {
+					Intent intent = new Intent(ProductDetailActivity.this, ProductKeywordList_.class);
+					startActivity(intent);
 				}
-				
-				return false;
+				return true;
 			}
 		});
 		addMoreCommentButton.setOnClickListener(new OnClickListener() {
@@ -152,10 +156,22 @@ public class ProductDetailActivity extends MainActionBarActivity {
 				loadProductAnimationPicture();
 			}
 		});
+		cartImageView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				 
+				Intent intent = new Intent("com.yoopoon.market.showcart");
+				intent.addCategory(Intent.CATEGORY_DEFAULT);
+				/*Intent intent = new Intent(ProductDetailActivity.this, MainActivity_.class);
+				Bundle bundle = new Bundle();
+				bundle.putBoolean("productDetailCartClick", true);
+				intent.putExtra("productDetailBundle", bundle);
+				mContext.startActivity(intent);*/
+				sendBroadcast(intent);
+				MainActivity_.intent(mContext).start();
+			}
+		});
 	}
-	/*private void cartAnimation(  ){
-		
-	}*/
 	/**
 	 * @Title: loadComment
 	 * @Description: 循环加载产品评论
@@ -247,7 +263,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
-				Log.e("11111111111111111111111", productId+"");
 				JSONObject productJsonObject = data.getMRootData().optJSONObject("ProductModel");
 				//设置商品详细信息
 				initProductDetailInfo(productJsonObject);
@@ -358,8 +373,12 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		}.setUrl(getString(R.string.url_comment)).addParam("ProductId", productId).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
+	/**
+	 * @Title: loadProductAnimationPicture
+	 * @Description: 给购物车添加动画效果
+	 */
 	private void loadProductAnimationPicture() {
-		if ((!productImageURL.equals(""))&&(!productImageURL.equals("null"))) {
+		if ((!productImageURL.equals("")) && (!productImageURL.equals("null"))) {
 			ImageLoader.getInstance().displayImage(productImageURL, animationCartImageView, MyApplication.getOptions(),
 					MyApplication.getLoadingListener());
 			animationCartImageView.setVisibility(View.VISIBLE);
