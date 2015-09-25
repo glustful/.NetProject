@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -60,7 +59,6 @@ import com.yoopoon.market.utils.ParserJSON.ParseListener;
  * @date: 2015-9-7 下午4:50:59
  */
 public class MeFragment extends Fragment implements OnClickListener {
-	private static final String TAG = "MeFragment";
 	View rootView;
 	Button btn_order;
 	Button btn_service;
@@ -343,7 +341,6 @@ public class MeFragment extends Fragment implements OnClickListener {
 	public void onResume() {
 		super.onResume();
 		MainActivity mainActivity = (MainActivity) getActivity();
-		Log.i(TAG, "onResume:" + mainActivity.getCurrentPage());
 		if (mainActivity.getCurrentPage() == 3) {
 			if (!User.isLogin(getActivity())) {
 				LoginActivity_.intent(getActivity()).start();

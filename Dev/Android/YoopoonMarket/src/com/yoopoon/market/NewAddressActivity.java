@@ -13,6 +13,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -26,6 +27,7 @@ import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
+import com.yoopoon.market.utils.RegxUtils;
 import com.yoopoon.market.utils.SerializerJSON;
 import com.yoopoon.market.utils.SerializerJSON.SerializeListener;
 
@@ -59,9 +61,31 @@ public class NewAddressActivity extends MainActionBarActivity {
 		int userid = sp.getInt("UserId", 0);
 
 		if (userid != 0) {
-			loading.setVisibility(View.VISIBLE);
 			if (areaId.equals("0")) {
 				Toast.makeText(NewAddressActivity.this, "请选择地区", Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+			String address = et_address.getText().toString();
+			String zip = et_postno.getText().toString();
+			String linkMan = et_linkman.getText().toString();
+			String tel = et_phone.getText().toString();
+
+			if (TextUtils.isEmpty(address)) {
+				Toast.makeText(this, "请输入详细地址", Toast.LENGTH_LONG).show();
+				return;
+			}
+
+			if (!RegxUtils.isName(linkMan)) {
+				Toast.makeText(this, "请输入正确的联系人姓名", Toast.LENGTH_LONG).show();
+				return;
+			}
+			if (!RegxUtils.isPhone(tel)) {
+				Toast.makeText(this, "请输入正确的联系电话", Toast.LENGTH_LONG).show();
+				return;
+			}
+			if (TextUtils.isEmpty(zip)) {
+				Toast.makeText(this, "请输入邮编", Toast.LENGTH_LONG).show();
 				return;
 			}
 
@@ -74,6 +98,7 @@ public class NewAddressActivity extends MainActionBarActivity {
 			entity.AreaId = Integer.parseInt(areaId);
 			entity.IsDefault = cb.isChecked() ? "true" : "false";
 
+			loading.setVisibility(View.VISIBLE);
 			add(entity);
 		} else {
 			// 未登录
@@ -172,9 +197,7 @@ public class NewAddressActivity extends MainActionBarActivity {
 					if (names[i] != null)
 						sb.append(names[i].trim() + " ");
 				}
-				Toast.makeText(NewAddressActivity.this, sb.toString(), Toast.LENGTH_SHORT).show();
 				tv_select.setText(sb.toString());
-				Log.i(TAG, tv_select.getText().toString());
 			}
 		}
 	};

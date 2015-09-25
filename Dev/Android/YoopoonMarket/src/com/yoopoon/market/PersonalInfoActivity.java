@@ -51,6 +51,7 @@ import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.utils.ParserJSON;
 import com.yoopoon.market.utils.ParserJSON.ParseListener;
+import com.yoopoon.market.utils.RegxUtils;
 import com.yoopoon.market.utils.SerializerJSON;
 import com.yoopoon.market.utils.SerializerJSON.SerializeListener;
 import com.yoopoon.market.utils.StringUtils;
@@ -173,7 +174,6 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 	}
 
 	void fillData() {
-
 		et_name.setText(member.RealName);
 		et_phone.setText(member.Phone);
 		et_postno.setText(member.PostNo);
@@ -189,6 +189,25 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 	}
 
 	void modify() {
+		String phone = et_phone.getText().toString();
+		String postNo = et_postno.getText().toString();
+		String realName = et_name.getText().toString();
+
+		if (!RegxUtils.isName(realName)) {
+			Toast.makeText(this, "请输入正确的姓名", Toast.LENGTH_LONG).show();
+			return;
+		}
+
+		if (!RegxUtils.isPhone(phone)) {
+			Toast.makeText(this, "请输入正确的联系电话", Toast.LENGTH_LONG).show();
+			return;
+		}
+
+		if (TextUtils.isEmpty(postNo)) {
+			Toast.makeText(this, "请输入邮政编码", Toast.LENGTH_LONG).show();
+			return;
+		}
+
 		loading.setVisibility(View.VISIBLE);
 		new SerializerJSON(new SerializeListener() {
 
@@ -220,7 +239,6 @@ public class PersonalInfoActivity extends MainActionBarActivity {
 	}
 
 	void requestModifyInfo(String serializeResult) {
-		Log.i(TAG, serializeResult);
 		new RequestAdapter() {
 
 			@Override

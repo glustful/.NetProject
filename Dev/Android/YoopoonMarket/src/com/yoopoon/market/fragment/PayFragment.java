@@ -45,7 +45,6 @@ import com.yoopoon.market.utils.ParserJSON;
 import com.yoopoon.market.utils.ParserJSON.ParseListener;
 
 public class PayFragment extends Fragment {
-	private static final String TAG = "PayFragment";
 	View rootView;
 	PullToRefreshListView lv;
 	TextView tv_empty;
@@ -53,11 +52,13 @@ public class PayFragment extends Fragment {
 	MyListViewAdapter adapter;
 	int page = 1;
 	int pageCount = 5;
+	View loading;
 
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		rootView = inflater.inflate(R.layout.fragment_pay, null);
+		if (rootView == null)
+			rootView = inflater.inflate(R.layout.fragment_pay, null);
 		init();
 		return rootView;
 	}
@@ -83,6 +84,8 @@ public class PayFragment extends Fragment {
 			return;
 		}
 		String userId = User.getUserId(getActivity());
+		if (page == 1)
+			loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
@@ -91,13 +94,21 @@ public class PayFragment extends Fragment {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					JSONArray array = object.optJSONArray("List");
-					if (array.length() == 0 && page > 1) {
-						Toast.makeText(getActivity(), "已经没有更多数据啦", Toast.LENGTH_SHORT).show();
+					if (array.length() == 0) {
+						if (page == 1) {
+							loading.setVisibility(View.GONE);
+							tv_empty.setVisibility(View.VISIBLE);
+						}
+						if (page > 1)
+							Toast.makeText(getActivity(), "已经没有更多数据啦", Toast.LENGTH_SHORT).show();
 					}
 					if (array.length() > 0) {
 						parseToOrderList(array);
 					}
 
+				} else {
+					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
+					loading.setVisibility(View.GONE);
 				}
 			}
 
@@ -148,12 +159,14 @@ public class PayFragment extends Fragment {
 	}
 
 	void fillData() {
+		loading.setVisibility(View.GONE);
 		TextView tv = (TextView) rootView.findViewById(R.id.tv_empty);
 		tv.setVisibility(orders.size() > 0 ? View.GONE : View.VISIBLE);
 		adapter.notifyDataSetInvalidated();
 	}
 
 	void init() {
+		loading = rootView.findViewById(R.id.ll_loading);
 		lv = (PullToRefreshListView) rootView.findViewById(R.id.lv);
 		adapter = new MyListViewAdapter();
 		lv.setAdapter(adapter);

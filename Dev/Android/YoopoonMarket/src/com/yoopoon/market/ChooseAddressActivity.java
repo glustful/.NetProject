@@ -87,6 +87,7 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 					if (array != null)
 						parseToEntityList(array);
 					else {
+						loading.setVisibility(View.GONE);
 						tv_empty.setVisibility(View.VISIBLE);
 					}
 

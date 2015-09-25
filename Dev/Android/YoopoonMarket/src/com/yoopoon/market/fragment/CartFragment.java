@@ -82,7 +82,8 @@ public class CartFragment extends Fragment implements OnClickListener {
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		rootView = inflater.inflate(R.layout.fragment_cart, null, false);
+		if (rootView == null)
+			rootView = inflater.inflate(R.layout.fragment_cart, null, false);
 		init();
 		return rootView;
 	}
@@ -130,6 +131,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 
 					@Override
 					public void run() {
+						sendBroadcast(count);
 						tv_title_count.setText("购物车(" + count + ")");
 
 					}

@@ -4,6 +4,7 @@
     android:layout_height="match_parent" >
     
     <TextView 
+        android:visibility="gone"
         android:id="@+id/tv_empty"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
@@ -19,6 +20,12 @@
         android:divider="@null"
         android:dividerHeight="5dp"
         android:cacheColorHint="#00000000" />
+    <include 
+        android:visibility="gone"
+        android:id="@+id/ll_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/loading"/>
     
 
 </RelativeLayout>

@@ -1,15 +1,3 @@
-/**   
- * Copyright ? 2015 yoopoon. All rights reserved.
- * 
- * @Title: MainActivity.java 
- * @Project: YoopoonMarket
- * @Package: com.yoopoon.market 
- * @Description: TODO
- * @author: guojunjun  
- * @updater: guojunjun 
- * @date: 2015-9-7 下午4:51:39 
- * @version: V1.0   
- */
 package com.yoopoon.market;
 
 import java.io.IOException;
@@ -79,15 +67,8 @@ import com.yoopoon.market.utils.Utils;
 import com.yoopoon.market.view.LazyViewPager;
 import com.yoopoon.market.view.LazyViewPager.OnPageChangeListener;
 
-/**
- * @ClassName: MainActivity
- * @Description: TODO
- * @author: guojunjun
- * @date: 2015-9-7 下午4:51:39
- */
 @EActivity(R.layout.activity_main)
 public class MainActivity extends FragmentActivity implements OnClickListener {
-	private static final String TAG = "MainActivity";
 	private Context mContext;
 	@ViewById(R.id.vp)
 	LazyViewPager vp;
