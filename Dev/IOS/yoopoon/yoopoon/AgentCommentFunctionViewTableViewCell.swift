@@ -22,10 +22,18 @@ class AgentCommentFunctionViewTableViewCell: UITableViewCell {
         CommentTools.getCurrentController()?.navigationController!.pushViewController(controller, animated: true)
     }
     @IBAction func newBabyCourseAction(sender: UIVerticalButton) {
-        TipTools().showToast("提示", message: "请关注我们的官网主页", duration: 2)
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        if let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.templateIdentifier) as? TemplateViewController{
+            controller.type = 0
+            CommentTools.getCurrentController()?.navigationController!.pushViewController(controller, animated: true)
+        }
     }
     @IBAction func offenQuestionAction(sender: UIVerticalButton) {
-         TipTools().showToast("提示", message: "请关注我们的官网主页", duration: 2)
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        if let controller = storyboard.instantiateViewControllerWithIdentifier(ControllerIdentifier.templateIdentifier) as? TemplateViewController{
+            controller.type = 1
+            CommentTools.getCurrentController()?.navigationController!.pushViewController(controller, animated: true)
+        }
     }
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -46,13 +46,13 @@ class SecurityViewController: TextFieldViewController {
             uiValide.shake(5, delta: 5)
             return false
         }
-        self.brokerEntity.updateValue(uiValide.text, forKey: "MobileYzm")
+        self.brokerEntity.updateValue(uiValide.text!, forKey: "MobileYzm")
         if uiPhone.text == nil || uiPhone.text == ""{
             uiPhone.shake(5, delta: 5)
             return false
         }
         
-        self.brokerEntity.updateValue(uiPhone.text, forKey: "OldPassword")
+        self.brokerEntity.updateValue(uiPhone.text!, forKey: "OldPassword")
         
         if uiPasswd.text == nil || uiPasswd.text == ""{
             uiPasswd.shake(5, delta: 5)
@@ -63,8 +63,8 @@ class SecurityViewController: TextFieldViewController {
             TipTools().showToast("提示", message: "两次输入的密码不相同，重新输入", duration: 2)
             return false
         }
-        self.brokerEntity.updateValue(uiPasswd.text, forKey: "Password")
-        self.brokerEntity.updateValue(uiConfirePasswd.text, forKey: "SecondPassword")
+        self.brokerEntity.updateValue(uiPasswd.text!, forKey: "Password")
+        self.brokerEntity.updateValue(uiConfirePasswd.text!, forKey: "SecondPassword")
         return true
     }
     
