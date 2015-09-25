@@ -4,7 +4,7 @@
 <div class=" header bar" style="height:44px">
     <a class="button  button-icon icon icon-fuwuanniu" ng-click="go('page.Product-Catagory')"
        ui-sref="page.Product-Catagory"></a>
-       <span class="selectArea" ng-click="showSelectBox()" ng-hide="showSelect">云南省</span>
+       <span class="selectArea" ng-click="showSelectBox()" ng-hide="showSelect">{{area}}</span>
     <!--<label class=" item-select select-header" ng-hide="showSelect">
 
         <select ng-model="selected" ng-click="showSelectBox()" id="ParentId"  ng-options="o.Id as o.Name for o in addrss" ng-change="click()" required>
@@ -20,11 +20,19 @@
 
 <div class="bar bar-subheader bar-light selectBox" ng-class="{'addselectBox':selectBox}">
 	 <i class="ion ion-ios-close-outline" ng-click="closeSelectBox()" style="font-size: 30px;"></i>
+    <div class="fuji">
 	<ul class="list">
-		<li class="item">昆明市</li>
-		<li class="item">曲靖市</li>
+		<li class="item" ng-repeat="item in addrss" ng-click="click(item.Name,item.Id)">{{item.Name}}</li>
 	</ul>
-	</div>
+    </div>
+    <div class="ziji">
+    <ul style="margin-left: 50px">
+        <li style="float: left ;width:60px; height: 40px;border-radius:10px; margin-top: 10px;" ng-repeat="item in zilei">
+            <button class="btn m-b-xs w-xs btn-default btn-rounded" ng-click="huan(item.Name)" >{{item.Name}}</button></li>
+
+    </ul>
+    </div>
+</div>
 
 <ion-view view-title="优·购物" hide-tabs="false" hide-nav-bar="true">
     <!-- 主页-->
