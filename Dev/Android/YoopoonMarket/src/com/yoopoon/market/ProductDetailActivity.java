@@ -2,22 +2,29 @@ package com.yoopoon.market;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -27,10 +34,15 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.advertisement.ProductAdvertisement;
 import com.yoopoon.market.db.dao.DBDao;
@@ -93,14 +105,75 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	// 商品图片位置
 	private String productImageURL;
 	Staff staff;
+	//设置商品数量对应的Popupwindow
+	private LinearLayout productAmountLinearLayout;
+	private Button reduceButton, addButton, confirmButton;
+	private EditText productAmountEditText;
+	private ImageView cancelImageView;
+	private PopupWindow mPopupwindow;
+	private RelativeLayout productDetailRelativeLayout;
 
 	@Click(R.id.btn_purchase)
 	void purchase() {
-		if (staff == null)
-			return;
-		List<Staff> staffList = new ArrayList<Staff>();
-		staffList.add(staff);
-		BalanceActivity_.intent(this).staffList(staffList).start();
+		initPopupWindow();
+	}
+	private void initPopupWindow() {
+		productAmountLinearLayout = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.pupupwindow_purchase,
+				null);
+		reduceButton = (Button) productAmountLinearLayout.findViewById(R.id.btn_reduce_amount);
+		addButton = (Button) productAmountLinearLayout.findViewById(R.id.btn_add_amount);
+		productAmountEditText = (EditText) productAmountLinearLayout.findViewById(R.id.et_parduct_amount);
+		confirmButton = (Button) productAmountLinearLayout.findViewById(R.id.btn_confirm_amount);
+		mPopupwindow = new PopupWindow(productAmountLinearLayout, ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.WRAP_CONTENT);
+		cancelImageView = (ImageView) productAmountLinearLayout.findViewById(R.id.img_cancel_setting_amount);
+		mPopupwindow.setBackgroundDrawable(new BitmapDrawable());
+		mPopupwindow.setOutsideTouchable(true);
+		mPopupwindow.setFocusable(true);
+		mPopupwindow.showAtLocation(shoppingLinearLayout, Gravity.BOTTOM, 0, 0);
+		mPopupwindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+		mPopupwindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+		mPopupwindow.setOnDismissListener(new popDismissListener());
+		popBackgroundAlpha(0.5f);
+		//减少数量
+		reduceButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				int productAmount = Integer.parseInt(productAmountEditText.getText().toString().trim());
+				if (productAmount > 1) {
+					productAmount = productAmount - 1;
+				} else if (productAmount <= 1) {
+					productAmount = 1;
+				}
+				productAmountEditText.setText(productAmount + "");
+			}
+		});
+		addButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				int productAmount = Integer.parseInt(productAmountEditText.getText().toString().trim());
+				productAmount = productAmount + 1;
+				productAmountEditText.setText(productAmount + "");
+			}
+		});
+		confirmButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (staff == null)
+					return;
+				List<Staff> staffList = new ArrayList<Staff>();
+				staffList.add(staff);
+				staff.count = Integer.parseInt(productAmountEditText.getText().toString().trim());
+				BalanceActivity_.intent(ProductDetailActivity.this).staffList(staffList).start();
+			}
+		});
+		cancelImageView.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				mPopupwindow.dismiss();
+				return true;
+			}
+		});
 	}
 
 	// 设置返回状态码，如果是首页跳转返回首页，如果是商品列表页回商品列表页
@@ -116,6 +189,8 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		comeFromstatusCode = getIntent().getExtras().getString("comeFromstatusCode");
 		productId = getIntent().getExtras().getString("productId");
 		linearLayout = (LinearLayout) findViewById(R.id.linearlayout_product_detail);
+		productDetailRelativeLayout = (RelativeLayout) LayoutInflater.from(mContext).inflate(
+				R.layout.activity_product_detail, null);
 		productAdvertisement = new ProductAdvertisement(mContext);
 		// 获取广告信息
 		// 添加广告
@@ -264,6 +339,8 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	protected void onPause() {
 		super.onPause();
 		count = 2;
+		mPopupwindow.dismiss();
+		popBackgroundAlpha(1.0f);
 	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -496,4 +573,21 @@ public class ProductDetailActivity extends MainActionBarActivity {
 			});
 		}
 	}
+	public void popBackgroundAlpha(float bgAlpha) {
+		WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+		layoutParams.alpha = bgAlpha; //0.0-1.0
+		 
+		getWindow().setAttributes(layoutParams);
+	}
+	 class popDismissListener implements PopupWindow.OnDismissListener{
+
+		@Override
+		public void onDismiss() {
+			popBackgroundAlpha(1.0f);
+			
+		}
+		 
+	 }
+	 
+	
 }
