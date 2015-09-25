@@ -38,6 +38,8 @@ import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.AboutUActivity_;
 import com.yoopoon.market.AddressManageActivity_;
+import com.yoopoon.market.LoginActivity_;
+import com.yoopoon.market.MainActivity;
 import com.yoopoon.market.MeOrderActivity_;
 import com.yoopoon.market.MeServiceActivity_;
 import com.yoopoon.market.PersonalInfoActivity_;
@@ -74,8 +76,8 @@ public class MeFragment extends Fragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		if (rootView == null) {
 			rootView = inflater.inflate(R.layout.fragment_me, null, false);
-			init();
 		}
+		init();
 		return rootView;
 	}
 
@@ -227,7 +229,6 @@ public class MeFragment extends Fragment implements OnClickListener {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					Log.i(TAG, object.toString());
 					int count = object.optInt("TotalCount");
 					serviceStatus.get(0).setText(count + "");
 					serviceStatus.get(0).setVisibility(count > 0 ? View.VISIBLE : View.GONE);
@@ -332,24 +333,29 @@ public class MeFragment extends Fragment implements OnClickListener {
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
-		isVisibleUser = isVisibleToUser;
+		if (isVisibleToUser && !User.isLogin(getActivity())) {
+			LoginActivity_.intent(getActivity()).start();
+		}
 
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		MainActivity mainActivity = (MainActivity) getActivity();
+		Log.i(TAG, "onResume:" + mainActivity.getCurrentPage());
+		if (mainActivity.getCurrentPage() == 3) {
+			if (!User.isLogin(getActivity())) {
+				LoginActivity_.intent(getActivity()).start();
+			} else {
+				// 若已经登录，需要请求数据
+				SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.share_preference),
+						Context.MODE_PRIVATE);
+				requestOrder(String.valueOf(sp.getInt("UserId", 0)));
+				requestServiceOrder(String.valueOf(sp.getInt("UserId", 0)));
+				requestData();
 
-		if (!User.isLogin(getActivity())) {
-			// 未登录
-		} else {
-			// 若已经登录，需要请求数据
-			SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.share_preference),
-					Context.MODE_PRIVATE);
-			requestOrder(String.valueOf(sp.getInt("UserId", 0)));
-			requestServiceOrder(String.valueOf(sp.getInt("UserId", 0)));
-			requestData();
-
+			}
 		}
 
 	}

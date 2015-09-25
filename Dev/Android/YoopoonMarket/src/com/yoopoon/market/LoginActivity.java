@@ -5,6 +5,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.text.TextUtils;
@@ -96,14 +97,22 @@ public class LoginActivity extends MainActionBarActivity {
 
 	@Override
 	public void backButtonClick(View v) {
+		sendBroadcast();
 		MainActivity_.intent(this).start();
-		finish();
+		// finish();
+	}
+
+	void sendBroadcast() {
+		Intent intent = new Intent("com.yoopoon.market.showshop");
+		intent.addCategory(Intent.CATEGORY_DEFAULT);
+		this.sendBroadcast(intent);
 	}
 
 	@Override
 	public void onBackPressed() {
+		sendBroadcast();
 		MainActivity_.intent(this).start();
-		finish();
+		// finish();
 	}
 
 	@Override
