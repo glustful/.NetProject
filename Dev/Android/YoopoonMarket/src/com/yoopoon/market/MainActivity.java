@@ -15,7 +15,6 @@ package com.yoopoon.market;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -23,7 +22,6 @@ import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,14 +29,12 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.text.Editable;
 import android.text.TextWatcher;
-
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -63,12 +59,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoopoon.market.db.dao.DBDao;
 import com.yoopoon.market.domain.AreaEntity;
+import com.yoopoon.market.domain.User;
 import com.yoopoon.market.fragment.CartFragment;
 import com.yoopoon.market.fragment.MeFragment;
 import com.yoopoon.market.fragment.ServeFragment;
@@ -123,9 +119,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
 		}
+
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 		}
+
 		@Override
 		public void afterTextChanged(Editable s) {
 			if (!s.toString().trim().equals("")) {
@@ -160,22 +158,25 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				@Override
 				public void onAnimationStart(Animation animation) {
 				}
+
 				@Override
 				public void onAnimationRepeat(Animation animation) {
 				}
+
 				@Override
 				public void onAnimationEnd(Animation animation) {
 					et_search.setText("");
 					et_search.setVisibility(View.GONE);
 					clearSearchImageView.setVisibility(View.GONE);
 					Utils.hiddenSoftBorad(mContext);
-					//如果原编辑框中数据不为空，则清除数据同时刷新Fragment
+					// 如果原编辑框中数据不为空，则清除数据同时刷新Fragment
 					mShopFragment.settingClearSearch();
 				}
 			});
 			et_search.startAnimation(animation);
 		}
 	}
+
 	@Click(R.id.iv_iknow)
 	void iKnow() {
 		SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference), MODE_PRIVATE);
@@ -211,6 +212,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		fragments.add(new CartFragment());
 		fragments.add(new MeFragment());
 		vp.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
+		vp.setOffscreenPageLimit(0);
 		lls.add((LinearLayout) findViewById(R.id.ll1));
 		lls.add((LinearLayout) findViewById(R.id.ll2));
 		lls.add((LinearLayout) findViewById(R.id.ll3));
@@ -255,14 +257,18 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			}
 		});
 		et_search.addTextChangedListener(searchEditTextWatcher);
-		// ################################################徐阳会 2015年9月22日修改#########################Start
-		//                                   添加搜索框中清除搜索功能
-		//################################################徐阳会 2015年9月22日修改#########################Start
+		// ################################################徐阳会
+		// 2015年9月22日修改#########################Start
+		// 添加搜索框中清除搜索功能
+		// ################################################徐阳会
+		// 2015年9月22日修改#########################Start
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 	}
+
 	/**
 	 * @Title: searchProduct
 	 * @Description: 根据关键字搜索商品
@@ -275,11 +281,14 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			mShopFragment.searchProduct(searchString);
 		}
 	}
+
 	protected void onCreate(android.os.Bundle arg0) {
 		super.onCreate(arg0);
-		LoginActivity_.intent(this).start();
+		if (User.isLogin(this))
+			LoginActivity_.intent(this).start();
 		registerBroadcast();
 	};
+
 	void registerBroadcast() {
 		// 展示第一次打开优服务的蒙层
 		IntentFilter shadowFilter = new IntentFilter("com.yoopoon.market.show_shadow");
@@ -355,6 +364,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		buyImg.setImageResource(R.drawable.sign);// 设置buyImg的图片
 		setAnim(buyImg, start_location);// 开始执行动画
 	}
+
 	private View addViewToAnimLayout(final ViewGroup vg, final View view, int[] location) {
 		int x = location[0];
 		int y = location[1];
@@ -365,6 +375,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		view.setLayoutParams(lp);
 		return view;
 	}
+
 	private ViewGroup createAnimLayout() {
 		ViewGroup rootView = (ViewGroup) this.getWindow().getDecorView();
 		LinearLayout animLayout = new LinearLayout(this);
@@ -376,6 +387,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		rootView.addView(animLayout);
 		return animLayout;
 	}
+
 	private void setAnim(final View v, int[] start_location) {
 		anim_mask_layout = null;
 		anim_mask_layout = createAnimLayout();
@@ -408,10 +420,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			public void onAnimationStart(Animation animation) {
 				v.setVisibility(View.VISIBLE);
 			}
+
 			@Override
 			public void onAnimationRepeat(Animation animation) {
 				// TODO Auto-generated method stub
 			}
+
 			// 动画的结束
 			@Override
 			public void onAnimationEnd(Animation animation) {
@@ -421,6 +435,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			}
 		});
 	}
+
 	void requestArea() {
 		ll_loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
@@ -440,11 +455,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					ll_loading.setVisibility(View.GONE);
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 			}
 		}.setUrl(getString(R.string.url_area_get)).setRequestMethod(RequestMethod.eGet).notifyRequest();
 	}
+
 	void parseToObject(final JSONArray array) {
 		new ParserJSON(new ParseListener() {
 			@Override
@@ -471,6 +488,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				}
 				return areaList;
 			}
+
 			@Override
 			public void onComplete(Object parseResult) {
 				areaItems = new String[areaList.size()];
@@ -506,10 +524,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		public MyPageAdapter(FragmentManager fm) {
 			super(fm);
 		}
+
 		@Override
 		public Fragment getItem(int arg0) {
 			return fragments.get(arg0);
 		}
+
 		@Override
 		public int getCount() {
 			return fragments.size();
@@ -521,10 +541,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		public void onPageScrollStateChanged(int arg0) {
 			// TODO Auto-generated method stub
 		}
+
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
 			// TODO Auto-generated method stub
 		}
+
 		@Override
 		public void onPageSelected(int arg0) {
 			onClick(lls.get(arg0));
@@ -554,9 +576,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			System.exit(0);
 		}
 	}
+
 	public void toServe(View v) {
 		vp.setCurrentItem(1);
 	}
+
 	@Override
 	public void onClick(View v) {
 		for (LinearLayout ll : lls) {
@@ -587,6 +611,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				break;
 		}
 	}
+
+	public int getCurrentPage() {
+		return vp.getCurrentItem();
+	}
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -594,6 +623,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			this.unregisterReceiver(receiver);
 		}
 	}
+
 	/**
 	 * @Title: clearSearchSetting
 	 * @Description: 清除搜索框中内容设置
@@ -605,9 +635,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				@Override
 				public void onAnimationStart(Animation animation) {
 				}
+
 				@Override
 				public void onAnimationRepeat(Animation animation) {
 				}
+
 				@Override
 				public void onAnimationEnd(Animation animation) {
 					et_search.setText("");

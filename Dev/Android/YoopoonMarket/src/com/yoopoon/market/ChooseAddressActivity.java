@@ -49,6 +49,8 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 	List<Staff> staffList;
 	@Extra
 	ProductEntity product;
+	@ViewById(R.id.tv_empty)
+	TextView tv_empty;
 
 	@Click(R.id.btn_manage)
 	void manageAddress() {
@@ -82,7 +84,12 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					JSONArray array = object.optJSONArray("List");
-					parseToEntityList(array);
+					if (array != null)
+						parseToEntityList(array);
+					else {
+						tv_empty.setVisibility(View.VISIBLE);
+					}
+
 				} else {
 					loading.setVisibility(View.GONE);
 					Toast.makeText(ChooseAddressActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
@@ -104,6 +111,7 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 			@Override
 			public Object onParse() {
 				ObjectMapper om = new ObjectMapper();
+				addressList.clear();
 				for (int i = 0; i < array.length(); i++) {
 					MemberAddressEntity addressEntity = null;
 					try {
@@ -155,6 +163,7 @@ public class ChooseAddressActivity extends MainActionBarActivity {
 
 		@Override
 		public int getCount() {
+			tv_empty.setVisibility(addressList.size() > 0 ? View.GONE : View.VISIBLE);
 			return addressList.size();
 		}
 

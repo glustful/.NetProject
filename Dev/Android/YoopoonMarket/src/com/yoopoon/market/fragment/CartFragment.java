@@ -26,7 +26,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -318,7 +317,6 @@ public class CartFragment extends Fragment implements OnClickListener {
 								public void run() {
 									DBDao dao = new DBDao(getActivity());
 									dao.updateCount(staff.productId, staff.count);
-									Log.i(TAG, "staff.count = " + staff.count);
 									sendBroadcast(dao.getAllCounts());
 								}
 							}.start();
@@ -346,7 +344,6 @@ public class CartFragment extends Fragment implements OnClickListener {
 							public void run() {
 								DBDao dao = new DBDao(getActivity());
 								dao.updateCount(staff.productId, staff.count);
-								Log.i(TAG, "staff.count = " + staff.count);
 								sendBroadcast(dao.getAllCounts());
 							}
 						}.start();
