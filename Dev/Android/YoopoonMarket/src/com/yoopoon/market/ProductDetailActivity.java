@@ -339,7 +339,9 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	protected void onPause() {
 		super.onPause();
 		count = 2;
-		mPopupwindow.dismiss();
+		if (mPopupwindow != null) {
+			mPopupwindow.dismiss();
+		}
 		popBackgroundAlpha(1.0f);
 	}
 	@Override
@@ -402,7 +404,6 @@ public class ProductDetailActivity extends MainActionBarActivity {
 	 * @param jsonObject
 	 */
 	private void initProductDetailInfo(JSONObject jsonObject) {
-		Log.i(TAG, jsonObject.toString());
 		String name = jsonObject.optString("Name", "");
 		String subtitte = jsonObject.optString("Subtitte", "");
 		String price = SplitStringWithDot.split(jsonObject.optString("Price", "0"));
@@ -501,93 +502,73 @@ public class ProductDetailActivity extends MainActionBarActivity {
 				.notifyRequest();
 	}
 	private void loadProductAnimationPicture() {
-		if ((!productImageURL.equals("")) && (!productImageURL.equals("null"))) {
-			ImageLoader.getInstance().displayImage(productImageURL, animationCartImageView, MyApplication.getOptions(),
-					MyApplication.getLoadingListener());
-			animationCartImageView.setVisibility(View.VISIBLE);
-			int[] cartLocation = new int[2];
-			int[] pictureLocation = new int[2];
-			cartImageView.getLocationInWindow(cartLocation);
-			animationCartImageView.getLocationInWindow(pictureLocation);
-			cartXPosition = cartLocation[0];
-			cartYPosition = cartLocation[1];
-			pictureXPosition = pictureLocation[0];
-			pictureYPosition = pictureLocation[1];
-			animationCartImageView.setTag(productImageURL);
-			AnimationSet animationSet = new AnimationSet(true);
-			// animationSet.setDuration(1200);
-			/*
-			 * Animation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE, 0,
-			 * Animation.ABSOLUTE, (cartXPosition - pictureXPosition - 40), Animation.ABSOLUTE, 0,
-			 * Animation.ABSOLUTE, (cartYPosition - pictureYPosition));
-			 */
-			/*
-			 * TranslateAnimation translateAnimationX = new TranslateAnimation(Animation.ABSOLUTE,
-			 * 0, Animation.ABSOLUTE, (cartXPosition - pictureXPosition - 40), Animation.ABSOLUTE,
-			 * 0, Animation.ABSOLUTE, 0); TranslateAnimation translateAnimationY = new
-			 * TranslateAnimation(Animation.ABSOLUTE, 0, Animation.ABSOLUTE, 0, Animation.ABSOLUTE,
-			 * cartYPosition - pictureYPosition, Animation.ABSOLUTE, (cartYPosition -
-			 * pictureYPosition));
-			 */
-			TranslateAnimation translateAnimationX = new TranslateAnimation(0, (cartXPosition - pictureXPosition - 70),
-					0, 0);
-			TranslateAnimation translateAnimationY = new TranslateAnimation(0, 0, 0,
-					(cartYPosition - pictureYPosition) - 50);
-			translateAnimationX.setInterpolator(new LinearInterpolator());
-			translateAnimationX.setRepeatCount(0);// 动画重复执行的次数
-			translateAnimationX.setFillAfter(true);
-			translateAnimationY.setInterpolator(new AccelerateInterpolator());
-			translateAnimationY.setRepeatCount(0);// 动画重复执行的次数
-			translateAnimationX.setFillAfter(true);
-			RotateAnimation rotateAnimation = new RotateAnimation(0, 1080, Animation.RELATIVE_TO_SELF, 0.5f,
-					Animation.RELATIVE_TO_SELF, 0.5f);
-			Animation scaleAnimation = new ScaleAnimation(1, 0, 1, 0, Animation.RELATIVE_TO_SELF, 0.5f,
-					Animation.RELATIVE_TO_SELF, 0.5f);
-			/*
-			 * Log.e("11111111111111", pictureXPosition + ":::" + pictureYPosition + "---------" +
-			 * cartXPosition + "::::::" + cartYPosition);
-			 */
-			translateAnimationX.setDuration(1500);
-			translateAnimationY.setDuration(1000);
-			scaleAnimation.setDuration(1500);
-			rotateAnimation.setDuration(1500);
-			// 添加动画
-			// animationSet.setDuration(1500);
-			animationSet.addAnimation(rotateAnimation);
-			animationSet.addAnimation(scaleAnimation);
-			animationSet.addAnimation(translateAnimationX);
-			animationSet.addAnimation(translateAnimationY);
-			/* animationSet.addAnimation(translateAnimation); */
-			animationCartImageView.startAnimation(animationSet);
-			animationSet.setAnimationListener(new AnimationListener() {
-				@Override
-				public void onAnimationStart(Animation animation) {
-				}
-				@Override
-				public void onAnimationRepeat(Animation animation) {
-				}
-				@Override
-				public void onAnimationEnd(Animation animation) {
-					animationCartImageView.setVisibility(View.GONE);
-				}
-			});
+		if (productImageURL != null && animationCartImageView != null) {
+			if ((!productImageURL.equals("")) && (!productImageURL.equals("null"))) {
+				/*ImageLoader.getInstance().displayImage(productImageURL, animationCartImageView,
+						MyApplication.getOptions(), MyApplication.getLoadingListener());*/
+				ImageLoader.getInstance().displayImage(productImageURL, animationCartImageView);
+				animationCartImageView.setVisibility(View.VISIBLE);
+				int[] cartLocation = new int[2];
+				int[] pictureLocation = new int[2];
+				cartImageView.getLocationInWindow(cartLocation);
+				animationCartImageView.getLocationInWindow(pictureLocation);
+				cartXPosition = cartLocation[0];
+				cartYPosition = cartLocation[1];
+				pictureXPosition = pictureLocation[0];
+				pictureYPosition = pictureLocation[1];
+				//animationCartImageView.setTag(productImageURL);
+				AnimationSet animationSet = new AnimationSet(true);
+				TranslateAnimation translateAnimationX = new TranslateAnimation(0,
+						(cartXPosition - pictureXPosition - 70), 0, 0);
+				TranslateAnimation translateAnimationY = new TranslateAnimation(0, 0, 0,
+						(cartYPosition - pictureYPosition) - 50);
+				translateAnimationX.setInterpolator(new LinearInterpolator());
+				translateAnimationX.setRepeatCount(0);// 动画重复执行的次数
+				translateAnimationX.setFillAfter(true);
+				translateAnimationY.setInterpolator(new AccelerateInterpolator());
+				translateAnimationY.setRepeatCount(0);// 动画重复执行的次数
+				translateAnimationX.setFillAfter(true);
+				RotateAnimation rotateAnimation = new RotateAnimation(0, 1080, Animation.RELATIVE_TO_SELF, 0.5f,
+						Animation.RELATIVE_TO_SELF, 0.5f);
+				Animation scaleAnimation = new ScaleAnimation(1, 0, 1, 0, Animation.RELATIVE_TO_SELF, 0.5f,
+						Animation.RELATIVE_TO_SELF, 0.5f);
+				translateAnimationX.setDuration(1500);
+				translateAnimationY.setDuration(1000);
+				scaleAnimation.setDuration(1500);
+				rotateAnimation.setDuration(1500);
+				// 添加动画
+				// animationSet.setDuration(1500);
+				animationSet.addAnimation(rotateAnimation);
+				animationSet.addAnimation(scaleAnimation);
+				animationSet.addAnimation(translateAnimationX);
+				animationSet.addAnimation(translateAnimationY);
+				/* animationSet.addAnimation(translateAnimation); */
+				animationCartImageView.startAnimation(animationSet);
+				animationSet.setAnimationListener(new AnimationListener() {
+					@Override
+					public void onAnimationStart(Animation animation) {
+					}
+					@Override
+					public void onAnimationRepeat(Animation animation) {
+					}
+					@Override
+					public void onAnimationEnd(Animation animation) {
+						animationCartImageView.setVisibility(View.GONE);
+					}
+				});
+			}
 		}
 	}
 	public void popBackgroundAlpha(float bgAlpha) {
 		WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
 		layoutParams.alpha = bgAlpha; //0.0-1.0
-		 
 		getWindow().setAttributes(layoutParams);
 	}
-	 class popDismissListener implements PopupWindow.OnDismissListener{
 
+	class popDismissListener implements PopupWindow.OnDismissListener {
 		@Override
 		public void onDismiss() {
 			popBackgroundAlpha(1.0f);
-			
 		}
-		 
-	 }
-	 
-	
+	}
 }

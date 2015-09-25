@@ -168,26 +168,14 @@ public class ShopFragment extends Fragment {
 		recommondProductByButton = (Button) shopFragmentHeadView.findViewById(R.id.purchase_immediately_button);
 		salesVolumeButton = (Button) shopFragmentHeadView.findViewById(R.id.has_buy_button);
 		recommondProductCartImageView = (ImageView) shopFragmentHeadView.findViewById(R.id.img_cart);
-		// 点击图片跳转到商品详细信息
-		recommondProductImageView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Bundle bundle = new Bundle();
-				bundle.putString("productId", "1");
-				Intent intent = new Intent(mContext, ProductDetailActivity_.class);
-				intent.putExtras(bundle);
-				mContext.startActivity(intent);
-			}
-		});
-		// 点击小购物车图片事件
-		requestProduct();
+		//requestProduct();
 	}
 	/**
 	 * @Title: initRecommendProduct
 	 * @Description: 初始化推荐套餐商品信息
 	 * @param jsonObject
 	 */
-	private void initRecommendProduct(JSONObject jsonObject) {
+	private void initRecommendProduct(final JSONObject jsonObject) {
 		final String name = jsonObject.optString("Name", "");
 		recommondProductNameTextView.setText(name);
 		final String price = SplitStringWithDot.split(jsonObject.optString("Price", "0"));
@@ -247,6 +235,19 @@ public class ShopFragment extends Fragment {
 				}.start();
 			}
 		});
+		// 点击图片跳转到商品详细信息
+		recommondProductImageView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Bundle bundle = new Bundle();
+				bundle.putString("comeFromstatusCode", "shopFragment");
+				bundle.putString("productId", jsonObject.optString("Id").toString());
+				Intent intent = new Intent(mContext, ProductDetailActivity_.class);
+				intent.putExtras(bundle);
+				mContext.startActivity(intent);
+			}
+		});
+		// 点击小购物车图片事件
 	}
 	/**
 	 * @Title: requestAdvertisements
@@ -291,24 +292,26 @@ public class ShopFragment extends Fragment {
 			public void onReponse(ResponseData data) {
 				progressbarLinearlayout.setVisibility(View.GONE);
 				JSONArray jsonArray;
+				JSONObject theFirstProductOBJ = new JSONObject();
 				if (data.getMRootData() != null) {
+					mPullToRefreshListView.onRefreshComplete();
 					try {
 						jsonArray = data.getMRootData().getJSONArray("List");
+						String productCountString = data.getMRootData().optString("TotalCount");
+						int productCount = Integer.parseInt(productCountString.trim());
 						if (productJsonArrayList != null && productJsonArrayList.size() >= 1) {
-							productListAdapter.refresh(productJsonArrayList);
+							productListAdapter.refresh(productJsonArrayList, jsonArray.length());
 						} else {
-							productListAdapter = new ProductListAdapter(mContext,
-									JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
+							ArrayList<JSONObject> jsonObjects = JSONArrayConvertToArrayList
+									.convertToArrayList(jsonArray);
+							theFirstProductOBJ = jsonObjects.get(6);
+							productListAdapter = new ProductListAdapter(mContext, jsonObjects, productCount,
+									jsonArray.length());
 							productListView.setAdapter(productListAdapter);
 							productJsonArrayList = JSONArrayConvertToArrayList.convertToArrayList(jsonArray);
 						}
 						// 加载推荐套餐内容
-						productListAdapter = new ProductListAdapter(mContext,
-								JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
-						productListView.setAdapter(productListAdapter);
-						// 加载推荐套餐内容
-						initRecommendProduct(JSONArrayConvertToArrayList.convertToArrayList(jsonArray).get(0));
-						mPullToRefreshListView.onRefreshComplete();
+						initRecommendProduct(theFirstProductOBJ);
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -327,7 +330,7 @@ public class ShopFragment extends Fragment {
 	 * @Description: 传入参数，刷新商品信息
 	 * @param hashMap
 	 */
-	private void requestProduct(HashMap<String, String> hashMap) {
+	/*private void requestProduct(HashMap<String, String> hashMap) {
 		progressbarLinearlayout.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 			@Override
@@ -339,7 +342,8 @@ public class ShopFragment extends Fragment {
 						jsonArray = data.getMRootData().getJSONArray("List");
 						if (searchProductFrameLayout.getVisibility() == View.VISIBLE) {
 						} else {
-							productListAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
+							productListAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(jsonArray),
+									productListView.getChildCount());
 							initRecommendProduct(JSONArrayConvertToArrayList.convertToArrayList(jsonArray).get(0));
 						}
 					} catch (JSONException e) {
@@ -354,17 +358,13 @@ public class ShopFragment extends Fragment {
 			}
 		}.setUrl(getString(R.string.url_get_communityproduct)).addParam(hashMap).setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
-	}
+	}*/
 	/**
 	 * @Title: refreshProduct
 	 * @Description: 传入参数，获取商品信息
 	 * @param hashMap
 	 */
 	private void refreshProduct(HashMap<String, String> hashMap) {
-		/*
-		 * HashMap<String, String> map1 = new HashMap<String, String>(); map1.put("Page", 5 + "");
-		 * map1.put("PageCount", "10");
-		 */
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
@@ -378,7 +378,8 @@ public class ShopFragment extends Fragment {
 							productPageCount = productPageCount - 1;
 							return;
 						}
-						productListAdapter.addRefresh(JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
+						productListAdapter.addRefresh(JSONArrayConvertToArrayList.convertToArrayList(jsonArray),
+								jsonArray.length());
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -525,18 +526,23 @@ public class ShopFragment extends Fragment {
 				if (data.getMRootData() != null) {
 					try {
 						jsonArray = data.getMRootData().getJSONArray("List");
+						String productCountString = data.getMRootData().optString("TotalCount");
+						int productCount = Integer.parseInt(productCountString.trim());
 						if (jsonArray.length() >= 1) {
 							if (searchPageCount > 1) {
-								searchProductAdapter.addRefresh(JSONArrayConvertToArrayList
-										.convertToArrayList(jsonArray));
+								searchProductAdapter.addRefresh(
+										JSONArrayConvertToArrayList.convertToArrayList(jsonArray),
+										jsonArray.length());
 							} else if (searchPageCount == 1) {
 								searchProductAdapter = new ProductListAdapter(mContext,
-										JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
+										JSONArrayConvertToArrayList.convertToArrayList(jsonArray),productCount,jsonArray.length());
 								searchListView.setAdapter(searchProductAdapter);
 							}
 						} else {
-							Toast.makeText(mContext, "请从新输入搜索关键字", Toast.LENGTH_SHORT).show();
-							searchProductAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
+							//Toast.makeText(mContext, "请从新输入搜索关键字", Toast.LENGTH_SHORT).show();
+							/*if (JSONArrayConvertToArrayList.convertToArrayList(jsonArray) != null) {
+								searchProductAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
+							}*/
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
