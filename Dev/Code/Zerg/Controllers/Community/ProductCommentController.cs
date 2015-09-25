@@ -1,14 +1,17 @@
 using System;
 using System.Linq;
 using System.Net.Http;
+using System.Transactions;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Community.Entity.Model.Order;
 using Community.Entity.Model.ProductComment;
 using Community.Service.Product;
 using Community.Service.ProductComment;
 using Zerg.Common;
 using Zerg.Models.Community;
 using Community.Service.Member;
+using Community.Service.OrderDetail;
 using YooPoon.Core.Site;
 
 namespace Zerg.Controllers.Community
@@ -21,13 +24,15 @@ namespace Zerg.Controllers.Community
         private readonly IProductService _productService;
         private readonly IMemberService _memberService;
         private readonly IWorkContext _workContext;
+        private readonly IOrderDetailService _orderDetailService;
 
-        public ProductCommentController(IProductCommentService productCommentService,IProductService productService,IMemberService memberService,IWorkContext workContext)
+        public ProductCommentController(IProductCommentService productCommentService,IProductService productService,IMemberService memberService,IWorkContext workContext,IOrderDetailService orderDetailService)
 		{
 		    _productCommentService = productCommentService;
             _productService = productService;
             _memberService = memberService;
             _workContext = workContext;
+            _orderDetailService = orderDetailService;
 		}
         /// <summary>
         /// 根据评论ID获取该评论
@@ -85,20 +90,29 @@ namespace Zerg.Controllers.Community
         [HttpPost]
         public HttpResponseMessage Post(ProductCommentModel model)
         {
-            
-            
+            var detail = _orderDetailService.GetOrderDetailById(model.ProductDetailsId);
+            if (detail == null)
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "无法找到评价商品所在订单"));
+            detail.Status = EnumOrderDetailStatus.已评价;
+
 			var entity = new ProductCommentEntity
 			{
 				Product =_productService.GetProductById(model.ProductId),
                 Member = _memberService.GetMemberByUserId(_workContext.CurrentUser.Id),
 				AddTime =DateTime.Now,
 				Content = model.Content,
-				Stars = model.Stars
+				Stars = model.Stars,
+                OrderDetail = _orderDetailService.GetOrderDetailById(model.ProductDetailsId)
 			};
-			if(_productCommentService.Create(entity).Id > 0)
-			{
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功！"));
-			}
+            using (var tran = new TransactionScope())
+            {
+                if (_productCommentService.Create(entity).Id > 0 && _orderDetailService.Update(detail).Id > 0)
+                {
+                    tran.Complete();
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "添加成功！"));
+                }
+            }
+
             return PageHelper.toJson(PageHelper.ReturnValue(false, "添加失败！"));
 		}
 

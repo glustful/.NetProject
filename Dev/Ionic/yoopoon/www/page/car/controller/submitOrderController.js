@@ -1,9 +1,14 @@
 /**
  * Created by Yunjoy on 2015/9/21.
  */
-app.controller('submitOrderController', ['$http','$scope','repository', '$stateParams', 'cartservice', 'orderService',
-    function($http,$scope,repository, $stateParams, cart, orderService) {
-        if ($stateParams.productId && $stateParams.count) {
+app.controller('submitOrderController', ['$http','$scope','repository', '$stateParams','AuthService', '$state','cartservice', 'orderService',
+    function($http,$scope,repository, $stateParams, AuthService,$state,cart, orderService) {
+        $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
+        if( $scope.currentuser==undefined ||  $scope.currentuser=="")
+        {
+            $state.go("page.login");//调到登录页面
+        }
+        if ($stateParams.productId!=null && $stateParams.count!=null) {
             $http.get(SETTING.ApiUrl+"/CommunityProduct/Get?id="+$stateParams.productId,{
                 'withCredentails':true
             }).success(function(data){
@@ -18,7 +23,7 @@ app.controller('submitOrderController', ['$http','$scope','repository', '$stateP
                 $scope.CountPrice=data.ProductModel.Price*$stateParams.count
             })
         } else {
-            $scope.model = data;
+            //$scope.model = data;
         }
 
         //TODO:完成地址绑定及选择
@@ -33,10 +38,14 @@ app.controller('submitOrderController', ['$http','$scope','repository', '$stateP
         //    .success(function(data) {
         //        $scope.userinfo = data;
         //    });
-        $http.get(SETTING.ApiUrl+"/MemberAddress/Get?memberId="+5,{
+        $scope.mcon={
+            UserId:$scope.currentuser.UserId
+        }
+        $http.get(SETTING.ApiUrl+"/MemberAddress/Get",{
+            params:$scope.mcon,
         'withCredentials':true
          }).success(function(data){
-            $scope.userinfo = data;
+            $scope.userinfo = data.List[0];
         })
         //todo:完成生成订单并付款的逻辑
         //		$scope.submit = function () {

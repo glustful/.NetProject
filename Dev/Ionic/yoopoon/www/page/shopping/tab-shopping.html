@@ -115,13 +115,16 @@
                 </div>
                 <div class="activity padding text-left">
                     <div class="color-white">{{list.Name}}</div>
+
                     <p><span class="p-price" style="font-size: 0.5em">RMB{{list.OldPrice}}</span>/
+
                         <del style="font-size: 2px;" class="color-white">折扣前{{list.Price}}</del>
                     </p>
                     <i class="icon icon-gouwuche shop-cart"  ng-click="AddCart1(this)"></i><br>
                     <button class=" energized-bg none-border button-size " ng-click="buysome(list.Id)">
                         立即购买
                     </button>
+
 
                 </div>
             </div>
@@ -140,13 +143,16 @@
                         <div class="padding">
                             <p>{{row.Name}}</p>
 
+
                             <p><span class="p-price" style="font-size: 0.5em">RMB{{row.OldPrice}}</span>/
+
                                 <del style="font-size: 2px;">折扣前{{row.Price}}</del>
                             </p>
                             <p>
                                 <button class="button  button-small   button-energized"  ng-click="buysome(row.Id)">立即购买</button>
                                 <i class="icon icon-gouwuche " style="float: right;font-size: 30px"
                                    ng-click="AddCart(this)"></i></p>
+
                         </div>
                     </div>
                 </li>

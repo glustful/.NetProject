@@ -1,5 +1,6 @@
 using System;
 using Community.Entity.Model.Member;
+using Community.Entity.Model.OrderDetail;
 using Community.Entity.Model.Product;
 using YooPoon.Core.Data;
 
@@ -19,7 +20,7 @@ namespace Community.Entity.Model.ProductComment
 		/// <summary>
 		/// AddUser
 		/// </summary>
-		//public virtual int AddUser { get; set; }
+		public virtual int AddUser { get; set; }
 		/// <summary>
 		/// AddTime
 		/// </summary>
@@ -32,5 +33,10 @@ namespace Community.Entity.Model.ProductComment
 		/// 评论星级
 		/// </summary>
 		public virtual int Stars { get; set; }
+
+        /// <summary>
+        /// 对应的订单明细
+        /// </summary>
+        public virtual OrderDetailEntity OrderDetail { get; set; }
 	}
 }
