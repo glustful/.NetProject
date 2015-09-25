@@ -59,7 +59,15 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         $scope.showSelect = true;
         $scope.isShow = true;
     };
-
+//  下拉框效果
+	$scope.selectBox=false;
+	$scope.showSelectBox=function(){
+		$scope.selectBox=true;
+	}
+//	关闭下拉框
+	$scope.closeSelectBox=function(){
+		$scope.selectBox=false;
+	}
 
     //region地址获取
     $scope.Condition = {
@@ -119,11 +127,11 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
             'withCredentials': true
         }).success(function (data1) {
             $scope.list = data1.List[0];
-//            var img=$scope.list.MainImg;
-//            var imgfb=document.createElement("img");
-//            document.getElementById("father").appendChild(imgfb);
-//            imgfb.className="add";
-//            imgfb.setAttribute("src","http://img.iyookee.cn/"+img);
+            var img=$scope.list.MainImg;
+            var imgfb=document.createElement("img");
+            document.getElementById("father").appendChild(imgfb);
+            imgfb.className="add";
+            imgfb.setAttribute("src","http://img.iyookee.cn/"+img);
         });
 
     };

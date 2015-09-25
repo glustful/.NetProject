@@ -4,12 +4,13 @@
 <div class=" header bar" style="height:44px">
     <a class="button  button-icon icon icon-fuwuanniu" ng-click="go('page.Product-Catagory')"
        ui-sref="page.Product-Catagory"></a>
-    <label class=" item-select select-header" ng-hide="showSelect">
+       <span class="selectArea" ng-click="showSelectBox()" ng-hide="showSelect">云南省</span>
+    <!--<label class=" item-select select-header" ng-hide="showSelect">
 
-        <select ng-model="selected" id="ParentId"  ng-options="o.Id as o.Name for o in addrss" ng-change="click()" required>
+        <select ng-model="selected" ng-click="showSelectBox()" id="ParentId"  ng-options="o.Id as o.Name for o in addrss" ng-change="click()" required>
         </select>
 
-    </label>
+    </label>-->
     <a class="button button-icon icon icon-search search" ng-click="showInput()"></a>
     <a class="button button-icon icon ion-navicon-round round"
        ng-click="go('index.html#/page/shopping/Product-Catagory')"></a>
@@ -17,6 +18,13 @@
            placeholder="" style="border: 1px solid #fff; height: 70%;z-index: 0;padding-left: 10px;color: #fff">
 </div>
 
+<div class="bar bar-subheader bar-light selectBox" ng-class="{'addselectBox':selectBox}">
+	 <i class="ion ion-ios-close-outline" ng-click="closeSelectBox()" style="font-size: 30px;"></i>
+	<ul class="list">
+		<li class="item">昆明市</li>
+		<li class="item">曲靖市</li>
+	</ul>
+	</div>
 
 <ion-view view-title="优·购物" hide-tabs="false" hide-nav-bar="true">
     <!-- 主页-->
@@ -92,18 +100,16 @@
 
             </div>
         <!--</ion-scroll>-->
-            <div class="item item-image" id="father">
-                <img ng-src="http://img.iyookee.cn/{{list.MainImg}}" class="f-show"
-                     ng-click="go('index.html#/page/shopping/product-detail')">
 
-        <div class=" stable-bg padding">
+
+        <div class="stable-bg padding">
             <div class="  item item-light item-borderless" style="margin-bottom: 10px">
                 <span class="title assertive font-11"><strong>| 爆款套餐</strong>&nbsp;| 省到不行</span>
             </div>
-            <div class="item item-image ">
-                <img ng-src="http://img.iyookee.cn/{{list.MainImg}}@400w_140h_70q_2e" class="f-show"
+            <div class="item item-image " style="overflow: inherit;">
+                <img ng-src="http://img.iyookee.cn/{{list.MainImg}}@400w_140h_70q_2e"
                      ui-sref="page.product-detail({id:list.Id})">
-
+                <img ng-src="http://img.iyookee.cn/{{list.MainImg}}@400w_140h_70q_2e" class="add">
                 <div class="p-location">
                     <div class="p-invisible">{{list.Owner}}人已抢购</div>
                 </div>
@@ -119,9 +125,9 @@
 
                 </div>
             </div>
-            <ul>
+            <ul style="z-index:0">
                 <li style="width:50%;float:left" ng-repeat="row in items">
-                    <div class="col p-relative">
+                    <div class="">
 
                             <img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}@187w_140h_70q_2e"
                                  ui-sref="page.product-detail({id:row.Id})">
