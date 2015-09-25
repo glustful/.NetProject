@@ -121,13 +121,16 @@ public class MyApplication extends Application {
 
 				@Override
 				public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-					if (imageUri.equals(view.getTag().toString())) {
-						if (view.getWidth() > 0) {
-							// loadedImage
+					if(imageUri!=null&&view!=null){
+						if (imageUri.equals(view.getTag().toString())) {
+							if (view.getWidth() > 0) {
+								// loadedImage
+							}
+							// ((ImageView) view).setScaleType(ScaleType.FIT_XY);
+							((ImageView) view).setImageBitmap(loadedImage);
 						}
-						// ((ImageView) view).setScaleType(ScaleType.FIT_XY);
-						((ImageView) view).setImageBitmap(loadedImage);
 					}
+					
 				}
 
 				@Override
