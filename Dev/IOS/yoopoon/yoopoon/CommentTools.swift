@@ -43,7 +43,6 @@ class CommentTools: NSObject {
         
     }
     
-    
     //获取当前显示的controller
     class func getCurrentController()->UIViewController?{
         

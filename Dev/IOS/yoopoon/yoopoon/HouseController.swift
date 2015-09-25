@@ -17,7 +17,7 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
     //请求产品列表
     private var productList = [ProductEntity]()
     private var isBroker = false
-    
+    private var adView:ADView?
     @IBOutlet weak var uiAreaButton: UIHorizantButton!
     @IBOutlet weak var uiTypeButton: UIHorizantButton!
     @IBOutlet weak var uiPriceButton: UIHorizantButton!
@@ -56,6 +56,7 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
         }else{
             self.mTableView.reloadData()
         }
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -135,8 +136,9 @@ class HouseController: UIViewController, UITableViewDataSource,UITableViewDelega
                 //如果你的这个广告视图是添加到导航控制器子控制器的View上,请添加此句,否则可忽略此句
                 self.automaticallyAdjustsScrollViewInsets = false;
                 
-                var adView:ADView = ADView.adScrollViewWithFrame(CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height/5),imageLinkUrl:imagesURL,placeHoderImageName:"placeHoder.jpg" ,pageControlShowStyle:UIPageControlShowStyle.UIPageControlShowStyleCenter)!;
-                self.mTableView.tableHeaderView = adView
+                self.adView = ADView.adScrollViewWithFrame(CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height/5),imageLinkUrl:imagesURL,placeHoderImageName:"placeHoder.jpg" ,pageControlShowStyle:UIPageControlShowStyle.UIPageControlShowStyleCenter)!;
+                self.mTableView.tableHeaderView = self.adView
+                self.adView!.setUpTime()
                 
                 },
                 faild: {error in print("\(error!.description)")})

@@ -44,7 +44,7 @@ class SearchProductView: UIView ,UITableViewDataSource,UITableViewDelegate{
         self.mTableView.reloadData()
         paramter.updateValue("10", forKey: "PageCount")
         paramter.updateValue("1", forKey: "page")
-        paramter.updateValue(uiSearchText.text, forKey: "condition")
+        paramter.updateValue(uiSearchText.text ?? "", forKey: "condition")
         paramter.updateValue("房地产", forKey: "className")
     }
     

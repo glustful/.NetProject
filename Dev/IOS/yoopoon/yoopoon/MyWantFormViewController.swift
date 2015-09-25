@@ -33,7 +33,7 @@ class MyWantFormViewController: TextFieldViewController,UIPopoverPresentationCon
             uiCustomName.shake(5, delta: 3)
             return
         }
-        if !RegexHelper(clientNameRegx).match(uiCustomName.text){
+        if !RegexHelper(clientNameRegx).match(uiCustomName.text!){
             TipTools().showToast("提示", message: "客户姓名必须是汉字组成", duration: 2)
             return
         }
@@ -41,7 +41,7 @@ class MyWantFormViewController: TextFieldViewController,UIPopoverPresentationCon
             uiCustomPhone.shake(5, delta: 3)
             return
         }
-        if !RegexHelper(phoneRegex).match(uiCustomPhone.text){
+        if !RegexHelper(phoneRegex).match(uiCustomPhone.text!){
             TipTools().showToast("提示", message: "客户电话格式不对", duration: 2)
             return
         }
@@ -51,11 +51,11 @@ class MyWantFormViewController: TextFieldViewController,UIPopoverPresentationCon
                 uiPreDate.shake(5, delta: 3)
                 return
             }
-        self.postEntity.updateValue(uiPreDate.text, forKey: "Appointmenttime")
+        self.postEntity.updateValue(uiPreDate.text!, forKey: "Appointmenttime")
         }
-        self.postEntity.updateValue(uiCustomName.text, forKey: "Clientname")
-        self.postEntity.updateValue(uiCustomPhone.text, forKey: "Phone")
-        self.postEntity.updateValue(uiDescript.text, forKey: "Note")
+        self.postEntity.updateValue(uiCustomName.text ?? "", forKey: "Clientname")
+        self.postEntity.updateValue(uiCustomPhone.text ?? "", forKey: "Phone")
+        self.postEntity.updateValue(uiDescript.text ?? "", forKey: "Note")
         post()
         
     }
@@ -64,7 +64,7 @@ class MyWantFormViewController: TextFieldViewController,UIPopoverPresentationCon
     提交请示
     */
     private func post(){
-        var url = type == 0 ? urlBrokerLeadClientAdd : urlBrokerRECClientAdd
+        let url = type == 0 ? urlBrokerLeadClientAdd : urlBrokerRECClientAdd
         RequestAdapter()
         .setUrl(url)
         .setEncoding(.JSON)
@@ -72,7 +72,7 @@ class MyWantFormViewController: TextFieldViewController,UIPopoverPresentationCon
         .setParameters(self.postEntity)
         .setIsShowIndicator(true, currentView: self.view)
         .request({json in
-            print(json)
+            
             if let status = json["Status"].bool{
                 if status{
                     self.navigationController!.popViewControllerAnimated(true)
@@ -81,7 +81,7 @@ class MyWantFormViewController: TextFieldViewController,UIPopoverPresentationCon
             }
             TipTools().showToast("提示", message: "请求失败,请重试", duration: 3)
             }, faild: {error in
-                print("\(error!.description)")
+               
                 TipTools().showToast("提示", message: "请求失败,请重试", duration: 3)
         })
     }

@@ -116,7 +116,7 @@ class PersonSettingViewController: SuperViewController,UITextFieldDelegate,UINav
     - returns: <#return value description#>
     */
     private func validate()->Bool{
-        if !RegexHelper(brokerNickNameRegex).match(self.uiAliase.text){
+        if !RegexHelper(brokerNickNameRegex).match(self.uiAliase.text!){
             self.uiScrollForm.setContentOffset(CGPointZero, animated: true)
             TipTools().showToast("格式不符", message: "昵称只能是汉字字母下划线组成", duration: 2)
             return false
@@ -126,7 +126,7 @@ class PersonSettingViewController: SuperViewController,UITextFieldDelegate,UINav
             self.uiName.shake(5, delta: 5)
             return false
         }
-        if !RegexHelper(brokerNameRegex).match(self.uiName.text){
+        if !RegexHelper(brokerNameRegex).match(self.uiName.text!){
             self.uiScrollForm.setContentOffset(CGPointZero, animated: true)
             TipTools().showToast("格式不符", message: "姓名只能是2-5个汉字组成", duration: 2)
             return false
@@ -135,7 +135,7 @@ class PersonSettingViewController: SuperViewController,UITextFieldDelegate,UINav
             self.uiIdentifyCard.shake(5, delta: 5)
             return false
         }
-        if !RegexHelper(identifyCardRegex).match(self.uiIdentifyCard.text){
+        if !RegexHelper(identifyCardRegex).match(self.uiIdentifyCard.text!){
             
             TipTools().showToast("格式不符", message: "身份证号码不对", duration: 2)
             return false
@@ -144,7 +144,7 @@ class PersonSettingViewController: SuperViewController,UITextFieldDelegate,UINav
             self.uiEmail.shake(5, delta: 5)
             return false
         }
-        if !RegexHelper(emailRegex).match(self.uiEmail.text){
+        if !RegexHelper(emailRegex).match(self.uiEmail.text!){
             
             TipTools().showToast("格式不符", message: "邮箱格式不对", duration: 2)
             return false
@@ -177,13 +177,13 @@ class PersonSettingViewController: SuperViewController,UITextFieldDelegate,UINav
             if let status = json["Status"].bool{
                 if status{
                     
-                    self.navigationController!.popToViewController(self.navigationController!.viewControllers.first as! UIViewController, animated: true)
+                    self.navigationController!.popToViewController(self.navigationController!.viewControllers.first! as UIViewController, animated: true)
                     return
                 }
             }
             TipTools().showToast("提示", message: "保存失败", duration: 2)
                 }, faild: {error in
-                    print("\(error!.description)")
+                    
                 TipTools().showToast("提示", message: "保存失败", duration: 2)
             })
     }

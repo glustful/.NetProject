@@ -27,7 +27,7 @@ class ChooseBankViewController: UIViewController,UITableViewDataSource,UITableVi
         .request({json in
             if let list = json["List"].array{
                 for i in 0..<list.count{
-                    var entity = BankEntity()
+                    let entity = BankEntity()
                     entity.generateSelf(list[i])
                     self.dataSource.append(entity)
                 }
@@ -46,7 +46,7 @@ class ChooseBankViewController: UIViewController,UITableViewDataSource,UITableVi
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         let identifier = "identifier"
-        var cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier(identifier) as UITableViewCell?
         if cell == nil{
             cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: identifier)
         }

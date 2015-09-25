@@ -28,7 +28,7 @@ class LoginViewController: SuperViewController {
             self.uiPassword.shake(5, delta: 5)
             return
         }
-        loginWithPhone(self.uiPhone.text,password: self.uiPassword.text)
+        loginWithPhone(self.uiPhone.text!,password: self.uiPassword.text!)
     }
     
     /**
