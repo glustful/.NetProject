@@ -11,6 +11,7 @@ using Community.Service.MemberAddress;
 using Community.Service.Product;
 using Community.Service.ServiceOrder;
 using YooPoon.Core.Site;
+using YooPoon.WebFramework.User.Entity;
 using Zerg.Common;
 using Zerg.Models.Community;
 
@@ -26,7 +27,7 @@ namespace Zerg.Controllers.Community
         private readonly IMemberAddressService _memberAddressService;
         private readonly IMemberService _memberService;
 
-        public ServiceOrderController(IServiceOrderService serviceOrderService, IProductService productService, IWorkContext workContext,IMemberAddressService memberAddressService,IMemberService memberService)
+        public ServiceOrderController(IServiceOrderService serviceOrderService, IProductService productService, IWorkContext workContext, IMemberAddressService memberAddressService, IMemberService memberService)
         {
             _serviceOrderService = serviceOrderService;
             _productService = productService;
@@ -37,8 +38,12 @@ namespace Zerg.Controllers.Community
 
         public ServiceOrderModel Get(int id)
         {
+            var currentUser = (UserBase)_workContext.CurrentUser;
             var entity = _serviceOrderService.GetServiceOrderById(id);
             if (entity == null)
+                return null;
+            if (!currentUser.UserRoles.ToList()
+    .Exists(c => c.Role.RoleName == "superAdmin" || c.Role.RoleName == "admin") && ProductEntity.AddUser != currentUser.Id)
                 return null;
             var model = new ServiceOrderModel
             {
@@ -72,6 +77,10 @@ namespace Zerg.Controllers.Community
 
         public HttpResponseMessage Get([FromUri]ServiceOrderSearchCondition condition)
         {
+            var currentUser = (UserBase)_workContext.CurrentUser;
+            if (!currentUser.UserRoles.ToList()
+                .Exists(c => c.Role.RoleName == "superAdmin" || c.Role.RoleName == "admin"))
+                condition.AddUsers = new[] { currentUser.Id };
             var model = _serviceOrderService.GetServiceOrdersByCondition(condition).Select(c => new ServiceOrderModel
             {
                 Id = c.Id,
@@ -86,7 +95,7 @@ namespace Zerg.Controllers.Community
                 UpdUser = c.UpdUser,
                 UpdTime = c.UpdTime,
                 UserName = c.AddMember.UserName,
-                Details = c.Details.Select(d=>new ServiceOrderDetailModel
+                Details = c.Details.Select(d => new ServiceOrderDetailModel
                 {
                     Count = d.Count,
                     Id = d.Id,
@@ -121,7 +130,7 @@ namespace Zerg.Controllers.Community
                 Price = p.Price
             }).ToList();
             if (products.Count < 1)
-                return PageHelper.toJson(PageHelper.ReturnValue(false,"生成订单失败，无法找到服务商品"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "生成订单失败，无法找到服务商品"));
             //订单编号
             Random rd = new Random();
             var orderNumber = "S" + DateTime.Now.ToString("yyyyMMddHHmmssffff") + rd.Next(100, 999);
@@ -155,7 +164,7 @@ namespace Zerg.Controllers.Community
                     Addtime = entity.AddTime
                 }));
             }
-            return PageHelper.toJson(PageHelper.ReturnValue(false,"生成服务订单失败"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "生成服务订单失败"));
         }
 
         public bool Put([FromBody]ServiceOrderModel model)
