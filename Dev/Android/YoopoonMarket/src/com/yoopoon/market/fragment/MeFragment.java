@@ -74,7 +74,6 @@ public class MeFragment extends Fragment implements OnClickListener {
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		Log.i(TAG, "onCreateView");
 		if (rootView == null) {
 			rootView = inflater.inflate(R.layout.fragment_me, null, false);
 		}
@@ -334,8 +333,9 @@ public class MeFragment extends Fragment implements OnClickListener {
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
-		Log.i(TAG, "setUserVisibleHint:isVisibleToUser = " + isVisibleToUser);
-		isVisibleUser = isVisibleToUser;
+		if (isVisibleToUser && !User.isLogin(getActivity())) {
+			LoginActivity_.intent(getActivity()).start();
+		}
 
 	}
 
@@ -343,6 +343,7 @@ public class MeFragment extends Fragment implements OnClickListener {
 	public void onResume() {
 		super.onResume();
 		MainActivity mainActivity = (MainActivity) getActivity();
+		Log.i(TAG, "onResume:" + mainActivity.getCurrentPage());
 		if (mainActivity.getCurrentPage() == 3) {
 			if (!User.isLogin(getActivity())) {
 				LoginActivity_.intent(getActivity()).start();
