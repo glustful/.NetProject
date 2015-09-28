@@ -13,6 +13,7 @@ class NumberFormatTools: NSObject {
     /// double类型去掉未尾的零和点，返回对应的字符串
     class func clipEndZeros(source: Double)->String{
         var str: String = "\(source)"
+      
         if str.componentsSeparatedByString(".").count == 2{
             while true{
                 let end = str.endIndex
