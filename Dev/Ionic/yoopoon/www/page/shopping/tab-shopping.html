@@ -16,10 +16,18 @@
 
 <div class="bar bar-subheader bar-light selectBox" ng-class="{'addselectBox':selectBox}">
 	<i class="ion ion-ios-close-outline" ng-click="closeSelectBox()" style="font-size: 30px;"></i>
+    <div class="fuji">
 	<ul class="list">
-		<li class="item">昆明市</li>
-		<li class="item">曲靖市</li>
+		<li class="item" ng-repeat="item in addrss" ng-click="click(item.Name,item.Id)">{{item.Name}}</li>
 	</ul>
+    </div>
+    <div class="ziji">
+    <ul style="margin-left: 50px">
+        <li style="float: left ;width:60px; height: 40px;border-radius:10px; margin-top: 10px;" ng-repeat="item in zilei">
+            <button class="btn m-b-xs w-xs btn-default btn-rounded" ng-click="huan(item.Name)" >{{item.Name}}</button></li>
+
+    </ul>
+    </div>
 </div>
 
 <ion-view view-title="优·购物" hide-tabs="false" hide-nav-bar="true">

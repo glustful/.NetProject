@@ -132,7 +132,7 @@ namespace Zerg.Controllers.Community
 			var entity = _memberAddressService.GetMemberAddressById(model.Id);
 			if(entity == null)
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "修改失败"));
-			entity.Member.Id = model.Member;
+			//entity.Member.Id = model.Member;
 			entity.Address = model.Address;
 			entity.Zip = model.Zip;
 			entity.Linkman = model.Linkman;
@@ -142,6 +142,11 @@ namespace Zerg.Controllers.Community
 			entity.Upduser = model.Upduser;
 			entity.Updtime = model.Updtime;
             entity.IsDefault = model.IsDefault;
+            if (model.IsDefault.HasValue && model.IsDefault.Value)
+            {
+                var defaultEntities = _memberAddressService.GetDefaultAddress(entity.Member.Id.ToString());
+                defaultEntities.IsDefault = false;
+            }
 			if(_memberAddressService.Update(entity) != null)
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "修改成功"));
             return PageHelper.toJson(PageHelper.ReturnValue(false, "修改失败"));

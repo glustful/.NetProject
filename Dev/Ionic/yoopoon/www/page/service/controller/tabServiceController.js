@@ -151,25 +151,63 @@ app.controller('clearservice',['$http','$scope','$stateParams',function($http,$s
 	{
 		$scope.go("page.service");
 	}
-	$scope.Address={
-		AreaName:$stateParams.name,
-		AreaId: $stateParams.id,
-		Address:'',
-		Zip :'',
-		Linkman :'',
-		Tel:''
+
+
+
+	$scope.loadmore=true;
+	$scope.Name=$stateParams.name;
+	$scope.items = [];
+	$scope.searchCondition = {
+
+		CategoryName:$stateParams.name,
+		IsDescending: true,
+		OrderBy: 'OrderByAddtime',
+		Page: 1,
+		PageCount: 10
+		//ProductId:''
 	};
 
-	$scope.saves = function () {
-
-		$http.post(SETTING.ApiUrl + '/MemberAddress/Post', $scope.Address, {'withCredentials': true})
-			.success(function (data) {
-				if (data.Status) {
-
-					$state.go("page.addressAdm");
+	var getList = function () {
+		$http.get(SETTING.ApiUrl + '/CommunityProduct/Get', {
+			params: $scope.searchCondition,
+			'withCredentials': true
+		}).success(function (data) {
+			if (data.List != "") {
+				$scope.items = data.List;
+				if(((($scope.searchCondition.Page-1)*$scope.searchCondition.PageCount )+data.List.length)==data.TotalCount)
+				{
+					$scope.loadmore=false;
 				}
+			}
+		});
+	};
+	getList();
+//endregion
+	//region 商品加载
+
+	$scope.load_more = function () {
+		$timeout(function () {
+			$scope.searchCondition.Page += 1;
+			$http.get(SETTING.ApiUrl + '/CommunityProduct/Get', {
+				params: $scope.searchCondition,
+				'withCredentials': true
+			}).success(function (data) {
+
+				if (data.List != "") {
+					for (var i = 0; i < data.List.length; i++) {
+						$scope.items.push(data.List[i]);
+					}
+					if($scope.items.length==data.TotalCount)
+					{
+						$scope.loadmore=false;
+					}
+				}
+				$scope.$broadcast("scroll.infiniteScrollComplete");
 			});
-	}
+		}, 1000)
+	};
+
+
 
     //    选择清洗服务
     $scope.selected1 = false;

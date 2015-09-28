@@ -55,11 +55,10 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
             if self.brandList.count == 0{
             requestADImg()
             requestOneBrand()
-            requestHoreTopThree()
+            //requestHoreTopThree()
             }
         }
-
-    }
+            }
     
     /**
     请求广告图片，
@@ -80,7 +79,8 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
                 self.automaticallyAdjustsScrollViewInsets = false;
                 
                 self.adScrollerView = ADView.adScrollViewWithFrame(CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height/5),imageLinkUrl:imagesURL,placeHoderImageName:"placeHoder.jpg" ,pageControlShowStyle:UIPageControlShowStyle.UIPageControlShowStyleCenter)!;
-                self.mTableView.reloadData()
+                self.mTableView.tableHeaderView = self.adScrollerView
+                self.adScrollerView!.setUpTime()
                 
                 },
                 faild: {error in print("\(error!.description)")})
@@ -99,7 +99,7 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
                 if let array = json["List"].array{
                     self.brandList.removeAll(keepCapacity: false)
                     for i in 0..<array.count{
-                        var entity = BrandAgentEntity()
+                        let entity = BrandAgentEntity()
                         entity.initData(array[i])
                         self.brandList.append(entity)
                     }
@@ -134,21 +134,21 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return self.brandList.count + 5
+        return self.brandList.count + 2
     }
 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         //let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
 
-        let adIdentity = "adTableviewcell"
+        //let adIdentity = "adTableviewcell"
         let commentFunctionIdentity = "commentFunction"
         let activeIdentity = "agentActive"
         let horeIdentity = "agentHore"
         let titleIdentity = "agentTitle"
         let houseIdentity = "agentHouse"
-       if indexPath.row == 0{
-            var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(adIdentity) as? UITableViewCell
+      /* if indexPath.row == 0{
+            var cell:UITableViewCell? = (tableView.dequeueReusableCellWithIdentifier(adIdentity) as UITableViewCell?)
             if cell == nil{
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: adIdentity)
                 cell!.selectionStyle = UITableViewCellSelectionStyle.None
@@ -158,7 +158,7 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
             }
             return cell!
        }
-       else if indexPath.row == 1{
+       else */if indexPath.row == 0{
         var cell:AgentCommentFunctionViewTableViewCell? = tableView.dequeueReusableCellWithIdentifier(commentFunctionIdentity) as? AgentCommentFunctionViewTableViewCell
         if cell == nil{
             cell = NSBundle.mainBundle().loadNibNamed("AgentCommentFunctionViewTableViewCell", owner: self, options: nil).last as? AgentCommentFunctionViewTableViewCell
@@ -166,7 +166,7 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
         }
         
         return cell!
-       }else if indexPath.row == 2{
+       }/*else if indexPath.row == 1{
         var cell:AgentRichTableViewCell? = tableView.dequeueReusableCellWithIdentifier(activeIdentity) as? AgentRichTableViewCell
         if cell == nil{
             cell = NSBundle.mainBundle().loadNibNamed("AgentRichTableViewCell", owner: self, options: nil).last as? AgentRichTableViewCell
@@ -174,7 +174,7 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
         }
         
         return cell!
-       }else if indexPath.row == 3{
+       }else if indexPath.row == 2{
         var cell:AgentHoreTableViewCell? = tableView.dequeueReusableCellWithIdentifier(horeIdentity) as? AgentHoreTableViewCell
         if cell == nil{
             cell = NSBundle.mainBundle().loadNibNamed("AgentHoreTableViewCell", owner: self, options: nil).last as? AgentHoreTableViewCell
@@ -186,8 +186,8 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
             cell!.removeChild()
         }
         return cell!
-        }
-       else if indexPath.row == 4{
+        }*/
+       else if indexPath.row == 1{
         var cell:AgentTitleTableViewCell? = tableView.dequeueReusableCellWithIdentifier(titleIdentity) as? AgentTitleTableViewCell
         if cell == nil{
             cell = NSBundle.mainBundle().loadNibNamed("AgentTitleTableViewCell", owner: self, options: nil).last as? AgentTitleTableViewCell
@@ -201,7 +201,7 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
             cell = NSBundle.mainBundle().loadNibNamed("AgentHouseTableViewCell", owner: self, options: nil).last as? AgentHouseTableViewCell
             cell!.selectionStyle = UITableViewCellSelectionStyle.None
         }
-        cell!.initLayout(self.brandList[indexPath.row-5])
+        cell!.initLayout(self.brandList[indexPath.row-2])
         return cell!
     }
     
@@ -214,14 +214,14 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
     - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
-        if indexPath.row == 0{
+       /* if indexPath.row == 0{
             return UIScreen.mainScreen().bounds.height/5
-        }else if indexPath.row == 1{
+        }else*/ if indexPath.row == 0{
             return screenBounds.height/7
-        }else if indexPath.row == 2{
+        }/*else if indexPath.row == 1{
 
             return screenBounds.width / 4 + 50
-        }else if indexPath.row == 3{
+        }else if indexPath.row == 2{
             if self.horeDataSource == nil{
                 return 45
             }
@@ -230,8 +230,8 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
             }
             return screenBounds.height/4
           
-        }
-        else if indexPath.row == 4{
+        }*/
+        else if indexPath.row == 1{
             return 40
         }
         let height = screenBounds.width/(727/280)
@@ -239,12 +239,12 @@ class AgentViewController: UIViewController, UITableViewDelegate,UITableViewData
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        if indexPath.row < 5{
+        if indexPath.row < 2{
             return
         }
-        var storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+       // _ = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         if let controller = storyboard?.instantiateViewControllerWithIdentifier(ControllerIdentifier.brandDetailIdentifier) as? BrandDetialController{
-            controller.brandId = self.brandList[indexPath.row-5].brandId ?? ""
+            controller.brandId = self.brandList[indexPath.row-2].brandId ?? ""
             self.navigationController!.pushViewController(controller, animated: true)
         }
     }

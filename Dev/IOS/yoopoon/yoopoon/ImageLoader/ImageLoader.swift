@@ -10,18 +10,24 @@ import Foundation
 import UIKit
 
 public protocol URLLiteralConvertible {
-    var URL: NSURL { get }
+    var imageLoaderURL: NSURL { get }
 }
 
 extension NSURL: URLLiteralConvertible {
-    public var URL: NSURL {
+    public var imageLoaderURL: NSURL {
         return self
     }
 }
 
+extension NSURLComponents: URLLiteralConvertible {
+    public var imageLoaderURL: NSURL {
+        return URL!
+    }
+}
+
 extension String: URLLiteralConvertible {
-    public var URL: NSURL {
-        if let string = stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding) {
+    public var imageLoaderURL: NSURL {
+        if let string = stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet()) {
             return NSURL(string: string)!
         }
         return NSURL(string: self)!
@@ -32,7 +38,7 @@ extension String: URLLiteralConvertible {
 
 extension CGBitmapInfo {
     private var alphaInfo: CGImageAlphaInfo? {
-        let info = self.intersect(.AlphaInfoMask)
+        let info = intersect(.AlphaInfoMask)
         return CGImageAlphaInfo(rawValue: info.rawValue)
     }
 }
@@ -53,8 +59,8 @@ extension UIImage {
             return self
         }
 
-        var bitmapInfo = CGImageGetBitmapInfo(CGImage)
-        var alphaInfo = CGImageGetAlphaInfo(CGImage)
+        var bitmapInfoValue = CGImageGetBitmapInfo(CGImage).rawValue
+        let alphaInfo = CGImageGetAlphaInfo(CGImage)
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let colorSpaceModel = CGColorSpaceGetModel(colorSpace)
 
@@ -69,8 +75,8 @@ extension UIImage {
             default:
                 break
             }
-            bitmapInfo &= ~CGBitmapInfo.AlphaInfoMask
-            bitmapInfo |= CGBitmapInfo(rawValue: info.rawValue)
+            bitmapInfoValue &= ~CGBitmapInfo.AlphaInfoMask.rawValue
+            bitmapInfoValue |= info.rawValue
         default:
             break
         }
@@ -82,16 +88,15 @@ extension UIImage {
             bitsPerComponent,
             0,
             colorSpace,
-            bitmapInfo
+            bitmapInfoValue
         )
 
-        let frame = CGRect(x: 0, y: 0, width: Int(width), height: Int(height))
+        let frame = CGRect(x: 0, y: 0, width: width, height: height)
 
         CGContextDrawImage(context, frame, CGImage)
-        let inflatedImageRef = CGBitmapContextCreateImage(context)
 
-        if let inflatedImage = UIImage(CGImage: inflatedImageRef, scale: scale, orientation: imageOrientation) {
-            return inflatedImage
+        if let cgImage = CGBitmapContextCreateImage(context) {
+            return UIImage(CGImage: cgImage, scale: scale, orientation: imageOrientation)
         }
 
         return self
@@ -104,7 +109,7 @@ extension UIImage {
     Cache for `ImageLoader` have to implement methods.
     fetch image by cache before sending a request and set image into cache after receiving image data.
 */
-public protocol ImageCache: NSObjectProtocol {
+public protocol ImageCache: class {
 
     subscript (aKey: NSURL) -> UIImage? {
         get
@@ -113,9 +118,9 @@ public protocol ImageCache: NSObjectProtocol {
 
 }
 
-internal typealias CompletionHandler = (NSURL, UIImage?, NSError?) -> ()
+public typealias CompletionHandler = (NSURL, UIImage?, NSError?, CacheType) -> Void
 
-internal class Block: NSObject {
+class Block: NSObject {
 
     let completionHandler: CompletionHandler
     init(completionHandler: CompletionHandler) {
@@ -137,6 +142,16 @@ public enum State {
 }
 
 /**
+    Use to check where image is loaded from.
+    None:   fetching from network
+    Cache:  getting from `ImageCache`
+*/
+public enum CacheType {
+    case None
+    case Cache
+}
+
+/**
     Responsible for creating and managing `Loader` objects and controlling of `NSURLSession` and `ImageCache`
 */
 public class Manager {
@@ -144,18 +159,16 @@ public class Manager {
     let session: NSURLSession
     let cache: ImageCache
     let delegate: SessionDataDelegate = SessionDataDelegate()
-    public var inflatesImage: Bool = true
+    public var inflatesImage = true
+    /**
+        Use to kill or keep a fetching image loader when it's blocks is to empty by imageview or anyone.
+    */
+    public var shouldKeepLoader = false
 
     private let decompressingQueue = dispatch_queue_create(nil, DISPATCH_QUEUE_CONCURRENT)
 
     // MARK: singleton instance
-    public class var sharedInstance: Manager {
-        struct Singleton {
-            static let instance = Manager()
-        }
-
-        return Singleton.instance
-    }
+    public static let sharedInstance = Manager()
 
     init(configuration: NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration(),
         cache: ImageCache = Diskcached()
@@ -168,9 +181,8 @@ public class Manager {
 
     var state: State {
 
-        var status: State = .Ready
-
-        for loader: Loader in delegate.loaders.values {
+        var status = State.Ready
+        for loader in delegate.loaders.values {
             switch loader.state {
             case .Running:
                 status = .Running
@@ -187,26 +199,23 @@ public class Manager {
 
     // MARK: loading
 
-    internal func load(URL: URLLiteralConvertible) -> Loader {
-        let URL = URL.URL
-        if let loader = delegate[URL] {
+    func load(URL: URLLiteralConvertible) -> Loader {
+        if let loader = delegate[URL.imageLoaderURL] {
             loader.resume()
             return loader
         }
 
-        let request = NSMutableURLRequest(URL: URL)
+        let request = NSMutableURLRequest(URL: URL.imageLoaderURL)
         request.setValue("image/*", forHTTPHeaderField: "Accept")
         let task = session.dataTaskWithRequest(request)
 
         let loader = Loader(task: task, delegate: self)
-        delegate[URL] = loader
+        delegate[URL.imageLoaderURL] = loader
         return loader
     }
 
-    internal func suspend(URL: URLLiteralConvertible) -> Loader? {
-        let URL = URL.URL
-
-        if let loader = delegate[URL] {
+    func suspend(URL: URLLiteralConvertible) -> Loader? {
+        if let loader = delegate[URL.imageLoaderURL] {
             loader.suspend()
             return loader
         }
@@ -214,20 +223,16 @@ public class Manager {
         return nil
     }
 
-    internal func cancel(URL: URLLiteralConvertible, block: Block? = nil) -> Loader? {
-        let URL = URL.URL
-
-        if let loader = delegate[URL] {
-
+    func cancel(URL: URLLiteralConvertible, block: Block? = nil) -> Loader? {
+        if let loader = delegate[URL.imageLoaderURL] {
             if let block = block {
                 loader.remove(block)
             }
 
-            if loader.blocks.count == 0 || block == nil {
+            if !shouldKeepLoader && loader.blocks.count == 0 {
                 loader.cancel()
-                delegate.remove(URL)
+                delegate.remove(URL.imageLoaderURL)
             }
-
             return loader
         }
 
@@ -237,39 +242,35 @@ public class Manager {
     class SessionDataDelegate: NSObject, NSURLSessionDataDelegate {
 
         private let _queue = dispatch_queue_create(nil, DISPATCH_QUEUE_CONCURRENT)
-        private var loaders: [NSURL: Loader]  = [NSURL: Loader]()
+        private var loaders = [NSURL: Loader]()
 
         subscript (URL: NSURL) -> Loader? {
-
             get {
                 var loader : Loader?
                 dispatch_sync(_queue) {
                     loader = self.loaders[URL]
                 }
-
                 return loader
             }
-
             set {
-                dispatch_barrier_async(_queue) {
-                    self.loaders[URL] = newValue!
+                if let newValue = newValue {
+                    dispatch_barrier_async(_queue) {
+                        self.loaders[URL] = newValue
+                    }
                 }
             }
         }
 
         private func remove(URL: NSURL) -> Loader? {
-
             if let loader = self[URL] {
                 loaders.removeValueForKey(URL)
                 return loader
             }
-
             return nil
         }
 
         func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
-            // TODO: status code 3xx
-            if let URL = dataTask.originalRequest.URL, let loader = self[URL] {
+            if let URL = dataTask.originalRequest?.URL, let loader = self[URL] {
                 loader.receive(data)
             }
         }
@@ -279,9 +280,7 @@ public class Manager {
         }
 
         func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
-            // TODO: status code 3xx
-            // loader completion, and store remove loader
-            if let URL = task.originalRequest.URL, let loader = self[URL] {
+            if let URL = task.originalRequest?.URL, let loader = self[URL] {
                 loader.complete(error)
             }
         }
@@ -295,7 +294,7 @@ public class Loader {
 
     unowned let delegate: Manager
     let task: NSURLSessionDataTask
-    var receivedData: NSMutableData = NSMutableData()
+    var receivedData = NSMutableData()
     let inflatesImage: Bool
     internal var blocks: [Block] = []
 
@@ -303,14 +302,14 @@ public class Loader {
         self.task = task
         self.delegate = delegate
         self.inflatesImage = delegate.inflatesImage
-        self.resume()
+        resume()
     }
 
     var state: NSURLSessionTaskState {
         return task.state
     }
 
-    public func completionHandler(completionHandler: (NSURL, UIImage?, NSError?) -> ()) -> Self {
+    public func completionHandler(completionHandler: CompletionHandler) -> Self {
 
         let block = Block(completionHandler: completionHandler)
         blocks.append(block)
@@ -334,14 +333,7 @@ public class Loader {
 
     private func remove(block: Block) {
         // needs to queue with sync
-        var newBlocks: [Block] = []
-        for b: Block in blocks {
-            if !b.isEqual(block) {
-                newBlocks.append(b)
-            }
-        }
-
-        blocks = newBlocks
+        blocks = blocks.filter{ !$0.isEqual(block) }
     }
 
     private func receive(data: NSData) {
@@ -350,13 +342,11 @@ public class Loader {
 
     private func complete(error: NSError?) {
 
-        if let URL = task.originalRequest.URL {
-
+        if let URL = task.originalRequest?.URL {
             if let error = error {
                 failure(URL, error: error)
                 return
             }
-
             dispatch_async(delegate.decompressingQueue) {
                 self.success(URL, data: self.receivedData)
             }
@@ -368,20 +358,20 @@ public class Loader {
         _toCache(URL, image: image)
 
         for block: Block in blocks {
-            block.completionHandler(URL, image, nil)
+            block.completionHandler(URL, image, nil, .None)
         }
         blocks = []
     }
 
     private func failure(URL: NSURL, error: NSError) {
         for block: Block in blocks {
-            block.completionHandler(URL, nil, error)
+            block.completionHandler(URL, nil, error, .None)
         }
         blocks = []
     }
 
-    private func _toCache(URL: NSURL, image _image: UIImage?) {
-        var image = _image
+    private func _toCache(URL: NSURL, image: UIImage?) {
+        var image = image
         if inflatesImage {
             image = image?.inflated()
         }
@@ -417,9 +407,7 @@ public func cancel(URL: URLLiteralConvertible) -> Loader? {
     Fetches the image using the shared manager instance's `ImageCache` object for the specified URL.
 */
 public func cache(URL: URLLiteralConvertible) -> UIImage? {
-    let URL = URL.URL
-
-    return Manager.sharedInstance.cache[URL]
+    return Manager.sharedInstance.cache[URL.imageLoaderURL]
 }
 
 public var state: State {

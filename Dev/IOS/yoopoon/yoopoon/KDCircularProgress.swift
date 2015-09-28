@@ -245,7 +245,7 @@ public class KDCircularProgress: UIView {
     }
     
     public func stopAnimation() {
-        let presentationLayer = progressLayer.presentationLayer() as! KDCircularProgressViewLayer
+        //let presentationLayer = progressLayer.presentationLayer() as! KDCircularProgressViewLayer
         progressLayer.removeAllAnimations()
         angle = 0
     }
@@ -374,7 +374,7 @@ public class KDCircularProgress: UIView {
             CGContextSetLineWidth(imageCtx, progressLineWidth)
             CGContextDrawPath(imageCtx, CGPathDrawingMode.Stroke)
             
-            let drawMask: CGImageRef = CGBitmapContextCreateImage(UIGraphicsGetCurrentContext())
+            let drawMask: CGImageRef = CGBitmapContextCreateImage(UIGraphicsGetCurrentContext())!
             UIGraphicsEndImageContext()
             
             CGContextSaveGState(ctx)
@@ -424,19 +424,19 @@ public class KDCircularProgress: UIView {
             } else {
                 let g = CGGradientCreateWithColorComponents(baseSpace, componentsArray, locations,componentsArray.count / 4)
                 self.gradientCache = g
-                gradient = g
+                gradient = g!
             }
             
             let halfX = bounds.size.width/2.0
             let floatPi = CGFloat(M_PI)
             let rotateSpeed = clockwise == true ? gradientRotateSpeed : gradientRotateSpeed * -1
             let angleInRadians = ConversionFunctions.DegreesToRadians(rotateSpeed * CGFloat(angle) - 90)
-            var oppositeAngle = angleInRadians > floatPi ? angleInRadians - floatPi : angleInRadians + floatPi
+            let oppositeAngle = angleInRadians > floatPi ? angleInRadians - floatPi : angleInRadians + floatPi
             
             let startPoint = CGPoint(x: (cos(angleInRadians) * halfX) + halfX, y: (sin(angleInRadians) * halfX) + halfX)
             let endPoint = CGPoint(x: (cos(oppositeAngle) * halfX) + halfX, y: (sin(oppositeAngle) * halfX) + halfX)
             
-            CGContextDrawLinearGradient(ctx, gradient, startPoint, endPoint, 0)
+            CGContextDrawLinearGradient(ctx, gradient, startPoint, endPoint, CGGradientDrawingOptions.DrawsAfterEndLocation)
         }
         
         func gradientLocationsFromColorCount(colorCount: Int, gradientWidth: CGFloat) -> [CGFloat] {

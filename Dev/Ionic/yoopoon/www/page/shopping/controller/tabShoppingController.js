@@ -95,13 +95,16 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         });
     }
     getAddress();
-
     $scope.SCondition = {
 
         Parent_Id: ''
     };
-    $scope.click = function () {
-        $scope.SCondition.Parent_Id = $scope.selected
+
+    $scope.area="云南省"
+    $scope.click = function (area,id) {
+        $scope.area=area;
+        //$scope.selectBox=false;
+        $scope.SCondition.Parent_Id =id
         $http.get(SETTING.ApiUrl + '/CommunityArea/Get', {
             params: $scope.SCondition,
             'withCredentials': true
@@ -109,6 +112,10 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
             $scope.zilei = data.List;
         })
 
+    }
+    $scope.huan=function(area){
+        $scope.area=area;
+        $scope.selectBox=false;
     }
     //endregion
 
