@@ -47,6 +47,7 @@ class ADView: UIView,UIScrollViewDelegate {
     var imageLinkURL:[String]?{
         
         didSet{
+           
             adScrollView!.contentSize = CGSizeMake(kADWidth!*CGFloat(self.imageLinkURL!.count+2), kADHeight!)
             var index:CGFloat = 1.0
             for url in self.imageLinkURL!{
@@ -168,8 +169,12 @@ class ADView: UIView,UIScrollViewDelegate {
     - parameter timer: <#timer description#>
     */
     func animalMoveImage(timer: NSTimer){
-
+       
+        if (kADWidth!+CGFloat(self.adScrollView!.contentOffset.x))>(CGFloat(self.imageLinkURL!.count+1) * kADWidth!){
+            self.adScrollView!.setContentOffset(CGPointMake(kADWidth!, 0), animated: true)
+        }else{
         self.adScrollView!.setContentOffset(CGPointMake(kADWidth!+CGFloat(self.adScrollView!.contentOffset.x), 0), animated: true)
+        }
         isTimeUp = true
         NSTimer.scheduledTimerWithTimeInterval(0.4, target: self, selector: "scrollViewDidEndDecelerating:", userInfo: nil, repeats: false)
     }
@@ -201,10 +206,12 @@ class ADView: UIView,UIScrollViewDelegate {
        
         if adScrollView!.contentOffset.x == 0{
             pageControl!.currentPage = self.imageLinkURL!.count-1
-            adScrollView!.contentOffset = CGPointMake(kADWidth!*CGFloat(self.imageLinkURL!.count), 0)
+            //adScrollView!.contentOffset = CGPointMake(kADWidth!*CGFloat(self.imageLinkURL!.count), 0)
+            adScrollView!.setContentOffset(CGPointMake(kADWidth!*CGFloat(self.imageLinkURL!.count), 0), animated: false)
         }else if adScrollView!.contentOffset.x == CGFloat(self.imageLinkURL!.count+1)*self.kADWidth!{
             pageControl!.currentPage = 0
-            adScrollView!.contentOffset = CGPointMake(kADWidth!, 0)
+            //adScrollView!.contentOffset = CGPointMake(kADWidth!, 0)
+            adScrollView!.setContentOffset(CGPointMake(kADWidth!, 0), animated: false)
         }else{
             pageControl!.currentPage = number.integerValue-1
         }
@@ -225,14 +232,5 @@ class ADView: UIView,UIScrollViewDelegate {
         self.setUpTime()
     }
     
-    /**
-    子视图添加到父视图或者离开父视图时调用
     
-    - parameter newSuperview: <#newSuperview description#>
-    */
-    override func willMoveToSuperview(newSuperview: UIView?) {
-        
-        setUpTime()
-       
-    }
 }

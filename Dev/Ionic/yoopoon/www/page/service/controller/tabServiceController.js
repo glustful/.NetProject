@@ -14,6 +14,7 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 	$scope.model = {
 		activeIndex: 0
 	};
+	al
 
 
 	// 遮罩层
@@ -64,7 +65,7 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 	//我的服务
 	function tab() {
 		//待接件
-		if ($stateParams.tabIndex == 5) {
+		    if ($stateParams.tabIndex == 5) {
 			$scope.tabIndex = 5;
 			$scope.condition = {
 				Status: '4',
@@ -96,7 +97,6 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 		}
 	}
 	tab();
-
 	//$scope.tabIndex = 5;
 	$scope.getServiceList = function (tabIndex) {
 		$scope.tabIndex = tabIndex;

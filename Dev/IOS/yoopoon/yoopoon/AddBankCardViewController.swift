@@ -63,7 +63,7 @@ class AddBankCardViewController: TextFieldViewController,UIPopoverPresentationCo
             return false
         }
         
-            if ( self.uiCardNo.text.characters.count < 16 ||  self.uiCardNo.text.characters.count > 19) {
+            if ( self.uiCardNo.text!.characters.count < 16 ||  self.uiCardNo.text!.characters.count > 19) {
                 TipTools().showToast("提示", message: "银行卡号长度必须在16到19之间", duration: 2)
                 
                 return false
@@ -73,7 +73,7 @@ class AddBankCardViewController: TextFieldViewController,UIPopoverPresentationCo
             var strBin = [10,18,30,35,37,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,58,60,62,65,68,69,84,87,88,94,95,98,99]
         var flag = false
         for key in strBin{
-            if self.uiCardNo.text.hasPrefix(String(key)){
+            if self.uiCardNo.text!.hasPrefix(String(key)){
                 flag = true
                 break
 
@@ -96,15 +96,15 @@ class AddBankCardViewController: TextFieldViewController,UIPopoverPresentationCo
             uiValide.shake(5, delta: 5)
             return false
         }
-        postEntity.updateValue(uiCardNo.text, forKey: "Num")
+        postEntity.updateValue(uiCardNo.text!, forKey: "Num")
         postEntity.updateValue("\(self.mBankEntity?.id ?? 0)", forKey: "Bank")
         postEntity.updateValue(uiAddress.text, forKey: "Address")
-        postEntity.updateValue(uiValide.text, forKey: "MobileYzm")
-        if uiCardType.selectedSegmentIndex == 0{
+        postEntity.updateValue(uiValide.text!, forKey: "MobileYzm")
+        //if uiCardType.selectedSegmentIndex == 0{
             postEntity.updateValue("储蓄卡", forKey: "Type")
-        }else{
-            postEntity.updateValue("信用卡", forKey: "Type")
-        }
+        //}else{
+            //postEntity.updateValue("信用卡", forKey: "Type")
+        //}
         
 
         return true
@@ -119,7 +119,7 @@ class AddBankCardViewController: TextFieldViewController,UIPopoverPresentationCo
         .setParameters(self.postEntity)
         .setIsShowIndicator(true, currentView: self.view)
         .request({json in
-            print(json)
+            
             if let status = json["Status"].bool{
                 if status{
                     self.navigationController!.popViewControllerAnimated(true)

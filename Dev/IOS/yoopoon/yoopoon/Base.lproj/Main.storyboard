@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYf-cr-5Vn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYf-cr-5Vn">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -240,7 +241,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="GYi-7B-h3T">
-                                <rect key="frame" x="0.0" y="64" width="600" height="479"/>
+                                <rect key="frame" x="4" y="64" width="592" height="479"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                         </subviews>
@@ -1739,6 +1740,7 @@
                         <segue destination="8rH-5P-KwB" kind="show" identifier="myWantFormSegue" id="SDR-QG-Rj8"/>
                         <segue destination="ZiF-lA-18q" kind="show" identifier="grabRedEnvelopeSegue" id="GjH-bv-a80"/>
                         <segue destination="O91-5h-B4Y" kind="show" id="y7g-cd-dVK"/>
+                        <segue destination="fPp-s6-wPH" kind="show" id="TnU-yq-9v4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="82h-Un-9eo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2095,10 +2097,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="敬请期待下一版本的来临" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AHH-cb-0p6">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="抢红包活动只在微信公众号里进行，请关注我们的微信公众号" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AHH-cb-0p6">
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.96470588235294119" green="0.0" blue="0.027450980392156862" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -2114,6 +2116,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fzA-wG-Tza" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2802" y="3035"/>
+        </scene>
+        <!--Template View Controller-->
+        <scene sceneID="zWB-Iz-YDZ">
+            <objects>
+                <viewController storyboardIdentifier="templateController" id="fPp-s6-wPH" customClass="TemplateViewController" customModule="yoopoon" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="caJ-V7-3Nd"/>
+                        <viewControllerLayoutGuide type="bottom" id="k7M-6p-AXo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PZh-OB-UWQ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LY4-0V-eTr">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <attributedString key="attributedText"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="k7M-6p-AXo" firstAttribute="top" secondItem="LY4-0V-eTr" secondAttribute="bottom" id="1CJ-0c-s3c"/>
+                            <constraint firstItem="LY4-0V-eTr" firstAttribute="top" secondItem="caJ-V7-3Nd" secondAttribute="bottom" id="Zy7-Xl-L2Y"/>
+                            <constraint firstItem="LY4-0V-eTr" firstAttribute="leading" secondItem="PZh-OB-UWQ" secondAttribute="leading" id="iWw-tM-hHK"/>
+                            <constraint firstAttribute="trailing" secondItem="LY4-0V-eTr" secondAttribute="trailing" id="kUg-Kg-VHU"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="uiTemplateText" destination="LY4-0V-eTr" id="wiq-Hf-v6O"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RNc-dd-C49" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2053" y="3390"/>
         </scene>
         <!--Take Integration View Controller-->
         <scene sceneID="eWO-Wq-Vdf">
@@ -2336,7 +2372,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="RIA-y9-85a">
-                                <rect key="frame" x="0.0" y="182" width="600" height="216"/>
+                                <rect key="frame" x="0.0" y="40" width="600" height="500"/>
                                 <date key="date" timeIntervalSinceReferenceDate="460889601.601026">
                                     <!--2015-08-10 08:53:21 +0000-->
                                 </date>
@@ -2476,16 +2512,16 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uU8-e1-Eld">
-                                <rect key="frame" x="444" y="346" width="146" height="30"/>
+                                <rect key="frame" x="445" y="346" width="145" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="没有账号?点此" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UjK-oI-Qku">
-                                        <rect key="frame" x="0.0" y="0.0" width="112" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="111" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.33333333333333331" green="0.32941176470588235" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="注册" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UnI-ag-wjD">
-                                        <rect key="frame" x="112" y="0.0" width="34" height="30"/>
+                                        <rect key="frame" x="111" y="0.0" width="34" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.93746239973262036" green="0.27854874839849392" blue="0.060122600162901628" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2503,7 +2539,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2wk-Yn-7Ai">
-                                <rect key="frame" x="444" y="346" width="146" height="30"/>
+                                <rect key="frame" x="445" y="346" width="145" height="30"/>
                                 <state key="normal" title="没有帐号？点此注册">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>

@@ -13,16 +13,25 @@
     left:40% ;
 }
 
-.header .item-select select{
-    position: static;
-    background:none;
-    border: none;
-    color: #fff;
-    padding:0;
-    max-width: 100%;
-    height: 100%;
+.header .selectArea{
+    position: absolute;
+	color:#fff;
+	font-size: 16px;
+	top:25%;
+	left: 43%;
 
-
+}
+.header .selectArea:after{
+	content:'';
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #fff;
+	position: absolute;
+	right: -15px;
+	top:40%;
+	
 }
 .header .item-select:after{
     color: #fff;
@@ -54,6 +63,16 @@
     right: 0;
     font-size: 20px;
 }
+.selectBox{
+	height: 300px;
+	position: absolute;
+	top:-1000px;
+	-webkit-transition: all 1s;
+}
+.addselectBox{
+	top:44px;
+}
+
 .bg-yellow{
     padding: 0 ;
     height: 70px;
@@ -397,6 +416,50 @@
     }
    }
 /*动画结束*/
+/*shopping页购物车动画*/
+
+.add{
+    position:absolute;
+    top:0;
+    left:0;
+    opacity:0;
+    -webkit-animation-name: Gwc-two;
+    -webkit-animation-duration: 10s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-delay: 0s;
+
+    z-index:10000;
+
+
+}
+
+@-webkit-keyframes Gwc-two{
+    0%{opacity:1;
+       -webkit-transform:scale(0.5,0.8);
+       /*-webkit-transform:rotate(160deg);*/
+
+
+    }
+    20%{
+        opacity:1;
+        -webkit-transform:scale(0.1,0.3);
+       /* -webkit-transform:rotate(120deg);*/
+    }
+    40%{
+    	opacity:1;
+    	-webkit-transform:scale(0.1,0.3);
+        /*-webkit-transform:rotate(-360deg);*/
+    }
+    100%{
+        opacity:1;
+        /*-webkit-transform:translateX(10%);*/
+        /*-webkit-transform:translateY(500px;);*/
+        /*-webkit-transform:rotate(360deg);*/
+       /* -webkit-transform:scale(0.05,0.1);*/
+        -webkit-transform:rotate(-260deg);
+        top:200%;
+    }
+}
 .buyNew{
     position: absolute;
     top:0;
@@ -404,7 +467,6 @@
     height: 100%;
     background: rgba(0,0,0,0.6);
     z-index: 100000000;
-
 }
 .innerMask{
    background-color: #fff;
@@ -458,3 +520,4 @@
 .nodetail{
     display: none;
 }
+

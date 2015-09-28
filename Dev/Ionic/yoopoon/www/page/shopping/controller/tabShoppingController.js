@@ -59,7 +59,15 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         $scope.showSelect = true;
         $scope.isShow = true;
     };
-
+//  下拉框效果
+	$scope.selectBox=false;
+	$scope.showSelectBox=function(){
+		$scope.selectBox=true;
+	}
+//	关闭下拉框
+	$scope.closeSelectBox=function(){
+		$scope.selectBox=false;
+	}
 
     //region地址获取
     $scope.Condition = {
@@ -87,13 +95,16 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         });
     }
     getAddress();
-
     $scope.SCondition = {
 
         Parent_Id: ''
     };
-    $scope.click = function () {
-        $scope.SCondition.Parent_Id = $scope.selected
+
+    $scope.area="云南省"
+    $scope.click = function (area,id) {
+        $scope.area=area;
+        //$scope.selectBox=false;
+        $scope.SCondition.Parent_Id =id
         $http.get(SETTING.ApiUrl + '/CommunityArea/Get', {
             params: $scope.SCondition,
             'withCredentials': true
@@ -101,6 +112,10 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
             $scope.zilei = data.List;
         })
 
+    }
+    $scope.huan=function(area){
+        $scope.area=area;
+        $scope.selectBox=false;
     }
     //endregion
 
@@ -112,17 +127,41 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         IsRecommend: '1'
         //ProductId:''
     };
+
     var getProductList = function () {
         $http.get(SETTING.ApiUrl + '/CommunityProduct/Get', {
             params: $scope.Condition,
             'withCredentials': true
         }).success(function (data1) {
             $scope.list = data1.List[0];
+            var img=$scope.list.MainImg;
+            var imgfb=document.createElement("img");
+            document.getElementById("father").appendChild(imgfb);
+            imgfb.className="add";
+            imgfb.setAttribute("src","http://img.iyookee.cn/"+img);
         });
-        ;
+
     };
     getProductList();
     $scope.getList = getProductList;
+
+//    增加到购物车动画
+//    var imgfb=document.createElement("img");
+////    var imgfb=img.cloneNode(true);
+//    document.getElementById("father").appendChild(imgfb);
+//    imgfb.className="f-show add";
+//    imgfb.setAttribute("ng-src","http://img.iyookee.cn/"+'$scope.list.MainImg');
+    $scope.AddCart1 = function (list) {
+        $scope.cartinfo.id = $scope.list.Id;
+        $scope.cartinfo.name = $scope.list.Name;
+        $scope.cartinfo.mainimg = $scope.list.MainImg;
+        $scope.cartinfo.price = $scope.list.Price;
+        $scope.cartinfo.oldprice = $scope.list.OldPrice;
+        $scope.cartinfo.count = 1;
+        cartservice.add($scope.cartinfo);
+    };
+
+
 //endregion
 
     //region 商品获取
@@ -206,15 +245,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
 
         cartservice.add($scope.cartinfo);
     }
-    $scope.AddCart1 = function (list) {
-        $scope.cartinfo.id = $scope.list.Id;
-        $scope.cartinfo.name = $scope.list.Name;
-        $scope.cartinfo.mainimg = $scope.list.MainImg;
-        $scope.cartinfo.price = $scope.list.Price;
-        $scope.cartinfo.oldprice = $scope.list.OldPrice;
-        $scope.cartinfo.count = 1;
-        cartservice.add($scope.cartinfo);
-    };
+
     //endregion
 
     //region   立即购买

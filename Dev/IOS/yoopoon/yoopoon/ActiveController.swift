@@ -37,8 +37,10 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
         if self.brandList.count == 0{
             requestADImg()
             requestBrandList()
-            requestActiveAD()
+            //requestActiveAD()
             User.share.autoLogin()
+            
+
         }
     }
     
@@ -61,7 +63,7 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
             .setEncoding(.URL)
             .addParameter("channelName", value: "活动")
             .request({json in
-                var height = (json.count % 3 == 0) ? (json.count / 3) : (json.count / 3 + 1)
+                let height = (json.count % 3 == 0) ? (json.count / 3) : (json.count / 3 + 1)
                 self.activeADView = ActiveADView(frame: CGRectMake(0, 0, self.mTableView!.bounds.width, screenBounds.height * 0.2 * CGFloat(height)))
                 self.activeADView!.json = json
                 
@@ -127,10 +129,12 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
                     
                 }
                 //如果你的这个广告视图是添加到导航控制器子控制器的View上,请添加此句,否则可忽略此句
-                self.automaticallyAdjustsScrollViewInsets = false
+               // self.automaticallyAdjustsScrollViewInsets = false
                 
                 self.adScrollerView = ADView.adScrollViewWithFrame(CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height/5),imageLinkUrl:imagesURL,placeHoderImageName:"placeHoder.jpg" ,pageControlShowStyle:UIPageControlShowStyle.UIPageControlShowStyleCenter)!
-                self.mTableView.reloadData()
+                self.mTableView.tableHeaderView = self.adScrollerView
+                self.adScrollerView!.setUpTime()
+               // self.mTableView.reloadData()
                 
                 },
                 faild: {error in print("\(error!.description)")})
@@ -156,7 +160,7 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
     - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        return self.brandList.count + 2
+        return self.brandList.count
     }
     
     
@@ -170,20 +174,20 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
     */
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         let identify = "tableviewcell"
-        let adIdentity = "adTableviewcell"
-        let activeIdentity = "activeTableViewCell"
-        if indexPath.row == 0{
-            var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(adIdentity) as? UITableViewCell
+       // let adIdentity = "adTableviewcell"
+       // let activeIdentity = "activeTableViewCell"
+        /*if indexPath.row == 100000{
+            var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(adIdentity) as UITableViewCell?
             if cell == nil{
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: adIdentity)
                 cell!.selectionStyle = UITableViewCellSelectionStyle.None
             }
             if self.adScrollerView != nil{
-                cell!.contentView.addSubview(adScrollerView!)
+               // cell!.contentView.addSubview(adScrollerView!)
             }
             return cell!
-        }else if indexPath.row == 1{
-            var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(activeIdentity) as? UITableViewCell
+        }else if indexPath.row == 0{
+            var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(activeIdentity) as UITableViewCell?
             if cell == nil{
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: adIdentity)
                 cell!.selectionStyle = UITableViewCellSelectionStyle.None
@@ -193,7 +197,7 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
             }
             return cell!
         }
-        else {
+        else {*/
         var cell: ActiveTableCell? = tableView.dequeueReusableCellWithIdentifier(identify) as? ActiveTableCell
         
         if cell == nil { // no value
@@ -202,10 +206,10 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
             cell!.selectionStyle = UITableViewCellSelectionStyle.None
             
         }
-        cell!.initLayout(brandList[indexPath.row-2])
+        cell!.initLayout(brandList[indexPath.row])
         
         return cell!
-    }
+   // }
     
     }
     
@@ -218,11 +222,11 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
     - returns: <#return value description#>
     */
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
-        if indexPath.row == 0{
+        /*if indexPath.row == 1000000{
             return UIScreen.mainScreen().bounds.height/5
-        }else if indexPath.row == 1{
-            return activeADView?.bounds.height ?? 0//UIScreen.mainScreen().bounds.height/3
-        }
+        }else *///if indexPath.row == 0{
+            //return activeADView?.bounds.height ?? 0//UIScreen.mainScreen().bounds.height/3
+        //}
         //729:390
         let height = screenBounds.width/(729/390)
         
@@ -231,9 +235,9 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
     
     // Called after the user changes the selection.
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        if indexPath.row > 1{
+        //if indexPath.row > 0{
         self.performSegueWithIdentifier("brandDetail", sender: self)
-        }
+       // }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -249,8 +253,8 @@ class ActiveController: UIViewController,UITableViewDataSource,UITableViewDelega
     
     private func dealWithBrandDetailSegue(segue: UIStoryboardSegue){
         let controller = segue.destinationViewController as! BrandDetialController
-        controller.brandId = String(self.brandList[self.mTableView.indexPathForSelectedRow!.row-2].id)
-        controller.brandEntity = self.brandList[self.mTableView.indexPathForSelectedRow!.row-2]
+        controller.brandId = String(self.brandList[self.mTableView.indexPathForSelectedRow!.row].id)
+        controller.brandEntity = self.brandList[self.mTableView.indexPathForSelectedRow!.row]
     }
     
 
