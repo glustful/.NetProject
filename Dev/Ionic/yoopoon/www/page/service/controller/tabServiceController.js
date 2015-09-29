@@ -216,6 +216,7 @@ app.controller('clearservice',['$http','$scope','$stateParams',function($http,$s
     $scope.selectService = function(sel) {
 		$scope.selected =sel;
 		$("#li"+sel).attr("class","distance border-css");
+//		$("#li"+sel:even).attr("class","distance border-css specialStyle");
 
 	for(i=0;i<	$scope.items.length;i++)
 	{
