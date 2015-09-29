@@ -151,70 +151,80 @@ app.controller('clearservice',['$http','$scope','$stateParams',function($http,$s
 	{
 		$scope.go("page.service");
 	}
-	$scope.Address={
-		AreaName:$stateParams.name,
-		AreaId: $stateParams.id,
-		Address:'',
-		Zip :'',
-		Linkman :'',
-		Tel:''
+
+
+
+	$scope.loadmore=true;
+	$scope.Name=$stateParams.name;
+	$scope.items = [];
+	$scope.searchCondition = {
+
+		CategoryName:$stateParams.name,
+		IsDescending: true,
+		OrderBy: 'OrderByAddtime',
+		Page: 1,
+		PageCount: 10
+		//ProductId:''
 	};
 
-	$scope.saves = function () {
+	var getList = function () {
+		$http.get(SETTING.ApiUrl + '/CommunityProduct/Get', {
+			params: $scope.searchCondition,
+			'withCredentials': true
+		}).success(function (data) {
+			if (data.List != "") {
+				$scope.items = data.List;
 
-		$http.post(SETTING.ApiUrl + '/MemberAddress/Post', $scope.Address, {'withCredentials': true})
-			.success(function (data) {
-				if (data.Status) {
 
-					$state.go("page.addressAdm");
+				if(((($scope.searchCondition.Page-1)*$scope.searchCondition.PageCount )+data.List.length)==data.TotalCount)
+				{
+					$scope.loadmore=false;
 				}
+			}
+		});
+	};
+	getList();
+//endregion
+	//region 商品加载
+
+	$scope.load_more = function () {
+		$timeout(function () {
+			$scope.searchCondition.Page += 1;
+			$http.get(SETTING.ApiUrl + '/CommunityProduct/Get', {
+				params: $scope.searchCondition,
+				'withCredentials': true
+			}).success(function (data) {
+
+				if (data.List != "") {
+					for (var i = 0; i < data.List.length; i++) {
+						$scope.items.push(data.List[i]);
+					}
+					if($scope.items.length==data.TotalCount)
+					{
+						$scope.loadmore=false;
+					}
+				}
+				$scope.$broadcast("scroll.infiniteScrollComplete");
 			});
+		}, 1000)
+	};
+
+
+	$scope.selected = "";
+    //    选择清洗服务
+
+    $scope.selectService = function(sel) {
+		$scope.selected =sel;
+		$("#li"+sel).attr("class","distance border-css");
+
+	for(i=0;i<	$scope.items.length;i++)
+	{
+		if($scope.items[i].Id!=sel)
+		{
+			$("#li"+$scope.items[i].Id).attr("class","distance");
+		}
 	}
 
-    //    选择清洗服务
-    $scope.selected1 = false;
-    $scope.selected2 = false;
-    $scope.selected3 = false;
-    $scope.selected4 = false;
-    $scope.selected5 = false;
-    $scope.selectService = function(sel) {
-        switch (sel) {
-            case 1:
-                if ($scope.selected1 == false) {
-                    $scope.selected1 = true;
-                    return;
-                }
-                $scope.selected1 = false;
-                break;
-            case 2:
-                if ($scope.selected2 == false) {
-                    $scope.selected2 = true;
-                    return;
-                }
-                $scope.selected2 = false;
-                break;
-            case 3:
-                if ($scope.selected3 == false) {
-                    $scope.selected3 = true;
-                    return;
-                }
-                $scope.selected3 = false;
-                break;
-            case 4:
-                if ($scope.selected4 == false) {
-                    $scope.selected4 = true;
-                    return;
-                }
-                $scope.selected4 = false;
-                break;
-            case 5:
-                if ($scope.selected5 == false) {
-                    $scope.selected5 = true;
-                    return;
-                }
-                $scope.selected5 = false;
-                break;
-        }
     }
 
 }]);
