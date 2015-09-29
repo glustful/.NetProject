@@ -78,7 +78,7 @@
                 android:drawableLeft="@drawable/u"
                 android:drawablePadding="5dp"
                 android:text="关于U+" />
-        </LinearLayout>
+        </LinearLayout> 
     </ScrollView>
     
     <include 

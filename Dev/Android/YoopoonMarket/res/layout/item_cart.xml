@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/white_bg"
     android:gravity="center_vertical"
-    android:padding="5dp" >
+    android:padding="5dp" 
+    android:id="@+id/rl_parent">
 
     <RelativeLayout
         android:id="@+id/rl"
