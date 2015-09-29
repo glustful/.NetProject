@@ -174,6 +174,8 @@ app.controller('clearservice',['$http','$scope','$stateParams',function($http,$s
 		}).success(function (data) {
 			if (data.List != "") {
 				$scope.items = data.List;
+
+
 				if(((($scope.searchCondition.Page-1)*$scope.searchCondition.PageCount )+data.List.length)==data.TotalCount)
 				{
 					$scope.loadmore=false;
@@ -208,51 +210,21 @@ app.controller('clearservice',['$http','$scope','$stateParams',function($http,$s
 	};
 
 
-
+	$scope.selected = "";
     //    选择清洗服务
-    $scope.selected1 = false;
-    $scope.selected2 = false;
-    $scope.selected3 = false;
-    $scope.selected4 = false;
-    $scope.selected5 = false;
+
     $scope.selectService = function(sel) {
-        switch (sel) {
-            case 1:
-                if ($scope.selected1 == false) {
-                    $scope.selected1 = true;
-                    return;
-                }
-                $scope.selected1 = false;
-                break;
-            case 2:
-                if ($scope.selected2 == false) {
-                    $scope.selected2 = true;
-                    return;
-                }
-                $scope.selected2 = false;
-                break;
-            case 3:
-                if ($scope.selected3 == false) {
-                    $scope.selected3 = true;
-                    return;
-                }
-                $scope.selected3 = false;
-                break;
-            case 4:
-                if ($scope.selected4 == false) {
-                    $scope.selected4 = true;
-                    return;
-                }
-                $scope.selected4 = false;
-                break;
-            case 5:
-                if ($scope.selected5 == false) {
-                    $scope.selected5 = true;
-                    return;
-                }
-                $scope.selected5 = false;
-                break;
-        }
+		$scope.selected =sel;
+		$("#li"+sel).attr("class","distance border-css");
+
+	for(i=0;i<	$scope.items.length;i++)
+	{
+		if($scope.items[i].Id!=sel)
+		{
+			$("#li"+$scope.items[i].Id).attr("class","distance");
+		}
+	}
+
     }
 
 }]);

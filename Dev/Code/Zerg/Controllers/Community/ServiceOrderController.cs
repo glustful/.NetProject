@@ -44,7 +44,7 @@ namespace Zerg.Controllers.Community
                 return null;
             if (!currentUser.UserRoles.ToList()
     .Exists(c => c.Role.RoleName == "superAdmin" || c.Role.RoleName == "admin") )
-   // .Exists(c => c.Role.RoleName == "superAdmin" || c.Role.RoleName == "admin") && ProductEntity.AddUser != currentUser.Id)
+  //  .Exists(c => c.Role.RoleName == "superAdmin" || c.Role.RoleName == "admin" )&& c.AddUser != currentUser.Id)
                 return null;
             var model = new ServiceOrderModel
             {
