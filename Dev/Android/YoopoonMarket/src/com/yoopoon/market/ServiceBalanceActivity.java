@@ -124,8 +124,10 @@ public class ServiceBalanceActivity extends MainActionBarActivity {
 							bundle.putFloat("Price", price);
 							bundle.putString("No", No);
 							bundle.putString("Msg", msg);
-
-							PayDemoActivity_.intent(ServiceBalanceActivity.this).orderBundle(bundle).start();
+							// 订单确认成功，跳转至支付界面，关闭自己
+							PayDemoActivity_.intent(ServiceBalanceActivity.this).orderBundle(bundle).isService(true)
+									.start();
+							finish();
 						}
 					}
 				} else {

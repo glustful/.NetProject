@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,7 +64,7 @@ public class ServiceOrder3 extends Fragment {
 		tv_empty = (TextView) rootView.findViewById(R.id.tv_empty);
 		tv_empty.setVisibility(services.size() > 0 ? View.GONE : View.VISIBLE);
 		lv = (PullToRefreshListView) rootView.findViewById(R.id.lv);
-		lv.setAdapter(new MyListViewAdapter());
+		lv.setAdapter(adapter);
 
 		lv.setMode(Mode.PULL_FROM_END);
 		lv.setOnRefreshListener(new HowWillIrefresh());
@@ -75,11 +76,13 @@ public class ServiceOrder3 extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		Log.i(TAG, "onResume()");
 		page = 1;
 		requestData();
 	}
 
 	void requestData() {
+		Log.i(TAG, "requestData()");
 		if (!User.isLogin(getActivity())) {
 			LoginActivity_.intent(getActivity()).start();
 			return;
@@ -93,6 +96,7 @@ public class ServiceOrder3 extends Fragment {
 				if (object != null) {
 					lv.onRefreshComplete();
 					JSONArray array = object.optJSONArray("List");
+
 					if (array != null) {
 						if (array.length() == 0 && page > 1)
 							Toast.makeText(getActivity(), "已经没有更多数据啦", Toast.LENGTH_SHORT).show();
@@ -108,7 +112,7 @@ public class ServiceOrder3 extends Fragment {
 
 			}
 		}.setUrl(getString(R.string.url_serviceorder_get)).setRequestMethod(RequestMethod.eGet)
-				.addParam("userid", userId).addParam("status", "1").addParam("page", String.valueOf(page))
+				.addParam("userid", userId).addParam("status", "3").addParam("page", String.valueOf(page))
 				.addParam("pagecount", String.valueOf(pageCount)).notifyRequest();
 	}
 

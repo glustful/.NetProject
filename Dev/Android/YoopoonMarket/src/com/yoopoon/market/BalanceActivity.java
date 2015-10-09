@@ -175,8 +175,10 @@ public class BalanceActivity extends MainActionBarActivity {
 							staffId[i] = staffList.get(i).id;
 						}
 						bundle.putIntArray("StaffIds", staffId);
-
-						PayDemoActivity_.intent(BalanceActivity.this).orderBundle(bundle).start();
+						// 打开支付界面
+						PayDemoActivity_.intent(BalanceActivity.this).orderBundle(bundle).isService(false).start();
+						// 订单已确认成功，关闭自己
+						finish();
 					}
 				} else {
 					Toast.makeText(BalanceActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();

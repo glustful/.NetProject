@@ -109,7 +109,7 @@ public class ServiceOrder2 extends Fragment {
 
 			}
 		}.setUrl(getString(R.string.url_serviceorder_get)).setRequestMethod(RequestMethod.eGet)
-				.addParam("userid", userId).addParam("status", "1").addParam("page", String.valueOf(page))
+				.addParam("userid", userId).addParam("status", "2").addParam("page", String.valueOf(page))
 				.addParam("pagecount", String.valueOf(pageCount)).notifyRequest();
 	}
 

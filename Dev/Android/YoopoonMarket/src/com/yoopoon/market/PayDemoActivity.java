@@ -10,6 +10,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,6 +28,8 @@ import com.yoopoon.market.db.dao.DBDao;
 public class PayDemoActivity extends MainActionBarActivity {
 	@Extra
 	Bundle orderBundle;
+	@Extra
+	boolean isService;
 
 	@ViewById(R.id.product_subject)
 	TextView tv_name;
@@ -133,10 +136,12 @@ public class PayDemoActivity extends MainActionBarActivity {
 
 	@AfterViews
 	void initUI() {
-		backButton.setVisibility(View.VISIBLE);
+		backWhiteButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		rightButton.setVisibility(View.GONE);
-		titleButton.setText("支付宝");
+		titleButton.setText("支付");
+		titleButton.setTextColor(Color.WHITE);
+		headView.setBackgroundColor(Color.RED);
 
 		String price = orderBundle.getFloat("Price") + "";
 		tv_price.setText(price);
@@ -314,6 +319,10 @@ public class PayDemoActivity extends MainActionBarActivity {
 
 	@Override
 	public void backButtonClick(View v) {
+		// 订单已经确认成功，点击返回说明没有成功付款，应跳到未付款界面
+		if (!isService)
+			MeOrderActivity_.intent(this).item(0).start();
+		// 关闭自己
 		finish();
 	}
 

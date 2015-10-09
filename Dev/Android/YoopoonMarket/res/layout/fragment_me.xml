@@ -43,7 +43,8 @@
                     android:layout_toRightOf="@id/imageView1"
                     android:paddingBottom="40dp"
                     android:textStyle="bold|italic"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/white" />
             </RelativeLayout>
 
             <include

@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -59,6 +60,7 @@ import com.yoopoon.market.utils.ParserJSON.ParseListener;
  * @date: 2015-9-7 下午4:50:59
  */
 public class MeFragment extends Fragment implements OnClickListener {
+	private static final String TAG = "MeFragment";
 	View rootView;
 	Button btn_order;
 	Button btn_service;
@@ -227,7 +229,10 @@ public class MeFragment extends Fragment implements OnClickListener {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					int count = object.optInt("TotalCount");
+					Log.i(TAG, object.toString());
+					// int count = object.optInt("TotalCount");
+					// serviceStatus.get(0).setText(count + "");
+					int count = object.optJSONArray("List").length();
 					serviceStatus.get(0).setText(count + "");
 					serviceStatus.get(0).setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 				}
@@ -247,7 +252,9 @@ public class MeFragment extends Fragment implements OnClickListener {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					int count = object.optInt("TotalCount");
+					Log.i(TAG, object.toString());
+					// int count = object.optInt("TotalCount");
+					int count = object.optJSONArray("List").length();
 					serviceStatus.get(1).setText(count + "");
 					serviceStatus.get(1).setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 				}
@@ -267,7 +274,9 @@ public class MeFragment extends Fragment implements OnClickListener {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					int count = object.optInt("TotalCount");
+					Log.i(TAG, object.toString());
+					// int count = object.optInt("TotalCount");
+					int count = object.optJSONArray("List").length();
 					serviceStatus.get(2).setText(count + "");
 					serviceStatus.get(2).setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 				}
@@ -320,6 +329,7 @@ public class MeFragment extends Fragment implements OnClickListener {
 		btn_address.setOnClickListener(this);
 		btn_about.setOnClickListener(this);
 		btn_order.setOnClickListener(this);
+		btn_service.setOnClickListener(this);
 
 		TextView tv_name = (TextView) rootView.findViewById(R.id.tv_name);
 		tv_name.setText(User.getUserName(getActivity()));

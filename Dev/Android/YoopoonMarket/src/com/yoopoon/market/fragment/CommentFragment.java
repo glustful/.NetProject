@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,11 +68,13 @@ public class CommentFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		Log.i(TAG, "onResume");
 		page = 1;
 		requestData();
 	}
 
 	void requestData() {
+		Log.i(TAG, "requestData");
 		if (!User.isLogin(getActivity())) {
 			LoginActivity_.intent(getActivity()).start();
 			return;

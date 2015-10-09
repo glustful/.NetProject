@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,6 +92,7 @@ public class ServiceOrder1 extends Fragment {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
+					Log.i(TAG, object.toString());
 					lv.onRefreshComplete();
 					JSONArray array = object.optJSONArray("List");
 					if (array != null) {
