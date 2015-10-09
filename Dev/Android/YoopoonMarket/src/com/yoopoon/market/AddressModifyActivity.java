@@ -30,6 +30,7 @@ import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.utils.RegxUtils;
 import com.yoopoon.market.utils.SerializerJSON;
 import com.yoopoon.market.utils.SerializerJSON.SerializeListener;
+import com.yoopoon.market.utils.StringUtils;
 
 @EActivity(R.layout.activity_modify_address)
 public class AddressModifyActivity extends MainActionBarActivity {
@@ -111,7 +112,6 @@ public class AddressModifyActivity extends MainActionBarActivity {
 
 			@Override
 			public void onComplete(String serializeResult) {
-				Log.i(TAG, serializeResult);
 				requestModify(serializeResult);
 			}
 		}).execute();
@@ -121,7 +121,6 @@ public class AddressModifyActivity extends MainActionBarActivity {
 	@SuppressLint("InflateParams")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.i(TAG, "onCreate");
 		if (savedInstanceState != null) {
 			addressEntity = (MemberAddressEntity) savedInstanceState.get("addressEntity");
 		}
@@ -188,6 +187,8 @@ public class AddressModifyActivity extends MainActionBarActivity {
 		} else if ("true".equals(isDefault)) {
 			cb_isdefault.setChecked(true);
 		}
+		Log.i(TAG, addressEntity.AreaId + "");
+		requestArea("123");
 	}
 
 	void requestModify(String json) {
@@ -211,6 +212,37 @@ public class AddressModifyActivity extends MainActionBarActivity {
 
 			}
 		}.setUrl(getString(R.string.url_modify_address)).setRequestMethod(RequestMethod.ePut).SetJSON(json)
+				.notifyRequest();
+	}
+
+	void requestArea(String areaId) {
+		new RequestAdapter() {
+
+			@Override
+			public void onReponse(ResponseData data) {
+				JSONObject object = data.getMRootData();
+				if (object != null) {
+					String parentName = object.optString("ParentName", "");
+					String name = object.optString("Name", "");
+					StringBuilder sb = new StringBuilder();
+					if (!StringUtils.isEmpty(parentName))
+						sb.append(parentName + " ");
+					if (!StringUtils.isEmpty(name))
+						sb.append(name);
+					if (!TextUtils.isEmpty(sb.toString()))
+						tv_select.setText(sb.toString());
+
+				} else {
+					Toast.makeText(AddressModifyActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
+				}
+			}
+
+			@Override
+			public void onProgress(ProgressMessage msg) {
+				// TODO Auto-generated method stub
+
+			}
+		}.setUrl(getString(R.string.url_area_get)).setRequestMethod(RequestMethod.eGet).addParam("id", areaId)
 				.notifyRequest();
 	}
 

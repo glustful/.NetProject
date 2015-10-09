@@ -16,18 +16,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -63,6 +62,11 @@ public class AddressManageActivity extends MainActionBarActivity {
 	PullToRefreshListView lv;
 	@ViewById(R.id.ll_loading)
 	View ll_loading;
+
+	@Click(R.id.btn_add)
+	void newAddress() {
+		NewAddressActivity_.intent(AddressManageActivity.this).start();
+	}
 	List<MemberAddressEntity> addressList = new ArrayList<MemberAddressEntity>();
 	MyListViewAdapter adapter;
 
@@ -88,38 +92,23 @@ public class AddressManageActivity extends MainActionBarActivity {
 	class MyListViewAdapter extends BaseAdapter {
 		@Override
 		public int getCount() {
-			return addressList.size() + 1;
+			return addressList.size();
 		}
+
 		@Override
 		public Object getItem(int position) {
 			// TODO Auto-generated method stub
 			return null;
 		}
+
 		@Override
 		public long getItemId(int position) {
 			// TODO Auto-generated method stub
 			return 0;
 		}
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			if (position == addressList.size()) {
-				TextView tv = new TextView(AddressManageActivity.this);
-				tv.setPadding(20, 20, 20, 20);
-				tv.setGravity(Gravity.CENTER_VERTICAL);
-				tv.setText("+新增收货地址");
-				tv.setTextColor(Color.GRAY);
-				Drawable drawableRight = getResources().getDrawable(R.drawable.right_next_icon);
-				drawableRight.setBounds(0, 0, drawableRight.getMinimumWidth(), drawableRight.getMinimumHeight());
-				tv.setCompoundDrawables(null, null, drawableRight, null);
-				tv.setBackgroundResource(R.drawable.white_bg);
-				tv.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						NewAddressActivity_.intent(AddressManageActivity.this).start();
-					}
-				});
-				return tv;
-			}
 			final MemberAddressEntity entity = addressList.get(position);
 			if (convertView == null || !(convertView instanceof LinearLayout))
 				convertView = View.inflate(AddressManageActivity.this, R.layout.item_address, null);
@@ -166,6 +155,7 @@ public class AddressManageActivity extends MainActionBarActivity {
 		builder.setSpan(blackSpan, 4, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 		textView.setText(builder);
 	}
+
 	void requestData() {
 		ll_loading.setVisibility(View.VISIBLE);
 		String userId = User.getUserId(AddressManageActivity.this);
@@ -178,7 +168,6 @@ public class AddressManageActivity extends MainActionBarActivity {
 					JSONObject object = data.getMRootData();
 					if (object != null) {
 						addressList.clear();
-						Log.i(TAG, object.toString());
 						JSONArray array = object.optJSONArray("List");
 						parseToEntityList(array);
 					} else {
@@ -186,6 +175,7 @@ public class AddressManageActivity extends MainActionBarActivity {
 						Toast.makeText(AddressManageActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 					}
 				}
+
 				@Override
 				public void onProgress(ProgressMessage msg) {
 					// TODO Auto-generated method stub
@@ -194,8 +184,10 @@ public class AddressManageActivity extends MainActionBarActivity {
 					.addParam("userid", userId).notifyRequest();
 		}
 	}
+
 	void parseToEntityList(final JSONArray array) {
 		new ParserJSON(new ParseListener() {
+
 			@Override
 			public Object onParse() {
 				ObjectMapper om = new ObjectMapper();
@@ -219,6 +211,7 @@ public class AddressManageActivity extends MainActionBarActivity {
 				}
 				return addressList;
 			}
+
 			@Override
 			public void onComplete(Object parseResult) {
 				if (parseResult != null) {
@@ -228,6 +221,7 @@ public class AddressManageActivity extends MainActionBarActivity {
 			}
 		}).execute();
 	}
+
 	void fillData() {
 		ll_loading.setVisibility(View.GONE);
 		if (adapter == null) {
@@ -237,11 +231,11 @@ public class AddressManageActivity extends MainActionBarActivity {
 			adapter.notifyDataSetChanged();
 		}
 	}
+
 	public void delete(final MemberAddressEntity entity) {
 		new RequestAdapter() {
 			@Override
 			public void onReponse(ResponseData data) {
-				Log.i(TAG, data.toString());
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					boolean status = object.optBoolean("Status");
@@ -250,6 +244,7 @@ public class AddressManageActivity extends MainActionBarActivity {
 				}
 				Toast.makeText(AddressManageActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
@@ -257,23 +252,28 @@ public class AddressManageActivity extends MainActionBarActivity {
 		}.setUrl(getString(R.string.url_delete_address)).setRequestMethod(RequestMethod.eDelete)
 				.addParam("id", entity.Id + "").notifyRequest();
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		requestData();
 	}
+
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		return true;
