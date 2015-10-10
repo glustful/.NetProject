@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Linq;
 using System.Net.Http;
 using System.Transactions;
@@ -35,9 +35,9 @@ namespace Zerg.Controllers.Community
             _orderDetailService = orderDetailService;
 		}
         /// <summary>
-        /// ¸ù¾İÆÀÂÛID»ñÈ¡¸ÃÆÀÂÛ
+        /// æ ¹æ®è¯„è®ºIDè·å–è¯¥è¯„è®º
         /// </summary>
-        /// <param name="id">ÆÀÂÛID</param>
+        /// <param name="id">è¯„è®ºID</param>
         /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage Get(int id)
@@ -56,7 +56,7 @@ namespace Zerg.Controllers.Community
 		}
 
         /// <summary>
-        /// Ìõ¼ş²éÑ¯
+        /// æ¡ä»¶æŸ¥è¯¢
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
@@ -83,17 +83,17 @@ namespace Zerg.Controllers.Community
 
 
         /// <summary>
-        /// Ìí¼ÓÆÀÂÛ
+        /// æ·»åŠ è¯„è®º
         /// </summary>
-        /// <param name="model">ÆÀÂÛÊµÌå</param>
+        /// <param name="model">è¯„è®ºå®ä½“</param>
         /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage Post(ProductCommentModel model)
         {
             var detail = _orderDetailService.GetOrderDetailById(model.ProductDetailsId);
             if (detail == null)
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "ÎŞ·¨ÕÒµ½ÆÀ¼ÛÉÌÆ·ËùÔÚ¶©µ¥"));
-            detail.Status = EnumOrderDetailStatus.ÒÑÆÀ¼Û;
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "æ— æ³•æ‰¾åˆ°è¯„ä»·å•†å“æ‰€åœ¨è®¢å•"));
+            detail.Status = EnumOrderDetailStatus.å·²è¯„ä»·;
 
 			var entity = new ProductCommentEntity
 			{
@@ -109,49 +109,49 @@ namespace Zerg.Controllers.Community
                 if (_productCommentService.Create(entity).Id > 0 && _orderDetailService.Update(detail).Id > 0)
                 {
                     tran.Complete();
-                    return PageHelper.toJson(PageHelper.ReturnValue(true, "Ìí¼Ó³É¹¦£¡"));
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "æ·»åŠ æˆåŠŸï¼"));
                 }
             }
 
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "Ìí¼ÓÊ§°Ü£¡"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "æ·»åŠ å¤±è´¥ï¼"));
 		}
 
 
         /// <summary>
-        /// ĞŞ¸ÄÆÀÂÛ
+        /// ä¿®æ”¹è¯„è®º
         /// </summary>
-        /// <param name="model">ÆÀÂÛÊµÌå</param>
+        /// <param name="model">è¯„è®ºå®ä½“</param>
         /// <returns>Bool</returns>
         public HttpResponseMessage Put(ProductCommentModel model)
 		{
 			var entity = _productCommentService.GetProductCommentById(model.Id);
 			if(entity == null)
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "Ã»ÓĞ¸ÃÆÀÂÛ£¡"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "æ²¡æœ‰è¯¥è¯„è®ºï¼"));
 			entity.Product = _productService.GetProductById(model.Id);
 			//entity.AddUser = model.AddUser;
 			entity.AddTime = model.AddTime;
 			entity.Content = model.Content;
 			entity.Stars = model.Stars;
 			if(_productCommentService.Update(entity) != null)
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "ĞŞ¸Ä³É¹¦£¡"));
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "ĞŞ¸ÄÊ§°Ü£¡"));
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "ä¿®æ”¹æˆåŠŸï¼"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "ä¿®æ”¹å¤±è´¥ï¼"));
 		}
 
 
         /// <summary>
-        /// É¾³ıÆÀÂÛ
+        /// åˆ é™¤è¯„è®º
         /// </summary>
-        /// <param name="id">ÆÀÂÛID</param>
+        /// <param name="id">è¯„è®ºID</param>
         /// <returns></returns>
         
         public HttpResponseMessage Delete(int id)
 		{
 			var entity = _productCommentService.GetProductCommentById(id);
 			if(entity == null)
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "Ã»ÓĞ¸ÃÆÀÂÛ£¡"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "æ²¡æœ‰è¯¥è¯„è®ºï¼"));
 			if(_productCommentService.Delete(entity))
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "É¾³ı³É¹¦£¡"));
-            return PageHelper.toJson(PageHelper.ReturnValue(true, "É¾³ıÊ§°Ü£¡"));
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "åˆ é™¤æˆåŠŸï¼"));
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "åˆ é™¤å¤±è´¥ï¼"));
 		}
 	}
 }
