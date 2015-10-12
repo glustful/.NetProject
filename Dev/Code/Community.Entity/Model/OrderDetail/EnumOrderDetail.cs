@@ -1,8 +1,8 @@
-namespace Community.Entity.Model.Order
+ï»¿namespace Community.Entity.Model.Order
 {
     public enum EnumOrderDetailStatus
     {
-        Î´ÆÀ¼Û=0,
-        ÒÑÆÀ¼Û=1
+        æœªè¯„ä»·=0,
+        å·²è¯„ä»·=1
     }
 }

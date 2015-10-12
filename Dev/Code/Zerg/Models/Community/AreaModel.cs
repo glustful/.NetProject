@@ -38,6 +38,7 @@ namespace Zerg.Models.Community
         /// </summary>
         public AreaModel Parent { get; set; }
 
+
         /// <summary>
         /// 父级名称
         /// </summary>

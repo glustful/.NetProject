@@ -145,7 +145,7 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 
 });
 
-app.controller('clearservice',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
+app.controller('clearservice',['$http','$scope', '$state','$stateParams',function($http,$scope, $state,$stateParams){
 // money
 	if( $stateParams.name==undefined ||  $stateParams.name=="" )
 	{
@@ -228,6 +228,16 @@ app.controller('clearservice',['$http','$scope','$stateParams',function($http,$s
 
     }
 
+	$scope.buysome=function(){
+if($scope.selected!=undefined && $scope.selected!="") {
+	$http.get(SETTING.ApiUrl + '/CommunityProduct/Get?id=' + $scope.selected, {
+		'withCredentials': true
+	}).success(function (data) {
+		$scope.itema = data.ProductModel;
+		$state.go("page.order", {productcount: $scope.itema, pricecount: $scope.itema.Price})
+	});
+}
+	}
 }]);
 
 app.controller('safeservice',['$http','$scope','$stateParams',function($http,$scope,$stateParams){
