@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import UIKit
 
 class RequestAdapter:NSObject, NSURLConnectionDataDelegate{
     //私有变量
@@ -69,7 +70,7 @@ class RequestAdapter:NSObject, NSURLConnectionDataDelegate{
         if self.isShowIndicator{
         self.showDicator()
         }
-        var request:Request = Alamofire.request(method, URLString, parameters: parameters, encoding: encoding)
+        let request:Request = Alamofire.request(method, URLString, parameters: parameters, encoding: encoding)
         if cookie != nil && !isSave{
           
            request.session.configuration.HTTPAdditionalHeaders!.updateValue(self.cookie!, forKey: "Cookie")
@@ -77,6 +78,26 @@ class RequestAdapter:NSObject, NSURLConnectionDataDelegate{
         }else{
            request.session.configuration.HTTPAdditionalHeaders!.updateValue("", forKey: "Cookie")
         }
+        request.responseJSON{
+            response in
+            if self.isShowIndicator{
+                self.dimisionDicator()
+            }
+            let cookies: String? = response.response?.allHeaderFields["Set-Cookie"] as? String
+            if (self.isSave && cookies != nil){
+                
+                NSUserDefaults().setValue(cookies, forKey: "cookie")
+            }
+            if response.result.error != nil{
+                faild(error: response.result.error)
+            }else{
+                let array = JSON(data: response.data!)
+               
+                finish(json: array)
+            }
+
+        }
+        /*
         request.responseJSON{
             (request,response,json,error) in
             
@@ -95,7 +116,7 @@ class RequestAdapter:NSObject, NSURLConnectionDataDelegate{
                 finish(json: array)
             }
             
-        }
+        }*/
     }
     
     private func showDicator(){
@@ -118,21 +139,21 @@ class RequestAdapter:NSObject, NSURLConnectionDataDelegate{
     func uploadHeadImg(image: UIImage,callBack: (sucess: Bool,result: NSData?)->()){
         uploadHeadPhotoCallback = callBack
         
-        var formBoundary = "----WebKitFormBoundaryUn6BaRHhVPJWBScv"
-        var request = NSMutableURLRequest(URL: NSURL(string: apiHost + urlRecourceUpload)!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 10)
-        var startBoundary = "--" + formBoundary
-        var endBoundary = startBoundary + "--"
-        var data:NSData = UIImageJPEGRepresentation(image,1)
-        var body = NSMutableString()
+        let formBoundary = "----WebKitFormBoundaryUn6BaRHhVPJWBScv"
+        let request = NSMutableURLRequest(URL: NSURL(string: apiHost + urlRecourceUpload)!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 10)
+        let startBoundary = "--" + formBoundary
+        let endBoundary = startBoundary + "--"
+        let data:NSData = UIImageJPEGRepresentation(image,1)!
+        let body = NSMutableString()
         body.appendFormat(startBoundary + "\r\n")
         body.appendFormat("Content-Disposition: form-data; name=\"fileToUpload\"; filename=\"headPhoto.jpg\"\r\n")
         body.appendFormat("Content-Type: image/png\r\n\r\n")
-        var requestData = NSMutableData()
+        let requestData = NSMutableData()
         requestData.appendData(body.dataUsingEncoding(NSUTF8StringEncoding)!)
         requestData.appendData(data)
-        var end = "\r\n\(endBoundary)"
+        let end = "\r\n\(endBoundary)"
         requestData.appendData(end.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!)
-        var content = "multipart/form-data; boundary=\(formBoundary)"
+        let content = "multipart/form-data; boundary=\(formBoundary)"
         request.setValue(content, forHTTPHeaderField: "Content-Type")
         request.setValue("\(requestData.length)", forHTTPHeaderField: "Content-Length")
         
@@ -140,7 +161,7 @@ class RequestAdapter:NSObject, NSURLConnectionDataDelegate{
         request.HTTPBody = requestData
         request.HTTPMethod = "POST"
        
-        var conn = NSURLConnection(request: request, delegate: self)
+        _ = NSURLConnection(request: request, delegate: self)
         
     }
     
@@ -154,7 +175,7 @@ class RequestAdapter:NSObject, NSURLConnectionDataDelegate{
         request.HTTPBody = "\(id)".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         request.HTTPMethod = "POST"
         
-        var conn = NSURLConnection(request: request, delegate: self)
+        _ = NSURLConnection(request: request, delegate: self)
         
     }
 

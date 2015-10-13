@@ -10,7 +10,7 @@ import Foundation
 class JSONTools{
     class func optStringFromOption(source:String?)->String{
         if let result = source{
-            return source!
+            return result
         }else{
             return ""
         }

@@ -30,6 +30,7 @@ struct ControllerIdentifier {
     static let takeIntegrationIdentifier = "takeIntegrationController"
     static let loginIdentifier = "loginController"
     static let brandDetailIdentifier = "brandDetailController"
+    static let templateIdentifier = "templateController"
 }
 
 struct SMSType {

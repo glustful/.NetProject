@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-private var ImageLoaderURLKey: UInt = 0
-private var ImageLoaderBlockKey: UInt = 0
+private var ImageLoaderURLKey = 0
+private var ImageLoaderBlockKey = 0
 
 /**
     Extension using ImageLoader sends a request, receives image and displays.
@@ -24,7 +24,7 @@ extension UIImageView {
             return objc_getAssociatedObject(self, &ImageLoaderURLKey) as? NSURL
         }
         set(newValue) {
-            objc_setAssociatedObject(self, &ImageLoaderURLKey, newValue, UInt(objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &ImageLoaderURLKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 
@@ -33,31 +33,20 @@ extension UIImageView {
             return objc_getAssociatedObject(self, &ImageLoaderBlockKey)
         }
         set(newValue) {
-            objc_setAssociatedObject(self, &ImageLoaderBlockKey, newValue, UInt(objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &ImageLoaderBlockKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 
     // MARK: - public
-    public func load(URL: URLLiteralConvertible) {
-        load(URL, placeholder: nil) { _ in }
-    }
-
-    public func load(URL: URLLiteralConvertible, placeholder: UIImage?) {
-        load(URL, placeholder: placeholder) { _ in }
-    }
-
-
-    public func load(URL: URLLiteralConvertible, placeholder: UIImage?, completionHandler:(NSURL, UIImage?, NSError?) -> ()) {
+    public func load(URL: URLLiteralConvertible, placeholder: UIImage? = nil, completionHandler:CompletionHandler? = nil) {
         cancelLoading()
 
         if let placeholder = placeholder {
             image = placeholder
         }
 
-        let URL = URL.URL
-
-        self.URL = URL
-        _load(URL, completionHandler: completionHandler)
+        self.URL = URL.imageLoaderURL
+        _load(URL.imageLoaderURL, completionHandler: completionHandler)
     }
 
     public func cancelLoading() {
@@ -67,50 +56,30 @@ extension UIImageView {
     }
 
     // MARK: - private
+    private static let _requesting_queue = dispatch_queue_create("swift.imageloader.queues.requesting", DISPATCH_QUEUE_SERIAL)
 
-    private class var _requesting_queue: dispatch_queue_t {
-        struct Static {
-            static let queue = dispatch_queue_create("swift.imageloader.queues.requesting", DISPATCH_QUEUE_SERIAL)
-        }
+    private func _load(URL: NSURL, completionHandler: CompletionHandler?) {
 
-        return Static.queue
-    }
+        let completionHandler: (NSURL, UIImage?, NSError?, CacheType) -> Void = { URL, image, error, cacheType in
 
-    private func _load(URL: NSURL, completionHandler:(NSURL, UIImage?, NSError?) -> ()) {
-
-        weak var wSelf = self
-        let completionHandler: (NSURL, UIImage?, NSError?) -> () = { URL, image, error in
-
-            if wSelf == nil {
-                return
-            }
-
-            dispatch_async(dispatch_get_main_queue(), {
-
+            dispatch_async(dispatch_get_main_queue(), { [weak self] in
                 // requesting is success then set image
-                if self.URL != nil && self.URL!.isEqual(URL) {
-                    if let image = image {
-                        wSelf!.image = image
-                    }
+                if let thisURL = self?.URL, let image = image where thisURL.isEqual(URL) {
+                    self?.image = image
                 }
-                completionHandler(URL, image, error)
-
+                completionHandler?(URL, image, error, cacheType)
             })
         }
 
         // caching
         if let image = Manager.sharedInstance.cache[URL] {
-            completionHandler(URL, image, nil)
+            completionHandler(URL, image, nil, .Cache)
             return
         }
 
         dispatch_async(UIImageView._requesting_queue, {
-
             let loader = Manager.sharedInstance.load(URL).completionHandler(completionHandler)
             self.block = loader.blocks.last
-
-            return
-
         })
 
     }

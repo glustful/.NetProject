@@ -18,7 +18,7 @@ class AddAgentDetailViewController: UIViewController {
             uiPhone.shake(5, delta: 5)
             return
         }
-        if !RegexHelper(phoneRegex).match(uiPhone.text){
+        if !RegexHelper(phoneRegex).match(uiPhone.text!){
             TipTools().showToast("格式不符", message: "电话号码格式不对，重新输入", duration: 2)
             return
         }
@@ -59,7 +59,7 @@ class AddAgentDetailViewController: UIViewController {
         .addParameter("PartnerId", value: "0")
         .addParameter("userId", value: "0")
         .addParameter("BrokerId", value: "0")
-        .addParameter("Phone", value: uiPhone.text)
+        .addParameter("Phone", value: uiPhone.text!)
         .request({json in
             self.uiButton.enabled = true
             if let status = json["Status"].bool{
@@ -85,7 +85,7 @@ class AddAgentDetailViewController: UIViewController {
             
             .addParameter("SmsType", value: SMSType.referAgentType)
            
-            .addParameter("Mobile", value: uiPhone.text)
+            .addParameter("Mobile", value: uiPhone.text!)
             .request({json in
                 self.uiButton.enabled = true
               
