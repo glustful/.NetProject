@@ -66,11 +66,11 @@
 .selectBox{
 	height: 300px;
 	position: absolute;
-	top:-1000px;
+	top:-1000px !important;
 	-webkit-transition: all 1s;
 }
 .addselectBox{
-	top:44px;
+	top:44px !important;
 }
 
 .bg-yellow{
