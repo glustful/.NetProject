@@ -32,7 +32,7 @@
             </ion-slide>
             <ion-slide>
                 <div class="detail-img">
-                    <img ng-src="{{Img+product.Img2}}@320w_231h_70q" style="width: 100%320px;height: 231px">
+                    <img ng-src="{{Img+product.Img2}}@320w_231h_70q" style="width: 100%;height: 231px">
                 </div>
             </ion-slide>
             <ion-slide>
@@ -59,7 +59,7 @@
         <div class="list padding">
         <h4 class="font-title">商品评价（{{Count}}）</h4>
         <div class="item item-avatar none-border" ng-repeat="item in CommentList">
-        <img src="http://img.iyookee.cn/{{item.UserImg}}@40w_40h_70q">
+        <img ng-src="http://img.iyookee.cn/{{item.UserImg}}@40w_40h_70q">
         <h2>{{item.UserName}}</h2>
         <p style="white-space: normal">{{item.Content}}</p>
         </div>
