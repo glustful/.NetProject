@@ -75,35 +75,42 @@
 
 .bg-yellow{
     padding: 0 ;
-    height: 70px;
-    margin-left: 20px;
+    height: 100px;
     background-color: #ffcc00 ;
+}
+.bg-yellow a{
+    opacity: 1;
+}
+.bg-yellow .tab-item i{
+    font-size: 1.8em;
+    margin-top: 10px;
+    width: 50px;
+    height:50px;
+    background-color: white;
+    border-radius:50% ;
+    padding: 15%;
+}
+.bg-yellow .tab-item p{
+    font-size: 1em;
+    margin-top: 8px;
+}
+.bg-yellow  .col-10 a{
+    display: inline-block;
+   height: 85px;
+    width: 30px;
+    background-color: red;
+    color: white;
+    padding: 2px 8px 2px 8px;
+    font-size: 6px;
+    margin-top: 6px;
+    border-radius: 3px;
+
 }
 .scroll-home{
     width: 100%;
     background-color:#ffcc00 ;
 }
-.circle{
-    width: 40px;
-    height:40px;
-    background-color: white;
-    border-radius:50% ;
-    padding: 5px;
-}
 
-.button-service{
-    position: absolute;
-    top:162px;
-    height: 65px;
-    width: 20px;
-    background-color: red;
-    color: white;
-    border-radius: 5px;
-    padding: 3px;
-    font-size: 0.8em;
-    z-index: 20;
-    left: 0;
-}
 .font-8{
     font-size: 0.5em;
     font-family: "Microsoft YaHei";
@@ -131,15 +138,15 @@
     z-index: 1;
 }
 .activity{
-    width: 50%;
+    width: 45%;
     height: 100%;
     background-color: rgba(1,17,17,0.7);
     position: absolute;
     top:0;
     right: 0;
-
     /*opacity: 0.7;*/
 }
+
 
 .s-location{
     position: absolute;
@@ -161,7 +168,7 @@
     height: 22%;
     width: 60%;
     border-radius: 5px;
-    color: white;
+    color: black;
     font-size: 0.9em;
     font-family: "Microsoft YaHei";
     position: absolute;

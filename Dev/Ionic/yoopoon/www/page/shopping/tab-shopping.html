@@ -57,50 +57,35 @@
 		</ion-slide-box>
 		<!-- ion-infinite-scroll 上拉加载数据指令 distance默认1% nf-if的值为false时，就禁止执行on-infinite  -->
 		<ion-infinite-scroll ng-if="moredata" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
-		<a class="button-service" ng-click="go('index.html#/page/service/safe')" style="">优服务</a>
+
 		<!--<ion-scroll zooming="true" direction="x" class="scroll-home">-->
 		<div class="row bg-yellow">
-
-			<a class="col-20 tab-item">
-				<i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i>
-
+			<div class="col-10" style="font-size: 5px">
+				<a  ng-click="go('index.html#/page/service/safe')"  > 优&nbsp;.服务</a>
+			</div>
+			<a class="col-15 tab-item">
+				<i class="icon icon-jiazhenfuwu circle energized"  ></i>
 				<p class="font-8">家政服务</p>
 			</a>
-			<a class="col-20 tab-item">
-				<i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i>
+			<a class="col-15 tab-item" style="opacity: 1">
+				<i class="icon icon-yifuqingxi circle calm" ></i>
 
 				<p class="font-8">衣物清洗</p>
 			</a>
-			<a class="col-20 tab-item">
-				<i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i>
-
+			<a class="col-15 tab-item">
+				<i class="icon icon-kuaididaishou circle royal" ></i>
 				<p class="font-8">快递代收</p>
 			</a>
-			<a class="col-20 tab-item">
-				<i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i>
+			<a class="col-15 tab-item">
+				<i class="icon icon-yuesao circle assertive" ></i>
 
 				<p class="font-8">月嫂</p>
 			</a>
-			<a class="col-20 tab-item">
-				<i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i>
-
-				<p class="font-8">家政服务</p>
+			<a class="col-15 tab-item">
+				<i class="icon icon-jiazhenfuwu circle energized" ></i>
+				<p class="font-8">更多</p>
 			</a>
-			<a class="col-20 tab-item">
-				<i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i>
 
-				<p class="font-8">衣物清洗</p>
-			</a>
-			<a class="col-20 tab-item">
-				<i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i>
-
-				<p class="font-8">快递代收</p>
-			</a>
-			<a class="col-20 tab-item">
-				<i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i>
-
-				<p class="font-8">月嫂</p>
-			</a>
 
 		</div>
 		<!--</ion-scroll>-->
@@ -122,7 +107,7 @@
 					</p>
 					<i class="icon icon-gouwuche shop-cart" ng-click="AddCart1(this)"></i>
 					<br>
-					<button class=" energized-bg none-border button-size " ng-click="buysome(list.Id)">
+					<button class=" energized-bg none-border  " ng-click="buysome(list.Id)">
 						立即购买
 					</button>
 
