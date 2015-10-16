@@ -198,3 +198,6 @@ h4{
 .safe-list .detail h2{
     color: #545556;
 }
+.display-none{
+    display: none;
+}

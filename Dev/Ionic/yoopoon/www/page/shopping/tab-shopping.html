@@ -32,7 +32,7 @@
 
 <ion-view view-title="优·购物" hide-tabs="false" hide-nav-bar="true">
 	<!-- 主页-->
-	<ion-content class="scroll-content" no-header="true" style="top:44px">
+	<ion-content class="scroll-content stable-bg" no-header="true" style="top:44px">
 		<ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
 		<ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" ng-if="content">
 			<ion-slide ng-repeat="item in content">
@@ -129,7 +129,7 @@
 				</div>
 			</div>
 			<ul style="z-index:0">
-				<li style="width:50%;float:left" ng-repeat="row in items">
+				<li style="width:49%;float:left;margin-right: 1%" ng-repeat="row in items">
 					<div class="">
 
 						<img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}@187w_140h_70q_2e" ui-sref="page.product-detail({id:row.Id})">
