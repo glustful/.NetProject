@@ -14,7 +14,7 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 	$scope.model = {
 		activeIndex: 0
 	};
-	al
+
 
 
 	// 遮罩层

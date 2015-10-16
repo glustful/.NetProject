@@ -32,7 +32,7 @@
 
 <ion-view view-title="优·购物" hide-tabs="false" hide-nav-bar="true">
 	<!-- 主页-->
-	<ion-content class="scroll-content" no-header="true" style="top:44px">
+	<ion-content class="scroll-content stable-bg" no-header="true" style="top:44px">
 		<ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
 		<ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true" ng-if="content">
 			<ion-slide ng-repeat="item in content">
@@ -57,50 +57,35 @@
 		</ion-slide-box>
 		<!-- ion-infinite-scroll 上拉加载数据指令 distance默认1% nf-if的值为false时，就禁止执行on-infinite  -->
 		<ion-infinite-scroll ng-if="moredata" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
-		<a class="button-service" ng-click="go('index.html#/page/service/safe')" style="">优服务</a>
+
 		<!--<ion-scroll zooming="true" direction="x" class="scroll-home">-->
 		<div class="row bg-yellow">
-
-			<a class="col-20 tab-item">
-				<i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i>
-
+			<div class="col-10" style="font-size: 5px">
+				<a  ng-click="go('index.html#/page/service/safe')"  > 优&nbsp;.服务</a>
+			</div>
+			<a class="col-15 tab-item">
+				<i class="icon icon-jiazhenfuwu circle energized"  ></i>
 				<p class="font-8">家政服务</p>
 			</a>
-			<a class="col-20 tab-item">
-				<i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i>
+			<a class="col-15 tab-item" style="opacity: 1">
+				<i class="icon icon-yifuqingxi circle calm" ></i>
 
 				<p class="font-8">衣物清洗</p>
 			</a>
-			<a class="col-20 tab-item">
-				<i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i>
-
+			<a class="col-15 tab-item">
+				<i class="icon icon-kuaididaishou circle royal" ></i>
 				<p class="font-8">快递代收</p>
 			</a>
-			<a class="col-20 tab-item">
-				<i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i>
+			<a class="col-15 tab-item">
+				<i class="icon icon-yuesao circle assertive" ></i>
 
 				<p class="font-8">月嫂</p>
 			</a>
-			<a class="col-20 tab-item">
-				<i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i>
-
+			<a class="col-15 tab-item">
+				<i class="icon icon-jiazhenfuwu circle energized" ></i>
 				<p class="font-8">更多</p>
 			</a>
-			<a class="col-20 tab-item">
-				<i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i>
 
-				<p class="font-8">衣物清洗</p>
-			</a>
-			<a class="col-20 tab-item">
-				<i class="icon icon-kuaididaishou circle royal" style="font-size: 1.6em;margin-top: 10px"></i>
-
-				<p class="font-8">快递代收</p>
-			</a>
-			<a class="col-20 tab-item">
-				<i class="icon icon-yuesao circle assertive" style="font-size: 1.6em;margin-top: 10px"></i>
-
-				<p class="font-8">月嫂</p>
-			</a>
 
 		</div>
 		</ion-scroll>
@@ -122,14 +107,14 @@
 					</p>
 					<i class="icon icon-gouwuche shop-cart" ng-click="AddCart1(this)"></i>
 					<br>
-					<button class=" energized-bg none-border button-size " ng-click="buysome(list.Id)">
+					<button class=" energized-bg none-border  " ng-click="buysome(list.Id)">
 						立即购买
 					</button>
 
 				</div>
 			</div>
 			<ul style="z-index:0">
-				<li style="width:50%;float:left;position: relative;" ng-repeat="row in items">
+				<li style="width:49%;float:left;margin-right: 1%" ng-repeat="row in items">
 					<div class="">
 
 						<img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}@187w_140h_70q_2e" ui-sref="page.product-detail({id:row.Id})">
