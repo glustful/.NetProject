@@ -187,7 +187,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         IsDescending: true,
         OrderBy: 'OrderByAddtime',
         Page: 1,
-        PageCount: 5
+        PageCount: 4
         //ProductId:''
     };
 

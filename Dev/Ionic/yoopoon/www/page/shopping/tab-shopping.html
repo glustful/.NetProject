@@ -2,7 +2,7 @@
 
 <div class=" header bar" style="height:44px">
 	<a class="button  button-icon icon icon-fuwuanniu" ng-click="go('page.Product-Catagory')" ui-sref="page.Product-Catagory"></a>
-	<span class="selectArea" ng-click="showSelectBox()" ng-hide="showSelect">云南省</span>
+	<span class="selectArea" ng-click="showSelectBox()" ng-hide="showSelect">{{area}}</span>
 	<!--<label class=" item-select select-header" ng-hide="showSelect">
 
         <select ng-model="selected" ng-click="showSelectBox()" id="ParentId"  ng-options="o.Id as o.Name for o in addrss" ng-change="click()" required>
@@ -84,7 +84,7 @@
 			<a class="col-20 tab-item">
 				<i class="icon icon-jiazhenfuwu circle energized" style="font-size: 1.6em;margin-top: 10px"></i>
 
-				<p class="font-8">家政服务</p>
+				<p class="font-8">更多</p>
 			</a>
 			<a class="col-20 tab-item">
 				<i class="icon icon-yifuqingxi circle calm" style="font-size: 1.6em;margin-top: 10px"></i>
@@ -103,7 +103,7 @@
 			</a>
 
 		</div>
-		<!--</ion-scroll>-->
+		</ion-scroll>
 
 		<div class="stable-bg padding">
 			<div class="  item item-light item-borderless" style="margin-bottom: 10px">
@@ -129,13 +129,13 @@
 				</div>
 			</div>
 			<ul style="z-index:0">
-				<li style="width:50%;float:left" ng-repeat="row in items">
+				<li style="width:50%;float:left;position: relative;" ng-repeat="row in items">
 					<div class="">
 
 						<img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}@187w_140h_70q_2e" ui-sref="page.product-detail({id:row.Id})">
 
 						<div class="s-location">
-							<p class="p-invisible">{{row.Owner}}人已抢购</p>
+							<div class="p-invisible">{{row.Owner}}人已抢购</div>
 						</div>
 						<div class="padding">
 							<p>{{row.Name}}</p>
@@ -190,7 +190,7 @@
 			<!--</div>-->
 			<!--</div>-->
 		</div>
-		<ion-infinite-scroll ng-if="loadmore" on-infinite="load_more();">
+		<ion-infinite-scroll  ng-if="loadmore" on-infinite="load_more();">
 		</ion-infinite-scroll>
 	</ion-content>
 
