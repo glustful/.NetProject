@@ -158,6 +158,7 @@ namespace Zerg.Controllers.Community
                 Owner =c.Owner,
                 Addtime = c.AddTime,
 				Detail = c.Detail.Detail,
+                Ad1 = c.Detail.Ad1
 //				Comments = c.Comments,
 //				Parameters = c.Parameters,
                 //ParameterValue =c.Parameters.Select(p => new ProductParameterValueModel
