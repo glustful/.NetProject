@@ -111,7 +111,7 @@
 			</div>
 			<div class="item item-image " style="overflow: inherit;">
 				<img ng-src="http://img.iyookee.cn/{{list.MainImg}}@400w_140h_70q_2e" ui-sref="page.product-detail({id:list.Id})">
-				<img ng-src="http://img.iyookee.cn/{{list.MainImg}}@400w_140h_70q_2e" class="add">
+				<!--<img ng-src="http://img.iyookee.cn/{{list.MainImg}}@400w_140h_70q_2e" class="add">-->
 				<div class="p-location">
 					<div class="p-invisible">{{list.Owner}}人已抢购</div>
 				</div>
@@ -128,15 +128,10 @@
 
 				</div>
 			</div>
+			
 			<ul style="z-index:0">
-				<li style="width:50%;float:left" ng-repeat="row in items">
-					<div class="">
-
-						<img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}@187w_140h_70q_2e" ui-sref="page.product-detail({id:row.Id})">
-
-						<div class="s-location">
-							<p class="p-invisible">{{row.Owner}}人已抢购</p>
-						</div>
+				<li style="width:50%;float:left; position:relative" ng-repeat="row in items">
+						<img style="width:100%" ng-src="http://img.iyookee.cn/{{row.MainImg}}@187w_140h_70q_2e" ui-sref="page.product-detail({id:row.Id})">
 						<div class="padding">
 							<p>{{row.Name}}</p>
 
@@ -145,9 +140,12 @@
 							</p>
 							<p>
 								<button class="button  button-small   button-energized" ng-click="buysome(row.Id)">立即购买</button>
-								<i class="icon icon-gouwuche " style="float: right;font-size: 30px" ng-click="AddCart(this)"></i></p>
+								<i class="icon icon-gouwuche icons" style="float: right;font-size: 30px" ng-click="AddCart(this,$event)"></i></p>
 						</div>
-					</div>
+						<div class="s-location">
+							<p class="p-invisible">{{row.Owner}}人已抢购</p>
+						</div>
+					
 				</li>
 				<!--<li style="width:50%;float:left" >-->
 				<!--<div class="col p-relative">-->
@@ -163,7 +161,7 @@
 				<!--</div>-->
 				<!--</li>-->
 			</ul>
-
+			
 			<!--<div class="row">-->
 			<!--<div class="col p-relative" >-->
 			<!--<img src="img/product2.png" ng-click="go('index.html#/page/shopping/product-detail')">-->
