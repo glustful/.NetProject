@@ -72,8 +72,10 @@ public class TreeCategoryActivity extends MainActionBarActivity {
 		});
 		requestData();
 	}
+
 	void requestData() {
 		new RequestAdapter() {
+
 			@Override
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
@@ -89,6 +91,7 @@ public class TreeCategoryActivity extends MainActionBarActivity {
 					Toast.makeText(TreeCategoryActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
+
 			@Override
 			public void onProgress(ProgressMessage msg) {
 				// TODO Auto-generated method stub
@@ -96,8 +99,10 @@ public class TreeCategoryActivity extends MainActionBarActivity {
 		}.setUrl(getString(R.string.url_category_getall)).addParam("ifid", "1").setRequestMethod(RequestMethod.eGet)
 				.notifyRequest();
 	}
+
 	void parseToList(final JSONArray array) {
 		new ParserJSON(new ParseListener() {
+
 			@Override
 			public Object onParse() {
 				ObjectMapper om = new ObjectMapper();
@@ -118,6 +123,7 @@ public class TreeCategoryActivity extends MainActionBarActivity {
 				}
 				return lists;
 			}
+
 			@Override
 			public void onComplete(Object parseResult) {
 				if (parseResult != null) {
@@ -127,6 +133,7 @@ public class TreeCategoryActivity extends MainActionBarActivity {
 			}
 		}).execute();
 	}
+
 	void initList() {
 		for (int i = 0; i < lists.size(); i++) {
 			Log.i(TAG, "i" + i);
@@ -157,6 +164,7 @@ public class TreeCategoryActivity extends MainActionBarActivity {
 				childTv.setTextSize(16);
 				ll.addView(childTv);
 				childTv.setOnClickListener(new OnClickListener() {
+
 					@Override
 					public void onClick(View v) {
 						TextView childTextView = (TextView) v;
@@ -173,16 +181,20 @@ public class TreeCategoryActivity extends MainActionBarActivity {
 		}
 		ll_category.removeViewAt(ll_category.getChildCount() - 1);
 	}
+
 	@Override
 	public void backButtonClick(View v) {
 		finish();
 	}
+
 	@Override
 	public void titleButtonClick(View v) {
 	}
+
 	@Override
 	public void rightButtonClick(View v) {
 	}
+
 	@Override
 	public Boolean showHeadView() {
 		return true;

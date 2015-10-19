@@ -490,7 +490,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					SearchActivity_.intent(MainActivity.this).which(0).start();
 					break;
 				case R.id.rightBtn:
-					TreeCategoryActivity_.intent(MainActivity.this).start();
+					CategoryActivity2_.intent(MainActivity.this).start();
 					break;
 				default:
 					break;
