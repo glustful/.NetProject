@@ -5,6 +5,10 @@ app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout','$stateParams'
     function ($http, $scope, $timeout,$stateParams) {
     $scope.Img=SETTING.ImgUrl;
     $scope.category=$stateParams.name;
+        //var products=document.getElementById("product-list");
+        //var categorys=document.getElementById("category");
+        //var cateH=categorys.offsetHeight;
+        //alert(cateH);
     //region 获取商品列表
     $scope.sech = {
         Page: 0,
@@ -126,6 +130,10 @@ app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout','$stateParams'
         'withCredentials': true
     }).success(function (data) {
         $scope.cateList = data;
+        //var products=document.getElementById("product-list");
+        //var categorys=document.getElementById("category");
+        //var cateH=categorys.offsetHeight;
+        //alert(cateH);
     });
     //endregion
 }])
@@ -214,7 +222,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$t
             count: null,
             mainimg:null,
             price:null,
-            oldprice:null,
+            oldprice:null
             //parameterValue:[]
         };
         $scope.changIng=false;
@@ -228,7 +236,12 @@ app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$t
             //$scope.cartinfo.parameterValue=$scope.product.ParameterValue;
             $scope.cartinfo.count = 1;
             cartservice.add($scope.cartinfo);
-
+            //region 按钮禁用
+            var buyNowBtn=document.getElementById("buyNowBtn");
+            console.log(buyNowBtn);
+            buyNowBtn.disabled=true;
+            buyNowBtn.className="col button-large none-border p-button";
+            //endregion
         }
         //endregion
         //region  立即购买
