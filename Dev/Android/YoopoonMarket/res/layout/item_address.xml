@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
-    android:padding="10dp"
     android:background="@color/white" >
 
     <RelativeLayout
@@ -39,28 +38,27 @@
     <LinearLayout 
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
         
         <TextView 
             android:id="@+id/tv_modify"
-            android:layout_weight="1.5"
-            android:textStyle="bold"
-            android:textColor="@color/blue"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:background="@drawable/white_bg"
-            android:text="修改"/>
+            android:textColor="@color/blue"
+            android:text="修改"
+            android:textStyle="bold"
+            android:padding="5dp"/>
         
         <TextView 
-            android:id="@+id/tv_delete"
-            android:background="@drawable/white_bg"
-            android:clickable="true"
-            android:layout_weight="1"
+            android:padding="5dp"
             android:textStyle="bold"
-            android:textColor="@color/red"
-            android:layout_width="0dp"
+            android:id="@+id/tv_delete"
+            android:clickable="true"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/red"
             android:text="删除"/>
         
     </LinearLayout>

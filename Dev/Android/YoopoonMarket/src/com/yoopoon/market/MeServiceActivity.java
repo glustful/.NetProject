@@ -6,12 +6,12 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -31,10 +31,11 @@ public class MeServiceActivity extends MainActionBarActivity implements OnClickL
 
 	@AfterViews
 	void initUI() {
-		Log.i(TAG, "item = " + item);
-		backButton.setVisibility(View.VISIBLE);
+		backWhiteButton.setVisibility(View.VISIBLE);
 		titleButton.setVisibility(View.VISIBLE);
 		rightButton.setVisibility(View.GONE);
+		headView.setBackgroundColor(Color.RED);
+		titleButton.setTextColor(Color.WHITE);
 		titleButton.setText("我的服务");
 
 		fragments.add(new ServiceOrder1());

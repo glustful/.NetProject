@@ -30,7 +30,6 @@ import com.yoopoon.market.net.ResponseData;
 import com.yoopoon.market.utils.RegxUtils;
 import com.yoopoon.market.utils.SerializerJSON;
 import com.yoopoon.market.utils.SerializerJSON.SerializeListener;
-import com.yoopoon.market.utils.StringUtils;
 
 @EActivity(R.layout.activity_modify_address)
 public class AddressModifyActivity extends MainActionBarActivity {
@@ -222,15 +221,16 @@ public class AddressModifyActivity extends MainActionBarActivity {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					String parentName = object.optString("ParentName", "");
-					String name = object.optString("Name", "");
-					StringBuilder sb = new StringBuilder();
-					if (!StringUtils.isEmpty(parentName))
-						sb.append(parentName + " ");
-					if (!StringUtils.isEmpty(name))
-						sb.append(name);
-					if (!TextUtils.isEmpty(sb.toString()))
-						tv_select.setText(sb.toString());
+					StringBuilder builder = new StringBuilder();
+					JSONObject parentObject = object.optJSONObject("Parent");
+					if (parentObject.optJSONObject("Parent") != null) {
+						builder.append(parentObject.optJSONObject("Parent").optString("Name", ""));
+					}
+
+					builder.append(parentObject.optString("Name", ""));
+					builder.append(object.optString("Name", ""));
+					if (!TextUtils.isEmpty(builder.toString()))
+						tv_select.setText(builder.toString());
 
 				} else {
 					Toast.makeText(AddressModifyActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
