@@ -91,7 +91,7 @@ public class ShopFragment extends Fragment {
 	// 搜索商品分页状态码
 	private int searchPageCount = 1;
 	private ArrayList<JSONObject> productJsonArrayList;
-	// 搜索关键字
+	// 搜索关键字t
 	private String keywordSearch = "";
 	private FrameLayout searchProductFrameLayout;
 	private FrameLayout productListFrameLayout;
@@ -109,7 +109,7 @@ public class ShopFragment extends Fragment {
 				parentViewGroup.removeView(rootView);
 			}
 		} else {
-			mContext = getActivity();
+			mContext = getActivity();  
 			mADController = new ADController(mContext);
 			rootView = inflater.inflate(R.layout.fragment_shop, null);
 			searchProductFrameLayout = (FrameLayout) rootView.findViewById(R.id.framelayout_search_product_list);
@@ -121,10 +121,10 @@ public class ShopFragment extends Fragment {
 		}
 		return rootView;
 	}
-	/**
+	/**; 
 	 * @Title: initShopFragment
 	 * @Description: 初始化和设置视图控件
-	 */
+	 */ 
 	private void initUI() {
 		productListView.addHeaderView(mADController.getRootView());
 		// 联网获取广告
@@ -543,7 +543,7 @@ public class ShopFragment extends Fragment {
 							/*if (JSONArrayConvertToArrayList.convertToArrayList(jsonArray) != null) {
 								searchProductAdapter.refresh(JSONArrayConvertToArrayList.convertToArrayList(jsonArray));
 							}*/
-						}
+						}  
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}

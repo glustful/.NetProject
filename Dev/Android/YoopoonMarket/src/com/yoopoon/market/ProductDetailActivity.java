@@ -159,6 +159,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		confirmButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Toast.makeText(mContext, "productPurchase", Toast.LENGTH_SHORT).show();
 				if (staff == null)
 					return;
 				List<Staff> staffList = new ArrayList<Staff>();
@@ -188,6 +189,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		// 获取从首页过来的id
 		comeFromstatusCode = getIntent().getExtras().getString("comeFromstatusCode");
 		productId = getIntent().getExtras().getString("productId");
+		Log.e(TAG, productId);
 		linearLayout = (LinearLayout) findViewById(R.id.linearlayout_product_detail);
 		productDetailRelativeLayout = (RelativeLayout) LayoutInflater.from(mContext).inflate(
 				R.layout.activity_product_detail, null);
@@ -407,7 +409,7 @@ public class ProductDetailActivity extends MainActionBarActivity {
 		String name = jsonObject.optString("Name", "");
 		String subtitte = jsonObject.optString("Subtitte", "");
 		String price = SplitStringWithDot.split(jsonObject.optString("Price", "0"));
-		String oldPrice;
+		String oldPrice="";
 		String imageUrl = getString(R.string.url_image) + jsonObject.optString("MainImg");
 		productTitleTextView.setText(jsonObject.optString("Name", ""));
 		productSubtitleTextView.setText(jsonObject.optString("Subtitte", ""));

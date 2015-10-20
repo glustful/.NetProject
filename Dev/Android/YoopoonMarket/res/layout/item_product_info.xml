@@ -18,10 +18,9 @@
             <ImageView
                 android:id="@+id/img_product_photo1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="100dp"
                 android:padding="10dp"
-                android:scaleType="fitXY" />
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/tv_product_name1"
@@ -130,10 +129,9 @@
             <ImageView
                 android:id="@+id/img_product_photo2"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="100dp"
                 android:padding="10dp"
-                android:scaleType="fitXY" />
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/tv_product_name2"
