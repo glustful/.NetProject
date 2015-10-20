@@ -15,6 +15,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +73,6 @@ public class ServiceBalanceActivity extends MainActionBarActivity {
 		newFragment.show(getFragmentManager(), "datePicker");
 	}
 
-	EditText et_remark;
 	MemberAddressEntity addressEntity;
 	List<OrderDetailEntity> details = new ArrayList<OrderDetailEntity>();
 
@@ -86,17 +87,24 @@ public class ServiceBalanceActivity extends MainActionBarActivity {
 	}
 
 	void requestAddOrder() {
-		loading.setVisibility(View.VISIBLE);
+		if (addressEntity == null) {
+			Toast.makeText(this, "请选择地址", Toast.LENGTH_LONG).show();
+			return;
+		}
+
 		if (tv_time.getTag() == null) {
 			Toast.makeText(ServiceBalanceActivity.this, "请选择服务时间", Toast.LENGTH_LONG).show();
 			return;
 		}
-		Log.i(TAG, product.toString());
+
 		String time = tv_time.getText().toString();
-		String remark = et_remark.getText().toString();
+
 		String json = "{\"MemberAddressId\":" + addressEntity.Id + ",\"Servicetime\":\"" + time + "\",\"Remark\":\""
 				+ remark + "\",\"Details\":[{\"Count\":1,\"Price\":" + product.Price + ",\"Product\":{\"Id\":"
 				+ product.Id + "}}]}";
+		Log.i(TAG, json);
+
+		loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
@@ -116,8 +124,10 @@ public class ServiceBalanceActivity extends MainActionBarActivity {
 							bundle.putFloat("Price", price);
 							bundle.putString("No", No);
 							bundle.putString("Msg", msg);
-
-							PayDemoActivity_.intent(ServiceBalanceActivity.this).orderBundle(bundle).start();
+							// 订单确认成功，跳转至支付界面，关闭自己
+							PayDemoActivity_.intent(ServiceBalanceActivity.this).orderBundle(bundle).isService(true)
+									.start();
+							finish();
 						}
 					}
 				} else {
@@ -204,6 +214,10 @@ public class ServiceBalanceActivity extends MainActionBarActivity {
 
 			@Override
 			public void onReponse(ResponseData data) {
+				if (data.getMsg().startsWith("Value")) {
+					loading.setVisibility(View.GONE);
+					return;
+				}
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					parseToEntity(object);
@@ -266,6 +280,8 @@ public class ServiceBalanceActivity extends MainActionBarActivity {
 		TextView tv_count;
 	}
 
+	String remark;
+
 	class MyListViewAdapter extends BaseAdapter {
 
 		@Override
@@ -292,7 +308,24 @@ public class ServiceBalanceActivity extends MainActionBarActivity {
 				int px = Utils.dp2px(ServiceBalanceActivity.this, 200);
 				LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, px);
 				v.setLayoutParams(params);
-				et_remark = (EditText) v.findViewById(R.id.et_remark);
+				EditText et_remark = (EditText) v.findViewById(R.id.et_remark);
+				et_remark.addTextChangedListener(new TextWatcher() {
+
+					@Override
+					public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+					}
+
+					@Override
+					public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+					}
+
+					@Override
+					public void afterTextChanged(Editable s) {
+						remark = s == null ? "" : s.toString();
+					}
+				});
 				return v;
 			}
 			if (convertView == null || !(convertView instanceof RelativeLayout))

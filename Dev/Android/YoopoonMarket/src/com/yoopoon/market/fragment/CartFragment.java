@@ -15,6 +15,8 @@ package com.yoopoon.market.fragment;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -82,7 +84,8 @@ public class CartFragment extends Fragment implements OnClickListener {
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		rootView = inflater.inflate(R.layout.fragment_cart, null, false);
+		if (rootView == null)
+			rootView = inflater.inflate(R.layout.fragment_cart, null, false);
 		init();
 		return rootView;
 	}
@@ -130,6 +133,7 @@ public class CartFragment extends Fragment implements OnClickListener {
 
 					@Override
 					public void run() {
+						sendBroadcast(count);
 						tv_title_count.setText("购物车(" + count + ")");
 
 					}
@@ -379,24 +383,45 @@ public class CartFragment extends Fragment implements OnClickListener {
 
 				@Override
 				public void onClick(View v) {
-					staffList.remove(staff);
-					fillData();
-					new Thread() {
+					Builder builder = new Builder(getActivity());
+					builder.setTitle("删除");
+					builder.setMessage("确定要删除" + staff.title + "么?");
+					builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
-						public void run() {
-							DBDao dao = new DBDao(getActivity());
-							dao.delete(staff.id);
-							totalcount = dao.getAllCounts();
-							getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							staffList.remove(staff);
+							fillData();
+							new Thread() {
 
-								@Override
 								public void run() {
-									tv_title_count.setText("购物车(" + totalcount + ")");
-									sendBroadcast(totalcount);
-								}
-							});
-						};
-					}.start();
+									DBDao dao = new DBDao(getActivity());
+									dao.delete(staff.id);
+									totalcount = dao.getAllCounts();
+									getActivity().runOnUiThread(new Runnable() {
+
+										@Override
+										public void run() {
+											tv_title_count.setText("购物车(" + totalcount + ")");
+											sendBroadcast(totalcount);
+										}
+									});
+								};
+							}.start();
+							dialog.dismiss();
+						}
+					});
+
+					builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+
+					builder.show();
+
 				}
 			});
 			return convertView;

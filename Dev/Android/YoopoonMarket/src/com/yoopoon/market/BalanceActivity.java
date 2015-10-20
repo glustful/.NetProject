@@ -23,7 +23,9 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,14 +84,19 @@ public class BalanceActivity extends MainActionBarActivity {
 	@ViewById(R.id.tv_price_total)
 	TextView tv_price_total;
 
-	EditText et_remark;
 	MemberAddressEntity addressEntity;
 	List<OrderDetailEntity> details = new ArrayList<OrderDetailEntity>();
 
 	@Click(R.id.btn_ok)
 	void confirmOrder() {
+
 		if (User.isLogin(this)) {
 
+			if (addressEntity == null) {
+				Toast.makeText(this, "请选择收货地址", Toast.LENGTH_LONG).show();
+				return;
+			}
+			loading.setVisibility(View.VISIBLE);
 			for (Staff staff : staffList) {
 				ProductEntity product = new ProductEntity();
 				product.Name = staff.category;
@@ -98,7 +105,7 @@ public class BalanceActivity extends MainActionBarActivity {
 				product.Price = staff.price_counted;
 				OrderDetailEntity detail = new OrderDetailEntity();
 				detail.Product = product;
-				detail.Remark = et_remark.getText().toString();
+				detail.Remark = remark;
 				detail.Totalprice = product.Price * staff.count;
 				detail.ProductName = product.Name;
 				detail.Count = staff.count;
@@ -110,7 +117,7 @@ public class BalanceActivity extends MainActionBarActivity {
 			orderEntity.Totalprice = total_price;
 			orderEntity.MemberAddressId = addressEntity.Id;
 			orderEntity.Details = details;
-			orderEntity.Remark = et_remark.getText().toString();
+			orderEntity.Remark = remark;
 			orderEntity.UserName = User.getUserName(BalanceActivity.this);
 			orderEntity.Actualprice = orderEntity.Totalprice;
 			serializeOrder(orderEntity);
@@ -145,8 +152,6 @@ public class BalanceActivity extends MainActionBarActivity {
 	}
 
 	void requestAddOrder(String serial) {
-		Log.i(TAG, serial);
-		loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
@@ -154,7 +159,6 @@ public class BalanceActivity extends MainActionBarActivity {
 				loading.setVisibility(View.GONE);
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					Log.i(TAG, object.toString());
 					boolean status = object.optBoolean("Status", false);
 					if (status) {
 						JSONObject orderEntity = object.optJSONObject("Object");
@@ -171,8 +175,10 @@ public class BalanceActivity extends MainActionBarActivity {
 							staffId[i] = staffList.get(i).id;
 						}
 						bundle.putIntArray("StaffIds", staffId);
-
-						PayDemoActivity_.intent(BalanceActivity.this).orderBundle(bundle).start();
+						// 打开支付界面
+						PayDemoActivity_.intent(BalanceActivity.this).orderBundle(bundle).isService(false).start();
+						// 订单已确认成功，关闭自己
+						finish();
 					}
 				} else {
 					Toast.makeText(BalanceActivity.this, data.getMsg(), Toast.LENGTH_SHORT).show();
@@ -210,9 +216,7 @@ public class BalanceActivity extends MainActionBarActivity {
 	protected void onResume() {
 		super.onResume();
 
-		Log.i(TAG, "onResume()");
 		if (checkedAddress != null) {
-			Log.i(TAG, checkedAddress.toString());
 			addressEntity = checkedAddress;
 			setAddress();
 		} else {
@@ -236,13 +240,15 @@ public class BalanceActivity extends MainActionBarActivity {
 			LoginActivity_.intent(this).start();
 			return;
 		}
-		String userid = User.getUserId(BalanceActivity.this);
 		loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
-				Log.i(TAG, data.toString());
+				if (data.getMsg().startsWith("Value")) {
+					loading.setVisibility(View.GONE);
+					return;
+				}
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					parseToEntity(object);
@@ -284,7 +290,6 @@ public class BalanceActivity extends MainActionBarActivity {
 			@Override
 			public void onComplete(Object parseResult) {
 				if (parseResult != null) {
-					Log.i(TAG, parseResult.toString());
 					setAddress();
 				}
 			}
@@ -297,6 +302,8 @@ public class BalanceActivity extends MainActionBarActivity {
 		tv_phone.setText(addressEntity.Tel);
 		tv_address.setText(addressEntity.Address);
 	}
+
+	String remark;
 
 	static class ViewHolder {
 		ImageView iv;
@@ -333,7 +340,26 @@ public class BalanceActivity extends MainActionBarActivity {
 				int px = Utils.dp2px(BalanceActivity.this, 200);
 				LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, px);
 				v.setLayoutParams(params);
-				et_remark = (EditText) v.findViewById(R.id.et_remark);
+				EditText et_remark = (EditText) v.findViewById(R.id.et_remark);
+				et_remark.addTextChangedListener(new TextWatcher() {
+
+					@Override
+					public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+					}
+
+					@Override
+					public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void afterTextChanged(Editable s) {
+						remark = s == null ? "" : s.toString();
+
+					}
+				});
 				return v;
 			}
 			if (convertView == null || !(convertView instanceof RelativeLayout))

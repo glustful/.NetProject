@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,7 +20,6 @@ import com.yoopoon.market.utils.Utils;
 
 @EActivity(R.layout.activity_login)
 public class LoginActivity extends MainActionBarActivity {
-	private static final String TAG = "LoginActivity";
 	@ViewById(R.id.ll_loading)
 	View loading;
 
@@ -37,19 +35,16 @@ public class LoginActivity extends MainActionBarActivity {
 		final String account = et_account.getText().toString();
 		final String psw = et_psw.getText().toString();
 		String json = "{\"Username\":\"" + account + "\",\"password\":\"" + psw + "\"}";
-		Log.i(TAG, json);
 		new RequestAdapter() {
 
 			@Override
 			public void onReponse(ResponseData data) {
-				Log.i(TAG, data.toString());
 				loading.setVisibility(View.GONE);
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					boolean status = object.optBoolean("Status", false);
 					JSONObject userObject = object.optJSONObject("Object");
 					if (status && userObject != null) {
-						Log.i(TAG, userObject.toString());
 						SharedPreferences sp = getSharedPreferences(getString(R.string.share_preference), MODE_PRIVATE);
 						Editor editor = sp.edit();
 						editor.putString("UserName", account);

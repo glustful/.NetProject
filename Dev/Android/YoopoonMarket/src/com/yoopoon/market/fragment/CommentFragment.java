@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,11 +53,14 @@ public class CommentFragment extends Fragment {
 	List<CommunityOrderEntity> orders = new ArrayList<CommunityOrderEntity>();
 	int page = 1;
 	int pageCount = 5;
+	View loading;
+	TextView tv_empty;
 
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		rootView = inflater.inflate(R.layout.fragment_comment, null);
+		if (rootView == null)
+			rootView = inflater.inflate(R.layout.fragment_comment, null);
 		init();
 		return rootView;
 	}
@@ -64,17 +68,21 @@ public class CommentFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		Log.i(TAG, "onResume");
 		page = 1;
 		requestData();
 	}
 
 	void requestData() {
+		Log.i(TAG, "requestData");
 		if (!User.isLogin(getActivity())) {
 			LoginActivity_.intent(getActivity()).start();
 			return;
 		}
 		String userId = User.getUserId(getActivity());
-
+		if (page == 1) {
+			loading.setVisibility(View.VISIBLE);
+		}
 		new RequestAdapter() {
 
 			@Override
@@ -83,13 +91,21 @@ public class CommentFragment extends Fragment {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					JSONArray array = object.optJSONArray("List");
-					if (array.length() == 0 && page > 1) {
-						Toast.makeText(getActivity(), "已经没有更多数据啦", Toast.LENGTH_SHORT).show();
+					if (array.length() == 0) {
+						if (page == 1) {
+							loading.setVisibility(View.GONE);
+							tv_empty.setVisibility(View.VISIBLE);
+						}
+						if (page > 1)
+							Toast.makeText(getActivity(), "已经没有更多数据啦", Toast.LENGTH_SHORT).show();
 					}
 					if (array.length() > 0) {
 						parseToOrderList(array);
 					}
 
+				} else {
+					loading.setVisibility(View.GONE);
+					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 				}
 			}
 
@@ -139,6 +155,8 @@ public class CommentFragment extends Fragment {
 	}
 
 	void init() {
+		tv_empty = (TextView) rootView.findViewById(R.id.tv_empty);
+		loading = rootView.findViewById(R.id.ll_loading);
 		lv = (PullToRefreshListView) rootView.findViewById(R.id.lv);
 		adapter = new MyListViewAdapter();
 		lv.setAdapter(adapter);
@@ -148,8 +166,8 @@ public class CommentFragment extends Fragment {
 	}
 
 	void fillData() {
-		TextView tv = (TextView) rootView.findViewById(R.id.tv_empty);
-		tv.setVisibility(orders.size() > 0 ? View.GONE : View.VISIBLE);
+		loading.setVisibility(View.GONE);
+		tv_empty.setVisibility(orders.size() > 0 ? View.GONE : View.VISIBLE);
 		adapter.notifyDataSetInvalidated();
 	}
 

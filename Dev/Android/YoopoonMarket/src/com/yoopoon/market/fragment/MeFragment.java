@@ -229,7 +229,10 @@ public class MeFragment extends Fragment implements OnClickListener {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					int count = object.optInt("TotalCount");
+					Log.i(TAG, object.toString());
+					// int count = object.optInt("TotalCount");
+					// serviceStatus.get(0).setText(count + "");
+					int count = object.optJSONArray("List").length();
 					serviceStatus.get(0).setText(count + "");
 					serviceStatus.get(0).setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 				}
@@ -249,7 +252,9 @@ public class MeFragment extends Fragment implements OnClickListener {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					int count = object.optInt("TotalCount");
+					Log.i(TAG, object.toString());
+					// int count = object.optInt("TotalCount");
+					int count = object.optJSONArray("List").length();
 					serviceStatus.get(1).setText(count + "");
 					serviceStatus.get(1).setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 				}
@@ -269,7 +274,9 @@ public class MeFragment extends Fragment implements OnClickListener {
 			public void onReponse(ResponseData data) {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
-					int count = object.optInt("TotalCount");
+					Log.i(TAG, object.toString());
+					// int count = object.optInt("TotalCount");
+					int count = object.optJSONArray("List").length();
 					serviceStatus.get(2).setText(count + "");
 					serviceStatus.get(2).setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 				}
@@ -322,6 +329,7 @@ public class MeFragment extends Fragment implements OnClickListener {
 		btn_address.setOnClickListener(this);
 		btn_about.setOnClickListener(this);
 		btn_order.setOnClickListener(this);
+		btn_service.setOnClickListener(this);
 
 		TextView tv_name = (TextView) rootView.findViewById(R.id.tv_name);
 		tv_name.setText(User.getUserName(getActivity()));
@@ -343,7 +351,6 @@ public class MeFragment extends Fragment implements OnClickListener {
 	public void onResume() {
 		super.onResume();
 		MainActivity mainActivity = (MainActivity) getActivity();
-		Log.i(TAG, "onResume:" + mainActivity.getCurrentPage());
 		if (mainActivity.getCurrentPage() == 3) {
 			if (!User.isLogin(getActivity())) {
 				LoginActivity_.intent(getActivity()).start();

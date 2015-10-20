@@ -17,8 +17,10 @@ import com.yoopoon.market.net.ProgressMessage;
 import com.yoopoon.market.net.RequestAdapter;
 import com.yoopoon.market.net.RequestAdapter.RequestMethod;
 import com.yoopoon.market.net.ResponseData;
+import com.yoopoon.market.utils.RegxUtils;
 import com.yoopoon.market.utils.SerializerJSON;
 import com.yoopoon.market.utils.SerializerJSON.SerializeListener;
+import com.yoopoon.market.utils.Utils;
 
 @EActivity(R.layout.activity_register)
 public class RegisterActivity extends MainActionBarActivity {
@@ -28,15 +30,32 @@ public class RegisterActivity extends MainActionBarActivity {
 
 	@Click(R.id.btn_register)
 	void register() {
-		loading.setVisibility(View.VISIBLE);
+		Utils.hiddenSoftBorad(this);
+
 		String username = et_username.getText().toString();
 		String psw = et_psw.getText().toString();
 		String confirm = et_confirm.getText().toString();
+
+		if (!RegxUtils.isPhone(username)) {
+			Toast.makeText(this, "请输入正确的手机号码", Toast.LENGTH_LONG).show();
+			return;
+		}
+
+		if (psw.length() < 6) {
+			Toast.makeText(this, "请输入长度为6-20的密码", Toast.LENGTH_LONG).show();
+			return;
+		}
+
+		if (!psw.equals(confirm)) {
+			Toast.makeText(this, "两次输入的密码不一致", Toast.LENGTH_LONG).show();
+			return;
+		}
 
 		model.UserName = username;
 		model.Phone = username;
 		model.Password = psw;
 		model.SecondPassword = confirm;
+		loading.setVisibility(View.VISIBLE);
 		serializeJson();
 
 	}

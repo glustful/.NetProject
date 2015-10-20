@@ -59,6 +59,7 @@
                 android:text="收货人" />
 
             <EditText
+                android:maxLength="5"
                 android:id="@+id/et_linkman"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

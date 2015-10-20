@@ -52,16 +52,19 @@ public class ReceiveFragment extends Fragment {
 	View loading;
 	int page = 1;
 	int pageCount = 5;
+	TextView tv_empty;
 
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		rootView = inflater.inflate(R.layout.fragment_receive, null);
+		if (rootView == null)
+			rootView = inflater.inflate(R.layout.fragment_receive, null);
 		init();
 		return rootView;
 	}
 
 	void init() {
+		tv_empty = (TextView) rootView.findViewById(R.id.tv_empty);
 		loading = rootView.findViewById(R.id.ll_loading);
 
 		lv = (PullToRefreshListView) rootView.findViewById(R.id.lv);
@@ -93,7 +96,8 @@ public class ReceiveFragment extends Fragment {
 			return;
 		}
 		String userId = User.getUserId(getActivity());
-
+		if (page == 1)
+			loading.setVisibility(View.VISIBLE);
 		new RequestAdapter() {
 
 			@Override
@@ -102,12 +106,21 @@ public class ReceiveFragment extends Fragment {
 				JSONObject object = data.getMRootData();
 				if (object != null) {
 					JSONArray array = object.optJSONArray("List");
-					if (array.length() == 0 && page > 1) {
-						Toast.makeText(getActivity(), "已经没有更多数据啦", Toast.LENGTH_SHORT).show();
+					if (array.length() == 0) {
+						if (page == 1) {
+							loading.setVisibility(View.GONE);
+							tv_empty.setVisibility(View.VISIBLE);
+						}
+						if (page > 1)
+							Toast.makeText(getActivity(), "已经没有更多数据啦", Toast.LENGTH_SHORT).show();
 					}
 					if (array.length() > 0) {
 						parseToOrderList(array);
 					}
+
+				} else {
+					loading.setVisibility(View.GONE);
+					Toast.makeText(getActivity(), data.getMsg(), Toast.LENGTH_SHORT).show();
 
 				}
 			}
@@ -159,8 +172,8 @@ public class ReceiveFragment extends Fragment {
 	}
 
 	void fillData() {
-		TextView tv = (TextView) rootView.findViewById(R.id.tv_empty);
-		tv.setVisibility(orders.size() > 0 ? View.GONE : View.VISIBLE);
+		loading.setVisibility(View.GONE);
+		tv_empty.setVisibility(orders.size() > 0 ? View.GONE : View.VISIBLE);
 		adapter.notifyDataSetInvalidated();
 	}
 

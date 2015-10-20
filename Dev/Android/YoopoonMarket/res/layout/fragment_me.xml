@@ -22,7 +22,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="125dp"
-                    android:background="@drawable/default_img" />
+                    android:background="@drawable/ocean" />
 
                 <com.makeramen.RoundedImageView
                     android:id="@+id/imageView1"
@@ -42,7 +42,9 @@
                     android:layout_alignParentBottom="true"
                     android:layout_toRightOf="@id/imageView1"
                     android:paddingBottom="40dp"
-                    android:textSize="20sp" />
+                    android:textStyle="bold|italic"
+                    android:textSize="20sp"
+                    android:textColor="@color/white" />
             </RelativeLayout>
 
             <include
@@ -77,7 +79,7 @@
                 android:drawableLeft="@drawable/u"
                 android:drawablePadding="5dp"
                 android:text="关于U+" />
-        </LinearLayout>
+        </LinearLayout> 
     </ScrollView>
     
     <include 
