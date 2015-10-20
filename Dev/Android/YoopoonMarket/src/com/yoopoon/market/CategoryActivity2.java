@@ -2,7 +2,9 @@ package com.yoopoon.market;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
@@ -12,19 +14,19 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -195,34 +197,24 @@ public class CategoryActivity2 extends MainActionBarActivity {
 	}
 
 	void refreshLinearLayout(int position) {
-		Log.i(TAG, "refreshLinearlayout");
 		ll.removeAllViews();
 		TreeCategory category = lists.get(position);
 		List<TreeCategory> children = category.children;
+		int spacing = Utils.dp2px(this, 10);
 		for (final TreeCategory child : children) {
 			TextView tv = new TextView(this);
 			tv.setText(child.label);
+			tv.setPadding(0, 0, 0, spacing);
 			ll.addView(tv);
-			// LabelGroup labelGroup = new LabelGroup(this);
-			//
-			// ImageView[] ivs = new ImageView[6];
-			// for (int i = 0; i < ivs.length; i++) {
-			// ivs[i] = new ImageView(CategoryActivity2.this);
-			// int width = Utils.dp2px(CategoryActivity2.this, 50);
-			// int margin = Utils.dp2px(this, 10);
-			// LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, width);
-			// params.setMargins(0, 0, margin, margin);
-			// labelGroup.addView(ivs[i], params);
-			// }
-			//
-			// requestImages(String.valueOf(child.Id), ivs);
-			// ll.addView(labelGroup);
 			MyGridView gv = new MyGridView(this);
-			gv.setNumColumns(3);
-			int spacing = Utils.dp2px(this, 10);
 			gv.setHorizontalSpacing(spacing);
-			gv.setVerticalSpacing(spacing);
+			gv.setColumnWidth(GridView.AUTO_FIT);
+			gv.setNumColumns(3);
 			ll.addView(gv);
+			View v = new View(CategoryActivity2.this);
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 1);
+			v.setBackgroundResource(R.drawable.line);
+			ll.addView(v, params);
 			requestImages(String.valueOf(child.Id), gv);
 			tv.setOnClickListener(new OnClickListener() {
 
@@ -237,19 +229,26 @@ public class CategoryActivity2 extends MainActionBarActivity {
 				}
 			});
 		}
+		ll.removeViewAt(ll.getChildCount() - 1);
 
 	}
 
-	class MyGridViewAdapter extends BaseAdapter {
-		String[] imgs;
+	static class ViewHolder {
+		ImageView iv;
+		TextView tv;
+	}
 
-		public MyGridViewAdapter(String[] imgs) {
-			this.imgs = imgs;
+	class MyGridViewAdapter extends BaseAdapter {
+
+		List<Map<String, String>> infos;
+
+		public MyGridViewAdapter(List<Map<String, String>> infos) {
+			this.infos = infos;
 		}
 
 		@Override
 		public int getCount() {
-			return imgs.length;
+			return infos.size();
 		}
 
 		@Override
@@ -264,13 +263,36 @@ public class CategoryActivity2 extends MainActionBarActivity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			ImageView iv = new ImageView(CategoryActivity2.this);
-			int width = Utils.dp2px(CategoryActivity2.this, 50);
-			AbsListView.LayoutParams params = new AbsListView.LayoutParams(width, width);
-			iv.setLayoutParams(params);
-			ImageLoader.getInstance().displayImage(imgs[position], iv);
-			iv.setScaleType(ScaleType.CENTER);
-			return iv;
+			Map<String, String> item = infos.get(position);
+			if (convertView == null)
+				convertView = View.inflate(CategoryActivity2.this, R.layout.item_category, null);
+			ViewHolder holder = (ViewHolder) convertView.getTag();
+			if (holder == null) {
+				holder = new ViewHolder();
+				holder.iv = (ImageView) convertView.findViewById(R.id.iv);
+				holder.tv = (TextView) convertView.findViewById(R.id.tv);
+				convertView.setTag(holder);
+			}
+			GridView gv = (GridView) parent;
+			int width = gv.getColumnWidth();
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, width);
+			holder.iv.setLayoutParams(params);
+			ImageLoader.getInstance().displayImage(item.get("url"), holder.iv);
+			holder.tv.setText(item.get("name"));
+			final String id = item.get("id");
+			convertView.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Bundle bundle = new Bundle();
+					bundle.putString("comeFromstatusCode", "productClassificationList");
+					bundle.putString("productId", id);
+					Intent intent = new Intent(CategoryActivity2.this, ProductDetailActivity_.class);
+					intent.putExtras(bundle);
+					CategoryActivity2.this.startActivity(intent);
+				}
+			});
+			return convertView;
 		}
 
 	}
@@ -285,15 +307,20 @@ public class CategoryActivity2 extends MainActionBarActivity {
 					JSONArray array = object.optJSONArray("List");
 					if (array != null) {
 						int length = array.length() >= 6 ? 6 : array.length();
-						String[] imgs = new String[length];
+						List<Map<String, String>> infos = new ArrayList<Map<String, String>>();
 						for (int i = 0; i < length; i++) {
+							Map<String, String> item = new HashMap<String, String>();
 							JSONObject product = array.optJSONObject(i);
 							String img = product.optString("MainImg");
 							String name = product.optString("Name");
+							String id = product.optString("Id");
 							String url = getString(R.string.url_image) + img;
-							imgs[i] = url;
+							item.put("url", url);
+							item.put("name", name);
+							item.put("id", id);
+							infos.add(item);
 						}
-						gv.setAdapter(new MyGridViewAdapter(imgs));
+						gv.setAdapter(new MyGridViewAdapter(infos));
 					}
 				} else {
 					Toast.makeText(CategoryActivity2.this, data.getMsg(), Toast.LENGTH_SHORT).show();

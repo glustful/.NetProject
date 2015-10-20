@@ -13,13 +13,10 @@
 package com.yoopoon.view.adapter;
 
 import java.util.ArrayList;
-
 import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,14 +24,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yoopoon.market.MyApplication;
 import com.yoopoon.market.ProductDetailActivity_;
 import com.yoopoon.market.R;
-import com.yoopoon.market.R.id;
-import com.yoopoon.market.R.layout;
 
 public class ProductClassificationListAdapter extends BaseAdapter {
 	private Context mContext;
@@ -44,18 +37,22 @@ public class ProductClassificationListAdapter extends BaseAdapter {
 		mContext = context;
 		datas = arrayList;
 	}
+
 	@Override
 	public int getCount() {
 		return datas.size();
 	}
+
 	@Override
 	public Object getItem(int position) {
 		return datas.get(position);
 	}
+
 	@Override
 	public long getItemId(int position) {
 		return position;
 	}
+
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ProductViewHandler productViewHandler;
@@ -89,6 +86,7 @@ public class ProductClassificationListAdapter extends BaseAdapter {
 					+ "人抢购");
 		}
 		convertView.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				Bundle bundle = new Bundle();
@@ -101,6 +99,7 @@ public class ProductClassificationListAdapter extends BaseAdapter {
 		});
 		return convertView;
 	}
+
 	/**
 	 * @Title: refresh
 	 * @Description: 传入数据刷新产品列表
@@ -113,13 +112,13 @@ public class ProductClassificationListAdapter extends BaseAdapter {
 		}
 		this.notifyDataSetChanged();
 	}
+
 	public void addRefresh(ArrayList<JSONObject> arrayList) {
 		if (arrayList != null) {
 			datas.addAll(arrayList);
 		}
 		this.notifyDataSetChanged();
 	}
-	
 
 	class ProductViewHandler {
 		private ImageView productPhotoImageView;

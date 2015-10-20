@@ -20,7 +20,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/commodity_testing" />
+                android:src="@drawable/commodity_testing"
+                android:layout_margin="5dp" />
         </LinearLayout>
 
         <LinearLayout
