@@ -1,3 +1,92 @@
+
+
+app.controller('tabservice',['$http','$scope',function($http,$scope){
+	$scope.go = function (state) {
+		window.location.href = state;
+	};
+
+	//    搜索功能
+	$scope.showSelect = false;
+	$scope.isShow = false;
+	$scope.showInput = function () {
+		$scope.showSelect = true;
+		$scope.isShow = true;
+	};
+//  下拉框效果
+	$scope.selectBox=false;
+	$scope.showSelectBox=function(){
+		$scope.selectBox=true;
+	}
+//	关闭下拉框
+	$scope.closeSelectBox=function(){
+		$scope.selectBox=false;
+	}
+
+	//region地址获取
+	$scope.Condition = {
+		Page: 1,
+		father: true,
+		Parent_Id: ''
+	};
+	$scope.pare = [];
+
+	var getAddress = function () {
+		$http.get(SETTING.ApiUrl + '/CommunityArea/Get', {
+			params: $scope.Condition,
+			'withCredentials': true
+		}).success(function (data3) {
+			if (data3.List != "") {
+				$scope.addrss = data3.List;
+				$scope.selected = data3.List[0].Id;//如果想要第一个值
+				//for( i=0;i<data3.List.length;i++){
+				//    if(data3.List[i].Parent=null)
+				//    {
+				//        $scope.pare.push (data3.List[i].Parent);
+				//    }}
+				//alert($scope.pare);
+			}
+		});
+	}
+	getAddress();
+	$scope.SCondition = {
+
+		Parent_Id: ''
+	};
+
+	$scope.area="云南省"
+	$scope.click = function (area,id) {
+		$scope.area=area;
+		//$scope.selectBox=false;
+		$scope.SCondition.Parent_Id =id
+		$http.get(SETTING.ApiUrl + '/CommunityArea/Get', {
+			params: $scope.SCondition,
+			'withCredentials': true
+		}).success(function (data) {
+			$scope.zilei = data.List;
+		})
+
+	}
+	$scope.huan=function(area){
+		$scope.area=area;
+		$scope.selectBox=false;
+	}
+
+
+//region 图片轮播
+	$scope.channelName = 'banner';
+	$http.get(SETTING.ApiUrl+'/Channel/GetTitleImg', {
+		params: {ChannelName: $scope.channelName},
+		'withCredentials': true
+	}).success(function (data) {
+		$scope.content = data;
+	});
+	//endregion
+
+
+}]);
+
+
+
 app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, $timeout,AuthService, $ionicHistory,$stateParams) {
 	// With the new view caching in Ionic, Controllers are only called
 	// when they are recreated or on app start, instead of every page change.
@@ -141,6 +230,9 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 		}, 500);
 
 	};
+
+
+
 
 
 });

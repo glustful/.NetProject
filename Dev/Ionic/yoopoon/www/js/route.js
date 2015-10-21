@@ -77,7 +77,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                views: {
                'page-service': {
                templateUrl: 'page/service/tab-service.html',
-               controller: 'serviceIndex'
+               controller: 'tabservice'
                }
                }
                })
