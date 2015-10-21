@@ -121,6 +121,11 @@ namespace Community.Service.ServiceOrder
                 {
                     query = query.Where(q => condition.AddUsers.Contains(q.AddUser));
                 }
+			    if (condition.Status != null)
+			    {
+			        query = query.Where(c => c.Status == condition.Status);
+			    }
+                
 				if(condition.OrderBy.HasValue)
 				{
 					switch (condition.OrderBy.Value)
@@ -201,6 +206,10 @@ namespace Community.Service.ServiceOrder
                 {
                     query = query.Where(q => condition.AddUsers.Contains(q.AddUser));
                 }
+                if (condition.Status != null)
+                {
+                    query = query.Where(c => c.Status == condition.Status);
+                }
 				return query.Count();
 			}
 			catch(Exception e)
@@ -209,5 +218,18 @@ namespace Community.Service.ServiceOrder
                 return -1;
 			}
 		}
+
+	    public ServiceOrderEntity GetServiceOrderByNo(string orderNo)
+	    {
+	        try
+	        {
+	            return _serviceorderRepository.Get(c => c.OrderNo == orderNo);
+	        }
+	        catch (Exception e)
+	        {
+                _log.Error(e, "数据库操作出错");
+                return null;
+	        }
+	    }
 	}
 }

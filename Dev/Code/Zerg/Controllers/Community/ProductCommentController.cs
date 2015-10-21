@@ -1,14 +1,18 @@
-using System;
+ï»¿using System;
 using System.Linq;
 using System.Net.Http;
+using System.Transactions;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Community.Entity.Model.Order;
 using Community.Entity.Model.ProductComment;
 using Community.Service.Product;
 using Community.Service.ProductComment;
 using Zerg.Common;
 using Zerg.Models.Community;
 using Community.Service.Member;
+using Community.Service.OrderDetail;
+using YooPoon.Core.Site;
 
 namespace Zerg.Controllers.Community
 {
@@ -19,17 +23,21 @@ namespace Zerg.Controllers.Community
 		private readonly IProductCommentService _productCommentService;
         private readonly IProductService _productService;
         private readonly IMemberService _memberService;
+        private readonly IWorkContext _workContext;
+        private readonly IOrderDetailService _orderDetailService;
 
-		public ProductCommentController(IProductCommentService productCommentService,IProductService productService,IMemberService memberService)
+        public ProductCommentController(IProductCommentService productCommentService,IProductService productService,IMemberService memberService,IWorkContext workContext,IOrderDetailService orderDetailService)
 		{
 		    _productCommentService = productCommentService;
             _productService = productService;
             _memberService = memberService;
+            _workContext = workContext;
+            _orderDetailService = orderDetailService;
 		}
         /// <summary>
-        /// ¸ù¾İÆÀÂÛID»ñÈ¡¸ÃÆÀÂÛ
+        /// æ ¹æ®è¯„è®ºIDè·å–è¯¥è¯„è®º
         /// </summary>
-        /// <param name="id">ÆÀÂÛID</param>
+        /// <param name="id">è¯„è®ºID</param>
         /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage Get(int id)
@@ -48,7 +56,7 @@ namespace Zerg.Controllers.Community
 		}
 
         /// <summary>
-        /// Ìõ¼ş²éÑ¯
+        /// æ¡ä»¶æŸ¥è¯¢
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
@@ -75,66 +83,75 @@ namespace Zerg.Controllers.Community
 
 
         /// <summary>
-        /// Ìí¼ÓÆÀÂÛ
+        /// æ·»åŠ è¯„è®º
         /// </summary>
-        /// <param name="model">ÆÀÂÛÊµÌå</param>
+        /// <param name="model">è¯„è®ºå®ä½“</param>
         /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage Post(ProductCommentModel model)
         {
-            
-            
+            var detail = _orderDetailService.GetOrderDetailById(model.ProductDetailsId);
+            if (detail == null)
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "æ— æ³•æ‰¾åˆ°è¯„ä»·å•†å“æ‰€åœ¨è®¢å•"));
+            detail.Status = EnumOrderDetailStatus.å·²è¯„ä»·;
+
 			var entity = new ProductCommentEntity
 			{
 				Product =_productService.GetProductById(model.ProductId),
-                Member = _memberService .GetMemberById (1),
+                Member = _memberService.GetMemberByUserId(_workContext.CurrentUser.Id),
 				AddTime =DateTime.Now,
 				Content = model.Content,
-				Stars = model.Stars
+				Stars = model.Stars,
+                OrderDetail = _orderDetailService.GetOrderDetailById(model.ProductDetailsId)
 			};
-			if(_productCommentService.Create(entity).Id > 0)
-			{
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "Ìí¼Ó³É¹¦£¡"));
-			}
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "Ìí¼ÓÊ§°Ü£¡"));
+            using (var tran = new TransactionScope())
+            {
+                if (_productCommentService.Create(entity).Id > 0 && _orderDetailService.Update(detail).Id > 0)
+                {
+                    tran.Complete();
+                    return PageHelper.toJson(PageHelper.ReturnValue(true, "æ·»åŠ æˆåŠŸï¼"));
+                }
+            }
+
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "æ·»åŠ å¤±è´¥ï¼"));
 		}
 
 
         /// <summary>
-        /// ĞŞ¸ÄÆÀÂÛ
+        /// ä¿®æ”¹è¯„è®º
         /// </summary>
-        /// <param name="model">ÆÀÂÛÊµÌå</param>
+        /// <param name="model">è¯„è®ºå®ä½“</param>
         /// <returns>Bool</returns>
         public HttpResponseMessage Put(ProductCommentModel model)
 		{
 			var entity = _productCommentService.GetProductCommentById(model.Id);
 			if(entity == null)
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "Ã»ÓĞ¸ÃÆÀÂÛ£¡"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "æ²¡æœ‰è¯¥è¯„è®ºï¼"));
 			entity.Product = _productService.GetProductById(model.Id);
 			//entity.AddUser = model.AddUser;
 			entity.AddTime = model.AddTime;
 			entity.Content = model.Content;
 			entity.Stars = model.Stars;
 			if(_productCommentService.Update(entity) != null)
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "ĞŞ¸Ä³É¹¦£¡"));
-            return PageHelper.toJson(PageHelper.ReturnValue(false, "ĞŞ¸ÄÊ§°Ü£¡"));
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "ä¿®æ”¹æˆåŠŸï¼"));
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "ä¿®æ”¹å¤±è´¥ï¼"));
 		}
 
 
         /// <summary>
-        /// É¾³ıÆÀÂÛ
+        /// åˆ é™¤è¯„è®º
         /// </summary>
-        /// <param name="id">ÆÀÂÛID</param>
+        /// <param name="id">è¯„è®ºID</param>
         /// <returns></returns>
         
         public HttpResponseMessage Delete(int id)
 		{
 			var entity = _productCommentService.GetProductCommentById(id);
 			if(entity == null)
-                return PageHelper.toJson(PageHelper.ReturnValue(false, "Ã»ÓĞ¸ÃÆÀÂÛ£¡"));
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "æ²¡æœ‰è¯¥è¯„è®ºï¼"));
 			if(_productCommentService.Delete(entity))
-                return PageHelper.toJson(PageHelper.ReturnValue(true, "É¾³ı³É¹¦£¡"));
-            return PageHelper.toJson(PageHelper.ReturnValue(true, "É¾³ıÊ§°Ü£¡"));
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "åˆ é™¤æˆåŠŸï¼"));
+            return PageHelper.toJson(PageHelper.ReturnValue(true, "åˆ é™¤å¤±è´¥ï¼"));
 		}
 	}
 }

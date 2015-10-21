@@ -7,7 +7,13 @@ app.controller('serviceIndex', function($scope) {
 
 
 
-    // узуж╡Ц
+    //    Ф░°Г╢╒Е┼÷Х┐╫
+    $scope.showSelect = false;
+    $scope.isShow = false;
+    $scope.showInput = function() {
+        $scope.showSelect = true;
+        $scope.isShow = true;
+    };
 
     var tip1 = document.getElementById("tiphidden1");
     var tip2 = document.getElementById("tiphidden2");

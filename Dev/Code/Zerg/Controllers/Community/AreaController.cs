@@ -43,18 +43,39 @@ namespace Zerg.Controllers.Community
                         Adddate = entity.AddDate,
                         Name = entity.Name,
                         //ParentName = entity.Parent.Name,
-                        Parent = entity.Parent == null ? null: new AreaModel { Id = entity.Parent.Id, Adddate = entity.Parent.AddDate, Name = entity.Parent.Name },
-                    };
-                    if (model.Parent != null)
-                    {
-                        model.Parent = new AreaModel
+                        Parent = entity.Parent == null ? null : new AreaModel
                         {
-                            Name = entity.Parent.Name,
-                            Adddate = entity.Parent.AddDate,
-                            Codeid = entity.Parent.CodeId,
                             Id = entity.Parent.Id,
-                        };
-                    }
+                            Adddate = entity.Parent.AddDate,
+                            Name = entity.Parent.Name,
+                            Parent = entity.Parent.Parent == null ? null : new AreaModel { Id = entity.Parent.Parent.Id, Adddate = entity.Parent.Parent.AddDate, Name = entity.Parent.Parent.Name,
+                            Parent = entity.Parent.Parent.Parent == null ? null : new AreaModel { Id = entity.Parent.Parent.Parent.Id, Adddate = entity.Parent.Parent.Parent.AddDate, Name = entity.Parent.Parent.Parent.Name
+                                } 
+                            },
+                        }
+                    };
+                    //if (model.Parent != null)
+                    //{
+                    //    model.Parent = new AreaModel
+                    //    {
+                    //        Name = entity.Parent.Name,
+                    //        Adddate = entity.Parent.AddDate,
+                    //        Codeid = entity.Parent.CodeId,
+                    //        Id = entity.Parent.Id,
+                    //    };
+                    //}
+                    //if(model.Parent!=null)
+                    //{
+                    //    var entityParent = _areaService.GetAreaById(model.Parent.Id);
+                    //    model.Parent.Parent = new AreaModel
+                    //    {
+                    //        Id = entityParent.Parent.Id,
+                    //        Codeid=entityParent.Parent.CodeId,
+                    //        Adddate = entityParent.Parent.AddDate,
+                    //        Name = entityParent.Parent.Name,
+                    //        Parent=entityParent.Parent==null?null:new AreaModel { Id = entityParent.Parent.Id, Adddate = entityParent.Parent.AddDate, Name = entityParent.Parent.Name }
+                    //    };
+                    //}
                 }
                 else
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "数据库没有此记录！"));
@@ -125,12 +146,16 @@ namespace Zerg.Controllers.Community
         {
             AreaEntity entity = _areaService.GetAreaById(model.Id);
             if (entity == null)
-               return PageHelper.toJson(PageHelper.ReturnValue(false, "数据库没有此记录！")); 
-
-            if (model.Parent != null && model.Parent.Id != entity.Parent.Id)
+               return PageHelper.toJson(PageHelper.ReturnValue(false, "数据库没有此记录！"));
+            try {
+                if (model.Parent != null && model.Parent.Id != entity.Parent.Id)
+                {
+                    var father = _areaService.GetAreaById(Convert.ToInt32(model.Parent.Id));
+                    entity.Parent = father;
+                }
+            }catch(Exception ex)
             {
-                var father = _areaService.GetAreaById(Convert.ToInt32( model.Parent.Id));
-                entity.Parent = father;
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "修改失败！"));
             }
 
             entity.CodeId = model.Codeid;

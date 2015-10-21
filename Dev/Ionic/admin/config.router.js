@@ -74,6 +74,26 @@ angular.module('app').run(['$rootScope', '$state', '$stateParams', 'AuthService'
                           }]
                   }
               })
+              .state('app.member.memlist', {
+                  url: 'memlist',
+                  templateUrl: 'app/module/member/view/memlist.html',
+                  resolve: {
+                      deps: ['$ocLazyLoad',
+                          function ($ocLazyLoad) {
+                              return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
+                          }]
+                  }
+              })
+              .state('app.member.detail', {
+                  url: 'detail?id',
+                  templateUrl: 'app/module/member/view/detail.html',
+                  resolve: {
+                      deps: ['$ocLazyLoad',
+                          function ($ocLazyLoad) {
+                              return $ocLazyLoad.load(['app/module/member/controller/memlist.js']);
+                          }]
+                  }
+              })
 
 
               //--------------公众号基本设置

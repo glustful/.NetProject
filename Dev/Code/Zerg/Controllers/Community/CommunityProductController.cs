@@ -39,6 +39,10 @@ namespace Zerg.Controllers.Community
         public HttpResponseMessage Get(int id)
 		{
 			var entity =_productService.GetProductById(id);
+            if (entity == null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不存在"));
+            }
             var comment = entity.Comments;           
             List<ProductCommentModel> commentList;
             if (comment == null)
@@ -85,13 +89,13 @@ namespace Zerg.Controllers.Community
                 Ad2 = entity.Detail.Ad2,
                 Ad3 = entity.Detail.Ad3,
                 //Comments = entity.Comments,		
-                ParameterValue =entity.Parameters.Select(c => new ProductParameterValueModel
-                {
-                    ParameterId = c.Parameter.Id,
-                    ParameterString = c.Parameter.Name,
-                    ValueId = c.ParameterValue.Id,
-                    Value = c.ParameterValue.Value
-                }).ToList()
+                //ParameterValue =entity.Parameters.Select(c => new ProductParameterValueModel
+                //{
+                //    ParameterId = c.Parameter.Id,
+                //    ParameterString = c.Parameter.Name,
+                //    ValueId = c.ParameterValue.Id,
+                //    Value = c.ParameterValue.Value
+                //}).ToList()
             };
             var product=new ProductComment
             {
@@ -115,7 +119,8 @@ namespace Zerg.Controllers.Community
                IsDescending = condition.IsDescending,
                OrderBy = condition.OrderBy,
                PriceBegin = condition.PriceBegin,
-               PriceEnd = condition.PriceEnd
+               PriceEnd = condition.PriceEnd,
+               CategoryName=condition.CategoryName
             };
             if (condition.CategoryId!=0 && condition.CategoryId!=null)
             {
@@ -153,6 +158,7 @@ namespace Zerg.Controllers.Community
                 Owner =c.Owner,
                 Addtime = c.AddTime,
 				Detail = c.Detail.Detail,
+                Ad1 = c.Detail.Ad1
 //				Comments = c.Comments,
 //				Parameters = c.Parameters,
                 //ParameterValue =c.Parameters.Select(p => new ProductParameterValueModel

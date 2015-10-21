@@ -49,7 +49,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         // Set up the various states which the app can be in.
         // Each state's controller can be found in controllers.js
         $stateProvider
-        
+
         // setup an abstract state for the tabs directive
         .state('page', {
                url: '/page',
@@ -128,11 +128,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
                }
                })
             .state('page.order', {
-                url: '/car/order?productcount&pricecount',
+                url: '/car/order?productId&count',
                 views: {
                     'page-car': {
                         templateUrl: 'page/car/order.html',
-                        controller: 'TabCarCtrl'
+                        controller: 'submitOrderController'
                     }
                 }
             })
@@ -212,8 +212,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 url: '/me/newAddress?id&name',
                 views: {
                     'page-me': {
-                        templateUrl: 'page/me/newAddress.html',
-                        controller: 'newAddress'
+                        templateUrl: 'page/me/newAddress.html'
+
                     }
                 }
             })
@@ -281,7 +281,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
     })
     .state('page.search_product', {
-        url: '/search_product?productName',
+        url: '/search_product',
         views: {
             'page-shopping': {
                 templateUrl: 'page/shopping/searchProduct.html',

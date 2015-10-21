@@ -24,7 +24,7 @@ class ForgetPasswdViewController: TextFieldViewController {
             uiPhone.shake(5, delta: 5)
             return
         }
-        if !RegexHelper(phoneRegex).match(uiPhone.text){
+        if !RegexHelper(phoneRegex).match(uiPhone.text!){
             TipTools().showToast("格式不符", message: "电话号码格式不对，重新输入", duration: 2)
             return
         }
@@ -50,16 +50,16 @@ class ForgetPasswdViewController: TextFieldViewController {
             uiValide.shake(5, delta: 5)
             return false
         }
-        self.brokerEntity.updateValue(uiValide.text, forKey: "Yzm")
+        self.brokerEntity.updateValue(uiValide.text!, forKey: "Yzm")
         if uiPhone.text == nil || uiPhone.text == ""{
             uiPhone.shake(5, delta: 5)
             return false
         }
-        if !RegexHelper(phoneRegex).match(uiPhone.text){
+        if !RegexHelper(phoneRegex).match(uiPhone.text!){
             TipTools().showToast("格式不符", message: "电话号码格式不对，重新输入", duration: 2)
             return false
         }
-        self.brokerEntity.updateValue(uiPhone.text, forKey: "Phone")
+        self.brokerEntity.updateValue(uiPhone.text!, forKey: "Phone")
         
         if uiPasswd.text == nil || uiPasswd.text == ""{
             uiPasswd.shake(5, delta: 5)
@@ -70,8 +70,8 @@ class ForgetPasswdViewController: TextFieldViewController {
             TipTools().showToast("提示", message: "两次输入的密码不相同，重新输入", duration: 2)
             return false
         }
-        self.brokerEntity.updateValue(uiPasswd.text, forKey: "first_password")
-        self.brokerEntity.updateValue(uiConfirePasswd.text, forKey: "second_password")
+        self.brokerEntity.updateValue(uiPasswd.text!, forKey: "first_password")
+        self.brokerEntity.updateValue(uiConfirePasswd.text!, forKey: "second_password")
         return true
     }
     
@@ -84,7 +84,7 @@ class ForgetPasswdViewController: TextFieldViewController {
             .setIsShowIndicator(true, currentView: self.view)
             .setParameters(brokerEntity)
             .request({json in
-                print(json)
+                
                 if let status = json["Status"].bool{
                     if status{
                         
@@ -111,7 +111,7 @@ class ForgetPasswdViewController: TextFieldViewController {
             .setUrl(urlSMSSend)
             .setEncoding(.JSON)
             .setRequestMethod(.POST)
-            .addParameter("Mobile", value: uiPhone.text)
+            .addParameter("Mobile", value: uiPhone.text!)
             .addParameter("SmsType", value: SMSType.forgetPasswordType)
             .request({json in
                 if json["Message"].stringValue == "1"{

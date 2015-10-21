@@ -70,6 +70,7 @@ namespace Community.Entity.Model.MemberAddress
 
 		public EnumMemberAddressSearchOrderBy? OrderBy { get; set; }
 
+
 	}
 
 

@@ -108,7 +108,7 @@ class ProductDetailViewController: SuperViewController {
         
         if let productImg = json["ProductDetailImg"].string{
            // println()
-            self.uiProductImg.load(imgHost + productImg, placeholder: UIImage(named: placeHoder), completionHandler: {(_,image,_) in
+            self.uiProductImg.load(imgHost + productImg, placeholder: UIImage(named: placeHoder), completionHandler: {(_,image,_,_) in
                 if let img = image{
                     if img.size.width < screenBounds.width{
                     self.constraintMiddleViewHeight.constant = img.size.height
@@ -119,7 +119,7 @@ class ProductDetailViewController: SuperViewController {
             })
         }
         if let productDetailImg = json["Productimg1"].string{
-            self.uiPicDetail.load(imgHost + productDetailImg, placeholder: UIImage(named: placeHoder), completionHandler: {(_,image,_) in
+            self.uiPicDetail.load(imgHost + productDetailImg, placeholder: UIImage(named: placeHoder), completionHandler: {(_,image,_,_) in
                 if let img = image{
                    
                     if img.size.width < screenBounds.width{

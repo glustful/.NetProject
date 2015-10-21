@@ -6,7 +6,7 @@
 </div>
 <div class="bar bar-subheader bar-stable" style="top:44px;">
     <ul>
-        <li style="float:left;width: 20%;height: 30px;margin-left: 20px;" ng-repeat="item in cateList"
+        <li style="text-align:center;line-height:30px;float:left;width: 20%;height: 30px;margin-left: 20px;background-color:#E2DFDF" ng-repeat="item in cateList"
             ng-click="getList(item.Id)">{{item.Name}}
         </li>
     </ul>
@@ -31,7 +31,7 @@
         <ion-list>
             <ion-item class="row" ng-repeat="item in list" >
                 <div class="product col col-25" ui-sref="page.product-detail({id:item.Id})">
-                    <img src="http://img.iyookee.cn/{{item.MainImg}}" alt=""/>
+                    <img ng-src="{{Img+item.MainImg}}@67w_67h_70q" alt=""/>
                 </div>
                 <div class="col col-75">
                     <h2 style="white-space: normal" class="font-title">{{item.Name}}</h2>

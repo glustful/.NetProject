@@ -38,11 +38,11 @@ namespace Zerg.Controllers.Community
                 var user = _workContext.CurrentUser;
                 if (user == null)
                     return PageHelper.toJson(PageHelper.ReturnValue(false, "无法获取当前的用户信息"));
-                entity = _memberAddressService.GetDefaultAddress(user.Id);
+                entity = _memberAddressService.GetDefaultAddress(user.Id)??_memberService.GetMemberByUserId(user.Id).Address.FirstOrDefault();
             }
             else
             {
-                entity = _memberAddressService.GetDefaultAddress(memberId);
+                entity = _memberAddressService.GetDefaultAddress(memberId)??_memberService.GetMemberById(int.Parse(memberId)).Address.FirstOrDefault();
             }
             if (entity == null)
                 return PageHelper.toJson(null);
@@ -78,14 +78,15 @@ namespace Zerg.Controllers.Community
                 Adduser = entity.Adduser,
                 Addtime = entity.Addtime,
                 Upduser = entity.Upduser,
-                Updtime = entity.Updtime
+                Updtime = entity.Updtime,
+                IsDefault = entity.IsDefault
             };
             return PageHelper.toJson(model);
 		}
 
         public HttpResponseMessage Get([FromUri]MemberAddressSearchCondition condition)
 		{
-			var model =_memberAddressService.GetMemberAddresssByCondition(condition).Select(o=>o.Id).Count()>0? _memberAddressService.GetMemberAddresssByCondition(condition).Select(c=>new MemberAddressModel
+			var model =_memberAddressService.GetMemberAddresssByCondition(condition).Select(o=>o.Id).Any()? _memberAddressService.GetMemberAddresssByCondition(condition).Select(c=>new MemberAddressModel
 			{
 				Id = c.Id,
 				Member = c.Member.Id,
@@ -97,6 +98,7 @@ namespace Zerg.Controllers.Community
 				Addtime = c.Addtime,
 				Upduser = c.Upduser,
 				Updtime = c.Updtime,
+                IsDefault = c.IsDefault
 			}).ToList():null;
             var totalCount = _memberAddressService.GetMemberAddressCount(condition);
             return PageHelper.toJson(new { List = model, Condition = condition, toTalCount = totalCount });
@@ -115,7 +117,8 @@ namespace Zerg.Controllers.Community
 				Addtime = DateTime.Now,
 				Upduser = _workContext.CurrentUser.Id,
 				Updtime = DateTime.Now,
-                Area = _areaService.GetAreaById(model.AreaId)
+                Area = _areaService.GetAreaById(model.AreaId),
+                IsDefault = model.IsDefault
 			};
 			if(_memberAddressService.Create(entity).Id > 0)
 			{
@@ -129,7 +132,7 @@ namespace Zerg.Controllers.Community
 			var entity = _memberAddressService.GetMemberAddressById(model.Id);
 			if(entity == null)
                 return PageHelper.toJson(PageHelper.ReturnValue(false, "修改失败"));
-			entity.Member.Id = model.Member;
+			//entity.Member.Id = model.Member;
 			entity.Address = model.Address;
 			entity.Zip = model.Zip;
 			entity.Linkman = model.Linkman;
@@ -138,6 +141,12 @@ namespace Zerg.Controllers.Community
 			entity.Addtime = model.Addtime;
 			entity.Upduser = model.Upduser;
 			entity.Updtime = model.Updtime;
+            entity.IsDefault = model.IsDefault;
+            if (model.IsDefault.HasValue && model.IsDefault.Value)
+            {
+                var defaultEntities = _memberAddressService.GetDefaultAddress(entity.Member.Id.ToString());
+                defaultEntities.IsDefault = false;
+            }
 			if(_memberAddressService.Update(entity) != null)
                 return PageHelper.toJson(PageHelper.ReturnValue(true, "修改成功"));
             return PageHelper.toJson(PageHelper.ReturnValue(false, "修改失败"));

@@ -53,7 +53,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func hiddenNavigationBar(){
        // (window!.rootViewController as! UINavigationController).navigationBar.hidden = true
         let navi = (window!.rootViewController as! UINavigationController)
-        
         let searchFrame = CGRectMake(0, UIApplication.sharedApplication().statusBarFrame.height, UIScreen.mainScreen().bounds.width, navi.navigationBar.frame.height)
        let searchView =
        NSBundle.mainBundle().loadNibNamed("SearchProductView", owner: nil, options: nil).last as! SearchProductView

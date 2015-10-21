@@ -9,7 +9,7 @@
             <option>JavaScript</option>
         </select>
     </label>
-  <a class="button button-icon icon icon-search search" ng-click="showInput()"></a>
+  <a class="button button-icon icon icon-search searchs" ng-click="showInput()"></a>
     <input class="header-input" ng-class="{'header-input-show':isShow}" type="text" placeholder="" style="border: 1px solid #fff; height: 70%;z-index: 0;padding-left: 10px;color: #fff">
 </div>
 
@@ -55,17 +55,20 @@
           </div>
 
       <h4 style="text-align: center; color:#b0b0b0 ">······更多精彩，敬请期待！</h4>
-
-
   </ion-content>
 
-    <!--底部-->
-    <div id="tiphidden2">
-        <div class="row dark-bg hidden-pg" style="position: fixed;bottom: 0;" >
-            <img src="page/shopping/img/foot.png">
-        </div>
-        <div class="button-location" ng-click="closetips()" >
-            <img src="page/shopping/img/button.png" >
+    <!-- 遮罩content-->
+    <div style="position:absolute;top: 44px;width: 100%;height:100%;background: rgba(51, 51, 51, 0.5);z-index: 999" id="tiphidden2">
+        <!--底部-->
+        <div >
+            <div class="row dark-bg hidden-pg" style="position: absolute;bottom: 44px;" >
+                <img src="page/shopping/img/foot.png">
+            </div>
+            <div class="button-location" ng-click="closetips()" >
+                <img src="page/shopping/img/button.png" >
+            </div>
         </div>
     </div>
+
+
 </ion-view>

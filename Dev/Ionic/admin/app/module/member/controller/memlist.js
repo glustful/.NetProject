@@ -4,8 +4,8 @@
 app.controller('memController', ['$scope', '$http','$stateParams','$modal','$state',
     function($scope, $http,$stateParams,$modal,$state) {
         $scope.searchCondition = {
-            page: 1,
-            pageSize: 10
+            Page: 1,
+            PageCount: 10
         };
 
         var getMember = function() {
