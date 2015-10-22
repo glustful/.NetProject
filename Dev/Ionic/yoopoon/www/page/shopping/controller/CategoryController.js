@@ -22,8 +22,8 @@ app.controller('CategoryController',['$scope','$http','$state',function($scope,$
     //    $state.go("page.search_product", {productName: $scope.productName});
     //};
     $scope.tabIndex= 1 ;
-    $scope.category=function(tabIndex,$event){
-        $scope.obj=$event.target;
+    $scope.category=function(tabIndex){
+
         $scope.tabIndex=tabIndex;
 
 
