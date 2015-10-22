@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="page/car/css/car.css">
 <div  onUnload="opener.location.reload()">
   <div class="bar" style="height: 44px">
-      <h2 class=" title">购物车(5)</h2>
-      <a href="" class="button button-clear" ng-click="flag.showDelete=!flag.showDelete;flag.showReorder=false;">编辑</a>
+      <h2 class=" title" style="font-weight: 600;font-size:24px;">购物车({{sum}})</h2>
+      <a href="" class="button button-clear" style="font-size: 15px;color: #222222;"  ng-click="flag.showDelete=!flag.showDelete;flag.showReorder=false;">编辑</a>
   </div>
         <ion-view hide-nav-bar="true" hide-tabs="false">
   <ion-content no-header="true" style="top:44px;">
@@ -74,10 +74,10 @@
     </ion-list>
   </ion-content>
         </ion-view>
-            <div class="bar bar-subfooter checkout">
+            <div id="sssum" class="bar bar-subfooter checkout" style="border-top: solid 0.5px;">
                 <ion-checkbox style="margin-top: -12px;margin-left: -10px;width: 100px;"  ng-click="all(allButton,productlist)" ng-model="allButton">全选</ion-checkbox>
-                <h2 class="title">合计<span class="red">￥{{dprice}}</span></h2>
-                <a class="button light " ng-click="jiesuan()">结算(5)</a>
+                <h2 class="title">合计<span class="red">{{dprice | currency:"￥"}}</span></h2>
+                <input type="button" style="background-color: #ff5000"  aria-disabled="true" disabled="disabled" id="ccsum"  class="button light " ng-click="jiesuan()"value="结算({{sum}})"/>
             </div>
 
 </div>

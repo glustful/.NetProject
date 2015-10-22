@@ -377,7 +377,7 @@
     top:320px;
 }
 /*动画开始*/
-.gwc-car{
+/*.gwc-car{
     width: 40px;
     height: 40px;
     background-color: #898d93;
@@ -421,11 +421,29 @@
         bottom:90%;
         left: 85%;
     }
-   }
+   }*/
 /*动画结束*/
 /*shopping页购物车动画*/
+.gwcAnimation{
+	position:fixed;
+	opacity: 0;
+	display: block;
+	z-index: 32222222222222;
+	-webkit-animation-name: Gwc;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-delay: 0s;
+}
+@-webkit-keyframes Gwc {
+	0% {
+	-webkit-transform: rotate(0) scale(1);opacity:0.5;}
+50% {
+	-webkit-transform: rotate(720deg) scale(0.5); opacity:1;}
+100% {
+	-webkit-transform: rotate(1080deg) scale(0.1); opacity:0;bottom: 0;left:75%}
+}	
 
-.add{
+/*.add{
     position:absolute;
     top:0;
     left:0;
@@ -438,7 +456,7 @@
     z-index:10000;
 
 
-}
+}*/
 
 /*@-webkit-keyframes Gwc-two{
     from{opacity:1;

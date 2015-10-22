@@ -222,7 +222,7 @@ app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$t
             count: null,
             mainimg:null,
             price:null,
-            oldprice:null,
+            oldprice:null
             //parameterValue:[]
         };
         $scope.changIng=false;

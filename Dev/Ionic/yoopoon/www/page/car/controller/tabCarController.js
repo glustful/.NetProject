@@ -81,12 +81,15 @@ var carlistcount=0;
     $scope.all=function(c,v){
 
         if(c==true){
+            $scope.choseArr=[""];
             cleanchoseArr();
-            for( i=0;i<$scope.productlist.length;i++)
+            for( j=0;j<$scope.productlist.length;j++)
             {
-                $("#check"+$scope.productlist[i].id).find(":checkbox")[0].checked=true;
-                $scope.choseArr.push($scope.productlist[i].id);
+                cleanchoseArr();
+                $("#check"+$scope.productlist[j].id).find(":checkbox")[0].checked=true;
+                $scope.choseArr.push($scope.productlist[j].id);
             }
+           // document.getElementById('ccsum').removeAttribute('disabled');
            // var valuss=v;
            // $scope.choseArr=valuss;
         }else{
@@ -94,10 +97,13 @@ var carlistcount=0;
             {
                 $("#check"+$scope.productlist[i].id).find(":checkbox").eq(0).prop('checked', false);
             }
+
             $scope.choseArr=[""];
             cleanchoseArr();
+           // document.getElementById('ccsum').setAttribute('disabled');
         }
         allprice();
+
     }
     var cleanchoseArr=function() {
         for(i=0;i<$scope.choseArr.length;i++)
@@ -191,17 +197,32 @@ var carlistcount=0;
 
     //region 计算总价
     $scope.dprice=0;
+    $scope.sum=0;
+
 
    var allprice=function(){
         var prices=0;
+       $scope.sum=$scope.choseArr.length;
 
        for(i=0;i< $scope.choseArr.length;i++)
        {
            for(j=0;j<$scope.productlist.length;j++){
                if($scope.choseArr[i]==$scope.productlist[j].id){
-                   prices+= parseInt($scope.productlist[j].price * $scope.productlist[j].count);
+                   prices+= parseFloat($scope.productlist[j].price * $scope.productlist[j].count);
+                 //  $scope.sum+=1;
+
                }
+
            }
+       }
+       if( $scope.sum>0){
+           document.getElementById('ccsum').removeAttribute('disabled');
+       }
+       else{
+           // document.getElementById('ccsum').setAttribute('disabled');
+           //  document.getElementById('ccsum').disabled="disabled";
+           $("#ccsum").attr("disabled",true);
+           // $("#ccsum").css("disabled","disabled");
        }
         $scope.dprice=prices;
     }
