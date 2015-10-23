@@ -23,10 +23,8 @@ app.controller('CategoryController',['$scope','$http','$state',function($scope,$
     //};
     $scope.tabIndex= 1 ;
     $scope.category=function(tabIndex){
-
         $scope.tabIndex=tabIndex;
-
-
     }
+    console.log("111");
 }]);
 //end----------------------------商品分类 huangxiuyu2015.09.15-------------------------
