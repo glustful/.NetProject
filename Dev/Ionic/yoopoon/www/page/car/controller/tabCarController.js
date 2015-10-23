@@ -7,6 +7,8 @@ app.controller('TabCarCtrl', function($scope,$state, $ionicSlideBoxDelegate,cart
   //  window.onload=function(){
   //
   //  }
+
+
     $scope.$on('$viewContentLoaded', function() {
         getcar();
     });
@@ -14,6 +16,7 @@ app.controller('TabCarCtrl', function($scope,$state, $ionicSlideBoxDelegate,cart
 var carlistcount=0;
 
     var getcar =function (){
+        //window.location.reload();
         var storage=window.localStorage.ShoppingCart;
         if(storage!=undefined)
         {
@@ -194,6 +197,7 @@ var carlistcount=0;
 }
 
     //endregion
+
 
     //region 计算总价
     $scope.dprice=0;

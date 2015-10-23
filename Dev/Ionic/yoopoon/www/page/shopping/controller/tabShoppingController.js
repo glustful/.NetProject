@@ -168,15 +168,7 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
 //    document.getElementById("father").appendChild(imgfb);
 //    imgfb.className="f-show add";
 //    imgfb.setAttribute("ng-src","http://img.iyookee.cn/"+'$scope.list.MainImg');
-    $scope.AddCart1 = function (list) {
-        $scope.cartinfo.id = $scope.list.Id;
-        $scope.cartinfo.name = $scope.list.Name;
-        $scope.cartinfo.mainimg = $scope.list.MainImg;
-        $scope.cartinfo.price = $scope.list.Price;
-        $scope.cartinfo.oldprice = $scope.list.OldPrice;
-        $scope.cartinfo.count = 1;
-        cartservice.add($scope.cartinfo);
-    };
+
 
 
 //endregion
@@ -262,6 +254,15 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
 
         cartservice.add($scope.cartinfo);
     }
+    $scope.AddCart1 = function (list) {
+        $scope.cartinfo.id = $scope.list.Id;
+        $scope.cartinfo.name = $scope.list.Name;
+        $scope.cartinfo.mainimg = $scope.list.MainImg;
+        $scope.cartinfo.price = $scope.list.Price;
+        $scope.cartinfo.oldprice = $scope.list.OldPrice;
+        $scope.cartinfo.count = 1;
+        cartservice.add($scope.cartinfo);
+    };
 
     //endregion
 
