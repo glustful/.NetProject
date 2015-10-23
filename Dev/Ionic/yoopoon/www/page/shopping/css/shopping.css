@@ -75,7 +75,7 @@
 
 .bg-yellow{
     padding: 0 ;
-    height: 100px;
+    /*height: 100px;*/
     background-color: #ffcc00 ;
 }
 .bg-yellow a{
