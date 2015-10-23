@@ -30,7 +30,7 @@ var carlistcount=0;
     getcar();
 
 
-  $scope.chats = [{
+    $scope.chats = [{
     id: 0,
     name: 'Ben Sparrow',
     lastText: 'You on your way?',
