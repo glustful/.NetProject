@@ -139,17 +139,14 @@
 			</div>
 			
 			<ul style="z-index:0">
-				<li style="width:49%;float:left;margin-right: 1%" ng-repeat="row in items">
+				<li style="width:49%;float:left;margin-right: 1%;position: relative" ng-repeat="row in items">
 					<div class="">
-
 						<img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}@187w_140h_70q_2e" ui-sref="page.product-detail({id:row.Id})">
-
 						<div class="s-location">
 							<div class="p-invisible">{{row.Owner}}人已抢购</div>
 						</div>
 						<div class="padding">
 							<p>{{row.Name}}</p>
-
 							<p><span class="p-price" style="font-size: 0.5em">RMB{{row.OldPrice}}</span>/
 								<del style="font-size: 2px;">折扣前{{row.Price}}</del>
 							</p>
