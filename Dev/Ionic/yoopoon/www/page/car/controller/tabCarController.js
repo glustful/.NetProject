@@ -239,7 +239,7 @@ var carlistcount=0;
     $scope.delete_item=function(id){
        cartservice.deletethis(id)
         getcar();
-
+        $scope.all();
     };
     $scope.move_item = function(item, fromIndex, toIndex) {
         $scope.items.splice(fromIndex, 1);
