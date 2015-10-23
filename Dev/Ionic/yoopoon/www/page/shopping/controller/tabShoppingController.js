@@ -243,16 +243,28 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         parameterValue:[]
     };
     // 添加商品
-    $scope.AddCart = function (data) {
+    $scope.AddCart = function (data,$event) {
         $scope.cartinfo.id = data.row.Id;
         $scope.cartinfo.name = data.row.Name;
         $scope.cartinfo.mainimg = data.row.MainImg;
         $scope.cartinfo.price = data.row.Price;
         $scope.cartinfo.oldprice = data.row.OldPrice;
         $scope.cartinfo.count = 1;
-
-
         cartservice.add($scope.cartinfo);
+        
+        var currentObj=$event.target;
+		var imgF=currentObj.parentNode.parentNode.parentNode;
+		var img=imgF.getElementsByTagName("img");
+		var cloneImg=img[0].cloneNode(true);
+		var left = img[0].x;
+		var top = img[0].y;
+		cloneImg.className="gwcAnimation";
+		cloneImg.x = left;
+		cloneImg.y = top;
+		imgF.appendChild(cloneImg);
+		
+		
+
     }
     $scope.AddCart1 = function (list) {
         $scope.cartinfo.id = $scope.list.Id;

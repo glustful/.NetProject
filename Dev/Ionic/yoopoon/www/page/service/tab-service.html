@@ -1,40 +1,36 @@
 <link rel="stylesheet" href="page/service/css/service.css">
-
+<link href="page/shopping/css/shopping.css" type="text/css" rel="stylesheet">
 <div class="bar header" style="height: 44px">
-    <a class="button  button-icon icon icon-fuwuanniu" ng-click="closetips()"></a>
-    <label class=" item-select select-header" ng-hide="showSelect">
-        <select>
-            <option>金尚俊园A座</option>
-            <option >CSS</option>
-            <option>JavaScript</option>
-        </select>
-    </label>
-  <a class="button button-icon icon icon-search search" ng-click="showInput()"></a>
-    <input class="header-input" ng-class="{'header-input-show':isShow}" type="text" placeholder="" style="border: 1px solid #fff; height: 70%;z-index: 0;padding-left: 10px;color: #fff">
+    <a class="button  button-icon icon icon-fuwuanniu" ng-click="go('page.Product-Catagory')" ui-sref="page.Product-Catagory"></a>
+    <span class="selectArea" ng-click="showSelectBox()" ng-hide="showSelect">{{area}}</span>
+    <!--<label class=" item-select select-header" ng-hide="showSelect">-->
+        <!--<select>-->
+            <!--<option>金尚俊园A座</option>-->
+            <!--<option >CSS</option>-->
+            <!--<option>JavaScript</option>-->
+        <!--</select>-->
+    <!--</label>-->
+
+
+    <a class="button button-icon icon icon-search search" ng-click="showInput()"></a>
+    <a class="button button-icon icon ion-navicon-round round" ng-click="go('index.html#/page/shopping/Product-Catagory')"></a>
+    <input class="header-input" ng-model="searchname" ng-class="{'header-input-show':isShow}" id="search" type="text" placeholder="" style="border: 1px solid #fff; height: 70%;z-index: 0;padding-left: 10px;color: #fff">
 </div>
 
 <!--头部遮罩-->
-<div class="bar p-head" style="height: 44px" id="tiphidden1">
-    <img src="page/shopping/img/head.png">
-</div>
+
 <ion-view hide-nav-bar="true" hide-tabs="hide">
   <ion-content no-header="true" style="top:44px;">
   <ion-slide-box auto-play="true" does-continue="true" slide-interval=2000 show-pager="true">
-  <ion-slide>
-    <div class="box">
-      <img src="http://img5.imgtn.bdimg.com/it/u=4041718731,746112096&fm=21&gp=0.jpg">
-    </div>
-  </ion-slide>
-  <ion-slide>
-    <div class="box">
-      <img src="http://img.iyookee.cn/20150619/20150619_100607_883_670.png">
-    </div>
-  </ion-slide>
-  <ion-slide>
-    <div class="box">
-      <img src="http://img.iyookee.cn/20150714/20150714_172952_955_22.jpg">
-    </div>
-  </ion-slide>
+      <ion-slide ng-repeat="item in content">
+          <div class="box">
+              <img ng-if="item" ng-src="http://img.iyookee.cn/{{item.TitleImg}}" class="img-full">
+              <!--{{slide.TitleImg}}-->
+          </div>
+      </ion-slide>
+
+
+
 </ion-slide-box>
     <div style="background-color: #e8e8e8;">
     <div class="row service">
@@ -58,7 +54,7 @@
   </ion-content>
 
     <!-- 遮罩content-->
-    <div style="position:absolute;top: 44px;width: 100%;height:100%;background: rgba(51, 51, 51, 0.5);z-index: 999" id="tiphidden2">
+    <div style="display: none; position:absolute;top: 44px;width: 100%;height:100%;background: rgba(51, 51, 51, 0.5);z-index: 999" id="tiphidden2">
         <!--底部-->
         <div >
             <div class="row dark-bg hidden-pg" style="position: absolute;bottom: 44px;" >
