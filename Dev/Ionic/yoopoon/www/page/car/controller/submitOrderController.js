@@ -8,6 +8,8 @@ app.controller('submitOrderController', ['$http','$scope','repository', '$stateP
         {
             $state.go("page.login");//调到登录页面
         }
+        $scope.count=$stateParams.count;
+        $scope.productId=$stateParams.productId;
         if ($stateParams.productId!=null && $stateParams.count!=null) {
             $http.get(SETTING.ApiUrl+"/CommunityProduct/Get?id="+$stateParams.productId,{
                 'withCredentails':true
@@ -40,13 +42,35 @@ app.controller('submitOrderController', ['$http','$scope','repository', '$stateP
         //    });
         $scope.mcon={
             UserId:$scope.currentuser.UserId
+        };
+        if($stateParams.memberaddreid)
+        {
+            $http.get(SETTING.ApiUrl+"/MemberAddress/Get?id="+$stateParams.memberaddreid,{
+                'withCredentials':true
+            }).success(function(data){
+                console.log(data);
+                $scope.userinfo = data;
+            });
         }
+        else{
         $http.get(SETTING.ApiUrl+"/MemberAddress/Get",{
             params:$scope.mcon,
         'withCredentials':true
          }).success(function(data){
             $scope.userinfo = data.List[0];
-        })
+        });
+        }
+//        $scope.searchCondition={
+//            Adduser:$scope.currentuser.UserId
+//        };
+//        $scope.getAddress=function(){
+//            $http.get(SETTING.ApiUrl+'/MemberAddress/Get/',{params:$scope.searchCondition,'withCredentials':true}).
+//                success(function(data){
+//
+//                    $scope.userinfo=data.List[0];
+//                    console.log(data);
+//                })};
+//        $scope.getAddress();
         //todo:完成生成订单并付款的逻辑
         //		$scope.submit = function () {
         //			alert("111");
