@@ -11,6 +11,8 @@ using System.EnterpriseServices;
 using System.Text.RegularExpressions;
 using System.Web.Http.Cors;
 using YooPoon.Core.Site;
+using Community.Entity.Model.Product;
+using Community.Service.Product;
 
 
 namespace Zerg.Controllers.Community
@@ -21,32 +23,14 @@ namespace Zerg.Controllers.Community
 	{
 		private readonly ICategoryService _categoryService;
         private readonly IWorkContext _workContent;
-
-        public CategoryController(ICategoryService categoryService, IWorkContext workContent)
+        private readonly IProductService _productService;
+        public CategoryController(ICategoryService categoryService, IWorkContext workContent,IProductService productService)
 		{
 			_categoryService = categoryService;
             _workContent = workContent;
+            _productService = productService;
 		}
         #region 商品分类管理 2015.9.9 黄秀宇
-
-        //public System.Web.Mvc.JsonResult Get()
-        //{
-        //     CategorySearchCondition  csc = new CategorySearchCondition()
-        //    {
-        //        OrderBy = EnumCategorySearchOrderBy.OrderById,                
-        //    };
-        //    List<CategoryEntity> listCategofyOne = _categoryService.GetCategorysByCondition(csc).Where(o=>o.Father==null).ToList();
-        //    foreach (var p in listCategofyOne)
-        //    {
-        //        if (p.Father == null)
-        //        {
-        //           //查找第一级；
-        //        }
-        //    }
-
-        //    return System.Web.Mvc.Json("", System.Web.Mvc.JsonRequestBehavior.AllowGet);
-        //}
-
 
         /// <summary>
         /// 根据id查找商品分类信息
@@ -266,8 +250,21 @@ namespace Zerg.Controllers.Community
             public string label { set; get; }
             public List<TreeJsonModel> children { set; get; }
             public int Id { set; get; }
+            /// <summary>
+            /// 父分类
+            /// </summary>
+            public virtual CategoryEntity Father { get; set; }
+            public List<Product> product { get; set; }
         }
-
+        /// <summary>
+        /// 商品类
+        /// </summary>
+        public class Product
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string MainImg { get; set; }
+        }
 
         /// <summary>
         /// 自上而下获取树状根节点列表；
@@ -311,6 +308,123 @@ namespace Zerg.Controllers.Community
         }
 
         /// <summary>
+        /// 查找分类跟6个商品；
+        /// </summary>
+        /// <returns>树状根节点列表</returns>
+        [Description("查找分类跟6个商品")]
+        public List<TreeJsonModel> GetCateANDPro()
+        {
+            CategorySearchCondition csc = new CategorySearchCondition()
+            {
+                OrderBy = EnumCategorySearchOrderBy.OrderById,
+                father ="NULL"
+            };
+            List<CategoryEntity> ceListBuffer = new List<CategoryEntity>();
+            List<TreeJsonModel> treeJsonModelBuffer = new List<TreeJsonModel>();
+            List<CategoryEntity> ceList = _categoryService.GetCategorysByCondition(csc).ToList();
+            foreach (var ce in ceList)
+            {
+                if (ce.Father == null)
+                {
+                    ceListBuffer.Add(ce);//查找第一级；
+                }
+            }
+            foreach (var ce in ceListBuffer)
+            {
+                List<CategoryEntity> ceList1 = _categoryService.GetCategorysBySuperFather(ce.Id).ToList();//找出该级的子集；
+                TreeJsonModel TJM1=null;
+                foreach (var ce1 in ceList1)
+                {
+                     TJM1 = new TreeJsonModel()
+                    {
+                        label = ce1.Name,
+                        Id = ce1.Id,
+                        //Father = ce1.Father
+                    };
+                     TJM1.children = GetJsonModel(ce1.Id);//获取第三级分类跟分类下的前6个商品
+                     treeJsonModelBuffer.Add(TJM1);
+
+                }
+                    
+                
+            }
+            return treeJsonModelBuffer;
+        }
+        /// <summary>
+        /// 第三级分类跟第三集分类下的六个商品；
+        /// </summary>
+        /// <param name="nodeId">节点ID</param>
+        /// <returns>所有树子节点</returns>
+        [Description("第三级分类跟第三集分类下的六个商品")]
+        public List<TreeJsonModel> GetJsonModel(int nodeId)
+        {
+            CategorySearchCondition csc = new CategorySearchCondition()
+            {
+                OrderBy = EnumCategorySearchOrderBy.OrderById
+            };
+            List<TreeJsonModel> datalist = new List<TreeJsonModel>();
+            List<CategoryEntity> ceList = _categoryService.GetCategorysBySuperFather(nodeId).ToList();//找出该级的子集；
+            int i = 0;
+            foreach (var ce in ceList)
+            {
+                TreeJsonModel TJM = new TreeJsonModel()
+                {
+                    label = ce.Name,
+                    Id = ce.Id,
+                    // Father  =ce.Father
+                };
+                datalist.Add(TJM);
+                TJM.product = GetSixPro(TJM.Id);//自迭代;
+
+            }
+            if (ceList.Count == 0)//若遍历到末端，则：
+            {
+                return null;
+            }
+            else
+            {
+                return datalist;
+            }
+        }
+        /// <summary>
+        /// 获取6个商品
+        /// </summary>
+        /// <param name="id">分类id</param>
+        /// <returns>商品列表</returns>
+        public List <Product> GetSixPro(int id)
+        {
+            var con = new ProductSearchCondition
+            {
+                Page =1,
+                PageCount =6,
+               // Name = condition.Name,
+                IsDescending = true,
+               // OrderBy = condition.OrderBy,
+               // PriceBegin = condition.PriceBegin,
+               //PriceEnd = condition.PriceEnd,
+               // CategoryName = condition.CategoryName,
+                CategoryId=id
+            };
+            List<Product> data = new List<Product>();
+            var model = _productService.GetProductsByCondition(con).Select(c => new ProductModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                MainImg = c.MainImg,
+            }).ToList();
+            foreach (var pro in model)
+            {
+                Product produce = new Product
+                {
+                    Id = pro.Id,
+                    Name =pro.Name ,
+                    MainImg =pro.MainImg 
+                };
+                data.Add(produce);
+            }
+            return data;
+        }
+        /// <summary>
         /// 自迭代获取所有树子节点；
         /// </summary>
         /// <param name="nodeId">节点ID</param>
@@ -324,12 +438,14 @@ namespace Zerg.Controllers.Community
             };
             List<TreeJsonModel> datalist = new List<TreeJsonModel>();
             List<CategoryEntity> ceList = _categoryService.GetCategorysBySuperFather(nodeId).ToList();//找出该级的子集；
+            int i = 0;
             foreach (var ce in ceList)
             {
                 TreeJsonModel TJM = new TreeJsonModel()
                 {
                     label = ce.Name,
-                    Id = ce.Id
+                    Id = ce.Id,
+                   // Father  =ce.Father
                 };
                 datalist.Add(TJM);
                 if(ifid==0)

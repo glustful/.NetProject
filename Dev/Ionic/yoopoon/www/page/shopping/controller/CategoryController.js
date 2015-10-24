@@ -34,8 +34,8 @@ app.controller('CategoryController',['$scope','$http','$state',function($scope,$
                 console.log(data);
             })
     };
-    $scope.selectCategory(1);
-//    $scope.productName = '';
+   // $scope.selectCategory(1);
+    $scope.productName = '';
 //    document.getElementById('search').onblur = function () {
 //        $state.go("page.search_product", {productName: $scope.productName});
 //    };
@@ -45,5 +45,16 @@ app.controller('CategoryController',['$scope','$http','$state',function($scope,$
         $scope.tabIndex=tabIndex;
 
     }
+    $scope.Img=SETTING.ImgUrl;
+    //-----------查找商品-----------
+    $scope.getProduct=function(){
+        $http.get(SETTING.ApiUrl+"/Category/GetCateANDPro",{withCredentials:true}).
+            success(function(data){
+                $scope.catelist=data;
+                $scope.tabIndex=data[0].Id;
+            console.log(data);
+        });
+    }
+    $scope.getProduct();
 }]);
 //end----------------------------商品分类 huangxiuyu2015.09.15-------------------------
