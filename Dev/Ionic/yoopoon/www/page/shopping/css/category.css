@@ -10,7 +10,6 @@
     overflow-y: auto;
     min-height: 100%;
     display: block;
-
 }
 .category1{
     overflow: hidden;
@@ -32,6 +31,8 @@
 .category-content{
     margin-left: 90px;
     overflow: hidden;
+    min-height: 100%;
+    height: auto;
 }
 .category-content h4{
     color: silver;
@@ -53,4 +54,7 @@
     background-color: white;
     color: red;
     border: none;
+}
+.cur{
+    background-color: red;
 }
