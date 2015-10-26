@@ -63,54 +63,60 @@
 			<!--<div class="col-10" style="font-size: 5px">-->
 				<!--<a  ng-click="go('index.html#/page/service/safe')"  > 优&nbsp;.服务</a>-->
 			<!--</div>-->
-			<div class="row">
-				<a class="col-15 tab-item">
-					<i class="icon icon-jiazhenfuwu circle energized"  ></i>
-					<p class="font-8">家政服务</p>
-				</a>
-				<a class="col-15 tab-item" style="opacity: 1">
-					<i class="icon icon-yifuqingxi circle calm" ></i>
+			<ul style="overflow: hidden">
+				<li ng-repeat="item in ServiceList" style="float: left;width: 20%;text-align: center;opacity: 1" class="tab-item ">
+					<i ui-sref="({ServiceId:item.ServiceId})" class="icon {{item.Class}}"></i>
+					<p class="font-8">{{item.Name}}</p>
+				</li>
+			</ul>
+				<!--<a class="col-15 tab-item">-->
+					<!--<i class="icon icon-jiazhenfuwu circle energized"  ></i>-->
+					<!--<p class="font-8">家政服务</p>-->
+				<!--</a>-->
+				<!--<a class="col-15 tab-item" style="opacity: 1">-->
+					<!--<i class="icon icon-yifuqingxi circle calm" ></i>-->
 
-					<p class="font-8">衣物清洗</p>
-				</a>
-				<a class="col-15 tab-item">
-					<i class="icon icon-kuaididaishou circle royal" ></i>
-					<p class="font-8">快递代收</p>
-				</a>
-				<a class="col-15 tab-item">
-					<i class="icon icon-yuesao circle assertive" ></i>
+					<!--<p class="font-8">衣物清洗</p>-->
+				<!--</a>-->
+				<!--<a class="col-15 tab-item">-->
+					<!--<i class="icon icon-kuaididaishou circle royal" ></i>-->
+					<!--<p class="font-8">快递代收</p>-->
+				<!--</a>-->
+				<!--<a class="col-15 tab-item">-->
+					<!--<i class="icon icon-yuesao circle assertive" ></i>-->
 
-					<p class="font-8">月嫂</p>
-				</a>
-				<a class="col-15 tab-item">
-					<i class="icon icon-jiazhenfuwu circle energized" ></i>
-					<p class="font-8">社区</p>
-				</a>
+					<!--<p class="font-8">月嫂</p>-->
+				<!--</a>-->
+				<!--<a class="col-15 tab-item">-->
+					<!--<i class="icon icon-jiazhenfuwu circle energized" ></i>-->
+					<!--<p class="font-8">社区</p>-->
+				<!--</a>-->
+
 			</div>
-			<div class="row">
-				<a class="col-15 tab-item">
-					<i class="icon icon-jiazhenfuwu circle energized"  ></i>
-					<p class="font-8">食品</p>
-				</a>
-				<a class="col-15 tab-item" style="opacity: 1">
-					<i class="icon icon-yifuqingxi circle calm" ></i>
+			<!--<div class="row">-->
+				<!--<a class="col-15 tab-item">-->
+					<!--<i class="icon icon-jiazhenfuwu circle energized"  ></i>-->
+					<!--<p class="font-8">食品</p>-->
+				<!--</a>-->
+				<!--<a class="col-15 tab-item" style="opacity: 1">-->
+					<!--<i class="icon icon-yifuqingxi calm" ></i>-->
 
-					<p class="font-8">服装</p>
-				</a>
-				<a class="col-15 tab-item">
-					<i class="icon icon-kuaididaishou circle royal" ></i>
-					<p class="font-8">电器</p>
-				</a>
-				<a class="col-15 tab-item">
-					<i class="icon icon-yuesao circle assertive" ></i>
+					<!--<p class="font-8">服装</p>-->
+				<!--</a>-->
+				<!--<a class="col-15 tab-item">-->
+					<!--<i class="icon icon-kuaididaishou circle royal" ></i>-->
+					<!--<p class="font-8">电器</p>-->
+				<!--</a>-->
+				<!--<a class="col-15 tab-item">-->
+					<!--<i class="icon icon-yuesao circle assertive" ></i>-->
 
-					<p class="font-8">服务</p>
-				</a>
-				<a class="col-15 tab-item">
-					<i class="icon icon-jiazhenfuwu circle energized" ></i>
-					<p class="font-8">更多</p>
-				</a>
-			</div>
+					<!--<p class="font-8">服务</p>-->
+				<!--</a>-->
+				<!--<a class="col-15 tab-item">-->
+					<!--<i class="icon icon-jiazhenfuwu circle energized" ></i>-->
+					<!--<p class="font-8">更多</p>-->
+				<!--</a>-->
+			<!--</div>-->
 		</div>
 		</ion-scroll>
 

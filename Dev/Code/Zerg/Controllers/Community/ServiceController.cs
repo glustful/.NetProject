@@ -5,7 +5,10 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Community.Entity.Model.Product;
+using Community.Entity.Model.Service;
 using Community.Service.Product;
+using Community.Service.Service;
+using YooPoon.Core.Site;
 using Zerg.Common;
 using Zerg.Models.Community;
 
@@ -15,13 +18,18 @@ namespace Zerg.Controllers.Community
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class ServiceController : ApiController
     {
-        private readonly IProductService _productService;       
-       
+        private readonly IProductService _productService;
+        private readonly  IServiceService _serviceService;
+        private readonly  IWorkContext _workContext;
 
-        public ServiceController(IProductService productService)
+
+        public ServiceController(IProductService productService,IServiceService serviceService,IWorkContext workContext)
 		{
-			_productService = productService;		             
+			_productService = productService;
+            _serviceService = serviceService;
+            _workContext = workContext;
 		}
+        #region 获取服务型商品
         /// <summary>
         /// 获取商品详情
         /// </summary>
@@ -96,6 +104,91 @@ namespace Zerg.Controllers.Community
             var totalCount = _productService.GetProductCount(condition);
             return PageHelper.toJson(new{List=model,Condition=condition,TotalCount=totalCount});
         }
+#endregion
+
+        #region 首页服务图标
+
+        public HttpResponseMessage GetService(int id)
+        {
+            var entity = _serviceService.GetServiceById(id);
+            if (entity == null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不存在"));
+            }
+            var model=new ServiceModel
+            {
+                Id = entity.Id,
+                ServiceId =entity.ServiceId,
+                Name = entity.Name,
+                Class = entity.Class
+            };
+            return PageHelper.toJson(model);
+        }
+        public HttpResponseMessage GetList([FromUri] ServiceSearchCondition condition)
+        {
+            var model = _serviceService.GetServiceByCondition(condition).Select(c => new ServiceModel
+            {
+                Id = c.Id,
+                ServiceId = c.ServiceId,
+                Class = c.Class,
+                Name = c.Name
+            }).ToList();
+            var totalCount = _serviceService.GetServiceCount(condition);
+            return PageHelper.toJson(new {List=model,Condition=condition,TotalCount=totalCount});
+        }
+
+        public HttpResponseMessage Post(ServiceModel model)
+        {
+            var entity=new ServiceEntity
+            {
+                Name = model.Name,
+                Class = model.Class,
+                AddTime = DateTime.Now,
+                AddUser = _workContext.CurrentUser.Id,
+                ServiceId = model.ServiceId,
+                UpTime = DateTime.Now,
+                UpUser = _workContext.CurrentUser.Id
+            };
+            if (_serviceService.Create(entity).Id > 0)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据添加成功"));
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据添加失败"));
+        }
+
+        public HttpResponseMessage Put(ServiceModel model)
+        {
+            var entity = _serviceService.GetServiceById(model.Id);
+            if (entity==null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不存在"));
+            }
+            entity.Name = model.Name;
+            entity.Class = model.Class;
+            entity.ServiceId = model.ServiceId;
+            entity.UpTime=DateTime.Now;
+            entity.UpUser = _workContext.CurrentUser.Id;
+            if (_serviceService.Update(entity) != null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据更新成功"));
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据更新失败"));
+        }
+
+        public HttpResponseMessage Delete(int id)
+        {
+            var entity = _serviceService.GetServiceById(id);
+            if (entity == null)
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(false, "数据不存在"));
+            }
+            if (_serviceService.Delete(entity))
+            {
+                return PageHelper.toJson(PageHelper.ReturnValue(true, "数据删除成功"));
+            }
+            return PageHelper.toJson(PageHelper.ReturnValue(false, "数据删除失败"));
+        }
+        #endregion
     }
 
 }

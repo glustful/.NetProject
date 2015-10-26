@@ -247,6 +247,7 @@
     <Compile Include="Models\Community\ProductParameterValueModel.cs" />
     <Compile Include="Models\Community\ServiceOrderDetailModel.cs" />
     <Compile Include="Models\Community\ServiceOrderModel.cs" />
+    <Compile Include="Models\Community\ServiceModel.cs" />
     <Compile Include="Models\CRM\AdminPayModel.cs" />
     <Compile Include="Models\CRM\BrokerLeadClientPay .cs" />
     <Compile Include="Models\CRM\BrokerRECClientModel.cs">
@@ -402,7 +403,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>false</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50597</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
