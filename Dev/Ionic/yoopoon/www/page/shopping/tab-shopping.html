@@ -94,9 +94,8 @@
 			<div class="  item item-light item-borderless" style="margin-bottom: 10px">
 				<span class="title assertive font-11"><strong>| 爆款套餐</strong>&nbsp;| 省到不行</span>
 			</div>
-			<div class="item item-image " style="overflow: inherit;">
-				<img ng-src="http://img.iyookee.cn/{{list.MainImg}}@400w_140h_70q_2e" ui-sref="page.product-detail({id:list.Id})">
-				<!--<img ng-src="http://img.iyookee.cn/{{list.MainImg}}@400w_140h_70q_2e" class="add">-->
+			<div id="bigImg" class="item item-image " style="overflow: inherit;">
+				<img  ng-src="http://img.iyookee.cn/{{list.MainImg}}@400w_140h_70q_2e" ui-sref="page.product-detail({id:list.Id})">
 				<div class="p-location">
 					<div class="p-invisible">{{list.Owner}}人已抢购</div>
 				</div>
@@ -115,9 +114,7 @@
 			</div>
 			
 			<ul style="z-index:0">
-				<li style="width:49%;float:left;margin-right: 1%" ng-repeat="row in items">
-					<div class="">
-
+				<li style="width:49%;float:left;margin-right: 1%;position:relative" ng-repeat="row in items">
 						<img ng-if="row" ng-src="http://img.iyookee.cn/{{row.MainImg}}@187w_140h_70q_2e" ui-sref="page.product-detail({id:row.Id})">
 
 						<div class="s-location">

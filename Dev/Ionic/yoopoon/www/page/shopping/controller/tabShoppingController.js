@@ -176,6 +176,16 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         $scope.cartinfo.oldprice = $scope.list.OldPrice;
         $scope.cartinfo.count = 1;
         cartservice.add($scope.cartinfo);
+        var $bigImg=$("#bigImg").children();
+        var bigImg=$bigImg[0];
+        var cloneImg=bigImg.cloneNode(true);
+        document.body.appendChild(cloneImg);
+   		var top=$bigImg.offset().top;
+   		var left=$bigImg.offset().left;
+   		cloneImg.style.position="fixed";
+   		cloneImg.style.top=top+"px";
+   		cloneImg.style.left=left+"px";
+   		cloneImg.className="gwcFrist";
     };
 
 
@@ -251,6 +261,9 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         parameterValue:[]
     };
     // 添加商品
+//  $(window).scroll(function(){
+//  	var st=$(this).scrollTop();
+//  })
     $scope.AddCart = function (data,$event) {
         $scope.cartinfo.id = data.row.Id;
         $scope.cartinfo.name = data.row.Name;
@@ -263,16 +276,17 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         var currentObj=$event.target;
 		var imgF=currentObj.parentNode.parentNode.parentNode;
 		var img=imgF.getElementsByTagName("img");
-		var cloneImg=img[0].cloneNode(true);
-		var left = img[0].x;
-		var top = img[0].y;
-		cloneImg.className="gwcAnimation";
-		cloneImg.x = left;
-		cloneImg.y = top;
-		imgF.appendChild(cloneImg);
-		
-		
-
+		var currentImg=img[0];
+		var cloneImg=currentImg.cloneNode(false);
+		var $cloneImg=$(cloneImg);
+		document.body.appendChild(cloneImg);
+		var top = $(currentImg).offset().top;
+		var left = $(currentImg).offset().left;
+	    $cloneImg.css({"position":"fixed","top":top+"px","left":left+"px"});
+		cloneImg.className="gwcAnimation";	
+		var timeOut=setTimeout(function(){
+			$("gwcAnimation").remove();
+		},2000)
     }
 
     //endregion
