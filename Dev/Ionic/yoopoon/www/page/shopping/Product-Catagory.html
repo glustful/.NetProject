@@ -1,151 +1,38 @@
-<div  >
-<div class="bar  bar-light padding "style="height: 44px;border-bottom: solid 1px silver">
-    <button class="button  button-icon icon ion-chevron-left color-silver" onclick="javascript:history.back(-1);"></button>
-    <h1 class="title font-title">分 类</h1>
-</div>
-<div class="bar  bar-light " style="top: 44px">
-   <div class=" item-input icon-search border-input input-size">
-       <input type="text" class="list-title " placeholder="寻找你喜欢的宝贝" >
-   </div>
-</div>
-<ion-view hide-tabs="true" hide-nav-bar="true">
-<ion-content class="content " style="top: 98px">
-    <div class="category-tab stable-bg">
-        <div class="category1 ">
-            <ul>
-                <li class="" ng-class="{'active': tabIndex==1}" ng-click="category(1)"><a>热门推荐</a></li>
-                <li  class="cur" ng-class="{'active': tabIndex==2}" ng-click="category(2)"><a>潮流女装</a></li>
-                <li class="cur"><a>热门推荐</a></li>
-                <li  class="cur"><a>潮流女装</a></li>
-                <li class="cur"><a>热门推荐</a></li>
-                <li  class="cur"><a>潮流女装</a></li>
-                <li class="cur"><a>热门推荐</a></li>
-
-            </ul>
+<div>
+    <div class="bar  bar-light padding " style="height: 44px;border-bottom: solid 1px silver">
+        <button class="button  button-icon icon ion-chevron-left color-silver"
+                onclick="javascript:history.back(-1);"></button>
+        <h1 class="title font-title">分 类</h1>
+    </div>
+    <div class="bar  bar-light " style="top: 44px">
+        <div class=" item-input icon-search border-input input-size">
+            <input type="text" class="list-title " placeholder="寻找你喜欢的宝贝">
         </div>
     </div>
-    <div class="category-content padding" >
-        <div class="branchList"  ng-show="tabIndex==1">
-        <h4>金牌</h4>
-        <ul>
-            <li>
-                <img src="img/product3.png">
-                <p>手机</p>
-            </li>
-            <li>
-                <img src="img/product3.png">
-                <p>手机</p>
-
-            </li>
-            <li>
-                <img src="img/product3.png">
-                <p>手机</p>
-            </li>
-            <li>
-                <img src="img/product3.png">
-                <p>手机</p>
-            </li>
-            <li>
-                <img src="img/product3.png">
-                <p>手机</p>
-            </li>
-            <li>
-                <img src="img/product3.png">
-                <p>手机</p>
-            </li>
-            <li>
-                <img src="img/product3.png">
-                <p>手机</p>
-            </li>
-            <li>
-                <img src="img/product3.png">
-                <p>手机</p>
-            </li>
-            <li>
-                <img src="img/product3.png">
-                <p>手机</p>
-            </li>
-        </ul>
-    </div>
-        <div class="branchList"  ng-show="tabIndex==2">
-            <h4>金牌2</h4>
-            <ul>
-                <li>
-                    <img src="img/product3.png">
-                    <p>手机</p>
-                </li>
-                <li>
-                    <img src="img/product3.png">
-                    <p>手机</p>
-
-                </li>
-                <li>
-                    <img src="img/product3.png">
-                    <p>手机</p>
-                </li>
-                <li>
-                    <img src="img/product3.png">
-                    <p>手机</p>
-                </li>
-                <li>
-                    <img src="img/product3.png">
-                    <p>手机</p>
-                </li>
-                <li>
-                    <img src="img/product3.png">
-                    <p>手机</p>
-                </li>
-                <li>
-                    <img src="img/product3.png">
-                    <p>手机</p>
-                </li>
-                <li>
-                    <img src="img/product3.png">
-                    <p>手机</p>
-                </li>
-                <li>
-                    <img src="img/product3.png">
-                    <p>手机</p>
-                </li>
-            </ul>
+    <ion-view hide-tabs="true" hide-nav-bar="true" >
+        <div class="category-tab stable-bg" >
+            <ion-scroll zooming="true" direction="y" class="scroll-category">
+                <ul>
+                    <li  ng-repeat="item in catelist" class="cur acti" ng-class="{'active': tabIndex==item.Id}"
+                        ng-click="category(item.Id)"><a>{{item.label}}</a>
+                    </li>
+                </ul>
+            </ion-scroll>
         </div>
-        <div class="branchList"  ng-show="tabIndex==1">
-            <h4>金牌</h4>
-            <ul>
-                <li>
-                    <img src="img/product3.png">
-                    <p>手机</p>
-                </li>
-                <li>
-                    <img src="img/product3.png">
-                    <p>手机</p>
+        <ion-content class="content " style="top: 98px">
 
-            <div class="category-tab stable-bg"  style=" position: fixed;top: 0;left: 0;">
-                <div class="category1 ">
-                    <ul>
-                        <li ng-repeat="item in catelist" class="cur" ng-class="{'active': tabIndex==item.Id}" ng-click="category(item.Id)"><a>{{item.label}}</a></li>
-                        <!--<li class="cur" ng-class="{'active': tabIndex==1}" ng-click="category(1)"><a>热门推荐</a></li>-->
-                        <!--<li class="cur" ng-class="{'active': tabIndex==2}" ng-click="category(2)"><a>潮流女装</a></li>-->
-                        <!--<li class="cur"><a>热门推荐</a></li>-->
-                        <!--<li class="cur"><a>潮流女装</a></li>-->
-                        <!--<li class="cur"><a>热门推荐</a></li>-->
-                        <!--<li class="cur"><a>潮流女装</a></li>-->
-                        <!--<li class="cur"><a>热门推荐</a></li>-->
-                    </ul>
-                </div>
-            </div>
-            <div class="category-content padding"ng-repeat="itemtail in catelist"  ng-show="tabIndex==itemtail.Id">
-                <div class="branchList"ng-repeat="item1 in itemtail.children">
-                    <h4 ui-sref="page.product-list({id:item1.Id,name:item1.label})">{{item1.label}}11</h4>
-                    <ul>
-                        <li ng-repeat="item2 in item1.product" ui-sref="page.product-detail({id:item2.Id})">
-                            <img ng-src="{{Img+item2.MainImg}}@67w_67h_70q" alt=""/>
+            <div class="category-content padding"  ng-repeat="itemtail in catelist"
+                 ng-show="tabIndex==itemtail.Id">
 
-                            <p >{{item2.Name}}</p>
-                        </li>
-
-                    </ul>
-                </div>
+                    <div class="branchList" ng-repeat="item1 in itemtail.children">
+                        <h4 ui-sref="page.product-list({id:item1.Id,name:item1.label})">{{item1.label}}11</h4>
+                        <ul>
+                            <li ng-repeat="item2 in item1.product" ui-sref="page.product-detail({id:item2.Id})">
+                                <img ng-src="{{Img+item2.MainImg}}@67w_67h_70q" alt=""/>
+                                <p>{{item2.Name}}</p>
+                            </li>
+                        </ul>
+                    </div>
             </div>
 
         </ion-content>

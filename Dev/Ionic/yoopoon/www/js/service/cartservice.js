@@ -36,20 +36,21 @@ app.service("cartservice", ['$rootScope',
 			cartinfo.parameterValue=data.parameterValue;
 
 			var storage = localStorage.getItem("ShoppingCart");
-			//第一次加入商品 
-			if (storage == null || storage == "") {
-				var jsonstr = {
-					"productlist": [{
-						"id": cartinfo.id,
-						"name": cartinfo.name,
-						"count": cartinfo.count,
-                        "mainimg":cartinfo.mainimg,
-                        "price":cartinfo.price,
-                        "oldprice":cartinfo.oldprice,
-						"parameterValue":cartinfo.parameterValue
+			//第一次加入商品
+			var jsonstr = {
+				"productlist": [{
+					"id": cartinfo.id,
+					"name": cartinfo.name,
+					"count": cartinfo.count,
+					"mainimg":cartinfo.mainimg,
+					"price":cartinfo.price,
+					"oldprice":cartinfo.oldprice,
+					"parameterValue":cartinfo.parameterValue
 
-					}]
-				};
+				}]
+			};
+			if (storage == null || storage == "") {
+
 				localStorage.setItem("ShoppingCart", "'" + JSON.stringify(jsonstr));
 				$rootScope.cartProductCount += 1;
 			} else {
