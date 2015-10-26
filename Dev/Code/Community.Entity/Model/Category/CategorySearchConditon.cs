@@ -18,7 +18,7 @@ namespace Community.Entity.Model.Category
 		/// 是否降序
 		/// </summary>
 		public bool IsDescending { get; set; }
-
+        public string  father { get; set; }
 
 		public int[] Ids { get; set; }
 

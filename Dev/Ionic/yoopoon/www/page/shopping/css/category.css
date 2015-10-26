@@ -1,0 +1,60 @@
+.main-content{
+    border-top: solid 1px silver;
+
+}
+.category-tab{
+    float: left;
+    min-width: 90px;
+    width: 90px;
+    height: auto;
+    overflow-y: auto;
+    min-height: 100%;
+    display: block;
+}
+.category1{
+    overflow: hidden;
+    height: 670px;
+}
+.category-tab li{
+    height: 49px;
+    line-height: 49px;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    background: #f3f4f6;
+    text-align: center;
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.category-content{
+    margin-left: 90px;
+    overflow: hidden;
+    min-height: 100%;
+    height: auto;
+}
+.category-content h4{
+    color: silver;
+    font-family: "Microsoft YaHei";
+    font-size: 1.12em;
+}
+.category-content .branchList li{
+    width: 30%;
+    float: left;
+    margin-left: 1%;
+    margin-right: 2%;
+    text-align: center;
+}
+.category-content .branchList li img{
+    width: 60px;
+    height: 60px;
+}
+.click-change{
+    background-color: white;
+    color: red;
+    border: none;
+}
+.cur{
+    background-color: red;
+}

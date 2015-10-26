@@ -98,6 +98,10 @@ namespace Community.Service.Category
 			var query = _categoryRepository.Table;
 			try
 			{
+                if(condition .father =="NULL")
+                {
+                    query = query.Where(q => q.Father == null&&q.Name !="服务");
+                }
 				if (condition.AddTimeBegin.HasValue)
                 {
                     query = query.Where(q => q.AddTime>= condition.AddTimeBegin.Value);

@@ -7,6 +7,8 @@ app.controller('TabCarCtrl', function($scope,$state, $ionicSlideBoxDelegate,cart
   //  window.onload=function(){
   //
   //  }
+
+
     $scope.$on('$viewContentLoaded', function() {
         getcar();
     });
@@ -14,6 +16,7 @@ app.controller('TabCarCtrl', function($scope,$state, $ionicSlideBoxDelegate,cart
 var carlistcount=0;
 
     var getcar =function (){
+        //window.location.reload();
         var storage=window.localStorage.ShoppingCart;
         if(storage!=undefined)
         {
@@ -27,7 +30,7 @@ var carlistcount=0;
     getcar();
 
 
-  $scope.chats = [{
+    $scope.chats = [{
     id: 0,
     name: 'Ben Sparrow',
     lastText: 'You on your way?',
@@ -195,6 +198,7 @@ var carlistcount=0;
 
     //endregion
 
+
     //region 计算总价
     $scope.dprice=0;
     $scope.sum=0;
@@ -235,7 +239,7 @@ var carlistcount=0;
     $scope.delete_item=function(id){
        cartservice.deletethis(id)
         getcar();
-
+        $scope.all();
     };
     $scope.move_item = function(item, fromIndex, toIndex) {
         $scope.items.splice(fromIndex, 1);

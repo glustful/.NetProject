@@ -421,6 +421,31 @@ angular.module('app').run(['$rootScope', '$state', '$stateParams', 'AuthService'
                           }]
                   }
               })
+              //region 服务配置管理
+              .state('app.service', {
+                  url: '/service',
+                  template: '<div ui-view class="fade-in-up"></div>',
+                  resolve: {
+                      deps: ['$ocLazyLoad',
+                          function( $ocLazyLoad ){
+                              return $ocLazyLoad.load(['app/module/Service/controller/ServiceController.js']);
+                          }]
+                  }
+              })
+              .state('app.service.serviceList', {
+                  url: '/serviceList',
+                  templateUrl: 'app/module/Service/view/Index.html'
+              })
+              .state('app.service.create', {
+                  url: '/create',
+                  templateUrl: 'app/module/Service/view/Create.html'
+              })
+              .state('app.service.edit', {
+                  url: '/edit?Id',
+                  templateUrl: 'app/module/Service/view/Edit.html'
+              })
+              //endregion
+
               .state('order', {
                   url: '/order',
                   templateUrl: 'app/common/layout/app.html'

@@ -1,0 +1,43 @@
+<div ng-controller="EditServiceCtr">
+    <div class="row">
+        <form class="form-horizontal" role="form" name="form"enctype="multipart/form-data" ng-submit="update()">
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> 名称 </label>
+
+                <div class="col-sm-9">
+                    <input class="form-control" style="width: 200px" type="text" ng-model="model.Name" required ng-maxlength="20"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <!--分类-->
+                <label class="col-sm-3 control-label no-padding-right"> 服务Id </label>
+                <div class="col-sm-9">
+                    <div style="float: left;margin-right: 20px">
+                        <!--<select class="form-control" style="width: 100px" ng-model="model.SerivceId"-->
+                        <!--ng-options="o.Id as o.Name for o in CategoryOneList" ng-change="selectTwoChange()" required>-->
+                        <!--</select>-->
+                        <input class="form-control" style="width: 200px" type="text" ng-model="model.ServiceId" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> 类库 </label>
+
+                <div class="col-sm-9">
+                    <input class="form-control" style="width: 200px" type="text" ng-model="model.Class" required>
+                </div>
+            </div>
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+
+                    <button id="btn_ok" class="btn btn-info" type="submit">
+                        <i class="icon-ok bigger-110"></i>
+                        提交
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
