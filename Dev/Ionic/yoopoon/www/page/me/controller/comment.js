@@ -17,20 +17,50 @@ console.log($stateParams);
         ProductId:0,
         Content:""
     }
+    $scope.UpOrderDatail={
+        Id:0
+    }
     $scope.proName="";
     $scope.Img="";
-$scope.openshow=function(proId,proname,proimg){
+    $scope.Sta="";
+$scope.openshow=function(proId,proname,proimg,orId,comSta){
     $scope.AddComment.ProductId=proId;
     $scope.proName=proname;
     $scope.Img=proimg;
-//    alert($scope.Img);
+    $scope.UpOrderDatail.Id =orId;
+    $scope.Sta=comSta;
+    if(comSta=="已评价")
+    {
+        alert("你已评价过，不能再次评价");
+    }
+    //alert($scope.Id);
    // $("userComment").toggle();
-}
+};
 
     $scope.putComment=function(){
+        if($scope.Sta==="已评价")
+        {
+            alert("你已评价过，不能再次评价");
+            return;
+        }
+        if($scope.AddComment.Content.length===0)
+        {
+            alert("请输入评价内容");
+            return;
+        }
        $http.post(SETTING.ApiUrl+"/ProductComment/Post",$scope.AddComment,{'withCredentials':true}).
            success(function(data){
-            console.log(data.Msg);
+            if(data.Status)
+            {
+                $http.put(SETTING.ApiUrl+"/OrderDetail/Put",$scope.UpOrderDatail,{'withCredentials':true}).
+                    success(function(data){
+                        alert(data.Msg);
+                        $scope.getOrderById();
+                        $http.get(SETTING.ApiUrl+"/CommunityOrder/upOrderStatus?id="+$stateParams.Id,{'withCredentials':true}).success(function(data){
+                           // alert(data.Msg);
+                        })
+                    });
+            }
            });
     }
-    }])
+    }]);
