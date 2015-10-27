@@ -1,4 +1,4 @@
-<div>
+
     <div class="bar  bar-light padding " style="height: 44px;border-bottom: solid 1px silver">
         <button class="button  button-icon icon ion-chevron-left color-silver"
                 onclick="javascript:history.back(-1);"></button>
@@ -9,16 +9,17 @@
             <input type="text" class="list-title " placeholder="寻找你喜欢的宝贝">
         </div>
     </div>
-    <ion-view hide-tabs="true" hide-nav-bar="true" >
-        <div class="category-tab stable-bg" >
-            <ion-scroll zooming="true" direction="y" class="scroll-category">
+    <ion-scroll zooming="true" direction="y" class=" category-tab stable-bg has-header" style="height: 80%; overflow-y:scroll ;">
                 <ul>
                     <li  ng-repeat="item in catelist" class="cur acti" ng-class="{'active': tabIndex==item.Id}"
                         ng-click="category(item.Id)"><a>{{item.label}}</a>
                     </li>
                 </ul>
-            </ion-scroll>
-        </div>
+    </ion-scroll>
+    <ion-view hide-tabs="true" hide-nav-bar="true" >
+      <!--  <div class="category-tab stable-bg" >-->
+            
+       <!-- </div>-->
         <ion-content class="content " style="top: 98px">
 
             <div class="category-content padding"  ng-repeat="itemtail in catelist"
@@ -31,10 +32,10 @@
                                 <img ng-src="{{Img+item2.MainImg}}@67w_67h_70q" alt=""/>
                                 <p>{{item2.Name}}</p>
                             </li>
+                            
                         </ul>
                     </div>
             </div>
 
         </ion-content>
     </ion-view>
-</div>
