@@ -124,6 +124,7 @@ namespace Zerg.Controllers.Community
             };
             return PageHelper.toJson(model);
         }
+        [HttpGet]
         public HttpResponseMessage GetList([FromUri] ServiceSearchCondition condition)
         {
             var model = _serviceService.GetServiceByCondition(condition).Select(c => new ServiceModel

@@ -75,10 +75,10 @@
 }
 
 .bg-yellow{
-    padding: 0 ;
+    padding-top: 5px;
     /*height: 100px;*/
-    height: 70px;
-    margin-left: 20px;
+    /*height: 140px;*/
+    /*margin-left: 20px;*/
     background-color: #ffcc00 ;
 }
 .scroll-home{
@@ -86,11 +86,11 @@
     background-color:#ffcc00 ;
 }
 .circle{
-    width: 40px;
-    height:40px;
+    width: 50px;
     background-color: white;
     border-radius:50% ;
-    padding: 5px;
+    padding: 10px;
+    font-size: 1.2em;
 }
 
 .button-service{
