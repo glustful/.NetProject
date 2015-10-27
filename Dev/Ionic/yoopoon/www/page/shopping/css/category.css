@@ -11,12 +11,7 @@
     z-index: 999;
 
 }
-.scroll-category{
-    height: 900px;
-    min-height: 100%;
-    overflow-y: scroll;
 
-}
 .category-tab li{
     height: 49px;
     line-height: 49px;
@@ -52,12 +47,7 @@
     width: 60px;
     height: 60px;
 }
-.click-change{
-    background-color: white;
-    color: red;
-    border: none;
-}
 
-.category-tab ul li a:active{
+.category-tab ul li a:hover{
     color: red;
 }
