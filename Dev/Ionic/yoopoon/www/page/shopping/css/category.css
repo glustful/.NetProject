@@ -3,17 +3,19 @@
 
 }
 .category-tab{
-    float: left;
     min-width: 90px;
     width: 90px;
-    height: auto;
+    position: absolute;
+    top:98px;
     overflow-y: auto;
-    min-height: 100%;
-    display: block;
+    z-index: 999;
+
 }
-.category1{
-    overflow: hidden;
-    height: 670px;
+.scroll-category{
+    height: 900px;
+    min-height: 100%;
+    overflow-y: scroll;
+
 }
 .category-tab li{
     height: 49px;
@@ -55,6 +57,7 @@
     color: red;
     border: none;
 }
-.cur{
-    background-color: red;
+
+.category-tab ul li a:active{
+    color: red;
 }
