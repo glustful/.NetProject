@@ -440,7 +440,7 @@
     -webkit-animation-timing-function: linear;
     -webkit-animation-delay: 0s;
 }
-@-webkit-keyframes Gwc {
+@-webkit-keyframes Gwc{
 	0% {
 	-webkit-transform: rotate(0) scale(1);opacity:0.5;}
 50% {

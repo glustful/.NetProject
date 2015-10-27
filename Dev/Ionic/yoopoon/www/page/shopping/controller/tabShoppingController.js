@@ -186,6 +186,9 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
    		cloneImg.style.top=top+"px";
    		cloneImg.style.left=left+"px";
    		cloneImg.className="gwcFrist";
+   		setTimeout(function(){
+   			$(cloneImg).remove();
+   		},1000)
     };
 
 
@@ -283,10 +286,10 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
 		var top = $(currentImg).offset().top;
 		var left = $(currentImg).offset().left;
 	    $cloneImg.css({"position":"fixed","top":top+"px","left":left+"px"});
-		cloneImg.className="gwcAnimation";	
-		var timeOut=setTimeout(function(){
-			$("gwcAnimation").remove();
-		},2000)
+		cloneImg.className="gwcAnimation";
+		setTimeout(function(){
+			$cloneImg.remove();
+		},1000);
     }
 
     //endregion
