@@ -75,9 +75,9 @@
 }
 
 .bg-yellow{
-    padding: 0 ;
+    padding-top: 5px;
     /*height: 100px;*/
-    height: 70px;
+    /*height: 140px;*/
     /*margin-left: 20px;*/
     background-color: #ffcc00 ;
 }
@@ -86,11 +86,11 @@
     background-color:#ffcc00 ;
 }
 .circle{
-    width: 40px;
-    height:40px;
+    width: 50px;
     background-color: white;
     border-radius:50% ;
-    padding: 5px;
+    padding: 10px;
+    font-size: 1.2em;
 }
 
 .button-service{
@@ -440,7 +440,7 @@
     -webkit-animation-timing-function: linear;
     -webkit-animation-delay: 0s;
 }
-@-webkit-keyframes Gwc {
+@-webkit-keyframes Gwc{
 	0% {
 	-webkit-transform: rotate(0) scale(1);opacity:0.5;}
 50% {

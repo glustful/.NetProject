@@ -186,6 +186,9 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
    		cloneImg.style.top=top+"px";
    		cloneImg.style.left=left+"px";
    		cloneImg.className="gwcFrist";
+   		setTimeout(function(){
+   			$(cloneImg).remove();
+   		},1000)
     };
 
 
@@ -283,10 +286,10 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
 		var top = $(currentImg).offset().top;
 		var left = $(currentImg).offset().left;
 	    $cloneImg.css({"position":"fixed","top":top+"px","left":left+"px"});
-		cloneImg.className="gwcAnimation";	
-		var timeOut=setTimeout(function(){
-			$("gwcAnimation").remove();
-		},2000)
+		cloneImg.className="gwcAnimation";
+		setTimeout(function(){
+			$cloneImg.remove();
+		},1000);
     }
 
     //endregion
@@ -314,6 +317,16 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     document.getElementById('search').onblur = function () {
         $state.go("page.search_product", {productName: $scope.searchname});
     };
+$scope.ServiceCon={
+    Page:1,
+    PageCount:10
+}
+    $http.get(SETTING.ApiUrl+"/Service/GetList",$scope.ServiceCon,{
+        'withCredentials':true
+    }).success(function(data)
+    {
+        $scope.ServiceList=data.List
+    })
 }]);
 
 
