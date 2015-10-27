@@ -9,7 +9,7 @@
             <input type="text" class="list-title " placeholder="寻找你喜欢的宝贝">
         </div>
     </div>
-    <ion-scroll zooming="true" direction="y" class=" category-tab stable-bg has-header" style="height: 80%; overflow-y:scroll ;">
+    <ion-scroll zooming="true" direction="y" class=" category-tab stable-bg" style="height: 80%; overflow-y:scroll;">
                 <ul>
                     <li  ng-repeat="item in catelist" class="cur acti" ng-class="{'active': tabIndex==item.Id}"
                         ng-click="category(item.Id)"><a>{{item.label}}</a>
