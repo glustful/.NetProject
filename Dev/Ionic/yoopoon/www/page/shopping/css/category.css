@@ -52,12 +52,7 @@
     width: 60px;
     height: 60px;
 }
-.click-change{
-    background-color: white;
-    color: red;
-    border: none;
-}
 
-.category-tab ul li a:active{
-    color: red;
+.active{
+	color:red;
 }
