@@ -13,7 +13,7 @@
         <div class="category-tab stable-bg" >
             <ion-scroll zooming="true" direction="y" class="scroll-category">
                 <ul>
-                    <li  ng-repeat="item in catelist" class="cur acti" ng-class="{'active': tabIndex==item.Id}"
+                    <li  ng-repeat="item in catelist" class="cur " ng-class="{'active': tabIndex==item.Id}"
                         ng-click="category(item.Id)"><a>{{item.label}}</a>
                     </li>
                 </ul>
