@@ -312,6 +312,8 @@ namespace Zerg.Controllers.Community
         /// </summary>
         /// <returns>树状根节点列表</returns>
         [Description("查找分类跟6个商品")]
+        [EnableCors("*", "*", "*", SupportsCredentials = true)]
+        [HttpGet]
         public List<TreeJsonModel> GetCateANDPro()
         {
             CategorySearchCondition csc = new CategorySearchCondition()
