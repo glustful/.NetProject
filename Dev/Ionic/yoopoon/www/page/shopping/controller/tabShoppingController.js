@@ -317,6 +317,16 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     document.getElementById('search').onblur = function () {
         $state.go("page.search_product", {productName: $scope.searchname});
     };
+$scope.ServiceCon={
+    Page:1,
+    PageCount:10
+}
+    $http.get(SETTING.ApiUrl+"/Service/GetList",$scope.ServiceCon,{
+        'withCredentials':true
+    }).success(function(data)
+    {
+        $scope.ServiceList=data.List
+    })
 }]);
 
 
