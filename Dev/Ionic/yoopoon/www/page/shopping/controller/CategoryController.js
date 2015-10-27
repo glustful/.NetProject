@@ -43,7 +43,6 @@ app.controller('CategoryController',['$scope','$http','$state',function($scope,$
     $scope.category=function(tabIndex){
 
         $scope.tabIndex=tabIndex;
-
     }
     $scope.Img=SETTING.ImgUrl;
     //-----------查找商品-----------
