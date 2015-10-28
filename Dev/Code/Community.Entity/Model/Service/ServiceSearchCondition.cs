@@ -28,7 +28,8 @@ namespace Community.Entity.Model.Service
         public int[] Ids { get; set; }
         public string Name { get; set; }
         public string Class { get; set; }
-        public int? ServiceId { get; set; }
+        //public int? ServiceId { get; set; }
+        public string Link { get; set; }
         public int[] AddUsers { get; set; }
         public int[] UpUsers { get; set; }
         public EnumServiceSearchOrderBy? OrderBy { get; set; }

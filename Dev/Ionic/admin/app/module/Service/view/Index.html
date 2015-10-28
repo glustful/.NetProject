@@ -12,7 +12,7 @@
             <tr>
                 <th align="center">名称</th>
                 <th align="center">类库</th>
-                <th align="center">服务Id</th>
+                <th align="center">地址</th>
                 <th align="center">操作</th>
             </tr>
             </thead>
@@ -20,7 +20,7 @@
             <tr ng-repeat="item in list">
                 <td>{{item.Name }}</td>
                 <td>{{item.Class}}</td>
-                <td>{{item.ServiceId}}</td>
+                <td>{{item.Link}}</td>
                 <td>
                     <a ui-sref="app.service.edit({Id:item.Id})" class="btn btn-info btn-sm"><i md-ink-ripple class="fa fa-fw m-r-xs fa-edit"></i> 编辑
                     </a>

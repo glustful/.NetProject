@@ -55,7 +55,7 @@ app.controller("CreateServiceCtr",['$http','$scope','$state',function($http,$sco
     $scope.model={
         Name:'',
         Class:'',
-        ServiceId:''
+        Link:''
     }
     $scope.save=function() {
         $http.post(SETTING.ZergWcApiUrl + "/Service/Post", $scope.model, {
