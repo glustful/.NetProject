@@ -3,18 +3,19 @@
 
 }
 .category-tab{
-    float: left;
     min-width: 90px;
     width: 90px;
-    height: auto;
+    position: absolute;
+    top:98px;
     overflow-y: auto;
-    min-height: 100%;
-    display: block;
+    z-index: 999;
 
 }
-.category1{
-    overflow: hidden;
-    height: 670px;
+.scroll-category{
+    height: 900px;
+    min-height: 100%;
+    overflow-y: scroll;
+
 }
 .category-tab li{
     height: 49px;
@@ -32,6 +33,8 @@
 .category-content{
     margin-left: 90px;
     overflow: hidden;
+    min-height: 100%;
+    height: auto;
 }
 .category-content h4{
     color: silver;
@@ -49,8 +52,7 @@
     width: 60px;
     height: 60px;
 }
-.click-change{
-    background-color: white;
-    color: red;
-    border: none;
+
+.active{
+	color:red;
 }

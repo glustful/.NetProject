@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mappings\Service\ServiceMapping.cs" />
     <Compile Include="Model\Area\AreaEntity.cs" />
     <Compile Include="Model\Area\AreaSearchConditon.cs" />
     <Compile Include="Model\Area\EnumArea.cs" />
@@ -112,6 +113,8 @@
     <Compile Include="Mappings\Product\ProductMapping.cs" />
     <Compile Include="Mappings\ServiceOrderDetail\ServiceOrderDetailMapping.cs" />
     <Compile Include="Mappings\ServiceOrder\ServiceOrderMapping.cs" />
+    <Compile Include="Model\Service\ServiceEntity.cs" />
+    <Compile Include="Model\Service\ServiceSearchCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

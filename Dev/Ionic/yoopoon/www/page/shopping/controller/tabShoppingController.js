@@ -168,7 +168,28 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
 //    document.getElementById("father").appendChild(imgfb);
 //    imgfb.className="f-show add";
 //    imgfb.setAttribute("ng-src","http://img.iyookee.cn/"+'$scope.list.MainImg');
-
+    $scope.AddCart1 = function (list) {
+        $scope.cartinfo.id = $scope.list.Id;
+        $scope.cartinfo.name = $scope.list.Name;
+        $scope.cartinfo.mainimg = $scope.list.MainImg;
+        $scope.cartinfo.price = $scope.list.Price;
+        $scope.cartinfo.oldprice = $scope.list.OldPrice;
+        $scope.cartinfo.count = 1;
+        cartservice.add($scope.cartinfo);
+        var $bigImg=$("#bigImg").children();
+        var bigImg=$bigImg[0];
+        var cloneImg=bigImg.cloneNode(true);
+        document.body.appendChild(cloneImg);
+   		var top=$bigImg.offset().top;
+   		var left=$bigImg.offset().left;
+   		cloneImg.style.position="fixed";
+   		cloneImg.style.top=top+"px";
+   		cloneImg.style.left=left+"px";
+   		cloneImg.className="gwcFrist";
+   		setTimeout(function(){
+   			$(cloneImg).remove();
+   		},1000)
+    };
 
 
 //endregion
@@ -243,6 +264,9 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         parameterValue:[]
     };
     // 添加商品
+//  $(window).scroll(function(){
+//  	var st=$(this).scrollTop();
+//  })
     $scope.AddCart = function (data,$event) {
         $scope.cartinfo.id = data.row.Id;
         $scope.cartinfo.name = data.row.Name;
@@ -255,26 +279,18 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
         var currentObj=$event.target;
 		var imgF=currentObj.parentNode.parentNode.parentNode;
 		var img=imgF.getElementsByTagName("img");
-		var cloneImg=img[0].cloneNode(true);
-		var left = img[0].x;
-		var top = img[0].y;
+		var currentImg=img[0];
+		var cloneImg=currentImg.cloneNode(false);
+		var $cloneImg=$(cloneImg);
+		document.body.appendChild(cloneImg);
+		var top = $(currentImg).offset().top;
+		var left = $(currentImg).offset().left;
+	    $cloneImg.css({"position":"fixed","top":top+"px","left":left+"px"});
 		cloneImg.className="gwcAnimation";
-		cloneImg.x = left;
-		cloneImg.y = top;
-		imgF.appendChild(cloneImg);
-		
-		
-
+		setTimeout(function(){
+			$cloneImg.remove();
+		},1000);
     }
-    $scope.AddCart1 = function (list) {
-        $scope.cartinfo.id = $scope.list.Id;
-        $scope.cartinfo.name = $scope.list.Name;
-        $scope.cartinfo.mainimg = $scope.list.MainImg;
-        $scope.cartinfo.price = $scope.list.Price;
-        $scope.cartinfo.oldprice = $scope.list.OldPrice;
-        $scope.cartinfo.count = 1;
-        cartservice.add($scope.cartinfo);
-    };
 
     //endregion
 
@@ -301,6 +317,16 @@ app.controller('TabShoppingCtrl', ['$http', '$scope', '$stateParams', '$state', 
     document.getElementById('search').onblur = function () {
         $state.go("page.search_product", {productName: $scope.searchname});
     };
+$scope.ServiceCon={
+    Page:1,
+    PageCount:10
+}
+    $http.get(SETTING.ApiUrl+"/Service/GetList",$scope.ServiceCon,{
+        'withCredentials':true
+    }).success(function(data)
+    {
+        $scope.ServiceList=data.List
+    })
 }]);
 
 

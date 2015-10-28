@@ -70,6 +70,8 @@
     <Compile Include="ServiceOrderDetail\ServiceOrderDetailService.cs" />
     <Compile Include="ServiceOrder\IServiceOrderService.cs" />
     <Compile Include="ServiceOrder\ServiceOrderService.cs" />
+    <Compile Include="Service\IServiceService.cs" />
+    <Compile Include="Service\ServiceSerivce.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Community.Entity\Community.Entity.csproj">
