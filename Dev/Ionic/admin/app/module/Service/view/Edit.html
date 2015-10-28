@@ -14,10 +14,10 @@
                 <label class="col-sm-3 control-label no-padding-right"> 地址 </label>
                 <div class="col-sm-9">
                     <div style="float: left;margin-right: 20px">
-                        <!--<select class="form-control" style="width: 100px" ng-model="model.SerivceId"-->
-                        <!--ng-options="o.Id as o.Name for o in CategoryOneList" ng-change="selectTwoChange()" required>-->
-                        <!--</select>-->
-                        <input class="form-control" style="width: 200px" type="text" ng-model="model.Link" required>
+                        <select class="form-control" style="width: 200px" ng-model="model.Link"
+                        ng-options="o.name as o.name for o in LinkList" required>
+                        </select>
+                        <!--<input class="form-control" style="width: 200px" type="text" ng-model="model.Link" required>-->
                     </div>
                 </div>
             </div>
@@ -25,7 +25,10 @@
                 <label class="col-sm-3 control-label no-padding-right"> 类库 </label>
 
                 <div class="col-sm-9">
-                    <input class="form-control" style="width: 200px" type="text" ng-model="model.Class" required>
+                    <!--<input class="form-control" style="width: 200px" type="text" ng-model="model.Class" required>-->
+                    <select class="form-control" style="width: 200px" ng-model="model.Class"
+                            ng-options="o.name as o.name for o in ClassList" required>
+                    </select>
                 </div>
             </div>
             <div class="clearfix form-actions">
