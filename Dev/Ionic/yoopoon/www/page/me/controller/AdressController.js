@@ -16,7 +16,7 @@ app.controller('addressAdm',['$http','$scope','AuthService',function($http,$scop
             success(function(data){
 
                 $scope.list=data.List;
-                console.log(data);
+               // console.log(data);
             })};
     $scope.getAddress();
 
@@ -80,7 +80,7 @@ app.controller('selectCity',['$http','$scope','$stateParams',function($http,$sco
             success(function(data){
 
                 $scope.listCity=data.List;
-                console.log($scope.listCity);
+              //  console.log($scope.listCity);
             });
     }
     $scope.selCity();

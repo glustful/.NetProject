@@ -12,12 +12,12 @@ $scope.tabIndex=$stateParams.tabIndex;
    $scope.getOrderStatus=function()
    {
        $scope.searchCondition.Status=$scope.tabIndex;
-       alert($scope.tabIndex);
+       //alert($scope.tabIndex);
        $http.get(SETTING.ApiUrl +"/CommunityOrder/Get",{
            params:$scope.searchCondition,
            'withCredentials':true}).
         success(function(data){
-            console.log(data);
+           // console.log(data);
                $scope.list=data.List;
         });
    };
@@ -31,7 +31,7 @@ $scope.tabIndex=$stateParams.tabIndex;
         Id:10,
         Status:2
 
-    }
+    };
     $scope.upOrderStatus=function(id,orderid)
     {
 
