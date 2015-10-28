@@ -4,6 +4,10 @@
 //start--------------------------地址管理 huangxiuyu 2015.09.15--------------------------
 app.controller('addressAdm',['$http','$scope','AuthService',function($http,$scope,AuthService, $ionicSlideBoxDelegate) {
     $scope.currentuser= AuthService.CurrentUser();
+    if( $scope.currentuser==undefined ||  $scope.currentuser=="")
+    {
+        $state.go("page.login");//调到登录页面
+    }
     $scope.searchCondition={
         Adduser:$scope.currentuser.UserId
     }
@@ -12,7 +16,7 @@ app.controller('addressAdm',['$http','$scope','AuthService',function($http,$scop
             success(function(data){
 
                 $scope.list=data.List;
-                console.log(data);
+               // console.log(data);
             })};
     $scope.getAddress();
 
@@ -76,7 +80,7 @@ app.controller('selectCity',['$http','$scope','$stateParams',function($http,$sco
             success(function(data){
 
                 $scope.listCity=data.List;
-                console.log($scope.listCity);
+              //  console.log($scope.listCity);
             });
     }
     $scope.selCity();
@@ -120,12 +124,15 @@ app.controller('newaddress',['$http','$scope','$stateParams','$state','AuthServi
     $scope.saves = function () {
         if( $scope.Addre.Address=="" ||  $scope.Addre.Address==undefined ||  $scope.Addre.Zip=="" ||  $scope.Addre.Zip==undefined ||  $scope.Addre.Linkman=="" ||  $scope.Addre.Linkman==undefined ||  $scope.Addre.Tel=="" ||  $scope.Addre.Tel==undefined  )
         {
+            alert("信息不能为空");
             return;
         }
         if( $scope.Addre.Zip.length!=6)
         {
+            alert("邮政编号错误");
             return;
         }
+        $scope.Addre.Address=$scope.AreaName+" "+$scope.Addre.Address;
         $http.post(SETTING.ApiUrl+ '/MemberAddress/Post', $scope.Addre, {'withCredentials': true}).success(function (data) {
                 if (data.Status) {
 

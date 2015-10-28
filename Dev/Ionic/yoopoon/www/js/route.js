@@ -128,7 +128,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                }
                })
             .state('page.order', {
-                url: '/car/order?productId&count',
+                url: '/car/order?productId&count&memberaddreid',
                 views: {
                     'page-car': {
                         templateUrl: 'page/car/order.html',
@@ -173,11 +173,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 }
             })
             .state('page.selectAddress', {
-                url: '/me/selectAddress',
+                url: '/me/selectAddress?productId&count',
                 views: {
                     'page-me': {
                         templateUrl: 'page/me/selectAddress.html',
-                        controller: 'TabMeCtrl'
+                        controller: 'selectaddress'
                     }
                 }
             })

@@ -66,7 +66,7 @@
                 <i class="icon icon-addressManage" style="color: #3b4043;font-size: 24px;"></i>
                 <h2 style="color: #122733">收货人:{{userinfo.Linkman}} <number style="float:right">{{userinfo.Tel}}</number></h2>
                 <p style="white-space: normal;color: #122733">收货地址：{{userinfo.Address}}</p>
-                <a class="icon ion-ios-arrow-right" href="#/page/me/selectAddress" style="color: #999999;"></a>
+                <a class="icon ion-ios-arrow-right"ui-sref="page.selectAddress({productId:productId,count:count})"style="color: #999999;"></a>
             </ion-item>
             <ion-item class="item-thumbnail-left" style="background-color: #f5f5f5" ng-repeat="list in model">
                 <img src="http://img.iyookee.cn/{{list.mainimg}}" alt=""/>
