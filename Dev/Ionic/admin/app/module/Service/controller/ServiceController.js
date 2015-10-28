@@ -69,6 +69,16 @@ app.controller("CreateServiceCtr",['$http','$scope','$state',function($http,$sco
     }
 }])
 app.controller("EditServiceCtr",['$http','$scope','$stateParams','$state',function($http,$scope,$stateParams,$state){
+    $scope.LinkList = [
+        {name:'page.safe'},
+        {name:'page.clear'},
+    ];
+    $scope.ClassList = [
+        {name:'icon-jiazhenfuwu energized'},
+        {name:'icon-yifuqingxi calm'},
+        {name:'icon-jiazhenfuwu royal'},
+        {name:'icon-yifuqingxi assertive'},
+    ];
     $http.get(SETTING.ZergWcApiUrl+"/Service/GetService?Id="+$stateParams.Id,{
         'withCredentials':true
     }).success(function(data){

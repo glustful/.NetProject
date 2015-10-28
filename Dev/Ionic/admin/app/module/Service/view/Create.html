@@ -1,28 +1,28 @@
 <div ng-controller="CreateServiceCtr">
-    <div class="row">
+
         <form class="form-horizontal" role="form" name="form"enctype="multipart/form-data" ng-submit="save()">
 
-            <div class="form-group">
+            <div class="form-group row">
                 <label class="col-sm-3 control-label no-padding-right"> 名称 </label>
 
                 <div class="col-sm-9">
                     <input class="form-control" style="width: 200px" type="text" ng-model="model.Name" required ng-maxlength="20"/>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
                 <!--分类-->
                 <label class="col-sm-3 control-label no-padding-right"> 地址 </label>
                 <div class="col-sm-9">
-                    <div style="float: left;margin-right: 20px">
-                        <select class="form-control" style="width: 200px" ng-model="model.Link">
-                            <option selected>page.clear</option>
+                        <select name="list" class="form-control" ng-model="model.Link" style="width: 200px;display: inline-block;">
+                            <option selected = "selected">page.clear</option>
                             <option>page.safe</option>
                         </select>
+                        <span>预约型clear,不预约型safe</span>
                         <!--<input class="form-control" style="width: 200px" type="text" ng-model="model.ServiceId" required>-->
-                    </div>
+                    <!--</div>-->
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group row">
                 <label class="col-sm-3 control-label no-padding-right"> 类库 </label>
 
                 <div class="col-sm-9">
@@ -46,5 +46,4 @@
             </div>
 
         </form>
-    </div>
 </div>
