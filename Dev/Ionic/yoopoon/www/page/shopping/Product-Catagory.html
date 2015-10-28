@@ -1,4 +1,10 @@
-
+<script type="text/javascript">
+    function searchPro()
+{
+var x=document.getElementById('search').value;
+$state.go("page.search_product", {productName: x});
+}
+</script>
     <div class="bar  bar-light padding " style="height: 44px;border-bottom: solid 1px silver">
         <button class="button  button-icon icon ion-chevron-left color-silver"
                 onclick="javascript:history.back(-1);"></button>
@@ -6,7 +12,7 @@
     </div>
     <div class="bar  bar-light " style="top: 44px">
         <div class=" item-input icon-search border-input input-size">
-            <input type="text" class="list-title " placeholder="寻找你喜欢的宝贝">
+            <input type="text"onblur="searchPro()" class="list-title " placeholder="寻找你喜欢的宝贝">
         </div>
     </div>
     <ion-scroll zooming="true" direction="y" class=" category-tab stable-bg " style="height: 80%; overflow-y:scroll ;">
