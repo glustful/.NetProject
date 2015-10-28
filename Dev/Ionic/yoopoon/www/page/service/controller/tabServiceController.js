@@ -5,6 +5,16 @@ app.controller('tabservice',['$http','$scope',function($http,$scope){
 		window.location.href = state;
 	};
 
+	//region 图片轮播
+	$scope.channelName = 'banner';
+	$http.get(SETTING.ApiUrl+'/Channel/GetTitleImg', {
+		params: {ChannelName: $scope.channelName},
+		'withCredentials': true
+	}).success(function (data) {
+		$scope.content = data;
+	});
+	//endregion
+
 	//    搜索功能
 	$scope.showSelect = false;
 	$scope.isShow = false;
@@ -72,15 +82,7 @@ app.controller('tabservice',['$http','$scope',function($http,$scope){
 	}
 
 
-//region 图片轮播
-	$scope.channelName = 'banner';
-	$http.get(SETTING.ApiUrl+'/Channel/GetTitleImg', {
-		params: {ChannelName: $scope.channelName},
-		'withCredentials': true
-	}).success(function (data) {
-		$scope.content = data;
-	});
-	//endregion
+
 
 
 }]);
