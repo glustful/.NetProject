@@ -38,15 +38,23 @@ app.controller('submitOrderController', ['$http','$scope','repository', '$stateP
         //    .success(function(data) {
         //        $scope.userinfo = data;
         //    });
-        $scope.mcon={
-            UserId:$scope.currentuser.UserId
+
+
+
+        if( $scope.currentuser!=undefined &&  $scope.currentuser!="") {
+
+            $scope.mcon={
+                UserId:$scope.currentuser.UserId
+
+            }
+
+            $http.get(SETTING.ApiUrl + "/MemberAddress/Get", {
+                params: $scope.mcon,
+                'withCredentials': true
+            }).success(function (data) {
+                $scope.userinfo = data.List[0];
+            })
         }
-        $http.get(SETTING.ApiUrl+"/MemberAddress/Get",{
-            params:$scope.mcon,
-        'withCredentials':true
-         }).success(function(data){
-            $scope.userinfo = data.List[0];
-        })
         //todo:完成生成订单并付款的逻辑
         //		$scope.submit = function () {
         //			alert("111");
