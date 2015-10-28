@@ -1,4 +1,4 @@
-app.controller('TabCarCtrl', function($scope,$state, $ionicSlideBoxDelegate,cartservice) {
+app.controller('TabCarCtrl', function($scope,$state,$ionicHistory,AuthService,  $ionicSlideBoxDelegate,cartservice) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -75,7 +75,7 @@ var carlistcount=0;
   $scope.delegateHandler = $ionicSlideBoxDelegate;
 
 
-
+    $ionicHistory.clearHistory();
 
     //region 全选 单选
     $scope.start=false;//默认未选中
@@ -249,16 +249,26 @@ var carlistcount=0;
 
     //region 结算
     $scope.jiesuan=function(){
-        $scope.productcount=[];
-        for(i=0;i< $scope.choseArr.length;i++)
+
+        $scope.currentuser= AuthService.CurrentUser(); //调用service服务来获取当前登陆信息
+        if( $scope.currentuser==undefined ||  $scope.currentuser=="")
         {
-            for(j=0;j<$scope.productlist.length;j++){
-                if($scope.choseArr[i]==$scope.productlist[j].id){
-                   $scope.productcount.push($scope.productlist[j])
+            $state.go("page.login");//调到登录页面
+        }
+        else
+        {
+            $scope.productcount=[];
+            for(i=0;i< $scope.choseArr.length;i++)
+            {
+                for(j=0;j<$scope.productlist.length;j++){
+                    if($scope.choseArr[i]==$scope.productlist[j].id){
+                        $scope.productcount.push($scope.productlist[j])
+                    }
                 }
             }
+            $state.go("page.order",{productcount:$scope.productcount,pricecount:$scope.dprice})
         }
-       $state.go("page.order",{productcount:$scope.productcount,pricecount:$scope.dprice})
+
     }
 
     //endregion

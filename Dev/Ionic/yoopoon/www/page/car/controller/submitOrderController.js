@@ -8,8 +8,6 @@ app.controller('submitOrderController', ['$http','$scope','repository', '$stateP
         {
             $state.go("page.login");//调到登录页面
         }
-        $scope.count=$stateParams.count;
-        $scope.productId=$stateParams.productId;
         if ($stateParams.productId!=null && $stateParams.count!=null) {
             $http.get(SETTING.ApiUrl+"/CommunityProduct/Get?id="+$stateParams.productId,{
                 'withCredentails':true
@@ -40,17 +38,22 @@ app.controller('submitOrderController', ['$http','$scope','repository', '$stateP
         //    .success(function(data) {
         //        $scope.userinfo = data;
         //    });
-        $scope.mcon={
-            UserId:$scope.currentuser.UserId
-        };
-        if($stateParams.memberaddreid)
-        {
-            $http.get(SETTING.ApiUrl+"/MemberAddress/Get?id="+$stateParams.memberaddreid,{
-                'withCredentials':true
-            }).success(function(data){
-                console.log(data);
-                $scope.userinfo = data;
-            });
+
+
+
+        if( $scope.currentuser!=undefined &&  $scope.currentuser!="") {
+
+            $scope.mcon={
+                UserId:$scope.currentuser.UserId
+
+            }
+
+            $http.get(SETTING.ApiUrl + "/MemberAddress/Get", {
+                params: $scope.mcon,
+                'withCredentials': true
+            }).success(function (data) {
+                $scope.userinfo = data.List[0];
+            })
         }
         else{
         $http.get(SETTING.ApiUrl+"/MemberAddress/Get",{

@@ -20,7 +20,8 @@ namespace Community.Entity.Mappings.Service
             Property(c => c.AddUser).HasColumnType("int").IsOptional();
             Property(c => c.Class).HasColumnType("varchar").HasMaxLength(50).IsOptional();
             Property(c => c.Name).HasColumnType("varchar").HasMaxLength(50).IsOptional();
-            Property(c => c.ServiceId).HasColumnType("int").IsOptional();
+            //Property(c => c.ServiceId).HasColumnType("int").IsOptional();
+            Property(c => c.Link).HasColumnType("varchar").HasMaxLength(50).IsOptional();
             Property(c => c.UpTime).HasColumnType("datetime").IsOptional();
             Property(c => c.UpUser).HasColumnType("int").IsOptional();
         }

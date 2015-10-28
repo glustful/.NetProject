@@ -65,7 +65,7 @@
 			<!--</div>-->
 			<ul style="overflow: hidden">
 				<li ng-repeat="item in ServiceList" style="float: left;width: 20%;height: 80px;;text-align: center;opacity: 1" class="tab-item ">
-					<i ui-sref="" class="icon {{item.Class}} light circle" style="height: 50px"></i>
+					<i ui-sref="{{item.Link}}({name:item.Name})" class="icon {{item.Class}} light circle" style="height: 50px"></i>
 					<p class="font-8">{{item.Name}}</p>
 				</li>
 			</ul>
