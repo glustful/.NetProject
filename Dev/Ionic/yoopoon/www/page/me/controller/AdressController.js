@@ -113,7 +113,7 @@ app.controller('newaddress',['$http','$scope','$stateParams','$state','AuthServi
     $scope.AreaName=$stateParams.name;
         $scope.Addre={
         AreaId: $stateParams.id,
-        Address:'',
+        Address:$scope.AreaName,
         Zip :'',
         Linkman :'',
         Tel:'',
@@ -122,17 +122,33 @@ app.controller('newaddress',['$http','$scope','$stateParams','$state','AuthServi
 
 
     $scope.saves = function () {
-        if( $scope.Addre.Address=="" ||  $scope.Addre.Address==undefined ||  $scope.Addre.Zip=="" ||  $scope.Addre.Zip==undefined ||  $scope.Addre.Linkman=="" ||  $scope.Addre.Linkman==undefined ||  $scope.Addre.Tel=="" ||  $scope.Addre.Tel==undefined  )
+
+        if($scope.Addre.Address=="" ||  $scope.Addre.Address==undefined||  $scope.Addre.Address==$scope.AreaName)
         {
-            alert("信息不能为空");
+            alert("请填写详细地址。");
             return;
         }
-        if( $scope.Addre.Zip.length!=6)
+
+        if( $scope.Addre.Linkman=="" ||  $scope.Addre.Linkman==undefined)
         {
-            alert("邮政编号错误");
+            alert("联系人填写错误。");
             return;
         }
-        $scope.Addre.Address=$scope.AreaName+" "+$scope.Addre.Address;
+        //验证手机号码合法性
+        var re = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+        if (!re.test($scope.Addre.Tel)) {
+            alert("手机号码填写错误。");
+            document.getElementById("pphone").focus();
+            return false;
+        }
+//验证邮政编码合法性
+        var pattern = /^[0-9]{6}$/;
+        var  flag = pattern.test($scope.Addre.Zip);
+        if (!flag) {
+            alert("非法的邮政编码！")
+            document.getElementById("zippp").focus();
+            return false;
+        }
         $http.post(SETTING.ApiUrl+ '/MemberAddress/Post', $scope.Addre, {'withCredentials': true}).success(function (data) {
                 if (data.Status) {
 
