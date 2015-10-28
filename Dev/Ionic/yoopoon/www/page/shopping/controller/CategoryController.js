@@ -41,14 +41,13 @@ app.controller('CategoryController',['$scope','$http','$state',function($scope,$
 //    };
     $scope.tabIndex= 1 ;
     $scope.category=function(tabIndex){
+
         $scope.tabIndex=tabIndex;
-        var div1 = document.getElementById(tabIndex);
-        div1.style.color="red";
     }
     $scope.Img=SETTING.ImgUrl;
     //-----------查找商品-----------
     $scope.getProduct=function(){
-        $http.get(SETTING.ApiUrl+"/Category/GetCateANDPro",{withCredentials:true}).
+        $http.get(SETTING.ApiUrl+'/Category/GetCateANDPro',{withCredentials:true}).
             success(function(data){
                 $scope.catelist=data;
                 $scope.tabIndex=data[0].Id;
