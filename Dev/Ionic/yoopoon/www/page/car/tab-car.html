@@ -1,10 +1,11 @@
 <link rel="stylesheet" href="page/car/css/car.css">
-<div  onload="opener.location.reload()" ng-controller="TabCarCtrl">
+
+<div  onload="opener.location.reload()" >
   <div class="bar" style="height: 44px">
       <h2 class=" title" style="font-weight: 600;font-size:24px;">购物车({{sum}})</h2>
       <a href="" class="button button-clear" style="font-size: 15px;color: #222222;"  ng-click="flag.showDelete=!flag.showDelete;flag.showReorder=false;">编辑</a>
   </div>
-        <ion-view hide-nav-bar="true" hide-tabs="false">
+        <ion-view cache-view="false" hide-nav-bar="true" hide-tabs="false">
   <ion-content no-header="true" style="top:44px;">
     <!--<div class="test">购物车(5)</div>-->
       <ion-list show-delete="flag.showDelete" show-reorder="flag.showReorder">
