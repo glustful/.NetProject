@@ -13,7 +13,7 @@ namespace Community.Entity.Mappings.MemberAddress
 			HasRequired(c =>c.Member).WithMany(c=>c.Address);
             HasOptional(c => c.Area);
             //todo:在正式版本后改为required
-			Property(c => c.Address).HasColumnType("varchar").HasMaxLength(30).IsOptional();
+			Property(c => c.Address).HasColumnType("varchar").HasMaxLength(100).IsOptional();
 			Property(c => c.Zip).HasColumnType("varchar").HasMaxLength(10).IsOptional();
 			Property(c => c.Linkman).HasColumnType("varchar").HasMaxLength(30).IsOptional();
 			Property(c => c.Tel).HasColumnType("varchar").HasMaxLength(15).IsOptional();

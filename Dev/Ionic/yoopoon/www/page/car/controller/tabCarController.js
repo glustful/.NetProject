@@ -7,11 +7,9 @@ app.controller('TabCarCtrl', function($scope,$state,$ionicHistory,AuthService,  
   //  window.onload=function(){
   //
   //  }
+    //
 
-
-    $scope.$on('$viewContentLoaded', function() {
-        getcar();
-    });
+    $ionicHistory.clearHistory();
 
 var carlistcount=0;
 
@@ -26,7 +24,9 @@ var carlistcount=0;
         }
 
     };
-
+    $scope.$on('$viewContentLoaded', function() {
+        getcar();
+    });
     getcar();
 
 
@@ -75,7 +75,7 @@ var carlistcount=0;
   $scope.delegateHandler = $ionicSlideBoxDelegate;
 
 
-    $ionicHistory.clearHistory();
+
 
     //region 全选 单选
     $scope.start=false;//默认未选中
