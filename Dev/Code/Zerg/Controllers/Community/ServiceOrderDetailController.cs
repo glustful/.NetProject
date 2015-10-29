@@ -52,7 +52,8 @@ namespace Zerg.Controllers.Community
                 propValue = c.Product.Parameters.Select(o => o.ParameterValue.Value).FirstOrDefault(),
                
 			}).ToList();
-            return PageHelper.toJson(new { List = model });
+            var count = _serviceOrderDetailService.GetServiceOrderDetailCount(condition);
+            return PageHelper.toJson(new { List = model,TotalCount=count });
 		}
 
 //		public bool Post(ServiceOrderDetailModel model)
