@@ -57,11 +57,11 @@
         </span>
         </p>
         <div class="list" style="margin-bottom: 0;padding:10px 10px 0">
-        <h4 class="font-title">商品评价（{{Count}}）</h4>
+        <h4 class="font-title">商品评价({{Count}})</h4>
         <div class="item item-avatar none-border" ng-repeat="item in CommentList" style="padding-left: 0;">
             <div class="commImg">
                 <img ng-src="http://img.iyookee.cn/{{item.UserImg}}@40w_40h_70q">
-                <span style="float:left;padding:5px 0 0 5px;">{{item.UserName}}</span>
+                <span style="float:left;padding:5px 0 0 5px;">{{item.UserName|replaceStr}}</span>
             </div>
         <p style="white-space: normal;padding-top: 10px">{{item.Content}}</p>
         </div>
@@ -71,8 +71,8 @@
             查看更多评论
         </button>
         </div>
-        <div class="text-center" style="padding-top: 10px;background-color:#e0e0e0;">
-        <p><span class="font-title" ng-click="getDetail()" ng-class="{true: 'text', false: 'notext'}[istext]">点击查看图文详情</span>
+        <div class="text-center" style="padding: 10px 0;background-color:#e0e0e0;">
+        <p style="margin-bottom: 0"><span class="font-title" ng-click="getDetail()" ng-class="{true: 'text', false: 'notext'}[istext]">点击查看图文详情</span>
             <ion-spinner icon="ios-small" ng-class="{true: 'spinner', false: 'nospinner'}[isspinner]"></ion-spinner></p>
             <div ng-class="{true: 'detail', false: 'nodetail'}[isDetail]">
                 <div>
