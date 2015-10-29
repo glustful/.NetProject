@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="page/car/css/car.css">
-<div  onload="opener.location.reload()">
+<div  onload="opener.location.reload()" ng-controller="TabCarCtrl">
   <div class="bar" style="height: 44px">
       <h2 class=" title" style="font-weight: 600;font-size:24px;">购物车({{sum}})</h2>
       <a href="" class="button button-clear" style="font-size: 15px;color: #222222;"  ng-click="flag.showDelete=!flag.showDelete;flag.showReorder=false;">编辑</a>
@@ -15,7 +15,7 @@
         <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
         <ion-item class="item-thumbnail-left car-list" ng-repeat="item in productlist">
 
-            <img ng-src="http://img.iyookee.cn/{{item.mainimg}}" alt="" />
+            <img ng-src="http://img.iyookee.cn/{{item.mainimg}}@80w_80h_70q_2e" alt="" />
             <h2>{{item.name}}</h2>
             <!--<p>口味：甜味</p>-->
             <div style="margin-left: 30px;">

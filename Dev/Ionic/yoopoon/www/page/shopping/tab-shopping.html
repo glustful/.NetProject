@@ -1,7 +1,7 @@
 <link href="page/shopping/css/shopping.css" type="text/css" rel="stylesheet">
 
 <div class=" header bar" style="height:44px">
-	<a class="button  button-icon icon icon-fuwuanniu" ng-click="go('page.Product-Catagory')" ui-sref="page.Product-Catagory"></a>
+	<a class="button  button-icon icon icon-fuwuanniu" ui-sref="page.service"></a>
 	<span class="selectArea" ng-click="showSelectBox()" ng-hide="showSelect">{{area}}</span>
 	<!--<label class=" item-select select-header" ng-hide="showSelect">
 
@@ -23,8 +23,8 @@
     </div>
     <div class="ziji">
     <ul style="margin-left: 50px">
-        <li style="float: left ;width:60px; height: 40px;border-radius:10px; margin-top: 10px;" ng-repeat="item in zilei">
-            <button class="btn m-b-xs w-xs btn-default btn-rounded" ng-click="huan(item.Name)" >{{item.Name}}</button></li>
+        <li style="float: left ;width:70px; height: 40px;  margin-top: 10px;" ng-repeat="item in zilei">
+            <button  style="border: none; background-color: inherit" ng-click="huan(item.Name)" >{{item.Name}}</button></li>
 
     </ul>
     </div>
