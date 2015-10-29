@@ -137,6 +137,14 @@ app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout','$stateParams'
     });
     //endregion
 }])
+app.filter('replaceStr',function(){
+    return function(str){
+        //替换第三到第五个字符为*
+        var newStr= str.substring(0,2)+"***"+str.substring(5,str.length);
+        return newStr;
+
+    }
+});
 app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$timeout','$ionicSlideBoxDelegate', 'cartservice',
     function ($http, $scope, $state,$stateParams, $timeout, $ionicSlideBoxDelegate,cartservice) {
         $scope.Img=SETTING.ImgUrl;
