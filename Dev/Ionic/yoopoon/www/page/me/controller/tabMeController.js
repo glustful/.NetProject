@@ -25,6 +25,21 @@ app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderServic
         window.location.href = state;
     }
 
+    var getWaitRec = function(){
+        $scope.condition = {
+            Status: '1',
+            Addusers: $scope.currentuser.UserId
+        };
+
+        $http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
+            .success(function(data) {
+                //$scope.list = data.List;
+                $scope.TotalCount = data.TotalCount;
+                console.log( $scope.TotalCount );
+            });
+    }
+    getWaitRec();
+
 
     $scope.save = function () {
         //if (document.getElementById("Uptext").innerText == '正在上传..') {
@@ -286,7 +301,7 @@ app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderServic
                     var img = document.getElementById('imghead');
                     img.src = $scope.oldMem.Thumbnail;
                     location.reload([true]);
-                    $state.go("app.me");
+                    $state.go("page.me");
                 }
             });
     }

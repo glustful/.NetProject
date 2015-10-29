@@ -68,7 +68,8 @@ namespace Zerg.Controllers.Community
                 orderId=c.Order .Id 
                 //				Order = c.Order,
             }).ToList();
-            return PageHelper.toJson(new { List = model });
+           var  count = _orderDetailService.GetOrderDetailCount(condition);
+            return PageHelper.toJson(new { List = model ,Count=count});
 		}
 
 //		public bool Post(OrderDetailModel model)
