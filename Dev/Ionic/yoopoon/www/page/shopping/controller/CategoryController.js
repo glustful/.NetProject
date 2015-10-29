@@ -51,7 +51,7 @@ app.controller('CategoryController',['$scope','$http','$state',function($scope,$
             success(function(data){
                 $scope.catelist=data;
                 $scope.tabIndex=data[0].Id;
-            //console.log(data);
+            console.log(data);
         });
     }
     $scope.getProduct();
