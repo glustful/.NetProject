@@ -118,7 +118,7 @@ namespace Zerg.Controllers.Community
             var model=new ServiceModel
             {
                 Id = entity.Id,
-                ServiceId =entity.ServiceId,
+                Link = entity.Link,
                 Name = entity.Name,
                 Class = entity.Class
             };
@@ -130,7 +130,7 @@ namespace Zerg.Controllers.Community
             var model = _serviceService.GetServiceByCondition(condition).Select(c => new ServiceModel
             {
                 Id = c.Id,
-                ServiceId = c.ServiceId,
+                Link = c.Link,
                 Class = c.Class,
                 Name = c.Name
             }).ToList();
@@ -146,7 +146,7 @@ namespace Zerg.Controllers.Community
                 Class = model.Class,
                 AddTime = DateTime.Now,
                 AddUser = _workContext.CurrentUser.Id,
-                ServiceId = model.ServiceId,
+                Link = model.Link,
                 UpTime = DateTime.Now,
                 UpUser = _workContext.CurrentUser.Id
             };
@@ -166,7 +166,7 @@ namespace Zerg.Controllers.Community
             }
             entity.Name = model.Name;
             entity.Class = model.Class;
-            entity.ServiceId = model.ServiceId;
+            entity.Link= model.Link;
             entity.UpTime=DateTime.Now;
             entity.UpUser = _workContext.CurrentUser.Id;
             if (_serviceService.Update(entity) != null)

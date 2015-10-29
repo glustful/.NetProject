@@ -31,11 +31,11 @@ app.controller('CategoryController',['$scope','$http','$state',function($scope,$
             true}).
             success(function(data){
                 $scope.catelist=data;
-                console.log(data);
+               // console.log(data);
             })
     };
    // $scope.selectCategory(1);
-    $scope.productName = '';
+//    $scope.productName = '';
 //    document.getElementById('search').onblur = function () {
 //        $state.go("page.search_product", {productName: $scope.productName});
 //    };
@@ -51,7 +51,7 @@ app.controller('CategoryController',['$scope','$http','$state',function($scope,$
             success(function(data){
                 $scope.catelist=data;
                 $scope.tabIndex=data[0].Id;
-            console.log(data);
+            //console.log(data);
         });
     }
     $scope.getProduct();

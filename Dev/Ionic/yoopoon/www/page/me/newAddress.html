@@ -14,7 +14,8 @@
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>
             <ion-item class="item-icon-right">
-                <input type="text" ng-model="Addre.Address" placeholder="请输入详细地址"/>
+                <input type="text"name="Address" ng-model="Addre.Address" placeholder="请输入详细地址"required/>
+                <!--<span ng-show="login_form.Address.$error.required"style="color:red;" aria-hidden="false">*必填项</span>-->
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>
             <ion-item class="item-icon-right">
@@ -22,11 +23,11 @@
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>
             <ion-item class="item-icon-right">
-                <input type="tel" ng-model="Addre.Tel" placeholder="请输入收货人联系电话"/>
+                <input type="tel"id="pphone"maxlength="30" ng-model="Addre.Tel" placeholder="请输入收货人联系电话"/>
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>
             <ion-item class="item-icon-right">
-                <input type="tel" ng-model="Addre.Zip" placeholder="请输入邮编"/>
+                <input id="zippp" type="tel" ng-model="Addre.Zip" placeholder="请输入邮编"/>
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>
         </ion-list>

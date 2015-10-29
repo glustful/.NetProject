@@ -4,6 +4,10 @@
 //start--------------------------地址管理 huangxiuyu 2015.09.15--------------------------
 app.controller('addressAdm',['$http','$scope','AuthService',function($http,$scope,AuthService, $ionicSlideBoxDelegate) {
     $scope.currentuser= AuthService.CurrentUser();
+    if( $scope.currentuser==undefined ||  $scope.currentuser=="")
+    {
+        $state.go("page.login");//调到登录页面
+    }
     $scope.searchCondition={
         Adduser:$scope.currentuser.UserId
     }
@@ -12,7 +16,7 @@ app.controller('addressAdm',['$http','$scope','AuthService',function($http,$scop
             success(function(data){
 
                 $scope.list=data.List;
-                console.log(data);
+               // console.log(data);
             })};
     $scope.getAddress();
 
@@ -76,7 +80,7 @@ app.controller('selectCity',['$http','$scope','$stateParams',function($http,$sco
             success(function(data){
 
                 $scope.listCity=data.List;
-                console.log($scope.listCity);
+              //  console.log($scope.listCity);
             });
     }
     $scope.selCity();
@@ -109,7 +113,7 @@ app.controller('newaddress',['$http','$scope','$stateParams','$state','AuthServi
     $scope.AreaName=$stateParams.name;
         $scope.Addre={
         AreaId: $stateParams.id,
-        Address:'',
+        Address:$scope.AreaName,
         Zip :'',
         Linkman :'',
         Tel:'',
@@ -118,13 +122,32 @@ app.controller('newaddress',['$http','$scope','$stateParams','$state','AuthServi
 
 
     $scope.saves = function () {
-        if( $scope.Addre.Address=="" ||  $scope.Addre.Address==undefined ||  $scope.Addre.Zip=="" ||  $scope.Addre.Zip==undefined ||  $scope.Addre.Linkman=="" ||  $scope.Addre.Linkman==undefined ||  $scope.Addre.Tel=="" ||  $scope.Addre.Tel==undefined  )
+
+        if($scope.Addre.Address=="" ||  $scope.Addre.Address==undefined||  $scope.Addre.Address==$scope.AreaName)
         {
+            alert("请填写详细地址。");
             return;
         }
-        if( $scope.Addre.Zip.length!=6)
+
+        if( $scope.Addre.Linkman=="" ||  $scope.Addre.Linkman==undefined)
         {
+            alert("联系人填写错误。");
             return;
+        }
+        //验证手机号码合法性
+        var re = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+        if (!re.test($scope.Addre.Tel)) {
+            alert("手机号码填写错误。");
+            document.getElementById("pphone").focus();
+            return false;
+        }
+//验证邮政编码合法性
+        var pattern = /^[0-9]{6}$/;
+        var  flag = pattern.test($scope.Addre.Zip);
+        if (!flag) {
+            alert("非法的邮政编码！")
+            document.getElementById("zippp").focus();
+            return false;
         }
         $http.post(SETTING.ApiUrl+ '/MemberAddress/Post', $scope.Addre, {'withCredentials': true}).success(function (data) {
                 if (data.Status) {
