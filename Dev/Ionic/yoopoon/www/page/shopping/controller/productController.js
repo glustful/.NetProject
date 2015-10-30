@@ -137,6 +137,14 @@ app.controller('ShoppingListCtrl', ['$http', '$scope', '$timeout','$stateParams'
     });
     //endregion
 }])
+app.filter('replaceStr',function(){
+    return function(str){
+        //替换第三到第五个字符为*
+        var newStr= str.substring(0,2)+"***"+str.substring(5,str.length);
+        return newStr;
+
+    }
+});
 app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$timeout','$ionicSlideBoxDelegate', 'cartservice',
     function ($http, $scope, $state,$stateParams, $timeout, $ionicSlideBoxDelegate,cartservice) {
         $scope.Img=SETTING.ImgUrl;
@@ -171,7 +179,8 @@ app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$t
             PageCount: 2,
             ProductId: $stateParams.id
         }
-        $scope.tipp = "查看更多评论";
+        $scope.isdisplay=false;
+        $scope.ismore=false;
         $scope.CommentList = [];//保存从服务器查来的任务，可累加
         var morecomment = function () {
             $timeout(function () {
@@ -184,18 +193,53 @@ app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$t
                         for (var i = 0; i < data.Model.length; i++) {
                             $scope.CommentList.push(data.Model[i]);
                         }
+                        if($scope.CommentList.length==data.TotalCount)
+                        {
+                            $scope.ismore=false;
+                            $scope.isdisplay=false;
+                        }
+                        else
+                        {
+                            //$scope.tipp = "查看更多评论";
+                            $scope.ismore=true;
+                        }
                     }
                     $scope.Count = data.TotalCount;
                 });
             }, 1000)
         };
         morecomment();
-        $scope.more = morecomment;
-
+        $scope.more =function()
+        {
+            $scope.isdisplay=true;
+            morecomment();
+        }
         //endregion
         //region 加载图文详情
        // $scope.hasload=false;
-        var load_detail = function () {
+       // var load_detail = function () {
+       //     $timeout(function () {
+       //         $http.get(SETTING.ApiUrl + "/ProductDetail/Get?id=" + $stateParams.id, {
+       //             'withCredentials': true
+       //         }).success(function (data) {
+       //             $scope.productDetail = data;
+       //             if(data!=null)
+       //             {
+       //                 //$scope.hasload=false;
+       //                 $scope.isdis=false;
+       //                 $scope.isDetail=true;
+       //             }
+       //         });
+       //        $scope.$broadcast("scroll.infiniteScrollComplete");
+       //     }, 1000);
+       // };
+        $scope.isDetail=false;
+        $scope.isspinner=false;
+        $scope.istext=true;
+        $scope.getDetail=function(){
+            //load_detail();
+            $scope.isspinner=true
+            $scope.istext=false;
             $timeout(function () {
                 $http.get(SETTING.ApiUrl + "/ProductDetail/Get?id=" + $stateParams.id, {
                     'withCredentials': true
@@ -203,16 +247,15 @@ app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$t
                     $scope.productDetail = data;
                     if(data!=null)
                     {
-                        $scope.hasload=false;
+                        //$scope.hasload=false;
+                        $scope.isspinner=false;
+                        $scope.isDetail=true;
                     }
                 });
-               $scope.$broadcast("scroll.infiniteScrollComplete");
+                $scope.$broadcast("scroll.infiniteScrollComplete");
             }, 1000);
-        };
-        $scope.isDetail=false;
-        $scope.getDetail=function(){
-            load_detail();
-            $scope.isDetail=true;
+
+            //$scope.isDetail=true;
         }
         //endregion
         //region 加入购物车
@@ -238,7 +281,6 @@ app.controller('ProductDetail', ['$http', '$scope', '$state','$stateParams', '$t
             cartservice.add($scope.cartinfo);
             //region 按钮禁用
             var buyNowBtn=document.getElementById("buyNowBtn");
-            console.log(buyNowBtn);
             buyNowBtn.disabled=true;
             buyNowBtn.className="col button-large none-border p-button";
             //endregion

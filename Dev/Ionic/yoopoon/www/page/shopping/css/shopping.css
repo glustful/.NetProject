@@ -372,7 +372,7 @@
     top:320px;
 }
 /*动画开始*/
-/*.gwc-car{
+.gwc-car{
     width: 40px;
     height: 40px;
     background-color: #898d93;
@@ -416,7 +416,7 @@
         bottom:90%;
         left: 85%;
     }
-   }*/
+   }
 /*动画结束*/
 /*shopping页购物车动画*/
 .gwcFrist{
@@ -533,8 +533,27 @@
 }
 .detail{
     display: block;
+    padding-top: 10px;
 }
 .nodetail{
     display: none;
 }
-
+.spinner,.text,.more,.display{
+    display: block;
+}
+.nospinner,.notext,.nomore,.nodisplay{
+    display: none;
+}
+.nomore{
+    height: 0;
+}
+.commImg{
+    overflow: hidden;
+}
+.commImg img{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    float: left;
+}

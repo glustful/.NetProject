@@ -1,3 +1,19 @@
+<script type="text/javascript"language="JavaScript">
+    function opens(){
+//                alert(id);
+//                if($(id).html()=="未评价") {
+        document.getElementById("userComment").style.display = "inline";
+//                }
+//                else if($(id).html()=="已评价")
+//                {
+//                    alert("你已评价过，不能再次评价");
+//                }
+    }
+    function cance(){
+        document.getElementById("userComment").style.display = "none";
+//
+    }
+</script>
 <div class="bar stable-bg padding-left" style="height: 44px">
     <button class="button  button-icon icon ion-chevron-left color-silver" onclick="javascript:history.back(-1);"></button>
     <h1 class="title font-title">评&nbsp;&nbsp;&nbsp;&nbsp;价</h1>
@@ -5,7 +21,7 @@
 <ion-view hide-tabs="true">
     <ion-content class="stable-bg">
         <ion-list ng-repeat="item in list.Details">
-            <ion-item class="item-thumbnail-left "onclick="opens()" ng-click="openshow(item.Product.Id,item.ProductName,item.Product.MainImg,item.Id,item.Status)">
+            <ion-item class="item-thumbnail-left " ng-click="openshow(item.Product.Id,item.ProductName,item.Product.MainImg,item.Id,item.Status)">
                     <img src="http://img.iyookee.cn/{{item.Product.MainImg}}" alt=""/>
                     <h2 style="white-space: normal" class="font-title">{{item.ProductName}}</h2>
                     <!--<p>口味：甜味</p>-->
@@ -37,24 +53,8 @@
         </div>
         <textarea ng-model="AddComment.Content" name="UserComment" rows="5" cols="30"  class="stable-bg font-11"  placeholder="请发表商品评价......"style="width: 100%"></textarea>
         <div class="padding-top">
-            <a onclick="cance()" class="button button-small  assertive-bg color-white " style="width: 58px">取消</a>
+            <a ng-click="cance()" class="button button-small  assertive-bg color-white " style="width: 58px">取消</a>
             <a class="button button-small  assertive-bg color-white float-right" ng-click="putComment()">发表评论</a>
         </div>
     </div>
 </ion-view>
-        <script type="text/javascript"language="JavaScript">
-            function opens(){
-//                alert(id);
-//                if($(id).html()=="未评价") {
-                    document.getElementById("userComment").style.display = "inline";
-//                }
-//                else if($(id).html()=="已评价")
-//                {
-//                    alert("你已评价过，不能再次评价");
-//                }
-            }
-            function cance(){
-                document.getElementById("userComment").style.display = "none";
-//
-            }
-        </script>

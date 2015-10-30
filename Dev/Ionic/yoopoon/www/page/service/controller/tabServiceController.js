@@ -167,6 +167,7 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 					.success(function(data) {
 						//alert("recive ");
 						$scope.list = data.List;
+						$scope.Total =data.count;
 					});
 			};
 			getRec();
@@ -182,6 +183,7 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
 					.success(function(data) {
 						$scope.list = data.List;
+						$scope.Total =data.count;
 					});
 			};
 			getHandle();
@@ -200,6 +202,7 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
 					.success(function(data) {
 					$scope.list = data.List;
+						$scope.TotalCount = data.count;
 				});
 			};
 			getList();
@@ -214,12 +217,12 @@ app.controller('TabServiceCtrl', function($scope,$http, $ionicSlideBoxDelegate, 
 				$http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
 					.success(function(data) {
 						$scope.list = data.List;
+						$scope.TotalCount = data.count;
 					});
 			};
 			getList1();
 		}
 	};
-
 
 	//    滚动刷新
 	$scope.items = [];

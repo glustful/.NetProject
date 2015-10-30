@@ -17,7 +17,7 @@ using System.Web.Http.Cors;
 
 namespace Zerg.Controllers.Community
 {
-//    [AllowAnonymous]
+    [AllowAnonymous]
     [EnableCors("*", "*", "*", SupportsCredentials = true)]
     public class CommunityOrderController : ApiController
     {
@@ -95,7 +95,7 @@ namespace Zerg.Controllers.Community
         /// <returns></returns>
         
         [HttpGet]
-        public HttpResponseMessage upOrderStatus(int id)
+        public HttpResponseMessage UpOrderStatus(int id)
         {
             var entity = _orderService.GetOrderById(id);
             if (entity == null)

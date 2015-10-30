@@ -1,169 +1,168 @@
-var httpimguri="";
-app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderService,$ionicSlideBoxDelegate,$ionicModal,$stateParams) {
-    $scope.model = {
-        activeIndex: 0
-    };
-    //打开评论
-    var comment = document.getElementById("userComment");
-    $scope.open = function () {
-        comment.style.display = "";
-    }
-
-    $scope.pageClick = function (index) {
-        //alert(index);
-        //alert($scope.delegateHandler.currentIndex());
-        $scope.model.activeIndex = 2;
-    };
-
-    $scope.slideHasChanged = function ($index) {
-        //alert($index);
-        //alert($scope.model.activeIndex);
-    };
-    $scope.delegateHandler = $ionicSlideBoxDelegate;
-
-    $scope.go = function (state) {
-        window.location.href = state;
-    }
-
-
-    $scope.save = function () {
-        //if (document.getElementById("Uptext").innerText == '正在上传..') {
-        //    alert("头像正在上传,请稍等!");
-        //    return;
-        //}
-        if (httpimguri.length > 0) {
-            $scope.oldMem.Thumbnail = httpimguri;
-            //如果服务器返回了用户的头像地址,操作IMG标签的SRC为angularjs绑定
-            var img = document.getElementById('imghead');
-            img.src = "{{oldMem.Thumbnail}}";
-            //有图片就显示
-            img.style.display = 'block';
-        } else {
-            httpimguri = '';
-        }
-        $http.post(SETTING.ApiUrl + '/Member/Post', $scope.oldMem, {'withCredentials': true})
-            .success(function (data) {
-                if (data.Status) {
-                    var img = document.getElementById('imghead');
-                    img.src = $scope.oldMem.Thumbnail;
-                    location.reload([true]);
-                    $state.go("app.me");
-                }
-            });
-    }
-
-    //获取当前用户信息
-    $scope.currentuser= AuthService.CurrentUser();
-    //我的订单
-    $scope.tabIndex = 1;
-    $scope.getOrderList = function (tabIndex) {
-        $scope.tabIndex = tabIndex;
-    };
-    function tab() {
-        //待付款
-        if ($stateParams.tabIndex == 1) {
-            $scope.tabIndex = 1;
-            //$scope.serchCondition={
-            //    Status:'1',
-            //    //CustomerName: $scope.currentuser.UserName
-            //}
-            //$scope.myOrder = orderService.getOrderList($scope.searchCondition)
-        }
-        //待发货
-        if ($stateParams.tabIndex == 2) {
-            $scope.tabIndex = 2;
-            //$scope.serchCondition={
-            //    //CustomerName: $scope.currentuser.UserName,
-            //    Status:'2'
-            //}
-            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
-        }
-        //待收货
-        if ($stateParams.tabIndex == 3) {
-            $scope.tabIndex = 3;
-            //$scope.serchCondition={
-            //    //CustomerName: $scope.currentuser.UserName,
-            //    Status:'3'
-            //}
-            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
-        }
-        //待评价
-        if ($stateParams.tabIndex == 4) {
-            $scope.tabIndex = 4;
-        }
-    }
-    tab();
-    //个人资料修改
-    $scope.imgUrl = SETTING.ImgUrl;
-    $scope.oldMem = {
-        Realname: '',
-        UserName:'',
-        IdentityNo: '',
-        Icq: '',
-        Phone: '',
-        Thumbnail: '',
-        PostNo: '',
-        UpdUser:$scope.currentuser.UserId
-    };
-
-    $http.get(SETTING.ApiUrl+'/Member/Get?userId='+$scope.currentuser.UserId,{'withCredentials':true})
-        .success(function(response) {
-            $scope.oldMem=response;
-            console.log($scope.oldMem);
-            //添加判断,如果用户没有头像,隐藏IMG标签
-            if($scope.oldMem.Thumbnail.length<15){
-                //操作IMG标签的SRC为空
-                var img = document.getElementById('imghead');
-                //没图片隐藏
-                img.style.display = 'none';
-                img.src = "";
-            }else{
-                //隐藏默认头像
-                var defaultHeadImg = document.getElementById("preview");
-                defaultHeadImg.style.background = 'white';
-            }
-        });
-
-    $scope.save = function () {
-        if (httpimguri.length > 0) {
-            $scope.oldMem.Thumbnail = httpimguri;
-            //如果服务器返回了用户的头像地址,操作IMG标签的SRC为angularjs绑定
-            var img = document.getElementById('imghead');
-            img.src = "{{oldMem.Thumbnail}}";
-            //有图片就显示
-            img.style.display = 'block';
-        } else {
-            httpimguri = '';
-        }
-        $http.put(SETTING.ApiUrl + '/Member/Put', $scope.oldMem, {'withCredentials': true})
-            .success(function (data) {
-                if (data.Status) {
-                    var img = document.getElementById('imghead');
-                    img.src = $scope.oldMem.Thumbnail;
-                    location.reload([true]);
-                    $state.go("app.me");
-                }
-            });
-    }
-
-})
-app.controller('selectAddress', function($scope,$routeParams) {
-
-    $scope.model = {
-        activeIndex: 0
-    };
-
-    $scope.pageClick = function (index) {
-        $scope.model.activeIndex = 2;
-    };
-
-    $scope.slideHasChanged = function ($index) {
-
-    };
-    $scope.delegateHandler = $ionicSlideBoxDelegate;
-
-
-})
+//var httpimguri="";
+//app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderService,$ionicSlideBoxDelegate,$ionicModal,$stateParams) {
+//    $scope.model = {
+//        activeIndex: 0
+//    };
+//    //打开评论
+//    var comment = document.getElementById("userComment");
+//    $scope.open = function () {
+//        comment.style.display = "";
+//    }
+//
+//    $scope.pageClick = function (index) {
+//        //alert(index);
+//        //alert($scope.delegateHandler.currentIndex());
+//        $scope.model.activeIndex = 2;
+//    };
+//
+//    $scope.slideHasChanged = function ($index) {
+//        //alert($index);
+//        //alert($scope.model.activeIndex);
+//    };
+//    $scope.delegateHandler = $ionicSlideBoxDelegate;
+//
+//    $scope.go = function (state) {
+//        window.location.href = state;
+//    }
+//
+//    $scope.save = function () {
+//        //if (document.getElementById("Uptext").innerText == '正在上传..') {
+//        //    alert("头像正在上传,请稍等!");
+//        //    return;
+//        //}
+//        if (httpimguri.length > 0) {
+//            $scope.oldMem.Thumbnail = httpimguri;
+//            //如果服务器返回了用户的头像地址,操作IMG标签的SRC为angularjs绑定
+//            var img = document.getElementById('imghead');
+//            img.src = "{{oldMem.Thumbnail}}";
+//            //有图片就显示
+//            img.style.display = 'block';
+//        } else {
+//            httpimguri = '';
+//        }
+//        $http.post(SETTING.ApiUrl + '/Member/Post', $scope.oldMem, {'withCredentials': true})
+//            .success(function (data) {
+//                if (data.Status) {
+//                    var img = document.getElementById('imghead');
+//                    img.src = $scope.oldMem.Thumbnail;
+//                    location.reload([true]);
+//                    $state.go("app.me");
+//                }
+//            });
+//    }
+//
+//    //获取当前用户信息
+//    $scope.currentuser= AuthService.CurrentUser();
+//    //我的订单
+//    $scope.tabIndex = 1;
+//    $scope.getOrderList = function (tabIndex) {
+//        $scope.tabIndex = tabIndex;
+//    };
+//    function tab() {
+//        //待付款
+//        if ($stateParams.tabIndex == 1) {
+//            $scope.tabIndex = 1;
+//            //$scope.serchCondition={
+//            //    Status:'1',
+//            //    //CustomerName: $scope.currentuser.UserName
+//            //}
+//            //$scope.myOrder = orderService.getOrderList($scope.searchCondition)
+//        }
+//        //待发货
+//        if ($stateParams.tabIndex == 2) {
+//            $scope.tabIndex = 2;
+//            //$scope.serchCondition={
+//            //    //CustomerName: $scope.currentuser.UserName,
+//            //    Status:'2'
+//            //}
+//            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
+//        }
+//        //待收货
+//        if ($stateParams.tabIndex == 3) {
+//            $scope.tabIndex = 3;
+//            //$scope.serchCondition={
+//            //    //CustomerName: $scope.currentuser.UserName,
+//            //    Status:'3'
+//            //}
+//            //$scope.myOrder = orderService.getOrderList($scope.searchCondition);
+//        }
+//        //待评价
+//        if ($stateParams.tabIndex == 4) {
+//            $scope.tabIndex = 4;
+//        }
+//    }
+//    tab();
+//    //个人资料修改
+//    $scope.imgUrl = SETTING.ImgUrl;
+//    $scope.oldMem = {
+//        Realname: '',
+//        UserName:'',
+//        IdentityNo: '',
+//        Icq: '',
+//        Phone: '',
+//        Thumbnail: '',
+//        PostNo: '',
+//        UpdUser:$scope.currentuser.UserId
+//    };
+//
+//    $http.get(SETTING.ApiUrl+'/Member/Get?userId='+$scope.currentuser.UserId,{'withCredentials':true})
+//        .success(function(response) {
+//            $scope.oldMem=response;
+//            console.log($scope.oldMem);
+//            //添加判断,如果用户没有头像,隐藏IMG标签
+//            if($scope.oldMem.Thumbnail.length<15){
+//                //操作IMG标签的SRC为空
+//                var img = document.getElementById('imghead');
+//                //没图片隐藏
+//                img.style.display = 'none';
+//                img.src = "";
+//            }else{
+//                //隐藏默认头像
+//                var defaultHeadImg = document.getElementById("preview");
+//                defaultHeadImg.style.background = 'white';
+//            }
+//        });
+//
+//    $scope.save = function () {
+//        if (httpimguri.length > 0) {
+//            $scope.oldMem.Thumbnail = httpimguri;
+//            //如果服务器返回了用户的头像地址,操作IMG标签的SRC为angularjs绑定
+//            var img = document.getElementById('imghead');
+//            img.src = "{{oldMem.Thumbnail}}";
+//            //有图片就显示
+//            img.style.display = 'block';
+//        } else {
+//            httpimguri = '';
+//        }
+//        $http.put(SETTING.ApiUrl + '/Member/Put', $scope.oldMem, {'withCredentials': true})
+//            .success(function (data) {
+//                if (data.Status) {
+//                    var img = document.getElementById('imghead');
+//                    img.src = $scope.oldMem.Thumbnail;
+//                    location.reload([true]);
+//                    $state.go("app.me");
+//                }
+//            });
+//    }
+//
+//})
+//app.controller('selectAddress', function($scope,$routeParams) {
+//
+//    $scope.model = {
+//        activeIndex: 0
+//    };
+//
+//    $scope.pageClick = function (index) {
+//        $scope.model.activeIndex = 2;
+//    };
+//
+//    $scope.slideHasChanged = function ($index) {
+//
+//    };
+//    $scope.delegateHandler = $ionicSlideBoxDelegate;
+//
+//
+//})
 
 var httpimguri="";
 app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderService,$ionicSlideBoxDelegate,$ionicModal,$stateParams) {
@@ -176,7 +175,20 @@ app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderServic
     $scope.model = {
         activeIndex: 0
     };
+    var getWaitRec = function(){
+        $scope.condition = {
+            Status: '1',
+            Addusers: $scope.currentuser.UserId
+        };
 
+        $http.get(SETTING.ApiUrl+'/ServiceOrderDetail/Get',{params:$scope.condition,'withCredentials':true})
+            .success(function(data) {
+                //$scope.list = data.List;
+                $scope.TotalCount = data.TotalCount;
+                console.log( $scope.TotalCount );
+            });
+    }
+    getWaitRec();
     $scope.pageClick = function (index) {
         //alert(index);
         //alert($scope.delegateHandler.currentIndex());
@@ -286,7 +298,7 @@ app.controller('TabMeCtrl', function($scope,$http,$state,AuthService,orderServic
                     var img = document.getElementById('imghead');
                     img.src = $scope.oldMem.Thumbnail;
                     location.reload([true]);
-                    $state.go("app.me");
+                    $state.go("page.me");
                 }
             });
     }

@@ -41,6 +41,11 @@
     font-family: "Microsoft YaHei";
     font-size: 1.12em;
 }
+.branchList{
+    display: block;
+    width: 100%;
+    float: left;
+}
 .category-content .branchList li{
     width: 30%;
     float: left;
