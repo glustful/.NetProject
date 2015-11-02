@@ -174,6 +174,7 @@ var carlistcount=0;
             if($scope.productlist[j].id==id){
                 $scope.productlist[j].count=  $scope.productlist[j].count+1;
             }
+
         }
         allprice();
 
@@ -189,6 +190,11 @@ var carlistcount=0;
                     $scope.productlist[j].count=  $scope.productlist[j].count-1;
                     cartservice.delete(id);
                 }
+                else{
+                    cartservice.deletethis(id);
+                    getcar();
+                }
+
             }
 
         }
