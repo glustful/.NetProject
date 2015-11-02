@@ -15,7 +15,8 @@ console.log($stateParams);
     //评价
     $scope.AddComment={
         ProductId:0,
-        Content:""
+        Content:"",
+        ProductDetailsId:0
     }
     $scope.UpOrderDatail={
         Id:0
@@ -24,11 +25,13 @@ console.log($stateParams);
     $scope.Img="";
     $scope.Sta="";
 $scope.openshow=function(proId,proname,proimg,orId,comSta){
+    document.getElementById("userComment").style.display = "inline";
     $scope.AddComment.ProductId=proId;
     $scope.proName=proname;
     $scope.Img=proimg;
     $scope.UpOrderDatail.Id =orId;
     $scope.Sta=comSta;
+    $scope.AddComment.ProductDetailsId=orId;
     if(comSta=="已评价")
     {
         alert("你已评价过，不能再次评价");
@@ -36,7 +39,10 @@ $scope.openshow=function(proId,proname,proimg,orId,comSta){
     //alert($scope.Id);
    // $("userComment").toggle();
 };
-
+  $scope.cance=  function (){
+        document.getElementById("userComment").style.display = "none";
+//
+    }
     $scope.putComment=function(){
         if($scope.Sta==="已评价")
         {
@@ -54,10 +60,11 @@ $scope.openshow=function(proId,proname,proimg,orId,comSta){
             {
                 $http.put(SETTING.ApiUrl+"/OrderDetail/Put",$scope.UpOrderDatail,{'withCredentials':true}).
                     success(function(data){
-                        alert(data.Msg);
+                        //alert(data.Status+"11");
                         $scope.getOrderById();
-                        $http.get(SETTING.ApiUrl+"/CommunityOrder/upOrderStatus?id="+$stateParams.Id,{'withCredentials':true}).success(function(data){
-                           // alert(data.Msg);
+                        $http.get(SETTING.ApiUrl+"/CommunityOrder/UpOrderStatus?id="+$stateParams.Id,{'withCredentials':true}).success(function(data){
+
+                            document.getElementById("userComment").style.display = "none";
                         })
                     });
             }

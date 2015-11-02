@@ -28,8 +28,8 @@ $state.go("page.search_product", {productName: x});
             <div class="category-content padding"  ng-repeat="itemtail in catelist"
                  ng-show="tabIndex==itemtail.Id">
 
-                    <div class="branchList" ng-repeat="item1 in itemtail.children">
-                        <h4 ui-sref="page.product-list({id:item1.Id,name:item1.label})">{{item1.label}}11</h4>
+                    <div class="branchList " ng-repeat="item1 in itemtail.children" >
+                        <h4 ui-sref="page.product-list({id:item1.Id,name:item1.label})">{{item1.label}}</h4>
                         <ul>
                             <li ng-repeat="item2 in item1.product" ui-sref="page.product-detail({id:item2.Id})">
                                 <img ng-src="{{Img+item2.MainImg}}@67w_67h_70q" alt=""/>

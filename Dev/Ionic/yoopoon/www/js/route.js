@@ -52,6 +52,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
         // setup an abstract state for the tabs directive
         .state('page', {
+               cache: false,
                url: '/page',
                abstract: true,
                templateUrl: 'page/tabs.html'
@@ -117,8 +118,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
                         controller:'safedetailservice'
                     }
                 }
-            })
-        .state('page.car', {
+            }).state('page.car', {
+               cache: false,
                url: '/car',
                views: {
                'page-car': {

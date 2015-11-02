@@ -56,40 +56,47 @@
         <i class="icon-daishouhuo font-16 color-Red"></i>&nbsp;已有{{product.Owner}}人抢购
         </span>
         </p>
-        <div class="list padding">
-        <h4 class="font-title">商品评价（{{Count}}）</h4>
-        <div class="item item-avatar none-border" ng-repeat="item in CommentList">
-        <img ng-src="http://img.iyookee.cn/{{item.UserImg}}@40w_40h_70q">
-        <h2>{{item.UserName}}</h2>
-        <p style="white-space: normal">{{item.Content}}</p>
+        <div class="list" style="margin-bottom: 0;padding:10px 10px 0">
+        <h4 class="font-title">商品评价({{Count}})</h4>
+        <div class="item item-avatar none-border" ng-repeat="item in CommentList" style="padding-left: 0;">
+            <div class="commImg">
+                <img ng-src="http://img.iyookee.cn/{{item.UserImg}}@40w_40h_70q">
+                <span style="float:left;padding:5px 0 0 5px;">{{item.UserName|replaceStr}}</span>
+            </div>
+        <p style="white-space: normal;padding-top: 10px">{{item.Content}}</p>
         </div>
-        <button class="button button-full  text-center light-bg bottom-border " ng-click="more()">
-            {{tipp}}
+           <p style="text-align: center"><ion-spinner icon="ios-small" ng-class="{true:'display',false:'nodisplay'}[isdisplay]"></ion-spinner></p>
+        <button class="button button-full  text-center light-bg bottom-border "
+                ng-class="{true: 'more', false: 'nomore'}[ismore]" ng-click="more()" style="margin-bottom: 0;">
+            查看更多评论
         </button>
-        <div class="padding stable-bg text-center">
-        <p><span class="font-title" ng-click="getDetail()">点击查看图文详情</span></p>
         </div>
+        <div class="text-center" style="padding: 10px 0;background-color:#e0e0e0;">
+        <p style="margin-bottom: 0"><span class="font-title" ng-click="getDetail()" ng-class="{true: 'text', false: 'notext'}[istext]">点击查看图文详情</span>
+            <ion-spinner icon="ios-small" ng-class="{true: 'spinner', false: 'nospinner'}[isspinner]"></ion-spinner></p>
+            <div ng-class="{true: 'detail', false: 'nodetail'}[isDetail]">
+                <div>
+                    <div style="text-align:center;margin-bottom: 10px;">
+                        <img ng-src="{{Img+productDetail.Img}}@320w_231h_70q" style="width: 320px;height: 231px"/>
+                    </div>
+                    <div style="text-align:center;margin-bottom: 10px">
+                        <img ng-src="{{Img+productDetail.Img1}}@320w_231h_70q" style="width: 320px;height: 231px"/>
+                    </div>
+                    <div style="text-align:center;margin-bottom: 10px">
+                        <img ng-src="{{Img+productDetail.Img2}}@320w_231h_70q" style="width: 320px;height: 231px"/>
+                    </div>
+                    <div style="text-align:center;">
+                        <img ng-src="{{Img+productDetail.Img3}}@320w_231h_70q" style="width: 320px;height: 231px"/>
+                    </div>
+                </div>
+                <div style="clear: both;text-align:left;margin-top: 10px"><span>{{productDetail.Detail}}</span></div>
+            </div>
         </div>
+
         <!--<div class="div-null"></div>-->
         <!--<ion-infinite-scroll ng-if="hasload" on-infinite="load_detail();" distance="1%">-->
         <!--</ion-infinite-scroll>-->
-        <div ng-class="{true: 'detail', false: 'nodetail'}[isDetail]">
-            <div>
-                  <div style="text-align:center;margin-bottom: 10px;">
-                      <img ng-src="{{Img+productDetail.Img}}@320w_231h_70q" style="width: 320px;height: 231px"/>
-                  </div>
-                  <div style="text-align:center;margin-bottom: 10px">
-                      <img ng-src="{{Img+productDetail.Img1}}@320w_231h_70q" style="width: 320px;height: 231px"/>
-                  </div>
-                  <div style="text-align:center;margin-bottom: 10px">
-                      <img ng-src="{{Img+productDetail.Img2}}@320w_231h_70q" style="width: 320px;height: 231px"/>
-                  </div>
-                  <div style="text-align:center;">
-                      <img ng-src="{{Img+productDetail.Img3}}@320w_231h_70q" style="width: 320px;height: 231px"/>
-                  </div>
-            </div>
-        <div style="clear: both;text-align:left;margin-top: 10px"><span>{{productDetail.Detail}}</span></div>
-        </div>
+
     </ion-content>
     <div class="icon-size gwc-car " id="gwcaction" ng-class="{'changeAfter':changIng}">
         <i class="icon-gouwuche color-white"></i>

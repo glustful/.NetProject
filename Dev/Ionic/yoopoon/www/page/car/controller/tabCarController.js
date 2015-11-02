@@ -10,7 +10,7 @@ app.controller('TabCarCtrl', function($scope,$state,$ionicHistory,AuthService,  
     //
 
     $ionicHistory.clearHistory();
-
+    //$ionicConfigProvider.views.maxCache(0);
 var carlistcount=0;
 
     var getcar =function (){
