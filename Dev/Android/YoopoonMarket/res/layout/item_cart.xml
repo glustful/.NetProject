@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/white_bg"
+    android:gravity="center_vertical"
+    android:padding="5dp" 
+    android:id="@+id/rl_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content" >
+
+        <CheckBox
+            android:id="@+id/cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/tv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/delete_icon"
+            android:clickable="true"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@id/rl"
+        android:paddingLeft="5dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/default_img" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/iv"
+        android:text="我是花吃 云南特产零食糕点 玫瑰鲜花饼 6枚*2盒 包邮包邮 神犬小七同款" />
+
+    <TextView
+        android:id="@+id/tv_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:layout_toRightOf="@id/iv"
+        android:text="口味：甜味"
+        android:textColor="@color/text_gray" />
+
+    <TextView
+        android:id="@+id/tv_price_counted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv"
+        android:layout_toRightOf="@id/iv"
+        android:text="￥69.9"
+        android:textColor="@color/red" />
+
+    <TextView
+        android:id="@+id/tv_price_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_price_counted"
+        android:layout_toRightOf="@id/tv_price_counted"
+        android:text="￥89.9"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/small_textsize" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_price_previous"
+        android:layout_alignParentRight="true"
+        android:gravity="right" >
+
+        <TextView
+            android:id="@+id/btn_countdown"
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/white_bg"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="-"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/et_count"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@+id/btn_countup"
+            android:layout_toRightOf="@id/btn_countdown"
+            android:background="@drawable/et_count"
+            android:clickable="true"
+            android:gravity="center"
+            android:inputType="number"
+            android:lines="3"
+            android:text="5"
+            android:textSize="@dimen/small_textsize" />
+
+        <TextView
+            android:id="@+id/btn_countup"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_toRightOf="@id/et_count"
+            android:background="@drawable/white_bg"
+            android:clickable="true"
+            android:padding="5dp"
+            android:text="+"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

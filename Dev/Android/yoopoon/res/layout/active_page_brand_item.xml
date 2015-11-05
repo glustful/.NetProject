@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/default_head_img" />
+            android:src="@drawable/logo_gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,7 +41,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/small_textSize" />
+                    android:textSize="@dimen/small_textSize" 
+                    android:text="[昆明]"/>
 
                 <TextView
                     android:id="@+id/title"
@@ -49,10 +50,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/small_textSize" />
+                    android:textSize="@dimen/small_textSize"
+                    android:text="中天理想中心" />
 
                 <TextView
                     android:id="@+id/area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/small_textSize"
+                    android:text="area" />
+                
+                <TextView
+                    android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -82,8 +93,7 @@
             android:id="@+id/adTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textSize="@dimen/large_textSize" />
+            android:padding="10dp"/>
     </LinearLayout>
 
     <LinearLayout

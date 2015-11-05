@@ -10,9 +10,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    <TextView 
+        android:id="@+id/tv_active_network"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请检查网络连接"
+        android:background="#55ffff00"
+        android:padding="10dp"
+        android:drawableRight="@drawable/right_next_icon"
+        android:visibility="gone"/>
 	
-   
-   
+   <RelativeLayout 
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+   	
     <com.handmark.pulltorefresh.library.PullToRefreshListView 
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/matter_list_view"
@@ -20,6 +31,31 @@
         android:layout_height="match_parent"
         ptr:ptrAnimationStyle="flip"
         />
+    
+    <LinearLayout 
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="#55000000"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:visibility="gone"
+        android:id="@+id/ll_progress">
+        
+        
+        <ProgressBar 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="玩命加载中..."
+            android:textColor="@color/little_whitle"/>
+        
+    </LinearLayout>
+    
+    </RelativeLayout>
   
         
    

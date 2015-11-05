@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="500dp"
+    android:background="@drawable/white_bg" >
+
+     <ImageView
+        android:id="@+id/iv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dip"
+        android:background="@drawable/stright_border"
+        android:src="@drawable/default_img"
+        android:scaleType="center" />
+    <TextView 
+        android:id="@+id/tv"
+        android:padding="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#550000ff"
+        android:text="度假"
+        android:textColor="@color/white"
+        android:layout_alignTop="@id/iv"
+        />
+
+</RelativeLayout>

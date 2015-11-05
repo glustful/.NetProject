@@ -1,8 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
-using Community.Entity.Model.Area;
-using Community.Service.Area;
 using Zerg.Models.Community;
 using System;
 using System.ComponentModel;

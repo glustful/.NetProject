@@ -4,7 +4,7 @@
  * @Title: MeFooterView.java 
  * @Project: yoopoon
  * @Package: com.yoopoon.home.ui.me 
- * @Description: TODO
+ * @Description: 经纪人个人页面功能
  * @author: guojunjun  
  * @updater: guojunjun 
  * @date: 2015-7-7 下午2:14:07 
@@ -15,10 +15,15 @@ package com.yoopoon.home.ui.me;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
+import com.yoopoon.home.IClientActivity_;
+import com.yoopoon.home.IPartnerActivity_;
+import com.yoopoon.home.IRecommendActivity_;
 import com.yoopoon.home.R;
 
 /**
@@ -30,6 +35,7 @@ import com.yoopoon.home.R;
 @EViewGroup(R.layout.me_footer_view)
 public class MeFooterView extends LinearLayout {
 	// [start] viewById
+
 	@ViewById(R.id.brokerLayout)
 	View brokerLayout;
 	@ViewById(R.id.customLayout)
@@ -37,9 +43,10 @@ public class MeFooterView extends LinearLayout {
 
 	// [end]
 	// [start] onClick
+
 	@Click(R.id.registerToBroker)
 	void registerToBroker() {
-
+		PersonSettingActivity_.intent(getContext()).start();
 	}
 
 	@Click(R.id.setting)
@@ -52,25 +59,67 @@ public class MeFooterView extends LinearLayout {
 		setting();
 	}
 
+	@Click(R.id.tv_footer_recommend)
+	void iRecommend() {
+		// ################彭佳媛 编写 ################### Start
+		// RecommendActivity_.intent(getContext()).start();
+		// #################彭佳媛 编写 ################## End
+		//
+		//
+		// ################徐阳会 修改 2015年7月16日 ##################### Start
+		// 创建Broadast,发送广播, 让mainPage将页面切换到经纪人推荐页面(和经纪人带客页面一样)(FramHouseFragment)
+		Intent intent = new Intent("com.yoopoon.broker_takeguest");
+		intent.addCategory(Intent.CATEGORY_DEFAULT);
+		Activity currentActivity = (Activity) getContext();
+		currentActivity.sendBroadcast(intent);
+		// ###############徐阳会 修改 2015年7月16日 ##################### End
+	}
+
+	// ################ 彭佳媛 编写 #################
+	/*
+	 * @Click(R.id.tv_footer_guest) void iGuest() { IGuestActivity_.intent(getContext()).start(); }
+	 */
+	// ################ 彭佳媛 编写 #################
+	// ################ 徐阳会 修改 2015年7月16日 Start #################
+
+	// ################ 徐阳会 修改 2015年7月16日 End #################
+	@Click(R.id.tv_footer_calc)
+	void iPartner() {
+	}
+
+	@Click(R.id.tv_footer_partner)
+	void addPartner() {
+		IPartnerActivity_.intent(getContext()).start();
+	}
+
+	@Click(R.id.tv_footer_iclient)
+	void iRank() {
+		IClientActivity_.intent(getContext()).start();
+	}
+
+	@Click(R.id.tv_footer_recommend_agent)
+	void recommendAgent() {
+		IRecommendActivity_.intent(getContext()).start();
+	}
+
 	// [end]
 	// [start] constructor
+
 	public MeFooterView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-
 	}
 
 	public MeFooterView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-
 	}
 
 	public MeFooterView(Context context) {
 		super(context);
-
 	}
 
 	// [end]
 	// [start] public method
+
 	public void show(boolean isBroker) {
 		if (isBroker) {
 			brokerLayout.setVisibility(View.VISIBLE);
@@ -82,7 +131,6 @@ public class MeFooterView extends LinearLayout {
 	}
 
 	// [end]
-
 	/**
 	 * @Title: hide
 	 * @Description: 隐藏布局文件

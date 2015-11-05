@@ -1,18 +1,9 @@
 package com.yoopoon.home.ui.active;
 
 import java.util.ArrayList;
-
 import org.json.JSONObject;
-
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.yoopoon.common.base.Tools;
-import com.yoopoon.home.MyApplication;
-import com.yoopoon.home.R;
-
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,20 +11,26 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yoopoon.common.base.Tools;
+import com.yoopoon.common.base.utils.StringUtils;
+import com.yoopoon.home.MyApplication;
+import com.yoopoon.home.R;
 
 public class ActiveBrandAdapter extends BaseAdapter {
+	private static final String TAG = "ActiveBrandAdapter";
 	Context mContext;
 	ArrayList<JSONObject> datas;
 	int height = 0;
-	public ActiveBrandAdapter(Context context){
+
+	public ActiveBrandAdapter(Context context) {
 		this.mContext = context;
 		datas = new ArrayList<JSONObject>();
-		height = MyApplication.getInstance().getDeviceInfo((Activity)mContext).heightPixels/6;
+		height = MyApplication.getInstance().getDeviceInfo((Activity) mContext).heightPixels / 6;
 	}
+
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -55,51 +52,59 @@ public class ActiveBrandAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Holder mHolder;
-		if(convertView == null){
+		if (convertView == null) {
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.active_page_brand_item, null);
 			mHolder = new Holder();
 			mHolder.init(convertView);
 			convertView.setTag(mHolder);
-		}else{
+		} else {
 			mHolder = (Holder) convertView.getTag();
 		}
 		final JSONObject item = datas.get(position);
-		String url = mContext.getString(R.string.url_host_img)+item.optString("Bimg");
+		// Log.i(TAG, item.toString());
+		String url = mContext.getString(R.string.url_host_img) + item.optString("Bimg");
 		mHolder.img.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, height));
 		mHolder.img.setTag(url);
-		ImageLoader.getInstance().displayImage(url, mHolder.img, MyApplication.getOptions(),MyApplication.getLoadingListener());
-		mHolder.title.setText(""+item.optString("Bname")+"");
+		ImageLoader.getInstance().displayImage(url, mHolder.img, MyApplication.getOptions(),
+				MyApplication.getLoadingListener());
+		String title = item.optString("Bname");
+		mHolder.title.setText(StringUtils.isEmpty(title) ? "" : title);
 		JSONObject parameter = item.optJSONObject("ProductParamater");
-		mHolder.city.setText("["+parameter.optString("所属城市")+"]");
-		mHolder.area.setText(parameter.optString("占地面积"));
-		mHolder.rightAdTitle.setText(Html.fromHtml(item.optString("AdTitle")));
-		mHolder.adTitle.setText(item.optString("SubTitle"));
-		
-		mHolder.callPhone.setText("来电咨询："+parameter.optString("来电咨询"));
-		mHolder.callPhone.setTag(Tools.optString(parameter, "来电咨询","10086"));
-		mHolder.preferential.setText("最高享用优惠："+parameter.optString("最高优惠")+"元/套");
+		String city = parameter.optString("所属城市");
+		mHolder.city.setText("[" + (StringUtils.isEmpty(city) ? "" : city) + "]");
+		String area = "占地：" + parameter.optString("占地面积");
+		mHolder.area.setText(StringUtils.isEmpty(area) ? "" : area);
+		// String price = parameter.optString("总价");
+		// mHolder.price.setText(StringUtils.isEmpty(area) ? "总价：110万" : price);
+		String adTitle = Html.fromHtml(item.optString("AdTitle")).toString();
+		String defaultAdTitle = Html.fromHtml(
+				"<span>每平米直降</span><br><b>5000元</b><br><span>1万还可抵3万</span><br><span>3万可抵15万</span><br>").toString();
+		mHolder.rightAdTitle.setText(StringUtils.isEmpty(adTitle) ? defaultAdTitle : adTitle);
+		String subTitle = item.optString("SubTitle");
+		mHolder.adTitle.setText(StringUtils.isEmpty(subTitle) ? defaultAdTitle : subTitle);
+		String phone = parameter.optString("来电咨询");
+		mHolder.callPhone.setText("来电咨询：" + (StringUtils.isEmpty(phone) ? "" : phone));
+		mHolder.callPhone.setTag(Tools.optString(parameter, "来电咨询", "10086"));
+		String preferential = parameter.optString("最高优惠");
+		mHolder.preferential.setText("最高享用优惠：" + (StringUtils.isEmpty(preferential) ? "" : preferential) + "元/套");
 		mHolder.callPhone.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				Tools.callPhone(mContext, v.getTag().toString());
-				
 			}
 		});
 		convertView.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				BrandDetailActivity_.intent(mContext)
-				.mJson(item.toString())
-				.start();
-				
+				BrandDetail2Activity_.intent(mContext).mJson(item.toString()).start();
+				// BrandDetailActivity_.intent(mContext).mJson(item.toString()).start();
 			}
 		});
 		return convertView;
 	}
-	
-	class Holder{
+
+	class Holder {
 		ImageView img;
 		TextView title;
 		TextView adTitle;
@@ -108,9 +113,9 @@ public class ActiveBrandAdapter extends BaseAdapter {
 		TextView rightAdTitle;
 		TextView city;
 		TextView area;
-		
-		
-		void init(View root){
+		TextView price;
+
+		void init(View root) {
 			img = (ImageView) root.findViewById(R.id.img);
 			title = (TextView) root.findViewById(R.id.title);
 			adTitle = (TextView) root.findViewById(R.id.adTitle);
@@ -118,8 +123,8 @@ public class ActiveBrandAdapter extends BaseAdapter {
 			preferential = (TextView) root.findViewById(R.id.preferential);
 			city = (TextView) root.findViewById(R.id.city);
 			rightAdTitle = (TextView) root.findViewById(R.id.rightAdTitle);
-						
 			area = (TextView) root.findViewById(R.id.area);
+			price = (TextView) root.findViewById(R.id.price);
 		}
 	}
 
@@ -128,5 +133,4 @@ public class ActiveBrandAdapter extends BaseAdapter {
 		datas.addAll(mJsonObjects);
 		this.notifyDataSetChanged();
 	}
-
 }

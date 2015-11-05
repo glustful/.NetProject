@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="url_host">http://192.168.1.199:9010</string>
+    <string name="url_test">/api/Channel/GetTitleImg?ChannelName=banner</string>
+    <string name="url_image">http://img.yoopoon.com/</string>
+    <string name="url_test2">/api/Brand/GetAllBrand</string>
+    <string name="url_product_search">/api/Product/GetSearchProduct</string>
+    <!-- 获取广告API -->
+    <string name="url_get_advertisement">/api/ad/get</string>
+    <!-- 获取商品API -->
+    <string name="url_get_communityproduct">/api/communityproduct/get</string>
+
+    <!-- 我 -->
+    <string name="url_getmemeber_byid">/api/member/get</string>
+    <string name="url_member_modify">/api/member/put</string>
+    <string name="url_member_add">/api/member/post</string>
+    <string name="url_member_delete">/api/member/delete</string>
+    <string name="url_member_register">/api/member/AddMember</string>
+    <string name="url_upload">/api/Resource/Upload</string>
+    
+    <!-- 地址 -->
+    <string name="url_get_address_byid">/api/memberaddress/get</string>
+    <string name="url_modify_address">/api/memberaddress/put</string>
+    <string name="url_add_address">/api/memberaddress/post</string>
+    <string name="url_delete_address">/api/memberaddress/delete</string>
+
+    <!-- 分类 -->
+    <string name="url_category_getall">/api/category/getalltree</string>
+    <string name="url_category_get">/api/category/getchildbyfatherid</string>
+
+    
+    <!-- 地区 --> 
+    <string name="url_area_get">/api/CommunityArea/get</string>
+    
+    <string name="url_login">/api/user/LoginEntry</string>
+    
+    <!-- 订单 -->
+    <string name="url_order_post">/api/CommunityOrder/post</string>
+    <string name="url_order_get">/api/CommunityOrder/get</string>
+    <string name="url_order_put">/api/CommunityOrder/put</string>
+    <string name="url_serviceorder_post">/api/serviceOrder/post</string>
+    <string name="url_serviceorder_get">/api/serviceOrder/get</string>
+    
+    <!-- 评论 -->
+    <string name="url_comment">/api/productcomment/get</string>
+    <string name="url_comment_post">/api/productcomment/post</string>
+    
+    <!-- 服务 -->
+    <string name="url_service_get">/api/service/get</string>
+    
+    
+    
+    
+    
+</resources>

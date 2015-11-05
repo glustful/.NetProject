@@ -20,11 +20,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
-
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
@@ -51,13 +49,11 @@ import org.apache.http.util.EncodingUtils;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.yoopoon.home.data.net.RequestAdapter.RequestContentType;
-import com.yoopoon.home.data.storage.LocalPath;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import com.yoopoon.home.data.net.RequestAdapter.RequestContentType;
+import com.yoopoon.home.data.storage.LocalPath;
 
 public class RequstManager {
 	private static RequstManager mManager = null;
@@ -92,8 +88,8 @@ public class RequstManager {
 		int threadPoolSize = Runtime.getRuntime().availableProcessors() * 2 + 2;
 
 		mBlockingQueue = new LinkedBlockingQueue<Runnable>();
-		mThreadPoolExecutor = new HttpThreadPoolExecutor(threadPoolSize,
-				threadPoolSize * 2, 30, TimeUnit.SECONDS, mBlockingQueue);// 将网络请求全部加入线程池
+		mThreadPoolExecutor = new HttpThreadPoolExecutor(threadPoolSize, threadPoolSize * 2, 30, TimeUnit.SECONDS,
+				mBlockingQueue);// 将网络请求全部加入线程池
 		mTaskQueue = new HashMap<String, RequestTask>();
 	}
 
@@ -153,10 +149,8 @@ public class RequstManager {
 						String name = o.optString("name");
 						String value = o.optString("value");
 						if (name != null && value != null) {
-							BasicClientCookie basicClientCookie = new BasicClientCookie(
-									name, value);
-							basicClientCookie
-									.setComment(o.optString("comment"));
+							BasicClientCookie basicClientCookie = new BasicClientCookie(name, value);
+							basicClientCookie.setComment(o.optString("comment"));
 							basicClientCookie.setDomain(o.optString("domain"));
 							basicClientCookie.setPath(o.optString("path"));
 							basicClientCookie.setVersion(o.optInt("version"));
@@ -204,8 +198,7 @@ public class RequstManager {
 
 	private DefaultHttpClient getHttpClient(RequestAdapter data) {
 		try {
-			KeyStore trustStore = KeyStore.getInstance(KeyStore
-					.getDefaultType());
+			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
 			trustStore.load(null, null);
 			SSLSocketFactory sf = new SSLSocketFactoryEx(trustStore);
 			sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
@@ -215,91 +208,83 @@ public class RequstManager {
 			HttpProtocolParams.setUseExpectContinue(httpParams, true);
 
 			SchemeRegistry schReg = new SchemeRegistry();
-			schReg.register(new Scheme("http", PlainSocketFactory
-					.getSocketFactory(), 80));
+			schReg.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
 			schReg.register(new Scheme("https", sf, 443));
 
-			ClientConnectionManager conManager = new ThreadSafeClientConnManager(
-					httpParams, schReg);
+			ClientConnectionManager conManager = new ThreadSafeClientConnManager(httpParams, schReg);
 
-			HttpConnectionParams.setConnectionTimeout(httpParams,
-					data.getTimeOutLimit() * 1000);
-			HttpConnectionParams.setSoTimeout(httpParams,
-					data.getTimeOutLimit() * 1000); // 此处的单位是毫秒
-			HttpConnectionParams.setSocketBufferSize(httpParams,
-					mRevBufferSize * 2);
-			DefaultHttpClient httpClient = new DefaultHttpClient(conManager,
-					httpParams);
+			HttpConnectionParams.setConnectionTimeout(httpParams, data.getTimeOutLimit() * 1000);
+			HttpConnectionParams.setSoTimeout(httpParams, data.getTimeOutLimit() * 1000); // 此处的单位是毫秒
+			HttpConnectionParams.setSocketBufferSize(httpParams, mRevBufferSize * 2);
+			DefaultHttpClient httpClient = new DefaultHttpClient(conManager, httpParams);
 			return httpClient;
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
-	private void requestSyncPostMode(String urlstring,
-			RequestAdapter mRequestData, DefaultHttpClient mHttpClient) {
+	private void requestSyncPostMode(String urlstring, RequestAdapter mRequestData, DefaultHttpClient mHttpClient) {
 		Map<String, String> params = mRequestData.getParams();
 		HttpPost httpPost = new HttpPost(urlstring);
 		httpPost.setHeader("x-requested-with", "XMLHttpRequest");
 		if (mRequestData.getContentType() == RequestContentType.eJSON) {
 			httpPost.setHeader("Content-Type", "application/json");
-			
+
 		}
 		List<NameValuePair> reqPar = new ArrayList<NameValuePair>();
 		if (null != params) {
-			
+
 			for (Map.Entry<String, String> entry : params.entrySet()) {
 				String key = entry.getKey();
 				String value = entry.getValue();
 				reqPar.add(new BasicNameValuePair(key, value));
 			}
 		}
-			try {
-				if(mRequestData.getContentType()==RequestContentType.eGeneral){
-					httpPost.setEntity(new UrlEncodedFormEntity(reqPar, "UTF-8"));
-				}else{
-					httpPost.setEntity(new StringEntity(mRequestData.getJSON(), "UTF-8"));
-				}
-	            HttpResponse httpResponse = mHttpClient.execute(httpPost);
-	            int responseCode = httpResponse.getStatusLine().getStatusCode();
-	            if ((responseCode > 199) && (responseCode < 400)) {
-	            	
-	                if (!mStopRunning && mRequestData.getSaveSession()) {
-	                    CookieStore cookie = mHttpClient.getCookieStore();
-	                    if (null != cookie) {
-	                        saveCookie(cookie);
-	                    }
-	                }
+		try {
+			if (mRequestData.getContentType() == RequestContentType.eGeneral) {
+				httpPost.setEntity(new UrlEncodedFormEntity(reqPar, "UTF-8"));
+			} else {
+				httpPost.setEntity(new StringEntity(mRequestData.getJSON(), "UTF-8"));
+			}
+			HttpResponse httpResponse = mHttpClient.execute(httpPost);
+			int responseCode = httpResponse.getStatusLine().getStatusCode();
+			if ((responseCode > 199) && (responseCode < 400)) {
 
-	                if (mRequestData.getRequestType() == RequestAdapter.RequestType.eGeneral) {
-	                    ResponseMessage msg = new ResponseMessage();
-	                    msg.setCode(responseCode);
-	                    msg.setMsg("获取数据成功");
-	                   
-	                    msg.setData(EntityUtils.toByteArray(httpResponse.getEntity()));
-	                    mRequestData.handleResponeMsg(msg);
-	                }
-	            } else {
-	                ResponseMessage msg = new ResponseMessage();
-	                msg.setCode(responseCode);
-	                msg.setMsg("请求错误");
-	                msg.setData(null);
-	                mRequestData.handleResponeMsg(msg);
-	            }
-	        } catch (Exception e) {
-	            ResponseMessage msg = new ResponseMessage();
-	            msg.setCode(-1);
-	            msg.setMsg(e.getMessage());
-	            msg.setData(null);
-	            mRequestData.handleResponeMsg(msg);
-	        }
-		
+				if (!mStopRunning && mRequestData.getSaveSession()) {
+					CookieStore cookie = mHttpClient.getCookieStore();
+					if (null != cookie) {
+						saveCookie(cookie);
+					}
+				}
+
+				if (mRequestData.getRequestType() == RequestAdapter.RequestType.eGeneral) {
+					ResponseMessage msg = new ResponseMessage();
+					msg.setCode(responseCode);
+					msg.setMsg("获取数据成功");
+
+					msg.setData(EntityUtils.toByteArray(httpResponse.getEntity()));
+					mRequestData.handleResponeMsg(msg);
+				}
+			} else {
+				ResponseMessage msg = new ResponseMessage();
+				msg.setCode(responseCode);
+				msg.setMsg("请求错误");
+				msg.setData(null);
+				mRequestData.handleResponeMsg(msg);
+			}
+		} catch (Exception e) {
+			ResponseMessage msg = new ResponseMessage();
+			msg.setCode(-1);
+			msg.setMsg(e.getMessage());
+			msg.setData(null);
+			mRequestData.handleResponeMsg(msg);
+		}
+
 	}
-	
+
 	private static void saveCookie(CookieStore cookie) {
 
-		if (cookie != null && cookie.getCookies() != null
-				&& !cookie.getCookies().isEmpty()) {
+		if (cookie != null && cookie.getCookies() != null && !cookie.getCookies().isEmpty()) {
 			try {
 				JSONArray array = new JSONArray();
 				for (Cookie c : cookie.getCookies()) {
@@ -318,8 +303,7 @@ public class RequstManager {
 				}
 				String s = array.toString();
 				// 把cookie持久化到文件�?
-				File cookieFile = new File(LocalPath.intance().cacheBasePath
-						+ "co");
+				File cookieFile = new File(LocalPath.intance().cacheBasePath + "co");
 				FileOutputStream fout = new FileOutputStream(cookieFile);
 				byte[] bytes = s.getBytes();
 
@@ -336,8 +320,7 @@ public class RequstManager {
 
 		SSLContext sslContext = SSLContext.getInstance("TLS");
 
-		public SSLSocketFactoryEx(KeyStore truststore)
-				throws NoSuchAlgorithmException, KeyManagementException,
+		public SSLSocketFactoryEx(KeyStore truststore) throws NoSuchAlgorithmException, KeyManagementException,
 				KeyStoreException, UnrecoverableKeyException {
 			super(truststore);
 
@@ -349,17 +332,13 @@ public class RequstManager {
 				}
 
 				@Override
-				public void checkClientTrusted(
-						java.security.cert.X509Certificate[] chain,
-						String authType)
+				public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType)
 						throws java.security.cert.CertificateException {
 
 				}
 
 				@Override
-				public void checkServerTrusted(
-						java.security.cert.X509Certificate[] chain,
-						String authType)
+				public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType)
 						throws java.security.cert.CertificateException {
 
 				}
@@ -369,10 +348,9 @@ public class RequstManager {
 		}
 
 		@Override
-		public Socket createSocket(Socket socket, String host, int port,
-				boolean autoClose) throws IOException, UnknownHostException {
-			return sslContext.getSocketFactory().createSocket(socket, host,
-					port, autoClose);
+		public Socket createSocket(Socket socket, String host, int port, boolean autoClose) throws IOException,
+				UnknownHostException {
+			return sslContext.getSocketFactory().createSocket(socket, host, port, autoClose);
 		}
 
 		@Override
@@ -385,12 +363,9 @@ public class RequstManager {
 		@Override
 		public void handleMessage(Message msg) {
 			Bundle bundle = msg.getData();
-			ProgressMessage progressMessage = (ProgressMessage) bundle
-					.getSerializable("progressMsg");
-			ResponseMessage responseMessage = (ResponseMessage) bundle
-					.getSerializable("responseMsg");
-			RequestAdapter adpater = (RequestAdapter) bundle
-					.getSerializable("adpater");
+			ProgressMessage progressMessage = (ProgressMessage) bundle.getSerializable("progressMsg");
+			ResponseMessage responseMessage = (ResponseMessage) bundle.getSerializable("responseMsg");
+			RequestAdapter adpater = (RequestAdapter) bundle.getSerializable("adpater");
 			if (adpater == null) {
 				return;
 			}
@@ -408,8 +383,7 @@ public class RequstManager {
 	};
 
 	public class HttpThreadPoolExecutor extends ThreadPoolExecutor {
-		public HttpThreadPoolExecutor(int corePoolSize, int maximumPoolSize,
-				long keepAliveTime, TimeUnit unit,
+		public HttpThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit,
 				BlockingQueue<Runnable> workQueue) {
 			super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
 		}

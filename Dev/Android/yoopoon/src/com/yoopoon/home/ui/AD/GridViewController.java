@@ -5,7 +5,6 @@ package com.yoopoon.home.ui.AD;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.json.JSONArray;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -30,12 +29,13 @@ public abstract class GridViewController {
 	protected Context mContext;
 
 	protected LayoutInflater inflater;
-	
+
 	protected ViewPager mViewPager;
 	protected MyPagerAdapter mPagerAdapter;
 	protected List<View> mViews;
 	private ImageView[] imageViews;
 	protected ViewGroup circles;
+
 	public View getRootView() {
 		if (rootView == null) {
 			initView();
@@ -67,22 +67,22 @@ public abstract class GridViewController {
 		mViewPager.setOnPageChangeListener(new AdPageChangeListener());
 
 	}
-	
-	public void initCircle(){
-		if(circles == null)
+
+	public void initCircle() {
+		if (circles == null)
 			return;
-		ViewGroup group  = (ViewGroup) circles.findViewById(R.id.circle);
+		ViewGroup group = (ViewGroup) circles.findViewById(R.id.circle);
+		group.removeAllViews();
 		imageViews = new ImageView[mViews.size()];
 		// 广告栏的小圆点图标
 		for (int i = 0; i < mViews.size(); i++) {
 			// 创建一个ImageView, 并设置宽高. 将该对象放入到数组中
 			ImageView imageView = new ImageView(mContext);
-			
+
 			MarginLayoutParams lp = new MarginLayoutParams(20, 20);
 			lp.rightMargin = 50;
-			//imageView.setLayoutParams(lp);
-			
-			
+			// imageView.setLayoutParams(lp);
+
 			imageViews[i] = imageView;
 
 			// 初始值, 默认第0个选中
@@ -92,10 +92,11 @@ public abstract class GridViewController {
 				imageViews[i].setBackgroundResource(R.drawable.white_point);
 			}
 			// 将小圆点放入到布局中
-			group.addView(imageViews[i],lp);
+			group.addView(imageViews[i], lp);
 			System.out.println("addcircle");
 		}
 	}
+
 	/**
 	 * ViewPager 页面改变监听器
 	 */
@@ -121,14 +122,12 @@ public abstract class GridViewController {
 		@Override
 		public void onPageSelected(int arg0) {
 			// 获取当前显示的页面是哪个页面
-			
+
 			// 重新设置原点布局集合
 			for (int i = 0; i < imageViews.length; i++) {
-				imageViews[arg0]
-						.setBackgroundResource(R.drawable.red_point_icon);
+				imageViews[arg0].setBackgroundResource(R.drawable.red_point_icon);
 				if (arg0 != i) {
-					imageViews[i]
-							.setBackgroundResource(R.drawable.white_point);
+					imageViews[i].setBackgroundResource(R.drawable.white_point);
 				}
 			}
 		}
@@ -175,7 +174,6 @@ public abstract class GridViewController {
 
 	}
 
-	public abstract void onGridItemClick(AdapterView<?> parent, View view,
-			int position, long id);
+	public abstract void onGridItemClick(AdapterView<?> parent, View view, int position, long id);
 
 }

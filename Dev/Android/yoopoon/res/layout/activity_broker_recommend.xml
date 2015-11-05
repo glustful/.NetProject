@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="30dp" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="意向楼盘" />
+
+            <EditText
+                android:id="@+id/intent_property"
+                style="@style/EditText_Guest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="意向户型" />
+
+            <EditText
+                android:id="@+id/intent_property_type"
+                style="@style/EditText_Guest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp" />
+
+            <com.yoopoon.home.ui.view.RedStarTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="*客户姓名" />
+            
+            <LinearLayout style="@style/LinearLayout_With_Clear" >
+
+                <EditText
+                    android:id="@+id/guest_name"
+                    style="@style/EditText_Transparent_Bg"
+                    android:hint="请填写客户的姓名"
+                    android:singleLine="true" />
+
+                <ImageButton
+                    android:id="@+id/delete_guest_name"
+                    style="@style/ImageButton_Clean_Text"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="联系电话" />
+            
+            
+            <LinearLayout style="@style/LinearLayout_With_Clear" >
+
+                <EditText
+                    android:id="@+id/phone_number"
+                    style="@style/EditText_Transparent_Bg"
+                    android:hint="请填写客户的联系电话"
+                    android:singleLine="true" 
+                    android:inputType="phone"/>
+
+                <ImageButton
+                    android:id="@+id/delete_guest_phone_number"
+                    style="@style/ImageButton_Clean_Text"/>
+            </LinearLayout>
+
+            
+
+            <!-- <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="预约时间" />
+
+            <Button
+                android:id="@+id/reservation_time"
+                style="@style/EditText_Guest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:gravity="center_vertical"
+                android:hint="年/月/日" /> -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="详情" />
+             <LinearLayout style="@style/LinearLayout_With_Clear" >
+
+                <EditText
+                    android:id="@+id/detail"
+                    style="@style/EditText_Transparent_Bg"
+                    android:hint="备注"
+                    android:gravity="left"
+                    android:lines="3" />
+
+                <ImageButton
+                    android:id="@+id/delete_detail"
+                    style="@style/ImageButton_Clean_Text"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="25dp" >
+            </View>
+
+            <Button
+                android:id="@+id/commit_broker_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/red"
+                android:text="提交信息"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

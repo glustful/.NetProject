@@ -140,5 +140,4 @@ namespace Zerg.Models.Community
             return true;
         }
 
-	}
 }

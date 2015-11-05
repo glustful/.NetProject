@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/default_head_img" />
+            android:src="@drawable/logo_gray" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -27,12 +27,22 @@
             android:paddingRight="10dp"
             android:paddingTop="5dp" >
 
-            <TextView
+            <!--
+                 <TextView
                 android:id="@+id/right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="楼 盘\n详 情"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/large_textSize" />
+            -->
+
+            <TextView
+                android:id="@+id/right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="@dimen/large_textSize" />
 
@@ -51,8 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
                 android:layout_toLeftOf="@id/right"
-                android:textColor="@android:color/darker_gray"
                 android:text=""
+                android:textColor="@android:color/darker_gray"
                 android:textSize="@dimen/large_textSize" />
         </RelativeLayout>
     </RelativeLayout>
@@ -64,8 +74,8 @@
         android:background="@android:color/white"
         android:padding="10dp"
         android:textColor="@color/second_red"
-        android:textSize="@dimen/large_textSize" 
-        android:visibility="gone"/>
+        android:textSize="@dimen/large_textSize"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -75,31 +85,76 @@
         android:padding="10dp" >
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="我要带客"
-            android:textColor="@android:color/white" 
-            android:visibility="gone"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="我要推荐"
-            android:textColor="@android:color/white" 
-            android:visibility="gone"/>
-
-        <TextView
             android:id="@+id/callPhone"
-            android:background="@drawable/cycle_selector"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/cycle_selector"
             android:drawableLeft="@drawable/phone_icon"
             android:drawablePadding="5dp"
             android:text="咨询热线"
             android:textColor="@android:color/white" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/broker_takeguest_recommend_brandDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/broker_take_guest_from_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:background="@color/button_transparent"
+            android:text="我要带客"
+            android:textColor="@android:color/white" >
+        </Button>
+
+        <Button
+            android:id="@+id/broker_recommend_from_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/broker_take_guest_from_brand"
+            android:background="@color/button_transparent"
+            android:text="我要推荐"
+            android:textColor="@android:color/white" />
+
+        <!--
+             <View
+            android:id="@+id/view"
+            android:layout_width="1px"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:layout_toLeftOf="@+id/broker_consultation_from_brand"
+            android:background="@drawable/vertical_line" />
+        -->
+
+        <View
+            android:layout_width="0.001dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/broker_consultation_from_brand"
+            android:background="@drawable/vertical_line" />
+
+        <Button
+            android:id="@+id/broker_consultation_from_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:background="@color/button_transparent"
+            android:drawableLeft="@drawable/phone_icon2"
+            android:drawablePadding="5dp"
+            android:text="咨询热线"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
 
 </LinearLayout>

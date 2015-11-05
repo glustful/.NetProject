@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="10dp" >
+
+    <Button
+        android:id="@+id/btn_service"
+        style="@style/Button_Me"
+        android:drawableLeft="@drawable/me_serve"
+        android:drawablePadding="5dp"
+        android:text="我的服务" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" >
+
+        <RelativeLayout
+			android:id="@+id/rl5"
+            style="@style/RelativeLayout_Me"
+            android:background="@drawable/white_bg"
+            android:clickable="true"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/unbox"
+                android:text="待接件" />
+
+            <TextView
+                android:id="@+id/tv_service1"
+                style="@style/TextView_Circle"
+                android:layout_alignRight="@id/tv1"
+                android:background="@drawable/circle"  
+                android:gravity="center" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl6"
+            style="@style/RelativeLayout_Me"
+            android:background="@drawable/white_bg"
+            android:clickable="true"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/dealing"
+                android:text="办理中" />
+
+            <TextView
+                android:id="@+id/tv_service2"
+                android:layout_alignRight="@id/tv2"
+                style="@style/TextView_Circle"
+                android:background="@drawable/circle"
+                android:gravity="center"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl7"
+            style="@style/RelativeLayout_Me"
+            android:background="@drawable/white_bg"
+            android:clickable="true"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/quill"
+                android:text="待评价" />
+
+            <TextView
+                android:id="@+id/tv_service3"
+                android:layout_alignRight="@id/tv3"
+                style="@style/TextView_Circle"
+                android:background="@drawable/circle"
+                android:gravity="center"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

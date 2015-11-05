@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Email\SendEmail.cs" />
+    <Compile Include="Encryption\Email\SendEmail.cs" />
     <Compile Include="Encryption\EncrypHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WC\Common\IWCCommonService.cs" />

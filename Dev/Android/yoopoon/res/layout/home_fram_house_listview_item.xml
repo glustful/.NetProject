@@ -3,7 +3,8 @@
     android:id="@+id/house_listview_item"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="#ffffff">
 
     <LinearLayout
         android:id="@+id/house_listview_item_linearlayout"
@@ -17,9 +18,11 @@
             android:layout_alignParentLeft="true"
             android:layout_weight="1.2"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical" 
+            android:padding="5dp">
 
             <ImageView
+                
                 android:id="@+id/house_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -31,8 +34,8 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="0.2" >
+            android:layout_weight="0.2"
+            android:orientation="horizontal" >
         </LinearLayout>
 
         <LinearLayout
@@ -43,36 +46,109 @@
 
             <TextView
                 android:id="@+id/house_productname"
+                android:gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5" />
 
             <View
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="?android:attr/listDivider" />
+                android:layout_height="1dp"
+                android:background="@color/deviding_line" />
 
             <TextView
                 android:id="@+id/house_price"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/red"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="@color/red" />
 
             <TextView
                 android:id="@+id/tpye_area_stockRule"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#9D9D9D"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="#9D9D9D" />
 
             <TextView
                 android:id="@+id/house_advertisement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#FF8000"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="#FF8000" />
         </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/deviding_line" />
+
+    <LinearLayout
+        android:id="@+id/house_broker_function_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/house_takeguest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="带客"
+            android:textColor="@color/red"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/house_recommend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="推荐"
+            android:textColor="@color/red"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/house_bribe"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="红包"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/house_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="积分"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/deviding_line"
+        android:orientation="horizontal" >
     </LinearLayout>
 
 </LinearLayout>

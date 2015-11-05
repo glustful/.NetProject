@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <requestFocus />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp" >
+
+            <TextView
+                android:id="@+id/tv_security_err"
+                style="@style/TextView_Show_Err" />
+
+            <TextView
+                style="@style/TextView_WrapContent"
+                android:text="旧密码" />
+
+            <LinearLayout style="@style/LinearLayout_With_Clear" >
+
+                <EditText
+                    android:id="@+id/et_security_old_psw"
+                    style="@style/EditText_Transparent_Bg"
+                    android:hint="请输入旧密码"
+                    android:singleLine="true"
+                    android:inputType="textPassword" />
+
+                <ImageButton
+                    android:id="@+id/ib_security_clean_old"
+                    style="@style/ImageButton_Clean_Text" />
+            </LinearLayout>
+            
+            <TextView
+                android:id="@+id/tv_security_old"
+                style="@style/TextView_Warning"
+                android:text="请输入旧密码" />
+
+            <TextView
+                style="@style/TextView_WrapContent"
+                android:layout_marginTop="15dp"
+                android:text="新密码" />
+
+            <LinearLayout style="@style/LinearLayout_With_Clear" >
+
+                <EditText
+                    android:id="@+id/et_security_new_psw"
+                    style="@style/EditText_Transparent_Bg"
+                    android:hint="请输入新密码"
+                    android:singleLine="true"
+                    android:inputType="textPassword" />
+
+                <ImageButton
+                    android:id="@+id/ib_security_clean_new"
+                    style="@style/ImageButton_Clean_Text" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_security_new"
+                style="@style/TextView_Warning"
+                 />
+
+            <TextView
+                style="@style/TextView_WrapContent"
+                android:layout_marginTop="15dp"
+                android:text="确认新密码" />
+
+            <LinearLayout style="@style/LinearLayout_With_Clear" >
+
+                <EditText
+                    android:id="@+id/et_security_confirm"
+                    style="@style/EditText_Transparent_Bg"
+                    android:hint="请输入新密码"
+                    android:inputType="textPassword"
+                    android:singleLine="true" />
+
+                <ImageButton
+                    android:id="@+id/ib_security_clean_confirm"
+                    style="@style/ImageButton_Clean_Text" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_security_confirm"
+                style="@style/TextView_Warning"
+                android:text="两次输入的密码不一致" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp" >
+
+                <Button
+                    android:id="@+id/btn_security_setting_getcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/et_security_code"
+                    android:background="@drawable/cycle_selector"
+                    android:text="获取验证码"
+                    android:textColor="@color/little_whitle" />
+
+                <TextView
+                    android:text="请输入验证码"
+                    android:id="@+id/tv_security_code"
+                    style="@style/TextView_Warning"
+                    android:layout_alignBottom="@id/btn_security_setting_getcode"
+                    android:layout_toRightOf="@id/btn_security_setting_getcode" />
+
+                <EditText
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:id="@+id/et_security_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/btn_security_setting_getcode"
+                    android:hint="请输入验证码"
+                    android:textColor="@color/setting_text"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_security_setting_save"
+                style="@style/Red_Button_MarginTop"
+                android:text="保存" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_security_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:layout_centerVertical="true"
+            android:visibility="gone" >
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="@style/login_loading_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:maxHeight="120dp"
+                android:maxWidth="180dp"
+                android:minHeight="120dp"
+                android:minWidth="180dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/progressBar"
+                android:layout_alignLeft="@+id/progressBar"
+                android:layout_alignRight="@+id/progressBar"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal"
+                android:text="请求中..."
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>

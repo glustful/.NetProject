@@ -24,7 +24,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -34,13 +34,13 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
         android:name="com.yoopoon.home.MyApplication_"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
@@ -86,16 +86,142 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-         <activity
+        <activity
             android:name="com.yoopoon.home.ui.html5.HTML5Activity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
-         <activity
+        <activity
             android:name="com.yoopoon.home.ui.me.SettingActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/ActionbarTheme" >
         </activity>
+        <activity
+            android:name="com.yoopoon.home.ui.me.PersonSettingActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.RecommendActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.house.ui.broker.BrokerRecommendActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.IGuestActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.IPartnerActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.BrokerRankActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.house.ui.bonus.BrokerBonusActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.house.ui.broker.BrokerScoreActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.IPocketActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.TakeCashActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.BankCashActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.SecuritySettingActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.AddBankActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.IRecommendActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.FindPswActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.IClientActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.ui.active.BrandDetail2Activity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.ui.agent.AgentBrandDetailActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.RecBuildActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.MeTaskActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.TakeCash2Activity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.TakeCashStep2Activity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.PartnerDetailActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" >
+        </activity>
+        <activity
+            android:name="com.yoopoon.home.ui.active.BrokerBrandActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionbarTheme" />
+
+        <service android:name="com.yoopoon.home.service.SmsService" />
     </application>
     <!-- 测试配置选项 -->
     <instrumentation

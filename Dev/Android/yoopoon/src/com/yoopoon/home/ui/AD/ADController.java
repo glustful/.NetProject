@@ -3,17 +3,9 @@ package com.yoopoon.home.ui.AD;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.yoopoon.home.MyApplication;
-import com.yoopoon.home.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
@@ -28,6 +20,11 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.yoopoon.home.MyApplication;
+import com.yoopoon.home.R;
 
 public class ADController {
 
@@ -46,6 +43,7 @@ public class ADController {
 	private AtomicInteger atomicInteger = new AtomicInteger(0);
 	private boolean isContinue = true;
 	private List<String> urls;
+	private int adCount;
 
 	public View getRootView() {
 		if (rootView == null) {
@@ -60,8 +58,9 @@ public class ADController {
 	}
 
 	public void show(List<String> urls) {
+		this.adCount = urls.size();
 		this.urls = urls;
-		if(rootView==null)
+		if (rootView == null)
 			return;
 		initPageAdapter();
 
@@ -69,6 +68,7 @@ public class ADController {
 
 		adViewPager.setAdapter(adapter);
 		new Thread(new Runnable() {
+
 			@Override
 			public void run() {
 				while (true) {
@@ -81,39 +81,38 @@ public class ADController {
 		}).start();
 	}
 
+	public boolean isEmpty() {
+		return !(adCount > 0);
+	}
+
 	private void initViewPager() {
-		
+
 		rootView = inflater.inflate(R.layout.ad_page_view, null);
-		
+
 		// 从布局文件中获取ViewPager父容器
-		pagerLayout = (LinearLayout) rootView
-				.findViewById(R.id.view_pager_content);
+		pagerLayout = (LinearLayout) rootView.findViewById(R.id.view_pager_content);
 		// 创建ViewPager
 		adViewPager = new ViewPager(mContext);
 
 		// 获取屏幕像素相关信息
 		DisplayMetrics dm = new DisplayMetrics();
-		((Activity) mContext).getWindowManager().getDefaultDisplay()
-				.getMetrics(dm);
+		((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(dm);
 
 		// 根据屏幕信息设置ViewPager广告容器的宽高
-		adViewPager.setLayoutParams(new LayoutParams(dm.widthPixels,
-				dm.heightPixels*1/5));
+		adViewPager.setLayoutParams(new LayoutParams(dm.widthPixels, dm.heightPixels * 1 / 5));
 
 		// 将ViewPager容器设置到布局文件父容器中
 		pagerLayout.addView(adViewPager);
 
-		
 		adViewPager.setOnPageChangeListener(new AdPageChangeListener());
 
-		
 	}
 
 	private void atomicOption() {
 		atomicInteger.incrementAndGet();
-		//if (atomicInteger.get() > imageViews.length - 1) {
-			//atomicInteger.getAndAdd(-imageViews.length);
-		//}
+		// if (atomicInteger.get() > imageViews.length - 1) {
+		// atomicInteger.getAndAdd(-imageViews.length);
+		// }
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -136,31 +135,32 @@ public class ADController {
 
 	private void initPageAdapter() {
 		pageViews = new ArrayList<View>();
-		if(urls!=null)
-		for (int i = 0; i < urls.size(); i++) {
-			ImageView img = new ImageView(mContext);
-			
-			img.setTag(mContext.getString(R.string.url_host_img) + urls.get(i));
-			
-			img.setScaleType(ScaleType.FIT_XY);
-			pageViews.add(img);
-		}
+		if (urls != null)
+			for (int i = 0; i < urls.size(); i++) {
+				ImageView img = new ImageView(mContext);
+
+				img.setTag(mContext.getString(R.string.url_host_img) + urls.get(i));
+
+				img.setScaleType(ScaleType.FIT_XY);
+				pageViews.add(img);
+			}
 		adapter = new AdPageAdapter(pageViews);
 	}
 
 	private void initCirclePoint() {
 		ViewGroup group = (ViewGroup) rootView.findViewById(R.id.viewGroup);
+		group.removeAllViews();
 		imageViews = new ImageView[pageViews.size()];
 		// 广告栏的小圆点图标
 		for (int i = 0; i < pageViews.size(); i++) {
 			// 创建一个ImageView, 并设置宽高. 将该对象放入到数组中
 			imageView = new ImageView(mContext);
-			
-			MarginLayoutParams lp = new MarginLayoutParams(20, 20);
+
+			MarginLayoutParams lp = new MarginLayoutParams(MarginLayoutParams.WRAP_CONTENT,
+					MarginLayoutParams.WRAP_CONTENT);
 			lp.rightMargin = 50;
-			//imageView.setLayoutParams(lp);
-			
-			
+			// imageView.setLayoutParams(lp);
+
 			imageViews[i] = imageView;
 
 			// 初始值, 默认第0个选中
@@ -170,7 +170,7 @@ public class ADController {
 				imageViews[i].setBackgroundResource(R.drawable.white_point);
 			}
 			// 将小圆点放入到布局中
-			group.addView(imageViews[i],lp);
+			group.addView(imageViews[i], lp);
 		}
 	}
 
@@ -202,17 +202,16 @@ public class ADController {
 			atomicInteger.getAndSet(arg0);
 			// 重新设置原点布局集合
 			for (int i = 0; i < imageViews.length; i++) {
-				imageViews[arg0%imageViews.length]
-						.setBackgroundResource(R.drawable.black_point);
-				if (arg0%imageViews.length != i) {
-					imageViews[i%imageViews.length]
-							.setBackgroundResource(R.drawable.white_point);
+				imageViews[arg0 % imageViews.length].setBackgroundResource(R.drawable.black_point);
+				if (arg0 % imageViews.length != i) {
+					imageViews[i % imageViews.length].setBackgroundResource(R.drawable.white_point);
 				}
 			}
 		}
 	}
 
 	private final class AdPageAdapter extends PagerAdapter {
+
 		private List<View> views = null;
 
 		/**
@@ -227,7 +226,7 @@ public class ADController {
 		 */
 		@Override
 		public void destroyItem(View container, int position, Object object) {
-			((ViewPager) container).removeView(views.get(position%views.size()));
+			((ViewPager) container).removeView(views.get(position % views.size()));
 		}
 
 		/**
@@ -243,10 +242,9 @@ public class ADController {
 		 */
 		@Override
 		public Object instantiateItem(View container, int position) {
-			
-			ImageView imageView = (ImageView) views.get(position%views.size());
-			ImageLoader.getInstance().displayImage(
-					imageView.getTag().toString(), imageView,
+
+			ImageView imageView = (ImageView) views.get(position % views.size());
+			ImageLoader.getInstance().displayImage(imageView.getTag().toString(), imageView,
 					MyApplication.getOptions(), new ImageLoadingListener() {
 
 						@Override
@@ -254,36 +252,34 @@ public class ADController {
 							// TODO Auto-generated method stub
 
 						}
-   
+
 						@Override
-						public void onLoadingFailed(String imageUri, View view,
-								FailReason failReason) {
+						public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
 							// TODO Auto-generated method stub
 
 						}
 
 						@Override
-						public void onLoadingComplete(String imageUri,
-								View view, Bitmap loadedImage) {
+						public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
 							if (imageUri.equals(view.getTag().toString())) {
 								((ImageView) view).setImageBitmap(loadedImage);
-								
+
 							}
 
 						}
 
 						@Override
-						public void onLoadingCancelled(String imageUri,
-								View view) {
+						public void onLoadingCancelled(String imageUri, View view) {
 							// TODO Auto-generated method stub
 
 						}
 					});
-			if(imageView.getParent() != null){
-				((ViewGroup)imageView.getParent()).removeView(imageView);
+			if (imageView.getParent() != null) {
+				((ViewGroup) imageView.getParent()).removeView(imageView);
 			}
-			((ViewPager) container).addView(imageView,new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-			
+			((ViewPager) container).addView(imageView, new LayoutParams(LayoutParams.MATCH_PARENT,
+					LayoutParams.MATCH_PARENT));
+
 			return imageView;
 		}
 

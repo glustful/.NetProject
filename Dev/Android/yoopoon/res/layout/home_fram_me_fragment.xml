@@ -22,31 +22,17 @@
                 android:background="@android:color/white"
                 android:padding="5dp" />
 
-            <TextView
-                android:id="@+id/todayTaskCount"
+            <com.yoopoon.home.ui.me.MeFooterView_
+                android:id="@+id/footerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </com.yoopoon.home.ui.me.MeFooterView_>
+
+            <include
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@android:color/white"
-                android:padding="10dp"
-                android:text="今日任务(无)"
-                android:textColor="@color/green"
-                android:textSize="@dimen/large_textSize"
-                android:textStyle="bold" />
-            <com.yoopoon.home.ui.me.TodyTaskView_
-                
-                android:id="@+id/todayTask"
-                
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-                
-
-           	<com.yoopoon.home.ui.me.MeFooterView_
-           	    android:layout_width="match_parent"
-           	    android:layout_height="wrap_content"
-           	    android:id="@+id/footerView">
-           	    </com.yoopoon.home.ui.me.MeFooterView_>
+                layout="@layout/item_foot" />
         </LinearLayout>
     </ScrollView>
 

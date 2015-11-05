@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -19,22 +18,18 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.CookieStore;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -47,9 +42,7 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.BufferedHttpEntity;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
@@ -65,20 +58,16 @@ import org.apache.http.util.EncodingUtils;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.yoopoon.home.data.net.RequestAdapter.RequestContentType;
-import com.yoopoon.home.data.storage.LocalPath;
-
 import android.graphics.Bitmap;
-import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import com.yoopoon.home.data.net.RequestAdapter.RequestContentType;
+import com.yoopoon.home.data.storage.LocalPath;
 
 public class RequestTask implements Runnable {
 	private static CookieStore mCookieStore = null;
-
 	private static final int mRevBufferSize = 1024 * 2;
 	private boolean mStopRunning;
 	private RequestAdapter mRequestData;
@@ -110,19 +99,15 @@ public class RequestTask implements Runnable {
 		if (mRequestData == null || mStopRunning) {
 			return;
 		}
-
 		mHttpClient = getHttpClient(mRequestData);
 		if (mCookieStore == null) {// 如果为空，尝试从文件获取
 			File cookieFile = new File(LocalPath.intance().cacheBasePath + "co");
 			String res = "";
 			try {
 				FileInputStream fin = new FileInputStream(cookieFile);
-
 				int length = fin.available();
-
 				byte[] buffer = new byte[length];
 				fin.read(buffer);
-
 				res = EncodingUtils.getString(buffer, "UTF-8");
 				fin.close();
 				if (res != null && !"".equals(res.trim())) {
@@ -133,10 +118,8 @@ public class RequestTask implements Runnable {
 						String name = o.optString("name");
 						String value = o.optString("value");
 						if (name != null && value != null) {
-							BasicClientCookie basicClientCookie = new BasicClientCookie(
-									name, value);
-							basicClientCookie
-									.setComment(o.optString("comment"));
+							BasicClientCookie basicClientCookie = new BasicClientCookie(name, value);
+							basicClientCookie.setComment(o.optString("comment"));
 							basicClientCookie.setDomain(o.optString("domain"));
 							basicClientCookie.setPath(o.optString("path"));
 							basicClientCookie.setVersion(o.optInt("version"));
@@ -145,18 +128,15 @@ public class RequestTask implements Runnable {
 						}
 						mCookieStore = basicCookieStore;
 					}
-
 					mHttpClient.setCookieStore(mCookieStore);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
 		if (mCookieStore != null) {
 			mHttpClient.setCookieStore(mCookieStore);
 		}
-
 		String urlString = "";
 		if (mRequestData.getCallMethod() == RequestAdapter.CallMethod.eUnity) {
 			urlString = mRequestData.getUnityUrl();
@@ -164,7 +144,6 @@ public class RequestTask implements Runnable {
 		} else {
 			urlString = mRequestData.getHost() + mRequestData.getUrl();
 		}
-
 		if (mRequestData.getRequestMethod() == RequestAdapter.RequestMethod.eGet) {
 			RequestGetMethod(urlString);
 		} else if (mRequestData.getRequestMethod() == RequestAdapter.RequestMethod.ePost) {
@@ -175,8 +154,17 @@ public class RequestTask implements Runnable {
 				e.printStackTrace();
 			}
 		} else {
-			upLoadRequestPostMethod(urlString);
+			// upLoadRequestPostMethod(urlString);
+			uploadImage(urlString);
 		}
+	}
+
+	/**
+	 * @Title: uploadImage
+	 * @Description: TODO
+	 * @param urlString
+	 */
+	private void uploadImage(String urlString) {
 
 	}
 
@@ -194,8 +182,8 @@ public class RequestTask implements Runnable {
 			}
 			urlString = urlString.substring(0, urlString.length() - 1);// 去掉最后的&字符
 		}
+		Log.i("RequestTask", urlString.toString());
 		HttpResponse httpResponse = null;
-		
 		try {
 			HttpGet get = new HttpGet(urlString);
 			get.setHeader("x-requested-with", "XMLHttpRequest");
@@ -213,13 +201,11 @@ public class RequestTask implements Runnable {
 					ResponseMessage msg = new ResponseMessage();
 					msg.setCode(responseCode);
 					msg.setMsg("获取数据成功");
-					msg.setData(EntityUtils.toByteArray(httpResponse
-							.getEntity()));
+					msg.setData(EntityUtils.toByteArray(httpResponse.getEntity()));
 					sendResponseMessage(msg);
 				} else if (mRequestData.getRequestType() == RequestAdapter.RequestType.eFileDown) {
 					HttpEntity entity = httpResponse.getEntity();
-					BufferedHttpEntity bufHttpEntity = new BufferedHttpEntity(
-							entity);
+					BufferedHttpEntity bufHttpEntity = new BufferedHttpEntity(entity);
 					InputStream is = bufHttpEntity.getContent();
 					downloadFile(is, responseCode);
 				} else if (mRequestData.getRequestType() == RequestAdapter.RequestType.eFileUp) {
@@ -230,17 +216,14 @@ public class RequestTask implements Runnable {
 					sendResponseMessage(msg);
 				} else if (mRequestData.getRequestType() == RequestAdapter.RequestType.eFileStream) {
 					HttpEntity entity = httpResponse.getEntity();
-					BufferedHttpEntity bufferedHttpEntity = new BufferedHttpEntity(
-							entity);
+					BufferedHttpEntity bufferedHttpEntity = new BufferedHttpEntity(entity);
 					InputStream is = bufferedHttpEntity.getContent();
 					mIs = is;
-					Log.d("RequestTask",
-							"InputStream size is +" + "..." + is.available());
+					Log.d("RequestTask", "InputStream size is +" + "..." + is.available());
 					ResponseMessage msg = new ResponseMessage();
 					msg.setCode(responseCode);
 					msg.setInstream(mIs);
 					sendResponseMessage(msg);
-
 				}
 			} else {
 				ResponseMessage msg = new ResponseMessage();
@@ -258,34 +241,36 @@ public class RequestTask implements Runnable {
 		}
 	}
 
-	private void RequestPostMethod(String urlString)
-			throws UnsupportedEncodingException {
+	private void RequestPostMethod(String urlString) throws UnsupportedEncodingException {
 		IdentityHashMap<String, String> params = mRequestData.getParams();
 		HttpPost httpPost = new HttpPost(urlString);
 		httpPost.setHeader("x-requested-with", "XMLHttpRequest");
+		// httpPost.setHeader("Access-Control-Allow-Credentials", "true");
+		httpPost.setHeader("Accept", "application/json, text/plain, */*");
+		httpPost.setHeader("Connection", "keep-alive");
 		if (mRequestData.getContentType() == RequestContentType.eJSON) {
-			httpPost.setHeader("Content-Type", "application/json");
+			httpPost.setHeader("Content-Type", "application/json;charset=UTF-8");
+		} else if (mRequestData.getContentType() == RequestContentType.eImage) {
+			httpPost.setHeader("Content-Type", "image/jpeg");
 		}
-
 		List<NameValuePair> reqPar = new ArrayList<NameValuePair>();
 		if (null != params) {
-
 			for (Map.Entry<String, String> entry : params.entrySet()) {
 				String key = entry.getKey();
 				String value = entry.getValue();
 				reqPar.add(new BasicNameValuePair(key, value));
 			}
 		}
-
 		try {
 			if (mRequestData.getContentType() == RequestContentType.eGeneral) {
 				httpPost.setEntity(new UrlEncodedFormEntity(reqPar, "UTF-8"));
+			} else if (mRequestData.getContentType() == RequestContentType.eJSON) {
+				httpPost.setEntity(new StringEntity(mRequestData.getJSON(), "UTF-8"));
 			} else {
-				httpPost.setEntity(new StringEntity(mRequestData.getJSON(),
-						"UTF-8"));
+				httpPost.setEntity(new StringEntity(mRequestData.getJSON(), "UTF-8"));
 			}
-
 			HttpResponse httpResponse = mHttpClient.execute(httpPost);
+
 			int responseCode = httpResponse.getStatusLine().getStatusCode();
 			if ((responseCode > 199) && (responseCode < 400)) {
 				if (!mStopRunning && mRequestData.getSaveSession()) {
@@ -294,27 +279,22 @@ public class RequestTask implements Runnable {
 						saveCookie(cookie);
 					}
 				}
-
 				if (mRequestData.getRequestType() == RequestAdapter.RequestType.eGeneral) {
 					ResponseMessage msg = new ResponseMessage();
 					msg.setCode(responseCode);
 					msg.setMsg("获取数据成功");
 					// System.out.println("response="+httpResponse.getEntity());
-
-					msg.setData(EntityUtils.toByteArray(httpResponse
-							.getEntity()));
+					msg.setData(EntityUtils.toByteArray(httpResponse.getEntity()));
 					sendResponseMessage(msg);
 					/*
-					 * InputStream in = httpResponse.getEntity().getContent();
-					 * BufferedReader bw = new BufferedReader(new
-					 * InputStreamReader(in)); String line = bw.readLine();
-					 * while(line != null){ System.out.println("line="+line);
-					 * line = bw.readLine(); } bw.close();
+					 * InputStream in = httpResponse.getEntity().getContent(); BufferedReader bw =
+					 * new BufferedReader(new InputStreamReader(in)); String line = bw.readLine();
+					 * while(line != null){ System.out.println("line="+line); line = bw.readLine();
+					 * } bw.close();
 					 */
 				} else if (mRequestData.getRequestType() == RequestAdapter.RequestType.eFileDown) {
 					HttpEntity entity = httpResponse.getEntity();
-					BufferedHttpEntity bufHttpEntity = new BufferedHttpEntity(
-							entity);
+					BufferedHttpEntity bufHttpEntity = new BufferedHttpEntity(entity);
 					InputStream is = bufHttpEntity.getContent();
 					downloadFile(is, responseCode);
 				} else if (mRequestData.getRequestType() == RequestAdapter.RequestType.eFileUp) {
@@ -338,7 +318,6 @@ public class RequestTask implements Runnable {
 				sendResponseMessage(msg);
 			}
 		} catch (Exception e) {
-
 			ResponseMessage msg = new ResponseMessage();
 			msg.setCode(-1);
 			// msg.setMsg(e.getMessage());
@@ -346,42 +325,41 @@ public class RequestTask implements Runnable {
 			msg.setData(null);
 			sendResponseMessage(msg);
 		}
-
 	}
 
 	private void upLoadRequestPostMethod(String urlString) {
 		HttpEntity entityWhole;
-		MultipartEntity mpEntity = new MultipartEntity();
+		org.apache.http.entity.mime.MultipartEntity mpEntity = null;
+
+		mpEntity = new org.apache.http.entity.mime.MultipartEntity();
+
 		HttpPost httpPost = new HttpPost(urlString);
 		httpPost.setHeader("x-requested-with", "XMLHttpRequest");
-		// httpPost.setHeader("Content-Type","multipart/form-data");
+		httpPost.setHeader("Content-Type", "multipart/form-data");
+		httpPost.setHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+		httpPost.setHeader("Connection", "keep-alive");
+		httpPost.setHeader("User-Agent",
+				"Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36");
+		httpPost.setHeader("Access-Control-Allow-Credentials", "true");
 
 		try {
-			if (mRequestData.getmAttPath() != null
-					&& !"".equals(mRequestData.getmAttPath().trim())
+			if (mRequestData.getmAttPath() != null && !"".equals(mRequestData.getmAttPath().trim())
 					&& mRequestData.getmBitmap() == null) {
+				/*
+				 * IdentityHashMap<String, String> params = mRequestData.getParams(); if (null !=
+				 * params) { for (Map.Entry<String, String> entry : params.entrySet()) { String key
+				 * = entry.getKey(); String value = entry.getValue(); try { StringBody par = new
+				 * StringBody(value); mpEntity.addPart(key, par); } catch (Exception e) {
+				 * e.printStackTrace(); } } }
+				 */
+				FileBody file = new FileBody(new File(mRequestData.getmAttPath()), "image/jpeg", "utf8");
 
-				IdentityHashMap<String, String> params = mRequestData
-						.getParams();
-				if (null != params) {
-					for (Map.Entry<String, String> entry : params.entrySet()) {
-						String key = entry.getKey();
-						String value = entry.getValue();
-						try {
-							StringBody par = new StringBody(value);
-							mpEntity.addPart(key, par);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				}
-				FileBody file = new FileBody(new File(
-						mRequestData.getmAttPath()));
+				// FormBodyPart body = new FormBodyPart("fileToUpload", file);
 				mpEntity.addPart("file", file);
+
 				httpPost.setEntity(mpEntity);
 
-			} else if (mRequestData.getmAttPath() == null
-					&& mRequestData.getmBitmap() != null) {
+			} else if (mRequestData.getmAttPath() == null && mRequestData.getmBitmap() != null) {
 				Bitmap bitmap = mRequestData.getmBitmap();
 				ByteArrayOutputStream bao = new ByteArrayOutputStream();
 				bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bao);// 将bitmap转换为PNG
@@ -401,21 +379,18 @@ public class RequestTask implements Runnable {
 					ResponseMessage msg = new ResponseMessage();
 					msg.setCode(responseCode);
 					msg.setMsg("获取数据成功");
-					msg.setData(EntityUtils.toByteArray(httpResponse
-							.getEntity()));
+					msg.setData(EntityUtils.toByteArray(httpResponse.getEntity()));
 					sendResponseMessage(msg);
 				} else if (mRequestData.getRequestType() == RequestAdapter.RequestType.eFileDown) {
 					HttpEntity entity = httpResponse.getEntity();
-					BufferedHttpEntity bufHttpEntity = new BufferedHttpEntity(
-							entity);
+					BufferedHttpEntity bufHttpEntity = new BufferedHttpEntity(entity);
 					InputStream is = bufHttpEntity.getContent();
 					downloadFile(is, responseCode);
 				} else if (mRequestData.getRequestType() == RequestAdapter.RequestType.eFileUp) {
 					ResponseMessage msg = new ResponseMessage();
 					msg.setCode(responseCode);
 					msg.setMsg(httpResponse.getStatusLine().getReasonPhrase());
-					msg.setData(EntityUtils.toByteArray(httpResponse
-							.getEntity()));
+					msg.setData(EntityUtils.toByteArray(httpResponse.getEntity()));
 					sendResponseMessage(msg);
 				} else {
 					ResponseMessage msg = new ResponseMessage();
@@ -424,7 +399,6 @@ public class RequestTask implements Runnable {
 					msg.setData(null);
 					sendResponseMessage(msg);
 				}
-
 			} else {
 				ResponseMessage msg = new ResponseMessage();
 				msg.setCode(responseCode);
@@ -439,11 +413,9 @@ public class RequestTask implements Runnable {
 			msg.setData(null);
 			sendResponseMessage(msg);
 		}
-
 	}
 
 	private void downloadFile(InputStream is, int responseCode) {
-
 		int fileSize = 0;
 		try {
 			fileSize = is.available();
@@ -453,13 +425,10 @@ public class RequestTask implements Runnable {
 		FileOutputStream out = null;
 		int readCount = 0;
 		try {
-			Log.d("RequsetTask",
-					"download File path is" + mRequestData.getLocalPath());
+			Log.d("RequsetTask", "download File path is" + mRequestData.getLocalPath());
 			out = new FileOutputStream(mRequestData.getLocalPath(), false);
-			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
-					out);
-			BufferedInputStream bufferedInputStream = new BufferedInputStream(
-					is);
+			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(out);
+			BufferedInputStream bufferedInputStream = new BufferedInputStream(is);
 			byte[] buf = new byte[1024];
 			int bytesRead = 0;
 			while (bytesRead >= 0 && !mStopRunning) {
@@ -486,7 +455,6 @@ public class RequestTask implements Runnable {
 					sendResponseMessage(msg);
 				}
 			}
-
 			try {
 				is.close();
 				bufferedInputStream.close();
@@ -506,7 +474,6 @@ public class RequestTask implements Runnable {
 			msg.setData(null);
 			sendResponseMessage(msg);
 		}
-
 		ResponseMessage msg = new ResponseMessage();
 		msg.setCode(responseCode);
 		msg.setMsg("文件下载成功");
@@ -528,39 +495,27 @@ public class RequestTask implements Runnable {
 		Bundle bund = new Bundle();
 		bund.putSerializable("adpater", mRequestData);
 		bund.putSerializable("responseMsg", msg);
-
 		hadnelMsg.setData(bund);
 		hadnelMsg.sendToTarget();
 	}
 
 	private DefaultHttpClient getHttpClient(RequestAdapter data) {
 		try {
-			KeyStore trustStore = KeyStore.getInstance(KeyStore
-					.getDefaultType());
+			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
 			trustStore.load(null, null);
 			SSLSocketFactory sf = new SSLSocketFactoryEx(trustStore);
 			sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-
 			HttpParams httpParams = new BasicHttpParams();
 			HttpProtocolParams.setVersion(httpParams, HttpVersion.HTTP_1_1);
 			HttpProtocolParams.setUseExpectContinue(httpParams, true);
-
 			SchemeRegistry schReg = new SchemeRegistry();
-			schReg.register(new Scheme("http", PlainSocketFactory
-					.getSocketFactory(), 80));
+			schReg.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
 			schReg.register(new Scheme("https", sf, 443));
-
-			ClientConnectionManager conManager = new ThreadSafeClientConnManager(
-					httpParams, schReg);
-
-			HttpConnectionParams.setConnectionTimeout(httpParams,
-					data.getTimeOutLimit() * 1000);
-			HttpConnectionParams.setSoTimeout(httpParams,
-					data.getTimeOutLimit() * 1000); // 此处的单位是毫秒
-			HttpConnectionParams.setSocketBufferSize(httpParams,
-					mRevBufferSize * 2);
-			DefaultHttpClient httpClient = new DefaultHttpClient(conManager,
-					httpParams);
+			ClientConnectionManager conManager = new ThreadSafeClientConnManager(httpParams, schReg);
+			HttpConnectionParams.setConnectionTimeout(httpParams, data.getTimeOutLimit() * 1000);
+			HttpConnectionParams.setSoTimeout(httpParams, data.getTimeOutLimit() * 1000); // 此处的单位是毫秒
+			HttpConnectionParams.setSocketBufferSize(httpParams, mRevBufferSize * 2);
+			DefaultHttpClient httpClient = new DefaultHttpClient(conManager, httpParams);
 			return httpClient;
 		} catch (Exception e) {
 			return null;
@@ -568,46 +523,34 @@ public class RequestTask implements Runnable {
 	}
 
 	class SSLSocketFactoryEx extends SSLSocketFactory {
-
 		SSLContext sslContext = SSLContext.getInstance("TLS");
 
-		public SSLSocketFactoryEx(KeyStore truststore)
-				throws NoSuchAlgorithmException, KeyManagementException,
+		public SSLSocketFactoryEx(KeyStore truststore) throws NoSuchAlgorithmException, KeyManagementException,
 				KeyStoreException, UnrecoverableKeyException {
 			super(truststore);
-
 			TrustManager tm = new X509TrustManager() {
-
 				@Override
 				public java.security.cert.X509Certificate[] getAcceptedIssuers() {
 					return null;
 				}
 
 				@Override
-				public void checkClientTrusted(
-						java.security.cert.X509Certificate[] chain,
-						String authType)
+				public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType)
 						throws java.security.cert.CertificateException {
-
 				}
 
 				@Override
-				public void checkServerTrusted(
-						java.security.cert.X509Certificate[] chain,
-						String authType)
+				public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType)
 						throws java.security.cert.CertificateException {
-
 				}
 			};
-
 			sslContext.init(null, new TrustManager[] { tm }, null);
 		}
 
 		@Override
-		public Socket createSocket(Socket socket, String host, int port,
-				boolean autoClose) throws IOException, UnknownHostException {
-			return sslContext.getSocketFactory().createSocket(socket, host,
-					port, autoClose);
+		public Socket createSocket(Socket socket, String host, int port, boolean autoClose) throws IOException,
+				UnknownHostException {
+			return sslContext.getSocketFactory().createSocket(socket, host, port, autoClose);
 		}
 
 		@Override
@@ -617,13 +560,10 @@ public class RequestTask implements Runnable {
 	}
 
 	private static void saveCookie(CookieStore cookie) {
-
-		if (cookie != null && cookie.getCookies() != null
-				&& !cookie.getCookies().isEmpty()) {
+		if (cookie != null && cookie.getCookies() != null && !cookie.getCookies().isEmpty()) {
 			try {
 				JSONArray array = new JSONArray();
 				for (Cookie c : cookie.getCookies()) {
-					
 					JSONObject o = new JSONObject();
 					o.put("name", c.getName());
 					o.put("value", c.getValue());
@@ -638,11 +578,9 @@ public class RequestTask implements Runnable {
 				}
 				String s = array.toString();
 				// 把cookie持久化到文件
-				File cookieFile = new File(LocalPath.intance().cacheBasePath
-						+ "co");
+				File cookieFile = new File(LocalPath.intance().cacheBasePath + "co");
 				FileOutputStream fout = new FileOutputStream(cookieFile);
 				byte[] bytes = s.getBytes();
-
 				fout.write(bytes);
 				fout.close();
 			} catch (Exception e) {
@@ -655,5 +593,4 @@ public class RequestTask implements Runnable {
 	public static void setmCookieStore(CookieStore mCookieStore) {
 		RequestTask.mCookieStore = mCookieStore;
 	}
-
 }

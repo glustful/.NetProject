@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp" 
+    android:padding="10dp"
+    android:background="@drawable/white_bg">
+    
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="center"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/stright_border"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/iv"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@id/iv"
+        android:text="我是花吃 云南特产零食糕点  玫瑰鲜花饼" />
+
+    <TextView
+        android:id="@+id/tv_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/iv"
+        android:text="口味：甜味"
+        android:textColor="@color/text_gray" />
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv"
+        android:layout_toRightOf="@id/iv"
+        android:text="x1"
+        android:textColor="@color/text_gray" />
+
+    <TextView
+        android:id="@+id/tv_price_counted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv"
+        android:layout_toLeftOf="@id/tv_price_previous"
+        android:text="￥69.9"
+        android:textSize="16sp"
+        android:textColor="@color/red" />
+    
+    <TextView
+        android:id="@+id/tv_price_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:text="￥89.9"
+        android:textSize="12sp"
+        
+        android:textColor="@color/text_gray" />
+
+</RelativeLayout>

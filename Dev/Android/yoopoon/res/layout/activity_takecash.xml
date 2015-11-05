@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:gravity="center"
+    android:padding="10dp">
+    
+    <ImageView 
+        android:id="@+id/iv_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/take_cash_finish"/>
+    
+    <TextView 
+        android:id="@+id/tv_dialog_status"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提现申请成功"/>
+    
+    <TextView 
+        android:id="@+id/tv_dialog_time"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="预计三天后到账"/>
+    
+    <Button 
+        android:id="@+id/btn_dialog"
+        style="@style/Red_Button_MarginTop"
+        android:text="确定"/>
+    
+
+</LinearLayout>

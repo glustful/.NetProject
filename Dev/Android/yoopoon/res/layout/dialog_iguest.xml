@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:gravity="center"
+    android:padding="10dp" >
+    
+    
+    <ImageView
+        android:id="@+id/iv_iguest_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/iguest_success"/>
+    
+    <TextView 
+        android:id="@+id/tv_iguest_dialog"
+        android:paddingTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="信息提交成功"
+        android:textColor="@color/setting_text"/>
+    
+    <Button 
+        android:id="@+id/btn_iguest_dialog"
+        android:layout_marginTop="10dp"
+        style="@style/Red_Button_MarginTop"
+        android:text="关闭"/>
+    
+
+</LinearLayout>

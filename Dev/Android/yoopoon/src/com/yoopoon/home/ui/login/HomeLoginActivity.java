@@ -11,7 +11,13 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONException;
+import org.json.JSONObject;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -19,6 +25,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -32,7 +39,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yoopoon.common.base.utils.SPUtils;
 import com.yoopoon.common.base.utils.Utils;
+import com.yoopoon.home.FindPswActivity_;
 import com.yoopoon.home.MainActionBarActivity;
 import com.yoopoon.home.R;
 import com.yoopoon.home.data.json.SerializerJSON;
@@ -93,11 +102,12 @@ public class HomeLoginActivity extends MainActionBarActivity {
 
 	@AfterViews
 	void crateData() {
-		this.titleButton.setText("用户登陆");
+		this.titleButton.setText("用户登录");
 		this.titleButton.setVisibility(View.VISIBLE);
 		this.rightButton.setVisibility(View.INVISIBLE);
 		this.backButton.setVisibility(View.VISIBLE);
 		this.backButton.setText("返回");
+		this.backButton.setTextColor(Color.WHITE);
 		SpannableString span = new SpannableString(this.registerButton.getText());
 		ForegroundColorSpan fgcs = new ForegroundColorSpan(getResources().getColor(R.color.second_red));
 		span.setSpan(fgcs, span.length() - 2, span.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -141,7 +151,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 	@Click(R.id.delMailBtn)
 	void delMailClick(View v) {
 		mEmailText.setText("");
-		mPwdText.setText("");
+		// mPwdText.setText("");
 	}
 
 	@Click(R.id.delPwdBtn)
@@ -154,6 +164,11 @@ public class HomeLoginActivity extends MainActionBarActivity {
 	void registerClick(View v) {
 		HomeRegisterActivity_.intent(mContext).start();
 		this.finish();
+	}
+
+	@Click(R.id.tv_login_forget)
+	void findPsw() {
+		FindPswActivity_.intent(this).start();
 	}
 
 	@Override
@@ -176,7 +191,7 @@ public class HomeLoginActivity extends MainActionBarActivity {
 			cookieFile.delete();
 		}
 		RequestTask.setmCookieStore(null);
-		String eMail = mUser.getUserName();
+		String eMail = mUser.getPhone();
 		String pwd = mUser.getPassword();
 		auto = mUser.isRemember();
 		auto = (auto == null) ? false : auto;
@@ -185,6 +200,8 @@ public class HomeLoginActivity extends MainActionBarActivity {
 			mPwdText.setText(pwd);
 			requestLogin(eMail, pwd, auto);
 		} else {
+			SPUtils.clearAllInfo(this);
+			Log.i(TAG, "clearAllInfos");
 			mPwdText.setText("");
 			if (!isManual) {
 				FramMainActivity_.intent(mContext).start();
@@ -258,9 +275,11 @@ public class HomeLoginActivity extends MainActionBarActivity {
 
 					@Override
 					public void onComplete(String serializeResult) {
-						if (serializeResult != null)
+						if (serializeResult != null) {
 							PreferenceManager.getDefaultSharedPreferences(mContext).edit()
 									.putString("user", serializeResult).commit();
+							saveInfoToSp(serializeResult);
+						}
 					}
 				}).execute();
 				mLoadingLayout.setVisibility(View.GONE);
@@ -330,7 +349,17 @@ public class HomeLoginActivity extends MainActionBarActivity {
 
 	@Override
 	public void backButtonClick(View v) {
-		finish();
+		onBackPressed();
+	}
+
+	@Override
+	public void onBackPressed() {
+		// 点击返回时，一定是 用户没有登陆成功
+		Intent intent = new Intent("com.yoopoon.OPEN_ACTIVE_ACTION");
+		intent.addCategory(Intent.CATEGORY_DEFAULT);
+		this.sendBroadcast(intent);
+		FramMainActivity_.intent(this).start();
+		super.onBackPressed();
 	}
 
 	@Override
@@ -347,5 +376,41 @@ public class HomeLoginActivity extends MainActionBarActivity {
 	public Boolean showHeadView() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	/**
+	 * 将后台传递过来的json数据以xml的格式保存至sp中
+	 * @Title: saveInfoToSp
+	 * @Description: TODO
+	 * @param serializeResult json数据
+	 */
+	public void saveInfoToSp(String serializeResult) {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+		Editor editor = sp.edit();
+		try {
+			JSONObject obj = new JSONObject(serializeResult);
+			String userName = obj.getString("userName");
+			String phone = obj.getString("phone");
+			String password = obj.getString("password");
+			String userId = String.valueOf(obj.getInt("id"));
+			boolean remember = User.lastLoginUser(this).remember;
+			boolean isBroker = obj.getBoolean("broker");
+			editor.putString("userName", userName);
+			editor.putString("phone", phone);
+			editor.putString("password", password);
+			editor.putString("userId", userId);
+			editor.putBoolean("isBroker", isBroker);
+			editor.putBoolean("remember", remember);
+			editor.commit();
+			sendLoginSuccessBroadcast();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void sendLoginSuccessBroadcast() {
+		Intent intent = new Intent("com.yoopoon.login_action");
+		intent.addCategory(Intent.CATEGORY_DEFAULT);
+		sendBroadcast(intent);
 	}
 }

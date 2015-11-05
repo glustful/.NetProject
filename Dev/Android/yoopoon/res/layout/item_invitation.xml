@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:padding="5dp"
+    android:gravity="center_vertical"
+    android:background="#ffffff">
+    
+    <ImageView 
+        android:id="@+id/iv_invitation"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="center"
+        android:src="@drawable/partner_avater"/>
+    
+    <TextView 
+        android:id="@+id/tv_invitation_phone"
+        android:text="13508713650"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    
+    <TextView 
+        style="@style/Red_TextView_WrapContent"
+        android:text="同意"/>
+    
+    <TextView  
+        android:layout_marginLeft="5dp"
+        style="@style/Red_TextView_WrapContent"
+        android:text="忽略"/>
+    
+
+</LinearLayout>

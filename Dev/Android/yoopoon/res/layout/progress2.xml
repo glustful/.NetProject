@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:orientation="vertical" >
+    
+    <View 
+        android:layout_marginLeft="42.5dp"
+        android:layout_width="0.0001px"
+        android:layout_height="140dp"
+        android:background="@drawable/vertical_line"/>
+    
+    <TextView 
+        style="@style/TextView_Detail_Progress_Undone"
+        android:id="@+id/tv_progress_1"
+        android:text="信息提交，等待审核"/>
+    
+    <View 
+        android:id="@+id/line1"
+        android:layout_below="@id/tv_progress_1"
+        style="@style/View_Margin"/>
+    
+    <TextView 
+        android:layout_below="@id/line1"
+        android:id="@+id/tv_progress_2"
+        style="@style/TextView_Detail_Progress_Done"
+        android:text="审核成功，等待上访"/>
+    
+    
+    <View 
+        android:id="@+id/line2"
+        android:layout_below="@id/tv_progress_2"
+        style="@style/View_Margin"/>
+    
+    <TextView 
+        android:layout_below="@id/line2"
+        android:id="@+id/tv_progress_3"
+        style="@style/TextView_Detail_Progress_Undone"
+        android:text="上访成功，洽谈中"/>
+    
+    
+    <View 
+        android:id="@+id/line3"
+        android:layout_below="@id/tv_progress_3"
+        style="@style/View_Margin"/>
+    
+    <TextView 
+        android:layout_below="@id/line3"
+        android:id="@+id/tv_progress_4"
+        style="@style/TextView_Detail_Progress_Undone"
+        android:text="交易成功"/>
+    
+    
+
+</RelativeLayout>

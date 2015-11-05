@@ -1,33 +1,38 @@
 package com.yoopoon.home.ui.agent;
 
 import java.util.ArrayList;
-
 import org.json.JSONObject;
-
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.yoopoon.home.MyApplication;
-import com.yoopoon.home.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yoopoon.common.base.utils.DensityUtil;
+import com.yoopoon.home.MyApplication;
+import com.yoopoon.home.R;
+import com.yoopoon.home.ui.active.BrokerBrandActivity_;
+import com.yoopoon.house.ui.bonus.BrokerBonusActivity_;
+import com.yoopoon.house.ui.broker.BrokerRecommendActivity_;
+import com.yoopoon.house.ui.broker.BrokerScoreActivity_;
+import com.yoopoon.house.ui.broker.BrokerTakeGuestActivity_;
 
 public class AgentBrandAdapter extends BaseAdapter {
 	Context mContext;
 	ArrayList<JSONObject> datas;
 	int height = 0;
-	public AgentBrandAdapter(Context context){
+
+	public AgentBrandAdapter(Context context) {
 		this.mContext = context;
 		datas = new ArrayList<JSONObject>();
-		height = MyApplication.getInstance().getDeviceInfo((Activity)mContext).heightPixels/6;
+		height = MyApplication.getInstance().getDeviceInfo((Activity) mContext).heightPixels / 5;
 	}
+
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -49,33 +54,99 @@ public class AgentBrandAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Holder mHolder;
-		if(convertView == null){
+		if (convertView == null) {
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.agent_page_brand_item, null);
 			mHolder = new Holder();
 			mHolder.init(convertView);
 			convertView.setTag(mHolder);
-		}else{
+		} else {
 			mHolder = (Holder) convertView.getTag();
 		}
-		JSONObject item = datas.get(position);
-		String url = mContext.getString(R.string.url_host_img)+item.optString("Bimg");
-		mHolder.img.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, height));
+		// "BrandId":"134",
+		// "BrandName":"华润中央公园",
+		// "Bimg":"20150701/20150701_161420_163_911.jpg",
+		// "ProductId":33,
+		// "Productname":"公园城11",
+		// "HouseType":"",
+		// "Price":"5000.00",
+		// "Commition":"1500.00",
+		// "SubTitle":"一万抵三万"
+		final JSONObject item = datas.get(position);
+		String url = mContext.getString(R.string.url_host_img) + item.optString("Bimg");
+		mHolder.img.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+				DensityUtil.dip2px(mContext, 150)));
 		mHolder.img.setTag(url);
-		ImageLoader.getInstance().displayImage(url, mHolder.img, MyApplication.getOptions(),MyApplication.getLoadingListener());
-		mHolder.title.setText("["+item.optString("Bname")+"]");
-		
+		ImageLoader.getInstance().displayImage(url, mHolder.img);
+		mHolder.title.setText("[" + item.optString("BrandName") + "]");
+		String price = item.optString("Price");
+		String commition = item.optString("Commition");
+		mHolder.tv_price.setText("价格：" + price);
+		mHolder.tv_commition.setText("最高佣金" + commition + "元/套");
+		mHolder.tv_iguest.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				BrokerTakeGuestActivity_.intent(mContext).intent_properString(item.optString("Productname"))
+						.intent_propretyTypeString(item.optString("HouseType"))
+						.intent_propretyNumber(item.optString("ProductId")).start();
+			}
+		});
+		mHolder.tv_irecommend.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				BrokerRecommendActivity_.intent(mContext).intent_properString(item.optString("Productname"))
+						.intent_propretyTypeString(item.optString("HouseType"))
+						.intent_propretyNumber(item.optString("ProductId")).start();
+			}
+		});
+
+		mHolder.tv_bonus.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				BrokerBonusActivity_.intent(mContext).start();
+			}
+		});
+
+		mHolder.tv_score.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				BrokerScoreActivity_.intent(mContext).start();
+			}
+		});
+
+		mHolder.img.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				BrokerBrandActivity_.intent(mContext).mJson(item.toString()).start();
+			}
+		});
+
 		return convertView;
 	}
-	
-	class Holder{
+
+	class Holder {
+
 		ImageView img;
 		TextView title;
-		
-		
-		void init(View root){
+		TextView tv_price;
+		TextView tv_commition;
+		TextView tv_iguest;
+		TextView tv_irecommend;
+
+		TextView tv_bonus;
+		TextView tv_score;
+
+		void init(View root) {
 			img = (ImageView) root.findViewById(R.id.img);
 			title = (TextView) root.findViewById(R.id.title);
-			
+			tv_price = (TextView) root.findViewById(R.id.tv_agent_brand_price);
+			tv_commition = (TextView) root.findViewById(R.id.tv_agent_brand_commition);
+			tv_iguest = (TextView) root.findViewById(R.id.tv_agent_brand_iguest);
+			tv_irecommend = (TextView) root.findViewById(R.id.tv_agent_brand_irecommend);
+			tv_bonus = (TextView) root.findViewById(R.id.tv_agent_brand_bonus);
+			tv_score = (TextView) root.findViewById(R.id.tv_agent_brand_score);
 		}
 	}
 
@@ -84,5 +155,4 @@ public class AgentBrandAdapter extends BaseAdapter {
 		datas.addAll(mJsonObjects);
 		this.notifyDataSetChanged();
 	}
-
 }

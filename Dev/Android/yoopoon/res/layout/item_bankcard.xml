@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bankcard_selector"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/tv_bankcard_bank"
+        style="@style/TextView_WhiteTextColor"
+        android:textSize="@dimen/middle_textSize"
+        android:text="中国建设银行" />
+    
+    <TextView
+        android:height="60dp"
+        style="@style/TextView_WhiteTextColor"
+        android:id="@+id/tv_bankcard_type"
+        android:textSize="@dimen/small_textSize"
+        android:layout_below="@id/tv_bankcard_bank"
+        android:text="储蓄卡"/>
+    
+    <TextView 
+        android:id="@+id/tv_bankcard_card"
+        style="@style/TextView_WhiteTextColor"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentBottom="true"
+		android:textSize="@dimen/large_textSize"
+		android:text="**** **** **** 7695"
+        />
+
+</RelativeLayout>

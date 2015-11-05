@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:padding="10dp" 
+    android:layout_gravity="center_vertical">
+    
+    <ImageView 
+        android:id="@+id/iv_partde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/partner_detail_level"/>
+    
+    <TextView
+        android:padding="5dp"
+        android:id="@+id/tv_partde_name"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/iv_partde" 
+        style="@style/TextView_WrapContent"
+        android:text="姓名：优客惠"/>
+    
+    <TextView
+        android:padding="5dp"
+        android:layout_below="@id/tv_partde_name"
+        android:id="@+id/tv_partde_phone"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/iv_partde" 
+        style="@style/TextView_WrapContent"
+        android:text="电话：13508713650"/>
+    
+    <TextView
+        android:padding="5dp"
+        android:layout_below="@id/tv_partde_phone"
+        android:id="@+id/tv_partde_regtime"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/iv_partde" 
+        style="@style/TextView_WrapContent"
+        android:text="注册时间：2015-07-08"/>
+    
+
+</RelativeLayout>
